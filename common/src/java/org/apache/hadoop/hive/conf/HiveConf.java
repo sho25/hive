@@ -5493,6 +5493,8 @@ argument_list|,
 operator|new
 name|StringSet
 argument_list|(
+literal|"none"
+argument_list|,
 literal|"minimal"
 argument_list|,
 literal|"more"
@@ -5503,6 +5505,8 @@ operator|+
 literal|"Currently the query should be single sourced not having any subquery and should not have\n"
 operator|+
 literal|"any aggregations or distincts (which incurs RS), lateral views and joins.\n"
+operator|+
+literal|"0. none : disable hive.fetch.task.conversion\n"
 operator|+
 literal|"1. minimal : SELECT STAR, FILTER on partition columns, LIMIT only\n"
 operator|+

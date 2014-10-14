@@ -1078,6 +1078,28 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEFETCHTASKCONVERSION
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"none"
+argument_list|)
+condition|)
+block|{
 name|transformations
 operator|.
 name|add
@@ -1088,6 +1110,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// must be called last
+block|}
 if|if
 condition|(
 name|HiveConf
