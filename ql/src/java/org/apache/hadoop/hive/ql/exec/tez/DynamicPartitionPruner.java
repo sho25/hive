@@ -2840,13 +2840,25 @@ operator|.
 name|increment
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|!
 name|queue
 operator|.
 name|offer
 argument_list|(
 name|event
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Queue full"
+argument_list|)
+throw|;
+block|}
 name|checkForSourceCompletion
 argument_list|(
 name|event
@@ -3011,13 +3023,25 @@ argument_list|()
 condition|)
 block|{
 comment|// we've got what we need; mark the queue
+if|if
+condition|(
+operator|!
 name|queue
 operator|.
 name|offer
 argument_list|(
 name|endOfEvents
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Queue full"
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
