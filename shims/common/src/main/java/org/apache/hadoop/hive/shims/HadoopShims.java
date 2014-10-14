@@ -1103,6 +1103,20 @@ name|Path
 name|path
 parameter_list|)
 function_decl|;
+comment|/**    * Reset the default fair scheduler queue mapping to end user.    *    * @param conf    * @param userName end user name    */
+specifier|public
+name|void
+name|refreshDefaultQueue
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|userName
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Create the proxy ugi for the given userid    * @param userName    * @return    */
 specifier|public
 name|UserGroupInformation

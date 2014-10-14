@@ -4169,6 +4169,21 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|void
+name|refreshDefaultQueue
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|userName
+parameter_list|)
+block|{
+comment|// MR1 does not expose API required to set MR queue mapping for user
+block|}
+annotation|@
+name|Override
+specifier|public
 name|String
 name|getTokenFileLocEnvName
 parameter_list|()

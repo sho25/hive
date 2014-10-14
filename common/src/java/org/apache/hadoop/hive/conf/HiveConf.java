@@ -6578,6 +6578,23 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_SERVER2_MAP_FAIR_SCHEDULER_QUEUE
+argument_list|(
+literal|"hive.server2.map.fair.scheduler.queue"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If the YARN fair scheduler is configured and HiveServer2 is running in non-impersonation mode,\n"
+operator|+
+literal|"this setting determines the user for fair scheduler queue mapping.\n"
+operator|+
+literal|"If set to true (default), the logged-in user determines the fair scheduler queue\n"
+operator|+
+literal|"for submitted jobs, so that map reduce resource usage can be tracked by user.\n"
+operator|+
+literal|"If set to false, all Hive jobs go to the 'hive' user's queue."
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
