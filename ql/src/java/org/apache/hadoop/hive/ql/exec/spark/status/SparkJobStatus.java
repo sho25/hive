@@ -53,11 +53,6 @@ name|getState
 parameter_list|()
 function_decl|;
 specifier|public
-name|SparkProgress
-name|getSparkJobProgress
-parameter_list|()
-function_decl|;
-specifier|public
 name|int
 index|[]
 name|getStageIds
@@ -68,7 +63,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|SparkProgress
+name|SparkStageProgress
 argument_list|>
 name|getSparkStageProgress
 parameter_list|()
