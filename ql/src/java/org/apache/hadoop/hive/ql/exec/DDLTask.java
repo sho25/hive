@@ -2509,22 +2509,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDeException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|columnar
 operator|.
 name|ColumnarSerDe
@@ -6142,6 +6126,11 @@ argument_list|,
 name|dropIdx
 operator|.
 name|getIndexName
+argument_list|()
+argument_list|,
+name|dropIdx
+operator|.
+name|isThrowException
 argument_list|()
 argument_list|,
 literal|true
@@ -13746,7 +13735,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// get the tables for the desired pattenn - populate the output stream
+comment|// get the tables for the desired pattern - populate the output stream
 name|List
 argument_list|<
 name|String
@@ -23980,7 +23969,7 @@ name|getOutputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// only persist input/ouput format to metadata when it is explicitly specified.
+comment|// only persist input/output format to metadata when it is explicitly specified.
 comment|// Otherwise, load lazily via StorageHandler at query time.
 if|if
 condition|(

@@ -559,24 +559,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|AlreadyExistsException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|ColumnStatistics
 import|;
 end_import
@@ -1046,24 +1028,6 @@ operator|.
 name|api
 operator|.
 name|SerDeInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|SetPartitionsStatsRequest
 import|;
 end_import
 
@@ -2191,7 +2155,7 @@ return|return
 name|hiveConf
 return|;
 block|}
-comment|/**    * Called whenever this object is instantiated using ReflectionUils, and also    * on connection retries. In cases of connection retries, conf will usually    * contain modified values.    */
+comment|/**    * Called whenever this object is instantiated using ReflectionUtils, and also    * on connection retries. In cases of connection retries, conf will usually    * contain modified values.    */
 annotation|@
 name|Override
 annotation|@
@@ -16018,7 +15982,7 @@ literal|" doesn't exist"
 argument_list|)
 throw|;
 block|}
-comment|// For now only alter name, owner, paramters, cols, bucketcols are allowed
+comment|// For now only alter name, owner, parameters, cols, bucketcols are allowed
 name|oldt
 operator|.
 name|setDatabase
@@ -16266,7 +16230,7 @@ literal|" doesn't exist"
 argument_list|)
 throw|;
 block|}
-comment|// For now only alter paramters are allowed
+comment|// For now only alter parameters are allowed
 name|oldi
 operator|.
 name|setParameters
@@ -17176,7 +17140,7 @@ argument_list|()
 decl_stmt|;
 comment|// Because there is a 1-N relationship between CDs and SDs,
 comment|// we must set the SD's CD to null first before dropping the storage descriptor
-comment|// to satisfy foriegn key constraints.
+comment|// to satisfy foreign key constraints.
 name|msd
 operator|.
 name|setCD
@@ -17867,6 +17831,59 @@ return|return
 literal|null
 return|;
 block|}
+name|MTable
+name|origTable
+init|=
+name|mIndex
+operator|.
+name|getOrigTable
+argument_list|()
+decl_stmt|;
+name|MTable
+name|indexTable
+init|=
+name|mIndex
+operator|.
+name|getIndexTable
+argument_list|()
+decl_stmt|;
+name|String
+index|[]
+name|qualified
+init|=
+name|MetaStoreUtils
+operator|.
+name|getQualifiedName
+argument_list|(
+name|origTable
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|indexTable
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|String
+name|indexTableName
+init|=
+name|qualified
+index|[
+literal|0
+index|]
+operator|+
+literal|"."
+operator|+
+name|qualified
+index|[
+literal|1
+index|]
+decl_stmt|;
 return|return
 operator|new
 name|Index
@@ -17881,10 +17898,7 @@ operator|.
 name|getIndexHandlerClass
 argument_list|()
 argument_list|,
-name|mIndex
-operator|.
-name|getOrigTable
-argument_list|()
+name|origTable
 operator|.
 name|getDatabase
 argument_list|()
@@ -17892,10 +17906,7 @@ operator|.
 name|getName
 argument_list|()
 argument_list|,
-name|mIndex
-operator|.
-name|getOrigTable
-argument_list|()
+name|origTable
 operator|.
 name|getTableName
 argument_list|()
@@ -17910,16 +17921,8 @@ operator|.
 name|getLastAccessTime
 argument_list|()
 argument_list|,
-name|mIndex
-operator|.
-name|getIndexTable
-argument_list|()
-operator|.
-name|getTableName
-argument_list|()
+name|indexTableName
 argument_list|,
-name|this
-operator|.
 name|convertToStorageDescriptor
 argument_list|(
 name|mIndex
