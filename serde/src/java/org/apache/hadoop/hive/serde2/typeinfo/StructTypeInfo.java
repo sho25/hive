@@ -395,7 +395,7 @@ if|if
 condition|(
 name|fieldLowerCase
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|allStructFieldNames
 operator|.

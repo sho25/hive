@@ -165,13 +165,13 @@ name|typeString
 init|=
 literal|"struct<name:string,studentid:int,"
 operator|+
-literal|"contact:struct<phno:string,email:string>,"
+literal|"contact:struct<phNo:string,email:string>,"
 operator|+
 literal|"currently_registered_courses:array<string>,"
 operator|+
 literal|"current_grades:map<string,string>,"
 operator|+
-literal|"phnos:array<struct<phno:string,type:string>>,blah:array<int>>"
+literal|"phNos:array<struct<phNo:string,type:string>>,blah:array<int>>"
 decl_stmt|;
 name|TypeInfo
 name|ti
@@ -224,11 +224,15 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
+comment|// Looks like HCatFieldSchema.getTypeString() lower-cases its results
 name|assertEquals
 argument_list|(
 name|ti
 operator|.
 name|getTypeName
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|,
 name|hsch
@@ -255,6 +259,9 @@ name|getTypeString
 argument_list|()
 argument_list|,
 name|typeString
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
