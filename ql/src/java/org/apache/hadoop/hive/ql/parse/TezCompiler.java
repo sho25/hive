@@ -2583,6 +2583,20 @@ argument_list|)
 expr_stmt|;
 comment|// need a new run of the constant folding because we might have created lots
 comment|// of "and true and true" conditions.
+if|if
+condition|(
+name|procCtx
+operator|.
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEOPTCONSTANTPROPAGATION
+argument_list|)
+condition|)
+block|{
 operator|new
 name|ConstantPropagate
 argument_list|()
@@ -2594,6 +2608,7 @@ operator|.
 name|parseContext
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
