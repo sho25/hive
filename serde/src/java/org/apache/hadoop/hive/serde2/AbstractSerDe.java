@@ -73,6 +73,16 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
 begin_comment
 comment|/**  * Abstract class for implementing SerDe. The abstract class has been created, so that  * new methods can be added in the underlying interface, SerDe, and only implementations  * that need those methods overwrite it.  */
 end_comment
@@ -121,7 +131,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties. Can be null in compile time    * @param tbl    *          table properties    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -129,6 +139,8 @@ specifier|abstract
 name|void
 name|initialize
 parameter_list|(
+annotation|@
+name|Nullable
 name|Configuration
 name|conf
 parameter_list|,
