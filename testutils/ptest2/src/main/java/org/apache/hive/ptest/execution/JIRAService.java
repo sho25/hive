@@ -1023,15 +1023,6 @@ argument_list|(
 name|mPatch
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|attachmentId
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
 name|comments
 operator|.
 name|add
@@ -1046,25 +1037,7 @@ argument_list|(
 literal|"ATTACHMENT ID: "
 operator|+
 name|attachmentId
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|!
-name|buildInfo
-operator|.
-name|getBuildName
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-name|comments
-operator|.
-name|add
-argument_list|(
+operator|+
 literal|" - "
 operator|+
 name|buildInfo
@@ -1073,7 +1046,6 @@ name|getBuildName
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|mLogger
 operator|.
 name|info
