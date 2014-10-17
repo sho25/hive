@@ -587,6 +587,28 @@ name|HashBiMap
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ReduceSinkDesc
+operator|.
+name|ReducerTraits
+operator|.
+name|AUTOPARALLEL
+import|;
+end_import
+
 begin_comment
 comment|/**  * GenTezUtils is a collection of shared helper methods to produce  * TezWork  */
 end_comment
@@ -901,8 +923,13 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|isAutoParallel
+name|getReducerTraits
 argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|AUTOPARALLEL
+argument_list|)
 condition|)
 block|{
 name|reduceWork

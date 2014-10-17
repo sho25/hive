@@ -567,6 +567,28 @@ name|MurmurHash
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ReduceSinkDesc
+operator|.
+name|ReducerTraits
+operator|.
+name|UNIFORM
+import|;
+end_import
+
 begin_comment
 comment|/**  * Reduce Sink Operator sends output to the reduce stage.  **/
 end_comment
@@ -807,7 +829,7 @@ comment|// input aliases of this RS for join (used for PPD)
 specifier|protected
 specifier|transient
 name|boolean
-name|autoParallel
+name|useUniformHash
 init|=
 literal|false
 decl_stmt|;
@@ -1401,12 +1423,17 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
-name|autoParallel
+name|useUniformHash
 operator|=
 name|conf
 operator|.
-name|isAutoParallel
+name|getReducerTraits
 argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|UNIFORM
+argument_list|)
 expr_stmt|;
 name|firstRow
 operator|=
@@ -2113,7 +2140,7 @@ decl_stmt|;
 comment|// distKeyLength doesn't include tag, but includes buckNum in cachedKeys[0]
 if|if
 condition|(
-name|autoParallel
+name|useUniformHash
 operator|&&
 name|partitionEval
 operator|.
