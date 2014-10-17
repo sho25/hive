@@ -3528,6 +3528,9 @@ operator|.
 name|startGroup
 argument_list|()
 expr_stmt|;
+comment|// We do not call startGroup on operators below because we are batching rows in
+comment|// an output batch and the semantics will not work.
+comment|// super.startGroup();
 block|}
 annotation|@
 name|Override
@@ -3543,6 +3546,9 @@ operator|.
 name|endGroup
 argument_list|()
 expr_stmt|;
+comment|// We do not call endGroup on operators below because we are batching rows in
+comment|// an output batch and the semantics will not work.
+comment|// super.endGroup();
 block|}
 annotation|@
 name|Override
