@@ -1958,6 +1958,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|ALTER_TABLE_TYPE_PARTIAL_PARTITION_SPEC_NO_SUPPORTED
+argument_list|(
+literal|10299
+argument_list|,
+literal|"Alter table partition type {0} does not allow partial partition spec"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
