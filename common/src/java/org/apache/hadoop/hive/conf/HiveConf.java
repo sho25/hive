@@ -4235,6 +4235,18 @@ argument_list|,
 literal|"By default Tez will spawn containers of the size of a mapper. This can be used to overwrite."
 argument_list|)
 block|,
+name|HIVETEZCPUVCORES
+argument_list|(
+literal|"hive.tez.cpu.vcores"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"By default Tez will ask for however many cpus map-reduce is configured to use per container. "
+operator|+
+literal|"This can be used to overwrite."
+argument_list|)
+block|,
 name|HIVETEZJAVAOPTS
 argument_list|(
 literal|"hive.tez.java.opts"
