@@ -1206,6 +1206,9 @@ argument_list|(
 name|Counter
 operator|.
 name|DESERIALIZE_ERRORS
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|deserialize_error_count
 argument_list|)
@@ -1217,6 +1220,9 @@ argument_list|(
 name|Counter
 operator|.
 name|SERIALIZE_ERRORS
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|serialize_error_count
 argument_list|)

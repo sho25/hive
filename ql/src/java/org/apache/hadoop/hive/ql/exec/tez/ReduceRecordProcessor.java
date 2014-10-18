@@ -1198,17 +1198,7 @@ operator|.
 name|pushRecord
 argument_list|()
 condition|)
-block|{
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|logProgress
-argument_list|()
-expr_stmt|;
-block|}
-block|}
+block|{}
 block|}
 comment|/**    * Get the inputs that should be streamed through reduce plan.    * @param inputs    * @return    */
 specifier|private
@@ -1387,6 +1377,8 @@ operator|new
 name|ReportStats
 argument_list|(
 name|reporter
+argument_list|,
+name|jconf
 argument_list|)
 decl_stmt|;
 name|reducer
