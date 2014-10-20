@@ -1060,6 +1060,9 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|isSparkExecEngine
+operator|||
+operator|(
 name|pctx
 operator|.
 name|getContext
@@ -1069,10 +1072,8 @@ name|getExplain
 argument_list|()
 operator|&&
 operator|!
-name|isSparkExecEngine
-operator|&&
-operator|!
 name|isTezExecEngine
+operator|)
 condition|)
 block|{
 name|transformations
