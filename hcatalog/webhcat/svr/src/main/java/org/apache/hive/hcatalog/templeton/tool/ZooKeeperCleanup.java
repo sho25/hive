@@ -75,11 +75,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|curator
 operator|.
-name|conf
+name|framework
 operator|.
-name|Configuration
+name|CuratorFramework
 import|;
 end_import
 
@@ -89,9 +89,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|zookeeper
+name|hadoop
 operator|.
-name|ZooKeeper
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -327,7 +329,7 @@ name|void
 name|run
 parameter_list|()
 block|{
-name|ZooKeeper
+name|CuratorFramework
 name|zk
 init|=
 literal|null
@@ -432,24 +434,11 @@ name|zk
 operator|!=
 literal|null
 condition|)
-block|{
-try|try
-block|{
 name|zk
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|e
-parameter_list|)
-block|{
-comment|// We're trying to exit anyway, just ignore.
-block|}
-block|}
 block|}
 name|long
 name|sleepMillis
@@ -534,7 +523,7 @@ name|String
 argument_list|>
 name|getChildList
 parameter_list|(
-name|ZooKeeper
+name|CuratorFramework
 name|zk
 parameter_list|)
 block|{
@@ -597,7 +586,7 @@ parameter_list|(
 name|String
 name|node
 parameter_list|,
-name|ZooKeeper
+name|CuratorFramework
 name|zk
 parameter_list|)
 block|{
@@ -674,6 +663,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|//this is set in ZooKeeperStorage.create()
 name|then
 operator|=
 name|state
@@ -682,6 +672,8 @@ name|getCreated
 argument_list|()
 expr_stmt|;
 block|}
+comment|//todo: this should check that the job actually completed and likely use completion time
+comment|//which is not tracked directly but available on /jobs/<id> node via "mtime" in Stat
 if|if
 condition|(
 name|now
@@ -734,6 +726,13 @@ argument_list|(
 literal|"checkAndDelete failed for "
 operator|+
 name|node
+operator|+
+literal|" due to: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// We don't throw a new exception for this -- just keep going with the
