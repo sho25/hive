@@ -4842,9 +4842,6 @@ name|isNative
 argument_list|,
 name|functionName
 argument_list|,
-operator|(
-name|GenericUDF
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -4987,9 +4984,6 @@ name|isNative
 argument_list|,
 name|functionName
 argument_list|,
-operator|(
-name|GenericUDTF
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -8330,9 +8324,6 @@ argument_list|,
 operator|new
 name|GenericUDAFBridge
 argument_list|(
-operator|(
-name|UDAF
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -9979,9 +9970,6 @@ else|else
 block|{
 name|clonedUDF
 operator|=
-operator|(
-name|GenericUDF
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -10128,9 +10116,6 @@ literal|null
 return|;
 block|}
 return|return
-operator|(
-name|GenericUDTF
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -10636,7 +10621,7 @@ name|udfClass
 return|;
 block|}
 comment|/**    * Returns whether the exprNodeDesc is node of "cast".    */
-specifier|private
+specifier|public
 specifier|static
 name|boolean
 name|isOpCast
