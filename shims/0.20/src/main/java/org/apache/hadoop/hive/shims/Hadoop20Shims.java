@@ -3188,6 +3188,23 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|getResolvedPrincipal
+parameter_list|(
+name|String
+name|principal
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+comment|// Not supported
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|reLoginUserFromKeytab
 parameter_list|()
