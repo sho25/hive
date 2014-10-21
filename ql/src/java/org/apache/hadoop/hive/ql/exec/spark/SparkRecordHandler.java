@@ -279,16 +279,7 @@ name|rp
 operator|=
 name|reporter
 expr_stmt|;
-name|MapredContext
-operator|.
-name|get
-argument_list|()
-operator|.
-name|setReporter
-argument_list|(
-name|reporter
-argument_list|)
-expr_stmt|;
+comment|//    MapredContext.get().setReporter(reporter);
 name|LOG
 operator|.
 name|info

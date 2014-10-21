@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -65,23 +55,19 @@ end_import
 
 begin_import
 import|import
-name|org
+name|scala
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
+name|Tuple2
 import|;
 end_import
 
 begin_import
 import|import
-name|scala
+name|java
 operator|.
-name|Tuple2
+name|util
+operator|.
+name|Iterator
 import|;
 end_import
 
@@ -124,11 +110,16 @@ parameter_list|(
 name|byte
 index|[]
 name|buffer
+parameter_list|,
+name|SparkReporter
+name|sparkReporter
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|buffer
+argument_list|,
+name|sparkReporter
 argument_list|)
 expr_stmt|;
 block|}
@@ -194,9 +185,7 @@ name|jobConf
 argument_list|,
 name|result
 argument_list|,
-name|Reporter
-operator|.
-name|NULL
+name|sparkReporter
 argument_list|)
 expr_stmt|;
 return|return

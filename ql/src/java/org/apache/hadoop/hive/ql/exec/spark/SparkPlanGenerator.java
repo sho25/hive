@@ -733,6 +733,10 @@ name|Path
 name|scratchDir
 decl_stmt|;
 specifier|private
+name|SparkReporter
+name|sparkReporter
+decl_stmt|;
+specifier|private
 specifier|final
 name|Map
 argument_list|<
@@ -776,6 +780,9 @@ name|jobConf
 parameter_list|,
 name|Path
 name|scratchDir
+parameter_list|,
+name|SparkReporter
+name|sparkReporter
 parameter_list|)
 block|{
 name|this
@@ -840,6 +847,12 @@ argument_list|,
 name|SparkTran
 argument_list|>
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|sparkReporter
+operator|=
+name|sparkReporter
 expr_stmt|;
 block|}
 specifier|public
@@ -2160,6 +2173,8 @@ operator|new
 name|HiveMapFunction
 argument_list|(
 name|confBytes
+argument_list|,
+name|sparkReporter
 argument_list|)
 decl_stmt|;
 name|result
@@ -2216,6 +2231,8 @@ operator|new
 name|HiveReduceFunction
 argument_list|(
 name|confBytes
+argument_list|,
+name|sparkReporter
 argument_list|)
 decl_stmt|;
 name|result
