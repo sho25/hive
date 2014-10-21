@@ -556,12 +556,6 @@ name|OperatorDesc
 argument_list|>
 name|parentOfRoot
 decl_stmt|;
-comment|// Default task is the task we use for those operators that are not connected
-comment|// to the newly generated TS
-specifier|public
-name|SparkTask
-name|defaultTask
-decl_stmt|;
 comment|// Spark task we're currently processing
 specifier|public
 name|SparkTask
@@ -572,50 +566,6 @@ comment|// one.
 specifier|public
 name|BaseWork
 name|preceedingWork
-decl_stmt|;
-comment|// All operators that we should unlink with their parents, for multi-table insertion
-comment|// It's a mapping from operator to its ONLY parent.
-specifier|public
-name|Map
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|,
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|opToParentMap
-decl_stmt|;
-comment|// A mapping from operators to their corresponding tasks.
-comment|// The key for this map could only be:
-comment|//  1. TableScanOperators (so we know which task for the tree rooted at this TS)
-comment|//  2. FileSinkOperators (need this info in GenSparkUtils::processFileSinks)
-comment|//  3. UnionOperator/JoinOperator (need for merging tasks)
-specifier|public
-specifier|final
-name|Map
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|,
-name|SparkTask
-argument_list|>
-name|opToTaskMap
-decl_stmt|;
-comment|// temporary TS generated for multi-table insertion
-specifier|public
-specifier|final
-name|Set
-argument_list|<
-name|TableScanOperator
-argument_list|>
-name|tempTS
 decl_stmt|;
 comment|// map that keeps track of the last operator of a task to the work
 comment|// that follows it. This is used for connecting them later.
@@ -905,7 +855,7 @@ name|outputs
 expr_stmt|;
 name|this
 operator|.
-name|defaultTask
+name|currentTask
 operator|=
 operator|(
 name|SparkTask
@@ -938,14 +888,8 @@ name|rootTasks
 operator|.
 name|add
 argument_list|(
-name|defaultTask
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
 name|currentTask
-operator|=
-literal|null
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -1189,52 +1133,6 @@ operator|new
 name|LinkedHashSet
 argument_list|<
 name|ReduceSinkOperator
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|opToParentMap
-operator|=
-operator|new
-name|LinkedHashMap
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|,
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|opToTaskMap
-operator|=
-operator|new
-name|LinkedHashMap
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-argument_list|,
-name|SparkTask
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|tempTS
-operator|=
-operator|new
-name|LinkedHashSet
-argument_list|<
-name|TableScanOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
