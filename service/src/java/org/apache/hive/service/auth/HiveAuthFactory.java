@@ -1431,6 +1431,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1469,6 +1471,8 @@ argument_list|(
 literal|"Received empty retrieving delegation token for user "
 operator|+
 name|owner
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1490,6 +1494,8 @@ literal|"Error retrieving delegation token for user "
 operator|+
 name|owner
 argument_list|,
+literal|"08S01"
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1505,6 +1511,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"delegation token retrieval interrupted"
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1534,6 +1542,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1560,6 +1570,8 @@ argument_list|(
 literal|"Error canceling delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1588,6 +1600,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1614,6 +1628,8 @@ argument_list|(
 literal|"Error renewing delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1642,6 +1658,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1669,6 +1687,8 @@ argument_list|(
 literal|"Error extracting user from delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1808,6 +1828,8 @@ operator|+
 literal|" for "
 operator|+
 name|proxyUser
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)

@@ -12157,6 +12157,14 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -12164,6 +12172,7 @@ argument_list|(
 literal|"Hive Conf not found or Session not initiated, use thread based class loader instead"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|JavaUtils
 operator|.
@@ -12189,6 +12198,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -12196,10 +12213,19 @@ argument_list|(
 literal|"Use session specified class loader"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|sessionCL
 return|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -12207,6 +12233,7 @@ argument_list|(
 literal|"Session specified class loader not found, use thread based class loader"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|JavaUtils
 operator|.

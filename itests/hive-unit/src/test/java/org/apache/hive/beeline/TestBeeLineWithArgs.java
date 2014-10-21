@@ -770,7 +770,7 @@ return|return
 name|output
 return|;
 block|}
-comment|/**    * Attempt to execute a simple script file with the -f option to BeeLine    * Test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found    * Print PASSED or FAILED    * @paramm testName Name of test to print    * @param expectedPattern Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @throws Exception on command execution error    */
+comment|/**    * Attempt to execute a simple script file with the -f option to BeeLine    * Test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found    * Print PASSED or FAILED    * @param testName Name of test to print    * @param expectedPattern Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @throws Exception on command execution error    */
 specifier|private
 name|void
 name|testScriptFile
@@ -1247,7 +1247,7 @@ name|argList
 operator|.
 name|add
 argument_list|(
-literal|"hive.table.name=dummy"
+literal|"test.hive.table.name=dummy"
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -1260,7 +1260,7 @@ specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
-literal|"create table ${hiveconf:hive.table.name} (d int);\nshow tables;\n"
+literal|"create table ${hiveconf:test.hive.table.name} (d int);\nshow tables;\n"
 decl_stmt|;
 specifier|final
 name|String

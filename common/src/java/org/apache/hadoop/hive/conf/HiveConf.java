@@ -2878,24 +2878,6 @@ operator|+
 literal|"Set to 0 for forever."
 argument_list|)
 block|,
-name|HIVETABLENAME
-argument_list|(
-literal|"hive.table.name"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-block|,
-name|HIVEPARTITIONNAME
-argument_list|(
-literal|"hive.partition.name"
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|HIVESCRIPTAUTOPROGRESS
 argument_list|(
 literal|"hive.script.auto.progress"
