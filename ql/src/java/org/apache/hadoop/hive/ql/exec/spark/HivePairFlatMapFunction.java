@@ -93,7 +93,7 @@ argument_list|,
 name|V
 argument_list|>
 block|{
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|NumberFormat
@@ -104,7 +104,7 @@ operator|.
 name|getInstance
 argument_list|()
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|NumberFormat
@@ -260,7 +260,7 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getStageId
+name|stageId
 argument_list|()
 argument_list|)
 argument_list|)
@@ -309,7 +309,7 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getPartitionId
+name|partitionId
 argument_list|()
 argument_list|)
 argument_list|)
@@ -356,7 +356,7 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getPartitionId
+name|partitionId
 argument_list|()
 argument_list|)
 expr_stmt|;
