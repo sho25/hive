@@ -1256,17 +1256,6 @@ operator|)
 name|currOpClone
 expr_stmt|;
 block|}
-comment|// Put the filter "skewed column = skewed keys" in op
-comment|// and "skewed columns != skewed keys" in selectOpClone
-name|insertSkewFilter
-argument_list|(
-name|tableScanOpsForJoin
-argument_list|,
-name|skewedValues
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|TableScanOperator
@@ -1280,14 +1269,39 @@ name|TableScanOperator
 argument_list|>
 argument_list|()
 decl_stmt|;
-assert|assert
+if|if
+condition|(
+operator|!
 name|getTableScanOpsForJoin
 argument_list|(
 name|joinOpClone
 argument_list|,
 name|tableScanCloneOpsForJoin
 argument_list|)
-assert|;
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Operator tree not properly cloned!"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+comment|// Put the filter "skewed column = skewed keys" in op
+comment|// and "skewed columns != skewed keys" in selectOpClone
+name|insertSkewFilter
+argument_list|(
+name|tableScanOpsForJoin
+argument_list|,
+name|skewedValues
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|insertSkewFilter
 argument_list|(
 name|tableScanCloneOpsForJoin
