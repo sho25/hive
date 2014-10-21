@@ -2913,6 +2913,17 @@ argument_list|,
 literal|"Truncate each environment variable for external script in scripts operator to 20KB (to fit system limits)"
 argument_list|)
 block|,
+name|HIVESCRIPT_ENV_BLACKLIST
+argument_list|(
+literal|"hive.script.operator.env.blacklist"
+argument_list|,
+literal|"hive.txn.valid.txns,hive.script.operator.env.blacklist"
+argument_list|,
+literal|"Comma separated list of keys from the configuration file not to convert to environment "
+operator|+
+literal|"variables when envoking the script operator"
+argument_list|)
+block|,
 name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
