@@ -51354,6 +51354,11 @@ init|=
 literal|null
 decl_stmt|;
 comment|// save join type
+name|boolean
+name|continueScanning
+init|=
+literal|true
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -51366,6 +51371,8 @@ init|;
 name|j
 operator|>=
 literal|0
+operator|&&
+name|continueScanning
 condition|;
 name|j
 operator|--
@@ -51491,6 +51498,11 @@ operator|.
 name|JOINNODE_OUTERJOIN_MORETHAN_16
 argument_list|)
 expr_stmt|;
+name|continueScanning
+operator|=
+operator|!
+name|runCBO
+expr_stmt|;
 continue|continue;
 block|}
 block|}
@@ -51522,6 +51534,12 @@ expr_stmt|;
 continue|continue;
 comment|// continue merging with next alias
 block|}
+comment|/*          * for CBO provided orderings, don't attempt to reorder joins.          * only convert consecutive joins into n-way joins.          */
+name|continueScanning
+operator|=
+operator|!
+name|runCBO
+expr_stmt|;
 if|if
 condition|(
 name|prevType
@@ -61135,7 +61153,7 @@ argument_list|)
 expr_stmt|;
 name|disableJoinMerge
 operator|=
-literal|true
+literal|false
 expr_stmt|;
 name|sinkOp
 operator|=
