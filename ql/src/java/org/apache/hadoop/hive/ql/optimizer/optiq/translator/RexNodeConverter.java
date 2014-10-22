@@ -2405,6 +2405,8 @@ name|Short
 operator|)
 name|value
 argument_list|)
+argument_list|,
+name|optiqDataType
 argument_list|)
 expr_stmt|;
 break|break;
