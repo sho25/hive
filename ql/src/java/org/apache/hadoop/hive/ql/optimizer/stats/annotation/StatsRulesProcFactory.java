@@ -6997,7 +6997,7 @@ condition|(
 name|ops
 operator|!=
 literal|null
-operator|||
+operator|&&
 operator|!
 name|ops
 operator|.
