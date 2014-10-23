@@ -31,7 +31,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|BytesWritable
+name|WritableComparable
 import|;
 end_import
 
@@ -58,13 +58,13 @@ name|SparkTran
 parameter_list|<
 name|KI
 extends|extends
-name|BytesWritable
+name|WritableComparable
 parameter_list|,
 name|VI
 parameter_list|,
 name|KO
 extends|extends
-name|BytesWritable
+name|WritableComparable
 parameter_list|,
 name|VO
 parameter_list|>
