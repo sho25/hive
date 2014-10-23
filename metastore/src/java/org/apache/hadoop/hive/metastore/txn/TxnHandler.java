@@ -501,6 +501,11 @@ specifier|private
 name|long
 name|timeout
 decl_stmt|;
+specifier|private
+name|String
+name|identifierQuoteString
+decl_stmt|;
+comment|// quotes to use for quoting tables, where necessary
 comment|// DEADLOCK DETECTION AND HANDLING
 comment|// A note to developers of this class.  ALWAYS access HIVE_LOCKS before TXNS to avoid deadlock
 comment|// between simultaneous accesses.  ALWAYS access TXN_COMPONENTS before HIVE_LOCKS .
@@ -5025,6 +5030,39 @@ name|stmt
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|/**    * Determine the String that should be used to quote identifiers.    * @param conn Active connection    * @return quotes    * @throws SQLException    */
+specifier|protected
+name|String
+name|getIdentifierQuoteString
+parameter_list|(
+name|Connection
+name|conn
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+if|if
+condition|(
+name|identifierQuoteString
+operator|==
+literal|null
+condition|)
+block|{
+name|identifierQuoteString
+operator|=
+name|conn
+operator|.
+name|getMetaData
+argument_list|()
+operator|.
+name|getIdentifierQuoteString
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|identifierQuoteString
+return|;
 block|}
 specifier|protected
 enum|enum
