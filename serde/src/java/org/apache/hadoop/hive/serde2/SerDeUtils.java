@@ -2893,10 +2893,15 @@ name|props
 init|=
 operator|new
 name|Properties
+argument_list|()
+decl_stmt|;
+name|props
+operator|.
+name|putAll
 argument_list|(
 name|tblProps
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|partProps
