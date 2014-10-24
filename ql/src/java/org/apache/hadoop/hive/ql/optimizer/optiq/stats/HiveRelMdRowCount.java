@@ -1071,6 +1071,10 @@ argument_list|,
 name|leftFilters
 argument_list|,
 name|rightFilters
+argument_list|,
+name|joinTypeHolder
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Pair

@@ -129,18 +129,6 @@ name|eigenbase
 operator|.
 name|rel
 operator|.
-name|JoinRelType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|eigenbase
-operator|.
-name|rel
-operator|.
 name|RelFactories
 import|;
 end_import
@@ -206,6 +194,18 @@ operator|.
 name|RelOptUtil
 operator|.
 name|InputFinder
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eigenbase
+operator|.
+name|rex
+operator|.
+name|RexBuilder
 import|;
 end_import
 
@@ -500,22 +500,7 @@ name|joinFilters
 parameter_list|,
 name|JoinRelBase
 name|join
-parameter_list|,
-name|JoinRelType
-name|joinType
 parameter_list|)
-block|{
-if|if
-condition|(
-name|joinType
-operator|.
-name|equals
-argument_list|(
-name|JoinRelType
-operator|.
-name|INNER
-argument_list|)
-condition|)
 block|{
 name|ListIterator
 argument_list|<
@@ -590,8 +575,7 @@ name|getOperands
 argument_list|()
 control|)
 block|{
-comment|// NOTE: Hive dis-allows projections from both left
-comment|//&
+comment|// NOTE: Hive dis-allows projections from both left&
 comment|// right side
 comment|// of join condition. Example: Hive disallows
 comment|// (r1.x=r2.x)=(r1.y=r2.y) on join condition.
@@ -631,7 +615,6 @@ operator|.
 name|remove
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|private
