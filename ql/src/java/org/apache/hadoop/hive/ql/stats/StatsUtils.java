@@ -2070,6 +2070,8 @@ decl_stmt|;
 comment|// add partition column stats
 name|addParitionColumnStats
 argument_list|(
+name|conf
+argument_list|,
 name|neededColumns
 argument_list|,
 name|referencedColumns
@@ -2173,6 +2175,8 @@ argument_list|)
 decl_stmt|;
 name|addParitionColumnStats
 argument_list|(
+name|conf
+argument_list|,
 name|neededColumns
 argument_list|,
 name|referencedColumns
@@ -2555,6 +2559,9 @@ specifier|static
 name|void
 name|addParitionColumnStats
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -2713,6 +2720,28 @@ operator|.
 name|setCountDistint
 argument_list|(
 name|numPartitions
+argument_list|)
+expr_stmt|;
+name|partCS
+operator|.
+name|setAvgColLen
+argument_list|(
+name|StatsUtils
+operator|.
+name|getAvgColLenOfVariableLengthTypes
+argument_list|(
+name|conf
+argument_list|,
+name|ci
+operator|.
+name|getObjectInspector
+argument_list|()
+argument_list|,
+name|partCS
+operator|.
+name|getColumnType
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|colStats
@@ -6753,7 +6782,29 @@ name|getIsPartitionColOrVirtualCol
 argument_list|()
 condition|)
 block|{
-comment|// vitual columns
+name|ColStatistics
+name|colStats
+init|=
+name|parentStats
+operator|.
+name|getColumnStatisticsFromColName
+argument_list|(
+name|colName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|colStats
+operator|!=
+literal|null
+condition|)
+block|{
+comment|/* If statistics for the column already exist use it. */
+return|return
+name|colStats
+return|;
+block|}
+comment|// virtual columns
 name|colType
 operator|=
 name|encd
