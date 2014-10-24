@@ -863,7 +863,9 @@ name|opMergeJoinWorkMap
 operator|.
 name|containsKey
 argument_list|(
-name|operator
+name|context
+operator|.
+name|currentMergeJoinOperator
 argument_list|)
 condition|)
 block|{
@@ -876,7 +878,9 @@ name|opMergeJoinWorkMap
 operator|.
 name|get
 argument_list|(
-name|operator
+name|context
+operator|.
+name|currentMergeJoinOperator
 argument_list|)
 expr_stmt|;
 block|}
@@ -911,7 +915,9 @@ name|opMergeJoinWorkMap
 operator|.
 name|put
 argument_list|(
-name|operator
+name|context
+operator|.
+name|currentMergeJoinOperator
 argument_list|,
 name|mergeJoinWork
 argument_list|)
@@ -2006,12 +2012,9 @@ name|rs
 argument_list|)
 decl_stmt|;
 comment|// guaranteed to be instance of MergeJoinWork if index is valid
-name|MergeJoinWork
-name|mergeJoinWork
+name|BaseWork
+name|baseWork
 init|=
-operator|(
-name|MergeJoinWork
-operator|)
 name|tezWork
 operator|.
 name|getChildren
@@ -2023,6 +2026,21 @@ name|get
 argument_list|(
 name|index
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|baseWork
+operator|instanceof
+name|MergeJoinWork
+condition|)
+block|{
+name|MergeJoinWork
+name|mergeJoinWork
+init|=
+operator|(
+name|MergeJoinWork
+operator|)
+name|baseWork
 decl_stmt|;
 comment|// disconnect the connection to union work and connect to merge work
 name|followingWork
@@ -2039,6 +2057,17 @@ operator|.
 name|getMainWork
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+name|rWork
+operator|=
+operator|(
+name|ReduceWork
+operator|)
+name|baseWork
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{

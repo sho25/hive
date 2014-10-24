@@ -1580,6 +1580,11 @@ name|mapJoinConversionPos
 argument_list|,
 name|mapJoinDesc
 argument_list|)
+argument_list|,
+name|joinOp
+operator|.
+name|getSchema
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|OpTraits
