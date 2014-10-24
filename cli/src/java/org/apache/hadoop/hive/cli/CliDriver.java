@@ -1026,8 +1026,8 @@ else|else
 block|{
 try|try
 block|{
-name|this
-operator|.
+name|ret
+operator|=
 name|processFile
 argument_list|(
 name|cmd_1
