@@ -3725,7 +3725,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Found plan in cache."
+literal|"Found plan in cache for name: "
+operator|+
+name|name
 argument_list|)
 expr_stmt|;
 name|gWork
@@ -9994,6 +9996,15 @@ comment|/**    * Some jobs like "INSERT INTO" jobs create copies of files like 0
 specifier|private
 specifier|static
 specifier|final
+name|String
+name|COPY_KEYWORD
+init|=
+literal|"_copy_"
+decl_stmt|;
+comment|// copy keyword
+specifier|private
+specifier|static
+specifier|final
 name|Pattern
 name|COPY_FILE_NAME_TO_TASK_ID_REGEX
 init|=
@@ -10015,7 +10026,6 @@ operator|+
 comment|// attemptId (limited to 6 digits)
 literal|"((_)(\\Bcopy\\B)(_)"
 operator|+
-comment|// copy keyword
 literal|"([0-9]{1,6})$)?"
 operator|+
 comment|// copy file index
@@ -11961,6 +11971,45 @@ block|}
 return|return
 literal|false
 return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|getBucketFileNameFromPathSubString
+parameter_list|(
+name|String
+name|bucketName
+parameter_list|)
+block|{
+try|try
+block|{
+return|return
+name|bucketName
+operator|.
+name|split
+argument_list|(
+name|COPY_KEYWORD
+argument_list|)
+index|[
+literal|0
+index|]
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+return|return
+name|bucketName
+return|;
+block|}
 block|}
 specifier|public
 specifier|static

@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * This class is the payload for custom vertex. It serializes and de-serializes  * @numBuckets: the number of buckets of the "big table"  * @vertexType: this is the type of vertex and differentiates between bucket map join and SMB joins  * @inputName: This is the name of the input. Used in case of SMB joins  */
+comment|/*  * This class is the payload for custom vertex. It serializes and de-serializes  * @numBuckets: the number of buckets of the "big table"  * @vertexType: this is the type of vertex and differentiates between bucket map join and SMB joins  * @numInputs: The number of inputs that are directly connected to the vertex (MRInput/MultiMRInput).  *             In case of bucket map join, it is always 1.  * @inputName: This is the name of the input. Used in case of SMB joins. Empty in case of BucketMapJoin  */
 end_comment
 
 begin_class
@@ -109,6 +109,10 @@ operator|.
 name|AUTO_INITIALIZED_EDGES
 decl_stmt|;
 specifier|private
+name|int
+name|numInputs
+decl_stmt|;
+specifier|private
 name|String
 name|inputName
 decl_stmt|;
@@ -116,6 +120,30 @@ specifier|public
 name|CustomVertexConfiguration
 parameter_list|()
 block|{   }
+comment|// this is the constructor to use for the Bucket map join case.
+specifier|public
+name|CustomVertexConfiguration
+parameter_list|(
+name|int
+name|numBuckets
+parameter_list|,
+name|VertexType
+name|vertexType
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|numBuckets
+argument_list|,
+name|vertexType
+argument_list|,
+literal|""
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+comment|// this is the constructor to use for SMB.
 specifier|public
 name|CustomVertexConfiguration
 parameter_list|(
@@ -127,6 +155,9 @@ name|vertexType
 parameter_list|,
 name|String
 name|inputName
+parameter_list|,
+name|int
+name|numInputs
 parameter_list|)
 block|{
 name|this
@@ -140,6 +171,12 @@ operator|.
 name|vertexType
 operator|=
 name|vertexType
+expr_stmt|;
+name|this
+operator|.
+name|numInputs
+operator|=
+name|numInputs
 expr_stmt|;
 name|this
 operator|.
@@ -179,6 +216,13 @@ argument_list|(
 name|this
 operator|.
 name|numBuckets
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|writeInt
+argument_list|(
+name|numInputs
 argument_list|)
 expr_stmt|;
 name|out
@@ -227,6 +271,15 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
+name|numInputs
+operator|=
+name|in
+operator|.
+name|readInt
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
 name|inputName
 operator|=
 name|in
@@ -260,6 +313,15 @@ parameter_list|()
 block|{
 return|return
 name|inputName
+return|;
+block|}
+specifier|public
+name|int
+name|getNumInputs
+parameter_list|()
+block|{
+return|return
+name|numInputs
 return|;
 block|}
 block|}

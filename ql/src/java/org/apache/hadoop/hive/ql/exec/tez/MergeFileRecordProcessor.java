@@ -1251,6 +1251,15 @@ name|theMRInput
 init|=
 literal|null
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"VDK: the inputs are: "
+operator|+
+name|inputs
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Entry

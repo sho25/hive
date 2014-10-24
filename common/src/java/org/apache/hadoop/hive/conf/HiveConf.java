@@ -7237,6 +7237,18 @@ literal|1024L
 argument_list|,
 literal|"Maximum total data size of events in dynamic pruning."
 argument_list|)
+block|,
+name|TEZ_SMB_NUMBER_WAVES
+argument_list|(
+literal|"hive.tez.smb.number.waves"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.5
+argument_list|,
+literal|"The number of waves in which to run the SMB join. Account for cluster being occupied. Ideally should be 1 wave."
+argument_list|)
 block|;
 specifier|public
 specifier|final

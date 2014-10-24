@@ -65,18 +65,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|ByteString
-import|;
-end_import
-
-begin_import
-import|import
 name|javax
 operator|.
 name|security
@@ -396,24 +384,6 @@ operator|.
 name|ql
 operator|.
 name|ErrorMsg
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|CommonMergeJoinOperator
 import|;
 end_import
 
@@ -1469,22 +1439,6 @@ name|tez
 operator|.
 name|mapreduce
 operator|.
-name|common
-operator|.
-name|MRInputAMSplitGenerator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|mapreduce
-operator|.
 name|hadoop
 operator|.
 name|MRHelpers
@@ -1520,22 +1474,6 @@ operator|.
 name|hadoop
 operator|.
 name|MRJobConfig
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|mapreduce
-operator|.
-name|input
-operator|.
-name|MRInput
 import|;
 end_import
 
@@ -1600,22 +1538,6 @@ operator|.
 name|partition
 operator|.
 name|MRPartitioner
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|mapreduce
-operator|.
-name|protos
-operator|.
-name|MRRuntimeProtos
 import|;
 end_import
 
@@ -2478,8 +2400,6 @@ argument_list|(
 name|numBuckets
 argument_list|,
 name|vertexType
-argument_list|,
-literal|""
 argument_list|)
 decl_stmt|;
 name|DataOutputBuffer
@@ -2661,8 +2581,6 @@ argument_list|(
 name|numBuckets
 argument_list|,
 name|vertexType
-argument_list|,
-literal|""
 argument_list|)
 decl_stmt|;
 name|DataOutputBuffer
@@ -2769,11 +2687,6 @@ argument_list|)
 return|;
 block|}
 comment|/*    * Helper function to create an edge property from an edge type.    */
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"rawtypes"
-argument_list|)
 specifier|private
 name|EdgeProperty
 name|createEdgeProperty
@@ -3711,14 +3624,6 @@ name|getMainWork
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|CommonMergeJoinOperator
-name|mergeJoinOp
-init|=
-name|mergeJoinWork
-operator|.
-name|getMergeJoinOperator
-argument_list|()
-decl_stmt|;
 name|Vertex
 name|mergeVx
 init|=
@@ -3740,15 +3645,6 @@ name|ctx
 argument_list|,
 name|vertexType
 argument_list|)
-decl_stmt|;
-comment|// grouping happens in execution phase. Setting the class to TezGroupedSplitsInputFormat
-comment|// here would cause pre-mature grouping which would be incorrect.
-name|Class
-name|inputFormatClass
-init|=
-name|HiveInputFormat
-operator|.
-name|class
 decl_stmt|;
 name|conf
 operator|.
@@ -3881,6 +3777,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// the +1 to the size is because of the main work.
 name|CustomVertexConfiguration
 name|vertexConf
 init|=
@@ -3904,6 +3801,13 @@ name|mergeJoinWork
 operator|.
 name|getBigTableAlias
 argument_list|()
+argument_list|,
+name|mapWorkList
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|1
 argument_list|)
 decl_stmt|;
 name|DataOutputBuffer
@@ -4074,6 +3978,11 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 name|Class
 name|inputFormatClass
 init|=
@@ -4355,6 +4264,33 @@ block|}
 else|else
 block|{
 comment|// Not HiveInputFormat, or a custom VertexManager will take care of grouping splits
+if|if
+condition|(
+name|vertexHasCustomInput
+condition|)
+block|{
+name|dataSource
+operator|=
+name|MultiMRInput
+operator|.
+name|createConfigBuilder
+argument_list|(
+name|conf
+argument_list|,
+name|inputFormatClass
+argument_list|)
+operator|.
+name|groupSplits
+argument_list|(
+literal|false
+argument_list|)
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|dataSource
 operator|=
 name|MRInputLegacy
@@ -4374,6 +4310,7 @@ operator|.
 name|build
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -5190,6 +5127,11 @@ name|prewarmVertex
 return|;
 block|}
 comment|/**    * @param conf    * @return path to destination directory on hdfs    * @throws LoginException if we are unable to figure user information    * @throws IOException when any dfs operation fails.    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
 specifier|public
 name|Path
 name|getDefaultDestDir
@@ -5842,6 +5784,11 @@ return|return
 name|fstatus
 return|;
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
 specifier|public
 specifier|static
 name|FileStatus
@@ -6618,6 +6565,11 @@ return|;
 block|}
 block|}
 comment|/**    * Create a vertex from a given work object.    *    * @param conf JobConf to be used to this execution unit    * @param work The instance of BaseWork representing the actual work to be performed    * by this vertex.    * @param scratchDir HDFS scratch dir for this execution unit.    * @param appJarLr Local resource for hive-exec.    * @param additionalLr    * @param fileSystem FS corresponding to scratchDir and LocalResources    * @param ctx This query's context    * @return Vertex    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
 specifier|public
 name|Vertex
 name|createVertex
