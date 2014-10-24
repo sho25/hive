@@ -859,6 +859,20 @@ name|FileInputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveHBaseTableInputFormat implements InputFormat for HBase storage handler  * tables, decorating an underlying HBase TableInputFormat with extra Hive logic  * such as column pruning and filter pushdown.  */
 end_comment
@@ -2583,6 +2597,17 @@ throws|throws
 name|IOException
 block|{
 comment|//obtain delegation tokens for the job
+if|if
+condition|(
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+operator|.
+name|hasKerberosCredentials
+argument_list|()
+condition|)
+block|{
 name|TableMapReduceUtil
 operator|.
 name|initCredentials
@@ -2590,6 +2615,7 @@ argument_list|(
 name|jobConf
 argument_list|)
 expr_stmt|;
+block|}
 name|String
 name|hbaseTableName
 init|=

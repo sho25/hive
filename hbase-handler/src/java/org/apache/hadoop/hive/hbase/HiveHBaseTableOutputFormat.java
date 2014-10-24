@@ -355,6 +355,20 @@ name|Progressable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveHBaseTableOutputFormat implements HiveOutputFormat for HBase tables.  * We also need to implement the @deprecated org.apache.hadoop.mapred.OutFormat<?,?>  * class to keep it compliant with Hive interfaces.  */
 end_comment
@@ -415,6 +429,17 @@ throws|throws
 name|IOException
 block|{
 comment|//obtain delegation tokens for the job
+if|if
+condition|(
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+operator|.
+name|hasKerberosCredentials
+argument_list|()
+condition|)
+block|{
 name|TableMapReduceUtil
 operator|.
 name|initCredentials
@@ -422,6 +447,7 @@ argument_list|(
 name|jc
 argument_list|)
 expr_stmt|;
+block|}
 name|String
 name|hbaseTableName
 init|=
