@@ -2004,8 +2004,12 @@ name|MapInput
 argument_list|(
 name|hadoopRDD
 argument_list|,
-literal|false
-comment|/*TODO: fix this after resolving HIVE-8457: cloneToWork.containsKey(mapWork)*/
+name|cloneToWork
+operator|.
+name|containsKey
+argument_list|(
+name|mapWork
+argument_list|)
 argument_list|)
 decl_stmt|;
 return|return
