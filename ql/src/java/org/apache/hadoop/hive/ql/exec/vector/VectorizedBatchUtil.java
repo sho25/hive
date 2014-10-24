@@ -2170,9 +2170,10 @@ decl_stmt|;
 name|int
 name|length
 init|=
-name|bytes
+name|bw
 operator|.
-name|length
+name|getLength
+argument_list|()
 decl_stmt|;
 try|try
 block|{
