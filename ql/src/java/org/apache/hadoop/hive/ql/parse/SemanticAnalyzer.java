@@ -10211,6 +10211,7 @@ argument_list|()
 operator|>
 literal|1
 condition|)
+block|{
 name|queryProperties
 operator|.
 name|setMultiDestQuery
@@ -10218,6 +10219,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 break|break;
 case|case
 name|HiveParser
@@ -18823,6 +18825,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
+comment|// TODO: make aliases unique, otherwise needless rewriting takes place
 specifier|private
 name|Integer
 name|genColListRegex
@@ -18862,6 +18865,9 @@ argument_list|<
 name|String
 argument_list|>
 name|aliases
+parameter_list|,
+name|boolean
+name|ensureUniqueCols
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -19244,6 +19250,63 @@ name|oColInfo
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|ensureUniqueCols
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|output
+operator|.
+name|putWithCheck
+argument_list|(
+name|tmp
+index|[
+literal|0
+index|]
+argument_list|,
+name|tmp
+index|[
+literal|1
+index|]
+argument_list|,
+literal|null
+argument_list|,
+name|oColInfo
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Cannot add column to RR: "
+operator|+
+name|tmp
+index|[
+literal|0
+index|]
+operator|+
+literal|"."
+operator|+
+name|tmp
+index|[
+literal|1
+index|]
+operator|+
+literal|" => "
+operator|+
+name|oColInfo
+operator|+
+literal|" due to duplication, see previous warnings"
+argument_list|)
+throw|;
+block|}
+block|}
+else|else
+block|{
 name|output
 operator|.
 name|put
@@ -19261,6 +19324,7 @@ argument_list|,
 name|oColInfo
 argument_list|)
 expr_stmt|;
+block|}
 name|pos
 operator|=
 name|Integer
@@ -23535,6 +23599,8 @@ name|qb
 operator|.
 name|getAliases
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -24263,6 +24329,8 @@ name|qb
 operator|.
 name|getAliases
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|selectStar
@@ -24348,6 +24416,8 @@ name|qb
 operator|.
 name|getAliases
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -24488,6 +24558,8 @@ name|qb
 operator|.
 name|getAliases
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -73973,12 +74045,7 @@ operator|.
 name|debug
 argument_list|(
 literal|"Original Plan:\n"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+operator|+
 name|RelOptUtil
 operator|.
 name|toString
@@ -73992,12 +74059,7 @@ operator|.
 name|debug
 argument_list|(
 literal|"Plan After PPD, PartPruning, ColumnPruning:\n"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+operator|+
 name|RelOptUtil
 operator|.
 name|toString
@@ -74011,12 +74073,7 @@ operator|.
 name|debug
 argument_list|(
 literal|"Plan After Join Reordering:\n"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+operator|+
 name|RelOptUtil
 operator|.
 name|toString
@@ -75381,6 +75438,9 @@ operator|new
 name|RowResolver
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -75388,10 +75448,17 @@ argument_list|(
 name|joinRR
 argument_list|,
 name|leftRR
-argument_list|,
-literal|0
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// 2. Construct ExpressionNodeDesc representing Join Condition
 name|RexNode
@@ -77944,8 +78011,6 @@ argument_list|(
 name|oRR
 argument_list|,
 name|iRR
-argument_list|,
-literal|0
 argument_list|,
 name|numColumns
 argument_list|)
@@ -80764,6 +80829,9 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -80771,10 +80839,17 @@ argument_list|(
 name|obSyntheticProjectRR
 argument_list|,
 name|inputRR
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|)
+throw|;
+block|}
 name|int
 name|vcolPos
 init|=
@@ -80857,6 +80932,9 @@ condition|(
 name|outermostOB
 condition|)
 block|{
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -80864,13 +80942,23 @@ argument_list|(
 name|outputRR
 argument_list|,
 name|inputRR
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -80878,10 +80966,17 @@ argument_list|(
 name|outputRR
 argument_list|,
 name|obSyntheticProjectRR
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|)
+throw|;
+block|}
 name|originalOBChild
 operator|=
 name|srcRel
@@ -80890,6 +80985,9 @@ block|}
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -80897,10 +80995,17 @@ argument_list|(
 name|outputRR
 argument_list|,
 name|inputRR
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|// 4. Construct SortRel
 name|RelTraitSet
@@ -81122,6 +81227,9 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -81134,10 +81242,17 @@ name|get
 argument_list|(
 name|srcRel
 argument_list|)
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|)
+throw|;
+block|}
 name|ImmutableMap
 argument_list|<
 name|String
@@ -82420,6 +82535,9 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -82427,10 +82545,17 @@ argument_list|(
 name|out_rwsch
 argument_list|,
 name|inputRR
-argument_list|,
-literal|0
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
 argument_list|)
 expr_stmt|;
+block|}
 comment|// 4. Walk through Window Expressions& Construct RexNodes for those,
 comment|// Update out_rwsch
 for|for
@@ -83067,6 +83192,18 @@ argument_list|(
 name|selClauseName
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"TODO# for select clause, got "
+operator|+
+name|selExprList
+operator|.
+name|dump
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// 2.Row resolvers for input, output
 name|RowResolver
 name|out_rwsch
@@ -83596,6 +83733,8 @@ argument_list|,
 name|out_rwsch
 argument_list|,
 name|tabAliasesForAllProjs
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|selectStar
@@ -83678,6 +83817,8 @@ argument_list|,
 name|out_rwsch
 argument_list|,
 name|tabAliasesForAllProjs
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -83815,6 +83956,8 @@ argument_list|,
 name|out_rwsch
 argument_list|,
 name|tabAliasesForAllProjs
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -84745,6 +84888,9 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|RowResolver
 operator|.
 name|add
@@ -84759,10 +84905,17 @@ name|get
 argument_list|(
 name|topConstrainingProjArgsRel
 argument_list|)
-argument_list|,
-literal|0
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Duplicates detected when adding columns to RR: see previous message"
 argument_list|)
 expr_stmt|;
+block|}
 name|srcRel
 operator|=
 name|genSelectRelNode
@@ -85693,6 +85846,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// TODO: this should be unique
 for|for
 control|(
 name|ColumnInfo
