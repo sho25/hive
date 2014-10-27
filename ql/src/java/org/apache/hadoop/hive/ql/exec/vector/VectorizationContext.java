@@ -5076,6 +5076,26 @@ argument_list|()
 argument_list|)
 return|;
 case|case
+name|TIMESTAMP
+case|:
+return|return
+operator|new
+name|ConstantVectorExpression
+argument_list|(
+name|outCol
+argument_list|,
+name|TimestampUtils
+operator|.
+name|getTimeNanoSec
+argument_list|(
+operator|(
+name|Timestamp
+operator|)
+name|constantValue
+argument_list|)
+argument_list|)
+return|;
+case|case
 name|FLOAT_FAMILY
 case|:
 return|return
@@ -5185,6 +5205,16 @@ argument_list|(
 literal|"Unsupported constant type: "
 operator|+
 name|typeName
+operator|+
+literal|", object class "
+operator|+
+name|constantValue
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 throw|;
 block|}
