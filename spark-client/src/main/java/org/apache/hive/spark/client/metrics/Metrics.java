@@ -57,11 +57,33 @@ name|TaskMetrics
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
 begin_comment
 comment|/**  * Metrics tracked during the execution of a job.  *  * Depending on how the metrics object is obtained (by calling methods in the `MetricsCollection`  * class), metrics will refer to one or more tasks.  */
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Private
 specifier|public
 class|class
 name|Metrics

@@ -19,11 +19,33 @@ name|metrics
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
 begin_comment
 comment|/**  * Method by which input data was read. Network means that the data was read over the network  * from a remote block manager (which may have stored the data on-disk or in-memory).  */
 end_comment
 
 begin_enum
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Private
 specifier|public
 enum|enum
 name|DataReadMethod
