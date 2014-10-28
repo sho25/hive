@@ -1178,6 +1178,22 @@ return|return
 name|columns
 return|;
 block|}
+comment|/**    * Gets the partition columns of the table.    *    * @return the partition columns    */
+specifier|public
+name|List
+argument_list|<
+name|HCatFieldSchema
+argument_list|>
+name|getPartColumns
+parameter_list|()
+block|{
+return|return
+name|hcatTable
+operator|.
+name|getPartCols
+argument_list|()
+return|;
+block|}
 comment|/**    * Gets the input format.    *    * @return the input format    */
 specifier|public
 name|String
