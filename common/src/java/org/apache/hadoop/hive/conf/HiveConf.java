@@ -5943,6 +5943,17 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
+name|HIVE_LOG_EXPLAIN_OUTPUT
+argument_list|(
+literal|"hive.log.explain.output"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to log explain output for every query.\n"
+operator|+
+literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
+argument_list|)
+block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
