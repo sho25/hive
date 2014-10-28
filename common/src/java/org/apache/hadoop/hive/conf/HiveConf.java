@@ -8930,6 +8930,13 @@ name|unit
 operator|.
 name|isEmpty
 argument_list|()
+operator|||
+name|unit
+operator|.
+name|equals
+argument_list|(
+literal|"l"
+argument_list|)
 condition|)
 block|{
 if|if
