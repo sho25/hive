@@ -2594,6 +2594,10 @@ argument_list|,
 name|deserialize_error_count
 argument_list|)
 expr_stmt|;
+name|numRows
+operator|=
+literal|0
+expr_stmt|;
 name|String
 name|context
 init|=

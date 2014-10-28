@@ -2454,6 +2454,10 @@ name|getFieldObjectInspector
 argument_list|()
 expr_stmt|;
 block|}
+name|numRows
+operator|=
+literal|0
+expr_stmt|;
 name|String
 name|context
 init|=

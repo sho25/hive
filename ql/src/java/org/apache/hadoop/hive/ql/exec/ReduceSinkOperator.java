@@ -904,6 +904,10 @@ name|HiveException
 block|{
 try|try
 block|{
+name|numRows
+operator|=
+literal|0
+expr_stmt|;
 name|String
 name|context
 init|=
