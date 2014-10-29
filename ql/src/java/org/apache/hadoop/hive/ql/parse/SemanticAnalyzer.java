@@ -84459,18 +84459,6 @@ argument_list|(
 name|selClauseName
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# for select clause, got "
-operator|+
-name|selExprList
-operator|.
-name|dump
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// 2.Row resolvers for input, output
 name|RowResolver
 name|out_rwsch
@@ -85374,17 +85362,43 @@ else|:
 literal|false
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
 name|out_rwsch
 operator|.
-name|put
+name|putWithCheck
 argument_list|(
 name|tabAlias
 argument_list|,
 name|colAlias
 argument_list|,
+literal|null
+argument_list|,
 name|colInfo
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|OptiqSemanticException
+argument_list|(
+literal|"Cannot add column to RR: "
+operator|+
+name|tabAlias
+operator|+
+literal|"."
+operator|+
+name|colAlias
+operator|+
+literal|" => "
+operator|+
+name|colInfo
+operator|+
+literal|" due to duplication, see previous warnings"
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|exp
