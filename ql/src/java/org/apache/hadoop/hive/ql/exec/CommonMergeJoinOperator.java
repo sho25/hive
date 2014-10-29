@@ -1670,27 +1670,6 @@ block|{
 name|joinFinalLeftData
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-operator|!
-operator|(
-operator|(
-name|joinKeysObjectInspectors
-operator|!=
-literal|null
-operator|)
-operator|&&
-operator|(
-name|joinKeysObjectInspectors
-index|[
-name|alias
-index|]
-operator|!=
-literal|null
-operator|)
-operator|)
-condition|)
-block|{
 name|super
 operator|.
 name|closeOp
@@ -1698,7 +1677,6 @@ argument_list|(
 name|abort
 argument_list|)
 expr_stmt|;
-block|}
 comment|// clean up
 for|for
 control|(
