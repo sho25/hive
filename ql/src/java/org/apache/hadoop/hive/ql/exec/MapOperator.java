@@ -2253,6 +2253,18 @@ name|tableRowOI
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|children
+operator|.
+name|contains
+argument_list|(
+name|op
+argument_list|)
+operator|==
+literal|false
+condition|)
+block|{
 name|op
 operator|.
 name|setParentOperators
@@ -2289,6 +2301,7 @@ argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|initOperatorContext
@@ -2413,12 +2426,12 @@ throw|;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"dump "
 operator|+
