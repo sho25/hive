@@ -448,6 +448,32 @@ name|PredicateTransitivePropagate
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTCONSTANTPROPAGATION
+argument_list|)
+condition|)
+block|{
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ConstantPropagate
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|transformations
 operator|.
 name|add
@@ -483,6 +509,8 @@ name|HIVEOPTCONSTANTPROPAGATION
 argument_list|)
 condition|)
 block|{
+comment|// We run constant propagation twice because after predicate pushdown, filter expressions
+comment|// are combined and may become eligible for reduction (like is not null filter).
 name|transformations
 operator|.
 name|add
