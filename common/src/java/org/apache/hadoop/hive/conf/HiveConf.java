@@ -1416,9 +1416,11 @@ literal|"hive.exec.dynamic.partition.mode"
 argument_list|,
 literal|"strict"
 argument_list|,
-literal|"In strict mode, the user must specify at least one static partition \n"
+literal|"In strict mode, the user must specify at least one static partition\n"
 operator|+
-literal|"in case the user accidentally overwrites all partitions."
+literal|"in case the user accidentally overwrites all partitions.\n"
+operator|+
+literal|"In nonstrict mode all partitions are allowed to be dynamic."
 argument_list|)
 block|,
 name|DYNAMICPARTITIONMAXPARTS
@@ -2505,7 +2507,21 @@ literal|"hive.metastore.try.direct.sql"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"Whether the Hive metastore should try to use direct SQL queries instead of the\n"
+operator|+
+literal|"DataNucleus for certain read paths. This can improve metastore performance when\n"
+operator|+
+literal|"fetching many partitions or column statistics by orders of magnitude; however, it\n"
+operator|+
+literal|"is not guaranteed to work on all RDBMS-es and all versions. In case of SQL failures,\n"
+operator|+
+literal|"the metastore will fall back to the DataNucleus, so it's safe even if SQL doesn't\n"
+operator|+
+literal|"work for all queries on your datastore. If all SQL queries fail (for example, your\n"
+operator|+
+literal|"metastore is backed by MongoDB), you might want to disable this to save the\n"
+operator|+
+literal|"try-and-fall-back cost."
 argument_list|)
 block|,
 name|METASTORE_TRY_DIRECT_SQL_DDL
@@ -2514,7 +2530,15 @@ literal|"hive.metastore.try.direct.sql.ddl"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"Same as hive.metastore.try.direct.sql, for read statements within a transaction that\n"
+operator|+
+literal|"modifies metastore data. Due to non-standard behavior in Postgres, if a direct SQL\n"
+operator|+
+literal|"select query has incorrect syntax or something similar inside a transaction, the\n"
+operator|+
+literal|"entire transaction will fail and fall-back to DataNucleus will not be possible. You\n"
+operator|+
+literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
 argument_list|)
 block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
@@ -2523,25 +2547,25 @@ literal|"hive.metastore.disallow.incompatible.col.type.changes"
 argument_list|,
 literal|false
 argument_list|,
-literal|"If true (default is false), ALTER TABLE operations which change the type of \n"
+literal|"If true (default is false), ALTER TABLE operations which change the type of a\n"
 operator|+
-literal|"a column (say STRING) to an incompatible type (say MAP<STRING, STRING>) are disallowed.  \n"
+literal|"column (say STRING) to an incompatible type (say MAP) are disallowed.\n"
 operator|+
 literal|"RCFile default SerDe (ColumnarSerDe) serializes the values in such a way that the\n"
 operator|+
 literal|"datatypes can be converted from string to any type. The map is also serialized as\n"
 operator|+
-literal|"a string, which can be read as a string as well. However, with any binary \n"
+literal|"a string, which can be read as a string as well. However, with any binary\n"
 operator|+
 literal|"serialization, this is not true. Blocking the ALTER TABLE prevents ClassCastExceptions\n"
 operator|+
-literal|"when subsequently trying to access old partitions. \n"
+literal|"when subsequently trying to access old partitions.\n"
 operator|+
 literal|"\n"
 operator|+
-literal|"Primitive types like INT, STRING, BIGINT, etc are compatible with each other and are \n"
+literal|"Primitive types like INT, STRING, BIGINT, etc., are compatible with each other and are\n"
 operator|+
-literal|"not blocked.  \n"
+literal|"not blocked.\n"
 operator|+
 literal|"\n"
 operator|+
@@ -2794,7 +2818,7 @@ literal|"hive.jar.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"The location of hive_cli.jar that is used when submitting jobs in a separate jvm."
 argument_list|)
 block|,
 name|HIVEAUXJARS
@@ -2803,7 +2827,7 @@ literal|"hive.aux.jars.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"The location of the plugin jars that contain implementations of user defined functions and serdes."
 argument_list|)
 block|,
 comment|// reloadable jars
@@ -2825,7 +2849,7 @@ literal|"hive.added.files.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"This an internal parameter."
 argument_list|)
 block|,
 name|HIVEADDEDJARS
@@ -2834,7 +2858,7 @@ literal|"hive.added.jars.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"This an internal parameter."
 argument_list|)
 block|,
 name|HIVEADDEDARCHIVES
@@ -2843,7 +2867,7 @@ literal|"hive.added.archives.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"This an internal parameter."
 argument_list|)
 block|,
 name|HIVE_CURRENT_DATABASE
@@ -3646,13 +3670,13 @@ literal|"hive.merge.orcfile.stripe.level"
 argument_list|,
 literal|true
 argument_list|,
-literal|"When hive.merge.mapfiles or hive.merge.mapredfiles is enabled while writing a\n"
+literal|"When hive.merge.mapfiles, hive.merge.mapredfiles or hive.merge.tezfiles is enabled\n"
 operator|+
-literal|" table with ORC file format, enabling this config will do stripe level fast merge\n"
+literal|"while writing a table with ORC file format, enabling this config will do stripe-level\n"
 operator|+
-literal|" for small ORC files. Note that enabling this config will not honor padding tolerance\n"
+literal|"fast merge for small ORC files. Note that enabling this config will not honor the\n"
 operator|+
-literal|" config (hive.exec.orc.block.padding.tolerance)."
+literal|"padding tolerance config (hive.exec.orc.block.padding.tolerance)."
 argument_list|)
 block|,
 name|HIVEUSEEXPLICITRCFILEHEADER
@@ -3731,7 +3755,11 @@ literal|"hive.exec.orc.write.format"
 argument_list|,
 literal|null
 argument_list|,
-literal|"Define the version of the file to write"
+literal|"Define the version of the file to write. Possible values are 0.11 and 0.12.\n"
+operator|+
+literal|"If this parameter is not defined, ORC will use the run length encoding (RLE)\n"
+operator|+
+literal|"introduced in Hive 0.12. Any value other than 0.11 results in the 0.12 encoding."
 argument_list|)
 block|,
 name|HIVE_ORC_DEFAULT_STRIPE_SIZE
@@ -3744,7 +3772,7 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|"Define the default ORC stripe size"
+literal|"Define the default ORC stripe size, in bytes."
 argument_list|)
 block|,
 name|HIVE_ORC_DEFAULT_BLOCK_SIZE
@@ -3777,7 +3805,9 @@ literal|"hive.exec.orc.default.row.index.stride"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Define the default ORC index stride"
+literal|"Define the default ORC index stride in number of rows. (Stride is the number of rows\n"
+operator|+
+literal|"an index entry represents.)"
 argument_list|)
 block|,
 name|HIVE_ORC_ROW_INDEX_STRIDE_DICTIONARY_CHECK
@@ -3801,7 +3831,7 @@ literal|256
 operator|*
 literal|1024
 argument_list|,
-literal|"Define the default ORC buffer size"
+literal|"Define the default ORC buffer size, in bytes."
 argument_list|)
 block|,
 name|HIVE_ORC_DEFAULT_BLOCK_PADDING
@@ -3810,7 +3840,7 @@ literal|"hive.exec.orc.default.block.padding"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Define the default block padding"
+literal|"Define the default block padding, which pads stripes to the HDFS block boundaries."
 argument_list|)
 block|,
 name|HIVE_ORC_BLOCK_PADDING_TOLERANCE
@@ -3819,13 +3849,19 @@ literal|"hive.exec.orc.block.padding.tolerance"
 argument_list|,
 literal|0.05f
 argument_list|,
-literal|"Define the tolerance for block padding as a percentage of stripe size.\n"
+literal|"Define the tolerance for block padding as a decimal fraction of stripe size (for\n"
 operator|+
-literal|"For the defaults of 64Mb ORC stripe and 256Mb HDFS blocks, a maximum of 3.2Mb will be reserved for padding within the 256Mb block. \n"
+literal|"example, the default value 0.05 is 5% of the stripe size). For the defaults of 64Mb\n"
 operator|+
-literal|"In that case, if the available size within the block is more than 3.2Mb, a new smaller stripe will be inserted to fit within that space. \n"
+literal|"ORC stripe and 256Mb HDFS blocks, the default block padding tolerance of 5% will\n"
 operator|+
-literal|"This will make sure that no stripe written will cross block boundaries and cause remote reads within a node local task."
+literal|"reserve a maximum of 3.2Mb for padding within the 256Mb block. In that case, if the\n"
+operator|+
+literal|"available size within the block is more than 3.2Mb, a new smaller stripe will be\n"
+operator|+
+literal|"inserted to fit within that space. This will make sure that no stripe written will\n"
+operator|+
+literal|"cross block boundaries and cause remote reads within a node local task."
 argument_list|)
 block|,
 name|HIVE_ORC_DEFAULT_COMPRESS
@@ -3923,7 +3959,7 @@ literal|"hive.exec.orc.zerocopy"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Use zerocopy reads with ORC."
+literal|"Use zerocopy reads with ORC. (This requires Hadoop 2.3 or later.)"
 argument_list|)
 block|,
 name|HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL
@@ -4234,7 +4270,7 @@ argument_list|,
 operator|-
 literal|1
 argument_list|,
-literal|"By default Tez will ask for however many cpus map-reduce is configured to use per container. "
+literal|"By default Tez will ask for however many cpus map-reduce is configured to use per container.\n"
 operator|+
 literal|"This can be used to overwrite."
 argument_list|)
@@ -4779,7 +4815,13 @@ argument_list|,
 literal|"fs"
 argument_list|)
 argument_list|,
-literal|"The storage that stores temporary Hive statistics. Currently, jdbc, hbase, counter and custom type are supported."
+literal|"The storage that stores temporary Hive statistics. In filesystem based statistics collection ('fs'), \n"
+operator|+
+literal|"each task writes statistics it has collected in a file on the filesystem, which will be aggregated \n"
+operator|+
+literal|"after the job has finished. Supported values are fs (filesystem), jdbc:database (where database \n"
+operator|+
+literal|"can be derby, mysql, etc.), hbase, counter, and custom as defined in StatsSetupConst.java."
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
@@ -5235,9 +5277,9 @@ literal|"hive.zookeeper.client.port"
 argument_list|,
 literal|"2181"
 argument_list|,
-literal|"The port of ZooKeeper servers to talk to. "
+literal|"The port of ZooKeeper servers to talk to.\n"
 operator|+
-literal|"If the list of Zookeeper servers specified in hive.zookeeper.quorum,"
+literal|"If the list of Zookeeper servers specified in hive.zookeeper.quorum\n"
 operator|+
 literal|"does not contain port numbers, this value is used."
 argument_list|)
@@ -5280,7 +5322,17 @@ literal|"hive.txn.manager"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.lockmgr.DummyTxnManager"
 argument_list|,
-literal|""
+literal|"Set to org.apache.hadoop.hive.ql.lockmgr.DbTxnManager as part of turning on Hive\n"
+operator|+
+literal|"transactions, which also requires appropriate settings for hive.compactor.initiator.on,\n"
+operator|+
+literal|"hive.compactor.worker.threads, hive.support.concurrency (true), hive.enforce.bucketing\n"
+operator|+
+literal|"(true), and hive.exec.dynamic.partition.mode (nonstrict).\n"
+operator|+
+literal|"The default DummyTxnManager replicates pre-Hive-0.13 behavior and provides\n"
+operator|+
+literal|"no transactions."
 argument_list|)
 block|,
 name|HIVE_TXN_TIMEOUT
@@ -5308,11 +5360,17 @@ literal|1000
 argument_list|,
 literal|"Maximum number of transactions that can be fetched in one call to open_txns().\n"
 operator|+
-literal|"Increasing this will decrease the number of delta files created when\n"
+literal|"This controls how many transactions streaming agents such as Flume or Storm open\n"
 operator|+
-literal|"streaming data into Hive.  But it will also increase the number of\n"
+literal|"simultaneously. The streaming agent then writes that number of entries into a single\n"
 operator|+
-literal|"open transactions at any given time, possibly impacting read performance."
+literal|"file (per Flume agent or Storm bolt). Thus increasing this value decreases the number\n"
+operator|+
+literal|"of delta files created by streaming agents. But it also increases the number of open\n"
+operator|+
+literal|"transactions that Hive has to track at any given time, which may negatively affect\n"
+operator|+
+literal|"read performance."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_INITIATOR_ON
@@ -5321,7 +5379,13 @@ literal|"hive.compactor.initiator.on"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to run the compactor's initiator thread in this metastore instance or not."
+literal|"Whether to run the initiator and cleaner threads on this metastore instance or not.\n"
+operator|+
+literal|"Set this to true on one instance of the Thrift metastore service as part of turning\n"
+operator|+
+literal|"on Hive transactions. For a complete list of parameters required for turning on\n"
+operator|+
+literal|"transactions, see hive.txn.manager."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_WORKER_THREADS
@@ -5330,7 +5394,23 @@ literal|"hive.compactor.worker.threads"
 argument_list|,
 literal|0
 argument_list|,
-literal|"Number of compactor worker threads to run on this metastore instance."
+literal|"How many compactor worker threads to run on this metastore instance. Set this to a\n"
+operator|+
+literal|"positive number on one or more instances of the Thrift metastore service as part of\n"
+operator|+
+literal|"turning on Hive transactions. For a complete list of parameters required for turning\n"
+operator|+
+literal|"on transactions, see hive.txn.manager.\n"
+operator|+
+literal|"Worker threads spawn MapReduce jobs to do compactions. They do not do the compactions\n"
+operator|+
+literal|"themselves. Increasing the number of worker threads will decrease the time it takes\n"
+operator|+
+literal|"tables or partitions to be compacted once they are determined to need compaction.\n"
+operator|+
+literal|"It will also increase the background load on the Hadoop cluster as more MapReduce jobs\n"
+operator|+
+literal|"will be running in the background."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_WORKER_TIMEOUT
@@ -5347,9 +5427,9 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Time before a given compaction in working state is declared a failure\n"
+literal|"Time in seconds after which a compaction job will be declared failed and the\n"
 operator|+
-literal|"and returned to the initiated state."
+literal|"compaction re-queued."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_CHECK_INTERVAL
@@ -5366,9 +5446,21 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Time between checks to see if any partitions need compacted.\n"
+literal|"Time in seconds between checks to see if any tables or partitions need to be\n"
 operator|+
-literal|"This should be kept high because each check for compaction requires many calls against the NameNode."
+literal|"compacted. This should be kept high because each check for compaction requires\n"
+operator|+
+literal|"many calls against the NameNode.\n"
+operator|+
+literal|"Decreasing this value will reduce the time it takes for compaction to be started\n"
+operator|+
+literal|"for a table or partition that requires compaction. However, checking if compaction\n"
+operator|+
+literal|"is needed requires several calls to the NameNode for each table or partition that\n"
+operator|+
+literal|"has had a transaction done on it since the last major compaction. So decreasing this\n"
+operator|+
+literal|"value will increase the load on the NameNode."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_DELTA_NUM_THRESHOLD
@@ -5377,9 +5469,9 @@ literal|"hive.compactor.delta.num.threshold"
 argument_list|,
 literal|10
 argument_list|,
-literal|"Number of delta files that must exist in a directory before the compactor will attempt\n"
+literal|"Number of delta directories in a table or partition that will trigger a minor\n"
 operator|+
-literal|"a minor compaction."
+literal|"compaction."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_DELTA_PCT_THRESHOLD
@@ -5388,7 +5480,9 @@ literal|"hive.compactor.delta.pct.threshold"
 argument_list|,
 literal|0.1f
 argument_list|,
-literal|"Percentage (by size) of base that deltas can be before major compaction is initiated."
+literal|"Percentage (fractional) size of the delta files relative to the base that will trigger\n"
+operator|+
+literal|"a major compaction. (1.0 = 100%, so the default 0.1 = 10%.)"
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_ABORTEDTXN_THRESHOLD
@@ -5397,9 +5491,9 @@ literal|"hive.compactor.abortedtxn.threshold"
 argument_list|,
 literal|1000
 argument_list|,
-literal|"Number of aborted transactions involving a particular table or partition before major\n"
+literal|"Number of aborted transactions involving a given table or partition that will trigger\n"
 operator|+
-literal|"compaction is initiated."
+literal|"a major compaction."
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_CLEANER_RUN_INTERVAL
@@ -5572,7 +5666,17 @@ literal|"hive.cache.expr.evaluation"
 argument_list|,
 literal|true
 argument_list|,
-literal|"If true, evaluation result of deterministic expression referenced twice or more will be cached."
+literal|"If true, the evaluation result of a deterministic expression referenced twice or more\n"
+operator|+
+literal|"will be cached.\n"
+operator|+
+literal|"For example, in a filter condition like '.. where key + 10 = 100 or key + 10 = 0'\n"
+operator|+
+literal|"the expression 'key + 10' will be evaluated/cached once and reused for the following\n"
+operator|+
+literal|"expression ('key + 10 = 0'). Currently, this is applied only to expressions in select\n"
+operator|+
+literal|"or filter operators."
 argument_list|)
 block|,
 comment|// Hive Variables
@@ -5660,11 +5764,15 @@ literal|"hive.security.metastore.authorization.manager"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.security.authorization.DefaultHiveMetastoreAuthorizationProvider"
 argument_list|,
-literal|"authorization manager class name to be used in the metastore for authorization.\n"
+literal|"Names of authorization manager classes (comma separated) to be used in the metastore\n"
 operator|+
-literal|"The user defined authorization class should implement interface \n"
+literal|"for authorization. The user defined authorization class should implement interface\n"
 operator|+
-literal|"org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider. "
+literal|"org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider.\n"
+operator|+
+literal|"All authorization manager classes have to successfully authorize the metastore API\n"
+operator|+
+literal|"call for the command execution to be allowed."
 argument_list|)
 block|,
 name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
@@ -5732,9 +5840,13 @@ literal|"hive.security.authorization.createtable.owner.grants"
 argument_list|,
 literal|""
 argument_list|,
-literal|"the privileges automatically granted to the owner whenever a table gets created.\n"
+literal|"The privileges automatically granted to the owner whenever a table gets created.\n"
 operator|+
-literal|"An example like \"select,drop\" will grant select and drop privilege to the owner of the table"
+literal|"An example like \"select,drop\" will grant select and drop privilege to the owner\n"
+operator|+
+literal|"of the table. Note that the default gives the creator of a table no access to the\n"
+operator|+
+literal|"table (but see HIVE-8067)."
 argument_list|)
 block|,
 comment|// if this is not set default value is set during config initialization
@@ -6241,9 +6353,6 @@ argument_list|,
 literal|"Port number of HiveServer2 Thrift interface when hive.server2.transport.mode is 'binary'."
 argument_list|)
 block|,
-comment|// hadoop.rpc.protection being set to a higher level than HiveServer2
-comment|// does not make sense in most situations.
-comment|// HiveServer2 ignores hadoop.rpc.protection in favor of hive.server2.thrift.sasl.qop.
 name|HIVE_SERVER2_THRIFT_SASL_QOP
 argument_list|(
 literal|"hive.server2.thrift.sasl.qop"
@@ -6260,9 +6369,15 @@ argument_list|,
 literal|"auth-conf"
 argument_list|)
 argument_list|,
-literal|"Sasl QOP value; Set it to one of following values to enable higher levels of\n"
+literal|"Sasl QOP value; set it to one of following values to enable higher levels of\n"
 operator|+
-literal|" protection for HiveServer2 communication with clients.\n"
+literal|"protection for HiveServer2 communication with clients.\n"
+operator|+
+literal|"Setting hadoop.rpc.protection to a higher level than HiveServer2 does not\n"
+operator|+
+literal|"make sense in most situations. HiveServer2 ignores hadoop.rpc.protection in favor\n"
+operator|+
+literal|"of hive.server2.thrift.sasl.qop.\n"
 operator|+
 literal|"  \"auth\" - authentication only (default)\n"
 operator|+
@@ -6334,7 +6449,7 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Maximum time for which HiveServer2 shutdown will wait for async"
+literal|"How long HiveServer2 shutdown will wait for async threads to terminate."
 argument_list|)
 block|,
 name|HIVE_SERVER2_ASYNC_EXEC_WAIT_QUEUE_SIZE
@@ -6417,7 +6532,11 @@ literal|"  KERBEROS: Kerberos/GSSAPI authentication\n"
 operator|+
 literal|"  CUSTOM: Custom authentication provider\n"
 operator|+
-literal|"          (Use with property hive.server2.custom.authentication.class)"
+literal|"          (Use with property hive.server2.custom.authentication.class)\n"
+operator|+
+literal|"  PAM: Pluggable authentication module\n"
+operator|+
+literal|"  NOSASL:  Raw transport"
 argument_list|)
 block|,
 name|HIVE_SERVER2_ALLOW_USER_SUBSTITUTION
@@ -6599,7 +6718,7 @@ literal|"hive.server2.use.SSL"
 argument_list|,
 literal|false
 argument_list|,
-literal|""
+literal|"Set this to true for using SSL encryption in HiveServer2."
 argument_list|)
 block|,
 name|HIVE_SERVER2_SSL_KEYSTORE_PATH
@@ -6608,7 +6727,7 @@ literal|"hive.server2.keystore.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"SSL certificate keystore location."
 argument_list|)
 block|,
 name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
@@ -6617,7 +6736,7 @@ literal|"hive.server2.keystore.password"
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+literal|"SSL certificate keystore password."
 argument_list|)
 block|,
 name|HIVE_SERVER2_MAP_FAIR_SCHEDULER_QUEUE
@@ -7218,9 +7337,11 @@ literal|"hive.tez.dynamic.partition.pruning"
 argument_list|,
 literal|true
 argument_list|,
-literal|"When dynamic pruning is enabled, joins on partition keys will be processed by sending events from the processing "
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by sending\n"
 operator|+
-literal|"vertices to the tez application master. These events will be used to prune unnecessary partitions."
+literal|"events from the processing vertices to the Tez application master. These events will be\n"
+operator|+
+literal|"used to prune unnecessary partitions."
 argument_list|)
 block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_EVENT_SIZE
