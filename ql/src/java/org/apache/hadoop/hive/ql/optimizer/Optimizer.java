@@ -621,9 +621,6 @@ name|ConfVars
 operator|.
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|)
-operator|&&
-operator|!
-name|isSparkExecEngine
 condition|)
 block|{
 name|transformations
