@@ -1902,6 +1902,7 @@ argument_list|,
 name|colAlias
 argument_list|)
 decl_stmt|;
+comment|// Hive adds the same mapping twice... I wish we could fix stuff like that.
 if|if
 condition|(
 name|existing
@@ -1922,6 +1923,21 @@ return|return
 literal|true
 return|;
 block|}
+elseif|else
+if|if
+condition|(
+name|existing
+operator|.
+name|isSameColumnForRR
+argument_list|(
+name|newCI
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 name|LOG
 operator|.
 name|warn
@@ -1929,18 +1945,24 @@ argument_list|(
 literal|"Found duplicate column alias in RR: "
 operator|+
 name|existing
-operator|+
-literal|" for "
-operator|+
+operator|.
+name|toMappingString
+argument_list|(
 name|tabAlias
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|colAlias
+argument_list|)
 operator|+
-literal|" and "
+literal|" adding "
 operator|+
-name|internalName
+name|newCI
+operator|.
+name|toMappingString
+argument_list|(
+name|tabAlias
+argument_list|,
+name|colAlias
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -1979,6 +2001,20 @@ return|return
 literal|true
 return|;
 block|}
+elseif|else
+if|if
+condition|(
+name|existing
+operator|.
+name|isSameColumnForRR
+argument_list|(
+name|newCI
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
 block|}
 name|LOG
 operator|.
@@ -1987,16 +2023,16 @@ argument_list|(
 literal|"Failed to use internal name after finding a duplicate: "
 operator|+
 name|existing
-operator|+
-literal|" for "
-operator|+
+operator|.
+name|toMappingString
+argument_list|(
 name|tabAlias
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|internalName
 argument_list|)
+argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
