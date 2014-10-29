@@ -1639,7 +1639,7 @@ name|IOException
 block|{
 name|Utilities
 operator|.
-name|copyTableJobPropertiesToConf
+name|copyTablePropertiesToConf
 argument_list|(
 name|table
 argument_list|,

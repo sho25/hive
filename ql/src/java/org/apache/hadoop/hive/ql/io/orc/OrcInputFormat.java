@@ -2399,6 +2399,15 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Number of buckets specified by conf file is "
+operator|+
+name|numBuckets
+argument_list|)
+expr_stmt|;
 name|int
 name|cacheStripeDetailsSize
 init|=
