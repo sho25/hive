@@ -872,7 +872,7 @@ name|scratchColumnVectorTypes
 init|=
 name|Utilities
 operator|.
-name|getScratchColumnVectorTypes
+name|getAllScratchColumnVectorTypeMaps
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -1021,7 +1021,7 @@ name|columnTypeMap
 operator|=
 name|Utilities
 operator|.
-name|getScratchColumnVectorTypes
+name|getAllScratchColumnVectorTypeMaps
 argument_list|(
 name|hiveConf
 argument_list|)

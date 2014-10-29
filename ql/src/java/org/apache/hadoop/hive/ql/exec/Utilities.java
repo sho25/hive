@@ -3828,7 +3828,7 @@ argument_list|,
 name|String
 argument_list|>
 argument_list|>
-name|getScratchColumnVectorTypes
+name|getAllScratchColumnVectorTypeMaps
 parameter_list|(
 name|Configuration
 name|hiveConf
@@ -3860,7 +3860,7 @@ block|}
 return|return
 name|baseWork
 operator|.
-name|getScratchColumnVectorTypes
+name|getAllScratchColumnVectorTypeMaps
 argument_list|()
 return|;
 block|}
@@ -3877,7 +3877,7 @@ argument_list|,
 name|Integer
 argument_list|>
 argument_list|>
-name|getScratchColumnMap
+name|getAllColumnVectorMaps
 parameter_list|(
 name|Configuration
 name|hiveConf
@@ -3909,7 +3909,7 @@ block|}
 return|return
 name|baseWork
 operator|.
-name|getScratchColumnMap
+name|getAllColumnVectorMaps
 argument_list|()
 return|;
 block|}

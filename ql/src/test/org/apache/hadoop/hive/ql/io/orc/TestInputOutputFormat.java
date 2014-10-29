@@ -9253,7 +9253,7 @@ argument_list|)
 expr_stmt|;
 name|mapWork
 operator|.
-name|setScratchColumnMap
+name|setAllColumnVectorMaps
 argument_list|(
 operator|new
 name|HashMap
@@ -9272,7 +9272,7 @@ argument_list|)
 expr_stmt|;
 name|mapWork
 operator|.
-name|setScratchColumnVectorTypes
+name|setAllScratchColumnVectorTypeMaps
 argument_list|(
 operator|new
 name|HashMap

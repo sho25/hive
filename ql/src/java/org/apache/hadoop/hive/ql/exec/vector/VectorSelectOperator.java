@@ -231,26 +231,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|api
-operator|.
-name|OperatorType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -417,7 +397,7 @@ operator|=
 name|ve
 expr_stmt|;
 block|}
-comment|/**      * Create a new vectorization context to update the column map but same output column manager      * must be inherited to track the scratch the columns.      */
+comment|/**      * Create a new vectorization context to create a new projection, but keep       * same output column manager must be inherited to track the scratch the columns.      */
 name|vOutContext
 operator|=
 operator|new
@@ -439,13 +419,9 @@ operator|+
 literal|"/_SELECT_"
 argument_list|)
 expr_stmt|;
-comment|// Update column map
 name|vOutContext
 operator|.
-name|getColumnMap
-argument_list|()
-operator|.
-name|clear
+name|resetProjectionColumns
 argument_list|()
 expr_stmt|;
 for|for
@@ -491,7 +467,7 @@ index|]
 decl_stmt|;
 name|vOutContext
 operator|.
-name|addToColumnMap
+name|addProjectionColumn
 argument_list|(
 name|columnName
 argument_list|,

@@ -813,7 +813,7 @@ name|tag
 argument_list|,
 name|redWork
 operator|.
-name|getScratchColumnVectorTypes
+name|getAllScratchColumnVectorTypeMaps
 argument_list|()
 argument_list|)
 expr_stmt|;
