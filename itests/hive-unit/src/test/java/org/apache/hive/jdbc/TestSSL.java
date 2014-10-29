@@ -53,6 +53,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|URLEncoder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|sql
 operator|.
 name|Connection
@@ -356,6 +366,10 @@ name|SSL_CONN_PARAMS
 init|=
 literal|";ssl=true;sslTrustStore="
 operator|+
+name|URLEncoder
+operator|.
+name|encode
+argument_list|(
 name|dataFileDir
 operator|+
 name|File
@@ -363,6 +377,7 @@ operator|.
 name|separator
 operator|+
 name|TRUST_STORE_NAME
+argument_list|)
 operator|+
 literal|";trustStorePassword="
 operator|+

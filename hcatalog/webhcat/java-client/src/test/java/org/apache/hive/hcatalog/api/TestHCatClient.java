@@ -1204,10 +1204,7 @@ decl_stmt|;
 name|String
 name|expectedDir
 init|=
-name|fixPath
-argument_list|(
 name|warehouseDir
-argument_list|)
 operator|.
 name|replaceFirst
 argument_list|(

@@ -4559,7 +4559,10 @@ operator|+
 literal|".db"
 argument_list|)
 operator|.
-name|getCanonicalPath
+name|toURI
+argument_list|()
+operator|.
+name|getPath
 argument_list|()
 decl_stmt|;
 name|db
