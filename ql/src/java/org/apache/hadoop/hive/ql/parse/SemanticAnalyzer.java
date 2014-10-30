@@ -62892,6 +62892,16 @@ operator|.
 name|INSERT
 decl_stmt|;
 name|boolean
+name|noBadTokens
+init|=
+name|HiveOptiqUtil
+operator|.
+name|validateASTForUnsupportedTokens
+argument_list|(
+name|ast
+argument_list|)
+decl_stmt|;
+name|boolean
 name|result
 init|=
 name|isSupportedRoot
@@ -62901,6 +62911,8 @@ operator|&&
 name|createVwDesc
 operator|==
 literal|null
+operator|&&
+name|noBadTokens
 decl_stmt|;
 if|if
 condition|(
@@ -62945,6 +62957,15 @@ condition|)
 name|msg
 operator|+=
 literal|"has create view; "
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|noBadTokens
+condition|)
+name|msg
+operator|+=
+literal|"has unsupported tokens; "
 expr_stmt|;
 if|if
 condition|(
