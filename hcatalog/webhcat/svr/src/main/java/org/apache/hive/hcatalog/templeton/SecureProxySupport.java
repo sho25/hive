@@ -578,6 +578,7 @@ name|getHcatServiceStr
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|args
 operator|.
 name|add
@@ -594,7 +595,6 @@ operator|+
 name|user
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 class|class
 name|TokenWrapper
@@ -691,6 +691,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|//todo: according to JavaDoc this seems like private API: addDelegationToken should be used
 name|twrapper
 operator|.
 name|token

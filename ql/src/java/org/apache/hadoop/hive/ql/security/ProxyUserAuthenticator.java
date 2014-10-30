@@ -84,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ProxyUserAuthenticator extends HadoopDefaultAuthenticator  * but honours a proxy config setting proxy.user.name instead of the  * current user if set. This allows server processes like webhcat which  * proxy other users to easily specify an override if allowed.  */
+comment|/**  * ProxyUserAuthenticator extends HadoopDefaultAuthenticator  * but honours a proxy config setting proxy.user.name instead of the  * current user if set. This allows server processes like webhcat which  * proxy other users to easily specify an override if allowed.  *  * It is no longer necessary to use this class with WebHCat as of Hive 0.14.  */
 end_comment
 
 begin_class
