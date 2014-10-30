@@ -231,6 +231,42 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|JoinOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|MapJoinOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Operator
 import|;
 end_import
@@ -693,6 +729,46 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|spark
+operator|.
+name|SparkMapJoinOptimizer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|spark
+operator|.
+name|SparkReduceSinkMapJoinProc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|GlobalLimitCtx
@@ -1047,7 +1123,7 @@ argument_list|)
 expr_stmt|;
 comment|// TODO: need to research and verify support convert join to map join optimization.
 comment|//opRules.put(new RuleRegExp(new String("Convert Join to Map-join"),
-comment|//    JoinOperator.getOperatorName() + "%"), new ConvertJoinMapJoin());
+comment|//    JoinOperator.getOperatorName() + "%"), new SparkMapJoinOptimizer());
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
 name|Dispatcher
@@ -1200,6 +1276,11 @@ argument_list|,
 name|inputs
 argument_list|,
 name|outputs
+argument_list|,
+name|pCtx
+operator|.
+name|getTopOps
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// create a walker which walks the tree in a DFS manner while maintaining
@@ -1241,8 +1322,8 @@ argument_list|,
 name|genSparkWork
 argument_list|)
 expr_stmt|;
-comment|//    opRules.put(new RuleRegExp("No more walking on ReduceSink-MapJoin",
-comment|//        MapJoinOperator.getOperatorName() + "%"), new ReduceSinkMapJoinProc());
+comment|//opRules.put(new RuleRegExp("No more walking on ReduceSink-MapJoin",
+comment|//    MapJoinOperator.getOperatorName() + "%"), new SparkReduceSinkMapJoinProc());
 name|opRules
 operator|.
 name|put

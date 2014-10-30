@@ -2562,6 +2562,7 @@ return|return
 name|mapJoinOp
 return|;
 block|}
+specifier|public
 specifier|static
 name|MapJoinOperator
 name|convertJoinOpMapJoinOp
