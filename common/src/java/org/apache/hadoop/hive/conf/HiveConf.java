@@ -11154,6 +11154,8 @@ literal|"hive\\.cbo\\..*"
 block|,
 literal|"hive\\.convert\\..*"
 block|,
+literal|"hive\\.exec\\.dynamic\\.partition.*"
+block|,
 literal|"hive\\.exec\\..*\\.dynamic\\.partitions\\..*"
 block|,
 literal|"hive\\.exec\\.compress\\..*"
