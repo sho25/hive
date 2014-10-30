@@ -465,6 +465,14 @@ literal|600
 operator|*
 literal|1000
 decl_stmt|;
+specifier|static
+specifier|final
+name|int
+name|ZOOKEEPER_CONNECTION_TIMEOUT
+init|=
+operator|-
+literal|1
+decl_stmt|;
 comment|// Currently supports JKS keystore format
 specifier|static
 specifier|final
