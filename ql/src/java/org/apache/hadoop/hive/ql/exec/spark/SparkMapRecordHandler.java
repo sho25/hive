@@ -1082,6 +1082,8 @@ operator|new
 name|ReportStats
 argument_list|(
 name|rp
+argument_list|,
+name|jc
 argument_list|)
 decl_stmt|;
 name|mo
