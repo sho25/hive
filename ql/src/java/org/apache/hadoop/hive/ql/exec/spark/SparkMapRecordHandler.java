@@ -694,6 +694,16 @@ name|jc
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|MapredContext
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setReporter
+argument_list|(
+name|reporter
+argument_list|)
+expr_stmt|;
 name|mo
 operator|.
 name|setExecContext

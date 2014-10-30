@@ -67,6 +67,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|spark
+operator|.
+name|status
+operator|.
+name|SparkJobRef
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|SparkWork
@@ -89,7 +111,7 @@ parameter_list|)
 function_decl|;
 comment|/**    * Submit given<i>sparkWork</i> to SparkClient    * @param driverContext    * @param sparkWork    */
 specifier|public
-name|int
+name|SparkJobRef
 name|submit
 parameter_list|(
 name|DriverContext
@@ -98,6 +120,8 @@ parameter_list|,
 name|SparkWork
 name|sparkWork
 parameter_list|)
+throws|throws
+name|Exception
 function_decl|;
 comment|/**    * Is the session open and ready to submit jobs?    */
 specifier|public
