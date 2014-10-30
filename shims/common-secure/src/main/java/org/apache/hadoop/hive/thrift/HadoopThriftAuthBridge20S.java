@@ -1782,6 +1782,15 @@ name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 init|=
 literal|"hive.cluster.delegation.token.store.zookeeper.connectString"
 decl_stmt|;
+comment|// alternate connect string specification configuration
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
+init|=
+literal|"hive.zookeeper.quorum"
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -1812,7 +1821,7 @@ specifier|final
 name|String
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE_DEFAULT
 init|=
-literal|"/hive/cluster/delegation"
+literal|"/hivedelegation"
 decl_stmt|;
 specifier|public
 name|Server
@@ -2238,6 +2247,9 @@ name|conf
 parameter_list|,
 name|Object
 name|rawStore
+parameter_list|,
+name|ServerMode
+name|smode
 parameter_list|)
 throws|throws
 name|IOException
@@ -2288,9 +2300,11 @@ argument_list|)
 decl_stmt|;
 name|dts
 operator|.
-name|setStore
+name|init
 argument_list|(
 name|rawStore
+argument_list|,
+name|smode
 argument_list|)
 expr_stmt|;
 name|secretManager

@@ -2125,7 +2125,7 @@ name|metastore
 operator|.
 name|events
 operator|.
-name|AlterIndexEvent
+name|AddPartitionEvent
 import|;
 end_import
 
@@ -2143,7 +2143,7 @@ name|metastore
 operator|.
 name|events
 operator|.
-name|AddPartitionEvent
+name|AlterIndexEvent
 import|;
 end_import
 
@@ -2876,6 +2876,26 @@ operator|.
 name|thrift
 operator|.
 name|HadoopThriftAuthBridge
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|thrift
+operator|.
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
+name|ServerMode
 import|;
 end_import
 
@@ -33529,6 +33549,10 @@ name|baseHandler
 operator|.
 name|getMS
 argument_list|()
+argument_list|,
+name|ServerMode
+operator|.
+name|METASTORE
 argument_list|)
 expr_stmt|;
 name|transFactory

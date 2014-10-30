@@ -1307,7 +1307,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Extension of rollMasterKey to remove expired keys from store.    * @throws IOException    */
+comment|/**    * Extension of rollMasterKey to remove expired keys from store.    *    * @throws IOException    */
 specifier|protected
 name|void
 name|rollMasterKeyExt
@@ -1421,6 +1421,8 @@ name|getKeyId
 argument_list|()
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|tokenStore
 operator|.
 name|removeMasterKey
@@ -1431,6 +1433,28 @@ name|getKeyId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOGGER
+operator|.
+name|error
+argument_list|(
+literal|"Error removing expired key id={}"
+argument_list|,
+name|expiredKey
+operator|.
+name|getKeyId
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Cloned from {@link AbstractDelegationTokenSecretManager} to deal with private access    * restriction (there would not be an need to clone the remove thread if the remove logic was    * protected/extensible).    */

@@ -2185,16 +2185,24 @@ literal|"hive.cluster.delegation.token.store.zookeeper.connectString"
 argument_list|,
 literal|""
 argument_list|,
-literal|"The ZooKeeper token store connect string."
+literal|"The ZooKeeper token store connect string. You can re-use the configuration value\n"
+operator|+
+literal|"set in hive.zookeeper.quorum, by leaving this parameter unset."
 argument_list|)
 block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|(
 literal|"hive.cluster.delegation.token.store.zookeeper.znode"
 argument_list|,
-literal|"/hive/cluster/delegation"
+literal|"/hivedelegation"
 argument_list|,
-literal|"The root path for token store data."
+literal|"The root path for token store data. Note that this is used by both HiveServer2 and\n"
+operator|+
+literal|"MetaStore to store delegation Token. One directory gets created for each of them.\n"
+operator|+
+literal|"The final directory names would have the servername appended to it (HIVESERVER2,\n"
+operator|+
+literal|"METASTORE)."
 argument_list|)
 block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_ZK_ACL
@@ -2203,7 +2211,11 @@ literal|"hive.cluster.delegation.token.store.zookeeper.acl"
 argument_list|,
 literal|""
 argument_list|,
-literal|"ACL for token store entries. List comma separated all server principals for the cluster."
+literal|"ACL for token store entries. Comma separated list of ACL entries. For example:\n"
+operator|+
+literal|"sasl:hive/host1@MY.DOMAIN:cdrwa,sasl:hive/host2@MY.DOMAIN:cdrwa\n"
+operator|+
+literal|"Defaults to all permissions for the hiveserver2/metastore process user."
 argument_list|)
 block|,
 name|METASTORE_CACHE_PINOBJTYPES
@@ -5262,13 +5274,17 @@ literal|"hive.zookeeper.quorum"
 argument_list|,
 literal|""
 argument_list|,
-literal|"List of ZooKeeper servers to talk to. This is needed for: "
+literal|"List of ZooKeeper servers to talk to. This is needed for: \n"
 operator|+
-literal|"1. Read/write locks - when hive.lock.manager is set to "
+literal|"1. Read/write locks - when hive.lock.manager is set to \n"
 operator|+
-literal|"org.apache.hadoop.hive.ql.lockmgr.zookeeper.ZooKeeperHiveLockManager, "
+literal|"org.apache.hadoop.hive.ql.lockmgr.zookeeper.ZooKeeperHiveLockManager, \n"
 operator|+
-literal|"2. When HiveServer2 supports service discovery via Zookeeper."
+literal|"2. When HiveServer2 supports service discovery via Zookeeper.\n"
+operator|+
+literal|"3. For delegation token storage if zookeeper store is used, if\n"
+operator|+
+literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set"
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT
