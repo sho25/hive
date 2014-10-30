@@ -1294,8 +1294,6 @@ argument_list|,
 name|fileSchema
 argument_list|,
 name|recordSchema
-argument_list|,
-name|columnType
 argument_list|)
 return|;
 block|}
@@ -1849,9 +1847,6 @@ name|fileSchema
 parameter_list|,
 name|Schema
 name|recordSchema
-parameter_list|,
-name|TypeInfo
-name|columnType
 parameter_list|)
 throws|throws
 name|AvroSerdeException
@@ -1918,8 +1913,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|currentFileSchema
-operator|=
+if|if
+condition|(
 name|fileSchema
 operator|.
 name|getType
@@ -1928,7 +1923,26 @@ operator|==
 name|Type
 operator|.
 name|UNION
-condition|?
+condition|)
+block|{
+comment|// The fileSchema may have the null value in a different position, so
+comment|// we need to get the correct tag
+name|tag
+operator|=
+name|GenericData
+operator|.
+name|get
+argument_list|()
+operator|.
+name|resolveUnion
+argument_list|(
+name|fileSchema
+argument_list|,
+name|datum
+argument_list|)
+expr_stmt|;
+name|currentFileSchema
+operator|=
 name|fileSchema
 operator|.
 name|getTypes
@@ -1938,9 +1952,15 @@ name|get
 argument_list|(
 name|tag
 argument_list|)
-else|:
+expr_stmt|;
+block|}
+else|else
+block|{
+name|currentFileSchema
+operator|=
 name|fileSchema
 expr_stmt|;
+block|}
 block|}
 return|return
 name|worker
