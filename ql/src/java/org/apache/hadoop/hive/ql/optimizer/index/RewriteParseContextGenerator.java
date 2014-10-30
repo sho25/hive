@@ -668,6 +668,8 @@ name|sem
 operator|.
 name|initPhase1Ctx
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|LOG

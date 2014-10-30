@@ -1386,7 +1386,7 @@ name|rewrittenQueryStr
 operator|.
 name|append
 argument_list|(
-literal|" sort by ROW__ID desc "
+literal|" sort by ROW__ID "
 argument_list|)
 expr_stmt|;
 comment|// Parse the rewritten query string

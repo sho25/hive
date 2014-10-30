@@ -1014,6 +1014,9 @@ literal|"file://"
 operator|+
 name|baseDir
 operator|.
+name|toURI
+argument_list|()
+operator|.
 name|getPath
 argument_list|()
 argument_list|)

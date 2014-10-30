@@ -105,34 +105,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -142,24 +114,6 @@ operator|.
 name|type
 operator|.
 name|HiveDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|ByteStream
-operator|.
-name|Output
 import|;
 end_import
 
@@ -261,21 +215,6 @@ argument_list|<
 name|TimestampWritable
 argument_list|>
 block|{
-specifier|static
-specifier|final
-specifier|private
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|TimestampWritable
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 specifier|static
 specifier|final
 specifier|public
@@ -532,6 +471,30 @@ name|externalBytes
 expr_stmt|;
 name|clearTimestamp
 argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setTime
+parameter_list|(
+name|long
+name|time
+parameter_list|)
+block|{
+name|timestamp
+operator|.
+name|setTime
+argument_list|(
+name|time
+argument_list|)
+expr_stmt|;
+name|bytesEmpty
+operator|=
+literal|true
+expr_stmt|;
+name|timestampEmpty
+operator|=
+literal|false
 expr_stmt|;
 block|}
 specifier|public
@@ -1224,12 +1187,7 @@ block|}
 return|return
 name|seconds
 operator|+
-operator|(
-operator|(
-name|double
-operator|)
 name|nanos
-operator|)
 operator|/
 literal|1000000000
 return|;
@@ -1984,7 +1942,7 @@ return|return
 name|val
 return|;
 block|}
-comment|/**    * Writes a Timestamp's serialized value to byte array b at the given offset    * @param timestamp to convert to bytes    * @param b destination byte array    * @param offset destination offset in the byte array    */
+comment|/**    * Writes a Timestamp's serialized value to byte array b at the given offset    * @param t to convert to bytes    * @param b destination byte array    * @param offset destination offset in the byte array    */
 specifier|public
 specifier|static
 name|void
@@ -2355,7 +2313,7 @@ name|f
 decl_stmt|;
 comment|// We must ensure the exactness of the double's fractional portion.
 comment|// 0.6 as the fraction part will be converted to 0.59999... and
-comment|// significantly reduce the savings from binary serializtion
+comment|// significantly reduce the savings from binary serialization
 name|BigDecimal
 name|bd
 init|=

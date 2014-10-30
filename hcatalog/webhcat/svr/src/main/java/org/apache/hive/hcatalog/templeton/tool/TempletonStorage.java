@@ -41,16 +41,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -82,8 +72,6 @@ block|,
 name|JOB
 block|,
 name|JOBTRACKING
-block|,
-name|TEMPLETONOVERHEAD
 block|}
 specifier|public
 specifier|static
@@ -145,23 +133,6 @@ name|String
 name|key
 parameter_list|)
 function_decl|;
-comment|/**    * Get all the name/value pairs stored for this id.    * Be careful using getFields() -- optimistic locking will mean that    * your odds of a conflict are decreased if you read/write one field    * at a time.  getFields() is intended for read-only usage.    *    * If the type is UNKNOWN, search for the id in all types.    *    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @return A Map of key/value pairs found for this type/id.    */
-specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|getFields
-parameter_list|(
-name|Type
-name|type
-parameter_list|,
-name|String
-name|id
-parameter_list|)
-function_decl|;
 comment|/**    * Delete a data grouping (all data for a jobid, all tracking data    * for a job, etc.).  If the type is UNKNOWN, search for the id    * in all types.    *    * @param type The data type (as listed above)    * @param id The String id of this data grouping (jobid, etc.)    * @return True if successful, false if not, throws NotFoundException    * if the id wasn't found.    */
 specifier|public
 name|boolean
@@ -176,15 +147,6 @@ parameter_list|)
 throws|throws
 name|NotFoundException
 function_decl|;
-comment|/**    * Get the id of each data grouping in the storage system.    *    * @return An ArrayList<String> of ids.    */
-specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|getAll
-parameter_list|()
-function_decl|;
 comment|/**    * Get the id of each data grouping of a given type in the storage    * system.    * @param type The data type (as listed above)    * @return An ArrayList<String> of ids.    */
 specifier|public
 name|List
@@ -195,39 +157,6 @@ name|getAllForType
 parameter_list|(
 name|Type
 name|type
-parameter_list|)
-function_decl|;
-comment|/**    * Get the id of each data grouping that has the specific key/value    * pair.    * @param key The name of the field to search for    * @param value The value of the field to search for    * @return An ArrayList<String> of ids.    */
-specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|getAllForKey
-parameter_list|(
-name|String
-name|key
-parameter_list|,
-name|String
-name|value
-parameter_list|)
-function_decl|;
-comment|/**    * Get the id of each data grouping of a given type that has the    * specific key/value pair.    * @param type The data type (as listed above)    * @param key The name of the field to search for    * @param value The value of the field to search for    * @return An ArrayList<String> of ids.    */
-specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|getAllForTypeAndKey
-parameter_list|(
-name|Type
-name|type
-parameter_list|,
-name|String
-name|key
-parameter_list|,
-name|String
-name|value
 parameter_list|)
 function_decl|;
 comment|/**    * For storage methods that require a connection, this is a hint    * that it's time to open a connection.    */

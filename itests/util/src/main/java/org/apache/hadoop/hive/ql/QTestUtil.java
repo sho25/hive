@@ -2143,7 +2143,17 @@ name|URL
 argument_list|(
 literal|"file://"
 operator|+
+operator|new
+name|File
+argument_list|(
 name|confDir
+argument_list|)
+operator|.
+name|toURI
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
 operator|+
 literal|"/hive-site.xml"
 argument_list|)
@@ -3502,6 +3512,8 @@ name|index
 operator|.
 name|getIndexName
 argument_list|()
+argument_list|,
+literal|true
 argument_list|,
 literal|true
 argument_list|)

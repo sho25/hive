@@ -312,6 +312,14 @@ name|ObjectInspector
 name|getObjectInspector
 parameter_list|()
 function_decl|;
+specifier|public
+name|boolean
+name|isDelete
+parameter_list|(
+name|V
+name|value
+parameter_list|)
+function_decl|;
 block|}
 comment|/**    * Get a reader that returns the raw ACID events (insert, update, delete).    * Should only be used by the compactor.    * @param conf the configuration    * @param collapseEvents should the ACID events be collapsed so that only    *                       the last version of the row is kept.    * @param bucket the bucket to read    * @param validTxnList the list of valid transactions to use    * @param baseDirectory the base directory to read or the root directory for    *                      old style files    * @param deltaDirectory a list of delta files to include in the merge    * @return a record reader    * @throws IOException    */
 name|RawReader

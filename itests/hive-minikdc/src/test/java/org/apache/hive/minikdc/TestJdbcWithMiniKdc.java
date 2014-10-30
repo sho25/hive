@@ -35,18 +35,6 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
 name|assertTrue
 import|;
 end_import
@@ -794,7 +782,7 @@ name|HIVE_TEST_USER_1
 argument_list|)
 expr_stmt|;
 block|}
-comment|/***    * Negtive test for token based authentication    * Verify that a user can't retrieve a token for user that    * it's not allowed to impersonate    * @throws Exception    */
+comment|/***    * Negative test for token based authentication    * Verify that a user can't retrieve a token for user that    * it's not allowed to impersonate    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -825,6 +813,8 @@ name|getJdbcURL
 argument_list|()
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// retrieve token and store in the cache
 name|String
 name|token
@@ -847,26 +837,68 @@ operator|.
 name|HIVE_SERVICE_PRINCIPAL
 argument_list|)
 decl_stmt|;
-name|hs2Conn
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|assertNull
+name|fail
 argument_list|(
 name|MiniHiveKdc
 operator|.
 name|HIVE_TEST_SUPER_USER
 operator|+
-literal|" shouldn't be allowed to create token for "
+literal|" shouldn't be allowed to retrieve token for "
 operator|+
 name|MiniHiveKdc
 operator|.
 name|HIVE_TEST_USER_2
-argument_list|,
-name|token
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+comment|// Expected error
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Failed to validate proxy privilege"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Failed to validate proxy privilege"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Test connection using the proxy user connection property    * @throws Exception    */
 annotation|@
@@ -988,17 +1020,41 @@ name|e
 parameter_list|)
 block|{
 comment|// Expected error
-name|assertEquals
-argument_list|(
-literal|"08S01"
-argument_list|,
 name|e
 operator|.
-name|getSQLState
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getMessage
 argument_list|()
 operator|.
-name|trim
+name|contains
+argument_list|(
+literal|"Failed to validate proxy privilege"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getCause
 argument_list|()
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"is not allowed to impersonate"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

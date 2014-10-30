@@ -392,7 +392,7 @@ parameter_list|()
 throws|throws
 name|HiveAuthzPluginException
 function_decl|;
-comment|/**    * Modify the given HiveConf object to configure authorization related parameters    * or other parameters related to hive security    * @param hiveConf    */
+comment|/**    * Modify the given HiveConf object to configure authorization related parameters    * or other parameters related to hive security    * @param hiveConf    * @throws HiveAuthzPluginException    */
 specifier|public
 name|void
 name|applyAuthorizationConfigPolicy
@@ -400,6 +400,8 @@ parameter_list|(
 name|HiveConf
 name|hiveConf
 parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
 function_decl|;
 block|}
 end_interface

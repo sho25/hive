@@ -190,6 +190,21 @@ init|=
 literal|"PIG_OPTS"
 decl_stmt|;
 block|}
+specifier|public
+specifier|static
+interface|interface
+name|Sqoop
+block|{
+comment|/**      * comma-separated list of jar names (short name) which are needed for Sqoop JDBC access      */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LIB_JARS
+init|=
+literal|"templeton.sqoop.lib.jar"
+decl_stmt|;
+block|}
 block|}
 end_interface
 

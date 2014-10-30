@@ -502,12 +502,15 @@ operator|.
 name|toStringTree
 argument_list|()
 decl_stmt|;
+comment|// if any of following tokens are present in AST, bail out
 name|String
 index|[]
 name|tokens
 init|=
 block|{
 literal|"TOK_CHARSETLITERAL"
+block|,
+literal|"TOK_TABLESPLITSAMPLE"
 block|}
 decl_stmt|;
 for|for
@@ -1453,7 +1456,7 @@ return|return
 name|outJoinCond
 return|;
 block|}
-comment|/**    * JoinPredicateInfo represents Join condition; JoinPredicate Info uses    * JoinLeafPredicateInfo to represent individual conjunctive elements in the    * predicate.<br>    * JoinPredicateInfo = JoinLeafPredicateInfo1 and JoinLeafPredicateInfo2...<br>    *<p>    * JoinPredicateInfo:<br>    * 1. preserves the order of conjuctive elements for    * equi-join(m_equiJoinPredicateElements)<br>    * 2. Stores set of projection indexes from left and right child which is part    * of equi join keys; the indexes are both in child and Join node schema.<br>    * 3. Keeps a map of projection indexes that are part of join keys to list of    * conjuctive elements(JoinLeafPredicateInfo) that uses them.    *    */
+comment|/**    * JoinPredicateInfo represents Join condition; JoinPredicate Info uses    * JoinLeafPredicateInfo to represent individual conjunctive elements in the    * predicate.<br>    * JoinPredicateInfo = JoinLeafPredicateInfo1 and JoinLeafPredicateInfo2...<br>    *<p>    * JoinPredicateInfo:<br>    * 1. preserves the order of conjuctive elements for    * equi-join(equiJoinPredicateElements)<br>    * 2. Stores set of projection indexes from left and right child which is part    * of equi join keys; the indexes are both in child and Join node schema.<br>    * 3. Keeps a map of projection indexes that are part of join keys to list of    * conjuctive elements(JoinLeafPredicateInfo) that uses them.    *    */
 specifier|public
 specifier|static
 class|class
@@ -1633,6 +1636,8 @@ name|getNonEquiJoinPredicateElements
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|nonEquiJoinPredicateElements
 return|;
 block|}
@@ -1645,6 +1650,8 @@ name|getEquiJoinPredicateElements
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|equiJoinPredicateElements
 return|;
 block|}
@@ -1657,6 +1664,8 @@ name|getProjsFromLeftPartOfJoinKeysInChildSchema
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|projsFromLeftPartOfJoinKeysInChildSchema
 return|;
 block|}
@@ -1669,6 +1678,8 @@ name|getProjsFromRightPartOfJoinKeysInChildSchema
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|projsFromRightPartOfJoinKeysInChildSchema
 return|;
 block|}
@@ -1682,6 +1693,8 @@ name|getProjsFromLeftPartOfJoinKeysInJoinSchema
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|projsFromLeftPartOfJoinKeysInChildSchema
 return|;
 block|}
@@ -1694,6 +1707,8 @@ name|getProjsFromRightPartOfJoinKeysInJoinSchema
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|projsFromRightPartOfJoinKeysInJoinSchema
 return|;
 block|}
@@ -1711,6 +1726,8 @@ name|getMapOfProjIndxToLeafPInfo
 parameter_list|()
 block|{
 return|return
+name|this
+operator|.
 name|mapOfProjIndxInJoinSchemaToLeafPInfo
 return|;
 block|}
@@ -1936,7 +1953,7 @@ if|if
 condition|(
 name|jlpi
 operator|.
-name|m_comparisonType
+name|comparisonType
 operator|.
 name|equals
 argument_list|(
@@ -2186,7 +2203,7 @@ block|{
 specifier|private
 specifier|final
 name|SqlKind
-name|m_comparisonType
+name|comparisonType
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2194,7 +2211,7 @@ name|ImmutableList
 argument_list|<
 name|RexNode
 argument_list|>
-name|m_joinKeyExprsFromLeft
+name|joinKeyExprsFromLeft
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2202,7 +2219,7 @@ name|ImmutableList
 argument_list|<
 name|RexNode
 argument_list|>
-name|m_joinKeyExprsFromRight
+name|joinKeyExprsFromRight
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2210,7 +2227,7 @@ name|ImmutableSet
 argument_list|<
 name|Integer
 argument_list|>
-name|m_projsFromLeftPartOfJoinKeysInChildSchema
+name|projsFromLeftPartOfJoinKeysInChildSchema
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2218,7 +2235,7 @@ name|ImmutableSet
 argument_list|<
 name|Integer
 argument_list|>
-name|m_projsFromRightPartOfJoinKeysInChildSchema
+name|projsFromRightPartOfJoinKeysInChildSchema
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2226,7 +2243,7 @@ name|ImmutableSet
 argument_list|<
 name|Integer
 argument_list|>
-name|m_projsFromRightPartOfJoinKeysInJoinSchema
+name|projsFromRightPartOfJoinKeysInJoinSchema
 decl_stmt|;
 specifier|public
 name|JoinLeafPredicateInfo
@@ -2265,11 +2282,15 @@ argument_list|>
 name|projsFromRightPartOfJoinKeysInJoinSchema
 parameter_list|)
 block|{
-name|m_comparisonType
+name|this
+operator|.
+name|comparisonType
 operator|=
 name|comparisonType
 expr_stmt|;
-name|m_joinKeyExprsFromLeft
+name|this
+operator|.
+name|joinKeyExprsFromLeft
 operator|=
 name|ImmutableList
 operator|.
@@ -2278,7 +2299,9 @@ argument_list|(
 name|joinKeyExprsFromLeft
 argument_list|)
 expr_stmt|;
-name|m_joinKeyExprsFromRight
+name|this
+operator|.
+name|joinKeyExprsFromRight
 operator|=
 name|ImmutableList
 operator|.
@@ -2287,7 +2310,9 @@ argument_list|(
 name|joinKeyExprsFromRight
 argument_list|)
 expr_stmt|;
-name|m_projsFromLeftPartOfJoinKeysInChildSchema
+name|this
+operator|.
+name|projsFromLeftPartOfJoinKeysInChildSchema
 operator|=
 name|ImmutableSet
 operator|.
@@ -2296,7 +2321,9 @@ argument_list|(
 name|projsFromLeftPartOfJoinKeysInChildSchema
 argument_list|)
 expr_stmt|;
-name|m_projsFromRightPartOfJoinKeysInChildSchema
+name|this
+operator|.
+name|projsFromRightPartOfJoinKeysInChildSchema
 operator|=
 name|ImmutableSet
 operator|.
@@ -2305,7 +2332,9 @@ argument_list|(
 name|projsFromRightPartOfJoinKeysInChildSchema
 argument_list|)
 expr_stmt|;
-name|m_projsFromRightPartOfJoinKeysInJoinSchema
+name|this
+operator|.
+name|projsFromRightPartOfJoinKeysInJoinSchema
 operator|=
 name|ImmutableSet
 operator|.
@@ -2324,7 +2353,9 @@ name|getJoinKeyExprsFromLeft
 parameter_list|()
 block|{
 return|return
-name|m_joinKeyExprsFromLeft
+name|this
+operator|.
+name|joinKeyExprsFromLeft
 return|;
 block|}
 specifier|public
@@ -2336,7 +2367,9 @@ name|getJoinKeyExprsFromRight
 parameter_list|()
 block|{
 return|return
-name|m_joinKeyExprsFromRight
+name|this
+operator|.
+name|joinKeyExprsFromRight
 return|;
 block|}
 specifier|public
@@ -2348,7 +2381,9 @@ name|getProjsFromLeftPartOfJoinKeysInChildSchema
 parameter_list|()
 block|{
 return|return
-name|m_projsFromLeftPartOfJoinKeysInChildSchema
+name|this
+operator|.
+name|projsFromLeftPartOfJoinKeysInChildSchema
 return|;
 block|}
 comment|/**      * NOTE: Join Schema = left Schema + (right Schema offset by      * left.fieldcount). Hence its ok to return projections from left in child      * schema.      */
@@ -2361,7 +2396,9 @@ name|getProjsFromLeftPartOfJoinKeysInJoinSchema
 parameter_list|()
 block|{
 return|return
-name|m_projsFromLeftPartOfJoinKeysInChildSchema
+name|this
+operator|.
+name|projsFromLeftPartOfJoinKeysInChildSchema
 return|;
 block|}
 specifier|public
@@ -2373,7 +2410,9 @@ name|getProjsFromRightPartOfJoinKeysInChildSchema
 parameter_list|()
 block|{
 return|return
-name|m_projsFromRightPartOfJoinKeysInChildSchema
+name|this
+operator|.
+name|projsFromRightPartOfJoinKeysInChildSchema
 return|;
 block|}
 specifier|public
@@ -2385,7 +2424,9 @@ name|getProjsFromRightPartOfJoinKeysInJoinSchema
 parameter_list|()
 block|{
 return|return
-name|m_projsFromRightPartOfJoinKeysInJoinSchema
+name|this
+operator|.
+name|projsFromRightPartOfJoinKeysInJoinSchema
 return|;
 block|}
 specifier|private

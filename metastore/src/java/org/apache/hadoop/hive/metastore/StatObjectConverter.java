@@ -3348,6 +3348,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+name|colType
+operator|=
+name|colType
+operator|.
+name|toLowerCase
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|colType

@@ -408,6 +408,10 @@ specifier|protected
 name|BooleanPointer
 name|stop
 decl_stmt|;
+specifier|protected
+name|BooleanPointer
+name|looped
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -450,6 +454,9 @@ name|init
 parameter_list|(
 name|BooleanPointer
 name|stop
+parameter_list|,
+name|BooleanPointer
+name|looped
 parameter_list|)
 throws|throws
 name|MetaException
@@ -459,6 +466,12 @@ operator|.
 name|stop
 operator|=
 name|stop
+expr_stmt|;
+name|this
+operator|.
+name|looped
+operator|=
+name|looped
 expr_stmt|;
 name|setPriority
 argument_list|(

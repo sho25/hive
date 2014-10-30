@@ -149,6 +149,24 @@ name|hive
 operator|.
 name|shims
 operator|.
+name|HadoopShims
+operator|.
+name|KerberosNameShim
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
 name|ShimLoader
 import|;
 end_import
@@ -177,9 +195,15 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|security
+name|hive
 operator|.
-name|UserGroupInformation
+name|thrift
+operator|.
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
+name|ServerMode
 import|;
 end_import
 
@@ -193,11 +217,7 @@ name|hadoop
 operator|.
 name|security
 operator|.
-name|authentication
-operator|.
-name|util
-operator|.
-name|KerberosName
+name|UserGroupInformation
 import|;
 end_import
 
@@ -588,6 +608,10 @@ argument_list|(
 name|conf
 argument_list|,
 literal|null
+argument_list|,
+name|ServerMode
+operator|.
+name|HIVESERVER2
 argument_list|)
 expr_stmt|;
 block|}
@@ -1431,6 +1455,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1469,6 +1495,8 @@ argument_list|(
 literal|"Received empty retrieving delegation token for user "
 operator|+
 name|owner
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1490,6 +1518,8 @@ literal|"Error retrieving delegation token for user "
 operator|+
 name|owner
 argument_list|,
+literal|"08S01"
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1505,6 +1535,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"delegation token retrieval interrupted"
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1534,6 +1566,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1560,6 +1594,8 @@ argument_list|(
 literal|"Error canceling delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1588,6 +1624,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1614,6 +1652,8 @@ argument_list|(
 literal|"Error renewing delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1642,6 +1682,8 @@ operator|new
 name|HiveSQLException
 argument_list|(
 literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
 argument_list|)
 throw|;
 block|}
@@ -1669,6 +1711,8 @@ argument_list|(
 literal|"Error extracting user from delegation token "
 operator|+
 name|delegationToken
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)
@@ -1711,11 +1755,15 @@ name|isSecurityEnabled
 argument_list|()
 condition|)
 block|{
-name|KerberosName
+name|KerberosNameShim
 name|kerbName
 init|=
-operator|new
-name|KerberosName
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getKerberosNameShim
 argument_list|(
 name|realUser
 argument_list|)
@@ -1804,6 +1852,8 @@ operator|+
 literal|" for "
 operator|+
 name|proxyUser
+argument_list|,
+literal|"08S01"
 argument_list|,
 name|e
 argument_list|)

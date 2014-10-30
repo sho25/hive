@@ -224,12 +224,12 @@ block|{
 specifier|private
 specifier|final
 name|RelNode
-name|m_childRel
+name|childRel
 decl_stmt|;
 specifier|private
 specifier|final
 name|double
-name|m_childCardinality
+name|childCardinality
 decl_stmt|;
 specifier|protected
 name|FilterSelectivityEstimator
@@ -243,17 +243,21 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|m_childRel
+name|this
+operator|.
+name|childRel
 operator|=
 name|childRel
 expr_stmt|;
-name|m_childCardinality
+name|this
+operator|.
+name|childCardinality
 operator|=
 name|RelMetadataQuery
 operator|.
 name|getRowCount
 argument_list|(
-name|m_childRel
+name|childRel
 argument_list|)
 expr_stmt|;
 block|}
@@ -292,14 +296,16 @@ return|return
 literal|1.0
 return|;
 block|}
-comment|/*      * Ignore any predicates on partition columns      * because we have already accounted for these in      * the Table row count.      */
+comment|/*      * Ignore any predicates on partition columns because we have already      * accounted for these in the Table row count.      */
 if|if
 condition|(
 name|isPartitionPredicate
 argument_list|(
 name|call
 argument_list|,
-name|m_childRel
+name|this
+operator|.
+name|childRel
 argument_list|)
 condition|)
 block|{
@@ -362,6 +368,7 @@ argument_list|(
 name|call
 argument_list|)
 expr_stmt|;
+break|break;
 block|}
 case|case
 name|LESS_THAN_OR_EQUAL
@@ -544,7 +551,7 @@ expr_stmt|;
 block|}
 name|tmpCardinality
 operator|=
-name|m_childCardinality
+name|childCardinality
 operator|*
 name|tmpSelectivity
 expr_stmt|;
@@ -561,7 +568,7 @@ literal|1
 operator|-
 name|tmpCardinality
 operator|/
-name|m_childCardinality
+name|childCardinality
 operator|)
 expr_stmt|;
 else|else
@@ -689,7 +696,9 @@ name|HiveRelMdDistinctRowCount
 operator|.
 name|getDistinctRowCount
 argument_list|(
-name|m_childRel
+name|this
+operator|.
+name|childRel
 argument_list|,
 operator|(
 operator|(
@@ -744,7 +753,9 @@ name|HiveRelMdDistinctRowCount
 operator|.
 name|getDistinctRowCount
 argument_list|(
-name|m_childRel
+name|this
+operator|.
+name|childRel
 argument_list|,
 name|childProjIndx
 argument_list|)

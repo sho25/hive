@@ -633,6 +633,8 @@ literal|0
 index|]
 condition|)
 block|{
+comment|// Since we store references to Decimal128 instances, we must use the update method instead
+comment|// of plain assignment.
 name|outputColumnVector
 operator|.
 name|vector
@@ -641,13 +643,16 @@ name|outputBatch
 operator|.
 name|size
 index|]
-operator|=
+operator|.
+name|update
+argument_list|(
 name|inputColumnVector
 operator|.
 name|vector
 index|[
 literal|0
 index|]
+argument_list|)
 expr_stmt|;
 block|}
 else|else

@@ -2324,9 +2324,15 @@ expr_stmt|;
 comment|// check that src and dest are on the same file system
 if|if
 condition|(
+operator|!
+name|FileUtils
+operator|.
+name|equalsFileSystem
+argument_list|(
 name|srcFs
-operator|!=
+argument_list|,
 name|destFs
+argument_list|)
 condition|)
 block|{
 throw|throw

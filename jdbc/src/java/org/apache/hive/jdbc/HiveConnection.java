@@ -1587,7 +1587,7 @@ name|httpPath
 decl_stmt|;
 name|httpPath
 operator|=
-name|hiveConfMap
+name|sessConfMap
 operator|.
 name|get
 argument_list|(
@@ -1800,29 +1800,7 @@ name|isKerberosAuthMode
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
-name|useSsl
-condition|)
-block|{
-name|String
-name|msg
-init|=
-literal|"SSL encryption is currently not supported with "
-operator|+
-literal|"kerberos authentication"
-decl_stmt|;
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-name|msg
-argument_list|,
-literal|" 08S01"
-argument_list|)
-throw|;
-block|}
-comment|/**        * Add an interceptor which sets the appropriate header in the request.        * It does the kerberos authentication and get the final service ticket,        * for sending to the server before every request.        */
+comment|/**        * Add an interceptor which sets the appropriate header in the request.        * It does the kerberos authentication and get the final service ticket,        * for sending to the server before every request.        * In https mode, the entire information is encrypted        * TODO: Optimize this with a mix of kerberos + using cookie.        */
 name|requestInterceptor
 operator|=
 operator|new
@@ -1861,6 +1839,7 @@ name|getPassword
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Configure httpClient for SSL
 if|if
 condition|(
@@ -1897,7 +1876,7 @@ decl_stmt|;
 name|SSLSocketFactory
 name|socketFactory
 decl_stmt|;
-comment|/**          * The code within the try block throws:          * 1. SSLInitializationException          * 2. KeyStoreException          * 3. IOException          * 4. NoSuchAlgorithmException          * 5. CertificateException          * 6. KeyManagementException          * 7. UnrecoverableKeyException          * We don't want the client to retry on any of these, hence we catch all          * and throw a SQLException.          */
+comment|/**        * The code within the try block throws:        * 1. SSLInitializationException        * 2. KeyStoreException        * 3. IOException        * 4. NoSuchAlgorithmException        * 5. CertificateException        * 6. KeyManagementException        * 7. UnrecoverableKeyException        * We don't want the client to retry on any of these, hence we catch all        * and throw a SQLException.        */
 try|try
 block|{
 if|if
@@ -2027,7 +2006,6 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 name|httpClient
@@ -2725,6 +2703,55 @@ argument_list|(
 name|openConf
 argument_list|)
 expr_stmt|;
+comment|// Store the user name in the open request in case no non-sasl authentication
+if|if
+condition|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_SIMPLE
+operator|.
+name|equals
+argument_list|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
+argument_list|)
+argument_list|)
+condition|)
+block|{
+name|openReq
+operator|.
+name|setUsername
+argument_list|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|openReq
+operator|.
+name|setPassword
+argument_list|(
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_PASSWD
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 try|try
 block|{
 name|TOpenSessionResp
@@ -2926,7 +2953,7 @@ block|{
 name|String
 name|transportMode
 init|=
-name|hiveConfMap
+name|sessConfMap
 operator|.
 name|get
 argument_list|(

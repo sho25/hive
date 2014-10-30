@@ -2181,7 +2181,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @param cascade           if true, delete all tables on the DB if exists. Othewise, the query    *                        will fail if table still exists.    * @throws HiveException    * @throws NoSuchObjectException    */
+comment|/**    * Drop a database    * @param name    * @param deleteData    * @param ignoreUnknownDb if true, will ignore NoSuchObjectException    * @param cascade         if true, delete all tables on the DB if exists. Otherwise, the query    *                        will fail if table still exists.    * @throws HiveException    * @throws NoSuchObjectException    */
 specifier|public
 name|void
 name|dropDatabase
@@ -2245,7 +2245,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Creates a table metdata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
+comment|/**    * Creates a table metadata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
 specifier|public
 name|void
 name|createTable
@@ -2303,7 +2303,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates a table metdata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @param bucketCount    *          number of buckets that each partition (or the table itself) should    *          be divided into    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
+comment|/**    * Creates a table metadata and the directory for the table data    *    * @param tableName    *          name of the table    * @param columns    *          list of fields of the table    * @param partCols    *          partition keys of the table    * @param fileInputFormat    *          Class of the input format of the table data file    * @param fileOutputFormat    *          Class of the output format of the table data file    * @param bucketCount    *          number of buckets that each partition (or the table itself) should    *          be divided into    * @throws HiveException    *           thrown if the args are invalid or if the metadata or the data    *           directory couldn't be created    */
 specifier|public
 name|void
 name|createTable
@@ -5068,6 +5068,9 @@ name|String
 name|index_name
 parameter_list|,
 name|boolean
+name|throwException
+parameter_list|,
+name|boolean
 name|deleteData
 parameter_list|)
 throws|throws
@@ -5099,6 +5102,8 @@ index|]
 argument_list|,
 name|index_name
 argument_list|,
+name|throwException
+argument_list|,
 name|deleteData
 argument_list|)
 return|;
@@ -5115,6 +5120,9 @@ name|tbl_name
 parameter_list|,
 name|String
 name|index_name
+parameter_list|,
+name|boolean
+name|throwException
 parameter_list|,
 name|boolean
 name|deleteData
@@ -5146,20 +5154,28 @@ name|NoSuchObjectException
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|throwException
+condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Partition or table doesn't exist. "
+literal|"Index "
 operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
+name|index_name
+operator|+
+literal|" doesn't exist. "
 argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+return|return
+literal|false
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -15080,25 +15096,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-block|}
-specifier|public
-specifier|static
-name|String
-index|[]
-name|getQualifiedNames
-parameter_list|(
-name|String
-name|qualifiedName
-parameter_list|)
-block|{
-return|return
-name|qualifiedName
-operator|.
-name|split
-argument_list|(
-literal|"\\."
-argument_list|)
-return|;
 block|}
 specifier|public
 name|void

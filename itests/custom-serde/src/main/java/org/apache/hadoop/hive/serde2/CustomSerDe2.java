@@ -244,6 +244,21 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|SerDeSpec
+argument_list|(
+name|schemaProps
+operator|=
+block|{
+name|serdeConstants
+operator|.
+name|LIST_COLUMNS
+block|,
+name|serdeConstants
+operator|.
+name|LIST_COLUMN_TYPES
+block|}
+argument_list|)
 specifier|public
 class|class
 name|CustomSerDe2

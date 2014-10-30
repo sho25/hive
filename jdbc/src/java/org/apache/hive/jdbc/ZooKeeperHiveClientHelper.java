@@ -205,6 +205,29 @@ operator|.
 name|ZOOKEEPER_NAMESPACE
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|(
+name|zooKeeperNamespace
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|zooKeeperNamespace
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+name|zooKeeperNamespace
+operator|=
+name|JdbcConnectionParams
+operator|.
+name|ZOOKEEPER_DEFAULT_NAMESPACE
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -221,12 +244,16 @@ decl_stmt|;
 name|String
 name|serverNode
 decl_stmt|;
-comment|// Pick a random HiveServer2 host from the ZooKeeper namspace
-try|try
-block|{
 name|ZooKeeper
 name|zooKeeperClient
 init|=
+literal|null
+decl_stmt|;
+comment|// Pick a random HiveServer2 host from the ZooKeeper namspace
+try|try
+block|{
+name|zooKeeperClient
+operator|=
 operator|new
 name|ZooKeeper
 argument_list|(
@@ -242,7 +269,7 @@ operator|.
 name|DummyWatcher
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// All the HiveServer2 host nodes that are in ZooKeeper currently
 name|serverHosts
 operator|=
@@ -369,6 +396,34 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+finally|finally
+block|{
+comment|// Try to close the client connection with ZooKeeper
+if|if
+condition|(
+name|zooKeeperClient
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|zooKeeperClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// No-op
+block|}
+block|}
 block|}
 block|}
 block|}

@@ -2035,7 +2035,7 @@ name|client
 operator|=
 name|HiveMetaStore
 operator|.
-name|newHMSHandler
+name|newRetryingHMSHandler
 argument_list|(
 literal|"hive client"
 argument_list|,

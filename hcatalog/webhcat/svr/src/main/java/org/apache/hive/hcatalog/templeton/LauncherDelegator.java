@@ -760,6 +760,8 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|//note that in ToolRunner this is expected to be a local FS path
+comment|//see GenericOptionsParser.getLibJars()
 name|args
 operator|.
 name|add
@@ -847,6 +849,7 @@ argument_list|,
 name|statusdir
 argument_list|)
 expr_stmt|;
+comment|//Use of ToolRunner "-files" option could be considered here
 name|addDef
 argument_list|(
 name|args

@@ -841,7 +841,7 @@ specifier|abstract
 class|class
 name|BaseSemanticAnalyzer
 block|{
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|Log

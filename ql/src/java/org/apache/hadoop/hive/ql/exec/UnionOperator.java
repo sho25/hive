@@ -491,7 +491,7 @@ index|[
 name|c
 index|]
 operator|.
-name|update
+name|updateForUnionAll
 argument_list|(
 name|parentFields
 index|[

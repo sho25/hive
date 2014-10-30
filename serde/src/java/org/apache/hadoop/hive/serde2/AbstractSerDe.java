@@ -73,6 +73,16 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
 begin_comment
 comment|/**  * Abstract class for implementing SerDe. The abstract class has been created, so that  * new methods can be added in the underlying interface, SerDe, and only implementations  * that need those methods overwrite it.  */
 end_comment
@@ -85,6 +95,10 @@ name|AbstractSerDe
 implements|implements
 name|SerDe
 block|{
+specifier|protected
+name|String
+name|configErrors
+decl_stmt|;
 comment|/**    * Initialize the SerDe. By default, this will use one set of properties, either the    * table properties or the partition properties. If a SerDe needs access to both sets,    * it should override this method.    *    * Eventually, once all SerDes have implemented this method,    * we should convert it to an abstract method.    *    * @param configuration        Hadoop configuration    * @param tableProperties      Table properties    * @param partitionProperties  Partition properties    * @throws SerDeException    */
 specifier|public
 name|void
@@ -117,7 +131,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties    * @param tbl    *          table properties    * @throws SerDeException    */
+comment|/**    * Initialize the HiveSerializer.    *    * @param conf    *          System properties. Can be null in compile time    * @param tbl    *          table properties    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -125,6 +139,8 @@ specifier|abstract
 name|void
 name|initialize
 parameter_list|(
+annotation|@
+name|Nullable
 name|Configuration
 name|conf
 parameter_list|,
@@ -189,6 +205,22 @@ parameter_list|()
 throws|throws
 name|SerDeException
 function_decl|;
+comment|/**    * Get the error messages during the Serde configuration    *    * @return The error messages in the configuration which are empty if no error occurred    */
+specifier|public
+name|String
+name|getConfigurationErrors
+parameter_list|()
+block|{
+return|return
+name|configErrors
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+name|configErrors
+return|;
+block|}
 block|}
 end_class
 

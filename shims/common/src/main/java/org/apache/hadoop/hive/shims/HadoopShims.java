@@ -892,6 +892,20 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Dynamically sets up the JAAS configuration that uses kerberos    * @param principal    * @param keyTabFile    * @throws IOException    */
+specifier|public
+name|void
+name|setZookeeperClientKerberosJaasConfig
+parameter_list|(
+name|String
+name|principal
+parameter_list|,
+name|String
+name|keyTabFile
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Add a delegation token to the given ugi    * @param ugi    * @param tokenStr    * @param tokenService    * @throws IOException    */
 specifier|public
 name|void
@@ -1046,6 +1060,17 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Convert Kerberos principal name pattern to valid Kerberos principal names.    * @param principal (principal name pattern)    * @return    * @throws IOException    */
+specifier|public
+name|String
+name|getResolvedPrincipal
+parameter_list|(
+name|String
+name|principal
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Perform kerberos re-login using the given principal and keytab, to renew    * the credentials    * @throws IOException    */
 specifier|public
 name|void
@@ -1102,6 +1127,20 @@ parameter_list|,
 name|Path
 name|path
 parameter_list|)
+function_decl|;
+comment|/**    * Reset the default fair scheduler queue mapping to end user.    *    * @param conf    * @param userName end user name    */
+specifier|public
+name|void
+name|refreshDefaultQueue
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|String
+name|userName
+parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 comment|/**    * Create the proxy ugi for the given userid    * @param userName    * @return    */
 specifier|public
@@ -1962,6 +2001,50 @@ name|FileSystem
 name|fs
 parameter_list|)
 function_decl|;
+comment|/**    * Returns a shim to wrap KerberosName    */
+specifier|public
+name|KerberosNameShim
+name|getKerberosNameShim
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Shim for KerberosName    */
+specifier|public
+interface|interface
+name|KerberosNameShim
+block|{
+specifier|public
+name|String
+name|getDefaultRealm
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getServiceName
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getHostName
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getRealm
+parameter_list|()
+function_decl|;
+specifier|public
+name|String
+name|getShortName
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+block|}
 block|}
 end_interface
 

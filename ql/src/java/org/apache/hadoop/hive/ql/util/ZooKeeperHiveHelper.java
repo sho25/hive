@@ -429,6 +429,8 @@ name|DummyWatcher
 implements|implements
 name|Watcher
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|process
