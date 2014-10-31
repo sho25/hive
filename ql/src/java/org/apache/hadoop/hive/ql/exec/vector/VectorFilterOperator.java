@@ -230,6 +230,20 @@ name|conditionEvaluator
 init|=
 literal|null
 decl_stmt|;
+comment|// Temporary selected vector
+specifier|private
+name|int
+index|[]
+name|temporarySelected
+init|=
+operator|new
+name|int
+index|[
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
+index|]
+decl_stmt|;
 comment|// filterMode is 1 if condition is always true, -1 if always false
 comment|// and 0 if condition needs to be computed.
 specifier|transient
@@ -429,8 +443,56 @@ name|VectorizedRowBatch
 operator|)
 name|row
 decl_stmt|;
-comment|//Evaluate the predicate expression
 comment|//The selected vector represents selected rows.
+comment|//Clone the selected vector
+name|System
+operator|.
+name|arraycopy
+argument_list|(
+name|vrg
+operator|.
+name|selected
+argument_list|,
+literal|0
+argument_list|,
+name|temporarySelected
+argument_list|,
+literal|0
+argument_list|,
+name|vrg
+operator|.
+name|size
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+name|selectedBackup
+init|=
+name|vrg
+operator|.
+name|selected
+decl_stmt|;
+name|vrg
+operator|.
+name|selected
+operator|=
+name|temporarySelected
+expr_stmt|;
+name|int
+name|sizeBackup
+init|=
+name|vrg
+operator|.
+name|size
+decl_stmt|;
+name|boolean
+name|selectedInUseBackup
+init|=
+name|vrg
+operator|.
+name|selectedInUse
+decl_stmt|;
+comment|//Evaluate the predicate expression
 switch|switch
 condition|(
 name|filterMode
@@ -482,6 +544,25 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Restore the original selected vector
+name|vrg
+operator|.
+name|selected
+operator|=
+name|selectedBackup
+expr_stmt|;
+name|vrg
+operator|.
+name|size
+operator|=
+name|sizeBackup
+expr_stmt|;
+name|vrg
+operator|.
+name|selectedInUse
+operator|=
+name|selectedInUseBackup
+expr_stmt|;
 block|}
 specifier|static
 specifier|public

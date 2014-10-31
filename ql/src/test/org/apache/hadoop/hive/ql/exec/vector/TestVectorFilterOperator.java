@@ -588,11 +588,12 @@ argument_list|()
 decl_stmt|;
 name|vfo
 operator|.
-name|processOp
+name|getConditionEvaluator
+argument_list|()
+operator|.
+name|evaluate
 argument_list|(
 name|vrg
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 comment|//Verify
