@@ -352,6 +352,12 @@ operator|+
 literal|" row format delimited fields terminated by '\t' stored as textfile location '"
 operator|+
 name|dataDir
+operator|.
+name|toURI
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
 operator|+
 literal|"'"
 argument_list|,

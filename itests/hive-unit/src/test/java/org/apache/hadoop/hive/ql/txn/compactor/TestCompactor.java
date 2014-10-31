@@ -1127,6 +1127,12 @@ name|stagingFolder
 operator|.
 name|newFolder
 argument_list|()
+operator|.
+name|toURI
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
 operator|+
 literal|"'"
 argument_list|,

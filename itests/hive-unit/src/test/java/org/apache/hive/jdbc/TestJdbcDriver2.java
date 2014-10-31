@@ -11559,6 +11559,11 @@ literal|"a"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Test bad args to getXXX()    * @throws SQLException    */
 annotation|@

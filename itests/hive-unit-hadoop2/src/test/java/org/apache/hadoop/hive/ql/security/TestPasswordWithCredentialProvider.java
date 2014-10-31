@@ -406,6 +406,12 @@ argument_list|,
 literal|"jceks://file/"
 operator|+
 name|tmpDir
+operator|.
+name|toURI
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
 operator|+
 literal|"/test.jks"
 argument_list|)
