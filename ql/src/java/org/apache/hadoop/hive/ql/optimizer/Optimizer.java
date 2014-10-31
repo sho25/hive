@@ -844,9 +844,6 @@ operator|)
 operator|&&
 operator|!
 name|isTezExecEngine
-operator|&&
-operator|!
-name|isSparkExecEngine
 condition|)
 block|{
 if|if
