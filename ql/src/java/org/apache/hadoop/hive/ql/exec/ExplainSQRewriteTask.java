@@ -1118,8 +1118,6 @@ return|return
 literal|"EXPLAIN REWRITE"
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<
