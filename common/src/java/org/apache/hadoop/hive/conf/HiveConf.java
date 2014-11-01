@@ -2089,7 +2089,7 @@ name|METASTORESERVERMAXTHREADS
 argument_list|(
 literal|"hive.metastore.server.max.threads"
 argument_list|,
-literal|100000
+literal|1000
 argument_list|,
 literal|"Maximum number of worker threads in the Thrift server's pool."
 argument_list|)
