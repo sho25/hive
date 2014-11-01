@@ -5786,6 +5786,11 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
+name|ofs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|fixXml4JDK7
 argument_list|(
 name|outf
@@ -5862,6 +5867,13 @@ operator|.
 name|varname
 argument_list|,
 literal|"kryo"
+argument_list|)
+expr_stmt|;
+name|IOUtils
+operator|.
+name|closeQuietly
+argument_list|(
+name|ofs
 argument_list|)
 expr_stmt|;
 block|}
