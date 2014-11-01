@@ -138,6 +138,9 @@ index|[
 name|i
 index|]
 operator|.
+name|getHiveDecimal
+argument_list|()
+operator|.
 name|longValue
 argument_list|()
 expr_stmt|;

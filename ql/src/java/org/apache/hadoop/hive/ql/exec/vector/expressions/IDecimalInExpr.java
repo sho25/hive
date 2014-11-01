@@ -37,7 +37,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Decimal128
+name|HiveDecimal
 import|;
 end_import
 
@@ -49,7 +49,7 @@ block|{
 name|void
 name|setInListValues
 parameter_list|(
-name|Decimal128
+name|HiveDecimal
 index|[]
 name|inVals
 parameter_list|)
