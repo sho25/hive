@@ -2643,11 +2643,11 @@ block|{
 name|String
 name|doAs
 init|=
-name|conf
+name|System
 operator|.
-name|get
+name|getenv
 argument_list|(
-literal|"proxy.user.name"
+literal|"HADOOP_USER_NAME"
 argument_list|)
 decl_stmt|;
 if|if

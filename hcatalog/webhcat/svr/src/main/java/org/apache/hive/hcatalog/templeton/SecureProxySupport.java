@@ -258,7 +258,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Helper class to run jobs using Kerberos security.  Always safe to  * use these methods, it's a noop if security is not enabled.  */
+comment|/**  * Helper class to run jobs using Kerberos security.  Always safe to  * use these methods, it's a no-op if security is not enabled.  */
 end_comment
 
 begin_class
@@ -578,7 +578,6 @@ name|getHcatServiceStr
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|args
 operator|.
 name|add
@@ -595,6 +594,7 @@ operator|+
 name|user
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 class|class
 name|TokenWrapper
