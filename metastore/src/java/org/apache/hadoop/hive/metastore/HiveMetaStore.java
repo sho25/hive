@@ -33376,6 +33376,20 @@ comment|// Server will create new threads up to max as necessary. After an idle
 comment|// period, it will destroy threads to keep the number of threads in the
 comment|// pool to min.
 name|int
+name|maxMessageSize
+init|=
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORESERVERMAXMESSAGESIZE
+argument_list|)
+decl_stmt|;
+name|int
 name|minWorkerThreads
 init|=
 name|conf
@@ -33721,6 +33735,21 @@ name|TBinaryProtocol
 operator|.
 name|Factory
 argument_list|()
+argument_list|)
+operator|.
+name|inputProtocolFactory
+argument_list|(
+operator|new
+name|TBinaryProtocol
+operator|.
+name|Factory
+argument_list|(
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+name|maxMessageSize
+argument_list|)
 argument_list|)
 operator|.
 name|minWorkerThreads

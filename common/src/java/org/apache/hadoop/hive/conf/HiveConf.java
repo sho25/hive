@@ -2076,6 +2076,19 @@ operator|+
 literal|"testing only."
 argument_list|)
 block|,
+name|METASTORESERVERMAXMESSAGESIZE
+argument_list|(
+literal|"hive.metastore.server.max.message.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes a HMS will accept."
+argument_list|)
+block|,
 name|METASTORESERVERMINTHREADS
 argument_list|(
 literal|"hive.metastore.server.min.threads"
@@ -6303,6 +6316,19 @@ argument_list|,
 literal|"cliservice"
 argument_list|,
 literal|"Path component of URL endpoint when in HTTP mode."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_MAX_MESSAGE_SIZE
+argument_list|(
+literal|"hive.server2.thrift.max.message.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes a HS2 server will accept."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_MIN_WORKER_THREADS
