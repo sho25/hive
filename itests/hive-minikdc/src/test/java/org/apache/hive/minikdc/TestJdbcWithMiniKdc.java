@@ -867,7 +867,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Failed to validate proxy privilege"
+literal|"Error retrieving delegation token for user"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -886,7 +886,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Failed to validate proxy privilege"
+literal|"is not allowed to impersonate"
 argument_list|)
 argument_list|)
 expr_stmt|;
