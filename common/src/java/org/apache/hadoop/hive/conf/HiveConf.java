@@ -7423,6 +7423,24 @@ literal|0.5
 argument_list|,
 literal|"The number of waves in which to run the SMB join. Account for cluster being occupied. Ideally should be 1 wave."
 argument_list|)
+block|,
+name|TEZ_EXEC_SUMMARY
+argument_list|(
+literal|"hive.tez.exec.print.summary"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Display breakdown of execution steps, for every query executed by the shell."
+argument_list|)
+block|,
+name|TEZ_EXEC_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.tez.exec.inplace.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Updates tez job execution progress in-place in the terminal."
+argument_list|)
 block|;
 specifier|public
 specifier|final
