@@ -125,6 +125,9 @@ decl_stmt|;
 name|String
 name|serverHttpUrl
 decl_stmt|;
+name|boolean
+name|assumeSubject
+decl_stmt|;
 comment|// A fair reentrant lock
 specifier|private
 specifier|static
@@ -148,6 +151,9 @@ name|host
 parameter_list|,
 name|String
 name|serverHttpUrl
+parameter_list|,
+name|boolean
+name|assumeSubject
 parameter_list|)
 block|{
 name|this
@@ -167,6 +173,12 @@ operator|.
 name|serverHttpUrl
 operator|=
 name|serverHttpUrl
+expr_stmt|;
+name|this
+operator|.
+name|assumeSubject
+operator|=
+name|assumeSubject
 expr_stmt|;
 block|}
 annotation|@
@@ -209,6 +221,8 @@ argument_list|,
 name|host
 argument_list|,
 name|serverHttpUrl
+argument_list|,
+name|assumeSubject
 argument_list|)
 expr_stmt|;
 comment|// Set the session key token (Base64 encoded) in the headers
