@@ -814,7 +814,13 @@ name|create_role
 argument_list|(
 operator|new
 name|Role
-argument_list|()
+argument_list|(
+literal|"role1"
+argument_list|,
+literal|0
+argument_list|,
+literal|"owner"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
