@@ -369,6 +369,8 @@ index|[
 literal|0
 index|]
 argument_list|,
+name|decimalPlaces
+argument_list|,
 name|outputColVector
 argument_list|)
 expr_stmt|;
@@ -436,6 +438,8 @@ index|[
 name|i
 index|]
 argument_list|,
+name|decimalPlaces
+argument_list|,
 name|outputColVector
 argument_list|)
 expr_stmt|;
@@ -482,6 +486,8 @@ name|vector
 index|[
 name|i
 index|]
+argument_list|,
+name|decimalPlaces
 argument_list|,
 name|outputColVector
 argument_list|)
@@ -549,6 +555,8 @@ index|[
 name|i
 index|]
 argument_list|,
+name|decimalPlaces
+argument_list|,
 name|outputColVector
 argument_list|)
 expr_stmt|;
@@ -596,6 +604,8 @@ name|vector
 index|[
 name|i
 index|]
+argument_list|,
+name|decimalPlaces
 argument_list|,
 name|outputColVector
 argument_list|)
