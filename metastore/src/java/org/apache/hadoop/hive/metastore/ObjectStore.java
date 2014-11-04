@@ -3738,14 +3738,25 @@ parameter_list|)
 throws|throws
 name|NoSuchObjectException
 block|{
+name|MetaException
+name|ex
+init|=
+literal|null
+decl_stmt|;
+name|Database
+name|db
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
-return|return
+name|db
+operator|=
 name|getDatabaseInternal
 argument_list|(
 name|name
 argument_list|)
-return|;
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -3757,30 +3768,59 @@ comment|// Signature restriction to NSOE, and NSOE being a flat exception preven
 comment|// setting the cause of the NSOE as the MetaException. We should not lose the info
 comment|// we got here, but it's very likely that the MetaException is irrelevant and is
 comment|// actually an NSOE message, so we should log it and throw an NSOE with the msg.
+name|ex
+operator|=
+name|e
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|db
+operator|==
+literal|null
+condition|)
+block|{
 name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Got a MetaException trying to call getDatabase("
+literal|"Failed to get database "
 operator|+
 name|name
 operator|+
-literal|"), returning NoSuchObjectException"
+literal|", returning NoSuchObjectException"
 argument_list|,
-name|e
+name|ex
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-name|e
+name|name
+operator|+
+operator|(
+name|ex
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+operator|(
+literal|": "
+operator|+
+name|ex
 operator|.
 name|getMessage
 argument_list|()
+operator|)
+operator|)
 argument_list|)
 throw|;
 block|}
+return|return
+name|db
+return|;
 block|}
 specifier|public
 name|Database
@@ -14354,7 +14394,7 @@ name|NoSuchObjectException
 block|{
 name|LOG
 operator|.
-name|error
+name|warn
 argument_list|(
 literal|"Direct SQL failed"
 operator|+

@@ -391,24 +391,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|NoSuchObjectException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|Order
 import|;
 end_import
@@ -1045,9 +1027,10 @@ name|MetaException
 block|{
 if|if
 condition|(
+operator|!
 name|isMySql
 condition|)
-block|{
+return|return;
 try|try
 block|{
 assert|assert
@@ -1084,8 +1067,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-block|}
-comment|/**    * MySQL, by default, doesn't recognize ANSI quotes which need to have for Postgres.    * Try to set the ANSI quotes mode on for the session. Due to connection pooling, needs    * to be called in the same transaction as the actual queries.    */
+comment|/**    * MySQL, by default, doesn't recognize ANSI quotes which we need to have for Postgres.    * Try to set the ANSI quotes mode on for the session. Due to connection pooling, needs    * to be called in the same transaction as the actual queries.    */
 specifier|private
 name|void
 name|trySetAnsiQuotesForMysql
@@ -1241,9 +1223,17 @@ argument_list|,
 name|queryTextDbSelector
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|debug
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"getDatabase:query instantiated : "
 operator|+
@@ -1259,6 +1249,12 @@ operator|+
 literal|"]"
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|List
 argument_list|<
 name|Object
@@ -1294,22 +1290,9 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"getDatabase:queryDbSelector ran, returned no/empty results, returning NoSuchObjectException"
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"There is no database named "
-operator|+
-name|dbName
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 assert|assert
 operator|(
@@ -1333,22 +1316,9 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"getDatabase:queryDbSelector ran, returned results, but the result entry was null, returning NoSuchObjectException"
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"There is no database named "
-operator|+
-name|dbName
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 name|Object
 index|[]
@@ -1385,17 +1355,13 @@ literal|" WHERE \"DB_ID\" = ? "
 operator|+
 literal|" AND \"PARAM_KEY\" IS NOT NULL"
 decl_stmt|;
-name|Object
-index|[]
-name|params2
-init|=
-operator|new
-name|Object
-index|[]
-block|{
+name|params
+index|[
+literal|0
+index|]
+operator|=
 name|dbid
-block|}
-decl_stmt|;
+expr_stmt|;
 name|queryDbParams
 operator|=
 name|pm
@@ -1407,9 +1373,17 @@ argument_list|,
 name|queryTextDbParams
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|debug
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"getDatabase:query2 instantiated : "
 operator|+
@@ -1417,7 +1391,7 @@ name|queryTextDbParams
 operator|+
 literal|" with param ["
 operator|+
-name|params2
+name|params
 index|[
 literal|0
 index|]
@@ -1425,6 +1399,7 @@ operator|+
 literal|"]"
 argument_list|)
 expr_stmt|;
+block|}
 name|Map
 argument_list|<
 name|String
@@ -1455,7 +1430,7 @@ name|queryDbParams
 operator|.
 name|executeWithArray
 argument_list|(
-name|params2
+name|params
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1500,13 +1475,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"getDatabase: instantiating db object to return"
-argument_list|)
-expr_stmt|;
 name|Database
 name|db
 init|=
