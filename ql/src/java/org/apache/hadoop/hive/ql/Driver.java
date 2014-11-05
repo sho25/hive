@@ -3269,7 +3269,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"EXPLAIN output: "
+literal|"EXPLAIN output for queryid "
+operator|+
+name|queryId
+operator|+
+literal|" : "
 operator|+
 name|explainOutput
 argument_list|)
