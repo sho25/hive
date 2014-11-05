@@ -455,24 +455,6 @@ init|=
 literal|"hiveserver2"
 decl_stmt|;
 comment|// Non-configurable params:
-comment|// ZOOKEEPER_SESSION_TIMEOUT is not exposed as client configurable
-specifier|static
-specifier|final
-name|int
-name|ZOOKEEPER_SESSION_TIMEOUT
-init|=
-literal|600
-operator|*
-literal|1000
-decl_stmt|;
-specifier|static
-specifier|final
-name|int
-name|ZOOKEEPER_CONNECTION_TIMEOUT
-init|=
-operator|-
-literal|1
-decl_stmt|;
 comment|// Currently supports JKS keystore format
 specifier|static
 specifier|final
