@@ -1318,7 +1318,7 @@ name|mapJoinLocalWork
 init|=
 name|mapJoinMapWork
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 name|MapredLocalWork
@@ -1326,7 +1326,7 @@ name|childLocalWork
 init|=
 name|childMapWork
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 if|if
@@ -1599,7 +1599,7 @@ condition|)
 block|{
 name|childMapWork
 operator|.
-name|setMapLocalWork
+name|setMapRedLocalWork
 argument_list|(
 name|mapJoinLocalWork
 argument_list|)

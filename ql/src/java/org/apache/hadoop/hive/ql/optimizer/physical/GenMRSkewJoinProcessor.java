@@ -2379,7 +2379,7 @@ expr_stmt|;
 block|}
 name|newPlan
 operator|.
-name|setMapLocalWork
+name|setMapRedLocalWork
 argument_list|(
 name|localPlan
 argument_list|)

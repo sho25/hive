@@ -188,6 +188,10 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+specifier|private
+name|MapredLocalWork
+name|mrLocalWork
+decl_stmt|;
 specifier|public
 name|BaseWork
 parameter_list|()
@@ -605,6 +609,40 @@ operator|.
 name|allColumnVectorMaps
 operator|=
 name|allColumnVectorMaps
+expr_stmt|;
+block|}
+comment|/**    * @return the mapredLocalWork    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Local Work"
+argument_list|)
+specifier|public
+name|MapredLocalWork
+name|getMapRedLocalWork
+parameter_list|()
+block|{
+return|return
+name|mrLocalWork
+return|;
+block|}
+comment|/**    * @param mapLocalWork    *          the mapredLocalWork to set    */
+specifier|public
+name|void
+name|setMapRedLocalWork
+parameter_list|(
+specifier|final
+name|MapredLocalWork
+name|mapLocalWork
+parameter_list|)
+block|{
+name|this
+operator|.
+name|mrLocalWork
+operator|=
+name|mapLocalWork
 expr_stmt|;
 block|}
 annotation|@
