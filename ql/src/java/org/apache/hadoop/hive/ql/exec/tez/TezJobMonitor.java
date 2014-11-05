@@ -705,7 +705,7 @@ specifier|final
 name|String
 name|SUMMARY_HEADER_FORMAT
 init|=
-literal|"%-16s %-12s %-12s %-15s %-20s %-15s %-15s %-15s %-15s"
+literal|"%-16s %-12s %-12s %-12s %-19s %-19s %-15s %-15s %-15s"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -713,7 +713,7 @@ specifier|final
 name|String
 name|SUMMARY_VERTEX_FORMAT
 init|=
-literal|"%-12s %11s %13s %12s %19s %19s %13s %15s %16s"
+literal|"%-16s %11s %16s %12s %16s %18s %18s %14s %16s"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -2816,6 +2816,12 @@ name|hiveCounters
 argument_list|,
 name|hiveCountersGroup
 argument_list|,
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"%s_"
+argument_list|,
 name|MapOperator
 operator|.
 name|Counter
@@ -2824,6 +2830,16 @@ name|RECORDS_IN
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+operator|+
+name|vertexName
+operator|.
+name|replace
+argument_list|(
+literal|" "
+argument_list|,
+literal|"_"
+argument_list|)
 argument_list|)
 operator|+
 name|hiveInputRecordsFromOtherVertices
@@ -2838,6 +2854,12 @@ name|hiveCounters
 argument_list|,
 name|hiveCountersGroup
 argument_list|,
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"%s_"
+argument_list|,
 name|ReduceSinkOperator
 operator|.
 name|Counter
@@ -2846,6 +2868,16 @@ name|RECORDS_OUT_INTERMEDIATE
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+operator|+
+name|vertexName
+operator|.
+name|replace
+argument_list|(
+literal|" "
+argument_list|,
+literal|"_"
+argument_list|)
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -2858,6 +2890,12 @@ name|hiveCounters
 argument_list|,
 name|hiveCountersGroup
 argument_list|,
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"%s_"
+argument_list|,
 name|FileSinkOperator
 operator|.
 name|Counter
@@ -2866,6 +2904,16 @@ name|RECORDS_OUT
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+operator|+
+name|vertexName
+operator|.
+name|replace
+argument_list|(
+literal|" "
+argument_list|,
+literal|"_"
+argument_list|)
 argument_list|)
 operator|+
 name|hiveOutputIntermediateRecords
@@ -4022,6 +4070,36 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
+comment|/*            * We may have missed the start of the vertex due to the 3 seconds interval            */
+if|if
+condition|(
+operator|!
+name|perfLogger
+operator|.
+name|startTimeHasMethod
+argument_list|(
+name|PerfLogger
+operator|.
+name|TEZ_RUN_VERTEX
+operator|+
+name|s
+argument_list|)
+condition|)
+block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|CLASS_NAME
+argument_list|,
+name|PerfLogger
+operator|.
+name|TEZ_RUN_VERTEX
+operator|+
+name|s
+argument_list|)
+expr_stmt|;
+block|}
 name|perfLogger
 operator|.
 name|PerfLogEnd
@@ -4057,6 +4135,35 @@ literal|0
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|perfLogger
+operator|.
+name|startTimeHasMethod
+argument_list|(
+name|PerfLogger
+operator|.
+name|TEZ_RUN_VERTEX
+operator|+
+name|s
+argument_list|)
+condition|)
+block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|CLASS_NAME
+argument_list|,
+name|PerfLogger
+operator|.
+name|TEZ_RUN_VERTEX
+operator|+
+name|s
+argument_list|)
+expr_stmt|;
+block|}
 comment|/* vertex is started, but not complete */
 if|if
 condition|(
