@@ -815,7 +815,7 @@ name|localWork
 operator|=
 name|mrwork
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 expr_stmt|;
 name|execContext
@@ -1231,7 +1231,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 for|for

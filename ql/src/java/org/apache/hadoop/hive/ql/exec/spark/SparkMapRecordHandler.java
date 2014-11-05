@@ -671,7 +671,7 @@ name|localWork
 operator|=
 name|mrwork
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 expr_stmt|;
 name|execContext

@@ -481,7 +481,7 @@ name|localPlan
 init|=
 name|plan
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 if|if
@@ -562,7 +562,7 @@ return|return;
 block|}
 name|plan
 operator|.
-name|setMapLocalWork
+name|setMapRedLocalWork
 argument_list|(
 literal|null
 argument_list|)
