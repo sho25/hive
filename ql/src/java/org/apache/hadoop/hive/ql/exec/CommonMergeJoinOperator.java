@@ -870,6 +870,34 @@ name|getRecordSources
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|endGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+comment|// we do not want the end group to cause a checkAndGenObject
+name|defaultEndGroup
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|startGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
+comment|// we do not want the start group to clear the storage
+name|defaultStartGroup
+argument_list|()
+expr_stmt|;
+block|}
 comment|/*    * (non-Javadoc)    *    * @see org.apache.hadoop.hive.ql.exec.Operator#processOp(java.lang.Object,    * int) this processor has a push-pull model. First call to this method is a    * push but the rest is pulled until we run out of records.    */
 annotation|@
 name|Override
@@ -1526,7 +1554,6 @@ comment|// first promote the next group to be the current group if we reached a
 comment|// new group in the previous fetch
 if|if
 condition|(
-operator|(
 name|this
 operator|.
 name|nextKeyWritables
@@ -1535,18 +1562,6 @@ name|t
 index|]
 operator|!=
 literal|null
-operator|)
-operator|||
-operator|(
-name|this
-operator|.
-name|fetchDone
-index|[
-name|t
-index|]
-operator|==
-literal|false
-operator|)
 condition|)
 block|{
 name|promoteNextGroupToCandidate
