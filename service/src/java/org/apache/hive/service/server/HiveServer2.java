@@ -1491,7 +1491,7 @@ operator|.
 name|getServerAddress
 argument_list|()
 operator|.
-name|getHostName
+name|getHostAddress
 argument_list|()
 operator|+
 literal|":"
