@@ -6217,6 +6217,15 @@ operator|+
 literal|"get old behavior, if desired. See, test-case in patch for HIVE-6689."
 argument_list|)
 block|,
+name|HIVE_SSL_PROTOCOL_BLACKLIST
+argument_list|(
+literal|"hive.ssl.protocol.blacklist"
+argument_list|,
+literal|"SSLv2,SSLv2Hello,SSLv3"
+argument_list|,
+literal|"SSL Versions to disable for all Hive Servers"
+argument_list|)
+block|,
 comment|// HiveServer2 specific configs
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
