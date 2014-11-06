@@ -1253,11 +1253,28 @@ comment|// partition columns followed by bucket number followed by sort columns 
 comment|// the reduce sink key. Since both key columns are not prefix subset
 comment|// ReduceSinkDeDuplication will not merge them together resulting in 2 MR jobs.
 comment|// To avoid that we will remove the RS (and EX) inserted by enforce bucketing/sorting.
+if|if
+condition|(
+operator|!
 name|removeRSInsertedByEnforceBucketing
 argument_list|(
 name|fsOp
 argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Bailing out of sort dynamic partition optimization as some partition columns "
+operator|+
+literal|"got constant folded."
+argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 comment|// unlink connection between FS and its parent
 name|Operator
 argument_list|<
@@ -2035,7 +2052,7 @@ block|}
 comment|// Remove RS and EX introduced by enforce bucketing/sorting config
 comment|// Convert PARENT -> RS -> EX -> FS to PARENT -> FS
 specifier|private
-name|void
+name|boolean
 name|removeRSInsertedByEnforceBucketing
 parameter_list|(
 name|FileSinkOperator
@@ -2242,6 +2259,39 @@ operator|instanceof
 name|ExtractOperator
 condition|)
 block|{
+comment|// if schema size cannot be matched, then it could be because of constant folding
+comment|// converting partition column expression to constant expression. The constant
+comment|// expression will then get pruned by column pruner since it will not reference to
+comment|// any columns.
+if|if
+condition|(
+name|rsParent
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getSignature
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|!=
+name|rsChild
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getSignature
+argument_list|()
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 name|rsParent
 operator|.
 name|getChildOperators
@@ -2298,7 +2348,7 @@ name|info
 argument_list|(
 literal|"Removed "
 operator|+
-name|rsParent
+name|rsToRemove
 operator|.
 name|getOperatorId
 argument_list|()
@@ -2316,6 +2366,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
+return|return
+literal|true
+return|;
 block|}
 specifier|private
 name|List
