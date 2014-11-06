@@ -122,6 +122,11 @@ name|SparkStatistics
 name|getSparkStatistics
 parameter_list|()
 function_decl|;
+specifier|public
+name|void
+name|cleanup
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
