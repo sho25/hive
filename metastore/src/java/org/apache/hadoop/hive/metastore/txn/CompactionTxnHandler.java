@@ -601,6 +601,8 @@ parameter_list|)
 block|{        }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"setRunAs"
@@ -974,6 +976,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"findNextToCompact"
@@ -1178,6 +1182,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"markCompacted"
@@ -2012,6 +2018,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"markCleaned"
@@ -2322,6 +2330,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"cleanEmptyAbortedTxns"
@@ -2502,6 +2512,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"revokeFromLocalWorkers"
@@ -2692,6 +2704,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"revokeTimedoutWorkers"
