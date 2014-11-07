@@ -37,7 +37,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Decimal128
+name|HiveDecimal
 import|;
 end_import
 
@@ -105,6 +105,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -139,7 +157,7 @@ name|int
 name|inputCol
 decl_stmt|;
 specifier|private
-name|Decimal128
+name|HiveDecimal
 index|[]
 name|inListValues
 decl_stmt|;
@@ -148,7 +166,7 @@ specifier|private
 specifier|transient
 name|HashSet
 argument_list|<
-name|Decimal128
+name|HiveDecimal
 argument_list|>
 name|inSet
 decl_stmt|;
@@ -220,7 +238,7 @@ operator|=
 operator|new
 name|HashSet
 argument_list|<
-name|Decimal128
+name|HiveDecimal
 argument_list|>
 argument_list|(
 name|inListValues
@@ -230,7 +248,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|Decimal128
+name|HiveDecimal
 name|val
 range|:
 name|inListValues
@@ -281,7 +299,7 @@ name|batch
 operator|.
 name|size
 decl_stmt|;
-name|Decimal128
+name|HiveDecimalWritable
 index|[]
 name|vector
 init|=
@@ -327,6 +345,9 @@ name|vector
 index|[
 literal|0
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 operator|)
 condition|)
@@ -386,6 +407,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -438,6 +462,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -504,6 +531,9 @@ name|vector
 index|[
 literal|0
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -581,6 +611,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -644,6 +677,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -717,22 +753,10 @@ literal|null
 return|;
 block|}
 specifier|public
-name|Decimal128
-index|[]
-name|getInListValues
-parameter_list|()
-block|{
-return|return
-name|this
-operator|.
-name|inListValues
-return|;
-block|}
-specifier|public
 name|void
 name|setInListValues
 parameter_list|(
-name|Decimal128
+name|HiveDecimal
 index|[]
 name|a
 parameter_list|)

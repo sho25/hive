@@ -488,7 +488,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|validateASTForCBO
+name|validateASTForUnsupportedTokens
 parameter_list|(
 name|ASTNode
 name|ast

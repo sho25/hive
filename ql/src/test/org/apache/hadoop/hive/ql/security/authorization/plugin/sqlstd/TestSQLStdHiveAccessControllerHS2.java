@@ -485,6 +485,10 @@ argument_list|,
 literal|"hive.tez.dummy"
 argument_list|,
 literal|"tez.task.dummy"
+argument_list|,
+literal|"hive.exec.dynamic.partition"
+argument_list|,
+literal|"hive.exec.dynamic.partition.mode"
 argument_list|)
 decl_stmt|;
 comment|// combine two lists

@@ -63,6 +63,28 @@ name|DecimalColumnVector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|DecimalToStringUnaryUDF
+import|;
+end_import
+
 begin_comment
 comment|/**  * To support vectorized cast of decimal to string.  */
 end_comment
@@ -167,7 +189,10 @@ index|[
 name|i
 index|]
 operator|.
-name|getHiveDecimalString
+name|getHiveDecimal
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 decl_stmt|;
 name|byte

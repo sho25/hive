@@ -610,6 +610,18 @@ name|TypeInfoToSchema
 name|typeInfoToSchema
 decl_stmt|;
 specifier|private
+specifier|final
+name|String
+name|lineSeparator
+init|=
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"line.separator"
+argument_list|)
+decl_stmt|;
+specifier|private
 name|String
 name|getAvroSchemaString
 parameter_list|(
@@ -2126,7 +2138,7 @@ argument_list|)
 operator|.
 name|replace
 argument_list|(
-literal|"\n"
+name|lineSeparator
 argument_list|,
 literal|""
 argument_list|)
@@ -2334,7 +2346,7 @@ argument_list|)
 operator|.
 name|replace
 argument_list|(
-literal|"\n"
+name|lineSeparator
 argument_list|,
 literal|""
 argument_list|)

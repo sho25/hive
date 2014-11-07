@@ -2106,6 +2106,19 @@ operator|+
 literal|"testing only."
 argument_list|)
 block|,
+name|METASTORESERVERMAXMESSAGESIZE
+argument_list|(
+literal|"hive.metastore.server.max.message.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes a HMS will accept."
+argument_list|)
+block|,
 name|METASTORESERVERMINTHREADS
 argument_list|(
 literal|"hive.metastore.server.min.threads"
@@ -2119,7 +2132,7 @@ name|METASTORESERVERMAXTHREADS
 argument_list|(
 literal|"hive.metastore.server.max.threads"
 argument_list|,
-literal|100000
+literal|1000
 argument_list|,
 literal|"Maximum number of worker threads in the Thrift server's pool."
 argument_list|)
@@ -6243,6 +6256,15 @@ operator|+
 literal|"get old behavior, if desired. See, test-case in patch for HIVE-6689."
 argument_list|)
 block|,
+name|HIVE_SSL_PROTOCOL_BLACKLIST
+argument_list|(
+literal|"hive.ssl.protocol.blacklist"
+argument_list|,
+literal|"SSLv2,SSLv2Hello,SSLv3"
+argument_list|,
+literal|"SSL Versions to disable for all Hive Servers"
+argument_list|)
+block|,
 comment|// HiveServer2 specific configs
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
@@ -6342,6 +6364,19 @@ argument_list|,
 literal|"cliservice"
 argument_list|,
 literal|"Path component of URL endpoint when in HTTP mode."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_MAX_MESSAGE_SIZE
+argument_list|(
+literal|"hive.server2.thrift.max.message.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes a HS2 server will accept."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_MIN_WORKER_THREADS
@@ -7437,6 +7472,24 @@ operator|)
 literal|0.5
 argument_list|,
 literal|"The number of waves in which to run the SMB join. Account for cluster being occupied. Ideally should be 1 wave."
+argument_list|)
+block|,
+name|TEZ_EXEC_SUMMARY
+argument_list|(
+literal|"hive.tez.exec.print.summary"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Display breakdown of execution steps, for every query executed by the shell."
+argument_list|)
+block|,
+name|TEZ_EXEC_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.tez.exec.inplace.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Updates tez job execution progress in-place in the terminal."
 argument_list|)
 block|;
 specifier|public
@@ -11203,6 +11256,8 @@ block|,
 literal|"hive\\.cbo\\..*"
 block|,
 literal|"hive\\.convert\\..*"
+block|,
+literal|"hive\\.exec\\.dynamic\\.partition.*"
 block|,
 literal|"hive\\.exec\\..*\\.dynamic\\.partitions\\..*"
 block|,

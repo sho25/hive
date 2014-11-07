@@ -258,7 +258,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Helper class to run jobs using Kerberos security.  Always safe to  * use these methods, it's a noop if security is not enabled.  */
+comment|/**  * Helper class to run jobs using Kerberos security.  Always safe to  * use these methods, it's a no-op if security is not enabled.  */
 end_comment
 
 begin_class
@@ -691,6 +691,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|//todo: according to JavaDoc this seems like private API: addDelegationToken should be used
 name|twrapper
 operator|.
 name|token

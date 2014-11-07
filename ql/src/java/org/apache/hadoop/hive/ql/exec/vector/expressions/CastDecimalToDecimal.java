@@ -166,6 +166,7 @@ name|int
 name|i
 parameter_list|)
 block|{
+comment|// The set routine enforces precision and scale.
 name|outV
 operator|.
 name|vector
@@ -173,7 +174,7 @@ index|[
 name|i
 index|]
 operator|.
-name|update
+name|set
 argument_list|(
 name|inV
 operator|.
@@ -181,27 +182,6 @@ name|vector
 index|[
 name|i
 index|]
-argument_list|)
-expr_stmt|;
-name|outV
-operator|.
-name|vector
-index|[
-name|i
-index|]
-operator|.
-name|changeScaleDestructive
-argument_list|(
-name|outV
-operator|.
-name|scale
-argument_list|)
-expr_stmt|;
-name|outV
-operator|.
-name|checkPrecisionOverflow
-argument_list|(
-name|i
 argument_list|)
 expr_stmt|;
 block|}

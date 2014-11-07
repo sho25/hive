@@ -775,7 +775,7 @@ parameter_list|(
 name|TypeInfo
 name|ti
 parameter_list|,
-name|Decimal128
+name|HiveDecimal
 name|value
 parameter_list|)
 block|{
@@ -783,15 +783,7 @@ return|return
 operator|new
 name|HiveDecimalWritable
 argument_list|(
-name|HiveDecimal
-operator|.
-name|create
-argument_list|(
 name|value
-operator|.
-name|toBigDecimal
-argument_list|()
-argument_list|)
 argument_list|)
 return|;
 block|}
@@ -1455,6 +1447,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -1612,6 +1607,9 @@ name|vector
 index|[
 name|i
 index|]
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Assert

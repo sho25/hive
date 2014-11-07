@@ -531,10 +531,6 @@ name|vOutContext
 init|=
 literal|null
 decl_stmt|;
-specifier|private
-name|String
-name|fileKey
-decl_stmt|;
 comment|// The above members are initialized by the constructor and must not be
 comment|// transient.
 comment|//---------------------------------------------------------------------------
@@ -2929,13 +2925,6 @@ operator|+
 literal|"/_GROUPBY_"
 argument_list|)
 expr_stmt|;
-name|fileKey
-operator|=
-name|vOutContext
-operator|.
-name|getFileKey
-argument_list|()
-expr_stmt|;
 block|}
 specifier|public
 name|VectorGroupByOperator
@@ -3172,9 +3161,10 @@ name|vrbCtx
 operator|.
 name|init
 argument_list|(
-name|hconf
-argument_list|,
-name|fileKey
+name|vOutContext
+operator|.
+name|getScratchColumnTypeMap
+argument_list|()
 argument_list|,
 operator|(
 name|StructObjectInspector

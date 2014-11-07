@@ -4650,6 +4650,7 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
+comment|// also clone the colExprMap by default
 name|Operator
 argument_list|<
 name|?
@@ -4665,6 +4666,9 @@ argument_list|(
 name|descClone
 argument_list|,
 name|getSchema
+argument_list|()
+argument_list|,
+name|getColumnExprMap
 argument_list|()
 argument_list|,
 name|parentClones

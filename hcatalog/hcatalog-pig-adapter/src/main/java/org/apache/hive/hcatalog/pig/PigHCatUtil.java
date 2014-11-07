@@ -2822,6 +2822,16 @@ argument_list|()
 control|)
 block|{
 comment|// since map key for Pig has to be Strings
+if|if
+condition|(
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|result
 operator|.
 name|put
@@ -2853,6 +2863,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|result
