@@ -919,27 +919,13 @@ range|:
 name|incompatFileSet
 control|)
 block|{
-name|String
-name|fileName
-init|=
-name|incompatFile
-operator|.
-name|getName
-argument_list|()
-decl_stmt|;
 name|Path
-name|destFile
+name|destDir
 init|=
-operator|new
-name|Path
-argument_list|(
 name|finalPath
 operator|.
 name|getParent
 argument_list|()
-argument_list|,
-name|fileName
-argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -951,7 +937,7 @@ name|fs
 argument_list|,
 name|incompatFile
 argument_list|,
-name|destFile
+name|destDir
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -964,7 +950,7 @@ name|incompatFile
 operator|+
 literal|" to "
 operator|+
-name|destFile
+name|destDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -984,7 +970,7 @@ name|incompatFile
 operator|+
 literal|" to "
 operator|+
-name|destFile
+name|destDir
 argument_list|)
 expr_stmt|;
 throw|throw
