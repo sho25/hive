@@ -3502,6 +3502,12 @@ specifier|final
 name|boolean
 name|hasBase
 decl_stmt|;
+specifier|private
+name|OrcFile
+operator|.
+name|WriterVersion
+name|writerVersion
+decl_stmt|;
 name|SplitGenerator
 parameter_list|(
 name|Context
@@ -4295,6 +4301,7 @@ argument_list|,
 name|isOriginal
 argument_list|)
 expr_stmt|;
+comment|// only do split pruning if HIVE-8732 has been fixed in the writer
 if|if
 condition|(
 name|options
@@ -4303,6 +4310,14 @@ name|getSearchArgument
 argument_list|()
 operator|!=
 literal|null
+operator|&&
+name|writerVersion
+operator|!=
+name|OrcFile
+operator|.
+name|WriterVersion
+operator|.
+name|ORIGINAL
 condition|)
 block|{
 name|SearchArgument
@@ -4795,6 +4810,12 @@ name|fileInfo
 operator|.
 name|types
 expr_stmt|;
+name|writerVersion
+operator|=
+name|fileInfo
+operator|.
+name|writerVersion
+expr_stmt|;
 comment|// For multiple runs, in case sendSplitsInFooter changes
 if|if
 condition|(
@@ -4865,6 +4886,15 @@ operator|.
 name|getTypes
 argument_list|()
 expr_stmt|;
+name|fileInfo
+operator|.
+name|writerVersion
+operator|=
+name|orcReader
+operator|.
+name|getWriterVersion
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -4914,6 +4944,13 @@ operator|=
 name|orcReader
 operator|.
 name|getTypes
+argument_list|()
+expr_stmt|;
+name|writerVersion
+operator|=
+name|orcReader
+operator|.
+name|getWriterVersion
 argument_list|()
 expr_stmt|;
 name|fileMetaInfo
@@ -4973,6 +5010,8 @@ argument_list|,
 name|types
 argument_list|,
 name|fileMetaInfo
+argument_list|,
+name|writerVersion
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5477,6 +5516,12 @@ name|Type
 argument_list|>
 name|types
 decl_stmt|;
+specifier|private
+name|OrcFile
+operator|.
+name|WriterVersion
+name|writerVersion
+decl_stmt|;
 name|FileInfo
 parameter_list|(
 name|long
@@ -5506,6 +5551,11 @@ name|ReaderImpl
 operator|.
 name|FileMetaInfo
 name|fileMetaInfo
+parameter_list|,
+name|OrcFile
+operator|.
+name|WriterVersion
+name|writerVersion
 parameter_list|)
 block|{
 name|this
@@ -5543,6 +5593,12 @@ operator|.
 name|types
 operator|=
 name|types
+expr_stmt|;
+name|this
+operator|.
+name|writerVersion
+operator|=
+name|writerVersion
 expr_stmt|;
 block|}
 block|}

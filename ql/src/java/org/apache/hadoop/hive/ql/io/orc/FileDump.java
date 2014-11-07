@@ -415,6 +415,30 @@ name|conf
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"File Version: "
+operator|+
+name|reader
+operator|.
+name|getFileVersion
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" with "
+operator|+
+name|reader
+operator|.
+name|getWriterVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|RecordReaderImpl
 name|rows
 init|=
