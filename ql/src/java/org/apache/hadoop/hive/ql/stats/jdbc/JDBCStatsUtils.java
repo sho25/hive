@@ -87,6 +87,22 @@ name|StatsSetupConst
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|hash
+operator|.
+name|MurmurHash
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -376,7 +392,13 @@ operator|.
 name|getIdColumnName
 argument_list|()
 operator|+
-literal|" VARCHAR(255) PRIMARY KEY "
+literal|" VARCHAR("
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+operator|+
+literal|") PRIMARY KEY "
 decl_stmt|;
 for|for
 control|(
@@ -703,6 +725,49 @@ literal|" LIKE ? ESCAPE ?"
 decl_stmt|;
 return|return
 name|delete
+return|;
+block|}
+comment|/**    * Make sure the row ID fits into the row ID column in the table.    * @param rowId Row ID.    * @return Resulting row ID truncated to correct length, if necessary.    */
+specifier|public
+specifier|static
+name|String
+name|truncateRowId
+parameter_list|(
+name|String
+name|rowId
+parameter_list|)
+block|{
+return|return
+operator|(
+name|rowId
+operator|.
+name|length
+argument_list|()
+operator|<=
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+operator|)
+condition|?
+name|rowId
+else|:
+name|Integer
+operator|.
+name|toHexString
+argument_list|(
+name|MurmurHash
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|hash
+argument_list|(
+name|rowId
+operator|.
+name|getBytes
+argument_list|()
+argument_list|)
+argument_list|)
 return|;
 block|}
 block|}
