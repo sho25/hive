@@ -5123,8 +5123,7 @@ decl_stmt|;
 name|factor
 operator|=
 name|sign
-operator|!=
-operator|-
+operator|==
 literal|1
 condition|?
 name|factor

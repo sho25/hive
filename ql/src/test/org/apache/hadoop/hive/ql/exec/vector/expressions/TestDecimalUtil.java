@@ -183,6 +183,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|HiveDecimal
 name|d2
 init|=
@@ -197,7 +198,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d2
 operator|.
@@ -315,7 +316,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d4
 operator|.
@@ -380,7 +381,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|1
 argument_list|,
 name|d5
 operator|.
@@ -445,7 +446,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|1
 argument_list|,
 name|d6
 operator|.
@@ -570,6 +571,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|HiveDecimal
 name|d2
 init|=
@@ -584,7 +586,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d2
 operator|.
@@ -702,7 +704,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d4
 operator|.
@@ -767,7 +769,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|1
 argument_list|,
 name|d5
 operator|.
@@ -832,7 +834,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|1
 argument_list|,
 name|d6
 operator|.
@@ -1074,6 +1076,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|HiveDecimal
 name|d2
 init|=
@@ -1088,7 +1091,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d2
 operator|.
@@ -1206,7 +1209,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d4
 operator|.
@@ -1437,6 +1440,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|HiveDecimal
 name|d2
 init|=
@@ -1451,7 +1455,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|3
 argument_list|,
 name|d2
 operator|.
@@ -1569,7 +1573,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|3
 argument_list|,
 name|d4
 operator|.
@@ -1853,6 +1857,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|HiveDecimal
 name|d3
 init|=
@@ -1867,7 +1872,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d3
 operator|.
@@ -2020,7 +2025,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|0
 argument_list|,
 name|d3
 operator|.
