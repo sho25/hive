@@ -1638,6 +1638,13 @@ argument_list|(
 literal|"Status: Initializing"
 argument_list|)
 expr_stmt|;
+name|startTime
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+expr_stmt|;
 break|break;
 case|case
 name|RUNNING
