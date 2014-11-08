@@ -372,7 +372,7 @@ name|portNum
 decl_stmt|;
 specifier|protected
 name|InetAddress
-name|serverAddress
+name|serverIPAddress
 decl_stmt|;
 specifier|protected
 name|String
@@ -508,7 +508,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|serverAddress
+name|serverIPAddress
 operator|=
 name|InetAddress
 operator|.
@@ -520,7 +520,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|serverAddress
+name|serverIPAddress
 operator|=
 name|InetAddress
 operator|.
@@ -840,11 +840,11 @@ return|;
 block|}
 specifier|public
 name|InetAddress
-name|getServerAddress
+name|getServerIPAddress
 parameter_list|()
 block|{
 return|return
-name|serverAddress
+name|serverIPAddress
 return|;
 block|}
 annotation|@
