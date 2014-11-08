@@ -2435,7 +2435,7 @@ specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"Parsing command"
+literal|"number of splits"
 decl_stmt|;
 name|testScriptFile
 argument_list|(

@@ -6029,7 +6029,7 @@ literal|"hive.server2.logging.operation.enabled"
 argument_list|,
 literal|true
 argument_list|,
-literal|"When true, HS2 will save operation logs"
+literal|"When true, HS2 will save operation logs and make them available for clients"
 argument_list|)
 block|,
 name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
@@ -6051,6 +6051,15 @@ operator|+
 literal|"operation_logs"
 argument_list|,
 literal|"Top level directory where operation logs are stored if logging functionality is enabled"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_VERBOSE
+argument_list|(
+literal|"hive.server2.logging.operation.verbose"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When true, HS2 operation logs available for clients will be verbose"
 argument_list|)
 block|,
 comment|// logging configuration
