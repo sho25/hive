@@ -1080,6 +1080,11 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+name|TezJobMonitor
+operator|.
+name|initShutdownHook
+argument_list|()
+expr_stmt|;
 name|session
 operator|.
 name|start
