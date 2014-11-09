@@ -1937,6 +1937,19 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+specifier|public
+name|void
+name|mergeCredentials
+parameter_list|(
+name|JobConf
+name|dest
+parameter_list|,
+name|JobConf
+name|src
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Check if the configured UGI has access to the path for the given file system action.    * Method will return successfully if action is permitted. AccessControlExceptoin will    * be thrown if user does not have access to perform the action. Other exceptions may    * be thrown for non-access related errors.    * @param fs    * @param status    * @param action    * @throws IOException    * @throws AccessControlException    * @throws Exception    */
 specifier|public
 name|void
