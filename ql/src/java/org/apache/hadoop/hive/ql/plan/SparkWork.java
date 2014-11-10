@@ -637,6 +637,24 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Whether the specified BaseWork is a vertex in this graph    * @param w the BaseWork to check    * @return whether specified BaseWork is in this graph    */
+specifier|public
+name|boolean
+name|contains
+parameter_list|(
+name|BaseWork
+name|w
+parameter_list|)
+block|{
+return|return
+name|workGraph
+operator|.
+name|containsKey
+argument_list|(
+name|w
+argument_list|)
+return|;
+block|}
 comment|/**    * add creates a new node in the graph without any connections    */
 specifier|public
 name|void
