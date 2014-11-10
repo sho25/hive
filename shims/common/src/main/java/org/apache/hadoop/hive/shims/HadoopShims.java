@@ -1950,6 +1950,18 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Get the counter group display name    * @param group the group name to lookup    * @param defaultValue of the group    * @return the group display name    */
+specifier|public
+name|String
+name|getCounterGroupName
+parameter_list|(
+name|String
+name|group
+parameter_list|,
+name|String
+name|defaultValue
+parameter_list|)
+function_decl|;
 comment|/**    * Check if the configured UGI has access to the path for the given file system action.    * Method will return successfully if action is permitted. AccessControlExceptoin will    * be thrown if user does not have access to perform the action. Other exceptions may    * be thrown for non-access related errors.    * @param fs    * @param status    * @param action    * @throws IOException    * @throws AccessControlException    * @throws Exception    */
 specifier|public
 name|void

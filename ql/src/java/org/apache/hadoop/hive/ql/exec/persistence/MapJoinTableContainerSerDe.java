@@ -636,10 +636,9 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-operator|!
 name|fileStatus
 operator|.
-name|isFile
+name|isDir
 argument_list|()
 condition|)
 block|{

@@ -803,7 +803,7 @@ name|item
 operator|.
 name|_1
 operator|.
-name|copyBytes
+name|getBytes
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -817,7 +817,7 @@ name|item
 operator|.
 name|_2
 operator|.
-name|copyBytes
+name|getBytes
 argument_list|()
 argument_list|)
 decl_stmt|;
