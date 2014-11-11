@@ -5878,6 +5878,15 @@ operator|+
 literal|"table (but see HIVE-8067)."
 argument_list|)
 block|,
+name|HIVE_AUTHORIZATION_TASK_FACTORY
+argument_list|(
+literal|"hive.security.authorization.task.factory"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.parse.authorization.HiveAuthorizationTaskFactoryImpl"
+argument_list|,
+literal|"Authorization DDL task factory implementation"
+argument_list|)
+block|,
 comment|// if this is not set default value is set during config initialization
 comment|// Default value can't be set in this constructor as it would refer names in other ConfVars
 comment|// whose constructor would not have been called
