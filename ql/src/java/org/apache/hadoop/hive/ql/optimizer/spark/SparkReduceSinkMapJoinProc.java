@@ -941,8 +941,9 @@ init|=
 operator|new
 name|SparkEdgeProperty
 argument_list|(
-literal|0
-comment|/*null, edgeType, numBuckets*/
+name|SparkEdgeProperty
+operator|.
+name|SHUFFLE_NONE
 argument_list|)
 decl_stmt|;
 if|if

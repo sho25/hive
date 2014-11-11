@@ -287,12 +287,6 @@ argument_list|(
 literal|"PARTITION-LEVEL SORT"
 argument_list|)
 expr_stmt|;
-return|return
-name|sb
-operator|.
-name|toString
-argument_list|()
-return|;
 block|}
 if|if
 condition|(
@@ -325,12 +319,6 @@ argument_list|(
 literal|"SORT"
 argument_list|)
 expr_stmt|;
-return|return
-name|sb
-operator|.
-name|toString
-argument_list|()
-return|;
 block|}
 return|return
 name|sb
