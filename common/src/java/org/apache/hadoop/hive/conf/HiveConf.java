@@ -2700,6 +2700,15 @@ operator|+
 literal|"* implies all the keys will get inherited."
 argument_list|)
 block|,
+name|METASTORE_FILTER_HOOK
+argument_list|(
+literal|"hive.metastore.filter.hook"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
+argument_list|,
+literal|"Metastore hook class for filtering the metadata read results"
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
