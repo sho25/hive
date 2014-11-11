@@ -833,6 +833,16 @@ begin_import
 import|import
 name|parquet
 operator|.
+name|hadoop
+operator|.
+name|ParquetOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|parquet
+operator|.
 name|io
 operator|.
 name|api
@@ -859,6 +869,10 @@ block|,
 name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
+block|,
+name|ParquetOutputFormat
+operator|.
+name|COMPRESSION
 block|}
 argument_list|)
 specifier|public
@@ -914,6 +928,15 @@ name|Text
 argument_list|(
 literal|"bag"
 argument_list|)
+decl_stmt|;
+comment|// default compression type is uncompressed
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|DEFAULTCOMPRESSION
+init|=
+literal|"UNCOMPRESSED"
 decl_stmt|;
 comment|// Map precision to the number bytes needed for binary conversion.
 specifier|public
@@ -1023,6 +1046,10 @@ specifier|private
 name|long
 name|deserializedSize
 decl_stmt|;
+specifier|private
+name|String
+name|compressionType
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -1086,6 +1113,20 @@ operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)
 decl_stmt|;
+comment|// Get compression properties
+name|compressionType
+operator|=
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|ParquetOutputFormat
+operator|.
+name|COMPRESSION
+argument_list|,
+name|DEFAULTCOMPRESSION
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|columnNameProperty
