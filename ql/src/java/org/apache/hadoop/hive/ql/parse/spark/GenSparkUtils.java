@@ -2483,6 +2483,17 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+specifier|synchronized
+name|int
+name|getNextSeqNumber
+parameter_list|()
+block|{
+return|return
+operator|++
+name|sequenceNumber
+return|;
+block|}
 block|}
 end_class
 
