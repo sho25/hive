@@ -273,7 +273,7 @@ operator|new
 name|HivePushDownJoinConditionRule
 argument_list|()
 decl_stmt|;
-comment|/** 	 * Creates a PushFilterPastJoinRule with an explicit root operand. 	 */
+comment|/**    * Creates a PushFilterPastJoinRule with an explicit root operand.    */
 specifier|protected
 name|HivePushFilterPastJoinRule
 parameter_list|(
@@ -311,7 +311,7 @@ name|projectFactory
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** 	 * Rule that tries to push filter expressions into a join condition and into 	 * the inputs of the join. 	 */
+comment|/**    * Rule that tries to push filter expressions into a join condition and into    * the inputs of the join.    */
 specifier|public
 specifier|static
 class|class
@@ -479,7 +479,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/* 	 * Any predicates pushed down to joinFilters that aren't equality 	 * conditions: put them back as aboveFilters because Hive doesn't support 	 * not equi join conditions. 	 */
+comment|/*    * Any predicates pushed down to joinFilters that aren't equality conditions:    * put them back as aboveFilters because Hive doesn't support not equi join    * conditions.    */
 annotation|@
 name|Override
 specifier|protected
@@ -559,6 +559,11 @@ name|RexCall
 operator|)
 name|exp
 decl_stmt|;
+name|boolean
+name|validHiveJoinFilter
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 operator|(
@@ -574,7 +579,47 @@ name|SqlKind
 operator|.
 name|EQUALS
 operator|)
-operator|||
+condition|)
+block|{
+name|validHiveJoinFilter
+operator|=
+literal|true
+expr_stmt|;
+for|for
+control|(
+name|RexNode
+name|rn
+range|:
+name|c
+operator|.
+name|getOperands
+argument_list|()
+control|)
+block|{
+comment|// NOTE: Hive dis-allows projections from both left& right side
+comment|// of join condition. Example: Hive disallows
+comment|// (r1.x +r2.x)=(r1.y+r2.y) on join condition.
+if|if
+condition|(
+name|filterRefersToBothSidesOfJoin
+argument_list|(
+name|rn
+argument_list|,
+name|join
+argument_list|)
+condition|)
+block|{
+name|validHiveJoinFilter
+operator|=
+literal|false
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+elseif|else
+if|if
+condition|(
 operator|(
 name|c
 operator|.
@@ -632,32 +677,18 @@ name|GREATER_THAN_OR_EQUAL
 operator|)
 condition|)
 block|{
-name|boolean
 name|validHiveJoinFilter
-init|=
+operator|=
 literal|true
-decl_stmt|;
-for|for
-control|(
-name|RexNode
-name|rn
-range|:
-name|c
-operator|.
-name|getOperands
-argument_list|()
-control|)
-block|{
-comment|// NOTE: Hive dis-allows projections from both left
-comment|//&
-comment|// right side
-comment|// of join condition. Example: Hive disallows
-comment|// (r1.x=r2.x)=(r1.y=r2.y) on join condition.
+expr_stmt|;
+comment|// NOTE: Hive dis-allows projections from both left& right side of
+comment|// join in in equality condition. Example: Hive disallows (r1.x<
+comment|// r2.x) on join condition.
 if|if
 condition|(
 name|filterRefersToBothSidesOfJoin
 argument_list|(
-name|rn
+name|c
 argument_list|,
 name|join
 argument_list|)
@@ -667,7 +698,6 @@ name|validHiveJoinFilter
 operator|=
 literal|false
 expr_stmt|;
-break|break;
 block|}
 block|}
 if|if
@@ -675,7 +705,6 @@ condition|(
 name|validHiveJoinFilter
 condition|)
 continue|continue;
-block|}
 block|}
 name|aboveFilters
 operator|.
