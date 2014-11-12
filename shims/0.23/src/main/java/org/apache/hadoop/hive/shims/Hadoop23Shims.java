@@ -3199,6 +3199,9 @@ name|conf
 argument_list|)
 condition|)
 block|{
+comment|//Attempt extended Acl operations only if its enabled, but don't fail the operation regardless.
+try|try
+block|{
 name|aclStatus
 operator|=
 name|fs
@@ -3208,6 +3211,31 @@ argument_list|(
 name|file
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Skipping ACL inheritance: File system for path "
+operator|+
+name|file
+operator|+
+literal|" "
+operator|+
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+operator|+
+name|e
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 return|return
 operator|new
@@ -3296,6 +3324,9 @@ argument_list|(
 name|conf
 argument_list|)
 condition|)
+block|{
+comment|//Attempt extended Acl operations only if its enabled, 8791but don't fail the operation regardless.
+try|try
 block|{
 name|AclStatus
 name|aclStatus
@@ -3443,6 +3474,31 @@ argument_list|()
 block|}
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Skipping ACL inheritance: File system for path "
+operator|+
+name|target
+operator|+
+literal|" "
+operator|+
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+operator|+
+name|e
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
