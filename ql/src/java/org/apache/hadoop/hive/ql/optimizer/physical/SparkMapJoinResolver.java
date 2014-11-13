@@ -689,6 +689,17 @@ name|HIVEQUERYID
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// copy cloneToWork to ensure RDD cache still works
+name|parentWork
+operator|.
+name|setCloneToWork
+argument_list|(
+name|sparkWork
+operator|.
+name|getCloneToWork
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|dependencyGraph
 operator|.
 name|get
