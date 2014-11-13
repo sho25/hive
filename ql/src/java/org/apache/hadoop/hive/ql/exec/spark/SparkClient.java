@@ -1510,6 +1510,8 @@ argument_list|,
 name|jobProgressListener
 argument_list|,
 name|sparkCounters
+argument_list|,
+name|future
 argument_list|)
 decl_stmt|;
 return|return
