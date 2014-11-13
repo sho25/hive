@@ -550,7 +550,7 @@ name|baseDir
 init|=
 name|localWork
 operator|.
-name|getTmpPath
+name|getTmpHDFSPath
 argument_list|()
 decl_stmt|;
 if|if
