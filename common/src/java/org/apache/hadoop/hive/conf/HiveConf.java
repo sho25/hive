@@ -6263,7 +6263,7 @@ name|HIVE_SSL_PROTOCOL_BLACKLIST
 argument_list|(
 literal|"hive.ssl.protocol.blacklist"
 argument_list|,
-literal|"SSLv2,SSLv2Hello,SSLv3"
+literal|"SSLv2,SSLv3"
 argument_list|,
 literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)
