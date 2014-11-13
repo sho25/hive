@@ -2469,6 +2469,8 @@ operator|new
 name|MetaStoreDirectSql
 argument_list|(
 name|pm
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -12261,8 +12263,6 @@ argument_list|,
 name|tblName
 argument_list|,
 name|partNames
-argument_list|,
-literal|null
 argument_list|)
 return|;
 block|}
@@ -12592,8 +12592,6 @@ argument_list|,
 name|tblName
 argument_list|,
 name|partNames
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}

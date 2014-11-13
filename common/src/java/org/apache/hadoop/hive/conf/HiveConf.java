@@ -2549,6 +2549,21 @@ operator|+
 literal|"try-and-fall-back cost."
 argument_list|)
 block|,
+name|METASTORE_DIRECT_SQL_PARTITION_BATCH_SIZE
+argument_list|(
+literal|"hive.metastore.direct.sql.batch.size"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Batch size for partition and other object retrieval from the underlying DB in direct\n"
+operator|+
+literal|"SQL. For some DBs like Oracle and MSSQL, there are hardcoded or perf-based limitations\n"
+operator|+
+literal|"that necessitate this. For DBs that can handle the queries, this isn't necessary and\n"
+operator|+
+literal|"may impede performance. -1 means no batching, 0 means automatic batching."
+argument_list|)
+block|,
 name|METASTORE_TRY_DIRECT_SQL_DDL
 argument_list|(
 literal|"hive.metastore.try.direct.sql.ddl"
