@@ -214,7 +214,7 @@ specifier|private
 name|String
 name|stageID
 decl_stmt|;
-comment|// Temp HDFS path for Spark HashTable sink and loader
+comment|// Temp HDFS path for Spark HashTable sink
 specifier|private
 name|Path
 name|tmpHDFSPath
