@@ -898,6 +898,13 @@ block|}
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|originalTask
+operator|!=
+name|resultTask
+condition|)
+block|{
 name|List
 argument_list|<
 name|Task
@@ -966,6 +973,7 @@ argument_list|(
 name|originalTask
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|createdTaskMap
