@@ -514,7 +514,8 @@ init|=
 operator|!
 name|looped
 operator|.
-name|boolVal
+name|get
+argument_list|()
 decl_stmt|;
 comment|// Make sure nothing escapes this run method and kills the metastore at large,
 comment|// so wrap it in a big catch Throwable statement.
@@ -847,7 +848,8 @@ name|cleanerCheckInterval
 operator|||
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 continue|continue;
 else|else
@@ -889,9 +891,10 @@ condition|)
 block|{
 name|looped
 operator|.
-name|boolVal
-operator|=
+name|set
+argument_list|(
 literal|true
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -900,7 +903,8 @@ condition|(
 operator|!
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 do|;
 block|}

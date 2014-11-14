@@ -51,6 +51,20 @@ name|MetaException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * A thread that runs in the metastore, separate from the threads in the thrift service.  */
 end_comment
@@ -80,37 +94,20 @@ comment|/**    * Initialize the thread.  This must not be called until after    
 name|void
 name|init
 parameter_list|(
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 parameter_list|,
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Run the thread in the background.  This must not be called until    * {@link #init(org.apache.hadoop.hive.metastore.MetaStoreThread.BooleanPointer)} has    * been called.    */
+comment|/**    * Run the thread in the background.  This must not be called until    * {@link ##init(java.util.concurrent.atomic.AtomicBoolean, java.util.concurrent.atomic.AtomicBoolean)} has    * been called.    */
 name|void
 name|start
 parameter_list|()
 function_decl|;
-class|class
-name|BooleanPointer
-block|{
-specifier|public
-name|boolean
-name|boolVal
-decl_stmt|;
-specifier|public
-name|BooleanPointer
-parameter_list|()
-block|{
-name|boolVal
-operator|=
-literal|false
-expr_stmt|;
-block|}
-block|}
 block|}
 end_interface
 

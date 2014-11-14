@@ -419,6 +419,20 @@ name|TimeUnit
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * A class to initiate compactions.  This will run in a separate thread.  */
 end_comment
@@ -820,7 +834,8 @@ name|checkInterval
 operator|||
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 continue|continue;
 else|else
@@ -839,7 +854,8 @@ condition|(
 operator|!
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 do|;
 block|}
@@ -871,10 +887,10 @@ specifier|public
 name|void
 name|init
 parameter_list|(
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 parameter_list|,
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
