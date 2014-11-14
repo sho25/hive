@@ -843,6 +843,16 @@ begin_import
 import|import
 name|parquet
 operator|.
+name|hadoop
+operator|.
+name|ParquetWriter
+import|;
+end_import
+
+begin_import
+import|import
+name|parquet
+operator|.
 name|io
 operator|.
 name|api
@@ -929,14 +939,19 @@ argument_list|(
 literal|"bag"
 argument_list|)
 decl_stmt|;
-comment|// default compression type is uncompressed
+comment|// default compression type for parquet output format
 specifier|private
 specifier|static
 specifier|final
 name|String
 name|DEFAULTCOMPRESSION
 init|=
-literal|"UNCOMPRESSED"
+name|ParquetWriter
+operator|.
+name|DEFAULT_COMPRESSION_CODEC_NAME
+operator|.
+name|name
+argument_list|()
 decl_stmt|;
 comment|// Map precision to the number bytes needed for binary conversion.
 specifier|public
