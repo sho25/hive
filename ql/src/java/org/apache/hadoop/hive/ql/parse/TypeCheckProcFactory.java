@@ -895,6 +895,20 @@ name|VarcharTypeInfo
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
 begin_comment
 comment|/**  * The Factory for creating typecheck processors. The typecheck processors are  * used to processes the syntax trees for expressions and convert them into  * expression Node Descriptor trees. They also introduce the correct conversion  * functions to do proper implicit conversion.  */
 end_comment
@@ -1453,27 +1467,23 @@ argument_list|(
 name|disp
 argument_list|)
 decl_stmt|;
-comment|// Create a list of topop nodes
+comment|// Create a list of top nodes
 name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
 name|topNodes
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|Node
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|topNodes
+name|Lists
 operator|.
-name|add
+expr|<
+name|Node
+operator|>
+name|newArrayList
 argument_list|(
 name|expr
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|HashMap
 argument_list|<
 name|Node
