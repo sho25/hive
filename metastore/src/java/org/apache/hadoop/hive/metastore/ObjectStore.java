@@ -3479,12 +3479,17 @@ name|TXN_STATUS
 operator|.
 name|ROLLBACK
 expr_stmt|;
+try|try
+block|{
 comment|// could already be rolled back
 name|currentTransaction
 operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+block|}
+finally|finally
+block|{
 comment|// remove all detached objects from the cache, since the transaction is
 comment|// being rolled back they are no longer relevant, and this prevents them
 comment|// from reattaching in future transactions
@@ -3493,6 +3498,7 @@ operator|.
 name|evictAll
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
