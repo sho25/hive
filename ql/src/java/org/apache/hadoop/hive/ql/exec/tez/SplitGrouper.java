@@ -563,6 +563,11 @@ name|totalSize
 init|=
 literal|0
 decl_stmt|;
+name|boolean
+name|earlyExit
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -592,6 +597,42 @@ name|bucketId
 argument_list|)
 control|)
 block|{
+comment|// the incoming split may not be a file split when we are re-grouping TezGroupedSplits in
+comment|// the case of SMB join. So in this case, we can do an early exit by not doing the
+comment|// calculation for bucketSizeMap. Each bucket will assume it can fill availableSlots * waves
+comment|// (preset to 0.5) for SMB join.
+if|if
+condition|(
+operator|!
+operator|(
+name|s
+operator|instanceof
+name|FileSplit
+operator|)
+condition|)
+block|{
+name|bucketTaskMap
+operator|.
+name|put
+argument_list|(
+name|bucketId
+argument_list|,
+call|(
+name|int
+call|)
+argument_list|(
+name|availableSlots
+operator|*
+name|waves
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|earlyExit
+operator|=
+literal|true
+expr_stmt|;
+continue|continue;
+block|}
 name|FileSplit
 name|fsplit
 init|=
@@ -624,6 +665,15 @@ argument_list|,
 name|size
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|earlyExit
+condition|)
+block|{
+return|return
+name|bucketTaskMap
+return|;
 block|}
 comment|// compute the number of tasks
 for|for

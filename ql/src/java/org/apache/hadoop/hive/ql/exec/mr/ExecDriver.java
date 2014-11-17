@@ -2384,7 +2384,7 @@ name|localwork
 init|=
 name|mWork
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 if|if

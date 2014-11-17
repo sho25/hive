@@ -1437,7 +1437,14 @@ argument_list|)
 throw|;
 block|}
 return|return
+name|dtFactory
+operator|.
+name|createTypeWithNullability
+argument_list|(
 name|convertedType
+argument_list|,
+literal|true
+argument_list|)
 return|;
 block|}
 specifier|public

@@ -3744,7 +3744,7 @@ condition|)
 block|{
 name|line
 operator|+=
-literal|" "
+literal|"\n"
 operator|+
 name|extra
 expr_stmt|;

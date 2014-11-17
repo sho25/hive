@@ -337,7 +337,7 @@ name|hostName
 expr_stmt|;
 block|}
 comment|// get service host
-specifier|protected
+specifier|public
 name|String
 name|getHost
 parameter_list|()
@@ -379,7 +379,7 @@ name|portNum
 expr_stmt|;
 block|}
 comment|// Get binary service port #
-specifier|protected
+specifier|public
 name|int
 name|getBinaryPort
 parameter_list|()
@@ -389,7 +389,7 @@ name|binaryPort
 return|;
 block|}
 comment|// Get http service port #
-specifier|protected
+specifier|public
 name|int
 name|getHttpPort
 parameter_list|()

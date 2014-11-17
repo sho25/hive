@@ -196,6 +196,21 @@ operator|=
 name|joinType
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|setPreserved
+parameter_list|(
+name|boolean
+name|preserved
+parameter_list|)
+block|{
+name|this
+operator|.
+name|preserved
+operator|=
+name|preserved
+expr_stmt|;
+block|}
 block|}
 end_class
 

@@ -422,7 +422,7 @@ name|SERVICE_DISCOVERY_MODE
 init|=
 literal|"serviceDiscoveryMode"
 decl_stmt|;
-comment|// Don't use dynamic serice discovery
+comment|// Don't use dynamic service discovery
 specifier|static
 specifier|final
 name|String
@@ -455,16 +455,6 @@ init|=
 literal|"hiveserver2"
 decl_stmt|;
 comment|// Non-configurable params:
-comment|// ZOOKEEPER_SESSION_TIMEOUT is not exposed as client configurable
-specifier|static
-specifier|final
-name|int
-name|ZOOKEEPER_SESSION_TIMEOUT
-init|=
-literal|600
-operator|*
-literal|1000
-decl_stmt|;
 comment|// Currently supports JKS keystore format
 specifier|static
 specifier|final
@@ -952,33 +942,31 @@ name|SQLException
 block|{
 if|if
 condition|(
-operator|(
 name|status
 operator|.
 name|getStatusCode
 argument_list|()
-operator|!=
+operator|==
 name|TStatusCode
 operator|.
 name|SUCCESS_STATUS
-operator|)
-operator|&&
+operator|||
 operator|(
 name|withInfo
 operator|&&
-operator|(
 name|status
 operator|.
 name|getStatusCode
 argument_list|()
-operator|!=
+operator|==
 name|TStatusCode
 operator|.
 name|SUCCESS_WITH_INFO_STATUS
 operator|)
-operator|)
 condition|)
 block|{
+return|return;
+block|}
 throw|throw
 operator|new
 name|HiveSQLException
@@ -986,7 +974,6 @@ argument_list|(
 name|status
 argument_list|)
 throw|;
-block|}
 block|}
 comment|/**    * Parse JDBC connection URL    * The new format of the URL is:    * jdbc:hive2://<host1>:<port1>,<host2>:<port2>/dbName;sess_var_list?hive_conf_list#hive_var_list    * where the optional sess, conf and var lists are semicolon separated<key>=<val> pairs.    * For utilizing dynamic service discovery with HiveServer2 multiple comma separated host:port pairs can    * be specified as shown above.    * The JDBC driver resolves the list of uris and picks a specific server instance to connect to.    * Currently, dynamic service discovery using ZooKeeper is supported, in which case the host:port pairs represent a ZooKeeper ensemble.    *    * As before, if the host/port is not specified, it the driver runs an embedded hive.    * examples -    *  jdbc:hive2://ubuntu:11000/db2?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://ubuntu:11000/db2;user=foo;password=bar    *    *  Connect to http://server:10001/hs2, with specified basicAuth credentials and initial database:    *  jdbc:hive2://server:10001/db;user=foo;password=bar?hive.server2.transport.mode=http;hive.server2.thrift.http.path=hs2    *    * @param uri    * @return    * @throws SQLException    */
 specifier|public
@@ -1173,45 +1160,6 @@ argument_list|(
 literal|"([^;]*)=([^;]*)[;]?"
 argument_list|)
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|sessionVarMap
-init|=
-name|connParams
-operator|.
-name|getSessionVars
-argument_list|()
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|hiveConfMap
-init|=
-name|connParams
-operator|.
-name|getHiveConfs
-argument_list|()
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|hiveVarMap
-init|=
-name|connParams
-operator|.
-name|getHiveVars
-argument_list|()
-decl_stmt|;
 comment|// dbname and session settings
 name|String
 name|sessVars
@@ -1330,7 +1278,10 @@ condition|)
 block|{
 if|if
 condition|(
-name|sessionVarMap
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
 operator|.
 name|put
 argument_list|(
@@ -1422,7 +1373,10 @@ name|find
 argument_list|()
 condition|)
 block|{
-name|hiveConfMap
+name|connParams
+operator|.
+name|getHiveConfs
+argument_list|()
 operator|.
 name|put
 argument_list|(
@@ -1477,7 +1431,10 @@ name|find
 argument_list|()
 condition|)
 block|{
-name|hiveVarMap
+name|connParams
+operator|.
+name|getHiveVars
+argument_list|()
 operator|.
 name|put
 argument_list|(
@@ -1520,9 +1477,15 @@ literal|"=<qop_value>"
 expr_stmt|;
 name|handleParamDeprecation
 argument_list|(
-name|sessionVarMap
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
 argument_list|,
-name|sessionVarMap
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
 argument_list|,
 name|JdbcConnectionParams
 operator|.
@@ -1548,9 +1511,15 @@ literal|"=<transport_mode_value>"
 expr_stmt|;
 name|handleParamDeprecation
 argument_list|(
-name|hiveConfMap
+name|connParams
+operator|.
+name|getHiveConfs
+argument_list|()
 argument_list|,
-name|sessionVarMap
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
 argument_list|,
 name|JdbcConnectionParams
 operator|.
@@ -1576,9 +1545,15 @@ literal|"=<http_path_value>"
 expr_stmt|;
 name|handleParamDeprecation
 argument_list|(
-name|hiveConfMap
+name|connParams
+operator|.
+name|getHiveConfs
+argument_list|()
 argument_list|,
-name|sessionVarMap
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
 argument_list|,
 name|JdbcConnectionParams
 operator|.
@@ -1635,6 +1610,15 @@ argument_list|(
 name|connParams
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Resolved authority: "
+operator|+
+name|resolvedAuthorityString
+argument_list|)
+expr_stmt|;
 name|uri
 operator|=
 name|uri
@@ -1719,7 +1703,7 @@ return|return
 name|connParams
 return|;
 block|}
-comment|/**    * Remove the deprecatedName param from the fromMap and put the key value in the toMap.    * Also log a deprecation message for the client.    * @param fromMap    * @param toMap    * @param oldName    * @param newName    */
+comment|/**    * Remove the deprecatedName param from the fromMap and put the key value in the toMap.    * Also log a deprecation message for the client.    * @param fromMap    * @param toMap    * @param deprecatedName    * @param newName    * @param newUsage    */
 specifier|private
 specifier|static
 name|void

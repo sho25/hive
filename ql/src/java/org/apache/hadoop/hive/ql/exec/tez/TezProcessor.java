@@ -47,17 +47,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
+name|Collections
 import|;
 end_import
 
@@ -78,18 +68,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
 import|;
 end_import
 
@@ -219,38 +197,6 @@ name|tez
 operator|.
 name|mapreduce
 operator|.
-name|input
-operator|.
-name|MRInputLegacy
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|mapreduce
-operator|.
-name|input
-operator|.
-name|MultiMRInput
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|mapreduce
-operator|.
 name|processor
 operator|.
 name|MRTaskReporter
@@ -286,6 +232,22 @@ operator|.
 name|api
 operator|.
 name|Event
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|runtime
+operator|.
+name|api
+operator|.
+name|Input
 import|;
 end_import
 
@@ -911,14 +873,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Input: "
+literal|"Starting input "
 operator|+
 name|inputEntry
 operator|.
 name|getKey
 argument_list|()
-operator|+
-literal|" is not cached"
 argument_list|)
 expr_stmt|;
 name|inputEntry
@@ -928,6 +888,26 @@ argument_list|()
 operator|.
 name|start
 argument_list|()
+expr_stmt|;
+name|processorContext
+operator|.
+name|waitForAnyInputReady
+argument_list|(
+name|Collections
+operator|.
+name|singletonList
+argument_list|(
+call|(
+name|Input
+call|)
+argument_list|(
+name|inputEntry
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+argument_list|)
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -943,7 +923,7 @@ operator|.
 name|getKey
 argument_list|()
 operator|+
-literal|" is already cached. Skipping start"
+literal|" is already cached. Skipping start and wait for ready"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1101,6 +1081,11 @@ block|}
 block|}
 block|}
 comment|/**    * KVOutputCollector. OutputCollector that writes using KVWriter.    * Must be initialized before it is used.    *    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 specifier|static
 class|class
 name|TezKVOutputCollector

@@ -77,6 +77,42 @@ name|metastore
 operator|.
 name|events
 operator|.
+name|AddIndexEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|AlterIndexEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
 name|AddPartitionEvent
 import|;
 end_import
@@ -186,6 +222,24 @@ operator|.
 name|events
 operator|.
 name|DropDatabaseEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|DropIndexEvent
 import|;
 end_import
 
@@ -382,7 +436,40 @@ name|partSetDoneEvent
 parameter_list|)
 throws|throws
 name|MetaException
-block|{    }
+block|{   }
+comment|/**    * @param indexEvent index event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAddIndex
+parameter_list|(
+name|AddIndexEvent
+name|indexEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param indexEvent index event    * @throws MetaException    */
+specifier|public
+name|void
+name|onDropIndex
+parameter_list|(
+name|DropIndexEvent
+name|indexEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param indexEvent index event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAlterIndex
+parameter_list|(
+name|AlterIndexEvent
+name|indexEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
 annotation|@
 name|Override
 specifier|public

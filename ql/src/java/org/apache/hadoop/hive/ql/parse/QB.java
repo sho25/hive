@@ -536,6 +536,18 @@ operator|)
 return|;
 block|}
 specifier|public
+name|String
+name|getAlias
+parameter_list|()
+block|{
+return|return
+name|qbp
+operator|.
+name|getAlias
+argument_list|()
+return|;
+block|}
+specifier|public
 name|QBParseInfo
 name|getParseInfo
 parameter_list|()
@@ -1016,6 +1028,24 @@ return|return
 name|isQuery
 return|;
 block|}
+comment|// to decide whether to rewrite RR of subquery
+specifier|public
+name|boolean
+name|isTopLevelSelectStarQuery
+parameter_list|()
+block|{
+return|return
+operator|!
+name|isCTAS
+argument_list|()
+operator|&&
+name|qbp
+operator|.
+name|isTopLevelSimpleSelectStarQuery
+argument_list|()
+return|;
+block|}
+comment|// to find target for fetch task conversion optimizer (not allows subqueries)
 specifier|public
 name|boolean
 name|isSimpleSelectQuery

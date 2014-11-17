@@ -71,6 +71,16 @@ name|PART_STAT_RAW_DATA_SIZE_COLUMN_NAME
 init|=
 literal|"RAW_DATA_SIZE"
 decl_stmt|;
+comment|// 255 is an old value that we will keep for now; it can be increased to 4000; limits are
+comment|// MySQL - 65535, SQL Server - 8000, Oracle - 4000, Derby - 32762, Postgres - large.
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|ID_COLUMN_VARCHAR_SIZE
+init|=
+literal|255
+decl_stmt|;
 block|}
 end_class
 

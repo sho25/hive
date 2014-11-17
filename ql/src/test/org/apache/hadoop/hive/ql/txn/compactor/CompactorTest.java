@@ -509,6 +509,20 @@ name|Stack
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * Super class for all of the compactor test modules.  */
 end_comment
@@ -565,15 +579,11 @@ name|conf
 decl_stmt|;
 specifier|private
 specifier|final
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 init|=
 operator|new
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -703,9 +713,7 @@ specifier|protected
 name|void
 name|startCleaner
 parameter_list|(
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
@@ -1528,9 +1536,10 @@ parameter_list|()
 block|{
 name|stop
 operator|.
-name|boolVal
-operator|=
+name|set
+argument_list|(
 literal|true
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -1739,9 +1748,7 @@ argument_list|,
 name|stopAfterOne
 argument_list|,
 operator|new
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1756,9 +1763,7 @@ parameter_list|,
 name|boolean
 name|stopAfterOne
 parameter_list|,
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
@@ -1842,9 +1847,10 @@ argument_list|)
 expr_stmt|;
 name|stop
 operator|.
-name|boolVal
-operator|=
+name|set
+argument_list|(
 name|stopAfterOne
+argument_list|)
 expr_stmt|;
 name|t
 operator|.

@@ -750,6 +750,12 @@ operator|new
 name|Object
 argument_list|()
 decl_stmt|;
+specifier|private
+name|int
+name|totalEventCount
+init|=
+literal|0
+decl_stmt|;
 specifier|public
 name|DynamicPartitionPruner
 parameter_list|()
@@ -858,6 +864,8 @@ operator|.
 name|prunePartitions
 argument_list|(
 name|work
+argument_list|,
+name|context
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1174,10 +1182,18 @@ name|prunePartitions
 parameter_list|(
 name|MapWork
 name|work
+parameter_list|,
+name|InputInitializerContext
+name|context
 parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|int
+name|expectedEvents
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -1206,6 +1222,33 @@ name|source
 argument_list|)
 control|)
 block|{
+name|int
+name|taskNum
+init|=
+name|context
+operator|.
+name|getVertexNumTasks
+argument_list|(
+name|source
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Expecting "
+operator|+
+name|taskNum
+operator|+
+literal|" events for vertex "
+operator|+
+name|source
+argument_list|)
+expr_stmt|;
+name|expectedEvents
+operator|+=
+name|taskNum
+expr_stmt|;
 name|prunePartitionSingleSource
 argument_list|(
 name|source
@@ -1216,6 +1259,35 @@ name|work
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// sanity check. all tasks must submit events for us to succeed.
+if|if
+condition|(
+name|expectedEvents
+operator|!=
+name|totalEventCount
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Expecting: "
+operator|+
+name|expectedEvents
+operator|+
+literal|", received: "
+operator|+
+name|totalEventCount
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Incorrect event count in dynamic parition pruning"
+argument_list|)
+throw|;
 block|}
 block|}
 specifier|private
@@ -2441,6 +2513,9 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+operator|++
+name|totalEventCount
+expr_stmt|;
 name|queue
 operator|.
 name|offer

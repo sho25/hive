@@ -295,6 +295,15 @@ class|class
 name|Server
 block|{
 specifier|public
+enum|enum
+name|ServerMode
+block|{
+name|HIVESERVER2
+block|,
+name|METASTORE
+block|}
+empty_stmt|;
+specifier|public
 specifier|abstract
 name|TTransportFactory
 name|createTransportFactory
@@ -344,6 +353,9 @@ name|conf
 parameter_list|,
 name|Object
 name|hmsHandler
+parameter_list|,
+name|ServerMode
+name|smode
 parameter_list|)
 throws|throws
 name|IOException

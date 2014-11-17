@@ -794,7 +794,7 @@ operator|.
 name|getMapWork
 argument_list|()
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 if|if
@@ -1014,7 +1014,7 @@ operator|.
 name|getMapWork
 argument_list|()
 operator|.
-name|setMapLocalWork
+name|setMapRedLocalWork
 argument_list|(
 name|newLocalWork
 argument_list|)

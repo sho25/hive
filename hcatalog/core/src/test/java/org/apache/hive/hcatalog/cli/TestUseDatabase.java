@@ -394,7 +394,10 @@ literal|" add partition (b='2') location '"
 operator|+
 name|dir
 operator|.
-name|getAbsolutePath
+name|toURI
+argument_list|()
+operator|.
+name|getPath
 argument_list|()
 operator|+
 literal|"'"

@@ -349,6 +349,20 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * Superclass for all threads in the compactor.  */
 end_comment
@@ -405,11 +419,11 @@ name|int
 name|threadId
 decl_stmt|;
 specifier|protected
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 decl_stmt|;
 specifier|protected
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 decl_stmt|;
 annotation|@
@@ -452,10 +466,10 @@ specifier|public
 name|void
 name|init
 parameter_list|(
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 parameter_list|,
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws

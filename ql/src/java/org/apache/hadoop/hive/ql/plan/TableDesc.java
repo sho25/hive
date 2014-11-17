@@ -77,11 +77,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|conf
 operator|.
-name|common
-operator|.
-name|JavaUtils
+name|Configuration
 import|;
 end_import
 
@@ -412,11 +410,28 @@ return|return
 name|inputFileFormatClass
 return|;
 block|}
-comment|/**    * Return a deserializer object corresponding to the tableDesc.    */
 specifier|public
 name|Deserializer
 name|getDeserializer
 parameter_list|()
+throws|throws
+name|Exception
+block|{
+return|return
+name|getDeserializer
+argument_list|(
+literal|null
+argument_list|)
+return|;
+block|}
+comment|/**    * Return a deserializer object corresponding to the tableDesc.    */
+specifier|public
+name|Deserializer
+name|getDeserializer
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -435,7 +450,7 @@ name|initializeSerDe
 argument_list|(
 name|de
 argument_list|,
-literal|null
+name|conf
 argument_list|,
 name|properties
 argument_list|,

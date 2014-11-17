@@ -570,10 +570,6 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|MapredLocalWork
-name|mapLocalWork
-decl_stmt|;
-specifier|private
 name|Path
 name|tmpHDFSPath
 decl_stmt|;
@@ -1059,6 +1055,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|MapredLocalWork
+name|mapLocalWork
+init|=
+name|getMapRedLocalWork
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|mapLocalWork
@@ -1227,40 +1229,6 @@ operator|.
 name|aliasToWork
 operator|=
 name|aliasToWork
-expr_stmt|;
-block|}
-comment|/**    * @return the mapredLocalWork    */
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"Local Work"
-argument_list|)
-specifier|public
-name|MapredLocalWork
-name|getMapLocalWork
-parameter_list|()
-block|{
-return|return
-name|mapLocalWork
-return|;
-block|}
-comment|/**    * @param mapLocalWork    *          the mapredLocalWork to set    */
-specifier|public
-name|void
-name|setMapLocalWork
-parameter_list|(
-specifier|final
-name|MapredLocalWork
-name|mapLocalWork
-parameter_list|)
-block|{
-name|this
-operator|.
-name|mapLocalWork
-operator|=
-name|mapLocalWork
 expr_stmt|;
 block|}
 annotation|@

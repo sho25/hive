@@ -3301,6 +3301,9 @@ name|klh
 operator|.
 name|decimalIndex
 argument_list|)
+operator|.
+name|getHiveDecimal
+argument_list|()
 argument_list|)
 return|;
 block|}

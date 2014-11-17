@@ -4254,7 +4254,7 @@ name|enablelog
 argument_list|)
 return|;
 block|}
-comment|/**    * Run a Sqoop job.    * @param optionsFile  name of option file which contains Sqoop command to run    * @param otherFiles   additional files to be shipped to the launcher, such as option                          files which contain part of the Sqoop command    * @param statusdir    where the stderr/stdout of templeton controller job goes    * @param callback     URL which WebHCat will call when the sqoop job finishes    * @param enablelog    whether to collect mapreduce log into statusdir/logs    */
+comment|/**    * Run a Sqoop job.    * @param optionsFile  name of option file which contains Sqoop command to run    * @param otherFiles   additional files to be shipped to the launcher, such as option                          files which contain part of the Sqoop command    * @param libdir       dir containing JDBC jars that Sqoop will need to interact with the database    * @param statusdir    where the stderr/stdout of templeton controller job goes    * @param callback     URL which WebHCat will call when the sqoop job finishes    * @param enablelog    whether to collect mapreduce log into statusdir/logs    */
 annotation|@
 name|POST
 annotation|@
@@ -4290,6 +4290,14 @@ literal|"optionsfile"
 argument_list|)
 name|String
 name|optionsFile
+parameter_list|,
+annotation|@
+name|FormParam
+argument_list|(
+literal|"libdir"
+argument_list|)
+name|String
+name|libdir
 parameter_list|,
 annotation|@
 name|FormParam
@@ -4331,8 +4339,6 @@ throws|,
 name|BadParam
 throws|,
 name|QueueException
-throws|,
-name|ExecuteException
 throws|,
 name|IOException
 throws|,
@@ -4432,6 +4438,15 @@ name|userArgs
 operator|.
 name|put
 argument_list|(
+literal|"libdir"
+argument_list|,
+name|libdir
+argument_list|)
+expr_stmt|;
+name|userArgs
+operator|.
+name|put
+argument_list|(
 literal|"files"
 argument_list|,
 name|otherFiles
@@ -4502,6 +4517,8 @@ name|getCompletedUrl
 argument_list|()
 argument_list|,
 name|enablelog
+argument_list|,
+name|libdir
 argument_list|)
 return|;
 block|}

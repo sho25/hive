@@ -848,7 +848,8 @@ argument_list|(
 name|hiveUDF
 argument_list|)
 expr_stmt|;
-comment|// this should probably never happen, see getName comment
+comment|// this should probably never happen, see getName
+comment|// comment
 name|LOG
 operator|.
 name|warn
@@ -861,7 +862,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// We could just do toLowerCase here and let SA qualify it, but let's be proper...
+comment|// We could just do toLowerCase here and let SA qualify it, but let's be
+comment|// proper...
 name|name
 operator|=
 name|FunctionRegistry
@@ -893,6 +895,9 @@ name|op
 parameter_list|,
 name|RelDataType
 name|dt
+parameter_list|,
+name|int
+name|argsLength
 parameter_list|)
 block|{
 name|String
@@ -911,6 +916,7 @@ name|name
 operator|==
 literal|null
 condition|)
+block|{
 name|name
 operator|=
 name|op
@@ -918,6 +924,45 @@ operator|.
 name|getName
 argument_list|()
 expr_stmt|;
+block|}
+comment|// Make sure we handle unary + and - correctly.
+if|if
+condition|(
+name|argsLength
+operator|==
+literal|1
+condition|)
+block|{
+if|if
+condition|(
+name|name
+operator|==
+literal|"+"
+condition|)
+block|{
+name|name
+operator|=
+name|FunctionRegistry
+operator|.
+name|UNARY_PLUS_FUNC_NAME
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|==
+literal|"-"
+condition|)
+block|{
+name|name
+operator|=
+name|FunctionRegistry
+operator|.
+name|UNARY_MINUS_FUNC_NAME
+expr_stmt|;
+block|}
+block|}
 name|FunctionInfo
 name|hFn
 init|=
@@ -1773,9 +1818,12 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|// TODO: this is not valid. Function names for built-in UDFs are specified in FunctionRegistry,
-comment|//       and only happen to match annotations. For user UDFs, the name is what user specifies at
-comment|//       creation time (annotation can be absent, different, or duplicate some other function).
+comment|// TODO: this is not valid. Function names for built-in UDFs are specified in
+comment|// FunctionRegistry,
+comment|// and only happen to match annotations. For user UDFs, the name is what user
+comment|// specifies at
+comment|// creation time (annotation can be absent, different, or duplicate some other
+comment|// function).
 specifier|private
 specifier|static
 name|String
@@ -2242,6 +2290,24 @@ literal|"not"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|registerFunction
+argument_list|(
+literal|"<>"
+argument_list|,
+name|SqlStdOperatorTable
+operator|.
+name|NOT_EQUALS
+argument_list|,
+name|hToken
+argument_list|(
+name|HiveParser
+operator|.
+name|NOTEQUAL
+argument_list|,
+literal|"<>"
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -2357,11 +2423,11 @@ name|ImmutableList
 argument_list|<
 name|RelDataType
 argument_list|>
-name|m_argTypes
+name|argTypes
 decl_stmt|;
 specifier|final
 name|RelDataType
-name|m_retType
+name|retType
 decl_stmt|;
 specifier|public
 name|OptiqUDAF
@@ -2407,11 +2473,15 @@ operator|.
 name|USER_DEFINED_FUNCTION
 argument_list|)
 expr_stmt|;
-name|m_argTypes
+name|this
+operator|.
+name|argTypes
 operator|=
 name|argTypes
 expr_stmt|;
-name|m_retType
+name|this
+operator|.
+name|retType
 operator|=
 name|retType
 expr_stmt|;
@@ -2431,7 +2501,9 @@ name|typeFactory
 parameter_list|)
 block|{
 return|return
-name|m_argTypes
+name|this
+operator|.
+name|argTypes
 return|;
 block|}
 annotation|@
@@ -2446,7 +2518,9 @@ name|typeFactory
 parameter_list|)
 block|{
 return|return
-name|m_retType
+name|this
+operator|.
+name|retType
 return|;
 block|}
 block|}
@@ -2457,30 +2531,30 @@ name|OptiqUDFInfo
 block|{
 specifier|private
 name|String
-name|m_udfName
+name|udfName
 decl_stmt|;
 specifier|private
 name|SqlReturnTypeInference
-name|m_returnTypeInference
+name|returnTypeInference
 decl_stmt|;
 specifier|private
 name|SqlOperandTypeInference
-name|m_operandTypeInference
+name|operandTypeInference
 decl_stmt|;
 specifier|private
 name|SqlOperandTypeChecker
-name|m_operandTypeChecker
+name|operandTypeChecker
 decl_stmt|;
 specifier|private
 name|ImmutableList
 argument_list|<
 name|RelDataType
 argument_list|>
-name|m_argTypes
+name|argTypes
 decl_stmt|;
 specifier|private
 name|RelDataType
-name|m_retType
+name|retType
 decl_stmt|;
 block|}
 specifier|private
@@ -2510,13 +2584,13 @@ argument_list|()
 decl_stmt|;
 name|udfInfo
 operator|.
-name|m_udfName
+name|udfName
 operator|=
 name|hiveUdfName
 expr_stmt|;
 name|udfInfo
 operator|.
-name|m_returnTypeInference
+name|returnTypeInference
 operator|=
 name|ReturnTypes
 operator|.
@@ -2527,7 +2601,7 @@ argument_list|)
 expr_stmt|;
 name|udfInfo
 operator|.
-name|m_operandTypeInference
+name|operandTypeInference
 operator|=
 name|InferTypes
 operator|.
@@ -2586,7 +2660,7 @@ expr_stmt|;
 block|}
 name|udfInfo
 operator|.
-name|m_operandTypeChecker
+name|operandTypeChecker
 operator|=
 name|OperandTypes
 operator|.
@@ -2600,7 +2674,7 @@ argument_list|)
 expr_stmt|;
 name|udfInfo
 operator|.
-name|m_argTypes
+name|argTypes
 operator|=
 name|ImmutableList
 operator|.
@@ -2614,7 +2688,7 @@ argument_list|)
 expr_stmt|;
 name|udfInfo
 operator|.
-name|m_retType
+name|retType
 operator|=
 name|optiqRetType
 expr_stmt|;
@@ -2660,7 +2734,8 @@ argument_list|)
 condition|)
 block|{
 comment|// We can create Optiq IS_DISTINCT_FROM operator for this. But since our
-comment|// join reordering algo cant handle this anyway there is no advantage of this.
+comment|// join reordering algo cant handle this anyway there is no advantage of
+comment|// this.
 comment|// So, bail out for now.
 throw|throw
 operator|new
@@ -2706,7 +2781,7 @@ name|SqlFunction
 argument_list|(
 name|uInf
 operator|.
-name|m_udfName
+name|udfName
 argument_list|,
 name|SqlKind
 operator|.
@@ -2714,15 +2789,15 @@ name|OTHER_FUNCTION
 argument_list|,
 name|uInf
 operator|.
-name|m_returnTypeInference
+name|returnTypeInference
 argument_list|,
 name|uInf
 operator|.
-name|m_operandTypeInference
+name|operandTypeInference
 argument_list|,
 name|uInf
 operator|.
-name|m_operandTypeChecker
+name|operandTypeChecker
 argument_list|,
 name|SqlFunctionCategory
 operator|.
@@ -2791,27 +2866,27 @@ name|OptiqUDAF
 argument_list|(
 name|uInf
 operator|.
-name|m_udfName
+name|udfName
 argument_list|,
 name|uInf
 operator|.
-name|m_returnTypeInference
+name|returnTypeInference
 argument_list|,
 name|uInf
 operator|.
-name|m_operandTypeInference
+name|operandTypeInference
 argument_list|,
 name|uInf
 operator|.
-name|m_operandTypeChecker
+name|operandTypeChecker
 argument_list|,
 name|uInf
 operator|.
-name|m_argTypes
+name|argTypes
 argument_list|,
 name|uInf
 operator|.
-name|m_retType
+name|retType
 argument_list|)
 expr_stmt|;
 block|}

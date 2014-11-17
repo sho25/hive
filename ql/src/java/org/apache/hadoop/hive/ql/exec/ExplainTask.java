@@ -5355,8 +5355,6 @@ return|return
 literal|"EXPLAIN"
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|List
 argument_list|<

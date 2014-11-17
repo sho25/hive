@@ -788,6 +788,15 @@ return|;
 block|}
 block|}
 decl_stmt|;
+name|fileID
+operator|=
+name|JDBCStatsUtils
+operator|.
+name|truncateRowId
+argument_list|(
+name|fileID
+argument_list|)
+expr_stmt|;
 name|String
 name|keyPrefix
 init|=
@@ -894,7 +903,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Warning. Nothing published. Nothing aggregated."
+literal|"Nothing published. Nothing aggregated."
 argument_list|)
 expr_stmt|;
 return|return
@@ -1158,6 +1167,15 @@ block|}
 decl_stmt|;
 try|try
 block|{
+name|rowID
+operator|=
+name|JDBCStatsUtils
+operator|.
+name|truncateRowId
+argument_list|(
+name|rowID
+argument_list|)
+expr_stmt|;
 name|String
 name|keyPrefix
 init|=

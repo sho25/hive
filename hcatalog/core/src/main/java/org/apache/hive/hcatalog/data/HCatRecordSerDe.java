@@ -73,7 +73,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|TreeMap
+name|HashMap
 import|;
 end_import
 
@@ -1182,7 +1182,7 @@ argument_list|>
 name|m
 init|=
 operator|new
-name|TreeMap
+name|HashMap
 argument_list|<
 name|Object
 argument_list|,

@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * DummyPreListener.  *  * An implemenation of MetaStorePreEventListener which stores the Events it's seen in a list.  */
+comment|/**  *  * DummyPreListener.  *  * An implementation of MetaStorePreEventListener which stores the Events it's seen in a list.  */
 end_comment
 
 begin_class

@@ -601,6 +601,8 @@ parameter_list|)
 block|{        }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"setRunAs"
@@ -974,6 +976,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"findNextToCompact"
@@ -1178,6 +1182,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"markCompacted"
@@ -2012,6 +2018,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"markCleaned"
@@ -2322,6 +2330,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"cleanEmptyAbortedTxns"
@@ -2502,6 +2512,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"revokeFromLocalWorkers"
@@ -2692,6 +2704,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"revokeTimedoutWorkers"
@@ -2782,6 +2796,14 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|String
+name|quote
+init|=
+name|getIdentifierQuoteString
+argument_list|(
+name|dbConn
+argument_list|)
+decl_stmt|;
 name|stmt
 operator|=
 name|dbConn
@@ -2789,11 +2811,47 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-name|String
-name|s
+name|StringBuilder
+name|bldr
 init|=
-literal|"SELECT COLUMN_NAME FROM "
-operator|+
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|bldr
+operator|.
+name|append
+argument_list|(
+literal|"SELECT "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"COLUMN_NAME"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" FROM "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
 operator|(
 name|ci
 operator|.
@@ -2805,39 +2863,140 @@ literal|"TAB_COL_STATS"
 else|:
 literal|"PART_COL_STATS"
 operator|)
-operator|+
-literal|" WHERE DB_NAME='"
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" WHERE "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"DB_NAME"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" = '"
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|ci
 operator|.
 name|dbname
-operator|+
-literal|"' AND TABLE_NAME='"
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"' AND "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"TABLE_NAME"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" = '"
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|ci
 operator|.
 name|tableName
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|"'"
-operator|+
-operator|(
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
 name|ci
 operator|.
 name|partName
-operator|==
+operator|!=
 literal|null
-condition|?
-literal|""
-else|:
-literal|" AND PARTITION_NAME='"
-operator|+
+condition|)
+block|{
+name|bldr
+operator|.
+name|append
+argument_list|(
+literal|" AND "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"PARTITION_NAME"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|quote
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" = '"
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|ci
 operator|.
 name|partName
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|"'"
-operator|)
+argument_list|)
+expr_stmt|;
+block|}
+name|String
+name|s
+init|=
+name|bldr
+operator|.
+name|toString
+argument_list|()
 decl_stmt|;
+comment|/*String s = "SELECT COLUMN_NAME FROM " + (ci.partName == null ? "TAB_COL_STATS" :           "PART_COL_STATS")          + " WHERE DB_NAME='" + ci.dbname + "' AND TABLE_NAME='" + ci.tableName + "'"         + (ci.partName == null ? "" : " AND PARTITION_NAME='" + ci.partName + "'");*/
 name|LOG
 operator|.
 name|debug

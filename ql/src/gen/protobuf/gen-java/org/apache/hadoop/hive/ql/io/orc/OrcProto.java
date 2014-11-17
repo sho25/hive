@@ -90667,7 +90667,7 @@ name|getCompressionBlockSize
 parameter_list|()
 function_decl|;
 comment|// repeated uint32 version = 4 [packed = true];
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|java
 operator|.
 name|util
@@ -90683,12 +90683,12 @@ argument_list|>
 name|getVersionList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|int
 name|getVersionCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|int
 name|getVersion
 parameter_list|(
@@ -90705,6 +90705,17 @@ function_decl|;
 comment|/**      *<code>optional uint64 metadataLength = 5;</code>      */
 name|long
 name|getMetadataLength
+parameter_list|()
+function_decl|;
+comment|// optional uint32 writerVersion = 6;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+name|int
+name|getWriterVersion
 parameter_list|()
 function_decl|;
 comment|// optional string magic = 8000;
@@ -91269,12 +91280,29 @@ expr_stmt|;
 break|break;
 block|}
 case|case
-literal|64002
+literal|48
 case|:
 block|{
 name|bitField0_
 operator||=
 literal|0x00000010
+expr_stmt|;
+name|writerVersion_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|64002
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
 expr_stmt|;
 name|magic_
 operator|=
@@ -91774,7 +91802,7 @@ name|Integer
 argument_list|>
 name|version_
 decl_stmt|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|java
 operator|.
@@ -91795,7 +91823,7 @@ return|return
 name|version_
 return|;
 block|}
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|int
 name|getVersionCount
@@ -91808,7 +91836,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|int
 name|getVersion
@@ -91874,6 +91902,47 @@ return|return
 name|metadataLength_
 return|;
 block|}
+comment|// optional uint32 writerVersion = 6;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|WRITERVERSION_FIELD_NUMBER
+init|=
+literal|6
+decl_stmt|;
+specifier|private
+name|int
+name|writerVersion_
+decl_stmt|;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+specifier|public
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000010
+operator|)
+operator|==
+literal|0x00000010
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+specifier|public
+name|int
+name|getWriterVersion
+parameter_list|()
+block|{
+return|return
+name|writerVersion_
+return|;
+block|}
 comment|// optional string magic = 8000;
 specifier|public
 specifier|static
@@ -91902,10 +91971,10 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000010
+literal|0x00000020
 operator|)
 operator|==
-literal|0x00000010
+literal|0x00000020
 operator|)
 return|;
 block|}
@@ -92137,6 +92206,10 @@ name|metadataLength_
 operator|=
 literal|0L
 expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
 name|magic_
 operator|=
 literal|""
@@ -92365,6 +92438,29 @@ literal|0x00000010
 operator|)
 operator|==
 literal|0x00000010
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|6
+argument_list|,
+name|writerVersion_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
 operator|)
 condition|)
 block|{
@@ -92640,6 +92736,37 @@ literal|0x00000010
 operator|)
 operator|==
 literal|0x00000010
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|6
+argument_list|,
+name|writerVersion_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
 operator|)
 condition|)
 block|{
@@ -93639,6 +93766,19 @@ operator|~
 literal|0x00000010
 operator|)
 expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
 name|magic_
 operator|=
 literal|""
@@ -93649,7 +93789,7 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000020
+literal|0x00000040
 operator|)
 expr_stmt|;
 return|return
@@ -94042,6 +94182,30 @@ expr_stmt|;
 block|}
 name|result
 operator|.
+name|writerVersion_
+operator|=
+name|writerVersion_
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000040
+operator|)
+operator|==
+literal|0x00000040
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+block|}
+name|result
+operator|.
 name|magic_
 operator|=
 name|magic_
@@ -94314,13 +94478,30 @@ if|if
 condition|(
 name|other
 operator|.
+name|hasWriterVersion
+argument_list|()
+condition|)
+block|{
+name|setWriterVersion
+argument_list|(
+name|other
+operator|.
+name|getWriterVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
 name|hasMagic
 argument_list|()
 condition|)
 block|{
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -94903,7 +95084,7 @@ literal|0x00000008
 expr_stmt|;
 block|}
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|java
 operator|.
@@ -94933,7 +95114,7 @@ name|version_
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|int
 name|getVersionCount
@@ -94946,7 +95127,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|int
 name|getVersion
@@ -94964,7 +95145,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|setVersion
@@ -94995,7 +95176,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|addVersion
@@ -95021,7 +95202,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|addAllVersion
@@ -95062,7 +95243,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|clearVersion
@@ -95178,6 +95359,89 @@ return|return
 name|this
 return|;
 block|}
+comment|// optional uint32 writerVersion = 6;
+specifier|private
+name|int
+name|writerVersion_
+decl_stmt|;
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|int
+name|getWriterVersion
+parameter_list|()
+block|{
+return|return
+name|writerVersion_
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|Builder
+name|setWriterVersion
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+name|writerVersion_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|Builder
+name|clearWriterVersion
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|// optional string magic = 8000;
 specifier|private
 name|java
@@ -95200,10 +95464,10 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000020
+literal|0x00000040
 operator|)
 operator|==
-literal|0x00000020
+literal|0x00000040
 operator|)
 return|;
 block|}
@@ -95394,7 +95658,7 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -95419,7 +95683,7 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000020
+literal|0x00000040
 operator|)
 expr_stmt|;
 name|magic_
@@ -95467,7 +95731,7 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -96238,7 +96502,7 @@ literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
 operator|+
 literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
 operator|+
-literal|"\"\305\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
+literal|"\"\334\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
 operator|+
 literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
 operator|+
@@ -96246,11 +96510,13 @@ literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
 operator|+
 literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
 operator|+
-literal|"\022\026\n\016metadataLength\030\005 \001(\004\022\016\n\005magic\030\300> \001(\t"
+literal|"\022\026\n\016metadataLength\030\005 \001(\004\022\025\n\rwriterVersio"
 block|,
-literal|"*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022"
+literal|"n\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKi"
 operator|+
-literal|"\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
+literal|"nd\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZ"
+operator|+
+literal|"O\020\003"
 block|}
 decl_stmt|;
 name|com
@@ -97231,6 +97497,8 @@ block|,
 literal|"Version"
 block|,
 literal|"MetadataLength"
+block|,
+literal|"WriterVersion"
 block|,
 literal|"Magic"
 block|, }

@@ -1590,6 +1590,11 @@ init|=
 literal|null
 decl_stmt|;
 comment|// create final load/move work
+name|boolean
+name|preservePartitionSpecs
+init|=
+literal|false
+decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -1713,6 +1718,11 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|isOverWrite
+condition|)
+block|{
 name|outputs
 operator|.
 name|add
@@ -1722,24 +1732,41 @@ name|WriteEntity
 argument_list|(
 name|part
 argument_list|,
-operator|(
-name|isOverWrite
-condition|?
 name|WriteEntity
 operator|.
 name|WriteType
 operator|.
 name|INSERT_OVERWRITE
-else|:
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|part
+argument_list|,
 name|WriteEntity
 operator|.
 name|WriteType
 operator|.
 name|INSERT
-operator|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// If partition already exists and we aren't overwriting it, then respect
+comment|// its current location info rather than picking it from the parent TableDesc
+name|preservePartitionSpecs
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1817,6 +1844,22 @@ argument_list|,
 name|isOverWrite
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|preservePartitionSpecs
+condition|)
+block|{
+comment|// Note : preservePartitionSpecs=true implies inheritTableSpecs=false but
+comment|// but preservePartitionSpecs=false(default) here is not sufficient enough
+comment|// info to set inheritTableSpecs=true
+name|loadTableWork
+operator|.
+name|setInheritTableSpecs
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 name|Task
 argument_list|<
 name|?

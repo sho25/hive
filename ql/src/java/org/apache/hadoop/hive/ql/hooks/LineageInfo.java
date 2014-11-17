@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -906,6 +916,10 @@ parameter_list|()
 block|{
 name|index
 operator|=
+name|Collections
+operator|.
+name|synchronizedMap
+argument_list|(
 operator|new
 name|LinkedHashMap
 argument_list|<
@@ -914,6 +928,7 @@ argument_list|,
 name|Dependency
 argument_list|>
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Gets the dependency for a table, column tuple.    * @param dc The data container of the column whose dependency is being inspected.    * @param col The column whose dependency is being inspected.    * @return Dependency for that particular table, column tuple.    *         null if no dependency is found.    */

@@ -139,7 +139,10 @@ index|[
 name|i
 index|]
 operator|.
-name|getSignum
+name|getHiveDecimal
+argument_list|()
+operator|.
+name|signum
 argument_list|()
 operator|==
 literal|0

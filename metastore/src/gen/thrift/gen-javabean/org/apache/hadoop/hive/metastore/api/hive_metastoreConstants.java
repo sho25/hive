@@ -456,6 +456,22 @@ name|META_TABLE_STORAGE
 init|=
 literal|"storage_handler"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TABLE_IS_TRANSACTIONAL
+init|=
+literal|"transactional"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TABLE_NO_AUTO_COMPACT
+init|=
+literal|"no_auto_compaction"
+decl_stmt|;
 block|}
 end_class
 

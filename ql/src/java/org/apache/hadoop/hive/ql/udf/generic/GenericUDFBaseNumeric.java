@@ -1846,6 +1846,16 @@ name|length
 operator|==
 literal|2
 operator|)
+operator|:
+name|opDisplayName
+operator|+
+literal|" with "
+operator|+
+name|children
+operator|.
+name|length
+operator|+
+literal|" children"
 assert|;
 return|return
 literal|"("

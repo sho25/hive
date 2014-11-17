@@ -147,6 +147,24 @@ name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|PrimitiveTypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * The basic implementation of PartitionExpressionProxy that uses ql package classes.  */
 end_comment
@@ -206,7 +224,13 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|columnNames
+name|partColumnNames
+parameter_list|,
+name|List
+argument_list|<
+name|PrimitiveTypeInfo
+argument_list|>
+name|partColumnTypeInfos
 parameter_list|,
 name|byte
 index|[]
@@ -256,7 +280,9 @@ name|PartitionPruner
 operator|.
 name|prunePartitionNames
 argument_list|(
-name|columnNames
+name|partColumnNames
+argument_list|,
+name|partColumnTypeInfos
 argument_list|,
 name|expr
 argument_list|,

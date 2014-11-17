@@ -490,6 +490,9 @@ argument_list|,
 name|runAs
 argument_list|)
 decl_stmt|;
+comment|//This will work only if the files are local files on webhcat server
+comment|// (which is not very useful since users might not have access to that file system).
+comment|//This is likely the HIVE-5188 issue
 name|args
 operator|.
 name|add

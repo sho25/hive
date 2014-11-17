@@ -1049,15 +1049,6 @@ argument_list|(
 name|abort
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|logCloseInfo
-argument_list|()
-expr_stmt|;
-block|}
 name|ExecMapper
 operator|.
 name|ReportStats
@@ -1069,6 +1060,8 @@ operator|.
 name|ReportStats
 argument_list|(
 name|reporter
+argument_list|,
+name|jconf
 argument_list|)
 decl_stmt|;
 name|mergeOp
@@ -1182,15 +1175,6 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|logProgress
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 block|}
 catch|catch
@@ -1267,6 +1251,15 @@ name|theMRInput
 init|=
 literal|null
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"VDK: the inputs are: "
+operator|+
+name|inputs
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Entry

@@ -400,7 +400,7 @@ decl_stmt|;
 comment|// Lock states
 specifier|static
 specifier|final
-specifier|private
+specifier|protected
 name|char
 name|LOCK_ACQUIRED
 init|=
@@ -408,7 +408,7 @@ literal|'a'
 decl_stmt|;
 specifier|static
 specifier|final
-specifier|private
+specifier|protected
 name|char
 name|LOCK_WAITING
 init|=
@@ -417,7 +417,7 @@ decl_stmt|;
 comment|// Lock types
 specifier|static
 specifier|final
-specifier|private
+specifier|protected
 name|char
 name|LOCK_EXCLUSIVE
 init|=
@@ -425,7 +425,7 @@ literal|'e'
 decl_stmt|;
 specifier|static
 specifier|final
-specifier|private
+specifier|protected
 name|char
 name|LOCK_SHARED
 init|=
@@ -433,7 +433,7 @@ literal|'r'
 decl_stmt|;
 specifier|static
 specifier|final
-specifier|private
+specifier|protected
 name|char
 name|LOCK_SEMI_SHARED
 init|=
@@ -501,6 +501,11 @@ specifier|private
 name|long
 name|timeout
 decl_stmt|;
+specifier|private
+name|String
+name|identifierQuoteString
+decl_stmt|;
+comment|// quotes to use for quoting tables, where necessary
 comment|// DEADLOCK DETECTION AND HANDLING
 comment|// A note to developers of this class.  ALWAYS access HIVE_LOCKS before TXNS to avoid deadlock
 comment|// between simultaneous accesses.  ALWAYS access TXN_COMPONENTS before HIVE_LOCKS .
@@ -1580,6 +1585,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"openTxns"
@@ -1767,6 +1774,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"abortTxn"
@@ -2036,6 +2045,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"commitTxn"
@@ -2158,6 +2169,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"lock"
@@ -2276,6 +2289,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"lockNoWait"
@@ -2443,6 +2458,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"checkLock"
@@ -2712,6 +2729,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"unlock"
@@ -3291,6 +3310,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"heartbeat"
@@ -3504,6 +3525,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"heartbeatTxnRange"
@@ -3987,6 +4010,8 @@ parameter_list|)
 block|{         }
 name|detectDeadlock
 argument_list|(
+name|dbConn
+argument_list|,
 name|e
 argument_list|,
 literal|"compact"
@@ -4759,11 +4784,14 @@ name|dbConn
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Determine if an exception was a deadlock.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.DeadlockException when deadlock    * detected and retry count has not been exceeded.    */
+comment|/**    * Determine if an exception was a deadlock.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param conn database connection    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.DeadlockException when deadlock    * detected and retry count has not been exceeded.    */
 specifier|protected
 name|void
 name|detectDeadlock
 parameter_list|(
+name|Connection
+name|conn
+parameter_list|,
 name|SQLException
 name|e
 parameter_list|,
@@ -4772,15 +4800,93 @@ name|caller
 parameter_list|)
 throws|throws
 name|DeadlockException
+throws|,
+name|MetaException
 block|{
-specifier|final
-name|String
-name|mysqlDeadlock
-init|=
-literal|"Deadlock found when trying to get lock; try restarting transaction"
-decl_stmt|;
+comment|// If you change this function, remove the @Ignore from TestTxnHandler.deadlockIsDetected()
+comment|// to test these changes.
+comment|// MySQL and MSSQL use 40001 as the state code for rollback.  Postgres uses 40001 and 40P01.
+comment|// Oracle seems to return different SQLStates and messages each time,
+comment|// so I've tried to capture the different error messages (there appear to be fewer different
+comment|// error messages than SQL states).
+comment|// Derby and newer MySQL driver use the new SQLTransactionRollbackException
 if|if
 condition|(
+name|dbProduct
+operator|==
+literal|null
+condition|)
+block|{
+name|determineDatabaseProduct
+argument_list|(
+name|conn
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|e
+operator|instanceof
+name|SQLTransactionRollbackException
+operator|||
+operator|(
+operator|(
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|MYSQL
+operator|||
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|POSTGRES
+operator|||
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|SQLSERVER
+operator|)
+operator|&&
+name|e
+operator|.
+name|getSQLState
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"40001"
+argument_list|)
+operator|)
+operator|||
+operator|(
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|POSTGRES
+operator|&&
+name|e
+operator|.
+name|getSQLState
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"40P01"
+argument_list|)
+operator|)
+operator|||
+operator|(
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|ORACLE
+operator|&&
+operator|(
 name|e
 operator|.
 name|getMessage
@@ -4788,12 +4894,20 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-name|mysqlDeadlock
+literal|"deadlock detected"
 argument_list|)
 operator|||
 name|e
-operator|instanceof
-name|SQLTransactionRollbackException
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"can't serialize access for this transaction"
+argument_list|)
+operator|)
+operator|)
 condition|)
 block|{
 if|if
@@ -5025,6 +5139,39 @@ name|stmt
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|/**    * Determine the String that should be used to quote identifiers.    * @param conn Active connection    * @return quotes    * @throws SQLException    */
+specifier|protected
+name|String
+name|getIdentifierQuoteString
+parameter_list|(
+name|Connection
+name|conn
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+if|if
+condition|(
+name|identifierQuoteString
+operator|==
+literal|null
+condition|)
+block|{
+name|identifierQuoteString
+operator|=
+name|conn
+operator|.
+name|getMetaData
+argument_list|()
+operator|.
+name|getIdentifierQuoteString
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|identifierQuoteString
+return|;
 block|}
 specifier|protected
 enum|enum
