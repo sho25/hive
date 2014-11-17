@@ -69,6 +69,18 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|spark
+operator|.
+name|JobExecutionStatus
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -92,7 +104,7 @@ name|getJobId
 parameter_list|()
 function_decl|;
 specifier|public
-name|SparkJobState
+name|JobExecutionStatus
 name|getState
 parameter_list|()
 function_decl|;
