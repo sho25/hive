@@ -1243,6 +1243,13 @@ name|endsWith
 argument_list|(
 literal|"-client"
 argument_list|)
+operator|||
+name|master
+operator|.
+name|startsWith
+argument_list|(
+literal|"spark"
+argument_list|)
 condition|)
 block|{
 name|String

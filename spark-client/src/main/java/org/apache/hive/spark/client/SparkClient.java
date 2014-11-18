@@ -79,6 +79,8 @@ name|Private
 specifier|public
 interface|interface
 name|SparkClient
+extends|extends
+name|Serializable
 block|{
 comment|/**    * Submits a job for asynchronous execution.    *    * @param job The job to execute.    * @return A handle that be used to monitor the job.    */
 parameter_list|<

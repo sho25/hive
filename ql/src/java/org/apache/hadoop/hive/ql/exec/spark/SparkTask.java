@@ -1119,6 +1119,13 @@ operator|.
 name|getSparkJobStatus
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|sparkJobStatus
+operator|!=
+literal|null
+condition|)
+block|{
 name|sparkCounters
 operator|=
 name|sparkJobStatus
@@ -1168,7 +1175,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"=====Spark Job[%d] statistics====="
+literal|"=====Spark Job[%s] statistics====="
 argument_list|,
 name|jobRef
 operator|.
@@ -1188,6 +1195,7 @@ operator|.
 name|cleanup
 argument_list|()
 expr_stmt|;
+block|}
 name|rc
 operator|=
 literal|0

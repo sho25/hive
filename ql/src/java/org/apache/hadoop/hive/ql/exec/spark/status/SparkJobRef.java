@@ -29,7 +29,7 @@ class|class
 name|SparkJobRef
 block|{
 specifier|private
-name|int
+name|String
 name|jobId
 decl_stmt|;
 specifier|private
@@ -43,7 +43,7 @@ block|{}
 specifier|public
 name|SparkJobRef
 parameter_list|(
-name|int
+name|String
 name|jobId
 parameter_list|)
 block|{
@@ -57,7 +57,7 @@ block|}
 specifier|public
 name|SparkJobRef
 parameter_list|(
-name|int
+name|String
 name|jobId
 parameter_list|,
 name|SparkJobStatus
@@ -78,7 +78,7 @@ name|sparkJobStatus
 expr_stmt|;
 block|}
 specifier|public
-name|int
+name|String
 name|getJobId
 parameter_list|()
 block|{
@@ -90,7 +90,7 @@ specifier|public
 name|void
 name|setJobId
 parameter_list|(
-name|int
+name|String
 name|jobId
 parameter_list|)
 block|{
