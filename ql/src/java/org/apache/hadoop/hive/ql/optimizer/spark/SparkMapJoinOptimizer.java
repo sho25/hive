@@ -582,7 +582,20 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-comment|/*     if (mapJoinConversionPos< 0) {       // we are just converting to a common merge join operator. The shuffle       // join in map-reduce case.       int pos = 0; // it doesn't matter which position we use in this case.       convertJoinSMBJoin(joinOp, context, pos, 0, false, false);       return null;     }*/
+if|if
+condition|(
+name|mapJoinConversionPos
+operator|<
+literal|0
+condition|)
+block|{
+comment|// we are just converting to a common merge join operator. The shuffle
+comment|// join in map-reduce case.
+comment|/*       int pos = 0; // it doesn't matter which position we use in this case.       convertJoinSMBJoin(joinOp, context, pos, 0, false, false);       */
+return|return
+literal|null
+return|;
+block|}
 name|MapJoinOperator
 name|mapJoinOp
 init|=
