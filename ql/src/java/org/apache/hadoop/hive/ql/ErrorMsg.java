@@ -1967,6 +1967,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|ALTER_TABLE_PARTITION_CASCADE_NOT_SUPPORTED
+argument_list|(
+literal|10300
+argument_list|,
+literal|"Alter table partition type {0} does not support cascade"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

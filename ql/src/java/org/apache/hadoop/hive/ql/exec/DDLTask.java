@@ -20213,6 +20213,11 @@ name|getOldName
 argument_list|()
 argument_list|,
 name|tbl
+argument_list|,
+name|alterTbl
+operator|.
+name|getIsCascade
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
