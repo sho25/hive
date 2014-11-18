@@ -33,7 +33,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Completor
+name|console
+operator|.
+name|completer
+operator|.
+name|Completer
 import|;
 end_import
 
@@ -41,7 +45,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|SimpleCompletor
+name|console
+operator|.
+name|completer
+operator|.
+name|StringsCompleter
 import|;
 end_import
 
@@ -49,7 +57,7 @@ begin_class
 class|class
 name|TableNameCompletor
 implements|implements
-name|Completor
+name|Completer
 block|{
 specifier|private
 specifier|final
@@ -101,7 +109,7 @@ return|;
 block|}
 return|return
 operator|new
-name|SimpleCompletor
+name|StringsCompleter
 argument_list|(
 name|beeLine
 operator|.

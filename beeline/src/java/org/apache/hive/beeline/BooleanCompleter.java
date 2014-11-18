@@ -17,27 +17,13 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
 name|jline
 operator|.
-name|Completor
-import|;
-end_import
-
-begin_import
-import|import
-name|jline
+name|console
 operator|.
-name|SimpleCompletor
+name|completer
+operator|.
+name|StringsCompleter
 import|;
 end_import
 
@@ -47,12 +33,12 @@ end_comment
 
 begin_class
 class|class
-name|BooleanCompletor
+name|BooleanCompleter
 extends|extends
-name|SimpleCompletor
+name|StringsCompleter
 block|{
 specifier|public
-name|BooleanCompletor
+name|BooleanCompleter
 parameter_list|()
 block|{
 name|super

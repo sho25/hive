@@ -607,7 +607,7 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Terminal
+name|TerminalFactory
 import|;
 end_import
 
@@ -1348,12 +1348,12 @@ name|getTerminalWidth
 parameter_list|()
 block|{
 return|return
-name|Terminal
+name|TerminalFactory
 operator|.
-name|getTerminal
+name|get
 argument_list|()
 operator|.
-name|getTerminalWidth
+name|getWidth
 argument_list|()
 return|;
 block|}

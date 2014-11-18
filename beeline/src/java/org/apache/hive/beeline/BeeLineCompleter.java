@@ -33,7 +33,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Completor
+name|console
+operator|.
+name|completer
+operator|.
+name|Completer
 import|;
 end_import
 
@@ -43,9 +47,9 @@ end_comment
 
 begin_class
 class|class
-name|BeeLineCompletor
+name|BeeLineCompleter
 implements|implements
-name|Completor
+name|Completer
 block|{
 specifier|private
 specifier|final
@@ -53,7 +57,7 @@ name|BeeLine
 name|beeLine
 decl_stmt|;
 comment|/**    * @param beeLine    */
-name|BeeLineCompletor
+name|BeeLineCompleter
 parameter_list|(
 name|BeeLine
 name|beeLine
@@ -152,7 +156,7 @@ operator|.
 name|getDatabaseConnection
 argument_list|()
 operator|.
-name|getSQLCompletor
+name|getSQLCompleter
 argument_list|()
 operator|!=
 literal|null
@@ -164,7 +168,7 @@ operator|.
 name|getDatabaseConnection
 argument_list|()
 operator|.
-name|getSQLCompletor
+name|getSQLCompleter
 argument_list|()
 operator|.
 name|complete

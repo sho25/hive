@@ -23,7 +23,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Completor
+name|console
+operator|.
+name|completer
+operator|.
+name|Completer
 import|;
 end_import
 
@@ -74,9 +78,9 @@ parameter_list|)
 function_decl|;
 comment|/**    * Returns the completors that can handle parameters.    */
 specifier|public
-name|Completor
+name|Completer
 index|[]
-name|getParameterCompletors
+name|getParameterCompleters
 parameter_list|()
 function_decl|;
 comment|/**    * Returns exception thrown for last command    * @return    */
