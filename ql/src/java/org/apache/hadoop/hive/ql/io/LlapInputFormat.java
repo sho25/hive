@@ -1850,25 +1850,7 @@ operator|=
 operator|!
 name|hasNulls
 expr_stmt|;
-name|currentVectorSlice
-operator|.
-name|copyDecimals
-argument_list|(
-name|c
-operator|.
-name|vector
-argument_list|,
-name|hasNulls
-condition|?
-name|c
-operator|.
-name|isNull
-else|:
-literal|null
-argument_list|,
-literal|0
-argument_list|)
-expr_stmt|;
+comment|// TODO#: currentVectorSlice.copyDecimals(c.vector, hasNulls ? c.isNull : null, 0);
 if|if
 condition|(
 name|hasNulls

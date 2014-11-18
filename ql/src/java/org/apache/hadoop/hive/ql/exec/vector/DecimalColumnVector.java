@@ -347,13 +347,7 @@ name|isRepeating
 operator|=
 literal|true
 expr_stmt|;
-name|vector
-index|[
-literal|0
-index|]
-operator|=
-name|value
-expr_stmt|;
+comment|// TODO#: vector[0] = value;
 block|}
 comment|// Fill the column vector with nulls
 specifier|public
