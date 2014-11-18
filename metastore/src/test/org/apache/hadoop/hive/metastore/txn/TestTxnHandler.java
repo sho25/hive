@@ -224,6 +224,20 @@ import|;
 end_import
 
 begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
+begin_import
 import|import static
 name|junit
 operator|.
@@ -8630,15 +8644,11 @@ name|conn
 argument_list|)
 expr_stmt|;
 specifier|final
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 name|sawDeadlock
 init|=
 operator|new
-name|MetaStoreThread
-operator|.
-name|BooleanPointer
+name|AtomicBoolean
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -8826,9 +8836,10 @@ argument_list|)
 expr_stmt|;
 name|sawDeadlock
 operator|.
-name|boolVal
-operator|=
+name|set
+argument_list|(
 literal|true
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -8997,9 +9008,10 @@ argument_list|)
 expr_stmt|;
 name|sawDeadlock
 operator|.
-name|boolVal
-operator|=
+name|set
+argument_list|(
 literal|true
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -9050,7 +9062,8 @@ if|if
 condition|(
 name|sawDeadlock
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 break|break;
 block|}
@@ -9058,7 +9071,8 @@ name|assertTrue
 argument_list|(
 name|sawDeadlock
 operator|.
-name|boolVal
+name|get
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

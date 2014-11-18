@@ -2388,13 +2388,14 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+comment|// As of HIVE-8745, these decimal values should be trimmed of trailing zeros.
 name|byte
 index|[]
 name|v
 init|=
 name|toBytes
 argument_list|(
-literal|"1.10"
+literal|"1.1"
 argument_list|)
 decl_stmt|;
 name|assertTrue
@@ -2477,7 +2478,7 @@ name|v
 operator|=
 name|toBytes
 argument_list|(
-literal|"-2.20"
+literal|"-2.2"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -2525,7 +2526,7 @@ name|v
 operator|=
 name|toBytes
 argument_list|(
-literal|"9999999999999999.00"
+literal|"9999999999999999"
 argument_list|)
 expr_stmt|;
 name|Assert

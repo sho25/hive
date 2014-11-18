@@ -45,6 +45,24 @@ name|MetaException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|PrimitiveTypeInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * The proxy interface that metastore uses to manipulate and apply  * serialized filter expressions coming from client.  */
 end_comment
@@ -66,7 +84,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Filters the partition names via serialized Hive expression.    * @param columnNames Partition column names in the underlying table.    * @param expr Serialized expression.    * @param defaultPartitionName Default partition name from job or server configuration.    * @param partitionNames Partition names; the list is modified in place.    * @return Whether there were any unknown partitions preserved in the name list.    */
+comment|/**    * Filters the partition names via serialized Hive expression.    * @param partColumnNames Partition column names in the underlying table.    * @param partColumnTypeInfos Partition column types in the underlying table    * @param expr Serialized expression.    * @param defaultPartitionName Default partition name from job or server configuration.    * @param partitionNames Partition names; the list is modified in place.    * @return Whether there were any unknown partitions preserved in the name list.    */
 specifier|public
 name|boolean
 name|filterPartitionsByExpr
@@ -75,7 +93,13 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|columnNames
+name|partColumnNames
+parameter_list|,
+name|List
+argument_list|<
+name|PrimitiveTypeInfo
+argument_list|>
+name|partColumnTypeInfos
 parameter_list|,
 name|byte
 index|[]

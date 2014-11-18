@@ -4806,8 +4806,9 @@ block|{
 comment|// If you change this function, remove the @Ignore from TestTxnHandler.deadlockIsDetected()
 comment|// to test these changes.
 comment|// MySQL and MSSQL use 40001 as the state code for rollback.  Postgres uses 40001 and 40P01.
-comment|// Oracle seems to return different SQLStates each time, but the message always contains
-comment|// "deadlock detected", so I've used that instead.
+comment|// Oracle seems to return different SQLStates and messages each time,
+comment|// so I've tried to capture the different error messages (there appear to be fewer different
+comment|// error messages than SQL states).
 comment|// Derby and newer MySQL driver use the new SQLTransactionRollbackException
 if|if
 condition|(
@@ -4894,6 +4895,16 @@ operator|.
 name|contains
 argument_list|(
 literal|"deadlock detected"
+argument_list|)
+operator|||
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"can't serialize access for this transaction"
 argument_list|)
 operator|)
 operator|)

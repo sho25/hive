@@ -1439,6 +1439,7 @@ argument_list|(
 name|component
 argument_list|)
 expr_stmt|;
+break|break;
 block|}
 block|}
 name|LOG
@@ -2026,7 +2027,7 @@ name|lowLinks
 operator|.
 name|put
 argument_list|(
-name|child
+name|o
 argument_list|,
 name|Math
 operator|.

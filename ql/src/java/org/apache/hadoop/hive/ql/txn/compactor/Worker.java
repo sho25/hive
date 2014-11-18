@@ -371,6 +371,20 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * A class to do compactions.  This will run in a separate thread.  It will spin on the  * compaction queue and look for new work to do.  */
 end_comment
@@ -506,7 +520,8 @@ operator|&&
 operator|!
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 block|{
 try|try
@@ -970,7 +985,8 @@ condition|(
 operator|!
 name|stop
 operator|.
-name|boolVal
+name|get
+argument_list|()
 condition|)
 do|;
 block|}
@@ -1006,10 +1022,10 @@ specifier|public
 name|void
 name|init
 parameter_list|(
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
 parameter_list|,
-name|BooleanPointer
+name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws

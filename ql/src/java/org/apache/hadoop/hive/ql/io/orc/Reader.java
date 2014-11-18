@@ -199,6 +199,20 @@ argument_list|>
 name|getTypes
 parameter_list|()
 function_decl|;
+comment|/**    * Get the file format version.    */
+name|OrcFile
+operator|.
+name|Version
+name|getFileVersion
+parameter_list|()
+function_decl|;
+comment|/**    * Get the version of the writer of this file.    */
+name|OrcFile
+operator|.
+name|WriterVersion
+name|getWriterVersion
+parameter_list|()
+function_decl|;
 comment|/**    * Options for creating a RecordReader.    */
 specifier|public
 specifier|static

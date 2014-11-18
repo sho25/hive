@@ -451,6 +451,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -951,6 +965,22 @@ comment|// ignore
 block|}
 block|}
 block|}
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|initShutdownHook
+parameter_list|()
+block|{
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|shutdownList
+argument_list|,
+literal|"Shutdown hook was not properly initialized"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1637,6 +1667,13 @@ name|printInfo
 argument_list|(
 literal|"Status: Initializing"
 argument_list|)
+expr_stmt|;
+name|startTime
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
 expr_stmt|;
 break|break;
 case|case

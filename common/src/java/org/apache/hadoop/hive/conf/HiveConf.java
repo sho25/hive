@@ -2579,6 +2579,21 @@ operator|+
 literal|"try-and-fall-back cost."
 argument_list|)
 block|,
+name|METASTORE_DIRECT_SQL_PARTITION_BATCH_SIZE
+argument_list|(
+literal|"hive.metastore.direct.sql.batch.size"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Batch size for partition and other object retrieval from the underlying DB in direct\n"
+operator|+
+literal|"SQL. For some DBs like Oracle and MSSQL, there are hardcoded or perf-based limitations\n"
+operator|+
+literal|"that necessitate this. For DBs that can handle the queries, this isn't necessary and\n"
+operator|+
+literal|"may impede performance. -1 means no batching, 0 means automatic batching."
+argument_list|)
+block|,
 name|METASTORE_TRY_DIRECT_SQL_DDL
 argument_list|(
 literal|"hive.metastore.try.direct.sql.ddl"
@@ -2728,6 +2743,15 @@ argument_list|,
 literal|"List of comma separated keys occurring in table properties which will get inherited to newly created partitions. \n"
 operator|+
 literal|"* implies all the keys will get inherited."
+argument_list|)
+block|,
+name|METASTORE_FILTER_HOOK
+argument_list|(
+literal|"hive.metastore.filter.hook"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
+argument_list|,
+literal|"Metastore hook class for filtering the metadata read results"
 argument_list|)
 block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
@@ -5917,6 +5941,15 @@ operator|+
 literal|"table (but see HIVE-8067)."
 argument_list|)
 block|,
+name|HIVE_AUTHORIZATION_TASK_FACTORY
+argument_list|(
+literal|"hive.security.authorization.task.factory"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.parse.authorization.HiveAuthorizationTaskFactoryImpl"
+argument_list|,
+literal|"Authorization DDL task factory implementation"
+argument_list|)
+block|,
 comment|// if this is not set default value is set during config initialization
 comment|// Default value can't be set in this constructor as it would refer names in other ConfVars
 comment|// whose constructor would not have been called
@@ -6068,7 +6101,7 @@ literal|"hive.server2.logging.operation.enabled"
 argument_list|,
 literal|true
 argument_list|,
-literal|"When true, HS2 will save operation logs"
+literal|"When true, HS2 will save operation logs and make them available for clients"
 argument_list|)
 block|,
 name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
@@ -6090,6 +6123,15 @@ operator|+
 literal|"operation_logs"
 argument_list|,
 literal|"Top level directory where operation logs are stored if logging functionality is enabled"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_VERBOSE
+argument_list|(
+literal|"hive.server2.logging.operation.verbose"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When true, HS2 operation logs available for clients will be verbose"
 argument_list|)
 block|,
 comment|// logging configuration
@@ -6260,7 +6302,7 @@ name|HIVE_SSL_PROTOCOL_BLACKLIST
 argument_list|(
 literal|"hive.ssl.protocol.blacklist"
 argument_list|,
-literal|"SSLv2,SSLv2Hello,SSLv3"
+literal|"SSLv2,SSLv3"
 argument_list|,
 literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)

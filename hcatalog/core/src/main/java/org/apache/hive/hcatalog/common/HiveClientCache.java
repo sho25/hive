@@ -95,6 +95,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|ThreadFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|TimeUnit
 import|;
 end_import
@@ -327,6 +339,22 @@ name|RemovalNotification
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ThreadFactoryBuilder
+import|;
+end_import
+
 begin_comment
 comment|/**  * A thread safe time expired cache for HiveMetaStoreClient  */
 end_comment
@@ -398,6 +426,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ScheduledFuture
 argument_list|<
 name|?
@@ -525,6 +554,8 @@ name|CacheableHiveMetaStoreClient
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onRemoval
@@ -605,6 +636,8 @@ operator|new
 name|Runnable
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -637,6 +670,28 @@ name|timeout
 expr_stmt|;
 block|}
 comment|/**      * Create the cleanup handle. In addition to cleaning up every cleanupInterval, we add      * a slight offset, so that the very first time it runs, it runs with a slight delay, so      * as to catch any other connections that were closed when the first timeout happened.      * As a result, the time we can expect an unused connection to be reaped is      * 5 seconds after the first timeout, and then after that, it'll check for whether or not      * it can be cleaned every max(DEFAULT_HIVE_CACHE_EXPIRY_TIME_SECONDS,timeout) seconds      */
+name|ThreadFactory
+name|daemonThreadFactory
+init|=
+operator|(
+operator|new
+name|ThreadFactoryBuilder
+argument_list|()
+operator|)
+operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+operator|.
+name|setNameFormat
+argument_list|(
+literal|"HiveClientCache-cleaner-%d"
+argument_list|)
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
 name|cleanupHandle
 operator|=
 name|Executors
@@ -644,6 +699,8 @@ operator|.
 name|newScheduledThreadPool
 argument_list|(
 literal|1
+argument_list|,
+name|daemonThreadFactory
 argument_list|)
 operator|.
 name|scheduleWithFixedDelay
@@ -1252,6 +1309,7 @@ extends|extends
 name|HiveMetaStoreClient
 block|{
 specifier|private
+specifier|final
 name|AtomicInteger
 name|users
 init|=

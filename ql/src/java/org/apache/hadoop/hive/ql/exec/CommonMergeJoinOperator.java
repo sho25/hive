@@ -2338,7 +2338,8 @@ operator|==
 literal|null
 condition|)
 block|{
-return|return
+if|if
+condition|(
 name|nullsafes
 operator|!=
 literal|null
@@ -2347,14 +2348,17 @@ name|nullsafes
 index|[
 name|i
 index|]
-condition|?
-literal|0
-else|:
+condition|)
+block|{
+continue|continue;
+block|}
+else|else
+block|{
+return|return
 operator|-
 literal|1
 return|;
-comment|// just return k1 is
-comment|// smaller than k2
+block|}
 block|}
 elseif|else
 if|if

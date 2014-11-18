@@ -235,6 +235,18 @@ name|NoSuchObjectException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|datanucleus
+operator|.
+name|exceptions
+operator|.
+name|NucleusException
+import|;
+end_import
+
 begin_class
 annotation|@
 name|InterfaceAudience
@@ -843,6 +855,7 @@ argument_list|()
 operator|!=
 literal|null
 operator|&&
+operator|(
 name|e
 operator|.
 name|getCause
@@ -856,9 +869,20 @@ operator|.
 name|jdo
 operator|.
 name|JDOException
+operator|||
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|NucleusException
+operator|)
 condition|)
 block|{
-comment|// The JDOException may be wrapped further in a MetaException
+comment|// The JDOException or the Nucleus Exception may be wrapped further in a MetaException
 name|caughtException
 operator|=
 name|e

@@ -6385,6 +6385,8 @@ name|taskIndependent
 condition|)
 block|{
 comment|// key = "database.table/SP/DP/"LB/
+comment|// Hive store lowercase table name in metastore, and Counters is character case sensitive, so we
+comment|// use lowercase table name as prefix here, as StatsTask get table name from metastore to fetch counter.
 name|prefix
 operator|=
 name|conf
@@ -6393,6 +6395,9 @@ name|getTableInfo
 argument_list|()
 operator|.
 name|getTableName
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 expr_stmt|;
 block|}

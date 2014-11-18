@@ -1492,7 +1492,7 @@ operator|||
 operator|(
 name|thriftCLIService
 operator|.
-name|getServerAddress
+name|getServerIPAddress
 argument_list|()
 operator|==
 literal|null
@@ -1510,10 +1510,10 @@ block|}
 return|return
 name|thriftCLIService
 operator|.
-name|getServerAddress
+name|getServerIPAddress
 argument_list|()
 operator|.
-name|getHostAddress
+name|getHostName
 argument_list|()
 operator|+
 literal|":"

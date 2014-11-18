@@ -1384,6 +1384,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// Wildcard bind
 name|serverAddress
 operator|=
 operator|new
@@ -1462,7 +1463,7 @@ argument_list|,
 name|keyStorePassWord
 argument_list|)
 expr_stmt|;
-name|InetAddress
+name|InetSocketAddress
 name|serverAddress
 decl_stmt|;
 if|if
@@ -1477,23 +1478,26 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// Wildcard bind
 name|serverAddress
 operator|=
-name|InetAddress
-operator|.
-name|getLocalHost
-argument_list|()
+operator|new
+name|InetSocketAddress
+argument_list|(
+name|portNum
+argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
 name|serverAddress
 operator|=
-name|InetAddress
-operator|.
-name|getByName
+operator|new
+name|InetSocketAddress
 argument_list|(
 name|hiveHost
+argument_list|,
+name|portNum
 argument_list|)
 expr_stmt|;
 block|}
@@ -1509,6 +1513,9 @@ argument_list|,
 literal|0
 argument_list|,
 name|serverAddress
+operator|.
+name|getAddress
+argument_list|()
 argument_list|,
 name|params
 argument_list|)

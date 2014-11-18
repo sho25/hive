@@ -3350,7 +3350,7 @@ block|}
 comment|/**    * Clear out any side effects of running tests    */
 specifier|public
 name|void
-name|clearTestSideEffects
+name|clearTablesCreatedDuringTests
 parameter_list|()
 throws|throws
 name|Exception
@@ -3571,6 +3571,16 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|fileSystem
+operator|.
+name|exists
+argument_list|(
+name|p
+argument_list|)
+condition|)
+block|{
 for|for
 control|(
 name|FileStatus
@@ -3618,6 +3628,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -3686,6 +3697,32 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+comment|/**    * Clear out any side effects of running tests    */
+specifier|public
+name|void
+name|clearTestSideEffects
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+if|if
+condition|(
+name|System
+operator|.
+name|getenv
+argument_list|(
+name|QTEST_LEAVE_FILES
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+return|return;
+block|}
+name|clearTablesCreatedDuringTests
+argument_list|()
+expr_stmt|;
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf
@@ -3750,6 +3787,9 @@ condition|)
 block|{
 return|return;
 block|}
+name|clearTablesCreatedDuringTests
+argument_list|()
+expr_stmt|;
 name|SessionState
 operator|.
 name|get
