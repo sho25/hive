@@ -266,6 +266,10 @@ literal|2
 index|]
 expr_stmt|;
 block|}
+name|currentValue
+operator|=
+literal|null
+expr_stmt|;
 block|}
 annotation|@
 name|Override
