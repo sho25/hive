@@ -618,30 +618,6 @@ return|return
 literal|false
 return|;
 block|}
-comment|//Select *
-if|if
-condition|(
-name|this
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|isSelStarNoCompute
-argument_list|()
-operator|||
-name|this
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|isSelectStar
-argument_list|()
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
 comment|//Check whether the have the same schema
 if|if
 condition|(

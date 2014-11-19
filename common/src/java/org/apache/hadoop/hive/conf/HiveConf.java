@@ -4550,6 +4550,15 @@ argument_list|,
 literal|"Whether to enable constant propagation optimizer"
 argument_list|)
 block|,
+name|HIVEIDENTITYPROJECTREMOVER
+argument_list|(
+literal|"hive.optimize.remove.identity.project"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Removes identity project from operator tree"
+argument_list|)
+block|,
 name|HIVEMETADATAONLYQUERIES
 argument_list|(
 literal|"hive.optimize.metadataonly"
