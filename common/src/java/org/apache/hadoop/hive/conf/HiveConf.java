@@ -2039,7 +2039,7 @@ name|HMSHANDLERATTEMPTS
 argument_list|(
 literal|"hive.hmshandler.retry.attempts"
 argument_list|,
-literal|1
+literal|10
 argument_list|,
 literal|"The number of times to retry a HMSHandler call if there were a connection error."
 argument_list|)
@@ -2048,7 +2048,7 @@ name|HMSHANDLERINTERVAL
 argument_list|(
 literal|"hive.hmshandler.retry.interval"
 argument_list|,
-literal|"1000ms"
+literal|"2000ms"
 argument_list|,
 operator|new
 name|TimeValidator
