@@ -1627,6 +1627,8 @@ parameter_list|,
 name|int
 name|args
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 return|return
 name|fn
@@ -1654,6 +1656,8 @@ parameter_list|,
 name|int
 name|args
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|List
 argument_list|<

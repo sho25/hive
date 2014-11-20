@@ -6858,6 +6858,30 @@ operator|+
 literal|"If set to false, all Hive jobs go to the 'hive' user's queue."
 argument_list|)
 block|,
+name|HIVE_SERVER2_BUILTIN_UDF_WHITELIST
+argument_list|(
+literal|"hive.server2.builtin.udf.whitelist"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list of builtin udf names allowed in queries.\n"
+operator|+
+literal|"An empty whitelist allows all builtin udfs to be executed. "
+operator|+
+literal|" The udf black list takes precedence over udf white list"
+argument_list|)
+block|,
+name|HIVE_SERVER2_BUILTIN_UDF_BLACKLIST
+argument_list|(
+literal|"hive.server2.builtin.udf.blacklist"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list of udfs names. These udfs will not be allowed in queries."
+operator|+
+literal|" The udf black list takes precedence over udf white list"
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"

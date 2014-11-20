@@ -20404,6 +20404,8 @@ parameter_list|,
 name|ExprNodeDesc
 name|right
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 return|return
 operator|new
