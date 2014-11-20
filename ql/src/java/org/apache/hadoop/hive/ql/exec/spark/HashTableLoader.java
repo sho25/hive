@@ -498,9 +498,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// Note: it's possible that a MJ operator is in a ReduceWork, in which case the
+comment|// currentInputPath will be null. But, since currentInputPath is only interesting
+comment|// for bucket join case, and for bucket join the MJ operator will always be in
+comment|// a MapWork, this should be OK.
 name|String
 name|currentInputPath
 init|=
+name|context
+operator|.
+name|getCurrentInputPath
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|context
 operator|.
 name|getCurrentInputPath
