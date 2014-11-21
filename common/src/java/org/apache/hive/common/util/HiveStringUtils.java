@@ -3962,6 +3962,25 @@ return|return
 name|len
 return|;
 block|}
+specifier|public
+specifier|static
+name|String
+name|normalizeIdentifier
+parameter_list|(
+name|String
+name|identifier
+parameter_list|)
+block|{
+return|return
+name|identifier
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
