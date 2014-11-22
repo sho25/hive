@@ -1924,6 +1924,13 @@ name|context
 operator|.
 name|conf
 decl_stmt|;
+comment|// Unlike in MR, we may call this method multiple times, for each
+comment|// small table HTS. But, since it's idempotent, it should be OK.
+name|mjDesc
+operator|.
+name|resetOrder
+argument_list|()
+expr_stmt|;
 name|float
 name|hashtableMemoryUsage
 decl_stmt|;
