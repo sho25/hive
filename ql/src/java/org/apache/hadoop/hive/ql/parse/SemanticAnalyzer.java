@@ -5081,10 +5081,11 @@ name|SplitSample
 argument_list|>
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order maps - see HIVE-8707
 name|topOps
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -5100,7 +5101,7 @@ expr_stmt|;
 name|topSelOps
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -59778,6 +59779,7 @@ throws|throws
 name|SemanticException
 block|{
 comment|// First generate all the opInfos for the elements in the from clause
+comment|// Must be deterministic order map - see HIVE-8707
 name|Map
 argument_list|<
 name|String
@@ -59787,7 +59789,7 @@ argument_list|>
 name|aliasToOpInfo
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

@@ -6511,6 +6511,7 @@ argument_list|>
 name|dnMap
 parameter_list|)
 block|{
+comment|// Must be deterministic order map - see HIVE-8707
 return|return
 operator|(
 name|dnMap
@@ -6522,7 +6523,7 @@ literal|null
 else|:
 name|Maps
 operator|.
-name|newHashMap
+name|newLinkedHashMap
 argument_list|(
 name|dnMap
 argument_list|)

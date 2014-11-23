@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -388,10 +398,11 @@ name|boolean
 name|isSubQ
 parameter_list|)
 block|{
+comment|// Must be deterministic order maps - see HIVE-8707
 name|aliasToTabs
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -402,7 +413,7 @@ expr_stmt|;
 name|aliasToSubq
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -413,7 +424,7 @@ expr_stmt|;
 name|aliasToProps
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -466,10 +477,11 @@ operator|new
 name|QBMetaData
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order maps - see HIVE-8707
 name|ptfNodeToSpec
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|ASTNode
 argument_list|,
@@ -480,7 +492,7 @@ expr_stmt|;
 name|destToWindowingSpec
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1275,6 +1287,7 @@ name|PTFInvocationSpec
 name|spec
 parameter_list|)
 block|{
+comment|// Must be deterministic order map - see HIVE-8707
 name|ptfNodeToSpec
 operator|=
 name|ptfNodeToSpec
@@ -1282,7 +1295,7 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|ASTNode
 argument_list|,
