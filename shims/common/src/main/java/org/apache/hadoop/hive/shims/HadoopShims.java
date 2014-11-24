@@ -1914,6 +1914,23 @@ name|JobContext
 name|context
 parameter_list|)
 function_decl|;
+comment|/**    * Get job conf from the old style JobContext.    * @param context job context    * @return job conf    */
+specifier|public
+name|JobConf
+name|getJobConf
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|JobContext
+name|context
+parameter_list|)
+function_decl|;
 specifier|public
 name|FileSystem
 name|getNonCachedFileSystem
