@@ -338,8 +338,16 @@ implements|implements
 name|SparkClient
 block|{
 specifier|private
-specifier|final
 specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|Logger
 name|LOG
 init|=
@@ -352,6 +360,15 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|DEFAULT_CONNECTION_TIMEOUT
+init|=
+literal|"60"
+decl_stmt|;
+comment|// In seconds
 specifier|private
 specifier|final
 name|Map
@@ -479,6 +496,8 @@ expr_stmt|;
 name|long
 name|connectTimeout
 init|=
+literal|1000
+operator|*
 name|Integer
 operator|.
 name|parseInt
@@ -497,11 +516,9 @@ argument_list|)
 operator|.
 name|or
 argument_list|(
-literal|"10"
+name|DEFAULT_CONNECTION_TIMEOUT
 argument_list|)
 argument_list|)
-operator|*
-literal|1000
 decl_stmt|;
 name|long
 name|endTime
