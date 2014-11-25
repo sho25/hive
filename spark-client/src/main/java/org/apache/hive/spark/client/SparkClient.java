@@ -128,6 +128,14 @@ name|URL
 name|url
 parameter_list|)
 function_decl|;
+comment|/**    * Get the count of executors    */
+name|Future
+argument_list|<
+name|Integer
+argument_list|>
+name|getExecutorCount
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

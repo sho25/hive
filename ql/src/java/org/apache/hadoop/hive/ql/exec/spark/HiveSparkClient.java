@@ -23,6 +23,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Closeable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -79,21 +99,13 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|apache
 operator|.
-name|Closeable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|spark
 operator|.
-name|io
-operator|.
-name|Serializable
+name|SparkConf
 import|;
 end_import
 
@@ -117,6 +129,19 @@ parameter_list|,
 name|SparkWork
 name|sparkWork
 parameter_list|)
+throws|throws
+name|Exception
+function_decl|;
+specifier|public
+name|SparkConf
+name|getSparkConf
+parameter_list|()
+function_decl|;
+comment|/**    * Get the count of executors    */
+specifier|public
+name|int
+name|getExecutorCount
+parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
