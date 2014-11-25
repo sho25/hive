@@ -303,7 +303,8 @@ decl_stmt|;
 name|long
 name|startTime
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 while|while
 condition|(
@@ -325,6 +326,12 @@ condition|(
 name|state
 operator|!=
 literal|null
+operator|&&
+name|state
+operator|!=
+name|JobExecutionStatus
+operator|.
+name|UNKNOWN
 operator|&&
 operator|(
 name|state
@@ -470,6 +477,23 @@ name|lastProgressMap
 operator|=
 name|progressMap
 expr_stmt|;
+if|if
+condition|(
+name|startTime
+operator|<
+literal|0
+condition|)
+block|{
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"Status: Finished successfully within a check interval."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|double
 name|duration
 init|=
@@ -500,6 +524,7 @@ name|duration
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|running
 operator|=
 literal|false

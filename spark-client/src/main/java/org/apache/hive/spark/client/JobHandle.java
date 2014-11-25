@@ -33,6 +33,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|Future
@@ -88,6 +98,14 @@ function_decl|;
 comment|/**    * A collection of metrics collected from the Spark jobs triggered by this job.    *    * To collect job metrics on the client, Spark jobs must be registered with JobContext::monitor()    * on the remote end.    */
 name|MetricsCollection
 name|getMetrics
+parameter_list|()
+function_decl|;
+comment|/**    * Get corresponding spark job IDs for this job    */
+name|List
+argument_list|<
+name|Integer
+argument_list|>
+name|getSparkJobIds
 parameter_list|()
 function_decl|;
 comment|// TODO: expose job status?

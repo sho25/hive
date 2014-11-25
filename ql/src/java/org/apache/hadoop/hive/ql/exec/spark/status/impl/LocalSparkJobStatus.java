@@ -300,7 +300,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|SimpleSparkJobStatus
+name|LocalSparkJobStatus
 implements|implements
 name|SparkJobStatus
 block|{
@@ -331,7 +331,7 @@ argument_list|>
 name|future
 decl_stmt|;
 specifier|public
-name|SimpleSparkJobStatus
+name|LocalSparkJobStatus
 parameter_list|(
 name|JavaSparkContext
 name|sparkContext

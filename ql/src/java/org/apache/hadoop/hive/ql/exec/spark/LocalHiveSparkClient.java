@@ -259,7 +259,7 @@ name|status
 operator|.
 name|impl
 operator|.
-name|SimpleSparkJobStatus
+name|LocalSparkJobStatus
 import|;
 end_import
 
@@ -994,7 +994,7 @@ name|getInstance
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// As we always use foreach action to submit RDD graph, it would only trigger on job.
+comment|// As we always use foreach action to submit RDD graph, it would only trigger one job.
 name|int
 name|jobId
 init|=
@@ -1008,11 +1008,11 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|SimpleSparkJobStatus
+name|LocalSparkJobStatus
 name|sparkJobStatus
 init|=
 operator|new
-name|SimpleSparkJobStatus
+name|LocalSparkJobStatus
 argument_list|(
 name|sc
 argument_list|,

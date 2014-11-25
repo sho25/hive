@@ -67,6 +67,26 @@ name|InterfaceAudience
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * Holds runtime information about the job execution context.  *  * An instance of this class is kept on the node hosting a remote Spark context and is made  * available to jobs being executed via RemoteSparkContext#submit().  */
 end_comment
@@ -101,6 +121,22 @@ name|T
 argument_list|>
 name|job
 parameter_list|)
+function_decl|;
+comment|/**    * Return a map from client job Id to corresponding JavaFutureActions    */
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|JavaFutureAction
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+argument_list|>
+name|getMonitoredJobs
+parameter_list|()
 function_decl|;
 block|}
 end_interface
