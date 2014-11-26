@@ -327,6 +327,16 @@ name|delete
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|execHostsIgnoreErrors
+argument_list|(
+literal|"pkill -f java"
+argument_list|)
+expr_stmt|;
+name|execHostsIgnoreErrors
+argument_list|(
+literal|"pkill -9 -f java"
+argument_list|)
+expr_stmt|;
 name|elapsedTime
 operator|=
 name|TimeUnit

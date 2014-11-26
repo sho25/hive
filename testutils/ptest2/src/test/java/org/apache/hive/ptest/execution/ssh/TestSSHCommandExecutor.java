@@ -314,6 +314,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|"whoami"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|executor
@@ -494,6 +496,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|"whoami"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|executor

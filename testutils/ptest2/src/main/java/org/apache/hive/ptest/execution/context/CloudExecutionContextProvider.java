@@ -1867,6 +1867,8 @@ argument_list|,
 literal|0
 argument_list|,
 literal|"pkill -f java"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|mSSHCommandExecutor
