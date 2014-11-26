@@ -124,7 +124,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|TestTezSessionState
+name|SampleTezSessionState
 extends|extends
 name|TezSessionState
 block|{
@@ -150,7 +150,7 @@ name|boolean
 name|doAsEnabled
 decl_stmt|;
 specifier|public
-name|TestTezSessionState
+name|SampleTezSessionState
 parameter_list|(
 name|String
 name|sessionId

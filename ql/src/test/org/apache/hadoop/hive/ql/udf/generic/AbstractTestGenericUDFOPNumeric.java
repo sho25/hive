@@ -179,10 +179,10 @@ begin_class
 specifier|public
 specifier|abstract
 class|class
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 block|{
 specifier|public
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 parameter_list|()
 block|{
 comment|// Arithmetic operations rely on getting conf from SessionState, need to initialize here.

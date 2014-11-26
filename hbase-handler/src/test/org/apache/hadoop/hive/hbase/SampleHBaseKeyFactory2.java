@@ -386,7 +386,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestHBaseKeyFactory2
+name|SampleHBaseKeyFactory2
 extends|extends
 name|AbstractHBaseKeyFactory
 block|{
