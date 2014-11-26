@@ -6508,6 +6508,42 @@ argument_list|,
 literal|"Maximum number of Thrift worker threads"
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_LOGIN_BEBACKOFF_SLOT_LENGTH
+argument_list|(
+literal|"hive.server2.thrift.exponential.backoff.slot.length"
+argument_list|,
+literal|"100ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Binary exponential backoff slot time for Thrift clients during login to HiveServer2,\n"
+operator|+
+literal|"for retries until hitting Thrift client timeout"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_LOGIN_TIMEOUT
+argument_list|(
+literal|"hive.server2.thrift.login.timeout"
+argument_list|,
+literal|"20s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for Thrift clients during login to HiveServer2"
+argument_list|)
+block|,
 name|HIVE_SERVER2_THRIFT_WORKER_KEEPALIVE_TIME
 argument_list|(
 literal|"hive.server2.thrift.worker.keepalive.time"
