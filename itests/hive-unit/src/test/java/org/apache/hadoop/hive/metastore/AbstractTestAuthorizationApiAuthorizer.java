@@ -265,7 +265,7 @@ begin_class
 specifier|public
 specifier|abstract
 class|class
-name|TestAuthorizationApiAuthorizer
+name|AbstractTestAuthorizationApiAuthorizer
 block|{
 specifier|protected
 specifier|static

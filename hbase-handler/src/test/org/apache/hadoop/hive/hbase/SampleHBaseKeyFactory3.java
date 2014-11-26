@@ -246,15 +246,15 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Simple extension of {@link TestHBaseKeyFactory2} with exception of using filters instead of start  * and stop keys  * */
+comment|/**  * Simple extension of {@link SampleHBaseKeyFactory2} with exception of using filters instead of start  * and stop keys  * */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestHBaseKeyFactory3
+name|SampleHBaseKeyFactory3
 extends|extends
-name|TestHBaseKeyFactory2
+name|SampleHBaseKeyFactory2
 block|{
 annotation|@
 name|Override
@@ -272,11 +272,11 @@ name|ExprNodeDesc
 name|predicate
 parameter_list|)
 block|{
-name|TestHBasePredicateDecomposer
+name|SampleHBasePredicateDecomposer
 name|decomposedPredicate
 init|=
 operator|new
-name|TestHBasePredicateDecomposer
+name|SampleHBasePredicateDecomposer
 argument_list|(
 name|keyMapping
 argument_list|)
@@ -299,7 +299,7 @@ end_class
 
 begin_class
 class|class
-name|TestHBasePredicateDecomposer
+name|SampleHBasePredicateDecomposer
 extends|extends
 name|AbstractHBaseKeyPredicateDecomposer
 block|{
@@ -315,7 +315,7 @@ specifier|private
 name|ColumnMapping
 name|keyMapping
 decl_stmt|;
-name|TestHBasePredicateDecomposer
+name|SampleHBasePredicateDecomposer
 parameter_list|(
 name|ColumnMapping
 name|keyMapping

@@ -314,7 +314,7 @@ specifier|public
 class|class
 name|TestGenericUDFOPMod
 extends|extends
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 block|{
 annotation|@
 name|Test

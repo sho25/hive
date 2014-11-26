@@ -76,7 +76,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|TestURLHook
+name|SampleURLHook
 implements|implements
 name|JDOConnectionURLHook
 block|{

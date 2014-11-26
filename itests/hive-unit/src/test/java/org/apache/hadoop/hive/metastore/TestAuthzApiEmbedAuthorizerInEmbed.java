@@ -24,7 +24,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test {@link TestAuthorizationApiAuthorizer} in embedded mode of metastore  */
+comment|/**  * Test {@link AbstractTestAuthorizationApiAuthorizer} in embedded mode of metastore  */
 end_comment
 
 begin_class
@@ -32,7 +32,7 @@ specifier|public
 class|class
 name|TestAuthzApiEmbedAuthorizerInEmbed
 extends|extends
-name|TestAuthorizationApiAuthorizer
+name|AbstractTestAuthorizationApiAuthorizer
 block|{
 annotation|@
 name|BeforeClass
@@ -49,7 +49,7 @@ operator|=
 literal|false
 expr_stmt|;
 comment|// embedded metastore mode
-name|TestAuthorizationApiAuthorizer
+name|AbstractTestAuthorizationApiAuthorizer
 operator|.
 name|setup
 argument_list|()

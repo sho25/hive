@@ -366,7 +366,7 @@ specifier|public
 class|class
 name|TestGenericUDFOPPlus
 extends|extends
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 block|{
 annotation|@
 name|Test

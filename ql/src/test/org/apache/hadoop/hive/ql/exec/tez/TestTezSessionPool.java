@@ -150,7 +150,7 @@ parameter_list|)
 block|{
 return|return
 operator|new
-name|TestTezSessionState
+name|SampleTezSessionState
 argument_list|(
 name|sessionId
 argument_list|)
