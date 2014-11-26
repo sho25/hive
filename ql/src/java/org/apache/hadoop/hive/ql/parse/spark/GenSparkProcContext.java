@@ -1160,6 +1160,17 @@ name|this
 operator|.
 name|dependencyTask
 operator|=
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
+argument_list|)
+condition|?
 operator|(
 name|DependencyCollectionTask
 operator|)
@@ -1173,6 +1184,8 @@ argument_list|()
 argument_list|,
 name|conf
 argument_list|)
+else|:
+literal|null
 expr_stmt|;
 name|this
 operator|.
