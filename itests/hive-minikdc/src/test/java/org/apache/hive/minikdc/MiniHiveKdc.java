@@ -139,7 +139,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|ShimLoader
+name|Utils
 import|;
 end_import
 
@@ -584,10 +584,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|UserGroupInformation
 operator|.
 name|loginUserFromKeytab
 argument_list|(
@@ -600,10 +597,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|Utils
 operator|.
 name|getUGIForConf
 argument_list|(

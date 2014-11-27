@@ -281,6 +281,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -567,10 +583,7 @@ expr_stmt|;
 comment|//  If the hadoop cluster is secure, do a kerberos login for the service from the keytab
 if|if
 condition|(
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|UserGroupInformation
 operator|.
 name|isSecurityEnabled
 argument_list|()
@@ -589,10 +602,7 @@ name|this
 operator|.
 name|serviceUGI
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|Utils
 operator|.
 name|getUGIForConf
 argument_list|(

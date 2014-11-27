@@ -205,6 +205,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|thrift
 operator|.
 name|HadoopThriftAuthBridge
@@ -740,10 +756,7 @@ name|serverMode
 argument_list|)
 throw|;
 block|}
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|Utils
 operator|.
 name|setZookeeperClientKerberosJaasConfig
 argument_list|(
@@ -2294,7 +2307,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2325,7 +2338,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2357,7 +2370,7 @@ literal|"Zookeeper connect string has to be specifed through "
 operator|+
 literal|"either "
 operator|+
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2365,7 +2378,7 @@ name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 operator|+
 literal|" or "
 operator|+
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2382,7 +2395,7 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2404,7 +2417,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -2439,13 +2452,13 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|,
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.

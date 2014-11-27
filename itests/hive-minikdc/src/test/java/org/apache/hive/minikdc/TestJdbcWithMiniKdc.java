@@ -167,7 +167,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|ShimLoader
+name|Utils
 import|;
 end_import
 
@@ -1155,10 +1155,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|Utils
 operator|.
 name|setTokenStr
 argument_list|(

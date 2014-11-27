@@ -1737,6 +1737,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|thrift
 operator|.
 name|HadoopThriftAuthBridge
@@ -2862,14 +2878,6 @@ name|tte
 init|=
 literal|null
 decl_stmt|;
-name|HadoopShims
-name|shim
-init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-decl_stmt|;
 name|boolean
 name|useSasl
 init|=
@@ -3007,7 +3015,7 @@ decl_stmt|;
 comment|// tokenSig could be null
 name|tokenStrForm
 operator|=
-name|shim
+name|Utils
 operator|.
 name|getTokenStrForm
 argument_list|(
@@ -3226,7 +3234,7 @@ block|{
 name|UserGroupInformation
 name|ugi
 init|=
-name|shim
+name|Utils
 operator|.
 name|getUGIForConf
 argument_list|(

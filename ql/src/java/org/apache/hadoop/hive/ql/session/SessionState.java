@@ -785,6 +785,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -1173,6 +1189,7 @@ name|NO_CURRENT_TXN
 decl_stmt|;
 comment|/**    * Whether we are in auto-commit state or not.  Currently we are always in auto-commit,    * so there are not setters for this yet.    */
 specifier|private
+specifier|final
 name|boolean
 name|txnAutoCommit
 init|=
@@ -1878,10 +1895,7 @@ expr_stmt|;
 name|UserGroupInformation
 name|sessionUGI
 init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|Utils
 operator|.
 name|getUGIForConf
 argument_list|(

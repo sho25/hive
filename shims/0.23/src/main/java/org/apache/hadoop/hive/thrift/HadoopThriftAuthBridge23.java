@@ -102,7 +102,7 @@ specifier|public
 class|class
 name|HadoopThriftAuthBridge23
 extends|extends
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 block|{
 specifier|private
 specifier|static

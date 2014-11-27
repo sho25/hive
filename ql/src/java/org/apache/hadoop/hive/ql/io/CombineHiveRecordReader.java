@@ -91,24 +91,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-operator|.
-name|InputSplitShim
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Writable
@@ -199,6 +181,22 @@ name|Reporter
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|lib
+operator|.
+name|CombineFileSplit
+import|;
+end_import
+
 begin_comment
 comment|/**  * CombineHiveRecordReader.  *  * @param<K>  * @param<V>  */
 end_comment
@@ -259,7 +257,7 @@ argument_list|(
 name|jobConf
 argument_list|,
 operator|(
-name|InputSplitShim
+name|CombineFileSplit
 operator|)
 name|split
 argument_list|)
@@ -401,6 +399,8 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|K
 name|createKey
@@ -416,6 +416,8 @@ name|createKey
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|V
 name|createValue
@@ -431,6 +433,8 @@ name|createValue
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getPos

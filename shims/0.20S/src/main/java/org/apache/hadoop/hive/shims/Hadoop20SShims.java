@@ -695,9 +695,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|JobTrackerState
-name|state
-decl_stmt|;
 switch|switch
 condition|(
 name|clusterStatus

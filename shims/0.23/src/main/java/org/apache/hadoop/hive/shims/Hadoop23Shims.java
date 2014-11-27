@@ -2595,9 +2595,6 @@ argument_list|)
 argument_list|,
 name|taskId
 argument_list|,
-operator|(
-name|Reporter
-operator|)
 name|progressable
 argument_list|)
 expr_stmt|;
@@ -2713,17 +2710,6 @@ argument_list|)
 argument_list|,
 name|jobId
 argument_list|,
-operator|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
-operator|)
 name|progressable
 argument_list|)
 return|;
@@ -3605,10 +3591,12 @@ implements|implements
 name|HdfsFileStatus
 block|{
 specifier|private
+specifier|final
 name|FileStatus
 name|fileStatus
 decl_stmt|;
 specifier|private
+specifier|final
 name|AclStatus
 name|aclStatus
 decl_stmt|;
@@ -3861,6 +3849,7 @@ argument_list|>
 argument_list|()
 block|{
 specifier|private
+specifier|final
 name|RemoteIterator
 argument_list|<
 name|LocatedFileStatus
@@ -4001,15 +3990,6 @@ block|}
 else|else
 block|{
 comment|// If the FS has no access() method, we can try DefaultFileAccess ..
-name|UserGroupInformation
-name|ugi
-init|=
-name|getUGIForConf
-argument_list|(
-name|getConf
-argument_list|()
-argument_list|)
-decl_stmt|;
 name|DefaultFileAccess
 operator|.
 name|checkFileAccess
@@ -4914,6 +4894,7 @@ operator|.
 name|KerberosNameShim
 block|{
 specifier|private
+specifier|final
 name|KerberosName
 name|kerberosName
 decl_stmt|;
@@ -4933,6 +4914,8 @@ name|name
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getDefaultRealm
@@ -4945,6 +4928,8 @@ name|getDefaultRealm
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getServiceName
@@ -4957,6 +4942,8 @@ name|getServiceName
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getHostName
@@ -4969,6 +4956,8 @@ name|getHostName
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getRealm
@@ -4981,6 +4970,8 @@ name|getRealm
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getShortName
