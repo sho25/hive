@@ -196,7 +196,7 @@ specifier|public
 class|class
 name|TestMapStructures
 extends|extends
-name|TestParquetDirect
+name|AbstractTestParquetDirect
 block|{
 annotation|@
 name|Test

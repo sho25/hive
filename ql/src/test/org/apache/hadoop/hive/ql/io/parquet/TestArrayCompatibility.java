@@ -240,7 +240,7 @@ specifier|public
 class|class
 name|TestArrayCompatibility
 extends|extends
-name|TestParquetDirect
+name|AbstractTestParquetDirect
 block|{
 annotation|@
 name|Test

@@ -349,8 +349,9 @@ end_import
 
 begin_class
 specifier|public
+specifier|abstract
 class|class
-name|TestParquetDirect
+name|AbstractTestParquetDirect
 block|{
 specifier|public
 specifier|static
