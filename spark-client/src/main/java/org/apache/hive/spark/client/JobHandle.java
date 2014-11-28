@@ -67,6 +67,22 @@ name|InterfaceAudience
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|spark
+operator|.
+name|counter
+operator|.
+name|SparkCounters
+import|;
+end_import
+
 begin_comment
 comment|/**  * A handle to a submitted job. Allows for monitoring and controlling of the running remote job.  */
 end_comment
@@ -106,6 +122,11 @@ argument_list|<
 name|Integer
 argument_list|>
 name|getSparkJobIds
+parameter_list|()
+function_decl|;
+comment|/**    * Get the SparkCounters for this job    */
+name|SparkCounters
+name|getSparkCounters
 parameter_list|()
 function_decl|;
 comment|// TODO: expose job status?

@@ -2102,6 +2102,15 @@ argument_list|)
 expr_stmt|;
 name|handle
 operator|.
+name|setSparkCounters
+argument_list|(
+name|jr
+operator|.
+name|sparkCounters
+argument_list|)
+expr_stmt|;
+name|handle
+operator|.
 name|complete
 argument_list|(
 name|jr

@@ -23,6 +23,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
+name|spark
+operator|.
+name|counter
+operator|.
+name|SparkCounters
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|spark
 operator|.
 name|api
@@ -120,6 +136,9 @@ argument_list|<
 name|T
 argument_list|>
 name|job
+parameter_list|,
+name|SparkCounters
+name|sparkCounters
 parameter_list|)
 function_decl|;
 comment|/**    * Return a map from client job Id to corresponding JavaFutureActions    */

@@ -457,13 +457,7 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
 name|hive
-operator|.
-name|ql
-operator|.
-name|exec
 operator|.
 name|spark
 operator|.
@@ -1080,13 +1074,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|sparkCounters
-operator|=
-name|sparkJobStatus
-operator|.
-name|getCounter
-argument_list|()
-expr_stmt|;
 name|SparkJobMonitor
 name|monitor
 init|=
@@ -1099,6 +1086,14 @@ decl_stmt|;
 name|monitor
 operator|.
 name|startMonitor
+argument_list|()
+expr_stmt|;
+comment|// for RSC, we should get the counters after job has finished
+name|sparkCounters
+operator|=
+name|sparkJobStatus
+operator|.
+name|getCounter
 argument_list|()
 expr_stmt|;
 name|SparkStatistics
