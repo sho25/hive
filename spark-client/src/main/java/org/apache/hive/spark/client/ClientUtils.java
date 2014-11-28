@@ -390,7 +390,7 @@ argument_list|(
 literal|"spark.akka.heartbeat.interval"
 argument_list|)
 argument_list|,
-literal|1000
+literal|100
 argument_list|)
 decl_stmt|;
 comment|// Disabled due to chill-akka depending on kryo 2.21, which is incompatible with 2.22

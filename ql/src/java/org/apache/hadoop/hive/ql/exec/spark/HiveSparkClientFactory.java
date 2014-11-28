@@ -572,10 +572,12 @@ block|{
 name|String
 name|value
 init|=
-name|entry
+name|hiveConf
 operator|.
-name|getValue
-argument_list|()
+name|get
+argument_list|(
+name|propertyName
+argument_list|)
 decl_stmt|;
 name|sparkConf
 operator|.

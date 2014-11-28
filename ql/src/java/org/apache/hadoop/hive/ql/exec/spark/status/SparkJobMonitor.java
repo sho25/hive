@@ -323,6 +323,24 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"state = "
+operator|+
+name|state
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|state
 operator|!=
 literal|null
