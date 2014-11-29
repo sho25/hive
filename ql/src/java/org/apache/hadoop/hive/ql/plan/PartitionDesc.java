@@ -293,6 +293,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapred
+operator|.
+name|OutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|util
 operator|.
 name|ReflectionUtils
@@ -384,7 +398,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|HiveOutputFormat
+name|OutputFormat
 argument_list|>
 name|outputFileFormatClass
 decl_stmt|;
@@ -838,7 +852,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|HiveOutputFormat
+name|OutputFormat
 argument_list|>
 name|getOutputFileFormatClass
 parameter_list|()
@@ -883,7 +897,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|HiveOutputFormat
+name|OutputFormat
 argument_list|>
 name|outputClass
 init|=
@@ -898,8 +912,6 @@ operator|.
 name|getOutputFormatSubstitute
 argument_list|(
 name|outputFileFormatClass
-argument_list|,
-literal|false
 argument_list|)
 decl_stmt|;
 if|if

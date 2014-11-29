@@ -301,46 +301,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcRecordUpdater
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|log
 operator|.
 name|PerfLogger
@@ -449,7 +409,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|HadoopShims
+name|HadoopShimsSecure
 operator|.
 name|InputSplitShim
 import|;
@@ -613,6 +573,22 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|lib
+operator|.
+name|CombineFileSplit
+import|;
+end_import
+
 begin_comment
 comment|/**  * CombineHiveInputFormat is a parameterized InputFormat which looks at the path  * name and determine the correct InputFormat for that path name from  * mapredPlan.pathToPartitionInfo(). It can be used to read files with different  * input format in the same map-reduce job.  */
 end_comment
@@ -669,13 +645,13 @@ specifier|public
 specifier|static
 class|class
 name|CombineHiveInputSplit
-implements|implements
+extends|extends
 name|InputSplitShim
 block|{
 name|String
 name|inputFormatClassName
 decl_stmt|;
-name|InputSplitShim
+name|CombineFileSplit
 name|inputSplitShim
 decl_stmt|;
 specifier|public
@@ -702,7 +678,7 @@ block|}
 specifier|public
 name|CombineHiveInputSplit
 parameter_list|(
-name|InputSplitShim
+name|CombineFileSplit
 name|inputSplitShim
 parameter_list|)
 throws|throws
@@ -725,7 +701,7 @@ parameter_list|(
 name|JobConf
 name|job
 parameter_list|,
-name|InputSplitShim
+name|CombineFileSplit
 name|inputSplitShim
 parameter_list|)
 throws|throws
@@ -819,7 +795,7 @@ block|}
 block|}
 block|}
 specifier|public
-name|InputSplitShim
+name|CombineFileSplit
 name|getInputSplitShim
 parameter_list|()
 block|{
@@ -852,6 +828,8 @@ operator|=
 name|inputFormatClassName
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|JobConf
 name|getJob
@@ -864,6 +842,8 @@ name|getJob
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getLength
@@ -877,6 +857,8 @@ argument_list|()
 return|;
 block|}
 comment|/** Returns an array containing the startoffsets of the files in the split. */
+annotation|@
+name|Override
 specifier|public
 name|long
 index|[]
@@ -891,6 +873,8 @@ argument_list|()
 return|;
 block|}
 comment|/** Returns an array containing the lengths of the files in the split. */
+annotation|@
+name|Override
 specifier|public
 name|long
 index|[]
@@ -905,6 +889,8 @@ argument_list|()
 return|;
 block|}
 comment|/** Returns the start offset of the i<sup>th</sup> Path. */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getOffset
@@ -923,6 +909,8 @@ argument_list|)
 return|;
 block|}
 comment|/** Returns the length of the i<sup>th</sup> Path. */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|getLength
@@ -941,6 +929,8 @@ argument_list|)
 return|;
 block|}
 comment|/** Returns the number of Paths in the split. */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getNumPaths
@@ -954,6 +944,8 @@ argument_list|()
 return|;
 block|}
 comment|/** Returns the i<sup>th</sup> Path. */
+annotation|@
+name|Override
 specifier|public
 name|Path
 name|getPath
@@ -972,6 +964,8 @@ argument_list|)
 return|;
 block|}
 comment|/** Returns all the Paths in the split. */
+annotation|@
+name|Override
 specifier|public
 name|Path
 index|[]
@@ -986,6 +980,8 @@ argument_list|()
 return|;
 block|}
 comment|/** Returns all the Paths where this input-split resides. */
+annotation|@
+name|Override
 specifier|public
 name|String
 index|[]
@@ -1050,6 +1046,8 @@ argument_list|()
 return|;
 block|}
 comment|/**      * Writable interface.      */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|readFields
@@ -1076,6 +1074,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**      * Writable interface.      */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|write
@@ -1164,24 +1164,6 @@ operator|.
 name|writeUTF
 argument_list|(
 name|inputFormatClassName
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|shrinkSplit
-parameter_list|(
-name|long
-name|length
-parameter_list|)
-block|{
-name|inputSplitShim
-operator|.
-name|shrinkSplit
-argument_list|(
-name|length
 argument_list|)
 expr_stmt|;
 block|}
@@ -1281,17 +1263,6 @@ name|CombinePathInputFormat
 operator|)
 name|o
 decl_stmt|;
-if|if
-condition|(
-name|mObj
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 operator|(
 name|opList
@@ -2206,14 +2177,14 @@ block|}
 comment|// Processing directories
 name|List
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|iss
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2352,7 +2323,7 @@ expr_stmt|;
 block|}
 for|for
 control|(
-name|InputSplitShim
+name|CombineFileSplit
 name|is
 range|:
 name|iss
@@ -2438,40 +2409,6 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|pathToAliases
-init|=
-name|mrwork
-operator|.
-name|getPathToAliases
-argument_list|()
-decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-argument_list|>
-name|aliasToWork
-init|=
-name|mrwork
-operator|.
-name|getAliasToWork
-argument_list|()
-decl_stmt|;
 name|ArrayList
 argument_list|<
 name|InputSplit
@@ -2562,6 +2499,11 @@ argument_list|)
 decl_stmt|;
 comment|// Use HiveInputFormat if any of the paths is not splittable
 name|Class
+argument_list|<
+name|?
+extends|extends
+name|InputFormat
+argument_list|>
 name|inputFormatClass
 init|=
 name|part
@@ -2569,15 +2511,12 @@ operator|.
 name|getInputFileFormatClass
 argument_list|()
 decl_stmt|;
-name|String
-name|inputFormatClassName
-init|=
-name|inputFormatClass
-operator|.
-name|getName
-argument_list|()
-decl_stmt|;
 name|InputFormat
+argument_list|<
+name|WritableComparable
+argument_list|,
+name|Writable
+argument_list|>
 name|inputFormat
 init|=
 name|getInputFormatFromCache
@@ -2880,7 +2819,7 @@ name|combine
 parameter_list|,
 name|List
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|iss
 parameter_list|,
@@ -2933,13 +2872,13 @@ comment|/**    * This function is used to sample inputs for clauses like "TABLES
 specifier|private
 name|List
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|sampleSplits
 parameter_list|(
 name|List
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|splits
 parameter_list|)
@@ -2959,14 +2898,14 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|retLists
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2976,7 +2915,7 @@ name|String
 argument_list|,
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|>
 name|aliasToSplitList
@@ -2988,7 +2927,7 @@ name|String
 argument_list|,
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|>
 argument_list|()
@@ -3029,7 +2968,7 @@ comment|// Populate list of exclusive splits for every sampled alias
 comment|//
 for|for
 control|(
-name|InputSplitShim
+name|CombineFileSplit
 name|split
 range|:
 name|splits
@@ -3170,7 +3109,7 @@ argument_list|,
 operator|new
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|()
 argument_list|)
@@ -3214,7 +3153,7 @@ name|String
 argument_list|,
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 argument_list|>
 name|entry
@@ -3227,7 +3166,7 @@ control|)
 block|{
 name|ArrayList
 argument_list|<
-name|InputSplitShim
+name|CombineFileSplit
 argument_list|>
 name|splitList
 init|=
@@ -3243,7 +3182,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|InputSplitShim
+name|CombineFileSplit
 name|split
 range|:
 name|splitList
@@ -3316,7 +3255,7 @@ name|i
 operator|++
 control|)
 block|{
-name|InputSplitShim
+name|CombineFileSplit
 name|split
 init|=
 name|splitList
@@ -3390,7 +3329,12 @@ operator|>
 name|targetSize
 condition|)
 block|{
+operator|(
+operator|(
+name|InputSplitShim
+operator|)
 name|split
+operator|)
 operator|.
 name|shrinkSplit
 argument_list|(
@@ -3738,6 +3682,8 @@ expr_stmt|;
 block|}
 comment|// returns true if the specified path matches the prefix stored
 comment|// in this TestFilter.
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|accept

@@ -651,6 +651,11 @@ name|isTurnOffSorting
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|isCascade
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|AlterTableDesc
 parameter_list|()
@@ -687,6 +692,9 @@ name|first
 parameter_list|,
 name|String
 name|afterCol
+parameter_list|,
+name|boolean
+name|isCascade
 parameter_list|)
 block|{
 name|super
@@ -739,6 +747,12 @@ operator|=
 name|AlterTableTypes
 operator|.
 name|RENAMECOLUMN
+expr_stmt|;
+name|this
+operator|.
+name|isCascade
+operator|=
+name|isCascade
 expr_stmt|;
 block|}
 comment|/**    * @param oldName    *          old name of the table    * @param newName    *          new name of the table    */
@@ -803,6 +817,9 @@ name|newCols
 parameter_list|,
 name|AlterTableTypes
 name|alterType
+parameter_list|,
+name|boolean
+name|isCascade
 parameter_list|)
 block|{
 name|op
@@ -831,6 +848,12 @@ operator|.
 name|partSpec
 operator|=
 name|partSpec
+expr_stmt|;
+name|this
+operator|.
+name|isCascade
+operator|=
+name|isCascade
 expr_stmt|;
 block|}
 comment|/**    * @param alterType    *          type of alter op    */
@@ -2251,6 +2274,16 @@ parameter_list|()
 block|{
 return|return
 name|isDropIfExists
+return|;
+block|}
+comment|/**    * @return isCascade    */
+specifier|public
+name|boolean
+name|getIsCascade
+parameter_list|()
+block|{
+return|return
+name|isCascade
 return|;
 block|}
 specifier|public

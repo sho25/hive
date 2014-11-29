@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -280,10 +290,11 @@ specifier|public
 name|QBMetaData
 parameter_list|()
 block|{
+comment|// Must be deterministic order map - see HIVE-8707
 name|aliasToTable
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -335,10 +346,11 @@ name|Integer
 argument_list|>
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order maps - see HIVE-8707
 name|aliasToPartSpec
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -354,7 +366,7 @@ expr_stmt|;
 name|aliasToDPCtx
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

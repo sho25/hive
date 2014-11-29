@@ -98,7 +98,7 @@ specifier|public
 class|class
 name|SimpleWebException
 extends|extends
-name|Throwable
+name|Exception
 block|{
 specifier|public
 name|int

@@ -563,7 +563,7 @@ specifier|static
 class|class
 name|MyHadoopThriftAuthBridge20S
 extends|extends
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 block|{
 annotation|@
 name|Override
@@ -591,7 +591,7 @@ specifier|static
 class|class
 name|Server
 extends|extends
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 block|{
@@ -1822,7 +1822,7 @@ comment|//kerberos, this needs to be done
 name|waitForMetastoreTokenInit
 argument_list|()
 expr_stmt|;
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -1835,7 +1835,7 @@ operator|.
 name|KERBEROS
 argument_list|)
 expr_stmt|;
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.

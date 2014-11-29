@@ -1469,6 +1469,8 @@ parameter_list|(
 name|String
 name|column
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|ArrayList
 argument_list|<
@@ -1657,6 +1659,8 @@ parameter_list|(
 name|Table
 name|src
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|Operator
 argument_list|<
@@ -1733,6 +1737,8 @@ parameter_list|(
 name|Table
 name|src
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|Operator
 argument_list|<
@@ -2125,7 +2131,7 @@ name|Table
 name|src
 parameter_list|)
 throws|throws
-name|SemanticException
+name|Exception
 block|{
 name|ArrayList
 argument_list|<
@@ -3452,7 +3458,7 @@ name|Table
 name|src
 parameter_list|)
 throws|throws
-name|SemanticException
+name|Exception
 block|{
 comment|// map-side work
 name|ArrayList

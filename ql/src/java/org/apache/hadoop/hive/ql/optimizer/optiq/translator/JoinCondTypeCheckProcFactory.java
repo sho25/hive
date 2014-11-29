@@ -738,13 +738,14 @@ return|;
 block|}
 else|else
 block|{
+comment|// Qualified column access for which table was not found
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|INVALID_COLUMN
+name|INVALID_TABLE_ALIAS
 operator|.
 name|getMsg
 argument_list|(
@@ -924,7 +925,7 @@ name|cInfoToRet
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get ColumnExprProcessor.    *     * @return ColumnExprProcessor.    */
+comment|/**    * Factory method to get ColumnExprProcessor.    *    * @return ColumnExprProcessor.    */
 annotation|@
 name|Override
 specifier|public
@@ -1851,7 +1852,7 @@ name|inputLineage
 return|;
 block|}
 block|}
-comment|/**    * Factory method to get DefaultExprProcessor.    *     * @return DefaultExprProcessor.    */
+comment|/**    * Factory method to get DefaultExprProcessor.    *    * @return DefaultExprProcessor.    */
 annotation|@
 name|Override
 specifier|public
