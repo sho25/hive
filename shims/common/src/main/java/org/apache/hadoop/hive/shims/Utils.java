@@ -267,11 +267,8 @@ block|{
 specifier|public
 specifier|static
 name|UserGroupInformation
-name|getUGIForConf
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
+name|getUGI
+parameter_list|()
 throws|throws
 name|LoginException
 throws|,

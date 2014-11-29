@@ -300,13 +300,8 @@ name|currentUgi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|fs
-operator|.
-name|getConf
+name|getUGI
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|DefaultFileAccess
 operator|.

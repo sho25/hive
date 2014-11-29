@@ -3663,11 +3663,8 @@ name|ugi
 operator|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|getConf
+name|getUGI
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch

@@ -8252,10 +8252,8 @@ argument_list|()
 argument_list|,
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|perfLogger
@@ -9316,10 +9314,8 @@ operator|)
 argument_list|,
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|perfLogger

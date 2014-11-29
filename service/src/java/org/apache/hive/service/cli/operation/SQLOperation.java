@@ -1439,10 +1439,8 @@ block|{
 return|return
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|opConfig
-argument_list|)
+name|getUGI
+argument_list|()
 return|;
 block|}
 catch|catch

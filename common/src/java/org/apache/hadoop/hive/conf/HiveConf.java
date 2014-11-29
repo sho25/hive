@@ -11806,10 +11806,8 @@ name|ugi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|this
-argument_list|)
+name|getUGI
+argument_list|()
 decl_stmt|;
 return|return
 name|ugi

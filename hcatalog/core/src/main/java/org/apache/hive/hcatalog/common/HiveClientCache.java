@@ -1141,10 +1141,8 @@ name|ugi
 operator|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|hiveConf
-argument_list|)
+name|getUGI
+argument_list|()
 expr_stmt|;
 name|this
 operator|.

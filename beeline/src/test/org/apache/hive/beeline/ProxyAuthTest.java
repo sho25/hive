@@ -1229,12 +1229,8 @@ name|setTokenStr
 argument_list|(
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-operator|new
-name|Configuration
+name|getUGI
 argument_list|()
-argument_list|)
 argument_list|,
 name|tokenStr
 argument_list|,
