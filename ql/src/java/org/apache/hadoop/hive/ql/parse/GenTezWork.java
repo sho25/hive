@@ -718,13 +718,29 @@ argument_list|)
 condition|)
 block|{
 comment|// if we've seen both root and child, we can bail.
+comment|// clear out the mapjoin set. we don't need it anymore.
+name|context
+operator|.
+name|currentMapJoinOperators
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+comment|// clear out the union set. we don't need it anymore.
+name|context
+operator|.
+name|currentUnionOperators
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 return|return
 literal|null
 return|;
 block|}
 else|else
 block|{
-comment|// At this point we don't have to do anything special in this case. Just
+comment|// At this point we don't have to do anything special. Just
 comment|// run through the regular paces w/o creating a new task.
 name|work
 operator|=
