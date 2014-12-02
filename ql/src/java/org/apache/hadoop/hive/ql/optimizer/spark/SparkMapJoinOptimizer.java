@@ -549,7 +549,30 @@ name|JoinOperator
 operator|)
 name|nd
 decl_stmt|;
-comment|/*     if (!conf.getBoolVar(HiveConf.ConfVars.HIVECONVERTJOIN)&& !(conf.getBoolVar(HiveConf.ConfVars.HIVE_AUTO_SORTMERGE_JOIN))) {       // we are just converting to a common merge join operator. The shuffle       // join in map-reduce case.       int pos = 0; // it doesn't matter which position we use in this case.       convertJoinSMBJoin(joinOp, context, pos, 0, false, false);       return null;     }*/
+if|if
+condition|(
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVECONVERTJOIN
+argument_list|)
+condition|)
+block|{
+comment|//&& !(conf.getBoolVar(HiveConf.ConfVars.HIVE_AUTO_SORTMERGE_JOIN))) {
+comment|// we are just converting to a common merge join operator. The shuffle
+comment|// join in map-reduce case.
+comment|// int pos = 0; // it doesn't matter which position we use in this case.
+comment|// convertJoinSMBJoin(joinOp, context, pos, 0, false, false);
+return|return
+literal|null
+return|;
+block|}
 comment|// if we have traits, and table info is present in the traits, we know the
 comment|// exact number of buckets. Else choose the largest number of estimated
 comment|// reducers from the parent operators.
