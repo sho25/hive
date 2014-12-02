@@ -656,13 +656,6 @@ name|IOException
 throws|,
 name|SparkException
 block|{
-name|SparkClientFactory
-operator|.
-name|initialize
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
 name|sparkConf
 operator|=
 name|HiveSparkClientFactory

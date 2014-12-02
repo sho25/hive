@@ -148,6 +148,12 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+operator|!
+name|initialized
+condition|)
+block|{
 name|secret
 operator|=
 name|akka
@@ -213,6 +219,7 @@ name|initialized
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 comment|/** Stops the SparkClient library. */
 specifier|public
