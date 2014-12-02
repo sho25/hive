@@ -1251,7 +1251,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|TOK_TIMESTAMP
+name|TOK_TIMESTAMPLITERAL
 expr_stmt|;
 name|DateFormat
 name|df

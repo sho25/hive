@@ -1030,6 +1030,7 @@ name|hFn
 operator|==
 literal|null
 condition|)
+block|{
 try|try
 block|{
 name|hFn
@@ -1063,6 +1064,7 @@ name|hFn
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 return|return
 name|hFn
@@ -1388,7 +1390,7 @@ name|FunctionRegistry
 operator|.
 name|getFunctionInfo
 argument_list|(
-literal|"datetime"
+literal|"date"
 argument_list|)
 expr_stmt|;
 block|}
