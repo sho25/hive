@@ -390,6 +390,15 @@ literal|"60"
 decl_stmt|;
 comment|// In seconds
 specifier|private
+specifier|static
+specifier|final
+name|long
+name|DEFAULT_SHUTDOWN_TIMEOUT
+init|=
+literal|10000
+decl_stmt|;
+comment|// In milliseconds
+specifier|private
 specifier|final
 name|Map
 argument_list|<
@@ -733,12 +742,24 @@ argument_list|(
 name|clientRef
 argument_list|)
 expr_stmt|;
+name|long
+name|endTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|+
+name|DEFAULT_SHUTDOWN_TIMEOUT
+decl_stmt|;
 try|try
 block|{
 name|driverThread
 operator|.
 name|join
-argument_list|()
+argument_list|(
+name|DEFAULT_SHUTDOWN_TIMEOUT
+argument_list|)
 expr_stmt|;
 comment|// TODO: timeout?
 block|}
@@ -754,6 +775,31 @@ name|debug
 argument_list|(
 literal|"Interrupted before driver thread was finished."
 argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|endTime
+operator|-
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|<=
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Shut down time out."
+argument_list|)
+expr_stmt|;
+name|driverThread
+operator|.
+name|interrupt
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1808,6 +1854,18 @@ name|exitCode
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ie
+parameter_list|)
+block|{
+name|child
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

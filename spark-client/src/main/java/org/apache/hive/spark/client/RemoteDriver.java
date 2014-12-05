@@ -1498,6 +1498,19 @@ block|{
 comment|// Catch throwables in a best-effort to report job status back to the client. It's
 comment|// re-thrown so that the executor can destroy the affected thread (or the JVM can
 comment|// die or whatever would happen if the throwable bubbled up).
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to run job "
+operator|+
+name|req
+operator|.
+name|id
+argument_list|,
+name|t
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|tell
