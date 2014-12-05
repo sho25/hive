@@ -84788,6 +84788,9 @@ name|qb
 parameter_list|,
 name|RelNode
 name|srcRel
+parameter_list|,
+name|RelNode
+name|starSrcRel
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -84926,6 +84929,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+comment|// TODO: will this also fix windowing? try
 name|RowResolver
 name|inputRR
 init|=
@@ -84937,7 +84941,30 @@ name|get
 argument_list|(
 name|srcRel
 argument_list|)
+decl_stmt|,
+name|starRR
+init|=
+name|inputRR
 decl_stmt|;
+if|if
+condition|(
+name|starSrcRel
+operator|!=
+literal|null
+condition|)
+block|{
+name|starRR
+operator|=
+name|this
+operator|.
+name|relToHiveRR
+operator|.
+name|get
+argument_list|(
+name|starSrcRel
+argument_list|)
+expr_stmt|;
+block|}
 comment|// 3. Query Hints
 comment|// TODO: Handle Query Hints; currently we ignore them
 name|boolean
@@ -85233,7 +85260,7 @@ name|tabAliasesForAllProjs
 init|=
 name|getTabAliases
 argument_list|(
-name|inputRR
+name|starRR
 argument_list|)
 decl_stmt|;
 for|for
@@ -85427,7 +85454,7 @@ name|excludedColumns
 argument_list|,
 name|inputRR
 argument_list|,
-literal|null
+name|starRR
 argument_list|,
 name|pos
 argument_list|,
@@ -85513,7 +85540,7 @@ name|excludedColumns
 argument_list|,
 name|inputRR
 argument_list|,
-literal|null
+name|starRR
 argument_list|,
 name|pos
 argument_list|,
@@ -85654,7 +85681,7 @@ name|excludedColumns
 argument_list|,
 name|inputRR
 argument_list|,
-literal|null
+name|starRR
 argument_list|,
 name|pos
 argument_list|,
@@ -86418,6 +86445,11 @@ name|srcRel
 else|:
 name|filterRel
 expr_stmt|;
+name|RelNode
+name|starSrcRel
+init|=
+name|srcRel
+decl_stmt|;
 comment|// 3. Build Rel for GB Clause
 name|gbRel
 operator|=
@@ -86472,6 +86504,8 @@ argument_list|(
 name|qb
 argument_list|,
 name|srcRel
+argument_list|,
+name|starSrcRel
 argument_list|)
 expr_stmt|;
 name|srcRel
