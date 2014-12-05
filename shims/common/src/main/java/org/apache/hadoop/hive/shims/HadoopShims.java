@@ -23,26 +23,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|DataInput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|DataOutput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|IOException
 import|;
 end_import
@@ -306,20 +286,6 @@ operator|.
 name|mapred
 operator|.
 name|ClusterStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputSplit
 import|;
 end_import
 
@@ -1502,18 +1468,6 @@ name|src
 parameter_list|)
 throws|throws
 name|IOException
-function_decl|;
-comment|/**    * Get the counter group display name    * @param group the group name to lookup    * @param defaultValue of the group    * @return the group display name    */
-specifier|public
-name|String
-name|getCounterGroupName
-parameter_list|(
-name|String
-name|group
-parameter_list|,
-name|String
-name|defaultValue
-parameter_list|)
 function_decl|;
 comment|/**    * Check if the configured UGI has access to the path for the given file system action.    * Method will return successfully if action is permitted. AccessControlExceptoin will    * be thrown if user does not have access to perform the action. Other exceptions may    * be thrown for non-access related errors.    * @param fs    * @param status    * @param action    * @throws IOException    * @throws AccessControlException    * @throws Exception    */
 specifier|public
