@@ -1192,7 +1192,7 @@ operator|.
 name|getFieldName
 argument_list|()
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|s
 argument_list|)
@@ -1677,7 +1677,7 @@ operator|.
 name|getFieldName
 argument_list|()
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|right
 operator|.
