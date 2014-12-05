@@ -1148,7 +1148,7 @@ name|DROP_PARTITION_NON_STRING_PARTCOLS_NONEQUALITY
 argument_list|(
 literal|10129
 argument_list|,
-literal|"Drop partitions for a non string partition columns is not allowed using non-equality"
+literal|"Drop partitions for a non-string partition column is only allowed using equality"
 argument_list|)
 block|,
 name|ALTER_COMMAND_FOR_VIEWS
