@@ -1811,6 +1811,13 @@ argument_list|,
 literal|"Transaction manager has aborted the transaction."
 argument_list|)
 block|,
+name|DBTXNMGR_REQUIRES_CONCURRENCY
+argument_list|(
+literal|10264
+argument_list|,
+literal|"To use DbTxnManager you must set hive.support.concurrency=true"
+argument_list|)
+block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
