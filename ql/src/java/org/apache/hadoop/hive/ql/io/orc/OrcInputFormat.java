@@ -3125,6 +3125,13 @@ name|b
 index|]
 condition|)
 block|{
+synchronized|synchronized
+init|(
+name|context
+operator|.
+name|splits
+init|)
+block|{
 name|context
 operator|.
 name|splits
@@ -3156,6 +3163,7 @@ name|deltas
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
