@@ -11444,6 +11444,13 @@ argument_list|)
 operator|.
 name|matches
 argument_list|()
+operator|||
+name|resultType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"string_family"
+argument_list|)
 return|;
 block|}
 specifier|public

@@ -724,7 +724,7 @@ name|getOutputType
 parameter_list|()
 block|{
 return|return
-literal|"StringGroup"
+literal|"String_Family"
 return|;
 block|}
 specifier|public
