@@ -615,6 +615,12 @@ case|:
 case|case
 name|RENAME
 case|:
+case|case
+name|TRUNCATE
+case|:
+case|case
+name|MERGEFILES
+case|:
 return|return
 name|WriteType
 operator|.

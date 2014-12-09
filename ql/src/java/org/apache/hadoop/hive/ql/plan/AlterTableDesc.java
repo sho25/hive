@@ -350,7 +350,17 @@ name|COMPACT
 argument_list|(
 literal|"compact"
 argument_list|)
-block|;
+block|,
+name|TRUNCATE
+argument_list|(
+literal|"truncate"
+argument_list|)
+block|,
+name|MERGEFILES
+argument_list|(
+literal|"merge files"
+argument_list|)
+block|;     ;
 specifier|private
 specifier|final
 name|String
