@@ -718,8 +718,6 @@ literal|false
 return|;
 block|}
 block|}
-try|try
-block|{
 name|long
 name|numberOfBytes
 init|=
@@ -831,6 +829,22 @@ operator|.
 name|getMemoryAndCores
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Failed to get spark memory/core info"
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{
@@ -946,23 +960,6 @@ argument_list|(
 name|numReducers
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Failed to create spark client."
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 else|else
