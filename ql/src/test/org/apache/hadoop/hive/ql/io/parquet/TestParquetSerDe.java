@@ -247,33 +247,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
 name|Writable
-import|;
-end_import
-
-begin_import
-import|import
-name|parquet
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|Binary
 import|;
 end_import
 
@@ -348,9 +322,10 @@ init|=
 operator|new
 name|Writable
 index|[
-literal|8
+literal|9
 index|]
 decl_stmt|;
+comment|//primitive types
 name|arr
 index|[
 literal|0
@@ -424,6 +399,22 @@ operator|new
 name|BytesWritable
 argument_list|(
 literal|"hive and hadoop and parquet. Big family."
+operator|.
+name|getBytes
+argument_list|(
+literal|"UTF-8"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|arr
+index|[
+literal|6
+index|]
+operator|=
+operator|new
+name|BytesWritable
+argument_list|(
+literal|"parquetSerde binary"
 operator|.
 name|getBytes
 argument_list|(
@@ -543,7 +534,7 @@ argument_list|)
 expr_stmt|;
 name|arr
 index|[
-literal|6
+literal|7
 index|]
 operator|=
 operator|new
@@ -631,7 +622,7 @@ argument_list|)
 expr_stmt|;
 name|arr
 index|[
-literal|7
+literal|8
 index|]
 operator|=
 operator|new
@@ -846,7 +837,7 @@ name|setProperty
 argument_list|(
 literal|"columns"
 argument_list|,
-literal|"abyte,ashort,aint,along,adouble,astring,amap,alist"
+literal|"abyte,ashort,aint,along,adouble,astring,abinary,amap,alist"
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -855,7 +846,7 @@ name|setProperty
 argument_list|(
 literal|"columns.types"
 argument_list|,
-literal|"tinyint:smallint:int:bigint:double:string:map<string,int>:array<string>"
+literal|"tinyint:smallint:int:bigint:double:string:binary:map<string,int>:array<string>"
 argument_list|)
 expr_stmt|;
 name|tbl

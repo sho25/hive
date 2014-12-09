@@ -704,14 +704,19 @@ name|binaryTypeInfo
 argument_list|)
 condition|)
 block|{
-comment|// TODO : binaryTypeInfo is a byte array. Need to map it
-throw|throw
+return|return
 operator|new
-name|UnsupportedOperationException
+name|PrimitiveType
 argument_list|(
-literal|"Binary type not implemented"
+name|repetition
+argument_list|,
+name|PrimitiveTypeName
+operator|.
+name|BINARY
+argument_list|,
+name|name
 argument_list|)
-throw|;
+return|;
 block|}
 elseif|else
 if|if
