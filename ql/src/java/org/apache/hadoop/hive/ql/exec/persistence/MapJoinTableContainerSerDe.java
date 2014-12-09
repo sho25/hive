@@ -618,12 +618,7 @@ control|(
 name|FileStatus
 name|fileStatus
 range|:
-name|fs
-operator|.
-name|listStatus
-argument_list|(
-name|folder
-argument_list|)
+name|fileStatuses
 control|)
 block|{
 name|Path
@@ -638,7 +633,7 @@ if|if
 condition|(
 name|fileStatus
 operator|.
-name|isDir
+name|isDirectory
 argument_list|()
 condition|)
 block|{
