@@ -704,6 +704,8 @@ operator|+
 literal|" to: "
 operator|+
 name|numBuckets
+operator|+
+literal|" (buckets)"
 argument_list|)
 expr_stmt|;
 name|desc
@@ -768,6 +770,31 @@ operator|.
 name|getDataSize
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Sibling "
+operator|+
+name|sibling
+operator|+
+literal|" has stats: "
+operator|+
+name|sibling
+operator|.
+name|getStatistics
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -840,7 +867,9 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Failed to get spark memory/core info"
+literal|"Failed to get spark memory/core info: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -879,7 +908,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to return the session to SessionManager"
+literal|"Failed to return the session to SessionManager: "
+operator|+
+name|ex
 argument_list|,
 name|ex
 argument_list|)
@@ -944,6 +975,27 @@ name|LOG
 operator|.
 name|info
 argument_list|(
+literal|"Set parallelism parameters: cores = "
+operator|+
+name|cores
+operator|+
+literal|", numReducers = "
+operator|+
+name|numReducers
+operator|+
+literal|", bytesPerReducer = "
+operator|+
+name|bytesPerReducer
+operator|+
+literal|", numberOfBytes = "
+operator|+
+name|numberOfBytes
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
 literal|"Set parallelism for reduce sink "
 operator|+
 name|sink
@@ -951,6 +1003,8 @@ operator|+
 literal|" to: "
 operator|+
 name|numReducers
+operator|+
+literal|" (calculated)"
 argument_list|)
 expr_stmt|;
 name|desc
