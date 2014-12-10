@@ -184,6 +184,7 @@ argument_list|>
 name|sparkJobIds
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|SparkCounters
 name|sparkCounters
 decl_stmt|;
