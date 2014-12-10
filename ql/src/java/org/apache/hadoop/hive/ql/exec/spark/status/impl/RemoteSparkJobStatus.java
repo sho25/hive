@@ -1129,6 +1129,20 @@ specifier|final
 name|int
 name|sparkJobId
 decl_stmt|;
+specifier|private
+name|GetJobInfoJob
+parameter_list|()
+block|{
+comment|// For serialization.
+name|this
+argument_list|(
+literal|null
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
 name|GetJobInfoJob
 parameter_list|(
 name|String
@@ -1372,6 +1386,18 @@ specifier|final
 name|int
 name|stageId
 decl_stmt|;
+specifier|private
+name|GetStageInfoJob
+parameter_list|()
+block|{
+comment|// For serialization.
+name|this
+argument_list|(
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
 name|GetStageInfoJob
 parameter_list|(
 name|int

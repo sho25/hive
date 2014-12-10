@@ -88,6 +88,19 @@ specifier|final
 name|long
 name|shuffleWriteTime
 decl_stmt|;
+specifier|private
+name|ShuffleWriteMetrics
+parameter_list|()
+block|{
+comment|// For Serialization only.
+name|this
+argument_list|(
+literal|0L
+argument_list|,
+literal|0L
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|ShuffleWriteMetrics
 parameter_list|(

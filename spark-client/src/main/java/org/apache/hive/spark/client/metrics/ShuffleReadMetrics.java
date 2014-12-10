@@ -100,6 +100,23 @@ specifier|final
 name|long
 name|remoteBytesRead
 decl_stmt|;
+specifier|private
+name|ShuffleReadMetrics
+parameter_list|()
+block|{
+comment|// For Serialization only.
+name|this
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+literal|0L
+argument_list|,
+literal|0L
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|ShuffleReadMetrics
 parameter_list|(

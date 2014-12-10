@@ -734,8 +734,6 @@ operator|new
 name|SparkCounters
 argument_list|(
 name|sc
-argument_list|,
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|Map

@@ -86,6 +86,19 @@ specifier|final
 name|long
 name|bytesRead
 decl_stmt|;
+specifier|private
+name|InputMetrics
+parameter_list|()
+block|{
+comment|// For Serialization only.
+name|this
+argument_list|(
+literal|null
+argument_list|,
+literal|0L
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|InputMetrics
 parameter_list|(
