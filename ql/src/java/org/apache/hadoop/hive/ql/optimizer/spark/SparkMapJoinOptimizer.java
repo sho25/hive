@@ -698,6 +698,17 @@ operator|>
 literal|1
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Converted to map join with "
+operator|+
+name|numBuckets
+operator|+
+literal|" buckets"
+argument_list|)
+expr_stmt|;
 name|bucketColNames
 operator|=
 name|joinOp
@@ -714,6 +725,16 @@ literal|2
 index|]
 operator|/=
 name|numBuckets
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Can not convert to bucketed map join"
+argument_list|)
 expr_stmt|;
 block|}
 block|}
