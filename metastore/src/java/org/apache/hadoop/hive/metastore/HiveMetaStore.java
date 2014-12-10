@@ -3021,7 +3021,7 @@ name|thrift
 operator|.
 name|protocol
 operator|.
-name|TBinaryProtocol
+name|TCompactProtocol
 import|;
 end_import
 
@@ -33860,7 +33860,7 @@ operator|.
 name|protocolFactory
 argument_list|(
 operator|new
-name|TBinaryProtocol
+name|TCompactProtocol
 operator|.
 name|Factory
 argument_list|()
@@ -33869,14 +33869,10 @@ operator|.
 name|inputProtocolFactory
 argument_list|(
 operator|new
-name|TBinaryProtocol
+name|TCompactProtocol
 operator|.
 name|Factory
 argument_list|(
-literal|true
-argument_list|,
-literal|true
-argument_list|,
 name|maxMessageSize
 argument_list|,
 name|maxMessageSize

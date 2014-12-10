@@ -1821,7 +1821,7 @@ name|thrift
 operator|.
 name|protocol
 operator|.
-name|TBinaryProtocol
+name|TCompactProtocol
 import|;
 end_import
 
@@ -3153,7 +3153,7 @@ operator|.
 name|Client
 argument_list|(
 operator|new
-name|TBinaryProtocol
+name|TCompactProtocol
 argument_list|(
 name|transport
 argument_list|)
