@@ -44085,6 +44085,11 @@ argument_list|<
 name|Integer
 argument_list|>
 name|omitOpts
+parameter_list|,
+name|ExprNodeDesc
+index|[]
+index|[]
+name|joinKeys
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -44898,6 +44903,8 @@ argument_list|,
 name|joinCondns
 argument_list|,
 name|filterMap
+argument_list|,
+name|joinKeys
 argument_list|)
 decl_stmt|;
 name|desc
@@ -46406,6 +46413,8 @@ argument_list|,
 name|srcOps
 argument_list|,
 name|omitOpts
+argument_list|,
+name|joinKeys
 argument_list|)
 decl_stmt|;
 name|joinContext
