@@ -5760,6 +5760,18 @@ name|newKeyEpxrs
 argument_list|)
 expr_stmt|;
 comment|// partition columns
+if|if
+condition|(
+operator|!
+name|rsDesc
+operator|.
+name|getPartitionCols
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -5823,6 +5835,28 @@ name|expr
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|newPartExprs
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// If all partition columns are removed because of constant, insert an extra column to avoid
+comment|// random partitioning.
+name|newPartExprs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ExprNodeConstantDesc
+argument_list|(
+literal|""
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|rsDesc
 operator|.
 name|setPartitionCols
@@ -5830,6 +5864,7 @@ argument_list|(
 name|newPartExprs
 argument_list|)
 expr_stmt|;
+block|}
 comment|// value columns
 name|ArrayList
 argument_list|<
