@@ -57,7 +57,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashSet
 import|;
 end_import
 
@@ -438,7 +438,7 @@ block|{
 name|container
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|Object
 argument_list|>
