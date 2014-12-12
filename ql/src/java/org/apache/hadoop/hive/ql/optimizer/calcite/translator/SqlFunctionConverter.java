@@ -886,7 +886,8 @@ argument_list|(
 name|hiveUDF
 argument_list|)
 expr_stmt|;
-comment|// this should probably never happen, see getName
+comment|// this should probably never happen, see
+comment|// getName
 comment|// comment
 name|LOG
 operator|.
@@ -900,8 +901,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// We could just do toLowerCase here and let SA qualify it, but let's be
-comment|// proper...
+comment|// We could just do toLowerCase here and let SA qualify it, but
+comment|// let's be proper...
 name|name
 operator|=
 name|FunctionRegistry
@@ -920,6 +921,13 @@ argument_list|,
 name|calciteArgTypes
 argument_list|,
 name|retType
+argument_list|,
+name|FunctionRegistry
+operator|.
+name|isDeterministic
+argument_list|(
+name|hiveUDF
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -1546,8 +1554,8 @@ name|udf
 argument_list|)
 return|;
 block|}
-comment|// TODO: 1) handle Agg Func Name translation 2) is it correct to add func args
-comment|// as child of func?
+comment|// TODO: 1) handle Agg Func Name translation 2) is it correct to add func
+comment|// args as child of func?
 specifier|public
 specifier|static
 name|ASTNode
@@ -1913,11 +1921,9 @@ return|;
 block|}
 block|}
 comment|// TODO: this is not valid. Function names for built-in UDFs are specified in
-comment|// FunctionRegistry,
-comment|// and only happen to match annotations. For user UDFs, the name is what user
-comment|// specifies at
-comment|// creation time (annotation can be absent, different, or duplicate some other
-comment|// function).
+comment|// FunctionRegistry, and only happen to match annotations. For user UDFs, the
+comment|// name is what user specifies at creation time (annotation can be absent,
+comment|// different, or duplicate some other function).
 specifier|private
 specifier|static
 name|String
@@ -2099,7 +2105,7 @@ return|return
 name|udfName
 return|;
 block|}
-comment|/** This class is used to build immutable hashmaps in the static block above. */
+comment|/**    * This class is used to build immutable hashmaps in the static block above.    */
 specifier|private
 specifier|static
 class|class
@@ -2532,6 +2538,7 @@ name|text
 argument_list|)
 return|;
 block|}
+comment|// UDAF is assumed to be deterministic
 specifier|public
 specifier|static
 class|class
@@ -2583,6 +2590,77 @@ operator|.
 name|USER_DEFINED_FUNCTION
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+specifier|private
+specifier|static
+class|class
+name|CalciteSqlFn
+extends|extends
+name|SqlFunction
+block|{
+specifier|private
+specifier|final
+name|boolean
+name|deterministic
+decl_stmt|;
+specifier|public
+name|CalciteSqlFn
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|SqlKind
+name|kind
+parameter_list|,
+name|SqlReturnTypeInference
+name|returnTypeInference
+parameter_list|,
+name|SqlOperandTypeInference
+name|operandTypeInference
+parameter_list|,
+name|SqlOperandTypeChecker
+name|operandTypeChecker
+parameter_list|,
+name|SqlFunctionCategory
+name|category
+parameter_list|,
+name|boolean
+name|deterministic
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|name
+argument_list|,
+name|kind
+argument_list|,
+name|returnTypeInference
+argument_list|,
+name|operandTypeInference
+argument_list|,
+name|operandTypeChecker
+argument_list|,
+name|category
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|deterministic
+operator|=
+name|deterministic
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isDeterministic
+parameter_list|()
+block|{
+return|return
+name|deterministic
+return|;
 block|}
 block|}
 specifier|private
@@ -2773,6 +2851,9 @@ name|calciteArgTypes
 parameter_list|,
 name|RelDataType
 name|calciteRetType
+parameter_list|,
+name|boolean
+name|deterministic
 parameter_list|)
 throws|throws
 name|CalciteSemanticException
@@ -2796,8 +2877,7 @@ condition|)
 block|{
 comment|// We can create Calcite IS_DISTINCT_FROM operator for this. But since our
 comment|// join reordering algo cant handle this anyway there is no advantage of
-comment|// this.
-comment|// So, bail out for now.
+comment|// this.So, bail out for now.
 throw|throw
 operator|new
 name|CalciteSemanticException
@@ -2838,7 +2918,7 @@ decl_stmt|;
 name|calciteOp
 operator|=
 operator|new
-name|SqlFunction
+name|CalciteSqlFn
 argument_list|(
 name|uInf
 operator|.
@@ -2863,6 +2943,8 @@ argument_list|,
 name|SqlFunctionCategory
 operator|.
 name|USER_DEFINED_FUNCTION
+argument_list|,
+name|deterministic
 argument_list|)
 expr_stmt|;
 block|}
