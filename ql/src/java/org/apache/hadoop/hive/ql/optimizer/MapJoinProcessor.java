@@ -2752,6 +2752,16 @@ expr_stmt|;
 block|}
 name|mapJoinOp
 operator|.
+name|setPosToAliasMap
+argument_list|(
+name|op
+operator|.
+name|getPosToAliasMap
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|mapJoinOp
+operator|.
 name|setChildOperators
 argument_list|(
 name|childOps
