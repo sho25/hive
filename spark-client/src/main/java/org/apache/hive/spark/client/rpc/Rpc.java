@@ -1492,6 +1492,18 @@ name|isDone
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to send RPC, closing connection."
+argument_list|,
+name|cf
+operator|.
+name|cause
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|promise
 operator|.
 name|setFailure
@@ -1511,6 +1523,9 @@ name|discardRpc
 argument_list|(
 name|id
 argument_list|)
+expr_stmt|;
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 block|}

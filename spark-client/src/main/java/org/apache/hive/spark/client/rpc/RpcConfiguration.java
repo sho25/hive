@@ -238,7 +238,7 @@ specifier|static
 name|int
 name|RPC_MAX_MESSAGE_SIZE_DEFAULT
 init|=
-literal|10
+literal|50
 operator|*
 literal|1024
 operator|*

@@ -551,6 +551,25 @@ operator|.
 name|toByteArray
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Encoded message of type {} ({} bytes)"
+argument_list|,
+name|msg
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|msgData
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
 name|checkSize
 argument_list|(
 name|msgData
@@ -585,25 +604,6 @@ argument_list|(
 name|msgData
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Encoded message of type {} ({} bytes)"
-argument_list|,
-name|msg
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|msgData
-operator|.
-name|length
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -621,7 +621,9 @@ name|msgSize
 operator|>
 literal|0
 argument_list|,
-literal|"Message size must be positive."
+literal|"Message size (%s bytes) must be positive."
+argument_list|,
+name|msgSize
 argument_list|)
 expr_stmt|;
 name|Preconditions
@@ -636,7 +638,9 @@ name|msgSize
 operator|<=
 name|maxMessageSize
 argument_list|,
-literal|"Message exceeds maximum allowed size (%s bytes)."
+literal|"Message (%s bytes) exceeds maximum allowed size (%s bytes)."
+argument_list|,
+name|msgSize
 argument_list|,
 name|maxMessageSize
 argument_list|)
