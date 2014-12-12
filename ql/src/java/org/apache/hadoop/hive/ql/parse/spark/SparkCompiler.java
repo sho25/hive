@@ -2193,6 +2193,42 @@ argument_list|(
 name|physicalCtx
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESKEWJOIN
+argument_list|)
+condition|)
+block|{
+operator|(
+operator|new
+name|SparkSkewJoinResolver
+argument_list|()
+operator|)
+operator|.
+name|resolve
+argument_list|(
+name|physicalCtx
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping runtime skew join optimization"
+argument_list|)
+expr_stmt|;
+block|}
 name|physicalCtx
 operator|=
 operator|new
@@ -2387,33 +2423,6 @@ operator|.
 name|debug
 argument_list|(
 literal|"Skipping stage id rearranger"
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVESKEWJOIN
-argument_list|)
-condition|)
-block|{
-comment|// TODO: enable after HIVE-8913 is done
-comment|//(new SparkSkewJoinResolver()).resolve(physicalCtx);
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Skipping runtime skew join optimization"
 argument_list|)
 expr_stmt|;
 block|}
