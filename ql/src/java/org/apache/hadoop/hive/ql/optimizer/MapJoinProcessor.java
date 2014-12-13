@@ -1793,7 +1793,9 @@ comment|// generate the map join operator; already checked the map join
 name|MapJoinOperator
 name|newMapJoinOp
 init|=
+operator|new
 name|MapJoinProcessor
+argument_list|()
 operator|.
 name|convertMapJoin
 argument_list|(
@@ -2107,9 +2109,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * convert a regular join to a a map-side join.    *    * @param opParseCtxMap    * @param op    *          join operator    * @param joinTree    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    */
+comment|/**    * convert a regular join to a a map-side join.    *    * @param opParseCtxMap    * @param op    *          join operator    * @param joinTree    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    * @param validateMapJoinTree    */
 specifier|public
-specifier|static
 name|MapJoinOperator
 name|convertMapJoin
 parameter_list|(
@@ -3631,7 +3632,7 @@ return|return
 name|mapJoinPos
 return|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|genSelectPlan
 parameter_list|(

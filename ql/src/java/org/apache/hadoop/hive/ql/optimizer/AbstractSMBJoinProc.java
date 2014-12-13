@@ -2710,7 +2710,9 @@ block|{
 name|MapJoinOperator
 name|mapJoinOp
 init|=
+operator|new
 name|MapJoinProcessor
+argument_list|()
 operator|.
 name|convertMapJoin
 argument_list|(
