@@ -277,16 +277,6 @@ name|IOException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
 begin_comment
 comment|/**  * Fast file merge operator for ORC files.  */
 end_comment
@@ -327,10 +317,9 @@ name|compressBuffSize
 init|=
 literal|0
 decl_stmt|;
-name|List
-argument_list|<
-name|Integer
-argument_list|>
+name|OrcFile
+operator|.
+name|Version
 name|version
 decl_stmt|;
 name|int
@@ -554,7 +543,7 @@ name|version
 operator|=
 name|k
 operator|.
-name|getVersionList
+name|getVersion
 argument_list|()
 expr_stmt|;
 name|columnCount
@@ -598,6 +587,16 @@ operator|.
 name|compress
 argument_list|(
 name|compression
+argument_list|)
+operator|.
+name|version
+argument_list|(
+name|version
+argument_list|)
+operator|.
+name|rowIndexStride
+argument_list|(
+name|rowIndexStride
 argument_list|)
 operator|.
 name|inspector
@@ -994,7 +993,7 @@ condition|(
 operator|!
 name|k
 operator|.
-name|getVersionList
+name|getVersion
 argument_list|()
 operator|.
 name|equals
