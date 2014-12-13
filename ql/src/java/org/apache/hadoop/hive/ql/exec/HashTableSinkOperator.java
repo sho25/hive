@@ -729,7 +729,6 @@ index|[]
 name|mapJoinTableSerdes
 decl_stmt|;
 specifier|private
-specifier|static
 specifier|final
 name|Object
 index|[]
@@ -742,7 +741,6 @@ literal|0
 index|]
 decl_stmt|;
 specifier|private
-specifier|static
 specifier|final
 name|MapJoinEagerRowContainer
 name|EMPTY_ROW_CONTAINER
@@ -751,16 +749,6 @@ operator|new
 name|MapJoinEagerRowContainer
 argument_list|()
 decl_stmt|;
-static|static
-block|{
-name|EMPTY_ROW_CONTAINER
-operator|.
-name|addRow
-argument_list|(
-name|EMPTY_OBJECT_ARRAY
-argument_list|)
-expr_stmt|;
-block|}
 specifier|private
 name|long
 name|rowNumber
@@ -859,6 +847,13 @@ name|conf
 operator|.
 name|getHashtableMemoryUsage
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|EMPTY_ROW_CONTAINER
+operator|.
+name|addRow
+argument_list|(
+name|EMPTY_OBJECT_ARRAY
 argument_list|)
 expr_stmt|;
 comment|// for small tables only; so get the big table position first
