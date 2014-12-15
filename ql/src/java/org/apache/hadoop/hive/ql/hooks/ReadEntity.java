@@ -409,9 +409,6 @@ block|{
 name|super
 argument_list|(
 name|d
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|islocal
 argument_list|,

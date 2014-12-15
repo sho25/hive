@@ -1942,7 +1942,7 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|// do best effor to determine if this is a local file
+comment|// do best effort to determine if this is a local file
 return|return
 name|isLocalFile
 argument_list|(
@@ -1993,7 +1993,7 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|// do best effor to determine if this is a local file
+comment|// do best effort to determine if this is a local file
 name|FileSystem
 name|fsForFile
 init|=
