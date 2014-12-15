@@ -8183,6 +8183,15 @@ argument_list|)
 return|;
 block|}
 specifier|public
+name|Validator
+name|getValidator
+parameter_list|()
+block|{
+return|return
+name|validator
+return|;
+block|}
+specifier|public
 name|String
 name|validate
 parameter_list|(
