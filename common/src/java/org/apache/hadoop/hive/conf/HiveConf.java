@@ -3116,7 +3116,7 @@ name|HIVE_CBO_ENABLED
 argument_list|(
 literal|"hive.cbo.enable"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)

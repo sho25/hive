@@ -11808,7 +11808,7 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|,
-literal|"_c1"
+literal|"c1"
 argument_list|)
 expr_stmt|;
 comment|// verify the system generated column name
