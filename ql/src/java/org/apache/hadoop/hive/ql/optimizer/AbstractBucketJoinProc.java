@@ -1579,6 +1579,17 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|newAlias
+operator|.
+name|equals
+argument_list|(
+name|alias
+argument_list|)
+condition|)
+block|{
 name|joinAliases
 operator|.
 name|set
@@ -1616,6 +1627,7 @@ name|alias
 operator|=
 name|newAlias
 expr_stmt|;
+block|}
 break|break;
 block|}
 block|}
