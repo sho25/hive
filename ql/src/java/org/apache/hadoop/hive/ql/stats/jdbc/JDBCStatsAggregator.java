@@ -788,11 +788,9 @@ return|;
 block|}
 block|}
 decl_stmt|;
-name|fileID
-operator|=
 name|JDBCStatsUtils
 operator|.
-name|truncateRowId
+name|validateRowId
 argument_list|(
 name|fileID
 argument_list|)
@@ -1167,11 +1165,9 @@ block|}
 decl_stmt|;
 try|try
 block|{
-name|rowID
-operator|=
 name|JDBCStatsUtils
 operator|.
-name|truncateRowId
+name|validateRowId
 argument_list|(
 name|rowID
 argument_list|)
