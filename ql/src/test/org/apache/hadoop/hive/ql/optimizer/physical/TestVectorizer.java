@@ -707,6 +707,8 @@ name|validateMapWorkOperator
 argument_list|(
 name|gbyOp
 argument_list|,
+literal|null
+argument_list|,
 literal|false
 argument_list|)
 argument_list|)
@@ -1333,6 +1335,8 @@ name|validateMapWorkOperator
 argument_list|(
 name|map
 argument_list|,
+literal|null
+argument_list|,
 literal|false
 argument_list|)
 argument_list|)
@@ -1390,6 +1394,8 @@ operator|.
 name|validateMapWorkOperator
 argument_list|(
 name|map
+argument_list|,
+literal|null
 argument_list|,
 literal|false
 argument_list|)
