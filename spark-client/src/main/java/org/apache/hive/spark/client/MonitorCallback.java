@@ -19,6 +19,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -64,6 +74,12 @@ name|future
 parameter_list|,
 name|SparkCounters
 name|sparkCounters
+parameter_list|,
+name|Set
+argument_list|<
+name|Integer
+argument_list|>
+name|cachedRDDIds
 parameter_list|)
 function_decl|;
 block|}
