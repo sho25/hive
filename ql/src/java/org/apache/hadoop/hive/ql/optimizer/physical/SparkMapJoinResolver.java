@@ -720,7 +720,8 @@ name|isEmpty
 argument_list|()
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|Set
 argument_list|<
 name|Operator

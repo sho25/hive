@@ -813,6 +813,24 @@ name|a
 argument_list|)
 expr_stmt|;
 block|}
+name|edgeProperties
+operator|.
+name|remove
+argument_list|(
+operator|new
+name|ImmutablePair
+argument_list|<
+name|BaseWork
+argument_list|,
+name|BaseWork
+argument_list|>
+argument_list|(
+name|a
+argument_list|,
+name|b
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * getRoots returns all nodes that do not have a parent.    */
 specifier|public
@@ -1887,7 +1905,7 @@ return|return
 name|result
 return|;
 block|}
-comment|// get all reduce works in this spark work
+comment|// get all reduce works in this spark work in sorted order
 specifier|public
 name|List
 argument_list|<
