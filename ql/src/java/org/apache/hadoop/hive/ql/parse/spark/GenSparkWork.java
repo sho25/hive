@@ -73,9 +73,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|ObjectPair
 import|;
 end_import
 
@@ -345,6 +345,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|OperatorDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ReduceSinkDesc
 import|;
 end_import
@@ -400,24 +418,6 @@ operator|.
 name|plan
 operator|.
 name|SparkWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|UnionWork
 import|;
 end_import
 
@@ -604,11 +604,12 @@ argument_list|,
 literal|"AssertionError: expected context.currentRootOperator to be not null"
 argument_list|)
 expr_stmt|;
-comment|// Operator is a file sink or reduce sink. Something that forces
-comment|// a new vertex.
+comment|// Operator is a file sink or reduce sink. Something that forces a new vertex.
 name|Operator
 argument_list|<
 name|?
+extends|extends
+name|OperatorDesc
 argument_list|>
 name|operator
 init|=
@@ -616,6 +617,8 @@ operator|(
 name|Operator
 argument_list|<
 name|?
+extends|extends
+name|OperatorDesc
 argument_list|>
 operator|)
 name|nd
@@ -702,9 +705,6 @@ block|}
 name|SMBMapJoinOperator
 name|smbOp
 init|=
-operator|(
-name|SMBMapJoinOperator
-operator|)
 name|GenSparkUtils
 operator|.
 name|getChildOperator
@@ -772,9 +772,9 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//This logic is for SortMergeBucket MapJoin case.
-comment|//This MapWork (of big-table, see above..) is later initialized by SparkMapJoinFactory processor, so don't initialize it here.
-comment|//Just keep track of it in the context, for later processing.
+comment|// This logic is for SortMergeBucket MapJoin case.
+comment|// This MapWork (of big-table, see above..) is later initialized by SparkMapJoinFactory
+comment|// processor, so don't initialize it here. Just keep track of it in the context, for later processing.
 name|work
 operator|=
 name|utils
@@ -969,8 +969,7 @@ operator|+
 name|mj
 argument_list|)
 expr_stmt|;
-comment|// remember the mapping in case we scan another branch of the
-comment|// mapjoin later
+comment|// remember the mapping in case we scan another branch of the mapjoin later
 if|if
 condition|(
 operator|!
@@ -1261,15 +1260,6 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|context
-operator|.
-name|connectedReduceSinks
-operator|.
-name|add
-argument_list|(
-name|r
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 block|}
@@ -1284,8 +1274,47 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-comment|// This is where we cut the tree as described above. We also remember that
-comment|// we might have to connect parent work with this work later.
+comment|// Here we are disconnecting root with its parents. However, we need to save
+comment|// a few information, since in future we may reach the parent operators via a
+comment|// different path, and we may need to connect parent works with the work associated
+comment|// with this root operator.
+if|if
+condition|(
+name|root
+operator|.
+name|getNumParent
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|work
+operator|instanceof
+name|ReduceWork
+argument_list|,
+literal|"AssertionError: expected work to be a ReduceWork, but was "
+operator|+
+name|work
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ReduceWork
+name|reduceWork
+init|=
+operator|(
+name|ReduceWork
+operator|)
+name|work
+decl_stmt|;
 for|for
 control|(
 name|Operator
@@ -1310,15 +1339,83 @@ argument_list|()
 argument_list|)
 control|)
 block|{
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|parent
+operator|instanceof
+name|ReduceSinkOperator
+argument_list|,
+literal|"AssertionError: expected operator to be a ReduceSinkOperator, but was "
+operator|+
+name|parent
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ReduceSinkOperator
+name|rsOp
+init|=
+operator|(
+name|ReduceSinkOperator
+operator|)
+name|parent
+decl_stmt|;
+name|SparkEdgeProperty
+name|edgeProp
+init|=
+name|GenSparkUtils
+operator|.
+name|getEdgeProperty
+argument_list|(
+name|rsOp
+argument_list|,
+name|reduceWork
+argument_list|)
+decl_stmt|;
+name|rsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setOutputName
+argument_list|(
+name|reduceWork
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|GenMapRedUtils
+operator|.
+name|setKeyAndValueDesc
+argument_list|(
+name|reduceWork
+argument_list|,
+name|rsOp
+argument_list|)
+expr_stmt|;
 name|context
 operator|.
-name|leafOperatorToFollowingWork
+name|leafOpToFollowingWorkInfo
 operator|.
 name|put
 argument_list|(
-name|parent
+name|rsOp
 argument_list|,
-name|work
+name|ObjectPair
+operator|.
+name|create
+argument_list|(
+name|edgeProp
+argument_list|,
+name|reduceWork
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1342,6 +1439,10 @@ name|parent
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// If `currentUnionOperators` is not empty, it means we are creating BaseWork whose operator tree
+comment|// contains union operators. In this case, we need to save these BaseWorks, and remove
+comment|// the union operators from the operator tree later.
 if|if
 condition|(
 operator|!
@@ -1353,122 +1454,6 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-comment|// if there are union all operators we need to add the work to the set
-comment|// of union operators.
-name|UnionWork
-name|unionWork
-decl_stmt|;
-if|if
-condition|(
-name|context
-operator|.
-name|unionWorkMap
-operator|.
-name|containsKey
-argument_list|(
-name|operator
-argument_list|)
-condition|)
-block|{
-comment|// we've seen this terminal before and have created a union work object.
-comment|// just need to add this work to it. There will be no children of this one
-comment|// since we've passed this operator before.
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
-name|operator
-operator|.
-name|getChildOperators
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
-argument_list|,
-literal|"AssertionError: expected operator.getChildOperators() to be empty"
-argument_list|)
-expr_stmt|;
-name|unionWork
-operator|=
-operator|(
-name|UnionWork
-operator|)
-name|context
-operator|.
-name|unionWorkMap
-operator|.
-name|get
-argument_list|(
-name|operator
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// first time through. we need to create a union work object and add this
-comment|// work to it. Subsequent work should reference the union and not the actual
-comment|// work.
-name|unionWork
-operator|=
-name|utils
-operator|.
-name|createUnionWork
-argument_list|(
-name|context
-argument_list|,
-name|operator
-argument_list|,
-name|sparkWork
-argument_list|)
-expr_stmt|;
-block|}
-comment|// finally hook everything up
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Connecting union work ("
-operator|+
-name|unionWork
-operator|+
-literal|") with work ("
-operator|+
-name|work
-operator|+
-literal|")"
-argument_list|)
-expr_stmt|;
-name|SparkEdgeProperty
-name|edgeProp
-init|=
-operator|new
-name|SparkEdgeProperty
-argument_list|(
-name|SparkEdgeProperty
-operator|.
-name|SHUFFLE_NONE
-argument_list|)
-decl_stmt|;
-name|sparkWork
-operator|.
-name|connect
-argument_list|(
-name|work
-argument_list|,
-name|unionWork
-argument_list|,
-name|edgeProp
-argument_list|)
-expr_stmt|;
-name|unionWork
-operator|.
-name|addUnionOperators
-argument_list|(
-name|context
-operator|.
-name|currentUnionOperators
-argument_list|)
-expr_stmt|;
 name|context
 operator|.
 name|currentUnionOperators
@@ -1484,10 +1469,6 @@ name|add
 argument_list|(
 name|work
 argument_list|)
-expr_stmt|;
-name|work
-operator|=
-name|unionWork
 expr_stmt|;
 block|}
 comment|// We're scanning a tree from roots to leaf (this is not technically
@@ -1505,7 +1486,7 @@ if|if
 condition|(
 name|context
 operator|.
-name|leafOperatorToFollowingWork
+name|leafOpToFollowingWorkInfo
 operator|.
 name|containsKey
 argument_list|(
@@ -1513,33 +1494,38 @@ name|operator
 argument_list|)
 condition|)
 block|{
-name|BaseWork
-name|followingWork
+name|ObjectPair
+argument_list|<
+name|SparkEdgeProperty
+argument_list|,
+name|ReduceWork
+argument_list|>
+name|childWorkInfo
 init|=
 name|context
 operator|.
-name|leafOperatorToFollowingWork
+name|leafOpToFollowingWorkInfo
 operator|.
 name|get
 argument_list|(
 name|operator
 argument_list|)
 decl_stmt|;
-name|long
-name|bytesPerReducer
+name|SparkEdgeProperty
+name|edgeProp
 init|=
-name|context
+name|childWorkInfo
 operator|.
-name|conf
+name|getFirst
+argument_list|()
+decl_stmt|;
+name|ReduceWork
+name|childWork
+init|=
+name|childWorkInfo
 operator|.
-name|getLongVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|BYTESPERREDUCER
-argument_list|)
+name|getSecond
+argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
@@ -1551,153 +1537,72 @@ name|operator
 operator|+
 literal|" has common downstream work:"
 operator|+
-name|followingWork
+name|childWork
 argument_list|)
 expr_stmt|;
-comment|// need to add this branch to the key + value info
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
-name|operator
-operator|instanceof
-name|ReduceSinkOperator
-argument_list|,
-literal|"AssertionError: expected operator to be an instance of ReduceSinkOperator, but was "
-operator|+
-name|operator
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
-name|followingWork
-operator|instanceof
-name|ReduceWork
-argument_list|,
-literal|"AssertionError: expected followingWork to be an instance of ReduceWork, but was "
-operator|+
-name|followingWork
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|ReduceSinkOperator
-name|rs
-init|=
-operator|(
-name|ReduceSinkOperator
-operator|)
-name|operator
-decl_stmt|;
-name|ReduceWork
-name|rWork
-init|=
-operator|(
-name|ReduceWork
-operator|)
-name|followingWork
-decl_stmt|;
-name|GenMapRedUtils
-operator|.
-name|setKeyAndValueDesc
-argument_list|(
-name|rWork
-argument_list|,
-name|rs
-argument_list|)
-expr_stmt|;
-comment|// remember which parent belongs to which tag
-name|rWork
-operator|.
-name|getTagToInput
-argument_list|()
-operator|.
-name|put
-argument_list|(
-name|rs
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getTag
-argument_list|()
-argument_list|,
-name|work
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// remember the output name of the reduce sink
-name|rs
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setOutputName
-argument_list|(
-name|rWork
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// We may have already connected `work` with `childWork`, in case, for example, lateral view:
+comment|//    TS
+comment|//     |
+comment|//    ...
+comment|//     |
+comment|//    LVF
+comment|//     | \
+comment|//    SEL SEL
+comment|//     |    |
+comment|//    LVJ-UDTF
+comment|//     |
+comment|//    SEL
+comment|//     |
+comment|//    RS
+comment|// Here, RS can be reached from TS via two different paths. If there is any child work after RS,
+comment|// we don't want to connect them with the work associated with TS more than once.
 if|if
 condition|(
-operator|!
-name|context
-operator|.
-name|connectedReduceSinks
-operator|.
-name|contains
-argument_list|(
-name|rs
-argument_list|)
-condition|)
-block|{
-comment|// add dependency between the two work items
-name|SparkEdgeProperty
-name|edgeProp
-init|=
-name|GenSparkUtils
+name|sparkWork
 operator|.
 name|getEdgeProperty
 argument_list|(
-name|rs
+name|work
 argument_list|,
-name|rWork
+name|childWork
 argument_list|)
-decl_stmt|;
+operator|==
+literal|null
+condition|)
+block|{
 name|sparkWork
 operator|.
 name|connect
 argument_list|(
 name|work
 argument_list|,
-name|rWork
+name|childWork
 argument_list|,
 name|edgeProp
 argument_list|)
 expr_stmt|;
-name|context
+block|}
+else|else
+block|{
+name|LOG
 operator|.
-name|connectedReduceSinks
-operator|.
-name|add
+name|debug
 argument_list|(
-name|rs
+literal|"work "
+operator|+
+name|work
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" is already connected to "
+operator|+
+name|childWork
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" before"
 argument_list|)
 expr_stmt|;
 block|}

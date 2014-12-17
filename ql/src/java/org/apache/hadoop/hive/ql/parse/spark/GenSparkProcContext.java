@@ -31,6 +31,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ObjectPair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -142,24 +158,6 @@ operator|.
 name|exec
 operator|.
 name|SMBMapJoinOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|TableScanOperator
 import|;
 end_import
 
@@ -413,6 +411,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|ReduceWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|SparkEdgeProperty
 import|;
 end_import
@@ -603,20 +619,22 @@ specifier|public
 name|BaseWork
 name|preceedingWork
 decl_stmt|;
-comment|// map that keeps track of the last operator of a task to the work
-comment|// that follows it. This is used for connecting them later.
+comment|// map that keeps track of the last operator of a task to the following work
+comment|// of this operator. This is used for connecting them later.
 specifier|public
 specifier|final
 name|Map
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
+name|ReduceSinkOperator
 argument_list|,
-name|BaseWork
+name|ObjectPair
+argument_list|<
+name|SparkEdgeProperty
+argument_list|,
+name|ReduceWork
 argument_list|>
-name|leafOperatorToFollowingWork
+argument_list|>
+name|leafOpToFollowingWorkInfo
 decl_stmt|;
 comment|// a map that keeps track of work that need to be linked while
 comment|// traversing an operator tree
@@ -821,15 +839,6 @@ argument_list|>
 argument_list|>
 name|fileSinkMap
 decl_stmt|;
-comment|// remember which reducesinks we've already connected
-specifier|public
-specifier|final
-name|Set
-argument_list|<
-name|ReduceSinkOperator
-argument_list|>
-name|connectedReduceSinks
-decl_stmt|;
 comment|// Alias to operator map, from the semantic analyzer.
 comment|// This is necessary as sometimes semantic analyzer's mapping is different than operator's own alias.
 specifier|public
@@ -989,17 +998,19 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|leafOperatorToFollowingWork
+name|leafOpToFollowingWorkInfo
 operator|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-argument_list|>
+name|ReduceSinkOperator
 argument_list|,
-name|BaseWork
+name|ObjectPair
+argument_list|<
+name|SparkEdgeProperty
+argument_list|,
+name|ReduceWork
+argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1260,17 +1271,6 @@ name|List
 argument_list|<
 name|FileSinkOperator
 argument_list|>
-argument_list|>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|connectedReduceSinks
-operator|=
-operator|new
-name|LinkedHashSet
-argument_list|<
-name|ReduceSinkOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
