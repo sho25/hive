@@ -7618,6 +7618,23 @@ literal|true
 argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
 argument_list|)
+block|,
+name|SPARK_CLIENT_FUTURE_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.future.timeout"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"remote spark client JobHandle future timeout value in seconds."
+argument_list|)
 block|;
 specifier|public
 specifier|final

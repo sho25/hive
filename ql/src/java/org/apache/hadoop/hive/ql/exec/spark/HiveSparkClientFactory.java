@@ -133,9 +133,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
 name|conf
 operator|.
-name|Configuration
+name|HiveConf
 import|;
 end_import
 
@@ -213,8 +215,8 @@ specifier|static
 name|HiveSparkClient
 name|createHiveSparkClient
 parameter_list|(
-name|Configuration
-name|configuration
+name|HiveConf
+name|hiveconf
 parameter_list|)
 throws|throws
 name|IOException
@@ -227,11 +229,11 @@ name|String
 argument_list|,
 name|String
 argument_list|>
-name|conf
+name|sparkConf
 init|=
 name|initiateSparkConf
 argument_list|(
-name|configuration
+name|hiveconf
 argument_list|)
 decl_stmt|;
 comment|// Submit spark job through local spark context while spark master is local mode, otherwise submit
@@ -239,7 +241,7 @@ comment|// spark job through remote spark context.
 name|String
 name|master
 init|=
-name|conf
+name|sparkConf
 operator|.
 name|get
 argument_list|(
@@ -271,7 +273,7 @@ name|getInstance
 argument_list|(
 name|generateSparkConf
 argument_list|(
-name|conf
+name|sparkConf
 argument_list|)
 argument_list|)
 return|;
@@ -282,7 +284,9 @@ return|return
 operator|new
 name|RemoteHiveSparkClient
 argument_list|(
-name|conf
+name|hiveconf
+argument_list|,
+name|sparkConf
 argument_list|)
 return|;
 block|}
@@ -297,7 +301,7 @@ name|String
 argument_list|>
 name|initiateSparkConf
 parameter_list|(
-name|Configuration
+name|HiveConf
 name|hiveConf
 parameter_list|)
 block|{
