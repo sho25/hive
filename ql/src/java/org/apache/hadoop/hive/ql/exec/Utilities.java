@@ -3770,13 +3770,22 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|String
+name|msg
+init|=
+literal|"Failed to load plan: "
+operator|+
+name|path
+operator|+
+literal|": "
+operator|+
+name|e
+decl_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to load plan: "
-operator|+
-name|path
+name|msg
 argument_list|,
 name|e
 argument_list|)
@@ -3785,6 +3794,8 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
+name|msg
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -5504,15 +5515,32 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|String
+name|msg
+init|=
+literal|"Error caching "
+operator|+
+name|name
+operator|+
+literal|": "
+operator|+
 name|e
+decl_stmt|;
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|error
+argument_list|(
+name|msg
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
+name|msg
+argument_list|,
 name|e
 argument_list|)
 throw|;
