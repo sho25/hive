@@ -795,7 +795,7 @@ index|]
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+name|mapJoinOp
 return|;
 block|}
 comment|// replaces the join operator with a new CommonJoinOperator, removes the

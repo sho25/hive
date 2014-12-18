@@ -681,27 +681,6 @@ operator|.
 name|getWork
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|GenSparkUtils
-operator|.
-name|getChildOperator
-argument_list|(
-name|root
-argument_list|,
-name|DummyStoreOperator
-operator|.
-name|class
-argument_list|)
-operator|!=
-literal|null
-condition|)
-block|{
-comment|/*        *  SMB join case:        *        *   (Big)   (Small)  (Small)        *    TS       TS       TS        *     \       |       /        *       \     DS     DS        *         \   |    /        *          SMBJoinOP        *        * Only create MapWork rooted at TS of big table.        * If there are dummy-store operators anywhere in TS's children path, then this is for the small tables.        * No separate Map-Task need to be created for small table TS, as they will be read by the MapWork of the big-table.        */
-return|return
-literal|null
-return|;
-block|}
 name|SMBMapJoinOperator
 name|smbOp
 init|=
