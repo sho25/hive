@@ -90,6 +90,19 @@ operator|=
 name|oi
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|setNull
+parameter_list|()
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"should not be called"
+argument_list|)
+throw|;
+block|}
 annotation|@
 name|Override
 specifier|public
