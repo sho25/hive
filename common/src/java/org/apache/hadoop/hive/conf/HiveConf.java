@@ -6770,7 +6770,13 @@ literal|"hive.server2.authentication.ldap.url"
 argument_list|,
 literal|null
 argument_list|,
-literal|"LDAP connection URL"
+literal|"LDAP connection URL(s),\n"
+operator|+
+literal|"this value could contain URLs to mutiple LDAP servers instances for HA,\n"
+operator|+
+literal|"each LDAP URL is separated by a SPACE character. URLs are used in the \n"
+operator|+
+literal|" order specified until a connection is successful."
 argument_list|)
 block|,
 name|HIVE_SERVER2_PLAIN_LDAP_BASEDN
