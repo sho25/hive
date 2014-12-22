@@ -161,7 +161,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FooterBuffer
+name|Utilities
 import|;
 end_import
 
@@ -179,7 +179,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|FooterBuffer
 import|;
 end_import
 
@@ -548,15 +548,6 @@ argument_list|<
 name|Comparison
 argument_list|>
 argument_list|()
-decl_stmt|;
-specifier|private
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|PartitionDesc
-argument_list|>
-name|pathToPartitionInfo
 decl_stmt|;
 specifier|protected
 name|RecordReader
@@ -1032,18 +1023,6 @@ name|iocontext
 argument_list|)
 expr_stmt|;
 block|}
-name|pathToPartitionInfo
-operator|=
-name|Utilities
-operator|.
-name|getMapWork
-argument_list|(
-name|jobConf
-argument_list|)
-operator|.
-name|getPathToPartitionInfo
-argument_list|()
-expr_stmt|;
 name|initDone
 operator|=
 literal|true
@@ -1759,6 +1738,24 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|PartitionDesc
+argument_list|>
+name|pathToPartitionInfo
+init|=
+name|Utilities
+operator|.
+name|getMapWork
+argument_list|(
+name|jobConf
+argument_list|)
+operator|.
+name|getPathToPartitionInfo
+argument_list|()
+decl_stmt|;
 name|part
 operator|=
 name|HiveFileFormatUtils
