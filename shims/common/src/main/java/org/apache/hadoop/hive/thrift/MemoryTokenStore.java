@@ -466,7 +466,7 @@ literal|"addToken: tokenIdentifier = "
 operator|+
 name|tokenIdentifier
 operator|+
-literal|", addded = "
+literal|", added = "
 operator|+
 operator|(
 name|tokenInfo
