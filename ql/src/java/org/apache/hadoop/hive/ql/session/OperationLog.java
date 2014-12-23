@@ -9,29 +9,15 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|service
+name|ql
 operator|.
-name|cli
-operator|.
-name|operation
+name|session
 package|;
 end_package
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Charsets
-import|;
-end_import
 
 begin_import
 import|import
@@ -91,49 +77,11 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|io
 operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|FetchOrientation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|HiveSQLException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|cli
-operator|.
-name|OperationHandle
+name|*
 import|;
 end_import
 
@@ -141,9 +89,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|sql
 operator|.
-name|*
+name|SQLException
 import|;
 end_import
 
@@ -319,7 +267,7 @@ name|operationLogMessage
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Read operation execution logs from log file    * @param fetchOrientation one of Enum FetchOrientation values    * @param maxRows the max number of fetched lines from log    * @return    * @throws HiveSQLException    */
+comment|/**    * Read operation execution logs from log file    * @param isFetchFirst true if the Enum FetchOrientation value is Fetch_First    * @param maxRows the max number of fetched lines from log    * @return    * @throws java.sql.SQLException    */
 specifier|public
 name|List
 argument_list|<
@@ -327,21 +275,21 @@ name|String
 argument_list|>
 name|readOperationLog
 parameter_list|(
-name|FetchOrientation
-name|fetchOrientation
+name|boolean
+name|isFetchFirst
 parameter_list|,
 name|long
 name|maxRows
 parameter_list|)
 throws|throws
-name|HiveSQLException
+name|SQLException
 block|{
 return|return
 name|logFile
 operator|.
 name|read
 argument_list|(
-name|fetchOrientation
+name|isFetchFirst
 argument_list|,
 name|maxRows
 argument_list|)
@@ -452,26 +400,19 @@ name|String
 argument_list|>
 name|read
 parameter_list|(
-name|FetchOrientation
-name|fetchOrientation
+name|boolean
+name|isFetchFirst
 parameter_list|,
 name|long
 name|maxRows
 parameter_list|)
 throws|throws
-name|HiveSQLException
+name|SQLException
 block|{
 comment|// reset the BufferReader, if fetching from the beginning of the file
 if|if
 condition|(
-name|fetchOrientation
-operator|.
-name|equals
-argument_list|(
-name|FetchOrientation
-operator|.
-name|FETCH_FIRST
-argument_list|)
+name|isFetchFirst
 condition|)
 block|{
 name|resetIn
@@ -586,7 +527,7 @@ name|long
 name|nLines
 parameter_list|)
 throws|throws
-name|HiveSQLException
+name|SQLException
 block|{
 if|if
 condition|(
@@ -627,7 +568,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|HiveSQLException
+name|SQLException
 argument_list|(
 literal|"The operation has been closed and its log file "
 operator|+
@@ -646,7 +587,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|HiveSQLException
+name|SQLException
 argument_list|(
 literal|"Operation Log file "
 operator|+
@@ -743,7 +684,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|HiveSQLException
+name|SQLException
 argument_list|(
 literal|"The operation has been closed and its log file "
 operator|+
@@ -762,7 +703,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|HiveSQLException
+name|SQLException
 argument_list|(
 literal|"Reading operation log file encountered an exception: "
 argument_list|,
