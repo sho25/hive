@@ -4900,6 +4900,23 @@ name|name
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isDirectory
+parameter_list|(
+name|FileStatus
+name|fileStatus
+parameter_list|)
+block|{
+return|return
+name|fileStatus
+operator|.
+name|isDirectory
+argument_list|()
+return|;
+block|}
 comment|/**    * Shim for KerberosName    */
 specifier|public
 class|class

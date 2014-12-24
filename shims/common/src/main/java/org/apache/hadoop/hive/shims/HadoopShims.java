@@ -1544,6 +1544,14 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Check whether file is directory.    */
+name|boolean
+name|isDirectory
+parameter_list|(
+name|FileStatus
+name|fileStatus
+parameter_list|)
+function_decl|;
 comment|/**    * Shim for KerberosName    */
 specifier|public
 interface|interface
