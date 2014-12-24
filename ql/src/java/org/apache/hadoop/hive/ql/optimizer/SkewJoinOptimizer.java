@@ -3396,6 +3396,8 @@ argument_list|>
 name|op
 parameter_list|)
 block|{
+comment|// Must be deterministic order map for consistent q-test output across
+comment|// Java versions
 name|Map
 argument_list|<
 name|String
@@ -3410,7 +3412,7 @@ argument_list|>
 name|topOps
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
