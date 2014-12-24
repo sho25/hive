@@ -19,6 +19,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Throwables
+import|;
+end_import
+
+begin_import
+import|import
 name|io
 operator|.
 name|netty
@@ -1525,6 +1539,20 @@ name|Throwable
 name|error
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Send error to Client: {}"
+argument_list|,
+name|Throwables
+operator|.
+name|getStackTraceAsString
+argument_list|(
+name|error
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|clientRpc
 operator|.
 name|call
@@ -1558,6 +1586,15 @@ name|SparkCounters
 name|counters
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Send job({}) result to Client."
+argument_list|,
+name|jobId
+argument_list|)
+expr_stmt|;
 name|clientRpc
 operator|.
 name|call
@@ -1586,6 +1623,17 @@ name|int
 name|sparkJobId
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Send job({}/{}) submitted to Client."
+argument_list|,
+name|jobId
+argument_list|,
+name|sparkJobId
+argument_list|)
+expr_stmt|;
 name|clientRpc
 operator|.
 name|call
@@ -1604,10 +1652,10 @@ name|void
 name|sendMetrics
 parameter_list|(
 name|String
-name|clientId
+name|jobId
 parameter_list|,
 name|int
-name|jobId
+name|sparkJobId
 parameter_list|,
 name|int
 name|stageId
@@ -1619,6 +1667,21 @@ name|Metrics
 name|metrics
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Send task({}/{}/{}/{}) metric to Client."
+argument_list|,
+name|jobId
+argument_list|,
+name|sparkJobId
+argument_list|,
+name|stageId
+argument_list|,
+name|taskId
+argument_list|)
+expr_stmt|;
 name|clientRpc
 operator|.
 name|call
@@ -1626,9 +1689,9 @@ argument_list|(
 operator|new
 name|JobMetrics
 argument_list|(
-name|clientId
-argument_list|,
 name|jobId
+argument_list|,
+name|sparkJobId
 argument_list|,
 name|stageId
 argument_list|,

@@ -2195,6 +2195,15 @@ name|job
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Send JobRequest[{}]."
+argument_list|,
+name|jobId
+argument_list|)
+expr_stmt|;
 comment|// Link the RPC and the promise so that events from one are propagated to the other as
 comment|// needed.
 name|rpc

@@ -790,6 +790,15 @@ operator|instanceof
 name|String
 condition|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Received error message:{}."
+argument_list|,
+name|msg
+argument_list|)
+expr_stmt|;
 name|rpc
 operator|.
 name|future
