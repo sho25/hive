@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -181,6 +191,7 @@ init|=
 literal|false
 decl_stmt|;
 comment|// For views, the entities can be nested - by default, entities are at the top level
+comment|// Must be deterministic order set for consistent q-test output across Java versions
 specifier|private
 specifier|final
 name|Set
@@ -190,7 +201,7 @@ argument_list|>
 name|parents
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|ReadEntity
 argument_list|>
