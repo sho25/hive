@@ -97,6 +97,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -6309,6 +6319,7 @@ name|String
 name|funcName
 parameter_list|)
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions - see HIVE-9161
 name|Set
 argument_list|<
 name|String
@@ -6316,7 +6327,7 @@ argument_list|>
 name|synonyms
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|String
 argument_list|>

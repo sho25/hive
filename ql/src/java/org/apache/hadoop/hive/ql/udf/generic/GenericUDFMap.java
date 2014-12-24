@@ -33,6 +33,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -263,7 +273,8 @@ name|Converter
 index|[]
 name|converters
 decl_stmt|;
-name|HashMap
+comment|// Must be deterministic order map for consistent q-test output across Java versions - see HIVE-9161
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -272,7 +283,7 @@ argument_list|>
 name|ret
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
