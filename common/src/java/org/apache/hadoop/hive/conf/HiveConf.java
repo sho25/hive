@@ -6269,6 +6269,15 @@ argument_list|,
 literal|"Separator used to construct names of tables and partitions. For example, dbname@tablename@partitionname"
 argument_list|)
 block|,
+name|HIVE_CAPTURE_TRANSFORM_ENTITY
+argument_list|(
+literal|"hive.entity.capture.transform"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Compiler to capture transform URI referred in the query"
+argument_list|)
+block|,
 name|HIVE_DISPLAY_PARTITION_COLUMNS_SEPARATELY
 argument_list|(
 literal|"hive.display.partition.cols.separately"
