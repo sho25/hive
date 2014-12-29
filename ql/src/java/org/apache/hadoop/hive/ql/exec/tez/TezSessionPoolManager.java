@@ -962,10 +962,8 @@ name|ugi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 decl_stmt|;
 name|String
 name|userName

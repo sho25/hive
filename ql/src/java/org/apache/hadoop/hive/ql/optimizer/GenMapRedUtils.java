@@ -7996,7 +7996,7 @@ name|cplan
 operator|.
 name|setName
 argument_list|(
-literal|"Tez Merge File Work"
+literal|"File Merge"
 argument_list|)
 expr_stmt|;
 operator|(
@@ -8126,7 +8126,7 @@ name|cplan
 operator|.
 name|setName
 argument_list|(
-literal|"Tez Merge File Work"
+literal|"File Merge"
 argument_list|)
 expr_stmt|;
 operator|(

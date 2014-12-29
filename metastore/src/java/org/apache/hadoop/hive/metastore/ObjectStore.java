@@ -3225,24 +3225,35 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// something is wrong since openTransactionCalls is greater than 1 but
-comment|// currentTransaction is not active
-assert|assert
-operator|(
+comment|// openTransactionCalls> 1 means this is an interior transaction
+comment|// We should already have a transaction created that is active.
+if|if
+condition|(
 operator|(
 name|currentTransaction
-operator|!=
+operator|==
 literal|null
 operator|)
-operator|&&
+operator|||
 operator|(
+operator|!
 name|currentTransaction
 operator|.
 name|isActive
 argument_list|()
 operator|)
-operator|)
-assert|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"openTransaction called in an interior"
+operator|+
+literal|" transaction scope, but currentTransaction is not active."
+argument_list|)
+throw|;
+block|}
 block|}
 name|boolean
 name|result
@@ -3461,10 +3472,6 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-name|openTrasactionCalls
-operator|=
-literal|0
-expr_stmt|;
 name|debugLog
 argument_list|(
 literal|"Rollback transaction, isActive: "
@@ -3475,6 +3482,8 @@ name|isActive
 argument_list|()
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|currentTransaction
@@ -3489,23 +3498,25 @@ operator|.
 name|ROLLBACK
 condition|)
 block|{
-name|transactionStatus
-operator|=
-name|TXN_STATUS
-operator|.
-name|ROLLBACK
-expr_stmt|;
-try|try
-block|{
-comment|// could already be rolled back
 name|currentTransaction
 operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
 block|}
+block|}
 finally|finally
 block|{
+name|openTrasactionCalls
+operator|=
+literal|0
+expr_stmt|;
+name|transactionStatus
+operator|=
+name|TXN_STATUS
+operator|.
+name|ROLLBACK
+expr_stmt|;
 comment|// remove all detached objects from the cache, since the transaction is
 comment|// being rolled back they are no longer relevant, and this prevents them
 comment|// from reattaching in future transactions
@@ -3514,7 +3525,6 @@ operator|.
 name|evictAll
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 block|}
 annotation|@

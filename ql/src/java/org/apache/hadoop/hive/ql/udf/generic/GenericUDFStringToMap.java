@@ -27,7 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -349,9 +349,10 @@ name|GenericUDFStringToMap
 extends|extends
 name|GenericUDF
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions - see HIVE-9161
 specifier|private
 specifier|final
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -360,7 +361,7 @@ argument_list|>
 name|ret
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

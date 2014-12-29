@@ -2455,6 +2455,54 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test Beeline could show the query progress for time-consuming query when hive.exec.parallel    * is true    * @throws Throwable    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testQueryProgressParallel
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"set hive.support.concurrency = false;\n"
+operator|+
+literal|"set hive.exec.parallel = true;\n"
+operator|+
+literal|"select count(*) from "
+operator|+
+name|tableName
+operator|+
+literal|";\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"number of splits"
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|,
+name|getBaseArgs
+argument_list|(
+name|miniHS2
+operator|.
+name|getBaseJdbcURL
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Test Beeline will hide the query progress when silent option is set.    * @throws Throwable    */
 annotation|@
 name|Test

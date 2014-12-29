@@ -246,10 +246,8 @@ name|currentUserName
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 operator|.
 name|getShortUserName
 argument_list|()

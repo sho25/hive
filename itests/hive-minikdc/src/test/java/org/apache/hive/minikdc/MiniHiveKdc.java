@@ -599,10 +599,8 @@ expr_stmt|;
 return|return
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 return|;
 block|}
 specifier|public

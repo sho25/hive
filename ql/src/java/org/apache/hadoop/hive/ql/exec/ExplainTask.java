@@ -227,6 +227,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -692,7 +702,7 @@ argument_list|>
 name|tableInfo
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -2399,17 +2409,19 @@ argument_list|)
 expr_stmt|;
 name|out
 operator|.
-name|printf
+name|print
 argument_list|(
-literal|"%s "
-argument_list|,
 name|ent
 operator|.
 name|getKey
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|out
 operator|.
-name|toString
-argument_list|()
+name|print
+argument_list|(
+literal|" "
 argument_list|)
 expr_stmt|;
 block|}
@@ -4128,11 +4140,16 @@ condition|)
 block|{
 name|out
 operator|.
-name|printf
+name|print
 argument_list|(
-literal|"%s "
-argument_list|,
 name|header
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|print
+argument_list|(
+literal|" "
 argument_list|)
 expr_stmt|;
 block|}
@@ -4673,14 +4690,26 @@ argument_list|)
 expr_stmt|;
 name|out
 operator|.
-name|printf
+name|print
 argument_list|(
-literal|"Stage: %s\n"
-argument_list|,
+literal|"Stage: "
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|print
+argument_list|(
 name|task
 operator|.
 name|getId
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|print
+argument_list|(
+literal|"\n"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4811,10 +4840,8 @@ argument_list|)
 expr_stmt|;
 name|out
 operator|.
-name|printf
+name|print
 argument_list|(
-literal|"%s"
-argument_list|,
 name|task
 operator|.
 name|getId
@@ -5186,14 +5213,26 @@ condition|)
 block|{
 name|out
 operator|.
-name|printf
+name|print
 argument_list|(
-literal|" [%s]"
-argument_list|,
+literal|" ["
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|print
+argument_list|(
 name|task
 operator|.
 name|getType
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|out
+operator|.
+name|print
+argument_list|(
+literal|"]"
 argument_list|)
 expr_stmt|;
 block|}

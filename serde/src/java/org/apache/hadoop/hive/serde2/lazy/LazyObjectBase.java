@@ -38,6 +38,11 @@ name|int
 name|length
 parameter_list|)
 function_decl|;
+comment|/**    * called for null binary, hbase columns, for example    */
+name|void
+name|setNull
+parameter_list|()
+function_decl|;
 comment|/**    * If the LazyObjectBase is a primitive Object, then deserialize it and return the    * actual primitive Object. Otherwise (array, map, struct), return this.    */
 name|Object
 name|getObject

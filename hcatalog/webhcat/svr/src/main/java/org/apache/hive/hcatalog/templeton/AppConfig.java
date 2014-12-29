@@ -1813,6 +1813,22 @@ argument_list|)
 decl_stmt|;
 comment|//since raw data was (possibly) escaped to make split work,
 comment|//now need to remove escape chars so they don't interfere with downstream processing
+if|if
+condition|(
+name|props
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+return|;
+block|}
+else|else
+block|{
 for|for
 control|(
 name|int
@@ -1854,6 +1870,7 @@ argument_list|(
 name|props
 argument_list|)
 return|;
+block|}
 block|}
 specifier|public
 name|String

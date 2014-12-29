@@ -1945,12 +1945,8 @@ name|sessionUGI
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|startSs
-operator|.
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 decl_stmt|;
 name|FileSystem
 operator|.

@@ -1185,7 +1185,7 @@ name|in
 operator|.
 name|length
 index|[
-name|outElementNum
+name|inputElementNum
 index|]
 argument_list|)
 expr_stmt|;

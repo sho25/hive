@@ -87,22 +87,6 @@ name|StatsSetupConst
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|hash
-operator|.
-name|MurmurHash
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -443,6 +427,37 @@ return|return
 name|create
 return|;
 block|}
+comment|/**    * Prepares ALTER TABLE query    */
+specifier|public
+specifier|static
+name|String
+name|getAlterIdColumn
+parameter_list|()
+block|{
+return|return
+literal|"ALTER TABLE "
+operator|+
+name|JDBCStatsUtils
+operator|.
+name|getStatTableName
+argument_list|()
+operator|+
+literal|" ALTER COLUMN "
+operator|+
+name|JDBCStatsUtils
+operator|.
+name|getIdColumnName
+argument_list|()
+operator|+
+literal|" VARCHAR("
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+operator|+
+literal|")"
+return|;
+block|}
 comment|/**    * Prepares UPDATE statement issued when updating existing statistics    */
 specifier|public
 specifier|static
@@ -727,48 +742,38 @@ return|return
 name|delete
 return|;
 block|}
-comment|/**    * Make sure the row ID fits into the row ID column in the table.    * @param rowId Row ID.    * @return Resulting row ID truncated to correct length, if necessary.    */
+comment|/**    * Make sure the row ID fits into the row ID column in the table.    */
 specifier|public
 specifier|static
-name|String
-name|truncateRowId
+name|void
+name|validateRowId
 parameter_list|(
 name|String
 name|rowId
 parameter_list|)
 block|{
-return|return
-operator|(
+if|if
+condition|(
 name|rowId
 operator|.
 name|length
 argument_list|()
-operator|<=
+operator|>
 name|JDBCStatsSetupConstants
 operator|.
 name|ID_COLUMN_VARCHAR_SIZE
-operator|)
-condition|?
-name|rowId
-else|:
-name|Integer
-operator|.
-name|toHexString
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
-name|MurmurHash
-operator|.
-name|getInstance
-argument_list|()
-operator|.
-name|hash
-argument_list|(
+literal|"ID is too big, client should have truncated it: "
+operator|+
 name|rowId
-operator|.
-name|getBytes
-argument_list|()
 argument_list|)
-argument_list|)
-return|;
+throw|;
+block|}
 block|}
 block|}
 end_class

@@ -1675,13 +1675,8 @@ name|ugi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|fs
-operator|.
-name|getConf
+name|getUGI
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|String
 name|currentUser
@@ -1947,7 +1942,7 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|// do best effor to determine if this is a local file
+comment|// do best effort to determine if this is a local file
 return|return
 name|isLocalFile
 argument_list|(
@@ -1998,7 +1993,7 @@ parameter_list|)
 block|{
 try|try
 block|{
-comment|// do best effor to determine if this is a local file
+comment|// do best effort to determine if this is a local file
 name|FileSystem
 name|fsForFile
 init|=

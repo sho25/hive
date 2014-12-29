@@ -1705,10 +1705,8 @@ name|endUserName
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|job
-argument_list|)
+name|getUGI
+argument_list|()
 operator|.
 name|getShortUserName
 argument_list|()

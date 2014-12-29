@@ -3021,7 +3021,7 @@ name|thrift
 operator|.
 name|protocol
 operator|.
-name|TBinaryProtocol
+name|TCompactProtocol
 import|;
 end_import
 
@@ -3663,11 +3663,8 @@ name|ugi
 operator|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|getConf
+name|getUGI
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -33863,7 +33860,7 @@ operator|.
 name|protocolFactory
 argument_list|(
 operator|new
-name|TBinaryProtocol
+name|TCompactProtocol
 operator|.
 name|Factory
 argument_list|()
@@ -33872,14 +33869,10 @@ operator|.
 name|inputProtocolFactory
 argument_list|(
 operator|new
-name|TBinaryProtocol
+name|TCompactProtocol
 operator|.
 name|Factory
 argument_list|(
-literal|true
-argument_list|,
-literal|true
-argument_list|,
 name|maxMessageSize
 argument_list|,
 name|maxMessageSize

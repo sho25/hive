@@ -454,7 +454,7 @@ literal|"addToken: tokenIdentifier = "
 operator|+
 name|tokenIdentifier
 operator|+
-literal|", addded = "
+literal|", added = "
 operator|+
 name|result
 argument_list|)
@@ -645,7 +645,7 @@ literal|"removeToken: tokenIdentifier = "
 operator|+
 name|tokenIdentifier
 operator|+
-literal|", addded = "
+literal|", removed = "
 operator|+
 name|result
 argument_list|)

@@ -3146,7 +3146,7 @@ name|HIVE_CBO_ENABLED
 argument_list|(
 literal|"hive.cbo.enable"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
@@ -6308,6 +6308,15 @@ argument_list|,
 literal|"Separator used to construct names of tables and partitions. For example, dbname@tablename@partitionname"
 argument_list|)
 block|,
+name|HIVE_CAPTURE_TRANSFORM_ENTITY
+argument_list|(
+literal|"hive.entity.capture.transform"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Compiler to capture transform URI referred in the query"
+argument_list|)
+block|,
 name|HIVE_DISPLAY_PARTITION_COLUMNS_SEPARATELY
 argument_list|(
 literal|"hive.display.partition.cols.separately"
@@ -6809,7 +6818,13 @@ literal|"hive.server2.authentication.ldap.url"
 argument_list|,
 literal|null
 argument_list|,
-literal|"LDAP connection URL"
+literal|"LDAP connection URL(s),\n"
+operator|+
+literal|"this value could contain URLs to mutiple LDAP servers instances for HA,\n"
+operator|+
+literal|"each LDAP URL is separated by a SPACE character. URLs are used in the \n"
+operator|+
+literal|" order specified until a connection is successful."
 argument_list|)
 block|,
 name|HIVE_SERVER2_PLAIN_LDAP_BASEDN
@@ -8238,6 +8253,15 @@ name|isType
 argument_list|(
 name|value
 argument_list|)
+return|;
+block|}
+specifier|public
+name|Validator
+name|getValidator
+parameter_list|()
+block|{
+return|return
+name|validator
 return|;
 block|}
 specifier|public
@@ -11873,10 +11897,8 @@ name|ugi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|this
-argument_list|)
+name|getUGI
+argument_list|()
 decl_stmt|;
 return|return
 name|ugi

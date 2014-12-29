@@ -339,10 +339,8 @@ name|ugi
 operator|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 expr_stmt|;
 name|linfo
 operator|=
