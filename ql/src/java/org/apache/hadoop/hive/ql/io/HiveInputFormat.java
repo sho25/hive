@@ -1549,6 +1549,17 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|mrwork
+operator|==
+literal|null
+operator|||
+name|pathToPartitionInfo
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
 name|HiveConf
 operator|.
 name|getVar
@@ -1617,6 +1628,7 @@ operator|.
 name|getPathToPartitionInfo
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|/*    * AddSplitsForGroup collects separate calls to setInputPaths into one where possible.    * The reason for this is that this is faster on some InputFormats. E.g.: Orc will start    * a threadpool to do the work and calling it multiple times unnecessarily will create a lot    * of unnecessary thread pools.    */
 specifier|private

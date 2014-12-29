@@ -251,6 +251,15 @@ expr_stmt|;
 name|CombineHiveInputSplit
 name|hsplit
 init|=
+name|split
+operator|instanceof
+name|CombineHiveInputSplit
+condition|?
+operator|(
+name|CombineHiveInputSplit
+operator|)
+name|split
+else|:
 operator|new
 name|CombineHiveInputSplit
 argument_list|(
