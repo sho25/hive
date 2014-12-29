@@ -647,10 +647,8 @@ name|newUgi
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|conf
-argument_list|)
+name|getUGI
+argument_list|()
 decl_stmt|;
 name|String
 name|newUserName
@@ -660,18 +658,14 @@ operator|.
 name|getShortUserName
 argument_list|()
 decl_stmt|;
+comment|// TODOD this we need to store the session username somewhere else as getUGIForConf never used the conf
 name|UserGroupInformation
 name|ugiInSession
 init|=
 name|Utils
 operator|.
-name|getUGIForConf
-argument_list|(
-name|existingSession
-operator|.
-name|getConf
+name|getUGI
 argument_list|()
-argument_list|)
 decl_stmt|;
 name|String
 name|userNameInSession
