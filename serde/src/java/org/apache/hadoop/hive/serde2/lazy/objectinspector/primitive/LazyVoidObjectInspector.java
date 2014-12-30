@@ -126,13 +126,9 @@ name|Object
 name|o
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Internal error: cannot create Void object."
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class
