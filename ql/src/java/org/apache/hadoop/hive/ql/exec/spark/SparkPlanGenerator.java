@@ -1296,6 +1296,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+comment|// Caching is disabled for MapInput due to HIVE-8920
 name|MapInput
 name|result
 init|=
@@ -1306,12 +1307,8 @@ name|sparkPlan
 argument_list|,
 name|hadoopRDD
 argument_list|,
-name|cloneToWork
-operator|.
-name|containsKey
-argument_list|(
-name|mapWork
-argument_list|)
+literal|false
+comment|/*cloneToWork.containsKey(mapWork)*/
 argument_list|)
 decl_stmt|;
 return|return

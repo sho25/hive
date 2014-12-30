@@ -208,15 +208,6 @@ specifier|public
 class|class
 name|SparkUtilities
 block|{
-comment|// Used to save and retrieve IOContext for multi-insertion.
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|MAP_IO_CONTEXT
-init|=
-literal|"MAP_IO_CONTEXT"
-decl_stmt|;
 specifier|public
 specifier|static
 name|HiveKey
