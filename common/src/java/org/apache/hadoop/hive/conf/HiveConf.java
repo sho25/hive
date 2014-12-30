@@ -10566,32 +10566,6 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
-name|get
-argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|null
-argument_list|)
-operator|!=
-literal|null
-condition|)
-block|{
-name|l4j
-operator|.
-name|warn
-argument_list|(
-literal|"DEPRECATED: Configuration property hive.metastore.local no longer has any "
-operator|+
-literal|"effect. Make sure to provide a valid value for hive.metastore.uris if you are "
-operator|+
-literal|"connecting to a remote metastore."
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
 operator|(
 name|this
 operator|.
