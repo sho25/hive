@@ -3710,10 +3710,11 @@ name|QBJoinTree
 argument_list|>
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|topToTable
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,

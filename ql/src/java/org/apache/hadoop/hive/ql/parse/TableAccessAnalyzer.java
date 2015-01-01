@@ -918,6 +918,7 @@ return|return
 literal|null
 return|;
 block|}
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -930,7 +931,7 @@ argument_list|>
 name|tableToKeysMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1044,6 +1045,7 @@ name|TableAccessCtx
 operator|)
 name|procCtx
 decl_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -1056,7 +1058,7 @@ argument_list|>
 name|tableToKeysMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

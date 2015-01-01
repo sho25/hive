@@ -45,7 +45,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashSet
 import|;
 end_import
 
@@ -883,6 +893,7 @@ name|setCols
 init|=
 literal|null
 decl_stmt|;
+comment|// Must be deterministic order set for consistent q-test output across Java versions
 name|Set
 argument_list|<
 name|String
@@ -890,7 +901,7 @@ argument_list|>
 name|setRCols
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|String
 argument_list|>
@@ -958,10 +969,11 @@ operator|.
 name|getChildren
 argument_list|()
 decl_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|setCols
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
