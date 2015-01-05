@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -159,7 +169,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
+name|StructObjectInspector
 import|;
 end_import
 
@@ -247,7 +257,7 @@ name|rowsComputedFromStats
 decl_stmt|;
 specifier|private
 specifier|transient
-name|ObjectInspector
+name|StructObjectInspector
 name|statRowOI
 decl_stmt|;
 comment|/**    * Serialization Null Format for the serde used to fetch data.    */
@@ -273,7 +283,7 @@ argument_list|>
 argument_list|>
 name|rowsComputedFromStats
 parameter_list|,
-name|ObjectInspector
+name|StructObjectInspector
 name|statRowOI
 parameter_list|)
 block|{
@@ -291,7 +301,7 @@ name|statRowOI
 expr_stmt|;
 block|}
 specifier|public
-name|ObjectInspector
+name|StructObjectInspector
 name|getStatRowOI
 parameter_list|()
 block|{
@@ -638,6 +648,41 @@ parameter_list|()
 block|{
 return|return
 name|partDesc
+return|;
+block|}
+specifier|public
+name|List
+argument_list|<
+name|Path
+argument_list|>
+name|getPathLists
+parameter_list|()
+block|{
+return|return
+name|isPartitioned
+argument_list|()
+condition|?
+name|partDir
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+operator|new
+name|ArrayList
+argument_list|<
+name|Path
+argument_list|>
+argument_list|(
+name|partDir
+argument_list|)
+else|:
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|tblDir
+argument_list|)
 return|;
 block|}
 comment|/**    * Get Partition descriptors in sorted (ascending) order of partition directory    *    * @return the partDesc array list    */

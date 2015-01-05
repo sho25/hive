@@ -37112,7 +37112,9 @@ operator|)
 name|table_desc
 operator|.
 name|getDeserializer
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|getObjectInspector
 argument_list|()
