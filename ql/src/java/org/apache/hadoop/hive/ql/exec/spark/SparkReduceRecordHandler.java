@@ -1350,7 +1350,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|/* 	   * The row object inspector used by ReduceWork needs to be a 	   * **standard** struct object inspector, not just any struct object 	   * inspector. 	   */
+comment|/*            * The row object inspector used by ReduceWork needs to be a            * **standard** struct object inspector, not just any struct object            * inspector.            */
 name|ArrayList
 argument_list|<
 name|String
@@ -1999,16 +1999,20 @@ throw|;
 block|}
 else|else
 block|{
+name|String
+name|msg
+init|=
+literal|"Fatal error: "
+operator|+
+name|e
+decl_stmt|;
 name|LOG
 operator|.
 name|fatal
 argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+name|msg
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2035,7 +2039,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// System.err.print(keyObject.toString());
 while|while
 condition|(
 name|values
@@ -2055,7 +2058,6 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-comment|// System.err.print(who.getHo().toString());
 try|try
 block|{
 name|valueObject
