@@ -3805,6 +3805,19 @@ literal|""
 argument_list|)
 block|,
 comment|// 4M
+name|PARQUET_MEMORY_POOL_RATIO
+argument_list|(
+literal|"parquet.memory.pool.ratio"
+argument_list|,
+literal|0.5f
+argument_list|,
+literal|"Maximum fraction of heap that can be used by Parquet file writers in one task.\n"
+operator|+
+literal|"It is for avoiding OutOfMemory error in tasks. Work with Parquet 1.6.0 and above.\n"
+operator|+
+literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
