@@ -697,6 +697,22 @@ name|rel
 operator|.
 name|rules
 operator|.
+name|ReduceExpressionsRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
 name|SemiJoinFilterTransposeRule
 import|;
 end_import
@@ -2395,6 +2411,7 @@ extends|extends
 name|SemanticAnalyzer
 block|{
 specifier|private
+specifier|final
 name|AtomicInteger
 name|noColsMissingStats
 init|=
@@ -2508,6 +2525,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -2916,7 +2935,7 @@ return|return
 name|sinkOp
 return|;
 block|}
-comment|/**    * Can CBO handle the given AST?    *     * @param ast    *          Top level AST    * @param qb    *          top level QB corresponding to the AST    * @param cboCtx    * @param semAnalyzer    * @return boolean    *     *         Assumption:<br>    *         If top level QB is query then everything below it must also be    *         Query.    */
+comment|/**    * Can CBO handle the given AST?    *    * @param ast    *          Top level AST    * @param qb    *          top level QB corresponding to the AST    * @param cboCtx    * @param semAnalyzer    * @return boolean    *    *         Assumption:<br>    *         If top level QB is query then everything below it must also be    *         Query.    */
 name|boolean
 name|canHandleAstForCbo
 parameter_list|(
@@ -3177,7 +3196,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Checks whether Calcite can handle the query.    *     * @param queryProperties    * @param conf    * @param topLevelQB    *          Does QB corresponds to top most query block?    * @param verbose    *          Whether return value should be verbose in case of failure.    * @return null if the query can be handled; non-null reason string if it    *         cannot be.    *     *         Assumption:<br>    *         1. If top level QB is query then everything below it must also be    *         Query<br>    *         2. Nested Subquery will return false for qbToChk.getIsQuery()    */
+comment|/**    * Checks whether Calcite can handle the query.    *    * @param queryProperties    * @param conf    * @param topLevelQB    *          Does QB corresponds to top most query block?    * @param verbose    *          Whether return value should be verbose in case of failure.    * @return null if the query can be handled; non-null reason string if it    *         cannot be.    *    *         Assumption:<br>    *         1. If top level QB is query then everything below it must also be    *         Query<br>    *         2. Nested Subquery will return false for qbToChk.getIsQuery()    */
 specifier|static
 name|String
 name|canHandleQbForCbo
@@ -4071,7 +4090,7 @@ name|newChild
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get Optimized AST for the given QB tree in the semAnalyzer.    *     * @return Optimized operator tree translated in to Hive AST    * @throws SemanticException    */
+comment|/**    * Get Optimized AST for the given QB tree in the semAnalyzer.    *    * @return Optimized operator tree translated in to Hive AST    * @throws SemanticException    */
 name|ASTNode
 name|getOptimizedAST
 parameter_list|()
@@ -4163,7 +4182,7 @@ return|return
 name|optiqOptimizedAST
 return|;
 block|}
-comment|/***    * Unwraps Calcite Invocation exceptions coming meta data provider chain and    * obtains the real cause.    *     * @param Exception    */
+comment|/***    * Unwraps Calcite Invocation exceptions coming meta data provider chain and    * obtains the real cause.    *    * @param Exception    */
 specifier|private
 name|void
 name|rethrowCalciteException
@@ -4573,6 +4592,7 @@ name|RelOptSchema
 name|relOptSchema
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -4889,6 +4909,33 @@ name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+name|ReduceExpressionsRule
+operator|.
+name|JOIN_INSTANCE
+argument_list|)
+expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+name|ReduceExpressionsRule
+operator|.
+name|FILTER_INSTANCE
+argument_list|)
+expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+name|ReduceExpressionsRule
+operator|.
+name|PROJECT_INSTANCE
+argument_list|)
+expr_stmt|;
 name|hepPgm
 operator|=
 name|hepPgmBldr
@@ -5063,7 +5110,7 @@ return|return
 name|calciteOptimizedPlan
 return|;
 block|}
-comment|/**      * Perform all optimizations before Join Ordering.      *       * @param basePlan      *          original plan      * @param mdProvider      *          meta data provider      * @return      */
+comment|/**      * Perform all optimizations before Join Ordering.      *      * @param basePlan      *          original plan      * @param mdProvider      *          meta data provider      * @return      */
 specifier|private
 name|RelNode
 name|applyPreJoinOrderingTransforms
@@ -5112,6 +5159,18 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+name|ReduceExpressionsRule
+operator|.
+name|PROJECT_INSTANCE
+argument_list|,
+name|ReduceExpressionsRule
+operator|.
+name|FILTER_INSTANCE
+argument_list|,
+name|ReduceExpressionsRule
+operator|.
+name|JOIN_INSTANCE
 argument_list|,
 operator|new
 name|HiveFilterProjectTransposeRule
@@ -5290,7 +5349,7 @@ return|return
 name|basePlan
 return|;
 block|}
-comment|/**      * Run the HEP Planner with the given rule set.      *       * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param rules      * @return optimized RelNode      */
+comment|/**      * Run the HEP Planner with the given rule set.      *      * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param rules      * @return optimized RelNode      */
 specifier|private
 name|RelNode
 name|hepPlan
@@ -6940,7 +6999,7 @@ return|return
 name|joinRel
 return|;
 block|}
-comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *       * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
+comment|/**      * Generate Join Logical Plan Relnode by walking through the join AST.      *      * @param qb      * @param aliasToRel      *          Alias(Table/Relation alias) to RelNode; only read and not      *          written in to by this method      * @return      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genJoinLogicalPlan
@@ -8295,7 +8354,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|/*        * Handle Subquery predicates.        *         * Notes (8/22/14 hb): Why is this a copy of the code from {@link        * #genFilterPlan} - for now we will support the same behavior as non CBO        * route. - but plan to allow nested SubQueries(Restriction.9.m) and        * multiple SubQuery expressions(Restriction.8.m). This requires use to        * utilize Calcite's Decorrelation mechanics, and for Calcite to fix/flush        * out Null semantics(CALCITE-373) - besides only the driving code has        * been copied. Most of the code which is SubQueryUtils and QBSubQuery is        * reused.        */
+comment|/*        * Handle Subquery predicates.        *        * Notes (8/22/14 hb): Why is this a copy of the code from {@link        * #genFilterPlan} - for now we will support the same behavior as non CBO        * route. - but plan to allow nested SubQueries(Restriction.9.m) and        * multiple SubQuery expressions(Restriction.8.m). This requires use to        * utilize Calcite's Decorrelation mechanics, and for Calcite to fix/flush        * out Null semantics(CALCITE-373) - besides only the driving code has        * been copied. Most of the code which is SubQueryUtils and QBSubQuery is        * reused.        */
 name|int
 name|numSrcColumns
 init|=
@@ -10608,7 +10667,7 @@ return|return
 name|aInfo
 return|;
 block|}
-comment|/**      * Generate GB plan.      *       * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
+comment|/**      * Generate GB plan.      *      * @param qb      * @param srcRel      * @return TODO: 1. Grouping Sets (roll up..)      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genGBLogicalPlan
@@ -11338,7 +11397,7 @@ return|return
 name|gbRel
 return|;
 block|}
-comment|/**      * Generate OB RelNode and input Select RelNode that should be used to      * introduce top constraining Project. If Input select RelNode is not      * present then don't introduce top constraining select.      *       * @param qb      * @param srcRel      * @param outermostOB      * @return Pair<RelNode, RelNode> Key- OB RelNode, Value - Input Select for      *         top constraining Select      * @throws SemanticException      */
+comment|/**      * Generate OB RelNode and input Select RelNode that should be used to      * introduce top constraining Project. If Input select RelNode is not      * present then don't introduce top constraining select.      *      * @param qb      * @param srcRel      * @param outermostOB      * @return Pair<RelNode, RelNode> Key- OB RelNode, Value - Input Select for      *         top constraining Select      * @throws SemanticException      */
 specifier|private
 name|Pair
 argument_list|<
@@ -13948,7 +14007,7 @@ return|return
 name|selRel
 return|;
 block|}
-comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *       * @throws SemanticException      */
+comment|/**      * NOTE: there can only be one select caluse since we don't handle multi      * destination insert.      *      * @throws SemanticException      */
 specifier|private
 name|RelNode
 name|genSelectLogicalPlan
