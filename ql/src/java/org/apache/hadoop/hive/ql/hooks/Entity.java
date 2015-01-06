@@ -214,7 +214,7 @@ name|p
 decl_stmt|;
 comment|/**    * The directory if this is a directory    */
 specifier|private
-name|String
+name|Path
 name|d
 decl_stmt|;
 comment|/**    * An object that is represented as a String    * Currently used for functions    */
@@ -377,7 +377,7 @@ name|p
 expr_stmt|;
 block|}
 specifier|public
-name|String
+name|Path
 name|getD
 parameter_list|()
 block|{
@@ -389,7 +389,7 @@ specifier|public
 name|void
 name|setD
 parameter_list|(
-name|String
+name|Path
 name|d
 parameter_list|)
 block|{
@@ -639,7 +639,7 @@ block|}
 specifier|public
 name|Entity
 parameter_list|(
-name|String
+name|Path
 name|d
 parameter_list|,
 name|boolean
@@ -806,6 +806,25 @@ return|return
 name|typ
 return|;
 block|}
+specifier|public
+name|boolean
+name|isPathType
+parameter_list|()
+block|{
+return|return
+name|typ
+operator|==
+name|Type
+operator|.
+name|DFS_DIR
+operator|||
+name|typ
+operator|==
+name|Type
+operator|.
+name|LOCAL_DIR
+return|;
+block|}
 comment|/**    * Get the location of the entity.    */
 specifier|public
 name|URI
@@ -921,11 +940,10 @@ name|LOCAL_DIR
 condition|)
 block|{
 return|return
-operator|new
-name|URI
-argument_list|(
 name|d
-argument_list|)
+operator|.
+name|toUri
+argument_list|()
 return|;
 block|}
 return|return
@@ -1108,6 +1126,9 @@ return|;
 default|default:
 return|return
 name|d
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 block|}

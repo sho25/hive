@@ -293,6 +293,11 @@ return|return;
 block|}
 if|if
 condition|(
+name|command
+operator|.
+name|isReportErrors
+argument_list|()
+operator|&&
 name|attempts
 operator|++
 operator|<=

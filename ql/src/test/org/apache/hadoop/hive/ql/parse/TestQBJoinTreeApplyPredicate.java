@@ -163,7 +163,7 @@ block|{
 name|sA
 operator|=
 operator|new
-name|SemanticAnalyzer
+name|CalcitePlanner
 argument_list|(
 name|conf
 argument_list|)

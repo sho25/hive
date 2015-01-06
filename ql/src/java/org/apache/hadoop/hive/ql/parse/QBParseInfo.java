@@ -2026,6 +2026,7 @@ return|return
 literal|true
 return|;
 block|}
+comment|// for fast check of possible existence of RS (will be checked again in SimpleFetchOptimizer)
 specifier|public
 name|boolean
 name|isSimpleSelectQuery
@@ -2033,8 +2034,6 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|isSubQ
-operator|||
 name|joinExpr
 operator|!=
 literal|null
@@ -2070,13 +2069,25 @@ name|isEmpty
 argument_list|()
 operator|||
 operator|!
-name|aliasToLateralViews
+name|destRollups
 operator|.
 name|isEmpty
 argument_list|()
 operator|||
 operator|!
-name|destToLateralView
+name|destCubes
+operator|.
+name|isEmpty
+argument_list|()
+operator|||
+operator|!
+name|destGroupingSets
+operator|.
+name|isEmpty
+argument_list|()
+operator|||
+operator|!
+name|destToHaving
 operator|.
 name|isEmpty
 argument_list|()
@@ -2182,6 +2193,7 @@ literal|false
 return|;
 block|}
 block|}
+comment|// exclude insert queries
 for|for
 control|(
 name|ASTNode

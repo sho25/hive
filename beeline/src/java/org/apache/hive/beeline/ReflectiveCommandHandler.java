@@ -23,7 +23,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Completor
+name|console
+operator|.
+name|completer
+operator|.
+name|Completer
 import|;
 end_import
 
@@ -59,6 +63,7 @@ specifier|final
 name|BeeLine
 name|beeLine
 decl_stmt|;
+comment|/**    * @param beeLine    * @param cmds      'cmds' is an array of alternative names for the same command. And that the    *                  first one is always chosen for display purposes and to lookup help    *                  documentation from BeeLine.properties file.    * @param completer    */
 specifier|public
 name|ReflectiveCommandHandler
 parameter_list|(
@@ -69,9 +74,9 @@ name|String
 index|[]
 name|cmds
 parameter_list|,
-name|Completor
+name|Completer
 index|[]
-name|completor
+name|completer
 parameter_list|)
 block|{
 name|super
@@ -92,7 +97,7 @@ literal|0
 index|]
 argument_list|)
 argument_list|,
-name|completor
+name|completer
 argument_list|)
 expr_stmt|;
 name|this

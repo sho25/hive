@@ -805,6 +805,8 @@ parameter_list|,
 name|int
 name|index
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 return|return
 name|getListIndexNode
@@ -830,6 +832,8 @@ parameter_list|,
 name|ExprNodeDesc
 name|index
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|ArrayList
 argument_list|<

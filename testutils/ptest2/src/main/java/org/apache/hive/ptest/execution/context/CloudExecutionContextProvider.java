@@ -551,6 +551,14 @@ name|NUM_THREADS
 init|=
 literal|"numThreads"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|USER_METADATA
+init|=
+literal|"userMetadata"
+decl_stmt|;
 specifier|private
 specifier|final
 name|RandomAccessFile
@@ -1867,6 +1875,8 @@ argument_list|,
 literal|0
 argument_list|,
 literal|"pkill -f java"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|mSSHCommandExecutor
@@ -2912,6 +2922,15 @@ argument_list|,
 name|securityGroup
 argument_list|,
 name|maxBid
+argument_list|,
+name|context
+operator|.
+name|getSubProperties
+argument_list|(
+name|USER_METADATA
+operator|+
+literal|"."
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|CloudExecutionContextProvider

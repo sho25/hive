@@ -147,6 +147,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -312,6 +322,7 @@ literal|"alias3"
 argument_list|)
 expr_stmt|;
 comment|// joins alias1, alias2, alias3 (alias1 was not eligible for big pos)
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|HashMap
 argument_list|<
 name|Task
@@ -329,7 +340,7 @@ argument_list|>
 name|taskToAliases
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Task
 argument_list|<

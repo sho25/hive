@@ -333,7 +333,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -345,7 +345,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -393,7 +393,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -405,7 +405,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -453,7 +453,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -465,7 +465,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -513,7 +513,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -525,7 +525,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -573,7 +573,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -585,7 +585,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -633,7 +633,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -645,7 +645,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -698,7 +698,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -710,7 +710,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -763,7 +763,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -775,7 +775,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -836,7 +836,7 @@ parameter_list|)
 block|{
 annotation|@
 name|Override
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -848,7 +848,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -947,7 +947,7 @@ name|_type
 return|;
 block|}
 specifier|abstract
-name|Converter
+name|PrimitiveConverter
 name|getConverter
 parameter_list|(
 specifier|final
@@ -959,13 +959,13 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 function_decl|;
 specifier|public
 specifier|static
-name|Converter
+name|PrimitiveConverter
 name|getNewConverter
 parameter_list|(
 specifier|final
@@ -977,7 +977,7 @@ name|int
 name|index
 parameter_list|,
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|)
 block|{
@@ -1152,7 +1152,7 @@ name|type
 decl_stmt|;
 specifier|private
 specifier|final
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 decl_stmt|;
 specifier|private
@@ -1173,7 +1173,7 @@ parameter_list|(
 name|PrimitiveType
 name|type
 parameter_list|,
-name|HiveGroupConverter
+name|ConverterParent
 name|parent
 parameter_list|,
 name|int

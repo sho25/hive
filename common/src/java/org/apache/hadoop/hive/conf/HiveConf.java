@@ -389,6 +389,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|JobConf
@@ -2039,7 +2055,7 @@ name|HMSHANDLERATTEMPTS
 argument_list|(
 literal|"hive.hmshandler.retry.attempts"
 argument_list|,
-literal|1
+literal|10
 argument_list|,
 literal|"The number of times to retry a HMSHandler call if there were a connection error."
 argument_list|)
@@ -2048,7 +2064,7 @@ name|HMSHANDLERINTERVAL
 argument_list|(
 literal|"hive.hmshandler.retry.interval"
 argument_list|,
-literal|"1000ms"
+literal|"2000ms"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -3100,7 +3116,7 @@ name|HIVE_CBO_ENABLED
 argument_list|(
 literal|"hive.cbo.enable"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
@@ -3789,6 +3805,19 @@ literal|""
 argument_list|)
 block|,
 comment|// 4M
+name|PARQUET_MEMORY_POOL_RATIO
+argument_list|(
+literal|"parquet.memory.pool.ratio"
+argument_list|,
+literal|0.5f
+argument_list|,
+literal|"Maximum fraction of heap that can be used by Parquet file writers in one task.\n"
+operator|+
+literal|"It is for avoiding OutOfMemory error in tasks. Work with Parquet 1.6.0 and above.\n"
+operator|+
+literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
@@ -4548,6 +4577,15 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether to enable constant propagation optimizer"
+argument_list|)
+block|,
+name|HIVEIDENTITYPROJECTREMOVER
+argument_list|(
+literal|"hive.optimize.remove.identity.project"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Removes identity project from operator tree"
 argument_list|)
 block|,
 name|HIVEMETADATAONLYQUERIES
@@ -6244,6 +6282,15 @@ argument_list|,
 literal|"Separator used to construct names of tables and partitions. For example, dbname@tablename@partitionname"
 argument_list|)
 block|,
+name|HIVE_CAPTURE_TRANSFORM_ENTITY
+argument_list|(
+literal|"hive.entity.capture.transform"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Compiler to capture transform URI referred in the query"
+argument_list|)
+block|,
 name|HIVE_DISPLAY_PARTITION_COLUMNS_SEPARATELY
 argument_list|(
 literal|"hive.display.partition.cols.separately"
@@ -6499,6 +6546,42 @@ argument_list|,
 literal|"Maximum number of Thrift worker threads"
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_LOGIN_BEBACKOFF_SLOT_LENGTH
+argument_list|(
+literal|"hive.server2.thrift.exponential.backoff.slot.length"
+argument_list|,
+literal|"100ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Binary exponential backoff slot time for Thrift clients during login to HiveServer2,\n"
+operator|+
+literal|"for retries until hitting Thrift client timeout"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_LOGIN_TIMEOUT
+argument_list|(
+literal|"hive.server2.thrift.login.timeout"
+argument_list|,
+literal|"20s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for Thrift clients during login to HiveServer2"
+argument_list|)
+block|,
 name|HIVE_SERVER2_THRIFT_WORKER_KEEPALIVE_TIME
 argument_list|(
 literal|"hive.server2.thrift.worker.keepalive.time"
@@ -6709,7 +6792,13 @@ literal|"hive.server2.authentication.ldap.url"
 argument_list|,
 literal|null
 argument_list|,
-literal|"LDAP connection URL"
+literal|"LDAP connection URL(s),\n"
+operator|+
+literal|"this value could contain URLs to mutiple LDAP servers instances for HA,\n"
+operator|+
+literal|"each LDAP URL is separated by a SPACE character. URLs are used in the \n"
+operator|+
+literal|" order specified until a connection is successful."
 argument_list|)
 block|,
 name|HIVE_SERVER2_PLAIN_LDAP_BASEDN
@@ -6847,6 +6936,30 @@ operator|+
 literal|"for submitted jobs, so that map reduce resource usage can be tracked by user.\n"
 operator|+
 literal|"If set to false, all Hive jobs go to the 'hive' user's queue."
+argument_list|)
+block|,
+name|HIVE_SERVER2_BUILTIN_UDF_WHITELIST
+argument_list|(
+literal|"hive.server2.builtin.udf.whitelist"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list of builtin udf names allowed in queries.\n"
+operator|+
+literal|"An empty whitelist allows all builtin udfs to be executed. "
+operator|+
+literal|" The udf black list takes precedence over udf white list"
+argument_list|)
+block|,
+name|HIVE_SERVER2_BUILTIN_UDF_BLACKLIST
+argument_list|(
+literal|"hive.server2.builtin.udf.blacklist"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list of udfs names. These udfs will not be allowed in queries."
+operator|+
+literal|" The udf black list takes precedence over udf white list"
 argument_list|)
 block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
@@ -8157,6 +8270,15 @@ name|isType
 argument_list|(
 name|value
 argument_list|)
+return|;
+block|}
+specifier|public
+name|Validator
+name|getValidator
+parameter_list|()
+block|{
+return|return
+name|validator
 return|;
 block|}
 specifier|public
@@ -10519,32 +10641,6 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|this
-operator|.
-name|get
-argument_list|(
-literal|"hive.metastore.local"
-argument_list|,
-literal|null
-argument_list|)
-operator|!=
-literal|null
-condition|)
-block|{
-name|l4j
-operator|.
-name|warn
-argument_list|(
-literal|"DEPRECATED: Configuration property hive.metastore.local no longer has any "
-operator|+
-literal|"effect. Make sure to provide a valid value for hive.metastore.uris if you are "
-operator|+
-literal|"connecting to a remote metastore."
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
 operator|(
 name|this
 operator|.
@@ -11781,15 +11877,10 @@ block|{
 name|UserGroupInformation
 name|ugi
 init|=
-name|ShimLoader
+name|Utils
 operator|.
-name|getHadoopShims
+name|getUGI
 argument_list|()
-operator|.
-name|getUGIForConf
-argument_list|(
-name|this
-argument_list|)
 decl_stmt|;
 return|return
 name|ugi

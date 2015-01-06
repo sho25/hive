@@ -785,6 +785,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -1173,6 +1189,7 @@ name|NO_CURRENT_TXN
 decl_stmt|;
 comment|/**    * Whether we are in auto-commit state or not.  Currently we are always in auto-commit,    * so there are not setters for this yet.    */
 specifier|private
+specifier|final
 name|boolean
 name|txnAutoCommit
 init|=
@@ -1424,10 +1441,11 @@ operator|new
 name|LineageState
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|overriddenConfigurations
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1878,17 +1896,10 @@ expr_stmt|;
 name|UserGroupInformation
 name|sessionUGI
 init|=
-name|ShimLoader
+name|Utils
 operator|.
-name|getHadoopShims
+name|getUGI
 argument_list|()
-operator|.
-name|getUGIForConf
-argument_list|(
-name|startSs
-operator|.
-name|conf
-argument_list|)
 decl_stmt|;
 name|FileSystem
 operator|.
@@ -5760,10 +5771,11 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|overriddenConfigurations
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

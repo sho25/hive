@@ -143,7 +143,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|ArgumentCompletor
+name|console
+operator|.
+name|completer
+operator|.
+name|ArgumentCompleter
 import|;
 end_import
 
@@ -151,7 +155,11 @@ begin_import
 import|import
 name|jline
 operator|.
-name|Completor
+name|console
+operator|.
+name|completer
+operator|.
+name|Completer
 import|;
 end_import
 
@@ -226,8 +234,8 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|Completor
-name|sqlCompletor
+name|Completer
+name|sqlCompleter
 init|=
 literal|null
 decl_stmt|;
@@ -337,22 +345,14 @@ operator|.
 name|getExtraNameCharacters
 argument_list|()
 decl_stmt|;
-comment|// setup the completor for the database
-name|sqlCompletor
+comment|// setup the completer for the database
+name|sqlCompleter
 operator|=
 operator|new
-name|ArgumentCompletor
+name|ArgumentCompleter
 argument_list|(
 operator|new
-name|SQLCompletor
-argument_list|(
-name|beeLine
-argument_list|,
-name|skipmeta
-argument_list|)
-argument_list|,
-operator|new
-name|ArgumentCompletor
+name|ArgumentCompleter
 operator|.
 name|AbstractArgumentDelimiter
 argument_list|()
@@ -367,8 +367,8 @@ specifier|public
 name|boolean
 name|isDelimiterChar
 parameter_list|(
-name|String
-name|buf
+name|CharSequence
+name|buffer
 parameter_list|,
 name|int
 name|pos
@@ -377,7 +377,7 @@ block|{
 name|char
 name|c
 init|=
-name|buf
+name|buffer
 operator|.
 name|charAt
 argument_list|(
@@ -425,14 +425,27 @@ literal|1
 return|;
 block|}
 block|}
+argument_list|,
+operator|new
+name|SQLCompleter
+argument_list|(
+name|SQLCompleter
+operator|.
+name|getSQLCompleters
+argument_list|(
+name|beeLine
+argument_list|,
+name|skipmeta
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// not all argument elements need to hold true
 operator|(
 operator|(
-name|ArgumentCompletor
+name|ArgumentCompleter
 operator|)
-name|sqlCompletor
+name|sqlCompleter
 operator|)
 operator|.
 name|setStrict
@@ -1087,12 +1100,12 @@ return|return
 name|url
 return|;
 block|}
-name|Completor
-name|getSQLCompletor
+name|Completer
+name|getSQLCompleter
 parameter_list|()
 block|{
 return|return
-name|sqlCompletor
+name|sqlCompleter
 return|;
 block|}
 class|class

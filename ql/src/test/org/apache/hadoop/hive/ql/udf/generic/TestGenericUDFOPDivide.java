@@ -384,7 +384,7 @@ specifier|public
 class|class
 name|TestGenericUDFOPDivide
 extends|extends
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 block|{
 annotation|@
 name|Test

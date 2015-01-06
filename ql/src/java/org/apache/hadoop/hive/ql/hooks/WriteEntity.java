@@ -425,9 +425,6 @@ block|{
 name|super
 argument_list|(
 name|d
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|islocal
 argument_list|,
@@ -614,6 +611,12 @@ name|ADDCOLS
 case|:
 case|case
 name|RENAME
+case|:
+case|case
+name|TRUNCATE
+case|:
+case|case
+name|MERGEFILES
 case|:
 return|return
 name|WriteType

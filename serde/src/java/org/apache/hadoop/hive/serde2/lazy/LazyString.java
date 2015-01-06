@@ -188,6 +188,10 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+name|isNull
+operator|=
+literal|false
+expr_stmt|;
 block|}
 block|}
 end_class

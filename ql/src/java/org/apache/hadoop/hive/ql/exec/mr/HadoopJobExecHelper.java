@@ -1400,6 +1400,20 @@ init|=
 name|getClientStatPublishers
 argument_list|()
 decl_stmt|;
+specifier|final
+name|boolean
+name|localMode
+init|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|isLocalMode
+argument_list|(
+name|job
+argument_list|)
+decl_stmt|;
 name|Heartbeater
 name|heartbeater
 init|=
@@ -1470,6 +1484,12 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|localMode
+condition|)
+block|{
 if|if
 condition|(
 operator|!
@@ -1721,6 +1741,7 @@ name|rj
 operator|=
 name|newRj
 expr_stmt|;
+block|}
 block|}
 comment|// If fatal errors happen we should kill the job immediately rather than
 comment|// let the job retry several times, which eventually lead to failure.

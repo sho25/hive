@@ -428,7 +428,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -445,7 +445,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -488,7 +488,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -824,7 +824,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -921,7 +921,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
@@ -1036,7 +1036,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge20S
+name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.

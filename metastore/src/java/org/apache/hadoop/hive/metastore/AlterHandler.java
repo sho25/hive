@@ -160,7 +160,7 @@ name|AlterHandler
 extends|extends
 name|Configurable
 block|{
-comment|/**    * handles alter table    *    * @param msdb    *          object to get metadata    * @param wh    *          TODO    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other erro    */
+comment|/**    * handles alter table    *    * @param msdb    *          object to get metadata    * @param wh    *          TODO    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other error    */
 specifier|public
 specifier|abstract
 name|void
@@ -180,6 +180,35 @@ name|name
 parameter_list|,
 name|Table
 name|newTable
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+function_decl|;
+comment|/**    * handles alter table, the changes could be cascaded to partitions if applicable    *    * @param msdb    *          object to get metadata    * @param wh    *          Hive Warehouse where table data is stored    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @param cascade    *          if the changes will be cascaded to its partitions if applicable    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other error    */
+specifier|public
+specifier|abstract
+name|void
+name|alterTable
+parameter_list|(
+name|RawStore
+name|msdb
+parameter_list|,
+name|Warehouse
+name|wh
+parameter_list|,
+name|String
+name|dbname
+parameter_list|,
+name|String
+name|name
+parameter_list|,
+name|Table
+name|newTable
+parameter_list|,
+name|boolean
+name|cascade
 parameter_list|)
 throws|throws
 name|InvalidOperationException

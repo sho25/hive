@@ -65,7 +65,7 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|ShimLoader
+name|Utils
 import|;
 end_import
 
@@ -259,10 +259,7 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|UserGroupInformation
 operator|.
 name|isLoginKeytabBased
 argument_list|()
@@ -271,15 +268,10 @@ expr_stmt|;
 name|UserGroupInformation
 name|ugi
 init|=
-name|ShimLoader
+name|Utils
 operator|.
-name|getHadoopShims
+name|getUGI
 argument_list|()
-operator|.
-name|getUGIForConf
-argument_list|(
-name|hiveConf
-argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(

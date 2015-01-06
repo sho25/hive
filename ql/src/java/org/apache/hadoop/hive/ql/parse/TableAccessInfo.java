@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -118,10 +118,11 @@ specifier|public
 name|TableAccessInfo
 parameter_list|()
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|operatorToTableAccessMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<

@@ -167,7 +167,7 @@ condition|(
 name|whiteListParamsStr
 operator|==
 literal|null
-operator|&&
+operator|||
 name|whiteListParamsStr
 operator|.
 name|trim

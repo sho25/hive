@@ -125,24 +125,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|AppMasterEventOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|ColumnInfo
 import|;
 end_import
@@ -3292,12 +3274,12 @@ init|=
 literal|1L
 decl_stmt|;
 name|boolean
-name|mapSide
+name|interReduction
 init|=
 literal|false
 decl_stmt|;
 name|boolean
-name|mapSideHashAgg
+name|hashAgg
 init|=
 literal|false
 decl_stmt|;
@@ -3339,45 +3321,75 @@ comment|// There are different cases for Group By depending on map/reduce side, 
 comment|// grouping sets and column stats. If we don't have column stats, we just assume hash
 comment|// aggregation is disabled. Following are the possible cases and rule for cardinality
 comment|// estimation
-comment|// MAP SIDE:
+comment|// INTERMEDIATE REDUCTION:
 comment|// Case 1: NO column stats, NO hash aggregation, NO grouping sets — numRows
 comment|// Case 2: NO column stats, NO hash aggregation, grouping sets — numRows * sizeOfGroupingSet
 comment|// Case 3: column stats, hash aggregation, NO grouping sets — Min(numRows / 2, ndvProduct * parallelism)
 comment|// Case 4: column stats, hash aggregation, grouping sets — Min((numRows * sizeOfGroupingSet) / 2, ndvProduct * parallelism * sizeOfGroupingSet)
 comment|// Case 5: column stats, NO hash aggregation, NO grouping sets — numRows
 comment|// Case 6: column stats, NO hash aggregation, grouping sets — numRows * sizeOfGroupingSet
-comment|// REDUCE SIDE:
+comment|// FINAL REDUCTION:
 comment|// Case 7: NO column stats — numRows / 2
 comment|// Case 8: column stats, grouping sets — Min(numRows, ndvProduct * sizeOfGroupingSet)
 comment|// Case 9: column stats, NO grouping sets - Min(numRows, ndvProduct)
 if|if
 condition|(
+operator|!
 name|gop
 operator|.
-name|getChildOperators
+name|getConf
 argument_list|()
 operator|.
-name|get
+name|getMode
+argument_list|()
+operator|.
+name|equals
 argument_list|(
-literal|0
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|MERGEPARTIAL
 argument_list|)
-operator|instanceof
-name|ReduceSinkOperator
-operator|||
+operator|&&
+operator|!
 name|gop
 operator|.
-name|getChildOperators
+name|getConf
 argument_list|()
 operator|.
-name|get
+name|getMode
+argument_list|()
+operator|.
+name|equals
 argument_list|(
-literal|0
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|COMPLETE
 argument_list|)
-operator|instanceof
-name|AppMasterEventOperator
+operator|&&
+operator|!
+name|gop
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getMode
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|FINAL
+argument_list|)
 condition|)
 block|{
-name|mapSide
+name|interReduction
 operator|=
 literal|true
 expr_stmt|;
@@ -3514,7 +3526,7 @@ argument_list|)
 condition|)
 block|{
 comment|// check if map side aggregation is possible or not based on column stats
-name|mapSideHashAgg
+name|hashAgg
 operator|=
 name|checkMapSideAggregation
 argument_list|(
@@ -3541,9 +3553,9 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|" mapSideHashAgg: "
+literal|" hashAgg: "
 operator|+
-name|mapSideHashAgg
+name|hashAgg
 argument_list|)
 expr_stmt|;
 block|}
@@ -3713,13 +3725,12 @@ block|}
 block|}
 if|if
 condition|(
-name|mapSide
+name|interReduction
 condition|)
 block|{
-comment|// MAP SIDE
 if|if
 condition|(
-name|mapSideHashAgg
+name|hashAgg
 condition|)
 block|{
 if|if
@@ -3910,7 +3921,6 @@ block|}
 block|}
 else|else
 block|{
-comment|// REDUCE SIDE
 comment|// in reduce side GBY, we don't know if the grouping set was present or not. so get it
 comment|// from map side GBY
 name|GroupByOperator
@@ -4087,10 +4097,9 @@ decl_stmt|;
 comment|// if we don't have column stats, we just assume hash aggregation is disabled
 if|if
 condition|(
-name|mapSide
+name|interReduction
 condition|)
 block|{
-comment|// MAP SIDE
 if|if
 condition|(
 name|containsGroupingSet
@@ -4164,7 +4173,6 @@ block|}
 block|}
 else|else
 block|{
-comment|// REDUCE SIDE
 comment|// Case 7: NO column stats
 name|cardinality
 operator|=

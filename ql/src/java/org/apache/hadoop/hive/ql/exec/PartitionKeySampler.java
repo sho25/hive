@@ -965,7 +965,7 @@ block|}
 comment|// random sampling
 specifier|public
 specifier|static
-name|FetchSampler
+name|FetchOperator
 name|createSampler
 parameter_list|(
 name|FetchWork
@@ -983,6 +983,8 @@ name|?
 argument_list|>
 name|operator
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|sampleNum
@@ -1031,11 +1033,11 @@ literal|"Percentile value must be within the range of 0 to 1."
 argument_list|)
 throw|;
 block|}
-name|FetchSampler
+name|RandomSampler
 name|sampler
 init|=
 operator|new
-name|FetchSampler
+name|RandomSampler
 argument_list|(
 name|work
 argument_list|,
@@ -1065,7 +1067,7 @@ block|}
 specifier|private
 specifier|static
 class|class
-name|FetchSampler
+name|RandomSampler
 extends|extends
 name|FetchOperator
 block|{
@@ -1095,7 +1097,7 @@ name|int
 name|sampled
 decl_stmt|;
 specifier|public
-name|FetchSampler
+name|RandomSampler
 parameter_list|(
 name|FetchWork
 name|work
@@ -1109,6 +1111,8 @@ name|?
 argument_list|>
 name|operator
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|super
 argument_list|(
@@ -1187,9 +1191,7 @@ return|return
 literal|true
 return|;
 block|}
-name|operator
-operator|.
-name|flush
+name|flushRow
 argument_list|()
 expr_stmt|;
 return|return

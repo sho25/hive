@@ -305,6 +305,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Converts current object to a {@link TStatus} object    * @return	a {@link TStatus} object    */
 specifier|public
 name|TStatus
 name|toTStatus
@@ -360,6 +361,7 @@ return|return
 name|tStatus
 return|;
 block|}
+comment|/**    * Converts the specified {@link Exception} object into a {@link TStatus} object    * @param e	a {@link Exception} object    * @return	a {@link TStatus} object    */
 specifier|public
 specifier|static
 name|TStatus
@@ -423,6 +425,7 @@ return|return
 name|tStatus
 return|;
 block|}
+comment|/**    * Converts a {@link Throwable} object into a flattened list of texts including its stack trace    * and the stack traces of the nested causes.    * @param ex  a {@link Throwable} object    * @return    a flattened list of texts including the {@link Throwable} object's stack trace    *            and the stack traces of the nested causes.    */
 specifier|public
 specifier|static
 name|List
@@ -444,6 +447,7 @@ literal|null
 argument_list|)
 return|;
 block|}
+specifier|private
 specifier|static
 name|List
 argument_list|<
@@ -571,6 +575,7 @@ return|return
 name|detail
 return|;
 block|}
+specifier|private
 specifier|static
 name|List
 argument_list|<
@@ -791,6 +796,7 @@ return|return
 name|details
 return|;
 block|}
+comment|/**    * Converts a flattened list of texts including the stack trace and the stack    * traces of the nested causes into a {@link Throwable} object.    * @param details a flattened list of texts including the stack trace and the stack    *                traces of the nested causes    * @return        a {@link Throwable} object    */
 specifier|public
 specifier|static
 name|Throwable
@@ -814,6 +820,7 @@ literal|0
 argument_list|)
 return|;
 block|}
+specifier|private
 specifier|static
 name|Throwable
 name|toStackTrace

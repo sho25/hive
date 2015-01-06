@@ -6203,6 +6203,9 @@ name|HiveMetaStore
 operator|.
 name|PARTITION_DATE_FORMAT
 operator|.
+name|get
+argument_list|()
+operator|.
 name|parse
 argument_list|(
 operator|(

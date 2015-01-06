@@ -23,6 +23,18 @@ end_package
 
 begin_import
 import|import
+name|parquet
+operator|.
+name|filter2
+operator|.
+name|predicate
+operator|.
+name|FilterPredicate
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -431,6 +443,12 @@ comment|/**    * Serialize the SARG as a kyro object and return the base64 strin
 specifier|public
 name|String
 name|toKryo
+parameter_list|()
+function_decl|;
+comment|/**    * Translate the search argument to the filter predicate parquet used    * @return    */
+specifier|public
+name|FilterPredicate
+name|toFilterPredicate
 parameter_list|()
 function_decl|;
 comment|/**    * A builder object for contexts outside of Hive where it isn't easy to    * get a ExprNodeDesc. The user must call startOr, startAnd, or startNot    * before adding any leaves.    */
