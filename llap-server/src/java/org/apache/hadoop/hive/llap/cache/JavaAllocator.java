@@ -13,11 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
-name|io
-operator|.
-name|orc
+name|cache
 package|;
 end_package
 
@@ -25,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|nio
 operator|.
-name|IOException
+name|ByteBuffer
 import|;
 end_import
 
@@ -41,73 +39,64 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
-name|exec
+name|io
 operator|.
-name|vector
+name|api
 operator|.
-name|LongColumnVector
+name|cache
+operator|.
+name|Allocator
 import|;
 end_import
 
-begin_comment
-comment|/**  * Interface for reading integers.  */
-end_comment
-
-begin_interface
-interface|interface
-name|IntegerReader
+begin_class
+specifier|public
+class|class
+name|JavaAllocator
+implements|implements
+name|Allocator
 block|{
-comment|/**    * Seek to the position provided by index.    * @param index    * @throws IOException    */
-name|void
-name|seek
+annotation|@
+name|Override
+specifier|public
+name|LlapBuffer
+name|allocateMemory
 parameter_list|(
-name|PositionProvider
-name|index
+name|int
+name|size
 parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Skip number of specified rows.    * @param numValues    * @throws IOException    */
-name|void
-name|skip
-parameter_list|(
-name|long
-name|numValues
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Check if there are any more values left.    * @return    * @throws IOException    */
-name|boolean
-name|hasNext
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Return the next available value.    * @return    * @throws IOException    */
-name|long
-name|next
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
-name|void
-name|nextVector
-parameter_list|(
-name|LongColumnVector
-name|previous
-parameter_list|,
-name|long
-name|previousLen
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
+block|{
+return|return
+operator|new
+name|LlapBuffer
+argument_list|(
+name|ByteBuffer
+operator|.
+name|allocate
+argument_list|(
+name|size
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|size
+argument_list|)
+return|;
 block|}
-end_interface
+annotation|@
+name|Override
+specifier|public
+name|void
+name|deallocate
+parameter_list|(
+name|LlapBuffer
+name|columnData
+parameter_list|)
+block|{   }
+block|}
+end_class
 
 end_unit
 

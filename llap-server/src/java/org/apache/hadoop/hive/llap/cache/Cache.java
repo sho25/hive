@@ -13,23 +13,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
-name|io
-operator|.
-name|orc
+name|cache
 package|;
 end_package
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
 
 begin_import
 import|import
@@ -41,70 +29,50 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
-name|exec
+name|io
 operator|.
-name|vector
+name|api
 operator|.
-name|LongColumnVector
+name|cache
+operator|.
+name|Allocator
+operator|.
+name|LlapBuffer
 import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for reading integers.  */
+comment|/** Dummy interface for now, might be different. */
 end_comment
 
 begin_interface
+specifier|public
 interface|interface
-name|IntegerReader
+name|Cache
+parameter_list|<
+name|CacheKey
+parameter_list|>
 block|{
-comment|/**    * Seek to the position provided by index.    * @param index    * @throws IOException    */
-name|void
-name|seek
+specifier|public
+name|LlapBuffer
+name|cacheOrGet
 parameter_list|(
-name|PositionProvider
-name|index
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Skip number of specified rows.    * @param numValues    * @throws IOException    */
-name|void
-name|skip
-parameter_list|(
-name|long
-name|numValues
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Check if there are any more values left.    * @return    * @throws IOException    */
-name|boolean
-name|hasNext
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Return the next available value.    * @return    * @throws IOException    */
-name|long
-name|next
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
-name|void
-name|nextVector
-parameter_list|(
-name|LongColumnVector
-name|previous
+name|CacheKey
+name|key
 parameter_list|,
-name|long
-name|previousLen
+name|LlapBuffer
+name|value
 parameter_list|)
-throws|throws
-name|IOException
+function_decl|;
+specifier|public
+name|LlapBuffer
+name|get
+parameter_list|(
+name|CacheKey
+name|key
+parameter_list|)
 function_decl|;
 block|}
 end_interface
