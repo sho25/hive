@@ -97,6 +97,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -1973,6 +1983,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 comment|// create task to aliases mapping and alias to input file mapping for resolver
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|HashMap
 argument_list|<
 name|Task
@@ -1990,7 +2001,7 @@ argument_list|>
 name|taskToAliases
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Task
 argument_list|<

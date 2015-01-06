@@ -1989,8 +1989,9 @@ name|GenMRProcContext
 argument_list|(
 name|conf
 argument_list|,
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Operator
 argument_list|<

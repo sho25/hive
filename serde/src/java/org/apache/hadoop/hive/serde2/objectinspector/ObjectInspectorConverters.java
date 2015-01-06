@@ -979,7 +979,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Utility function to convert from one object inspector type to another.    * The output object inspector type should have all fields as settableOI type.    * The above condition can be violated only if equalsCheck is true and inputOI is    * equal to outputOI.    * @param inputOI : input object inspector    * @param outputOI : output object inspector    * @param oiSettableProperties : The object inspector to isSettable mapping used to cache    *                               intermediate results.    * @param equalsCheck : Do we need to check if the inputOI and outputOI are the same?    *                      true : If they are the same, we return the object inspector directly.    *                      false : Do not perform an equality check on inputOI and outputOI    * @return : The output object inspector containing all settable fields. The return value    *           can contain non-settable fields only if inputOI equals outputOI and equalsCheck is    *           true.    */
-specifier|private
+specifier|public
 specifier|static
 name|ObjectInspector
 name|getConvertedOI

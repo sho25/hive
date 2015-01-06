@@ -55,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -286,8 +286,7 @@ operator|.
 name|getTableToColumnAccessMap
 argument_list|()
 decl_stmt|;
-comment|// We need a new map to ensure output is always produced in the same order.
-comment|// This makes tests that use this hook deterministic.
+comment|// Must be deterministic order map for consistent test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -297,7 +296,7 @@ argument_list|>
 name|outputOrderedMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

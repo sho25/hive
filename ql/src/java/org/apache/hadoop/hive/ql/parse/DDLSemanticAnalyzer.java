@@ -12527,6 +12527,7 @@ name|ASTNode
 name|prop
 parameter_list|)
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|HashMap
 argument_list|<
 name|String
@@ -12536,7 +12537,7 @@ argument_list|>
 name|mapProp
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

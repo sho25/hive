@@ -5190,6 +5190,8 @@ argument_list|(
 name|hdfsDirPathStr
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|FileStatus
 name|fstatus
 init|=
@@ -5226,6 +5228,22 @@ argument_list|()
 argument_list|)
 argument_list|)
 throw|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
+block|{
+comment|// directory does not exist, create it
+name|fs
+operator|.
+name|mkdirs
+argument_list|(
+name|hdfsDirPath
+argument_list|)
+expr_stmt|;
 block|}
 name|Path
 name|retPath

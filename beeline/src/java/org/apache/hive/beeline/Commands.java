@@ -4014,6 +4014,13 @@ operator|.
 name|interrupt
 argument_list|()
 expr_stmt|;
+name|logThread
+operator|.
+name|join
+argument_list|(
+name|DEFAULT_QUERY_PROGRESS_THREAD_TIMEOUT
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 name|beeLine
@@ -4353,6 +4360,11 @@ operator|.
 name|debug
 argument_list|(
 literal|"Getting log thread is interrupted, since query is done!"
+argument_list|)
+expr_stmt|;
+name|showRemainingLogsIfAny
+argument_list|(
+name|hiveStatement
 argument_list|)
 expr_stmt|;
 return|return;

@@ -1489,10 +1489,11 @@ operator|new
 name|LineageState
 argument_list|()
 expr_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|overriddenConfigurations
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -5818,10 +5819,11 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|overriddenConfigurations
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
