@@ -62,8 +62,10 @@ specifier|public
 class|class
 name|IOContext
 block|{
+comment|/**    * Spark uses this thread local    */
 specifier|private
 specifier|static
+specifier|final
 name|ThreadLocal
 argument_list|<
 name|IOContext
@@ -93,8 +95,10 @@ return|;
 block|}
 block|}
 decl_stmt|;
+comment|/**    * Tez and MR use this map but are single threaded per JVM thus no synchronization is required.    */
 specifier|private
 specifier|static
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -114,21 +118,6 @@ argument_list|()
 decl_stmt|;
 specifier|public
 specifier|static
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|IOContext
-argument_list|>
-name|getMap
-parameter_list|()
-block|{
-return|return
-name|inputNameIOContextMap
-return|;
-block|}
-specifier|public
-specifier|static
 name|IOContext
 name|get
 parameter_list|(
@@ -138,14 +127,13 @@ parameter_list|)
 block|{
 if|if
 condition|(
+operator|!
 name|inputNameIOContextMap
 operator|.
 name|containsKey
 argument_list|(
 name|inputName
 argument_list|)
-operator|==
-literal|false
 condition|)
 block|{
 name|IOContext
@@ -193,53 +181,63 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+specifier|private
 name|long
 name|currentBlockStart
 decl_stmt|;
+specifier|private
 name|long
 name|nextBlockStart
 decl_stmt|;
+specifier|private
 name|long
 name|currentRow
 decl_stmt|;
+specifier|private
 name|boolean
 name|isBlockPointer
 decl_stmt|;
+specifier|private
 name|boolean
 name|ioExceptions
 decl_stmt|;
 comment|// Are we using the fact the input is sorted
+specifier|private
 name|boolean
 name|useSorted
 init|=
 literal|false
 decl_stmt|;
 comment|// Are we currently performing a binary search
+specifier|private
 name|boolean
 name|isBinarySearching
 init|=
 literal|false
 decl_stmt|;
 comment|// Do we want to end the binary search
+specifier|private
 name|boolean
 name|endBinarySearch
 init|=
 literal|false
 decl_stmt|;
 comment|// The result of the comparison of the last row processed
+specifier|private
 name|Comparison
 name|comparison
 init|=
 literal|null
 decl_stmt|;
 comment|// The class name of the generic UDF being used by the filter
+specifier|private
 name|String
 name|genericUDFClassName
 init|=
 literal|null
 decl_stmt|;
 comment|/**    * supports {@link org.apache.hadoop.hive.ql.metadata.VirtualColumn#ROWID}    */
-specifier|public
+specifier|private
 name|RecordIdentifier
 name|ri
 decl_stmt|;
@@ -256,6 +254,7 @@ name|EQUAL
 block|,
 name|UNKNOWN
 block|}
+specifier|private
 name|Path
 name|inputPath
 decl_stmt|;
@@ -474,7 +473,7 @@ return|;
 block|}
 specifier|public
 name|void
-name|setIsBinarySearching
+name|setBinarySearching
 parameter_list|(
 name|boolean
 name|isBinarySearching
@@ -638,6 +637,32 @@ operator|.
 name|genericUDFClassName
 operator|=
 name|genericUDFClassName
+expr_stmt|;
+block|}
+specifier|public
+name|RecordIdentifier
+name|getRecordIdentifier
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|ri
+return|;
+block|}
+specifier|public
+name|void
+name|setRecordIdentifier
+parameter_list|(
+name|RecordIdentifier
+name|ri
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ri
+operator|=
+name|ri
 expr_stmt|;
 block|}
 comment|/**    * The thread local IOContext is static, we may need to restart the search if, for instance,    * multiple files are being searched as part of a CombinedHiveRecordReader    */
