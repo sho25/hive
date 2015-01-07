@@ -440,7 +440,6 @@ operator|=
 name|sparkCounters
 expr_stmt|;
 block|}
-comment|// TODO: expose job status?
 annotation|@
 name|SuppressWarnings
 argument_list|(

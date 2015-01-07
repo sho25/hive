@@ -129,7 +129,6 @@ name|SparkCounters
 name|getSparkCounters
 parameter_list|()
 function_decl|;
-comment|// TODO: expose job status?
 block|}
 end_interface
 

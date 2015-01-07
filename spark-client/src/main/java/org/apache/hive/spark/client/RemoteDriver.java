@@ -2384,7 +2384,6 @@ name|SparkListenerJobStart
 name|jobStart
 parameter_list|)
 block|{
-comment|// TODO: are stage IDs unique? Otherwise this won't work.
 synchronized|synchronized
 init|(
 name|stageToJobId
