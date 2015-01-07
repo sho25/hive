@@ -2452,6 +2452,23 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|METASTORE_EVENT_DB_LISTENER_TTL
+argument_list|(
+literal|"hive.metastore.event.db.listener.timetolive"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"time after which events will be removed from the database listener queue"
+argument_list|)
+block|,
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
 argument_list|(
 literal|"hive.metastore.authorization.storage.checks"
