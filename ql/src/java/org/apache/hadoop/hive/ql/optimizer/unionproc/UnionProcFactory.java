@@ -1464,6 +1464,38 @@ argument_list|(
 name|pos
 argument_list|)
 decl_stmt|;
+comment|// (1) Because we have operator.supportUnionRemoveOptimization() for
+comment|// true only in SEL and FIL operators,
+comment|// this rule will actually only match UNION%(SEL%|FIL%)*FS%
+comment|// (2) The assumption here is that, if
+comment|// operator.getChildOperators().size()> 1, we are going to have
+comment|// multiple FS operators, i.e., multiple inserts.
+comment|// Current implementation does not support this. More details, please
+comment|// see HIVE-9217.
+if|if
+condition|(
+name|operator
+operator|.
+name|getChildOperators
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|operator
+operator|.
+name|getChildOperators
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|1
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Break if it encountered a union
 if|if
 condition|(
@@ -1479,24 +1511,6 @@ name|UnionOperator
 operator|)
 name|operator
 expr_stmt|;
-comment|// No need for this optimization in case of multi-table inserts
-if|if
-condition|(
-name|union
-operator|.
-name|getChildOperators
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|1
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
 break|break;
 block|}
 if|if
