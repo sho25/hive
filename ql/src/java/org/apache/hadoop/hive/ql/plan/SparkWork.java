@@ -176,7 +176,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class encapsulates all the work objects that can be executed  * in a single Spark job. Currently it's basically a tree with MapWork at the  * roots and and ReduceWork (or UnionWork) at all other nodes.  */
+comment|/**  * This class encapsulates all the work objects that can be executed  * in a single Spark job. Currently it's basically a tree with MapWork at the  * roots and and ReduceWork at all other nodes.  */
 end_comment
 
 begin_class
@@ -1907,7 +1907,7 @@ return|return
 name|result
 return|;
 block|}
-comment|// get all reduce works in this spark work in sorted order
+comment|/**    * @return all reduce works of this spark work, in sorted order.    */
 specifier|public
 name|List
 argument_list|<
