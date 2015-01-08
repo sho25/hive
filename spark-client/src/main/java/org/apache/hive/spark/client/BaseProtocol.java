@@ -29,20 +29,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Throwables
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -90,6 +76,20 @@ operator|.
 name|counter
 operator|.
 name|SparkCounters
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Throwables
 import|;
 end_import
 
@@ -432,7 +432,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Inform the client that a new spark job has been submitted for the client job    */
+comment|/**    * Inform the client that a new spark job has been submitted for the client job.    */
 specifier|protected
 specifier|static
 class|class

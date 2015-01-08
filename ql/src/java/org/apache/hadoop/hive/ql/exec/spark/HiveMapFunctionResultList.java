@@ -51,20 +51,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Reporter
-import|;
-end_import
-
-begin_import
-import|import
 name|scala
 operator|.
 name|Tuple2
@@ -111,7 +97,7 @@ specifier|final
 name|SparkRecordHandler
 name|recordHandler
 decl_stmt|;
-comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
+comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param conf Hive configuration.    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
 specifier|public
 name|HiveMapFunctionResultList
 parameter_list|(

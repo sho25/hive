@@ -158,7 +158,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Converts a join to a more optimized join for the Spark path.  Delegates to a more specialized join processor.  */
+comment|/**  * Converts a join to a more optimized join for the Spark path.  * Delegates to a more specialized join processor.  */
 end_comment
 
 begin_class

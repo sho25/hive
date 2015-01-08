@@ -1718,7 +1718,6 @@ block|}
 block|}
 block|}
 block|}
-comment|// TODO: enable non-staged mapjoin
 block|}
 block|}
 comment|// Create a new SparkTask for the specified SparkWork, recursively compute

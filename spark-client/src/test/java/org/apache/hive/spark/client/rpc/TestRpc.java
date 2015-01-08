@@ -253,7 +253,31 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
 import|;
 end_import
 
@@ -1437,7 +1461,6 @@ block|{
 comment|// No op. Shouldn't actually be called, if it is, the test will fail.
 block|}
 block|}
-empty_stmt|;
 block|}
 end_class
 

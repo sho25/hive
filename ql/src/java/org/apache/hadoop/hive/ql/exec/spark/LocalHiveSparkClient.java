@@ -476,8 +476,8 @@ literal|"tmpjars"
 decl_stmt|;
 specifier|protected
 specifier|static
-specifier|transient
 specifier|final
+specifier|transient
 name|Log
 name|LOG
 init|=
@@ -914,7 +914,7 @@ name|sparkJobStatus
 argument_list|)
 return|;
 block|}
-comment|/**    * At this point single SparkContext is used by more than one thread, so make this    * method synchronized.    *    * TODO: This method can't remove a jar/resource from SparkContext. Looks like this is an    * issue we have to live with until multiple SparkContexts are supported in a single JVM.    */
+comment|/**    * At this point single SparkContext is used by more than one thread, so make this    * method synchronized.    *    * This method can't remove a jar/resource from SparkContext. Looks like this is an    * issue we have to live with until multiple SparkContexts are supported in a single JVM.    */
 specifier|private
 specifier|synchronized
 name|void

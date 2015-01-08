@@ -39,7 +39,7 @@ decl_stmt|;
 specifier|public
 name|SparkJobRef
 parameter_list|()
-block|{}
+block|{ }
 specifier|public
 name|SparkJobRef
 parameter_list|(

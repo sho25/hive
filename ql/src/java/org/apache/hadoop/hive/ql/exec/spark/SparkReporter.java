@@ -267,8 +267,6 @@ specifier|public
 name|InputSplit
 name|getInputSplit
 parameter_list|()
-throws|throws
-name|UnsupportedOperationException
 block|{
 throw|throw
 operator|new

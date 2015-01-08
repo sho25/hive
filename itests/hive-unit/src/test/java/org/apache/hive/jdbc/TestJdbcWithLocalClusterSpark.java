@@ -752,7 +752,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Verify that the connection to HS2 with MiniMr is successful    * @throws Exception    */
+comment|/**    * Verify that the connection to HS2 with MiniMr is successful.    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -771,7 +771,7 @@ name|TEST_TAG_VALUE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Run nonMr query    * @throws Exception    */
+comment|/**    * Run nonMr query.    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -808,7 +808,7 @@ name|resultVal
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Run nonMr query    * @throws Exception    */
+comment|/**    * Run nonMr query.    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -1356,11 +1356,6 @@ literal|false
 decl_stmt|;
 try|try
 block|{
-name|ResultSet
-name|res
-decl_stmt|;
-name|res
-operator|=
 name|stmt2
 operator|.
 name|executeQuery
@@ -1471,7 +1466,7 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Verify if the given property contains the expected value    * @param propertyName    * @param expectedValue    * @throws Exception    */
+comment|/**    * Verify if the given property contains the expected value.    * @param propertyName    * @param expectedValue    * @throws Exception    */
 specifier|private
 name|void
 name|verifyProperty
@@ -1514,8 +1509,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|String
-name|results
 index|[]
+name|results
 init|=
 name|res
 operator|.

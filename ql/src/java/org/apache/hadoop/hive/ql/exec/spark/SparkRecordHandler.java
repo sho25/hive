@@ -198,14 +198,14 @@ class|class
 name|SparkRecordHandler
 block|{
 specifier|protected
+specifier|static
 specifier|final
 name|String
 name|CLASS_NAME
 init|=
-name|this
+name|SparkRecordHandler
 operator|.
-name|getClass
-argument_list|()
+name|class
 operator|.
 name|getName
 argument_list|()
@@ -221,6 +221,7 @@ name|getPerfLogger
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|Log
 name|LOG
@@ -229,10 +230,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|this
+name|SparkRecordHandler
 operator|.
-name|getClass
-argument_list|()
+name|class
 argument_list|)
 decl_stmt|;
 comment|// used to log memory usage periodically
@@ -282,6 +282,11 @@ init|=
 literal|1
 decl_stmt|;
 specifier|public
+parameter_list|<
+name|K
+parameter_list|,
+name|V
+parameter_list|>
 name|void
 name|init
 parameter_list|(
@@ -289,11 +294,18 @@ name|JobConf
 name|job
 parameter_list|,
 name|OutputCollector
+argument_list|<
+name|K
+argument_list|,
+name|V
+argument_list|>
 name|output
 parameter_list|,
 name|Reporter
 name|reporter
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|jc
 operator|=
@@ -330,7 +342,6 @@ name|rp
 operator|=
 name|reporter
 expr_stmt|;
-comment|//    MapredContext.get().setReporter(reporter);
 name|LOG
 operator|.
 name|info
@@ -440,6 +451,9 @@ function_decl|;
 comment|/**    * Process row with key and value collection.    */
 specifier|public
 specifier|abstract
+parameter_list|<
+name|E
+parameter_list|>
 name|void
 name|processRow
 parameter_list|(
@@ -447,6 +461,9 @@ name|Object
 name|key
 parameter_list|,
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|)
 throws|throws
@@ -469,7 +486,7 @@ name|nextLogThreshold
 condition|)
 block|{
 name|long
-name|used_memory
+name|usedMemory
 init|=
 name|memoryMXBean
 operator|.
@@ -489,7 +506,7 @@ name|rowNumber
 operator|+
 literal|" rows: used memory = "
 operator|+
-name|used_memory
+name|usedMemory
 argument_list|)
 expr_stmt|;
 name|nextLogThreshold
@@ -513,14 +530,14 @@ name|boolean
 name|getDone
 parameter_list|()
 function_decl|;
-comment|/**    * Log information to be logged at the end    */
+comment|/**    * Log information to be logged at the end.    */
 specifier|protected
 name|void
 name|logCloseInfo
 parameter_list|()
 block|{
 name|long
-name|used_memory
+name|usedMemory
 init|=
 name|memoryMXBean
 operator|.
@@ -540,7 +557,7 @@ name|rowNumber
 operator|+
 literal|" rows: used memory = "
 operator|+
-name|used_memory
+name|usedMemory
 argument_list|)
 expr_stmt|;
 block|}

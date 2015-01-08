@@ -556,11 +556,17 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 specifier|public
 class|class
 name|SparkPlanGenerator
 block|{
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|CLASS_NAME
@@ -1114,6 +1120,9 @@ return|;
 block|}
 specifier|private
 name|Class
+argument_list|<
+name|?
+argument_list|>
 name|getInputFormat
 parameter_list|(
 name|JobConf
@@ -1240,6 +1249,11 @@ return|return
 name|inputFormatClass
 return|;
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|private
 name|MapInput
 name|generateMapInput
@@ -1534,6 +1548,13 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+block|{
+literal|"unchecked"
+block|}
+argument_list|)
 specifier|private
 name|JobConf
 name|cloneJobConf

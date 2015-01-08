@@ -126,8 +126,7 @@ specifier|public
 interface|interface
 name|SparkSession
 block|{
-comment|/**    * Initializes a Spark session for DAG execution.    */
-specifier|public
+comment|/**    * Initializes a Spark session for DAG execution.    * @param conf Hive configuration.    */
 name|void
 name|open
 parameter_list|(
@@ -137,8 +136,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Submit given<i>sparkWork</i> to SparkClient    * @param driverContext    * @param sparkWork    */
-specifier|public
+comment|/**    * Submit given<i>sparkWork</i> to SparkClient.    * @param driverContext    * @param sparkWork    * @return SparkJobRef    */
 name|SparkJobRef
 name|submit
 parameter_list|(
@@ -152,7 +150,6 @@ throws|throws
 name|Exception
 function_decl|;
 comment|/**    * Get Spark shuffle memory per task, and total number of cores. This    * information can be used to estimate how many reducers a task can have.    *    * @return a tuple, the first element is the shuffle memory per task in bytes,    *  the second element is the number of total cores usable by the client    */
-specifier|public
 name|Tuple2
 argument_list|<
 name|Long
@@ -164,26 +161,22 @@ parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
-comment|/**    * Is the session open and ready to submit jobs?    */
-specifier|public
+comment|/**    * @return true if the session is open and ready to submit jobs.    */
 name|boolean
 name|isOpen
 parameter_list|()
 function_decl|;
-comment|/**    * Return configuration.    */
-specifier|public
+comment|/**    * @return configuration.    */
 name|HiveConf
 name|getConf
 parameter_list|()
 function_decl|;
-comment|/**    * Return session id.    */
-specifier|public
+comment|/**    * @return session id.    */
 name|String
 name|getSessionId
 parameter_list|()
 function_decl|;
-comment|/**    * Close session and release resources    */
-specifier|public
+comment|/**    * Close session and release resources.    */
 name|void
 name|close
 parameter_list|()

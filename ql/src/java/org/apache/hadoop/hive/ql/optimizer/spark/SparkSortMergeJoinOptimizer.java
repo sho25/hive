@@ -488,7 +488,8 @@ name|pGraphContext
 argument_list|)
 return|;
 block|}
-comment|//Preliminary checks.  In the MR version of the code, these used to be done via another walk, refactoring to be inline.
+comment|//Preliminary checks.  In the MR version of the code, these used to be done via another walk,
+comment|//here it is done inline.
 specifier|private
 name|boolean
 name|supportBucketMapJoin
@@ -562,6 +563,11 @@ name|pos
 operator|--
 control|)
 block|{
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Operator
 argument_list|<
 name|?

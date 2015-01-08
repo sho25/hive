@@ -819,6 +819,7 @@ name|int
 name|keysColumnOffset
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|int
 name|BATCH_SIZE
@@ -851,6 +852,11 @@ name|localWork
 init|=
 literal|null
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|public
 name|void
 name|init
@@ -864,6 +870,8 @@ parameter_list|,
 name|Reporter
 name|reporter
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|perfLogger
 operator|.
@@ -1743,6 +1751,9 @@ block|}
 annotation|@
 name|Override
 specifier|public
+parameter_list|<
+name|E
+parameter_list|>
 name|void
 name|processRow
 parameter_list|(
@@ -1750,6 +1761,9 @@ name|Object
 name|key
 parameter_list|,
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|)
 throws|throws
@@ -2027,10 +2041,16 @@ block|}
 block|}
 comment|/**    * @param values    * @return true if it is not done and can take more inputs    */
 specifier|private
+parameter_list|<
+name|E
+parameter_list|>
 name|boolean
 name|processKeyValues
 parameter_list|(
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|,
 name|byte
@@ -2218,7 +2238,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Hive Runtime Error while processing row (tag="
+literal|"Error while processing row (tag="
 operator|+
 name|tag
 operator|+
@@ -2238,10 +2258,16 @@ comment|// give me more
 block|}
 comment|/**    * @param values    * @return true if it is not done and can take more inputs    */
 specifier|private
+parameter_list|<
+name|E
+parameter_list|>
 name|boolean
 name|processVectors
 parameter_list|(
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|,
 name|byte
@@ -2507,7 +2533,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Hive Runtime Error while processing vector batch (tag="
+literal|"Error while processing vector batch (tag="
 operator|+
 name|tag
 operator|+
@@ -2561,7 +2587,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Hive Runtime Error: Unable to deserialize reduce input value (tag="
+literal|"Error: Unable to deserialize reduce input value (tag="
 operator|+
 name|tag
 operator|+

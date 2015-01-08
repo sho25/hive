@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|StringBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|List
@@ -530,7 +520,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ProcessAnalyzeTable sets up work for the several variants of analyze table  * (normal, no scan, partial scan.) The plan at this point will be a single  * table scan operator.  *  * TODO: cloned from tez ProcessAnalyzeTable. Need to make sure it fits to Spark.  */
+comment|/**  * ProcessAnalyzeTable sets up work for the several variants of analyze table  * (normal, no scan, partial scan.) The plan at this point will be a single  * table scan operator.  *  * Cloned from Tez ProcessAnalyzeTable.  */
 end_comment
 
 begin_class
@@ -544,7 +534,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Log
-name|logger
+name|LOGGER
 init|=
 name|LogFactory
 operator|.
@@ -565,7 +555,7 @@ name|utils
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Injecting the utils in the constructor facilitates testing    */
+comment|/**    * Injecting the utils in the constructor facilitates testing.    */
 specifier|public
 name|SparkProcessAnalyzeTable
 parameter_list|(
@@ -633,6 +623,11 @@ name|context
 operator|.
 name|parseContext
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 name|Class
 argument_list|<
 name|?
@@ -1260,6 +1255,11 @@ operator|new
 name|DriverContext
 argument_list|()
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Task
 argument_list|<
 name|PartialScanWork

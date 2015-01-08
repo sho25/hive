@@ -23,6 +23,26 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -63,7 +83,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|*
+name|AbstractFileMergeOperator
 import|;
 end_import
 
@@ -81,9 +101,61 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|mr
+name|ObjectCache
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|ExecMapperContext
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|ObjectCacheFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Operator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
 import|;
 end_import
 
@@ -139,7 +211,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapWork
+name|FileMergeDesc
 import|;
 end_import
 
@@ -157,7 +229,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredLocalWork
+name|MapWork
 import|;
 end_import
 
@@ -223,26 +295,20 @@ end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|io
+name|google
 operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|common
 operator|.
-name|util
+name|base
 operator|.
-name|Iterator
+name|Preconditions
 import|;
 end_import
 
 begin_comment
-comment|/**  * Copied from MergeFileMapper  *  * As MergeFileMapper is very similar to ExecMapper, this class is  * very similar to SparkMapRecordHandler  */
+comment|/**  * Copied from MergeFileMapper.  *  * As MergeFileMapper is very similar to ExecMapper, this class is  * very similar to SparkMapRecordHandler  */
 end_comment
 
 begin_class
@@ -264,7 +330,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Log
-name|l4j
+name|LOG
 init|=
 name|LogFactory
 operator|.
@@ -286,6 +352,11 @@ name|op
 decl_stmt|;
 specifier|private
 name|AbstractFileMergeOperator
+argument_list|<
+name|?
+extends|extends
+name|FileMergeDesc
+argument_list|>
 name|mergeOp
 decl_stmt|;
 specifier|private
@@ -294,8 +365,18 @@ index|[]
 name|row
 decl_stmt|;
 annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
+annotation|@
 name|Override
 specifier|public
+parameter_list|<
+name|K
+parameter_list|,
+name|V
+parameter_list|>
 name|void
 name|init
 parameter_list|(
@@ -303,11 +384,18 @@ name|JobConf
 name|job
 parameter_list|,
 name|OutputCollector
+argument_list|<
+name|K
+argument_list|,
+name|V
+argument_list|>
 name|output
 parameter_list|,
 name|Reporter
 name|reporter
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|super
 operator|.
@@ -442,6 +530,11 @@ name|mergeOp
 operator|=
 operator|(
 name|AbstractFileMergeOperator
+argument_list|<
+name|?
+extends|extends
+name|FileMergeDesc
+argument_list|>
 operator|)
 name|op
 expr_stmt|;
@@ -473,7 +566,7 @@ literal|true
 expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
 literal|"Merge file work's top operator should be an"
 operator|+
@@ -490,13 +583,13 @@ literal|true
 expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
 literal|"Map work should be a merge file work."
 argument_list|)
 throw|;
 block|}
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
@@ -591,6 +684,9 @@ block|}
 annotation|@
 name|Override
 specifier|public
+parameter_list|<
+name|E
+parameter_list|>
 name|void
 name|processRow
 parameter_list|(
@@ -598,6 +694,9 @@ name|Object
 name|key
 parameter_list|,
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|)
 throws|throws
@@ -626,7 +725,7 @@ name|void
 name|close
 parameter_list|()
 block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(

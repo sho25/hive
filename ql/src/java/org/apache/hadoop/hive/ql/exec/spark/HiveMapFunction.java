@@ -159,6 +159,11 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
+annotation|@
 name|Override
 specifier|public
 name|Iterable
@@ -244,7 +249,6 @@ argument_list|,
 name|mapRecordHandler
 argument_list|)
 decl_stmt|;
-comment|//TODO we need to implement a Spark specified Reporter to collect stats, refer to HIVE-7709.
 name|mapRecordHandler
 operator|.
 name|init

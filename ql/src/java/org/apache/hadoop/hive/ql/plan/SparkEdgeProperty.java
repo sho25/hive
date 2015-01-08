@@ -33,6 +33,7 @@ name|SparkEdgeProperty
 block|{
 specifier|public
 specifier|static
+specifier|final
 name|long
 name|SHUFFLE_NONE
 init|=
@@ -41,6 +42,7 @@ decl_stmt|;
 comment|// No shuffle is needed. For union only.
 specifier|public
 specifier|static
+specifier|final
 name|long
 name|SHUFFLE_GROUP
 init|=
@@ -49,6 +51,7 @@ decl_stmt|;
 comment|// HashPartition shuffle, keys are not sorted in any way.
 specifier|public
 specifier|static
+specifier|final
 name|long
 name|SHUFFLE_SORT
 init|=
@@ -57,6 +60,7 @@ decl_stmt|;
 comment|// RangePartition shuffle, keys are total sorted.
 specifier|public
 specifier|static
+specifier|final
 name|long
 name|MR_SHUFFLE_SORT
 init|=

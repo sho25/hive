@@ -23,15 +23,63 @@ end_package
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|google
+name|util
 operator|.
-name|common
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|base
+name|util
 operator|.
-name|Preconditions
+name|LinkedList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+operator|.
+name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Stack
 import|;
 end_import
 
@@ -76,24 +124,6 @@ operator|.
 name|common
 operator|.
 name|ObjectPair
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|DummyStoreOperator
 import|;
 end_import
 
@@ -423,68 +453,20 @@ end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|util
+name|google
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|common
 operator|.
-name|util
+name|base
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
+name|Preconditions
 import|;
 end_import
 
 begin_comment
-comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *  * Cloned from GenTezWork.  *  * TODO: need to go thru this to make it fit completely to Spark.  */
+comment|/**  * GenSparkWork separates the operator tree into spark tasks.  * It is called once per leaf operator (operator that forces a new execution unit.)  * and break the operators into work and tasks along the way.  *  * Cloned from GenTezWork.  */
 end_comment
 
 begin_class
@@ -605,6 +587,11 @@ literal|"AssertionError: expected context.currentRootOperator to be not null"
 argument_list|)
 expr_stmt|;
 comment|// Operator is a file sink or reduce sink. Something that forces a new vertex.
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Operator
 argument_list|<
 name|?
@@ -753,7 +740,8 @@ condition|)
 block|{
 comment|// This logic is for SortMergeBucket MapJoin case.
 comment|// This MapWork (of big-table, see above..) is later initialized by SparkMapJoinFactory
-comment|// processor, so don't initialize it here. Just keep track of it in the context, for later processing.
+comment|// processor, so don't initialize it here. Just keep track of it in the context,
+comment|// for later processing.
 name|work
 operator|=
 name|utils

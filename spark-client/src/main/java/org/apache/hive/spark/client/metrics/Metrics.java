@@ -323,7 +323,6 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|static
-specifier|final
 name|InputMetrics
 name|optionalInputMetric
 parameter_list|(
@@ -351,7 +350,6 @@ return|;
 block|}
 specifier|private
 specifier|static
-specifier|final
 name|ShuffleReadMetrics
 name|optionalShuffleReadMetric
 parameter_list|(
@@ -379,7 +377,6 @@ return|;
 block|}
 specifier|private
 specifier|static
-specifier|final
 name|ShuffleWriteMetrics
 name|optionalShuffleWriteMetrics
 parameter_list|(

@@ -52,6 +52,11 @@ import|;
 end_import
 
 begin_interface
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 specifier|public
 interface|interface
 name|SparkTran

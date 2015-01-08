@@ -157,7 +157,7 @@ argument_list|>
 name|cachedRDDIds
 parameter_list|)
 function_decl|;
-comment|/**    * Return a map from client job Id to corresponding JavaFutureActions    */
+comment|/**    * Return a map from client job Id to corresponding JavaFutureActions.    */
 name|Map
 argument_list|<
 name|String

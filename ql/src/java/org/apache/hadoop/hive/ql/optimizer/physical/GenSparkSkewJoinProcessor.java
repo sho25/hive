@@ -864,6 +864,11 @@ parameter_list|()
 block|{
 comment|// prevent instantiation
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|public
 specifier|static
 name|void
@@ -1390,10 +1395,19 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|Byte
-name|tag
-range|:
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
 name|tags
+operator|.
+name|length
+condition|;
+name|i
+operator|++
 control|)
 block|{
 name|newJoinValueTblDesc
@@ -3002,7 +3016,12 @@ name|cndTsk
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Insert SparkHashTableSink and HashTableDummy between small dir TS and MJ    */
+comment|/**    * Insert SparkHashTableSink and HashTableDummy between small dir TS and MJ.    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|private
 specifier|static
 name|void

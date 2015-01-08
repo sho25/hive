@@ -172,8 +172,8 @@ name|HiveSparkClientFactory
 block|{
 specifier|protected
 specifier|static
-specifier|transient
 specifier|final
+specifier|transient
 name|Log
 name|LOG
 init|=

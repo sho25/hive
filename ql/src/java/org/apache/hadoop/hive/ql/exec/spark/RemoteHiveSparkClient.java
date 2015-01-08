@@ -582,8 +582,8 @@ literal|"tmpjars"
 decl_stmt|;
 specifier|protected
 specifier|static
-specifier|transient
 specifier|final
+specifier|transient
 name|Log
 name|LOG
 init|=
@@ -598,8 +598,8 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|transient
 specifier|final
+specifier|transient
 name|Splitter
 name|CSV_SPLITTER
 init|=

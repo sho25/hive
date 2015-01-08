@@ -118,7 +118,7 @@ specifier|final
 name|SparkReduceRecordHandler
 name|reduceRecordHandler
 decl_stmt|;
-comment|/**    * Instantiate result set Iterable for Reduce function output.    *    * @param inputIterator Input record iterator.    * @param reducer Initialized {@link org.apache.hadoop.hive.ql.exec.mr.ExecReducer} instance.    */
+comment|/**    * Instantiate result set Iterable for Reduce function output.    *    * @param conf Hive configuration.    * @param inputIterator Input record iterator.    * @param reducer Initialized {@link org.apache.hadoop.hive.ql.exec.mr.ExecReducer} instance.    */
 specifier|public
 name|HiveReduceFunctionResultList
 parameter_list|(

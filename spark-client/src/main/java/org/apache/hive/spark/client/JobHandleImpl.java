@@ -19,6 +19,20 @@ end_package
 
 begin_import
 import|import
+name|io
+operator|.
+name|netty
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Promise
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -69,7 +83,7 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|TimeoutException
+name|TimeUnit
 import|;
 end_import
 
@@ -81,7 +95,7 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|TimeUnit
+name|TimeoutException
 import|;
 end_import
 
@@ -96,20 +110,6 @@ operator|.
 name|atomic
 operator|.
 name|AtomicBoolean
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|netty
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Promise
 import|;
 end_import
 

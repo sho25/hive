@@ -21,9 +21,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
+name|io
 operator|.
-name|URL
+name|Serializable
 import|;
 end_import
 
@@ -31,9 +31,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|net
 operator|.
-name|Serializable
+name|URL
 import|;
 end_import
 
@@ -128,7 +128,7 @@ name|URL
 name|url
 parameter_list|)
 function_decl|;
-comment|/**    * Get the count of executors    */
+comment|/**    * Get the count of executors.    */
 name|Future
 argument_list|<
 name|Integer

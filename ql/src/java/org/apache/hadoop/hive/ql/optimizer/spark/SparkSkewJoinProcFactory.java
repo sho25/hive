@@ -622,7 +622,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Spark-version of SkewJoinProcFactory  */
+comment|/**  * Spark-version of SkewJoinProcFactory.  */
 end_comment
 
 begin_class
@@ -1024,7 +1024,6 @@ argument_list|(
 name|baseWork
 argument_list|)
 expr_stmt|;
-comment|// TODO: take care of cloneToWork?
 name|currentWork
 operator|.
 name|getCloneToWork
@@ -1296,7 +1295,6 @@ operator|=
 literal|"$INTNAME"
 expr_stmt|;
 block|}
-comment|// TODO: remove this?
 name|String
 name|origStreamDesc
 init|=
@@ -1363,6 +1361,11 @@ name|tableDesc
 argument_list|)
 expr_stmt|;
 comment|// insert the new task between current task and its child
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Task
 argument_list|<
 name|?
@@ -1508,7 +1511,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Copy a sub-graph from originWork to newWork    */
+comment|/**    * Copy a sub-graph from originWork to newWork.    */
 specifier|private
 specifier|static
 name|void

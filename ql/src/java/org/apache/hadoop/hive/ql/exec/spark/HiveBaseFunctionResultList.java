@@ -311,21 +311,21 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/** Is the current state of the record processor done? */
+comment|/**    * @return true if current state of the record processor is done.    */
 specifier|protected
 specifier|abstract
 name|boolean
 name|processingDone
 parameter_list|()
 function_decl|;
-comment|/** Close the record processor */
+comment|/** Close the record processor. */
 specifier|protected
 specifier|abstract
 name|void
 name|closeRecordProcessor
 parameter_list|()
 function_decl|;
-comment|/** Implement Iterator interface */
+comment|/** Implement Iterator interface. */
 specifier|public
 class|class
 name|ResultIterator
@@ -402,10 +402,9 @@ name|IOException
 name|ex
 parameter_list|)
 block|{
-comment|// TODO: better handling of exception.
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
 literal|"Error while processing input."
 argument_list|,

@@ -23,17 +23,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
+name|Stack
 import|;
 end_import
 
@@ -47,11 +41,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|exec
-operator|.
-name|MapJoinOperator
+name|HiveConf
 import|;
 end_import
 
@@ -219,18 +211,8 @@ name|OptimizeSparkProcContext
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
-import|;
-end_import
-
 begin_comment
-comment|/**  * This processes joins in which user specified a hint to identify the small-table.  * Currently it takes a mapjoin already converted from hints, and converts it further to BucketMapJoin or SMBMapJoin  * using same small-table identification.  *  * The idea is eventually to process even hinted Mapjoin hints here, but due to code complexity in refactoring, that is still  * in Optimizer.  */
+comment|/**  * This processes joins in which user specified a hint to identify the small-table.  * Currently it takes a mapjoin already converted from hints, and converts it further  * to BucketMapJoin or SMBMapJoin using same small-table identification.  *  * The idea is eventually to process even hinted Mapjoin hints here,  * but due to code complexity in refactoring, that is still in Optimizer.  */
 end_comment
 
 begin_class
@@ -297,14 +279,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|MapJoinOperator
-name|mapJoinOp
-init|=
-operator|(
-name|MapJoinOperator
-operator|)
-name|nd
-decl_stmt|;
 name|OptimizeSparkProcContext
 name|context
 init|=

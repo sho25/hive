@@ -672,6 +672,24 @@ name|NodeProcessor
 block|{
 specifier|public
 specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|SparkReduceSinkMapJoinProc
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
 class|class
 name|SparkMapJoinFollowedByGroupByProcessor
 implements|implements
@@ -768,24 +786,6 @@ name|hasGroupBy
 return|;
 block|}
 block|}
-specifier|protected
-specifier|transient
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
 specifier|private
 name|boolean
 name|hasGroupBy
@@ -923,6 +923,11 @@ argument_list|()
 return|;
 block|}
 comment|/* (non-Javadoc)    * This processor addresses the RS-MJ case that occurs in spark on the small/hash    * table side of things. The work that RS will be a part of must be connected    * to the MJ work via be a broadcast edge.    * We should not walk down the tree when we encounter this pattern because:    * the type of work (map work or reduce work) needs to be determined    * on the basis of the big table side because it may be a mapwork (no need for shuffle)    * or reduce work.    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 annotation|@
 name|Override
 specifier|public
@@ -1097,6 +1102,12 @@ name|parents
 init|=
 operator|new
 name|ArrayList
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 argument_list|(
 name|mapJoinOp
 operator|.
@@ -1122,7 +1133,7 @@ name|BaseWork
 argument_list|>
 name|mapJoinWork
 decl_stmt|;
-comment|/*      *  if there was a pre-existing work generated for the big-table mapjoin side,      *  we need to hook the work generated for the RS (associated with the RS-MJ pattern)      *  with the pre-existing work.      *      *  Otherwise, we need to associate that the mapjoin op      *  to be linked to the RS work (associated with the RS-MJ pattern).      *      */
+comment|/*      *  If there was a pre-existing work generated for the big-table mapjoin side,      *  we need to hook the work generated for the RS (associated with the RS-MJ pattern)      *  with the pre-existing work.      *      *  Otherwise, we need to associate that the mapjoin op      *  to be linked to the RS work (associated with the RS-MJ pattern).      *      */
 name|mapJoinWork
 operator|=
 name|context
@@ -1251,7 +1262,6 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|/*  int numBuckets = -1;     EdgeType edgeType = EdgeType.BROADCAST_EDGE;     if (mapJoinOp.getConf().isBucketMapJoin()) {        // disable auto parallelism for bucket map joins       parentRS.getConf().setAutoParallel(false);        numBuckets = (Integer) mapJoinOp.getConf().getBigTableBucketNumMapping().values().toArray()[0];       if (mapJoinOp.getConf().getCustomBucketMapJoin()) {         edgeType = EdgeType.CUSTOM_EDGE;       } else {         edgeType = EdgeType.CUSTOM_SIMPLE_EDGE;       }     }*/
 name|SparkEdgeProperty
 name|edgeProp
 init|=
@@ -1468,11 +1478,6 @@ operator|new
 name|HashTableDummyDesc
 argument_list|()
 decl_stmt|;
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 name|HashTableDummyOperator
 name|dummyOp
 init|=
@@ -1581,10 +1586,20 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|ExprNodeDesc
-name|k
-range|:
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
 name|keyCols
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
 control|)
 block|{
 name|keyOrder
@@ -2006,7 +2021,7 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 argument_list|>
-name|RSparentOps
+name|rsParentOps
 init|=
 name|parentRS
 operator|.
@@ -2023,7 +2038,7 @@ name|OperatorDesc
 argument_list|>
 name|parent
 range|:
-name|RSparentOps
+name|rsParentOps
 control|)
 block|{
 name|parent
@@ -2040,7 +2055,7 @@ name|hashTableSinkOp
 operator|.
 name|setParentOperators
 argument_list|(
-name|RSparentOps
+name|rsParentOps
 argument_list|)
 expr_stmt|;
 name|hashTableSinkOp

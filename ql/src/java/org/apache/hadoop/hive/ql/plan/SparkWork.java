@@ -386,7 +386,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**    * getWorkMap returns a map of "vertex name" to BaseWork    */
+comment|/**    * @return a map of "vertex name" to BaseWork    */
 annotation|@
 name|Explain
 argument_list|(
@@ -447,7 +447,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * getAllWork returns a topologically sorted list of BaseWork    */
+comment|/**    * @return a topologically sorted list of BaseWork    */
 specifier|public
 name|List
 argument_list|<
@@ -601,7 +601,7 @@ name|child
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * add all nodes in the collection without any connections    */
+comment|/**    * Add all nodes in the collection without any connections.    */
 specifier|public
 name|void
 name|addAll
@@ -630,7 +630,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * add all nodes in the collection without any connections    */
+comment|/**    * Add all nodes in the collection without any connections.    */
 specifier|public
 name|void
 name|addAll
@@ -1536,9 +1536,11 @@ argument_list|(
 name|n2
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 return|return
 literal|false

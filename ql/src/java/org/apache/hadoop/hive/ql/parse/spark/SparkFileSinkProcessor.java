@@ -150,7 +150,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FileSinkProcessor handles addition of merge, move and stats tasks for filesinks  * Cloned from tez's FileSinkProcessor  */
+comment|/**  * FileSinkProcessor handles addition of merge, move and stats tasks for filesinks.  * Cloned from tez's FileSinkProcessor.  */
 end_comment
 
 begin_class
@@ -164,7 +164,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Log
-name|logger
+name|LOGGER
 init|=
 name|LogFactory
 operator|.

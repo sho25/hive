@@ -44,10 +44,6 @@ specifier|private
 name|int
 name|failedTaskCount
 decl_stmt|;
-comment|// TODO: remove the following two metrics as they're not available in current spark API,
-comment|// we can add them back once spark provides it
-comment|//  private int killedTaskCount;
-comment|//  private long cumulativeTime;
 specifier|public
 name|SparkStageProgress
 parameter_list|(

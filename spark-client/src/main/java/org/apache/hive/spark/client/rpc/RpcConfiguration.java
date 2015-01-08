@@ -148,50 +148,50 @@ argument_list|)
 decl_stmt|;
 comment|/** Connection timeout for RPC clients. */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|CONNECT_TIMEOUT_MS_KEY
 init|=
 literal|"hive.spark.client.connect.timeout.ms"
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|CONNECT_TIMEOUT_MS_DEFAULT
 init|=
 literal|1000
 decl_stmt|;
-comment|/**    * How long the server should wait for clients to connect back after they're registered. Also    * used to time out the client waiting for the server to reply to its "hello" message.    */
+comment|/**    * How long the server should wait for clients to connect back after they're    * registered. Also used to time out the client waiting for the server to    * reply to its "hello" message.    */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|SERVER_CONNECT_TIMEOUT_MS_KEY
 init|=
 literal|"hive.spark.client.server.connect.timeout.ms"
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|long
 name|SERVER_CONNECT_TIMEOUT_MS_DEFAULT
 init|=
 literal|10000L
 decl_stmt|;
-comment|/**    * Number of bits of randomness in the generated client secrets. Rounded down to the nearest    * multiple of 8.    */
+comment|/**    * Number of bits of randomness in the generated client secrets. Rounded down    * to the nearest multiple of 8.    */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|SECRET_RANDOM_BITS_KEY
 init|=
 literal|"hive.spark.client.secret.bits"
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|SECRET_RANDOM_BITS_DEFAULT
 init|=
@@ -199,8 +199,8 @@ literal|256
 decl_stmt|;
 comment|/** Hostname or IP address to advertise for the server. */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|SERVER_LISTEN_ADDRESS_KEY
 init|=
@@ -208,16 +208,16 @@ literal|"hive.spark.client.server.address"
 decl_stmt|;
 comment|/** Maximum number of threads to use for the RPC event loop. */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|RPC_MAX_THREADS_KEY
 init|=
 literal|"hive.spark.client.rpc.threads"
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|RPC_MAX_THREADS_DEFAULT
 init|=
@@ -225,16 +225,16 @@ literal|8
 decl_stmt|;
 comment|/** Maximum message size. Default = 10MB. */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|RPC_MAX_MESSAGE_SIZE_KEY
 init|=
 literal|"hive.spark.client.rpc.max.size"
 decl_stmt|;
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|RPC_MAX_MESSAGE_SIZE_DEFAULT
 init|=
@@ -246,8 +246,8 @@ literal|1024
 decl_stmt|;
 comment|/** Channel logging level. */
 specifier|public
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|RPC_CHANNEL_LOG_LEVEL_KEY
 init|=
@@ -441,7 +441,8 @@ name|isLoopbackAddress
 argument_list|()
 condition|)
 block|{
-comment|// Address resolves to something like 127.0.1.1, which happens on Debian; try to find
+comment|// Address resolves to something like 127.0.1.1, which happens on Debian;
+comment|// try to find
 comment|// a better address using the local network interfaces
 name|Enumeration
 argument_list|<

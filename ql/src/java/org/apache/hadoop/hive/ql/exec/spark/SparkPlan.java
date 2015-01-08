@@ -172,11 +172,17 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"rawtypes"
+argument_list|)
 specifier|public
 class|class
 name|SparkPlan
 block|{
 specifier|private
+specifier|static
 specifier|final
 name|String
 name|CLASS_NAME
@@ -293,6 +299,11 @@ name|Integer
 argument_list|>
 argument_list|()
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|public
 name|JavaPairRDD
 argument_list|<
@@ -302,8 +313,6 @@ name|BytesWritable
 argument_list|>
 name|generateGraph
 parameter_list|()
-throws|throws
-name|IllegalStateException
 block|{
 name|perfLogger
 operator|.
@@ -599,7 +608,7 @@ return|return
 name|cachedRDDIds
 return|;
 block|}
-comment|/**    * This method returns a topologically sorted list of SparkTran    */
+comment|/**    * This method returns a topologically sorted list of SparkTran.    */
 specifier|private
 name|List
 argument_list|<
@@ -749,8 +758,6 @@ parameter_list|,
 name|SparkTran
 name|child
 parameter_list|)
-throws|throws
-name|IllegalStateException
 block|{
 if|if
 condition|(
@@ -876,8 +883,6 @@ parameter_list|(
 name|SparkTran
 name|tran
 parameter_list|)
-throws|throws
-name|IllegalStateException
 block|{
 if|if
 condition|(
@@ -918,8 +923,6 @@ parameter_list|(
 name|SparkTran
 name|tran
 parameter_list|)
-throws|throws
-name|IllegalStateException
 block|{
 if|if
 condition|(

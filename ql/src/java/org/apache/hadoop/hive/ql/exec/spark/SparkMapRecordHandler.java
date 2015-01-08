@@ -267,6 +267,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|MapWork
@@ -436,7 +454,7 @@ specifier|public
 specifier|static
 specifier|final
 name|Log
-name|l4j
+name|LOG
 init|=
 name|LogFactory
 operator|.
@@ -464,6 +482,11 @@ name|ExecMapperContext
 name|execContext
 decl_stmt|;
 specifier|public
+parameter_list|<
+name|K
+parameter_list|,
+name|V
+parameter_list|>
 name|void
 name|init
 parameter_list|(
@@ -471,11 +494,18 @@ name|JobConf
 name|job
 parameter_list|,
 name|OutputCollector
+argument_list|<
+name|K
+argument_list|,
+name|V
+argument_list|>
 name|output
 parameter_list|,
 name|Reporter
 name|reporter
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|perfLogger
 operator|.
@@ -501,7 +531,7 @@ argument_list|)
 expr_stmt|;
 name|isLogInfoEnabled
 operator|=
-name|l4j
+name|LOG
 operator|.
 name|isInfoEnabled
 argument_list|()
@@ -621,7 +651,7 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
@@ -724,7 +754,7 @@ return|return;
 block|}
 comment|//The following code is for mapjoin
 comment|//initialize all the dummy ops
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
@@ -901,7 +931,7 @@ throw|;
 block|}
 else|else
 block|{
-name|l4j
+name|LOG
 operator|.
 name|fatal
 argument_list|(
@@ -926,6 +956,9 @@ block|}
 annotation|@
 name|Override
 specifier|public
+parameter_list|<
+name|E
+parameter_list|>
 name|void
 name|processRow
 parameter_list|(
@@ -933,6 +966,9 @@ name|Object
 name|key
 parameter_list|,
 name|Iterator
+argument_list|<
+name|E
+argument_list|>
 name|values
 parameter_list|)
 throws|throws
@@ -961,7 +997,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|trace
 argument_list|(
@@ -1086,7 +1122,7 @@ name|abort
 condition|)
 block|{
 comment|// signal new failure to map-reduce
-name|l4j
+name|LOG
 operator|.
 name|error
 argument_list|(
@@ -1095,9 +1131,9 @@ argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
-literal|"Hive Runtime Error while closing operators"
+literal|"Error while closing operators"
 argument_list|,
 name|e
 argument_list|)

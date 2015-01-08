@@ -649,8 +649,8 @@ class|class
 name|RemoteDriver
 block|{
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|Logger
 name|LOG
 init|=

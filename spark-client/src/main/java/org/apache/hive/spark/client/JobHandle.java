@@ -116,7 +116,7 @@ name|MetricsCollection
 name|getMetrics
 parameter_list|()
 function_decl|;
-comment|/**    * Get corresponding spark job IDs for this job    */
+comment|/**    * Get corresponding spark job IDs for this job.    */
 name|List
 argument_list|<
 name|Integer
@@ -124,7 +124,7 @@ argument_list|>
 name|getSparkJobIds
 parameter_list|()
 function_decl|;
-comment|/**    * Get the SparkCounters for this job    */
+comment|/**    * Get the SparkCounters for this job.    */
 name|SparkCounters
 name|getSparkCounters
 parameter_list|()

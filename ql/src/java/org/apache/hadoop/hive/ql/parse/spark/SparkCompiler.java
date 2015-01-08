@@ -1132,7 +1132,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * SparkCompiler translates the operator plan into SparkTasks.  *  * Pretty much cloned from TezCompiler.  *  * TODO: need to complete and make it fit to Spark.  */
+comment|/**  * SparkCompiler translates the operator plan into SparkTasks.  *  * Cloned from TezCompiler.  */
 end_comment
 
 begin_class
@@ -1159,7 +1159,7 @@ specifier|private
 specifier|static
 specifier|final
 name|PerfLogger
-name|perfLogger
+name|PERF_LOGGER
 init|=
 name|PerfLogger
 operator|.
@@ -1170,7 +1170,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Log
-name|logger
+name|LOGGER
 init|=
 name|LogFactory
 operator|.
@@ -1212,9 +1212,6 @@ argument_list|,
 name|db
 argument_list|)
 expr_stmt|;
-comment|//    TODO: Need to check if we require the use of recursive input dirs for union processing
-comment|//    conf.setBoolean("mapred.input.dir.recursive", true);
-comment|//    HiveConf.setBoolVar(conf, ConfVars.HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES, true);
 block|}
 annotation|@
 name|Override
@@ -1240,7 +1237,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogBegin
 argument_list|(
@@ -1444,7 +1441,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogEnd
 argument_list|(
@@ -1501,7 +1498,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogBegin
 argument_list|(
@@ -2014,7 +2011,7 @@ name|fileSink
 argument_list|)
 expr_stmt|;
 block|}
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogEnd
 argument_list|(
@@ -2357,7 +2354,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogBegin
 argument_list|(
@@ -2635,7 +2632,7 @@ literal|"Skipping stage id rearranger"
 argument_list|)
 expr_stmt|;
 block|}
-name|perfLogger
+name|PERF_LOGGER
 operator|.
 name|PerfLogEnd
 argument_list|(

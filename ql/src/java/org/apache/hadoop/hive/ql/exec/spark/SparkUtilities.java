@@ -200,7 +200,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Contains utilities methods used as part of Spark tasks  */
+comment|/**  * Contains utilities methods used as part of Spark tasks.  */
 end_comment
 
 begin_class

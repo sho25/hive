@@ -398,6 +398,11 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Task
 argument_list|<
 name|?

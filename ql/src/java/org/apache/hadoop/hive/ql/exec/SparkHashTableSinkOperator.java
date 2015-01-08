@@ -378,6 +378,14 @@ block|{
 specifier|private
 specifier|static
 specifier|final
+name|int
+name|MIN_REPLICATION
+init|=
+literal|10
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|long
 name|serialVersionUID
 init|=
@@ -868,7 +876,6 @@ expr_stmt|;
 try|try
 block|{
 comment|// This will guarantee file name uniqueness.
-comment|// TODO: can we use the task id, which should be unique
 if|if
 condition|(
 name|fs
@@ -905,7 +912,7 @@ name|Math
 operator|.
 name|min
 argument_list|(
-literal|10
+name|MIN_REPLICATION
 argument_list|,
 name|numOfPartitions
 argument_list|)

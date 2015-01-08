@@ -337,8 +337,8 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|synchronized
 specifier|static
+specifier|synchronized
 name|SparkSessionManagerImpl
 name|getInstance
 parameter_list|()
@@ -658,7 +658,7 @@ operator|.
 name|getShortUserName
 argument_list|()
 decl_stmt|;
-comment|// TODOD this we need to store the session username somewhere else as getUGIForConf never used the conf
+comment|// TODO this we need to store the session username somewhere else as getUGIForConf never used the conf
 name|UserGroupInformation
 name|ugiInSession
 init|=

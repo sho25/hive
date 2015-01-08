@@ -67,7 +67,6 @@ interface|interface
 name|SparkSessionManager
 block|{
 comment|/**    * Initialize based on given configuration.    *    * @param hiveConf    */
-specifier|public
 name|void
 name|setup
 parameter_list|(
@@ -77,8 +76,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Get a valid SparkSession. First try to check if existing session is reusable    * based on the given<i>conf</i>. If not release<i>existingSession</i> and return    * a new session based on session manager criteria and<i>conf</i>.    *    * @param existingSession Existing session (can be null)    * @param conf    * @param doOpen Should the session be opened before returning?    * @return    */
-specifier|public
+comment|/**    * Get a valid SparkSession. First try to check if existing session is reusable    * based on the given<i>conf</i>. If not release<i>existingSession</i> and return    * a new session based on session manager criteria and<i>conf</i>.    *    * @param existingSession Existing session (can be null)    * @param conf    * @param doOpen Should the session be opened before returning?    * @return SparkSession    */
 name|SparkSession
 name|getSession
 parameter_list|(
@@ -95,7 +93,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Return the given<i>sparkSession</i> to pool. This is used when the client    * still holds references to session and may want to reuse it in future.    * When client wants to reuse the session, it should pass the it<i>getSession</i> method.    */
-specifier|public
 name|void
 name|returnSession
 parameter_list|(
@@ -106,7 +103,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Close the given session and return it to pool. This is used when the client    * no longer needs a SparkSession.    */
-specifier|public
 name|void
 name|closeSession
 parameter_list|(
@@ -117,7 +113,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Shutdown the session manager. Also closing up SparkSessions in pool.    */
-specifier|public
 name|void
 name|shutdown
 parameter_list|()

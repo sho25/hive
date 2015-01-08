@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Stack
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -37,28 +47,6 @@ name|SemanticException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Matcher
-import|;
-end_import
-
 begin_comment
 comment|/**  * Rule that matches a particular type of node.  */
 end_comment
@@ -72,6 +60,9 @@ name|Rule
 block|{
 specifier|private
 name|Class
+argument_list|<
+name|?
+argument_list|>
 name|nodeClass
 decl_stmt|;
 specifier|public

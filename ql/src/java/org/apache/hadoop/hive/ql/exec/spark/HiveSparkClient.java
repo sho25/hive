@@ -119,7 +119,6 @@ extends|,
 name|Closeable
 block|{
 comment|/**    * HiveSparkClient should generate Spark RDD graph by given sparkWork and driverContext,    * and submit RDD graph to Spark cluster.    * @param driverContext    * @param sparkWork    * @return SparkJobRef could be used to track spark job progress and metrics.    * @throws Exception    */
-specifier|public
 name|SparkJobRef
 name|execute
 parameter_list|(
@@ -132,13 +131,12 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
-specifier|public
+comment|/**    * @return spark configuration    */
 name|SparkConf
 name|getSparkConf
 parameter_list|()
 function_decl|;
-comment|/**    * Get the count of executors    */
-specifier|public
+comment|/**    * @return the number of executors    */
 name|int
 name|getExecutorCount
 parameter_list|()
