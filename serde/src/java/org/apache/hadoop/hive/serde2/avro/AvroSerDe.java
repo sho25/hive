@@ -664,6 +664,8 @@ name|schema
 operator|=
 name|determineSchemaOrReturnErrorSchema
 argument_list|(
+name|configuration
+argument_list|,
 name|properties
 argument_list|)
 expr_stmt|;
@@ -1023,6 +1025,9 @@ specifier|public
 name|Schema
 name|determineSchemaOrReturnErrorSchema
 parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
 name|Properties
 name|props
 parameter_list|)
@@ -1038,6 +1043,8 @@ name|AvroSerdeUtils
 operator|.
 name|determineSchemaOrThrowException
 argument_list|(
+name|conf
+argument_list|,
 name|props
 argument_list|)
 return|;
