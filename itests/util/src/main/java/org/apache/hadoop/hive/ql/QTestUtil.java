@@ -1758,7 +1758,7 @@ name|logDir
 argument_list|,
 name|MiniClusterType
 operator|.
-name|spark
+name|none
 argument_list|,
 literal|null
 argument_list|,
@@ -8638,7 +8638,7 @@ name|logDir
 argument_list|,
 name|MiniClusterType
 operator|.
-name|spark
+name|none
 argument_list|,
 literal|null
 argument_list|,
