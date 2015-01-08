@@ -1238,7 +1238,7 @@ condition|(
 name|mkDirPath
 operator|!=
 literal|null
-operator|&
+operator|&&
 operator|!
 name|fs
 operator|.
