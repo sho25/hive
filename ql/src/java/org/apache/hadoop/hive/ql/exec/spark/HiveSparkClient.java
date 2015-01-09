@@ -143,6 +143,13 @@ parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
+comment|/**    * For standalone mode, this can be used to get total number of cores.    * @return  default parallelism.    */
+name|int
+name|getDefaultParallelism
+parameter_list|()
+throws|throws
+name|Exception
+function_decl|;
 block|}
 end_interface
 

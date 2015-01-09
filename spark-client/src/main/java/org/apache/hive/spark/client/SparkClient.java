@@ -136,6 +136,14 @@ argument_list|>
 name|getExecutorCount
 parameter_list|()
 function_decl|;
+comment|/**    * Get default parallelism. For standalone mode, this can be used to get total number of cores.    */
+name|Future
+argument_list|<
+name|Integer
+argument_list|>
+name|getDefaultParallelism
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

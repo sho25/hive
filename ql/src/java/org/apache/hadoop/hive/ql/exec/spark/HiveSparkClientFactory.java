@@ -350,15 +350,6 @@ argument_list|,
 literal|"org.apache.spark.serializer.KryoSerializer"
 argument_list|)
 expr_stmt|;
-name|sparkConf
-operator|.
-name|put
-argument_list|(
-literal|"spark.default.parallelism"
-argument_list|,
-literal|"1"
-argument_list|)
-expr_stmt|;
 comment|// load properties from spark-defaults.conf.
 name|InputStream
 name|inputStream
