@@ -9679,7 +9679,7 @@ name|rsp
 init|=
 name|client
 operator|.
-name|getNextNotification
+name|get_next_notification
 argument_list|(
 name|rqst
 argument_list|)
@@ -9778,7 +9778,7 @@ block|{
 return|return
 name|client
 operator|.
-name|getCurrentNotificationEventId
+name|get_current_notificationEventId
 argument_list|()
 return|;
 block|}

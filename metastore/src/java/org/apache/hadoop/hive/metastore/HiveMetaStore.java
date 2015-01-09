@@ -32809,7 +32809,7 @@ annotation|@
 name|Override
 specifier|public
 name|NotificationEventResponse
-name|getNextNotification
+name|get_next_notification
 parameter_list|(
 name|NotificationEventRequest
 name|rqst
@@ -32836,7 +32836,7 @@ annotation|@
 name|Override
 specifier|public
 name|CurrentNotificationEventId
-name|getCurrentNotificationEventId
+name|get_current_notificationEventId
 parameter_list|()
 throws|throws
 name|TException
