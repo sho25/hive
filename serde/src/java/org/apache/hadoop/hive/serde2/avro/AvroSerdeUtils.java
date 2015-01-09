@@ -489,6 +489,9 @@ specifier|static
 name|Schema
 name|determineSchemaOrThrowException
 parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
 name|Properties
 name|properties
 parameter_list|)
@@ -578,9 +581,7 @@ name|getSchemaFromFS
 argument_list|(
 name|schemaString
 argument_list|,
-operator|new
-name|Configuration
-argument_list|()
+name|conf
 argument_list|)
 decl_stmt|;
 if|if

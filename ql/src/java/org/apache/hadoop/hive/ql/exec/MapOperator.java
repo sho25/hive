@@ -3694,7 +3694,8 @@ operator|.
 name|getIoCxt
 argument_list|()
 operator|.
-name|ri
+name|getRecordIdentifier
+argument_list|()
 operator|==
 literal|null
 condition|)
@@ -3749,7 +3750,8 @@ operator|.
 name|getIoCxt
 argument_list|()
 operator|.
-name|ri
+name|getRecordIdentifier
+argument_list|()
 argument_list|,
 operator|(
 name|Object
@@ -3766,9 +3768,10 @@ operator|.
 name|getIoCxt
 argument_list|()
 operator|.
-name|ri
-operator|=
+name|setRecordIdentifier
+argument_list|(
 literal|null
+argument_list|)
 expr_stmt|;
 comment|//so we don't accidentally cache the value; shouldn't
 comment|//happen since IO layer either knows how to produce ROW__ID or not - but to be safe

@@ -2229,6 +2229,17 @@ argument_list|,
 literal|"If true, the metastore Thrift interface will use TFramedTransport. When false (default) a standard TTransport is used."
 argument_list|)
 block|,
+name|METASTORE_USE_THRIFT_COMPACT_PROTOCOL
+argument_list|(
+literal|"hive.metastore.thrift.compact.protocol.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the metastore Thrift interface will use TCompactProtocol. When false (default) TBinaryProtocol will be used.\n"
+operator|+
+literal|"Setting it to true will break compatibility with older clients running TBinaryProtocol."
+argument_list|)
+block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
 argument_list|(
 literal|"hive.cluster.delegation.token.store.class"
@@ -2480,6 +2491,23 @@ argument_list|,
 literal|""
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|METASTORE_EVENT_DB_LISTENER_TTL
+argument_list|(
+literal|"hive.metastore.event.db.listener.timetolive"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
@@ -3844,6 +3872,19 @@ literal|""
 argument_list|)
 block|,
 comment|// 4M
+name|PARQUET_MEMORY_POOL_RATIO
+argument_list|(
+literal|"parquet.memory.pool.ratio"
+argument_list|,
+literal|0.5f
+argument_list|,
+literal|"Maximum fraction of heap that can be used by Parquet file writers in one task.\n"
+operator|+
+literal|"It is for avoiding OutOfMemory error in tasks. Work with Parquet 1.6.0 and above.\n"
+operator|+
+literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"

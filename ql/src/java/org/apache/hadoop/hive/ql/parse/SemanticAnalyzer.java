@@ -20708,7 +20708,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|Integer
@@ -20765,7 +20765,7 @@ return|return
 name|groupingSetKeys
 return|;
 block|}
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|Integer
@@ -20974,7 +20974,7 @@ name|groupingSets
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|Integer

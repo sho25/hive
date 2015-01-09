@@ -491,6 +491,8 @@ name|AvroSerdeUtils
 operator|.
 name|determineSchemaOrThrowException
 argument_list|(
+name|jobConf
+argument_list|,
 name|properties
 argument_list|)
 expr_stmt|;
