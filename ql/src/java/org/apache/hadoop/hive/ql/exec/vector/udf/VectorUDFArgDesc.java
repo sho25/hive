@@ -29,16 +29,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|Serializable
 import|;
 end_import
@@ -479,6 +469,8 @@ operator|new
 name|RuntimeException
 argument_list|(
 literal|"Unable to get Java object from VectorizedRowBatch"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

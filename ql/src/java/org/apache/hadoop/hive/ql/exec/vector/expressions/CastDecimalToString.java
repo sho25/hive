@@ -63,28 +63,6 @@ name|DecimalColumnVector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|DecimalToStringUnaryUDF
-import|;
-end_import
-
 begin_comment
 comment|/**  * To support vectorized cast of decimal to string.  */
 end_comment
@@ -225,6 +203,8 @@ operator|new
 name|RuntimeException
 argument_list|(
 literal|"Internal error:  unable to convert decimal to string"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

@@ -299,7 +299,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|InstantiationException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -313,25 +313,8 @@ name|hmapClass
 operator|.
 name|getName
 argument_list|()
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|IllegalAccessException
+argument_list|,
 name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Whoops, could not create an Authenticator of class "
-operator|+
-name|hmapClass
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 throw|;
 block|}
