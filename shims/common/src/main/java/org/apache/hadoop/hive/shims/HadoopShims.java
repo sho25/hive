@@ -1533,6 +1533,14 @@ name|FileSystem
 name|fs
 parameter_list|)
 function_decl|;
+comment|/**    * Check whether file is directory.    */
+name|boolean
+name|isDirectory
+parameter_list|(
+name|FileStatus
+name|fileStatus
+parameter_list|)
+function_decl|;
 comment|/**    * Returns a shim to wrap KerberosName    */
 specifier|public
 name|KerberosNameShim
@@ -1543,14 +1551,6 @@ name|name
 parameter_list|)
 throws|throws
 name|IOException
-function_decl|;
-comment|/**    * Check whether file is directory.    */
-name|boolean
-name|isDirectory
-parameter_list|(
-name|FileStatus
-name|fileStatus
-parameter_list|)
 function_decl|;
 comment|/**    * Shim for KerberosName    */
 specifier|public

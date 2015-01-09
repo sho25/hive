@@ -48,7 +48,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveKey is a simple wrapper on Text which allows us to set the hashCode  * easily. hashCode is used for hadoop partitioner.  *   */
+comment|/**  * HiveKey is a simple wrapper on Text which allows us to set the hashCode  * easily. hashCode is used for hadoop partitioner.  */
 end_comment
 
 begin_class
