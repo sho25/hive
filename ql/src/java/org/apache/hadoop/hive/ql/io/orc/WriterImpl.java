@@ -3240,6 +3240,14 @@ name|increment
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
+name|indexStatistics
+operator|.
+name|setNull
+argument_list|()
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|isPresent

@@ -24922,6 +24922,17 @@ name|TimestampStatisticsOrBuilder
 name|getTimestampStatisticsOrBuilder
 parameter_list|()
 function_decl|;
+comment|// optional bool hasNull = 10;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+name|boolean
+name|hasHasNull
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+name|boolean
+name|getHasNull
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.ColumnStatistics}    */
 specifier|public
@@ -26029,6 +26040,23 @@ block|}
 name|bitField0_
 operator||=
 literal|0x00000100
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|80
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+name|hasNull_
+operator|=
+name|input
+operator|.
+name|readBool
+argument_list|()
 expr_stmt|;
 break|break;
 block|}
@@ -27148,6 +27176,47 @@ return|return
 name|timestampStatistics_
 return|;
 block|}
+comment|// optional bool hasNull = 10;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|HASNULL_FIELD_NUMBER
+init|=
+literal|10
+decl_stmt|;
+specifier|private
+name|boolean
+name|hasNull_
+decl_stmt|;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+specifier|public
+name|boolean
+name|hasHasNull
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+specifier|public
+name|boolean
+name|getHasNull
+parameter_list|()
+block|{
+return|return
+name|hasNull_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -27340,6 +27409,10 @@ name|TimestampStatistics
 operator|.
 name|getDefaultInstance
 argument_list|()
+expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
 expr_stmt|;
 block|}
 specifier|private
@@ -27607,6 +27680,29 @@ argument_list|(
 literal|9
 argument_list|,
 name|timestampStatistics_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeBool
+argument_list|(
+literal|10
+argument_list|,
+name|hasNull_
 argument_list|)
 expr_stmt|;
 block|}
@@ -27926,6 +28022,37 @@ argument_list|(
 literal|9
 argument_list|,
 name|timestampStatistics_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeBoolSize
+argument_list|(
+literal|10
+argument_list|,
+name|hasNull_
 argument_list|)
 expr_stmt|;
 block|}
@@ -29238,6 +29365,19 @@ operator|~
 literal|0x00000100
 operator|)
 expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000200
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -29846,6 +29986,30 @@ name|build
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|hasNull_
+operator|=
+name|hasNull_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -30137,6 +30301,23 @@ argument_list|(
 name|other
 operator|.
 name|getTimestampStatistics
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasHasNull
+argument_list|()
+condition|)
+block|{
+name|setHasNull
+argument_list|(
+name|other
+operator|.
+name|getHasNull
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -36320,6 +36501,89 @@ expr_stmt|;
 block|}
 return|return
 name|timestampStatisticsBuilder_
+return|;
+block|}
+comment|// optional bool hasNull = 10;
+specifier|private
+name|boolean
+name|hasNull_
+decl_stmt|;
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|boolean
+name|hasHasNull
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|boolean
+name|getHasNull
+parameter_list|()
+block|{
+return|return
+name|hasNull_
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|Builder
+name|setHasNull
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+name|hasNull_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|Builder
+name|clearHasNull
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000200
+operator|)
+expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
 return|;
 block|}
 comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.ColumnStatistics)
@@ -96376,7 +96640,7 @@ literal|"aximum\030\002 \001(\021\"7\n\023TimestampStatistics\022\017\n\007m"
 operator|+
 literal|"inimum\030\001 \001(\022\022\017\n\007maximum\030\002 \001(\022\"\037\n\020BinaryS"
 operator|+
-literal|"tatistics\022\013\n\003sum\030\001 \001(\022\"\234\005\n\020ColumnStatist"
+literal|"tatistics\022\013\n\003sum\030\001 \001(\022\"\255\005\n\020ColumnStatist"
 operator|+
 literal|"ics\022\026\n\016numberOfValues\030\001 \001(\004\022J\n\rintStatis"
 operator|+
@@ -96410,113 +96674,113 @@ literal|"tatistics\022R\n\023timestampStatistics\030\t \001(\01325"
 operator|+
 literal|".org.apache.hadoop.hive.ql.io.orc.Timest"
 operator|+
-literal|"ampStatistics\"n\n\rRowIndexEntry\022\025\n\tpositi"
+literal|"ampStatistics\022\017\n\007hasNull\030\n \001(\010\"n\n\rRowInd"
 block|,
-literal|"ons\030\001 \003(\004B\002\020\001\022F\n\nstatistics\030\002 \001(\01322.org."
+literal|"exEntry\022\025\n\tpositions\030\001 \003(\004B\002\020\001\022F\n\nstatis"
 operator|+
-literal|"apache.hadoop.hive.ql.io.orc.ColumnStati"
+literal|"tics\030\002 \001(\01322.org.apache.hadoop.hive.ql.i"
 operator|+
-literal|"stics\"J\n\010RowIndex\022>\n\005entry\030\001 \003(\0132/.org.a"
+literal|"o.orc.ColumnStatistics\"J\n\010RowIndex\022>\n\005en"
 operator|+
-literal|"pache.hadoop.hive.ql.io.orc.RowIndexEntr"
+literal|"try\030\001 \003(\0132/.org.apache.hadoop.hive.ql.io"
 operator|+
-literal|"y\"\331\001\n\006Stream\022;\n\004kind\030\001 \002(\0162-.org.apache."
+literal|".orc.RowIndexEntry\"\331\001\n\006Stream\022;\n\004kind\030\001 "
 operator|+
-literal|"hadoop.hive.ql.io.orc.Stream.Kind\022\016\n\006col"
+literal|"\002(\0162-.org.apache.hadoop.hive.ql.io.orc.S"
 operator|+
-literal|"umn\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\"r\n\004Kind\022\013\n\007PRE"
+literal|"tream.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006length\030\003 \001"
 operator|+
-literal|"SENT\020\000\022\010\n\004DATA\020\001\022\n\n\006LENGTH\020\002\022\023\n\017DICTIONA"
+literal|"(\004\"r\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001\022\n\n\006LEN"
 operator|+
-literal|"RY_DATA\020\003\022\024\n\020DICTIONARY_COUNT\020\004\022\r\n\tSECON"
+literal|"GTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DICTIONARY"
 operator|+
-literal|"DARY\020\005\022\r\n\tROW_INDEX\020\006\"\263\001\n\016ColumnEncoding"
+literal|"_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_INDEX\020\006\"\263"
 block|,
-literal|"\022C\n\004kind\030\001 \002(\01625.org.apache.hadoop.hive."
+literal|"\001\n\016ColumnEncoding\022C\n\004kind\030\001 \002(\01625.org.ap"
 operator|+
-literal|"ql.io.orc.ColumnEncoding.Kind\022\026\n\016diction"
+literal|"ache.hadoop.hive.ql.io.orc.ColumnEncodin"
 operator|+
-literal|"arySize\030\002 \001(\r\"D\n\004Kind\022\n\n\006DIRECT\020\000\022\016\n\nDIC"
+literal|"g.Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind\022\n"
 operator|+
-literal|"TIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022\021\n\rDICTIONARY_V"
+literal|"\n\006DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V2\020"
 operator|+
-literal|"2\020\003\"\214\001\n\014StripeFooter\0229\n\007streams\030\001 \003(\0132(."
+literal|"\002\022\021\n\rDICTIONARY_V2\020\003\"\214\001\n\014StripeFooter\0229\n"
 operator|+
-literal|"org.apache.hadoop.hive.ql.io.orc.Stream\022"
+literal|"\007streams\030\001 \003(\0132(.org.apache.hadoop.hive."
 operator|+
-literal|"A\n\007columns\030\002 \003(\01320.org.apache.hadoop.hiv"
+literal|"ql.io.orc.Stream\022A\n\007columns\030\002 \003(\01320.org."
 operator|+
-literal|"e.ql.io.orc.ColumnEncoding\"\370\002\n\004Type\0229\n\004k"
+literal|"apache.hadoop.hive.ql.io.orc.ColumnEncod"
 operator|+
-literal|"ind\030\001 \002(\0162+.org.apache.hadoop.hive.ql.io"
+literal|"ing\"\370\002\n\004Type\0229\n\004kind\030\001 \002(\0162+.org.apache."
 operator|+
-literal|".orc.Type.Kind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001\022\022\n\n"
+literal|"hadoop.hive.ql.io.orc.Type.Kind\022\024\n\010subty"
 block|,
-literal|"fieldNames\030\003 \003(\t\022\025\n\rmaximumLength\030\004 \001(\r\022"
+literal|"pes\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030\003 \003(\t\022\025\n\rmax"
 operator|+
-literal|"\021\n\tprecision\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001\n\004Ki"
+literal|"imumLength\030\004 \001(\r\022\021\n\tprecision\030\005 \001(\r\022\r\n\005s"
 operator|+
-literal|"nd\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003"
+literal|"cale\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE"
 operator|+
-literal|"INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n"
+literal|"\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOA"
 operator|+
-literal|"\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n"
+literal|"T\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022\n\n\006BINARY\020\010\022"
 operator|+
-literal|"\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022"
+literal|"\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STR"
 operator|+
-literal|"\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022\010\n\004C"
+literal|"UCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022"
 operator|+
-literal|"HAR\020\021\"x\n\021StripeInformation\022\016\n\006offset\030\001 \001"
+literal|"\013\n\007VARCHAR\020\020\022\010\n\004CHAR\020\021\"x\n\021StripeInformat"
 operator|+
-literal|"(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndataLength\030\003 "
+literal|"ion\022\016\n\006offset\030\001 \001(\004\022\023\n\013indexLength\030\002 \001(\004"
 operator|+
-literal|"\001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014numberOfRow"
+literal|"\022\022\n\ndataLength\030\003 \001(\004\022\024\n\014footerLength\030\004 \001"
 block|,
-literal|"s\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004name\030\001 \002("
+literal|"(\004\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020UserMetadata"
 operator|+
-literal|"\t\022\r\n\005value\030\002 \002(\014\"X\n\020StripeStatistics\022D\n\010"
+literal|"Item\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\014\"X\n\020Str"
 operator|+
-literal|"colStats\030\001 \003(\01322.org.apache.hadoop.hive."
+literal|"ipeStatistics\022D\n\010colStats\030\001 \003(\01322.org.ap"
 operator|+
-literal|"ql.io.orc.ColumnStatistics\"S\n\010Metadata\022G"
+literal|"ache.hadoop.hive.ql.io.orc.ColumnStatist"
 operator|+
-literal|"\n\013stripeStats\030\001 \003(\01322.org.apache.hadoop."
+literal|"ics\"S\n\010Metadata\022G\n\013stripeStats\030\001 \003(\01322.o"
 operator|+
-literal|"hive.ql.io.orc.StripeStatistics\"\356\002\n\006Foot"
+literal|"rg.apache.hadoop.hive.ql.io.orc.StripeSt"
 operator|+
-literal|"er\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLengt"
+literal|"atistics\"\356\002\n\006Footer\022\024\n\014headerLength\030\001 \001("
 operator|+
-literal|"h\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.ha"
+literal|"\004\022\025\n\rcontentLength\030\002 \001(\004\022D\n\007stripes\030\003 \003("
 operator|+
-literal|"doop.hive.ql.io.orc.StripeInformation\0225\n"
+literal|"\01323.org.apache.hadoop.hive.ql.io.orc.Str"
 operator|+
-literal|"\005types\030\004 \003(\0132&.org.apache.hadoop.hive.ql"
+literal|"ipeInformation\0225\n\005types\030\004 \003(\0132&.org.apac"
 block|,
-literal|".io.orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apa"
+literal|"he.hadoop.hive.ql.io.orc.Type\022D\n\010metadat"
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.UserMetadataIt"
+literal|"a\030\005 \003(\01322.org.apache.hadoop.hive.ql.io.o"
 operator|+
-literal|"em\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007"
+literal|"rc.UserMetadataItem\022\024\n\014numberOfRows\030\006 \001("
 operator|+
-literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
+literal|"\004\022F\n\nstatistics\030\007 \003(\01322.org.apache.hadoo"
 operator|+
-literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
+literal|"p.hive.ql.io.orc.ColumnStatistics\022\026\n\016row"
 operator|+
-literal|"\"\334\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
+literal|"IndexStride\030\010 \001(\r\"\334\001\n\nPostScript\022\024\n\014foot"
 operator|+
-literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
+literal|"erLength\030\001 \001(\004\022F\n\013compression\030\002 \001(\01621.or"
 operator|+
-literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
+literal|"g.apache.hadoop.hive.ql.io.orc.Compressi"
 operator|+
-literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
+literal|"onKind\022\034\n\024compressionBlockSize\030\003 \001(\004\022\023\n\007"
 operator|+
-literal|"\022\026\n\016metadataLength\030\005 \001(\004\022\025\n\rwriterVersio"
+literal|"version\030\004 \003(\rB\002\020\001\022\026\n\016metadataLength\030\005 \001("
 block|,
-literal|"n\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t*:\n\017CompressionKi"
+literal|"\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005magic\030\300> \001(\t"
 operator|+
-literal|"nd\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZ"
+literal|"*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022"
 operator|+
-literal|"O\020\003"
+literal|"\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
 block|}
 decl_stmt|;
 name|com
@@ -96965,6 +97229,8 @@ block|,
 literal|"BinaryStatistics"
 block|,
 literal|"TimestampStatistics"
+block|,
+literal|"HasNull"
 block|, }
 argument_list|)
 expr_stmt|;
