@@ -340,7 +340,7 @@ import|;
 end_import
 
 begin_class
-specifier|final
+specifier|public
 class|class
 name|ReaderImpl
 implements|implements
@@ -371,27 +371,27 @@ literal|16
 operator|*
 literal|1024
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|FileSystem
 name|fileSystem
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|Path
 name|path
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|CompressionKind
 name|compressionKind
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|CompressionCodec
 name|codec
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|int
 name|bufferSize
@@ -409,7 +409,7 @@ specifier|final
 name|int
 name|metadataSize
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|OrcProto
 operator|.
@@ -428,7 +428,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|Configuration
 name|conf
@@ -1423,6 +1423,7 @@ block|}
 block|}
 block|}
 comment|/**   * Constructor that let's the user specify additional options.    * @param path pathname for file    * @param options options for reading    * @throws IOException    */
+specifier|public
 name|ReaderImpl
 parameter_list|(
 name|Path

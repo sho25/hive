@@ -575,28 +575,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|orc
-operator|.
-name|LlapUtils
-operator|.
-name|PresentStreamReadResult
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|sarg
 operator|.
 name|PredicateLeaf
@@ -976,6 +954,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|RecordReaderImpl
 implements|implements
@@ -1017,7 +996,7 @@ specifier|final
 name|long
 name|firstRow
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|List
 argument_list|<
@@ -1080,7 +1059,7 @@ name|rowInStripe
 init|=
 literal|0
 decl_stmt|;
-specifier|private
+specifier|protected
 name|int
 name|currentStripe
 init|=
@@ -1761,6 +1740,7 @@ return|return
 name|result
 return|;
 block|}
+specifier|protected
 name|RecordReaderImpl
 parameter_list|(
 name|List
@@ -13017,6 +12997,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|protected
 name|OrcProto
 operator|.
 name|StripeFooter
@@ -14706,7 +14687,7 @@ name|statsObj
 return|;
 block|}
 comment|/**    * Pick the row groups that we need to load from the current stripe.    * @return an array with a boolean for each row group or null if all of the    *    row groups must be read.    * @throws IOException    */
-specifier|private
+specifier|protected
 name|boolean
 index|[]
 name|pickRowGroups
@@ -18225,6 +18206,7 @@ literal|"Seek after the end of reader range"
 argument_list|)
 throw|;
 block|}
+specifier|protected
 name|OrcProto
 operator|.
 name|RowIndex
