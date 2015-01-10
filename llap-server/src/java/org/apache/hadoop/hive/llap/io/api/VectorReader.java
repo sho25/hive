@@ -57,11 +57,9 @@ name|io
 operator|.
 name|api
 operator|.
-name|cache
+name|EncodedColumn
 operator|.
-name|Allocator
-operator|.
-name|LlapBuffer
+name|ColumnBuffer
 import|;
 end_import
 
@@ -108,7 +106,7 @@ decl_stmt|;
 specifier|public
 name|List
 argument_list|<
-name|LlapBuffer
+name|ColumnBuffer
 argument_list|>
 name|lockedBuffers
 decl_stmt|;

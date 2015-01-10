@@ -21,30 +21,6 @@ name|api
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|cache
-operator|.
-name|Allocator
-operator|.
-name|LlapBuffer
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -53,6 +29,13 @@ parameter_list|<
 name|BatchKey
 parameter_list|>
 block|{
+comment|// TODO: temporary class. Will be filled in when reading (ORC) is implemented. Need to balance
+comment|//       generality, and ability to not copy data from underlying low-level cached buffers.
+specifier|public
+specifier|static
+class|class
+name|ColumnBuffer
+block|{}
 specifier|public
 name|EncodedColumn
 parameter_list|(
@@ -62,7 +45,7 @@ parameter_list|,
 name|int
 name|columnIndex
 parameter_list|,
-name|LlapBuffer
+name|ColumnBuffer
 name|columnData
 parameter_list|)
 block|{
@@ -94,7 +77,7 @@ name|int
 name|columnIndex
 decl_stmt|;
 specifier|public
-name|LlapBuffer
+name|ColumnBuffer
 name|columnData
 decl_stmt|;
 block|}

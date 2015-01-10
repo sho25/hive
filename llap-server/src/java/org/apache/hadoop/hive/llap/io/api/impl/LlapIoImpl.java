@@ -131,7 +131,7 @@ name|llap
 operator|.
 name|cache
 operator|.
-name|JavaAllocator
+name|LowLevelBuddyCache
 import|;
 end_import
 
@@ -190,28 +190,6 @@ operator|.
 name|api
 operator|.
 name|VectorReader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|cache
-operator|.
-name|Allocator
 import|;
 end_import
 
@@ -432,15 +410,6 @@ name|conf
 operator|=
 name|conf
 expr_stmt|;
-comment|// ChunkPool<OrcLoader.ChunkKey> chunkPool = new ChunkPool<OrcLoader.ChunkKey>();
-comment|// new BufferPool(conf, chunkPool)
-name|Allocator
-name|allocator
-init|=
-operator|new
-name|JavaAllocator
-argument_list|()
-decl_stmt|;
 name|Cache
 argument_list|<
 name|OrcCacheKey
@@ -454,6 +423,7 @@ name|OrcCacheKey
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// High-level cache not supported yet.
 name|this
 operator|.
 name|edp
@@ -461,7 +431,11 @@ operator|=
 operator|new
 name|OrcEncodedDataProducer
 argument_list|(
-name|allocator
+operator|new
+name|LowLevelBuddyCache
+argument_list|(
+name|conf
+argument_list|)
 argument_list|,
 name|cache
 argument_list|,
@@ -497,7 +471,7 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO#: Add "create" method in a well-defined place when server is started
+comment|// TODO: Add "create" method in a well-defined place when server is started
 specifier|public
 specifier|static
 name|LlapIo

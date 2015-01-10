@@ -137,7 +137,7 @@ name|api
 operator|.
 name|cache
 operator|.
-name|Allocator
+name|LowLevelCache
 import|;
 end_import
 
@@ -522,8 +522,8 @@ argument_list|>
 argument_list|>
 name|consumer
 parameter_list|,
-name|Allocator
-name|allocator
+name|LowLevelCache
+name|cache
 parameter_list|)
 block|{    }
 block|}

@@ -767,6 +767,7 @@ operator|=
 literal|0
 expr_stmt|;
 block|}
+comment|// TODO: this should allocate from cache
 specifier|private
 name|ByteBuffer
 name|allocateBuffer

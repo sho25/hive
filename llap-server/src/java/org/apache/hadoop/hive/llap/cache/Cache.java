@@ -35,11 +35,9 @@ name|io
 operator|.
 name|api
 operator|.
-name|cache
+name|EncodedColumn
 operator|.
-name|Allocator
-operator|.
-name|LlapBuffer
+name|ColumnBuffer
 import|;
 end_import
 
@@ -56,18 +54,18 @@ name|CacheKey
 parameter_list|>
 block|{
 specifier|public
-name|LlapBuffer
+name|ColumnBuffer
 name|cacheOrGet
 parameter_list|(
 name|CacheKey
 name|key
 parameter_list|,
-name|LlapBuffer
+name|ColumnBuffer
 name|value
 parameter_list|)
 function_decl|;
 specifier|public
-name|LlapBuffer
+name|ColumnBuffer
 name|get
 parameter_list|(
 name|CacheKey

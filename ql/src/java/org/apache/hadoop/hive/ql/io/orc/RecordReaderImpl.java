@@ -373,7 +373,7 @@ name|api
 operator|.
 name|cache
 operator|.
-name|Allocator
+name|LowLevelCache
 import|;
 end_import
 
@@ -15313,6 +15313,7 @@ operator|.
 name|getDataLength
 argument_list|()
 decl_stmt|;
+comment|// TODO: planning should be added here too, to take cache into account
 comment|// explicitly trigger 1 big read
 name|DiskRange
 index|[]
@@ -15380,6 +15381,7 @@ argument_list|,
 name|streams
 argument_list|)
 expr_stmt|;
+comment|// TODO: decompressed data from streams should be put in cache
 block|}
 comment|/**    * The sections of stripe that we need to read.    */
 specifier|static
@@ -17321,6 +17323,7 @@ operator|.
 name|getStreamsList
 argument_list|()
 decl_stmt|;
+comment|// TODO: planning should take cache into account
 name|List
 argument_list|<
 name|DiskRange
@@ -17414,6 +17417,7 @@ argument_list|,
 name|chunks
 argument_list|)
 expr_stmt|;
+comment|// TODO: decompressed data from streams should be put in cache
 name|createStreams
 argument_list|(
 name|streamList
@@ -18641,7 +18645,7 @@ argument_list|>
 argument_list|>
 name|consumer
 parameter_list|,
-name|Allocator
+name|LowLevelCache
 name|allocator
 parameter_list|)
 block|{
