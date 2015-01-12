@@ -1575,6 +1575,8 @@ argument_list|(
 literal|"Failed to get file split for event: "
 operator|+
 name|diEvent
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

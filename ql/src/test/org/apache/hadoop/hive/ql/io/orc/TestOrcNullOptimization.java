@@ -793,7 +793,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 19998 min: 0 max: 0 sum: 0"
+literal|"count: 19998 hasNull: true min: 0 max: 0 sum: 0"
 argument_list|,
 name|stats
 index|[
@@ -855,7 +855,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 19998 min: a max: a sum: 19998"
+literal|"count: 19998 hasNull: true min: a max: a sum: 19998"
 argument_list|,
 name|stats
 index|[
@@ -1630,7 +1630,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 20000 min: 0 max: 0 sum: 0"
+literal|"count: 20000 hasNull: false min: 0 max: 0 sum: 0"
 argument_list|,
 name|stats
 index|[
@@ -1692,7 +1692,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 20000 min: a max: b sum: 20000"
+literal|"count: 20000 hasNull: false min: a max: b sum: 20000"
 argument_list|,
 name|stats
 index|[
@@ -2500,7 +2500,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7 min: 2 max: 3 sum: 17"
+literal|"count: 7 hasNull: true min: 2 max: 3 sum: 17"
 argument_list|,
 name|stats
 index|[
@@ -2562,7 +2562,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7 min: a max: h sum: 7"
+literal|"count: 7 hasNull: true min: a max: h sum: 7"
 argument_list|,
 name|stats
 index|[

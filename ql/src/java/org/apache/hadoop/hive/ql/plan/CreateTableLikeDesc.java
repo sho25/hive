@@ -112,6 +112,11 @@ name|isTemporary
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|isUserStorageFormat
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|CreateTableLikeDesc
 parameter_list|()
@@ -161,6 +166,9 @@ name|ifNotExists
 parameter_list|,
 name|String
 name|likeTableName
+parameter_list|,
+name|boolean
+name|isUserStorageFormat
 parameter_list|)
 block|{
 name|this
@@ -228,6 +236,12 @@ operator|.
 name|likeTableName
 operator|=
 name|likeTableName
+expr_stmt|;
+name|this
+operator|.
+name|isUserStorageFormat
+operator|=
+name|isUserStorageFormat
 expr_stmt|;
 block|}
 annotation|@
@@ -610,6 +624,18 @@ name|isTemporary
 operator|=
 name|isTemporary
 expr_stmt|;
+block|}
+comment|/**    * True if user has specified storage format in query    * @return boolean    */
+specifier|public
+name|boolean
+name|isUserStorageFormat
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|isUserStorageFormat
+return|;
 block|}
 block|}
 end_class
