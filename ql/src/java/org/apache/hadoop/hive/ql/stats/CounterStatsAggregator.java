@@ -251,6 +251,13 @@ name|Task
 name|sourceTask
 parameter_list|)
 block|{
+if|if
+condition|(
+name|sourceTask
+operator|instanceof
+name|MapRedTask
+condition|)
+block|{
 try|try
 block|{
 name|jc
@@ -319,6 +326,7 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 return|return
 name|counters
 operator|!=
@@ -367,13 +375,22 @@ name|String
 name|statType
 parameter_list|)
 block|{
+name|long
+name|value
+init|=
+literal|0
+decl_stmt|;
+if|if
+condition|(
+name|counters
+operator|!=
+literal|null
+condition|)
+block|{
 comment|// In case of counters, aggregation is done by JobTracker / MR AM itself
 comment|// so no need to aggregate, simply return the counter value for requested stat.
-return|return
-name|String
-operator|.
-name|valueOf
-argument_list|(
+name|value
+operator|=
 name|counters
 operator|.
 name|getGroup
@@ -385,6 +402,14 @@ name|getCounter
 argument_list|(
 name|statType
 argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|value
 argument_list|)
 return|;
 block|}

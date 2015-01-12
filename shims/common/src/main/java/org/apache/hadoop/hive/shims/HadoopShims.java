@@ -23,26 +23,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|DataInput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|DataOutput
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|IOException
 import|;
 end_import
@@ -306,20 +286,6 @@ operator|.
 name|mapred
 operator|.
 name|ClusterStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputSplit
 import|;
 end_import
 
@@ -1565,6 +1531,14 @@ name|conf
 parameter_list|,
 name|FileSystem
 name|fs
+parameter_list|)
+function_decl|;
+comment|/**    * Check whether file is directory.    */
+name|boolean
+name|isDirectory
+parameter_list|(
+name|FileStatus
+name|fileStatus
 parameter_list|)
 function_decl|;
 comment|/**    * Returns a shim to wrap KerberosName    */

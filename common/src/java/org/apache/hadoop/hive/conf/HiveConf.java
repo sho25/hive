@@ -616,6 +616,36 @@ name|modWhiteListPattern
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+name|boolean
+name|isSparkConfigUpdated
+init|=
+literal|false
+decl_stmt|;
+specifier|public
+name|boolean
+name|getSparkConfigUpdated
+parameter_list|()
+block|{
+return|return
+name|isSparkConfigUpdated
+return|;
+block|}
+specifier|public
+name|void
+name|setSparkConfigUpdated
+parameter_list|(
+name|boolean
+name|isSparkConfigUpdated
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isSparkConfigUpdated
+operator|=
+name|isSparkConfigUpdated
+expr_stmt|;
+block|}
 static|static
 block|{
 name|ClassLoader
@@ -3706,6 +3736,15 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Merge small files at the end of a Tez DAG"
+argument_list|)
+block|,
+name|HIVEMERGESPARKFILES
+argument_list|(
+literal|"hive.merge.sparkfiles"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Merge small files at the end of a Spark DAG Transformation"
 argument_list|)
 block|,
 name|HIVEMERGEMAPFILESSIZE
@@ -7207,9 +7246,11 @@ argument_list|(
 literal|"mr"
 argument_list|,
 literal|"tez"
+argument_list|,
+literal|"spark"
 argument_list|)
 argument_list|,
-literal|"Chooses execution engine. Options are: mr (Map reduce, default) or tez (hadoop 2 only)"
+literal|"Chooses execution engine. Options are: mr (Map reduce, default), tez (hadoop 2 only), spark"
 argument_list|)
 block|,
 name|HIVE_JAR_DIRECTORY
@@ -7632,6 +7673,23 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
+argument_list|)
+block|,
+name|SPARK_CLIENT_FUTURE_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.future.timeout"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"remote spark client JobHandle future timeout value in seconds."
 argument_list|)
 block|;
 specifier|public
@@ -8849,6 +8907,15 @@ literal|"of parameters that can't be modified at runtime"
 argument_list|)
 throw|;
 block|}
+name|isSparkConfigUpdated
+operator|=
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"spark"
+argument_list|)
+expr_stmt|;
 name|set
 argument_list|(
 name|name

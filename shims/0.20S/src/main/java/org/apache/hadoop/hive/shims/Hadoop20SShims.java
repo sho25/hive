@@ -3107,6 +3107,23 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isDirectory
+parameter_list|(
+name|FileStatus
+name|fileStatus
+parameter_list|)
+block|{
+return|return
+name|fileStatus
+operator|.
+name|isDir
+argument_list|()
+return|;
+block|}
 comment|/**    * Returns a shim to wrap KerberosName    */
 annotation|@
 name|Override

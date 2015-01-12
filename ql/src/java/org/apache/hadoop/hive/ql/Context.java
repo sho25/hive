@@ -2303,6 +2303,34 @@ name|boolean
 name|isLocalOnlyExecutionMode
 parameter_list|()
 block|{
+comment|// Always allow spark to run in a cluster mode. Without this, depending on
+comment|// user's local hadoop settings, true may be returned, which causes plan to be
+comment|// stored in local path.
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"spark"
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 return|return
 name|ShimLoader
 operator|.

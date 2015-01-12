@@ -1707,6 +1707,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * Given a Work descriptor and the TaskName for the work    * this is responsible to check each MapJoinOp for cross products.    * The analyze call returns the warnings list.    *<p>    * For MR the taskname is the StageName, for Tez it is the vertex name.    */
+specifier|public
+specifier|static
 class|class
 name|MapJoinCheck
 implements|implements
@@ -2063,6 +2065,7 @@ return|;
 block|}
 block|}
 comment|/*    * for a given Work Descriptor, it extracts information about the ReduceSinkOps    * in the Work. For Tez, you can restrict it to ReduceSinks for a particular output    * vertex.    */
+specifier|public
 specifier|static
 class|class
 name|ExtractReduceSinkInfo
