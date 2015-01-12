@@ -5446,11 +5446,17 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|600
-operator|*
-literal|1000
+literal|"600000ms"
 argument_list|,
-literal|"ZooKeeper client's session timeout. The client is disconnected, and as a result, all locks released, \n"
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's session timeout (in milliseconds). The client is disconnected, and as a result, all locks released, \n"
 operator|+
 literal|"if a heartbeat is not sent in the timeout."
 argument_list|)
@@ -5471,6 +5477,34 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Clean extra nodes at the end of the session."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_MAX_RETRIES
+argument_list|(
+literal|"hive.zookeeper.connection.max.retries"
+argument_list|,
+literal|3
+argument_list|,
+literal|"Max number of times to retry when connecting to the ZooKeeper server."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_BASESLEEPTIME
+argument_list|(
+literal|"hive.zookeeper.connection.basesleeptime"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Initial amount of time (in milliseconds) to wait between retries\n"
+operator|+
+literal|"when connecting to the ZooKeeper server when using ExponentialBackoffRetry policy."
 argument_list|)
 block|,
 comment|// Transactions
