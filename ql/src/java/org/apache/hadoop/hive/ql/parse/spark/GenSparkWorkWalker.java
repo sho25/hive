@@ -178,7 +178,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Walks the operator tree in DFS fashion.  *   * Cloned from GenTezWorkWarlker.  */
+comment|/**  * Walks the operator tree in DFS fashion.  *  * Cloned from GenTezWorkWarlker.  */
 end_comment
 
 begin_class
