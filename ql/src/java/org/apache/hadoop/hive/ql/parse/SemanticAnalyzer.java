@@ -63732,6 +63732,11 @@ name|storedAsDirs
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|isUserStorageFormat
+init|=
+literal|false
+decl_stmt|;
 name|RowFormatParams
 name|rowFormatParams
 init|=
@@ -63811,6 +63816,10 @@ name|child
 argument_list|)
 condition|)
 block|{
+name|isUserStorageFormat
+operator|=
+literal|true
+expr_stmt|;
 continue|continue;
 block|}
 switch|switch
@@ -64908,6 +64917,8 @@ argument_list|,
 name|ifNotExists
 argument_list|,
 name|likeTableName
+argument_list|,
+name|isUserStorageFormat
 argument_list|)
 decl_stmt|;
 name|SessionState
