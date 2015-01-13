@@ -161,24 +161,6 @@ name|OperatorType
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|StructObjectInspector
-import|;
-end_import
-
 begin_comment
 comment|/**  * Select operator implementation.  */
 end_comment
@@ -322,6 +304,7 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|HiveConf
@@ -339,21 +322,14 @@ argument_list|)
 condition|)
 block|{
 name|eval
-index|[
-name|i
-index|]
 operator|=
 name|ExprNodeEvaluatorFactory
 operator|.
-name|toCachedEval
+name|toCachedEvals
 argument_list|(
 name|eval
-index|[
-name|i
-index|]
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|output
 operator|=
@@ -371,15 +347,10 @@ name|info
 argument_list|(
 literal|"SELECT "
 operator|+
-operator|(
-operator|(
-name|StructObjectInspector
-operator|)
 name|inputObjInspectors
 index|[
 literal|0
 index|]
-operator|)
 operator|.
 name|getTypeName
 argument_list|()
