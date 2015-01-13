@@ -1223,6 +1223,13 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|Utilities
+operator|.
+name|clearWork
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|sparkSession
