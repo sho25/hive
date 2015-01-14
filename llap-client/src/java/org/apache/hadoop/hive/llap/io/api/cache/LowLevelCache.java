@@ -78,6 +78,14 @@ name|int
 name|size
 parameter_list|)
 function_decl|;
+name|void
+name|releaseBuffers
+parameter_list|(
+name|LlapMemoryBuffer
+index|[]
+name|cacheBuffers
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

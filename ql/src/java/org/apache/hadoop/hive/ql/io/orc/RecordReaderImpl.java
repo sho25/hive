@@ -18633,9 +18633,6 @@ parameter_list|,
 name|int
 name|rgCount
 parameter_list|,
-name|SearchArgument
-name|sarg
-parameter_list|,
 name|Consumer
 argument_list|<
 name|EncodedColumn

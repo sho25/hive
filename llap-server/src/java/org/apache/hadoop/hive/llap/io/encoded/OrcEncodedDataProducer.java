@@ -490,11 +490,6 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-specifier|final
-name|LowLevelCache
-name|lowLevelCache
-decl_stmt|;
-specifier|private
 name|Configuration
 name|conf
 decl_stmt|;
@@ -502,6 +497,7 @@ specifier|private
 name|OrcMetadataCache
 name|metadataCache
 decl_stmt|;
+comment|// TODO: it makes zero sense to have both at the same time and duplicate data. Add "cache mode".
 specifier|private
 specifier|final
 name|Cache
@@ -509,6 +505,11 @@ argument_list|<
 name|OrcCacheKey
 argument_list|>
 name|cache
+decl_stmt|;
+specifier|private
+specifier|final
+name|LowLevelCache
+name|lowLevelCache
 decl_stmt|;
 specifier|private
 class|class
@@ -849,7 +850,7 @@ argument_list|<
 name|Integer
 argument_list|>
 index|[]
-name|stripeColumnsToRead
+name|stripeColsToRead
 init|=
 name|produceDataFromCache
 argument_list|()
@@ -879,7 +880,13 @@ name|Integer
 argument_list|>
 name|colsToRead
 init|=
-name|stripeColumnsToRead
+name|stripeColsToRead
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|stripeColsToRead
 index|[
 name|stripeIxMod
 index|]
@@ -1067,7 +1074,29 @@ argument_list|,
 name|includes
 argument_list|)
 decl_stmt|;
-comment|// We pass in the already-filtered RGs, as well as sarg. ORC can apply additional filtering.
+comment|// In case if we have high-level cache, we will intercept the data and add it there;
+comment|// otherwise just pass the data directly to the consumer.
+name|Consumer
+argument_list|<
+name|EncodedColumn
+argument_list|<
+name|OrcBatchKey
+argument_list|>
+argument_list|>
+name|consumer
+init|=
+operator|(
+name|cache
+operator|==
+literal|null
+operator|)
+condition|?
+name|this
+operator|.
+name|consumer
+else|:
+name|this
+decl_stmt|;
 name|stripeReader
 operator|.
 name|readEncodedColumns
@@ -1076,9 +1105,7 @@ name|colRgs
 argument_list|,
 name|rgCount
 argument_list|,
-name|sarg
-argument_list|,
-name|this
+name|consumer
 argument_list|,
 name|lowLevelCache
 argument_list|)
@@ -1125,7 +1152,15 @@ name|ColumnBuffer
 name|data
 parameter_list|)
 block|{
-comment|// TODO#: return the data to cache (unlock)
+name|lowLevelCache
+operator|.
+name|releaseBuffers
+argument_list|(
+name|data
+operator|.
+name|cacheBuffers
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -1138,9 +1173,7 @@ argument_list|>
 name|stripes
 parameter_list|)
 block|{
-comment|// The unit of caching for ORC is (stripe x column) (see OrcBatchKey). Note that we do not use
-comment|// SARG anywhere, because file-level filtering on sarg is already performed during split
-comment|// generation, and stripe-level filtering to get row groups is not very helpful right now.
+comment|// The unit of caching for ORC is (stripe x column) (see OrcBatchKey).
 name|long
 name|offset
 init|=
@@ -1528,6 +1561,7 @@ index|]
 expr_stmt|;
 block|}
 block|}
+comment|// TODO: HERE, we need to apply sargs and mark RGs that are filtered as 1s
 name|rgsPerStripe
 operator|=
 operator|new
@@ -1571,7 +1605,6 @@ expr_stmt|;
 block|}
 block|}
 comment|// TODO: split by stripe? we do everything by stripe, and it might be faster
-comment|// TODO: return type provisional depending on ORC API
 specifier|private
 name|List
 argument_list|<
@@ -1581,7 +1614,15 @@ index|[]
 name|produceDataFromCache
 parameter_list|()
 block|{
-comment|// Assumes none of the columns are fetched, because we always do this before reading.
+if|if
+condition|(
+name|cache
+operator|==
+literal|null
+condition|)
+return|return
+literal|null
+return|;
 name|OrcCacheKey
 name|key
 init|=
@@ -1605,7 +1646,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-comment|// Grr, no generics arrays, "J" in "Java" stands for "joke".
+comment|// No generics arrays - "J" in "Java" stands for "joke".
 name|List
 argument_list|<
 name|Integer
@@ -1721,6 +1762,38 @@ operator|++
 name|rgIx
 control|)
 block|{
+name|int
+name|maskIndex
+init|=
+name|rgIx
+operator|>>>
+literal|6
+decl_stmt|,
+name|maskBit
+init|=
+literal|1
+operator|<<
+operator|(
+name|rgIx
+operator|&
+literal|63
+operator|)
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|doneMask
+index|[
+name|maskIndex
+index|]
+operator|&
+name|maskBit
+operator|)
+operator|!=
+literal|0
+condition|)
+continue|continue;
+comment|// RG eliminated by SARG
 name|key
 operator|.
 name|rgIx
@@ -1784,18 +1857,15 @@ argument_list|)
 expr_stmt|;
 name|doneMask
 index|[
-name|rgIx
-operator|>>>
-literal|6
+name|maskIndex
 index|]
-operator||=
-literal|1
-operator|<<
-operator|(
-name|rgIx
-operator|&
-literal|63
-operator|)
+operator|=
+name|doneMask
+index|[
+name|maskIndex
+index|]
+operator||
+name|maskBit
 expr_stmt|;
 block|}
 name|boolean
@@ -1931,6 +2001,11 @@ name|data
 parameter_list|)
 block|{
 comment|// Store object in cache; create new key object - cannot be reused.
+assert|assert
+name|cache
+operator|!=
+literal|null
+assert|;
 name|OrcCacheKey
 name|key
 init|=
@@ -1969,7 +2044,17 @@ operator|!=
 name|cached
 condition|)
 block|{
-comment|// TODO: deallocate columnData
+name|lowLevelCache
+operator|.
+name|releaseBuffers
+argument_list|(
+name|data
+operator|.
+name|columnData
+operator|.
+name|cacheBuffers
+argument_list|)
+expr_stmt|;
 name|data
 operator|.
 name|columnData

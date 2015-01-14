@@ -229,6 +229,10 @@ name|LlapIoImpl
 import|;
 end_import
 
+begin_comment
+comment|// TODO: refactor the cache and allocator parts?
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -242,7 +246,7 @@ specifier|private
 specifier|final
 name|ArrayList
 argument_list|<
-name|arena
+name|Arena
 argument_list|>
 name|arenas
 decl_stmt|;
@@ -303,13 +307,13 @@ name|int
 name|minAllocation
 decl_stmt|,
 name|maxAllocation
+decl_stmt|,
+name|arenaSize
 decl_stmt|;
 specifier|private
 specifier|final
 name|long
 name|maxSize
-decl_stmt|,
-name|arenaSize
 decl_stmt|;
 specifier|public
 name|LowLevelBuddyCache
@@ -348,7 +352,7 @@ name|arenaSize
 operator|=
 name|HiveConf
 operator|.
-name|getLongVar
+name|getIntVar
 argument_list|(
 name|conf
 argument_list|,
@@ -373,11 +377,11 @@ expr_stmt|;
 if|if
 condition|(
 name|maxSize
-argument_list|<
+operator|<
 name|arenaSize
 operator|||
 name|arenaSize
-argument_list|>
+operator|<
 name|maxAllocation
 operator|||
 name|maxAllocation
@@ -449,7 +453,7 @@ literal|1
 operator|)
 condition|)
 block|{
-comment|// TODO: technically, arena size is not required to be so; needs to be divisible by maxAlloc
+comment|// TODO: technically, arena size only needs to be divisible by maxAlloc
 throw|throw
 operator|new
 name|AssertionError
@@ -552,7 +556,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|arena
+name|Arena
 argument_list|>
 argument_list|(
 name|maxArenas
@@ -578,7 +582,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|arena
+name|Arena
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -591,7 +595,17 @@ literal|0
 argument_list|)
 operator|.
 name|init
-argument_list|()
+argument_list|(
+name|arenaSize
+argument_list|,
+name|maxAllocation
+argument_list|,
+name|arenaSizeLog2
+argument_list|,
+name|minAllocLog2
+argument_list|,
+name|maxAllocLog2
+argument_list|)
 expr_stmt|;
 name|cachePolicy
 operator|=
@@ -726,6 +740,8 @@ operator|.
 name|reserveMemory
 argument_list|(
 name|total
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|int
@@ -782,7 +798,7 @@ block|}
 comment|// TODO: instead of waiting, loop only ones we haven't tried w/tryLock?
 for|for
 control|(
-name|arena
+name|Arena
 name|block
 range|:
 name|arenas
@@ -829,7 +845,7 @@ block|}
 comment|// Then try to split bigger blocks.
 for|for
 control|(
-name|arena
+name|Arena
 name|block
 range|:
 name|arenas
@@ -876,7 +892,7 @@ block|}
 comment|// Then try to allocate memory if we haven't allocated all the way to maxSize yet; very rare.
 for|for
 control|(
-name|arena
+name|Arena
 name|block
 range|:
 name|arenas
@@ -912,7 +928,7 @@ specifier|private
 name|int
 name|allocateFast
 parameter_list|(
-name|arena
+name|Arena
 name|block
 parameter_list|,
 name|int
@@ -997,7 +1013,7 @@ specifier|private
 name|int
 name|allocateWithSplit
 parameter_list|(
-name|arena
+name|Arena
 name|arena
 parameter_list|,
 name|int
@@ -1488,7 +1504,7 @@ specifier|public
 name|int
 name|allocateFromFreeListUnderLock
 parameter_list|(
-name|arena
+name|Arena
 name|block
 parameter_list|,
 name|FreeList
@@ -1616,8 +1632,8 @@ specifier|private
 name|int
 name|allocateWithExpand
 parameter_list|(
+name|Arena
 name|arena
-name|block
 parameter_list|,
 name|int
 name|freeListIndex
@@ -1635,7 +1651,7 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|block
+name|arena
 operator|.
 name|data
 operator|!=
@@ -1647,30 +1663,40 @@ return|;
 comment|// already allocated
 synchronized|synchronized
 init|(
-name|block
+name|arena
 init|)
 block|{
 comment|// Never goes from non-null to null, so this is the only place we need sync.
 if|if
 condition|(
-name|block
+name|arena
 operator|.
 name|data
 operator|==
 literal|null
 condition|)
 block|{
-name|block
+name|arena
 operator|.
 name|init
-argument_list|()
+argument_list|(
+name|arenaSize
+argument_list|,
+name|maxAllocation
+argument_list|,
+name|arenaSizeLog2
+argument_list|,
+name|minAllocLog2
+argument_list|,
+name|maxAllocLog2
+argument_list|)
 expr_stmt|;
 block|}
 block|}
 return|return
 name|allocateWithSplit
 argument_list|(
-name|block
+name|arena
 argument_list|,
 name|freeListIndex
 argument_list|,
@@ -1858,14 +1884,14 @@ name|rc
 init|=
 name|buffer
 operator|.
-name|lock
+name|incRef
 argument_list|()
 decl_stmt|;
 if|if
 condition|(
 name|rc
 operator|==
-literal|0
+literal|1
 condition|)
 block|{
 name|cachePolicy
@@ -1995,8 +2021,17 @@ name|oldVal
 operator|==
 literal|null
 condition|)
+block|{
+comment|// Cached successfully, add to policy.
+name|cachePolicy
+operator|.
+name|cache
+argument_list|(
+name|buffer
+argument_list|)
+expr_stmt|;
 break|break;
-comment|// Cached successfully.
+block|}
 if|if
 condition|(
 name|DebugUtils
@@ -2093,7 +2128,7 @@ expr_stmt|;
 comment|// indicate that we've replaced the value
 break|break;
 block|}
-comment|// We found some old value but couldn't lock it; remove it.
+comment|// We found some old value but couldn't incRef it; remove it.
 name|subCache
 operator|.
 name|cache
@@ -2321,6 +2356,47 @@ name|buffer
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|releaseBuffers
+parameter_list|(
+name|LlapMemoryBuffer
+index|[]
+name|cacheBuffers
+parameter_list|)
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|cacheBuffers
+operator|.
+name|length
+condition|;
+operator|++
+name|i
+control|)
+block|{
+name|releaseBufferInternal
+argument_list|(
+operator|(
+name|LlapCacheableBuffer
+operator|)
+name|cacheBuffers
+index|[
+name|i
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 specifier|public
 name|void
 name|releaseBufferInternal
@@ -2333,7 +2409,7 @@ if|if
 condition|(
 name|buffer
 operator|.
-name|unlock
+name|decRef
 argument_list|()
 operator|==
 literal|0
@@ -2366,7 +2442,6 @@ argument_list|,
 operator|-
 literal|1
 argument_list|,
-operator|-
 literal|1
 argument_list|)
 return|;
@@ -2784,12 +2859,28 @@ block|}
 block|}
 block|}
 specifier|private
+specifier|static
 class|class
-name|arena
+name|Arena
 block|{
 name|void
 name|init
-parameter_list|()
+parameter_list|(
+name|int
+name|arenaSize
+parameter_list|,
+name|int
+name|maxAlloc
+parameter_list|,
+name|int
+name|arenaSizeLog2
+parameter_list|,
+name|int
+name|minAllocLog2
+parameter_list|,
+name|int
+name|maxAllocLog2
+parameter_list|)
 block|{
 name|data
 operator|=
@@ -2797,7 +2888,7 @@ name|ByteBuffer
 operator|.
 name|allocateDirect
 argument_list|(
-name|maxAllocation
+name|arenaSize
 argument_list|)
 expr_stmt|;
 name|int
@@ -2911,7 +3002,7 @@ name|i
 operator|,
 name|offset
 operator|+=
-name|maxAllocation
+name|maxAlloc
 control|)
 block|{
 comment|// TODO: will this cause bugs on large numbers due to some Java sign bit stupidity?
@@ -3023,7 +3114,6 @@ comment|// TODO: One possible improvement - store blocks arriving left over from
 comment|//       blocks requested, to be able to wait for pending splits and reduce fragmentation.
 comment|//       However, we are trying to increase fragmentation now, since we cater to single-size.
 block|}
-comment|// TODO##: separate the classes?
 specifier|private
 specifier|static
 class|class

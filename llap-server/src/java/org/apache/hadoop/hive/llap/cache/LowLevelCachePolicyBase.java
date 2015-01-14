@@ -91,11 +91,14 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|boolean
 name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
+parameter_list|,
+name|boolean
+name|waitForEviction
 parameter_list|)
 block|{
 comment|// TODO: if this cannot evict enough, it will spin infinitely. Terminate at some point?
@@ -152,6 +155,18 @@ argument_list|,
 name|evictionListener
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|waitForEviction
+operator|&&
+name|evicted
+operator|==
+literal|0
+condition|)
+return|return
+literal|false
+return|;
 comment|// Adjust the memory - we have to account for what we have just evicted.
 while|while
 condition|(
@@ -183,6 +198,8 @@ argument_list|(
 name|usedMem
 argument_list|,
 name|usedMem
+operator|-
+name|evicted
 operator|+
 name|reserveWithEviction
 argument_list|)
@@ -203,6 +220,9 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+return|return
+literal|true
+return|;
 block|}
 specifier|protected
 specifier|abstract

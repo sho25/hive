@@ -45,11 +45,14 @@ name|LlapCacheableBuffer
 name|buffer
 parameter_list|)
 function_decl|;
-name|void
+name|boolean
 name|reserveMemory
 parameter_list|(
 name|long
-name|total
+name|memoryToReserve
+parameter_list|,
+name|boolean
+name|oneEviction
 parameter_list|)
 function_decl|;
 block|}

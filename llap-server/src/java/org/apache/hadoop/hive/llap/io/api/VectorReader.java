@@ -103,13 +103,6 @@ specifier|public
 name|int
 name|size
 decl_stmt|;
-specifier|public
-name|List
-argument_list|<
-name|ColumnBuffer
-argument_list|>
-name|lockedBuffers
-decl_stmt|;
 block|}
 specifier|public
 name|ColumnVectorBatch

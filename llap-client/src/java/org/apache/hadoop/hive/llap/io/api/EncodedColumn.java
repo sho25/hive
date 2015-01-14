@@ -21,6 +21,28 @@ name|api
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|io
+operator|.
+name|api
+operator|.
+name|cache
+operator|.
+name|LlapMemoryBuffer
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -35,7 +57,21 @@ specifier|public
 specifier|static
 class|class
 name|ColumnBuffer
-block|{}
+block|{
+comment|// TODO: given how ORC will allocate, it might make sense to share array between all
+comment|//       returned encodedColumn-s, and store index and length in the array.
+specifier|public
+name|LlapMemoryBuffer
+index|[]
+name|cacheBuffers
+decl_stmt|;
+specifier|public
+name|int
+name|firstOffset
+decl_stmt|,
+name|lastLength
+decl_stmt|;
+block|}
 specifier|public
 name|EncodedColumn
 parameter_list|(
