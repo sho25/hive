@@ -316,7 +316,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error serializing job configuration"
+literal|"Error serializing job configuration: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -345,7 +347,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error closing output stream"
+literal|"Error closing output stream: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -400,16 +404,22 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
+name|String
+name|msg
+init|=
+literal|"Error de-serializing job configuration: "
+operator|+
+name|e
+decl_stmt|;
+throw|throw
+operator|new
+name|IllegalStateException
 argument_list|(
-literal|"Error de-serializing job configuration"
+name|msg
+argument_list|,
+name|e
 argument_list|)
-expr_stmt|;
-return|return
-literal|null
-return|;
+throw|;
 block|}
 return|return
 name|conf

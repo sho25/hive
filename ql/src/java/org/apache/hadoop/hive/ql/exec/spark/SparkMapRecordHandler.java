@@ -385,20 +385,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -441,18 +427,6 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|String
-name|PLAN_KEY
-init|=
-literal|"__MAP_PLAN__"
-decl_stmt|;
-specifier|private
-name|MapOperator
-name|mo
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
 name|Log
 name|LOG
 init|=
@@ -464,6 +438,18 @@ name|SparkMapRecordHandler
 operator|.
 name|class
 argument_list|)
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|PLAN_KEY
+init|=
+literal|"__MAP_PLAN__"
+decl_stmt|;
+specifier|private
+name|MapOperator
+name|mo
 decl_stmt|;
 specifier|private
 name|MapredLocalWork
@@ -840,7 +826,9 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Map operator initialization failed"
+literal|"Map operator initialization failed: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -931,22 +919,28 @@ throw|;
 block|}
 else|else
 block|{
+name|String
+name|msg
+init|=
+literal|"Error processing row: "
+operator|+
+name|e
+decl_stmt|;
 name|LOG
 operator|.
 name|fatal
 argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+name|msg
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
+name|msg
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1122,18 +1116,27 @@ name|abort
 condition|)
 block|{
 comment|// signal new failure to map-reduce
+name|String
+name|msg
+init|=
+literal|"Hit error while closing operators - failing tree: "
+operator|+
+name|e
+decl_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Hit error while closing operators - failing tree"
+name|msg
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Error while closing operators"
+name|msg
 argument_list|,
 name|e
 argument_list|)

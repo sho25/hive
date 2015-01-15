@@ -2840,9 +2840,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// keep it as reference in case we need fetch work
-comment|//        localPlan.getAliasToFetchWork().put(small_alias.toString(),
-comment|//            new FetchWork(tblDir, tableDescList.get(small_alias)));
 name|listWorks
 operator|.
 name|add

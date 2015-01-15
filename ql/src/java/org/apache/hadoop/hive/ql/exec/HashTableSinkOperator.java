@@ -732,7 +732,7 @@ specifier|private
 specifier|final
 name|Object
 index|[]
-name|EMPTY_OBJECT_ARRAY
+name|emptyObjectArray
 init|=
 operator|new
 name|Object
@@ -743,7 +743,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|MapJoinEagerRowContainer
-name|EMPTY_ROW_CONTAINER
+name|emptyRowContainer
 init|=
 operator|new
 name|MapJoinEagerRowContainer
@@ -849,11 +849,11 @@ name|getHashtableMemoryUsage
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|EMPTY_ROW_CONTAINER
+name|emptyRowContainer
 operator|.
 name|addRow
 argument_list|(
-name|EMPTY_OBJECT_ARRAY
+name|emptyObjectArray
 argument_list|)
 expr_stmt|;
 comment|// for small tables only; so get the big table position first
@@ -1565,7 +1565,7 @@ name|Object
 index|[]
 name|value
 init|=
-name|EMPTY_OBJECT_ARRAY
+name|emptyObjectArray
 decl_stmt|;
 if|if
 condition|(
@@ -1689,7 +1689,7 @@ else|else
 block|{
 name|rowContainer
 operator|=
-name|EMPTY_ROW_CONTAINER
+name|emptyRowContainer
 expr_stmt|;
 block|}
 name|rowNumber
@@ -1736,7 +1736,7 @@ if|if
 condition|(
 name|rowContainer
 operator|==
-name|EMPTY_ROW_CONTAINER
+name|emptyRowContainer
 condition|)
 block|{
 name|rowContainer
