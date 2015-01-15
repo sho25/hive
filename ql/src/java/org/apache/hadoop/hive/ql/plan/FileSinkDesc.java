@@ -71,6 +71,24 @@ name|AcidUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
 begin_comment
 comment|/**  * FileSinkDesc.  *  */
 end_comment
@@ -257,6 +275,11 @@ init|=
 literal|0
 decl_stmt|;
 comment|// transaction id for this operation
+specifier|private
+specifier|transient
+name|Table
+name|table
+decl_stmt|;
 specifier|public
 name|FileSinkDesc
 parameter_list|()
@@ -1382,6 +1405,30 @@ block|{
 return|return
 name|txnId
 return|;
+block|}
+specifier|public
+name|Table
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|table
+return|;
+block|}
+specifier|public
+name|void
+name|setTable
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+name|this
+operator|.
+name|table
+operator|=
+name|table
+expr_stmt|;
 block|}
 block|}
 end_class
