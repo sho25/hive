@@ -3201,30 +3201,6 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
-name|HIVEMAPJOINUSEOPTIMIZEDKEYS
-argument_list|(
-literal|"hive.mapjoin.optimized.keys"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should use optimized (size-wise), keys, allowing the table to take less\n"
-operator|+
-literal|"memory. Depending on key, the memory savings for entire table can be 5-15% or so."
-argument_list|)
-block|,
-name|HIVEMAPJOINLAZYHASHTABLE
-argument_list|(
-literal|"hive.mapjoin.lazy.hashtable"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should deserialize values on demand. Depending on how many values in\n"
-operator|+
-literal|"the table the join will actually touch, it can save a lot of memory by not creating objects for\n"
-operator|+
-literal|"rows that are not needed. If all rows are needed obviously there's no gain."
-argument_list|)
-block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
