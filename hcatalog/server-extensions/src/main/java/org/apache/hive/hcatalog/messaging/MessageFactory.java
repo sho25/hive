@@ -479,6 +479,19 @@ name|Table
 name|table
 parameter_list|)
 function_decl|;
+comment|/**    * Factory method for AlterTableMessage.  Unlike most of these calls, this one can return null,    * which means no message should be sent.  This is because there are many flavors of alter    * table (add column, add partition, etc.).  Some are covered elsewhere (like add partition)    * and some are not yet supported.    * @param before The table before the alter    * @param after The table after the alter    * @return    */
+specifier|public
+specifier|abstract
+name|AlterTableMessage
+name|buildAlterTableMessage
+parameter_list|(
+name|Table
+name|before
+parameter_list|,
+name|Table
+name|after
+parameter_list|)
+function_decl|;
 comment|/**    * Factory method for DropTableMessage.    * @param table The Table being dropped.    * @return DropTableMessage instance.    */
 specifier|public
 specifier|abstract
@@ -529,6 +542,19 @@ name|table
 parameter_list|,
 name|PartitionSpecProxy
 name|partitionSpec
+parameter_list|)
+function_decl|;
+comment|/**    * Factory method for building AlterPartitionMessage    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
+specifier|public
+specifier|abstract
+name|AlterPartitionMessage
+name|buildAlterPartitionMessage
+parameter_list|(
+name|Partition
+name|before
+parameter_list|,
+name|Partition
+name|after
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partition The Partition being dropped.    * @return DropPartitionMessage instance.    */
