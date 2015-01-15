@@ -803,29 +803,6 @@ name|protocol
 operator|.
 name|endSession
 argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|10
-argument_list|,
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|TimeoutException
-name|te
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Timed out waiting for driver to respond to stop request."
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -901,9 +878,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
-literal|"Shut down time out."
+literal|"Timed out shutting down remote driver, interrupting..."
 argument_list|)
 expr_stmt|;
 name|driverThread
