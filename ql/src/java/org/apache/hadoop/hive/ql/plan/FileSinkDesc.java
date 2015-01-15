@@ -163,6 +163,10 @@ specifier|private
 name|boolean
 name|multiFileSpray
 decl_stmt|;
+specifier|private
+name|boolean
+name|temporary
+decl_stmt|;
 comment|// Whether the files output by this FileSink can be merged, e.g. if they are to be put into a
 comment|// bucketed or sorted table/partition they cannot be merged.
 specifier|private
@@ -844,6 +848,32 @@ operator|.
 name|multiFileSpray
 operator|=
 name|multiFileSpray
+expr_stmt|;
+block|}
+comment|/**    * @return destination is temporary    */
+specifier|public
+name|boolean
+name|isTemporary
+parameter_list|()
+block|{
+return|return
+name|temporary
+return|;
+block|}
+comment|/**    * @param totalFiles the totalFiles to set    */
+specifier|public
+name|void
+name|setTemporary
+parameter_list|(
+name|boolean
+name|temporary
+parameter_list|)
+block|{
+name|this
+operator|.
+name|temporary
+operator|=
+name|temporary
 expr_stmt|;
 block|}
 specifier|public

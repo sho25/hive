@@ -6352,6 +6352,27 @@ argument_list|,
 literal|"whether insert into external tables is allowed"
 argument_list|)
 block|,
+name|HIVE_TEMPORARY_TABLE_STORAGE
+argument_list|(
+literal|"hive.exec.temporary.table.storage"
+argument_list|,
+literal|"default"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"memory"
+argument_list|,
+literal|"ssd"
+argument_list|,
+literal|"default"
+argument_list|)
+argument_list|,
+literal|"Define the storage policy for temporary tables."
+operator|+
+literal|"Choices between memory, ssd and default"
+argument_list|)
+block|,
 name|HIVE_DRIVER_RUN_HOOKS
 argument_list|(
 literal|"hive.exec.driver.run.hooks"

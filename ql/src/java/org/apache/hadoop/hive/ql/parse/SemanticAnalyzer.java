@@ -34665,6 +34665,11 @@ init|=
 literal|false
 decl_stmt|;
 comment|// should the destination table be written to using ACID
+name|boolean
+name|destTableIsTemporary
+init|=
+literal|false
+decl_stmt|;
 name|Partition
 name|dest_part
 init|=
@@ -34757,6 +34762,13 @@ name|isAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
+expr_stmt|;
+name|destTableIsTemporary
+operator|=
+name|dest_tab
+operator|.
+name|isTemporary
+argument_list|()
 expr_stmt|;
 comment|// Is the user trying to insert into a external tables
 if|if
@@ -36450,6 +36462,13 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|destTableIsTemporary
+operator|=
+name|tblDesc
+operator|.
+name|isTemporary
+argument_list|()
+expr_stmt|;
 block|}
 name|boolean
 name|first
@@ -37309,6 +37328,13 @@ name|fileSinkDesc
 argument_list|)
 expr_stmt|;
 block|}
+name|fileSinkDesc
+operator|.
+name|setTemporary
+argument_list|(
+name|destTableIsTemporary
+argument_list|)
+expr_stmt|;
 comment|/* Set List Bucketing context. */
 if|if
 condition|(
