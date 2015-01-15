@@ -383,6 +383,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|Future
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|TimeUnit
 import|;
 end_import
@@ -964,7 +976,7 @@ argument_list|)
 return|;
 block|}
 block|}
-name|JobHandle
+name|Future
 argument_list|<
 name|SparkJobInfo
 argument_list|>
@@ -972,7 +984,7 @@ name|getJobInfo
 init|=
 name|sparkClient
 operator|.
-name|submit
+name|run
 argument_list|(
 operator|new
 name|GetJobInfoJob
@@ -1029,7 +1041,7 @@ name|int
 name|stageId
 parameter_list|)
 block|{
-name|JobHandle
+name|Future
 argument_list|<
 name|SparkStageInfo
 argument_list|>
@@ -1037,7 +1049,7 @@ name|getStageInfo
 init|=
 name|sparkClient
 operator|.
-name|submit
+name|run
 argument_list|(
 operator|new
 name|GetStageInfoJob
