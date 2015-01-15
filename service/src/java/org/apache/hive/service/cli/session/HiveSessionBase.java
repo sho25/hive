@@ -169,21 +169,6 @@ name|OperationManager
 name|operationManager
 parameter_list|)
 function_decl|;
-comment|/**    * Initialize the session    * @param sessionConfMap    */
-name|void
-name|initialize
-parameter_list|(
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|sessionConfMap
-parameter_list|)
-throws|throws
-name|Exception
-function_decl|;
 comment|/**    * Check whether operation logging is enabled and session dir is created successfully    */
 name|boolean
 name|isOperationLogEnabled
