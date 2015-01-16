@@ -62,7 +62,11 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
+specifier|protected
+name|LlapMemoryBuffer
+parameter_list|()
+block|{   }
+specifier|protected
 name|void
 name|initialize
 parameter_list|(

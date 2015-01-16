@@ -172,19 +172,6 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testHeapSize7
-parameter_list|()
-block|{
-name|testHeapSize
-argument_list|(
-literal|7
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
 name|testHeapSize8
 parameter_list|()
 block|{
@@ -204,6 +191,19 @@ block|{
 name|testHeapSize
 argument_list|(
 literal|30
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testHeapSize64
+parameter_list|()
+block|{
+name|testHeapSize
+argument_list|(
+literal|64
 argument_list|)
 expr_stmt|;
 block|}
@@ -351,7 +351,7 @@ block|{
 name|LlapCacheableBuffer
 name|buffer
 init|=
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 operator|.
 name|allocateFake
 argument_list|()
@@ -565,7 +565,7 @@ block|{
 name|LlapCacheableBuffer
 name|buffer
 init|=
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 operator|.
 name|allocateFake
 argument_list|()
@@ -752,7 +752,7 @@ block|{
 name|LlapCacheableBuffer
 name|buffer
 init|=
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 operator|.
 name|allocateFake
 argument_list|()
@@ -850,7 +850,7 @@ specifier|final
 name|LlapCacheableBuffer
 name|CANNOT_EVICT
 init|=
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 operator|.
 name|allocateFake
 argument_list|()
@@ -1072,10 +1072,10 @@ name|LLAP_LRFU_LAMBDA
 operator|.
 name|varname
 argument_list|,
-literal|0.05f
+literal|0.2f
 argument_list|)
 expr_stmt|;
-comment|// very small heap? TODO#
+comment|// very small heap, 14 elements
 name|EvictionTracker
 name|et
 init|=
@@ -1158,7 +1158,7 @@ block|{
 name|LlapCacheableBuffer
 name|buffer
 init|=
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 operator|.
 name|allocateFake
 argument_list|()

@@ -147,7 +147,7 @@ name|llap
 operator|.
 name|cache
 operator|.
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 import|;
 end_import
 
@@ -460,13 +460,13 @@ name|OrcCacheKey
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 name|orcCache
 init|=
 name|useLowLevelCache
 condition|?
 operator|new
-name|LowLevelBuddyCache
+name|LowLevelCacheImpl
 argument_list|(
 name|conf
 argument_list|)

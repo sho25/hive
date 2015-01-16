@@ -40,6 +40,8 @@ class|class
 name|LowLevelCachePolicyBase
 implements|implements
 name|LowLevelCachePolicy
+implements|,
+name|MemoryManager
 block|{
 specifier|private
 specifier|final

@@ -28,7 +28,7 @@ specifier|public
 interface|interface
 name|LowLevelCache
 block|{
-comment|/**    * Gets file data for particular offsets. Null entries mean no data.    */
+comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    */
 name|LlapMemoryBuffer
 index|[]
 name|getFileData
@@ -41,7 +41,7 @@ index|[]
 name|offsets
 parameter_list|)
 function_decl|;
-comment|/**    * Puts file data into cache.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
+comment|/**    * Puts file data into cache.    * @param file File name; MUST be interned.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
 name|long
 index|[]
 name|putFileData
