@@ -29,6 +29,16 @@ name|Serializable
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
@@ -70,6 +80,16 @@ parameter_list|(
 name|OpTraits
 name|opTraits
 parameter_list|)
+function_decl|;
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|getOpProps
+parameter_list|()
 function_decl|;
 block|}
 end_interface
