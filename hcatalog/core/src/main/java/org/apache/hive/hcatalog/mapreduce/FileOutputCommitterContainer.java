@@ -686,6 +686,19 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|int
+name|APPEND_COUNTER_WARN_THRESHOLD
+init|=
+literal|1000
+decl_stmt|;
+specifier|private
+specifier|final
+name|int
+name|maxAppendAttempts
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|Logger
 name|LOG
 init|=
@@ -897,6 +910,24 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|maxAppendAttempts
+operator|=
+name|context
+operator|.
+name|getConfiguration
+argument_list|()
+operator|.
+name|getInt
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_APPEND_LIMIT
+argument_list|,
+name|APPEND_COUNTER_WARN_THRESHOLD
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -3706,15 +3737,9 @@ operator|=
 literal|""
 expr_stmt|;
 block|}
-comment|// Attempt to find COUNTER_MAX possible alternatives to a filename by
+comment|// Attempt to find maxAppendAttempts possible alternatives to a filename by
 comment|// appending _a_N and seeing if that destination also clashes. If we're
 comment|// still clashing after that, give up.
-specifier|final
-name|int
-name|COUNTER_MAX
-init|=
-literal|1000
-decl_stmt|;
 name|int
 name|counter
 init|=
@@ -3732,7 +3757,7 @@ argument_list|)
 operator|&&
 name|counter
 operator|<
-name|COUNTER_MAX
+name|maxAppendAttempts
 condition|;
 name|counter
 operator|++
@@ -3761,7 +3786,7 @@ if|if
 condition|(
 name|counter
 operator|==
-name|COUNTER_MAX
+name|maxAppendAttempts
 condition|)
 block|{
 throw|throw
@@ -3785,6 +3810,32 @@ operator|+
 name|dest
 argument_list|)
 throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|counter
+operator|>
+name|APPEND_COUNTER_WARN_THRESHOLD
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Append job used filename clash counter ["
+operator|+
+name|counter
+operator|+
+literal|"] which is greater than warning limit ["
+operator|+
+name|APPEND_COUNTER_WARN_THRESHOLD
+operator|+
+literal|"]. Please compact this table so that performance is not impacted."
+operator|+
+literal|" Please see HIVE-9381 for details."
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 if|if
