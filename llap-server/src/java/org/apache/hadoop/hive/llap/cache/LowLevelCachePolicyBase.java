@@ -48,7 +48,7 @@ specifier|final
 name|AtomicLong
 name|usedMemory
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|long
 name|maxSize
@@ -62,9 +62,6 @@ name|LowLevelCachePolicyBase
 parameter_list|(
 name|long
 name|maxSize
-parameter_list|,
-name|EvictionListener
-name|listener
 parameter_list|)
 block|{
 name|this
@@ -82,12 +79,6 @@ name|AtomicLong
 argument_list|(
 literal|0
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|evictionListener
-operator|=
-name|listener
 expr_stmt|;
 block|}
 annotation|@
@@ -238,6 +229,21 @@ name|EvictionListener
 name|listener
 parameter_list|)
 function_decl|;
+specifier|public
+name|void
+name|setEvictionListener
+parameter_list|(
+name|EvictionListener
+name|evictionListener
+parameter_list|)
+block|{
+name|this
+operator|.
+name|evictionListener
+operator|=
+name|evictionListener
+expr_stmt|;
+block|}
 block|}
 end_class
 
