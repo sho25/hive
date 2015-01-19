@@ -392,8 +392,8 @@ condition|(
 name|arguments
 operator|.
 name|length
-operator|<
-literal|0
+operator|!=
+literal|1
 condition|)
 block|{
 throw|throw

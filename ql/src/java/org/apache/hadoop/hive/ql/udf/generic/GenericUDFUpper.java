@@ -309,24 +309,6 @@ name|TypeInfoFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|VarcharTypeInfo
-import|;
-end_import
-
 begin_comment
 comment|/**  * UDFUpper.  *  */
 end_comment
@@ -410,8 +392,8 @@ condition|(
 name|arguments
 operator|.
 name|length
-operator|<
-literal|0
+operator|!=
+literal|1
 condition|)
 block|{
 throw|throw
