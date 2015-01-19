@@ -915,10 +915,7 @@ name|joinOp
 range|:
 name|pCtx
 operator|.
-name|getJoinContext
-argument_list|()
-operator|.
-name|keySet
+name|getJoinOps
 argument_list|()
 control|)
 block|{

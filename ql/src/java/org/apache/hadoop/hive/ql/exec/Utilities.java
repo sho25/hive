@@ -7783,17 +7783,6 @@ argument_list|,
 literal|"opParseCtxMap"
 argument_list|)
 expr_stmt|;
-name|removeField
-argument_list|(
-name|kryo
-argument_list|,
-name|MapWork
-operator|.
-name|class
-argument_list|,
-literal|"joinTree"
-argument_list|)
-expr_stmt|;
 return|return
 name|kryo
 return|;
