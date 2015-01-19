@@ -695,8 +695,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|matchingOps
@@ -727,8 +725,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|getOp
@@ -748,8 +744,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|ops
@@ -760,8 +754,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1351,8 +1343,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|ops
@@ -1577,8 +1567,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|hashTableSinkOps

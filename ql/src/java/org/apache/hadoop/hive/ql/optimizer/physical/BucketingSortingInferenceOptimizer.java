@@ -678,7 +678,7 @@ name|getSelProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Matches only GroupByOpeartors which are reducers, rather than map group by operators,
+comment|// Matches only GroupByOperators which are reducers, rather than map group by operators,
 comment|// or multi group by optimization specific operators
 name|opRules
 operator|.

@@ -25614,7 +25614,8 @@ literal|null
 argument_list|,
 literal|false
 argument_list|,
-literal|0
+operator|-
+literal|1
 argument_list|,
 name|numDistinctUDFs
 operator|>
@@ -26279,7 +26280,8 @@ comment|// This is only needed if a new grouping set key is being created
 name|int
 name|groupingSetsPosition
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 comment|// For grouping sets, add a dummy grouping key
 if|if
@@ -26287,6 +26289,13 @@ condition|(
 name|groupingSetsPresent
 condition|)
 block|{
+name|groupingSetsPosition
+operator|=
+name|groupByKeys
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
 comment|// Consider the query: select a,b, count(1) from T group by a,b with cube;
 comment|// where it is being executed in a single map-reduce job
 comment|// The plan is TableScan -> GroupBy1 -> ReduceSink -> GroupBy2 -> FileSink
@@ -26314,13 +26323,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|groupingSetsPosition
-operator|=
-name|groupByKeys
-operator|.
-name|size
-argument_list|()
-expr_stmt|;
 comment|// The grouping set has not yet been processed. Create a new grouping key
 comment|// Consider the query: select a,b, count(1) from T group by a,b with cube;
 comment|// where it is being executed in 2 map-reduce jobs
@@ -27453,10 +27455,8 @@ comment|// The grouping set key is present after the grouping keys, before the d
 name|int
 name|groupingSetsPosition
 init|=
-name|groupByKeys
-operator|.
-name|size
-argument_list|()
+operator|-
+literal|1
 decl_stmt|;
 comment|// For grouping sets, add a dummy grouping key
 comment|// This dummy key needs to be added as a reduce key
@@ -27472,6 +27472,13 @@ condition|(
 name|groupingSetsPresent
 condition|)
 block|{
+name|groupingSetsPosition
+operator|=
+name|groupByKeys
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
 name|createNewGroupingKey
 argument_list|(
 name|groupByKeys
@@ -30855,12 +30862,25 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|int
+name|groupingSetsPosition
+init|=
+operator|-
+literal|1
+decl_stmt|;
 comment|// For grouping sets, add a dummy grouping key
 if|if
 condition|(
 name|groupingSetsPresent
 condition|)
 block|{
+name|groupingSetsPosition
+operator|=
+name|groupByKeys
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
 name|addGroupingSetKey
 argument_list|(
 name|groupByKeys
@@ -31250,7 +31270,7 @@ literal|null
 argument_list|,
 literal|false
 argument_list|,
-literal|0
+name|groupingSetsPosition
 argument_list|,
 name|containsDistinctAggr
 argument_list|)
@@ -45190,7 +45210,8 @@ literal|null
 argument_list|,
 literal|false
 argument_list|,
-literal|0
+operator|-
+literal|1
 argument_list|,
 literal|false
 argument_list|)
