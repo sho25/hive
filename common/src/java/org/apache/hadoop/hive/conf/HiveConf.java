@@ -1174,6 +1174,19 @@ operator|+
 literal|"Two supported values are : kryo and javaXML. Kryo is default."
 argument_list|)
 block|,
+name|STAGINGDIR
+argument_list|(
+literal|"hive.exec.stagingdir"
+argument_list|,
+literal|".hive-staging"
+argument_list|,
+literal|"Directory name that will be created inside table locations in order to support HDFS encryption. "
+operator|+
+literal|"This is replaces ${hive.exec.scratchdir} for query results with the exception of read-only tables. "
+operator|+
+literal|"In all cases ${hive.exec.scratchdir} is still used for other temporary files, such as job plans."
+argument_list|)
+block|,
 name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"
@@ -3357,6 +3370,23 @@ operator|+
 literal|"cardinality (4 in the example above), is more than this value, a new MR job is added under the\n"
 operator|+
 literal|"assumption that the original group by will reduce the data size."
+argument_list|)
+block|,
+comment|// Max filesize used to do a single copy (after that, distcp is used)
+name|HIVE_EXEC_COPYFILE_MAXSIZE
+argument_list|(
+literal|"hive.exec.copyfile.maxsize"
+argument_list|,
+literal|32L
+operator|*
+literal|1024
+operator|*
+literal|1024
+comment|/*32M*/
+argument_list|,
+literal|"Maximum file size (in Mb) that Hive uses to do single HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
 argument_list|)
 block|,
 comment|// for hive udtf operator

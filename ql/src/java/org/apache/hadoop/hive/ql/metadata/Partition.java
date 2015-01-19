@@ -179,6 +179,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|MetaStoreUtils
@@ -1744,7 +1760,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 return|;
-comment|/*      * TODO: Keeping this code around for later use when we will support      * sampling on tables which are not created with CLUSTERED INTO clause      *      * // read from table meta data int numBuckets = this.table.getNumBuckets();      * if (numBuckets == -1) { // table meta data does not have bucket      * information // check if file system has multiple buckets(files) in this      * partition String pathPattern = this.partPath.toString() + "/*"; try {      * FileSystem fs = FileSystem.get(this.table.getDataLocation(),      * Hive.get().getConf()); FileStatus srcs[] = fs.globStatus(new      * Path(pathPattern)); numBuckets = srcs.length; } catch (Exception e) {      * throw new RuntimeException("Cannot get bucket count for table " +      * this.table.getName(), e); } } return numBuckets;      */
+comment|/*      * TODO: Keeping this code around for later use when we will support      * sampling on tables which are not created with CLUSTERED INTO clause      *      * // read from table meta data int numBuckets = this.table.getNumBuckets();      * if (numBuckets == -1) { // table meta data does not have bucket      * information // check if file system has multiple buckets(files) in this      * partition String pathPattern = this.partPath.toString() + "/*"; try {      * FileSystem fs = FileSystem.get(this.table.getDataLocation(),      * Hive.get().getConf()); FileStatus srcs[] = fs.globStatus(new      * Path(pathPattern), FileUtils.HIDDEN_FILES_PATH_FILTER); numBuckets = srcs.length; } catch (Exception e) {      * throw new RuntimeException("Cannot get bucket count for table " +      * this.table.getName(), e); } } return numBuckets;      */
 block|}
 specifier|public
 name|void
@@ -1898,6 +1914,10 @@ name|Path
 argument_list|(
 name|pathPattern
 argument_list|)
+argument_list|,
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Arrays
