@@ -79,7 +79,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|VectorReader
+name|impl
 operator|.
 name|ColumnVectorBatch
 import|;

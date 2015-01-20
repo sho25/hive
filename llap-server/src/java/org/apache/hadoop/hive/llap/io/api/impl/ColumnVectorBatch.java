@@ -18,18 +18,10 @@ operator|.
 name|io
 operator|.
 name|api
+operator|.
+name|impl
 package|;
 end_package
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
 
 begin_import
 import|import
@@ -51,14 +43,12 @@ name|ColumnVector
 import|;
 end_import
 
-begin_interface
+begin_comment
+comment|/**  * Unlike VRB, doesn't have some fields, and doesn't have all columns  * (non-selected, partition cols, cols for downstream ops, etc.)  */
+end_comment
+
+begin_class
 specifier|public
-interface|interface
-name|VectorReader
-block|{
-comment|/**    * Unlike VRB, doesn't have some fields, and doesn't have all columns    * (non-selected, partition cols, cols for downstream ops, etc.)    */
-specifier|public
-specifier|static
 class|class
 name|ColumnVectorBatch
 block|{
@@ -72,24 +62,7 @@ name|int
 name|size
 decl_stmt|;
 block|}
-specifier|public
-name|ColumnVectorBatch
-name|next
-parameter_list|()
-throws|throws
-name|InterruptedException
-throws|,
-name|IOException
-function_decl|;
-specifier|public
-name|void
-name|close
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-block|}
-end_interface
+end_class
 
 end_unit
 
