@@ -4860,6 +4860,10 @@ condition|(
 name|dbProduct
 operator|==
 literal|null
+operator|&&
+name|conn
+operator|!=
+literal|null
 condition|)
 block|{
 name|determineDatabaseProduct
