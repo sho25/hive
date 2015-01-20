@@ -1093,6 +1093,8 @@ init|=
 operator|new
 name|SparkJobMonitor
 argument_list|(
+name|conf
+argument_list|,
 name|sparkJobStatus
 argument_list|)
 decl_stmt|;
@@ -1103,7 +1105,6 @@ operator|.
 name|startMonitor
 argument_list|()
 expr_stmt|;
-comment|// for RSC, we should get the counters after job has finished
 name|sparkCounters
 operator|=
 name|sparkJobStatus
@@ -1111,6 +1112,14 @@ operator|.
 name|getCounter
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|rc
+operator|==
+literal|0
+condition|)
+block|{
+comment|// for RSC, we should get the counters after job has finished
 name|SparkStatistics
 name|sparkStatistics
 init|=
@@ -1152,6 +1161,22 @@ name|logSparkStatistic
 argument_list|(
 name|sparkStatistics
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|rc
+operator|==
+literal|2
+condition|)
+block|{
+comment|// Cancel job if the monitor found job submission timeout.
+name|jobRef
+operator|.
+name|cancelJob
+argument_list|()
 expr_stmt|;
 block|}
 name|sparkJobStatus

@@ -7689,7 +7689,24 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"remote spark client JobHandle future timeout value in seconds."
+literal|"Remote Spark client JobHandle future timeout value in seconds."
+argument_list|)
+block|,
+name|SPARK_JOB_MONITOR_TIMEOUT
+argument_list|(
+literal|"hive.spark.job.monitor.timeout"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Spark job monitor timeout if could not get job state in specified time interval."
 argument_list|)
 block|;
 specifier|public
