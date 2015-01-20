@@ -25,9 +25,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|IOException
+name|concurrent
+operator|.
+name|Callable
 import|;
 end_import
 
@@ -69,6 +71,10 @@ name|ColumnBuffer
 import|;
 end_import
 
+begin_comment
+comment|/**  * Interface for encoded data readers to implement.  * For now, has to implement callable for threadpool execution.  * The final threading design will probably change.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
@@ -81,15 +87,12 @@ name|ConsumerFeedback
 argument_list|<
 name|ColumnBuffer
 argument_list|>
-block|{
-specifier|public
-name|void
-name|start
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-block|}
+extends|,
+name|Callable
+argument_list|<
+name|Void
+argument_list|>
+block|{ }
 end_interface
 
 end_unit

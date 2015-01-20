@@ -522,7 +522,15 @@ parameter_list|,
 name|LowLevelCache
 name|cache
 parameter_list|)
-block|{    }
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"not implemented"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

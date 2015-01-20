@@ -23,6 +23,18 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ExecutorService
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -153,6 +165,9 @@ decl_stmt|;
 specifier|public
 name|OrcColumnVectorProducer
 parameter_list|(
+name|ExecutorService
+name|executor
+parameter_list|,
 name|OrcEncodedDataProducer
 name|edp
 parameter_list|,
@@ -161,7 +176,9 @@ name|conf
 parameter_list|)
 block|{
 name|super
-argument_list|()
+argument_list|(
+name|executor
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -203,6 +220,13 @@ argument_list|>
 name|downstreamConsumer
 parameter_list|)
 block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"not implemented"
+argument_list|)
+throw|;
 comment|// TODO:  HERE decode EncodedColumn-s into ColumnVector-s
 comment|//        sarg columns first, apply sarg, then decode others if needed; can cols skip values?
 comment|//        fill lockedBuffers from batch as we go and lock multiple times /after first/;

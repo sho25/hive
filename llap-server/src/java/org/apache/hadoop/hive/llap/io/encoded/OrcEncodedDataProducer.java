@@ -592,6 +592,10 @@ name|boolean
 name|isStopped
 init|=
 literal|false
+decl_stmt|,
+name|isPaused
+init|=
+literal|false
 decl_stmt|;
 specifier|public
 name|OrcEncodedDataReader
@@ -699,7 +703,33 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|start
+name|pause
+parameter_list|()
+block|{
+name|isPaused
+operator|=
+literal|true
+expr_stmt|;
+comment|// TODO: pause fetching
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|unpause
+parameter_list|()
+block|{
+name|isPaused
+operator|=
+literal|false
+expr_stmt|;
+comment|// TODO: unpause fetching
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Void
+name|call
 parameter_list|()
 throws|throws
 name|IOException
@@ -719,7 +749,9 @@ if|if
 condition|(
 name|isStopped
 condition|)
-return|return;
+return|return
+literal|null
+return|;
 name|List
 argument_list|<
 name|StripeInformation
@@ -844,7 +876,9 @@ if|if
 condition|(
 name|isStopped
 condition|)
-return|return;
+return|return
+literal|null
+return|;
 name|List
 argument_list|<
 name|Integer
@@ -856,7 +890,7 @@ name|produceDataFromCache
 argument_list|()
 decl_stmt|;
 comment|// readState now contains some 1s for column x rgs that were fetched from cache.
-comment|// TODO: I/O threadpool would be here; for now, linear and inefficient
+comment|// TODO: I/O threadpool would be here (or below); for now, linear
 for|for
 control|(
 name|int
@@ -1141,6 +1175,9 @@ name|split
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override

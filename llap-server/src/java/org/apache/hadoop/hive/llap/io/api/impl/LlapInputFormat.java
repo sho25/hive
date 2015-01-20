@@ -79,20 +79,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|llap
@@ -124,26 +110,6 @@ operator|.
 name|VectorReader
 operator|.
 name|ColumnVectorBatch
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|LlapIo
 import|;
 end_import
 
@@ -222,6 +188,26 @@ operator|.
 name|vector
 operator|.
 name|VectorizedRowBatchCtx
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcInputFormat
 import|;
 end_import
 
@@ -391,7 +377,6 @@ argument_list|>
 implements|,
 name|VectorizedInputFormatInterface
 block|{
-comment|/** See RequestFactory class documentation on why this is necessary */
 specifier|private
 specifier|static
 specifier|final
@@ -409,15 +394,25 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
-name|LlapIo
+name|LlapIoImpl
 name|llapIo
 decl_stmt|;
 name|LlapInputFormat
 parameter_list|(
-name|LlapIo
+name|LlapIoImpl
 name|llapIo
+parameter_list|,
+name|InputFormat
+name|sourceInputFormat
 parameter_list|)
 block|{
+comment|// TODO: right now, we do nothing with source input format, ORC-only in the first cut.
+comment|//       We'd need to plumb it thru and use it to get data to cache/etc.
+assert|assert
+name|sourceInputFormat
+operator|instanceof
+name|OrcInputFormat
+assert|;
 name|this
 operator|.
 name|llapIo
@@ -468,7 +463,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"No llap in non-vectorized mode; falling back to original"
+literal|"No llap in non-vectorized mode"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -478,7 +473,6 @@ argument_list|(
 literal|"No llap in non-vectorized mode"
 argument_list|)
 throw|;
-comment|// return realInputFormat.getRecordReader(split, job, reporter);
 block|}
 name|FileSplit
 name|fileSplit

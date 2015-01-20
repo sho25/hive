@@ -14,46 +14,59 @@ operator|.
 name|hive
 operator|.
 name|llap
+operator|.
+name|io
+operator|.
+name|api
 package|;
 end_package
 
-begin_comment
-comment|/**  * Consumer feedback typically used by Consumer<T>;  * allows consumer to influence production of data.  */
-end_comment
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|InputFormat
+import|;
+end_import
 
 begin_interface
 specifier|public
 interface|interface
-name|ConsumerFeedback
+name|LlapIo
 parameter_list|<
 name|T
 parameter_list|>
 block|{
-comment|/** Pause data production. */
-specifier|public
-name|void
-name|pause
-parameter_list|()
-function_decl|;
-comment|/** Unpause data production. */
-specifier|public
-name|void
-name|unpause
-parameter_list|()
-function_decl|;
-comment|/** Stop data production, the external operation has been cancelled. */
-specifier|public
-name|void
-name|stop
-parameter_list|()
-function_decl|;
-comment|/** Returns processed data back to producer; necessary if e.g. data is locked in cache. */
-specifier|public
-name|void
-name|returnData
-parameter_list|(
+name|InputFormat
+argument_list|<
+name|NullWritable
+argument_list|,
 name|T
-name|data
+argument_list|>
+name|getInputFormat
+parameter_list|(
+name|InputFormat
+name|sourceInputFormat
 parameter_list|)
 function_decl|;
 block|}

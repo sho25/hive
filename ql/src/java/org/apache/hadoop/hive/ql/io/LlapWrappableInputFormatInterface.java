@@ -13,50 +13,21 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|ql
+operator|.
+name|io
 package|;
 end_package
 
 begin_comment
-comment|/**  * Consumer feedback typically used by Consumer<T>;  * allows consumer to influence production of data.  */
+comment|/** Marker interface for LLAP; serves no other purpose. */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|ConsumerFeedback
-parameter_list|<
-name|T
-parameter_list|>
-block|{
-comment|/** Pause data production. */
-specifier|public
-name|void
-name|pause
-parameter_list|()
-function_decl|;
-comment|/** Unpause data production. */
-specifier|public
-name|void
-name|unpause
-parameter_list|()
-function_decl|;
-comment|/** Stop data production, the external operation has been cancelled. */
-specifier|public
-name|void
-name|stop
-parameter_list|()
-function_decl|;
-comment|/** Returns processed data back to producer; necessary if e.g. data is locked in cache. */
-specifier|public
-name|void
-name|returnData
-parameter_list|(
-name|T
-name|data
-parameter_list|)
-function_decl|;
-block|}
+name|LlapWrappableInputFormatInterface
+block|{}
 end_interface
 
 end_unit

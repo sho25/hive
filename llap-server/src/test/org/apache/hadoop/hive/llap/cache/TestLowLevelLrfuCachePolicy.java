@@ -922,17 +922,6 @@ name|locked
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
-specifier|static
-specifier|final
-name|LlapCacheableBuffer
-name|CANNOT_EVICT
-init|=
-name|LowLevelCacheImpl
-operator|.
-name|allocateFake
-argument_list|()
-decl_stmt|;
 comment|// Buffers in test are fakes not linked to cache; notify cache policy explicitly.
 specifier|public
 name|boolean

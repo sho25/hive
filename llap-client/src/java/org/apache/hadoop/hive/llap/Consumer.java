@@ -17,6 +17,10 @@ name|llap
 package|;
 end_package
 
+begin_comment
+comment|/**  * Data consumer; an equivalent of a data queue for an asynchronous data producer.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
@@ -25,11 +29,7 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
-specifier|public
-name|void
-name|setDone
-parameter_list|()
-function_decl|;
+comment|/** Some data has been produced. */
 specifier|public
 name|void
 name|consumeData
@@ -38,6 +38,13 @@ name|T
 name|data
 parameter_list|)
 function_decl|;
+comment|/** No more data will be produced; done */
+specifier|public
+name|void
+name|setDone
+parameter_list|()
+function_decl|;
+comment|/** No more data will be produced; error during production */
 specifier|public
 name|void
 name|setError

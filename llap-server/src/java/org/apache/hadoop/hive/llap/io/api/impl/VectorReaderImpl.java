@@ -230,6 +230,9 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|ColumnVectorProducer
+argument_list|<
+name|?
+argument_list|>
 name|cvp
 decl_stmt|;
 specifier|private
@@ -287,6 +290,9 @@ name|SearchArgument
 name|sarg
 parameter_list|,
 name|ColumnVectorProducer
+argument_list|<
+name|?
+argument_list|>
 name|cvp
 parameter_list|)
 block|{
