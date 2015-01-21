@@ -1018,6 +1018,25 @@ name|_2
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Remote Driver configured with: "
+operator|+
+name|e
+operator|.
+name|_1
+argument_list|()
+operator|+
+literal|"="
+operator|+
+name|e
+operator|.
+name|_2
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 name|String
 name|secret

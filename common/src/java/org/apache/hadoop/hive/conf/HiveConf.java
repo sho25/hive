@@ -7689,7 +7689,7 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Remote Spark client JobHandle future timeout value in seconds."
+literal|"Timeout for requests from Hive client to remote Spark driver."
 argument_list|)
 block|,
 name|SPARK_JOB_MONITOR_TIMEOUT
@@ -7706,7 +7706,83 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Spark job monitor timeout if could not get job state in specified time interval."
+literal|"Timeout for job monitor to get Spark job state."
+argument_list|)
+block|,
+name|SPARK_RPC_CLIENT_CONNECT_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.connect.timeout"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for remote Spark driver in connecting back to Hive client."
+argument_list|)
+block|,
+name|SPARK_RPC_CLIENT_HANDSHAKE_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.server.connect.timeout"
+argument_list|,
+literal|"20000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for handshake between Hive client and remote Spark driver.  Checked by both processes."
+argument_list|)
+block|,
+name|SPARK_RPC_SECRET_RANDOM_BITS
+argument_list|(
+literal|"hive.spark.client.secret.bits"
+argument_list|,
+literal|"256"
+argument_list|,
+literal|"Number of bits of randomness in the generated secret for communication between Hive client and remote Spark driver. "
+operator|+
+literal|"Rounded down to the nearest multiple of 8."
+argument_list|)
+block|,
+name|SPARK_RPC_MAX_THREADS
+argument_list|(
+literal|"hive.spark.client.rpc.threads"
+argument_list|,
+literal|8
+argument_list|,
+literal|"Maximum number of threads for remote Spark driver's RPC event loop."
+argument_list|)
+block|,
+name|SPARK_RPC_MAX_MESSAGE_SIZE
+argument_list|(
+literal|"hive.spark.client.rpc.max.size"
+argument_list|,
+literal|50
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes for communication between Hive client and remote Spark driver. Default is 50MB."
+argument_list|)
+block|,
+name|SPARK_RPC_CHANNEL_LOG_LEVEL
+argument_list|(
+literal|"hive.spark.client.channel.log.level"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Channel logging level for remote Spark driver.  One of {DEBUG, ERROR, INFO, TRACE, WARN}."
 argument_list|)
 block|;
 specifier|public

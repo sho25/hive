@@ -722,6 +722,8 @@ operator|.
 name|createClient
 argument_list|(
 name|conf
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}

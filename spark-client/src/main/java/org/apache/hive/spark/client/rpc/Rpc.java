@@ -552,6 +552,9 @@ decl_stmt|;
 name|int
 name|connectTimeoutMs
 init|=
+operator|(
+name|int
+operator|)
 name|rpcConf
 operator|.
 name|getConnectTimeoutMs
