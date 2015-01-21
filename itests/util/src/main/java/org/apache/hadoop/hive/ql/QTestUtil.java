@@ -1340,7 +1340,6 @@ specifier|protected
 name|Hive
 name|db
 decl_stmt|;
-specifier|static
 specifier|protected
 name|HiveConf
 name|conf
