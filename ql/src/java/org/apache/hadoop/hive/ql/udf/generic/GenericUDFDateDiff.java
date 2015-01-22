@@ -459,7 +459,7 @@ literal|"If date1 is earlier than date2, the result is negative.\n"
 operator|+
 literal|"Example:\n "
 operator|+
-literal|"> SELECT _FUNC_('2009-30-07', '2009-31-07') FROM src LIMIT 1;\n"
+literal|"> SELECT _FUNC_('2009-07-30', '2009-07-31') FROM src LIMIT 1;\n"
 operator|+
 literal|"  1"
 argument_list|)

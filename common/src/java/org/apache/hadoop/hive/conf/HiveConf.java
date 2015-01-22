@@ -1174,6 +1174,19 @@ operator|+
 literal|"Two supported values are : kryo and javaXML. Kryo is default."
 argument_list|)
 block|,
+name|STAGINGDIR
+argument_list|(
+literal|"hive.exec.stagingdir"
+argument_list|,
+literal|".hive-staging"
+argument_list|,
+literal|"Directory name that will be created inside table locations in order to support HDFS encryption. "
+operator|+
+literal|"This is replaces ${hive.exec.scratchdir} for query results with the exception of read-only tables. "
+operator|+
+literal|"In all cases ${hive.exec.scratchdir} is still used for other temporary files, such as job plans."
+argument_list|)
+block|,
 name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"
@@ -1394,6 +1407,19 @@ operator|+
 literal|"An on-failure hook is specified as the name of Java class which implements the \n"
 operator|+
 literal|"org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext interface."
+argument_list|)
+block|,
+name|QUERYREDACTORHOOKS
+argument_list|(
+literal|"hive.exec.query.redactor.hooks"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma-separated list of hooks to be invoked for each query which can \n"
+operator|+
+literal|"tranform the query before it's placed in the job.xml file. Must be a Java class which \n"
+operator|+
+literal|"extends from the org.apache.hadoop.hive.ql.hooks.Redactor abstract class."
 argument_list|)
 block|,
 name|CLIENTSTATSPUBLISHERS
@@ -3201,30 +3227,6 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
-name|HIVEMAPJOINUSEOPTIMIZEDKEYS
-argument_list|(
-literal|"hive.mapjoin.optimized.keys"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should use optimized (size-wise), keys, allowing the table to take less\n"
-operator|+
-literal|"memory. Depending on key, the memory savings for entire table can be 5-15% or so."
-argument_list|)
-block|,
-name|HIVEMAPJOINLAZYHASHTABLE
-argument_list|(
-literal|"hive.mapjoin.lazy.hashtable"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should deserialize values on demand. Depending on how many values in\n"
-operator|+
-literal|"the table the join will actually touch, it can save a lot of memory by not creating objects for\n"
-operator|+
-literal|"rows that are not needed. If all rows are needed obviously there's no gain."
-argument_list|)
-block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
@@ -3381,6 +3383,23 @@ operator|+
 literal|"cardinality (4 in the example above), is more than this value, a new MR job is added under the\n"
 operator|+
 literal|"assumption that the original group by will reduce the data size."
+argument_list|)
+block|,
+comment|// Max filesize used to do a single copy (after that, distcp is used)
+name|HIVE_EXEC_COPYFILE_MAXSIZE
+argument_list|(
+literal|"hive.exec.copyfile.maxsize"
+argument_list|,
+literal|32L
+operator|*
+literal|1024
+operator|*
+literal|1024
+comment|/*32M*/
+argument_list|,
+literal|"Maximum file size (in Mb) that Hive uses to do single HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
 argument_list|)
 block|,
 comment|// for hive udtf operator
@@ -5446,11 +5465,17 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|600
-operator|*
-literal|1000
+literal|"600000ms"
 argument_list|,
-literal|"ZooKeeper client's session timeout. The client is disconnected, and as a result, all locks released, \n"
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's session timeout (in milliseconds). The client is disconnected, and as a result, all locks released, \n"
 operator|+
 literal|"if a heartbeat is not sent in the timeout."
 argument_list|)
@@ -5471,6 +5496,34 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Clean extra nodes at the end of the session."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_MAX_RETRIES
+argument_list|(
+literal|"hive.zookeeper.connection.max.retries"
+argument_list|,
+literal|3
+argument_list|,
+literal|"Max number of times to retry when connecting to the ZooKeeper server."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_BASESLEEPTIME
+argument_list|(
+literal|"hive.zookeeper.connection.basesleeptime"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Initial amount of time (in milliseconds) to wait between retries\n"
+operator|+
+literal|"when connecting to the ZooKeeper server when using ExponentialBackoffRetry policy."
 argument_list|)
 block|,
 comment|// Transactions
@@ -6316,6 +6369,27 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"whether insert into external tables is allowed"
+argument_list|)
+block|,
+name|HIVE_TEMPORARY_TABLE_STORAGE
+argument_list|(
+literal|"hive.exec.temporary.table.storage"
+argument_list|,
+literal|"default"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"memory"
+argument_list|,
+literal|"ssd"
+argument_list|,
+literal|"default"
+argument_list|)
+argument_list|,
+literal|"Define the storage policy for temporary tables."
+operator|+
+literal|"Choices between memory, ssd and default"
 argument_list|)
 block|,
 name|HIVE_DRIVER_RUN_HOOKS

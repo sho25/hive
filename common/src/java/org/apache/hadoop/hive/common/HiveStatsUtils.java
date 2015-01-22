@@ -262,6 +262,10 @@ operator|.
 name|globStatus
 argument_list|(
 name|pathPattern
+argument_list|,
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 return|;
 block|}

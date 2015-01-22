@@ -499,7 +499,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * close the file systems for the session    * cancel the session's delegation token and close the metastore connection    */
+comment|/**    * Close the file systems for the session and remove it from the FileSystem cache.    * Cancel the session's delegation token and close the metastore connection    */
 annotation|@
 name|Override
 specifier|public
@@ -516,15 +516,30 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|cancelDelegationToken
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+try|try
+block|{
+name|super
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+try|try
+block|{
 name|FileSystem
 operator|.
 name|closeAllForUGI
 argument_list|(
 name|sessionUgi
 argument_list|)
-expr_stmt|;
-name|cancelDelegationToken
-argument_list|()
 expr_stmt|;
 block|}
 catch|catch
@@ -533,9 +548,9 @@ name|IOException
 name|ioe
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
+throw|throw
+operator|new
+name|HiveSQLException
 argument_list|(
 literal|"Could not clean up file-system handles for UGI: "
 operator|+
@@ -543,20 +558,9 @@ name|sessionUgi
 argument_list|,
 name|ioe
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
-finally|finally
-block|{
-name|release
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-name|super
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Enable delegation token for the session    * save the token string and set the token.signature in hive conf. The metastore client uses    * this token.signature to determine where to use kerberos or delegation token    * @throws HiveException    * @throws IOException    */

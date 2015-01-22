@@ -986,7 +986,14 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Found unexpected schema version "
+literal|"Expected schema version "
+operator|+
+name|MetaStoreSchemaInfo
+operator|.
+name|getHiveSchemaVersion
+argument_list|()
+operator|+
+literal|", found version "
 operator|+
 name|newSchemaVersion
 argument_list|)

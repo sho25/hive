@@ -8752,7 +8752,7 @@ try|try
 block|{
 name|txnHandler
 operator|.
-name|detectDeadlock
+name|checkRetryable
 argument_list|(
 name|conn1
 argument_list|,
@@ -8797,7 +8797,7 @@ catch|catch
 parameter_list|(
 name|TxnHandler
 operator|.
-name|DeadlockException
+name|RetryException
 name|de
 parameter_list|)
 block|{
@@ -8924,7 +8924,7 @@ try|try
 block|{
 name|txnHandler
 operator|.
-name|detectDeadlock
+name|checkRetryable
 argument_list|(
 name|conn2
 argument_list|,
@@ -8969,7 +8969,7 @@ catch|catch
 parameter_list|(
 name|TxnHandler
 operator|.
-name|DeadlockException
+name|RetryException
 name|de
 parameter_list|)
 block|{

@@ -433,8 +433,6 @@ argument_list|(
 name|joinOp
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|pGraphContext
 argument_list|)
 return|;
 block|}
@@ -483,8 +481,6 @@ argument_list|(
 name|joinOperator
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|pGraphContext
 argument_list|)
 return|;
 block|}
@@ -618,9 +614,6 @@ name|joinOp
 parameter_list|,
 name|SortBucketJoinProcCtx
 name|smbJoinContext
-parameter_list|,
-name|ParseContext
-name|parseContext
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -633,8 +626,6 @@ argument_list|(
 name|joinOp
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|parseContext
 argument_list|)
 decl_stmt|;
 name|SMBMapJoinOperator
@@ -645,8 +636,6 @@ argument_list|(
 name|mapJoinOp
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|parseContext
 argument_list|)
 decl_stmt|;
 name|smbMapJoinOp

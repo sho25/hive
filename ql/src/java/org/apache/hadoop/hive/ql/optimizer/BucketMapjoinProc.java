@@ -296,8 +296,6 @@ name|canConvertMapJoinToBucketMapJoin
 argument_list|(
 name|mapJoinOperator
 argument_list|,
-name|pGraphContext
-argument_list|,
 name|context
 argument_list|)
 decl_stmt|;
@@ -371,9 +369,6 @@ parameter_list|,
 name|MapJoinOperator
 name|mapJoinOp
 parameter_list|,
-name|QBJoinTree
-name|joinCtx
-parameter_list|,
 name|String
 name|baseBigAlias
 parameter_list|,
@@ -432,11 +427,15 @@ name|proc
 operator|.
 name|checkConvertBucketMapJoin
 argument_list|(
-name|pGraphContext
-argument_list|,
 name|ctx
 argument_list|,
-name|joinCtx
+name|mapJoinOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getAliasToOpInfo
+argument_list|()
 argument_list|,
 name|keysMap
 argument_list|,

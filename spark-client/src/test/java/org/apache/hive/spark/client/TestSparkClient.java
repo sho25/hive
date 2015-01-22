@@ -379,7 +379,7 @@ specifier|final
 name|long
 name|TIMEOUT
 init|=
-literal|10
+literal|20
 decl_stmt|;
 specifier|private
 specifier|static

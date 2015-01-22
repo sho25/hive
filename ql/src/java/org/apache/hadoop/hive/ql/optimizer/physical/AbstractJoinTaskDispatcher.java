@@ -273,24 +273,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|MapWork
 import|;
 end_import
@@ -360,9 +342,6 @@ name|currTask
 parameter_list|,
 name|ConditionalTask
 name|cndTsk
-parameter_list|,
-name|PhysicalContext
-name|physicalContext
 parameter_list|)
 block|{
 comment|// add this task into task tree
@@ -543,9 +522,6 @@ extends|extends
 name|Serializable
 argument_list|>
 name|newTask
-parameter_list|,
-name|PhysicalContext
-name|physicalContext
 parameter_list|)
 block|{
 comment|// add this task into task tree

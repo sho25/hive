@@ -2238,15 +2238,13 @@ block|}
 name|Table
 name|destTable
 init|=
-name|pGraphContext
+name|fsOp
 operator|.
-name|getFsopToTable
+name|getConf
 argument_list|()
 operator|.
-name|get
-argument_list|(
-name|fsOp
-argument_list|)
+name|getTable
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -2638,15 +2636,13 @@ decl_stmt|;
 name|Table
 name|srcTable
 init|=
-name|pGraphContext
+name|ts
 operator|.
-name|getTopToTable
+name|getConf
 argument_list|()
 operator|.
-name|get
-argument_list|(
-name|ts
-argument_list|)
+name|getTableMetadata
+argument_list|()
 decl_stmt|;
 comment|// Find the positions of the bucketed columns in the table corresponding
 comment|// to the select list.
