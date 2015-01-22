@@ -43,6 +43,11 @@ name|boolean
 name|cancelJob
 parameter_list|()
 function_decl|;
+specifier|public
+name|int
+name|monitorJob
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

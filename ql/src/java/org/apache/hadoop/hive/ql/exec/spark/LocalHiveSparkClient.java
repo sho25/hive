@@ -953,6 +953,8 @@ argument_list|(
 name|jobId
 argument_list|)
 argument_list|,
+name|hiveConf
+argument_list|,
 name|sparkJobStatus
 argument_list|,
 name|sc
