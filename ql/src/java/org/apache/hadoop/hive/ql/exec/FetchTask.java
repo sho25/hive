@@ -741,6 +741,13 @@ condition|(
 name|rowsRet
 operator|<=
 literal|0
+operator|||
+name|work
+operator|.
+name|getLimit
+argument_list|()
+operator|==
+name|totalRows
 condition|)
 block|{
 name|fetch
