@@ -1409,6 +1409,19 @@ operator|+
 literal|"org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext interface."
 argument_list|)
 block|,
+name|QUERYREDACTORHOOKS
+argument_list|(
+literal|"hive.exec.query.redactor.hooks"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma-separated list of hooks to be invoked for each query which can \n"
+operator|+
+literal|"tranform the query before it's placed in the job.xml file. Must be a Java class which \n"
+operator|+
+literal|"extends from the org.apache.hadoop.hive.ql.hooks.Redactor abstract class."
+argument_list|)
+block|,
 name|CLIENTSTATSPUBLISHERS
 argument_list|(
 literal|"hive.client.stats.publishers"
