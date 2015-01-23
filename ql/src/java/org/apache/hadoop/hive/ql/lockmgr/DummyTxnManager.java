@@ -1354,14 +1354,32 @@ name|HiveLockMode
 operator|.
 name|SHARED
 decl_stmt|;
-comment|//but the writeEntity is complete in DDL operations, and we need check its writeType to
-comment|//to determine the lockMode
-switch|switch
-condition|(
+comment|//but the writeEntity is complete in DDL operations, instead DDL sets the writeType, so
+comment|//we use it to determine its lockMode, and first we check if the writeType was set
+name|WriteEntity
+operator|.
+name|WriteType
+name|writeType
+init|=
 name|we
 operator|.
 name|getWriteType
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|writeType
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|lockMode
+return|;
+block|}
+switch|switch
+condition|(
+name|writeType
 condition|)
 block|{
 case|case

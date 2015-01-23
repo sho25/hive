@@ -473,9 +473,9 @@ literal|"ignored.\n"
 operator|+
 literal|"Example:\n "
 operator|+
-literal|"> SELECT _FUNC_('2009-30-07', 1) FROM src LIMIT 1;\n"
+literal|"> SELECT _FUNC_('2009-07-30', 1) FROM src LIMIT 1;\n"
 operator|+
-literal|"  '2009-29-07'"
+literal|"  '2009-07-29'"
 argument_list|)
 annotation|@
 name|VectorizedExpressions

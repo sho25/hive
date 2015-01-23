@@ -722,7 +722,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"insert into table page_view select a,b as c from (values (1,2),(3,4)) as VC(a,b) where b = 9"
+literal|"insert into page_view select a,b as c from (values (1,2),(3,4)) as VC(a,b) where b = 9"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -772,7 +772,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"insert into table page_view values(1,2)"
+literal|"insert into page_view values(1,2)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -819,6 +819,40 @@ argument_list|(
 literal|"insert into table page_view values(-1,2),(3,+4)"
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_QUERY "
+operator|+
+literal|"(TOK_FROM "
+operator|+
+literal|"(TOK_VIRTUAL_TABLE "
+operator|+
+literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+operator|+
+literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW (- 1) 2) (TOK_VALUE_ROW 3 (+ 4))))) "
+operator|+
+literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+operator|+
+literal|"(TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|//same query as above less the "table" keyword KW_TABLE
+name|ast
+operator|=
+name|parse
+argument_list|(
+literal|"insert into page_view values(-1,2),(3,+4)"
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals

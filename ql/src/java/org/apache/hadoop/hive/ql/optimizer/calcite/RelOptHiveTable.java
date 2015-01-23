@@ -1752,6 +1752,8 @@ operator|.
 name|error
 argument_list|(
 name|logMsg
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1759,6 +1761,8 @@ operator|new
 name|RuntimeException
 argument_list|(
 name|logMsg
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

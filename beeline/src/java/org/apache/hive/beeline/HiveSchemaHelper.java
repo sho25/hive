@@ -23,6 +23,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|collect
 operator|.
 name|Lists
@@ -456,7 +470,7 @@ name|DEFAUTL_DELIMITER
 init|=
 literal|";"
 decl_stmt|;
-comment|/***      * Find the type of given command      * @param dbCommand      * @return      */
+comment|/**      * Find the type of given command      *      * @param dbCommand      * @return      */
 specifier|public
 name|boolean
 name|isPartialCommand
@@ -467,7 +481,7 @@ parameter_list|)
 throws|throws
 name|IllegalArgumentException
 function_decl|;
-comment|/** Parse the DB specific nesting format and extract the inner script name if any      * @param dbCommand command from parent script      * @return      * @throws IllegalFormatException      */
+comment|/**      * Parse the DB specific nesting format and extract the inner script name if any      *      * @param dbCommand command from parent script      * @return      * @throws IllegalFormatException      */
 specifier|public
 name|String
 name|getScriptName
@@ -478,7 +492,7 @@ parameter_list|)
 throws|throws
 name|IllegalArgumentException
 function_decl|;
-comment|/***      * Find if the given command is a nested script execution      * @param dbCommand      * @return      */
+comment|/**      * Find if the given command is a nested script execution      *      * @param dbCommand      * @return      */
 specifier|public
 name|boolean
 name|isNestedScript
@@ -487,7 +501,7 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/***      * Find if the given command should not be passed to DB      * @param dbCommand      * @return      */
+comment|/**      * Find if the given command should not be passed to DB      *      * @param dbCommand      * @return      */
 specifier|public
 name|boolean
 name|isNonExecCommand
@@ -496,13 +510,13 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/***      * Get the SQL statement delimiter      * @return      */
+comment|/**      * Get the SQL statement delimiter      *      * @return      */
 specifier|public
 name|String
 name|getDelimiter
 parameter_list|()
 function_decl|;
-comment|/***      * Clear any client specific tags      * @return      */
+comment|/**      * Clear any client specific tags      *      * @return      */
 specifier|public
 name|String
 name|cleanseCommand
@@ -511,13 +525,13 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/***      * Does the DB required table/column names quoted      * @return      */
+comment|/**      * Does the DB required table/column names quoted      *      * @return      */
 specifier|public
 name|boolean
 name|needsQuotedIdentifier
 parameter_list|()
 function_decl|;
-comment|/***      * Flatten the nested upgrade script into a buffer      * @param scriptDir upgrade script directory      * @param scriptFile upgrade script file      * @return string of sql commands      */
+comment|/**      * Flatten the nested upgrade script into a buffer      *      * @param scriptDir  upgrade script directory      * @param scriptFile upgrade script file      * @return string of sql commands      */
 specifier|public
 name|String
 name|buildCommand
@@ -1003,6 +1017,18 @@ argument_list|(
 literal|","
 argument_list|)
 argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|this
+operator|.
+name|dbOpts
+operator|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1496,6 +1522,24 @@ name|POSTGRES_NESTING_TOKEN
 init|=
 literal|"\\i"
 decl_stmt|;
+annotation|@
+name|VisibleForTesting
+specifier|public
+specifier|static
+name|String
+name|POSTGRES_STANDARD_STRINGS_OPT
+init|=
+literal|"SET standard_conforming_strings"
+decl_stmt|;
+annotation|@
+name|VisibleForTesting
+specifier|public
+specifier|static
+name|String
+name|POSTGRES_SKIP_STANDARD_STRINGS_DBOPT
+init|=
+literal|"postgres.filter.81"
+decl_stmt|;
 specifier|public
 name|PostgresCommandParser
 parameter_list|(
@@ -1609,6 +1653,54 @@ parameter_list|()
 block|{
 return|return
 literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isNonExecCommand
+parameter_list|(
+name|String
+name|dbCommand
+parameter_list|)
+block|{
+comment|// Skip "standard_conforming_strings" command which is read-only in older
+comment|// Postgres versions like 8.1
+comment|// See: http://www.postgresql.org/docs/8.2/static/release-8-1.html
+if|if
+condition|(
+name|getDbOpts
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|POSTGRES_SKIP_STANDARD_STRINGS_DBOPT
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|dbCommand
+operator|.
+name|startsWith
+argument_list|(
+name|POSTGRES_STANDARD_STRINGS_OPT
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+block|}
+return|return
+name|super
+operator|.
+name|isNonExecCommand
+argument_list|(
+name|dbCommand
+argument_list|)
 return|;
 block|}
 block|}

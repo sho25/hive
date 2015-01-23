@@ -616,6 +616,36 @@ name|modWhiteListPattern
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+name|boolean
+name|isSparkConfigUpdated
+init|=
+literal|false
+decl_stmt|;
+specifier|public
+name|boolean
+name|getSparkConfigUpdated
+parameter_list|()
+block|{
+return|return
+name|isSparkConfigUpdated
+return|;
+block|}
+specifier|public
+name|void
+name|setSparkConfigUpdated
+parameter_list|(
+name|boolean
+name|isSparkConfigUpdated
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isSparkConfigUpdated
+operator|=
+name|isSparkConfigUpdated
+expr_stmt|;
+block|}
 static|static
 block|{
 name|ClassLoader
@@ -1144,6 +1174,19 @@ operator|+
 literal|"Two supported values are : kryo and javaXML. Kryo is default."
 argument_list|)
 block|,
+name|STAGINGDIR
+argument_list|(
+literal|"hive.exec.stagingdir"
+argument_list|,
+literal|".hive-staging"
+argument_list|,
+literal|"Directory name that will be created inside table locations in order to support HDFS encryption. "
+operator|+
+literal|"This is replaces ${hive.exec.scratchdir} for query results with the exception of read-only tables. "
+operator|+
+literal|"In all cases ${hive.exec.scratchdir} is still used for other temporary files, such as job plans."
+argument_list|)
+block|,
 name|SCRATCHDIR
 argument_list|(
 literal|"hive.exec.scratchdir"
@@ -1364,6 +1407,19 @@ operator|+
 literal|"An on-failure hook is specified as the name of Java class which implements the \n"
 operator|+
 literal|"org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext interface."
+argument_list|)
+block|,
+name|QUERYREDACTORHOOKS
+argument_list|(
+literal|"hive.exec.query.redactor.hooks"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma-separated list of hooks to be invoked for each query which can \n"
+operator|+
+literal|"tranform the query before it's placed in the job.xml file. Must be a Java class which \n"
+operator|+
+literal|"extends from the org.apache.hadoop.hive.ql.hooks.Redactor abstract class."
 argument_list|)
 block|,
 name|CLIENTSTATSPUBLISHERS
@@ -2199,6 +2255,17 @@ argument_list|,
 literal|"If true, the metastore Thrift interface will use TFramedTransport. When false (default) a standard TTransport is used."
 argument_list|)
 block|,
+name|METASTORE_USE_THRIFT_COMPACT_PROTOCOL
+argument_list|(
+literal|"hive.metastore.thrift.compact.protocol.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the metastore Thrift interface will use TCompactProtocol. When false (default) TBinaryProtocol will be used.\n"
+operator|+
+literal|"Setting it to true will break compatibility with older clients running TBinaryProtocol."
+argument_list|)
+block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
 argument_list|(
 literal|"hive.cluster.delegation.token.store.class"
@@ -2450,6 +2517,23 @@ argument_list|,
 literal|""
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|METASTORE_EVENT_DB_LISTENER_TTL
+argument_list|(
+literal|"hive.metastore.event.db.listener.timetolive"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
@@ -3143,30 +3227,6 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
-name|HIVEMAPJOINUSEOPTIMIZEDKEYS
-argument_list|(
-literal|"hive.mapjoin.optimized.keys"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should use optimized (size-wise), keys, allowing the table to take less\n"
-operator|+
-literal|"memory. Depending on key, the memory savings for entire table can be 5-15% or so."
-argument_list|)
-block|,
-name|HIVEMAPJOINLAZYHASHTABLE
-argument_list|(
-literal|"hive.mapjoin.lazy.hashtable"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether MapJoin hashtable should deserialize values on demand. Depending on how many values in\n"
-operator|+
-literal|"the table the join will actually touch, it can save a lot of memory by not creating objects for\n"
-operator|+
-literal|"rows that are not needed. If all rows are needed obviously there's no gain."
-argument_list|)
-block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
@@ -3323,6 +3383,23 @@ operator|+
 literal|"cardinality (4 in the example above), is more than this value, a new MR job is added under the\n"
 operator|+
 literal|"assumption that the original group by will reduce the data size."
+argument_list|)
+block|,
+comment|// Max filesize used to do a single copy (after that, distcp is used)
+name|HIVE_EXEC_COPYFILE_MAXSIZE
+argument_list|(
+literal|"hive.exec.copyfile.maxsize"
+argument_list|,
+literal|32L
+operator|*
+literal|1024
+operator|*
+literal|1024
+comment|/*32M*/
+argument_list|,
+literal|"Maximum file size (in Mb) that Hive uses to do single HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
 argument_list|)
 block|,
 comment|// for hive udtf operator
@@ -3678,6 +3755,15 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Merge small files at the end of a Tez DAG"
+argument_list|)
+block|,
+name|HIVEMERGESPARKFILES
+argument_list|(
+literal|"hive.merge.sparkfiles"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Merge small files at the end of a Spark DAG Transformation"
 argument_list|)
 block|,
 name|HIVEMERGEMAPFILESSIZE
@@ -5379,11 +5465,17 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|600
-operator|*
-literal|1000
+literal|"600000ms"
 argument_list|,
-literal|"ZooKeeper client's session timeout. The client is disconnected, and as a result, all locks released, \n"
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's session timeout (in milliseconds). The client is disconnected, and as a result, all locks released, \n"
 operator|+
 literal|"if a heartbeat is not sent in the timeout."
 argument_list|)
@@ -5404,6 +5496,34 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Clean extra nodes at the end of the session."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_MAX_RETRIES
+argument_list|(
+literal|"hive.zookeeper.connection.max.retries"
+argument_list|,
+literal|3
+argument_list|,
+literal|"Max number of times to retry when connecting to the ZooKeeper server."
+argument_list|)
+block|,
+name|HIVE_ZOOKEEPER_CONNECTION_BASESLEEPTIME
+argument_list|(
+literal|"hive.zookeeper.connection.basesleeptime"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Initial amount of time (in milliseconds) to wait between retries\n"
+operator|+
+literal|"when connecting to the ZooKeeper server when using ExponentialBackoffRetry policy."
 argument_list|)
 block|,
 comment|// Transactions
@@ -6249,6 +6369,27 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"whether insert into external tables is allowed"
+argument_list|)
+block|,
+name|HIVE_TEMPORARY_TABLE_STORAGE
+argument_list|(
+literal|"hive.exec.temporary.table.storage"
+argument_list|,
+literal|"default"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"memory"
+argument_list|,
+literal|"ssd"
+argument_list|,
+literal|"default"
+argument_list|)
+argument_list|,
+literal|"Define the storage policy for temporary tables."
+operator|+
+literal|"Choices between memory, ssd and default"
 argument_list|)
 block|,
 name|HIVE_DRIVER_RUN_HOOKS
@@ -7179,9 +7320,11 @@ argument_list|(
 literal|"mr"
 argument_list|,
 literal|"tez"
+argument_list|,
+literal|"spark"
 argument_list|)
 argument_list|,
-literal|"Chooses execution engine. Options are: mr (Map reduce, default) or tez (hadoop 2 only)"
+literal|"Chooses execution engine. Options are: mr (Map reduce, default), tez (hadoop 2 only), spark"
 argument_list|)
 block|,
 name|HIVE_JAR_DIRECTORY
@@ -7604,6 +7747,23 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
+argument_list|)
+block|,
+name|SPARK_CLIENT_FUTURE_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.future.timeout"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"remote spark client JobHandle future timeout value in seconds."
 argument_list|)
 block|,
 name|LLAP_ENABLED
@@ -8916,6 +9076,15 @@ literal|"of parameters that can't be modified at runtime"
 argument_list|)
 throw|;
 block|}
+name|isSparkConfigUpdated
+operator|=
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"spark"
+argument_list|)
+expr_stmt|;
 name|set
 argument_list|(
 name|name

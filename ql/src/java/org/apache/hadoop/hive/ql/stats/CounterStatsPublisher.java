@@ -258,7 +258,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|NumberFormatException
+name|Exception
 name|e
 parameter_list|)
 block|{
@@ -266,7 +266,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Invalid counter value "
+literal|"Failed to increment counter value "
 operator|+
 name|entry
 operator|.
@@ -279,8 +279,17 @@ name|entry
 operator|.
 name|getKey
 argument_list|()
+operator|+
+literal|": "
+operator|+
+name|e
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
+return|return
+literal|false
+return|;
 block|}
 block|}
 return|return

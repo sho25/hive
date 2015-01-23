@@ -3966,6 +3966,10 @@ operator|.
 name|listStatus
 argument_list|(
 name|p
+argument_list|,
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 return|;
 block|}
@@ -3992,6 +3996,10 @@ operator|.
 name|listStatus
 argument_list|(
 name|p
+argument_list|,
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 control|)
 block|{
