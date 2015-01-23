@@ -69,6 +69,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ObjectPair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -417,14 +433,6 @@ name|ReduceSinkDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|scala
-operator|.
-name|Tuple2
-import|;
-end_import
-
 begin_comment
 comment|/**  * SetSparkReducerParallelism determines how many reducers should  * be run for a given reduce sink, clone from SetReducerParallelism.  */
 end_comment
@@ -456,7 +464,7 @@ argument_list|)
 decl_stmt|;
 comment|// Spark memory per task, and total number of cores
 specifier|private
-name|Tuple2
+name|ObjectPair
 argument_list|<
 name|Long
 argument_list|,
@@ -961,14 +969,14 @@ literal|null
 operator|&&
 name|sparkMemoryAndCores
 operator|.
-name|_1
+name|getFirst
 argument_list|()
 operator|>
 literal|0
 operator|&&
 name|sparkMemoryAndCores
 operator|.
-name|_2
+name|getSecond
 argument_list|()
 operator|>
 literal|0
@@ -982,7 +990,7 @@ name|double
 operator|)
 name|sparkMemoryAndCores
 operator|.
-name|_1
+name|getFirst
 argument_list|()
 operator|/
 name|bytesPerReducer
@@ -1011,7 +1019,7 @@ name|numReducers
 argument_list|,
 name|sparkMemoryAndCores
 operator|.
-name|_2
+name|getSecond
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -81,6 +81,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ObjectPair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -224,14 +240,6 @@ operator|.
 name|util
 operator|.
 name|Utils
-import|;
-end_import
-
-begin_import
-import|import
-name|scala
-operator|.
-name|Tuple2
 import|;
 end_import
 
@@ -387,7 +395,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|Tuple2
+name|ObjectPair
 argument_list|<
 name|Long
 argument_list|,
@@ -424,7 +432,7 @@ condition|)
 block|{
 return|return
 operator|new
-name|Tuple2
+name|ObjectPair
 argument_list|<
 name|Long
 argument_list|,
@@ -610,7 +618,7 @@ argument_list|)
 expr_stmt|;
 return|return
 operator|new
-name|Tuple2
+name|ObjectPair
 argument_list|<
 name|Long
 argument_list|,
