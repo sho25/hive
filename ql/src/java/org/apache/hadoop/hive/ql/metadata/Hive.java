@@ -12686,7 +12686,10 @@ name|currentWorkingDir
 argument_list|)
 decl_stmt|;
 return|return
-name|Path
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
 operator|.
 name|getPathWithoutSchemeAndAuthority
 argument_list|(

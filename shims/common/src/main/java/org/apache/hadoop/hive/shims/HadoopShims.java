@@ -2027,6 +2027,14 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+specifier|public
+name|Path
+name|getPathWithoutSchemeAndAuthority
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
