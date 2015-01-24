@@ -8271,7 +8271,7 @@ return|return
 name|copy
 return|;
 block|}
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|FieldSchema
