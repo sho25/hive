@@ -3314,6 +3314,18 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
+comment|// Following remote job may refer to classes in this jar, and the remote job would be executed
+comment|// in a different thread, so we add this jar path to JobContext for further usage.
+name|jc
+operator|.
+name|getAddedJars
+argument_list|()
+operator|.
+name|add
+argument_list|(
+name|path
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
