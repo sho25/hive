@@ -14301,12 +14301,13 @@ block|}
 case|case
 name|IS_NULL
 case|:
+comment|// min = null condition above handles the all-nulls YES case
 return|return
 name|hasNull
 condition|?
 name|TruthValue
 operator|.
-name|YES
+name|YES_NO
 else|:
 name|TruthValue
 operator|.

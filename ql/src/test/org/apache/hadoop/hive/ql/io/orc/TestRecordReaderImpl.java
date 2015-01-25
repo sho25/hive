@@ -6267,7 +6267,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NO
 argument_list|,
 name|RecordReaderImpl
 operator|.
