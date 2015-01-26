@@ -2663,7 +2663,8 @@ name|updateUnpartitionedTableStatsFast
 argument_list|(
 name|newtCopy
 argument_list|,
-name|wh
+name|getWh
+argument_list|()
 operator|.
 name|getFileStatusesForSD
 argument_list|(
