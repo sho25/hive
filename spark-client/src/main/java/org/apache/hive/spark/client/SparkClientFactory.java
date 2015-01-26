@@ -61,6 +61,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|spark
@@ -229,7 +245,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Instantiates a new Spark client.    *    * @param conf Configuration for the remote Spark application.    */
+comment|/**    * Instantiates a new Spark client.    *    * @param sparkConf Configuration for the remote Spark application, contains spark.* properties.    * @param hiveConf Configuration for Hive, contains hive.* properties.    */
 specifier|public
 specifier|static
 specifier|synchronized
@@ -242,7 +258,10 @@ name|String
 argument_list|,
 name|String
 argument_list|>
-name|conf
+name|sparkConf
+parameter_list|,
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|IOException
@@ -266,7 +285,9 @@ name|SparkClientImpl
 argument_list|(
 name|server
 argument_list|,
-name|conf
+name|sparkConf
+argument_list|,
+name|hiveConf
 argument_list|)
 return|;
 block|}
