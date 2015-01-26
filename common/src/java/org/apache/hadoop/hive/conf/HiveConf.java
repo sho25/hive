@@ -1028,6 +1028,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|,
 name|HiveConf
@@ -2679,6 +2685,21 @@ operator|+
 literal|"entire transaction will fail and fall-back to DataNucleus will not be possible. You\n"
 operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
+argument_list|)
+block|,
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|(
+literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Thrift does not support nulls in maps, so any nulls present in maps retrieved from ORM must "
+operator|+
+literal|"either be pruned or converted to empty strings. Some backing dbs such as Oracle persist empty strings "
+operator|+
+literal|"as nulls, so we should set this parameter if we wish to reverse that behaviour. For others, "
+operator|+
+literal|"pruning is the correct behaviour"
 argument_list|)
 block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
