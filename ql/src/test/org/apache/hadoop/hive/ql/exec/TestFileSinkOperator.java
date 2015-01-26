@@ -175,7 +175,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -562,26 +562,6 @@ operator|.
 name|objectinspector
 operator|.
 name|StructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
@@ -1133,7 +1113,7 @@ expr_stmt|;
 name|txnList
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 operator|new
 name|long

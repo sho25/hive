@@ -9154,7 +9154,7 @@ block|{
 return|return
 name|TxnHandler
 operator|.
-name|createValidTxnList
+name|createValidReadTxnList
 argument_list|(
 name|client
 operator|.
@@ -9180,7 +9180,7 @@ block|{
 return|return
 name|TxnHandler
 operator|.
-name|createValidTxnList
+name|createValidReadTxnList
 argument_list|(
 name|client
 operator|.

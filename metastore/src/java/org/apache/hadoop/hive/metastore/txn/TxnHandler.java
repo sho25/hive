@@ -185,7 +185,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -1261,11 +1261,11 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetOpenTxnsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnList}.    * @param txns txn list from the metastore    * @param currentTxn Current transaction that the user has open.  If this is greater than 0 it    *                   will be removed from the exceptions list so that the user sees his own    *                   transaction as valid.    * @return a valid txn list.    */
+comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetOpenTxnsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnList}.  This assumes that the caller intends to    * read the files, and thus treats both open and aborted transactions as invalid.    * @param txns txn list from the metastore    * @param currentTxn Current transaction that the user has open.  If this is greater than 0 it    *                   will be removed from the exceptions list so that the user sees his own    *                   transaction as valid.    * @return a valid txn list.    */
 specifier|public
 specifier|static
 name|ValidTxnList
-name|createValidTxnList
+name|createValidReadTxnList
 parameter_list|(
 name|GetOpenTxnsResponse
 name|txns
@@ -1351,7 +1351,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|exceptions
 argument_list|,

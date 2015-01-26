@@ -75,7 +75,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -1143,7 +1143,7 @@ name|LockException
 block|{
 return|return
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|()
 return|;
 block|}

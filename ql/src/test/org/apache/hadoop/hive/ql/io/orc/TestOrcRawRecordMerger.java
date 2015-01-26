@@ -119,7 +119,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -2704,7 +2704,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|Long
 operator|.
@@ -4299,7 +4299,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"200:"
 argument_list|)
@@ -4754,7 +4754,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"200:"
 argument_list|)
@@ -6403,7 +6403,7 @@ name|ValidTxnList
 name|txns
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"2000:200"
 argument_list|)
