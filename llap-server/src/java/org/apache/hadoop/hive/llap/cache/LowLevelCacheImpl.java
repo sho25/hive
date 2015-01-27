@@ -686,18 +686,6 @@ argument_list|()
 expr_stmt|;
 continue|continue;
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"TODO# get +1 "
-operator|+
-name|buffer
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|long
 name|cacheOffset
 init|=
@@ -814,7 +802,7 @@ name|end
 condition|)
 block|{
 comment|// we assume it's always "==" now
-comment|// Replace the entire current DiskRange with new cached range. Java LL is idiotic, so...
+comment|// Replace the entire current DiskRange with new cached range.
 name|drIter
 operator|.
 name|remove
