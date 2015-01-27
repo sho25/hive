@@ -7770,7 +7770,7 @@ name|LLAP_ENABLED
 argument_list|(
 literal|"hive.llap.enabled"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|""
 argument_list|)
@@ -7847,7 +7847,7 @@ name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.use.lrfu"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|""
 argument_list|)
