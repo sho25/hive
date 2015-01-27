@@ -846,7 +846,10 @@ name|evicted
 operator|+=
 name|nextCandidate
 operator|.
-name|length
+name|byteBuffer
+operator|.
+name|remaining
+argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -972,7 +975,10 @@ name|evicted
 operator|+=
 name|buffer
 operator|.
-name|length
+name|byteBuffer
+operator|.
+name|remaining
+argument_list|()
 expr_stmt|;
 name|listener
 operator|.

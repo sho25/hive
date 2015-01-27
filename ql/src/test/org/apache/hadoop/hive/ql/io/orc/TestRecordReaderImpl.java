@@ -181,6 +181,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|DiskRange
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|type
 operator|.
 name|HiveDecimal
@@ -6475,8 +6491,6 @@ specifier|private
 specifier|static
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|diskRanges
@@ -6488,8 +6502,6 @@ parameter_list|)
 block|{
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|result
@@ -6497,8 +6509,6 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 argument_list|()
@@ -6526,8 +6536,6 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|(
 name|points
@@ -6560,8 +6568,6 @@ name|Exception
 block|{
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|list
@@ -7501,8 +7507,6 @@ name|Exception
 block|{
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|result
@@ -8530,8 +8534,6 @@ name|Exception
 block|{
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|result
@@ -9368,8 +9370,6 @@ name|Exception
 block|{
 name|List
 argument_list|<
-name|RecordReaderImpl
-operator|.
 name|DiskRange
 argument_list|>
 name|result

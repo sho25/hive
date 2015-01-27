@@ -343,7 +343,10 @@ name|evicted
 operator|+=
 name|candidate
 operator|.
-name|length
+name|byteBuffer
+operator|.
+name|remaining
+argument_list|()
 expr_stmt|;
 name|listener
 operator|.

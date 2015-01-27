@@ -238,6 +238,10 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+comment|// All kinds of random stuff needed by various parts of the system, beyond the publicly
+comment|// visible bytes "interface". This is not so pretty since all concerns are mixed here.
+comment|// But at least we don't waste bunch of memory per every buffer and bunch of virtual calls.
+comment|/** Allocator uses this to remember which arena to alloc from.    * TODO Could wrap ByteBuffer instead? This needs reference anyway. */
 specifier|public
 name|int
 name|arenaIndex
@@ -245,10 +249,17 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+comment|/** ORC cache uses this to store compressed length; buffer is cached uncompressed, but    * the lookup is on compressed ranges, so we need to know this. */
+specifier|public
+name|int
+name|declaredLength
+decl_stmt|;
+comment|/** Priority for cache policy (should be pretty universal). */
 specifier|public
 name|double
 name|priority
 decl_stmt|;
+comment|/** Last priority update time for cache policy (should be pretty universal). */
 specifier|public
 name|long
 name|lastUpdate
@@ -256,6 +267,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+comment|/** Linked list pointers for LRFU/LRU cache policies. Given that each block is in cache    * that might be better than external linked list. Or not, since this is not concurrent. */
 specifier|public
 name|LlapCacheableBuffer
 name|prev
@@ -266,12 +278,14 @@ name|next
 init|=
 literal|null
 decl_stmt|;
+comment|/** Index in heap for LRFU/LFU cache policies. */
 specifier|public
 name|int
 name|indexInHeap
 init|=
 name|NOT_IN_CACHE
 decl_stmt|;
+comment|// TODO: Add 4 more bytes of crap here!
 annotation|@
 name|VisibleForTesting
 name|int
@@ -283,109 +297,6 @@ name|refCount
 operator|.
 name|get
 argument_list|()
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|int
-name|hashCode
-parameter_list|()
-block|{
-if|if
-condition|(
-name|this
-operator|.
-name|byteBuffer
-operator|==
-literal|null
-condition|)
-return|return
-literal|0
-return|;
-return|return
-operator|(
-name|System
-operator|.
-name|identityHashCode
-argument_list|(
-name|this
-operator|.
-name|byteBuffer
-argument_list|)
-operator|*
-literal|37
-operator|+
-name|offset
-operator|)
-operator|*
-literal|37
-operator|+
-name|length
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|equals
-parameter_list|(
-name|Object
-name|obj
-parameter_list|)
-block|{
-if|if
-condition|(
-name|this
-operator|==
-name|obj
-condition|)
-return|return
-literal|true
-return|;
-if|if
-condition|(
-operator|!
-operator|(
-name|obj
-operator|instanceof
-name|LlapCacheableBuffer
-operator|)
-condition|)
-return|return
-literal|false
-return|;
-name|LlapCacheableBuffer
-name|other
-init|=
-operator|(
-name|LlapCacheableBuffer
-operator|)
-name|obj
-decl_stmt|;
-comment|// We only compare objects, and not contents of the ByteBuffer.
-return|return
-name|byteBuffer
-operator|==
-name|other
-operator|.
-name|byteBuffer
-operator|&&
-name|this
-operator|.
-name|offset
-operator|==
-name|other
-operator|.
-name|offset
-operator|&&
-name|this
-operator|.
-name|length
-operator|==
-name|other
-operator|.
-name|length
 return|;
 block|}
 name|int
@@ -425,6 +336,14 @@ assert|assert
 name|oldRefCount
 operator|>=
 literal|0
+operator|:
+literal|"oldRefCount is "
+operator|+
+name|oldRefCount
+operator|+
+literal|" "
+operator|+
+name|this
 assert|;
 name|newRefCount
 operator|=
@@ -505,6 +424,10 @@ argument_list|(
 literal|"Unexpected refCount "
 operator|+
 name|newRefCount
+operator|+
+literal|": "
+operator|+
+name|this
 argument_list|)
 throw|;
 block|}
@@ -526,8 +449,12 @@ name|Integer
 operator|.
 name|toHexString
 argument_list|(
-name|hashCode
-argument_list|()
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|this
+argument_list|)
 argument_list|)
 return|;
 block|}
