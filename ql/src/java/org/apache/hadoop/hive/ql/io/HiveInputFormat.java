@@ -1274,7 +1274,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ENABLED
+name|LLAP_IO_ENABLED
 argument_list|)
 condition|)
 block|{

@@ -1203,12 +1203,11 @@ argument_list|)
 throw|;
 block|}
 comment|// We found an old, valid block for this key in the cache.
-name|s
 name|releaseBufferInternal
 argument_list|(
 name|buffer
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|buffers
 index|[
 name|i

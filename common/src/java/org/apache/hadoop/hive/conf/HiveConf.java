@@ -7766,18 +7766,18 @@ argument_list|,
 literal|"remote spark client JobHandle future timeout value in seconds."
 argument_list|)
 block|,
-name|LLAP_ENABLED
+name|LLAP_IO_ENABLED
 argument_list|(
-literal|"hive.llap.enabled"
+literal|"hive.llap.io.enabled"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|""
 argument_list|)
 block|,
 name|LLAP_LOW_LEVEL_CACHE
 argument_list|(
-literal|"hive.llap.use.lowlevel.cache"
+literal|"hive.llap.io.use.lowlevel.cache"
 argument_list|,
 literal|true
 argument_list|,
@@ -7786,7 +7786,7 @@ argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MIN_ALLOC
 argument_list|(
-literal|"hive.llap.cache.orc.alloc.min"
+literal|"hive.llap.io.cache.orc.alloc.min"
 argument_list|,
 literal|128
 operator|*
@@ -7797,7 +7797,7 @@ argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MAX_ALLOC
 argument_list|(
-literal|"hive.llap.cache.orc.alloc.max"
+literal|"hive.llap.io.cache.orc.alloc.max"
 argument_list|,
 literal|16
 operator|*
@@ -7810,7 +7810,7 @@ argument_list|)
 block|,
 name|LLAP_ORC_CACHE_ARENA_SIZE
 argument_list|(
-literal|"hive.llap.cache.orc.arena.size"
+literal|"hive.llap.io.cache.orc.arena.size"
 argument_list|,
 literal|128
 operator|*
@@ -7823,7 +7823,7 @@ argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MAX_SIZE
 argument_list|(
-literal|"hive.llap.cache.orc.size"
+literal|"hive.llap.io.cache.orc.size"
 argument_list|,
 literal|1024L
 operator|*
@@ -7834,18 +7834,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|LLAP_REQUEST_THREAD_COUNT
-argument_list|(
-literal|"hive.llap.request.thread.count"
-argument_list|,
-literal|16
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|LLAP_USE_LRFU
 argument_list|(
-literal|"hive.llap.use.lrfu"
+literal|"hive.llap.io.use.lrfu"
 argument_list|,
 literal|false
 argument_list|,
@@ -7854,7 +7845,7 @@ argument_list|)
 block|,
 name|LLAP_LRFU_LAMBDA
 argument_list|(
-literal|"hive.llap.lrfu.lambda"
+literal|"hive.llap.io.lrfu.lambda"
 argument_list|,
 literal|0.01f
 argument_list|,
