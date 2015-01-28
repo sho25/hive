@@ -1444,6 +1444,12 @@ name|nameNode
 parameter_list|,
 name|int
 name|numDir
+parameter_list|,
+name|boolean
+name|local
+parameter_list|,
+name|String
+name|tezDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -2840,6 +2846,7 @@ implements|implements
 name|HdfsFileStatus
 block|{
 specifier|private
+specifier|final
 name|FileStatus
 name|fileStatus
 decl_stmt|;
@@ -3403,6 +3410,7 @@ operator|.
 name|KerberosNameShim
 block|{
 specifier|private
+specifier|final
 name|KerberosName
 name|kerberosName
 decl_stmt|;
@@ -3422,6 +3430,8 @@ name|name
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getDefaultRealm
@@ -3434,6 +3444,8 @@ name|getDefaultRealm
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getServiceName
@@ -3446,6 +3458,8 @@ name|getServiceName
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getHostName
@@ -3458,6 +3472,8 @@ name|getHostName
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getRealm
@@ -3470,6 +3486,8 @@ name|getRealm
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getShortName
