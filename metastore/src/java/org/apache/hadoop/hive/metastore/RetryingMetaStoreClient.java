@@ -607,7 +607,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"JDO[a-zA-Z]*Exception"
+literal|"(?s).*JDO[a-zA-Z]*Exception.*"
 argument_list|)
 condition|)
 block|{
