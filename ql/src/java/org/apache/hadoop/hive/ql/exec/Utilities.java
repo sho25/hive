@@ -3321,6 +3321,7 @@ argument_list|(
 name|path
 argument_list|)
 operator|||
+operator|!
 name|HiveConf
 operator|.
 name|getVar
@@ -3336,7 +3337,7 @@ argument_list|)
 operator|.
 name|equals
 argument_list|(
-literal|"spark"
+literal|"mr"
 argument_list|)
 condition|)
 block|{

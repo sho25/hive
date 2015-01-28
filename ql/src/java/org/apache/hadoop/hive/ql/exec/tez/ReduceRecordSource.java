@@ -628,7 +628,6 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
-specifier|static
 name|Deserializer
 name|inputKeyDeserializer
 decl_stmt|;

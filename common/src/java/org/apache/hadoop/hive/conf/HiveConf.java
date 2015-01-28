@@ -7327,6 +7327,23 @@ argument_list|,
 literal|"Chooses execution engine. Options are: mr (Map reduce, default), tez (hadoop 2 only), spark"
 argument_list|)
 block|,
+name|HIVE_EXECUTION_MODE
+argument_list|(
+literal|"hive.execution.mode"
+argument_list|,
+literal|"container"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"container"
+argument_list|,
+literal|"llap"
+argument_list|)
+argument_list|,
+literal|"Chooses whether query fragments will run in container or in llap"
+argument_list|)
+block|,
 name|HIVE_JAR_DIRECTORY
 argument_list|(
 literal|"hive.jar.directory"
