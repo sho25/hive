@@ -7770,7 +7770,7 @@ name|LLAP_IO_ENABLED
 argument_list|(
 literal|"hive.llap.io.enabled"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|""
 argument_list|)
