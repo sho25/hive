@@ -2272,6 +2272,25 @@ name|snapshot
 argument_list|()
 expr_stmt|;
 block|}
+comment|// make sure job has really succeeded
+comment|// at this point, future.get shall not block us
+for|for
+control|(
+name|JavaFutureAction
+argument_list|<
+name|?
+argument_list|>
+name|future
+range|:
+name|jobs
+control|)
+block|{
+name|future
+operator|.
+name|get
+argument_list|()
+expr_stmt|;
+block|}
 name|protocol
 operator|.
 name|jobFinished
