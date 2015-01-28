@@ -3714,6 +3714,16 @@ name|size
 argument_list|()
 operator|==
 literal|0
+operator|||
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getColsSize
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 name|tbl
