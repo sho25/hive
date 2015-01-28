@@ -6754,7 +6754,7 @@ argument_list|,
 name|tableName
 argument_list|)
 argument_list|)
-operator|==
+operator|!=
 literal|null
 return|;
 block|}
