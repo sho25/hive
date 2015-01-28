@@ -835,7 +835,7 @@ condition|(
 operator|!
 name|origColumn
 operator|.
-name|equals
+name|internalEquals
 argument_list|(
 name|destColumn
 argument_list|)

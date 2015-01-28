@@ -4228,13 +4228,6 @@ operator|.
 name|getTopOps
 argument_list|()
 expr_stmt|;
-name|opParseCtx
-operator|=
-name|pctx
-operator|.
-name|getOpParseCtx
-argument_list|()
-expr_stmt|;
 name|loadTableWork
 operator|=
 name|pctx
@@ -4341,8 +4334,6 @@ argument_list|,
 name|opToPartList
 argument_list|,
 name|topOps
-argument_list|,
-name|opParseCtx
 argument_list|,
 operator|new
 name|HashSet
@@ -42350,7 +42341,7 @@ argument_list|)
 expr_stmt|;
 name|rsRR
 operator|.
-name|addMappingOnly
+name|put
 argument_list|(
 name|nm
 index|[
@@ -44535,7 +44526,7 @@ argument_list|)
 expr_stmt|;
 name|outputRR
 operator|.
-name|addMappingOnly
+name|put
 argument_list|(
 name|nm
 index|[
@@ -61510,8 +61501,6 @@ argument_list|,
 name|opToPartList
 argument_list|,
 name|topOps
-argument_list|,
-name|opParseCtx
 argument_list|,
 operator|new
 name|HashSet

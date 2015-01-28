@@ -1489,6 +1489,15 @@ operator|.
 name|clone
 argument_list|()
 argument_list|,
+operator|new
+name|RowSchema
+argument_list|(
+name|parentRS
+operator|.
+name|getSchema
+argument_list|()
+argument_list|)
+argument_list|,
 name|parentRS
 operator|.
 name|getParentOperators

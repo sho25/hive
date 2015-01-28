@@ -2485,11 +2485,6 @@ argument_list|()
 argument_list|,
 name|pCtx
 operator|.
-name|getOpParseCtx
-argument_list|()
-argument_list|,
-name|pCtx
-operator|.
 name|getJoinOps
 argument_list|()
 argument_list|,
