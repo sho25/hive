@@ -565,8 +565,10 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertNull
+name|assertEquals
 argument_list|(
+literal|"myhcatdb"
+argument_list|,
 name|event
 operator|.
 name|getDbName
@@ -894,8 +896,10 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertNull
+name|assertEquals
 argument_list|(
+literal|"hcatcreatetable"
+argument_list|,
 name|event
 operator|.
 name|getTableName

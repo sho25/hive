@@ -779,8 +779,16 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Table name is not set in create table because this goes on the queue for the database the
-comment|// table is created in, not the (new) queue for the table itself.
+name|event
+operator|.
+name|setTableName
+argument_list|(
+name|t
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|enqueue
 argument_list|(
 name|event
@@ -1233,9 +1241,16 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// Database name is null for create database, because this doesn't belong to messages for
-comment|// that database.  Rather it belongs to system wide messages.  The db name is in the message,
-comment|// so listeners can determine it.
+name|event
+operator|.
+name|setDbName
+argument_list|(
+name|db
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|enqueue
 argument_list|(
 name|event
