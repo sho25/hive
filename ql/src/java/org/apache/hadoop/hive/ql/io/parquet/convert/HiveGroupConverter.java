@@ -293,6 +293,12 @@ operator|==
 name|OriginalType
 operator|.
 name|MAP
+operator|||
+name|annotation
+operator|==
+name|OriginalType
+operator|.
+name|MAP_KEY_VALUE
 condition|)
 block|{
 return|return
