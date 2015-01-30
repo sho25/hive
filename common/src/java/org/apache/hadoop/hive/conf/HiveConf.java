@@ -7858,6 +7858,15 @@ literal|null
 argument_list|,
 literal|"Channel logging level for remote Spark driver.  One of {DEBUG, ERROR, INFO, TRACE, WARN}."
 argument_list|)
+block|,
+name|SPARK_RPC_SASL_MECHANISM
+argument_list|(
+literal|"hive.spark.client.rpc.sasl.mechanisms"
+argument_list|,
+literal|"DIGEST-MD5"
+argument_list|,
+literal|"Name of the SASL mechanism to use for authentication."
+argument_list|)
 block|;
 specifier|public
 specifier|final
