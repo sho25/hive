@@ -3925,6 +3925,17 @@ operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
 argument_list|)
 block|,
+name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
+argument_list|(
+literal|"hive.parquet.timestamp.skip.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
+operator|+
+literal|"on reading parquet files from other tools"
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
