@@ -7836,7 +7836,7 @@ name|SPARK_RPC_CLIENT_HANDSHAKE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.server.connect.timeout"
 argument_list|,
-literal|"20000ms"
+literal|"90000ms"
 argument_list|,
 operator|new
 name|TimeValidator
