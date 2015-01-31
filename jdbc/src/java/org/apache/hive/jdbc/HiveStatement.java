@@ -2433,13 +2433,15 @@ name|logs
 operator|.
 name|add
 argument_list|(
-operator|(
 name|String
-operator|)
+operator|.
+name|valueOf
+argument_list|(
 name|row
 index|[
 literal|0
 index|]
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
