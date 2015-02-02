@@ -833,7 +833,6 @@ expr_stmt|;
 continue|continue;
 block|}
 comment|// Update the state to removed-from-list, so that parallel notifyUnlock doesn't modify us.
-comment|// TODO#: double check this is valid!
 name|nextCandidate
 operator|.
 name|indexInHeap

@@ -189,6 +189,12 @@ name|sarg
 decl_stmt|;
 specifier|private
 specifier|final
+name|String
+index|[]
+name|columnNames
+decl_stmt|;
+specifier|private
+specifier|final
 name|ColumnVectorProducer
 argument_list|<
 name|?
@@ -249,6 +255,10 @@ parameter_list|,
 name|SearchArgument
 name|sarg
 parameter_list|,
+name|String
+index|[]
+name|columnNames
+parameter_list|,
 name|ColumnVectorProducer
 argument_list|<
 name|?
@@ -273,6 +283,12 @@ operator|.
 name|sarg
 operator|=
 name|sarg
+expr_stmt|;
+name|this
+operator|.
+name|columnNames
+operator|=
+name|columnNames
 expr_stmt|;
 name|this
 operator|.
@@ -314,6 +330,8 @@ argument_list|,
 name|columnIds
 argument_list|,
 name|sarg
+argument_list|,
+name|columnNames
 argument_list|,
 name|this
 argument_list|)

@@ -37,7 +37,7 @@ name|api
 operator|.
 name|EncodedColumn
 operator|.
-name|ColumnBuffer
+name|StreamBuffer
 import|;
 end_import
 
@@ -54,18 +54,18 @@ name|CacheKey
 parameter_list|>
 block|{
 specifier|public
-name|ColumnBuffer
+name|StreamBuffer
 name|cacheOrGet
 parameter_list|(
 name|CacheKey
 name|key
 parameter_list|,
-name|ColumnBuffer
+name|StreamBuffer
 name|value
 parameter_list|)
 function_decl|;
 specifier|public
-name|ColumnBuffer
+name|StreamBuffer
 name|get
 parameter_list|(
 name|CacheKey

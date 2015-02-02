@@ -35,6 +35,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -108,10 +118,16 @@ function_decl|;
 name|void
 name|releaseBuffers
 parameter_list|(
+name|List
+argument_list|<
 name|LlapMemoryBuffer
-index|[]
+argument_list|>
 name|cacheBuffers
 parameter_list|)
+function_decl|;
+name|LlapMemoryBuffer
+name|createUnallocated
+parameter_list|()
 function_decl|;
 block|}
 end_interface

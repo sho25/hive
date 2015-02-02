@@ -17,7 +17,7 @@ name|llap
 operator|.
 name|io
 operator|.
-name|orc
+name|metadata
 package|;
 end_package
 
@@ -28,16 +28,6 @@ operator|.
 name|io
 operator|.
 name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
 import|;
 end_import
 
@@ -61,15 +51,8 @@ name|OrcProto
 import|;
 end_import
 
-begin_comment
-comment|/**  *  */
-end_comment
-
-begin_interface
-specifier|public
-interface|interface
-name|RecordReader
-extends|extends
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -85,8 +68,73 @@ operator|.
 name|orc
 operator|.
 name|RecordReader
-block|{ }
-end_interface
+import|;
+end_import
+
+begin_class
+specifier|public
+class|class
+name|OrcStripeMetadata
+block|{
+comment|// TODO#: add encoding and stream list
+name|OrcProto
+operator|.
+name|RowIndex
+index|[]
+name|rowIndexes
+decl_stmt|;
+specifier|public
+name|OrcStripeMetadata
+parameter_list|(
+name|RecordReader
+name|reader
+parameter_list|,
+name|int
+name|stripeIx
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|rowIndexes
+operator|=
+name|reader
+operator|.
+name|getCurrentRowIndexEntries
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|OrcProto
+operator|.
+name|RowIndex
+index|[]
+name|getRowIndexes
+parameter_list|()
+block|{
+return|return
+name|rowIndexes
+return|;
+block|}
+specifier|public
+name|void
+name|setRowIndexes
+parameter_list|(
+name|OrcProto
+operator|.
+name|RowIndex
+index|[]
+name|rowIndexes
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rowIndexes
+operator|=
+name|rowIndexes
+expr_stmt|;
+block|}
+block|}
+end_class
 
 end_unit
 

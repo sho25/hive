@@ -633,6 +633,10 @@ name|columnIds
 parameter_list|,
 name|SearchArgument
 name|sarg
+parameter_list|,
+name|String
+index|[]
+name|columnNames
 parameter_list|)
 block|{
 return|return
@@ -644,6 +648,8 @@ argument_list|,
 name|columnIds
 argument_list|,
 name|sarg
+argument_list|,
+name|columnNames
 argument_list|,
 name|cvp
 argument_list|)

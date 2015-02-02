@@ -67,7 +67,7 @@ name|api
 operator|.
 name|EncodedColumn
 operator|.
-name|ColumnBuffer
+name|StreamBuffer
 import|;
 end_import
 
@@ -85,7 +85,7 @@ parameter_list|>
 extends|extends
 name|ConsumerFeedback
 argument_list|<
-name|ColumnBuffer
+name|StreamBuffer
 argument_list|>
 extends|,
 name|Callable

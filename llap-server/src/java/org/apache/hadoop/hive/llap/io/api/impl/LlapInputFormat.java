@@ -505,6 +505,13 @@ name|createFromConf
 argument_list|(
 name|job
 argument_list|)
+argument_list|,
+name|ColumnProjectionUtils
+operator|.
+name|getReadColumnNames
+argument_list|(
+name|job
+argument_list|)
 argument_list|)
 decl_stmt|;
 return|return
