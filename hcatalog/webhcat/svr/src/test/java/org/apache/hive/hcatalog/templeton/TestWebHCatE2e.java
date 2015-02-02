@@ -1642,7 +1642,7 @@ operator|)
 operator|.
 name|matches
 argument_list|(
-literal|"0.[0-9]+.[0-9]+.*"
+literal|"[0-9]+.[0-9]+.[0-9]+.*"
 argument_list|)
 argument_list|)
 expr_stmt|;
