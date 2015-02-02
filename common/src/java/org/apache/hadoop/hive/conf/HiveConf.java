@@ -3694,6 +3694,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether Hive is running in test mode. If yes, it turns on sampling and prefixes the output tablename."
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEPREFIX
@@ -3703,6 +3705,8 @@ argument_list|,
 literal|"test_"
 argument_list|,
 literal|"In test mode, specfies prefixes for the output table"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODESAMPLEFREQ
@@ -3722,6 +3726,8 @@ operator|+
 literal|"  INSERT OVERWRITE TABLE test_dest\n"
 operator|+
 literal|"  SELECT col1 from src TABLESAMPLE (BUCKET 1 out of 32 on rand(1))"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODENOSAMPLE
@@ -3731,6 +3737,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"In test mode, specifies comma separated table names which would not apply sampling"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATAGGR
@@ -3740,6 +3748,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATPUB
@@ -3749,6 +3759,19 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVETESTCURRENTTIMESTAMP
+argument_list|(
+literal|"hive.test.currenttimestamp"
+argument_list|,
+literal|null
+argument_list|,
+literal|"current timestamp for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVEMERGEMAPFILES
