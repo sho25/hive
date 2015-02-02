@@ -543,10 +543,6 @@ name|QB
 name|qb
 decl_stmt|;
 specifier|private
-name|ASTNode
-name|ast
-decl_stmt|;
-specifier|private
 name|HashMap
 argument_list|<
 name|TableScanOperator
@@ -787,9 +783,6 @@ parameter_list|,
 name|QB
 name|qb
 parameter_list|,
-name|ASTNode
-name|ast
-parameter_list|,
 name|HashMap
 argument_list|<
 name|TableScanOperator
@@ -968,12 +961,6 @@ operator|.
 name|qb
 operator|=
 name|qb
-expr_stmt|;
-name|this
-operator|.
-name|ast
-operator|=
-name|ast
 expr_stmt|;
 name|this
 operator|.
@@ -1190,32 +1177,6 @@ operator|.
 name|conf
 operator|=
 name|conf
-expr_stmt|;
-block|}
-comment|/**    * @return the ast    */
-specifier|public
-name|ASTNode
-name|getParseTree
-parameter_list|()
-block|{
-return|return
-name|ast
-return|;
-block|}
-comment|/**    * @param ast    *          the parsetree to set    */
-specifier|public
-name|void
-name|setParseTree
-parameter_list|(
-name|ASTNode
-name|ast
-parameter_list|)
-block|{
-name|this
-operator|.
-name|ast
-operator|=
-name|ast
 expr_stmt|;
 block|}
 comment|/**    * @return the opToPartPruner    */

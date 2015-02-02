@@ -4332,8 +4332,6 @@ name|conf
 argument_list|,
 name|qb
 argument_list|,
-name|ast
-argument_list|,
 name|opToPartPruner
 argument_list|,
 name|opToPartList
@@ -61059,10 +61057,6 @@ argument_list|(
 name|conf
 argument_list|,
 name|qb
-argument_list|,
-name|plannerCtx
-operator|.
-name|child
 argument_list|,
 name|opToPartPruner
 argument_list|,
