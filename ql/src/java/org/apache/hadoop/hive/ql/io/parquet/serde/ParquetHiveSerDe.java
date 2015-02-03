@@ -2502,6 +2502,17 @@ parameter_list|)
 throws|throws
 name|SerDeException
 block|{
+if|if
+condition|(
+name|obj
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 switch|switch
 condition|(
 name|inspector
