@@ -1028,6 +1028,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|,
 name|HiveConf
@@ -2681,6 +2687,21 @@ operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
 argument_list|)
 block|,
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|(
+literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Thrift does not support nulls in maps, so any nulls present in maps retrieved from ORM must "
+operator|+
+literal|"either be pruned or converted to empty strings. Some backing dbs such as Oracle persist empty strings "
+operator|+
+literal|"as nulls, so we should set this parameter if we wish to reverse that behaviour. For others, "
+operator|+
+literal|"pruning is the correct behaviour"
+argument_list|)
+block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
@@ -3673,6 +3694,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether Hive is running in test mode. If yes, it turns on sampling and prefixes the output tablename."
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEPREFIX
@@ -3682,6 +3705,8 @@ argument_list|,
 literal|"test_"
 argument_list|,
 literal|"In test mode, specfies prefixes for the output table"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODESAMPLEFREQ
@@ -3701,6 +3726,8 @@ operator|+
 literal|"  INSERT OVERWRITE TABLE test_dest\n"
 operator|+
 literal|"  SELECT col1 from src TABLESAMPLE (BUCKET 1 out of 32 on rand(1))"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODENOSAMPLE
@@ -3710,6 +3737,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"In test mode, specifies comma separated table names which would not apply sampling"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATAGGR
@@ -3719,6 +3748,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATPUB
@@ -3728,6 +3759,19 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVETESTCURRENTTIMESTAMP
+argument_list|(
+literal|"hive.test.currenttimestamp"
+argument_list|,
+literal|null
+argument_list|,
+literal|"current timestamp for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVEMERGEMAPFILES
@@ -3902,6 +3946,17 @@ operator|+
 literal|"It is for avoiding OutOfMemory error in tasks. Work with Parquet 1.6.0 and above.\n"
 operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
+argument_list|)
+block|,
+name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
+argument_list|(
+literal|"hive.parquet.timestamp.skip.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
+operator|+
+literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
@@ -7804,7 +7859,7 @@ name|SPARK_RPC_CLIENT_HANDSHAKE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.server.connect.timeout"
 argument_list|,
-literal|"20000ms"
+literal|"90000ms"
 argument_list|,
 operator|new
 name|TimeValidator

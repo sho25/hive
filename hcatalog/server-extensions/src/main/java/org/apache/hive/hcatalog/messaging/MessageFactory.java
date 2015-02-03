@@ -570,6 +570,24 @@ name|Partition
 name|partition
 parameter_list|)
 function_decl|;
+specifier|public
+specifier|abstract
+name|InsertMessage
+name|buildInsertMessage
+parameter_list|(
+name|String
+name|db
+parameter_list|,
+name|String
+name|table
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partVals
+parameter_list|)
+function_decl|;
 block|}
 end_class
 

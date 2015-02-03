@@ -147,24 +147,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
-operator|.
-name|RowResolver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|plan
 operator|.
 name|ExprNodeDesc
@@ -292,12 +274,6 @@ name|op
 init|=
 literal|null
 decl_stmt|;
-specifier|private
-name|RowResolver
-name|toRR
-init|=
-literal|null
-decl_stmt|;
 comment|/**    * Values the expression sub-trees (predicates) that can be pushed down for    * root expression tree. Since there can be more than one alias in an    * expression tree, this is a map from the alias to predicates.    */
 specifier|private
 specifier|final
@@ -419,10 +395,6 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 name|op
-parameter_list|,
-specifier|final
-name|RowResolver
-name|toRR
 parameter_list|)
 block|{
 name|this
@@ -430,12 +402,6 @@ operator|.
 name|op
 operator|=
 name|op
-expr_stmt|;
-name|this
-operator|.
-name|toRR
-operator|=
-name|toRR
 expr_stmt|;
 name|pushdownPreds
 operator|=
@@ -501,16 +467,6 @@ parameter_list|()
 block|{
 return|return
 name|op
-return|;
-block|}
-comment|/**    * @return the row resolver of the operator of this expression.    */
-specifier|public
-name|RowResolver
-name|getToRR
-parameter_list|()
-block|{
-return|return
-name|toRR
 return|;
 block|}
 comment|/**    * @return the new expression to old expression map    */

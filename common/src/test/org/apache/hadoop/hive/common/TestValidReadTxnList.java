@@ -102,13 +102,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Tests for {@link org.apache.hadoop.hive.common.ValidTxnListImpl}  */
+comment|/**  * Tests for {@link ValidReadTxnList}  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestValidTxnImpl
+name|TestValidReadTxnList
 block|{
 annotation|@
 name|Test
@@ -123,7 +123,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 operator|new
 name|long
@@ -155,7 +155,7 @@ name|ValidTxnList
 name|newList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|()
 decl_stmt|;
 name|newList
@@ -171,7 +171,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|1
 argument_list|)
@@ -183,7 +183,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|2
 argument_list|)
@@ -203,7 +203,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 operator|new
 name|long
@@ -238,7 +238,7 @@ name|ValidTxnList
 name|newList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|()
 decl_stmt|;
 name|newList
@@ -254,7 +254,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|1
 argument_list|)
@@ -266,7 +266,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|2
 argument_list|)
@@ -278,7 +278,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|3
 argument_list|)
@@ -290,7 +290,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|4
 argument_list|)
@@ -302,7 +302,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|5
 argument_list|)
@@ -314,7 +314,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|6
 argument_list|)
@@ -367,7 +367,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|exceptions
 argument_list|,
@@ -386,7 +386,7 @@ name|ValidTxnList
 name|newList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|()
 decl_stmt|;
 name|newList
@@ -416,7 +416,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 name|i
 argument_list|)
@@ -442,7 +442,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 name|i
 argument_list|)
@@ -468,7 +468,7 @@ name|assertTrue
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 name|i
 argument_list|)
@@ -480,7 +480,7 @@ name|assertFalse
 argument_list|(
 name|newList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|2001
 argument_list|)
@@ -533,7 +533,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|exceptions
 argument_list|,

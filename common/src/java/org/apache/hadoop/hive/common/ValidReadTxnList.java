@@ -27,24 +27,28 @@ name|Arrays
 import|;
 end_import
 
+begin_comment
+comment|/**  * An implmentation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by readers.  * This class will view a transaction as valid only if it is committed.  Both open and aborted  * transactions will be seen as invalid.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
-name|ValidTxnListImpl
+name|ValidReadTxnList
 implements|implements
 name|ValidTxnList
 block|{
-specifier|private
+specifier|protected
 name|long
 index|[]
 name|exceptions
 decl_stmt|;
-specifier|private
+specifier|protected
 name|long
 name|highWatermark
 decl_stmt|;
 specifier|public
-name|ValidTxnListImpl
+name|ValidReadTxnList
 parameter_list|()
 block|{
 name|this
@@ -62,7 +66,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|ValidTxnListImpl
+name|ValidReadTxnList
 parameter_list|(
 name|long
 index|[]
@@ -117,7 +121,7 @@ name|highWatermark
 expr_stmt|;
 block|}
 specifier|public
-name|ValidTxnListImpl
+name|ValidReadTxnList
 parameter_list|(
 name|String
 name|value
@@ -133,7 +137,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isTxnCommitted
+name|isTxnValid
 parameter_list|(
 name|long
 name|txnid
@@ -167,7 +171,7 @@ annotation|@
 name|Override
 specifier|public
 name|RangeResponse
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 parameter_list|(
 name|long
 name|minTxnId
@@ -501,7 +505,7 @@ name|Override
 specifier|public
 name|long
 index|[]
-name|getOpenTransactions
+name|getInvalidTransactions
 parameter_list|()
 block|{
 return|return

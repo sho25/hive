@@ -1824,14 +1824,6 @@ return|;
 block|}
 block|}
 comment|//can safely convert the join to a map join.
-name|ParseContext
-name|parseContext
-init|=
-name|context
-operator|.
-name|getParseContext
-argument_list|()
-decl_stmt|;
 name|MapJoinOperator
 name|mapJoinOp
 init|=
@@ -1842,11 +1834,6 @@ argument_list|(
 name|context
 operator|.
 name|getConf
-argument_list|()
-argument_list|,
-name|parseContext
-operator|.
-name|getOpParseCtx
 argument_list|()
 argument_list|,
 name|joinOp

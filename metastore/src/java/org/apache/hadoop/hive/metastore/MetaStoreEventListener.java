@@ -293,6 +293,24 @@ name|metastore
 operator|.
 name|events
 operator|.
+name|InsertEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
 name|LoadPartitionDoneEvent
 import|;
 end_import
@@ -470,6 +488,17 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{   }
+comment|/**    * This will be called when an insert is executed that does not cause a partition to be added.    * If an insert causes a partition to be added it will cause {@link #onAddPartition} to be    * called instead.    * @param insertEvent    * @throws MetaException    */
+specifier|public
+name|void
+name|onInsert
+parameter_list|(
+name|InsertEvent
+name|insertEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{    }
 annotation|@
 name|Override
 specifier|public

@@ -597,6 +597,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|HCAT_INSERT_EVENT
+init|=
+literal|"INSERT"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|HCAT_MESSAGE_VERSION
 init|=
 literal|"HCAT_MESSAGE_VERSION"

@@ -2514,11 +2514,6 @@ argument_list|()
 argument_list|,
 name|pCtx
 operator|.
-name|getParseTree
-argument_list|()
-argument_list|,
-name|pCtx
-operator|.
 name|getOpToPartPruner
 argument_list|()
 argument_list|,
@@ -2530,11 +2525,6 @@ argument_list|,
 name|pCtx
 operator|.
 name|getTopOps
-argument_list|()
-argument_list|,
-name|pCtx
-operator|.
-name|getOpParseCtx
 argument_list|()
 argument_list|,
 name|pCtx

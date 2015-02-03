@@ -6744,6 +6744,25 @@ name|NoopHdfsEncryptionShim
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|Path
+name|getPathWithoutSchemeAndAuthority
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+block|{
+return|return
+name|Path
+operator|.
+name|getPathWithoutSchemeAndAuthority
+argument_list|(
+name|path
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

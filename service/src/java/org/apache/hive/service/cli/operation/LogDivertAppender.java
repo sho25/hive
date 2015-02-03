@@ -408,8 +408,6 @@ name|class
 operator|.
 name|getName
 argument_list|()
-block|,
-literal|"org.apache.hadoop.hive.ql.exec.spark.status.SparkJobMonitor"
 block|}
 decl_stmt|;
 name|addFilter

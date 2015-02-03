@@ -299,9 +299,12 @@ try|try
 block|{
 name|t
 operator|=
-name|Timestamp
+name|oi
 operator|.
-name|valueOf
+name|getTimestampParser
+argument_list|()
+operator|.
+name|parseTimestamp
 argument_list|(
 name|s
 argument_list|)

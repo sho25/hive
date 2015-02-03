@@ -8157,6 +8157,31 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
+name|List
+argument_list|<
+name|ColStatistics
+argument_list|>
+name|colStats
+init|=
+name|StatsUtils
+operator|.
+name|getColStatisticsUpdatingTableAlias
+argument_list|(
+name|parentStats
+argument_list|,
+name|lop
+operator|.
+name|getSchema
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|stats
+operator|.
+name|setColumnStats
+argument_list|(
+name|colStats
+argument_list|)
+expr_stmt|;
 comment|// if limit is greater than available rows then do not update
 comment|// statistics
 if|if
