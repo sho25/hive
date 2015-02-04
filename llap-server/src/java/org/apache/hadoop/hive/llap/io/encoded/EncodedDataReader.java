@@ -65,7 +65,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|EncodedColumn
+name|EncodedColumnBatch
 operator|.
 name|StreamBuffer
 import|;

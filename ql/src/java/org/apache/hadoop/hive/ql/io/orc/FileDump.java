@@ -1246,6 +1246,8 @@ operator|.
 name|readRowIndex
 argument_list|(
 name|stripeIx
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 for|for

@@ -157,7 +157,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|EncodedColumn
+name|EncodedColumnBatch
 import|;
 end_import
 
@@ -279,12 +279,16 @@ throws|throws
 name|IOException
 function_decl|;
 comment|// TODO: maybe all of this should be moved to LLAP-specific class
-comment|/**    * TODO: this API is subject to change; on one hand, external code should control the threading    *       aspects, with ORC method returning one EncodedColumn as it will; on the other, it's    *       more efficient for ORC to read stripe at once, apply RG-level sarg, etc., and thus    *       return many EncodedColumn-s.    *  TODO: assumes the reader is for one stripe, otherwise the signature makes no sense.    *        Also has no columns passed, because that is in ctor.    * @param colRgs What RGs are to be read. Has # of elements equal to the number of    *               included columns; then each boolean is rgCount long.    * @param cache Cache to get/put data and allocate memory.    * @param consumer Consumer to pass the results too.    * @throws IOException    */
+comment|/**    *  TODO: assumes the reader is for one stripe, otherwise the signature makes no sense.    *        Also has no columns passed, because that is in ctor.    * @param stripeIncludes Includes to use for this call. This method ignores reader's includes.    * @param colRgs What RGs are to be read. Has # of elements equal to the number of    *               included columns; then each boolean is rgCount long.    * @param cache Cache to get/put data and allocate memory.    * @param consumer Consumer to pass the results too.    * @throws IOException    */
 name|void
 name|readEncodedColumns
 parameter_list|(
 name|int
 name|stripeIx
+parameter_list|,
+name|boolean
+index|[]
+name|stripeIncludes
 parameter_list|,
 name|boolean
 index|[]
@@ -296,7 +300,7 @@ name|cache
 parameter_list|,
 name|Consumer
 argument_list|<
-name|EncodedColumn
+name|EncodedColumnBatch
 argument_list|<
 name|OrcBatchKey
 argument_list|>
@@ -309,7 +313,11 @@ function_decl|;
 name|RowIndex
 index|[]
 name|getCurrentRowIndexEntries
-parameter_list|()
+parameter_list|(
+name|boolean
+index|[]
+name|included
+parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
@@ -322,12 +330,37 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+name|List
+argument_list|<
+name|OrcProto
+operator|.
+name|Stream
+argument_list|>
+name|getCurrentStreams
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
 name|void
-name|setRowIndex
+name|setMetadata
 parameter_list|(
 name|RowIndex
 index|[]
-name|rowIndex
+name|index
+parameter_list|,
+name|List
+argument_list|<
+name|ColumnEncoding
+argument_list|>
+name|encodings
+parameter_list|,
+name|List
+argument_list|<
+name|OrcProto
+operator|.
+name|Stream
+argument_list|>
+name|streams
 parameter_list|)
 function_decl|;
 block|}

@@ -6049,6 +6049,8 @@ operator|.
 name|readRowIndex
 argument_list|(
 literal|0
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -6180,6 +6182,8 @@ operator|.
 name|readRowIndex
 argument_list|(
 literal|1
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals

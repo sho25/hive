@@ -129,6 +129,13 @@ name|LlapMemoryBuffer
 name|createUnallocated
 parameter_list|()
 function_decl|;
+name|void
+name|notifyReused
+parameter_list|(
+name|LlapMemoryBuffer
+name|buffer
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

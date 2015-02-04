@@ -115,7 +115,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|EncodedColumn
+name|EncodedColumnBatch
 import|;
 end_import
 

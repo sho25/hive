@@ -35,7 +35,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|EncodedColumn
+name|EncodedColumnBatch
 operator|.
 name|StreamBuffer
 import|;
@@ -58,12 +58,14 @@ annotation|@
 name|Override
 specifier|public
 name|StreamBuffer
+index|[]
 name|cacheOrGet
 parameter_list|(
 name|CacheKey
 name|key
 parameter_list|,
 name|StreamBuffer
+index|[]
 name|value
 parameter_list|)
 block|{
@@ -75,6 +77,7 @@ annotation|@
 name|Override
 specifier|public
 name|StreamBuffer
+index|[]
 name|get
 parameter_list|(
 name|CacheKey
