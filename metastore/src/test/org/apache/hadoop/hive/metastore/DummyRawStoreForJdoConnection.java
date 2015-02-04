@@ -3199,6 +3199,11 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+name|void
+name|flushCache
+parameter_list|()
+block|{    }
 block|}
 end_class
 

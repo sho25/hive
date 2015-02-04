@@ -2019,6 +2019,49 @@ argument_list|,
 literal|"Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore."
 argument_list|)
 block|,
+name|METASTORE_FASTPATH
+argument_list|(
+literal|"hive.metastore.fastpath"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Used to avoid all of the proxies and object copies in the metastore.  Note, if this is "
+operator|+
+literal|"set, you MUST use a local metastore (hive.metastore.uris must be empty) otherwise "
+operator|+
+literal|"undefined and most likely undesired behavior will result"
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_SIZE
+argument_list|(
+literal|"hive.metastore.hbase.cache.size"
+argument_list|,
+literal|100000
+argument_list|,
+literal|"Maximum number of "
+operator|+
+literal|"objects we will place in the hbase metastore cache.  The objects will be divided up by "
+operator|+
+literal|"types that we need to cache."
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_TIME_TO_LIVE
+argument_list|(
+literal|"hive.metastore.hbase.cache.ttl"
+argument_list|,
+literal|"600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Number of seconds for stats items to live in the cache"
+argument_list|)
+block|,
 name|METASTORETHRIFTCONNECTIONRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"

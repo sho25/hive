@@ -35626,6 +35626,15 @@ literal|true
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|flushCache
+parameter_list|()
+block|{
+comment|// NOP as there's no caching
+block|}
 specifier|private
 name|List
 argument_list|<

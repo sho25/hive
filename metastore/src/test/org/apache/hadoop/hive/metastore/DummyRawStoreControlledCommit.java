@@ -4072,6 +4072,19 @@ name|getCurrentNotificationEventId
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|flushCache
+parameter_list|()
+block|{
+name|objectStore
+operator|.
+name|flushCache
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 end_class
 
