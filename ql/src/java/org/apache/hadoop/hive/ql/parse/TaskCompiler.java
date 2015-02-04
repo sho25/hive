@@ -2525,11 +2525,6 @@ argument_list|()
 argument_list|,
 name|pCtx
 operator|.
-name|getGroupOpToInputTables
-argument_list|()
-argument_list|,
-name|pCtx
-operator|.
 name|getPrunedPartitions
 argument_list|()
 argument_list|,

@@ -4289,13 +4289,6 @@ operator|.
 name|getQB
 argument_list|()
 expr_stmt|;
-name|groupOpToInputTables
-operator|=
-name|pctx
-operator|.
-name|getGroupOpToInputTables
-argument_list|()
-expr_stmt|;
 name|prunedPartitions
 operator|=
 name|pctx
@@ -4375,8 +4368,6 @@ argument_list|,
 name|uCtx
 argument_list|,
 name|listMapJoinOpsNoReducer
-argument_list|,
-name|groupOpToInputTables
 argument_list|,
 name|prunedPartitions
 argument_list|,
@@ -61101,8 +61092,6 @@ argument_list|,
 name|uCtx
 argument_list|,
 name|listMapJoinOpsNoReducer
-argument_list|,
-name|groupOpToInputTables
 argument_list|,
 name|prunedPartitions
 argument_list|,

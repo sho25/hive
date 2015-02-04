@@ -73,16 +73,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -192,6 +182,24 @@ operator|.
 name|exec
 operator|.
 name|Operator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|OperatorUtils
 import|;
 end_import
 
@@ -1628,10 +1636,12 @@ argument_list|()
 operator|+
 literal|" "
 decl_stmt|;
-comment|// create a new ParseContext for the query to retrieve its operator tree,
-comment|// and the required GroupByOperator from it
-name|ParseContext
-name|newDAGContext
+comment|// retrieve the operator tree for the query, and the required GroupByOperator from it
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|newOperatorTree
 init|=
 name|RewriteParseContextGenerator
 operator|.
@@ -1649,44 +1659,35 @@ name|selReplacementCommand
 argument_list|)
 decl_stmt|;
 comment|// we get our new GroupByOperator here
-name|Map
-argument_list|<
-name|GroupByOperator
-argument_list|,
-name|Set
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|newGbyOpMap
-init|=
-name|newDAGContext
-operator|.
-name|getGroupOpToInputTables
-argument_list|()
-decl_stmt|;
 name|GroupByOperator
 name|newGbyOperator
 init|=
-name|newGbyOpMap
+name|OperatorUtils
 operator|.
-name|keySet
-argument_list|()
+name|findLastOperatorUpstream
+argument_list|(
+name|newOperatorTree
+argument_list|,
+name|GroupByOperator
 operator|.
-name|iterator
-argument_list|()
-operator|.
-name|next
-argument_list|()
+name|class
+argument_list|)
 decl_stmt|;
-name|GroupByDesc
-name|oldConf
-init|=
-name|operator
-operator|.
-name|getConf
-argument_list|()
-decl_stmt|;
+if|if
+condition|(
+name|newGbyOperator
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Error replacing GroupBy operator."
+argument_list|)
+throw|;
+block|}
 comment|// we need this information to set the correct colList, outputColumnNames
 comment|// in SelectOperator
 name|ExprNodeColumnDesc
@@ -1775,6 +1776,14 @@ block|}
 comment|// Now the GroupByOperator has the new AggregationList;
 comment|// sum(`_count_of_indexed_key`)
 comment|// instead of count(indexed_key)
+name|GroupByDesc
+name|oldConf
+init|=
+name|operator
+operator|.
+name|getConf
+argument_list|()
+decl_stmt|;
 name|oldConf
 operator|.
 name|setAggregators
