@@ -260,6 +260,14 @@ name|SPARK_DEFAULT_APP_NAME
 init|=
 literal|"Hive on Spark"
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|SPARK_DEFAULT_SERIALIZER
+init|=
+literal|"org.apache.spark.serializer.KryoSerializer"
+decl_stmt|;
 specifier|public
 specifier|static
 name|HiveSparkClient
@@ -397,7 +405,7 @@ name|put
 argument_list|(
 literal|"spark.serializer"
 argument_list|,
-literal|"org.apache.spark.serializer.KryoSerializer"
+name|SPARK_DEFAULT_SERIALIZER
 argument_list|)
 expr_stmt|;
 comment|// load properties from spark-defaults.conf.
@@ -513,7 +521,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"load spark configuration from %s (%s -> %s)."
+literal|"load spark property from %s (%s -> %s)."
 argument_list|,
 name|SPARK_DEFAULT_CONF_FILE
 argument_list|,
@@ -580,8 +588,35 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// load properties from hive configurations, including both spark.* properties
-comment|// and properties for remote driver RPC.
+comment|// load properties from hive configurations, including both spark.* properties,
+comment|// properties for remote driver RPC, and yarn properties for Spark on YARN mode.
+name|String
+name|sparkMaster
+init|=
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+literal|"spark.master"
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|sparkMaster
+operator|==
+literal|null
+condition|)
+block|{
+name|sparkMaster
+operator|=
+name|sparkConf
+operator|.
+name|get
+argument_list|(
+literal|"spark.master"
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|Map
@@ -642,7 +677,77 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"load spark configuration from hive configuration (%s -> %s)."
+literal|"load spark property from hive configuration (%s -> %s)."
+argument_list|,
+name|propertyName
+argument_list|,
+name|value
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|propertyName
+operator|.
+name|startsWith
+argument_list|(
+literal|"yarn"
+argument_list|)
+operator|&&
+operator|(
+name|sparkMaster
+operator|.
+name|equals
+argument_list|(
+literal|"yarn-client"
+argument_list|)
+operator|||
+name|sparkMaster
+operator|.
+name|equals
+argument_list|(
+literal|"yarn-cluster"
+argument_list|)
+operator|)
+condition|)
+block|{
+name|String
+name|value
+init|=
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+name|propertyName
+argument_list|)
+decl_stmt|;
+comment|// Add spark.hadoop prefix for yarn properties as SparkConf only accept properties
+comment|// started with spark prefix, Spark would remove spark.hadoop prefix lately and add
+comment|// it to its hadoop configuration.
+name|sparkConf
+operator|.
+name|put
+argument_list|(
+literal|"spark.hadoop."
+operator|+
+name|propertyName
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"load yarn property from hive configuration in %s mode (%s -> %s)."
+argument_list|,
+name|sparkMaster
 argument_list|,
 name|propertyName
 argument_list|,
@@ -692,7 +797,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"load RPC configuration from hive configuration (%s -> %s)."
+literal|"load RPC property from hive configuration (%s -> %s)."
 argument_list|,
 name|propertyName
 argument_list|,

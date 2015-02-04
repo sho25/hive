@@ -151,6 +151,14 @@ name|CONF_KEY_IN_PROCESS
 init|=
 literal|"spark.client.do_not_use.run_driver_in_process"
 decl_stmt|;
+comment|/** Used by client and driver to share a client ID for establishing an RPC session. */
+specifier|static
+specifier|final
+name|String
+name|CONF_CLIENT_ID
+init|=
+literal|"spark.client.authentication.client_id"
+decl_stmt|;
 comment|/** Used by client and driver to share a secret for establishing an RPC session. */
 specifier|static
 specifier|final

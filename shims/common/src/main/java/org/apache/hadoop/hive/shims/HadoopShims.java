@@ -669,6 +669,25 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+specifier|public
+name|MiniMrShim
+name|getMiniSparkCluster
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|int
+name|numberOfTaskTrackers
+parameter_list|,
+name|String
+name|nameNode
+parameter_list|,
+name|int
+name|numDir
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Shim for MiniMrCluster    */
 specifier|public
 interface|interface
