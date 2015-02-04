@@ -109,6 +109,8 @@ argument_list|<
 name|String
 argument_list|>
 name|partitionValues
+decl_stmt|,
+name|files
 decl_stmt|;
 comment|/**    * Default constructor, needed for Jackson.    */
 specifier|public
@@ -135,6 +137,12 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
 parameter_list|,
 name|Long
 name|timestamp
@@ -174,6 +182,12 @@ name|partitionValues
 operator|=
 name|partVals
 expr_stmt|;
+name|this
+operator|.
+name|files
+operator|=
+name|files
+expr_stmt|;
 name|checkValid
 argument_list|()
 expr_stmt|;
@@ -212,6 +226,20 @@ parameter_list|()
 block|{
 return|return
 name|partitionValues
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getFiles
+parameter_list|()
+block|{
+return|return
+name|files
 return|;
 block|}
 annotation|@

@@ -2845,6 +2845,17 @@ argument_list|,
 literal|"Metastore hook class for filtering the metadata read results"
 argument_list|)
 block|,
+name|FIRE_EVENTS_FOR_DML
+argument_list|(
+literal|"hive.metastore.dml.events"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the metastore will be asked"
+operator|+
+literal|" to fire events for DML operations"
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
