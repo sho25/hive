@@ -1057,6 +1057,19 @@ index|[
 name|i
 index|]
 decl_stmt|;
+assert|assert
+operator|!
+name|buffer
+operator|.
+name|isLocked
+argument_list|()
+assert|;
+comment|// TODO: is this always true? does put happen before reuse?
+name|buffer
+operator|.
+name|incRef
+argument_list|()
+expr_stmt|;
 name|long
 name|offset
 init|=
@@ -1079,12 +1092,6 @@ operator|.
 name|getLength
 argument_list|()
 expr_stmt|;
-assert|assert
-name|buffer
-operator|.
-name|isLocked
-argument_list|()
-assert|;
 while|while
 condition|(
 literal|true

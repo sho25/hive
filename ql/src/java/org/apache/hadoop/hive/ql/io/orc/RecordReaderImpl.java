@@ -19785,8 +19785,8 @@ parameter_list|)
 block|{
 name|streams
 index|[
-operator|++
 name|streamCount
+operator|++
 index|]
 operator|=
 operator|new
@@ -19976,6 +19976,7 @@ operator|.
 name|getColumnsList
 argument_list|()
 decl_stmt|;
+comment|// 1. Figure out what we have to read.
 name|LinkedList
 argument_list|<
 name|DiskRange
@@ -19994,7 +19995,7 @@ name|offset
 init|=
 literal|0
 decl_stmt|;
-comment|// Figure out which columns have a present stream
+comment|// 1.1. Figure out which columns have a present stream
 name|boolean
 index|[]
 name|hasNull
@@ -20013,7 +20014,7 @@ literal|null
 decl_stmt|;
 comment|// We assume stream list is sorted by column and that non-data
 comment|// streams do not interleave data streams for the same column.
-comment|// With that in mind, determine disk ranges to read/get from cache (not by stream).
+comment|// 1.2. With that in mind, determine disk ranges to read/get from cache (not by stream).
 name|int
 name|colRgIx
 init|=
@@ -20121,10 +20122,7 @@ block|}
 name|ColumnReadContext
 name|ctx
 init|=
-name|colCtxs
-index|[
-name|colRgIx
-index|]
+literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -20133,14 +20131,17 @@ operator|!=
 name|colIx
 condition|)
 block|{
-assert|assert
-name|ctx
-operator|==
-literal|null
-assert|;
 operator|++
 name|colRgIx
 expr_stmt|;
+assert|assert
+name|colCtxs
+index|[
+name|colRgIx
+index|]
+operator|==
+literal|null
+assert|;
 name|lastColIx
 operator|=
 name|colIx
@@ -20180,6 +20181,21 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|ctx
+operator|=
+name|colCtxs
+index|[
+name|colRgIx
+index|]
+expr_stmt|;
+assert|assert
+name|ctx
+operator|!=
+literal|null
+assert|;
+block|}
 name|int
 name|indexIx
 init|=
@@ -20212,10 +20228,7 @@ name|colIx
 index|]
 argument_list|)
 decl_stmt|;
-name|colCtxs
-index|[
-name|colRgIx
-index|]
+name|ctx
 operator|.
 name|addStream
 argument_list|(
@@ -20314,7 +20327,7 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
-comment|// Now, read all of these from cache or disk.
+comment|// 2. Now, read all of the ranges from cache or disk.
 if|if
 condition|(
 name|LOG
@@ -20374,7 +20387,7 @@ argument_list|,
 name|rangesToRead
 argument_list|)
 expr_stmt|;
-comment|// Separate buffers for each stream from the data we have.
+comment|// 2.1. Separate buffers for each stream from the data we have.
 comment|// TODO: given how we read, we could potentially get rid of this step?
 for|for
 control|(
@@ -20433,7 +20446,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// Finally, decompress data, map per RG, and return to caller.
+comment|// 3. Finally, decompress data, map per RG, and return to caller.
 comment|// We go by RG and not by column because that is how data is processed.
 name|int
 name|rgCount
@@ -20760,13 +20773,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"not implemented"
-argument_list|)
-throw|;
 block|}
 specifier|private
 name|StreamBuffer

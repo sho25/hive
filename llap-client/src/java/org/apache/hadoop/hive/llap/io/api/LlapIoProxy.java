@@ -247,6 +247,13 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+name|ctor
+operator|.
+name|setAccessible
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 return|return
 name|ctor
 operator|.
