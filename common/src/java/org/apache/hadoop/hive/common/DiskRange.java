@@ -223,6 +223,23 @@ name|UnsupportedOperationException
 argument_list|()
 throw|;
 block|}
+specifier|public
+name|void
+name|shiftBy
+parameter_list|(
+name|long
+name|baseOffset
+parameter_list|)
+block|{
+name|offset
+operator|-=
+name|baseOffset
+expr_stmt|;
+name|end
+operator|-=
+name|baseOffset
+expr_stmt|;
+block|}
 block|}
 end_class
 
