@@ -3475,6 +3475,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
+literal|"current_user"
+argument_list|,
+name|GenericUDFCurrentUser
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|registerGenericUDF
+argument_list|(
 literal|"isnull"
 argument_list|,
 name|GenericUDFOPNull
