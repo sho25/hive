@@ -113,7 +113,7 @@ name|EncodedDataReader
 argument_list|<
 name|BatchKey
 argument_list|>
-name|getReader
+name|createReader
 parameter_list|(
 name|InputSplit
 name|split

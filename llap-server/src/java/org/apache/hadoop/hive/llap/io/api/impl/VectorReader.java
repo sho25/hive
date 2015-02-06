@@ -156,7 +156,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** This used to be the main LLAP interface (next and close). However, since inputformat  * is used instead at present time, this class is just an extra layer. It could be merged  * into RecordReader of LlapInputFormat. */
+comment|/** This used to be the main LLAP interface (next and close). However, since inputformat  * is used instead at present time, this class is just an extra layer.  * TODO: It could be merged into RecordReader of LlapInputFormat. */
 end_comment
 
 begin_class
