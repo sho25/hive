@@ -340,6 +340,27 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
+comment|/**    * Filter out any objects that should not be shown to the user, from the list of    * tables or databases coming from a 'show tables' or 'show databases' command    * @param listObjs List of all objects obtained as result of a show command    * @param context    * @return filtered list of objects that will be returned to the user invoking the command    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|filterListCmdObjects
+parameter_list|(
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|listObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
+function_decl|;
 comment|/**    * @return all existing roles    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|List
 argument_list|<

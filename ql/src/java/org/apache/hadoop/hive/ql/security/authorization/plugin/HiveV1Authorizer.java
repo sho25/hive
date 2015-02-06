@@ -55,16 +55,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -2551,6 +2541,34 @@ name|HiveConf
 name|hiveConf
 parameter_list|)
 block|{   }
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|filterListCmdObjects
+parameter_list|(
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|listObjs
+parameter_list|,
+name|HiveAuthzContext
+name|context
+parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
+throws|,
+name|HiveAccessControlException
+block|{
+comment|// do no filtering in old authorizer
+return|return
+name|listObjs
+return|;
+block|}
 block|}
 end_class
 
