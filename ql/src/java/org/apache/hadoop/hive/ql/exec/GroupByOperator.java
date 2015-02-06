@@ -919,15 +919,6 @@ index|[]
 argument_list|>
 name|hashAggregations
 decl_stmt|;
-comment|// Used by hash distinct aggregations when hashGrpKeyNotRedKey is true
-specifier|private
-specifier|transient
-name|HashSet
-argument_list|<
-name|KeyWrapper
-argument_list|>
-name|keysCurrentGroup
-decl_stmt|;
 specifier|private
 specifier|transient
 name|boolean
@@ -937,20 +928,6 @@ specifier|private
 specifier|transient
 name|boolean
 name|hashAggr
-decl_stmt|;
-comment|// The reduction is happening on the reducer, and the grouping key and
-comment|// reduction keys are different.
-comment|// For example: select a, count(distinct b) from T group by a
-comment|// The data is sprayed by 'b' and the reducer is grouping it by 'a'
-specifier|private
-specifier|transient
-name|boolean
-name|groupKeyIsNotReduceKey
-decl_stmt|;
-specifier|private
-specifier|transient
-name|boolean
-name|firstRowInGroup
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -2365,28 +2342,6 @@ operator|.
 name|HIVEMAPAGGRHASHMINREDUCTION
 argument_list|)
 expr_stmt|;
-name|groupKeyIsNotReduceKey
-operator|=
-name|conf
-operator|.
-name|getGroupKeyNotReductionKey
-argument_list|()
-expr_stmt|;
-if|if
-condition|(
-name|groupKeyIsNotReduceKey
-condition|)
-block|{
-name|keysCurrentGroup
-operator|=
-operator|new
-name|HashSet
-argument_list|<
-name|KeyWrapper
-argument_list|>
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 name|List
 argument_list|<
@@ -4103,46 +4058,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|startGroup
-parameter_list|()
-throws|throws
-name|HiveException
-block|{
-name|firstRowInGroup
-operator|=
-literal|true
-expr_stmt|;
-name|super
-operator|.
-name|startGroup
-argument_list|()
-expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|endGroup
-parameter_list|()
-throws|throws
-name|HiveException
-block|{
-if|if
-condition|(
-name|groupKeyIsNotReduceKey
-condition|)
-block|{
-name|keysCurrentGroup
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-block|}
-block|}
 specifier|private
 name|void
 name|processKey
@@ -4188,10 +4103,6 @@ name|newKeys
 argument_list|)
 expr_stmt|;
 block|}
-name|firstRowInGroup
-operator|=
-literal|false
-expr_stmt|;
 if|if
 condition|(
 name|countAfterReport
@@ -4255,9 +4166,6 @@ comment|// Total number of input rows is needed for hash aggregation only
 if|if
 condition|(
 name|hashAggr
-operator|&&
-operator|!
-name|groupKeyIsNotReduceKey
 condition|)
 block|{
 name|numRowsInput
@@ -4646,29 +4554,6 @@ operator|++
 expr_stmt|;
 comment|// new entry in the hash table
 block|}
-comment|// If the grouping key and the reduction key are different, a set of
-comment|// grouping keys for the current reduction key are maintained in
-comment|// keysCurrentGroup
-comment|// Peek into the set to find out if a new grouping key is seen for the given
-comment|// reduction key
-if|if
-condition|(
-name|groupKeyIsNotReduceKey
-condition|)
-block|{
-name|newEntryForHashAggr
-operator|=
-name|keysCurrentGroup
-operator|.
-name|add
-argument_list|(
-name|newKeys
-operator|.
-name|copyKey
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Update the aggs
 name|updateAggregations
 argument_list|(
@@ -4690,17 +4575,8 @@ comment|// potentially new entry "aggs"
 comment|// can be flushed out of the hash table.
 comment|// Based on user-specified parameters, check if the hash table needs to be
 comment|// flushed.
-comment|// If the grouping key is not the same as reduction key, flushing can only
-comment|// happen at boundaries
 if|if
 condition|(
-operator|(
-operator|!
-name|groupKeyIsNotReduceKey
-operator|||
-name|firstRowInGroup
-operator|)
-operator|&&
 name|shouldBeFlushed
 argument_list|(
 name|newKeys
