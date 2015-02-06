@@ -3505,10 +3505,14 @@ break|break;
 case|case
 name|VARCHAR
 case|:
-name|appendWithQuotes
+block|{
+name|String
+name|s
+init|=
+name|SerDeUtils
+operator|.
+name|escapeString
 argument_list|(
-name|sb
-argument_list|,
 operator|(
 operator|(
 name|HiveVarcharObjectInspector
@@ -3524,17 +3528,29 @@ operator|.
 name|toString
 argument_list|()
 argument_list|)
-expr_stmt|;
-break|break;
-case|case
-name|CHAR
-case|:
-comment|//this should use HiveChar.getPaddedValue() but it's protected; currently (v0.13)
-comment|// HiveChar.toString() returns getPaddedValue()
+decl_stmt|;
 name|appendWithQuotes
 argument_list|(
 name|sb
 argument_list|,
+name|s
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+case|case
+name|CHAR
+case|:
+block|{
+comment|//this should use HiveChar.getPaddedValue() but it's protected; currently (v0.13)
+comment|// HiveChar.toString() returns getPaddedValue()
+name|String
+name|s
+init|=
+name|SerDeUtils
+operator|.
+name|escapeString
+argument_list|(
 operator|(
 operator|(
 name|HiveCharObjectInspector
@@ -3550,8 +3566,16 @@ operator|.
 name|toString
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|appendWithQuotes
+argument_list|(
+name|sb
+argument_list|,
+name|s
+argument_list|)
 expr_stmt|;
 break|break;
+block|}
 default|default:
 throw|throw
 operator|new
