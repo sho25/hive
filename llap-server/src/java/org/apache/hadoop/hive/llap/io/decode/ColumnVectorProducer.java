@@ -637,12 +637,6 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-name|int
-name|colsRemaining
-init|=
-operator|-
-literal|1
-decl_stmt|;
 synchronized|synchronized
 init|(
 name|targetBatch
@@ -741,6 +735,8 @@ if|if
 condition|(
 literal|0
 operator|==
+name|targetBatch
+operator|.
 name|colsRemaining
 condition|)
 block|{

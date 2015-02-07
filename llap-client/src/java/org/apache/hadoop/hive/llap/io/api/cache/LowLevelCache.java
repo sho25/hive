@@ -64,7 +64,7 @@ specifier|public
 interface|interface
 name|LowLevelCache
 block|{
-comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    */
+comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    * @param base base offset for the ranges (stripe offset in case of ORC).    */
 name|void
 name|getFileData
 parameter_list|(
@@ -76,6 +76,9 @@ argument_list|<
 name|DiskRange
 argument_list|>
 name|ranges
+parameter_list|,
+name|long
+name|base
 parameter_list|)
 function_decl|;
 comment|/**    * Puts file data into cache.    * @param file File name; MUST be interned.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
@@ -93,6 +96,9 @@ parameter_list|,
 name|LlapMemoryBuffer
 index|[]
 name|chunks
+parameter_list|,
+name|long
+name|base
 parameter_list|)
 function_decl|;
 comment|/**    * Releases the buffer returned by getFileData or allocateMultiple.    */

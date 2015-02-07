@@ -501,6 +501,9 @@ argument_list|<
 name|DiskRange
 argument_list|>
 name|ranges
+parameter_list|,
+name|long
+name|baseOffset
 parameter_list|)
 block|{
 name|FileCache
@@ -549,6 +552,8 @@ condition|)
 block|{
 name|getOverlappingRanges
 argument_list|(
+name|baseOffset
+argument_list|,
 name|dr
 argument_list|,
 name|subCache
@@ -571,6 +576,9 @@ specifier|private
 name|void
 name|getOverlappingRanges
 parameter_list|(
+name|long
+name|baseOffset
+parameter_list|,
 name|ListIterator
 argument_list|<
 name|DiskRange
@@ -614,10 +622,14 @@ argument_list|(
 name|currentNotCached
 operator|.
 name|offset
+operator|+
+name|baseOffset
 argument_list|,
 name|currentNotCached
 operator|.
 name|end
+operator|+
+name|baseOffset
 argument_list|)
 operator|.
 name|entrySet
@@ -760,6 +772,15 @@ argument_list|,
 name|currentCached
 argument_list|)
 expr_stmt|;
+comment|// Now that we've added it into correct position, we can adjust it by base offset.
+name|currentCached
+operator|.
+name|shiftBy
+argument_list|(
+operator|-
+name|baseOffset
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|private
@@ -779,6 +800,7 @@ name|CacheChunk
 name|currentCached
 parameter_list|)
 block|{
+comment|// Both currentNotCached and currentCached already include baseOffset.
 if|if
 condition|(
 name|currentNotCached
@@ -1002,6 +1024,9 @@ parameter_list|,
 name|LlapMemoryBuffer
 index|[]
 name|buffers
+parameter_list|,
+name|long
+name|baseOffset
 parameter_list|)
 block|{
 name|long
@@ -1079,6 +1104,8 @@ name|i
 index|]
 operator|.
 name|offset
+operator|+
+name|baseOffset
 decl_stmt|;
 name|buffer
 operator|.
@@ -1151,7 +1178,11 @@ literal|"@"
 operator|+
 name|offset
 operator|+
-literal|"; old "
+literal|" (base "
+operator|+
+name|baseOffset
+operator|+
+literal|"); old "
 operator|+
 name|oldVal
 operator|+
@@ -1201,6 +1232,12 @@ operator|+
 literal|" @"
 operator|+
 name|offset
+operator|+
+literal|" (base "
+operator|+
+name|baseOffset
+operator|+
+literal|")"
 argument_list|)
 throw|;
 block|}

@@ -1333,6 +1333,7 @@ literal|null
 condition|)
 block|{
 comment|// TODO: this is the inefficient path
+comment|// TODO#: this is invalid; base stripe offset should be passed.
 name|cache
 operator|.
 name|putFileData
@@ -1362,6 +1363,8 @@ index|[]
 block|{
 name|cacheBuffer
 block|}
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -2805,6 +2808,9 @@ parameter_list|(
 name|String
 name|fileName
 parameter_list|,
+name|long
+name|baseOffset
+parameter_list|,
 name|ZeroCopyReaderShim
 name|zcr
 parameter_list|,
@@ -2862,7 +2868,7 @@ name|toRelease
 init|=
 literal|null
 decl_stmt|;
-comment|// Find our bearings in the stream. Normally, iter will already point either to where we
+comment|// 1. Find our bearings in the stream. Normally, iter will already point either to where we
 comment|// want to be, or just before. However, RGs can overlap due to encoding, so we may have
 comment|// to return to a previous block.
 name|DiskRange
@@ -2875,7 +2881,7 @@ argument_list|,
 name|cOffset
 argument_list|)
 decl_stmt|;
-comment|// Go thru the blocks; add stuff to results and prepare the decompression work (see below).
+comment|// 2. Go thru the blocks; add stuff to results and prepare the decompression work (see below).
 if|if
 condition|(
 name|cOffset
@@ -2925,7 +2931,7 @@ operator|instanceof
 name|CacheChunk
 condition|)
 block|{
-comment|// This is a cached compression buffer, add as is.
+comment|// 2a. This is a cached compression buffer, add as is.
 name|CacheChunk
 name|cc
 init|=
@@ -2972,7 +2978,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// This is a compressed buffer. We need to uncompress it; the buffer can comprise
+comment|// 2b. This is a compressed buffer. We need to uncompress it; the buffer can comprise
 comment|// several disk ranges, so we might need to combine them.
 name|BufferChunk
 name|bc
@@ -3016,8 +3022,15 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
+name|long
+name|originalOffset
+init|=
+name|bc
+operator|.
+name|offset
+decl_stmt|;
 name|int
-name|chunkLength
+name|compressedBytesConsumed
 init|=
 name|addOneCompressionBuffer
 argument_list|(
@@ -3042,11 +3055,9 @@ argument_list|)
 decl_stmt|;
 name|currentCOffset
 operator|=
-name|bc
-operator|.
-name|offset
+name|originalOffset
 operator|+
-name|chunkLength
+name|compressedBytesConsumed
 expr_stmt|;
 block|}
 if|if
@@ -3078,11 +3089,11 @@ name|next
 argument_list|()
 expr_stmt|;
 block|}
+comment|// 3. Allocate the buffers, prepare cache keys.
 comment|// At this point, we have read all the CBs we need to read. cacheBuffers contains some cache
 comment|// data and some unallocated membufs for decompression. toDecompress contains all the work we
 comment|// need to do, and each item points to one of the membufs in cacheBuffers as target. The iter
 comment|// has also been adjusted to point to these buffers instead of compressed data for the ranges.
-comment|// Allocate the buffers, prepare cache keys.
 if|if
 condition|(
 name|toDecompress
@@ -3160,7 +3171,7 @@ argument_list|,
 name|bufferSize
 argument_list|)
 expr_stmt|;
-comment|// Now decompress (or copy) the data into cache buffers.
+comment|// 4. Now decompress (or copy) the data into cache buffers.
 for|for
 control|(
 name|ProcCacheChunk
@@ -3176,10 +3187,10 @@ operator|.
 name|isCompressed
 condition|)
 block|{
-name|codec
-operator|.
-name|decompress
+name|decompressDirectBuffer
 argument_list|(
+name|codec
+argument_list|,
 name|chunk
 operator|.
 name|originalData
@@ -3211,12 +3222,23 @@ comment|// Copy uncompressed data to cache.
 block|}
 name|chunk
 operator|.
+name|buffer
+operator|.
+name|byteBuffer
+operator|.
+name|position
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+name|chunk
+operator|.
 name|originalData
 operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|// Release original compressed buffers to zero-copy reader if needed.
+comment|// 5. Release original compressed buffers to zero-copy reader if needed.
 if|if
 condition|(
 name|toRelease
@@ -3246,7 +3268,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Finally, put data to cache.
+comment|// 6. Finally, put data to cache.
 name|cache
 operator|.
 name|putFileData
@@ -3256,9 +3278,132 @@ argument_list|,
 name|cacheKeys
 argument_list|,
 name|targetBuffers
+argument_list|,
+name|baseOffset
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Decompresses direct buffers; if shim is missing, does horrible things to make q files work.    */
+specifier|private
+specifier|static
+name|void
+name|decompressDirectBuffer
+parameter_list|(
+name|CompressionCodec
+name|codec
+parameter_list|,
+name|ByteBuffer
+name|fromBb
+parameter_list|,
+name|ByteBuffer
+name|toBb
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+try|try
+block|{
+name|codec
+operator|.
+name|decompress
+argument_list|(
+name|fromBb
+argument_list|,
+name|toBb
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|UnsatisfiedLinkError
+name|er
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Something horrible is happening. We hope this is a test run."
+argument_list|)
+expr_stmt|;
+comment|// Q tests do not have the native decompressor. We need it. So...
+name|ByteBuffer
+name|from
+init|=
+name|ByteBuffer
+operator|.
+name|allocate
+argument_list|(
+name|fromBb
+operator|.
+name|remaining
+argument_list|()
+argument_list|)
+decl_stmt|,
+name|to
+init|=
+name|ByteBuffer
+operator|.
+name|allocate
+argument_list|(
+name|toBb
+operator|.
+name|remaining
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|fromBb
+operator|.
+name|get
+argument_list|(
+name|from
+operator|.
+name|array
+argument_list|()
+argument_list|,
+name|from
+operator|.
+name|arrayOffset
+argument_list|()
+argument_list|,
+name|fromBb
+operator|.
+name|remaining
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|codec
+operator|.
+name|decompress
+argument_list|(
+name|from
+argument_list|,
+name|to
+argument_list|)
+expr_stmt|;
+name|toBb
+operator|.
+name|put
+argument_list|(
+name|to
+operator|.
+name|array
+argument_list|()
+argument_list|,
+name|to
+operator|.
+name|arrayOffset
+argument_list|()
+argument_list|,
+name|to
+operator|.
+name|remaining
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|/** Finds compressed offset in a stream and makes sure iter points to its position.      This may be necessary for obscure combinations of compression and encoding boundaries. */
 specifier|private
 specifier|static
 name|DiskRange
@@ -3393,6 +3538,7 @@ return|return
 name|current
 return|;
 block|}
+comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param ranges Iterator of all chunks, pointing at current.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the     *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The total number of compressed bytes consumed.    */
 specifier|private
 specifier|static
 name|int
@@ -3455,11 +3601,6 @@ init|=
 name|current
 operator|.
 name|offset
-operator|+
-name|compressed
-operator|.
-name|position
-argument_list|()
 decl_stmt|;
 name|int
 name|b0
@@ -3533,6 +3674,22 @@ name|chunkLength
 argument_list|)
 throw|;
 block|}
+name|int
+name|consumedLength
+init|=
+name|chunkLength
+operator|+
+name|OutStream
+operator|.
+name|HEADER_SIZE
+decl_stmt|;
+name|long
+name|cbEndOffset
+init|=
+name|cbStartOffset
+operator|+
+name|consumedLength
+decl_stmt|;
 name|boolean
 name|isUncompressed
 init|=
@@ -3579,13 +3736,15 @@ name|isUncompressed
 argument_list|,
 name|cbStartOffset
 argument_list|,
-name|chunkLength
-argument_list|,
-name|cache
+name|cbEndOffset
 argument_list|,
 name|compressed
 argument_list|,
+name|chunkLength
+argument_list|,
 name|ranges
+argument_list|,
+name|cache
 argument_list|,
 name|toDecompress
 argument_list|,
@@ -3596,7 +3755,7 @@ name|current
 operator|.
 name|offset
 operator|+=
-name|chunkLength
+name|consumedLength
 expr_stmt|;
 if|if
 condition|(
@@ -3621,10 +3780,10 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|chunkLength
+name|consumedLength
 return|;
 block|}
-comment|// TODO: we could remove extra copy for isUncompressed case.
+comment|// TODO: we could remove extra copy for isUncompressed case by copying directly to cache.
 comment|// We need to consolidate 2 or more buffers into one to decompress.
 name|ByteBuffer
 name|copy
@@ -3750,6 +3909,7 @@ operator|>=
 name|remaining
 condition|)
 block|{
+comment|// This is the last range for this compression block. Yay!
 name|slice
 operator|=
 name|compressed
@@ -3779,13 +3939,15 @@ name|isUncompressed
 argument_list|,
 name|cbStartOffset
 argument_list|,
-name|chunkLength
-argument_list|,
-name|cache
+name|cbEndOffset
 argument_list|,
 name|compressed
 argument_list|,
+name|remaining
+argument_list|,
 name|ranges
+argument_list|,
+name|cache
 argument_list|,
 name|toDecompress
 argument_list|,
@@ -3796,7 +3958,7 @@ name|range
 operator|.
 name|offset
 operator|+=
-name|chunkLength
+name|remaining
 expr_stmt|;
 if|if
 condition|(
@@ -3822,7 +3984,7 @@ expr_stmt|;
 comment|// We copied the entire buffer.
 block|}
 return|return
-name|chunkLength
+name|consumedLength
 return|;
 block|}
 name|remaining
@@ -3875,13 +4037,14 @@ name|cbStartOffset
 argument_list|)
 throw|;
 block|}
+comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartLength The number of bytes consumed from lastRange into fCB.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
 specifier|private
 specifier|static
 name|void
 name|addOneCompressionBlockByteBuffer
 parameter_list|(
 name|ByteBuffer
-name|fullSourceBlock
+name|fullCompressionBlock
 parameter_list|,
 name|boolean
 name|isUncompressed
@@ -3889,20 +4052,23 @@ parameter_list|,
 name|long
 name|cbStartOffset
 parameter_list|,
-name|int
-name|chunkLength
-parameter_list|,
-name|LowLevelCache
-name|cache
+name|long
+name|cbEndOffset
 parameter_list|,
 name|ByteBuffer
-name|currentRangeData
+name|lastRange
+parameter_list|,
+name|int
+name|lastPartLength
 parameter_list|,
 name|ListIterator
 argument_list|<
 name|DiskRange
 argument_list|>
 name|ranges
+parameter_list|,
+name|LowLevelCache
+name|cache
 parameter_list|,
 name|List
 argument_list|<
@@ -3935,13 +4101,6 @@ name|futureAlloc
 argument_list|)
 expr_stmt|;
 comment|// Add it to the list of work to decompress.
-name|long
-name|cbEndOffset
-init|=
-name|cbStartOffset
-operator|+
-name|chunkLength
-decl_stmt|;
 name|ProcCacheChunk
 name|cc
 init|=
@@ -3955,7 +4114,7 @@ argument_list|,
 operator|!
 name|isUncompressed
 argument_list|,
-name|fullSourceBlock
+name|fullCompressionBlock
 argument_list|,
 name|futureAlloc
 argument_list|)
@@ -3968,23 +4127,23 @@ name|cc
 argument_list|)
 expr_stmt|;
 comment|// Adjust the compression block position.
-name|currentRangeData
+name|lastRange
 operator|.
 name|position
 argument_list|(
-name|currentRangeData
+name|lastRange
 operator|.
 name|position
 argument_list|()
 operator|+
-name|chunkLength
+name|lastPartLength
 argument_list|)
 expr_stmt|;
 comment|// Finally, put it in the ranges list for future use (if shared between RGs).
 comment|// Before anyone else accesses it, it would have been allocated and decompressed locally.
 if|if
 condition|(
-name|currentRangeData
+name|lastRange
 operator|.
 name|remaining
 argument_list|()

@@ -36,17 +36,6 @@ return|return
 literal|false
 return|;
 block|}
-comment|/** Very detailed debug messages that dump data */
-specifier|public
-specifier|static
-name|boolean
-name|isTraceDataEnabled
-parameter_list|()
-block|{
-return|return
-literal|false
-return|;
-block|}
 specifier|public
 specifier|static
 name|boolean

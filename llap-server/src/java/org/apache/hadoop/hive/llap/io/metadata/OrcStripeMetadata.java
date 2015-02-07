@@ -258,11 +258,11 @@ operator|==
 literal|null
 condition|)
 return|return
-literal|true
+literal|false
 return|;
 block|}
 return|return
-literal|false
+literal|true
 return|;
 block|}
 specifier|public

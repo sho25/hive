@@ -545,6 +545,8 @@ literal|0
 argument_list|,
 literal|1
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -571,6 +573,8 @@ literal|2
 argument_list|,
 literal|3
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -687,6 +691,8 @@ literal|1
 argument_list|)
 argument_list|,
 name|bufsDiff
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -941,6 +947,8 @@ argument_list|(
 name|fileName
 argument_list|,
 name|input
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1108,6 +1116,8 @@ argument_list|)
 block|}
 argument_list|,
 name|fakes
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1423,6 +1433,8 @@ literal|0
 argument_list|,
 literal|1
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1445,6 +1457,8 @@ name|fakes
 argument_list|,
 literal|2
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1685,6 +1699,8 @@ literal|1
 argument_list|,
 literal|2
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1707,6 +1723,8 @@ name|fakes
 argument_list|,
 literal|3
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1763,6 +1781,8 @@ literal|6
 argument_list|,
 literal|7
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1804,6 +1824,8 @@ name|fakes
 argument_list|,
 literal|8
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2117,6 +2139,8 @@ argument_list|(
 name|fileName
 argument_list|,
 name|input
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 name|int
@@ -2276,6 +2300,8 @@ index|]
 argument_list|)
 argument_list|,
 name|buffers
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|puts
@@ -2565,6 +2591,8 @@ argument_list|(
 name|fileName
 argument_list|,
 name|input
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 name|DiskRange

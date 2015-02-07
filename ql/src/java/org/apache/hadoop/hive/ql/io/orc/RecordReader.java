@@ -278,7 +278,8 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|// TODO: maybe all of this should be moved to LLAP-specific class
+comment|// TODO: maybe all of this should be moved to LLAP-specific class.
+comment|//       See also comment in RecordReaderImpl; class doesn't even have to be RecordReader
 comment|/**    *  TODO: assumes the reader is for one stripe, otherwise the signature makes no sense.    *        Also has no columns passed, because that is in ctor.    * @param stripeIncludes Includes to use for this call. This method ignores reader's includes.    * @param colRgs What RGs are to be read. Has # of elements equal to the number of    *               included columns; then each boolean is rgCount long.    * @param cache Cache to get/put data and allocate memory.    * @param consumer Consumer to pass the results too.    * @throws IOException    */
 name|void
 name|readEncodedColumns

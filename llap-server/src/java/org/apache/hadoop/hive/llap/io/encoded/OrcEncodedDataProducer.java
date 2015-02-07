@@ -836,7 +836,7 @@ name|orcReader
 operator|=
 literal|null
 expr_stmt|;
-comment|// Get FILE metadata from cache, or create the reader and read it.
+comment|// 1. Get FILE metadata from cache, or create the reader and read it.
 name|OrcFileMetadata
 name|metadata
 init|=
@@ -858,52 +858,13 @@ condition|)
 block|{
 name|columnIds
 operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|Integer
-argument_list|>
+name|createColumnIds
 argument_list|(
 name|metadata
-operator|.
-name|getTypes
-argument_list|()
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|1
-init|;
-name|i
-operator|<
-name|metadata
-operator|.
-name|getTypes
-argument_list|()
-operator|.
-name|size
-argument_list|()
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|columnIds
-operator|.
-name|add
-argument_list|(
-name|i
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-comment|// Then, determine which stripes to read based on the split.
+comment|// 2. Determine which stripes to read based on the split.
 name|determineStripesToRead
 argument_list|(
 name|metadata
@@ -949,6 +910,7 @@ literal|null
 return|;
 comment|// No data to read.
 block|}
+comment|// 3. Apply SARG if needed, and otherwise determine what RGs to read.
 name|int
 name|stride
 init|=
@@ -1047,11 +1009,8 @@ argument_list|,
 name|stride
 argument_list|,
 name|stripeMetadatas
-argument_list|,
-name|stride
 argument_list|)
 expr_stmt|;
-comment|// TODO#: remove dbl stride
 block|}
 catch|catch
 parameter_list|(
@@ -1089,10 +1048,9 @@ return|return
 literal|null
 return|;
 block|}
-comment|// After this point, we may have some cleanup to do, so we cannot simply exit or error out.
-comment|// TODO#: and yet the latter is what we do for part of the path. Add error handling!
-comment|// Get data from high-level cache; if some cols are fully in cache, this will also
-comment|// give us the modified list of columns to read for every stripe (null means all).
+comment|// 4. Get data from high-level cache.
+comment|//    If some cols are fully in cache, this will also give us the modified list of
+comment|//    columns to read for every stripe (null means read all of them - the usual path).
 name|List
 argument_list|<
 name|Integer
@@ -1149,7 +1107,7 @@ return|;
 block|}
 block|}
 comment|// readState has been modified for column x rgs that were fetched from cache.
-comment|// Then, create the readers for each stripe and prepare to read. We will create reader
+comment|// 5. Create the readers for each stripe and prepare to read. We will create reader
 comment|// with global column list and then separately pass stripe-specific includes below.
 try|try
 block|{
@@ -1234,8 +1192,8 @@ return|return
 literal|null
 return|;
 block|}
-comment|// We now have one reader per stripe that needs to be read. Read.
-comment|// TODO: I/O threadpool would be here - one thread per stripe; for now, linear.
+comment|// 6. We now have one reader per stripe that needs to be read. Read data.
+comment|// TODO: I/O threadpool could be here - one thread per stripe; for now, linear.
 name|OrcBatchKey
 name|stripeKey
 init|=
@@ -1266,6 +1224,8 @@ condition|;
 operator|++
 name|stripeIxMod
 control|)
+block|{
+try|try
 block|{
 name|RecordReader
 name|stripeReader
@@ -1316,6 +1276,14 @@ index|[
 name|stripeIxMod
 index|]
 decl_stmt|;
+name|int
+name|stripeIx
+init|=
+name|stripeIxMod
+operator|+
+name|stripeIxFrom
+decl_stmt|;
+comment|// 6.1. Determine the columns to read (usually the same as requested).
 if|if
 condition|(
 name|colsToRead
@@ -1427,16 +1395,9 @@ operator|=
 name|colRgs2
 expr_stmt|;
 block|}
-comment|// Get stripe metadata from cache or reader. We might have read it before for RG filtering.
+comment|// 6.2. Ensure we have stripe metadata. We might have read it before for RG filtering.
 name|OrcStripeMetadata
 name|stripeMetadata
-decl_stmt|;
-name|int
-name|stripeIx
-init|=
-name|stripeIxMod
-operator|+
-name|stripeIxFrom
 decl_stmt|;
 if|if
 condition|(
@@ -1555,6 +1516,8 @@ name|getStreams
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// 6.3. Finally, hand off to the stripe reader to produce the data.
+comment|//      This is a sync call that will feed data to the consumer.
 comment|// In case if we have high-level cache, we will intercept the data and add it there;
 comment|// otherwise just pass the data directly to the consumer.
 name|Consumer
@@ -1578,9 +1541,8 @@ name|consumer
 else|:
 name|this
 decl_stmt|;
-comment|// This is where I/O happens. This is a sync call that will feed data to the consumer.
-try|try
-block|{
+comment|// TODO: readEncodedColumns is not supposed to throw; errors should be propagated thru
+comment|// consumer. It is potentially holding locked buffers, and must perform its own cleanup.
 name|stripeReader
 operator|.
 name|readEncodedColumns
@@ -1596,6 +1558,11 @@ argument_list|,
 name|consumer
 argument_list|)
 expr_stmt|;
+name|stripeReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1610,13 +1577,15 @@ argument_list|(
 name|t
 argument_list|)
 expr_stmt|;
-comment|// TODO#: what?
-block|}
-name|stripeReader
-operator|.
-name|close
-argument_list|()
+name|cleanupReaders
+argument_list|(
+name|stripeReaders
+argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 block|}
 comment|// Done with all the things.
 name|consumer
@@ -1648,6 +1617,73 @@ return|return
 literal|null
 return|;
 block|}
+comment|/**      * Puts all column indexes from metadata to make a column list to read all column.      */
+specifier|private
+name|List
+argument_list|<
+name|Integer
+argument_list|>
+name|createColumnIds
+parameter_list|(
+name|OrcFileMetadata
+name|metadata
+parameter_list|)
+block|{
+name|List
+argument_list|<
+name|Integer
+argument_list|>
+name|columnIds
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Integer
+argument_list|>
+argument_list|(
+name|metadata
+operator|.
+name|getTypes
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|1
+init|;
+name|i
+operator|<
+name|metadata
+operator|.
+name|getTypes
+argument_list|()
+operator|.
+name|size
+argument_list|()
+condition|;
+operator|++
+name|i
+control|)
+block|{
+name|columnIds
+operator|.
+name|add
+argument_list|(
+name|i
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|columnIds
+return|;
+block|}
+comment|/**      * In case if stripe metadata in cache does not have all indexes for current query, load      * the missing one. This is a temporary cludge until real metadata cache becomes available.      */
 specifier|private
 name|void
 name|updateLoadedIndexes
@@ -1693,6 +1729,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**      * Closes the stripe readers (on error).      */
 specifier|private
 name|void
 name|cleanupReaders
@@ -1735,6 +1772,7 @@ comment|// Ignore.
 block|}
 block|}
 block|}
+comment|/**      * Creates a reader to read single stripe, if there are any columns to read.      * @return The reader; null if stripe does not need to be read.      */
 specifier|private
 name|RecordReader
 name|prepareStripeReader
@@ -1844,6 +1882,7 @@ return|return
 name|existingReader
 return|;
 block|}
+comment|/**      * Ensures orcReader is initialized for the split.      */
 specifier|private
 name|void
 name|ensureOrcReader
@@ -1858,14 +1897,69 @@ operator|!=
 literal|null
 condition|)
 return|return;
+name|FileSystem
+name|fs
+init|=
+name|cachedFs
+decl_stmt|;
+name|Path
+name|path
+init|=
+name|split
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+literal|"pfile"
+operator|.
+name|equals
+argument_list|(
+name|path
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|fs
+operator|=
+name|path
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+comment|// Cannot use cached FS due to hive tests' proxy FS.
+block|}
 name|orcReader
 operator|=
-name|createOrcReader
+name|OrcFile
+operator|.
+name|createReader
 argument_list|(
-name|split
+name|path
+argument_list|,
+name|OrcFile
+operator|.
+name|readerOptions
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|filesystem
+argument_list|(
+name|fs
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      *  Gets file metadata for the split from cache, or reads it from the file.      */
 specifier|private
 name|OrcFileMetadata
 name|getOrReadFileMetadata
@@ -1875,16 +1969,14 @@ name|IOException
 block|{
 name|OrcFileMetadata
 name|metadata
-decl_stmt|;
-name|metadata
-operator|=
+init|=
 name|metadataCache
 operator|.
 name|getFileMetadata
 argument_list|(
 name|internedFilePath
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|metadata
@@ -1918,6 +2010,7 @@ return|return
 name|metadata
 return|;
 block|}
+comment|/**      * Reads the metadata for all stripes in the file.      * @param stripeReaders Array to preserve the readers used.      */
 specifier|private
 name|ArrayList
 argument_list|<
@@ -2158,6 +2251,7 @@ name|cacheBuffers
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Determines which RGs need to be read, after stripes have been determined.      * SARG is applied, and readState is populated for each stripe accordingly.      * @param stripes All stripes in the file (field state is used to determine stripes to read).      */
 specifier|private
 name|void
 name|determineRgsToRead
@@ -2186,9 +2280,6 @@ argument_list|<
 name|OrcStripeMetadata
 argument_list|>
 name|metadata
-parameter_list|,
-name|int
-name|stride
 parameter_list|)
 throws|throws
 name|IOException
@@ -2204,7 +2295,7 @@ name|sarg
 operator|!=
 literal|null
 operator|&&
-name|stride
+name|rowIndexStride
 operator|!=
 literal|0
 condition|)
@@ -2430,6 +2521,7 @@ name|rowIndexStride
 argument_list|)
 return|;
 block|}
+comment|/**      * Determine which stripes to read for a split. Populates stripeIxFrom and readState.      */
 specifier|public
 name|void
 name|determineStripesToRead
@@ -2703,6 +2795,7 @@ index|[]
 expr_stmt|;
 block|}
 comment|// TODO: split by stripe? we do everything by stripe, and it might be faster
+comment|/**      * Takes the data from high-level cache for all stripes and returns to consumer.      * @return List of columns to read per stripe, if any columns were fully eliminated by cache.      */
 specifier|private
 name|List
 argument_list|<
@@ -3357,77 +3450,6 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-specifier|private
-name|Reader
-name|createOrcReader
-parameter_list|(
-name|FileSplit
-name|fileSplit
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-name|FileSystem
-name|fs
-init|=
-name|cachedFs
-decl_stmt|;
-name|Path
-name|path
-init|=
-name|fileSplit
-operator|.
-name|getPath
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-literal|"pfile"
-operator|.
-name|equals
-argument_list|(
-name|path
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getScheme
-argument_list|()
-argument_list|)
-condition|)
-block|{
-name|fs
-operator|=
-name|path
-operator|.
-name|getFileSystem
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-comment|// Cannot use cached FS due to hive tests' proxy FS.
-block|}
-return|return
-name|OrcFile
-operator|.
-name|createReader
-argument_list|(
-name|path
-argument_list|,
-name|OrcFile
-operator|.
-name|readerOptions
-argument_list|(
-name|conf
-argument_list|)
-operator|.
-name|filesystem
-argument_list|(
-name|fs
-argument_list|)
-argument_list|)
-return|;
 block|}
 specifier|public
 name|OrcEncodedDataProducer

@@ -156,7 +156,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** This used to be the main LLAP interface (next and close). However, since inputformat  * is used instead at present time, this class is just an extra layer.  * TODO: It could be merged into RecordReader of LlapInputFormat. */
+comment|/** This used to be the main LLAP interface (next and close). However, since inputformat  * is used instead at present time, this class is just an extra layer.  * TODO# merged into RecordReader of LlapInputFormat; llap interface is async */
 end_comment
 
 begin_class
@@ -711,14 +711,6 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -745,7 +737,6 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 assert|assert
 name|t
 operator|!=
