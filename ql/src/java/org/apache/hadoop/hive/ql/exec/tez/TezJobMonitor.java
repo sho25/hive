@@ -3599,6 +3599,18 @@ name|int
 name|total
 parameter_list|)
 block|{
+name|String
+name|result
+init|=
+literal|""
+decl_stmt|;
+if|if
+condition|(
+name|s
+operator|!=
+literal|null
+condition|)
+block|{
 name|float
 name|percent
 init|=
@@ -3641,10 +3653,6 @@ comment|// "Tez Merge File Work" will become "Tez Merge File.."
 if|if
 condition|(
 name|s
-operator|!=
-literal|null
-operator|&&
-name|s
 operator|.
 name|length
 argument_list|()
@@ -3672,13 +3680,12 @@ operator|+
 literal|".."
 expr_stmt|;
 block|}
-name|String
 name|result
-init|=
+operator|=
 name|trimmedVName
 operator|+
 literal|" "
-decl_stmt|;
+expr_stmt|;
 name|int
 name|toFill
 init|=
@@ -3710,6 +3717,7 @@ name|result
 operator|+=
 literal|"."
 expr_stmt|;
+block|}
 block|}
 return|return
 name|result

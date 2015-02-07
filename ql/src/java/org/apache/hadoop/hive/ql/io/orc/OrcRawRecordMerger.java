@@ -2792,7 +2792,7 @@ condition|(
 operator|!
 name|validTxnList
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 operator|(
 operator|(

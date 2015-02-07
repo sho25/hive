@@ -357,24 +357,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|MoveWork
 import|;
 end_import
@@ -458,6 +440,16 @@ operator|.
 name|io
 operator|.
 name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
 import|;
 end_import
 
@@ -685,16 +677,16 @@ argument_list|>
 argument_list|>
 name|mapJoinWorkMap
 decl_stmt|;
-comment|// a map to keep track of which MapWork item holds which SMBMapJoinOp
+comment|// Map to keep track of which SMB Join operators and their information to annotate their MapWork with.
 specifier|public
 specifier|final
 name|Map
 argument_list|<
 name|SMBMapJoinOperator
 argument_list|,
-name|MapWork
+name|SparkSMBMapJoinInfo
 argument_list|>
-name|smbJoinWorkMap
+name|smbMapJoinCtxMap
 decl_stmt|;
 comment|// a map to keep track of which root generated which work
 specifier|public
@@ -1053,14 +1045,14 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|smbJoinWorkMap
+name|smbMapJoinCtxMap
 operator|=
 operator|new
-name|LinkedHashMap
+name|HashMap
 argument_list|<
 name|SMBMapJoinOperator
 argument_list|,
-name|MapWork
+name|SparkSMBMapJoinInfo
 argument_list|>
 argument_list|()
 expr_stmt|;

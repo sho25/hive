@@ -51,9 +51,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|lib
+name|exec
 operator|.
-name|NodeProcessorCtx
+name|RowSchema
 import|;
 end_import
 
@@ -69,9 +69,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|lib
 operator|.
-name|RowResolver
+name|NodeProcessorCtx
 import|;
 end_import
 
@@ -176,25 +176,14 @@ name|inpOp
 return|;
 block|}
 specifier|public
-name|RowResolver
-name|getResolver
+name|RowSchema
+name|getSchema
 parameter_list|()
 block|{
 return|return
-name|lctx
-operator|.
-name|getParseCtx
-argument_list|()
-operator|.
-name|getOpParseCtx
-argument_list|()
-operator|.
-name|get
-argument_list|(
 name|inpOp
-argument_list|)
 operator|.
-name|getRowResolver
+name|getSchema
 argument_list|()
 return|;
 block|}

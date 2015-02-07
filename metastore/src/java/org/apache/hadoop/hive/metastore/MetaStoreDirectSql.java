@@ -882,6 +882,11 @@ specifier|final
 name|int
 name|batchSize
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|convertMapNullsToEmptyStrings
+decl_stmt|;
 comment|/**    * Whether direct SQL can be used with the current datastore backing {@link #pm}.    */
 specifier|private
 specifier|final
@@ -958,6 +963,19 @@ operator|.
 name|batchSize
 operator|=
 name|batchSize
+expr_stmt|;
+name|convertMapNullsToEmptyStrings
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -1960,7 +1978,14 @@ name|db
 operator|.
 name|setParameters
 argument_list|(
+name|MetaStoreUtils
+operator|.
+name|trimMapNulls
+argument_list|(
 name|dbParams
+argument_list|,
+name|convertMapNullsToEmptyStrings
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if

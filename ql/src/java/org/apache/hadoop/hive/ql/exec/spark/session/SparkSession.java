@@ -33,6 +33,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ObjectPair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -113,14 +129,6 @@ name|SparkWork
 import|;
 end_import
 
-begin_import
-import|import
-name|scala
-operator|.
-name|Tuple2
-import|;
-end_import
-
 begin_interface
 specifier|public
 interface|interface
@@ -149,8 +157,8 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
-comment|/**    * Get Spark shuffle memory per task, and total number of cores. This    * information can be used to estimate how many reducers a task can have.    *    * @return a tuple, the first element is the shuffle memory per task in bytes,    *  the second element is the number of total cores usable by the client    */
-name|Tuple2
+comment|/**    * Get Spark shuffle memory per task, and total number of cores. This    * information can be used to estimate how many reducers a task can have.    *    * @return an object pair, the first element is the shuffle memory per task in bytes,    *  the second element is the number of total cores usable by the client    */
+name|ObjectPair
 argument_list|<
 name|Long
 argument_list|,

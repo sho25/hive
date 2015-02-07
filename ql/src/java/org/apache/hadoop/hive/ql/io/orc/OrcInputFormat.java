@@ -191,7 +191,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -2639,7 +2639,7 @@ decl_stmt|;
 name|transactionList
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|value
 argument_list|)
@@ -6432,7 +6432,7 @@ name|ValidTxnList
 name|validTxnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|txnString
 argument_list|)

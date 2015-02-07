@@ -1764,7 +1764,7 @@ operator|.
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|)
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|HiveAuthFactory
 operator|.

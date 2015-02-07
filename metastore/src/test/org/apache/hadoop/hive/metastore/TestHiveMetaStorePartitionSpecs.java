@@ -958,6 +958,30 @@ argument_list|(
 name|table
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Table "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tableName
+operator|+
+literal|" does not exist"
+argument_list|,
+name|hmsc
+operator|.
+name|tableExists
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static

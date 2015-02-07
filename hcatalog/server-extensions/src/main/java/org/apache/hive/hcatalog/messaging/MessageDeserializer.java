@@ -123,6 +123,15 @@ argument_list|(
 name|messageBody
 argument_list|)
 return|;
+case|case
+name|INSERT
+case|:
+return|return
+name|getInsertMessage
+argument_list|(
+name|messageBody
+argument_list|)
+return|;
 default|default:
 throw|throw
 operator|new
@@ -210,6 +219,16 @@ specifier|public
 specifier|abstract
 name|DropPartitionMessage
 name|getDropPartitionMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
+comment|/**    * Method to deserialize InsertMessage    * @param messageBody the message in serialized form    * @return message in object form    */
+specifier|public
+specifier|abstract
+name|InsertMessage
+name|getInsertMessage
 parameter_list|(
 name|String
 name|messageBody

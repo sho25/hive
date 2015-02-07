@@ -2327,16 +2327,6 @@ block|}
 block|}
 name|currWork
 operator|.
-name|setOpParseCtxMap
-argument_list|(
-name|parseCtx
-operator|.
-name|getOpParseCtx
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|currWork
-operator|.
 name|setLeftInputJoin
 argument_list|(
 name|joinOp
@@ -2700,13 +2690,6 @@ name|currTask
 argument_list|)
 expr_stmt|;
 comment|// clear JoinTree and OP Parse Context
-name|currWork
-operator|.
-name|setOpParseCtxMap
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
 name|currWork
 operator|.
 name|setLeftInputJoin

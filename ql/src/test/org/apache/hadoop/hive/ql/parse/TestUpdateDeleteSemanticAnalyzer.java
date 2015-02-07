@@ -420,7 +420,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|TestSemanticAnalyzer
+name|TestUpdateDeleteSemanticAnalyzer
 operator|.
 name|class
 operator|.

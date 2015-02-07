@@ -2760,6 +2760,14 @@ argument_list|,
 name|queryId
 argument_list|)
 expr_stmt|;
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setupQueryCurrentTimestamp
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 name|command

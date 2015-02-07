@@ -1085,6 +1085,20 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"Cannot find "
+operator|+
+operator|(
+operator|new
+name|Path
+argument_list|(
+name|inputFile
+argument_list|)
+operator|)
+operator|+
+literal|" in "
+operator|+
+name|fileClassPathsList
+argument_list|,
 name|fileClassPathsList
 operator|.
 name|contains
@@ -1101,6 +1115,20 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"Cannot find "
+operator|+
+operator|(
+operator|new
+name|Path
+argument_list|(
+name|dummyFile
+argument_list|)
+operator|)
+operator|+
+literal|" in "
+operator|+
+name|fileClassPathsList
+argument_list|,
 name|fileClassPathsList
 operator|.
 name|contains
@@ -1140,14 +1168,9 @@ argument_list|(
 name|cacheFiles
 argument_list|)
 decl_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|cacheFilesList
-operator|.
-name|contains
-argument_list|(
+name|URI
+name|inputFileURI
+init|=
 operator|new
 name|Path
 argument_list|(
@@ -1161,17 +1184,30 @@ argument_list|)
 operator|.
 name|toUri
 argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"Cannot find "
+operator|+
+name|inputFileURI
+operator|+
+literal|" in "
+operator|+
+name|cacheFilesList
+argument_list|,
 name|cacheFilesList
 operator|.
 name|contains
 argument_list|(
+name|inputFileURI
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|URI
+name|dummyFileURI
+init|=
 operator|new
 name|Path
 argument_list|(
@@ -1185,6 +1221,24 @@ argument_list|)
 operator|.
 name|toUri
 argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Cannot find "
+operator|+
+name|dummyFileURI
+operator|+
+literal|" in "
+operator|+
+name|cacheFilesList
+argument_list|,
+name|cacheFilesList
+operator|.
+name|contains
+argument_list|(
+name|dummyFileURI
 argument_list|)
 argument_list|)
 expr_stmt|;

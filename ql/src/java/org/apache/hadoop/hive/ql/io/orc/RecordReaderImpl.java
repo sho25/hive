@@ -8935,6 +8935,14 @@ decl_stmt|;
 if|if
 condition|(
 name|in
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Guard against empty dictionary stream.
+if|if
+condition|(
+name|in
 operator|.
 name|available
 argument_list|()
@@ -8968,6 +8976,12 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+name|in
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 else|else
 block|{
 name|dictionaryBuffer
@@ -8975,11 +8989,6 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|in
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 comment|// read the lengths
 name|name
 operator|=
@@ -9006,6 +9015,14 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|in
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Guard against empty LENGTH stream.
 name|IntegerReader
 name|lenReader
 init|=
@@ -9102,6 +9119,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 comment|// set up the row reader
 name|name
 operator|=
@@ -14674,12 +14692,13 @@ block|}
 case|case
 name|IS_NULL
 case|:
+comment|// min = null condition above handles the all-nulls YES case
 return|return
 name|hasNull
 condition|?
 name|TruthValue
 operator|.
-name|YES
+name|YES_NO
 else|:
 name|TruthValue
 operator|.

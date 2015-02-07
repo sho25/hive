@@ -61,6 +61,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|spark
@@ -134,6 +150,14 @@ name|String
 name|CONF_KEY_IN_PROCESS
 init|=
 literal|"spark.client.do_not_use.run_driver_in_process"
+decl_stmt|;
+comment|/** Used by client and driver to share a client ID for establishing an RPC session. */
+specifier|static
+specifier|final
+name|String
+name|CONF_CLIENT_ID
+init|=
+literal|"spark.client.authentication.client_id"
 decl_stmt|;
 comment|/** Used by client and driver to share a secret for establishing an RPC session. */
 specifier|static
@@ -229,7 +253,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Instantiates a new Spark client.    *    * @param conf Configuration for the remote Spark application.    */
+comment|/**    * Instantiates a new Spark client.    *    * @param sparkConf Configuration for the remote Spark application, contains spark.* properties.    * @param hiveConf Configuration for Hive, contains hive.* properties.    */
 specifier|public
 specifier|static
 specifier|synchronized
@@ -242,7 +266,10 @@ name|String
 argument_list|,
 name|String
 argument_list|>
-name|conf
+name|sparkConf
+parameter_list|,
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|IOException
@@ -266,7 +293,9 @@ name|SparkClientImpl
 argument_list|(
 name|server
 argument_list|,
-name|conf
+name|sparkConf
+argument_list|,
+name|hiveConf
 argument_list|)
 return|;
 block|}

@@ -55,7 +55,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -72,70 +72,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|IMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|LockComponentBuilder
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|LockRequestBuilder
 import|;
 end_import
 
@@ -431,7 +367,7 @@ name|assertFalse
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|1
 argument_list|)
@@ -443,7 +379,7 @@ name|assertTrue
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|2
 argument_list|)
@@ -455,7 +391,7 @@ name|assertFalse
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|3
 argument_list|)
@@ -467,7 +403,7 @@ name|assertFalse
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|4
 argument_list|)
@@ -582,7 +518,7 @@ name|assertFalse
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|1
 argument_list|)
@@ -594,7 +530,7 @@ name|assertTrue
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|2
 argument_list|)
@@ -606,7 +542,7 @@ name|assertTrue
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|3
 argument_list|)
@@ -618,7 +554,7 @@ name|assertFalse
 argument_list|(
 name|validTxns
 operator|.
-name|isTxnCommitted
+name|isTxnValid
 argument_list|(
 literal|4
 argument_list|)
@@ -654,7 +590,7 @@ name|NONE
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1L
 argument_list|,
@@ -780,7 +716,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|2L
 argument_list|,
@@ -800,7 +736,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|2L
 argument_list|,
@@ -820,7 +756,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|2L
 argument_list|,
@@ -840,7 +776,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|3L
 argument_list|,
@@ -860,7 +796,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1L
 argument_list|,
@@ -880,7 +816,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|2L
 argument_list|,
@@ -900,7 +836,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1L
 argument_list|,
@@ -920,7 +856,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|4L
 argument_list|,
@@ -940,7 +876,7 @@ name|NONE
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1L
 argument_list|,
@@ -960,7 +896,7 @@ name|NONE
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|5L
 argument_list|,
@@ -971,7 +907,7 @@ expr_stmt|;
 name|validTxns
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"10:4:5:6"
 argument_list|)
@@ -988,7 +924,7 @@ name|NONE
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|4
 argument_list|,
@@ -1008,7 +944,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|7
 argument_list|,
@@ -1028,7 +964,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|7
 argument_list|,
@@ -1048,7 +984,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|3
 argument_list|,
@@ -1068,7 +1004,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|4
 argument_list|,
@@ -1088,7 +1024,7 @@ name|SOME
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1
 argument_list|,
@@ -1108,7 +1044,7 @@ name|ALL
 argument_list|,
 name|validTxns
 operator|.
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 argument_list|(
 literal|1
 argument_list|,
@@ -1518,7 +1454,7 @@ name|ValidTxnList
 name|validTxns
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"1:"
 argument_list|)
@@ -1543,7 +1479,7 @@ expr_stmt|;
 name|validTxns
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|asString
 argument_list|)
@@ -1566,7 +1502,7 @@ name|assertNotNull
 argument_list|(
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1578,7 +1514,7 @@ literal|0
 argument_list|,
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 operator|.
 name|length
@@ -1603,7 +1539,7 @@ expr_stmt|;
 name|validTxns
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|asString
 argument_list|)
@@ -1626,7 +1562,7 @@ name|assertNotNull
 argument_list|(
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1638,7 +1574,7 @@ literal|0
 argument_list|,
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 operator|.
 name|length
@@ -1648,7 +1584,7 @@ comment|// Test with open transactions
 name|validTxns
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"10:5:3"
 argument_list|)
@@ -1692,7 +1628,7 @@ block|}
 name|validTxns
 operator|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|asString
 argument_list|)
@@ -1715,7 +1651,7 @@ name|assertNotNull
 argument_list|(
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1727,7 +1663,7 @@ literal|2
 argument_list|,
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 operator|.
 name|length
@@ -1749,7 +1685,7 @@ name|tid
 range|:
 name|validTxns
 operator|.
-name|getOpenTransactions
+name|getInvalidTransactions
 argument_list|()
 control|)
 block|{
