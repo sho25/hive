@@ -684,7 +684,7 @@ literal|"Only primitive type arguments are accepted but "
 operator|+
 name|arguments
 index|[
-literal|2
+literal|1
 index|]
 operator|.
 name|getTypeName
