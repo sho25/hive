@@ -93,24 +93,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|NoSuchObjectException
 import|;
 end_import
@@ -202,8 +184,6 @@ name|String
 argument_list|>
 name|dbList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|dbList
@@ -243,8 +223,6 @@ name|String
 argument_list|>
 name|tableList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|tableList
@@ -281,8 +259,6 @@ name|Table
 argument_list|>
 name|tableList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|tableList
@@ -303,8 +279,6 @@ name|Partition
 argument_list|>
 name|partitionList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|partitionList
@@ -325,8 +299,6 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|partitionSpecList
@@ -369,8 +341,6 @@ name|String
 argument_list|>
 name|partitionNames
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|partitionNames
@@ -413,8 +383,6 @@ name|String
 argument_list|>
 name|indexList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|indexList
@@ -435,8 +403,6 @@ name|Index
 argument_list|>
 name|indexeList
 parameter_list|)
-throws|throws
-name|MetaException
 block|{
 return|return
 name|indexeList

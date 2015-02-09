@@ -252,29 +252,6 @@ name|HiveAccessControlException
 block|{
 comment|// no-op
 block|}
-annotation|@
-name|Override
-specifier|public
-name|List
-argument_list|<
-name|HivePrivilegeObject
-argument_list|>
-name|filterListCmdObjects
-parameter_list|(
-name|List
-argument_list|<
-name|HivePrivilegeObject
-argument_list|>
-name|listObjs
-parameter_list|,
-name|HiveAuthzContext
-name|context
-parameter_list|)
-block|{
-return|return
-name|listObjs
-return|;
-block|}
 block|}
 end_class
 

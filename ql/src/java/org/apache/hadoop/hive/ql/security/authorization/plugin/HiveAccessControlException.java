@@ -82,7 +82,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Exception thrown by the Authorization plugin api (v2). Indicates  * a authorization check denying permissions for an action.  */
+comment|/**  * Exception thrown by the Authorization plugin api (v2). Indicates  * an error while performing authorization, and not a authorization being  * denied.  */
 end_comment
 
 begin_class

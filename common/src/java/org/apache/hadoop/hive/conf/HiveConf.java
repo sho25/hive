@@ -968,12 +968,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_FILTER_HOOK
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTORE_RAW_STORE_IMPL
 block|,
 name|HiveConf
@@ -2848,9 +2842,7 @@ literal|"hive.metastore.filter.hook"
 argument_list|,
 literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
 argument_list|,
-literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager\n"
-operator|+
-literal|"is set to instance of HiveAuthorizerFactory, then this value is ignored."
+literal|"Metastore hook class for filtering the metadata read results"
 argument_list|)
 block|,
 name|FIRE_EVENTS_FOR_DML

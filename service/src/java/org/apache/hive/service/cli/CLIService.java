@@ -213,24 +213,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|exec
@@ -563,7 +545,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|HiveException
 name|e
 parameter_list|)
 block|{
@@ -571,12 +553,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Error applying authorization policy on hive configuration: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
+literal|"Error applying authorization policy on hive configuration"
 argument_list|,
 name|e
 argument_list|)
@@ -774,8 +751,6 @@ name|newHiveConf
 parameter_list|)
 throws|throws
 name|HiveException
-throws|,
-name|MetaException
 block|{
 comment|// authorization setup using SessionState should be revisited eventually, as
 comment|// authorization and authentication are not session specific settings
