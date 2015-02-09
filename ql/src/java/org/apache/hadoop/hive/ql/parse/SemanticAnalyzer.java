@@ -4496,7 +4496,7 @@ break|break;
 case|case
 name|HiveParser
 operator|.
-name|TOK_UNION
+name|TOK_UNIONALL
 case|:
 block|{
 name|qbexpr
@@ -4571,7 +4571,7 @@ name|ast
 operator|.
 name|getChild
 argument_list|(
-literal|0
+literal|1
 argument_list|)
 operator|!=
 literal|null
@@ -9930,7 +9930,7 @@ break|break;
 case|case
 name|HiveParser
 operator|.
-name|TOK_UNION
+name|TOK_UNIONALL
 case|:
 if|if
 condition|(
