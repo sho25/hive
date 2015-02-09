@@ -126,6 +126,17 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|boolean
+name|DEBUG_LOG_ENABLED
+init|=
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+decl_stmt|;
 name|LazyBinary
 parameter_list|(
 name|LazyBinaryObjectInspector
@@ -321,6 +332,8 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|DEBUG_LOG_ENABLED
+operator|&&
 name|arrayByteBase64
 condition|)
 block|{
