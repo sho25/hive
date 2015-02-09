@@ -544,7 +544,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|+
-literal|" is passed. as first arguments"
+literal|" is passed as first arguments"
 argument_list|)
 throw|;
 block|}
@@ -575,13 +575,13 @@ literal|"Only primitive type arguments are accepted but "
 operator|+
 name|arguments
 index|[
-literal|2
+literal|1
 index|]
 operator|.
 name|getTypeName
 argument_list|()
 operator|+
-literal|" is passed. as second arguments"
+literal|" is passed as second arguments"
 argument_list|)
 throw|;
 block|}
@@ -695,9 +695,11 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|" ADD_MONTHS() only takes STRING/TIMESTAMP/DATEWRITABLE types as first argument, got "
+literal|0
+argument_list|,
+literal|"ADD_MONTHS() only takes STRING/TIMESTAMP/DATEWRITABLE types as first argument, got "
 operator|+
 name|inputType1
 argument_list|)
@@ -729,9 +731,11 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|" ADD_MONTHS() only takes INT types as second argument, got "
+literal|1
+argument_list|,
+literal|"ADD_MONTHS() only takes INT types as second argument, got "
 operator|+
 name|inputType2
 argument_list|)
@@ -941,8 +945,10 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|0
+argument_list|,
 literal|"ADD_MONTHS() only takes STRING/TIMESTAMP/DATEWRITABLE types, got "
 operator|+
 name|inputType1
