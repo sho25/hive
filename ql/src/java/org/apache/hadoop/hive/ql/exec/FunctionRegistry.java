@@ -3204,6 +3204,15 @@ argument_list|)
 expr_stmt|;
 name|registerGenericUDF
 argument_list|(
+literal|"next_day"
+argument_list|,
+name|GenericUDFNextDay
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|registerGenericUDF
+argument_list|(
 literal|"date_add"
 argument_list|,
 name|GenericUDFDateAdd
