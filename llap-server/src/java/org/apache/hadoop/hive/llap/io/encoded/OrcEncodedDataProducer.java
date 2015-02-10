@@ -3769,8 +3769,9 @@ name|this
 operator|.
 name|metadataCache
 operator|=
-operator|new
 name|OrcMetadataCache
+operator|.
+name|getInstance
 argument_list|()
 expr_stmt|;
 block|}

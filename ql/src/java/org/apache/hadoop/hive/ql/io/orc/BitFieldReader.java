@@ -61,29 +61,8 @@ name|LongColumnVector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|LlapUtils
-operator|.
-name|PresentStreamReadResult
-import|;
-end_import
-
 begin_class
+specifier|public
 class|class
 name|BitFieldReader
 block|{
@@ -111,6 +90,7 @@ specifier|final
 name|int
 name|mask
 decl_stmt|;
+specifier|public
 name|BitFieldReader
 parameter_list|(
 name|InStream
@@ -191,6 +171,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
 name|int
 name|next
 parameter_list|()
@@ -727,6 +708,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|public
 name|void
 name|seek
 parameter_list|(

@@ -13,11 +13,15 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
 name|io
 operator|.
+name|decode
+operator|.
 name|orc
+operator|.
+name|streams
 package|;
 end_package
 
@@ -47,62 +51,37 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|ColumnVector
 import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for reading integers.  */
+comment|/**  * Column stream reader interface.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|IntegerReader
+name|ColumnStream
 block|{
-comment|/**    * Seek to the position provided by index.    * @param index    * @throws IOException    */
+comment|/**    * Closes all internal stream readers.    * @throws IOException    */
+specifier|public
 name|void
-name|seek
-parameter_list|(
-name|PositionProvider
-name|index
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Skip number of specified rows.    * @param numValues    * @throws IOException    */
-name|void
-name|skip
-parameter_list|(
-name|long
-name|numValues
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Check if there are any more values left.    * @return    * @throws IOException    */
-name|boolean
-name|hasNext
+name|close
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Return the next available value.    * @return    * @throws IOException    */
-name|long
-name|next
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
-name|void
+comment|/**    * Returns next column vector from the stream.    * @param previousVector    * @param batchSize    * @return    * @throws IOException    */
+specifier|public
+name|ColumnVector
 name|nextVector
 parameter_list|(
-name|LongColumnVector
-name|previous
+name|ColumnVector
+name|previousVector
 parameter_list|,
-name|long
-name|previousLen
+name|int
+name|batchSize
 parameter_list|)
 throws|throws
 name|IOException

@@ -72,6 +72,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 specifier|final
 class|class
 name|SerializationUtils
@@ -324,6 +325,7 @@ literal|1
 operator|)
 return|;
 block|}
+specifier|public
 name|float
 name|readFloat
 parameter_list|(
@@ -448,6 +450,7 @@ literal|0xff
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|double
 name|readDouble
 parameter_list|(

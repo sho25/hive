@@ -61,33 +61,12 @@ name|LongColumnVector
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|LlapUtils
-operator|.
-name|PresentStreamReadResult
-import|;
-end_import
-
 begin_comment
 comment|/**  * A reader that reads a sequence of integers.  * */
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|RunLengthIntegerReader
 implements|implements
@@ -145,6 +124,7 @@ specifier|private
 name|SerializationUtils
 name|utils
 decl_stmt|;
+specifier|public
 name|RunLengthIntegerReader
 parameter_list|(
 name|InStream

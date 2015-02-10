@@ -203,6 +203,27 @@ operator|.
 name|file
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|OrcBatchKey
+name|clone
+parameter_list|()
+throws|throws
+name|CloneNotSupportedException
+block|{
+return|return
+operator|new
+name|OrcBatchKey
+argument_list|(
+name|file
+argument_list|,
+name|stripeIx
+argument_list|,
+name|rgIx
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

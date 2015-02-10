@@ -80,6 +80,7 @@ comment|/**  * A class that is a growable array of bytes. Growth is managed in t
 end_comment
 
 begin_class
+specifier|public
 specifier|final
 class|class
 name|DynamicByteArray

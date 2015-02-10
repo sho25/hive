@@ -13,11 +13,15 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
 name|io
 operator|.
+name|decode
+operator|.
 name|orc
+operator|.
+name|readers
 package|;
 end_package
 
@@ -47,20 +51,54 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|ColumnVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|PositionProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Text
 import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for reading integers.  */
+comment|/**  *  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|IntegerReader
+name|StringReader
 block|{
-comment|/**    * Seek to the position provided by index.    * @param index    * @throws IOException    */
+comment|/**    * Seek to the position provided by index.    * @param index    * @throws java.io.IOException    */
 name|void
 name|seek
 parameter_list|(
@@ -88,17 +126,17 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Return the next available value.    * @return    * @throws IOException    */
-name|long
+name|Text
 name|next
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
-name|void
+name|ColumnVector
 name|nextVector
 parameter_list|(
-name|LongColumnVector
+name|ColumnVector
 name|previous
 parameter_list|,
 name|long
