@@ -67,16 +67,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -194,6 +184,22 @@ operator|.
 name|HadoopShims
 operator|.
 name|ZeroCopyReaderShim
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|DebugUtils
 import|;
 end_import
 
@@ -2881,6 +2887,32 @@ argument_list|,
 name|cOffset
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting uncompressStream for ["
+operator|+
+name|cOffset
+operator|+
+literal|","
+operator|+
+name|endCOffset
+operator|+
+literal|") at "
+operator|+
+name|current
+argument_list|)
+expr_stmt|;
+block|}
 comment|// 2. Go thru the blocks; add stuff to results and prepare the decompression work (see below).
 if|if
 condition|(
@@ -2975,6 +3007,26 @@ name|cc
 operator|.
 name|end
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding an already-uncompressed buffer "
+operator|+
+name|cc
+operator|.
+name|buffer
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -3705,6 +3757,44 @@ operator|)
 decl_stmt|;
 if|if
 condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Found CB at "
+operator|+
+name|cbStartOffset
+operator|+
+literal|", chunk length "
+operator|+
+name|chunkLength
+operator|+
+literal|", total "
+operator|+
+name|consumedLength
+operator|+
+literal|", "
+operator|+
+operator|(
+name|isUncompressed
+condition|?
+literal|"not "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"compressed"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|compressed
 operator|.
 name|remaining
@@ -3738,11 +3828,11 @@ name|cbStartOffset
 argument_list|,
 name|cbEndOffset
 argument_list|,
-name|compressed
-argument_list|,
 name|chunkLength
 argument_list|,
 name|ranges
+argument_list|,
+name|current
 argument_list|,
 name|cache
 argument_list|,
@@ -3751,6 +3841,28 @@ argument_list|,
 name|cacheBuffers
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adjusting "
+operator|+
+name|current
+operator|+
+literal|" to consume "
+operator|+
+name|consumedLength
+argument_list|)
+expr_stmt|;
+block|}
 name|current
 operator|.
 name|offset
@@ -3808,6 +3920,14 @@ operator|.
 name|remaining
 argument_list|()
 decl_stmt|;
+name|int
+name|originalPos
+init|=
+name|compressed
+operator|.
+name|position
+argument_list|()
+decl_stmt|;
 name|copy
 operator|.
 name|put
@@ -3822,6 +3942,26 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removing "
+operator|+
+name|current
+operator|+
+literal|" from ranges"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|zcr
 operator|!=
 literal|null
@@ -3829,10 +3969,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|compressed
-operator|.
-name|position
-argument_list|()
+name|originalPos
 operator|==
 literal|0
 condition|)
@@ -3941,11 +4078,11 @@ name|cbStartOffset
 argument_list|,
 name|cbEndOffset
 argument_list|,
-name|compressed
-argument_list|,
 name|remaining
 argument_list|,
 name|ranges
+argument_list|,
+name|current
 argument_list|,
 name|cache
 argument_list|,
@@ -3954,6 +4091,28 @@ argument_list|,
 name|cacheBuffers
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adjusting "
+operator|+
+name|range
+operator|+
+literal|" to consume "
+operator|+
+name|remaining
+argument_list|)
+expr_stmt|;
+block|}
 name|range
 operator|.
 name|offset
@@ -4017,6 +4176,26 @@ argument_list|)
 expr_stmt|;
 comment|// We copied the entire buffer.
 block|}
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removing "
+operator|+
+name|range
+operator|+
+literal|" from ranges"
+argument_list|)
+expr_stmt|;
+block|}
 name|ranges
 operator|.
 name|remove
@@ -4037,7 +4216,7 @@ name|cbStartOffset
 argument_list|)
 throw|;
 block|}
-comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartLength The number of bytes consumed from lastRange into fCB.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
+comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartLength The number of bytes consumed from lastRange into fCB.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
 specifier|private
 specifier|static
 name|void
@@ -4055,9 +4234,6 @@ parameter_list|,
 name|long
 name|cbEndOffset
 parameter_list|,
-name|ByteBuffer
-name|lastRange
-parameter_list|,
 name|int
 name|lastPartLength
 parameter_list|,
@@ -4066,6 +4242,9 @@ argument_list|<
 name|DiskRange
 argument_list|>
 name|ranges
+parameter_list|,
+name|BufferChunk
+name|lastChunk
 parameter_list|,
 name|LowLevelCache
 name|cache
@@ -4127,11 +4306,15 @@ name|cc
 argument_list|)
 expr_stmt|;
 comment|// Adjust the compression block position.
-name|lastRange
+name|lastChunk
+operator|.
+name|chunk
 operator|.
 name|position
 argument_list|(
-name|lastRange
+name|lastChunk
+operator|.
+name|chunk
 operator|.
 name|position
 argument_list|()
@@ -4143,7 +4326,9 @@ comment|// Finally, put it in the ranges list for future use (if shared between 
 comment|// Before anyone else accesses it, it would have been allocated and decompressed locally.
 if|if
 condition|(
-name|lastRange
+name|lastChunk
+operator|.
+name|chunk
 operator|.
 name|remaining
 argument_list|()
@@ -4151,6 +4336,30 @@ operator|<=
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Replacing "
+operator|+
+name|lastChunk
+operator|+
+literal|" with "
+operator|+
+name|cc
+operator|+
+literal|" in the buffers"
+argument_list|)
+expr_stmt|;
+block|}
 name|ranges
 operator|.
 name|set
@@ -4161,11 +4370,14 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|DiskRange
+name|before
+init|=
 name|ranges
 operator|.
 name|previous
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|ranges
 operator|.
 name|add
@@ -4179,6 +4391,30 @@ name|next
 argument_list|()
 expr_stmt|;
 comment|// TODO: This is really stupid.
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding "
+operator|+
+name|cc
+operator|+
+literal|" before "
+operator|+
+name|before
+operator|+
+literal|" in the buffers"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}

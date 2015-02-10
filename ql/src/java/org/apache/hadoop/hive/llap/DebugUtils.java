@@ -39,6 +39,16 @@ block|}
 specifier|public
 specifier|static
 name|boolean
+name|isTraceOrcEnabled
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+specifier|public
+specifier|static
+name|boolean
 name|isTraceLockingEnabled
 parameter_list|()
 block|{

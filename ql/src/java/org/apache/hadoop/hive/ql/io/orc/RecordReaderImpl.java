@@ -383,6 +383,22 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|DebugUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|io
 operator|.
 name|api
@@ -16031,17 +16047,43 @@ name|String
 name|toString
 parameter_list|()
 block|{
+name|boolean
+name|makesSense
+init|=
+name|chunk
+operator|.
+name|remaining
+argument_list|()
+operator|==
+operator|(
+name|end
+operator|-
+name|offset
+operator|)
+decl_stmt|;
 return|return
-literal|"range start: "
+literal|"data range ["
 operator|+
 name|offset
 operator|+
-literal|" size: "
+literal|", "
+operator|+
+name|end
+operator|+
+literal|"), size: "
 operator|+
 name|chunk
 operator|.
 name|remaining
 argument_list|()
+operator|+
+operator|(
+name|makesSense
+condition|?
+literal|""
+else|:
+literal|"(!)"
+operator|)
 operator|+
 literal|" type: "
 operator|+
@@ -16261,6 +16303,27 @@ literal|true
 expr_stmt|;
 return|return
 name|result
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"start: "
+operator|+
+name|offset
+operator|+
+literal|" end: "
+operator|+
+name|end
+operator|+
+literal|" cache buffer: "
+operator|+
+name|buffer
 return|;
 block|}
 block|}
@@ -17333,6 +17396,26 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating new range for RG read; last range (which can include some "
+operator|+
+literal|"previous RGs) was "
+operator|+
+name|lastRange
+argument_list|)
+expr_stmt|;
+block|}
 name|lastRange
 operator|=
 operator|new
@@ -19895,9 +19978,6 @@ block|{
 specifier|public
 name|ColumnReadContext
 parameter_list|(
-name|long
-name|offset
-parameter_list|,
 name|int
 name|colIx
 parameter_list|,
@@ -20098,6 +20178,7 @@ block|}
 comment|/*    * TODO: this method could be made static or moved to separate class unrelated to RecordReader.    *       It's not very well integrated into RecordReader, and violates many RR usage patterns.    *       The following fields are used; and how to get rid of them:    * currentStripe - always 0 in current usage.    * stripes, fileName, codec, zcr, bufferSize - available externally or thru parent Reader    * rowCountInStripe, file - derived    * types, encodings, indexes - available externally from cache (for initial caching, reader    *    is needed to get footer and indexes; or that can be refactored out)    */
 annotation|@
 name|Override
+comment|// TODO#: HERE
 specifier|public
 name|void
 name|readEncodedColumns
@@ -20213,6 +20294,7 @@ name|offset
 init|=
 literal|0
 decl_stmt|;
+comment|// Stream offset in relation to the stripe.
 comment|// 1.1. Figure out which columns have a present stream
 name|boolean
 index|[]
@@ -20225,6 +20307,29 @@ argument_list|,
 name|types
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"The following columns have PRESENT streams: "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|hasNull
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|DiskRange
 name|lastRange
 init|=
@@ -20331,6 +20436,32 @@ operator|.
 name|DATA
 condition|)
 block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Skipping stream: "
+operator|+
+name|streamKind
+operator|+
+literal|" at "
+operator|+
+name|offset
+operator|+
+literal|", "
+operator|+
+name|length
+argument_list|)
+expr_stmt|;
+block|}
 name|offset
 operator|+=
 name|length
@@ -20381,8 +20512,6 @@ operator|=
 operator|new
 name|ColumnReadContext
 argument_list|(
-name|offset
-argument_list|,
 name|colIx
 argument_list|,
 name|encodings
@@ -20398,6 +20527,44 @@ name|colIx
 index|]
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating context "
+operator|+
+name|colRgIx
+operator|+
+literal|" for column "
+operator|+
+name|colIx
+operator|+
+literal|" with encoding "
+operator|+
+name|encodings
+operator|.
+name|get
+argument_list|(
+name|colIx
+argument_list|)
+operator|+
+literal|" and rowIndex "
+operator|+
+name|indexes
+index|[
+name|colIx
+index|]
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -20459,6 +20626,40 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding stream for column "
+operator|+
+name|colIx
+operator|+
+literal|": "
+operator|+
+name|streamKind
+operator|+
+literal|" at "
+operator|+
+name|offset
+operator|+
+literal|", "
+operator|+
+name|length
+operator|+
+literal|", index position "
+operator|+
+name|indexIx
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|includedRgs
 operator|==
 literal|null
@@ -20489,6 +20690,28 @@ argument_list|,
 name|rangesToRead
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Will read whole stream "
+operator|+
+name|streamKind
+operator|+
+literal|"; added to "
+operator|+
+name|lastRange
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -20548,17 +20771,17 @@ block|}
 comment|// 2. Now, read all of the ranges from cache or disk.
 if|if
 condition|(
-name|LOG
+name|DebugUtils
 operator|.
-name|isDebugEnabled
+name|isTraceOrcEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
-literal|"chunks = "
+literal|"Resulting disk ranges to read: "
 operator|+
 name|stringifyDiskRanges
 argument_list|(
@@ -20567,11 +20790,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|mergeDiskRanges
-argument_list|(
-name|rangesToRead
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|cache
@@ -20590,6 +20808,31 @@ argument_list|,
 name|stripeOffset
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Disk ranges after cache (base offset "
+operator|+
+name|stripeOffset
+operator|+
+literal|"): "
+operator|+
+name|stringifyDiskRanges
+argument_list|(
+name|rangesToRead
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// Force direct buffers, since we will be decompressing to cache.
 name|readDiskRanges
@@ -20598,17 +20841,53 @@ name|file
 argument_list|,
 name|zcr
 argument_list|,
-name|stripe
-operator|.
-name|getOffset
-argument_list|()
+name|stripeOffset
 argument_list|,
 name|rangesToRead
 argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// 2.1. Separate buffers for each stream from the data we have.
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Disk ranges after disk read ("
+operator|+
+operator|(
+name|zcr
+operator|==
+literal|null
+condition|?
+literal|"no "
+else|:
+literal|""
+operator|)
+operator|+
+literal|" zero-copy, base"
+operator|+
+literal|" offset "
+operator|+
+name|stripeOffset
+operator|+
+literal|"): "
+operator|+
+name|stringifyDiskRanges
+argument_list|(
+name|rangesToRead
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// 2.1. Separate buffers (relative to stream offset) for each stream from the data we have.
 comment|// TODO: given how we read, we could potentially get rid of this step?
 for|for
 control|(
@@ -20645,10 +20924,12 @@ index|[
 name|i
 index|]
 decl_stmt|;
-name|sctx
-operator|.
-name|bufferIter
-operator|=
+name|List
+argument_list|<
+name|DiskRange
+argument_list|>
+name|sb
+init|=
 name|getStreamBuffers
 argument_list|(
 name|rangesToRead
@@ -20661,10 +20942,61 @@ name|sctx
 operator|.
 name|length
 argument_list|)
+decl_stmt|;
+name|sctx
+operator|.
+name|bufferIter
+operator|=
+name|sb
 operator|.
 name|listIterator
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Column "
+operator|+
+name|colCtx
+operator|.
+name|colIx
+operator|+
+literal|" stream "
+operator|+
+name|sctx
+operator|.
+name|kind
+operator|+
+literal|" at "
+operator|+
+name|sctx
+operator|.
+name|offset
+operator|+
+literal|","
+operator|+
+name|sctx
+operator|.
+name|length
+operator|+
+literal|" got ranges (relative to stream) "
+operator|+
+name|stringifyDiskRanges
+argument_list|(
+name|sb
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|// 3. Finally, decompress data, map per RG, and return to caller.
@@ -20888,6 +21220,56 @@ argument_list|)
 condition|)
 block|{
 comment|// This stream is for entire stripe and needed for every RG; uncompress once and reuse.
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Getting stripe-level stream ["
+operator|+
+name|sctx
+operator|.
+name|kind
+operator|+
+literal|", "
+operator|+
+name|ctx
+operator|.
+name|encoding
+operator|+
+literal|"] for"
+operator|+
+literal|" column "
+operator|+
+name|ctx
+operator|.
+name|colIx
+operator|+
+literal|" RG "
+operator|+
+name|rgIx
+operator|+
+literal|" at "
+operator|+
+name|sctx
+operator|.
+name|offset
+operator|+
+literal|", "
+operator|+
+name|sctx
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+block|}
 name|cb
 operator|=
 name|getStripeLevelStream
@@ -20958,6 +21340,74 @@ operator|.
 name|incRef
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Getting data for column "
+operator|+
+name|ctx
+operator|.
+name|colIx
+operator|+
+literal|" "
+operator|+
+operator|(
+name|isLastRg
+condition|?
+literal|"last "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"RG "
+operator|+
+name|rgIx
+operator|+
+literal|" stream "
+operator|+
+name|sctx
+operator|.
+name|kind
+operator|+
+literal|" at "
+operator|+
+name|sctx
+operator|.
+name|offset
+operator|+
+literal|", "
+operator|+
+name|sctx
+operator|.
+name|length
+operator|+
+literal|" index position "
+operator|+
+name|sctx
+operator|.
+name|streamIndexOffset
+operator|+
+literal|": compressed ["
+operator|+
+name|cOffset
+operator|+
+literal|", "
+operator|+
+name|endCOffset
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+block|}
 name|InStream
 operator|.
 name|uncompressStream

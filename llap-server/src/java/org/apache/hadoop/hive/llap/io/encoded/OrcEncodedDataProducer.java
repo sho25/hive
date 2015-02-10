@@ -1450,6 +1450,37 @@ argument_list|,
 name|stripeIncludes
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Caching stripe "
+operator|+
+name|stripeKey
+operator|.
+name|stripeIx
+operator|+
+literal|" metadata with includes: "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|stripeIncludes
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|metadataCache
 operator|.
 name|putStripeMetadata
@@ -1485,6 +1516,37 @@ name|stripeIncludes
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Updating indexes in stripe "
+operator|+
+name|stripeKey
+operator|.
+name|stripeIx
+operator|+
+literal|" metadata for includes: "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|stripeIncludes
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|updateLoadedIndexes
 argument_list|(
 name|stripeMetadata
@@ -1838,6 +1900,7 @@ return|return
 name|existingReader
 return|;
 comment|// Create RecordReader that will be used to read only this stripe.
+comment|// TODO: use separate class instead.
 name|StripeInformation
 name|si
 init|=
@@ -1854,6 +1917,40 @@ decl_stmt|;
 name|ensureOrcReader
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating stripe reader "
+operator|+
+name|stripeIx
+operator|+
+literal|": "
+operator|+
+name|si
+operator|.
+name|getOffset
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|si
+operator|.
+name|getLength
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|existingReader
 operator|=
 name|orcReader
@@ -2130,6 +2227,42 @@ operator|.
 name|stripeIx
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating stripe reader "
+operator|+
+name|stripeKey
+operator|.
+name|stripeIx
+operator|+
+literal|": "
+operator|+
+name|si
+operator|.
+name|getOffset
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|si
+operator|.
+name|getLength
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|stripeReaders
 index|[
 name|stripeIxMod
@@ -2189,6 +2322,37 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Caching stripe "
+operator|+
+name|stripeKey
+operator|.
+name|stripeIx
+operator|+
+literal|" metadata with includes: "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|globalInc
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Create new key object to reuse for gets; we've used the old one to put in cache.
 name|stripeKey
 operator|=
@@ -2205,6 +2369,37 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Updating indexes in stripe "
+operator|+
+name|stripeKey
+operator|.
+name|stripeIx
+operator|+
+literal|" metadata for includes: "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|globalInc
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|updateLoadedIndexes
 argument_list|(
 name|value
@@ -2357,7 +2552,7 @@ name|stripeIxMod
 control|)
 block|{
 name|int
-name|originalStripeIx
+name|stripeIx
 init|=
 name|stripeIxMod
 operator|+
@@ -2370,7 +2565,7 @@ name|stripes
 operator|.
 name|get
 argument_list|(
-name|originalStripeIx
+name|stripeIx
 argument_list|)
 decl_stmt|;
 name|int
@@ -2415,6 +2610,61 @@ name|getRowIndexes
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|rgsToRead
+operator|!=
+literal|null
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"SARG picked RGs for stripe "
+operator|+
+name|stripeIx
+operator|+
+literal|": "
+operator|+
+name|DebugUtils
+operator|.
+name|toString
+argument_list|(
+name|rgsToRead
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Will read all "
+operator|+
+name|rgCount
+operator|+
+literal|" RGs for stripe "
+operator|+
+name|stripeIx
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 assert|assert
 name|rgsToRead
@@ -2668,7 +2918,7 @@ if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceOrcEnabled
 argument_list|()
 condition|)
 block|{
@@ -2678,7 +2928,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Including from "
+literal|"Including stripes from "
 operator|+
 name|stripeIx
 operator|+
@@ -2710,7 +2960,7 @@ if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceOrcEnabled
 argument_list|()
 condition|)
 block|{
@@ -2720,7 +2970,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Including until "
+literal|"Including stripes until "
 operator|+
 name|stripeIxTo
 operator|+
@@ -2732,7 +2982,15 @@ literal|">= "
 operator|+
 name|maxOffset
 operator|+
-literal|")"
+literal|"); "
+operator|+
+operator|(
+name|stripeIxTo
+operator|-
+name|stripeIxFrom
+operator|)
+operator|+
+literal|" stripes"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2754,11 +3012,15 @@ operator|-
 literal|1
 condition|)
 block|{
+name|stripeIxTo
+operator|=
+name|stripeIx
+expr_stmt|;
 if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceOrcEnabled
 argument_list|()
 condition|)
 block|{
@@ -2768,18 +3030,22 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Including until "
+literal|"Including stripes until "
 operator|+
 name|stripeIx
 operator|+
-literal|" (end of file)"
+literal|" (end of file); "
+operator|+
+operator|(
+name|stripeIxTo
+operator|-
+name|stripeIxFrom
+operator|)
+operator|+
+literal|" stripes"
 argument_list|)
 expr_stmt|;
 block|}
-name|stripeIxTo
-operator|=
-name|stripeIx
-expr_stmt|;
 block|}
 name|readState
 operator|=

@@ -2834,8 +2834,6 @@ operator|+
 literal|"/staging"
 argument_list|)
 expr_stmt|;
-block|)
-empty_stmt|;
 block|}
 elseif|else
 if|if
@@ -2915,8 +2913,8 @@ expr_stmt|;
 block|}
 block|}
 name|initConf
-parameter_list|()
-constructor_decl|;
+argument_list|()
+expr_stmt|;
 comment|// Use the current directory if it is not specified
 name|String
 name|dataDir
@@ -3054,17 +3052,14 @@ expr_stmt|;
 name|setup
 operator|.
 name|preTest
-parameter_list|(
+argument_list|(
 name|conf
-parameter_list|)
-constructor_decl|;
+argument_list|)
+expr_stmt|;
 name|init
-parameter_list|()
-constructor_decl|;
+argument_list|()
+expr_stmt|;
 block|}
-end_class
-
-begin_function
 specifier|public
 name|void
 name|shutdown
@@ -3177,9 +3172,6 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-end_function
-
-begin_function
 specifier|public
 name|String
 name|readEntireFileIntoString
@@ -3253,9 +3245,6 @@ name|toString
 argument_list|()
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|addFile
@@ -3274,9 +3263,6 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|addFile
@@ -3300,9 +3286,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|addFile
@@ -3321,9 +3304,6 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|addFile
@@ -3508,9 +3488,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-end_function
-
-begin_decl_stmt
 specifier|private
 specifier|static
 specifier|final
@@ -3524,9 +3501,6 @@ argument_list|(
 literal|"-- SORT_BEFORE_DIFF"
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|static
 specifier|final
@@ -3540,9 +3514,6 @@ argument_list|(
 literal|"-- SORT_QUERY_RESULTS"
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|static
 specifier|final
@@ -3556,9 +3527,6 @@ argument_list|(
 literal|"-- HASH_QUERY_RESULTS"
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|static
 specifier|final
@@ -3572,9 +3540,6 @@ argument_list|(
 literal|"-- SORT_AND_HASH_QUERY_RESULTS"
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_function
 specifier|private
 name|boolean
 name|matches
@@ -3612,9 +3577,6 @@ return|return
 literal|false
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|checkHadoopVersionExclude
@@ -3866,9 +3828,6 @@ return|return
 literal|false
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|checkOSExclude
@@ -3993,9 +3952,6 @@ return|return
 literal|false
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|checkNeedJavaSpecificOutput
@@ -4066,13 +4022,7 @@ return|return
 literal|false
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Get formatted Java version to include minor version, but    * exclude patch level.    *    * @return Java version formatted as major_version.minor_version    */
-end_comment
-
-begin_function
 specifier|private
 specifier|static
 name|String
@@ -4143,13 +4093,7 @@ name|pos
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Clear out any side effects of running tests    */
-end_comment
-
-begin_function
 specifier|public
 name|void
 name|clearPostTestEffects
@@ -4165,9 +4109,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|clearKeysCreatedInTests
@@ -4221,13 +4162,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-end_function
-
-begin_comment
 comment|/**    * Clear out any side effects of running tests    */
-end_comment
-
-begin_function
 specifier|public
 name|void
 name|clearTablesCreatedDuringTests
@@ -4578,13 +4513,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-end_function
-
-begin_comment
 comment|/**    * Clear out any side effects of running tests    */
-end_comment
-
-begin_function
 specifier|public
 name|void
 name|clearTestSideEffects
@@ -4656,9 +4585,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|cleanUp
@@ -4870,9 +4796,6 @@ literal|"test_error"
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|protected
 name|void
 name|runCreateTableCmd
@@ -4923,9 +4846,6 @@ throw|;
 block|}
 return|return;
 block|}
-end_function
-
-begin_function
 specifier|protected
 name|void
 name|runCmd
@@ -4981,9 +4901,6 @@ throw|;
 block|}
 return|return;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|createSources
@@ -5079,9 +4996,6 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|init
@@ -5177,9 +5091,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|init
@@ -5204,9 +5115,6 @@ literal|"set hive.cli.print.header=true;"
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|cliInit
@@ -5225,9 +5133,6 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|String
 name|cliInit
@@ -5685,9 +5590,6 @@ name|getAbsolutePath
 argument_list|()
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|CliSessionState
 name|createSessionState
@@ -5795,9 +5697,6 @@ block|}
 block|}
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|CliSessionState
 name|startSessionState
@@ -5989,9 +5888,6 @@ return|return
 name|ss
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|executeOne
@@ -6093,9 +5989,6 @@ name|q1
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|execute
@@ -6153,9 +6046,6 @@ literal|1
 return|;
 block|}
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|executeClient
@@ -6189,9 +6079,6 @@ name|commands
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|executeClient
@@ -6210,9 +6097,6 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|int
 name|executeClientInternal
@@ -6378,9 +6262,6 @@ return|return
 name|rc
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|isHiveCommand
@@ -6447,9 +6328,6 @@ literal|false
 return|;
 block|}
 block|}
-end_function
-
-begin_function
 specifier|private
 name|int
 name|executeTestCommand
@@ -6655,9 +6533,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-end_function
-
-begin_function
 specifier|private
 name|CommandProcessor
 name|getTestCommand
@@ -6726,9 +6601,6 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|void
 name|enableTestOnlyCmd
@@ -6798,9 +6670,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|isCommandUsedForTesting
@@ -6851,9 +6720,6 @@ operator|!=
 literal|null
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|String
 name|getCommand
@@ -6986,9 +6852,6 @@ return|return
 name|commands
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|boolean
 name|isComment
@@ -7022,9 +6885,6 @@ literal|"--"
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|boolean
 name|shouldBeSkipped
@@ -7042,9 +6902,6 @@ name|tname
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|String
 name|getOutFileExtension
@@ -7081,9 +6938,6 @@ return|return
 name|outFileExtension
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|convertSequenceFileToTextFile
@@ -7167,9 +7021,6 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|checkNegativeResults
@@ -7363,9 +7214,6 @@ return|return
 name|exitVal
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|checkParseResults
@@ -7529,9 +7377,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-end_function
-
-begin_decl_stmt
 specifier|private
 specifier|final
 name|Pattern
@@ -7558,9 +7403,6 @@ literal|"<string>/.*/warehouse/.*</string>"
 block|}
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_function
 specifier|public
 name|int
 name|checkPlan
@@ -7794,13 +7636,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-end_function
-
-begin_comment
 comment|/**    * Given the current configurations (e.g., hadoop version and execution mode), return    * the correct file name to compare with the current test run output.    * @param outDir The directory where the reference log files are stored.    * @param testName The test file name (terminated by ".out").    * @return The file name appended with the configuration values if it exists.    */
-end_comment
-
-begin_function
 specifier|public
 name|String
 name|outPath
@@ -7973,13 +7809,7 @@ return|return
 name|ret
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Fix the XML generated by JDK7 which is slightly different from what's generated by JDK6,    * causing 40+ test failures. There are mainly two problems:    *    * 1. object element's properties, id and class, are in reverse order, i.e.    *<object class="org.apache.hadoop.hive.ql.exec.MapRedTask" id="MapRedTask0">    *    which needs to be fixed to    *<object id="MapRedTask0" class="org.apache.hadoop.hive.ql.exec.MapRedTask">    * 2. JDK introduces Enum as class, i.e.    *<object id="GenericUDAFEvaluator$Mode0" class="java.lang.Enum">    *<class>org.apache.hadoop.hive.ql.udf.generic.GenericUDAFEvaluator$Mode</class>    *    which needs to be fixed to    *<object id="GenericUDAFEvaluator$Mode0" class="org.apache.hadoop.hive.ql.udf.generic.GenericUDAFEvaluator$Mode"    *     method="valueOf">    *    * Though not elegant, this allows these test cases to pass until we have a better serialization mechanism.    *    * Did I mention this is test code?    *    * @param fname the name of the file to fix    * @throws Exception in case of IO error    */
-end_comment
-
-begin_function
 specifier|private
 specifier|static
 name|void
@@ -8344,13 +8174,7 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Get the value of a property in line. The returned value has original quotes    */
-end_comment
-
-begin_function
 specifier|private
 specifier|static
 name|String
@@ -8423,13 +8247,7 @@ literal|1
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Get the value of the element in input. (Note: the returned value has no quotes.)    */
-end_comment
-
-begin_function
 specifier|private
 specifier|static
 name|String
@@ -8502,9 +8320,6 @@ name|end
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|Pattern
 index|[]
@@ -8564,9 +8379,6 @@ return|return
 name|patterns
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 name|void
 name|maskPatterns
@@ -8851,9 +8663,6 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-end_function
-
-begin_decl_stmt
 specifier|private
 specifier|final
 name|Pattern
@@ -8934,9 +8743,6 @@ literal|".*.hive-staging.*"
 block|}
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|final
 name|Pattern
@@ -8955,9 +8761,6 @@ comment|//TODO: add more expected test result here
 block|}
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_function
 specifier|public
 name|int
 name|checkCliDriverResults
@@ -9069,9 +8872,6 @@ return|return
 name|exitVal
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|int
 name|checkCompareCliDriverResults
@@ -9212,9 +9012,6 @@ return|return
 literal|0
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9268,9 +9065,6 @@ block|}
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9532,9 +9326,6 @@ return|return
 name|result
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9570,9 +9361,6 @@ literal|null
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9598,9 +9386,6 @@ literal|null
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9624,9 +9409,6 @@ literal|null
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9676,9 +9458,6 @@ name|errFile
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|int
@@ -9880,9 +9659,6 @@ return|return
 name|result
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|String
@@ -9909,9 +9685,6 @@ else|:
 name|str
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|ASTNode
 name|parseQuery
@@ -9936,9 +9709,6 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|resetParser
@@ -9966,9 +9736,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|List
 argument_list|<
@@ -10068,9 +9835,6 @@ name|getRootTasks
 argument_list|()
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|TreeMap
 argument_list|<
@@ -10085,13 +9849,7 @@ return|return
 name|qMap
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * QTestSetup defines test fixtures which are reused across testcases,    * and are needed before any test can be run    */
-end_comment
-
-begin_class
 specifier|public
 specifier|static
 class|class
@@ -10328,13 +10086,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-end_class
-
-begin_comment
 comment|/**    * QTRunner: Runnable class for running a a single query file.    *    **/
-end_comment
-
-begin_class
 specifier|public
 specifier|static
 class|class
@@ -10438,13 +10190,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-end_class
-
-begin_comment
 comment|/**    * Setup to execute a set of query files. Uses QTestUtil to do so.    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param resDir    *          output directory    * @param logDir    *          log directory    * @return one QTestUtil for each query file    */
-end_comment
-
-begin_function
 specifier|public
 specifier|static
 name|QTestUtil
@@ -10544,13 +10290,7 @@ return|return
 name|qt
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Executes a set of query files in sequence.    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param qt    *          array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    */
-end_comment
-
-begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -10721,13 +10461,7 @@ name|failed
 operator|)
 return|;
 block|}
-end_function
-
-begin_comment
 comment|/**    * Executes a set of query files parallel.    *    * Each query file is run in a separate thread. The caller has to arrange    * that different query files do not collide (in terms of destination tables)    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param qt    *          array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    *    */
-end_comment
-
-begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -10966,9 +10700,6 @@ name|failed
 operator|)
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 specifier|static
 name|void
@@ -10996,9 +10727,6 @@ name|flush
 argument_list|()
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 specifier|static
 name|String
@@ -11050,9 +10778,6 @@ name|separator
 return|;
 block|}
 block|}
-end_function
-
-begin_decl_stmt
 specifier|private
 specifier|static
 name|String
@@ -11061,9 +10786,6 @@ name|cachedQvFileList
 init|=
 literal|null
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|static
 name|ImmutableList
@@ -11074,9 +10796,6 @@ name|cachedDefaultQvFileList
 init|=
 literal|null
 decl_stmt|;
-end_decl_stmt
-
-begin_decl_stmt
 specifier|private
 specifier|static
 name|Pattern
@@ -11093,9 +10812,6 @@ operator|.
 name|CASE_INSENSITIVE
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_function
 specifier|public
 specifier|static
 name|List
@@ -11143,9 +10859,6 @@ return|return
 name|result
 return|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|void
@@ -11272,9 +10985,6 @@ name|of
 argument_list|()
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|private
 specifier|static
 name|List
@@ -11457,9 +11167,6 @@ return|return
 name|result
 return|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|failed
@@ -11526,13 +11233,7 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_comment
 comment|// for negative tests, which is succeeded.. no need to print the query string
-end_comment
-
-begin_function
 specifier|public
 name|void
 name|failed
@@ -11562,9 +11263,6 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|failedDiff
@@ -11599,9 +11297,6 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-end_function
-
-begin_function
 specifier|public
 name|void
 name|failed
@@ -11720,8 +11415,8 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-end_function
+block|}
+end_class
 
-unit|}
 end_unit
 

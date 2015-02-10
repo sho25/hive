@@ -7414,7 +7414,7 @@ name|HIVE_VECTORIZATION_ENABLED
 argument_list|(
 literal|"hive.vectorized.execution.enabled"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of query execution.\n"
 operator|+
@@ -7811,7 +7811,7 @@ name|LLAP_IO_ENABLED
 argument_list|(
 literal|"hive.llap.io.enabled"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|""
 argument_list|)
