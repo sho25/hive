@@ -23,15 +23,21 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|io
 operator|.
-name|hadoop
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|conf
+name|util
 operator|.
-name|Configuration
+name|Iterator
 import|;
 end_import
 
@@ -57,26 +63,6 @@ name|Tuple2
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -93,17 +79,22 @@ argument_list|>
 argument_list|>
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+specifier|private
 specifier|final
 name|SparkRecordHandler
 name|recordHandler
 decl_stmt|;
-comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param conf Hive configuration.    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
+comment|/**    * Instantiate result set Iterable for Map function output.    *    * @param inputIterator Input record iterator.    * @param handler Initialized {@link SparkMapRecordHandler} instance.    */
 specifier|public
 name|HiveMapFunctionResultList
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|Iterator
 argument_list|<
 name|Tuple2
@@ -121,8 +112,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|conf
-argument_list|,
 name|inputIterator
 argument_list|)
 expr_stmt|;
