@@ -113,6 +113,10 @@ name|LlapMemoryBuffer
 argument_list|>
 name|cacheBuffers
 decl_stmt|;
+specifier|public
+name|int
+name|streamKind
+decl_stmt|;
 comment|// StreamBuffer can be reused for many RGs (e.g. dictionary case). To avoid locking every
 comment|// LlapMemoryBuffer 500 times, have a separate refcount on StreamBuffer itself.
 specifier|public
@@ -125,6 +129,20 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+specifier|public
+name|StreamBuffer
+parameter_list|(
+name|int
+name|kind
+parameter_list|)
+block|{
+name|this
+operator|.
+name|streamKind
+operator|=
+name|kind
+expr_stmt|;
+block|}
 specifier|public
 name|void
 name|incRef

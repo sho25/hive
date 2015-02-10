@@ -21490,7 +21490,14 @@ name|cb
 operator|=
 operator|new
 name|StreamBuffer
+argument_list|(
+name|sctx
+operator|.
+name|kind
+operator|.
+name|getNumber
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|cb
 operator|.
@@ -21621,7 +21628,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Reads the entire stream for a column (e.g. a dictionarty stream), or gets it from context.    * @param isLastRg Whether the stream is being read for last RG in stripe.    * @return StreamBuffer that contains the entire stream.    */
+comment|/**    * Reads the entire stream for a column (e.g. a dictionary stream), or gets it from context.    * @param isLastRg Whether the stream is being read for last RG in stripe.    * @return StreamBuffer that contains the entire stream.    */
 specifier|private
 name|StreamBuffer
 name|getStripeLevelStream
@@ -21656,7 +21663,14 @@ name|stripeLevelStream
 operator|=
 operator|new
 name|StreamBuffer
+argument_list|(
+name|ctx
+operator|.
+name|kind
+operator|.
+name|getNumber
 argument_list|()
+argument_list|)
 expr_stmt|;
 comment|// We will be using this for each RG while also sending RGs to processing.
 comment|// To avoid buffers being unlocked, run refcount one ahead; we will not increase

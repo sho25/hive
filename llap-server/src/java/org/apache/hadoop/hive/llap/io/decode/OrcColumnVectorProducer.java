@@ -451,11 +451,11 @@ begin_import
 import|import
 name|com
 operator|.
-name|clearspring
+name|google
 operator|.
-name|analytics
+name|common
 operator|.
-name|util
+name|collect
 operator|.
 name|Lists
 import|;
