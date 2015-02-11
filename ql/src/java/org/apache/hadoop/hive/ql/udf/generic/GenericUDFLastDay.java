@@ -498,7 +498,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|+
-literal|" is passed. as first arguments"
+literal|" is passed"
 argument_list|)
 throw|;
 block|}
@@ -612,9 +612,11 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|" LAST_DAY() only takes STRING/TIMESTAMP/DATEWRITABLE types as first argument, got "
+literal|0
+argument_list|,
+literal|"LAST_DAY() only takes STRING/TIMESTAMP/DATEWRITABLE types, got "
 operator|+
 name|inputType1
 argument_list|)
@@ -709,11 +711,6 @@ return|return
 literal|null
 return|;
 block|}
-name|lastDay
-argument_list|(
-name|date
-argument_list|)
-expr_stmt|;
 break|break;
 case|case
 name|TIMESTAMP
@@ -746,11 +743,6 @@ name|date
 operator|=
 name|ts
 expr_stmt|;
-name|lastDay
-argument_list|(
-name|date
-argument_list|)
-expr_stmt|;
 break|break;
 case|case
 name|DATE
@@ -781,23 +773,25 @@ operator|.
 name|get
 argument_list|()
 expr_stmt|;
-name|lastDay
-argument_list|(
-name|date
-argument_list|)
-expr_stmt|;
 break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|0
+argument_list|,
 literal|"LAST_DAY() only takes STRING/TIMESTAMP/DATEWRITABLE types, got "
 operator|+
 name|inputType1
 argument_list|)
 throw|;
 block|}
+name|lastDay
+argument_list|(
+name|date
+argument_list|)
+expr_stmt|;
 name|Date
 name|newDate
 init|=
