@@ -3159,6 +3159,17 @@ argument_list|,
 name|toRelease
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|compressedBytesConsumed
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+comment|// endCOffset is an estimate; we have a partially-read compression block, ignore it
+break|break;
+block|}
 name|currentCOffset
 operator|=
 name|originalOffset
@@ -3808,6 +3819,21 @@ name|cbStartOffset
 operator|+
 name|consumedLength
 decl_stmt|;
+if|if
+condition|(
+name|current
+operator|.
+name|end
+operator|<
+name|cbEndOffset
+condition|)
+block|{
+return|return
+operator|-
+literal|1
+return|;
+comment|// This is impossible to read from this chunk,
+block|}
 name|boolean
 name|isUncompressed
 init|=
