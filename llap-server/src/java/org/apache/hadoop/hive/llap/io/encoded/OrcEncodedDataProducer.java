@@ -1147,6 +1147,8 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|stripeReader
+operator|=
 name|orcReader
 operator|.
 name|encodedReader
@@ -1988,7 +1990,7 @@ return|return
 name|metadata
 return|;
 block|}
-comment|/**      * Reads the metadata for all stripes in the file.      * @param stripeReaders Array to preserve the readers used.      */
+comment|/**      * Reads the metadata for all stripes in the file.      */
 specifier|private
 name|ArrayList
 argument_list|<

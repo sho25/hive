@@ -349,16 +349,15 @@ if|if
 condition|(
 operator|(
 name|included
-operator|!=
+operator|==
 literal|null
-operator|&&
-operator|!
+operator|||
 name|included
 index|[
 name|col
 index|]
 operator|)
-operator|||
+operator|&&
 name|indexes
 index|[
 name|col
@@ -366,7 +365,7 @@ index|]
 operator|==
 literal|null
 condition|)
-continue|continue;
+block|{
 name|byte
 index|[]
 name|buffer
@@ -450,6 +449,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|offset
 operator|+=
