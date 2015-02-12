@@ -734,6 +734,8 @@ name|AvroSerdeUtils
 operator|.
 name|determineSchemaOrThrowException
 argument_list|(
+name|job
+argument_list|,
 name|props
 argument_list|)
 return|;

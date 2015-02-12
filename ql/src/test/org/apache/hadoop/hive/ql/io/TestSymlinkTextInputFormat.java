@@ -753,7 +753,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test combine symlink text input file. Two input dir, and each contails one    * file, and then create one symlink file containing these 2 files. Normally    * without combine, it will return at least 2 splits    */
+comment|/**    * Test combine symlink text input file. Two input dir, and each contains one    * file, and then create one symlink file containing these 2 files. Normally    * without combine, it will return at least 2 splits    */
 specifier|public
 name|void
 name|testCombine
@@ -1063,10 +1063,12 @@ block|}
 name|String
 name|cmd
 init|=
-literal|"select key from "
+literal|"select key*1 from "
 operator|+
 name|tblName
 decl_stmt|;
+name|ecode
+operator|=
 name|drv
 operator|.
 name|compile
@@ -1074,6 +1076,27 @@ argument_list|(
 name|cmd
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|ecode
+operator|!=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|Exception
+argument_list|(
+literal|"Select compile: "
+operator|+
+name|cmd
+operator|+
+literal|" failed with exit code= "
+operator|+
+name|ecode
+argument_list|)
+throw|;
+block|}
 comment|//create scratch dir
 name|Context
 name|ctx

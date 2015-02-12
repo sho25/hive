@@ -212,8 +212,6 @@ argument_list|(
 name|joinOp
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|pGraphContext
 argument_list|)
 decl_stmt|;
 if|if
@@ -226,8 +224,6 @@ argument_list|(
 name|joinOp
 argument_list|,
 name|smbJoinContext
-argument_list|,
-name|pGraphContext
 argument_list|)
 expr_stmt|;
 block|}

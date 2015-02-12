@@ -87,6 +87,20 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|ServiceUtils
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -213,10 +227,17 @@ argument_list|,
 name|ldapURL
 argument_list|)
 expr_stmt|;
-comment|//  If the domain is supplied, then append it. LDAP providers like Active Directory
-comment|// use a fully qualified user name like foo@bar.com.
+comment|// If the domain is available in the config, then append it unless domain is
+comment|// already part of the username. LDAP providers like Active Directory use a
+comment|// fully qualified user name like foo@bar.com.
 if|if
 condition|(
+operator|!
+name|hasDomain
+argument_list|(
+name|user
+argument_list|)
+operator|&&
 name|ldapDomain
 operator|!=
 literal|null
@@ -327,6 +348,27 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+specifier|private
+name|boolean
+name|hasDomain
+parameter_list|(
+name|String
+name|userName
+parameter_list|)
+block|{
+return|return
+operator|(
+name|ServiceUtils
+operator|.
+name|indexOfDomainMatch
+argument_list|(
+name|userName
+argument_list|)
+operator|>
+literal|0
+operator|)
+return|;
 block|}
 block|}
 end_class

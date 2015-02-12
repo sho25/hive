@@ -384,7 +384,7 @@ specifier|public
 class|class
 name|TestGenericUDFOPDivide
 extends|extends
-name|TestGenericUDFOPNumeric
+name|AbstractTestGenericUDFOPNumeric
 block|{
 annotation|@
 name|Test
@@ -1346,7 +1346,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"0.0617100"
+literal|"0.06171"
 argument_list|)
 argument_list|,
 name|res

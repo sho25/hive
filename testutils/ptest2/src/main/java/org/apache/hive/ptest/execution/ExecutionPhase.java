@@ -768,6 +768,30 @@ name|getFailedTests
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// if the TEST*.xml was not generated or was corrupt, let someone know
+if|if
+condition|(
+name|parser
+operator|.
+name|getNumAttemptedTests
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+name|failedTests
+operator|.
+name|add
+argument_list|(
+name|batch
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" - did not produce a TEST-*.xml file"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 finally|finally

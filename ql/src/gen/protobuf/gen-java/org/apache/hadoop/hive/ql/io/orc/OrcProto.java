@@ -50,7 +50,7 @@ name|ExtensionRegistry
 name|registry
 parameter_list|)
 block|{   }
-comment|/**    * Protobuf enum {@code org.apache.hadoop.hive.ql.io.orc.CompressionKind}    */
+comment|/**    * Protobuf enum {@code orc.proto.CompressionKind}    */
 specifier|public
 enum|enum
 name|CompressionKind
@@ -439,7 +439,7 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.ql.io.orc.CompressionKind)
+comment|// @@protoc_insertion_point(enum_scope:orc.proto.CompressionKind)
 block|}
 specifier|public
 interface|interface
@@ -487,7 +487,7 @@ name|getSum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.IntegerStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.IntegerStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -894,7 +894,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -927,7 +927,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_fieldAccessorTable
+name|internal_static_orc_proto_IntegerStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -2139,7 +2139,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.IntegerStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.IntegerStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -2209,7 +2209,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -2242,7 +2242,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_fieldAccessorTable
+name|internal_static_orc_proto_IntegerStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -2453,7 +2453,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -3303,7 +3303,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.IntegerStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.IntegerStatistics)
 block|}
 static|static
 block|{
@@ -3321,7 +3321,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.IntegerStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.IntegerStatistics)
 block|}
 specifier|public
 interface|interface
@@ -3369,7 +3369,7 @@ name|getSum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DoubleStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.DoubleStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -3776,7 +3776,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -3809,7 +3809,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DoubleStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -5021,7 +5021,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DoubleStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.DoubleStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -5091,7 +5091,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -5124,7 +5124,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DoubleStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -5335,7 +5335,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -6185,7 +6185,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.DoubleStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.DoubleStatistics)
 block|}
 static|static
 block|{
@@ -6203,7 +6203,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.DoubleStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.DoubleStatistics)
 block|}
 specifier|public
 interface|interface
@@ -6281,7 +6281,7 @@ name|getSum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StringStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.StringStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -6688,7 +6688,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -6721,7 +6721,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StringStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -8281,7 +8281,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StringStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.StringStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -8351,7 +8351,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -8384,7 +8384,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StringStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -8595,7 +8595,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -9893,7 +9893,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.StringStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.StringStatistics)
 block|}
 static|static
 block|{
@@ -9911,7 +9911,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.StringStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.StringStatistics)
 block|}
 specifier|public
 interface|interface
@@ -9956,7 +9956,7 @@ name|index
 parameter_list|)
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.BucketStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.BucketStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -10486,7 +10486,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -10519,7 +10519,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BucketStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -11665,7 +11665,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.BucketStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.BucketStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -11735,7 +11735,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -11768,7 +11768,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BucketStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -11960,7 +11960,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -12784,7 +12784,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.BucketStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.BucketStatistics)
 block|}
 static|static
 block|{
@@ -12802,7 +12802,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.BucketStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.BucketStatistics)
 block|}
 specifier|public
 interface|interface
@@ -12895,7 +12895,7 @@ name|getSumBytes
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DecimalStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.DecimalStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -13302,7 +13302,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -13335,7 +13335,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DecimalStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -15069,7 +15069,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DecimalStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.DecimalStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -15139,7 +15139,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -15172,7 +15172,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DecimalStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -15383,7 +15383,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -16905,7 +16905,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.DecimalStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.DecimalStatistics)
 block|}
 static|static
 block|{
@@ -16923,7 +16923,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.DecimalStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.DecimalStatistics)
 block|}
 specifier|public
 interface|interface
@@ -16960,7 +16960,7 @@ name|getMaximum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DateStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.DateStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -17350,7 +17350,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -17383,7 +17383,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DateStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -18496,7 +18496,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.DateStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.DateStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -18566,7 +18566,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -18599,7 +18599,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DateStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -18797,7 +18797,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -19523,7 +19523,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.DateStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.DateStatistics)
 block|}
 static|static
 block|{
@@ -19541,7 +19541,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.DateStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.DateStatistics)
 block|}
 specifier|public
 interface|interface
@@ -19578,7 +19578,7 @@ name|getMaximum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.TimestampStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.TimestampStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -19968,7 +19968,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -20001,7 +20001,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_fieldAccessorTable
+name|internal_static_orc_proto_TimestampStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -21114,7 +21114,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.TimestampStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.TimestampStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -21184,7 +21184,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -21217,7 +21217,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_fieldAccessorTable
+name|internal_static_orc_proto_TimestampStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -21415,7 +21415,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -22141,7 +22141,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.TimestampStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.TimestampStatistics)
 block|}
 static|static
 block|{
@@ -22159,7 +22159,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.TimestampStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.TimestampStatistics)
 block|}
 specifier|public
 interface|interface
@@ -22185,7 +22185,7 @@ name|getSum
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.BinaryStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.BinaryStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -22558,7 +22558,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -22591,7 +22591,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BinaryStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -23605,7 +23605,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.BinaryStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.BinaryStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -23675,7 +23675,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -23708,7 +23708,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BinaryStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -23893,7 +23893,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -24495,7 +24495,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.BinaryStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.BinaryStatistics)
 block|}
 static|static
 block|{
@@ -24513,7 +24513,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.BinaryStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.BinaryStatistics)
 block|}
 specifier|public
 interface|interface
@@ -24538,13 +24538,13 @@ name|long
 name|getNumberOfValues
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|// optional .orc.proto.IntegerStatistics intStatistics = 2;
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 name|boolean
 name|hasIntStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -24565,7 +24565,7 @@ name|IntegerStatistics
 name|getIntStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -24586,13 +24586,13 @@ name|IntegerStatisticsOrBuilder
 name|getIntStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|// optional .orc.proto.DoubleStatistics doubleStatistics = 3;
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 name|boolean
 name|hasDoubleStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 name|org
 operator|.
 name|apache
@@ -24613,7 +24613,7 @@ name|DoubleStatistics
 name|getDoubleStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 name|org
 operator|.
 name|apache
@@ -24634,13 +24634,13 @@ name|DoubleStatisticsOrBuilder
 name|getDoubleStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|// optional .orc.proto.StringStatistics stringStatistics = 4;
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 name|boolean
 name|hasStringStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 name|org
 operator|.
 name|apache
@@ -24661,7 +24661,7 @@ name|StringStatistics
 name|getStringStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 name|org
 operator|.
 name|apache
@@ -24682,13 +24682,13 @@ name|StringStatisticsOrBuilder
 name|getStringStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|// optional .orc.proto.BucketStatistics bucketStatistics = 5;
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 name|boolean
 name|hasBucketStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 name|org
 operator|.
 name|apache
@@ -24709,7 +24709,7 @@ name|BucketStatistics
 name|getBucketStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 name|org
 operator|.
 name|apache
@@ -24730,13 +24730,13 @@ name|BucketStatisticsOrBuilder
 name|getBucketStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|// optional .orc.proto.DecimalStatistics decimalStatistics = 6;
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 name|boolean
 name|hasDecimalStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 name|org
 operator|.
 name|apache
@@ -24757,7 +24757,7 @@ name|DecimalStatistics
 name|getDecimalStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 name|org
 operator|.
 name|apache
@@ -24778,13 +24778,13 @@ name|DecimalStatisticsOrBuilder
 name|getDecimalStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|// optional .orc.proto.DateStatistics dateStatistics = 7;
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 name|boolean
 name|hasDateStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 name|org
 operator|.
 name|apache
@@ -24805,7 +24805,7 @@ name|DateStatistics
 name|getDateStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 name|org
 operator|.
 name|apache
@@ -24826,13 +24826,13 @@ name|DateStatisticsOrBuilder
 name|getDateStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|// optional .orc.proto.BinaryStatistics binaryStatistics = 8;
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 name|boolean
 name|hasBinaryStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 name|org
 operator|.
 name|apache
@@ -24853,7 +24853,7 @@ name|BinaryStatistics
 name|getBinaryStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 name|org
 operator|.
 name|apache
@@ -24874,13 +24874,13 @@ name|BinaryStatisticsOrBuilder
 name|getBinaryStatisticsOrBuilder
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|// optional .orc.proto.TimestampStatistics timestampStatistics = 9;
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 name|boolean
 name|hasTimestampStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 name|org
 operator|.
 name|apache
@@ -24901,7 +24901,7 @@ name|TimestampStatistics
 name|getTimestampStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 name|org
 operator|.
 name|apache
@@ -24922,8 +24922,19 @@ name|TimestampStatisticsOrBuilder
 name|getTimestampStatisticsOrBuilder
 parameter_list|()
 function_decl|;
+comment|// optional bool hasNull = 10;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+name|boolean
+name|hasHasNull
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+name|boolean
+name|getHasNull
+parameter_list|()
+function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.ColumnStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.ColumnStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -26032,6 +26043,23 @@ literal|0x00000100
 expr_stmt|;
 break|break;
 block|}
+case|case
+literal|80
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+name|hasNull_
+operator|=
+name|input
+operator|.
+name|readBool
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
 block|}
 block|}
 block|}
@@ -26136,7 +26164,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -26169,7 +26197,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_fieldAccessorTable
+name|internal_static_orc_proto_ColumnStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -26356,7 +26384,7 @@ return|return
 name|numberOfValues_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;
+comment|// optional .orc.proto.IntegerStatistics intStatistics = 2;
 specifier|public
 specifier|static
 specifier|final
@@ -26385,7 +26413,7 @@ operator|.
 name|IntegerStatistics
 name|intStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 specifier|public
 name|boolean
 name|hasIntStatistics
@@ -26403,7 +26431,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26429,7 +26457,7 @@ return|return
 name|intStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26455,7 +26483,7 @@ return|return
 name|intStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;
+comment|// optional .orc.proto.DoubleStatistics doubleStatistics = 3;
 specifier|public
 specifier|static
 specifier|final
@@ -26484,7 +26512,7 @@ operator|.
 name|DoubleStatistics
 name|doubleStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 specifier|public
 name|boolean
 name|hasDoubleStatistics
@@ -26502,7 +26530,7 @@ literal|0x00000004
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26528,7 +26556,7 @@ return|return
 name|doubleStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>      */
+comment|/**      *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26554,7 +26582,7 @@ return|return
 name|doubleStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;
+comment|// optional .orc.proto.StringStatistics stringStatistics = 4;
 specifier|public
 specifier|static
 specifier|final
@@ -26583,7 +26611,7 @@ operator|.
 name|StringStatistics
 name|stringStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 specifier|public
 name|boolean
 name|hasStringStatistics
@@ -26601,7 +26629,7 @@ literal|0x00000008
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26627,7 +26655,7 @@ return|return
 name|stringStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>      */
+comment|/**      *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26653,7 +26681,7 @@ return|return
 name|stringStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;
+comment|// optional .orc.proto.BucketStatistics bucketStatistics = 5;
 specifier|public
 specifier|static
 specifier|final
@@ -26682,7 +26710,7 @@ operator|.
 name|BucketStatistics
 name|bucketStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 specifier|public
 name|boolean
 name|hasBucketStatistics
@@ -26700,7 +26728,7 @@ literal|0x00000010
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26726,7 +26754,7 @@ return|return
 name|bucketStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>      */
+comment|/**      *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26752,7 +26780,7 @@ return|return
 name|bucketStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;
+comment|// optional .orc.proto.DecimalStatistics decimalStatistics = 6;
 specifier|public
 specifier|static
 specifier|final
@@ -26781,7 +26809,7 @@ operator|.
 name|DecimalStatistics
 name|decimalStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 specifier|public
 name|boolean
 name|hasDecimalStatistics
@@ -26799,7 +26827,7 @@ literal|0x00000020
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26825,7 +26853,7 @@ return|return
 name|decimalStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>      */
+comment|/**      *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26851,7 +26879,7 @@ return|return
 name|decimalStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;
+comment|// optional .orc.proto.DateStatistics dateStatistics = 7;
 specifier|public
 specifier|static
 specifier|final
@@ -26880,7 +26908,7 @@ operator|.
 name|DateStatistics
 name|dateStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 specifier|public
 name|boolean
 name|hasDateStatistics
@@ -26898,7 +26926,7 @@ literal|0x00000040
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26924,7 +26952,7 @@ return|return
 name|dateStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>      */
+comment|/**      *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>      */
 specifier|public
 name|org
 operator|.
@@ -26950,7 +26978,7 @@ return|return
 name|dateStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;
+comment|// optional .orc.proto.BinaryStatistics binaryStatistics = 8;
 specifier|public
 specifier|static
 specifier|final
@@ -26979,7 +27007,7 @@ operator|.
 name|BinaryStatistics
 name|binaryStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 specifier|public
 name|boolean
 name|hasBinaryStatistics
@@ -26997,7 +27025,7 @@ literal|0x00000080
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 specifier|public
 name|org
 operator|.
@@ -27023,7 +27051,7 @@ return|return
 name|binaryStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>      */
+comment|/**      *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>      */
 specifier|public
 name|org
 operator|.
@@ -27049,7 +27077,7 @@ return|return
 name|binaryStatistics_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;
+comment|// optional .orc.proto.TimestampStatistics timestampStatistics = 9;
 specifier|public
 specifier|static
 specifier|final
@@ -27078,7 +27106,7 @@ operator|.
 name|TimestampStatistics
 name|timestampStatistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 specifier|public
 name|boolean
 name|hasTimestampStatistics
@@ -27096,7 +27124,7 @@ literal|0x00000100
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 specifier|public
 name|org
 operator|.
@@ -27122,7 +27150,7 @@ return|return
 name|timestampStatistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>      */
+comment|/**      *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>      */
 specifier|public
 name|org
 operator|.
@@ -27146,6 +27174,47 @@ parameter_list|()
 block|{
 return|return
 name|timestampStatistics_
+return|;
+block|}
+comment|// optional bool hasNull = 10;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|HASNULL_FIELD_NUMBER
+init|=
+literal|10
+decl_stmt|;
+specifier|private
+name|boolean
+name|hasNull_
+decl_stmt|;
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+specifier|public
+name|boolean
+name|hasHasNull
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional bool hasNull = 10;</code>      */
+specifier|public
+name|boolean
+name|getHasNull
+parameter_list|()
+block|{
+return|return
+name|hasNull_
 return|;
 block|}
 specifier|private
@@ -27340,6 +27409,10 @@ name|TimestampStatistics
 operator|.
 name|getDefaultInstance
 argument_list|()
+expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
 expr_stmt|;
 block|}
 specifier|private
@@ -27607,6 +27680,29 @@ argument_list|(
 literal|9
 argument_list|,
 name|timestampStatistics_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeBool
+argument_list|(
+literal|10
+argument_list|,
+name|hasNull_
 argument_list|)
 expr_stmt|;
 block|}
@@ -27926,6 +28022,37 @@ argument_list|(
 literal|9
 argument_list|,
 name|timestampStatistics_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeBoolSize
+argument_list|(
+literal|10
+argument_list|,
+name|hasNull_
 argument_list|)
 expr_stmt|;
 block|}
@@ -28591,7 +28718,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.ColumnStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.ColumnStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -28661,7 +28788,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -28694,7 +28821,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_fieldAccessorTable
+name|internal_static_orc_proto_ColumnStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -29238,6 +29365,19 @@ operator|~
 literal|0x00000100
 operator|)
 expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000200
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -29288,7 +29428,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -29846,6 +29986,30 @@ name|build
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|hasNull_
+operator|=
+name|hasNull_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -30141,6 +30305,23 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasHasNull
+argument_list|()
+condition|)
+block|{
+name|setHasNull
+argument_list|(
+name|other
+operator|.
+name|getHasNull
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|this
 operator|.
 name|mergeUnknownFields
@@ -30378,7 +30559,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;
+comment|// optional .orc.proto.IntegerStatistics intStatistics = 2;
 specifier|private
 name|org
 operator|.
@@ -30487,7 +30668,7 @@ name|IntegerStatisticsOrBuilder
 argument_list|>
 name|intStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|boolean
 name|hasIntStatistics
@@ -30505,7 +30686,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -30548,7 +30729,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|Builder
 name|setIntStatistics
@@ -30619,7 +30800,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|Builder
 name|setIntStatistics
@@ -30685,7 +30866,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|Builder
 name|mergeIntStatistics
@@ -30816,7 +30997,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|Builder
 name|clearIntStatistics
@@ -30877,7 +31058,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -30916,7 +31097,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -30959,7 +31140,7 @@ name|intStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.IntegerStatistics intStatistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.IntegerStatistics intStatistics = 2;</code>        */
 specifier|private
 name|com
 operator|.
@@ -31121,7 +31302,7 @@ return|return
 name|intStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;
+comment|// optional .orc.proto.DoubleStatistics doubleStatistics = 3;
 specifier|private
 name|org
 operator|.
@@ -31230,7 +31411,7 @@ name|DoubleStatisticsOrBuilder
 argument_list|>
 name|doubleStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|boolean
 name|hasDoubleStatistics
@@ -31248,7 +31429,7 @@ literal|0x00000004
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -31291,7 +31472,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|Builder
 name|setDoubleStatistics
@@ -31362,7 +31543,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|Builder
 name|setDoubleStatistics
@@ -31428,7 +31609,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|Builder
 name|mergeDoubleStatistics
@@ -31559,7 +31740,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|Builder
 name|clearDoubleStatistics
@@ -31620,7 +31801,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -31659,7 +31840,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -31702,7 +31883,7 @@ name|doubleStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DoubleStatistics doubleStatistics = 3;</code>        */
+comment|/**        *<code>optional .orc.proto.DoubleStatistics doubleStatistics = 3;</code>        */
 specifier|private
 name|com
 operator|.
@@ -31864,7 +32045,7 @@ return|return
 name|doubleStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;
+comment|// optional .orc.proto.StringStatistics stringStatistics = 4;
 specifier|private
 name|org
 operator|.
@@ -31973,7 +32154,7 @@ name|StringStatisticsOrBuilder
 argument_list|>
 name|stringStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|boolean
 name|hasStringStatistics
@@ -31991,7 +32172,7 @@ literal|0x00000008
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -32034,7 +32215,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|Builder
 name|setStringStatistics
@@ -32105,7 +32286,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|Builder
 name|setStringStatistics
@@ -32171,7 +32352,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|Builder
 name|mergeStringStatistics
@@ -32302,7 +32483,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|Builder
 name|clearStringStatistics
@@ -32363,7 +32544,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -32402,7 +32583,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -32445,7 +32626,7 @@ name|stringStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.StringStatistics stringStatistics = 4;</code>        */
+comment|/**        *<code>optional .orc.proto.StringStatistics stringStatistics = 4;</code>        */
 specifier|private
 name|com
 operator|.
@@ -32607,7 +32788,7 @@ return|return
 name|stringStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;
+comment|// optional .orc.proto.BucketStatistics bucketStatistics = 5;
 specifier|private
 name|org
 operator|.
@@ -32716,7 +32897,7 @@ name|BucketStatisticsOrBuilder
 argument_list|>
 name|bucketStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|boolean
 name|hasBucketStatistics
@@ -32734,7 +32915,7 @@ literal|0x00000010
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -32777,7 +32958,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|Builder
 name|setBucketStatistics
@@ -32848,7 +33029,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|Builder
 name|setBucketStatistics
@@ -32914,7 +33095,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|Builder
 name|mergeBucketStatistics
@@ -33045,7 +33226,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|Builder
 name|clearBucketStatistics
@@ -33106,7 +33287,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -33145,7 +33326,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -33188,7 +33369,7 @@ name|bucketStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BucketStatistics bucketStatistics = 5;</code>        */
+comment|/**        *<code>optional .orc.proto.BucketStatistics bucketStatistics = 5;</code>        */
 specifier|private
 name|com
 operator|.
@@ -33350,7 +33531,7 @@ return|return
 name|bucketStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;
+comment|// optional .orc.proto.DecimalStatistics decimalStatistics = 6;
 specifier|private
 name|org
 operator|.
@@ -33459,7 +33640,7 @@ name|DecimalStatisticsOrBuilder
 argument_list|>
 name|decimalStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|boolean
 name|hasDecimalStatistics
@@ -33477,7 +33658,7 @@ literal|0x00000020
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|org
 operator|.
@@ -33520,7 +33701,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|Builder
 name|setDecimalStatistics
@@ -33591,7 +33772,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|Builder
 name|setDecimalStatistics
@@ -33657,7 +33838,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|Builder
 name|mergeDecimalStatistics
@@ -33788,7 +33969,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|Builder
 name|clearDecimalStatistics
@@ -33849,7 +34030,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|org
 operator|.
@@ -33888,7 +34069,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|public
 name|org
 operator|.
@@ -33931,7 +34112,7 @@ name|decimalStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DecimalStatistics decimalStatistics = 6;</code>        */
+comment|/**        *<code>optional .orc.proto.DecimalStatistics decimalStatistics = 6;</code>        */
 specifier|private
 name|com
 operator|.
@@ -34093,7 +34274,7 @@ return|return
 name|decimalStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;
+comment|// optional .orc.proto.DateStatistics dateStatistics = 7;
 specifier|private
 name|org
 operator|.
@@ -34202,7 +34383,7 @@ name|DateStatisticsOrBuilder
 argument_list|>
 name|dateStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|boolean
 name|hasDateStatistics
@@ -34220,7 +34401,7 @@ literal|0x00000040
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -34263,7 +34444,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|Builder
 name|setDateStatistics
@@ -34334,7 +34515,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|Builder
 name|setDateStatistics
@@ -34400,7 +34581,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|Builder
 name|mergeDateStatistics
@@ -34531,7 +34712,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|Builder
 name|clearDateStatistics
@@ -34592,7 +34773,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -34631,7 +34812,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -34674,7 +34855,7 @@ name|dateStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.DateStatistics dateStatistics = 7;</code>        */
+comment|/**        *<code>optional .orc.proto.DateStatistics dateStatistics = 7;</code>        */
 specifier|private
 name|com
 operator|.
@@ -34836,7 +35017,7 @@ return|return
 name|dateStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;
+comment|// optional .orc.proto.BinaryStatistics binaryStatistics = 8;
 specifier|private
 name|org
 operator|.
@@ -34945,7 +35126,7 @@ name|BinaryStatisticsOrBuilder
 argument_list|>
 name|binaryStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|boolean
 name|hasBinaryStatistics
@@ -34963,7 +35144,7 @@ literal|0x00000080
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|org
 operator|.
@@ -35006,7 +35187,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|Builder
 name|setBinaryStatistics
@@ -35077,7 +35258,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|Builder
 name|setBinaryStatistics
@@ -35143,7 +35324,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|Builder
 name|mergeBinaryStatistics
@@ -35274,7 +35455,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|Builder
 name|clearBinaryStatistics
@@ -35335,7 +35516,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|org
 operator|.
@@ -35374,7 +35555,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|public
 name|org
 operator|.
@@ -35417,7 +35598,7 @@ name|binaryStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.BinaryStatistics binaryStatistics = 8;</code>        */
+comment|/**        *<code>optional .orc.proto.BinaryStatistics binaryStatistics = 8;</code>        */
 specifier|private
 name|com
 operator|.
@@ -35579,7 +35760,7 @@ return|return
 name|binaryStatisticsBuilder_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;
+comment|// optional .orc.proto.TimestampStatistics timestampStatistics = 9;
 specifier|private
 name|org
 operator|.
@@ -35688,7 +35869,7 @@ name|TimestampStatisticsOrBuilder
 argument_list|>
 name|timestampStatisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|boolean
 name|hasTimestampStatistics
@@ -35706,7 +35887,7 @@ literal|0x00000100
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|org
 operator|.
@@ -35749,7 +35930,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|Builder
 name|setTimestampStatistics
@@ -35820,7 +36001,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|Builder
 name|setTimestampStatistics
@@ -35886,7 +36067,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|Builder
 name|mergeTimestampStatistics
@@ -36017,7 +36198,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|Builder
 name|clearTimestampStatistics
@@ -36078,7 +36259,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|org
 operator|.
@@ -36117,7 +36298,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|public
 name|org
 operator|.
@@ -36160,7 +36341,7 @@ name|timestampStatistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.TimestampStatistics timestampStatistics = 9;</code>        */
+comment|/**        *<code>optional .orc.proto.TimestampStatistics timestampStatistics = 9;</code>        */
 specifier|private
 name|com
 operator|.
@@ -36322,7 +36503,90 @@ return|return
 name|timestampStatisticsBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.ColumnStatistics)
+comment|// optional bool hasNull = 10;
+specifier|private
+name|boolean
+name|hasNull_
+decl_stmt|;
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|boolean
+name|hasHasNull
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000200
+operator|)
+operator|==
+literal|0x00000200
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|boolean
+name|getHasNull
+parameter_list|()
+block|{
+return|return
+name|hasNull_
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|Builder
+name|setHasNull
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000200
+expr_stmt|;
+name|hasNull_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional bool hasNull = 10;</code>        */
+specifier|public
+name|Builder
+name|clearHasNull
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000200
+operator|)
+expr_stmt|;
+name|hasNull_
+operator|=
+literal|false
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.ColumnStatistics)
 block|}
 static|static
 block|{
@@ -36340,7 +36604,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.ColumnStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.ColumnStatistics)
 block|}
 specifier|public
 interface|interface
@@ -36384,13 +36648,13 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|// optional .orc.proto.ColumnStatistics statistics = 2;
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 name|boolean
 name|hasStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -36411,7 +36675,7 @@ name|ColumnStatistics
 name|getStatistics
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -36433,7 +36697,7 @@ name|getStatisticsOrBuilder
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.RowIndexEntry}    */
+comment|/**    * Protobuf type {@code orc.proto.RowIndexEntry}    */
 specifier|public
 specifier|static
 specifier|final
@@ -37068,7 +37332,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 return|;
 block|}
 specifier|protected
@@ -37101,7 +37365,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_fieldAccessorTable
+name|internal_static_orc_proto_RowIndexEntry_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -37330,7 +37594,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;
+comment|// optional .orc.proto.ColumnStatistics statistics = 2;
 specifier|public
 specifier|static
 specifier|final
@@ -37359,7 +37623,7 @@ operator|.
 name|ColumnStatistics
 name|statistics_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 specifier|public
 name|boolean
 name|hasStatistics
@@ -37377,7 +37641,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -37403,7 +37667,7 @@ return|return
 name|statistics_
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -38427,7 +38691,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.RowIndexEntry}      */
+comment|/**      * Protobuf type {@code orc.proto.RowIndexEntry}      */
 specifier|public
 specifier|static
 specifier|final
@@ -38497,7 +38761,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 return|;
 block|}
 specifier|protected
@@ -38530,7 +38794,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_fieldAccessorTable
+name|internal_static_orc_proto_RowIndexEntry_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -38774,7 +39038,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 return|;
 block|}
 specifier|public
@@ -39670,7 +39934,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;
+comment|// optional .orc.proto.ColumnStatistics statistics = 2;
 specifier|private
 name|org
 operator|.
@@ -39779,7 +40043,7 @@ name|ColumnStatisticsOrBuilder
 argument_list|>
 name|statisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|boolean
 name|hasStatistics
@@ -39797,7 +40061,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -39840,7 +40104,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|Builder
 name|setStatistics
@@ -39911,7 +40175,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|Builder
 name|setStatistics
@@ -39977,7 +40241,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|Builder
 name|mergeStatistics
@@ -40108,7 +40372,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|Builder
 name|clearStatistics
@@ -40169,7 +40433,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -40208,7 +40472,7 @@ name|getBuilder
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -40251,7 +40515,7 @@ name|statistics_
 return|;
 block|}
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnStatistics statistics = 2;</code>        */
 specifier|private
 name|com
 operator|.
@@ -40413,7 +40677,7 @@ return|return
 name|statisticsBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.RowIndexEntry)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.RowIndexEntry)
 block|}
 static|static
 block|{
@@ -40431,7 +40695,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.RowIndexEntry)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.RowIndexEntry)
 block|}
 specifier|public
 interface|interface
@@ -40445,8 +40709,8 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|// repeated .orc.proto.RowIndexEntry entry = 1;
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -40474,7 +40738,7 @@ argument_list|>
 name|getEntryList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -40498,12 +40762,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 name|int
 name|getEntryCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -40533,7 +40797,7 @@ argument_list|>
 name|getEntryOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -40558,7 +40822,7 @@ name|index
 parameter_list|)
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.RowIndex}    */
+comment|/**    * Protobuf type {@code orc.proto.RowIndex}    */
 specifier|public
 specifier|static
 specifier|final
@@ -41027,7 +41291,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 return|;
 block|}
 specifier|protected
@@ -41060,7 +41324,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_fieldAccessorTable
+name|internal_static_orc_proto_RowIndex_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -41202,7 +41466,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;
+comment|// repeated .orc.proto.RowIndexEntry entry = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -41238,7 +41502,7 @@ name|RowIndexEntry
 argument_list|>
 name|entry_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -41271,7 +41535,7 @@ return|return
 name|entry_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -41306,7 +41570,7 @@ return|return
 name|entry_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 specifier|public
 name|int
 name|getEntryCount
@@ -41319,7 +41583,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -41353,7 +41617,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -42241,7 +42505,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.RowIndex}      */
+comment|/**      * Protobuf type {@code orc.proto.RowIndex}      */
 specifier|public
 specifier|static
 specifier|final
@@ -42311,7 +42575,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 return|;
 block|}
 specifier|protected
@@ -42344,7 +42608,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_fieldAccessorTable
+name|internal_static_orc_proto_RowIndex_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -42556,7 +42820,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 return|;
 block|}
 specifier|public
@@ -43224,7 +43488,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;
+comment|// repeated .orc.proto.RowIndexEntry entry = 1;
 specifier|private
 name|java
 operator|.
@@ -43384,7 +43648,7 @@ name|RowIndexEntryOrBuilder
 argument_list|>
 name|entryBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -43443,7 +43707,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|int
 name|getEntryCount
@@ -43473,7 +43737,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -43526,7 +43790,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|setEntry
@@ -43606,7 +43870,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|setEntry
@@ -43681,7 +43945,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|addEntry
@@ -43754,7 +44018,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|addEntry
@@ -43834,7 +44098,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|addEntry
@@ -43902,7 +44166,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|addEntry
@@ -43977,7 +44241,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|addAllEntry
@@ -44048,7 +44312,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|clearEntry
@@ -44097,7 +44361,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|Builder
 name|removeEntry
@@ -44141,7 +44405,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -44178,7 +44442,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -44231,7 +44495,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -44292,7 +44556,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -44345,7 +44609,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -44403,7 +44667,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.RowIndexEntry entry = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.RowIndexEntry entry = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -44613,7 +44877,7 @@ return|return
 name|entryBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.RowIndex)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.RowIndex)
 block|}
 static|static
 block|{
@@ -44631,7 +44895,7293 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.RowIndex)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.RowIndex)
+block|}
+specifier|public
+interface|interface
+name|BloomFilterOrBuilder
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|MessageOrBuilder
+block|{
+comment|// optional uint32 numHashFunctions = 1;
+comment|/**      *<code>optional uint32 numHashFunctions = 1;</code>      */
+name|boolean
+name|hasNumHashFunctions
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 numHashFunctions = 1;</code>      */
+name|int
+name|getNumHashFunctions
+parameter_list|()
+function_decl|;
+comment|// repeated fixed64 bitset = 2;
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|getBitsetList
+parameter_list|()
+function_decl|;
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+name|int
+name|getBitsetCount
+parameter_list|()
+function_decl|;
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+name|long
+name|getBitset
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+function_decl|;
+block|}
+comment|/**    * Protobuf type {@code orc.proto.BloomFilter}    */
+specifier|public
+specifier|static
+specifier|final
+class|class
+name|BloomFilter
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+implements|implements
+name|BloomFilterOrBuilder
+block|{
+comment|// Use BloomFilter.newBuilder() to construct.
+specifier|private
+name|BloomFilter
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|Builder
+argument_list|<
+name|?
+argument_list|>
+name|builder
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|builder
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|builder
+operator|.
+name|getUnknownFields
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|BloomFilter
+parameter_list|(
+name|boolean
+name|noInit
+parameter_list|)
+block|{
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|getDefaultInstance
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+specifier|final
+name|BloomFilter
+name|defaultInstance
+decl_stmt|;
+specifier|public
+specifier|static
+name|BloomFilter
+name|getDefaultInstance
+parameter_list|()
+block|{
+return|return
+name|defaultInstance
+return|;
+block|}
+specifier|public
+name|BloomFilter
+name|getDefaultInstanceForType
+parameter_list|()
+block|{
+return|return
+name|defaultInstance
+return|;
+block|}
+specifier|private
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+name|unknownFields
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|public
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+name|getUnknownFields
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|unknownFields
+return|;
+block|}
+specifier|private
+name|BloomFilter
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+name|initFields
+argument_list|()
+expr_stmt|;
+name|int
+name|mutable_bitField0_
+init|=
+literal|0
+decl_stmt|;
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|Builder
+name|unknownFields
+init|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|newBuilder
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|boolean
+name|done
+init|=
+literal|false
+decl_stmt|;
+while|while
+condition|(
+operator|!
+name|done
+condition|)
+block|{
+name|int
+name|tag
+init|=
+name|input
+operator|.
+name|readTag
+argument_list|()
+decl_stmt|;
+switch|switch
+condition|(
+name|tag
+condition|)
+block|{
+case|case
+literal|0
+case|:
+name|done
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+default|default:
+block|{
+if|if
+condition|(
+operator|!
+name|parseUnknownField
+argument_list|(
+name|input
+argument_list|,
+name|unknownFields
+argument_list|,
+name|extensionRegistry
+argument_list|,
+name|tag
+argument_list|)
+condition|)
+block|{
+name|done
+operator|=
+literal|true
+expr_stmt|;
+block|}
+break|break;
+block|}
+case|case
+literal|8
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000001
+expr_stmt|;
+name|numHashFunctions_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|17
+case|:
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|mutable_bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|bitset_
+operator|=
+operator|new
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|mutable_bitField0_
+operator||=
+literal|0x00000002
+expr_stmt|;
+block|}
+name|bitset_
+operator|.
+name|add
+argument_list|(
+name|input
+operator|.
+name|readFixed64
+argument_list|()
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|18
+case|:
+block|{
+name|int
+name|length
+init|=
+name|input
+operator|.
+name|readRawVarint32
+argument_list|()
+decl_stmt|;
+name|int
+name|limit
+init|=
+name|input
+operator|.
+name|pushLimit
+argument_list|(
+name|length
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|mutable_bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+operator|&&
+name|input
+operator|.
+name|getBytesUntilLimit
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|bitset_
+operator|=
+operator|new
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|mutable_bitField0_
+operator||=
+literal|0x00000002
+expr_stmt|;
+block|}
+while|while
+condition|(
+name|input
+operator|.
+name|getBytesUntilLimit
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|bitset_
+operator|.
+name|add
+argument_list|(
+name|input
+operator|.
+name|readFixed64
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|input
+operator|.
+name|popLimit
+argument_list|(
+name|limit
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+name|e
+parameter_list|)
+block|{
+throw|throw
+name|e
+operator|.
+name|setUnfinishedMessage
+argument_list|(
+name|this
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+operator|.
+name|setUnfinishedMessage
+argument_list|(
+name|this
+argument_list|)
+throw|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|(
+operator|(
+name|mutable_bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|bitset_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bitset_
+argument_list|)
+expr_stmt|;
+block|}
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|unknownFields
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
+name|makeExtensionsImmutable
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+specifier|public
+specifier|static
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptor
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilter_descriptor
+return|;
+block|}
+specifier|protected
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internalGetFieldAccessorTable
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilter_fieldAccessorTable
+operator|.
+name|ensureFieldAccessorsInitialized
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|class
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+operator|.
+name|class
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Parser
+argument_list|<
+name|BloomFilter
+argument_list|>
+name|PARSER
+init|=
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|AbstractParser
+argument_list|<
+name|BloomFilter
+argument_list|>
+argument_list|()
+block|{
+specifier|public
+name|BloomFilter
+name|parsePartialFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+operator|new
+name|BloomFilter
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+block|}
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Parser
+argument_list|<
+name|BloomFilter
+argument_list|>
+name|getParserForType
+parameter_list|()
+block|{
+return|return
+name|PARSER
+return|;
+block|}
+specifier|private
+name|int
+name|bitField0_
+decl_stmt|;
+comment|// optional uint32 numHashFunctions = 1;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|NUMHASHFUNCTIONS_FIELD_NUMBER
+init|=
+literal|1
+decl_stmt|;
+specifier|private
+name|int
+name|numHashFunctions_
+decl_stmt|;
+comment|/**      *<code>optional uint32 numHashFunctions = 1;</code>      */
+specifier|public
+name|boolean
+name|hasNumHashFunctions
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 numHashFunctions = 1;</code>      */
+specifier|public
+name|int
+name|getNumHashFunctions
+parameter_list|()
+block|{
+return|return
+name|numHashFunctions_
+return|;
+block|}
+comment|// repeated fixed64 bitset = 2;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|BITSET_FIELD_NUMBER
+init|=
+literal|2
+decl_stmt|;
+specifier|private
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|bitset_
+decl_stmt|;
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|getBitsetList
+parameter_list|()
+block|{
+return|return
+name|bitset_
+return|;
+block|}
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+specifier|public
+name|int
+name|getBitsetCount
+parameter_list|()
+block|{
+return|return
+name|bitset_
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
+comment|/**      *<code>repeated fixed64 bitset = 2;</code>      */
+specifier|public
+name|long
+name|getBitset
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|bitset_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+specifier|private
+name|void
+name|initFields
+parameter_list|()
+block|{
+name|numHashFunctions_
+operator|=
+literal|0
+expr_stmt|;
+name|bitset_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|byte
+name|memoizedIsInitialized
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|public
+specifier|final
+name|boolean
+name|isInitialized
+parameter_list|()
+block|{
+name|byte
+name|isInitialized
+init|=
+name|memoizedIsInitialized
+decl_stmt|;
+if|if
+condition|(
+name|isInitialized
+operator|!=
+operator|-
+literal|1
+condition|)
+return|return
+name|isInitialized
+operator|==
+literal|1
+return|;
+name|memoizedIsInitialized
+operator|=
+literal|1
+expr_stmt|;
+return|return
+literal|true
+return|;
+block|}
+specifier|public
+name|void
+name|writeTo
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+name|output
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+name|getSerializedSize
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|1
+argument_list|,
+name|numHashFunctions_
+argument_list|)
+expr_stmt|;
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|bitset_
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|output
+operator|.
+name|writeFixed64
+argument_list|(
+literal|2
+argument_list|,
+name|bitset_
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|getUnknownFields
+argument_list|()
+operator|.
+name|writeTo
+argument_list|(
+name|output
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|int
+name|memoizedSerializedSize
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|public
+name|int
+name|getSerializedSize
+parameter_list|()
+block|{
+name|int
+name|size
+init|=
+name|memoizedSerializedSize
+decl_stmt|;
+if|if
+condition|(
+name|size
+operator|!=
+operator|-
+literal|1
+condition|)
+return|return
+name|size
+return|;
+name|size
+operator|=
+literal|0
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|1
+argument_list|,
+name|numHashFunctions_
+argument_list|)
+expr_stmt|;
+block|}
+block|{
+name|int
+name|dataSize
+init|=
+literal|0
+decl_stmt|;
+name|dataSize
+operator|=
+literal|8
+operator|*
+name|getBitsetList
+argument_list|()
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
+name|size
+operator|+=
+name|dataSize
+expr_stmt|;
+name|size
+operator|+=
+literal|1
+operator|*
+name|getBitsetList
+argument_list|()
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
+block|}
+name|size
+operator|+=
+name|getUnknownFields
+argument_list|()
+operator|.
+name|getSerializedSize
+argument_list|()
+expr_stmt|;
+name|memoizedSerializedSize
+operator|=
+name|size
+expr_stmt|;
+return|return
+name|size
+return|;
+block|}
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|0L
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|protected
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|writeReplace
+parameter_list|()
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectStreamException
+block|{
+return|return
+name|super
+operator|.
+name|writeReplace
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|data
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|data
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|byte
+index|[]
+name|data
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|byte
+index|[]
+name|data
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseDelimitedFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseDelimitedFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseDelimitedFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseDelimitedFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|Builder
+name|newBuilder
+parameter_list|()
+block|{
+return|return
+name|Builder
+operator|.
+name|create
+argument_list|()
+return|;
+block|}
+specifier|public
+name|Builder
+name|newBuilderForType
+parameter_list|()
+block|{
+return|return
+name|newBuilder
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|Builder
+name|newBuilder
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|prototype
+parameter_list|)
+block|{
+return|return
+name|newBuilder
+argument_list|()
+operator|.
+name|mergeFrom
+argument_list|(
+name|prototype
+argument_list|)
+return|;
+block|}
+specifier|public
+name|Builder
+name|toBuilder
+parameter_list|()
+block|{
+return|return
+name|newBuilder
+argument_list|(
+name|this
+argument_list|)
+return|;
+block|}
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|protected
+name|Builder
+name|newBuilderForType
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|BuilderParent
+name|parent
+parameter_list|)
+block|{
+name|Builder
+name|builder
+init|=
+operator|new
+name|Builder
+argument_list|(
+name|parent
+argument_list|)
+decl_stmt|;
+return|return
+name|builder
+return|;
+block|}
+comment|/**      * Protobuf type {@code orc.proto.BloomFilter}      */
+specifier|public
+specifier|static
+specifier|final
+class|class
+name|Builder
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|Builder
+argument_list|<
+name|Builder
+argument_list|>
+implements|implements
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+block|{
+specifier|public
+specifier|static
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptor
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilter_descriptor
+return|;
+block|}
+specifier|protected
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internalGetFieldAccessorTable
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilter_fieldAccessorTable
+operator|.
+name|ensureFieldAccessorsInitialized
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|class
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+operator|.
+name|class
+argument_list|)
+return|;
+block|}
+comment|// Construct using org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilter.newBuilder()
+specifier|private
+name|Builder
+parameter_list|()
+block|{
+name|maybeForceBuilderInitialization
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|Builder
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|BuilderParent
+name|parent
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|parent
+argument_list|)
+expr_stmt|;
+name|maybeForceBuilderInitialization
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|maybeForceBuilderInitialization
+parameter_list|()
+block|{
+if|if
+condition|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|alwaysUseFieldBuilders
+condition|)
+block|{         }
+block|}
+specifier|private
+specifier|static
+name|Builder
+name|create
+parameter_list|()
+block|{
+return|return
+operator|new
+name|Builder
+argument_list|()
+return|;
+block|}
+specifier|public
+name|Builder
+name|clear
+parameter_list|()
+block|{
+name|super
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|numHashFunctions_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+name|bitset_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000002
+operator|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
+name|Builder
+name|clone
+parameter_list|()
+block|{
+return|return
+name|create
+argument_list|()
+operator|.
+name|mergeFrom
+argument_list|(
+name|buildPartial
+argument_list|()
+argument_list|)
+return|;
+block|}
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptorForType
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilter_descriptor
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|getDefaultInstanceForType
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|getDefaultInstance
+argument_list|()
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|build
+parameter_list|()
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|result
+init|=
+name|buildPartial
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|result
+operator|.
+name|isInitialized
+argument_list|()
+condition|)
+block|{
+throw|throw
+name|newUninitializedMessageException
+argument_list|(
+name|result
+argument_list|)
+throw|;
+block|}
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|buildPartial
+parameter_list|()
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|result
+init|=
+operator|new
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|(
+name|this
+argument_list|)
+decl_stmt|;
+name|int
+name|from_bitField0_
+init|=
+name|bitField0_
+decl_stmt|;
+name|int
+name|to_bitField0_
+init|=
+literal|0
+decl_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000001
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|numHashFunctions_
+operator|=
+name|numHashFunctions_
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|bitset_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bitset_
+argument_list|)
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000002
+operator|)
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|bitset_
+operator|=
+name|bitset_
+expr_stmt|;
+name|result
+operator|.
+name|bitField0_
+operator|=
+name|to_bitField0_
+expr_stmt|;
+name|onBuilt
+argument_list|()
+expr_stmt|;
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Message
+name|other
+parameter_list|)
+block|{
+if|if
+condition|(
+name|other
+operator|instanceof
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+condition|)
+block|{
+return|return
+name|mergeFrom
+argument_list|(
+operator|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|)
+name|other
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+name|super
+operator|.
+name|mergeFrom
+argument_list|(
+name|other
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|other
+parameter_list|)
+block|{
+if|if
+condition|(
+name|other
+operator|==
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|getDefaultInstance
+argument_list|()
+condition|)
+return|return
+name|this
+return|;
+if|if
+condition|(
+name|other
+operator|.
+name|hasNumHashFunctions
+argument_list|()
+condition|)
+block|{
+name|setNumHashFunctions
+argument_list|(
+name|other
+operator|.
+name|getNumHashFunctions
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|other
+operator|.
+name|bitset_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|bitset_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|bitset_
+operator|=
+name|other
+operator|.
+name|bitset_
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000002
+operator|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|ensureBitsetIsMutable
+argument_list|()
+expr_stmt|;
+name|bitset_
+operator|.
+name|addAll
+argument_list|(
+name|other
+operator|.
+name|bitset_
+argument_list|)
+expr_stmt|;
+block|}
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+name|this
+operator|.
+name|mergeUnknownFields
+argument_list|(
+name|other
+operator|.
+name|getUnknownFields
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
+specifier|final
+name|boolean
+name|isInitialized
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|parsedMessage
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|parsedMessage
+operator|=
+name|PARSER
+operator|.
+name|parsePartialFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+name|e
+parameter_list|)
+block|{
+name|parsedMessage
+operator|=
+operator|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|)
+name|e
+operator|.
+name|getUnfinishedMessage
+argument_list|()
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|parsedMessage
+operator|!=
+literal|null
+condition|)
+block|{
+name|mergeFrom
+argument_list|(
+name|parsedMessage
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+name|this
+return|;
+block|}
+specifier|private
+name|int
+name|bitField0_
+decl_stmt|;
+comment|// optional uint32 numHashFunctions = 1;
+specifier|private
+name|int
+name|numHashFunctions_
+decl_stmt|;
+comment|/**        *<code>optional uint32 numHashFunctions = 1;</code>        */
+specifier|public
+name|boolean
+name|hasNumHashFunctions
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 numHashFunctions = 1;</code>        */
+specifier|public
+name|int
+name|getNumHashFunctions
+parameter_list|()
+block|{
+return|return
+name|numHashFunctions_
+return|;
+block|}
+comment|/**        *<code>optional uint32 numHashFunctions = 1;</code>        */
+specifier|public
+name|Builder
+name|setNumHashFunctions
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000001
+expr_stmt|;
+name|numHashFunctions_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 numHashFunctions = 1;</code>        */
+specifier|public
+name|Builder
+name|clearNumHashFunctions
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+name|numHashFunctions_
+operator|=
+literal|0
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// repeated fixed64 bitset = 2;
+specifier|private
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|bitset_
+init|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+decl_stmt|;
+specifier|private
+name|void
+name|ensureBitsetIsMutable
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000002
+operator|)
+operator|==
+literal|0x00000002
+operator|)
+condition|)
+block|{
+name|bitset_
+operator|=
+operator|new
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+argument_list|(
+name|bitset_
+argument_list|)
+expr_stmt|;
+name|bitField0_
+operator||=
+literal|0x00000002
+expr_stmt|;
+block|}
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|getBitsetList
+parameter_list|()
+block|{
+return|return
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bitset_
+argument_list|)
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|int
+name|getBitsetCount
+parameter_list|()
+block|{
+return|return
+name|bitset_
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|long
+name|getBitset
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|bitset_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|Builder
+name|setBitset
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|long
+name|value
+parameter_list|)
+block|{
+name|ensureBitsetIsMutable
+argument_list|()
+expr_stmt|;
+name|bitset_
+operator|.
+name|set
+argument_list|(
+name|index
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|Builder
+name|addBitset
+parameter_list|(
+name|long
+name|value
+parameter_list|)
+block|{
+name|ensureBitsetIsMutable
+argument_list|()
+expr_stmt|;
+name|bitset_
+operator|.
+name|add
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|Builder
+name|addAllBitset
+parameter_list|(
+name|java
+operator|.
+name|lang
+operator|.
+name|Iterable
+argument_list|<
+name|?
+extends|extends
+name|java
+operator|.
+name|lang
+operator|.
+name|Long
+argument_list|>
+name|values
+parameter_list|)
+block|{
+name|ensureBitsetIsMutable
+argument_list|()
+expr_stmt|;
+name|super
+operator|.
+name|addAll
+argument_list|(
+name|values
+argument_list|,
+name|bitset_
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated fixed64 bitset = 2;</code>        */
+specifier|public
+name|Builder
+name|clearBitset
+parameter_list|()
+block|{
+name|bitset_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000002
+operator|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.BloomFilter)
+block|}
+static|static
+block|{
+name|defaultInstance
+operator|=
+operator|new
+name|BloomFilter
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|defaultInstance
+operator|.
+name|initFields
+argument_list|()
+expr_stmt|;
+block|}
+comment|// @@protoc_insertion_point(class_scope:orc.proto.BloomFilter)
+block|}
+specifier|public
+interface|interface
+name|BloomFilterIndexOrBuilder
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|MessageOrBuilder
+block|{
+comment|// repeated .orc.proto.BloomFilter bloomFilter = 1;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|getBloomFilterList
+parameter_list|()
+function_decl|;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|getBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+function_decl|;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+name|int
+name|getBloomFilterCount
+parameter_list|()
+function_decl|;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|?
+extends|extends
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+name|getBloomFilterOrBuilderList
+parameter_list|()
+function_decl|;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+name|getBloomFilterOrBuilder
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+function_decl|;
+block|}
+comment|/**    * Protobuf type {@code orc.proto.BloomFilterIndex}    */
+specifier|public
+specifier|static
+specifier|final
+class|class
+name|BloomFilterIndex
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+implements|implements
+name|BloomFilterIndexOrBuilder
+block|{
+comment|// Use BloomFilterIndex.newBuilder() to construct.
+specifier|private
+name|BloomFilterIndex
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|Builder
+argument_list|<
+name|?
+argument_list|>
+name|builder
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|builder
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|builder
+operator|.
+name|getUnknownFields
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|BloomFilterIndex
+parameter_list|(
+name|boolean
+name|noInit
+parameter_list|)
+block|{
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|getDefaultInstance
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+specifier|final
+name|BloomFilterIndex
+name|defaultInstance
+decl_stmt|;
+specifier|public
+specifier|static
+name|BloomFilterIndex
+name|getDefaultInstance
+parameter_list|()
+block|{
+return|return
+name|defaultInstance
+return|;
+block|}
+specifier|public
+name|BloomFilterIndex
+name|getDefaultInstanceForType
+parameter_list|()
+block|{
+return|return
+name|defaultInstance
+return|;
+block|}
+specifier|private
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+name|unknownFields
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|public
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+name|getUnknownFields
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|unknownFields
+return|;
+block|}
+specifier|private
+name|BloomFilterIndex
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+name|initFields
+argument_list|()
+expr_stmt|;
+name|int
+name|mutable_bitField0_
+init|=
+literal|0
+decl_stmt|;
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|Builder
+name|unknownFields
+init|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|UnknownFieldSet
+operator|.
+name|newBuilder
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|boolean
+name|done
+init|=
+literal|false
+decl_stmt|;
+while|while
+condition|(
+operator|!
+name|done
+condition|)
+block|{
+name|int
+name|tag
+init|=
+name|input
+operator|.
+name|readTag
+argument_list|()
+decl_stmt|;
+switch|switch
+condition|(
+name|tag
+condition|)
+block|{
+case|case
+literal|0
+case|:
+name|done
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+default|default:
+block|{
+if|if
+condition|(
+operator|!
+name|parseUnknownField
+argument_list|(
+name|input
+argument_list|,
+name|unknownFields
+argument_list|,
+name|extensionRegistry
+argument_list|,
+name|tag
+argument_list|)
+condition|)
+block|{
+name|done
+operator|=
+literal|true
+expr_stmt|;
+block|}
+break|break;
+block|}
+case|case
+literal|10
+case|:
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|mutable_bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+operator|new
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|mutable_bitField0_
+operator||=
+literal|0x00000001
+expr_stmt|;
+block|}
+name|bloomFilter_
+operator|.
+name|add
+argument_list|(
+name|input
+operator|.
+name|readMessage
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|PARSER
+argument_list|,
+name|extensionRegistry
+argument_list|)
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+name|e
+parameter_list|)
+block|{
+throw|throw
+name|e
+operator|.
+name|setUnfinishedMessage
+argument_list|(
+name|this
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+operator|.
+name|setUnfinishedMessage
+argument_list|(
+name|this
+argument_list|)
+throw|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|(
+operator|(
+name|mutable_bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+block|}
+name|this
+operator|.
+name|unknownFields
+operator|=
+name|unknownFields
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
+name|makeExtensionsImmutable
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+specifier|public
+specifier|static
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptor
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
+return|;
+block|}
+specifier|protected
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internalGetFieldAccessorTable
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable
+operator|.
+name|ensureFieldAccessorsInitialized
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|class
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|Builder
+operator|.
+name|class
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Parser
+argument_list|<
+name|BloomFilterIndex
+argument_list|>
+name|PARSER
+init|=
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|AbstractParser
+argument_list|<
+name|BloomFilterIndex
+argument_list|>
+argument_list|()
+block|{
+specifier|public
+name|BloomFilterIndex
+name|parsePartialFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+operator|new
+name|BloomFilterIndex
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+block|}
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Parser
+argument_list|<
+name|BloomFilterIndex
+argument_list|>
+name|getParserForType
+parameter_list|()
+block|{
+return|return
+name|PARSER
+return|;
+block|}
+comment|// repeated .orc.proto.BloomFilter bloomFilter = 1;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|BLOOMFILTER_FIELD_NUMBER
+init|=
+literal|1
+decl_stmt|;
+specifier|private
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|bloomFilter_
+decl_stmt|;
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|getBloomFilterList
+parameter_list|()
+block|{
+return|return
+name|bloomFilter_
+return|;
+block|}
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|?
+extends|extends
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+name|getBloomFilterOrBuilderList
+parameter_list|()
+block|{
+return|return
+name|bloomFilter_
+return|;
+block|}
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+specifier|public
+name|int
+name|getBloomFilterCount
+parameter_list|()
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|getBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+comment|/**      *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>      */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+name|getBloomFilterOrBuilder
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+specifier|private
+name|void
+name|initFields
+parameter_list|()
+block|{
+name|bloomFilter_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|byte
+name|memoizedIsInitialized
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|public
+specifier|final
+name|boolean
+name|isInitialized
+parameter_list|()
+block|{
+name|byte
+name|isInitialized
+init|=
+name|memoizedIsInitialized
+decl_stmt|;
+if|if
+condition|(
+name|isInitialized
+operator|!=
+operator|-
+literal|1
+condition|)
+return|return
+name|isInitialized
+operator|==
+literal|1
+return|;
+name|memoizedIsInitialized
+operator|=
+literal|1
+expr_stmt|;
+return|return
+literal|true
+return|;
+block|}
+specifier|public
+name|void
+name|writeTo
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+name|output
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+name|getSerializedSize
+argument_list|()
+expr_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|bloomFilter_
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|output
+operator|.
+name|writeMessage
+argument_list|(
+literal|1
+argument_list|,
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|getUnknownFields
+argument_list|()
+operator|.
+name|writeTo
+argument_list|(
+name|output
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|int
+name|memoizedSerializedSize
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|public
+name|int
+name|getSerializedSize
+parameter_list|()
+block|{
+name|int
+name|size
+init|=
+name|memoizedSerializedSize
+decl_stmt|;
+if|if
+condition|(
+name|size
+operator|!=
+operator|-
+literal|1
+condition|)
+return|return
+name|size
+return|;
+name|size
+operator|=
+literal|0
+expr_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|bloomFilter_
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeMessageSize
+argument_list|(
+literal|1
+argument_list|,
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|size
+operator|+=
+name|getUnknownFields
+argument_list|()
+operator|.
+name|getSerializedSize
+argument_list|()
+expr_stmt|;
+name|memoizedSerializedSize
+operator|=
+name|size
+expr_stmt|;
+return|return
+name|size
+return|;
+block|}
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|0L
+decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|protected
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|writeReplace
+parameter_list|()
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|ObjectStreamException
+block|{
+return|return
+name|super
+operator|.
+name|writeReplace
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|data
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|data
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|byte
+index|[]
+name|data
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|byte
+index|[]
+name|data
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|data
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseDelimitedFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseDelimitedFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseDelimitedFrom
+parameter_list|(
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseDelimitedFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parseFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+return|return
+name|PARSER
+operator|.
+name|parseFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|Builder
+name|newBuilder
+parameter_list|()
+block|{
+return|return
+name|Builder
+operator|.
+name|create
+argument_list|()
+return|;
+block|}
+specifier|public
+name|Builder
+name|newBuilderForType
+parameter_list|()
+block|{
+return|return
+name|newBuilder
+argument_list|()
+return|;
+block|}
+specifier|public
+specifier|static
+name|Builder
+name|newBuilder
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|prototype
+parameter_list|)
+block|{
+return|return
+name|newBuilder
+argument_list|()
+operator|.
+name|mergeFrom
+argument_list|(
+name|prototype
+argument_list|)
+return|;
+block|}
+specifier|public
+name|Builder
+name|toBuilder
+parameter_list|()
+block|{
+return|return
+name|newBuilder
+argument_list|(
+name|this
+argument_list|)
+return|;
+block|}
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|Override
+specifier|protected
+name|Builder
+name|newBuilderForType
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|BuilderParent
+name|parent
+parameter_list|)
+block|{
+name|Builder
+name|builder
+init|=
+operator|new
+name|Builder
+argument_list|(
+name|parent
+argument_list|)
+decl_stmt|;
+return|return
+name|builder
+return|;
+block|}
+comment|/**      * Protobuf type {@code orc.proto.BloomFilterIndex}      */
+specifier|public
+specifier|static
+specifier|final
+class|class
+name|Builder
+extends|extends
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|Builder
+argument_list|<
+name|Builder
+argument_list|>
+implements|implements
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndexOrBuilder
+block|{
+specifier|public
+specifier|static
+specifier|final
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptor
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
+return|;
+block|}
+specifier|protected
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internalGetFieldAccessorTable
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable
+operator|.
+name|ensureFieldAccessorsInitialized
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|class
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|Builder
+operator|.
+name|class
+argument_list|)
+return|;
+block|}
+comment|// Construct using org.apache.hadoop.hive.ql.io.orc.OrcProto.BloomFilterIndex.newBuilder()
+specifier|private
+name|Builder
+parameter_list|()
+block|{
+name|maybeForceBuilderInitialization
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|Builder
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|BuilderParent
+name|parent
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|parent
+argument_list|)
+expr_stmt|;
+name|maybeForceBuilderInitialization
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|maybeForceBuilderInitialization
+parameter_list|()
+block|{
+if|if
+condition|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|alwaysUseFieldBuilders
+condition|)
+block|{
+name|getBloomFilterFieldBuilder
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+specifier|private
+specifier|static
+name|Builder
+name|create
+parameter_list|()
+block|{
+return|return
+operator|new
+name|Builder
+argument_list|()
+return|;
+block|}
+specifier|public
+name|Builder
+name|clear
+parameter_list|()
+block|{
+name|super
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+specifier|public
+name|Builder
+name|clone
+parameter_list|()
+block|{
+return|return
+name|create
+argument_list|()
+operator|.
+name|mergeFrom
+argument_list|(
+name|buildPartial
+argument_list|()
+argument_list|)
+return|;
+block|}
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|getDescriptorForType
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|getDefaultInstanceForType
+parameter_list|()
+block|{
+return|return
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|getDefaultInstance
+argument_list|()
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|build
+parameter_list|()
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|result
+init|=
+name|buildPartial
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|result
+operator|.
+name|isInitialized
+argument_list|()
+condition|)
+block|{
+throw|throw
+name|newUninitializedMessageException
+argument_list|(
+name|result
+argument_list|)
+throw|;
+block|}
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|buildPartial
+parameter_list|()
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|result
+init|=
+operator|new
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+argument_list|(
+name|this
+argument_list|)
+decl_stmt|;
+name|int
+name|from_bitField0_
+init|=
+name|bitField0_
+decl_stmt|;
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|bloomFilter_
+operator|=
+name|bloomFilter_
+expr_stmt|;
+block|}
+else|else
+block|{
+name|result
+operator|.
+name|bloomFilter_
+operator|=
+name|bloomFilterBuilder_
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
+block|}
+name|onBuilt
+argument_list|()
+expr_stmt|;
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Message
+name|other
+parameter_list|)
+block|{
+if|if
+condition|(
+name|other
+operator|instanceof
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+condition|)
+block|{
+return|return
+name|mergeFrom
+argument_list|(
+operator|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|)
+name|other
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+name|super
+operator|.
+name|mergeFrom
+argument_list|(
+name|other
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|other
+parameter_list|)
+block|{
+if|if
+condition|(
+name|other
+operator|==
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|.
+name|getDefaultInstance
+argument_list|()
+condition|)
+return|return
+name|this
+return|;
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|other
+operator|.
+name|bloomFilter_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|bloomFilter_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+name|other
+operator|.
+name|bloomFilter_
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|addAll
+argument_list|(
+name|other
+operator|.
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+block|}
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+if|if
+condition|(
+operator|!
+name|other
+operator|.
+name|bloomFilter_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|dispose
+argument_list|()
+expr_stmt|;
+name|bloomFilterBuilder_
+operator|=
+literal|null
+expr_stmt|;
+name|bloomFilter_
+operator|=
+name|other
+operator|.
+name|bloomFilter_
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+name|bloomFilterBuilder_
+operator|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|alwaysUseFieldBuilders
+condition|?
+name|getBloomFilterFieldBuilder
+argument_list|()
+else|:
+literal|null
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addAllMessages
+argument_list|(
+name|other
+operator|.
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+name|this
+operator|.
+name|mergeUnknownFields
+argument_list|(
+name|other
+operator|.
+name|getUnknownFields
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
+specifier|final
+name|boolean
+name|isInitialized
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+block|}
+specifier|public
+name|Builder
+name|mergeFrom
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedInputStream
+name|input
+parameter_list|,
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ExtensionRegistryLite
+name|extensionRegistry
+parameter_list|)
+throws|throws
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+block|{
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+name|parsedMessage
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|parsedMessage
+operator|=
+name|PARSER
+operator|.
+name|parsePartialFrom
+argument_list|(
+name|input
+argument_list|,
+name|extensionRegistry
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|InvalidProtocolBufferException
+name|e
+parameter_list|)
+block|{
+name|parsedMessage
+operator|=
+operator|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+operator|)
+name|e
+operator|.
+name|getUnfinishedMessage
+argument_list|()
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|parsedMessage
+operator|!=
+literal|null
+condition|)
+block|{
+name|mergeFrom
+argument_list|(
+name|parsedMessage
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+name|this
+return|;
+block|}
+specifier|private
+name|int
+name|bitField0_
+decl_stmt|;
+comment|// repeated .orc.proto.BloomFilter bloomFilter = 1;
+specifier|private
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|bloomFilter_
+init|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+decl_stmt|;
+specifier|private
+name|void
+name|ensureBloomFilterIsMutable
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+operator|new
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+argument_list|(
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+name|bitField0_
+operator||=
+literal|0x00000001
+expr_stmt|;
+block|}
+block|}
+specifier|private
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|RepeatedFieldBuilder
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+name|bloomFilterBuilder_
+decl_stmt|;
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|getBloomFilterList
+parameter_list|()
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bloomFilter_
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+name|bloomFilterBuilder_
+operator|.
+name|getMessageList
+argument_list|()
+return|;
+block|}
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|int
+name|getBloomFilterCount
+parameter_list|()
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
+else|else
+block|{
+return|return
+name|bloomFilterBuilder_
+operator|.
+name|getCount
+argument_list|()
+return|;
+block|}
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|getBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+name|bloomFilterBuilder_
+operator|.
+name|getMessage
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|setBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|value
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NullPointerException
+argument_list|()
+throw|;
+block|}
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|set
+argument_list|(
+name|index
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|setMessage
+argument_list|(
+name|index
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|setBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|builderForValue
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|set
+argument_list|(
+name|index
+argument_list|,
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|setMessage
+argument_list|(
+name|index
+argument_list|,
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|addBloomFilter
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|value
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NullPointerException
+argument_list|()
+throw|;
+block|}
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|add
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addMessage
+argument_list|(
+name|value
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|addBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+name|value
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NullPointerException
+argument_list|()
+throw|;
+block|}
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|add
+argument_list|(
+name|index
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addMessage
+argument_list|(
+name|index
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|addBloomFilter
+parameter_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|builderForValue
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|add
+argument_list|(
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addMessage
+argument_list|(
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|addBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|builderForValue
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|add
+argument_list|(
+name|index
+argument_list|,
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addMessage
+argument_list|(
+name|index
+argument_list|,
+name|builderForValue
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|addAllBloomFilter
+parameter_list|(
+name|java
+operator|.
+name|lang
+operator|.
+name|Iterable
+argument_list|<
+name|?
+extends|extends
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|>
+name|values
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|super
+operator|.
+name|addAll
+argument_list|(
+name|values
+argument_list|,
+name|bloomFilter_
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|addAllMessages
+argument_list|(
+name|values
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|clearBloomFilter
+parameter_list|()
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|bloomFilter_
+operator|=
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000001
+operator|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|Builder
+name|removeBloomFilter
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|ensureBloomFilterIsMutable
+argument_list|()
+expr_stmt|;
+name|bloomFilter_
+operator|.
+name|remove
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|bloomFilterBuilder_
+operator|.
+name|remove
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|getBloomFilterBuilder
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|getBloomFilterFieldBuilder
+argument_list|()
+operator|.
+name|getBuilder
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+name|getBloomFilterOrBuilder
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|bloomFilter_
+operator|.
+name|get
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+name|bloomFilterBuilder_
+operator|.
+name|getMessageOrBuilder
+argument_list|(
+name|index
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|?
+extends|extends
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+name|getBloomFilterOrBuilderList
+parameter_list|()
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|bloomFilterBuilder_
+operator|.
+name|getMessageOrBuilderList
+argument_list|()
+return|;
+block|}
+else|else
+block|{
+return|return
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+operator|.
+name|unmodifiableList
+argument_list|(
+name|bloomFilter_
+argument_list|)
+return|;
+block|}
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|addBloomFilterBuilder
+parameter_list|()
+block|{
+return|return
+name|getBloomFilterFieldBuilder
+argument_list|()
+operator|.
+name|addBuilder
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|getDefaultInstance
+argument_list|()
+argument_list|)
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+name|addBloomFilterBuilder
+parameter_list|(
+name|int
+name|index
+parameter_list|)
+block|{
+return|return
+name|getBloomFilterFieldBuilder
+argument_list|()
+operator|.
+name|addBuilder
+argument_list|(
+name|index
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|getDefaultInstance
+argument_list|()
+argument_list|)
+return|;
+block|}
+comment|/**        *<code>repeated .orc.proto.BloomFilter bloomFilter = 1;</code>        */
+specifier|public
+name|java
+operator|.
+name|util
+operator|.
+name|List
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+argument_list|>
+name|getBloomFilterBuilderList
+parameter_list|()
+block|{
+return|return
+name|getBloomFilterFieldBuilder
+argument_list|()
+operator|.
+name|getBuilderList
+argument_list|()
+return|;
+block|}
+specifier|private
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|RepeatedFieldBuilder
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+name|getBloomFilterFieldBuilder
+parameter_list|()
+block|{
+if|if
+condition|(
+name|bloomFilterBuilder_
+operator|==
+literal|null
+condition|)
+block|{
+name|bloomFilterBuilder_
+operator|=
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|RepeatedFieldBuilder
+argument_list|<
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilter
+operator|.
+name|Builder
+argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|BloomFilterOrBuilder
+argument_list|>
+argument_list|(
+name|bloomFilter_
+argument_list|,
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000001
+operator|)
+operator|==
+literal|0x00000001
+operator|)
+argument_list|,
+name|getParentForChildren
+argument_list|()
+argument_list|,
+name|isClean
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|bloomFilter_
+operator|=
+literal|null
+expr_stmt|;
+block|}
+return|return
+name|bloomFilterBuilder_
+return|;
+block|}
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.BloomFilterIndex)
+block|}
+static|static
+block|{
+name|defaultInstance
+operator|=
+operator|new
+name|BloomFilterIndex
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|defaultInstance
+operator|.
+name|initFields
+argument_list|()
+expr_stmt|;
+block|}
+comment|// @@protoc_insertion_point(class_scope:orc.proto.BloomFilterIndex)
 block|}
 specifier|public
 interface|interface
@@ -44645,13 +52195,13 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>      */
+comment|// optional .orc.proto.Stream.Kind kind = 1;
+comment|/**      *<code>optional .orc.proto.Stream.Kind kind = 1;</code>      */
 name|boolean
 name|hasKind
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Stream.Kind kind = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -44697,7 +52247,7 @@ name|getLength
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Stream}    */
+comment|/**    * Protobuf type {@code orc.proto.Stream}    */
 specifier|public
 specifier|static
 specifier|final
@@ -45175,7 +52725,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_Stream_descriptor
 return|;
 block|}
 specifier|protected
@@ -45208,7 +52758,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_fieldAccessorTable
+name|internal_static_orc_proto_Stream_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -45350,7 +52900,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|/**      * Protobuf enum {@code org.apache.hadoop.hive.ql.io.orc.Stream.Kind}      *      *<pre>      * if you add new index stream kinds, you need to make sure to update      * StreamName to ensure it is added to the stripe in the right area      *</pre>      */
+comment|/**      * Protobuf enum {@code orc.proto.Stream.Kind}      *      *<pre>      * if you add new index stream kinds, you need to make sure to update      * StreamName to ensure it is added to the stripe in the right area      *</pre>      */
 specifier|public
 enum|enum
 name|Kind
@@ -45418,6 +52968,14 @@ literal|6
 argument_list|,
 literal|6
 argument_list|)
+block|,
+comment|/**        *<code>BLOOM_FILTER = 7;</code>        */
+name|BLOOM_FILTER
+argument_list|(
+literal|7
+argument_list|,
+literal|7
+argument_list|)
 block|,       ;
 comment|/**        *<code>PRESENT = 0;</code>        */
 specifier|public
@@ -45481,6 +53039,15 @@ name|int
 name|ROW_INDEX_VALUE
 init|=
 literal|6
+decl_stmt|;
+comment|/**        *<code>BLOOM_FILTER = 7;</code>        */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|BLOOM_FILTER_VALUE
+init|=
+literal|7
 decl_stmt|;
 specifier|public
 specifier|final
@@ -45547,6 +53114,12 @@ literal|6
 case|:
 return|return
 name|ROW_INDEX
+return|;
+case|case
+literal|7
+case|:
+return|return
+name|BLOOM_FILTER
 return|;
 default|default:
 return|return
@@ -45810,13 +53383,13 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.ql.io.orc.Stream.Kind)
+comment|// @@protoc_insertion_point(enum_scope:orc.proto.Stream.Kind)
 block|}
 specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;
+comment|// optional .orc.proto.Stream.Kind kind = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -45847,7 +53420,7 @@ operator|.
 name|Kind
 name|kind_
 decl_stmt|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Stream.Kind kind = 1;</code>      */
 specifier|public
 name|boolean
 name|hasKind
@@ -45865,7 +53438,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Stream.Kind kind = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -46043,21 +53616,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -46959,7 +54517,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Stream}      */
+comment|/**      * Protobuf type {@code orc.proto.Stream}      */
 specifier|public
 specifier|static
 specifier|final
@@ -47029,7 +54587,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_Stream_descriptor
 return|;
 block|}
 specifier|protected
@@ -47062,7 +54620,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_fieldAccessorTable
+name|internal_static_orc_proto_Stream_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -47293,7 +54851,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_Stream_descriptor
 return|;
 block|}
 specifier|public
@@ -47760,17 +55318,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 literal|true
 return|;
@@ -47905,7 +55452,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;
+comment|// optional .orc.proto.Stream.Kind kind = 1;
 specifier|private
 name|org
 operator|.
@@ -47950,7 +55497,7 @@ name|Kind
 operator|.
 name|PRESENT
 decl_stmt|;
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Stream.Kind kind = 1;</code>        */
 specifier|public
 name|boolean
 name|hasKind
@@ -47968,7 +55515,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Stream.Kind kind = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -47996,7 +55543,7 @@ return|return
 name|kind_
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Stream.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|setKind
@@ -48051,7 +55598,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Stream.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Stream.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|clearKind
@@ -48263,7 +55810,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.Stream)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.Stream)
 block|}
 static|static
 block|{
@@ -48281,7 +55828,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.Stream)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.Stream)
 block|}
 specifier|public
 interface|interface
@@ -48295,13 +55842,13 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>      */
+comment|// optional .orc.proto.ColumnEncoding.Kind kind = 1;
+comment|/**      *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>      */
 name|boolean
 name|hasKind
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -48336,7 +55883,7 @@ name|getDictionarySize
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.ColumnEncoding}    */
+comment|/**    * Protobuf type {@code orc.proto.ColumnEncoding}    */
 specifier|public
 specifier|static
 specifier|final
@@ -48797,7 +56344,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 return|;
 block|}
 specifier|protected
@@ -48830,7 +56377,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_fieldAccessorTable
+name|internal_static_orc_proto_ColumnEncoding_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -48972,7 +56519,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|/**      * Protobuf enum {@code org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind}      */
+comment|/**      * Protobuf enum {@code orc.proto.ColumnEncoding.Kind}      */
 specifier|public
 enum|enum
 name|Kind
@@ -49363,13 +56910,13 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind)
+comment|// @@protoc_insertion_point(enum_scope:orc.proto.ColumnEncoding.Kind)
 block|}
 specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;
+comment|// optional .orc.proto.ColumnEncoding.Kind kind = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -49400,7 +56947,7 @@ operator|.
 name|Kind
 name|kind_
 decl_stmt|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>      */
 specifier|public
 name|boolean
 name|hasKind
@@ -49418,7 +56965,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -49551,21 +57098,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -50413,7 +57945,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.ColumnEncoding}      */
+comment|/**      * Protobuf type {@code orc.proto.ColumnEncoding}      */
 specifier|public
 specifier|static
 specifier|final
@@ -50483,7 +58015,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 return|;
 block|}
 specifier|protected
@@ -50516,7 +58048,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_fieldAccessorTable
+name|internal_static_orc_proto_ColumnEncoding_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -50734,7 +58266,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 return|;
 block|}
 specifier|public
@@ -51160,17 +58692,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 literal|true
 return|;
@@ -51305,7 +58826,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;
+comment|// optional .orc.proto.ColumnEncoding.Kind kind = 1;
 specifier|private
 name|org
 operator|.
@@ -51350,7 +58871,7 @@ name|Kind
 operator|.
 name|DIRECT
 decl_stmt|;
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>        */
 specifier|public
 name|boolean
 name|hasKind
@@ -51368,7 +58889,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -51396,7 +58917,7 @@ return|return
 name|kind_
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|setKind
@@ -51451,7 +58972,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.ColumnEncoding.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|clearKind
@@ -51580,7 +59101,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.ColumnEncoding)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.ColumnEncoding)
 block|}
 static|static
 block|{
@@ -51598,7 +59119,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.ColumnEncoding)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.ColumnEncoding)
 block|}
 specifier|public
 interface|interface
@@ -51612,8 +59133,8 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|// repeated .orc.proto.Stream streams = 1;
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -51641,7 +59162,7 @@ argument_list|>
 name|getStreamsList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -51665,12 +59186,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 name|int
 name|getStreamsCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -51700,7 +59221,7 @@ argument_list|>
 name|getStreamsOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -51724,8 +59245,8 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|// repeated .orc.proto.ColumnEncoding columns = 2;
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 name|java
 operator|.
 name|util
@@ -51753,7 +59274,7 @@ argument_list|>
 name|getColumnsList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -51777,12 +59298,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 name|int
 name|getColumnsCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 name|java
 operator|.
 name|util
@@ -51812,7 +59333,7 @@ argument_list|>
 name|getColumnsOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -51837,7 +59358,7 @@ name|index
 parameter_list|)
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeFooter}    */
+comment|/**    * Protobuf type {@code orc.proto.StripeFooter}    */
 specifier|public
 specifier|static
 specifier|final
@@ -52419,7 +59940,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 return|;
 block|}
 specifier|protected
@@ -52452,7 +59973,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_fieldAccessorTable
+name|internal_static_orc_proto_StripeFooter_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -52594,7 +60115,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;
+comment|// repeated .orc.proto.Stream streams = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -52630,7 +60151,7 @@ name|Stream
 argument_list|>
 name|streams_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -52663,7 +60184,7 @@ return|return
 name|streams_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -52698,7 +60219,7 @@ return|return
 name|streams_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 specifier|public
 name|int
 name|getStreamsCount
@@ -52711,7 +60232,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -52745,7 +60266,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.Stream streams = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -52779,7 +60300,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;
+comment|// repeated .orc.proto.ColumnEncoding columns = 2;
 specifier|public
 specifier|static
 specifier|final
@@ -52815,7 +60336,7 @@ name|ColumnEncoding
 argument_list|>
 name|columns_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 specifier|public
 name|java
 operator|.
@@ -52848,7 +60369,7 @@ return|return
 name|columns_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 specifier|public
 name|java
 operator|.
@@ -52883,7 +60404,7 @@ return|return
 name|columns_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 specifier|public
 name|int
 name|getColumnsCount
@@ -52896,7 +60417,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -52930,7 +60451,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -53022,80 +60543,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getStreamsCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getStreams
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getColumnsCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getColumns
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -53977,7 +61424,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeFooter}      */
+comment|/**      * Protobuf type {@code orc.proto.StripeFooter}      */
 specifier|public
 specifier|static
 specifier|final
@@ -54047,7 +61494,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 return|;
 block|}
 specifier|protected
@@ -54080,7 +61527,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_fieldAccessorTable
+name|internal_static_orc_proto_StripeFooter_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -54331,7 +61778,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 return|;
 block|}
 specifier|public
@@ -55066,72 +62513,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getStreamsCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getStreams
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getColumnsCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getColumns
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
 return|return
 literal|true
 return|;
@@ -55266,7 +62647,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;
+comment|// repeated .orc.proto.Stream streams = 1;
 specifier|private
 name|java
 operator|.
@@ -55426,7 +62807,7 @@ name|StreamOrBuilder
 argument_list|>
 name|streamsBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -55485,7 +62866,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|int
 name|getStreamsCount
@@ -55515,7 +62896,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -55568,7 +62949,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|setStreams
@@ -55648,7 +63029,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|setStreams
@@ -55723,7 +63104,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|addStreams
@@ -55796,7 +63177,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|addStreams
@@ -55876,7 +63257,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|addStreams
@@ -55944,7 +63325,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|addStreams
@@ -56019,7 +63400,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|addAllStreams
@@ -56090,7 +63471,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|clearStreams
@@ -56139,7 +63520,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|Builder
 name|removeStreams
@@ -56183,7 +63564,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -56220,7 +63601,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -56273,7 +63654,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -56334,7 +63715,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -56387,7 +63768,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -56445,7 +63826,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Stream streams = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.Stream streams = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -56655,7 +64036,7 @@ return|return
 name|streamsBuilder_
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;
+comment|// repeated .orc.proto.ColumnEncoding columns = 2;
 specifier|private
 name|java
 operator|.
@@ -56815,7 +64196,7 @@ name|ColumnEncodingOrBuilder
 argument_list|>
 name|columnsBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|java
 operator|.
@@ -56874,7 +64255,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|int
 name|getColumnsCount
@@ -56904,7 +64285,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -56957,7 +64338,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|setColumns
@@ -57037,7 +64418,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|setColumns
@@ -57112,7 +64493,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|addColumns
@@ -57185,7 +64566,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|addColumns
@@ -57265,7 +64646,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|addColumns
@@ -57333,7 +64714,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|addColumns
@@ -57408,7 +64789,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|addAllColumns
@@ -57479,7 +64860,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|clearColumns
@@ -57528,7 +64909,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|Builder
 name|removeColumns
@@ -57572,7 +64953,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -57609,7 +64990,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -57662,7 +65043,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|java
 operator|.
@@ -57723,7 +65104,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -57776,7 +65157,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -57834,7 +65215,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnEncoding columns = 2;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnEncoding columns = 2;</code>        */
 specifier|public
 name|java
 operator|.
@@ -58044,7 +65425,7 @@ return|return
 name|columnsBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.StripeFooter)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.StripeFooter)
 block|}
 static|static
 block|{
@@ -58062,7 +65443,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.StripeFooter)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.StripeFooter)
 block|}
 specifier|public
 interface|interface
@@ -58076,13 +65457,13 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>      */
+comment|// optional .orc.proto.Type.Kind kind = 1;
+comment|/**      *<code>optional .orc.proto.Type.Kind kind = 1;</code>      */
 name|boolean
 name|hasKind
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Type.Kind kind = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -58217,7 +65598,7 @@ name|getScale
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Type}    */
+comment|/**    * Protobuf type {@code orc.proto.Type}    */
 specifier|public
 specifier|static
 specifier|final
@@ -58961,7 +66342,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_Type_descriptor
 return|;
 block|}
 specifier|protected
@@ -58994,7 +66375,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_fieldAccessorTable
+name|internal_static_orc_proto_Type_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -59136,7 +66517,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|/**      * Protobuf enum {@code org.apache.hadoop.hive.ql.io.orc.Type.Kind}      */
+comment|/**      * Protobuf enum {@code orc.proto.Type.Kind}      */
 specifier|public
 enum|enum
 name|Kind
@@ -59849,13 +67230,13 @@ operator|=
 name|value
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(enum_scope:org.apache.hadoop.hive.ql.io.orc.Type.Kind)
+comment|// @@protoc_insertion_point(enum_scope:orc.proto.Type.Kind)
 block|}
 specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;
+comment|// optional .orc.proto.Type.Kind kind = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -59886,7 +67267,7 @@ operator|.
 name|Kind
 name|kind_
 decl_stmt|;
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Type.Kind kind = 1;</code>      */
 specifier|public
 name|boolean
 name|hasKind
@@ -59904,7 +67285,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>      */
+comment|/**      *<code>optional .orc.proto.Type.Kind kind = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -60332,21 +67713,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -61536,7 +68902,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Type}      */
+comment|/**      * Protobuf type {@code orc.proto.Type}      */
 specifier|public
 specifier|static
 specifier|final
@@ -61606,7 +68972,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_Type_descriptor
 return|;
 block|}
 specifier|protected
@@ -61639,7 +69005,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_fieldAccessorTable
+name|internal_static_orc_proto_Type_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -61924,7 +69290,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_Type_descriptor
 return|;
 block|}
 specifier|public
@@ -62625,17 +69991,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-if|if
-condition|(
-operator|!
-name|hasKind
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 literal|true
 return|;
@@ -62770,7 +70125,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;
+comment|// optional .orc.proto.Type.Kind kind = 1;
 specifier|private
 name|org
 operator|.
@@ -62815,7 +70170,7 @@ name|Kind
 operator|.
 name|BOOLEAN
 decl_stmt|;
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Type.Kind kind = 1;</code>        */
 specifier|public
 name|boolean
 name|hasKind
@@ -62833,7 +70188,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Type.Kind kind = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -62861,7 +70216,7 @@ return|return
 name|kind_
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Type.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|setKind
@@ -62916,7 +70271,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required .org.apache.hadoop.hive.ql.io.orc.Type.Kind kind = 1;</code>        */
+comment|/**        *<code>optional .orc.proto.Type.Kind kind = 1;</code>        */
 specifier|public
 name|Builder
 name|clearKind
@@ -63830,7 +71185,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.Type)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.Type)
 block|}
 static|static
 block|{
@@ -63848,7 +71203,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.Type)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.Type)
 block|}
 specifier|public
 interface|interface
@@ -63918,7 +71273,7 @@ name|getNumberOfRows
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeInformation}    */
+comment|/**    * Protobuf type {@code orc.proto.StripeInformation}    */
 specifier|public
 specifier|static
 specifier|final
@@ -64359,7 +71714,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 return|;
 block|}
 specifier|protected
@@ -64392,7 +71747,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_fieldAccessorTable
+name|internal_static_orc_proto_StripeInformation_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -65802,7 +73157,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeInformation}      */
+comment|/**      * Protobuf type {@code orc.proto.StripeInformation}      */
 specifier|public
 specifier|static
 specifier|final
@@ -65872,7 +73227,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 return|;
 block|}
 specifier|protected
@@ -65905,7 +73260,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_fieldAccessorTable
+name|internal_static_orc_proto_StripeInformation_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -66142,7 +73497,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 return|;
 block|}
 specifier|public
@@ -67240,7 +74595,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.StripeInformation)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.StripeInformation)
 block|}
 static|static
 block|{
@@ -67258,7 +74613,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.StripeInformation)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.StripeInformation)
 block|}
 specifier|public
 interface|interface
@@ -67272,13 +74627,13 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// required string name = 1;
-comment|/**      *<code>required string name = 1;</code>      */
+comment|// optional string name = 1;
+comment|/**      *<code>optional string name = 1;</code>      */
 name|boolean
 name|hasName
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required string name = 1;</code>      */
+comment|/**      *<code>optional string name = 1;</code>      */
 name|java
 operator|.
 name|lang
@@ -67287,7 +74642,7 @@ name|String
 name|getName
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required string name = 1;</code>      */
+comment|/**      *<code>optional string name = 1;</code>      */
 name|com
 operator|.
 name|google
@@ -67298,13 +74653,13 @@ name|ByteString
 name|getNameBytes
 parameter_list|()
 function_decl|;
-comment|// required bytes value = 2;
-comment|/**      *<code>required bytes value = 2;</code>      */
+comment|// optional bytes value = 2;
+comment|/**      *<code>optional bytes value = 2;</code>      */
 name|boolean
 name|hasValue
 parameter_list|()
 function_decl|;
-comment|/**      *<code>required bytes value = 2;</code>      */
+comment|/**      *<code>optional bytes value = 2;</code>      */
 name|com
 operator|.
 name|google
@@ -67316,7 +74671,7 @@ name|getValue
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.UserMetadataItem}    */
+comment|/**    * Protobuf type {@code orc.proto.UserMetadataItem}    */
 specifier|public
 specifier|static
 specifier|final
@@ -67706,7 +75061,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 return|;
 block|}
 specifier|protected
@@ -67739,7 +75094,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_fieldAccessorTable
+name|internal_static_orc_proto_UserMetadataItem_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -67885,7 +75240,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required string name = 1;
+comment|// optional string name = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -67902,7 +75257,7 @@ operator|.
 name|Object
 name|name_
 decl_stmt|;
-comment|/**      *<code>required string name = 1;</code>      */
+comment|/**      *<code>optional string name = 1;</code>      */
 specifier|public
 name|boolean
 name|hasName
@@ -67920,7 +75275,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>required string name = 1;</code>      */
+comment|/**      *<code>optional string name = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -68013,7 +75368,7 @@ name|s
 return|;
 block|}
 block|}
-comment|/**      *<code>required string name = 1;</code>      */
+comment|/**      *<code>optional string name = 1;</code>      */
 specifier|public
 name|com
 operator|.
@@ -68098,7 +75453,7 @@ name|ref
 return|;
 block|}
 block|}
-comment|// required bytes value = 2;
+comment|// optional bytes value = 2;
 specifier|public
 specifier|static
 specifier|final
@@ -68117,7 +75472,7 @@ operator|.
 name|ByteString
 name|value_
 decl_stmt|;
-comment|/**      *<code>required bytes value = 2;</code>      */
+comment|/**      *<code>optional bytes value = 2;</code>      */
 specifier|public
 name|boolean
 name|hasValue
@@ -68135,7 +75490,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**      *<code>required bytes value = 2;</code>      */
+comment|/**      *<code>optional bytes value = 2;</code>      */
 specifier|public
 name|com
 operator|.
@@ -68203,36 +75558,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-if|if
-condition|(
-operator|!
-name|hasName
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-if|if
-condition|(
-operator|!
-name|hasValue
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -69076,7 +76401,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.UserMetadataItem}      */
+comment|/**      * Protobuf type {@code orc.proto.UserMetadataItem}      */
 specifier|public
 specifier|static
 specifier|final
@@ -69146,7 +76471,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 return|;
 block|}
 specifier|protected
@@ -69179,7 +76504,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_fieldAccessorTable
+name|internal_static_orc_proto_UserMetadataItem_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -69385,7 +76710,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 return|;
 block|}
 specifier|public
@@ -69816,28 +77141,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-if|if
-condition|(
-operator|!
-name|hasName
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-if|if
-condition|(
-operator|!
-name|hasValue
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 literal|true
 return|;
@@ -69972,7 +77275,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// required string name = 1;
+comment|// optional string name = 1;
 specifier|private
 name|java
 operator|.
@@ -69983,7 +77286,7 @@ name|name_
 init|=
 literal|""
 decl_stmt|;
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|boolean
 name|hasName
@@ -70001,7 +77304,7 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -70079,7 +77382,7 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|com
 operator|.
@@ -70160,7 +77463,7 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|Builder
 name|setName
@@ -70201,7 +77504,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|Builder
 name|clearName
@@ -70231,7 +77534,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required string name = 1;</code>        */
+comment|/**        *<code>optional string name = 1;</code>        */
 specifier|public
 name|Builder
 name|setNameBytes
@@ -70274,7 +77577,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// required bytes value = 2;
+comment|// optional bytes value = 2;
 specifier|private
 name|com
 operator|.
@@ -70295,7 +77598,7 @@ name|ByteString
 operator|.
 name|EMPTY
 decl_stmt|;
-comment|/**        *<code>required bytes value = 2;</code>        */
+comment|/**        *<code>optional bytes value = 2;</code>        */
 specifier|public
 name|boolean
 name|hasValue
@@ -70313,7 +77616,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**        *<code>required bytes value = 2;</code>        */
+comment|/**        *<code>optional bytes value = 2;</code>        */
 specifier|public
 name|com
 operator|.
@@ -70329,7 +77632,7 @@ return|return
 name|value_
 return|;
 block|}
-comment|/**        *<code>required bytes value = 2;</code>        */
+comment|/**        *<code>optional bytes value = 2;</code>        */
 specifier|public
 name|Builder
 name|setValue
@@ -70372,7 +77675,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>required bytes value = 2;</code>        */
+comment|/**        *<code>optional bytes value = 2;</code>        */
 specifier|public
 name|Builder
 name|clearValue
@@ -70402,7 +77705,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.UserMetadataItem)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.UserMetadataItem)
 block|}
 static|static
 block|{
@@ -70420,7 +77723,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.UserMetadataItem)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.UserMetadataItem)
 block|}
 specifier|public
 interface|interface
@@ -70434,8 +77737,8 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|// repeated .orc.proto.ColumnStatistics colStats = 1;
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -70463,7 +77766,7 @@ argument_list|>
 name|getColStatsList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -70487,12 +77790,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 name|int
 name|getColStatsCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -70522,7 +77825,7 @@ argument_list|>
 name|getColStatsOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -70547,7 +77850,7 @@ name|index
 parameter_list|)
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeStatistics}    */
+comment|/**    * Protobuf type {@code orc.proto.StripeStatistics}    */
 specifier|public
 specifier|static
 specifier|final
@@ -71016,7 +78319,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -71049,7 +78352,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StripeStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -71191,7 +78494,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;
+comment|// repeated .orc.proto.ColumnStatistics colStats = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -71227,7 +78530,7 @@ name|ColumnStatistics
 argument_list|>
 name|colStats_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -71260,7 +78563,7 @@ return|return
 name|colStats_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -71295,7 +78598,7 @@ return|return
 name|colStats_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 specifier|public
 name|int
 name|getColStatsCount
@@ -71308,7 +78611,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -71342,7 +78645,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -72230,7 +79533,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.StripeStatistics}      */
+comment|/**      * Protobuf type {@code orc.proto.StripeStatistics}      */
 specifier|public
 specifier|static
 specifier|final
@@ -72300,7 +79603,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 return|;
 block|}
 specifier|protected
@@ -72333,7 +79636,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StripeStatistics_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -72545,7 +79848,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 return|;
 block|}
 specifier|public
@@ -73213,7 +80516,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;
+comment|// repeated .orc.proto.ColumnStatistics colStats = 1;
 specifier|private
 name|java
 operator|.
@@ -73373,7 +80676,7 @@ name|ColumnStatisticsOrBuilder
 argument_list|>
 name|colStatsBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -73432,7 +80735,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|int
 name|getColStatsCount
@@ -73462,7 +80765,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -73515,7 +80818,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|setColStats
@@ -73595,7 +80898,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|setColStats
@@ -73670,7 +80973,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addColStats
@@ -73743,7 +81046,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addColStats
@@ -73823,7 +81126,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addColStats
@@ -73891,7 +81194,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addColStats
@@ -73966,7 +81269,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addAllColStats
@@ -74037,7 +81340,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|clearColStats
@@ -74086,7 +81389,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|Builder
 name|removeColStats
@@ -74130,7 +81433,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -74167,7 +81470,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -74220,7 +81523,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -74281,7 +81584,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -74334,7 +81637,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -74392,7 +81695,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics colStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics colStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -74602,7 +81905,7 @@ return|return
 name|colStatsBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.StripeStatistics)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.StripeStatistics)
 block|}
 static|static
 block|{
@@ -74620,7 +81923,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.StripeStatistics)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.StripeStatistics)
 block|}
 specifier|public
 interface|interface
@@ -74634,8 +81937,8 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|// repeated .orc.proto.StripeStatistics stripeStats = 1;
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -74663,7 +81966,7 @@ argument_list|>
 name|getStripeStatsList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -74687,12 +81990,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 name|int
 name|getStripeStatsCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 name|java
 operator|.
 name|util
@@ -74722,7 +82025,7 @@ argument_list|>
 name|getStripeStatsOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 name|org
 operator|.
 name|apache
@@ -74747,7 +82050,7 @@ name|index
 parameter_list|)
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Metadata}    */
+comment|/**    * Protobuf type {@code orc.proto.Metadata}    */
 specifier|public
 specifier|static
 specifier|final
@@ -75216,7 +82519,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 return|;
 block|}
 specifier|protected
@@ -75249,7 +82552,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_fieldAccessorTable
+name|internal_static_orc_proto_Metadata_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -75391,7 +82694,7 @@ return|return
 name|PARSER
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;
+comment|// repeated .orc.proto.StripeStatistics stripeStats = 1;
 specifier|public
 specifier|static
 specifier|final
@@ -75427,7 +82730,7 @@ name|StripeStatistics
 argument_list|>
 name|stripeStats_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -75460,7 +82763,7 @@ return|return
 name|stripeStats_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 specifier|public
 name|java
 operator|.
@@ -75495,7 +82798,7 @@ return|return
 name|stripeStats_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 specifier|public
 name|int
 name|getStripeStatsCount
@@ -75508,7 +82811,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -75542,7 +82845,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>      */
 specifier|public
 name|org
 operator|.
@@ -76430,7 +83733,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Metadata}      */
+comment|/**      * Protobuf type {@code orc.proto.Metadata}      */
 specifier|public
 specifier|static
 specifier|final
@@ -76500,7 +83803,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 return|;
 block|}
 specifier|protected
@@ -76533,7 +83836,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_fieldAccessorTable
+name|internal_static_orc_proto_Metadata_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -76745,7 +84048,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 return|;
 block|}
 specifier|public
@@ -77413,7 +84716,7 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;
+comment|// repeated .orc.proto.StripeStatistics stripeStats = 1;
 specifier|private
 name|java
 operator|.
@@ -77573,7 +84876,7 @@ name|StripeStatisticsOrBuilder
 argument_list|>
 name|stripeStatsBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -77632,7 +84935,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|int
 name|getStripeStatsCount
@@ -77662,7 +84965,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -77715,7 +85018,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|setStripeStats
@@ -77795,7 +85098,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|setStripeStats
@@ -77870,7 +85173,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addStripeStats
@@ -77943,7 +85246,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addStripeStats
@@ -78023,7 +85326,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addStripeStats
@@ -78091,7 +85394,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addStripeStats
@@ -78166,7 +85469,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|addAllStripeStats
@@ -78237,7 +85540,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|clearStripeStats
@@ -78286,7 +85589,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|Builder
 name|removeStripeStats
@@ -78330,7 +85633,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -78367,7 +85670,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -78420,7 +85723,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -78481,7 +85784,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -78534,7 +85837,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|org
 operator|.
@@ -78592,7 +85895,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeStatistics stripeStats = 1;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeStatistics stripeStats = 1;</code>        */
 specifier|public
 name|java
 operator|.
@@ -78802,7 +86105,7 @@ return|return
 name|stripeStatsBuilder_
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.Metadata)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.Metadata)
 block|}
 static|static
 block|{
@@ -78820,7 +86123,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.Metadata)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.Metadata)
 block|}
 specifier|public
 interface|interface
@@ -78856,8 +86159,8 @@ name|long
 name|getContentLength
 parameter_list|()
 function_decl|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|// repeated .orc.proto.StripeInformation stripes = 3;
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 name|java
 operator|.
 name|util
@@ -78885,7 +86188,7 @@ argument_list|>
 name|getStripesList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 name|org
 operator|.
 name|apache
@@ -78909,12 +86212,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 name|int
 name|getStripesCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 name|java
 operator|.
 name|util
@@ -78944,7 +86247,7 @@ argument_list|>
 name|getStripesOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 name|org
 operator|.
 name|apache
@@ -78968,8 +86271,8 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|// repeated .orc.proto.Type types = 4;
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 name|java
 operator|.
 name|util
@@ -78997,7 +86300,7 @@ argument_list|>
 name|getTypesList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 name|org
 operator|.
 name|apache
@@ -79021,12 +86324,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 name|int
 name|getTypesCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 name|java
 operator|.
 name|util
@@ -79056,7 +86359,7 @@ argument_list|>
 name|getTypesOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 name|org
 operator|.
 name|apache
@@ -79080,8 +86383,8 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|// repeated .orc.proto.UserMetadataItem metadata = 5;
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 name|java
 operator|.
 name|util
@@ -79109,7 +86412,7 @@ argument_list|>
 name|getMetadataList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 name|org
 operator|.
 name|apache
@@ -79133,12 +86436,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 name|int
 name|getMetadataCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 name|java
 operator|.
 name|util
@@ -79168,7 +86471,7 @@ argument_list|>
 name|getMetadataOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 name|org
 operator|.
 name|apache
@@ -79203,8 +86506,8 @@ name|long
 name|getNumberOfRows
 parameter_list|()
 function_decl|;
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|// repeated .orc.proto.ColumnStatistics statistics = 7;
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 name|java
 operator|.
 name|util
@@ -79232,7 +86535,7 @@ argument_list|>
 name|getStatisticsList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 name|org
 operator|.
 name|apache
@@ -79256,12 +86559,12 @@ name|int
 name|index
 parameter_list|)
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 name|int
 name|getStatisticsCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 name|java
 operator|.
 name|util
@@ -79291,7 +86594,7 @@ argument_list|>
 name|getStatisticsOrBuilderList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 name|org
 operator|.
 name|apache
@@ -79327,7 +86630,7 @@ name|getRowIndexStride
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Footer}    */
+comment|/**    * Protobuf type {@code orc.proto.Footer}    */
 specifier|public
 specifier|static
 specifier|final
@@ -80203,7 +87506,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_Footer_descriptor
 return|;
 block|}
 specifier|protected
@@ -80236,7 +87539,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_fieldAccessorTable
+name|internal_static_orc_proto_Footer_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -80464,7 +87767,7 @@ return|return
 name|contentLength_
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;
+comment|// repeated .orc.proto.StripeInformation stripes = 3;
 specifier|public
 specifier|static
 specifier|final
@@ -80500,7 +87803,7 @@ name|StripeInformation
 argument_list|>
 name|stripes_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80533,7 +87836,7 @@ return|return
 name|stripes_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80568,7 +87871,7 @@ return|return
 name|stripes_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 specifier|public
 name|int
 name|getStripesCount
@@ -80581,7 +87884,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 specifier|public
 name|org
 operator|.
@@ -80615,7 +87918,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>      */
+comment|/**      *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>      */
 specifier|public
 name|org
 operator|.
@@ -80649,7 +87952,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;
+comment|// repeated .orc.proto.Type types = 4;
 specifier|public
 specifier|static
 specifier|final
@@ -80685,7 +87988,7 @@ name|Type
 argument_list|>
 name|types_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80718,7 +88021,7 @@ return|return
 name|types_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80753,7 +88056,7 @@ return|return
 name|types_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 specifier|public
 name|int
 name|getTypesCount
@@ -80766,7 +88069,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 specifier|public
 name|org
 operator|.
@@ -80800,7 +88103,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>      */
+comment|/**      *<code>repeated .orc.proto.Type types = 4;</code>      */
 specifier|public
 name|org
 operator|.
@@ -80834,7 +88137,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;
+comment|// repeated .orc.proto.UserMetadataItem metadata = 5;
 specifier|public
 specifier|static
 specifier|final
@@ -80870,7 +88173,7 @@ name|UserMetadataItem
 argument_list|>
 name|metadata_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80903,7 +88206,7 @@ return|return
 name|metadata_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 specifier|public
 name|java
 operator|.
@@ -80938,7 +88241,7 @@ return|return
 name|metadata_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 specifier|public
 name|int
 name|getMetadataCount
@@ -80951,7 +88254,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 specifier|public
 name|org
 operator|.
@@ -80985,7 +88288,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>      */
+comment|/**      *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>      */
 specifier|public
 name|org
 operator|.
@@ -81060,7 +88363,7 @@ return|return
 name|numberOfRows_
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;
+comment|// repeated .orc.proto.ColumnStatistics statistics = 7;
 specifier|public
 specifier|static
 specifier|final
@@ -81096,7 +88399,7 @@ name|ColumnStatistics
 argument_list|>
 name|statistics_
 decl_stmt|;
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 specifier|public
 name|java
 operator|.
@@ -81129,7 +88432,7 @@ return|return
 name|statistics_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 specifier|public
 name|java
 operator|.
@@ -81164,7 +88467,7 @@ return|return
 name|statistics_
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 specifier|public
 name|int
 name|getStatisticsCount
@@ -81177,7 +88480,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 specifier|public
 name|org
 operator|.
@@ -81211,7 +88514,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**      *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>      */
+comment|/**      *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>      */
 specifier|public
 name|org
 operator|.
@@ -81382,80 +88685,6 @@ name|isInitialized
 operator|==
 literal|1
 return|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getTypesCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getTypes
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getMetadataCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getMetadata
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-name|memoizedIsInitialized
-operator|=
-literal|0
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-block|}
 name|memoizedIsInitialized
 operator|=
 literal|1
@@ -82701,7 +89930,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.Footer}      */
+comment|/**      * Protobuf type {@code orc.proto.Footer}      */
 specifier|public
 specifier|static
 specifier|final
@@ -82771,7 +90000,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_Footer_descriptor
 return|;
 block|}
 specifier|protected
@@ -82804,7 +90033,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_fieldAccessorTable
+name|internal_static_orc_proto_Footer_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -83185,7 +90414,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_Footer_descriptor
 return|;
 block|}
 specifier|public
@@ -84497,72 +91726,6 @@ name|boolean
 name|isInitialized
 parameter_list|()
 block|{
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getTypesCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getTypes
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|getMetadataCount
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|getMetadata
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|isInitialized
-argument_list|()
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
 return|return
 literal|true
 return|;
@@ -84863,7 +92026,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;
+comment|// repeated .orc.proto.StripeInformation stripes = 3;
 specifier|private
 name|java
 operator|.
@@ -85023,7 +92186,7 @@ name|StripeInformationOrBuilder
 argument_list|>
 name|stripesBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|java
 operator|.
@@ -85082,7 +92245,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|int
 name|getStripesCount
@@ -85112,7 +92275,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -85165,7 +92328,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|setStripes
@@ -85245,7 +92408,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|setStripes
@@ -85320,7 +92483,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|addStripes
@@ -85393,7 +92556,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|addStripes
@@ -85473,7 +92636,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|addStripes
@@ -85541,7 +92704,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|addStripes
@@ -85616,7 +92779,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|addAllStripes
@@ -85687,7 +92850,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|clearStripes
@@ -85736,7 +92899,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|Builder
 name|removeStripes
@@ -85780,7 +92943,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -85817,7 +92980,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -85870,7 +93033,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|java
 operator|.
@@ -85931,7 +93094,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -85984,7 +93147,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|org
 operator|.
@@ -86042,7 +93205,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.StripeInformation stripes = 3;</code>        */
+comment|/**        *<code>repeated .orc.proto.StripeInformation stripes = 3;</code>        */
 specifier|public
 name|java
 operator|.
@@ -86252,7 +93415,7 @@ return|return
 name|stripesBuilder_
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;
+comment|// repeated .orc.proto.Type types = 4;
 specifier|private
 name|java
 operator|.
@@ -86412,7 +93575,7 @@ name|TypeOrBuilder
 argument_list|>
 name|typesBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|java
 operator|.
@@ -86471,7 +93634,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|int
 name|getTypesCount
@@ -86501,7 +93664,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -86554,7 +93717,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|setTypes
@@ -86634,7 +93797,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|setTypes
@@ -86709,7 +93872,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|addTypes
@@ -86782,7 +93945,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|addTypes
@@ -86862,7 +94025,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|addTypes
@@ -86930,7 +94093,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|addTypes
@@ -87005,7 +94168,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|addAllTypes
@@ -87076,7 +94239,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|clearTypes
@@ -87125,7 +94288,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|Builder
 name|removeTypes
@@ -87169,7 +94332,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -87206,7 +94369,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -87259,7 +94422,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|java
 operator|.
@@ -87320,7 +94483,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -87373,7 +94536,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|org
 operator|.
@@ -87431,7 +94594,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.Type types = 4;</code>        */
+comment|/**        *<code>repeated .orc.proto.Type types = 4;</code>        */
 specifier|public
 name|java
 operator|.
@@ -87641,7 +94804,7 @@ return|return
 name|typesBuilder_
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;
+comment|// repeated .orc.proto.UserMetadataItem metadata = 5;
 specifier|private
 name|java
 operator|.
@@ -87801,7 +94964,7 @@ name|UserMetadataItemOrBuilder
 argument_list|>
 name|metadataBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|java
 operator|.
@@ -87860,7 +95023,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|int
 name|getMetadataCount
@@ -87890,7 +95053,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -87943,7 +95106,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|setMetadata
@@ -88023,7 +95186,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|setMetadata
@@ -88098,7 +95261,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|addMetadata
@@ -88171,7 +95334,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|addMetadata
@@ -88251,7 +95414,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|addMetadata
@@ -88319,7 +95482,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|addMetadata
@@ -88394,7 +95557,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|addAllMetadata
@@ -88465,7 +95628,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|clearMetadata
@@ -88514,7 +95677,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|Builder
 name|removeMetadata
@@ -88558,7 +95721,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -88595,7 +95758,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -88648,7 +95811,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|java
 operator|.
@@ -88709,7 +95872,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -88762,7 +95925,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|org
 operator|.
@@ -88820,7 +95983,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.UserMetadataItem metadata = 5;</code>        */
+comment|/**        *<code>repeated .orc.proto.UserMetadataItem metadata = 5;</code>        */
 specifier|public
 name|java
 operator|.
@@ -89113,7 +96276,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;
+comment|// repeated .orc.proto.ColumnStatistics statistics = 7;
 specifier|private
 name|java
 operator|.
@@ -89273,7 +96436,7 @@ name|ColumnStatisticsOrBuilder
 argument_list|>
 name|statisticsBuilder_
 decl_stmt|;
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|java
 operator|.
@@ -89332,7 +96495,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|int
 name|getStatisticsCount
@@ -89362,7 +96525,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -89415,7 +96578,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|setStatistics
@@ -89495,7 +96658,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|setStatistics
@@ -89570,7 +96733,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|addStatistics
@@ -89643,7 +96806,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|addStatistics
@@ -89723,7 +96886,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|addStatistics
@@ -89791,7 +96954,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|addStatistics
@@ -89866,7 +97029,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|addAllStatistics
@@ -89937,7 +97100,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|clearStatistics
@@ -89986,7 +97149,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|Builder
 name|removeStatistics
@@ -90030,7 +97193,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -90067,7 +97230,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -90120,7 +97283,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|java
 operator|.
@@ -90181,7 +97344,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -90234,7 +97397,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|org
 operator|.
@@ -90292,7 +97455,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated .org.apache.hadoop.hive.ql.io.orc.ColumnStatistics statistics = 7;</code>        */
+comment|/**        *<code>repeated .orc.proto.ColumnStatistics statistics = 7;</code>        */
 specifier|public
 name|java
 operator|.
@@ -90585,7 +97748,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.Footer)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.Footer)
 block|}
 static|static
 block|{
@@ -90603,7 +97766,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.Footer)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.Footer)
 block|}
 specifier|public
 interface|interface
@@ -90628,13 +97791,13 @@ name|long
 name|getFooterLength
 parameter_list|()
 function_decl|;
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>      */
+comment|// optional .orc.proto.CompressionKind compression = 2;
+comment|/**      *<code>optional .orc.proto.CompressionKind compression = 2;</code>      */
 name|boolean
 name|hasCompression
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.CompressionKind compression = 2;</code>      */
 name|org
 operator|.
 name|apache
@@ -90667,7 +97830,7 @@ name|getCompressionBlockSize
 parameter_list|()
 function_decl|;
 comment|// repeated uint32 version = 4 [packed = true];
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|java
 operator|.
 name|util
@@ -90683,12 +97846,12 @@ argument_list|>
 name|getVersionList
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|int
 name|getVersionCount
 parameter_list|()
 function_decl|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 name|int
 name|getVersion
 parameter_list|(
@@ -90705,6 +97868,17 @@ function_decl|;
 comment|/**      *<code>optional uint64 metadataLength = 5;</code>      */
 name|long
 name|getMetadataLength
+parameter_list|()
+function_decl|;
+comment|// optional uint32 writerVersion = 6;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+name|int
+name|getWriterVersion
 parameter_list|()
 function_decl|;
 comment|// optional string magic = 8000;
@@ -90734,7 +97908,7 @@ name|getMagicBytes
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.PostScript}    *    *<pre>    * Serialized length must be less that 255 bytes    *</pre>    */
+comment|/**    * Protobuf type {@code orc.proto.PostScript}    *    *<pre>    * Serialized length must be less that 255 bytes    *</pre>    */
 specifier|public
 specifier|static
 specifier|final
@@ -91269,12 +98443,29 @@ expr_stmt|;
 break|break;
 block|}
 case|case
-literal|64002
+literal|48
 case|:
 block|{
 name|bitField0_
 operator||=
 literal|0x00000010
+expr_stmt|;
+name|writerVersion_
+operator|=
+name|input
+operator|.
+name|readUInt32
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|64002
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
 expr_stmt|;
 name|magic_
 operator|=
@@ -91416,7 +98607,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_PostScript_descriptor
 return|;
 block|}
 specifier|protected
@@ -91449,7 +98640,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_fieldAccessorTable
+name|internal_static_orc_proto_PostScript_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -91636,7 +98827,7 @@ return|return
 name|footerLength_
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;
+comment|// optional .orc.proto.CompressionKind compression = 2;
 specifier|public
 specifier|static
 specifier|final
@@ -91665,7 +98856,7 @@ operator|.
 name|CompressionKind
 name|compression_
 decl_stmt|;
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.CompressionKind compression = 2;</code>      */
 specifier|public
 name|boolean
 name|hasCompression
@@ -91683,7 +98874,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>      */
+comment|/**      *<code>optional .orc.proto.CompressionKind compression = 2;</code>      */
 specifier|public
 name|org
 operator|.
@@ -91774,7 +98965,7 @@ name|Integer
 argument_list|>
 name|version_
 decl_stmt|;
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|java
 operator|.
@@ -91795,7 +98986,7 @@ return|return
 name|version_
 return|;
 block|}
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|int
 name|getVersionCount
@@ -91808,7 +98999,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      */
+comment|/**      *<code>repeated uint32 version = 4 [packed = true];</code>      *      *<pre>      * the version of the file format      *   [0, 11] = Hive 0.11      *   [0, 12] = Hive 0.12      *</pre>      */
 specifier|public
 name|int
 name|getVersion
@@ -91874,6 +99065,47 @@ return|return
 name|metadataLength_
 return|;
 block|}
+comment|// optional uint32 writerVersion = 6;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|WRITERVERSION_FIELD_NUMBER
+init|=
+literal|6
+decl_stmt|;
+specifier|private
+name|int
+name|writerVersion_
+decl_stmt|;
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+specifier|public
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000010
+operator|)
+operator|==
+literal|0x00000010
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *</pre>      */
+specifier|public
+name|int
+name|getWriterVersion
+parameter_list|()
+block|{
+return|return
+name|writerVersion_
+return|;
+block|}
 comment|// optional string magic = 8000;
 specifier|public
 specifier|static
@@ -91902,10 +99134,10 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000010
+literal|0x00000020
 operator|)
 operator|==
-literal|0x00000010
+literal|0x00000020
 operator|)
 return|;
 block|}
@@ -92137,6 +99369,10 @@ name|metadataLength_
 operator|=
 literal|0L
 expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
 name|magic_
 operator|=
 literal|""
@@ -92365,6 +99601,29 @@ literal|0x00000010
 operator|)
 operator|==
 literal|0x00000010
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeUInt32
+argument_list|(
+literal|6
+argument_list|,
+name|writerVersion_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
 operator|)
 condition|)
 block|{
@@ -92640,6 +99899,37 @@ literal|0x00000010
 operator|)
 operator|==
 literal|0x00000010
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeUInt32Size
+argument_list|(
+literal|6
+argument_list|,
+name|writerVersion_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
 operator|)
 condition|)
 block|{
@@ -93324,7 +100614,7 @@ return|return
 name|builder
 return|;
 block|}
-comment|/**      * Protobuf type {@code org.apache.hadoop.hive.ql.io.orc.PostScript}      *      *<pre>      * Serialized length must be less that 255 bytes      *</pre>      */
+comment|/**      * Protobuf type {@code orc.proto.PostScript}      *      *<pre>      * Serialized length must be less that 255 bytes      *</pre>      */
 specifier|public
 specifier|static
 specifier|final
@@ -93394,7 +100684,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_PostScript_descriptor
 return|;
 block|}
 specifier|protected
@@ -93427,7 +100717,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_fieldAccessorTable
+name|internal_static_orc_proto_PostScript_fieldAccessorTable
 operator|.
 name|ensureFieldAccessorsInitialized
 argument_list|(
@@ -93639,6 +100929,19 @@ operator|~
 literal|0x00000010
 operator|)
 expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
 name|magic_
 operator|=
 literal|""
@@ -93649,7 +100952,7 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000020
+literal|0x00000040
 operator|)
 expr_stmt|;
 return|return
@@ -93702,7 +101005,7 @@ name|orc
 operator|.
 name|OrcProto
 operator|.
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_PostScript_descriptor
 return|;
 block|}
 specifier|public
@@ -94042,6 +101345,30 @@ expr_stmt|;
 block|}
 name|result
 operator|.
+name|writerVersion_
+operator|=
+name|writerVersion_
+expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000040
+operator|)
+operator|==
+literal|0x00000040
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+block|}
+name|result
+operator|.
 name|magic_
 operator|=
 name|magic_
@@ -94314,13 +101641,30 @@ if|if
 condition|(
 name|other
 operator|.
+name|hasWriterVersion
+argument_list|()
+condition|)
+block|{
+name|setWriterVersion
+argument_list|(
+name|other
+operator|.
+name|getWriterVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
 name|hasMagic
 argument_list|()
 condition|)
 block|{
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -94569,7 +101913,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;
+comment|// optional .orc.proto.CompressionKind compression = 2;
 specifier|private
 name|org
 operator|.
@@ -94610,7 +101954,7 @@ name|CompressionKind
 operator|.
 name|NONE
 decl_stmt|;
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.CompressionKind compression = 2;</code>        */
 specifier|public
 name|boolean
 name|hasCompression
@@ -94628,7 +101972,7 @@ literal|0x00000002
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.CompressionKind compression = 2;</code>        */
 specifier|public
 name|org
 operator|.
@@ -94654,7 +101998,7 @@ return|return
 name|compression_
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.CompressionKind compression = 2;</code>        */
 specifier|public
 name|Builder
 name|setCompression
@@ -94707,7 +102051,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional .org.apache.hadoop.hive.ql.io.orc.CompressionKind compression = 2;</code>        */
+comment|/**        *<code>optional .orc.proto.CompressionKind compression = 2;</code>        */
 specifier|public
 name|Builder
 name|clearCompression
@@ -94903,7 +102247,7 @@ literal|0x00000008
 expr_stmt|;
 block|}
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|java
 operator|.
@@ -94933,7 +102277,7 @@ name|version_
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|int
 name|getVersionCount
@@ -94946,7 +102290,7 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|int
 name|getVersion
@@ -94964,7 +102308,7 @@ name|index
 argument_list|)
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|setVersion
@@ -94995,7 +102339,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|addVersion
@@ -95021,7 +102365,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|addAllVersion
@@ -95062,7 +102406,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        */
+comment|/**        *<code>repeated uint32 version = 4 [packed = true];</code>        *        *<pre>        * the version of the file format        *   [0, 11] = Hive 0.11        *   [0, 12] = Hive 0.12        *</pre>        */
 specifier|public
 name|Builder
 name|clearVersion
@@ -95178,6 +102522,89 @@ return|return
 name|this
 return|;
 block|}
+comment|// optional uint32 writerVersion = 6;
+specifier|private
+name|int
+name|writerVersion_
+decl_stmt|;
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|boolean
+name|hasWriterVersion
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|int
+name|getWriterVersion
+parameter_list|()
+block|{
+return|return
+name|writerVersion_
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|Builder
+name|setWriterVersion
+parameter_list|(
+name|int
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+name|writerVersion_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *</pre>        */
+specifier|public
+name|Builder
+name|clearWriterVersion
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
+name|writerVersion_
+operator|=
+literal|0
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|// optional string magic = 8000;
 specifier|private
 name|java
@@ -95200,10 +102627,10 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000020
+literal|0x00000040
 operator|)
 operator|==
-literal|0x00000020
+literal|0x00000040
 operator|)
 return|;
 block|}
@@ -95394,7 +102821,7 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -95419,7 +102846,7 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000020
+literal|0x00000040
 operator|)
 expr_stmt|;
 name|magic_
@@ -95467,7 +102894,7 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000020
+literal|0x00000040
 expr_stmt|;
 name|magic_
 operator|=
@@ -95480,7 +102907,7 @@ return|return
 name|this
 return|;
 block|}
-comment|// @@protoc_insertion_point(builder_scope:org.apache.hadoop.hive.ql.io.orc.PostScript)
+comment|// @@protoc_insertion_point(builder_scope:orc.proto.PostScript)
 block|}
 static|static
 block|{
@@ -95498,7 +102925,7 @@ name|initFields
 argument_list|()
 expr_stmt|;
 block|}
-comment|// @@protoc_insertion_point(class_scope:org.apache.hadoop.hive.ql.io.orc.PostScript)
+comment|// @@protoc_insertion_point(class_scope:orc.proto.PostScript)
 block|}
 specifier|private
 specifier|static
@@ -95511,7 +102938,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95524,7 +102951,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_fieldAccessorTable
+name|internal_static_orc_proto_IntegerStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95537,7 +102964,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95550,7 +102977,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DoubleStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95563,7 +102990,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95576,7 +103003,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StringStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95589,7 +103016,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95602,7 +103029,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BucketStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95615,7 +103042,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95628,7 +103055,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DecimalStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95641,7 +103068,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95654,7 +103081,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DateStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95667,7 +103094,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95680,7 +103107,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_fieldAccessorTable
+name|internal_static_orc_proto_TimestampStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95693,7 +103120,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95706,7 +103133,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BinaryStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95719,7 +103146,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95732,7 +103159,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_fieldAccessorTable
+name|internal_static_orc_proto_ColumnStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95745,7 +103172,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95758,7 +103185,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_fieldAccessorTable
+name|internal_static_orc_proto_RowIndexEntry_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95771,7 +103198,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95784,7 +103211,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_fieldAccessorTable
+name|internal_static_orc_proto_RowIndex_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95797,7 +103224,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_BloomFilter_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95810,7 +103237,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_fieldAccessorTable
+name|internal_static_orc_proto_BloomFilter_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95823,7 +103250,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95836,7 +103263,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_fieldAccessorTable
+name|internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95849,7 +103276,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_Stream_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95862,7 +103289,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_fieldAccessorTable
+name|internal_static_orc_proto_Stream_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95875,7 +103302,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95888,7 +103315,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_fieldAccessorTable
+name|internal_static_orc_proto_ColumnEncoding_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95901,7 +103328,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95914,7 +103341,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_fieldAccessorTable
+name|internal_static_orc_proto_StripeFooter_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95927,7 +103354,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_Type_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95940,7 +103367,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_fieldAccessorTable
+name|internal_static_orc_proto_Type_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95953,7 +103380,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95966,7 +103393,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StripeInformation_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95979,7 +103406,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -95992,7 +103419,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_fieldAccessorTable
+name|internal_static_orc_proto_UserMetadataItem_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -96005,7 +103432,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -96018,7 +103445,7 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_fieldAccessorTable
+name|internal_static_orc_proto_StripeStatistics_fieldAccessorTable
 decl_stmt|;
 specifier|private
 specifier|static
@@ -96031,7 +103458,7 @@ operator|.
 name|Descriptors
 operator|.
 name|Descriptor
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 decl_stmt|;
 specifier|private
 specifier|static
@@ -96044,7 +103471,59 @@ operator|.
 name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_fieldAccessorTable
+name|internal_static_orc_proto_Metadata_fieldAccessorTable
+decl_stmt|;
+specifier|private
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|internal_static_orc_proto_Footer_descriptor
+decl_stmt|;
+specifier|private
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internal_static_orc_proto_Footer_fieldAccessorTable
+decl_stmt|;
+specifier|private
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|Descriptors
+operator|.
+name|Descriptor
+name|internal_static_orc_proto_PostScript_descriptor
+decl_stmt|;
+specifier|private
+specifier|static
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+name|internal_static_orc_proto_PostScript_fieldAccessorTable
 decl_stmt|;
 specifier|public
 specifier|static
@@ -96088,169 +103567,153 @@ index|[]
 name|descriptorData
 init|=
 block|{
-literal|"\n\017orc_proto.proto\022 org.apache.hadoop.hiv"
+literal|"\n\017orc_proto.proto\022\torc.proto\"B\n\021IntegerS"
 operator|+
-literal|"e.ql.io.orc\"B\n\021IntegerStatistics\022\017\n\007mini"
+literal|"tatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum\030\002 "
 operator|+
-literal|"mum\030\001 \001(\022\022\017\n\007maximum\030\002 \001(\022\022\013\n\003sum\030\003 \001(\022\""
+literal|"\001(\022\022\013\n\003sum\030\003 \001(\022\"A\n\020DoubleStatistics\022\017\n\007"
 operator|+
-literal|"A\n\020DoubleStatistics\022\017\n\007minimum\030\001 \001(\001\022\017\n\007"
+literal|"minimum\030\001 \001(\001\022\017\n\007maximum\030\002 \001(\001\022\013\n\003sum\030\003 "
 operator|+
-literal|"maximum\030\002 \001(\001\022\013\n\003sum\030\003 \001(\001\"A\n\020StringStat"
+literal|"\001(\001\"A\n\020StringStatistics\022\017\n\007minimum\030\001 \001(\t"
 operator|+
-literal|"istics\022\017\n\007minimum\030\001 \001(\t\022\017\n\007maximum\030\002 \001(\t"
+literal|"\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\022\"%\n\020Bucket"
 operator|+
-literal|"\022\013\n\003sum\030\003 \001(\022\"%\n\020BucketStatistics\022\021\n\005cou"
+literal|"Statistics\022\021\n\005count\030\001 \003(\004B\002\020\001\"B\n\021Decimal"
 operator|+
-literal|"nt\030\001 \003(\004B\002\020\001\"B\n\021DecimalStatistics\022\017\n\007min"
+literal|"Statistics\022\017\n\007minimum\030\001 \001(\t\022\017\n\007maximum\030\002"
 operator|+
-literal|"imum\030\001 \001(\t\022\017\n\007maximum\030\002 \001(\t\022\013\n\003sum\030\003 \001(\t"
+literal|" \001(\t\022\013\n\003sum\030\003 \001(\t\"2\n\016DateStatistics\022\017\n\007m"
 operator|+
-literal|"\"2\n\016DateStatistics\022\017\n\007minimum\030\001 \001(\021\022\017\n\007m"
+literal|"inimum\030\001 \001(\021\022\017\n\007maximum\030\002 \001(\021\"7\n\023Timesta"
 block|,
-literal|"aximum\030\002 \001(\021\"7\n\023TimestampStatistics\022\017\n\007m"
+literal|"mpStatistics\022\017\n\007minimum\030\001 \001(\022\022\017\n\007maximum"
 operator|+
-literal|"inimum\030\001 \001(\022\022\017\n\007maximum\030\002 \001(\022\"\037\n\020BinaryS"
+literal|"\030\002 \001(\022\"\037\n\020BinaryStatistics\022\013\n\003sum\030\001 \001(\022\""
 operator|+
-literal|"tatistics\022\013\n\003sum\030\001 \001(\022\"\234\005\n\020ColumnStatist"
+literal|"\365\003\n\020ColumnStatistics\022\026\n\016numberOfValues\030\001"
 operator|+
-literal|"ics\022\026\n\016numberOfValues\030\001 \001(\004\022J\n\rintStatis"
+literal|" \001(\004\0223\n\rintStatistics\030\002 \001(\0132\034.orc.proto."
 operator|+
-literal|"tics\030\002 \001(\01323.org.apache.hadoop.hive.ql.i"
+literal|"IntegerStatistics\0225\n\020doubleStatistics\030\003 "
 operator|+
-literal|"o.orc.IntegerStatistics\022L\n\020doubleStatist"
+literal|"\001(\0132\033.orc.proto.DoubleStatistics\0225\n\020stri"
 operator|+
-literal|"ics\030\003 \001(\01322.org.apache.hadoop.hive.ql.io"
+literal|"ngStatistics\030\004 \001(\0132\033.orc.proto.StringSta"
 operator|+
-literal|".orc.DoubleStatistics\022L\n\020stringStatistic"
+literal|"tistics\0225\n\020bucketStatistics\030\005 \001(\0132\033.orc."
 operator|+
-literal|"s\030\004 \001(\01322.org.apache.hadoop.hive.ql.io.o"
+literal|"proto.BucketStatistics\0227\n\021decimalStatist"
 operator|+
-literal|"rc.StringStatistics\022L\n\020bucketStatistics\030"
+literal|"ics\030\006 \001(\0132\034.orc.proto.DecimalStatistics\022"
 block|,
-literal|"\005 \001(\01322.org.apache.hadoop.hive.ql.io.orc"
+literal|"1\n\016dateStatistics\030\007 \001(\0132\031.orc.proto.Date"
 operator|+
-literal|".BucketStatistics\022N\n\021decimalStatistics\030\006"
+literal|"Statistics\0225\n\020binaryStatistics\030\010 \001(\0132\033.o"
 operator|+
-literal|" \001(\01323.org.apache.hadoop.hive.ql.io.orc."
+literal|"rc.proto.BinaryStatistics\022;\n\023timestampSt"
 operator|+
-literal|"DecimalStatistics\022H\n\016dateStatistics\030\007 \001("
+literal|"atistics\030\t \001(\0132\036.orc.proto.TimestampStat"
 operator|+
-literal|"\01320.org.apache.hadoop.hive.ql.io.orc.Dat"
+literal|"istics\022\017\n\007hasNull\030\n \001(\010\"W\n\rRowIndexEntry"
 operator|+
-literal|"eStatistics\022L\n\020binaryStatistics\030\010 \001(\01322."
+literal|"\022\025\n\tpositions\030\001 \003(\004B\002\020\001\022/\n\nstatistics\030\002 "
 operator|+
-literal|"org.apache.hadoop.hive.ql.io.orc.BinaryS"
+literal|"\001(\0132\033.orc.proto.ColumnStatistics\"3\n\010RowI"
 operator|+
-literal|"tatistics\022R\n\023timestampStatistics\030\t \001(\01325"
+literal|"ndex\022\'\n\005entry\030\001 \003(\0132\030.orc.proto.RowIndex"
 operator|+
-literal|".org.apache.hadoop.hive.ql.io.orc.Timest"
+literal|"Entry\"7\n\013BloomFilter\022\030\n\020numHashFunctions"
 operator|+
-literal|"ampStatistics\"n\n\rRowIndexEntry\022\025\n\tpositi"
+literal|"\030\001 \001(\r\022\016\n\006bitset\030\002 \003(\006\"?\n\020BloomFilterInd"
 block|,
-literal|"ons\030\001 \003(\004B\002\020\001\022F\n\nstatistics\030\002 \001(\01322.org."
+literal|"ex\022+\n\013bloomFilter\030\001 \003(\0132\026.orc.proto.Bloo"
 operator|+
-literal|"apache.hadoop.hive.ql.io.orc.ColumnStati"
+literal|"mFilter\"\325\001\n\006Stream\022$\n\004kind\030\001 \001(\0162\026.orc.p"
 operator|+
-literal|"stics\"J\n\010RowIndex\022>\n\005entry\030\001 \003(\0132/.org.a"
+literal|"roto.Stream.Kind\022\016\n\006column\030\002 \001(\r\022\016\n\006leng"
 operator|+
-literal|"pache.hadoop.hive.ql.io.orc.RowIndexEntr"
+literal|"th\030\003 \001(\004\"\204\001\n\004Kind\022\013\n\007PRESENT\020\000\022\010\n\004DATA\020\001"
 operator|+
-literal|"y\"\331\001\n\006Stream\022;\n\004kind\030\001 \002(\0162-.org.apache."
+literal|"\022\n\n\006LENGTH\020\002\022\023\n\017DICTIONARY_DATA\020\003\022\024\n\020DIC"
 operator|+
-literal|"hadoop.hive.ql.io.orc.Stream.Kind\022\016\n\006col"
+literal|"TIONARY_COUNT\020\004\022\r\n\tSECONDARY\020\005\022\r\n\tROW_IN"
 operator|+
-literal|"umn\030\002 \001(\r\022\016\n\006length\030\003 \001(\004\"r\n\004Kind\022\013\n\007PRE"
+literal|"DEX\020\006\022\020\n\014BLOOM_FILTER\020\007\"\234\001\n\016ColumnEncodi"
 operator|+
-literal|"SENT\020\000\022\010\n\004DATA\020\001\022\n\n\006LENGTH\020\002\022\023\n\017DICTIONA"
+literal|"ng\022,\n\004kind\030\001 \001(\0162\036.orc.proto.ColumnEncod"
 operator|+
-literal|"RY_DATA\020\003\022\024\n\020DICTIONARY_COUNT\020\004\022\r\n\tSECON"
+literal|"ing.Kind\022\026\n\016dictionarySize\030\002 \001(\r\"D\n\004Kind"
 operator|+
-literal|"DARY\020\005\022\r\n\tROW_INDEX\020\006\"\263\001\n\016ColumnEncoding"
+literal|"\022\n\n\006DIRECT\020\000\022\016\n\nDICTIONARY\020\001\022\r\n\tDIRECT_V"
 block|,
-literal|"\022C\n\004kind\030\001 \002(\01625.org.apache.hadoop.hive."
+literal|"2\020\002\022\021\n\rDICTIONARY_V2\020\003\"^\n\014StripeFooter\022\""
 operator|+
-literal|"ql.io.orc.ColumnEncoding.Kind\022\026\n\016diction"
+literal|"\n\007streams\030\001 \003(\0132\021.orc.proto.Stream\022*\n\007co"
 operator|+
-literal|"arySize\030\002 \001(\r\"D\n\004Kind\022\n\n\006DIRECT\020\000\022\016\n\nDIC"
+literal|"lumns\030\002 \003(\0132\031.orc.proto.ColumnEncoding\"\341"
 operator|+
-literal|"TIONARY\020\001\022\r\n\tDIRECT_V2\020\002\022\021\n\rDICTIONARY_V"
+literal|"\002\n\004Type\022\"\n\004kind\030\001 \001(\0162\024.orc.proto.Type.K"
 operator|+
-literal|"2\020\003\"\214\001\n\014StripeFooter\0229\n\007streams\030\001 \003(\0132(."
+literal|"ind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001\022\022\n\nfieldNames\030"
 operator|+
-literal|"org.apache.hadoop.hive.ql.io.orc.Stream\022"
+literal|"\003 \003(\t\022\025\n\rmaximumLength\030\004 \001(\r\022\021\n\tprecisio"
 operator|+
-literal|"A\n\007columns\030\002 \003(\01320.org.apache.hadoop.hiv"
+literal|"n\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001\n\004Kind\022\013\n\007BOOLE"
 operator|+
-literal|"e.ql.io.orc.ColumnEncoding\"\370\002\n\004Type\0229\n\004k"
+literal|"AN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003INT\020\003\022\010\n\004LO"
 operator|+
-literal|"ind\030\001 \002(\0162+.org.apache.hadoop.hive.ql.io"
+literal|"NG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n\n\006STRING\020\007\022"
 operator|+
-literal|".orc.Type.Kind\022\024\n\010subtypes\030\002 \003(\rB\002\020\001\022\022\n\n"
+literal|"\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n\004LIST\020\n\022\007\n\003"
 block|,
-literal|"fieldNames\030\003 \003(\t\022\025\n\rmaximumLength\030\004 \001(\r\022"
+literal|"MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022\013\n\007DECIMAL\020"
 operator|+
-literal|"\021\n\tprecision\030\005 \001(\r\022\r\n\005scale\030\006 \001(\r\"\321\001\n\004Ki"
+literal|"\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022\010\n\004CHAR\020\021\"x\n\021St"
 operator|+
-literal|"nd\022\013\n\007BOOLEAN\020\000\022\010\n\004BYTE\020\001\022\t\n\005SHORT\020\002\022\007\n\003"
+literal|"ripeInformation\022\016\n\006offset\030\001 \001(\004\022\023\n\013index"
 operator|+
-literal|"INT\020\003\022\010\n\004LONG\020\004\022\t\n\005FLOAT\020\005\022\n\n\006DOUBLE\020\006\022\n"
+literal|"Length\030\002 \001(\004\022\022\n\ndataLength\030\003 \001(\004\022\024\n\014foot"
 operator|+
-literal|"\n\006STRING\020\007\022\n\n\006BINARY\020\010\022\r\n\tTIMESTAMP\020\t\022\010\n"
+literal|"erLength\030\004 \001(\004\022\024\n\014numberOfRows\030\005 \001(\004\"/\n\020"
 operator|+
-literal|"\004LIST\020\n\022\007\n\003MAP\020\013\022\n\n\006STRUCT\020\014\022\t\n\005UNION\020\r\022"
+literal|"UserMetadataItem\022\014\n\004name\030\001 \001(\t\022\r\n\005value\030"
 operator|+
-literal|"\013\n\007DECIMAL\020\016\022\010\n\004DATE\020\017\022\013\n\007VARCHAR\020\020\022\010\n\004C"
+literal|"\002 \001(\014\"A\n\020StripeStatistics\022-\n\010colStats\030\001 "
 operator|+
-literal|"HAR\020\021\"x\n\021StripeInformation\022\016\n\006offset\030\001 \001"
+literal|"\003(\0132\033.orc.proto.ColumnStatistics\"<\n\010Meta"
 operator|+
-literal|"(\004\022\023\n\013indexLength\030\002 \001(\004\022\022\n\ndataLength\030\003 "
+literal|"data\0220\n\013stripeStats\030\001 \003(\0132\033.orc.proto.St"
 operator|+
-literal|"\001(\004\022\024\n\014footerLength\030\004 \001(\004\022\024\n\014numberOfRow"
+literal|"ripeStatistics\"\222\002\n\006Footer\022\024\n\014headerLengt"
 block|,
-literal|"s\030\005 \001(\004\"/\n\020UserMetadataItem\022\014\n\004name\030\001 \002("
+literal|"h\030\001 \001(\004\022\025\n\rcontentLength\030\002 \001(\004\022-\n\007stripe"
 operator|+
-literal|"\t\022\r\n\005value\030\002 \002(\014\"X\n\020StripeStatistics\022D\n\010"
+literal|"s\030\003 \003(\0132\034.orc.proto.StripeInformation\022\036\n"
 operator|+
-literal|"colStats\030\001 \003(\01322.org.apache.hadoop.hive."
+literal|"\005types\030\004 \003(\0132\017.orc.proto.Type\022-\n\010metadat"
 operator|+
-literal|"ql.io.orc.ColumnStatistics\"S\n\010Metadata\022G"
+literal|"a\030\005 \003(\0132\033.orc.proto.UserMetadataItem\022\024\n\014"
 operator|+
-literal|"\n\013stripeStats\030\001 \003(\01322.org.apache.hadoop."
+literal|"numberOfRows\030\006 \001(\004\022/\n\nstatistics\030\007 \003(\0132\033"
 operator|+
-literal|"hive.ql.io.orc.StripeStatistics\"\356\002\n\006Foot"
+literal|".orc.proto.ColumnStatistics\022\026\n\016rowIndexS"
 operator|+
-literal|"er\022\024\n\014headerLength\030\001 \001(\004\022\025\n\rcontentLengt"
+literal|"tride\030\010 \001(\r\"\305\001\n\nPostScript\022\024\n\014footerLeng"
 operator|+
-literal|"h\030\002 \001(\004\022D\n\007stripes\030\003 \003(\01323.org.apache.ha"
+literal|"th\030\001 \001(\004\022/\n\013compression\030\002 \001(\0162\032.orc.prot"
 operator|+
-literal|"doop.hive.ql.io.orc.StripeInformation\0225\n"
+literal|"o.CompressionKind\022\034\n\024compressionBlockSiz"
 operator|+
-literal|"\005types\030\004 \003(\0132&.org.apache.hadoop.hive.ql"
+literal|"e\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001\022\026\n\016metadata"
 block|,
-literal|".io.orc.Type\022D\n\010metadata\030\005 \003(\01322.org.apa"
+literal|"Length\030\005 \001(\004\022\025\n\rwriterVersion\030\006 \001(\r\022\016\n\005m"
 operator|+
-literal|"che.hadoop.hive.ql.io.orc.UserMetadataIt"
+literal|"agic\030\300> \001(\t*:\n\017CompressionKind\022\010\n\004NONE\020\000"
 operator|+
-literal|"em\022\024\n\014numberOfRows\030\006 \001(\004\022F\n\nstatistics\030\007"
+literal|"\022\010\n\004ZLIB\020\001\022\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003B\"\n org.a"
 operator|+
-literal|" \003(\01322.org.apache.hadoop.hive.ql.io.orc."
-operator|+
-literal|"ColumnStatistics\022\026\n\016rowIndexStride\030\010 \001(\r"
-operator|+
-literal|"\"\305\001\n\nPostScript\022\024\n\014footerLength\030\001 \001(\004\022F\n"
-operator|+
-literal|"\013compression\030\002 \001(\01621.org.apache.hadoop.h"
-operator|+
-literal|"ive.ql.io.orc.CompressionKind\022\034\n\024compres"
-operator|+
-literal|"sionBlockSize\030\003 \001(\004\022\023\n\007version\030\004 \003(\rB\002\020\001"
-operator|+
-literal|"\022\026\n\016metadataLength\030\005 \001(\004\022\016\n\005magic\030\300> \001(\t"
-block|,
-literal|"*:\n\017CompressionKind\022\010\n\004NONE\020\000\022\010\n\004ZLIB\020\001\022"
-operator|+
-literal|"\n\n\006SNAPPY\020\002\022\007\n\003LZO\020\003"
+literal|"pache.hadoop.hive.ql.io.orc"
 block|}
 decl_stmt|;
 name|com
@@ -96306,7 +103769,7 @@ name|descriptor
 operator|=
 name|root
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96319,7 +103782,7 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_fieldAccessorTable
+name|internal_static_orc_proto_IntegerStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96332,7 +103795,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_IntegerStatistics_descriptor
+name|internal_static_orc_proto_IntegerStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96350,7 +103813,7 @@ literal|"Sum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96363,7 +103826,7 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DoubleStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96376,7 +103839,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DoubleStatistics_descriptor
+name|internal_static_orc_proto_DoubleStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96394,7 +103857,7 @@ literal|"Sum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96407,7 +103870,7 @@ argument_list|(
 literal|2
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StringStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96420,7 +103883,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StringStatistics_descriptor
+name|internal_static_orc_proto_StringStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96438,7 +103901,7 @@ literal|"Sum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96451,7 +103914,7 @@ argument_list|(
 literal|3
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BucketStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96464,7 +103927,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BucketStatistics_descriptor
+name|internal_static_orc_proto_BucketStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96478,7 +103941,7 @@ literal|"Count"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96491,7 +103954,7 @@ argument_list|(
 literal|4
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DecimalStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96504,7 +103967,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DecimalStatistics_descriptor
+name|internal_static_orc_proto_DecimalStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96522,7 +103985,7 @@ literal|"Sum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96535,7 +103998,7 @@ argument_list|(
 literal|5
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_fieldAccessorTable
+name|internal_static_orc_proto_DateStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96548,7 +104011,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_DateStatistics_descriptor
+name|internal_static_orc_proto_DateStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96564,7 +104027,7 @@ literal|"Maximum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96577,7 +104040,7 @@ argument_list|(
 literal|6
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_fieldAccessorTable
+name|internal_static_orc_proto_TimestampStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96590,7 +104053,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_TimestampStatistics_descriptor
+name|internal_static_orc_proto_TimestampStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96606,7 +104069,7 @@ literal|"Maximum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96619,7 +104082,7 @@ argument_list|(
 literal|7
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_fieldAccessorTable
+name|internal_static_orc_proto_BinaryStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96632,7 +104095,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_BinaryStatistics_descriptor
+name|internal_static_orc_proto_BinaryStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96646,7 +104109,7 @@ literal|"Sum"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96659,7 +104122,7 @@ argument_list|(
 literal|8
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_fieldAccessorTable
+name|internal_static_orc_proto_ColumnStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96672,7 +104135,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnStatistics_descriptor
+name|internal_static_orc_proto_ColumnStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96699,10 +104162,12 @@ block|,
 literal|"BinaryStatistics"
 block|,
 literal|"TimestampStatistics"
+block|,
+literal|"HasNull"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96715,7 +104180,7 @@ argument_list|(
 literal|9
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_fieldAccessorTable
+name|internal_static_orc_proto_RowIndexEntry_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96728,7 +104193,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndexEntry_descriptor
+name|internal_static_orc_proto_RowIndexEntry_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96744,7 +104209,7 @@ literal|"Statistics"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96757,7 +104222,7 @@ argument_list|(
 literal|10
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_fieldAccessorTable
+name|internal_static_orc_proto_RowIndex_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96770,7 +104235,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_RowIndex_descriptor
+name|internal_static_orc_proto_RowIndex_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96784,7 +104249,7 @@ literal|"Entry"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_BloomFilter_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96797,7 +104262,7 @@ argument_list|(
 literal|11
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_fieldAccessorTable
+name|internal_static_orc_proto_BloomFilter_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96810,7 +104275,89 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Stream_descriptor
+name|internal_static_orc_proto_BloomFilter_descriptor
+argument_list|,
+operator|new
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+index|[]
+block|{
+literal|"NumHashFunctions"
+block|,
+literal|"Bitset"
+block|, }
+argument_list|)
+expr_stmt|;
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
+operator|=
+name|getDescriptor
+argument_list|()
+operator|.
+name|getMessageTypes
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|12
+argument_list|)
+expr_stmt|;
+name|internal_static_orc_proto_BloomFilterIndex_fieldAccessorTable
+operator|=
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+argument_list|(
+name|internal_static_orc_proto_BloomFilterIndex_descriptor
+argument_list|,
+operator|new
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+index|[]
+block|{
+literal|"BloomFilter"
+block|, }
+argument_list|)
+expr_stmt|;
+name|internal_static_orc_proto_Stream_descriptor
+operator|=
+name|getDescriptor
+argument_list|()
+operator|.
+name|getMessageTypes
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|13
+argument_list|)
+expr_stmt|;
+name|internal_static_orc_proto_Stream_fieldAccessorTable
+operator|=
+operator|new
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|GeneratedMessage
+operator|.
+name|FieldAccessorTable
+argument_list|(
+name|internal_static_orc_proto_Stream_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96828,7 +104375,7 @@ literal|"Length"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96838,10 +104385,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|12
+literal|14
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_fieldAccessorTable
+name|internal_static_orc_proto_ColumnEncoding_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96854,7 +104401,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_ColumnEncoding_descriptor
+name|internal_static_orc_proto_ColumnEncoding_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96870,7 +104417,7 @@ literal|"DictionarySize"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96880,10 +104427,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|13
+literal|15
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_fieldAccessorTable
+name|internal_static_orc_proto_StripeFooter_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96896,7 +104443,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeFooter_descriptor
+name|internal_static_orc_proto_StripeFooter_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96912,7 +104459,7 @@ literal|"Columns"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_Type_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96922,10 +104469,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|14
+literal|16
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_fieldAccessorTable
+name|internal_static_orc_proto_Type_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96938,7 +104485,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Type_descriptor
+name|internal_static_orc_proto_Type_descriptor
 argument_list|,
 operator|new
 name|java
@@ -96962,7 +104509,7 @@ literal|"Scale"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -96972,10 +104519,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|15
+literal|17
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_fieldAccessorTable
+name|internal_static_orc_proto_StripeInformation_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -96988,7 +104535,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeInformation_descriptor
+name|internal_static_orc_proto_StripeInformation_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97010,7 +104557,7 @@ literal|"NumberOfRows"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -97020,10 +104567,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|16
+literal|18
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_fieldAccessorTable
+name|internal_static_orc_proto_UserMetadataItem_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -97036,7 +104583,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_UserMetadataItem_descriptor
+name|internal_static_orc_proto_UserMetadataItem_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97052,7 +104599,7 @@ literal|"Value"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -97062,10 +104609,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|17
+literal|19
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_fieldAccessorTable
+name|internal_static_orc_proto_StripeStatistics_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -97078,7 +104625,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_StripeStatistics_descriptor
+name|internal_static_orc_proto_StripeStatistics_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97092,7 +104639,7 @@ literal|"ColStats"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -97102,10 +104649,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|18
+literal|20
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_fieldAccessorTable
+name|internal_static_orc_proto_Metadata_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -97118,7 +104665,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Metadata_descriptor
+name|internal_static_orc_proto_Metadata_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97132,7 +104679,7 @@ literal|"StripeStats"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_Footer_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -97142,10 +104689,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|19
+literal|21
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_fieldAccessorTable
+name|internal_static_orc_proto_Footer_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -97158,7 +104705,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_Footer_descriptor
+name|internal_static_orc_proto_Footer_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97186,7 +104733,7 @@ literal|"RowIndexStride"
 block|, }
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_PostScript_descriptor
 operator|=
 name|getDescriptor
 argument_list|()
@@ -97196,10 +104743,10 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|20
+literal|22
 argument_list|)
 expr_stmt|;
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_fieldAccessorTable
+name|internal_static_orc_proto_PostScript_fieldAccessorTable
 operator|=
 operator|new
 name|com
@@ -97212,7 +104759,7 @@ name|GeneratedMessage
 operator|.
 name|FieldAccessorTable
 argument_list|(
-name|internal_static_org_apache_hadoop_hive_ql_io_orc_PostScript_descriptor
+name|internal_static_orc_proto_PostScript_descriptor
 argument_list|,
 operator|new
 name|java
@@ -97231,6 +104778,8 @@ block|,
 literal|"Version"
 block|,
 literal|"MetadataLength"
+block|,
+literal|"WriterVersion"
 block|,
 literal|"Magic"
 block|, }

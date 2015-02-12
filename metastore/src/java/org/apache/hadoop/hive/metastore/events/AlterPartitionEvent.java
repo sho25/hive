@@ -55,6 +55,24 @@ name|Partition
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -72,6 +90,11 @@ specifier|final
 name|Partition
 name|newPart
 decl_stmt|;
+specifier|private
+specifier|final
+name|Table
+name|table
+decl_stmt|;
 specifier|public
 name|AlterPartitionEvent
 parameter_list|(
@@ -80,6 +103,9 @@ name|oldPart
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|Table
+name|table
 parameter_list|,
 name|boolean
 name|status
@@ -107,6 +133,12 @@ name|newPart
 operator|=
 name|newPart
 expr_stmt|;
+name|this
+operator|.
+name|table
+operator|=
+name|table
+expr_stmt|;
 block|}
 comment|/**    * @return the old partition    */
 specifier|public
@@ -126,6 +158,16 @@ parameter_list|()
 block|{
 return|return
 name|newPart
+return|;
+block|}
+comment|/**    * Get the table this partition is in    * @return    */
+specifier|public
+name|Table
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|table
 return|;
 block|}
 block|}

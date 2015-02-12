@@ -167,7 +167,10 @@ index|[
 name|i
 index|]
 operator|.
-name|getHiveDecimalString
+name|getHiveDecimal
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 decl_stmt|;
 name|byte
@@ -200,6 +203,8 @@ operator|new
 name|RuntimeException
 argument_list|(
 literal|"Internal error:  unable to convert decimal to string"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

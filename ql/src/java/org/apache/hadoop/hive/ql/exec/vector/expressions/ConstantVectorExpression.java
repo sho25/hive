@@ -47,7 +47,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Decimal128
+name|HiveDecimal
 import|;
 end_import
 
@@ -181,7 +181,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|Decimal128
+name|HiveDecimal
 name|decimalValue
 init|=
 literal|null
@@ -370,7 +370,7 @@ parameter_list|(
 name|int
 name|outputColumn
 parameter_list|,
-name|Decimal128
+name|HiveDecimal
 name|value
 parameter_list|)
 block|{
@@ -658,7 +658,7 @@ index|[
 literal|0
 index|]
 operator|.
-name|update
+name|set
 argument_list|(
 name|decimalValue
 argument_list|)
@@ -830,7 +830,7 @@ specifier|public
 name|void
 name|setDecimalValue
 parameter_list|(
-name|Decimal128
+name|HiveDecimal
 name|decimalValue
 parameter_list|)
 block|{

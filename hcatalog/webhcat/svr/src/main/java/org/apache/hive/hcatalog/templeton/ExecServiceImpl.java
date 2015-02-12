@@ -1091,7 +1091,9 @@ literal|"Command: "
 operator|+
 name|cmd
 operator|+
-literal|" failed:"
+literal|" failed. res="
+operator|+
+name|res
 argument_list|,
 name|ex
 argument_list|)
@@ -1129,6 +1131,10 @@ operator|+
 name|cmd
 operator|+
 name|msg
+operator|+
+literal|" res="
+operator|+
+name|res
 argument_list|)
 expr_stmt|;
 name|res
@@ -1138,6 +1144,29 @@ operator|+=
 literal|" Command "
 operator|+
 name|msg
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|res
+operator|.
+name|exitcode
+operator|!=
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Command: "
+operator|+
+name|cmd
+operator|+
+literal|" failed. res="
+operator|+
+name|res
+argument_list|)
 expr_stmt|;
 block|}
 return|return

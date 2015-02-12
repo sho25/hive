@@ -114,7 +114,7 @@ argument_list|(
 name|value
 operator|=
 block|{
-literal|""
+literal|"Apache Argus (incubating)"
 block|}
 argument_list|)
 annotation|@
@@ -480,6 +480,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo

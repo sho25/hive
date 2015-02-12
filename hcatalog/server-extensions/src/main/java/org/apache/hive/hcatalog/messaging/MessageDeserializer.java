@@ -79,6 +79,15 @@ name|messageBody
 argument_list|)
 return|;
 case|case
+name|ALTER_TABLE
+case|:
+return|return
+name|getAlterTableMessage
+argument_list|(
+name|messageBody
+argument_list|)
+return|;
+case|case
 name|DROP_TABLE
 case|:
 return|return
@@ -97,10 +106,28 @@ name|messageBody
 argument_list|)
 return|;
 case|case
+name|ALTER_PARTITION
+case|:
+return|return
+name|getAlterPartitionMessage
+argument_list|(
+name|messageBody
+argument_list|)
+return|;
+case|case
 name|DROP_PARTITION
 case|:
 return|return
 name|getDropPartitionMessage
+argument_list|(
+name|messageBody
+argument_list|)
+return|;
+case|case
+name|INSERT
+case|:
+return|return
+name|getInsertMessage
 argument_list|(
 name|messageBody
 argument_list|)
@@ -147,6 +174,16 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
+comment|/**    * Method to de-serialize AlterTableMessge    * @param messageBody string message    * @return object message    */
+specifier|public
+specifier|abstract
+name|AlterTableMessage
+name|getAlterTableMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
 comment|/**    * Method to de-serialize DropTableMessage instance.    */
 specifier|public
 specifier|abstract
@@ -167,11 +204,31 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
+comment|/**    * Method to deserialize AlterPartitionMessage    * @param messageBody the message in serialized form    * @return message in object form    */
+specifier|public
+specifier|abstract
+name|AlterPartitionMessage
+name|getAlterPartitionMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
 comment|/**    * Method to de-serialize DropPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropPartitionMessage
 name|getDropPartitionMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
+comment|/**    * Method to deserialize InsertMessage    * @param messageBody the message in serialized form    * @return message in object form    */
+specifier|public
+specifier|abstract
+name|InsertMessage
+name|getInsertMessage
 parameter_list|(
 name|String
 name|messageBody

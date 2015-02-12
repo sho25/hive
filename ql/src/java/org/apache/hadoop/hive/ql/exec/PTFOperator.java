@@ -478,7 +478,6 @@ name|hiveConf
 operator|=
 name|jobConf
 expr_stmt|;
-comment|// if the parent is ExtractOperator, this invocation is from reduce-side
 name|isMapOperator
 operator|=
 name|conf
@@ -869,7 +868,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-comment|/*        * Why cannot we just use the ExprNodeEvaluator on the column?        * - because on the reduce-side it is initialized based on the rowOI of the HiveTable        *   and not the OI of the ExtractOp ( the parent of this Operator on the reduce-side)        */
+comment|/*        * Why cannot we just use the ExprNodeEvaluator on the column?        * - because on the reduce-side it is initialized based on the rowOI of the HiveTable        *   and not the OI of the parent of this Operator on the reduce-side        */
 name|keyFields
 index|[
 name|i
@@ -1520,6 +1519,12 @@ condition|)
 block|{
 name|outputPartRowsItr
 operator|=
+name|inputPart
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|tabFn
 operator|.
 name|iterator
@@ -1535,6 +1540,12 @@ else|else
 block|{
 name|outputPart
 operator|=
+name|inputPart
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|tabFn
 operator|.
 name|execute
@@ -1544,6 +1555,12 @@ argument_list|)
 expr_stmt|;
 name|outputPartRowsItr
 operator|=
+name|outputPart
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|outputPart
 operator|.
 name|iterator
@@ -1579,6 +1596,13 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|outputPartRowsItr
+operator|!=
+literal|null
+condition|)
+block|{
 while|while
 condition|(
 name|outputPartRowsItr
@@ -1597,6 +1621,7 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1623,6 +1648,13 @@ name|isStreaming
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|outputPartRowsItr
+operator|!=
+literal|null
+condition|)
+block|{
 while|while
 condition|(
 name|outputPartRowsItr
@@ -1641,6 +1673,7 @@ argument_list|,
 name|outputObjInspector
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

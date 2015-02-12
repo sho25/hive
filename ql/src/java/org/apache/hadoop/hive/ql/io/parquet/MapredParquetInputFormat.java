@@ -194,7 +194,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * A Parquet InputFormat for Hive (with the deprecated package mapred)  *  */
+comment|/**  *  * A Parquet InputFormat for Hive (with the deprecated package mapred)  *  * NOTE: With HIVE-9235 we removed "implements VectorizedParquetInputFormat" since all data types  *       are not currently supported.  Removing the interface turns off vectorization.  */
 end_comment
 
 begin_class
@@ -208,8 +208,6 @@ name|Void
 argument_list|,
 name|ArrayWritable
 argument_list|>
-implements|implements
-name|VectorizedInputFormatInterface
 block|{
 specifier|private
 specifier|static

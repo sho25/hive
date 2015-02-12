@@ -376,7 +376,13 @@ operator|.
 name|getIdColumnName
 argument_list|()
 operator|+
-literal|" VARCHAR(255) PRIMARY KEY "
+literal|" VARCHAR("
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+operator|+
+literal|") PRIMARY KEY "
 decl_stmt|;
 for|for
 control|(
@@ -419,6 +425,37 @@ literal|")"
 expr_stmt|;
 return|return
 name|create
+return|;
+block|}
+comment|/**    * Prepares ALTER TABLE query    */
+specifier|public
+specifier|static
+name|String
+name|getAlterIdColumn
+parameter_list|()
+block|{
+return|return
+literal|"ALTER TABLE "
+operator|+
+name|JDBCStatsUtils
+operator|.
+name|getStatTableName
+argument_list|()
+operator|+
+literal|" ALTER COLUMN "
+operator|+
+name|JDBCStatsUtils
+operator|.
+name|getIdColumnName
+argument_list|()
+operator|+
+literal|" VARCHAR("
+operator|+
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+operator|+
+literal|")"
 return|;
 block|}
 comment|/**    * Prepares UPDATE statement issued when updating existing statistics    */
@@ -704,6 +741,39 @@ decl_stmt|;
 return|return
 name|delete
 return|;
+block|}
+comment|/**    * Make sure the row ID fits into the row ID column in the table.    */
+specifier|public
+specifier|static
+name|void
+name|validateRowId
+parameter_list|(
+name|String
+name|rowId
+parameter_list|)
+block|{
+if|if
+condition|(
+name|rowId
+operator|.
+name|length
+argument_list|()
+operator|>
+name|JDBCStatsSetupConstants
+operator|.
+name|ID_COLUMN_VARCHAR_SIZE
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"ID is too big, client should have truncated it: "
+operator|+
+name|rowId
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 end_class

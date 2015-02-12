@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -128,6 +118,16 @@ operator|.
 name|io
 operator|.
 name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -1775,7 +1775,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 name|maximum
@@ -2571,7 +2570,6 @@ operator|.
 name|minimum
 expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 name|maximum
@@ -3082,7 +3080,6 @@ operator|.
 name|minimum
 expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 name|maximum
@@ -3533,7 +3530,6 @@ operator|.
 name|minimum
 expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 name|maximum
@@ -3732,6 +3728,12 @@ name|count
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+name|boolean
+name|hasNull
+init|=
+literal|false
+decl_stmt|;
 name|ColumnStatisticsImpl
 parameter_list|(
 name|OrcProto
@@ -3756,6 +3758,22 @@ name|getNumberOfValues
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|stats
+operator|.
+name|hasHasNull
+argument_list|()
+condition|)
+block|{
+name|hasNull
+operator|=
+name|stats
+operator|.
+name|getHasNull
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 name|ColumnStatisticsImpl
 parameter_list|()
@@ -3767,6 +3785,15 @@ block|{
 name|count
 operator|+=
 literal|1
+expr_stmt|;
+block|}
+name|void
+name|setNull
+parameter_list|()
+block|{
+name|hasNull
+operator|=
+literal|true
 expr_stmt|;
 block|}
 name|void
@@ -3902,6 +3929,12 @@ name|stats
 operator|.
 name|count
 expr_stmt|;
+name|hasNull
+operator||=
+name|stats
+operator|.
+name|hasNull
+expr_stmt|;
 block|}
 name|void
 name|reset
@@ -3910,6 +3943,10 @@ block|{
 name|count
 operator|=
 literal|0
+expr_stmt|;
+name|hasNull
+operator|=
+literal|false
 expr_stmt|;
 block|}
 annotation|@
@@ -3926,6 +3963,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|boolean
+name|hasNull
+parameter_list|()
+block|{
+return|return
+name|hasNull
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|String
 name|toString
 parameter_list|()
@@ -3934,6 +3982,10 @@ return|return
 literal|"count: "
 operator|+
 name|count
+operator|+
+literal|" hasNull: "
+operator|+
+name|hasNull
 return|;
 block|}
 name|OrcProto
@@ -3963,6 +4015,13 @@ operator|.
 name|setNumberOfValues
 argument_list|(
 name|count
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
+name|setHasNull
+argument_list|(
+name|hasNull
 argument_list|)
 expr_stmt|;
 return|return

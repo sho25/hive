@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Copyright (c) Microsoft Corporation  *  * Licensed under the Apache License, Version 2.0 (the "License");  * you may not use this file except in compliance with the License.  * You may obtain a copy of the License at  *  * http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This code was originally written for Microsoft PolyBase.  *<p>  * A 128-bit fixed-length Decimal value in the ANSI SQL Numeric semantics,  * representing unscaledValue / 10**scale where scale is 0 or positive.  *</p>  *<p>  * This class is similar to {@link java.math.BigDecimal}, but a few things  * differ to conform to the SQL Numeric semantics.  *</p>  *<p>  * Scale of this object is specified by the user, not automatically determined  * like {@link java.math.BigDecimal}. This means that underflow is possible  * depending on the scale. {@link java.math.BigDecimal} controls rounding  * behaviors by MathContext, possibly throwing errors. But, underflow is NOT an  * error in ANSI SQL Numeric. "CAST(0.000000000....0001 AS DECIMAL(38,1))" is  * "0.0" without an error.  *</p>  *<p>  * Because this object is fixed-length, overflow is also possible. Overflow IS  * an error in ANSI SQL Numeric. "CAST(10000 AS DECIMAL(38,38))" throws overflow  * error.  *</p>  *<p>  * Each arithmetic operator takes scale as a parameter to control its behavior.  * It's user's (or query optimizer's) responsibility to give an appropriate  * scale parameter.  *</p>  *<p>  * Finally, this class performs MUCH faster than java.math.BigDecimal for a few  * reasons. Its behavior is simple because of the designs above. This class is  * fixed-length without array expansion and re-allocation. This class is  * mutable, allowing reuse of the same object without re-allocation. This class  * and {@link UnsignedInt128} are designed such that minimal heap-object  * allocations are required for most operations. The only exception is division.  * Even this class requires a few object allocations for division, though much  * fewer than BigDecimal.  *</p>  */
+comment|/**  * This code was based on code from Microsoft's PolyBase.  *<p>  * A 128-bit fixed-length Decimal value in the ANSI SQL Numeric semantics,  * representing unscaledValue / 10**scale where scale is 0 or positive.  *</p>  *<p>  * This class is similar to {@link java.math.BigDecimal}, but a few things  * differ to conform to the SQL Numeric semantics.  *</p>  *<p>  * Scale of this object is specified by the user, not automatically determined  * like {@link java.math.BigDecimal}. This means that underflow is possible  * depending on the scale. {@link java.math.BigDecimal} controls rounding  * behaviors by MathContext, possibly throwing errors. But, underflow is NOT an  * error in ANSI SQL Numeric. "CAST(0.000000000....0001 AS DECIMAL(38,1))" is  * "0.0" without an error.  *</p>  *<p>  * Because this object is fixed-length, overflow is also possible. Overflow IS  * an error in ANSI SQL Numeric. "CAST(10000 AS DECIMAL(38,38))" throws overflow  * error.  *</p>  *<p>  * Each arithmetic operator takes scale as a parameter to control its behavior.  * It's user's (or query optimizer's) responsibility to give an appropriate  * scale parameter.  *</p>  *<p>  * Finally, this class performs MUCH faster than java.math.BigDecimal for a few  * reasons. Its behavior is simple because of the designs above. This class is  * fixed-length without array expansion and re-allocation. This class is  * mutable, allowing reuse of the same object without re-allocation. This class  * and {@link UnsignedInt128} are designed such that minimal heap-object  * allocations are required for most operations. The only exception is division.  * Even this class requires a few object allocations for division, though much  * fewer than BigDecimal.  *</p>  */
 end_comment
 
 begin_class
@@ -212,11 +212,6 @@ specifier|private
 name|short
 name|scale
 decl_stmt|;
-comment|/**    * This is the actual scale detected from the value passed to this Decimal128.    * The value is always equals or less than #scale. It is used to return the correct    * decimal string from {@link #getHiveDecimalString()}.    */
-specifier|private
-name|short
-name|actualScale
-decl_stmt|;
 comment|/**    * -1 means negative, 0 means zero, 1 means positive.    *    * @serial    * @see #getSignum()    */
 specifier|private
 name|byte
@@ -270,12 +265,6 @@ name|signum
 operator|=
 literal|0
 expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-literal|0
-expr_stmt|;
 block|}
 comment|/**    * Copy constructor.    *    * @param o    *          object to copy from    */
 specifier|public
@@ -312,14 +301,6 @@ operator|=
 name|o
 operator|.
 name|signum
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|o
-operator|.
-name|actualScale
 expr_stmt|;
 block|}
 comment|/**    * Translates a {@code double} into a {@code Decimal128} in the given scaling.    * Note that, unlike java.math.BigDecimal, the scaling is given as the    * parameter, not automatically detected. This is one of the differences    * between ANSI SQL Numeric and Java's BigDecimal. See class comments for more    * details.    *<p>    * Unchecked exceptions: ArithmeticException if {@code val} overflows in the    * scaling. NumberFormatException if {@code val} is infinite or NaN.    *</p>    *    * @param val    *          {@code double} value to be converted to {@code Decimal128}.    * @param scale    *          scale of the {@code Decimal128}.    */
@@ -376,12 +357,6 @@ expr_stmt|;
 name|this
 operator|.
 name|scale
-operator|=
-name|scale
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
 operator|=
 name|scale
 expr_stmt|;
@@ -631,14 +606,6 @@ name|o
 operator|.
 name|signum
 expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|o
-operator|.
-name|actualScale
-expr_stmt|;
 return|return
 name|this
 return|;
@@ -692,7 +659,7 @@ literal|0
 argument_list|)
 return|;
 block|}
-comment|/**    * Update the value of this object with the given {@code long} with the given    * scale.    *    * @param val    *          {@code long} value to be set to {@code Decimal128}.    * @param scale    *          scale of the {@code Decimal128}.    */
+comment|/**    * Update the value of this object with the given {@code long} with the given    * scal.    *    * @param val    *          {@code long} value to be set to {@code Decimal128}.    * @param scale    *          scale of the {@code Decimal128}.    */
 specifier|public
 name|Decimal128
 name|update
@@ -778,13 +745,6 @@ name|scale
 argument_list|)
 expr_stmt|;
 block|}
-comment|// set actualScale to 0 because there is no fractional digits on integer values
-name|this
-operator|.
-name|actualScale
-operator|=
-literal|0
-expr_stmt|;
 return|return
 name|this
 return|;
@@ -836,26 +796,6 @@ operator|.
 name|scale
 operator|=
 name|scale
-expr_stmt|;
-comment|// Obtains the scale of the double value to keep a record of the original
-comment|// scale. This will be used to print the HiveDecimal string with the
-comment|// correct value scale.
-name|this
-operator|.
-name|actualScale
-operator|=
-operator|(
-name|short
-operator|)
-name|BigDecimal
-operator|.
-name|valueOf
-argument_list|(
-name|val
-argument_list|)
-operator|.
-name|scale
-argument_list|()
 expr_stmt|;
 comment|// Translate the double into sign, exponent and significand, according
 comment|// to the formulae in JLS, Section 20.10.22.
@@ -1000,39 +940,6 @@ name|exponent
 operator|++
 expr_stmt|;
 block|}
-comment|// Calculate the real number of fractional digits from the double value
-name|this
-operator|.
-name|actualScale
-operator|-=
-operator|(
-name|exponent
-operator|>
-literal|0
-operator|)
-condition|?
-name|exponent
-else|:
-literal|0
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-operator|(
-name|this
-operator|.
-name|actualScale
-operator|<
-literal|0
-operator|)
-condition|?
-literal|0
-else|:
-name|this
-operator|.
-name|actualScale
-expr_stmt|;
 comment|// so far same as java.math.BigDecimal, but the scaling below is
 comment|// specific to ANSI SQL Numeric.
 comment|// first, underflow is NOT an error in ANSI SQL Numeric.
@@ -1197,14 +1104,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1274,14 +1173,6 @@ name|scaleAndSignum
 operator|>>
 literal|16
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
 expr_stmt|;
 name|this
 operator|.
@@ -1355,14 +1246,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1433,14 +1316,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1508,14 +1383,6 @@ name|scaleAndSignum
 operator|>>
 literal|16
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
 expr_stmt|;
 name|this
 operator|.
@@ -1596,14 +1463,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1667,14 +1526,6 @@ name|scaleAndSignum
 operator|>>
 literal|16
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
 expr_stmt|;
 name|this
 operator|.
@@ -1742,14 +1593,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1814,14 +1657,6 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|signum
 operator|=
 call|(
@@ -1883,14 +1718,6 @@ name|scaleAndSignum
 operator|>>
 literal|16
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|this
-operator|.
-name|scale
 expr_stmt|;
 name|this
 operator|.
@@ -1963,6 +1790,12 @@ parameter_list|)
 block|{
 name|this
 operator|.
+name|scale
+operator|=
+name|scale
+expr_stmt|;
+name|this
+operator|.
 name|signum
 operator|=
 operator|(
@@ -2019,18 +1852,6 @@ name|bigInt
 argument_list|)
 expr_stmt|;
 block|}
-name|this
-operator|.
-name|scale
-operator|=
-name|scale
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|scale
-expr_stmt|;
 return|return
 name|this
 return|;
@@ -2523,37 +2344,6 @@ name|accumulated
 argument_list|)
 expr_stmt|;
 block|}
-name|this
-operator|.
-name|actualScale
-operator|=
-call|(
-name|short
-call|)
-argument_list|(
-name|fractionalDigits
-operator|-
-name|exponent
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-operator|(
-name|this
-operator|.
-name|actualScale
-operator|<
-literal|0
-operator|)
-condition|?
-literal|0
-else|:
-name|this
-operator|.
-name|actualScale
-expr_stmt|;
 name|int
 name|scaleAdjust
 init|=
@@ -3183,12 +2973,6 @@ name|scale
 expr_stmt|;
 name|this
 operator|.
-name|actualScale
-operator|=
-name|scale
-expr_stmt|;
-name|this
-operator|.
 name|unscaledValue
 operator|.
 name|throwIfExceedsTenToThirtyEight
@@ -3706,12 +3490,6 @@ name|scale
 operator|=
 name|newScale
 expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|newScale
-expr_stmt|;
 return|return;
 block|}
 comment|// this = this.mag / 10**this.scale
@@ -3805,12 +3583,6 @@ block|}
 name|this
 operator|.
 name|scale
-operator|=
-name|newScale
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
 operator|=
 name|newScale
 expr_stmt|;
@@ -4044,12 +3816,6 @@ name|scale
 operator|=
 name|newScale
 expr_stmt|;
-name|this
-operator|.
-name|actualScale
-operator|=
-name|newScale
-expr_stmt|;
 name|remainder
 operator|.
 name|update
@@ -4154,12 +3920,6 @@ block|}
 name|this
 operator|.
 name|scale
-operator|=
-name|newScale
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
 operator|=
 name|newScale
 expr_stmt|;
@@ -5154,12 +4914,25 @@ index|[
 literal|2
 index|]
 decl_stmt|;
-comment|/**    * Returns the string representation of this value. It returns the original    * {@code actualScale} fractional part when this value was created. However,    * don't use this string representation for the reconstruction of the object.    *    * @return string representation of this value    */
+comment|/**    * Returns the string representation of this value. It discards the trailing zeros    * in the fractional part to match the HiveDecimal's string representation. However,    * don't use this string representation for the reconstruction of the object.    *    * @return string representation of this value    */
 specifier|public
 name|String
 name|getHiveDecimalString
 parameter_list|()
 block|{
+if|if
+condition|(
+name|this
+operator|.
+name|signum
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+literal|"0"
+return|;
+block|}
 name|StringBuilder
 name|buf
 init|=
@@ -5263,9 +5036,9 @@ if|if
 condition|(
 name|this
 operator|.
-name|actualScale
+name|scale
 operator|>
-literal|0
+name|trailingZeros
 condition|)
 block|{
 name|buf
@@ -5275,60 +5048,19 @@ argument_list|(
 literal|'.'
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|trailingZeros
-operator|>
-name|this
-operator|.
-name|actualScale
-condition|)
-block|{
 for|for
 control|(
 name|int
 name|i
 init|=
-literal|0
+name|numIntegerDigits
 init|;
 name|i
 operator|<
 operator|(
-name|trailingZeros
+name|unscaledLength
 operator|-
-name|this
-operator|.
-name|scale
-operator|)
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|buf
-operator|.
-name|append
-argument_list|(
-literal|"0"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-name|numIntegerDigits
-init|;
-name|i
-operator|<
-operator|(
-name|numIntegerDigits
-operator|+
-name|this
-operator|.
-name|actualScale
+name|trailingZeros
 operator|)
 condition|;
 name|i
@@ -5362,9 +5094,9 @@ if|if
 condition|(
 name|this
 operator|.
-name|actualScale
+name|scale
 operator|>
-literal|0
+name|trailingZeros
 condition|)
 block|{
 comment|// fractional part has, starting with zeros
@@ -5375,15 +5107,6 @@ argument_list|(
 literal|'.'
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|this
-operator|.
-name|actualScale
-operator|>
-name|trailingZeros
-condition|)
-block|{
 for|for
 control|(
 name|int
@@ -5409,7 +5132,6 @@ literal|'0'
 argument_list|)
 expr_stmt|;
 block|}
-block|}
 for|for
 control|(
 name|int
@@ -5420,11 +5142,9 @@ init|;
 name|i
 operator|<
 operator|(
-name|numIntegerDigits
-operator|+
-name|this
-operator|.
-name|actualScale
+name|unscaledLength
+operator|-
+name|trailingZeros
 operator|)
 condition|;
 name|i
@@ -5664,12 +5384,6 @@ operator|+
 literal|"(Decimal128: scale="
 operator|+
 name|scale
-operator|+
-literal|", actualScale="
-operator|+
-name|this
-operator|.
-name|actualScale
 operator|+
 literal|", signum="
 operator|+
@@ -6006,12 +5720,6 @@ block|{
 name|this
 operator|.
 name|scale
-operator|=
-name|scale
-expr_stmt|;
-name|this
-operator|.
-name|actualScale
 operator|=
 name|scale
 expr_stmt|;

@@ -24,7 +24,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test {@link TestAuthorizationApiAuthorizer} in remote mode of metastore  */
+comment|/**  * Test {@link AbstractTestAuthorizationApiAuthorizer} in remote mode of metastore  */
 end_comment
 
 begin_class
@@ -32,7 +32,7 @@ specifier|public
 class|class
 name|TestAuthzApiEmbedAuthorizerInRemote
 extends|extends
-name|TestAuthorizationApiAuthorizer
+name|AbstractTestAuthorizationApiAuthorizer
 block|{
 annotation|@
 name|BeforeClass
@@ -49,7 +49,7 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// remote metastore mode
-name|TestAuthorizationApiAuthorizer
+name|AbstractTestAuthorizationApiAuthorizer
 operator|.
 name|setup
 argument_list|()

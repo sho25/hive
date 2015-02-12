@@ -68,7 +68,9 @@ name|Type
 block|{
 name|INTEGER
 block|,
-comment|// all of the integer types
+comment|// all of the integer types except long
+name|LONG
+block|,
 name|FLOAT
 block|,
 comment|// float and double
@@ -83,13 +85,23 @@ name|TIMESTAMP
 block|,
 name|BOOLEAN
 block|}
+comment|/**    * file format which supports search arguments    */
+specifier|public
+specifier|static
+enum|enum
+name|FileFormat
+block|{
+name|ORC
+block|,
+name|PARQUET
+block|}
 comment|/**    * Get the operator for the leaf.    */
 specifier|public
 name|Operator
 name|getOperator
 parameter_list|()
 function_decl|;
-comment|/**    * Get the type of the column and literal.    */
+comment|/**    * Get the type of the column and literal by the file format.    */
 specifier|public
 name|Type
 name|getType
@@ -101,20 +113,26 @@ name|String
 name|getColumnName
 parameter_list|()
 function_decl|;
-comment|/**    * Get the literal half of the predicate leaf.    * @return a Long, Double, or String    */
+comment|/**    * Get the literal half of the predicate leaf. Adapt the original type for what orc needs    * @return a Long, Double, or String for Orc and a Int, Long, Double, or String for parquet    */
 specifier|public
 name|Object
 name|getLiteral
-parameter_list|()
+parameter_list|(
+name|FileFormat
+name|format
+parameter_list|)
 function_decl|;
-comment|/**    * For operators with multiple literals (IN and BETWEEN), get the literals.    * @return the list of literals (Longs, Doubles, or Strings)    */
+comment|/**    * For operators with multiple literals (IN and BETWEEN), get the literals.    *    * @return the list of literals (Longs, Doubles, or Strings) for orc or the list of literals    * (Integer, Longs, Doubles, or String) for parquet    */
 specifier|public
 name|List
 argument_list|<
 name|Object
 argument_list|>
 name|getLiteralList
-parameter_list|()
+parameter_list|(
+name|FileFormat
+name|format
+parameter_list|)
 function_decl|;
 block|}
 end_interface

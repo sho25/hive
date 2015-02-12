@@ -71,7 +71,17 @@ block|,
 name|LOAD_PARTITION_DONE
 block|,
 name|AUTHORIZATION_API_CALL
-block|,   }
+block|,
+name|READ_TABLE
+block|,
+name|READ_DATABASE
+block|,
+name|ADD_INDEX
+block|,
+name|ALTER_INDEX
+block|,
+name|DROP_INDEX
+block|}
 specifier|private
 specifier|final
 name|PreEventType

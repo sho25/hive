@@ -51,6 +51,20 @@ name|MetaException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_comment
 comment|/**  * A thread that runs in the metastore, separate from the threads in the thrift service.  */
 end_comment
@@ -76,38 +90,24 @@ name|int
 name|threadId
 parameter_list|)
 function_decl|;
-comment|/**    * Initialize the thread.  This must not be called until after    * {@link #setHiveConf(org.apache.hadoop.hive.conf.HiveConf)} and  {@link #setThreadId(int)}    * have been called.    * @param stop a flag to watch for when to stop.  If this value is set to true,    *             the thread will terminate the next time through its main loop.    */
+comment|/**    * Initialize the thread.  This must not be called until after    * {@link #setHiveConf(org.apache.hadoop.hive.conf.HiveConf)} and  {@link #setThreadId(int)}    * have been called.    * @param stop a flag to watch for when to stop.  If this value is set to true,    *             the thread will terminate the next time through its main loop.    * @param looped a flag that is set to true everytime a thread goes through it's main loop.    *               This is purely for testing so that tests can assure themselves that the thread    *               has run through it's loop once.  The test can set this value to false.  The    *               thread should then assure that the loop has been gone completely through at    *               least once.    */
 name|void
 name|init
 parameter_list|(
-name|BooleanPointer
+name|AtomicBoolean
 name|stop
+parameter_list|,
+name|AtomicBoolean
+name|looped
 parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Run the thread in the background.  This must not be called until    * {@link #init(org.apache.hadoop.hive.metastore.MetaStoreThread.BooleanPointer)} has    * been called.    */
+comment|/**    * Run the thread in the background.  This must not be called until    * {@link ##init(java.util.concurrent.atomic.AtomicBoolean, java.util.concurrent.atomic.AtomicBoolean)} has    * been called.    */
 name|void
 name|start
 parameter_list|()
 function_decl|;
-class|class
-name|BooleanPointer
-block|{
-specifier|public
-name|boolean
-name|boolVal
-decl_stmt|;
-specifier|public
-name|BooleanPointer
-parameter_list|()
-block|{
-name|boolVal
-operator|=
-literal|false
-expr_stmt|;
-block|}
-block|}
 block|}
 end_interface
 

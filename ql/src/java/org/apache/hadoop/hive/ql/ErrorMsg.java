@@ -1148,7 +1148,7 @@ name|DROP_PARTITION_NON_STRING_PARTCOLS_NONEQUALITY
 argument_list|(
 literal|10129
 argument_list|,
-literal|"Drop partitions for a non string partition columns is not allowed using non-equality"
+literal|"Drop partitions for a non-string partition column is only allowed using equality"
 argument_list|)
 block|,
 name|ALTER_COMMAND_FOR_VIEWS
@@ -1811,6 +1811,13 @@ argument_list|,
 literal|"Transaction manager has aborted the transaction."
 argument_list|)
 block|,
+name|DBTXNMGR_REQUIRES_CONCURRENCY
+argument_list|(
+literal|10264
+argument_list|,
+literal|"To use DbTxnManager you must set hive.support.concurrency=true"
+argument_list|)
+block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
@@ -1934,6 +1941,46 @@ argument_list|(
 literal|10296
 argument_list|,
 literal|"Values clause with table constructor not yet supported"
+argument_list|)
+block|,
+name|ACID_OP_ON_NONACID_TABLE
+argument_list|(
+literal|10297
+argument_list|,
+literal|"Attempt to do update or delete on table {0} that does not use "
+operator|+
+literal|"an AcidOutputFormat or is not bucketed"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ACID_NO_SORTED_BUCKETS
+argument_list|(
+literal|10298
+argument_list|,
+literal|"ACID insert, update, delete not supported on tables that are "
+operator|+
+literal|"sorted, table {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ALTER_TABLE_TYPE_PARTIAL_PARTITION_SPEC_NO_SUPPORTED
+argument_list|(
+literal|10299
+argument_list|,
+literal|"Alter table partition type {0} does not allow partial partition spec"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ALTER_TABLE_PARTITION_CASCADE_NOT_SUPPORTED
+argument_list|(
+literal|10300
+argument_list|,
+literal|"Alter table partition type {0} does not support cascade"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

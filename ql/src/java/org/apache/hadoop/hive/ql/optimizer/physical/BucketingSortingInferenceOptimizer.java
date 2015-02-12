@@ -75,24 +75,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ExtractOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|FileSinkOperator
 import|;
 end_import
@@ -678,7 +660,7 @@ name|getSelProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Matches only GroupByOpeartors which are reducers, rather than map group by operators,
+comment|// Matches only GroupByOperators which are reducers, rather than map group by operators,
 comment|// or multi group by optimization specific operators
 name|opRules
 operator|.
@@ -747,30 +729,6 @@ argument_list|,
 name|BucketingSortingOpProcFactory
 operator|.
 name|getFileSinkProc
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// Matches only ExtractOperators which are reducers
-name|opRules
-operator|.
-name|put
-argument_list|(
-operator|new
-name|RuleExactMatch
-argument_list|(
-literal|"R6"
-argument_list|,
-name|ExtractOperator
-operator|.
-name|getOperatorName
-argument_list|()
-operator|+
-literal|"%"
-argument_list|)
-argument_list|,
-name|BucketingSortingOpProcFactory
-operator|.
-name|getExtractProc
 argument_list|()
 argument_list|)
 expr_stmt|;

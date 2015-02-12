@@ -601,6 +601,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|String
+name|TIMESTAMP_FORMATS
+init|=
+literal|"timestamp.formats"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|Set
 argument_list|<
 name|String

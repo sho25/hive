@@ -243,7 +243,7 @@ name|extended
 operator|=
 literal|"Example:\n"
 operator|+
-literal|"> SELECT _FUNC_('2009-30-07') FROM src LIMIT 1;\n"
+literal|"> SELECT _FUNC_('2009-07-30') FROM src LIMIT 1;\n"
 operator|+
 literal|"  7"
 argument_list|)

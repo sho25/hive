@@ -82,6 +82,27 @@ name|HCatConstants
 operator|.
 name|HCAT_DROP_PARTITION_EVENT
 argument_list|)
+operator|,
+name|ALTER_TABLE
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_ALTER_TABLE_EVENT
+argument_list|)
+operator|,
+name|ALTER_PARTITION
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_ALTER_PARTITION_EVENT
+argument_list|)
+operator|,
+name|INSERT
+argument_list|(
+name|HCatConstants
+operator|.
+name|HCAT_INSERT_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 

@@ -178,7 +178,7 @@ name|Exception
 block|{
 return|return
 operator|new
-name|InputMerger
+name|KeyValuesInputMerger
 argument_list|(
 name|getInputs
 argument_list|()

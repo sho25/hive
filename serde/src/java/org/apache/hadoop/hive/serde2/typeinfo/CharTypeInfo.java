@@ -54,7 +54,15 @@ comment|// no-arg constructor to make kyro happy.
 specifier|public
 name|CharTypeInfo
 parameter_list|()
-block|{   }
+block|{
+name|super
+argument_list|(
+name|serdeConstants
+operator|.
+name|CHAR_TYPE_NAME
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|CharTypeInfo
 parameter_list|(

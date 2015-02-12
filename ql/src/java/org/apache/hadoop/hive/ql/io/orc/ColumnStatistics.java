@@ -35,6 +35,11 @@ name|long
 name|getNumberOfValues
 parameter_list|()
 function_decl|;
+comment|/**    * Returns true if there are nulls in the scope of column statistics.    * @return true if null present else false    */
+name|boolean
+name|hasNull
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

@@ -71,6 +71,24 @@ name|AcidUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
 begin_comment
 comment|/**  * FileSinkDesc.  *  */
 end_comment
@@ -144,6 +162,10 @@ decl_stmt|;
 specifier|private
 name|boolean
 name|multiFileSpray
+decl_stmt|;
+specifier|private
+name|boolean
+name|temporary
 decl_stmt|;
 comment|// Whether the files output by this FileSink can be merged, e.g. if they are to be put into a
 comment|// bucketed or sorted table/partition they cannot be merged.
@@ -257,6 +279,11 @@ init|=
 literal|0
 decl_stmt|;
 comment|// transaction id for this operation
+specifier|private
+specifier|transient
+name|Table
+name|table
+decl_stmt|;
 specifier|public
 name|FileSinkDesc
 parameter_list|()
@@ -823,6 +850,32 @@ operator|=
 name|multiFileSpray
 expr_stmt|;
 block|}
+comment|/**    * @return destination is temporary    */
+specifier|public
+name|boolean
+name|isTemporary
+parameter_list|()
+block|{
+return|return
+name|temporary
+return|;
+block|}
+comment|/**    * @param totalFiles the totalFiles to set    */
+specifier|public
+name|void
+name|setTemporary
+parameter_list|(
+name|boolean
+name|temporary
+parameter_list|)
+block|{
+name|this
+operator|.
+name|temporary
+operator|=
+name|temporary
+expr_stmt|;
+block|}
 specifier|public
 name|boolean
 name|canBeMerged
@@ -1382,6 +1435,30 @@ block|{
 return|return
 name|txnId
 return|;
+block|}
+specifier|public
+name|Table
+name|getTable
+parameter_list|()
+block|{
+return|return
+name|table
+return|;
+block|}
+specifier|public
+name|void
+name|setTable
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+name|this
+operator|.
+name|table
+operator|=
+name|table
+expr_stmt|;
 block|}
 block|}
 end_class

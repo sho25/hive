@@ -317,19 +317,16 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|getClass
-argument_list|()
+return|return
+name|wrappedEval
 operator|.
-name|getSimpleName
-argument_list|()
-operator|+
-literal|": init not supported"
+name|init
+argument_list|(
+name|m
+argument_list|,
+name|parameters
 argument_list|)
-throw|;
+return|;
 block|}
 annotation|@
 name|Override

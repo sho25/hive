@@ -276,6 +276,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|protected
+specifier|static
 specifier|final
 name|Log
 name|LOG
@@ -284,10 +285,9 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|this
+name|UDTFOperator
 operator|.
-name|getClass
-argument_list|()
+name|class
 operator|.
 name|getName
 argument_list|()

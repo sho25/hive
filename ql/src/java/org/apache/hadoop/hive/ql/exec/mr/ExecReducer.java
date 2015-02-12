@@ -524,21 +524,32 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|boolean
+name|isInfoEnabled
+init|=
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|boolean
+name|isTraceEnabled
+init|=
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|String
 name|PLAN_KEY
 init|=
 literal|"__REDUCE_PLAN__"
-decl_stmt|;
-comment|// used to log memory usage periodically
-specifier|private
-specifier|final
-name|MemoryMXBean
-name|memoryMXBean
-init|=
-name|ManagementFactory
-operator|.
-name|getMemoryMXBean
-argument_list|()
 decl_stmt|;
 comment|// Input value serde needs to be an array to support different SerDe
 comment|// for different tags
@@ -592,16 +603,6 @@ name|size
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|isLogInfoEnabled
-init|=
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-decl_stmt|;
 comment|// TODO: move to DynamicSerDe when it's ready
 specifier|private
 name|Deserializer
@@ -642,18 +643,6 @@ name|boolean
 name|isTagged
 init|=
 literal|false
-decl_stmt|;
-specifier|private
-name|long
-name|cntr
-init|=
-literal|0
-decl_stmt|;
-specifier|private
-name|long
-name|nextCntr
-init|=
-literal|1
 decl_stmt|;
 specifier|private
 name|TableDesc
@@ -715,21 +704,11 @@ decl_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"maximum memory = "
-operator|+
-name|memoryMXBean
-operator|.
-name|getHeapMemoryUsage
-argument_list|()
-operator|.
-name|getMax
-argument_list|()
-argument_list|)
-expr_stmt|;
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
+block|{
 try|try
 block|{
 name|LOG
@@ -804,6 +783,7 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|jc
 operator|=
@@ -1075,13 +1055,6 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
-name|reducer
-operator|.
-name|setGroupKeyObjectInspector
-argument_list|(
-name|keyObjectInspector
-argument_list|)
-expr_stmt|;
 name|rowObjectInspector
 index|[
 name|tag
@@ -1334,6 +1307,11 @@ block|}
 else|else
 block|{
 comment|// If a operator wants to do some work at the end of a group
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1341,6 +1319,7 @@ argument_list|(
 literal|"End Group"
 argument_list|)
 expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|endGroup
@@ -1416,6 +1395,11 @@ name|getSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1423,17 +1407,18 @@ argument_list|(
 literal|"Start Group"
 argument_list|)
 expr_stmt|;
+block|}
+name|reducer
+operator|.
+name|startGroup
+argument_list|()
+expr_stmt|;
 name|reducer
 operator|.
 name|setGroupKeyObject
 argument_list|(
 name|keyObject
 argument_list|)
-expr_stmt|;
-name|reducer
-operator|.
-name|startGroup
-argument_list|()
 expr_stmt|;
 block|}
 comment|// System.err.print(keyObject.toString());
@@ -1544,54 +1529,6 @@ name|tag
 index|]
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|cntr
-operator|++
-expr_stmt|;
-if|if
-condition|(
-name|cntr
-operator|==
-name|nextCntr
-condition|)
-block|{
-name|long
-name|used_memory
-init|=
-name|memoryMXBean
-operator|.
-name|getHeapMemoryUsage
-argument_list|()
-operator|.
-name|getUsed
-argument_list|()
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ExecReducer: processing "
-operator|+
-name|cntr
-operator|+
-literal|" rows: used memory = "
-operator|+
-name|used_memory
-argument_list|)
-expr_stmt|;
-name|nextCntr
-operator|=
-name|getNextCntr
-argument_list|(
-name|cntr
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 try|try
 block|{
 name|reducer
@@ -1719,36 +1656,6 @@ throw|;
 block|}
 block|}
 block|}
-specifier|private
-name|long
-name|getNextCntr
-parameter_list|(
-name|long
-name|cntr
-parameter_list|)
-block|{
-comment|// A very simple counter to keep track of number of rows processed by the
-comment|// reducer. It dumps
-comment|// every 1 million times, and quickly before that
-if|if
-condition|(
-name|cntr
-operator|>=
-literal|1000000
-condition|)
-block|{
-return|return
-name|cntr
-operator|+
-literal|1000000
-return|;
-block|}
-return|return
-literal|10
-operator|*
-name|cntr
-return|;
-block|}
 annotation|@
 name|Override
 specifier|public
@@ -1762,6 +1669,8 @@ condition|(
 name|oc
 operator|==
 literal|null
+operator|&&
+name|isTraceEnabled
 condition|)
 block|{
 name|LOG
@@ -1782,6 +1691,11 @@ literal|null
 condition|)
 block|{
 comment|// If a operator wants to do some work at the end of a group
+if|if
+condition|(
+name|isTraceEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|trace
@@ -1789,35 +1703,11 @@ argument_list|(
 literal|"End Group"
 argument_list|)
 expr_stmt|;
+block|}
 name|reducer
 operator|.
 name|endGroup
 argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|isLogInfoEnabled
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ExecReducer: processed "
-operator|+
-name|cntr
-operator|+
-literal|" rows: used memory = "
-operator|+
-name|memoryMXBean
-operator|.
-name|getHeapMemoryUsage
-argument_list|()
-operator|.
-name|getUsed
-argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 name|reducer
@@ -1834,6 +1724,8 @@ operator|new
 name|ReportStats
 argument_list|(
 name|rp
+argument_list|,
+name|jc
 argument_list|)
 decl_stmt|;
 name|reducer

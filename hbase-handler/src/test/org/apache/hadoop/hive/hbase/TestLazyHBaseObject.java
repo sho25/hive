@@ -3961,20 +3961,15 @@ name|Arrays
 operator|.
 name|asList
 argument_list|(
-operator|new
-name|String
-index|[]
-block|{
 literal|"key"
-block|,
+argument_list|,
 literal|"a"
-block|,
+argument_list|,
 literal|"b"
-block|,
+argument_list|,
 literal|"c"
-block|,
+argument_list|,
 literal|"d"
-block|}
 argument_list|)
 decl_stmt|;
 name|Text
@@ -4121,6 +4116,8 @@ operator|(
 name|LazySimpleStructObjectInspector
 operator|)
 name|oi
+argument_list|,
+name|columnMappings
 argument_list|)
 decl_stmt|;
 name|List
@@ -4298,8 +4295,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4419,8 +4414,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4577,8 +4570,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4698,8 +4689,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4919,8 +4908,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -5137,6 +5124,8 @@ operator|(
 name|LazySimpleStructObjectInspector
 operator|)
 name|oi
+argument_list|,
+name|columnMappings
 argument_list|)
 decl_stmt|;
 name|List
@@ -5351,8 +5340,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -5509,8 +5496,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -5667,8 +5652,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -5788,8 +5771,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -5946,8 +5927,6 @@ operator|.
 name|init
 argument_list|(
 name|r
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -6189,6 +6168,8 @@ operator|(
 name|LazySimpleStructObjectInspector
 operator|)
 name|oi
+argument_list|,
+name|columnMappings
 argument_list|)
 decl_stmt|;
 name|byte
@@ -6422,8 +6403,6 @@ operator|.
 name|init
 argument_list|(
 name|result
-argument_list|,
-name|columnMappings
 argument_list|)
 expr_stmt|;
 name|List

@@ -668,7 +668,6 @@ comment|// There can be atmost one element eligible to be converted to
 comment|// metadata only
 if|if
 condition|(
-operator|(
 name|walkerCtx
 operator|.
 name|getMayBeMetadataOnlyTableScans
@@ -676,19 +675,6 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-operator|)
-operator|||
-operator|(
-name|walkerCtx
-operator|.
-name|getMayBeMetadataOnlyTableScans
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|1
-operator|)
 condition|)
 block|{
 return|return

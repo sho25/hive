@@ -177,6 +177,13 @@ init|=
 literal|"upgrade.order"
 decl_stmt|;
 specifier|private
+specifier|static
+name|String
+name|PRE_UPGRADE_PREFIX
+init|=
+literal|"pre-"
+decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|dbType
@@ -197,7 +204,8 @@ specifier|final
 name|String
 name|hiveHome
 decl_stmt|;
-comment|// Minor version upgrades often don't change schema. So they are equivalent to a version
+comment|// Some version upgrades often don't change schema. So they are equivalent to
+comment|// a version
 comment|// that has a corresponding schema. eg "0.13.1" is equivalent to "0.13.0"
 specifier|private
 specifier|static
@@ -217,6 +225,10 @@ argument_list|(
 literal|"0.13.1"
 argument_list|,
 literal|"0.13.0"
+argument_list|,
+literal|"1.0.0"
+argument_list|,
+literal|"0.14.0"
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -653,6 +665,28 @@ operator|+
 name|dbType
 operator|+
 name|SQL_FILE_EXTENSION
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|getPreUpgradeScriptName
+parameter_list|(
+name|int
+name|index
+parameter_list|,
+name|String
+name|upgradeScriptName
+parameter_list|)
+block|{
+return|return
+name|PRE_UPGRADE_PREFIX
+operator|+
+name|index
+operator|+
+literal|"-"
+operator|+
+name|upgradeScriptName
 return|;
 block|}
 specifier|public

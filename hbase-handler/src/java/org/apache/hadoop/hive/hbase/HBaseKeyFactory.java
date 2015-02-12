@@ -219,7 +219,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * serialize hive object in internal format of custom key    *    * @param object    * @param inspector    * @param output    *    * @return true if it's not null    * @throws java.io.IOException    */
+comment|/**    * serialize hive object in internal format of custom key    *    * @param object    * @param field    *    * @return true if it's not null    * @throws java.io.IOException    */
 name|byte
 index|[]
 name|serializeKey

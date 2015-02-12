@@ -794,7 +794,7 @@ operator|.
 name|getMapWork
 argument_list|()
 operator|.
-name|getMapLocalWork
+name|getMapRedLocalWork
 argument_list|()
 decl_stmt|;
 if|if
@@ -1014,7 +1014,7 @@ operator|.
 name|getMapWork
 argument_list|()
 operator|.
-name|setMapLocalWork
+name|setMapRedLocalWork
 argument_list|(
 name|newLocalWork
 argument_list|)
@@ -1452,6 +1452,7 @@ name|getTaskToAliases
 argument_list|()
 decl_stmt|;
 comment|// to avoid concurrent modify the hashmap
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|HashMap
 argument_list|<
 name|Task
@@ -1469,7 +1470,7 @@ argument_list|>
 name|newTaskToAliases
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Task
 argument_list|<

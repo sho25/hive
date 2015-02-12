@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -918,6 +908,7 @@ return|return
 literal|null
 return|;
 block|}
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -930,7 +921,7 @@ argument_list|>
 name|tableToKeysMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -944,15 +935,13 @@ decl_stmt|;
 name|Table
 name|tbl
 init|=
-name|pGraphContext
+name|tso
 operator|.
-name|getTopToTable
+name|getConf
 argument_list|()
 operator|.
-name|get
-argument_list|(
-name|tso
-argument_list|)
+name|getTableMetadata
+argument_list|()
 decl_stmt|;
 name|tableToKeysMap
 operator|.
@@ -1044,6 +1033,7 @@ name|TableAccessCtx
 operator|)
 name|procCtx
 decl_stmt|;
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -1056,7 +1046,7 @@ argument_list|>
 name|tableToKeysMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1086,19 +1076,6 @@ decl_stmt|;
 comment|// Get the key column names for each side of the join,
 comment|// and check if the keys are all constants
 comment|// or columns (not expressions). If yes, proceed.
-name|QBJoinTree
-name|joinTree
-init|=
-name|pGraphContext
-operator|.
-name|getJoinContext
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|op
-argument_list|)
-decl_stmt|;
 assert|assert
 operator|(
 name|parentOps
@@ -1106,7 +1083,10 @@ operator|.
 name|size
 argument_list|()
 operator|==
-name|joinTree
+name|op
+operator|.
+name|getConf
+argument_list|()
 operator|.
 name|getBaseSrc
 argument_list|()
@@ -1124,7 +1104,10 @@ control|(
 name|String
 name|src
 range|:
-name|joinTree
+name|op
+operator|.
+name|getConf
+argument_list|()
 operator|.
 name|getBaseSrc
 argument_list|()
@@ -1233,15 +1216,13 @@ block|}
 name|Table
 name|tbl
 init|=
-name|pGraphContext
+name|tso
 operator|.
-name|getTopToTable
+name|getConf
 argument_list|()
 operator|.
-name|get
-argument_list|(
-name|tso
-argument_list|)
+name|getTableMetadata
+argument_list|()
 decl_stmt|;
 name|tableToKeysMap
 operator|.

@@ -492,7 +492,9 @@ name|d
 operator|*
 name|MILLIS_PER_DAY
 decl_stmt|;
-return|return
+name|long
+name|tmp
+init|=
 name|millisUtc
 operator|-
 name|LOCAL_TIMEZONE
@@ -503,6 +505,21 @@ operator|.
 name|getOffset
 argument_list|(
 name|millisUtc
+argument_list|)
+decl_stmt|;
+comment|// Between millisUtc and tmp, the time zone offset may have changed due to DST.
+comment|// Look up the offset again.
+return|return
+name|millisUtc
+operator|-
+name|LOCAL_TIMEZONE
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getOffset
+argument_list|(
+name|tmp
 argument_list|)
 return|;
 block|}

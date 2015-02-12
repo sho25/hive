@@ -163,6 +163,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|serde
+operator|.
+name|serdeConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|SerDe
@@ -182,6 +198,22 @@ operator|.
 name|serde2
 operator|.
 name|SerDeException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|SerDeSpec
 import|;
 end_import
 
@@ -292,6 +324,21 @@ comment|/**  * A serde class for ORC.  * It transparently passes the object to/f
 end_comment
 
 begin_class
+annotation|@
+name|SerDeSpec
+argument_list|(
+name|schemaProps
+operator|=
+block|{
+name|serdeConstants
+operator|.
+name|LIST_COLUMNS
+block|,
+name|serdeConstants
+operator|.
+name|LIST_COLUMN_TYPES
+block|}
+argument_list|)
 specifier|public
 class|class
 name|OrcSerde
@@ -426,7 +473,9 @@ name|table
 operator|.
 name|getProperty
 argument_list|(
-literal|"columns"
+name|serdeConstants
+operator|.
+name|LIST_COLUMNS
 argument_list|)
 decl_stmt|;
 comment|// NOTE: if "columns.types" is missing, all columns will be of String type
@@ -437,7 +486,9 @@ name|table
 operator|.
 name|getProperty
 argument_list|(
-literal|"columns.types"
+name|serdeConstants
+operator|.
+name|LIST_COLUMN_TYPES
 argument_list|)
 decl_stmt|;
 comment|// Parse the configuration parameters

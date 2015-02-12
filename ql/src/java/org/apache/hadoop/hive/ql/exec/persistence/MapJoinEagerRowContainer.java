@@ -523,9 +523,6 @@ name|IOException
 throws|,
 name|SerDeException
 block|{
-name|clearRows
-argument_list|()
-expr_stmt|;
 name|long
 name|numRows
 init|=

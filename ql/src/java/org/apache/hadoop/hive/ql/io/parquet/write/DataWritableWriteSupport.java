@@ -55,9 +55,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|ParquetHiveRecord
 import|;
 end_import
 
@@ -116,7 +120,7 @@ name|DataWritableWriteSupport
 extends|extends
 name|WriteSupport
 argument_list|<
-name|ArrayWritable
+name|ParquetHiveRecord
 argument_list|>
 block|{
 specifier|public
@@ -250,7 +254,7 @@ name|void
 name|write
 parameter_list|(
 specifier|final
-name|ArrayWritable
+name|ParquetHiveRecord
 name|record
 parameter_list|)
 block|{

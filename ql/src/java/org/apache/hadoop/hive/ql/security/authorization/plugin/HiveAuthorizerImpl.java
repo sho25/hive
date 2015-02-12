@@ -581,6 +581,8 @@ parameter_list|(
 name|HiveConf
 name|hiveConf
 parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
 block|{
 name|accessController
 operator|.

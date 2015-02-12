@@ -119,7 +119,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -546,6 +546,18 @@ operator|.
 name|Assert
 operator|.
 name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
 import|;
 end_import
 
@@ -2692,7 +2704,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|Long
 operator|.
@@ -4287,7 +4299,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"200:"
 argument_list|)
@@ -4742,7 +4754,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"200:"
 argument_list|)
@@ -4962,6 +4974,16 @@ name|event
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertFalse
+argument_list|(
+name|merger
+operator|.
+name|isDelete
+argument_list|(
+name|event
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|true
@@ -5012,6 +5034,16 @@ argument_list|(
 literal|"second"
 argument_list|,
 name|getValue
+argument_list|(
+name|event
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|merger
+operator|.
+name|isDelete
 argument_list|(
 name|event
 argument_list|)
@@ -5342,6 +5374,16 @@ argument_list|(
 name|OrcRecordUpdater
 operator|.
 name|getRow
+argument_list|(
+name|event
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|merger
+operator|.
+name|isDelete
 argument_list|(
 name|event
 argument_list|)
@@ -6361,7 +6403,7 @@ name|ValidTxnList
 name|txns
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 literal|"2000:200"
 argument_list|)

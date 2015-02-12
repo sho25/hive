@@ -251,6 +251,16 @@ operator|.
 name|getTokenStopIndex
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|tokenStopIndex
+operator|<
+literal|0
+condition|)
+block|{
+comment|// this is for artificially added tokens
+return|return;
+block|}
 name|Translation
 name|translation
 init|=

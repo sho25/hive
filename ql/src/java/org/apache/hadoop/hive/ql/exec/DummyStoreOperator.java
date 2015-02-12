@@ -171,7 +171,7 @@ argument_list|>
 implements|implements
 name|Serializable
 block|{
-specifier|private
+specifier|protected
 specifier|transient
 name|InspectableObject
 name|result

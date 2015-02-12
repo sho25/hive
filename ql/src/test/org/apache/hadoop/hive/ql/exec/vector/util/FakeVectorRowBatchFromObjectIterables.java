@@ -113,7 +113,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Decimal128
+name|HiveDecimal
 import|;
 end_import
 
@@ -1098,15 +1098,15 @@ name|columnVector
 decl_stmt|;
 name|dcv
 operator|.
-name|vector
-index|[
+name|set
+argument_list|(
 name|row
-index|]
-operator|=
+argument_list|,
 operator|(
-name|Decimal128
+name|HiveDecimal
 operator|)
 name|value
+argument_list|)
 expr_stmt|;
 block|}
 block|}

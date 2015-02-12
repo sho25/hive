@@ -63,7 +63,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -73,7 +73,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashSet
 import|;
 end_import
 
@@ -130,10 +130,11 @@ specifier|public
 name|ColumnAccessInfo
 parameter_list|()
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|tableToColumnAccessMap
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -176,10 +177,11 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Must be deterministic order set for consistent q-test output across Java versions
 name|tableColumns
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|String
 argument_list|>
@@ -216,6 +218,7 @@ argument_list|>
 name|getTableToColumnAccessMap
 parameter_list|()
 block|{
+comment|// Must be deterministic order map for consistent q-test output across Java versions
 name|Map
 argument_list|<
 name|String
@@ -228,7 +231,7 @@ argument_list|>
 name|mapping
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

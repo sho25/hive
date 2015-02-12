@@ -84,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ProxyUserAuthenticator extends HadoopDefaultAuthenticator  * but honours a proxy config setting proxy.user.name instead of the  * current user if set. This allows server processes like webhcat which  * proxy other users to easily specify an override if allowed.  */
+comment|/**  * ProxyUserAuthenticator extends HadoopDefaultAuthenticator  * but honours a proxy config setting proxy.user.name instead of the  * current user if set. This allows server processes like webhcat which  * proxy other users to easily specify an override if allowed.  *  * It is no longer necessary to use this class with WebHCat as of Hive 0.14.  */
 end_comment
 
 begin_class
@@ -154,16 +154,11 @@ try|try
 block|{
 name|ugi
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|UserGroupInformation
 operator|.
 name|createRemoteUser
 argument_list|(
 name|proxyUser
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -204,15 +199,10 @@ name|this
 operator|.
 name|userName
 operator|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|ugi
 operator|.
 name|getShortUserName
-argument_list|(
-name|ugi
-argument_list|)
+argument_list|()
 expr_stmt|;
 if|if
 condition|(

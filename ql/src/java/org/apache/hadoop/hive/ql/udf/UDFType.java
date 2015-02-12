@@ -79,11 +79,55 @@ name|Target
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+operator|.
+name|Public
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
+operator|.
+name|Evolving
+import|;
+end_import
+
 begin_comment
-comment|/**  * UDFType.  *  */
+comment|/**  * UDFType annotations are used to describe properties of a UDF. This gives  * important information to the optimizer.  * If the UDF is not deterministic, or if it is stateful, it is necessary to  * annotate it as such for correctness.  *  */
 end_comment
 
 begin_annotation_defn
+annotation|@
+name|Public
+annotation|@
+name|Evolving
 annotation|@
 name|Target
 argument_list|(
@@ -104,18 +148,21 @@ specifier|public
 annotation_defn|@interface
 name|UDFType
 block|{
+comment|/**    * Certain optimizations should not be applied if UDF is not deterministic.    * Deterministic UDF returns same result each time it is invoked with a    * particular input. This determinism just needs to hold within the context of    * a query.    *    * @return true if the UDF is deterministic    */
 name|boolean
 name|deterministic
 parameter_list|()
 default|default
 literal|true
 function_decl|;
+comment|/**    * If a UDF stores state based on the sequence of records it has processed, it    * is stateful. A stateful UDF cannot be used in certain expressions such as    * case statement and certain optimizations such as AND/OR short circuiting    * don't apply for such UDFs, as they need to be invoked for each record.    * row_sequence is an example of stateful UDF. A stateful UDF is considered to    * be non-deterministic, irrespective of what deterministic() returns.    *    * @return true    */
 name|boolean
 name|stateful
 parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|/**    * A UDF is considered distinctLike if the UDF can be evaluated on just the    * distinct values of a column. Examples include min and max UDFs. This    * information is used by metadata-only optimizer.    *    * @return true if UDF is distinctLike    */
 name|boolean
 name|distinctLike
 parameter_list|()

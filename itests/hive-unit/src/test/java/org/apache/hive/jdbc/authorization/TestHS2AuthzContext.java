@@ -837,9 +837,9 @@ operator|.
 name|getIpAddress
 argument_list|()
 operator|.
-name|contains
+name|matches
 argument_list|(
-literal|"."
+literal|"[.:a-fA-F0-9]+"
 argument_list|)
 argument_list|)
 expr_stmt|;

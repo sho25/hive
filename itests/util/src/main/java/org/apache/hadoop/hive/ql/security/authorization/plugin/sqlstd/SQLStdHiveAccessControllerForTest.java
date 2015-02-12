@@ -192,6 +192,8 @@ parameter_list|(
 name|HiveConf
 name|hiveConf
 parameter_list|)
+throws|throws
+name|HiveAuthzPluginException
 block|{
 name|super
 operator|.
@@ -203,9 +205,9 @@ expr_stmt|;
 comment|// remove restrictions on the variables that can be set using set command
 name|hiveConf
 operator|.
-name|setIsModWhiteListEnabled
+name|setModifiableWhiteListRegex
 argument_list|(
-literal|false
+literal|".*"
 argument_list|)
 expr_stmt|;
 block|}

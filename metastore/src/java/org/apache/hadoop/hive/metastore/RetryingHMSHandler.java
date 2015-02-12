@@ -235,6 +235,18 @@ name|NoSuchObjectException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|datanucleus
+operator|.
+name|exceptions
+operator|.
+name|NucleusException
+import|;
+end_import
+
 begin_class
 annotation|@
 name|InterfaceAudience
@@ -268,7 +280,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|IHMSHandler
-name|base
+name|baseHandler
 decl_stmt|;
 specifier|private
 specifier|final
@@ -286,13 +298,13 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|HiveConf
-name|hiveConf
+name|origConf
 decl_stmt|;
 comment|// base configuration
 specifier|private
 specifier|final
 name|Configuration
-name|configuration
+name|activeConf
 decl_stmt|;
 comment|// active configuration
 specifier|private
@@ -301,8 +313,8 @@ parameter_list|(
 name|HiveConf
 name|hiveConf
 parameter_list|,
-name|String
-name|name
+name|IHMSHandler
+name|baseHandler
 parameter_list|,
 name|boolean
 name|local
@@ -312,32 +324,22 @@ name|MetaException
 block|{
 name|this
 operator|.
-name|hiveConf
+name|origConf
 operator|=
 name|hiveConf
 expr_stmt|;
 name|this
 operator|.
-name|base
+name|baseHandler
 operator|=
-operator|new
-name|HiveMetaStore
-operator|.
-name|HMSHandler
-argument_list|(
-name|name
-argument_list|,
-name|hiveConf
-argument_list|,
-literal|false
-argument_list|)
+name|baseHandler
 expr_stmt|;
 if|if
 condition|(
 name|local
 condition|)
 block|{
-name|base
+name|baseHandler
 operator|.
 name|setConf
 argument_list|(
@@ -346,9 +348,9 @@ argument_list|)
 expr_stmt|;
 comment|// tests expect configuration changes applied directly to metastore
 block|}
-name|configuration
+name|activeConf
 operator|=
-name|base
+name|baseHandler
 operator|.
 name|getConf
 argument_list|()
@@ -363,7 +365,7 @@ name|updateConnectionURL
 argument_list|(
 name|hiveConf
 argument_list|,
-name|getConf
+name|getActiveConf
 argument_list|()
 argument_list|,
 literal|null
@@ -371,7 +373,7 @@ argument_list|,
 name|metaStoreInitData
 argument_list|)
 expr_stmt|;
-name|base
+name|baseHandler
 operator|.
 name|init
 argument_list|()
@@ -385,8 +387,8 @@ parameter_list|(
 name|HiveConf
 name|hiveConf
 parameter_list|,
-name|String
-name|name
+name|IHMSHandler
+name|baseHandler
 parameter_list|,
 name|boolean
 name|local
@@ -402,7 +404,7 @@ name|RetryingHMSHandler
 argument_list|(
 name|hiveConf
 argument_list|,
-name|name
+name|baseHandler
 argument_list|,
 name|local
 argument_list|)
@@ -469,7 +471,7 @@ name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
-name|hiveConf
+name|origConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -485,7 +487,7 @@ name|HiveConf
 operator|.
 name|getTimeVar
 argument_list|(
-name|hiveConf
+name|origConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -505,7 +507,7 @@ name|HiveConf
 operator|.
 name|getIntVar
 argument_list|(
-name|hiveConf
+name|origConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -523,9 +525,9 @@ name|MetaStoreInit
 operator|.
 name|updateConnectionURL
 argument_list|(
-name|hiveConf
+name|origConf
 argument_list|,
-name|getConf
+name|getActiveConf
 argument_list|()
 argument_list|,
 literal|null
@@ -558,11 +560,11 @@ operator|||
 name|gotNewConnectUrl
 condition|)
 block|{
-name|base
+name|baseHandler
 operator|.
 name|setConf
 argument_list|(
-name|getConf
+name|getActiveConf
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -572,7 +574,7 @@ name|method
 operator|.
 name|invoke
 argument_list|(
-name|base
+name|baseHandler
 argument_list|,
 name|args
 argument_list|)
@@ -853,6 +855,7 @@ argument_list|()
 operator|!=
 literal|null
 operator|&&
+operator|(
 name|e
 operator|.
 name|getCause
@@ -866,9 +869,20 @@ operator|.
 name|jdo
 operator|.
 name|JDOException
+operator|||
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|NucleusException
+operator|)
 condition|)
 block|{
-comment|// The JDOException may be wrapped further in a MetaException
+comment|// The JDOException or the Nucleus Exception may be wrapped further in a MetaException
 name|caughtException
 operator|=
 name|e
@@ -994,7 +1008,7 @@ name|MetaStoreInit
 operator|.
 name|getConnectionURL
 argument_list|(
-name|getConf
+name|getActiveConf
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1004,9 +1018,9 @@ name|MetaStoreInit
 operator|.
 name|updateConnectionURL
 argument_list|(
-name|hiveConf
+name|origConf
 argument_list|,
-name|getConf
+name|getActiveConf
 argument_list|()
 argument_list|,
 name|lastUrl
@@ -1018,11 +1032,11 @@ block|}
 block|}
 specifier|public
 name|Configuration
-name|getConf
+name|getActiveConf
 parameter_list|()
 block|{
 return|return
-name|configuration
+name|activeConf
 return|;
 block|}
 block|}
