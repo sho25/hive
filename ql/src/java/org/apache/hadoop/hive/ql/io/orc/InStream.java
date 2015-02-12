@@ -2896,12 +2896,12 @@ name|long
 name|endCOffset
 parameter_list|,
 name|StreamBuffer
-name|colBuffer
+name|streamBuffer
 parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|colBuffer
+name|streamBuffer
 operator|.
 name|cacheBuffers
 operator|=
@@ -3044,7 +3044,7 @@ name|buffer
 argument_list|)
 expr_stmt|;
 block|}
-name|colBuffer
+name|streamBuffer
 operator|.
 name|cacheBuffers
 operator|.
@@ -3150,7 +3150,7 @@ name|bufferSize
 argument_list|,
 name|cache
 argument_list|,
-name|colBuffer
+name|streamBuffer
 operator|.
 name|cacheBuffers
 argument_list|,
@@ -4444,19 +4444,6 @@ operator|.
 name|previous
 argument_list|()
 decl_stmt|;
-name|ranges
-operator|.
-name|add
-argument_list|(
-name|cc
-argument_list|)
-expr_stmt|;
-name|ranges
-operator|.
-name|next
-argument_list|()
-expr_stmt|;
-comment|// TODO: This is really stupid.
 if|if
 condition|(
 name|DebugUtils
@@ -4481,6 +4468,14 @@ literal|" in the buffers"
 argument_list|)
 expr_stmt|;
 block|}
+name|ranges
+operator|.
+name|add
+argument_list|(
+name|cc
+argument_list|)
+expr_stmt|;
+comment|// At this point, next() should return before, which is the 2nd part of the split buffer.
 block|}
 block|}
 block|}

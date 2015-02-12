@@ -87,6 +87,7 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** Note - position/limit of this should NOT be modified after it's in cache.       We could add a wrapper to enforce that, but for now it's shared and should be duplicated. */
 specifier|public
 name|ByteBuffer
 name|byteBuffer
