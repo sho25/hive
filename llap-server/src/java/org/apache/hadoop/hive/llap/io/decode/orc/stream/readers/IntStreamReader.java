@@ -21,7 +21,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 package|;
 end_package
 
@@ -52,6 +54,30 @@ operator|.
 name|api
 operator|.
 name|EncodedColumnBatch
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|io
+operator|.
+name|decode
+operator|.
+name|orc
+operator|.
+name|stream
+operator|.
+name|StreamUtils
 import|;
 end_import
 
@@ -162,11 +188,11 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|ShortStreamReader
+name|IntStreamReader
 extends|extends
 name|RecordReaderImpl
 operator|.
-name|ShortTreeReader
+name|IntTreeReader
 block|{
 specifier|private
 name|boolean
@@ -179,7 +205,7 @@ name|RowIndexEntry
 name|rowIndex
 decl_stmt|;
 specifier|private
-name|ShortStreamReader
+name|IntStreamReader
 parameter_list|(
 name|int
 name|columnId
@@ -469,7 +495,7 @@ name|this
 return|;
 block|}
 specifier|public
-name|ShortStreamReader
+name|IntStreamReader
 name|build
 parameter_list|()
 throws|throws
@@ -555,7 +581,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|ShortStreamReader
+name|IntStreamReader
 argument_list|(
 name|columnIndex
 argument_list|,

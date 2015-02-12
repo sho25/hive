@@ -181,7 +181,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 operator|.
 name|DoubleStreamReader
 import|;
@@ -205,7 +207,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 operator|.
 name|FloatStreamReader
 import|;
@@ -229,7 +233,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 operator|.
 name|IntStreamReader
 import|;
@@ -253,7 +259,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 operator|.
 name|LongStreamReader
 import|;
@@ -277,7 +285,9 @@ name|decode
 operator|.
 name|orc
 operator|.
-name|streams
+name|stream
+operator|.
+name|readers
 operator|.
 name|ShortStreamReader
 import|;

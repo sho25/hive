@@ -3286,6 +3286,18 @@ range|:
 name|toDecompress
 control|)
 block|{
+name|int
+name|startPos
+init|=
+name|chunk
+operator|.
+name|buffer
+operator|.
+name|byteBuffer
+operator|.
+name|position
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|chunk
@@ -3334,7 +3346,7 @@ name|byteBuffer
 operator|.
 name|position
 argument_list|(
-literal|0
+name|startPos
 argument_list|)
 expr_stmt|;
 name|chunk
