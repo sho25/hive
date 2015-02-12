@@ -251,7 +251,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -372,9 +372,13 @@ name|serdeConstants
 operator|.
 name|SERIALIZATION_ENCODING
 block|,
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|SERIALIZATION_EXTEND_NESTING_LEVELS
+block|,
+name|LazySerDeParameters
+operator|.
+name|SERIALIZATION_EXTEND_ADDITIONAL_NESTING_LEVELS
 block|,
 name|HBaseSerDe
 operator|.
@@ -1316,9 +1320,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 name|getSerdeParams
 parameter_list|()
 block|{

@@ -237,9 +237,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -425,7 +423,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 specifier|final
-name|SerDeParameters
+name|LazySerDeParameters
 name|serDeParams
 init|=
 name|accumuloSerDeParameters
@@ -613,7 +611,7 @@ name|TypeInfo
 argument_list|>
 name|columnTypes
 parameter_list|,
-name|SerDeParameters
+name|LazySerDeParameters
 name|serDeParams
 parameter_list|,
 name|List

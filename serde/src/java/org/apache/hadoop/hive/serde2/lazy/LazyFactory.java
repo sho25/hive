@@ -1522,7 +1522,7 @@ name|typeInfo
 parameter_list|,
 name|byte
 index|[]
-name|separator
+name|separators
 parameter_list|,
 name|int
 name|separatorIndex
@@ -1547,7 +1547,7 @@ name|createLazyObjectInspector
 argument_list|(
 name|typeInfo
 argument_list|,
-name|separator
+name|separators
 argument_list|,
 name|separatorIndex
 argument_list|,
@@ -1576,7 +1576,7 @@ name|typeInfo
 parameter_list|,
 name|byte
 index|[]
-name|separator
+name|separators
 parameter_list|,
 name|int
 name|separatorIndex
@@ -1598,7 +1598,7 @@ name|createLazyObjectInspector
 argument_list|(
 name|typeInfo
 argument_list|,
-name|separator
+name|separators
 argument_list|,
 name|separatorIndex
 argument_list|,
@@ -1629,7 +1629,7 @@ name|typeInfo
 parameter_list|,
 name|byte
 index|[]
-name|separator
+name|separators
 parameter_list|,
 name|int
 name|separatorIndex
@@ -1654,7 +1654,7 @@ name|createLazyObjectInspector
 argument_list|(
 name|typeInfo
 argument_list|,
-name|separator
+name|separators
 argument_list|,
 name|separatorIndex
 argument_list|,
@@ -1685,7 +1685,7 @@ name|typeInfo
 parameter_list|,
 name|byte
 index|[]
-name|separator
+name|separators
 parameter_list|,
 name|int
 name|separatorIndex
@@ -1722,7 +1722,7 @@ name|extendedBooleanLiteral
 argument_list|,
 literal|null
 argument_list|,
-name|separator
+name|separators
 argument_list|,
 name|nullSequence
 argument_list|)
