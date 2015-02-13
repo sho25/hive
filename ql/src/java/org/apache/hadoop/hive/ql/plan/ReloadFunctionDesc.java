@@ -15,28 +15,44 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|plan
 package|;
 end_package
 
-begin_comment
-comment|/**  * Interface for common functionality between FunctionInfo/WindowFunctionInfo  */
-end_comment
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
 
-begin_interface
+begin_class
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Reload Function"
+argument_list|)
 specifier|public
-interface|interface
-name|CommonFunctionInfo
+class|class
+name|ReloadFunctionDesc
+implements|implements
+name|Serializable
 block|{
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|getFunctionClass
-parameter_list|()
-function_decl|;
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
 block|}
-end_interface
+end_class
 
 end_unit
 

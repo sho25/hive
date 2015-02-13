@@ -272,7 +272,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|void
+name|boolean
 name|closeClassLoadersTo
 parameter_list|(
 name|ClassLoader
@@ -293,7 +293,9 @@ name|stop
 argument_list|)
 condition|)
 block|{
-return|return;
+return|return
+literal|false
+return|;
 block|}
 for|for
 control|(
@@ -356,6 +358,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+return|return
+literal|true
+return|;
 block|}
 comment|// check before closing loaders, not to close app-classloader, etc. by mistake
 specifier|private

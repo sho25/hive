@@ -2010,6 +2010,11 @@ name|HiveParser
 operator|.
 name|TOK_DROPFUNCTION
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_RELOADFUNCTION
+case|:
 return|return
 operator|new
 name|FunctionSemanticAnalyzer

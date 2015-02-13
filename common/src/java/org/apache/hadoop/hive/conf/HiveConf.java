@@ -1657,7 +1657,7 @@ literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Do not report an error if DROP TABLE/VIEW/Index specifies a non-existent table/view/index"
+literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/index/function"
 argument_list|)
 block|,
 name|HIVEIGNOREMAPJOINHINT
