@@ -107,6 +107,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|UDFArgumentTypeException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|vector
 operator|.
 name|VectorizedExpressions
@@ -699,6 +717,39 @@ name|length
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|arguments
+index|[
+literal|0
+index|]
+operator|.
+name|getCategory
+argument_list|()
+operator|!=
+name|Category
+operator|.
+name|PRIMITIVE
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentTypeException
+argument_list|(
+literal|0
+argument_list|,
+literal|"ROUND input only takes primitive types, got "
+operator|+
+name|arguments
+index|[
+literal|0
+index|]
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|inputOI
 operator|=
 operator|(
@@ -711,7 +762,19 @@ index|]
 expr_stmt|;
 if|if
 condition|(
-name|inputOI
+name|arguments
+operator|.
+name|length
+operator|==
+literal|2
+condition|)
+block|{
+if|if
+condition|(
+name|arguments
+index|[
+literal|1
+index|]
 operator|.
 name|getCategory
 argument_list|()
@@ -723,26 +786,22 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|"ROUND input only takes primitive types, got "
+literal|1
+argument_list|,
+literal|"ROUND second argument only takes primitive types, got "
 operator|+
-name|inputOI
+name|arguments
+index|[
+literal|1
+index|]
 operator|.
 name|getTypeName
 argument_list|()
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|arguments
-operator|.
-name|length
-operator|==
-literal|2
-condition|)
-block|{
 name|PrimitiveObjectInspector
 name|scaleOI
 init|=
@@ -781,8 +840,10 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|1
+argument_list|,
 literal|"ROUND second argument only takes constant"
 argument_list|)
 throw|;
@@ -818,8 +879,10 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|1
+argument_list|,
 literal|"ROUND second argument only takes constant"
 argument_list|)
 throw|;
@@ -855,8 +918,10 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|1
+argument_list|,
 literal|"ROUND second argument only takes constant"
 argument_list|)
 throw|;
@@ -892,8 +957,10 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|1
+argument_list|,
 literal|"ROUND second argument only takes constant"
 argument_list|)
 throw|;
@@ -948,8 +1015,10 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
+literal|1
+argument_list|,
 literal|"ROUND second argument only takes integer constant"
 argument_list|)
 throw|;
@@ -1072,9 +1141,11 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|"Only numeric data types are allowed for ROUND function. Got "
+literal|0
+argument_list|,
+literal|"Only numeric or string group data types are allowed for ROUND function. Got "
 operator|+
 name|inputType
 operator|.
@@ -1624,9 +1695,11 @@ return|;
 default|default:
 throw|throw
 operator|new
-name|UDFArgumentException
+name|UDFArgumentTypeException
 argument_list|(
-literal|"Only numeric data types are allowed for ROUND function. Got "
+literal|0
+argument_list|,
+literal|"Only numeric or string group data types are allowed for ROUND function. Got "
 operator|+
 name|inputType
 operator|.
