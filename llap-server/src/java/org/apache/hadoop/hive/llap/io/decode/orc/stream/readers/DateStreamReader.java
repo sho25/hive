@@ -188,11 +188,11 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|ShortStreamReader
+name|DateStreamReader
 extends|extends
 name|RecordReaderImpl
 operator|.
-name|ShortTreeReader
+name|DateTreeReader
 block|{
 specifier|private
 name|boolean
@@ -205,7 +205,7 @@ name|RowIndexEntry
 name|rowIndex
 decl_stmt|;
 specifier|private
-name|ShortStreamReader
+name|DateStreamReader
 parameter_list|(
 name|int
 name|columnId
@@ -489,7 +489,7 @@ name|this
 return|;
 block|}
 specifier|public
-name|ShortStreamReader
+name|DateStreamReader
 name|build
 parameter_list|()
 throws|throws
@@ -575,7 +575,7 @@ expr_stmt|;
 block|}
 return|return
 operator|new
-name|ShortStreamReader
+name|DateStreamReader
 argument_list|(
 name|columnIndex
 argument_list|,
