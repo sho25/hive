@@ -7893,6 +7893,84 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|LLAP_AUTO_ENFORCE_TREE
+argument_list|(
+literal|"hive.llap.auto.enforce.tree"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enforce that all parents are in llap, before considering vertex"
+argument_list|)
+block|,
+name|LLAP_AUTO_ENFORCE_VECTORIZED
+argument_list|(
+literal|"hive.llap.auto.enforce.vectorized"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enforce that inputs are vectorized, before considering vertex"
+argument_list|)
+block|,
+name|LLAP_AUTO_ENFORCE_STATS
+argument_list|(
+literal|"hive.llap.auto.enforce.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enforce that col stats are available, before considering vertex"
+argument_list|)
+block|,
+name|LLAP_AUTO_MAX_INPUT
+argument_list|(
+literal|"hive.llap.auto.max.input.size"
+argument_list|,
+literal|10
+operator|*
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Check input size, before considering vertex (-1 disables check)"
+argument_list|)
+block|,
+name|LLAP_AUTO_MAX_OUTPUT
+argument_list|(
+literal|"hive.llap.auto.max.output.size"
+argument_list|,
+literal|1
+operator|*
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Check output size, before considering vertex (-1 disables check)"
+argument_list|)
+block|,
+name|LLAP_EXECUTION_MODE
+argument_list|(
+literal|"hive.llap.execution.mode"
+argument_list|,
+literal|"auto"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"auto"
+argument_list|,
+literal|"none"
+argument_list|,
+literal|"all"
+argument_list|,
+literal|"map"
+argument_list|)
+argument_list|,
+literal|"Chooses whether query fragments will run in container or in llap"
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
@@ -8011,7 +8089,7 @@ literal|"DIGEST-MD5"
 argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
 argument_list|)
-block|;    ;
+block|;
 specifier|public
 specifier|final
 name|String
