@@ -1082,14 +1082,6 @@ index|[
 name|i
 index|]
 decl_stmt|;
-assert|assert
-operator|!
-name|buffer
-operator|.
-name|isLocked
-argument_list|()
-assert|;
-comment|// TODO: is this always true? does put happen before reuse?
 name|buffer
 operator|.
 name|incRef
@@ -2297,9 +2289,6 @@ name|LlapMemoryBuffer
 name|buffer
 parameter_list|)
 block|{
-name|int
-name|newVal
-init|=
 operator|(
 operator|(
 name|LlapCacheableBuffer
@@ -2309,12 +2298,7 @@ operator|)
 operator|.
 name|incRef
 argument_list|()
-decl_stmt|;
-assert|assert
-name|newVal
-operator|>
-literal|1
-assert|;
+expr_stmt|;
 block|}
 block|}
 end_class

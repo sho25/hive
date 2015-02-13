@@ -2845,10 +2845,6 @@ name|originalData
 operator|=
 name|originalData
 expr_stmt|;
-name|setReused
-argument_list|()
-expr_stmt|;
-comment|// This block is immediately used by code that does the decompression.
 block|}
 name|boolean
 name|isCompressed
@@ -3026,14 +3022,6 @@ name|CacheChunk
 operator|)
 name|current
 decl_stmt|;
-if|if
-condition|(
-name|cc
-operator|.
-name|setReused
-argument_list|()
-condition|)
-block|{
 name|cache
 operator|.
 name|notifyReused
@@ -3043,7 +3031,6 @@ operator|.
 name|buffer
 argument_list|)
 expr_stmt|;
-block|}
 name|streamBuffer
 operator|.
 name|cacheBuffers
@@ -3365,6 +3352,15 @@ operator|.
 name|originalData
 operator|=
 literal|null
+expr_stmt|;
+name|cache
+operator|.
+name|notifyReused
+argument_list|(
+name|chunk
+operator|.
+name|buffer
+argument_list|)
 expr_stmt|;
 block|}
 comment|// 5. Release original compressed buffers to zero-copy reader if needed.
@@ -3819,21 +3815,6 @@ name|cbStartOffset
 operator|+
 name|consumedLength
 decl_stmt|;
-if|if
-condition|(
-name|current
-operator|.
-name|end
-operator|<
-name|cbEndOffset
-condition|)
-block|{
-return|return
-operator|-
-literal|1
-return|;
-comment|// This is impossible to read from this chunk,
-block|}
 name|boolean
 name|isUncompressed
 init|=
@@ -3987,6 +3968,27 @@ return|return
 name|consumedLength
 return|;
 block|}
+if|if
+condition|(
+name|current
+operator|.
+name|end
+operator|<
+name|cbEndOffset
+operator|&&
+operator|!
+name|ranges
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+return|return
+operator|-
+literal|1
+return|;
+comment|// This is impossible to read from this chunk.
+block|}
 comment|// TODO: we could remove extra copy for isUncompressed case by copying directly to cache.
 comment|// We need to consolidate 2 or more buffers into one to decompress.
 name|ByteBuffer
@@ -4087,6 +4089,11 @@ expr_stmt|;
 comment|// There might be slices depending on this buffer.
 block|}
 block|}
+name|DiskRange
+name|nextRange
+init|=
+literal|null
+decl_stmt|;
 while|while
 condition|(
 name|ranges
@@ -4095,19 +4102,18 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-name|DiskRange
-name|range
-init|=
+name|nextRange
+operator|=
 name|ranges
 operator|.
 name|next
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
 operator|(
-name|range
+name|nextRange
 operator|instanceof
 name|BufferChunk
 operator|)
@@ -4123,7 +4129,7 @@ throw|;
 block|}
 name|compressed
 operator|=
-name|range
+name|nextRange
 operator|.
 name|getData
 argument_list|()
@@ -4197,7 +4203,7 @@ name|info
 argument_list|(
 literal|"Adjusting "
 operator|+
-name|range
+name|nextRange
 operator|+
 literal|" to consume "
 operator|+
@@ -4205,7 +4211,7 @@ name|remaining
 argument_list|)
 expr_stmt|;
 block|}
-name|range
+name|nextRange
 operator|.
 name|offset
 operator|+=
@@ -4282,7 +4288,7 @@ name|info
 argument_list|(
 literal|"Removing "
 operator|+
-name|range
+name|nextRange
 operator|+
 literal|" from ranges"
 argument_list|)
@@ -4294,19 +4300,11 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"EOF in while trying to read "
-operator|+
-name|chunkLength
-operator|+
-literal|" bytes at "
-operator|+
-name|cbStartOffset
-argument_list|)
-throw|;
+return|return
+operator|-
+literal|1
+return|;
+comment|// This is impossible to read from this chunk.
 block|}
 comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartLength The number of bytes consumed from lastRange into fCB.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
 specifier|private
