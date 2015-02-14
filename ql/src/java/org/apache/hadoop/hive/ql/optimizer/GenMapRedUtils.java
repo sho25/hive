@@ -1219,7 +1219,7 @@ name|plan
 operator|.
 name|FilterDesc
 operator|.
-name|sampleDesc
+name|SampleDesc
 import|;
 end_import
 
@@ -4087,7 +4087,7 @@ name|paths
 init|=
 literal|null
 decl_stmt|;
-name|sampleDesc
+name|SampleDesc
 name|sampleDescr
 init|=
 name|parseCtx

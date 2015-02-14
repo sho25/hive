@@ -2269,7 +2269,7 @@ name|plan
 operator|.
 name|FilterDesc
 operator|.
-name|sampleDesc
+name|SampleDesc
 import|;
 end_import
 
@@ -3504,7 +3504,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 decl_stmt|;
@@ -3710,7 +3710,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -57200,7 +57200,7 @@ argument_list|,
 literal|true
 argument_list|,
 operator|new
-name|sampleDesc
+name|SampleDesc
 argument_list|(
 name|ts
 operator|.
@@ -57469,7 +57469,7 @@ argument_list|,
 literal|true
 argument_list|,
 operator|new
-name|sampleDesc
+name|SampleDesc
 argument_list|(
 name|tsSample
 operator|.

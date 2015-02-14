@@ -4831,6 +4831,8 @@ name|getExprListString
 parameter_list|(
 name|Collection
 argument_list|<
+name|?
+extends|extends
 name|ExprNodeDesc
 argument_list|>
 name|exprs

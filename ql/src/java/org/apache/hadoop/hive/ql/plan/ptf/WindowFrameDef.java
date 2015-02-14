@@ -82,6 +82,21 @@ operator|=
 name|end
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|start
+operator|+
+literal|"~"
+operator|+
+name|end
+return|;
+block|}
 block|}
 end_class
 
