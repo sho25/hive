@@ -1085,6 +1085,24 @@ name|getStreamsList
 argument_list|()
 control|)
 block|{
+name|String
+name|kind
+init|=
+name|section
+operator|.
+name|hasKind
+argument_list|()
+condition|?
+name|section
+operator|.
+name|getKind
+argument_list|()
+operator|.
+name|name
+argument_list|()
+else|:
+literal|"UNKNOWN"
+decl_stmt|;
 name|System
 operator|.
 name|out
@@ -1100,10 +1118,7 @@ argument_list|()
 operator|+
 literal|" section "
 operator|+
-name|section
-operator|.
-name|getKind
-argument_list|()
+name|kind
 operator|+
 literal|" start: "
 operator|+

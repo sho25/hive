@@ -16977,6 +16977,12 @@ if|if
 condition|(
 name|stream
 operator|.
+name|hasKind
+argument_list|()
+operator|&&
+operator|(
+name|stream
+operator|.
 name|getKind
 argument_list|()
 operator|==
@@ -16987,6 +16993,7 @@ operator|.
 name|Kind
 operator|.
 name|PRESENT
+operator|)
 condition|)
 block|{
 name|hasNull
@@ -17039,8 +17046,15 @@ operator|.
 name|getKind
 argument_list|()
 decl_stmt|;
+comment|// since stream kind is optional, first check if it exists
 if|if
 condition|(
+name|stream
+operator|.
+name|hasKind
+argument_list|()
+operator|&&
+operator|(
 name|StreamName
 operator|.
 name|getArea
@@ -17053,6 +17067,7 @@ operator|.
 name|Area
 operator|.
 name|DATA
+operator|)
 operator|&&
 name|includedColumns
 index|[
@@ -17803,6 +17818,7 @@ operator|.
 name|getColumn
 argument_list|()
 decl_stmt|;
+comment|// do not create stream if stream kind does not exist
 if|if
 condition|(
 operator|(
@@ -17816,6 +17832,12 @@ name|column
 index|]
 operator|)
 operator|&&
+name|streamDesc
+operator|.
+name|hasKind
+argument_list|()
+operator|&&
+operator|(
 name|StreamName
 operator|.
 name|getArea
@@ -17831,6 +17853,7 @@ operator|.
 name|Area
 operator|.
 name|DATA
+operator|)
 condition|)
 block|{
 name|long
@@ -19227,6 +19250,12 @@ if|if
 condition|(
 name|stream
 operator|.
+name|hasKind
+argument_list|()
+operator|&&
+operator|(
+name|stream
+operator|.
 name|getKind
 argument_list|()
 operator|==
@@ -19237,6 +19266,7 @@ operator|.
 name|Kind
 operator|.
 name|ROW_INDEX
+operator|)
 condition|)
 block|{
 name|boolean
