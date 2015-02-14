@@ -73,7 +73,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|URL
+name|URI
 import|;
 end_import
 
@@ -1442,7 +1442,7 @@ operator|.
 name|addJar
 argument_list|(
 operator|new
-name|URL
+name|URI
 argument_list|(
 literal|"file:"
 operator|+
@@ -1536,7 +1536,7 @@ operator|.
 name|addJar
 argument_list|(
 operator|new
-name|URL
+name|URI
 argument_list|(
 literal|"file:"
 operator|+
