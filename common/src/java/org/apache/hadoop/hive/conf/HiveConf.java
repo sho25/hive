@@ -1657,7 +1657,7 @@ literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Do not report an error if DROP TABLE/VIEW/Index specifies a non-existent table/view/index"
+literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/index/function"
 argument_list|)
 block|,
 name|HIVEIGNOREMAPJOINHINT
@@ -2845,6 +2845,17 @@ argument_list|,
 literal|"Metastore hook class for filtering the metadata read results"
 argument_list|)
 block|,
+name|FIRE_EVENTS_FOR_DML
+argument_list|(
+literal|"hive.metastore.dml.events"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the metastore will be asked"
+operator|+
+literal|" to fire events for DML operations"
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
@@ -3163,39 +3174,6 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether there is skew in data to optimize group by queries"
-argument_list|)
-block|,
-name|HIVE_OPTIMIZE_MULTI_GROUPBY_COMMON_DISTINCTS
-argument_list|(
-literal|"hive.optimize.multigroupby.common.distincts"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether to optimize a multi-groupby query with the same distinct.\n"
-operator|+
-literal|"Consider a query like:\n"
-operator|+
-literal|"\n"
-operator|+
-literal|"  from src\n"
-operator|+
-literal|"    insert overwrite table dest1 select col1, count(distinct colx) group by col1\n"
-operator|+
-literal|"    insert overwrite table dest2 select col2, count(distinct colx) group by col2;\n"
-operator|+
-literal|"\n"
-operator|+
-literal|"With this parameter set to true, first we spray by the distinct value (colx), and then\n"
-operator|+
-literal|"perform the 2 groups bys. This makes sense if map-side aggregation is turned off. However,\n"
-operator|+
-literal|"with maps-side aggregation, it might be useful in some cases to treat the 2 inserts independently, \n"
-operator|+
-literal|"thereby performing the query above in 2MR jobs instead of 3 (due to spraying by distinct key first).\n"
-operator|+
-literal|"If this parameter is turned off, we don't consider the fact that the distinct key is the same across\n"
-operator|+
-literal|"different MR jobs."
 argument_list|)
 block|,
 name|HIVEJOINEMITINTERVAL

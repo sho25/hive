@@ -572,6 +572,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * @param alias this is actually dest name, like insclause-0    */
 specifier|public
 name|Table
 name|getDestTableForAlias

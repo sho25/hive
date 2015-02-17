@@ -150,6 +150,14 @@ name|String
 argument_list|>
 name|partVals
 decl_stmt|;
+specifier|private
+specifier|final
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
+decl_stmt|;
 comment|/**    *    * @param db name of the database the table is in    * @param table name of the table being inserted into    * @param partitions list of partition values, can be null    * @param status status of insert, true = success, false = failure    * @param handler handler that is firing the event    */
 specifier|public
 name|InsertEvent
@@ -165,6 +173,12 @@ argument_list|<
 name|String
 argument_list|>
 name|partitions
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
 parameter_list|,
 name|boolean
 name|status
@@ -198,6 +212,12 @@ name|partVals
 operator|=
 name|partitions
 expr_stmt|;
+name|this
+operator|.
+name|files
+operator|=
+name|files
+expr_stmt|;
 block|}
 specifier|public
 name|String
@@ -229,6 +249,19 @@ parameter_list|()
 block|{
 return|return
 name|partVals
+return|;
+block|}
+comment|/**    * Get list of files created as a result of this DML operation    * @return list of new files    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getFiles
+parameter_list|()
+block|{
+return|return
+name|files
 return|;
 block|}
 block|}

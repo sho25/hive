@@ -68,6 +68,16 @@ argument_list|>
 name|getPartitionValues
 parameter_list|()
 function_decl|;
+comment|/**    * Get the list of files created as a result of this DML operation.  May be null.    * @return List of new files, or null.    */
+specifier|public
+specifier|abstract
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getFiles
+parameter_list|()
+function_decl|;
 annotation|@
 name|Override
 specifier|public

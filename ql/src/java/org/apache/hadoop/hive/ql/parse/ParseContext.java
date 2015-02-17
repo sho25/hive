@@ -177,24 +177,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|GroupByOperator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|JoinOperator
 import|;
 end_import
@@ -435,7 +417,7 @@ name|plan
 operator|.
 name|FilterDesc
 operator|.
-name|sampleDesc
+name|SampleDesc
 import|;
 end_import
 
@@ -565,7 +547,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 decl_stmt|;
@@ -688,18 +670,6 @@ decl_stmt|;
 comment|// list of map join
 comment|// operators with no
 comment|// reducer
-specifier|private
-name|Map
-argument_list|<
-name|GroupByOperator
-argument_list|,
-name|Set
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|groupOpToInputTables
-decl_stmt|;
 specifier|private
 name|Map
 argument_list|<
@@ -866,17 +836,6 @@ name|listMapJoinOpsNoReducer
 parameter_list|,
 name|Map
 argument_list|<
-name|GroupByOperator
-argument_list|,
-name|Set
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|groupOpToInputTables
-parameter_list|,
-name|Map
-argument_list|<
 name|String
 argument_list|,
 name|PrunedPartitionList
@@ -887,7 +846,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 parameter_list|,
@@ -1033,12 +992,6 @@ operator|.
 name|listMapJoinOpsNoReducer
 operator|=
 name|listMapJoinOpsNoReducer
-expr_stmt|;
-name|this
-operator|.
-name|groupOpToInputTables
-operator|=
-name|groupOpToInputTables
 expr_stmt|;
 name|this
 operator|.
@@ -1565,7 +1518,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|getOpToSamplePruner
 parameter_list|()
@@ -1583,7 +1536,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 parameter_list|)
@@ -1593,48 +1546,6 @@ operator|.
 name|opToSamplePruner
 operator|=
 name|opToSamplePruner
-expr_stmt|;
-block|}
-comment|/**    * @return the groupOpToInputTables    */
-specifier|public
-name|Map
-argument_list|<
-name|GroupByOperator
-argument_list|,
-name|Set
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|getGroupOpToInputTables
-parameter_list|()
-block|{
-return|return
-name|groupOpToInputTables
-return|;
-block|}
-comment|/**    * @param groupOpToInputTables    */
-specifier|public
-name|void
-name|setGroupOpToInputTables
-parameter_list|(
-name|Map
-argument_list|<
-name|GroupByOperator
-argument_list|,
-name|Set
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
-name|groupOpToInputTables
-parameter_list|)
-block|{
-name|this
-operator|.
-name|groupOpToInputTables
-operator|=
-name|groupOpToInputTables
 expr_stmt|;
 block|}
 comment|/**    * @return pruned partition map    */

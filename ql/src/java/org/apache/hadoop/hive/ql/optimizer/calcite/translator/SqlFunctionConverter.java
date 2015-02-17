@@ -833,7 +833,7 @@ name|RelDataType
 name|retType
 parameter_list|)
 throws|throws
-name|CalciteSemanticException
+name|SemanticException
 block|{
 comment|// handle overloaded methods first
 if|if
@@ -1551,6 +1551,11 @@ operator|(
 name|GenericUDF
 operator|)
 name|udf
+argument_list|,
+name|fi
+operator|.
+name|getResources
+argument_list|()
 argument_list|)
 return|;
 block|}

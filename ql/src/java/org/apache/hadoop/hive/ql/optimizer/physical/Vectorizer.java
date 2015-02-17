@@ -7619,25 +7619,6 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|desc
-operator|.
-name|getGroupKeyNotReductionKey
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Reduce vector mode not supported when group key is not reduction key"
-argument_list|)
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-if|if
-condition|(
 operator|!
 name|aggregatorsOutputIsPrimitive
 argument_list|(

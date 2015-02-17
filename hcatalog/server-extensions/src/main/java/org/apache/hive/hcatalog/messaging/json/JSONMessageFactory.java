@@ -780,6 +780,12 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
 parameter_list|)
 block|{
 return|return
@@ -795,6 +801,8 @@ argument_list|,
 name|table
 argument_list|,
 name|partVals
+argument_list|,
+name|files
 argument_list|,
 name|now
 argument_list|()

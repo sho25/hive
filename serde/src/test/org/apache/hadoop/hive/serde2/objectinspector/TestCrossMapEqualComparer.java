@@ -169,9 +169,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -471,7 +469,7 @@ parameter_list|,
 name|LazySimpleSerDe
 name|serde
 parameter_list|,
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 parameter_list|)
 throws|throws
@@ -638,12 +636,11 @@ name|oi1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 init|=
-name|LazySimpleSerDe
-operator|.
-name|initSerdeParams
+operator|new
+name|LazySerDeParameters
 argument_list|(
 name|conf
 argument_list|,
@@ -874,7 +871,7 @@ parameter_list|,
 name|LazySimpleSerDe
 name|serde
 parameter_list|,
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 parameter_list|)
 throws|throws
@@ -1041,12 +1038,11 @@ name|oi1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 init|=
-name|LazySimpleSerDe
-operator|.
-name|initSerdeParams
+operator|new
+name|LazySerDeParameters
 argument_list|(
 name|conf
 argument_list|,

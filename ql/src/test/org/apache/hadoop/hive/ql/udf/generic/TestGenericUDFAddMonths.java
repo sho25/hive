@@ -334,6 +334,17 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2014-01-32"
+argument_list|,
+literal|1
+argument_list|,
+literal|"2014-03-01"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void

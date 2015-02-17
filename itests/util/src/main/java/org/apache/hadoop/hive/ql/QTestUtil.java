@@ -6068,6 +6068,10 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|rc
+operator|==
+literal|0
+operator|&&
 name|SessionState
 operator|.
 name|get

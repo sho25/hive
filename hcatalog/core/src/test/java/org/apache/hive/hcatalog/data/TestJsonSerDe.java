@@ -427,7 +427,7 @@ argument_list|(
 operator|new
 name|String
 argument_list|(
-literal|"hcat and hadoop"
+literal|"hcat\nand\nhadoop"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -792,7 +792,7 @@ argument_list|(
 operator|new
 name|HiveChar
 argument_list|(
-literal|"hive_char"
+literal|"hive\nchar"
 argument_list|,
 literal|10
 argument_list|)
@@ -805,7 +805,7 @@ argument_list|(
 operator|new
 name|HiveVarchar
 argument_list|(
-literal|"hive_varchar"
+literal|"hive\nvarchar"
 argument_list|,
 literal|20
 argument_list|)

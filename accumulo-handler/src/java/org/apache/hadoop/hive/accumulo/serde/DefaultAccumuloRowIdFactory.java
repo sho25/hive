@@ -187,7 +187,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -279,9 +279,7 @@ name|AccumuloSerDeParameters
 name|accumuloSerDeParams
 decl_stmt|;
 specifier|protected
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 decl_stmt|;
 specifier|protected

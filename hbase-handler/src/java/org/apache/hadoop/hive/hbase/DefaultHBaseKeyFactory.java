@@ -117,9 +117,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -207,7 +205,7 @@ implements|implements
 name|HBaseKeyFactory
 block|{
 specifier|protected
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 decl_stmt|;
 specifier|protected
@@ -352,7 +350,7 @@ specifier|static
 name|DefaultHBaseKeyFactory
 name|forTest
 parameter_list|(
-name|SerDeParameters
+name|LazySerDeParameters
 name|params
 parameter_list|,
 name|ColumnMappings
