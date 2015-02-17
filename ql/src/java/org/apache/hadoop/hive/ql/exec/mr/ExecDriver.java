@@ -4455,9 +4455,14 @@ block|{
 name|String
 name|hadoopAuthToken
 init|=
+name|System
+operator|.
+name|getenv
+argument_list|(
 name|UserGroupInformation
 operator|.
 name|HADOOP_TOKEN_FILE_LOCATION
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
