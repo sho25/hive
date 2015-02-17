@@ -219,24 +219,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|StructObjectInspector
 import|;
 end_import
@@ -246,7 +228,7 @@ comment|/*  * Interface Design:  * A TableFunction provides 2 interfaces of exec
 end_comment
 
 begin_comment
-comment|/**  * Based on Hive {@link GenericUDAFEvaluator}. Break up the responsibility of the old AsbtractTableFunction  * class into a Resolver and Evaluator.  *<p>  * The Evaluator also holds onto the {@link TableFunctionDef}. This provides information  * about the arguments to the function, the shape of the Input partition and the Partitioning details.  * The Evaluator is responsible for providing the 2 execute methods:  *<ol>  *<li><b>execute:</b> which is invoked after the input is partitioned; the contract  * is, it is given an input Partition and must return an output Partition. The shape of the output  * Partition is obtained from the getOutputOI call.  *<li><b>transformRawInput:</b> In the case where this function indicates that it will transform the raw input  * before it is fed through the partitioning mechanics, this function is called. Again the contract is  * t is given an input Partition and must return an Partition. The shape of the output Partition is  * obtained from getRawInputOI() call.  *</ol>  *  */
+comment|/**  * Based on Hive {@link GenericUDAFEvaluator}. Break up the responsibility of the old AbstractTableFunction  * class into a Resolver and Evaluator.  *<p>  * The Evaluator also holds onto the {@link TableFunctionDef}. This provides information  * about the arguments to the function, the shape of the Input partition and the Partitioning details.  * The Evaluator is responsible for providing the 2 execute methods:  *<ol>  *<li><b>execute:</b> which is invoked after the input is partitioned; the contract  * is, it is given an input Partition and must return an output Partition. The shape of the output  * Partition is obtained from the getOutputOI call.  *<li><b>transformRawInput:</b> In the case where this function indicates that it will transform the raw input  * before it is fed through the partitioning mechanics, this function is called. Again the contract is  * t is given an input Partition and must return an Partition. The shape of the output Partition is  * obtained from getRawInputOI() call.  *</ol>  *  */
 end_comment
 
 begin_class
@@ -255,7 +237,7 @@ specifier|abstract
 class|class
 name|TableFunctionEvaluator
 block|{
-comment|/*    * how is this different from the OutpuShape set on the TableDef.    * This is the OI of the object coming out of the PTF.    * It is put in an output Partition whose Serde is usually LazyBinarySerde.    * So the next PTF (or Operator) in the chain gets a LazyBinaryStruct.    */
+comment|/*    * how is this different from the OutputShape set on the TableDef.    * This is the OI of the object coming out of the PTF.    * It is put in an output Partition whose Serde is usually LazyBinarySerde.    * So the next PTF (or Operator) in the chain gets a LazyBinaryStruct.    */
 specifier|transient
 specifier|protected
 name|StructObjectInspector
