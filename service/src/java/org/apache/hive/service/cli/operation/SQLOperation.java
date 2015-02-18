@@ -139,6 +139,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|codec
+operator|.
+name|binary
+operator|.
+name|Base64
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -782,6 +798,39 @@ argument_list|()
 operator|.
 name|getUserName
 argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// set the operation handle information in Driver, so that thrift API users
+comment|// can use the operation handle they receive, to lookup query information in
+comment|// Yarn ATS
+name|String
+name|guid64
+init|=
+name|Base64
+operator|.
+name|encodeBase64URLSafeString
+argument_list|(
+name|getHandle
+argument_list|()
+operator|.
+name|getHandleIdentifier
+argument_list|()
+operator|.
+name|toTHandleIdentifier
+argument_list|()
+operator|.
+name|getGuid
+argument_list|()
+argument_list|)
+operator|.
+name|trim
+argument_list|()
+decl_stmt|;
+name|driver
+operator|.
+name|setOperationId
+argument_list|(
+name|guid64
 argument_list|)
 expr_stmt|;
 comment|// In Hive server mode, we are not able to retry in the FetchTask

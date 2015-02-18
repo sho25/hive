@@ -401,24 +401,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MoveTask
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|Operator
 import|;
 end_import
@@ -709,7 +691,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|WriteEntity
+name|Redactor
 import|;
 end_import
 
@@ -727,7 +709,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|Redactor
+name|WriteEntity
 import|;
 end_import
 
@@ -1863,6 +1845,11 @@ decl_stmt|;
 specifier|private
 name|String
 name|userName
+decl_stmt|;
+comment|// HS2 operation handle guid string
+specifier|private
+name|String
+name|operationId
 decl_stmt|;
 specifier|private
 name|boolean
@@ -8098,6 +8085,8 @@ name|ss
 operator|.
 name|getUserIpAddress
 argument_list|()
+argument_list|,
+name|operationId
 argument_list|)
 decl_stmt|;
 name|hookContext
@@ -10008,18 +9997,10 @@ operator|.
 name|EXECPARALLEL
 argument_list|)
 operator|&&
-operator|(
 name|tsk
 operator|.
 name|isMapRedTask
 argument_list|()
-operator|||
-operator|(
-name|tsk
-operator|instanceof
-name|MoveTask
-operator|)
-operator|)
 condition|)
 block|{
 comment|// Launch it in the parallel mode, as a separate thread only for MR tasks
@@ -10740,6 +10721,22 @@ block|{
 return|return
 name|errorMessage
 return|;
+block|}
+comment|/**    * Set the HS2 operation handle's guid string    * @param opId base64 encoded guid string    */
+specifier|public
+name|void
+name|setOperationId
+parameter_list|(
+name|String
+name|opId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|operationId
+operator|=
+name|opId
+expr_stmt|;
 block|}
 block|}
 end_class

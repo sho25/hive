@@ -2237,7 +2237,7 @@ condition|(
 operator|!
 name|FunctionRegistry
 operator|.
-name|isNativeFuncExpr
+name|isBuiltInFuncExpr
 argument_list|(
 operator|(
 name|ExprNodeGenericFuncDesc

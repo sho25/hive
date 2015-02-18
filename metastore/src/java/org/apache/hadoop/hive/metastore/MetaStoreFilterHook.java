@@ -117,6 +117,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|MetaException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|NoSuchObjectException
 import|;
 end_import
@@ -209,6 +227,8 @@ name|String
 argument_list|>
 name|dbList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * filter to given database object if applicable    * @param dataBase    * @return the same database if it's not filtered out    * @throws NoSuchObjectException    */
 specifier|public
@@ -219,6 +239,8 @@ name|Database
 name|dataBase
 parameter_list|)
 throws|throws
+name|MetaException
+throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @returnList of filtered table names    */
@@ -238,6 +260,8 @@ name|String
 argument_list|>
 name|tableList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * filter to given table object if applicable    * @param table    * @return the same table if it's not filtered out    * @throws NoSuchObjectException    */
 specifier|public
@@ -248,6 +272,8 @@ name|Table
 name|table
 parameter_list|)
 throws|throws
+name|MetaException
+throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @returnList of filtered table names    */
@@ -264,6 +290,8 @@ name|Table
 argument_list|>
 name|tableList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * Filter given list of partitions    * @param partitionList    * @return    */
 specifier|public
@@ -279,6 +307,8 @@ name|Partition
 argument_list|>
 name|partitionList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * Filter given list of partition specs    * @param partitionSpecList    * @return    */
 specifier|public
@@ -294,6 +324,8 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * filter to given partition object if applicable    * @param partition    * @return the same partition object if it's not filtered out    * @throws NoSuchObjectException    */
 specifier|public
@@ -304,6 +336,8 @@ name|Partition
 name|partition
 parameter_list|)
 throws|throws
+name|MetaException
+throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Filter given list of partition names    * @param dbName    * @param tblName    * @param partitionNames    * @return    */
@@ -326,6 +360,8 @@ name|String
 argument_list|>
 name|partitionNames
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 specifier|public
 name|Index
@@ -335,6 +371,8 @@ name|Index
 name|index
 parameter_list|)
 throws|throws
+name|MetaException
+throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Filter given list of index names    * @param dbName    * @param tblName    * @param indexList    * @return    */
@@ -357,6 +395,8 @@ name|String
 argument_list|>
 name|indexList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * Filter given list of index objects    * @param indexeList    * @return    */
 specifier|public
@@ -372,6 +412,8 @@ name|Index
 argument_list|>
 name|indexeList
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 block|}
 end_interface

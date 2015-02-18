@@ -69,20 +69,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -210,9 +196,6 @@ decl_stmt|;
 specifier|public
 name|HiveBaseFunctionResultList
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|Iterator
 argument_list|<
 name|T
@@ -232,9 +215,7 @@ name|lastRecordOutput
 operator|=
 operator|new
 name|HiveKVResultCache
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -352,11 +333,6 @@ return|return
 literal|true
 return|;
 block|}
-name|lastRecordOutput
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
 comment|// Process the records in the input iterator until
 comment|//  - new output records are available for serving downstream operator,
 comment|//  - input records are exhausted or

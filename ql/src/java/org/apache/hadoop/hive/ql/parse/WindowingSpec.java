@@ -831,6 +831,8 @@ parameter_list|,
 name|WindowSpec
 name|wdwSpec
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|WindowFunctionInfo
 name|wFnInfo

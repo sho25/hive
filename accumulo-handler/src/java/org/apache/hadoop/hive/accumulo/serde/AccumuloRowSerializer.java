@@ -227,9 +227,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazyUtils
 import|;
 end_import
 
@@ -247,7 +245,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyUtils
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -513,7 +511,7 @@ name|output
 decl_stmt|;
 specifier|private
 specifier|final
-name|SerDeParameters
+name|LazySerDeParameters
 name|serDeParams
 decl_stmt|;
 specifier|private
@@ -540,7 +538,7 @@ parameter_list|(
 name|int
 name|primaryKeyOffset
 parameter_list|,
-name|SerDeParameters
+name|LazySerDeParameters
 name|serDeParams
 parameter_list|,
 name|List
@@ -1423,7 +1421,7 @@ name|toByteArray
 argument_list|()
 return|;
 block|}
-comment|/**    * Recursively serialize an Object using its {@link ObjectInspector}, respecting the    * separators defined by the {@link SerDeParameters}.    * @param oi ObjectInspector for the current object    * @param value The current object    * @param output A buffer output is written to    * @param mapping The mapping for this Hive column    * @param level The current level/offset for the SerDe separator    * @throws IOException    */
+comment|/**    * Recursively serialize an Object using its {@link ObjectInspector}, respecting the    * separators defined by the {@link LazySerDeParameters}.    * @param oi ObjectInspector for the current object    * @param value The current object    * @param output A buffer output is written to    * @param mapping The mapping for this Hive column    * @param level The current level/offset for the SerDe separator    * @throws IOException    */
 specifier|protected
 name|void
 name|writeWithLevel
