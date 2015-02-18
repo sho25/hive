@@ -54898,8 +54898,38 @@ name|unionColInfo
 argument_list|)
 expr_stmt|;
 block|}
+comment|// For Spark, we rely on the generated SelectOperator to do the type casting.
+comment|// Consider:
+comment|//    SEL_1 (int)   SEL_2 (int)    SEL_3 (double)
+comment|// If we first merge SEL_1 and SEL_2 into a UNION_1, and then merge UNION_1
+comment|// with SEL_3 to get UNION_2, then no SelectOperator will be inserted. Hence error
+comment|// will happen afterwards. The solution here is to insert one after UNION_1, which
+comment|// cast int to double.
+name|boolean
+name|isSpark
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"spark"
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
+name|isSpark
+operator|||
 operator|!
 operator|(
 name|leftOp
@@ -54926,6 +54956,8 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|isSpark
+operator|||
 operator|!
 operator|(
 name|rightOp

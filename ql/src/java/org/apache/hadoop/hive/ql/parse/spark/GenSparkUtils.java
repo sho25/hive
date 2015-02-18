@@ -1308,6 +1308,37 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// For MapWork, getAllRootOperators is not suitable, since it checks
+comment|// getPathToAliases, and will return null if this is empty. Here we are
+comment|// replacing getAliasToWork, so should use that information instead.
+if|if
+condition|(
+name|work
+operator|instanceof
+name|MapWork
+condition|)
+block|{
+name|roots
+operator|.
+name|addAll
+argument_list|(
+operator|(
+operator|(
+name|MapWork
+operator|)
+name|work
+operator|)
+operator|.
+name|getAliasToWork
+argument_list|()
+operator|.
+name|values
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|roots
 operator|.
 name|addAll
@@ -1318,6 +1349,7 @@ name|getAllRootOperators
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|work

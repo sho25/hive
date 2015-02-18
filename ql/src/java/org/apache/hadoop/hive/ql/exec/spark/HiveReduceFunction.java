@@ -23,6 +23,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -58,16 +68,6 @@ import|import
 name|scala
 operator|.
 name|Tuple2
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
 import|;
 end_import
 
@@ -175,8 +175,6 @@ init|=
 operator|new
 name|HiveReduceFunctionResultList
 argument_list|(
-name|jobConf
-argument_list|,
 name|it
 argument_list|,
 name|reducerRecordhandler
