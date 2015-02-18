@@ -1706,7 +1706,7 @@ specifier|final
 name|int
 name|columnId
 decl_stmt|;
-specifier|private
+specifier|protected
 name|BitFieldReader
 name|present
 init|=
@@ -2269,7 +2269,7 @@ name|BooleanTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|BitFieldReader
 name|reader
 init|=
@@ -2611,7 +2611,7 @@ name|ByteTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|RunLengthByteReader
 name|reader
 init|=
@@ -2940,7 +2940,7 @@ name|ShortTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|IntegerReader
 name|reader
 init|=
@@ -3384,7 +3384,7 @@ name|IntTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|IntegerReader
 name|reader
 init|=
@@ -3828,7 +3828,7 @@ name|LongTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|IntegerReader
 name|reader
 init|=
@@ -4276,7 +4276,7 @@ name|FloatTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|InStream
 name|stream
 decl_stmt|;
@@ -4742,7 +4742,7 @@ name|DoubleTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|InStream
 name|stream
 decl_stmt|;
@@ -5787,13 +5787,13 @@ name|TimestampTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|IntegerReader
 name|data
 init|=
 literal|null
 decl_stmt|;
-specifier|private
+specifier|protected
 name|IntegerReader
 name|nanos
 init|=
@@ -6543,7 +6543,7 @@ name|DateTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|IntegerReader
 name|reader
 init|=
@@ -6984,11 +6984,11 @@ name|DecimalTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|protected
 name|InStream
 name|valueStream
 decl_stmt|;
-specifier|private
+specifier|protected
 name|IntegerReader
 name|scaleReader
 init|=
@@ -8553,11 +8553,11 @@ name|StringDirectTreeReader
 extends|extends
 name|TreeReader
 block|{
-specifier|private
+specifier|public
 name|InStream
 name|stream
 decl_stmt|;
-specifier|private
+specifier|public
 name|IntegerReader
 name|lengths
 decl_stmt|;
@@ -9154,7 +9154,7 @@ name|int
 index|[]
 name|dictionaryOffsets
 decl_stmt|;
-specifier|private
+specifier|public
 name|IntegerReader
 name|reader
 decl_stmt|;
