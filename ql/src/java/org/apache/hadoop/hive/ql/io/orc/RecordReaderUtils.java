@@ -266,6 +266,7 @@ comment|/**  * Stateless methods shared between RecordReaderImpl and EncodedRead
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|RecordReaderUtils
 block|{
