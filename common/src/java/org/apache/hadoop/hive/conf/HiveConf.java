@@ -3212,6 +3212,15 @@ argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
 block|,
+name|HIVE_CBO_RETPATH_HIVEOP
+argument_list|(
+literal|"hive.cbo.returnpath.hiveop"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control calcite plan to hive operator conversion"
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE

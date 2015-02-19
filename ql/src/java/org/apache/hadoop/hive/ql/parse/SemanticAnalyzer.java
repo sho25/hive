@@ -3351,7 +3351,7 @@ name|PrunedPartitionList
 argument_list|>
 name|opToPartList
 decl_stmt|;
-specifier|private
+specifier|protected
 name|HashMap
 argument_list|<
 name|String
@@ -3366,7 +3366,6 @@ argument_list|>
 name|topOps
 decl_stmt|;
 specifier|private
-specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -3380,8 +3379,7 @@ argument_list|>
 argument_list|>
 name|topSelOps
 decl_stmt|;
-specifier|private
-specifier|final
+specifier|protected
 name|LinkedHashMap
 argument_list|<
 name|Operator
@@ -36317,7 +36315,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|private
+specifier|protected
 name|Operator
 name|genFileSinkPlan
 parameter_list|(
@@ -56214,7 +56212,7 @@ return|return
 name|equalsExpr
 return|;
 block|}
-specifier|private
+specifier|protected
 name|String
 name|getAliasId
 parameter_list|(

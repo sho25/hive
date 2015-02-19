@@ -257,22 +257,6 @@ name|rel
 operator|.
 name|type
 operator|.
-name|RelDataTypeFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|type
-operator|.
 name|RelDataTypeField
 import|;
 end_import
@@ -347,36 +331,6 @@ name|RexVisitorImpl
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|sql
-operator|.
-name|SqlKind
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|sql
-operator|.
-name|type
-operator|.
-name|SqlTypeUtil
-import|;
-end_import
-
 begin_comment
 comment|/*  * convert a RexNode to an ExprNodeDesc  */
 end_comment
@@ -400,11 +354,6 @@ decl_stmt|;
 name|boolean
 name|partitioningExpr
 decl_stmt|;
-specifier|private
-specifier|final
-name|RelDataTypeFactory
-name|dTFactory
-decl_stmt|;
 specifier|public
 name|ExprNodeConverter
 parameter_list|(
@@ -416,9 +365,6 @@ name|rType
 parameter_list|,
 name|boolean
 name|partitioningExpr
-parameter_list|,
-name|RelDataTypeFactory
-name|dTFactory
 parameter_list|)
 block|{
 name|super
@@ -426,12 +372,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-comment|/*      * hb: 6/25/14 for now we only support expressions that only contain      * partition cols. there is no use case for supporting generic expressions.      * for supporting generic exprs., we need to give the converter information      * on whether a column is a partition column or not, whether a column is a      * virtual column or not.      */
-assert|assert
-name|partitioningExpr
-operator|==
-literal|true
-assert|;
 name|this
 operator|.
 name|tabAlias
@@ -449,12 +389,6 @@ operator|.
 name|partitioningExpr
 operator|=
 name|partitioningExpr
-expr_stmt|;
-name|this
-operator|.
-name|dTFactory
-operator|=
-name|dTFactory
 expr_stmt|;
 block|}
 annotation|@
@@ -508,6 +442,7 @@ name|partitioningExpr
 argument_list|)
 return|;
 block|}
+comment|/**    * TODO: Handle 1) cast 2) Field Access 3) Windowing Over() 4, Windowing Agg Call    */
 annotation|@
 name|Override
 specifier|public
@@ -569,64 +504,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If Call is a redundant cast then bail out. Ex: cast(true)BOOLEAN
-if|if
-condition|(
-name|call
-operator|.
-name|isA
-argument_list|(
-name|SqlKind
-operator|.
-name|CAST
-argument_list|)
-operator|&&
-operator|(
-name|call
-operator|.
-name|operands
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|1
-operator|)
-operator|&&
-name|SqlTypeUtil
-operator|.
-name|equalSansNullability
-argument_list|(
-name|dTFactory
-argument_list|,
-name|call
-operator|.
-name|getType
-argument_list|()
-argument_list|,
-name|call
-operator|.
-name|operands
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-condition|)
-block|{
-return|return
-name|args
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-return|;
-block|}
-elseif|else
+comment|// If Expr is flat (and[p,q,r,s] or[p,q,r,s]) then recursively build the
+comment|// exprnode
 if|if
 condition|(
 name|ASTConverter
@@ -637,8 +516,6 @@ name|call
 argument_list|)
 condition|)
 block|{
-comment|// If Expr is flat (and[p,q,r,s] or[p,q,r,s]) then recursively build the
-comment|// exprnode
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -880,6 +757,7 @@ return|return
 name|gfDesc
 return|;
 block|}
+comment|/**    * TODO: 1. Handle NULL    */
 annotation|@
 name|Override
 specifier|public
