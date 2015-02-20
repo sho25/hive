@@ -123,6 +123,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|llap
 operator|.
 name|Consumer
@@ -873,6 +889,66 @@ operator|=
 name|getOrReadFileMetadata
 argument_list|()
 expr_stmt|;
+name|int
+name|bufferSize
+init|=
+name|metadata
+operator|.
+name|getCompressionBufferSize
+argument_list|()
+decl_stmt|;
+name|int
+name|minAllocSize
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_ORC_CACHE_MIN_ALLOC
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|bufferSize
+operator|!=
+name|minAllocSize
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"ORC compression buffer size ("
+operator|+
+name|bufferSize
+operator|+
+literal|") is smaller than"
+operator|+
+literal|" LLAP low-level cache minimum allocation size ("
+operator|+
+name|minAllocSize
+operator|+
+literal|"). Decrease the"
+operator|+
+literal|" value for "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_ORC_CACHE_MIN_ALLOC
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|columnIds
@@ -1630,11 +1706,6 @@ argument_list|,
 name|colRgs
 argument_list|)
 expr_stmt|;
-name|stripeReader
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1659,6 +1730,12 @@ literal|null
 return|;
 block|}
 block|}
+comment|// close the stripe reader, we are done reading
+name|stripeReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 comment|// Done with all the things.
 name|consumer
 operator|.
