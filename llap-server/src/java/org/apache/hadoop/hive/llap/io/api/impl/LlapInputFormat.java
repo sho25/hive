@@ -59,34 +59,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -434,21 +406,6 @@ implements|,
 name|VectorizedInputFormatInterface
 block|{
 specifier|private
-specifier|static
-specifier|final
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|LlapInputFormat
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
-specifier|private
 specifier|final
 name|LlapIoImpl
 name|llapIo
@@ -525,6 +482,8 @@ operator|!
 name|isVectorMode
 condition|)
 block|{
+name|LlapIoImpl
+operator|.
 name|LOG
 operator|.
 name|error
@@ -1107,7 +1066,6 @@ argument_list|(
 literal|"next will block"
 argument_list|)
 expr_stmt|;
-comment|// TODO: separate log objects
 block|}
 while|while
 condition|(
@@ -1271,7 +1229,7 @@ if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceMttEnabled
 argument_list|()
 condition|)
 block|{
@@ -1358,7 +1316,7 @@ if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceMttEnabled
 argument_list|()
 condition|)
 block|{
@@ -1368,7 +1326,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"setDone called; cclosed "
+literal|"setDone called; closed "
 operator|+
 name|isClosed
 operator|+
@@ -1419,7 +1377,7 @@ if|if
 condition|(
 name|DebugUtils
 operator|.
-name|isTraceEnabled
+name|isTraceMttEnabled
 argument_list|()
 condition|)
 block|{

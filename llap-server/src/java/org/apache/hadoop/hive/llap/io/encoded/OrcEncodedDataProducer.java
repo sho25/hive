@@ -854,6 +854,16 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -865,6 +875,7 @@ operator|+
 name|internedFilePath
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isStopped
@@ -2762,7 +2773,7 @@ if|if
 condition|(
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOGL
 operator|.
 name|isDebugEnabled
 argument_list|()
