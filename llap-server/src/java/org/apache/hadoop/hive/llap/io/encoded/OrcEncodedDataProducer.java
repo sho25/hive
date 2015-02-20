@@ -1165,7 +1165,6 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
-comment|// produceDataFromCache handles its own cleanup.
 name|consumer
 operator|.
 name|setError

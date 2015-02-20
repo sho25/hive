@@ -612,6 +612,29 @@ name|consumer
 operator|=
 name|consumer
 expr_stmt|;
+if|if
+condition|(
+name|zcr
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|cache
+operator|.
+name|isDirectAlloc
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Cannot use zero-copy reader with non-direct cache "
+operator|+
+literal|"buffers; either disable zero-copy or enable direct cache allocation"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/** Helper context for each column being read */
 specifier|private
@@ -1610,7 +1633,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Force direct buffers, since we will be decompressing to cache.
+comment|// Force direct buffers if we will be decompressing to direct cache.
 name|RecordReaderUtils
 operator|.
 name|readDiskRanges
@@ -1623,7 +1646,10 @@ name|stripeOffset
 argument_list|,
 name|rangesToRead
 argument_list|,
-literal|true
+name|cache
+operator|.
+name|isDirectAlloc
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 2.1. Separate buffers (relative to stream offset) for each stream from the data we have.

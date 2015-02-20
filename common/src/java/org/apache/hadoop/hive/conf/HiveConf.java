@@ -7875,6 +7875,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+argument_list|(
+literal|"hive.llap.io.cache.direct"
+argument_list|,
+literal|true
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.io.use.lrfu"

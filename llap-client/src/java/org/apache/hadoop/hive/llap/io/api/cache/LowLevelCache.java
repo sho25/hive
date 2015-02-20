@@ -142,6 +142,10 @@ name|LlapMemoryBuffer
 name|buffer
 parameter_list|)
 function_decl|;
+name|boolean
+name|isDirectAlloc
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
