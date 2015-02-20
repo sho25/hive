@@ -810,7 +810,8 @@ name|file
 decl_stmt|;
 comment|// OrcEncodedDataProducer should have just loaded cache entries from this file.
 comment|// The default LRU algorithm shouldn't have dropped the entries. To make it
-comment|// safe, untie the code from EDP into separate class and make use of loading cache.
+comment|// safe, untie the code from EDP into separate class and make use of loading cache. The current
+comment|// assumption is that entries for the current file exists in metadata cache.
 try|try
 block|{
 name|OrcFileMetadata
@@ -833,7 +834,9 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
-comment|// we are interested only in the stripe number. To make sure we get the correct stripe
+comment|// To get stripe metadata we only need to know the stripe number. Oddly, stripe metadata
+comment|// accepts BatchKey as key. We need to keep to row group index in batch key the same to
+comment|// retrieve the stripe metadata properly. To make sure we get the correct stripe
 comment|// metadata, set row group index to 0. That's how it is cached. See OrcEncodedDataProducer
 name|stripeKey
 operator|.
@@ -851,7 +854,7 @@ argument_list|(
 name|stripeKey
 argument_list|)
 decl_stmt|;
-comment|// Get non null row count from root column
+comment|// Get non null row count from root column, to get max vector batches
 name|int
 name|rgIdx
 init|=
@@ -925,7 +928,7 @@ name|RecordReaderImpl
 operator|.
 name|TreeReader
 index|[]
-name|columnStreams
+name|columnReaders
 init|=
 name|createTreeReaders
 argument_list|(
@@ -966,6 +969,7 @@ operator|.
 name|length
 argument_list|)
 decl_stmt|;
+comment|// for last batch in row group, adjust the batch size
 if|if
 condition|(
 name|i
@@ -1024,7 +1028,7 @@ operator|=
 operator|(
 name|ColumnVector
 operator|)
-name|columnStreams
+name|columnReaders
 index|[
 name|idx
 index|]
@@ -1128,7 +1132,7 @@ operator|++
 control|)
 block|{
 name|int
-name|colIx
+name|columnIndex
 init|=
 name|batch
 operator|.
@@ -1138,7 +1142,7 @@ name|i
 index|]
 decl_stmt|;
 name|int
-name|rgIdx
+name|rowGroupIndex
 init|=
 name|batch
 operator|.
@@ -1162,7 +1166,7 @@ decl_stmt|;
 name|OrcProto
 operator|.
 name|Type
-name|colType
+name|columnType
 init|=
 name|fileMetadata
 operator|.
@@ -1171,14 +1175,14 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 decl_stmt|;
-comment|// TODO: EncodedColumnBatch is already decompressed, we don't really need to pass codec.
-comment|// But we need to know if the original data is compressed or not. This is used to skip positions
-comment|// in row index. If the file is originally compressed, then 1st position (compressed offset)
-comment|// in row index should be skipped to get uncompressed offset, else 1st position should not
-comment|// be skipped.
+comment|// EncodedColumnBatch is already decompressed, we don't really need to pass codec.
+comment|// But we need to know if the original data is compressed or not. This is used to skip
+comment|// positions in row index properly. If the file is originally compressed,
+comment|// then 1st position (compressed offset) in row index should be skipped to get
+comment|// uncompressed offset, else 1st position should not be skipped.
 name|CompressionCodec
 name|codec
 init|=
@@ -1207,7 +1211,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 decl_stmt|;
 name|OrcProto
@@ -1220,7 +1224,7 @@ operator|.
 name|getRowIndexes
 argument_list|()
 index|[
-name|colIx
+name|columnIndex
 index|]
 decl_stmt|;
 name|OrcProto
@@ -1232,9 +1236,10 @@ name|rowIndex
 operator|.
 name|getEntry
 argument_list|(
-name|rgIdx
+name|rowGroupIndex
 argument_list|)
 decl_stmt|;
+comment|// stream buffers are arranged in enum order of stream kind
 name|EncodedColumnBatch
 operator|.
 name|StreamBuffer
@@ -1348,7 +1353,7 @@ block|}
 block|}
 switch|switch
 condition|(
-name|colType
+name|columnType
 operator|.
 name|getKind
 argument_list|()
@@ -1374,7 +1379,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1436,7 +1441,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1488,7 +1493,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1540,7 +1545,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1597,7 +1602,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1654,7 +1659,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1716,7 +1721,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1768,7 +1773,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1823,12 +1828,12 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setMaxLength
 argument_list|(
-name|colType
+name|columnType
 operator|.
 name|getMaximumLength
 argument_list|()
@@ -1836,7 +1841,7 @@ argument_list|)
 operator|.
 name|setCharacterType
 argument_list|(
-name|colType
+name|columnType
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1903,7 +1908,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -1970,12 +1975,12 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPrecision
 argument_list|(
-name|colType
+name|columnType
 operator|.
 name|getPrecision
 argument_list|()
@@ -1983,7 +1988,7 @@ argument_list|)
 operator|.
 name|setScale
 argument_list|(
-name|colType
+name|columnType
 operator|.
 name|getScale
 argument_list|()
@@ -2048,7 +2053,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -2115,7 +2120,7 @@ argument_list|)
 operator|.
 name|setColumnIndex
 argument_list|(
-name|colIx
+name|columnIndex
 argument_list|)
 operator|.
 name|setPresentStream
@@ -2159,7 +2164,7 @@ name|UnsupportedOperationException
 argument_list|(
 literal|"Data type not supported yet! "
 operator|+
-name|colType
+name|columnType
 argument_list|)
 throw|;
 block|}

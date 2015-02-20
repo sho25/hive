@@ -204,7 +204,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  */
+comment|/**  * Stream utility.  */
 end_comment
 
 begin_class
@@ -212,6 +212,7 @@ specifier|public
 class|class
 name|StreamUtils
 block|{
+comment|/**    * Create InStream from stream buffer.    *    * @param streamName - stream name    * @param fileName - file name    * @param codec - compression codec    * @param bufferSize - compression buffer size    * @param streamBuffer - stream buffer    * @return - InStream    * @throws IOException    */
 specifier|public
 specifier|static
 name|InStream
@@ -324,6 +325,7 @@ argument_list|(
 name|data
 argument_list|)
 expr_stmt|;
+comment|// offset start at where previous stream buffer left off
 name|offsetsList
 operator|.
 name|add
@@ -389,6 +391,7 @@ name|bufferSize
 argument_list|)
 return|;
 block|}
+comment|/**    * Converts row index entry to position provider.    *    * @param rowIndex - row index entry    * @return - position provider    */
 specifier|public
 specifier|static
 name|PositionProvider

@@ -182,7 +182,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  */
+comment|/**  * Stream reader for byte column type.  */
 end_comment
 
 begin_class
