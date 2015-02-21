@@ -29,16 +29,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -59,26 +49,39 @@ name|DiskRange
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|DiskRangeList
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
 name|LowLevelCache
 block|{
-comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    * @param base base offset for the ranges (stripe offset in case of ORC).    */
-name|void
+comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    * @param base base offset for the ranges (stripe offset in case of ORC).    * @return     */
+name|DiskRangeList
 name|getFileData
 parameter_list|(
 name|String
 name|fileName
 parameter_list|,
-name|LinkedList
-argument_list|<
-name|DiskRange
-argument_list|>
-name|ranges
+name|DiskRangeList
+name|range
 parameter_list|,
 name|long
-name|base
+name|baseOffset
 parameter_list|)
 function_decl|;
 comment|/**    * Puts file data into cache.    * @param file File name; MUST be interned.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
