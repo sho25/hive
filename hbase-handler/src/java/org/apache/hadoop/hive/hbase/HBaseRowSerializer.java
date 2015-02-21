@@ -143,7 +143,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazyUtils
 import|;
 end_import
 
@@ -161,7 +161,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyUtils
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -364,9 +364,7 @@ name|hbaseParam
 decl_stmt|;
 specifier|private
 specifier|final
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParam
 decl_stmt|;
 specifier|private
@@ -420,9 +418,7 @@ name|boolean
 index|[]
 name|needsEscape
 decl_stmt|;
-comment|// which chars need to be escaped. This array should have size
-comment|// of 128. Negative byte values (or byte values>= 128) are
-comment|// never escaped.
+comment|// which chars need to be escaped.
 specifier|private
 specifier|final
 name|long

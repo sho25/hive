@@ -81,6 +81,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1199,6 +1209,12 @@ parameter_list|(
 specifier|final
 name|Schema
 name|schema
+parameter_list|,
+name|Set
+argument_list|<
+name|Schema
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return
@@ -1219,6 +1235,12 @@ name|makeInstance
 parameter_list|(
 name|Object
 name|seed
+parameter_list|,
+name|Set
+argument_list|<
+name|Object
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return

@@ -921,21 +921,12 @@ literal|2
 operator|)
 assert|;
 return|return
-literal|"in_file("
-operator|+
+name|getStandardDisplayString
+argument_list|(
+literal|"in_file"
+argument_list|,
 name|children
-index|[
-literal|0
-index|]
-operator|+
-literal|", "
-operator|+
-name|children
-index|[
-literal|1
-index|]
-operator|+
-literal|")"
+argument_list|)
 return|;
 block|}
 block|}

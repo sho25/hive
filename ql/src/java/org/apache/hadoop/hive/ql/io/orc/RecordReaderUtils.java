@@ -319,6 +319,12 @@ if|if
 condition|(
 name|stream
 operator|.
+name|hasKind
+argument_list|()
+operator|&&
+operator|(
+name|stream
+operator|.
 name|getKind
 argument_list|()
 operator|==
@@ -329,6 +335,7 @@ operator|.
 name|Kind
 operator|.
 name|PRESENT
+operator|)
 condition|)
 block|{
 name|hasNull

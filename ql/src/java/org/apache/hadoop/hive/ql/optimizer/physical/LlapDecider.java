@@ -797,20 +797,6 @@ name|TezWork
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Joiner
-import|;
-end_import
-
 begin_comment
 comment|/**  * LlapDecider takes care of tagging certain vertices in the execution  * graph as "llap", which in turn causes them to be submitted to an  * llap daemon instead of a regular yarn container.  *  * The actual algoritm used is driven by LLAP_EXECUTION_MODE. "all",  * "none" and "map" mechanically tag those elements. "auto" tries to  * be smarter by looking for suitable vertices.  *  * Regardless of the algorithm used, it's always ensured that there's  * not user code that will be sent to the daemon (ie.: script  * operators, temporary functions, etc)  */
 end_comment
@@ -1481,7 +1467,7 @@ condition|(
 operator|!
 name|FunctionRegistry
 operator|.
-name|isNativeFuncExpr
+name|isBuiltInFuncExpr
 argument_list|(
 operator|(
 name|ExprNodeGenericFuncDesc

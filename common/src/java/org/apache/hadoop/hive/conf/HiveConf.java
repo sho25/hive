@@ -1663,7 +1663,7 @@ literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Do not report an error if DROP TABLE/VIEW/Index specifies a non-existent table/view/index"
+literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/index/function"
 argument_list|)
 block|,
 name|HIVEIGNOREMAPJOINHINT
@@ -2848,7 +2848,7 @@ literal|"hive.metastore.filter.hook"
 argument_list|,
 literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
 argument_list|,
-literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager\n"
+literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager"
 operator|+
 literal|"is set to instance of HiveAuthorizerFactory, then this value is ignored."
 argument_list|)

@@ -757,7 +757,7 @@ return|return
 name|arraySize
 return|;
 block|}
-comment|/**    * cachedList is reused every time getList is called. Different    * LazyBianryArray instances cannot share the same cachedList.    */
+comment|/**    * cachedList is reused every time getList is called. Different    * LazyBinaryArray instances cannot share the same cachedList.    */
 name|ArrayList
 argument_list|<
 name|Object

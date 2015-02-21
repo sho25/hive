@@ -282,6 +282,9 @@ case|:
 case|case
 name|DICTIONARY_COUNT
 case|:
+case|case
+name|BLOOM_FILTER
+case|:
 return|return
 name|Area
 operator|.

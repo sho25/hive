@@ -155,9 +155,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|ParquetHiveRecord
 import|;
 end_import
 
@@ -244,7 +248,7 @@ argument_list|(
 operator|(
 name|ParquetOutputFormat
 argument_list|<
-name|ArrayWritable
+name|ParquetHiveRecord
 argument_list|>
 operator|)
 name|mock
@@ -357,14 +361,14 @@ decl_stmt|;
 specifier|final
 name|ParquetOutputFormat
 argument_list|<
-name|ArrayWritable
+name|ParquetHiveRecord
 argument_list|>
 name|outputFormat
 init|=
 operator|(
 name|ParquetOutputFormat
 argument_list|<
-name|ArrayWritable
+name|ParquetHiveRecord
 argument_list|>
 operator|)
 name|mock
@@ -397,7 +401,7 @@ name|getParquerRecordWriterWrapper
 parameter_list|(
 name|ParquetOutputFormat
 argument_list|<
-name|ArrayWritable
+name|ParquetHiveRecord
 argument_list|>
 name|realOutputFormat
 parameter_list|,

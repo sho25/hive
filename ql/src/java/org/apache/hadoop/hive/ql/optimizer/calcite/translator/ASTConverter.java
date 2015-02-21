@@ -4376,9 +4376,9 @@ name|construct
 argument_list|(
 name|HiveParser
 operator|.
-name|TOK_UNION
+name|TOK_UNIONALL
 argument_list|,
-literal|"TOK_UNION"
+literal|"TOK_UNIONALL"
 argument_list|)
 operator|.
 name|add

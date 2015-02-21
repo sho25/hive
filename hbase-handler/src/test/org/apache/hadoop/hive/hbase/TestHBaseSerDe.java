@@ -619,7 +619,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazyStruct
 import|;
 end_import
 
@@ -637,7 +637,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazyStruct
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -9177,7 +9177,7 @@ name|tbl
 operator|.
 name|setProperty
 argument_list|(
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|SERIALIZATION_EXTEND_NESTING_LEVELS
 argument_list|,

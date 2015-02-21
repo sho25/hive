@@ -23,6 +23,24 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -32,6 +50,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"Windowing table definition"
+argument_list|)
 specifier|public
 class|class
 name|WindowTableFunctionDef
@@ -53,6 +78,13 @@ decl_stmt|;
 name|int
 name|rankLimitFunction
 decl_stmt|;
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"window functions"
+argument_list|)
 specifier|public
 name|List
 argument_list|<

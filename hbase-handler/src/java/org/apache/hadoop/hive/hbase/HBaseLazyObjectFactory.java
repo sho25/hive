@@ -85,9 +85,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
-operator|.
-name|SerDeParameters
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -243,7 +241,7 @@ specifier|static
 name|ObjectInspector
 name|createLazyHBaseStructInspector
 parameter_list|(
-name|SerDeParameters
+name|LazySerDeParameters
 name|serdeParams
 parameter_list|,
 name|int

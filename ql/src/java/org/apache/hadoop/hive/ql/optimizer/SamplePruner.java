@@ -473,7 +473,7 @@ name|plan
 operator|.
 name|FilterDesc
 operator|.
-name|sampleDesc
+name|SampleDesc
 import|;
 end_import
 
@@ -500,7 +500,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 decl_stmt|;
@@ -511,7 +511,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 parameter_list|)
@@ -529,7 +529,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|getOpToSamplePruner
 parameter_list|()
@@ -547,7 +547,7 @@ name|HashMap
 argument_list|<
 name|TableScanOperator
 argument_list|,
-name|sampleDesc
+name|SampleDesc
 argument_list|>
 name|opToSamplePruner
 parameter_list|)
@@ -782,7 +782,7 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|sampleDesc
+name|SampleDesc
 name|sampleDescr
 init|=
 name|filOpDesc
@@ -948,7 +948,7 @@ parameter_list|(
 name|Partition
 name|part
 parameter_list|,
-name|sampleDesc
+name|SampleDesc
 name|sampleDescr
 parameter_list|)
 throws|throws
