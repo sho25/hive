@@ -2691,6 +2691,15 @@ argument_list|,
 name|nameNode
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"yarn.resourcemanager.scheduler.class"
+argument_list|,
+literal|"org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler"
+argument_list|)
+expr_stmt|;
 name|mr
 operator|.
 name|init
