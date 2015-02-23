@@ -1311,7 +1311,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to start SparkContext."
+literal|"Failed to start SparkContext: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -1467,6 +1469,13 @@ condition|(
 name|running
 condition|)
 block|{
+if|if
+condition|(
+name|error
+operator|==
+literal|null
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1474,6 +1483,21 @@ argument_list|(
 literal|"Shutting down remote driver."
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Shutting down remote driver due to error: "
+operator|+
+name|error
+argument_list|,
+name|error
+argument_list|)
+expr_stmt|;
+block|}
 name|running
 operator|=
 literal|false
