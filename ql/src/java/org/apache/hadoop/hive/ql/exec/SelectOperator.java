@@ -341,6 +341,11 @@ operator|.
 name|length
 index|]
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -356,6 +361,7 @@ name|getTypeName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|outputObjInspector
 operator|=
 name|initEvaluatorsAndReturnStruct

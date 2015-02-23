@@ -491,6 +491,11 @@ operator|>
 name|MAX_SIZE
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -503,6 +508,7 @@ name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|hasReachedMaxSize
 operator|=
 literal|true
@@ -529,10 +535,7 @@ throw|;
 block|}
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -674,6 +677,11 @@ name|length
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -693,6 +701,7 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 name|context
 operator|.
 name|getTezProcessorContext

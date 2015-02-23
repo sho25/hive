@@ -671,6 +671,8 @@ operator|)
 expr_stmt|;
 if|if
 condition|(
+name|isLogInfoEnabled
+operator|&&
 name|needsTransform
 index|[
 name|p
