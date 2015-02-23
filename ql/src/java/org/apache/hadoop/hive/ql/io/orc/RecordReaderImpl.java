@@ -1938,7 +1938,7 @@ specifier|final
 name|int
 name|columnId
 decl_stmt|;
-specifier|protected
+specifier|public
 name|BitFieldReader
 name|present
 init|=

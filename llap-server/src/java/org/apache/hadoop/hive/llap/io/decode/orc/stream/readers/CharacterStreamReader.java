@@ -398,6 +398,8 @@ name|getNext
 argument_list|()
 expr_stmt|;
 block|}
+name|reader
+operator|.
 name|present
 operator|.
 name|seek

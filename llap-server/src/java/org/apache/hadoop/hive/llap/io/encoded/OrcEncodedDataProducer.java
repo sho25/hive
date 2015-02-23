@@ -947,7 +947,7 @@ decl_stmt|;
 if|if
 condition|(
 name|bufferSize
-operator|!=
+operator|<
 name|minAllocSize
 condition|)
 block|{
