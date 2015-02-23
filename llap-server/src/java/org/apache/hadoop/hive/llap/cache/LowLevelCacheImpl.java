@@ -779,6 +779,8 @@ argument_list|(
 name|currentNotCached
 argument_list|,
 name|currentCached
+argument_list|,
+name|baseOffset
 argument_list|)
 expr_stmt|;
 comment|// Now that we've added it into correct position, we can adjust it by base offset.
@@ -792,7 +794,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Adds cached buffer to buffer list.    * @param currentNotCached Pointer to the list node where we are inserting.    * @param currentCached The cached buffer found for this node, to insert.    * @return The new currentNotCached pointer, following the cached buffer insertion.    */
+comment|/**    * Adds cached buffer to buffer list.    * @param currentNotCached Pointer to the list node where we are inserting. Expressed in stripe/stream offset.    * @param currentCached The cached buffer found for this node, to insert. Expressed in file offset.    * @param baseOffset     * @return The new currentNotCached pointer, following the cached buffer insertion.    */
 specifier|private
 name|DiskRangeList
 name|addCachedBufferToIter
@@ -802,14 +804,32 @@ name|currentNotCached
 parameter_list|,
 name|CacheChunk
 name|currentCached
+parameter_list|,
+name|long
+name|baseOffset
 parameter_list|)
 block|{
 comment|// Both currentNotCached and currentCached already include baseOffset.
-if|if
-condition|(
+name|long
+name|startOffset
+init|=
+name|baseOffset
+operator|+
 name|currentNotCached
 operator|.
 name|offset
+decl_stmt|,
+name|endOffset
+init|=
+name|baseOffset
+operator|+
+name|currentNotCached
+operator|.
+name|end
+decl_stmt|;
+if|if
+condition|(
+name|startOffset
 operator|==
 name|currentCached
 operator|.
@@ -818,9 +838,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|currentNotCached
-operator|.
-name|end
+name|endOffset
 operator|<=
 name|currentCached
 operator|.
@@ -850,6 +868,8 @@ operator|=
 name|currentCached
 operator|.
 name|end
+operator|-
+name|baseOffset
 expr_stmt|;
 name|currentNotCached
 operator|.
@@ -866,21 +886,12 @@ block|}
 else|else
 block|{
 assert|assert
-name|currentNotCached
-operator|.
-name|offset
+name|startOffset
 operator|<
 name|currentCached
 operator|.
 name|offset
 assert|;
-name|long
-name|originalEnd
-init|=
-name|currentNotCached
-operator|.
-name|end
-decl_stmt|;
 name|currentNotCached
 operator|.
 name|end
@@ -888,6 +899,8 @@ operator|=
 name|currentCached
 operator|.
 name|offset
+operator|-
+name|baseOffset
 expr_stmt|;
 name|currentNotCached
 operator|.
@@ -898,7 +911,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|originalEnd
+name|endOffset
 operator|<=
 name|currentCached
 operator|.
@@ -922,8 +935,10 @@ argument_list|(
 name|currentCached
 operator|.
 name|end
+operator|-
+name|baseOffset
 argument_list|,
-name|originalEnd
+name|endOffset
 argument_list|)
 expr_stmt|;
 name|currentCached
