@@ -1343,7 +1343,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-comment|// TODO: should be LlapIoProxy.getIo eventually
 name|LlapIo
 argument_list|<
 name|VectorizedRowBatch
@@ -1352,10 +1351,8 @@ name|llapIo
 init|=
 name|LlapIoProxy
 operator|.
-name|getOrCreateIo
-argument_list|(
-name|conf
-argument_list|)
+name|getIo
+argument_list|()
 decl_stmt|;
 return|return
 name|castInputFormat
