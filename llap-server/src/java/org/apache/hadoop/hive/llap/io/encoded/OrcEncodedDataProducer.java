@@ -612,12 +612,6 @@ name|OrcBatchKey
 argument_list|>
 block|{
 specifier|private
-name|FileSystem
-name|cachedFs
-init|=
-literal|null
-decl_stmt|;
-specifier|private
 name|Configuration
 name|conf
 decl_stmt|;
@@ -2057,11 +2051,6 @@ operator|!=
 literal|null
 condition|)
 return|return;
-name|FileSystem
-name|fs
-init|=
-name|cachedFs
-decl_stmt|;
 name|Path
 name|path
 init|=
@@ -2070,33 +2059,20 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-literal|"pfile"
-operator|.
-name|equals
-argument_list|(
-name|path
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getScheme
-argument_list|()
-argument_list|)
-condition|)
-block|{
+comment|// Disable filesystem caching for now; Tez closes it and FS cache will fix all that
+name|FileSystem
+comment|/*fs = cachedFs;       if ("pfile".equals(path.toUri().getScheme())) {*/
 name|fs
-operator|=
+init|=
 name|path
 operator|.
 name|getFileSystem
 argument_list|(
 name|conf
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|// Cannot use cached FS due to hive tests' proxy FS.
-block|}
+comment|//}
 name|orcReader
 operator|=
 name|OrcFile
@@ -3796,17 +3772,6 @@ throws|throws
 name|IOException
 block|{
 comment|// We assume all splits will come from the same FS.
-name|this
-operator|.
-name|cachedFs
-operator|=
-name|FileSystem
-operator|.
-name|get
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
 name|this
 operator|.
 name|cache
