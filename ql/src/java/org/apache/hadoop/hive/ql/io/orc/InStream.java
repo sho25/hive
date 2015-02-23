@@ -3876,11 +3876,11 @@ name|end
 operator|<
 name|cbEndOffset
 operator|&&
+operator|!
 name|current
 operator|.
-name|next
-operator|==
-literal|null
+name|hasContiguousNext
+argument_list|()
 condition|)
 block|{
 return|return
@@ -4195,7 +4195,14 @@ name|next
 operator|=
 name|next
 operator|.
+name|hasContiguousNext
+argument_list|()
+condition|?
 name|next
+operator|.
+name|next
+else|:
+literal|null
 expr_stmt|;
 name|tmp
 operator|.
@@ -4207,7 +4214,6 @@ return|return
 literal|null
 return|;
 comment|// This is impossible to read from this chunk.
-comment|// TODO: dbl check this is valid; we just did a bunch of changes to the list.
 block|}
 comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastPartConsumedLength The number of compressed bytes consumed from last *range* into fullCompressionBlock.    *                               Can be different from lastPartChunkLength due to header.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
 specifier|private
