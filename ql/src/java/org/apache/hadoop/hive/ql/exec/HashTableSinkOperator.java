@@ -1816,6 +1816,11 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -1823,6 +1828,7 @@ argument_list|(
 literal|"mapJoinTables is null"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1885,6 +1891,11 @@ operator|.
 name|getTmpPath
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1894,6 +1905,7 @@ operator|+
 name|tmpURI
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|byte

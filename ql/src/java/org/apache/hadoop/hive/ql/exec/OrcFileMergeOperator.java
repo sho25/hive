@@ -503,6 +503,11 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -515,6 +520,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// store the orc configuration from the first file. All other files should
 comment|// match this configuration before merging else will not be merged
@@ -608,6 +614,11 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -617,6 +628,7 @@ operator|+
 name|outPath
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -753,6 +765,11 @@ name|getStripeStatistics
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -787,6 +804,7 @@ operator|+
 literal|" ]"
 argument_list|)
 expr_stmt|;
+block|}
 comment|// add user metadata to footer in case of any
 if|if
 condition|(
@@ -912,6 +930,11 @@ name|columnCount
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -924,6 +947,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -942,6 +966,11 @@ name|compression
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -956,6 +985,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -968,6 +998,11 @@ name|getCompressBufferSize
 argument_list|()
 operator|!=
 name|compressBuffSize
+condition|)
+block|{
+if|if
+condition|(
+name|isLogInfoEnabled
 condition|)
 block|{
 name|LOG
@@ -984,6 +1019,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -1002,6 +1038,11 @@ name|version
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1014,6 +1055,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -1026,6 +1068,11 @@ name|getRowIndexStride
 argument_list|()
 operator|!=
 name|rowIndexStride
+condition|)
+block|{
+if|if
+condition|(
+name|isLogInfoEnabled
 condition|)
 block|{
 name|LOG
@@ -1042,6 +1089,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;

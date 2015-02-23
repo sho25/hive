@@ -547,9 +547,13 @@ else|else
 block|{
 if|if
 condition|(
+name|isLogInfoEnabled
+operator|&&
+operator|(
 name|sz
 operator|==
 name|nextSz
+operator|)
 condition|)
 block|{
 comment|// Print a message if we reached at least 1000 rows for a join operand

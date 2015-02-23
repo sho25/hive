@@ -1499,6 +1499,11 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1508,6 +1513,7 @@ operator|+
 name|this
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|inputOIs
@@ -1747,6 +1753,11 @@ literal|"Internal Hive error during operator initialization."
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1761,6 +1772,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|void
@@ -1858,6 +1870,11 @@ name|State
 operator|.
 name|INIT
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1874,6 +1891,7 @@ operator|+
 literal|" initialized"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|childOperators
@@ -1888,6 +1906,11 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1902,6 +1925,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -2029,6 +2053,11 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2043,6 +2072,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Double the size of the array if needed
 if|if
 condition|(
@@ -2427,6 +2457,11 @@ condition|)
 block|{
 continue|continue;
 block|}
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2438,6 +2473,7 @@ operator|.
 name|state
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -2502,6 +2538,11 @@ name|allInitializedParentsAreClosed
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2509,6 +2550,7 @@ argument_list|(
 literal|"Not all parent operators are closed. Not closing."
 argument_list|)
 expr_stmt|;
+block|}
 return|return;
 block|}
 comment|// set state as CLOSE as long as all parents are closed
@@ -2519,6 +2561,11 @@ name|State
 operator|.
 name|CLOSE
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2528,6 +2575,7 @@ operator|+
 literal|" finished. closing... "
 argument_list|)
 expr_stmt|;
+block|}
 comment|// call the operator specific close routine
 name|closeOp
 argument_list|(
@@ -2565,6 +2613,11 @@ range|:
 name|childOperators
 control|)
 block|{
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2574,6 +2627,7 @@ operator|+
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 name|op
 operator|.
 name|close
@@ -2582,6 +2636,11 @@ name|abort
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2591,6 +2650,7 @@ operator|+
 literal|" Close done"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3621,6 +3681,11 @@ name|void
 name|logStats
 parameter_list|()
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 for|for
 control|(
 name|String
@@ -3654,6 +3719,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Implements the getName function for the Node Interface.    *    * @return the name of the operator    */
