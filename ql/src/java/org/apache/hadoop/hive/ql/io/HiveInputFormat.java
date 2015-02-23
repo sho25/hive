@@ -1354,6 +1354,24 @@ operator|.
 name|getIo
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|llapIo
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not using LLAP because IO is not initialized"
+argument_list|)
+expr_stmt|;
+return|return
+name|inputFormat
+return|;
+block|}
 return|return
 name|castInputFormat
 argument_list|(
