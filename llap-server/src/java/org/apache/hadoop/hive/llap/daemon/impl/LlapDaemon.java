@@ -433,6 +433,14 @@ operator|+
 literal|", shufflePort="
 operator|+
 name|shufflePort
+operator|+
+literal|", memoryConfigured="
+operator|+
+name|memoryAvailableBytes
+operator|+
+literal|", jvmAvailableMemory="
+operator|+
+name|jvmMax
 argument_list|)
 expr_stmt|;
 name|Preconditions
@@ -627,6 +635,8 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+try|try
+block|{
 name|LlapDaemonConfiguration
 name|daemonConf
 init|=
@@ -677,7 +687,6 @@ argument_list|(
 name|daemonConf
 argument_list|)
 decl_stmt|;
-comment|// TODO Get the PID - FWIW
 name|llapDaemon
 operator|.
 name|init
@@ -700,6 +709,32 @@ literal|"Started LlapDaemon"
 argument_list|)
 expr_stmt|;
 comment|// Relying on the RPC threads to keep the service alive.
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{
+comment|// TODO Replace this with a ExceptionHandler / ShutdownHook
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to start LLAP Daemon with exception"
+argument_list|,
+name|t
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|exit
+argument_list|(
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

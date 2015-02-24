@@ -85,16 +85,6 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|LLAP_DAEMON_AM_PREFIX
-init|=
-name|LLAP_DAEMON_PREFIX
-operator|+
-literal|"am."
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
 name|LLAP_DAEMON_SITE
 init|=
 literal|"llap-daemon-site.xml"
@@ -180,7 +170,7 @@ specifier|final
 name|String
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 init|=
-name|LLAP_DAEMON_AM_PREFIX
+name|LLAP_DAEMON_PREFIX
 operator|+
 literal|"memory.per.instance.mb"
 decl_stmt|;
@@ -198,7 +188,7 @@ specifier|final
 name|String
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 init|=
-name|LLAP_DAEMON_AM_PREFIX
+name|LLAP_DAEMON_PREFIX
 operator|+
 literal|"vcpus.per.instance"
 decl_stmt|;
@@ -217,7 +207,7 @@ specifier|final
 name|String
 name|LLAP_DAEMON_AM_SERVICE_HOSTS
 init|=
-name|LLAP_DAEMON_AM_PREFIX
+name|LLAP_DAEMON_PREFIX
 operator|+
 literal|"service.hosts"
 decl_stmt|;
@@ -227,7 +217,7 @@ specifier|final
 name|String
 name|LLAP_DAEMON_AM_COMMUNICATOR_NUM_THREADS
 init|=
-name|LLAP_DAEMON_AM_PREFIX
+name|LLAP_DAEMON_PREFIX
 operator|+
 literal|"communicator.num.threads"
 decl_stmt|;
