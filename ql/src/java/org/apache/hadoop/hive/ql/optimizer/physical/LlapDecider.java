@@ -1035,6 +1035,22 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_AUTO_ALLOW_UBER
+argument_list|)
+condition|)
+block|{
 comment|// let's see if we can go one step further and just uber this puppy
 if|if
 condition|(
@@ -1072,6 +1088,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// always mark as llap
 name|work

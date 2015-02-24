@@ -7902,6 +7902,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|LLAP_AUTO_ALLOW_UBER
+argument_list|(
+literal|"hive.llap.auto.allow.uber"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether or not to allow the planner to run vertices in the AM"
+argument_list|)
+block|,
 name|LLAP_AUTO_ENFORCE_TREE
 argument_list|(
 literal|"hive.llap.auto.enforce.tree"
