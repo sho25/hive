@@ -583,6 +583,13 @@ argument_list|)
 expr_stmt|;
 name|LlapIoProxy
 operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|LlapIoProxy
+operator|.
 name|initializeLlapIo
 argument_list|(
 name|conf
