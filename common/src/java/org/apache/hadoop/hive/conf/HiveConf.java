@@ -7963,7 +7963,7 @@ name|LLAP_EXECUTION_MODE
 argument_list|(
 literal|"hive.llap.execution.mode"
 argument_list|,
-literal|"auto"
+literal|"none"
 argument_list|,
 operator|new
 name|StringSet
