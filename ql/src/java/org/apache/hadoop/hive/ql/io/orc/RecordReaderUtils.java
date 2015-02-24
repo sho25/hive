@@ -1404,6 +1404,7 @@ argument_list|(
 name|len
 argument_list|)
 decl_stmt|;
+comment|// TODO: HDFS API is a mess, so handle all kinds of crap.
 name|int
 name|pos
 init|=
@@ -1411,17 +1412,24 @@ name|directBuf
 operator|.
 name|position
 argument_list|()
+decl_stmt|,
+name|startPos
+init|=
+name|pos
+decl_stmt|,
+name|endPos
+init|=
+name|pos
+operator|+
+name|len
 decl_stmt|;
 try|try
 block|{
 while|while
 condition|(
-name|directBuf
-operator|.
-name|remaining
-argument_list|()
-operator|>=
-literal|0
+name|pos
+operator|<
+name|endPos
 condition|)
 block|{
 name|int
@@ -1445,6 +1453,39 @@ operator|new
 name|EOFException
 argument_list|()
 throw|;
+if|if
+condition|(
+name|count
+operator|==
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"HDFS won't read any bloody data "
+operator|+
+operator|(
+name|endPos
+operator|-
+name|pos
+operator|)
+operator|+
+literal|"@"
+operator|+
+operator|(
+name|pos
+operator|-
+name|startPos
+operator|)
+operator|+
+literal|" and "
+operator|+
+name|pos
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|directBuf
@@ -1493,7 +1534,7 @@ if|if
 condition|(
 name|pos
 operator|>
-name|len
+name|endPos
 condition|)
 block|{
 throw|throw
@@ -1507,6 +1548,10 @@ operator|+
 literal|" length "
 operator|+
 name|len
+operator|+
+literal|"/"
+operator|+
+name|endPos
 operator|+
 literal|" after reading "
 operator|+
