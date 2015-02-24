@@ -649,9 +649,21 @@ condition|(
 name|llapMode
 condition|)
 block|{
+if|if
+condition|(
+name|uberMode
+condition|)
+block|{
+return|return
+literal|"vectorized, uber"
+return|;
+block|}
+else|else
+block|{
 return|return
 literal|"vectorized, llap"
 return|;
+block|}
 block|}
 else|else
 block|{
@@ -667,6 +679,10 @@ name|llapMode
 condition|)
 block|{
 return|return
+name|uberMode
+condition|?
+literal|"uber"
+else|:
 literal|"llap"
 return|;
 block|}
