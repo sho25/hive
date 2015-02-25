@@ -3771,7 +3771,26 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// We assume all splits will come from the same FS.
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Initializing ORC encoded data producer"
+argument_list|)
+expr_stmt|;
+block|}
 name|this
 operator|.
 name|cache

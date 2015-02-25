@@ -127,6 +127,28 @@ name|LlapMemoryBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|io
+operator|.
+name|api
+operator|.
+name|impl
+operator|.
+name|LlapIoImpl
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|final
@@ -262,6 +284,50 @@ operator|.
 name|LLAP_ORC_CACHE_MAX_SIZE
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Buddy allocator with "
+operator|+
+operator|(
+name|isDirect
+condition|?
+literal|"direct"
+else|:
+literal|"byte"
+operator|)
+operator|+
+literal|" buffers; allocation sizes "
+operator|+
+name|minAllocation
+operator|+
+literal|" - "
+operator|+
+name|maxAllocation
+operator|+
+literal|", arena size "
+operator|+
+name|arenaSize
+operator|+
+literal|". total size "
+operator|+
+name|maxSize
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|minAllocation

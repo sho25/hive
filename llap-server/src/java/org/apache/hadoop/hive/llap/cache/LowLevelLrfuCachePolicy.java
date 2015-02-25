@@ -425,6 +425,38 @@ name|maxBuffers
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"LRFU cache policy with min buffer size "
+operator|+
+name|minBufferSize
+operator|+
+literal|" and lambda "
+operator|+
+name|lambda
+operator|+
+literal|" (heap size "
+operator|+
+name|maxHeapSize
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+block|}
 name|heap
 operator|=
 operator|new

@@ -542,6 +542,30 @@ name|LLAP_LOW_LEVEL_CACHE
 argument_list|)
 decl_stmt|;
 comment|// High-level cache not supported yet.
+if|if
+condition|(
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Initializing LLAP IO"
+operator|+
+operator|(
+name|useLowLevelCache
+condition|?
+literal|" with low level cache"
+else|:
+literal|""
+operator|)
+argument_list|)
+expr_stmt|;
+block|}
 name|Cache
 argument_list|<
 name|OrcCacheKey
@@ -666,6 +690,22 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"LLAP IO initialized"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
