@@ -5750,7 +5750,23 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-comment|// 2. PPD
+comment|// 2. Add not null filters
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+name|HiveJoinAddNotNullRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+comment|// 3. PPD
 name|basePlan
 operator|=
 name|hepPlan
@@ -5772,10 +5788,6 @@ argument_list|,
 name|ReduceExpressionsRule
 operator|.
 name|JOIN_INSTANCE
-argument_list|,
-name|HiveJoinAddNotNullRule
-operator|.
-name|INSTANCE
 argument_list|,
 operator|new
 name|HiveFilterProjectTransposeRule
@@ -5838,7 +5850,7 @@ name|class
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 3. Transitive inference& Partition Pruning
+comment|// 4. Transitive inference& Partition Pruning
 name|basePlan
 operator|=
 name|hepPlan
@@ -5870,7 +5882,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 4. Projection Pruning
+comment|// 5. Projection Pruning
 name|RelFieldTrimmer
 name|fieldTrimmer
 init|=
@@ -5919,7 +5931,7 @@ argument_list|(
 name|basePlan
 argument_list|)
 expr_stmt|;
-comment|// 5. Rerun PPD through Project as column pruning would have introduced DT
+comment|// 6. Rerun PPD through Project as column pruning would have introduced DT
 comment|// above scans
 name|basePlan
 operator|=
