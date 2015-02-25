@@ -718,6 +718,28 @@ decl_stmt|;
 comment|// Lock the buffer, validate it and add to results.
 if|if
 condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Locking "
+operator|+
+name|buffer
+operator|+
+literal|" during get"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 operator|!
 name|lockBuffer
 argument_list|(
@@ -1090,6 +1112,28 @@ index|[
 name|i
 index|]
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Locking "
+operator|+
+name|buffer
+operator|+
+literal|" at put time"
+argument_list|)
+expr_stmt|;
+block|}
 name|buffer
 operator|.
 name|incRef
@@ -1194,6 +1238,28 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Locking "
+operator|+
+name|oldVal
+operator|+
+literal|"  due to cache collision"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|lockBuffer
 argument_list|(
 name|oldVal
@@ -1242,6 +1308,30 @@ argument_list|)
 throw|;
 block|}
 comment|// We found an old, valid block for this key in the cache.
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unlocking "
+operator|+
+name|buffer
+operator|+
+literal|" due to cache collision with "
+operator|+
+name|oldVal
+argument_list|)
+expr_stmt|;
+block|}
 name|releaseBufferInternal
 argument_list|(
 name|buffer

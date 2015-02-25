@@ -37,27 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ListIterator
 import|;
 end_import
 
@@ -128,22 +108,6 @@ operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|DiskRange
 import|;
 end_import
 
@@ -270,6 +234,28 @@ operator|.
 name|EncodedColumnBatch
 operator|.
 name|StreamBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|io
+operator|.
+name|api
+operator|.
+name|cache
+operator|.
+name|LlapMemoryBuffer
 import|;
 end_import
 
@@ -2365,6 +2351,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// TODO: this is not good; we hold all the blocks until we send them all.
+comment|//       Hard to avoid due to sharing by RGs... perhaps we can still do better.
 name|DiskRangeList
 name|toFree
 init|=
@@ -2386,10 +2374,9 @@ operator|instanceof
 name|CacheChunk
 condition|)
 block|{
-name|cache
-operator|.
-name|releaseBuffer
-argument_list|(
+name|LlapMemoryBuffer
+name|buffer
+init|=
 operator|(
 operator|(
 name|CacheChunk
@@ -2397,6 +2384,32 @@ operator|)
 name|toFree
 operator|)
 operator|.
+name|buffer
+decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unlocking "
+operator|+
+name|buffer
+operator|+
+literal|" at the end of readEncodedColumns"
+argument_list|)
+expr_stmt|;
+block|}
+name|cache
+operator|.
+name|releaseBuffer
+argument_list|(
 name|buffer
 argument_list|)
 expr_stmt|;

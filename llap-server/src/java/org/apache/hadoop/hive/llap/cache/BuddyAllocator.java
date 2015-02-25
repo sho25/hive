@@ -1671,6 +1671,7 @@ operator|.
 name|lock
 argument_list|()
 expr_stmt|;
+comment|// TODO: write some comments for this method
 try|try
 block|{
 name|ix

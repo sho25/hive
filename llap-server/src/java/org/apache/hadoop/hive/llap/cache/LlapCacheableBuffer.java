@@ -364,6 +364,30 @@ argument_list|)
 condition|)
 break|break;
 block|}
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Locked "
+operator|+
+name|this
+operator|+
+literal|"; new ref count "
+operator|+
+name|newRefCount
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|newRefCount
 return|;
@@ -410,6 +434,30 @@ operator|.
 name|decrementAndGet
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceLockingEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unlocked "
+operator|+
+name|this
+operator|+
+literal|"; refcount "
+operator|+
+name|newRefCount
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|newRefCount
