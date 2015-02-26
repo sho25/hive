@@ -698,9 +698,7 @@ name|llapDaemon
 operator|.
 name|init
 argument_list|(
-operator|new
-name|Configuration
-argument_list|()
+name|daemonConf
 argument_list|)
 expr_stmt|;
 name|llapDaemon
