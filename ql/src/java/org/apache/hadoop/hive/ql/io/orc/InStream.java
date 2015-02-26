@@ -3000,6 +3000,15 @@ name|LlapMemoryBuffer
 argument_list|>
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|cOffset
+operator|==
+name|endCOffset
+condition|)
+return|return
+literal|null
+return|;
 name|List
 argument_list|<
 name|ProcCacheChunk

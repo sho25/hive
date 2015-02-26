@@ -1740,6 +1740,15 @@ name|DiskRange
 argument_list|>
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|length
+operator|==
+literal|0
+condition|)
+return|return
+name|buffers
+return|;
 name|long
 name|streamEnd
 init|=
