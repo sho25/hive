@@ -5377,6 +5377,11 @@ name|hashAggregations
 operator|=
 literal|null
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -5384,6 +5389,7 @@ argument_list|(
 literal|"Hash Table completed flushed"
 argument_list|)
 expr_stmt|;
+block|}
 return|return;
 block|}
 name|int
@@ -5394,6 +5400,11 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -5403,6 +5414,7 @@ operator|+
 name|oldSize
 argument_list|)
 expr_stmt|;
+block|}
 name|Iterator
 argument_list|<
 name|Map
@@ -5487,6 +5499,11 @@ operator|>=
 name|oldSize
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -5499,6 +5516,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return;
 block|}
 block|}
@@ -5635,6 +5653,11 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -5647,6 +5670,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|Iterator
 name|iter
 init|=

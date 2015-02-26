@@ -57,6 +57,16 @@ name|HashMap
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
 begin_comment
 comment|/**  * Cache for objects whose creation only depends on some other set of objects  * and therefore can be used against other equivalent versions of those  * objects.  Essentially memoizes instance creation.  *  * @param<SeedObject>  Object that determines the instance  * @param<Instance>  Instance that will be created from SeedObject.  */
 end_comment
@@ -115,6 +125,32 @@ name|retrieve
 parameter_list|(
 name|SeedObject
 name|hv
+parameter_list|)
+throws|throws
+name|AvroSerdeException
+block|{
+return|return
+name|retrieve
+argument_list|(
+name|hv
+argument_list|,
+literal|null
+argument_list|)
+return|;
+block|}
+comment|/**    * Retrieve (or create if it doesn't exist) the correct Instance for this    * SeedObject using 'seenSchemas' to resolve circular references    */
+specifier|public
+name|Instance
+name|retrieve
+parameter_list|(
+name|SeedObject
+name|hv
+parameter_list|,
+name|Set
+argument_list|<
+name|SeedObject
+argument_list|>
+name|seenSchemas
 parameter_list|)
 throws|throws
 name|AvroSerdeException
@@ -197,6 +233,8 @@ init|=
 name|makeInstance
 argument_list|(
 name|hv
+argument_list|,
+name|seenSchemas
 argument_list|)
 decl_stmt|;
 name|cache
@@ -222,6 +260,12 @@ name|makeInstance
 parameter_list|(
 name|SeedObject
 name|hv
+parameter_list|,
+name|Set
+argument_list|<
+name|SeedObject
+argument_list|>
+name|seenSchemas
 parameter_list|)
 throws|throws
 name|AvroSerdeException

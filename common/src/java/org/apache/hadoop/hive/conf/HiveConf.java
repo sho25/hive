@@ -2415,6 +2415,17 @@ operator|+
 literal|"False: Warn if the version information stored in metastore doesn't match with one from in Hive jars."
 argument_list|)
 block|,
+name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
+argument_list|(
+literal|"hive.metastore.schema.verification.record.version"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true the current MS version is recorded in the VERSION table. If this is disabled and verification is\n"
+operator|+
+literal|" enabled the MS will be unusable."
+argument_list|)
+block|,
 name|METASTORE_AUTO_START_MECHANISM_MODE
 argument_list|(
 literal|"datanucleus.autoStartMechanismMode"

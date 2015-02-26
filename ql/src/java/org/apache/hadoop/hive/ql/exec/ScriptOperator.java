@@ -1580,6 +1580,11 @@ name|void
 name|displayBrokenPipeInfo
 parameter_list|()
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1605,6 +1610,7 @@ operator|+
 literal|"=true; to ignore it."
 argument_list|)
 expr_stmt|;
+block|}
 return|return;
 block|}
 specifier|private
@@ -1823,6 +1829,11 @@ argument_list|(
 name|cmdArgs
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1864,6 +1875,7 @@ operator|+
 name|alias
 argument_list|)
 expr_stmt|;
+block|}
 name|ProcessBuilder
 name|pb
 init|=
@@ -3409,6 +3421,11 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3416,6 +3433,7 @@ argument_list|(
 literal|"ErrorStreamProcessor calling reporter.progress()"
 argument_list|)
 expr_stmt|;
+block|}
 name|lastReportTime
 operator|=
 name|now
@@ -3625,6 +3643,11 @@ name|row
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3636,6 +3659,7 @@ operator|+
 literal|" done"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -1769,6 +1769,11 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1785,6 +1790,7 @@ operator|+
 name|totalSz
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|transient
 name|boolean

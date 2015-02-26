@@ -996,6 +996,11 @@ name|State
 operator|.
 name|INIT
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1012,6 +1017,7 @@ operator|+
 literal|" initialized"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|childOperators
@@ -1026,6 +1032,11 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1040,6 +1051,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|childOperatorsArray
 index|[
 literal|0
@@ -1442,6 +1454,11 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 for|for
 control|(
 name|int
@@ -1477,6 +1494,7 @@ operator|+
 literal|" rows"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * @return the name of the operator    */

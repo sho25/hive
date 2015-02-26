@@ -97,24 +97,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|AlreadyExistsException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|Database
 import|;
 end_import
@@ -151,43 +133,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|InvalidObjectException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|InvalidOperationException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
 import|;
 end_import
 
@@ -710,8 +656,6 @@ name|String
 name|dbName
 parameter_list|)
 throws|throws
-name|MetaException
-throws|,
 name|TException
 block|{
 try|try
@@ -752,13 +696,13 @@ block|}
 catch|catch
 parameter_list|(
 name|NoSuchObjectException
-name|e
+name|ignore
 parameter_list|)
 block|{     }
 catch|catch
 parameter_list|(
 name|InvalidOperationException
-name|e
+name|ignore
 parameter_list|)
 block|{     }
 block|}
@@ -1397,7 +1341,7 @@ parameter_list|(
 name|IMetaStoreClient
 operator|.
 name|IncompatibleMetastoreException
-name|ex
+name|ignore
 parameter_list|)
 block|{     }
 comment|// Invalid expression => throw some exception, but not incompatible metastore.
@@ -1446,7 +1390,7 @@ parameter_list|(
 name|IMetaStoreClient
 operator|.
 name|IncompatibleMetastoreException
-name|ex
+name|ignore
 parameter_list|)
 block|{
 name|fail
@@ -1458,7 +1402,7 @@ block|}
 catch|catch
 parameter_list|(
 name|Exception
-name|ex
+name|ignore
 parameter_list|)
 block|{     }
 block|}
@@ -1705,9 +1649,7 @@ argument_list|(
 operator|new
 name|ExprNodeGenericFuncDesc
 argument_list|(
-name|TypeInfoFactory
-operator|.
-name|booleanTypeInfo
+name|ti
 argument_list|,
 name|FunctionRegistry
 operator|.
@@ -2093,12 +2035,6 @@ name|String
 name|location
 parameter_list|)
 throws|throws
-name|InvalidObjectException
-throws|,
-name|AlreadyExistsException
-throws|,
-name|MetaException
-throws|,
 name|TException
 block|{
 name|Partition
