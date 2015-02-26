@@ -1618,7 +1618,16 @@ name|directBuf
 operator|.
 name|position
 argument_list|(
-literal|0
+name|startPos
+argument_list|)
+expr_stmt|;
+name|directBuf
+operator|.
+name|limit
+argument_list|(
+name|startPos
+operator|+
+name|len
 argument_list|)
 expr_stmt|;
 name|range

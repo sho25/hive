@@ -17524,6 +17524,9 @@ operator|-
 name|offset
 argument_list|)
 decl_stmt|;
+comment|// TODO: temporary
+try|try
+block|{
 name|sliceBuf
 operator|.
 name|position
@@ -17538,6 +17541,82 @@ argument_list|(
 name|newLimit
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to slice buffer chunk with range"
+operator|+
+literal|" ["
+operator|+
+name|this
+operator|.
+name|offset
+operator|+
+literal|", "
+operator|+
+name|this
+operator|.
+name|end
+operator|+
+literal|"), position: "
+operator|+
+name|chunk
+operator|.
+name|position
+argument_list|()
+operator|+
+literal|" limit: "
+operator|+
+name|chunk
+operator|.
+name|limit
+argument_list|()
+operator|+
+literal|", "
+operator|+
+operator|(
+name|chunk
+operator|.
+name|isDirect
+argument_list|()
+condition|?
+literal|"direct"
+else|:
+literal|"array"
+operator|)
+operator|+
+literal|"; to ["
+operator|+
+name|offset
+operator|+
+literal|", "
+operator|+
+name|end
+operator|+
+literal|") "
+operator|+
+name|t
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|t
+argument_list|)
+throw|;
+block|}
 return|return
 operator|new
 name|BufferChunk
