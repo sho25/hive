@@ -157,16 +157,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -599,11 +589,9 @@ name|ql
 operator|.
 name|io
 operator|.
-name|orc
+name|filters
 operator|.
-name|RecordReaderUtils
-operator|.
-name|ByteBufferAllocatorPool
+name|BloomFilter
 import|;
 end_import
 
@@ -621,9 +609,11 @@ name|ql
 operator|.
 name|io
 operator|.
-name|filters
+name|orc
 operator|.
-name|BloomFilter
+name|RecordReaderUtils
+operator|.
+name|ByteBufferAllocatorPool
 import|;
 end_import
 
@@ -968,20 +958,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
 import|;
 end_import
 
@@ -2011,6 +1987,29 @@ argument_list|(
 name|in
 argument_list|,
 literal|1
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|void
+name|setInStream
+parameter_list|(
+name|InStream
+name|inStream
+parameter_list|)
+block|{
+if|if
+condition|(
+name|present
+operator|!=
+literal|null
+condition|)
+block|{
+name|present
+operator|.
+name|setInStream
+argument_list|(
+name|inStream
 argument_list|)
 expr_stmt|;
 block|}
@@ -3702,6 +3701,29 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|void
+name|setInStream
+parameter_list|(
+name|InStream
+name|inStream
+parameter_list|)
+block|{
+if|if
+condition|(
+name|reader
+operator|!=
+literal|null
+condition|)
+block|{
+name|reader
+operator|.
+name|setInStream
+argument_list|(
+name|inStream
 argument_list|)
 expr_stmt|;
 block|}
@@ -7218,7 +7240,7 @@ name|TreeReader
 block|{
 specifier|protected
 name|InStream
-name|valueStream
+name|value
 decl_stmt|;
 specifier|protected
 name|IntegerReader
@@ -7334,7 +7356,7 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|valueStream
+name|value
 operator|=
 name|valueStream
 expr_stmt|;
@@ -7468,7 +7490,7 @@ argument_list|,
 name|encodings
 argument_list|)
 expr_stmt|;
-name|valueStream
+name|value
 operator|=
 name|streams
 operator|.
@@ -7568,7 +7590,7 @@ argument_list|(
 name|index
 argument_list|)
 expr_stmt|;
-name|valueStream
+name|value
 operator|.
 name|seek
 argument_list|(
@@ -7647,7 +7669,7 @@ name|SerializationUtils
 operator|.
 name|readBigInteger
 argument_list|(
-name|valueStream
+name|value
 argument_list|)
 argument_list|,
 operator|(
@@ -7770,7 +7792,7 @@ name|SerializationUtils
 operator|.
 name|readBigInteger
 argument_list|(
-name|valueStream
+name|value
 argument_list|)
 decl_stmt|;
 name|short
@@ -7873,7 +7895,7 @@ name|SerializationUtils
 operator|.
 name|readBigInteger
 argument_list|(
-name|valueStream
+name|value
 argument_list|)
 decl_stmt|;
 name|short
@@ -7974,7 +7996,7 @@ name|SerializationUtils
 operator|.
 name|readBigInteger
 argument_list|(
-name|valueStream
+name|value
 argument_list|)
 expr_stmt|;
 block|}
@@ -17357,6 +17379,7 @@ specifier|final
 name|ByteBuffer
 name|chunk
 decl_stmt|;
+specifier|public
 name|BufferChunk
 parameter_list|(
 name|ByteBuffer
@@ -17725,7 +17748,7 @@ name|buffer
 return|;
 block|}
 block|}
-comment|/**    * Plan the ranges of the file that we need to read given the list of    * columns and row groups.    * @param streamList the list of streams avaiable    * @param indexes the indexes that have been loaded    * @param includedColumns which columns are needed    * @param includedRowGroups which row groups are needed    * @param isCompressed does the file have generic compression    * @param encodings the encodings for each column    * @param types the types of the columns    * @param compressionSize the compression block size    * @return the list of disk ranges that will be loaded    */
+comment|/**    * Plan the ranges of the file that we need to read given the list of    * columns and row groups.    * @param streamList the list of streams available    * @param indexes the indexes that have been loaded    * @param includedColumns which columns are needed    * @param includedRowGroups which row groups are needed    * @param isCompressed does the file have generic compression    * @param encodings the encodings for each column    * @param types the types of the columns    * @param compressionSize the compression block size    * @return the list of disk ranges that will be loaded    */
 specifier|static
 name|DiskRangeList
 name|planReadPartialDataStreams
