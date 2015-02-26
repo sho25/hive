@@ -1027,6 +1027,18 @@ operator|.
 name|getType
 argument_list|()
 decl_stmt|;
+comment|// Nothing to do if key cannot be null
+if|if
+condition|(
+operator|!
+name|keyType
+operator|.
+name|isNullable
+argument_list|()
+condition|)
+block|{
+continue|continue;
+block|}
 name|SqlOperator
 name|funcCall
 init|=
