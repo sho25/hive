@@ -2308,42 +2308,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
-name|LlapIoImpl
-operator|.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Creating stripe reader "
-operator|+
-name|stripeKey
-operator|.
-name|stripeIx
-operator|+
-literal|": "
-operator|+
-name|si
-operator|.
-name|getOffset
-argument_list|()
-operator|+
-literal|", "
-operator|+
-name|si
-operator|.
-name|getLength
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
 name|value
 operator|==
 literal|null

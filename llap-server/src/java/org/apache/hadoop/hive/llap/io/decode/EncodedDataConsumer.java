@@ -119,6 +119,28 @@ name|io
 operator|.
 name|api
 operator|.
+name|EncodedColumnBatch
+operator|.
+name|StreamBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|io
+operator|.
+name|api
+operator|.
 name|impl
 operator|.
 name|ColumnVectorBatch
@@ -131,6 +153,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|abstract
 class|class
 name|EncodedDataConsumer
 parameter_list|<
@@ -200,6 +223,9 @@ name|colCount
 decl_stmt|;
 specifier|private
 name|ColumnVectorProducer
+argument_list|<
+name|BatchKey
+argument_list|>
 name|cvp
 decl_stmt|;
 specifier|public
@@ -680,8 +706,6 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|EncodedColumnBatch
-operator|.
 name|StreamBuffer
 argument_list|>
 argument_list|(
