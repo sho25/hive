@@ -2314,6 +2314,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"soundex"
+argument_list|,
+name|GenericUDFSoundex
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"size"
 argument_list|,
 name|GenericUDFSize
