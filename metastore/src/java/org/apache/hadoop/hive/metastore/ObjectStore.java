@@ -49,6 +49,16 @@ name|java
 operator|.
 name|net
 operator|.
+name|InetAddress
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
 name|URI
 import|;
 end_import
@@ -2065,6 +2075,19 @@ operator|new
 name|ReentrantLock
 argument_list|()
 decl_stmt|;
+comment|/**   * Verify the schema only once per JVM since the db connection info is static   */
+specifier|private
+specifier|final
+specifier|static
+name|AtomicBoolean
+name|isSchemaVerified
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -2106,6 +2129,18 @@ argument_list|,
 name|Class
 argument_list|>
 name|PINCLASSMAP
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|HOSTNAME
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|USER
 decl_stmt|;
 static|static
 block|{
@@ -2223,6 +2258,68 @@ argument_list|(
 name|map
 argument_list|)
 expr_stmt|;
+name|String
+name|hostname
+init|=
+literal|"UNKNOWN"
+decl_stmt|;
+try|try
+block|{
+name|InetAddress
+name|clientAddr
+init|=
+name|InetAddress
+operator|.
+name|getLocalHost
+argument_list|()
+decl_stmt|;
+name|hostname
+operator|=
+name|clientAddr
+operator|.
+name|getHostAddress
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{     }
+name|HOSTNAME
+operator|=
+name|hostname
+expr_stmt|;
+name|String
+name|user
+init|=
+name|System
+operator|.
+name|getenv
+argument_list|(
+literal|"USER"
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|user
+operator|==
+literal|null
+condition|)
+block|{
+name|USER
+operator|=
+literal|"UNKNOWN"
+expr_stmt|;
+block|}
+else|else
+block|{
+name|USER
+operator|=
+name|user
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|boolean
@@ -2270,17 +2367,6 @@ init|=
 name|TXN_STATUS
 operator|.
 name|NO_STATE
-decl_stmt|;
-specifier|private
-specifier|final
-name|AtomicBoolean
-name|isSchemaVerified
-init|=
-operator|new
-name|AtomicBoolean
-argument_list|(
-literal|false
-argument_list|)
 decl_stmt|;
 specifier|private
 name|Pattern
@@ -37917,6 +38003,23 @@ name|checkSchema
 argument_list|()
 expr_stmt|;
 block|}
+specifier|public
+specifier|static
+name|void
+name|setSchemaVerified
+parameter_list|(
+name|boolean
+name|val
+parameter_list|)
+block|{
+name|isSchemaVerified
+operator|.
+name|set
+argument_list|(
+name|val
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 specifier|synchronized
 name|void
@@ -37967,7 +38070,6 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// metastore has no schema version information
 if|if
 condition|(
 name|strictValidation
@@ -38013,7 +38115,13 @@ operator|.
 name|getHiveSchemaVersion
 argument_list|()
 argument_list|,
-literal|"Set by MetaStore"
+literal|"Set by MetaStore "
+operator|+
+name|USER
+operator|+
+literal|"@"
+operator|+
+name|HOSTNAME
 argument_list|)
 expr_stmt|;
 block|}
@@ -38023,12 +38131,6 @@ block|{
 comment|// metastore schema version is different than Hive distribution needs
 if|if
 condition|(
-name|strictValidation
-condition|)
-block|{
-if|if
-condition|(
-operator|!
 name|schemaVer
 operator|.
 name|equalsIgnoreCase
@@ -38038,6 +38140,23 @@ operator|.
 name|getHiveSchemaVersion
 argument_list|()
 argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found expected HMS version of "
+operator|+
+name|schemaVer
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|strictValidation
 condition|)
 block|{
 throw|throw
@@ -38063,29 +38182,28 @@ else|else
 block|{
 name|LOG
 operator|.
-name|warn
+name|error
 argument_list|(
-literal|"Metastore version was "
+literal|"Version information found in metastore differs "
 operator|+
 name|schemaVer
 operator|+
-literal|" "
+literal|" from expected schema version "
+operator|+
+name|MetaStoreSchemaInfo
+operator|.
+name|getHiveSchemaVersion
+argument_list|()
+operator|+
+literal|". Schema verififcation is disabled "
 operator|+
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|METASTORE_SCHEMA_VERIFICATION
-operator|.
-name|toString
-argument_list|()
 operator|+
-literal|" is not enabled so recording the new schema version "
-operator|+
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+literal|" so setting version."
 argument_list|)
 expr_stmt|;
 name|setMetaStoreSchemaVersion
@@ -38095,7 +38213,13 @@ operator|.
 name|getHiveSchemaVersion
 argument_list|()
 argument_list|,
-literal|"Set by MetaStore"
+literal|"Set by MetaStore "
+operator|+
+name|USER
+operator|+
+literal|"@"
+operator|+
+name|HOSTNAME
 argument_list|)
 expr_stmt|;
 block|}
@@ -38303,11 +38427,53 @@ operator|>
 literal|1
 condition|)
 block|{
+name|String
+name|msg
+init|=
+literal|"Metastore contains multiple versions ("
+operator|+
+name|mVerTables
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|") "
+decl_stmt|;
+for|for
+control|(
+name|MVersionTable
+name|version
+range|:
+name|mVerTables
+control|)
+block|{
+name|msg
+operator|+=
+literal|"[ version = "
+operator|+
+name|version
+operator|.
+name|getSchemaVersion
+argument_list|()
+operator|+
+literal|", comment = "
+operator|+
+name|version
+operator|.
+name|getVersionComment
+argument_list|()
+operator|+
+literal|" ] "
+expr_stmt|;
+block|}
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Metastore contains multiple versions"
+name|msg
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -38343,6 +38509,46 @@ name|commited
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|recordVersion
+init|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|recordVersion
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"setMetaStoreSchemaVersion called but recording version is disabled: "
+operator|+
+literal|"version = "
+operator|+
+name|schemaVersion
+operator|+
+literal|", comment = "
+operator|+
+name|comment
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 try|try
 block|{
 name|mSchemaVer

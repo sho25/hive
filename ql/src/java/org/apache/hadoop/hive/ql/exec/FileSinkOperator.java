@@ -4154,10 +4154,14 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|(
 operator|++
 name|numRows
 operator|==
 name|cntr
+operator|)
+operator|&&
+name|isLogInfoEnabled
 condition|)
 block|{
 name|cntr

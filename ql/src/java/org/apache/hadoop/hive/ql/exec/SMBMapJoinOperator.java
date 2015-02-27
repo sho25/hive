@@ -2918,6 +2918,11 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2931,6 +2936,7 @@ name|getFileId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|bucketMatcher
 operator|.
 name|setAliasBucketFileNameMapping
@@ -3956,6 +3962,11 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3967,6 +3978,7 @@ operator|+
 literal|" rows"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;

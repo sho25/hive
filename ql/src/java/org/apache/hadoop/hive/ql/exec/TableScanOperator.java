@@ -939,6 +939,11 @@ argument_list|,
 name|values
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -948,6 +953,7 @@ operator|+
 name|partitionSpecs
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// find which column contains the raw data size (both partitioned and non partitioned
 name|int
@@ -1520,6 +1526,11 @@ argument_list|)
 condition|)
 block|{
 comment|// just return, stats gathering should not block the main query.
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1527,6 +1538,7 @@ argument_list|(
 literal|"StatsPublishing error: cannot connect to database."
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isStatsReliable
@@ -1726,6 +1738,11 @@ argument_list|)
 throw|;
 block|}
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1742,6 +1759,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

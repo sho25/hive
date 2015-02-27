@@ -968,6 +968,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_FILTER_HOOK
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_RAW_STORE_IMPL
 block|,
 name|HiveConf
@@ -2409,6 +2415,17 @@ operator|+
 literal|"False: Warn if the version information stored in metastore doesn't match with one from in Hive jars."
 argument_list|)
 block|,
+name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
+argument_list|(
+literal|"hive.metastore.schema.verification.record.version"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true the current MS version is recorded in the VERSION table. If this is disabled and verification is\n"
+operator|+
+literal|" enabled the MS will be unusable."
+argument_list|)
+block|,
 name|METASTORE_AUTO_START_MECHANISM_MODE
 argument_list|(
 literal|"datanucleus.autoStartMechanismMode"
@@ -2842,7 +2859,9 @@ literal|"hive.metastore.filter.hook"
 argument_list|,
 literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
 argument_list|,
-literal|"Metastore hook class for filtering the metadata read results"
+literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager"
+operator|+
+literal|"is set to instance of HiveAuthorizerFactory, then this value is ignored."
 argument_list|)
 block|,
 name|FIRE_EVENTS_FOR_DML
