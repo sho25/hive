@@ -1640,6 +1640,8 @@ operator|.
 name|stringifyDiskRanges
 argument_list|(
 name|toRead
+operator|.
+name|next
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1687,6 +1689,8 @@ operator|.
 name|stringifyDiskRanges
 argument_list|(
 name|toRead
+operator|.
+name|next
 argument_list|)
 argument_list|)
 expr_stmt|;
