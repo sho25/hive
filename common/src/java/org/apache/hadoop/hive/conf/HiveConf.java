@@ -1095,6 +1095,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_TRY_DIRECT_SQL_DDL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
 block|}
 decl_stmt|;
 static|static
