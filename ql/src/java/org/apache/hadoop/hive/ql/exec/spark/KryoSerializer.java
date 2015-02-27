@@ -213,7 +213,7 @@ argument_list|)
 decl_stmt|;
 name|Utilities
 operator|.
-name|runtimeSerializationKryo
+name|sparkSerializationKryo
 operator|.
 name|get
 argument_list|()
@@ -260,7 +260,7 @@ block|{
 return|return
 name|Utilities
 operator|.
-name|runtimeSerializationKryo
+name|sparkSerializationKryo
 operator|.
 name|get
 argument_list|()
