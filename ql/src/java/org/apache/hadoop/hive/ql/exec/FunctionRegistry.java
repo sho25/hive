@@ -2305,7 +2305,7 @@ name|registerGenericUDF
 argument_list|(
 literal|"levenshtein"
 argument_list|,
-name|GenericUDFLevenstein
+name|GenericUDFLevenshtein
 operator|.
 name|class
 argument_list|)
