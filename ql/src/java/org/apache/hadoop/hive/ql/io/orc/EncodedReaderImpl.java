@@ -2376,6 +2376,31 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Disk ranges after processing all the data "
+operator|+
+name|RecordReaderUtils
+operator|.
+name|stringifyDiskRanges
+argument_list|(
+name|toRead
+operator|.
+name|next
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|// TODO: this is not good; we hold all the blocks until we send them all.
 comment|//       Hard to avoid due to sharing by RGs... perhaps we can still do better.
 name|DiskRangeList

@@ -490,6 +490,16 @@ name|String
 name|toString
 parameter_list|()
 block|{
+name|int
+name|refCount
+init|=
+name|this
+operator|.
+name|refCount
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
 return|return
 literal|"0x"
 operator|+
@@ -504,6 +514,12 @@ argument_list|(
 name|this
 argument_list|)
 argument_list|)
+operator|+
+literal|"("
+operator|+
+name|refCount
+operator|+
+literal|")"
 return|;
 block|}
 comment|/**    * @return Whether the we can invalidate; false if locked or already evicted.    */

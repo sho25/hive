@@ -2862,6 +2862,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * CacheChunk that is pre-created for new cache data; initially, it contains an original disk    * buffer and an unallocated LlapMemoryBuffer object. Before we expose it, the LMB is allocated,    * the data is decompressed, and original compressed data is discarded. The chunk lives on in    * the DiskRange list created for the request, and everyone treats it like regular CacheChunk.    */
 specifier|private
 specifier|static
 class|class
@@ -2886,6 +2887,9 @@ name|originalData
 parameter_list|,
 name|LlapMemoryBuffer
 name|targetBuffer
+parameter_list|,
+name|int
+name|originalCbIndex
 parameter_list|)
 block|{
 name|super
@@ -2909,6 +2913,12 @@ name|originalData
 operator|=
 name|originalData
 expr_stmt|;
+name|this
+operator|.
+name|originalCbIndex
+operator|=
+name|originalCbIndex
+expr_stmt|;
 block|}
 name|boolean
 name|isCompressed
@@ -2917,6 +2927,9 @@ name|ByteBuffer
 name|originalData
 init|=
 literal|null
+decl_stmt|;
+name|int
+name|originalCbIndex
 decl_stmt|;
 block|}
 comment|/**    * Uncompresses part of the stream. RGs can overlap, so we cannot just go and decompress    * and remove what we have returned. We will keep iterator as a "hint" point.    * @param fileName File name for cache keys.    * @param baseOffset Absolute offset of boundaries and ranges relative to file, for cache keys.    * @param start Ordered ranges containing file data. Helpful if they point close to cOffset.    * @param cOffset Start offset to decompress.    * @param endCOffset End offset to decompress; estimate, partial CBs will be ignored.    * @param zcr Zero-copy reader, if any, to release discarded buffers.    * @param codec Compression codec.    * @param bufferSize Compressed buffer (CB) size.    * @param cache Low-level cache to cache new data.    * @param streamBuffer Stream buffer, to add the results.    * @return Last buffer cached during decomrpession. Cache buffers are never removed from    *         the master list, so they are safe to keep as iterators for various streams.    */
@@ -3563,6 +3576,10 @@ argument_list|,
 name|toDecompress
 argument_list|,
 name|targetBuffers
+argument_list|,
+name|streamBuffer
+operator|.
+name|cacheBuffers
 argument_list|)
 expr_stmt|;
 return|return
@@ -3590,6 +3607,12 @@ parameter_list|,
 name|LlapMemoryBuffer
 index|[]
 name|targetBuffers
+parameter_list|,
+name|List
+argument_list|<
+name|LlapMemoryBuffer
+argument_list|>
+name|cacheBuffers
 parameter_list|)
 block|{
 if|if
@@ -3670,10 +3693,7 @@ operator|==
 literal|1
 condition|)
 block|{
-comment|// Cache has found an old buffer for the key and put it into array. Had the put succeeded
-comment|// for our new buffer, it would have refcount of 2 - 1 from put, and 1 from notifyReused
-comment|// call above. "Old" buffer now has refcount of 1 from put; new buffer is unchanged. We
-comment|// will discard the new buffer, and lock old again to make it consistent.
+comment|// Cache has found an old buffer for the key and put it into array instead of our new one.
 name|ProcCacheChunk
 name|replacedChunk
 init|=
@@ -3692,6 +3712,62 @@ index|[
 name|i
 index|]
 decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Discarding data due to cache collision: "
+operator|+
+name|replacedChunk
+operator|.
+name|buffer
+operator|+
+literal|" replaced with "
+operator|+
+name|replacementBuffer
+argument_list|)
+expr_stmt|;
+block|}
+assert|assert
+name|replacedChunk
+operator|.
+name|buffer
+operator|!=
+name|replacementBuffer
+operator|:
+name|i
+operator|+
+literal|" was not replaced in the results "
+operator|+
+literal|"even though mask is ["
+operator|+
+name|Long
+operator|.
+name|toBinaryString
+argument_list|(
+name|maskVal
+argument_list|)
+operator|+
+literal|"]"
+assert|;
+assert|assert
+name|replacedChunk
+operator|.
+name|originalCbIndex
+operator|>=
+literal|0
+assert|;
+comment|// Had the put succeeded for our new buffer, it would have refcount of 2 - 1 from put,
+comment|// and 1 from notifyReused call above. "Old" buffer now has the 1 from put; new buffer
+comment|// is unchanged at 1 from notifyReused. Make it all consistent.
 name|cache
 operator|.
 name|releaseBuffer
@@ -3708,12 +3784,32 @@ argument_list|(
 name|replacementBuffer
 argument_list|)
 expr_stmt|;
+comment|// Replace the buffer in our big range list, as well as in current results.
 name|replacedChunk
 operator|.
 name|buffer
 operator|=
 name|replacementBuffer
 expr_stmt|;
+name|cacheBuffers
+operator|.
+name|set
+argument_list|(
+name|replacedChunk
+operator|.
+name|originalCbIndex
+argument_list|,
+name|replacementBuffer
+argument_list|)
+expr_stmt|;
+name|replacedChunk
+operator|.
+name|originalCbIndex
+operator|=
+operator|-
+literal|1
+expr_stmt|;
+comment|// This can only happen once at decompress time.
 block|}
 name|maskVal
 operator|>>=
@@ -4456,6 +4552,13 @@ argument_list|,
 name|fullCompressionBlock
 argument_list|,
 name|futureAlloc
+argument_list|,
+name|cacheBuffers
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|toDecompress

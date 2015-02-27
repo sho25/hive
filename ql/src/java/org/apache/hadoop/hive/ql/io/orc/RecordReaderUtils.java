@@ -1405,6 +1405,7 @@ name|len
 argument_list|)
 decl_stmt|;
 comment|// TODO: HDFS API is a mess, so handle all kinds of crap.
+comment|// Before 2.7, read() also doesn't adjust position correctly, so track it.
 name|int
 name|pos
 init|=
@@ -1462,9 +1463,9 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|AssertionError
+name|IOException
 argument_list|(
-literal|"HDFS won't read any bloody data "
+literal|"0-length read: "
 operator|+
 operator|(
 name|endPos
@@ -1485,46 +1486,6 @@ operator|+
 name|pos
 argument_list|)
 throw|;
-block|}
-if|if
-condition|(
-name|directBuf
-operator|.
-name|position
-argument_list|()
-operator|!=
-name|pos
-condition|)
-block|{
-name|RecordReaderImpl
-operator|.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Warning - position mismatch from "
-operator|+
-name|file
-operator|.
-name|getClass
-argument_list|()
-operator|+
-literal|": after reading "
-operator|+
-name|count
-operator|+
-literal|", expected "
-operator|+
-name|pos
-operator|+
-literal|" but got "
-operator|+
-name|directBuf
-operator|.
-name|position
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 name|pos
 operator|+=

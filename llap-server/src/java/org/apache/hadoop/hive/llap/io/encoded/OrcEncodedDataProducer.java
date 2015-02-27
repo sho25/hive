@@ -2476,6 +2476,16 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|data
+operator|.
+name|decRef
+argument_list|()
+operator|!=
+literal|0
+condition|)
+return|return;
+if|if
+condition|(
 name|DebugUtils
 operator|.
 name|isTraceLockingEnabled
