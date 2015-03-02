@@ -999,7 +999,7 @@ name|partName
 init|=
 name|HBaseStore
 operator|.
-name|partName
+name|buildExternalPartName
 argument_list|(
 name|table
 argument_list|,
