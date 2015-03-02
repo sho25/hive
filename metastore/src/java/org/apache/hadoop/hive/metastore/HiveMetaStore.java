@@ -15854,6 +15854,62 @@ name|tbl
 argument_list|)
 condition|)
 block|{
+comment|// Data needs deletion. Check if trash may be skipped.
+name|boolean
+name|mustPurge
+init|=
+operator|(
+name|envContext
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|Boolean
+operator|.
+name|parseBoolean
+argument_list|(
+name|envContext
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"ifPurge"
+argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|mustPurge
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"dropPartition() will purge "
+operator|+
+name|partPath
+operator|+
+literal|" directly, skipping trash."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"dropPartition() will move "
+operator|+
+name|partPath
+operator|+
+literal|" to trash-directory."
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Archived partitions have har:/to_har_file as their location.
 comment|// The original directory was saved in params
 if|if
@@ -15875,6 +15931,8 @@ argument_list|(
 name|archiveParentDir
 argument_list|,
 literal|true
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -15894,6 +15952,8 @@ argument_list|(
 name|partPath
 argument_list|,
 literal|true
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 name|deleteParentRecursive
@@ -15909,6 +15969,8 @@ name|size
 argument_list|()
 operator|-
 literal|1
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -15969,6 +16031,9 @@ name|parent
 parameter_list|,
 name|int
 name|depth
+parameter_list|,
+name|boolean
+name|mustPurge
 parameter_list|)
 throws|throws
 name|IOException
@@ -16007,6 +16072,8 @@ argument_list|(
 name|parent
 argument_list|,
 literal|true
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 name|deleteParentRecursive
@@ -16019,6 +16086,8 @@ argument_list|,
 name|depth
 operator|-
 literal|1
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -16846,6 +16915,42 @@ name|tbl
 argument_list|)
 condition|)
 block|{
+comment|// Data needs deletion. Check if trash may be skipped.
+name|boolean
+name|mustPurge
+init|=
+operator|(
+name|envContext
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|Boolean
+operator|.
+name|parseBoolean
+argument_list|(
+name|envContext
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"ifPurge"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|mustPurge
+condition|?
+literal|"dropPartition() will purge partition-directories directly, skipping trash."
+else|:
+literal|"dropPartition() will move partition-directories to trash-directory."
+argument_list|)
+expr_stmt|;
 comment|// Archived partitions have har:/to_har_file as their location.
 comment|// The original directory was saved in params
 for|for
@@ -16863,6 +16968,8 @@ argument_list|(
 name|path
 argument_list|,
 literal|true
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -16883,6 +16990,8 @@ operator|.
 name|path
 argument_list|,
 literal|true
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 try|try
@@ -16901,6 +17010,8 @@ operator|.
 name|partValSize
 operator|-
 literal|1
+argument_list|,
+name|mustPurge
 argument_list|)
 expr_stmt|;
 block|}
