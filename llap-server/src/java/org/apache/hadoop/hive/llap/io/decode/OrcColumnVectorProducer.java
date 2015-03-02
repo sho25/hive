@@ -761,10 +761,6 @@ specifier|private
 name|boolean
 name|_skipCorrupt
 decl_stmt|;
-specifier|private
-name|int
-name|_previousStripeIndex
-decl_stmt|;
 specifier|public
 name|OrcColumnVectorProducer
 parameter_list|(
@@ -835,13 +831,6 @@ operator|.
 name|HIVE_ORC_SKIP_CORRUPT_DATA
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|_previousStripeIndex
-operator|=
-operator|-
-literal|1
-expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -910,15 +899,21 @@ name|stripeIx
 decl_stmt|;
 if|if
 condition|(
-name|_previousStripeIndex
+name|oedc
+operator|.
+name|getPreviousStripeIndex
+argument_list|()
 operator|==
 operator|-
 literal|1
 condition|)
 block|{
-name|_previousStripeIndex
-operator|=
+name|oedc
+operator|.
+name|setPreviousStripeIndex
+argument_list|(
 name|currentStripeIndex
+argument_list|)
 expr_stmt|;
 block|}
 name|boolean
@@ -926,7 +921,10 @@ name|sameStripe
 init|=
 name|currentStripeIndex
 operator|==
-name|_previousStripeIndex
+name|oedc
+operator|.
+name|getPreviousStripeIndex
+argument_list|()
 decl_stmt|;
 comment|// OrcEncodedDataProducer should have just loaded cache entries from this file.
 comment|// The default LRU algorithm shouldn't have dropped the entries. To make it
@@ -1103,9 +1101,12 @@ name|stripeMetadata
 argument_list|)
 expr_stmt|;
 block|}
-name|_previousStripeIndex
-operator|=
+name|oedc
+operator|.
+name|setPreviousStripeIndex
+argument_list|(
 name|currentStripeIndex
+argument_list|)
 expr_stmt|;
 for|for
 control|(
