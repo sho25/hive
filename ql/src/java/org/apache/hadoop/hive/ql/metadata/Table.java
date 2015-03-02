@@ -193,9 +193,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|FileUtils
 import|;
 end_import
 
@@ -209,9 +209,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|conf
 operator|.
-name|FileUtils
+name|HiveConf
 import|;
 end_import
 
@@ -458,6 +458,26 @@ operator|.
 name|io
 operator|.
 name|HiveSequenceFileOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|BaseSemanticAnalyzer
+operator|.
+name|TableSpec
 import|;
 end_import
 
@@ -764,6 +784,11 @@ specifier|private
 specifier|transient
 name|HiveStorageHandler
 name|storageHandler
+decl_stmt|;
+specifier|private
+specifier|transient
+name|TableSpec
+name|tableSpec
 decl_stmt|;
 comment|/**    * Used only for serialization.    */
 specifier|public
@@ -4920,6 +4945,30 @@ operator|.
 name|toLowerCase
 argument_list|()
 return|;
+block|}
+specifier|public
+name|TableSpec
+name|getTableSpec
+parameter_list|()
+block|{
+return|return
+name|tableSpec
+return|;
+block|}
+specifier|public
+name|void
+name|setTableSpec
+parameter_list|(
+name|TableSpec
+name|tableSpec
+parameter_list|)
+block|{
+name|this
+operator|.
+name|tableSpec
+operator|=
+name|tableSpec
+expr_stmt|;
 block|}
 block|}
 end_class

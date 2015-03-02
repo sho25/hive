@@ -155,16 +155,6 @@ name|javax
 operator|.
 name|jdo
 operator|.
-name|JDODataStoreException
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|jdo
-operator|.
 name|PersistenceManager
 import|;
 end_import
@@ -240,22 +230,6 @@ operator|.
 name|logging
 operator|.
 name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|derby
-operator|.
-name|iapi
-operator|.
-name|error
-operator|.
-name|StandardException
 import|;
 end_import
 
@@ -3073,6 +3047,11 @@ argument_list|()
 else|:
 literal|0
 decl_stmt|;
+name|Deadline
+operator|.
+name|checkTimeout
+argument_list|()
+expr_stmt|;
 comment|// Read all the fields and create partitions, SDs and serdes.
 name|TreeMap
 argument_list|<
@@ -3863,6 +3842,11 @@ name|setSerdeInfo
 argument_list|(
 name|serde
 argument_list|)
+expr_stmt|;
+name|Deadline
+operator|.
+name|checkTimeout
+argument_list|()
 expr_stmt|;
 block|}
 name|query

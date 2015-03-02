@@ -7900,11 +7900,11 @@ argument_list|)
 condition|)
 block|{
 comment|// If we're merging to the same location, we can avoid some metastore calls
-name|tableSpec
+name|TableSpec
 name|tablepart
 init|=
 operator|new
-name|tableSpec
+name|TableSpec
 argument_list|(
 name|this
 operator|.
@@ -11955,11 +11955,11 @@ argument_list|)
 condition|)
 block|{
 comment|// If we're merging to the same location, we can avoid some metastore calls
-name|tableSpec
+name|TableSpec
 name|tablepart
 init|=
 operator|new
-name|tableSpec
+name|TableSpec
 argument_list|(
 name|db
 argument_list|,

@@ -1314,11 +1314,11 @@ argument_list|)
 throw|;
 block|}
 comment|// initialize destination table/partition
-name|tableSpec
+name|TableSpec
 name|ts
 init|=
 operator|new
-name|tableSpec
+name|TableSpec
 argument_list|(
 name|db
 argument_list|,
