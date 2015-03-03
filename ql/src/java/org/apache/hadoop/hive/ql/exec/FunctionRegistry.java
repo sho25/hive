@@ -3190,6 +3190,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"trunc"
+argument_list|,
+name|GenericUDFTrunc
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"date_add"
 argument_list|,
 name|GenericUDFDateAdd
