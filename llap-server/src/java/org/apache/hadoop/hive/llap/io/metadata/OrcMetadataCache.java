@@ -82,7 +82,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ORC-specific metadata cache.  * TODO: should be merged with main cache somehow if we find this takes too much memory  */
+comment|/**  * TODO#: doc ORC-specific metadata cache.  * TODO: should be merged with main cache somehow if we find this takes too much memory  */
 end_comment
 
 begin_class

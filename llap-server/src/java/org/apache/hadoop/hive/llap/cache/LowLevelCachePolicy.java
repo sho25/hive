@@ -45,6 +45,20 @@ name|LlapCacheableBuffer
 name|buffer
 parameter_list|)
 function_decl|;
+name|long
+name|evictSomeBlocks
+parameter_list|(
+name|long
+name|memoryToReserve
+parameter_list|)
+function_decl|;
+name|void
+name|setEvictionListener
+parameter_list|(
+name|EvictionListener
+name|listener
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
