@@ -10137,12 +10137,22 @@ operator|!
 name|isExternal
 condition|)
 block|{
+comment|// Data needs deletion. Check if trash may be skipped.
+comment|// Trash may be skipped iff:
+comment|//  1. deleteData == true, obviously.
+comment|//  2. tbl is external.
+comment|//  3. Either
+comment|//    3.1. User has specified PURGE from the commandline, and if not,
+comment|//    3.2. User has set the table to auto-purge.
 name|boolean
 name|ifPurge
 init|=
+operator|(
+operator|(
 name|envContext
 operator|!=
 literal|null
+operator|)
 operator|&&
 name|Boolean
 operator|.
@@ -10158,6 +10168,29 @@ argument_list|(
 literal|"ifPurge"
 argument_list|)
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|tbl
+operator|.
+name|isSetParameters
+argument_list|()
+operator|&&
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+operator|)
 decl_stmt|;
 comment|// Delete the data in the partitions which have other locations
 name|deletePartitionData
@@ -15855,9 +15888,16 @@ argument_list|)
 condition|)
 block|{
 comment|// Data needs deletion. Check if trash may be skipped.
+comment|// Trash may be skipped iff:
+comment|//  1. deleteData == true, obviously.
+comment|//  2. tbl is external.
+comment|//  3. Either
+comment|//    3.1. User has specified PURGE from the commandline, and if not,
+comment|//    3.2. User has set the table to auto-purge.
 name|boolean
 name|mustPurge
 init|=
+operator|(
 operator|(
 name|envContext
 operator|!=
@@ -15878,6 +15918,29 @@ argument_list|(
 literal|"ifPurge"
 argument_list|)
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|tbl
+operator|.
+name|isSetParameters
+argument_list|()
+operator|&&
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+operator|)
 decl_stmt|;
 if|if
 condition|(
@@ -16916,9 +16979,16 @@ argument_list|)
 condition|)
 block|{
 comment|// Data needs deletion. Check if trash may be skipped.
+comment|// Trash may be skipped iff:
+comment|//  1. deleteData == true, obviously.
+comment|//  2. tbl is external.
+comment|//  3. Either
+comment|//    3.1. User has specified PURGE from the commandline, and if not,
+comment|//    3.2. User has set the table to auto-purge.
 name|boolean
 name|mustPurge
 init|=
+operator|(
 operator|(
 name|envContext
 operator|!=
@@ -16939,6 +17009,29 @@ argument_list|(
 literal|"ifPurge"
 argument_list|)
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|tbl
+operator|.
+name|isSetParameters
+argument_list|()
+operator|&&
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+operator|)
 decl_stmt|;
 name|LOG
 operator|.
