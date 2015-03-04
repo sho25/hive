@@ -135,7 +135,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|StatsSetupConst
+name|JavaUtils
 import|;
 end_import
 
@@ -1841,9 +1841,9 @@ name|class
 operator|.
 name|isAssignableFrom
 argument_list|(
-name|Class
+name|JavaUtils
 operator|.
-name|forName
+name|loadClass
 argument_list|(
 name|inputFormat
 argument_list|)

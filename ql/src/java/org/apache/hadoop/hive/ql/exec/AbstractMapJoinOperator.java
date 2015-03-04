@@ -229,10 +229,6 @@ specifier|transient
 name|int
 name|numMapRowsRead
 decl_stmt|;
-specifier|transient
-name|boolean
-name|firstRow
-decl_stmt|;
 specifier|public
 name|AbstractMapJoinOperator
 parameter_list|()
@@ -339,10 +335,6 @@ expr_stmt|;
 name|numMapRowsRead
 operator|=
 literal|0
-expr_stmt|;
-name|firstRow
-operator|=
-literal|true
 expr_stmt|;
 comment|// all other tables are small, and are cached in the hash table
 name|posBigTable

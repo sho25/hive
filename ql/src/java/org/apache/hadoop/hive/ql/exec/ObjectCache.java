@@ -19,6 +19,36 @@ name|exec
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Callable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * ObjectCache. Interface for maintaining objects associated with a task.  */
 end_comment
@@ -28,26 +58,31 @@ specifier|public
 interface|interface
 name|ObjectCache
 block|{
-comment|/**    * Add an object to the cache    * @param key    * @param value    */
+comment|/**    * @param key    */
 specifier|public
 name|void
-name|cache
+name|release
 parameter_list|(
 name|String
 name|key
-parameter_list|,
-name|Object
-name|value
 parameter_list|)
 function_decl|;
-comment|/**    * Retrieve object from cache.    * @param key    * @return the last cached object with the key, null if none.    */
+comment|/**    * Retrieve object from cache.    * @param key    * @param fn function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
 specifier|public
 name|Object
 name|retrieve
 parameter_list|(
 name|String
 name|key
+parameter_list|,
+name|Callable
+argument_list|<
+name|?
+argument_list|>
+name|fn
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 block|}
 end_interface
