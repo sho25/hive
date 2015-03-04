@@ -252,6 +252,9 @@ name|expectView
 parameter_list|,
 name|boolean
 name|ignoreProtection
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|)
 block|{
 name|this
@@ -344,6 +347,12 @@ operator|.
 name|expectView
 operator|=
 name|expectView
+expr_stmt|;
+name|this
+operator|.
+name|ifPurge
+operator|=
+name|ifPurge
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
