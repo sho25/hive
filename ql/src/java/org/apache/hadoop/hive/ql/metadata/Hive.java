@@ -9838,6 +9838,30 @@ argument_list|(
 literal|"Firing dml insert event"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|isTemporary
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not firing dml insert event as "
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" is temporary"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|FireEventRequestData
 name|data
 init|=
