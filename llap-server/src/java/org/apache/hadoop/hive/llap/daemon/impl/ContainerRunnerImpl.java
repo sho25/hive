@@ -1478,9 +1478,8 @@ operator|.
 name|start
 argument_list|()
 decl_stmt|;
-name|s
 name|tezChild
-init|=
+operator|=
 operator|new
 name|TezChild
 argument_list|(
@@ -1534,7 +1533,7 @@ argument_list|()
 argument_list|,
 literal|null
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|ContainerExecutionResult
 name|result
 init|=
