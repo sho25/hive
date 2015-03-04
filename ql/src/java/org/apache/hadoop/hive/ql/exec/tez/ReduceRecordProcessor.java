@@ -660,6 +660,11 @@ name|cacheKey
 operator|=
 name|queryId
 operator|+
+name|processorContext
+operator|.
+name|getTaskVertexName
+argument_list|()
+operator|+
 name|REDUCE_PLAN_KEY
 expr_stmt|;
 name|redWork

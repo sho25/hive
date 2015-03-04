@@ -8006,6 +8006,15 @@ argument_list|,
 literal|"Chooses whether query fragments will run in container or in llap"
 argument_list|)
 block|,
+name|LLAP_OBJECT_CACHE_ENABLED
+argument_list|(
+literal|"hive.llap.object.cache.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Cache objects (plans, hashtables, etc) in llap"
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
