@@ -750,20 +750,6 @@ name|stripes
 operator|!=
 literal|null
 assert|;
-name|LlapIoImpl
-operator|.
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# got metadata "
-operator|+
-name|m
-operator|.
-name|getStripeIx
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|stripes
 index|[
 name|m
@@ -803,17 +789,6 @@ name|batchKey
 operator|.
 name|stripeIx
 decl_stmt|;
-name|LlapIoImpl
-operator|.
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# got data "
-operator|+
-name|currentStripeIndex
-argument_list|)
-expr_stmt|;
 name|boolean
 name|sameStripe
 init|=
