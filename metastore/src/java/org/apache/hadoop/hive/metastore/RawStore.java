@@ -87,16 +87,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|SortedSet
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -142,24 +132,6 @@ operator|.
 name|api
 operator|.
 name|ColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|ColumnStatisticsObj
 import|;
 end_import
 
@@ -519,7 +491,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|SetPartitionsStatsRequest
+name|RolePrincipalGrant
 import|;
 end_import
 
@@ -610,132 +582,6 @@ operator|.
 name|api
 operator|.
 name|UnknownTableException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MDBPrivilege
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MGlobalPrivilege
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MPartitionColumnPrivilege
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MPartitionPrivilege
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MRoleMap
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MTableColumnPrivilege
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|model
-operator|.
-name|MTablePrivilege
 import|;
 end_import
 
@@ -1788,7 +1634,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MGlobalPrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listPrincipalGlobalGrants
 parameter_list|(
@@ -1803,7 +1649,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MDBPrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listPrincipalDBGrants
 parameter_list|(
@@ -1821,7 +1667,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MTablePrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listAllTableGrants
 parameter_list|(
@@ -1842,7 +1688,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MPartitionPrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listPrincipalPartitionGrants
 parameter_list|(
@@ -1858,6 +1704,12 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partValues
+parameter_list|,
 name|String
 name|partName
 parameter_list|)
@@ -1866,7 +1718,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MTableColumnPrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listPrincipalTableColumnGrants
 parameter_list|(
@@ -1890,7 +1742,7 @@ specifier|public
 specifier|abstract
 name|List
 argument_list|<
-name|MPartitionColumnPrivilege
+name|HiveObjectPrivilege
 argument_list|>
 name|listPrincipalPartitionColumnGrants
 parameter_list|(
@@ -1905,6 +1757,12 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partValues
 parameter_list|,
 name|String
 name|partName
@@ -1980,9 +1838,23 @@ function_decl|;
 specifier|public
 name|List
 argument_list|<
-name|MRoleMap
+name|Role
 argument_list|>
 name|listRoles
+parameter_list|(
+name|String
+name|principalName
+parameter_list|,
+name|PrincipalType
+name|principalType
+parameter_list|)
+function_decl|;
+specifier|public
+name|List
+argument_list|<
+name|RolePrincipalGrant
+argument_list|>
+name|listRolesWithGrants
 parameter_list|(
 name|String
 name|principalName
@@ -1995,7 +1867,7 @@ comment|/**    * Get the role to principal grant mapping for given role    * @pa
 specifier|public
 name|List
 argument_list|<
-name|MRoleMap
+name|RolePrincipalGrant
 argument_list|>
 name|listRoleMembers
 parameter_list|(
@@ -2138,7 +2010,7 @@ name|InvalidObjectException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param partVals    *    * @param ColumnStats object to persist    * @param List of partVals    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/** Persists the given column statistics object to the metastore    * @param colStats object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -2156,7 +2028,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param partVals    *    * @param ColumnStats object to persist    * @param List of partVals    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/** Persists the given column statistics object to the metastore    * @param partVals    *    * @param statsObj object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
 specifier|public
 specifier|abstract
 name|boolean
@@ -2180,7 +2052,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param The name of the database, defaults to current database    * @param The name of the table    * @param The name of the column for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidInputException    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidInputException    *    */
 specifier|public
 specifier|abstract
 name|ColumnStatistics
@@ -2589,7 +2461,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Alter function based on new function specs.    * @param dbName    * @param name    * @param newFunction    * @throws InvalidObjectException    * @throws MetaException    */
+comment|/**    * Alter function based on new function specs.    * @param dbName    * @param funcName    * @param newFunction    * @throws InvalidObjectException    * @throws MetaException    */
 specifier|public
 name|void
 name|alterFunction
@@ -2608,7 +2480,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Drop a function definition.    * @param dbName    * @param functionName    * @return    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @return    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
 specifier|public
 name|void
 name|dropFunction
@@ -2628,7 +2500,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Retrieve function by name.    * @param dbName    * @param functionName    * @return    * @throws MetaException    */
+comment|/**    * Retrieve function by name.    * @param dbName    * @param funcName    * @return    * @throws MetaException    */
 specifier|public
 name|Function
 name|getFunction
