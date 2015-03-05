@@ -557,7 +557,7 @@ name|assertEquals
 argument_list|(
 literal|"levenshtein test"
 argument_list|,
-literal|"levenshtein requires 2 arguments, got 1"
+literal|"levenshtein requires 2 argument(s), got 1"
 argument_list|,
 name|e
 operator|.
