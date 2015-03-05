@@ -70,12 +70,12 @@ specifier|public
 interface|interface
 name|LowLevelCache
 block|{
-comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param file File name; MUST be interned.    * @param base base offset for the ranges (stripe offset in case of ORC).    * @return     */
+comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param base base offset for the ranges (stripe offset in case of ORC).    * @return     */
 name|DiskRangeList
 name|getFileData
 parameter_list|(
-name|String
-name|fileName
+name|long
+name|fileId
 parameter_list|,
 name|DiskRangeList
 name|range
@@ -84,13 +84,13 @@ name|long
 name|baseOffset
 parameter_list|)
 function_decl|;
-comment|/**    * Puts file data into cache.    * @param file File name; MUST be interned.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
+comment|/**    * Puts file data into cache.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
 name|long
 index|[]
 name|putFileData
 parameter_list|(
-name|String
-name|file
+name|long
+name|fileId
 parameter_list|,
 name|DiskRange
 index|[]

@@ -352,8 +352,8 @@ argument_list|)
 decl_stmt|;
 specifier|protected
 specifier|final
-name|String
-name|fileName
+name|Long
+name|fileId
 decl_stmt|;
 specifier|protected
 specifier|final
@@ -368,8 +368,8 @@ decl_stmt|;
 specifier|public
 name|InStream
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|name
@@ -380,9 +380,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|fileName
+name|fileId
 operator|=
-name|fileName
+name|fileId
 expr_stmt|;
 name|this
 operator|.
@@ -396,15 +396,6 @@ name|length
 operator|=
 name|length
 expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getFileName
-parameter_list|()
-block|{
-return|return
-name|fileName
-return|;
 block|}
 specifier|public
 name|String
@@ -457,8 +448,8 @@ decl_stmt|;
 specifier|public
 name|UncompressedStream
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|name
@@ -475,7 +466,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|name
 argument_list|,
@@ -1043,8 +1034,8 @@ decl_stmt|;
 specifier|public
 name|CompressedStream
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|name
@@ -1070,7 +1061,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|name
 argument_list|,
@@ -1437,7 +1428,7 @@ condition|)
 block|{
 comment|// TODO: this is the inefficient path
 comment|// TODO#: this is invalid; base stripe offset should be passed, return value handled.
-comment|//cache.putFileData(fileName, new DiskRange[] { new DiskRange(originalOffset,
+comment|//cache.putFileData(fileId, new DiskRange[] { new DiskRange(originalOffset,
 comment|//  chunkLength + OutStream.HEADER_SIZE) }, new LlapMemoryBuffer[] { cacheBuffer }, 0);
 block|}
 block|}
@@ -2686,8 +2677,8 @@ specifier|static
 name|InStream
 name|create
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|streamName
@@ -2769,7 +2760,7 @@ block|}
 return|return
 name|create
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|streamName
 argument_list|,
@@ -2791,8 +2782,8 @@ specifier|static
 name|InStream
 name|create
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|name
@@ -2829,7 +2820,7 @@ return|return
 operator|new
 name|UncompressedStream
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|name
 argument_list|,
@@ -2845,7 +2836,7 @@ return|return
 operator|new
 name|CompressedStream
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|name
 argument_list|,
@@ -2938,8 +2929,8 @@ specifier|static
 name|DiskRangeList
 name|uncompressStream
 parameter_list|(
-name|String
-name|fileName
+name|long
+name|fileId
 parameter_list|,
 name|long
 name|baseOffset
@@ -3558,7 +3549,7 @@ name|cache
 operator|.
 name|putFileData
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|cacheKeys
 argument_list|,

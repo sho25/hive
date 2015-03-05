@@ -477,8 +477,8 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
-name|fileName
+name|long
+name|fileId
 decl_stmt|;
 specifier|private
 specifier|final
@@ -583,17 +583,17 @@ name|IOException
 block|{
 name|this
 operator|.
-name|fileName
+name|fileId
 operator|=
+name|RecordReaderUtils
+operator|.
+name|getFileId
+argument_list|(
+name|fileSystem
+argument_list|,
 name|path
-operator|.
-name|toString
-argument_list|()
-operator|.
-name|intern
-argument_list|()
+argument_list|)
 expr_stmt|;
-comment|// should we normalize this, like DFS would?
 name|this
 operator|.
 name|file
@@ -1657,7 +1657,7 @@ name|cache
 operator|.
 name|getFileData
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|toRead
 operator|.
@@ -1817,7 +1817,7 @@ argument_list|(
 operator|new
 name|OrcBatchKey
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|stripeIx
 argument_list|,
@@ -2073,7 +2073,7 @@ name|InStream
 operator|.
 name|uncompressStream
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|stripeOffset
 argument_list|,
@@ -2310,7 +2310,7 @@ name|InStream
 operator|.
 name|uncompressStream
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|stripeOffset
 argument_list|,

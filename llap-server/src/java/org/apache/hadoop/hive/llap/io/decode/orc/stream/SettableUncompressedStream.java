@@ -87,8 +87,8 @@ block|{
 specifier|public
 name|SettableUncompressedStream
 parameter_list|(
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|String
 name|name
@@ -105,7 +105,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|name
 argument_list|,

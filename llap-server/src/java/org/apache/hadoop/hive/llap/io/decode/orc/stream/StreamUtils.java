@@ -205,8 +205,8 @@ parameter_list|(
 name|String
 name|streamName
 parameter_list|,
-name|String
-name|fileName
+name|Long
+name|fileId
 parameter_list|,
 name|EncodedColumnBatch
 operator|.
@@ -252,7 +252,7 @@ return|return
 operator|new
 name|SettableUncompressedStream
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|streamName
 argument_list|,

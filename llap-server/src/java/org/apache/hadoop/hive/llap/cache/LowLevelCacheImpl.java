@@ -333,7 +333,7 @@ specifier|private
 specifier|final
 name|ConcurrentHashMap
 argument_list|<
-name|String
+name|Long
 argument_list|,
 name|FileCache
 argument_list|>
@@ -342,7 +342,7 @@ init|=
 operator|new
 name|ConcurrentHashMap
 argument_list|<
-name|String
+name|Long
 argument_list|,
 name|FileCache
 argument_list|>
@@ -499,8 +499,8 @@ specifier|public
 name|DiskRangeList
 name|getFileData
 parameter_list|(
-name|String
-name|fileName
+name|long
+name|fileId
 parameter_list|,
 name|DiskRangeList
 name|ranges
@@ -525,7 +525,7 @@ name|cache
 operator|.
 name|get
 argument_list|(
-name|fileName
+name|fileId
 argument_list|)
 decl_stmt|;
 if|if
@@ -1045,8 +1045,8 @@ name|long
 index|[]
 name|putFileData
 parameter_list|(
-name|String
-name|fileName
+name|long
+name|fileId
 parameter_list|,
 name|DiskRange
 index|[]
@@ -1080,7 +1080,7 @@ name|subCache
 init|=
 name|getOrAddFileSubCache
 argument_list|(
-name|fileName
+name|fileId
 argument_list|)
 decl_stmt|;
 try|try
@@ -1217,7 +1217,7 @@ name|info
 argument_list|(
 literal|"Trying to cache when the chunk is already cached for "
 operator|+
-name|fileName
+name|fileId
 operator|+
 literal|"@"
 operator|+
@@ -1416,12 +1416,12 @@ name|result
 return|;
 block|}
 comment|/**    * All this mess is necessary because we want to be able to remove sub-caches for fully    * evicted files. It may actually be better to have non-nested map with object keys?    */
-specifier|public
+specifier|private
 name|FileCache
 name|getOrAddFileSubCache
 parameter_list|(
-name|String
-name|fileName
+name|long
+name|fileId
 parameter_list|)
 block|{
 name|FileCache
@@ -1442,7 +1442,7 @@ name|cache
 operator|.
 name|get
 argument_list|(
-name|fileName
+name|fileId
 argument_list|)
 decl_stmt|;
 if|if
@@ -1489,7 +1489,7 @@ name|cache
 operator|.
 name|replace
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|subCache
 argument_list|,
@@ -1529,7 +1529,7 @@ name|cache
 operator|.
 name|putIfAbsent
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|newSubCache
 argument_list|)
@@ -1562,7 +1562,7 @@ name|cache
 operator|.
 name|replace
 argument_list|(
-name|fileName
+name|fileId
 argument_list|,
 name|oldSubCache
 argument_list|,
@@ -2163,7 +2163,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Long
 argument_list|,
 name|FileCache
 argument_list|>

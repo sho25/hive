@@ -118,7 +118,7 @@ specifier|private
 specifier|static
 name|Cache
 argument_list|<
-name|String
+name|Long
 argument_list|,
 name|OrcFileMetadata
 argument_list|>
@@ -204,8 +204,8 @@ specifier|public
 name|void
 name|putFileMetadata
 parameter_list|(
-name|String
-name|filePath
+name|long
+name|fileId
 parameter_list|,
 name|OrcFileMetadata
 name|metaData
@@ -215,7 +215,7 @@ name|METADATA
 operator|.
 name|put
 argument_list|(
-name|filePath
+name|fileId
 argument_list|,
 name|metaData
 argument_list|)
@@ -265,8 +265,8 @@ specifier|public
 name|OrcFileMetadata
 name|getFileMetadata
 parameter_list|(
-name|String
-name|pathString
+name|long
+name|fileId
 parameter_list|)
 throws|throws
 name|IOException
@@ -276,7 +276,7 @@ name|METADATA
 operator|.
 name|getIfPresent
 argument_list|(
-name|pathString
+name|fileId
 argument_list|)
 return|;
 block|}
