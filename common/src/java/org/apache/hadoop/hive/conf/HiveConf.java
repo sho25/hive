@@ -2062,6 +2062,15 @@ argument_list|,
 literal|"Number of seconds for stats items to live in the cache"
 argument_list|)
 block|,
+name|METASTORE_HBASE_CONNECTION_CLASS
+argument_list|(
+literal|"hive.metastore.hbase.connection.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.hbase.VanillaHBaseConnection"
+argument_list|,
+literal|"Class used to connection to HBase"
+argument_list|)
+block|,
 name|METASTORETHRIFTCONNECTIONRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"

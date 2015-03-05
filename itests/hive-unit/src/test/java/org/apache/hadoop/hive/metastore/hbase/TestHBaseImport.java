@@ -519,7 +519,7 @@ decl_stmt|;
 annotation|@
 name|Mock
 specifier|private
-name|HConnection
+name|HBaseConnection
 name|hconn
 decl_stmt|;
 specifier|private
@@ -715,7 +715,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -734,7 +734,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -753,7 +753,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -772,7 +772,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -791,7 +791,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -820,6 +820,21 @@ operator|.
 name|NO_CACHE_CONF
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_HBASE_CONNECTION_CLASS
+argument_list|,
+name|HBaseReadWrite
+operator|.
+name|TEST_CONN
 argument_list|)
 expr_stmt|;
 name|HBaseReadWrite

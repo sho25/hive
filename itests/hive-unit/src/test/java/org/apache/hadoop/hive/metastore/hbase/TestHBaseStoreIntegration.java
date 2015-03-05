@@ -937,7 +937,7 @@ decl_stmt|;
 annotation|@
 name|Mock
 specifier|private
-name|HConnection
+name|HBaseConnection
 name|hconn
 decl_stmt|;
 specifier|private
@@ -1177,7 +1177,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1196,7 +1196,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1215,7 +1215,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1234,7 +1234,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1253,7 +1253,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1272,7 +1272,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1291,7 +1291,7 @@ name|when
 argument_list|(
 name|hconn
 operator|.
-name|getTable
+name|getHBaseTable
 argument_list|(
 name|HBaseReadWrite
 operator|.
@@ -1320,6 +1320,21 @@ operator|.
 name|NO_CACHE_CONF
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_HBASE_CONNECTION_CLASS
+argument_list|,
+name|HBaseReadWrite
+operator|.
+name|TEST_CONN
 argument_list|)
 expr_stmt|;
 name|HBaseReadWrite
@@ -2316,6 +2331,13 @@ argument_list|(
 name|startTime
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"XXX alter table test"
+argument_list|)
+expr_stmt|;
 name|store
 operator|.
 name|alterTable
@@ -2339,6 +2361,18 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Alter table time "
+operator|+
+name|t
+operator|.
+name|getLastAccessTime
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -6798,6 +6832,22 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"Expected grant time of "
+operator|+
+name|now
+operator|+
+literal|" got "
+operator|+
+name|grants
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getGrantTime
+argument_list|()
+argument_list|,
 name|grants
 operator|.
 name|get
