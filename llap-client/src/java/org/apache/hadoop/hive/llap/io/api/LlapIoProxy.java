@@ -264,6 +264,26 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
+specifier|static
+name|void
+name|close
+parameter_list|()
+block|{
+if|if
+condition|(
+name|io
+operator|!=
+literal|null
+condition|)
+block|{
+name|io
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 block|}
 end_class
 

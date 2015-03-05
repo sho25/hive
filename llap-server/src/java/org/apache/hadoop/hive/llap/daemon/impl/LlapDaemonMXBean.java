@@ -15,62 +15,67 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|io
+name|daemon
 operator|.
-name|api
+name|impl
 package|;
 end_package
 
 begin_import
 import|import
-name|org
+name|javax
 operator|.
-name|apache
+name|management
 operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|NullWritable
+name|MXBean
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
+begin_comment
+comment|/**  * MXbean to expose llap daemon related information through JMX.  */
+end_comment
 
 begin_interface
+annotation|@
+name|MXBean
 specifier|public
 interface|interface
-name|LlapIo
-parameter_list|<
-name|T
-parameter_list|>
+name|LlapDaemonMXBean
 block|{
-name|InputFormat
-argument_list|<
-name|NullWritable
-argument_list|,
-name|T
-argument_list|>
-name|getInputFormat
-parameter_list|(
-name|InputFormat
-name|sourceInputFormat
-parameter_list|)
+comment|/**    * Gets the rpc port.    * @return the rpc port    */
+specifier|public
+name|int
+name|getRpcPort
+parameter_list|()
 function_decl|;
-name|void
-name|close
+comment|/**    * Gets the number of executors.    * @return number of executors    */
+specifier|public
+name|int
+name|getNumExecutors
+parameter_list|()
+function_decl|;
+comment|/**    * Gets the shuffle port.    * @return the shuffle port    */
+specifier|public
+name|int
+name|getShufflePort
+parameter_list|()
+function_decl|;
+comment|/**    * CSV list of local directories    * @return local dirs    */
+specifier|public
+name|String
+name|getLocalDirs
+parameter_list|()
+function_decl|;
+comment|/**    * Gets llap daemon configured memory per instance.    * @return memory per instance    */
+specifier|public
+name|long
+name|getMemoryPerInstance
+parameter_list|()
+function_decl|;
+comment|/**    * Gets max available jvm memory.    * @return max jvm memory    */
+specifier|public
+name|long
+name|getMaxJvmMemory
 parameter_list|()
 function_decl|;
 block|}

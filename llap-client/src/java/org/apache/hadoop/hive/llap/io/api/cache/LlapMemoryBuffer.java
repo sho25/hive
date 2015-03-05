@@ -33,6 +33,20 @@ name|ByteBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|metrics2
+operator|.
+name|MetricsSource
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|abstract
@@ -55,6 +69,9 @@ name|offset
 parameter_list|,
 name|int
 name|length
+parameter_list|,
+name|MetricsSource
+name|metrics
 parameter_list|)
 block|{
 name|this
@@ -86,11 +103,21 @@ operator|+
 name|length
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|metrics
+operator|=
+name|metrics
+expr_stmt|;
 block|}
 comment|/** Note - position/limit of this should NOT be modified after it's in cache.       We could add a wrapper to enforce that, but for now it's shared and should be duplicated. */
 specifier|public
 name|ByteBuffer
 name|byteBuffer
+decl_stmt|;
+specifier|public
+name|MetricsSource
+name|metrics
 decl_stmt|;
 block|}
 end_class

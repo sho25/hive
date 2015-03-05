@@ -15,62 +15,59 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|io
-operator|.
-name|api
+name|cache
 package|;
 end_package
 
 begin_import
 import|import
-name|org
+name|javax
 operator|.
-name|apache
+name|management
 operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|NullWritable
+name|MXBean
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
+begin_comment
+comment|/**  * MXbean to expose cache allocator related information through JMX.  */
+end_comment
 
 begin_interface
+annotation|@
+name|MXBean
 specifier|public
 interface|interface
-name|LlapIo
-parameter_list|<
-name|T
-parameter_list|>
+name|BuddyAllocatorMXBean
 block|{
-name|InputFormat
-argument_list|<
-name|NullWritable
-argument_list|,
-name|T
-argument_list|>
-name|getInputFormat
-parameter_list|(
-name|InputFormat
-name|sourceInputFormat
-parameter_list|)
+comment|/**    * Gets if bytebuffers are allocated directly offheap.    *    * @return gets if direct bytebuffer allocation    */
+specifier|public
+name|boolean
+name|getIsDirect
+parameter_list|()
 function_decl|;
-name|void
-name|close
+comment|/**    * Gets minimum allocation size of allocator.    *    * @return minimum allocation size    */
+specifier|public
+name|int
+name|getMinAllocation
+parameter_list|()
+function_decl|;
+comment|/**    * Gets maximum allocation size of allocator.    *    * @return maximum allocation size    */
+specifier|public
+name|int
+name|getMaxAllocation
+parameter_list|()
+function_decl|;
+comment|/**    * Gets the arena size.    *    * @return arena size    */
+specifier|public
+name|int
+name|getArenaSize
+parameter_list|()
+function_decl|;
+comment|/**    * Gets the maximum cache size.    *    * @return max cache size    */
+specifier|public
+name|long
+name|getMaxCacheSize
 parameter_list|()
 function_decl|;
 block|}

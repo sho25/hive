@@ -15,66 +15,20 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|io
-operator|.
-name|api
+name|metrics
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|NullWritable
-import|;
-end_import
+begin_comment
+comment|/**  *  */
+end_comment
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_interface
+begin_class
 specifier|public
-interface|interface
-name|LlapIo
-parameter_list|<
-name|T
-parameter_list|>
-block|{
-name|InputFormat
-argument_list|<
-name|NullWritable
-argument_list|,
-name|T
-argument_list|>
-name|getInputFormat
-parameter_list|(
-name|InputFormat
-name|sourceInputFormat
-parameter_list|)
-function_decl|;
-name|void
-name|close
-parameter_list|()
-function_decl|;
-block|}
-end_interface
+class|class
+name|LlapDaemonContainerRunnerInfo
+block|{ }
+end_class
 
 end_unit
 
