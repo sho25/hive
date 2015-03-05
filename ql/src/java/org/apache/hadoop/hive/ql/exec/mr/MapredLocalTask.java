@@ -729,38 +729,6 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|HadoopShims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
 name|Utils
 import|;
 end_import
@@ -1087,7 +1055,7 @@ init|=
 operator|new
 name|SimpleDateFormat
 argument_list|(
-literal|"yyyy-mm-dd hh:mm:ss"
+literal|"yyyy-MM-dd HH:mm:ss"
 argument_list|)
 decl_stmt|;
 return|return
