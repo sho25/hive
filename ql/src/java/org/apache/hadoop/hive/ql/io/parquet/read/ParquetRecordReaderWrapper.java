@@ -570,6 +570,10 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
+name|JobConf
+name|jobConf
+decl_stmt|;
+specifier|private
 specifier|final
 name|ProjectionPusher
 name|projectionPusher
@@ -663,6 +667,10 @@ name|projectionPusher
 operator|=
 name|pusher
 expr_stmt|;
+name|jobConf
+operator|=
+name|oldJobConf
+expr_stmt|;
 specifier|final
 name|ParquetInputSplit
 name|split
@@ -671,7 +679,7 @@ name|getSplit
 argument_list|(
 name|oldSplit
 argument_list|,
-name|oldJobConf
+name|jobConf
 argument_list|)
 decl_stmt|;
 name|TaskAttemptID
@@ -681,7 +689,7 @@ name|TaskAttemptID
 operator|.
 name|forName
 argument_list|(
-name|oldJobConf
+name|jobConf
 operator|.
 name|get
 argument_list|(
@@ -707,14 +715,14 @@ expr_stmt|;
 block|}
 name|setFilter
 argument_list|(
-name|oldJobConf
+name|jobConf
 argument_list|)
 expr_stmt|;
 comment|// create a TaskInputOutputContext
 name|Configuration
 name|conf
 init|=
-name|oldJobConf
+name|jobConf
 decl_stmt|;
 if|if
 condition|(
@@ -1357,10 +1365,8 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-specifier|final
-name|JobConf
-name|cloneJob
-init|=
+name|jobConf
+operator|=
 name|projectionPusher
 operator|.
 name|pushProjectionsAndFilters
@@ -1372,7 +1378,7 @@ operator|.
 name|getParent
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 specifier|final
 name|ParquetMetadata
 name|parquetMetadata
@@ -1381,7 +1387,7 @@ name|ParquetFileReader
 operator|.
 name|readFooter
 argument_list|(
-name|cloneJob
+name|jobConf
 argument_list|,
 name|finalPath
 argument_list|)
@@ -1417,7 +1423,7 @@ argument_list|()
 operator|.
 name|init
 argument_list|(
-name|cloneJob
+name|jobConf
 argument_list|,
 name|fileMetaData
 operator|.
