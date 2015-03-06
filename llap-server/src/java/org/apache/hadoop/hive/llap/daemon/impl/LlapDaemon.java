@@ -437,6 +437,9 @@ argument_list|(
 literal|"LlapDaemon"
 argument_list|)
 expr_stmt|;
+name|printAsciiArt
+argument_list|()
+expr_stmt|;
 comment|// TODO This needs to read TezConfiguration to pick up things like the heartbeat interval from config.
 comment|// Ideally, this would be part of llap-daemon-configuration
 name|this
@@ -782,6 +785,45 @@ argument_list|,
 name|memoryPerInstance
 argument_list|,
 name|metrics
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|printAsciiArt
+parameter_list|()
+block|{
+specifier|final
+name|String
+name|asciiArt
+init|=
+literal|""
+operator|+
+literal|"$$\\       $$\\        $$$$$$\\  $$$$$$$\\\n"
+operator|+
+literal|"$$ |      $$ |      $$  __$$\\ $$  __$$\\\n"
+operator|+
+literal|"$$ |      $$ |      $$ /  $$ |$$ |  $$ |\n"
+operator|+
+literal|"$$ |      $$ |      $$$$$$$$ |$$$$$$$  |\n"
+operator|+
+literal|"$$ |      $$ |      $$  __$$ |$$  ____/\n"
+operator|+
+literal|"$$ |      $$ |      $$ |  $$ |$$ |\n"
+operator|+
+literal|"$$$$$$$$\\ $$$$$$$$\\ $$ |  $$ |$$ |\n"
+operator|+
+literal|"\\________|\\________|\\__|  \\__|\\__|\n"
+operator|+
+literal|"\n"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"\n\n"
+operator|+
+name|asciiArt
 argument_list|)
 expr_stmt|;
 block|}
