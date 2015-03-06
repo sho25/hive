@@ -522,6 +522,29 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testDateType
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testConversion
+argument_list|(
+literal|"a"
+argument_list|,
+literal|"date"
+argument_list|,
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional int32 a (DATE);\n"
+operator|+
+literal|"}\n"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testArray
 parameter_list|()
 throws|throws
