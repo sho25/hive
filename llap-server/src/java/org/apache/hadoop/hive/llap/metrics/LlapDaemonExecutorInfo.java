@@ -73,11 +73,6 @@ argument_list|(
 literal|"User time in nanoseconds"
 argument_list|)
 block|,
-name|EXECUTOR_THREAD_SYSTEM_TIME
-argument_list|(
-literal|"System time in nanoseconds"
-argument_list|)
-block|,
 name|EXECUTOR_TOTAL_REQUESTS_HANDLED
 argument_list|(
 literal|"Total number of requests handled by the container"
