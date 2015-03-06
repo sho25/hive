@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -179,6 +189,11 @@ argument_list|<
 name|String
 argument_list|>
 name|getAddedJars
+parameter_list|()
+function_decl|;
+comment|/**    * Returns a local tmp dir specific to the context    */
+name|File
+name|getLocalTmpDir
 parameter_list|()
 function_decl|;
 block|}

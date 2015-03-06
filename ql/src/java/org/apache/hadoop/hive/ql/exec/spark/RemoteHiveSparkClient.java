@@ -1630,6 +1630,13 @@ name|size
 argument_list|()
 index|]
 argument_list|)
+argument_list|,
+name|localJobConf
+argument_list|,
+name|jc
+operator|.
+name|getLocalTmpDir
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|localJobConf
