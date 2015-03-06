@@ -1590,6 +1590,11 @@ literal|"Cannot change permissions of job properties file."
 argument_list|)
 throw|;
 block|}
+name|properties
+operator|.
+name|deleteOnExit
+argument_list|()
+expr_stmt|;
 name|Properties
 name|allProps
 init|=
