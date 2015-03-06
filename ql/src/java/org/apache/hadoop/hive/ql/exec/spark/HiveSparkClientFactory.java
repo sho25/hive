@@ -336,7 +336,7 @@ specifier|final
 name|String
 name|SPARK_DEFAULT_MASTER
 init|=
-literal|"local"
+literal|"yarn-cluster"
 decl_stmt|;
 specifier|private
 specifier|static
