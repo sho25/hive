@@ -631,6 +631,26 @@ name|RecordReaderImpl
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|WriterImpl
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -660,6 +680,10 @@ name|OrcFileMetadata
 name|fileMetadata
 decl_stmt|;
 comment|// We assume one request is only for one file.
+specifier|private
+name|CompressionCodec
+name|codec
+decl_stmt|;
 specifier|private
 name|OrcStripeMetadata
 index|[]
@@ -745,6 +769,19 @@ operator|.
 name|size
 argument_list|()
 index|]
+expr_stmt|;
+comment|// TODO: get rid of this
+name|codec
+operator|=
+name|WriterImpl
+operator|.
+name|createCodec
+argument_list|(
+name|fileMetadata
+operator|.
+name|getCompressionKind
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -905,6 +942,8 @@ argument_list|(
 name|numCols
 argument_list|,
 name|batch
+argument_list|,
+name|codec
 argument_list|,
 name|fileMetadata
 argument_list|,
@@ -1114,6 +1153,9 @@ name|OrcBatchKey
 argument_list|>
 name|batch
 parameter_list|,
+name|CompressionCodec
+name|codec
+parameter_list|,
 name|OrcFileMetadata
 name|fileMetadata
 parameter_list|,
@@ -1213,14 +1255,7 @@ comment|// But we need to know if the original data is compressed or not. This i
 comment|// positions in row index properly. If the file is originally compressed,
 comment|// then 1st position (compressed offset) in row index should be skipped to get
 comment|// uncompressed offset, else 1st position should not be skipped.
-name|CompressionCodec
-name|codec
-init|=
-name|fileMetadata
-operator|.
-name|getCompressionCodec
-argument_list|()
-decl_stmt|;
+comment|// TODO: there should be a better way to do this, code just needs to be modified
 name|OrcProto
 operator|.
 name|ColumnEncoding

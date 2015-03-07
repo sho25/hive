@@ -1626,7 +1626,9 @@ operator|=
 operator|new
 name|MetadataReader
 argument_list|(
-name|file
+name|fileSystem
+argument_list|,
+name|path
 argument_list|,
 name|codec
 argument_list|,
@@ -17814,10 +17816,12 @@ name|ByteBuffer
 name|getData
 parameter_list|()
 block|{
+comment|// Callers duplicate the buffer, they have to for BufferChunk
 return|return
 name|buffer
 operator|.
-name|byteBuffer
+name|getByteBufferRaw
+argument_list|()
 return|;
 block|}
 annotation|@

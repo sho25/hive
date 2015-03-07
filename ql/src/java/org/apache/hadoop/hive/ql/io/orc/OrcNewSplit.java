@@ -139,8 +139,6 @@ extends|extends
 name|FileSplit
 block|{
 specifier|private
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 decl_stmt|;
@@ -668,8 +666,6 @@ decl_stmt|;
 name|fileMetaInfo
 operator|=
 operator|new
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 argument_list|(
 name|compressionType
@@ -685,8 +681,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|getFileMetaInfo
 parameter_list|()

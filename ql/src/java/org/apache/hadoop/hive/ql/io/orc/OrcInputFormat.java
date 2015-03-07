@@ -3581,8 +3581,6 @@ argument_list|>
 name|stripes
 decl_stmt|;
 specifier|private
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 decl_stmt|;
@@ -3918,8 +3916,6 @@ parameter_list|,
 name|long
 name|length
 parameter_list|,
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 parameter_list|)
@@ -5598,8 +5594,6 @@ name|StripeInformation
 argument_list|>
 name|stripeInfos
 decl_stmt|;
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 decl_stmt|;
@@ -5645,8 +5639,6 @@ name|Type
 argument_list|>
 name|types
 parameter_list|,
-name|ReaderImpl
-operator|.
 name|FileMetaInfo
 name|fileMetaInfo
 parameter_list|,

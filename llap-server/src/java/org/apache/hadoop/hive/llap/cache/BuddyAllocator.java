@@ -760,7 +760,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 argument_list|()
 expr_stmt|;
 comment|// TODO: pool of objects?
@@ -1006,11 +1006,11 @@ name|LlapMemoryBuffer
 name|buffer
 parameter_list|)
 block|{
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 name|buf
 init|=
 operator|(
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 operator|)
 name|buffer
 decl_stmt|;
@@ -1985,7 +1985,7 @@ name|headerData
 expr_stmt|;
 operator|(
 operator|(
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 operator|)
 name|dest
 index|[
@@ -2002,8 +2002,6 @@ argument_list|,
 name|offset
 argument_list|,
 name|allocationSize
-argument_list|,
-name|metrics
 argument_list|)
 expr_stmt|;
 block|}
@@ -2365,7 +2363,7 @@ argument_list|)
 expr_stmt|;
 operator|(
 operator|(
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 operator|)
 name|dest
 index|[
@@ -2382,8 +2380,6 @@ argument_list|,
 name|offset
 argument_list|,
 name|size
-argument_list|,
-name|metrics
 argument_list|)
 expr_stmt|;
 operator|++
@@ -2441,7 +2437,7 @@ specifier|public
 name|void
 name|deallocate
 parameter_list|(
-name|LlapCacheableBuffer
+name|LlapDataBuffer
 name|buffer
 parameter_list|)
 block|{

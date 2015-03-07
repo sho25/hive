@@ -70,6 +70,15 @@ specifier|public
 interface|interface
 name|LowLevelCache
 block|{
+specifier|public
+enum|enum
+name|Priority
+block|{
+name|NORMAL
+block|,
+name|HIGH
+comment|// TODO: we could add more priorities, e.g. tiered-high, where we always evict it last.
+block|}
 comment|/**    * Gets file data for particular offsets. Null entries mean no data.    * @param base base offset for the ranges (stripe offset in case of ORC).    * @return     */
 name|DiskRangeList
 name|getFileData
@@ -102,6 +111,9 @@ name|chunks
 parameter_list|,
 name|long
 name|base
+parameter_list|,
+name|Priority
+name|priority
 parameter_list|)
 function_decl|;
 comment|/**    * Releases the buffer returned by getFileData or allocateMultiple.    */

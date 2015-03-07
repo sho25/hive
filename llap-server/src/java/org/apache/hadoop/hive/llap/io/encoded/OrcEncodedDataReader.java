@@ -540,6 +540,26 @@ operator|.
 name|orc
 operator|.
 name|OrcProto
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
 operator|.
 name|Type
 import|;
@@ -778,6 +798,10 @@ comment|// Read state.
 specifier|private
 name|int
 name|stripeIxFrom
+decl_stmt|;
+specifier|private
+name|OrcFileMetadata
+name|fileMetadata
 decl_stmt|;
 specifier|private
 name|Reader
@@ -1022,13 +1046,18 @@ operator|=
 literal|null
 expr_stmt|;
 comment|// 1. Get file metadata from cache, or create the reader and read it.
-name|OrcFileMetadata
-name|metadata
-init|=
-literal|null
-decl_stmt|;
-name|ensureFs
+comment|// Disable filesystem caching for now; Tez closes it and FS cache will fix all that
+name|fs
+operator|=
+name|split
+operator|.
+name|getPath
 argument_list|()
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -1048,7 +1077,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|metadata
+name|fileMetadata
 operator|=
 name|getOrReadFileMetadata
 argument_list|()
@@ -1057,13 +1086,13 @@ name|consumer
 operator|.
 name|setFileMetadata
 argument_list|(
-name|metadata
+name|fileMetadata
 argument_list|)
 expr_stmt|;
 name|int
 name|bufferSize
 init|=
-name|metadata
+name|fileMetadata
 operator|.
 name|getCompressionBufferSize
 argument_list|()
@@ -1131,18 +1160,13 @@ name|columnIds
 operator|=
 name|createColumnIds
 argument_list|(
-name|metadata
+name|fileMetadata
 argument_list|)
 expr_stmt|;
 block|}
 comment|// 2. Determine which stripes to read based on the split.
 name|determineStripesToRead
-argument_list|(
-name|metadata
-operator|.
-name|getStripes
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -1185,7 +1209,7 @@ comment|// 3. Apply SARG if needed, and otherwise determine what RGs to read.
 name|int
 name|stride
 init|=
-name|metadata
+name|fileMetadata
 operator|.
 name|getRowIndexStride
 argument_list|()
@@ -1218,7 +1242,7 @@ name|OrcInputFormat
 operator|.
 name|genIncludedColumns
 argument_list|(
-name|metadata
+name|fileMetadata
 operator|.
 name|getTypes
 argument_list|()
@@ -1299,8 +1323,6 @@ name|stripeMetadatas
 operator|=
 name|readStripesMetadata
 argument_list|(
-name|metadata
-argument_list|,
 name|globalIncludes
 argument_list|,
 name|sargColumns
@@ -1310,16 +1332,6 @@ block|}
 comment|// Now, apply SARG if any; w/o sarg, this will just initialize readState.
 name|determineRgsToRead
 argument_list|(
-name|metadata
-operator|.
-name|getStripes
-argument_list|()
-argument_list|,
-name|metadata
-operator|.
-name|getTypes
-argument_list|()
-argument_list|,
 name|globalIncludes
 argument_list|,
 name|stride
@@ -1389,11 +1401,6 @@ name|stripeColsToRead
 operator|=
 name|produceDataFromCache
 argument_list|(
-name|metadata
-operator|.
-name|getStripes
-argument_list|()
-argument_list|,
 name|stride
 argument_list|)
 expr_stmt|;
@@ -1424,6 +1431,7 @@ block|}
 block|}
 comment|// readState has been modified for column x rgs that were fetched from cache.
 comment|// 5. Create encoded data reader.
+comment|// TODO#: THIS
 name|ensureOrcReader
 argument_list|()
 expr_stmt|;
@@ -1566,7 +1574,7 @@ decl_stmt|;
 name|StripeInformation
 name|si
 init|=
-name|metadata
+name|fileMetadata
 operator|.
 name|getStripes
 argument_list|()
@@ -1662,7 +1670,7 @@ name|OrcInputFormat
 operator|.
 name|genIncludedColumns
 argument_list|(
-name|metadata
+name|fileMetadata
 operator|.
 name|getTypes
 argument_list|()
@@ -1791,7 +1799,7 @@ operator|=
 operator|new
 name|OrcStripeMetadata
 argument_list|(
-name|stripeIx
+name|stripeKey
 argument_list|,
 name|metadataReader
 argument_list|,
@@ -1837,8 +1845,6 @@ name|metadataCache
 operator|.
 name|putStripeMetadata
 argument_list|(
-name|stripeKey
-argument_list|,
 name|stripeMetadata
 argument_list|)
 expr_stmt|;
@@ -2015,6 +2021,7 @@ return|;
 block|}
 comment|/**    * Puts all column indexes from metadata to make a column list to read all column.    */
 specifier|private
+specifier|static
 name|List
 argument_list|<
 name|Integer
@@ -2206,9 +2213,6 @@ operator|!=
 literal|null
 condition|)
 return|return;
-name|ensureFs
-argument_list|()
-expr_stmt|;
 name|orcReader
 operator|=
 name|OrcFile
@@ -2231,34 +2235,6 @@ name|filesystem
 argument_list|(
 name|fs
 argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-specifier|private
-name|void
-name|ensureFs
-parameter_list|()
-throws|throws
-name|IOException
-block|{
-if|if
-condition|(
-name|fs
-operator|!=
-literal|null
-condition|)
-return|return;
-comment|// Disable filesystem caching for now; Tez closes it and FS cache will fix all that
-name|fs
-operator|=
-name|split
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getFileSystem
-argument_list|(
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2297,6 +2273,8 @@ operator|=
 operator|new
 name|OrcFileMetadata
 argument_list|(
+name|fileId
+argument_list|,
 name|orcReader
 argument_list|)
 expr_stmt|;
@@ -2304,8 +2282,6 @@ name|metadataCache
 operator|.
 name|putFileMetadata
 argument_list|(
-name|fileId
-argument_list|,
 name|metadata
 argument_list|)
 expr_stmt|;
@@ -2321,9 +2297,6 @@ name|OrcStripeMetadata
 argument_list|>
 name|readStripesMetadata
 parameter_list|(
-name|OrcFileMetadata
-name|metadata
-parameter_list|,
 name|boolean
 index|[]
 name|globalInc
@@ -2421,7 +2394,7 @@ expr_stmt|;
 name|StripeInformation
 name|si
 init|=
-name|metadata
+name|fileMetadata
 operator|.
 name|getStripes
 argument_list|()
@@ -2446,8 +2419,6 @@ operator|new
 name|OrcStripeMetadata
 argument_list|(
 name|stripeKey
-operator|.
-name|stripeIx
 argument_list|,
 name|metadataReader
 argument_list|,
@@ -2462,8 +2433,6 @@ name|metadataCache
 operator|.
 name|putStripeMetadata
 argument_list|(
-name|stripeKey
-argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
@@ -2670,18 +2639,6 @@ specifier|private
 name|void
 name|determineRgsToRead
 parameter_list|(
-name|List
-argument_list|<
-name|StripeInformation
-argument_list|>
-name|stripes
-parameter_list|,
-name|List
-argument_list|<
-name|Type
-argument_list|>
-name|types
-parameter_list|,
 name|boolean
 index|[]
 name|globalIncludes
@@ -2714,9 +2671,19 @@ operator|!=
 literal|0
 condition|)
 block|{
-name|ensureOrcReader
+name|List
+argument_list|<
+name|OrcProto
+operator|.
+name|Type
+argument_list|>
+name|types
+init|=
+name|fileMetadata
+operator|.
+name|getTypes
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|String
 index|[]
 name|colNamesForSarg
@@ -2731,12 +2698,10 @@ name|types
 argument_list|,
 name|globalIncludes
 argument_list|,
-name|OrcInputFormat
+name|fileMetadata
 operator|.
-name|isOriginal
-argument_list|(
-name|orcReader
-argument_list|)
+name|isOriginalFormat
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|sargApp
@@ -2782,7 +2747,10 @@ decl_stmt|;
 name|StripeInformation
 name|stripe
 init|=
-name|stripes
+name|fileMetadata
+operator|.
+name|getStripes
+argument_list|()
 operator|.
 name|get
 argument_list|(
@@ -3045,15 +3013,20 @@ comment|/**    * Determine which stripes to read for a split. Populates stripeIx
 specifier|public
 name|void
 name|determineStripesToRead
-parameter_list|(
+parameter_list|()
+block|{
+comment|// The unit of caching for ORC is (rg x column) (see OrcBatchKey).
 name|List
 argument_list|<
 name|StripeInformation
 argument_list|>
 name|stripes
-parameter_list|)
-block|{
-comment|// The unit of caching for ORC is (rg x column) (see OrcBatchKey).
+init|=
+name|fileMetadata
+operator|.
+name|getStripes
+argument_list|()
+decl_stmt|;
 name|long
 name|offset
 init|=
@@ -3340,12 +3313,6 @@ argument_list|>
 index|[]
 name|produceDataFromCache
 parameter_list|(
-name|List
-argument_list|<
-name|StripeInformation
-argument_list|>
-name|stripes
-parameter_list|,
 name|int
 name|rowIndexStride
 parameter_list|)
@@ -3443,7 +3410,10 @@ name|totalRgCount
 init|=
 name|getRgCount
 argument_list|(
-name|stripes
+name|fileMetadata
+operator|.
+name|getStripes
+argument_list|()
 operator|.
 name|get
 argument_list|(

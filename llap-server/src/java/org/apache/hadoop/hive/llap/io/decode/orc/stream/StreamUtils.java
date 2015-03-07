@@ -327,9 +327,7 @@ name|buffer
 init|=
 name|memoryBuffer
 operator|.
-name|byteBuffer
-operator|.
-name|duplicate
+name|getByteBufferDup
 argument_list|()
 decl_stmt|;
 name|RecordReaderImpl
