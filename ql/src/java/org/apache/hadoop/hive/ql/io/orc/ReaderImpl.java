@@ -1685,12 +1685,6 @@ operator|.
 name|getConfiguration
 argument_list|()
 expr_stmt|;
-name|boolean
-name|magic
-init|=
-literal|false
-decl_stmt|;
-comment|// TODO#: HERE
 name|FileMetadata
 name|fileMetadata
 init|=

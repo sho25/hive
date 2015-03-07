@@ -1431,7 +1431,6 @@ block|}
 block|}
 comment|// readState has been modified for column x rgs that were fetched from cache.
 comment|// 5. Create encoded data reader.
-comment|// TODO#: THIS
 name|ensureOrcReader
 argument_list|()
 expr_stmt|;
