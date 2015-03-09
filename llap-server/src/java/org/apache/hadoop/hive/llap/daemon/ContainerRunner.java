@@ -46,6 +46,8 @@ operator|.
 name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
+operator|.
+name|SubmitWorkRequestProto
 import|;
 end_import
 
@@ -55,11 +57,9 @@ interface|interface
 name|ContainerRunner
 block|{
 name|void
-name|queueContainer
+name|submitWork
 parameter_list|(
-name|LlapDaemonProtocolProtos
-operator|.
-name|RunContainerRequestProto
+name|SubmitWorkRequestProto
 name|request
 parameter_list|)
 throws|throws

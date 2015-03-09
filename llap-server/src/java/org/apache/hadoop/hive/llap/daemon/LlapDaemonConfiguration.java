@@ -205,7 +205,7 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|LLAP_DAEMON_AM_SERVICE_HOSTS
+name|LLAP_DAEMON_SERVICE_HOSTS
 init|=
 name|LLAP_DAEMON_PREFIX
 operator|+
@@ -215,7 +215,7 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|LLAP_DAEMON_AM_COMMUNICATOR_NUM_THREADS
+name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS
 init|=
 name|LLAP_DAEMON_PREFIX
 operator|+
@@ -225,7 +225,7 @@ specifier|public
 specifier|static
 specifier|final
 name|int
-name|LLAP_DAEMON_AM_COMMUNICATOR_NUM_THREADS_DEFAULT
+name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS_DEFAULT
 init|=
 literal|5
 decl_stmt|;

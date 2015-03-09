@@ -470,7 +470,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|DaemonTaskSchedulerService
+name|LlapTaskSchedulerService
 extends|extends
 name|TaskSchedulerService
 block|{
@@ -484,7 +484,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|DaemonTaskSchedulerService
+name|LlapTaskSchedulerService
 operator|.
 name|class
 argument_list|)
@@ -533,6 +533,11 @@ init|=
 operator|new
 name|Random
 argument_list|()
+decl_stmt|;
+specifier|private
+specifier|final
+name|int
+name|containerPort
 decl_stmt|;
 specifier|private
 specifier|final
@@ -613,7 +618,7 @@ name|createYarnClient
 argument_list|()
 decl_stmt|;
 specifier|public
-name|DaemonTaskSchedulerService
+name|LlapTaskSchedulerService
 parameter_list|(
 name|TaskSchedulerAppCallback
 name|appClient
@@ -640,7 +645,7 @@ block|{
 comment|// Accepting configuration here to allow setting up fields as final
 name|super
 argument_list|(
-name|DaemonTaskSchedulerService
+name|LlapTaskSchedulerService
 operator|.
 name|class
 operator|.
@@ -824,7 +829,7 @@ name|getTrimmedStrings
 argument_list|(
 name|LlapDaemonConfiguration
 operator|.
-name|LLAP_DAEMON_AM_SERVICE_HOSTS
+name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|)
 decl_stmt|;
 if|if
@@ -903,6 +908,23 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|this
+operator|.
+name|containerPort
+operator|=
+name|conf
+operator|.
+name|getInt
+argument_list|(
+name|LlapDaemonConfiguration
+operator|.
+name|LLAP_DAEMON_RPC_PORT
+argument_list|,
+name|LlapDaemonConfiguration
+operator|.
+name|LLAP_DAEMON_RPC_PORT_DEFAULT
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|serviceHosts
@@ -941,6 +963,10 @@ name|serviceHosts
 operator|.
 name|toString
 argument_list|()
+operator|+
+literal|", rpcPort="
+operator|+
+name|containerPort
 argument_list|)
 expr_stmt|;
 block|}
@@ -969,6 +995,8 @@ operator|+
 name|resourcePerExecutor
 operator|+
 literal|", hosts=<pending>"
+operator|+
+literal|", rpcPort=<pending>"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1369,6 +1397,8 @@ argument_list|,
 name|priority
 argument_list|,
 name|host
+argument_list|,
+name|containerPort
 argument_list|)
 decl_stmt|;
 name|runningTasks
@@ -1440,6 +1470,8 @@ argument_list|,
 name|priority
 argument_list|,
 name|host
+argument_list|,
+name|containerPort
 argument_list|)
 decl_stmt|;
 name|runningTasks
@@ -1875,6 +1907,9 @@ name|priority
 parameter_list|,
 name|String
 name|hostname
+parameter_list|,
+name|int
+name|port
 parameter_list|)
 block|{
 name|ContainerId
@@ -1901,7 +1936,7 @@ name|newInstance
 argument_list|(
 name|hostname
 argument_list|,
-literal|0
+name|port
 argument_list|)
 decl_stmt|;
 name|String

@@ -142,8 +142,6 @@ operator|.
 name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
-operator|.
-name|RunContainerRequestProto
 import|;
 end_import
 
@@ -1094,9 +1092,11 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|queueContainer
+name|submitWork
 parameter_list|(
-name|RunContainerRequestProto
+name|LlapDaemonProtocolProtos
+operator|.
+name|SubmitWorkRequestProto
 name|request
 parameter_list|)
 throws|throws
@@ -1104,7 +1104,7 @@ name|IOException
 block|{
 name|containerRunner
 operator|.
-name|queueContainer
+name|submitWork
 argument_list|(
 name|request
 argument_list|)

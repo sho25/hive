@@ -155,7 +155,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|RunContainerRequestProto
+name|SubmitWorkRequestProto
 import|;
 end_import
 
@@ -265,11 +265,11 @@ argument_list|)
 decl_stmt|;
 name|client
 operator|.
-name|runContainer
+name|submitWork
 argument_list|(
 literal|null
 argument_list|,
-name|RunContainerRequestProto
+name|SubmitWorkRequestProto
 operator|.
 name|newBuilder
 argument_list|()
