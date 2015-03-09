@@ -1142,8 +1142,7 @@ argument_list|,
 name|mapJoinConversionPos
 argument_list|)
 decl_stmt|;
-comment|// map join operator by default has no bucket cols and num of reduce sinks
-comment|// reduced by 1
+comment|// map join operator by default has no bucket cols
 name|mapJoinOp
 operator|.
 name|setOpTraits
@@ -1157,14 +1156,6 @@ operator|-
 literal|1
 argument_list|,
 literal|null
-argument_list|,
-name|joinOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getNumReduceSinks
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1230,7 +1221,6 @@ comment|// we cannot convert to bucket map join, we cannot convert to
 comment|// map join either based on the size. Check if we can convert to SMB join.
 if|if
 condition|(
-operator|(
 name|context
 operator|.
 name|conf
@@ -1245,19 +1235,6 @@ name|HIVE_AUTO_SORTMERGE_JOIN
 argument_list|)
 operator|==
 literal|false
-operator|)
-operator|||
-operator|(
-name|joinOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getNumReduceSinks
-argument_list|()
-operator|>=
-literal|2
-operator|)
 condition|)
 block|{
 name|convertJoinSMBJoin
@@ -1731,17 +1708,6 @@ name|getSchema
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|int
-name|numReduceSinks
-init|=
-name|joinOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getNumReduceSinks
-argument_list|()
-decl_stmt|;
 name|OpTraits
 name|opTraits
 init|=
@@ -1765,8 +1731,6 @@ argument_list|()
 operator|.
 name|getSortCols
 argument_list|()
-argument_list|,
-name|numReduceSinks
 argument_list|)
 decl_stmt|;
 name|mergeJoinOp
@@ -2367,14 +2331,6 @@ operator|-
 literal|1
 argument_list|,
 literal|null
-argument_list|,
-name|currentOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getNumReduceSinks
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2511,14 +2467,6 @@ name|getNumBuckets
 argument_list|()
 argument_list|,
 literal|null
-argument_list|,
-name|joinOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getNumReduceSinks
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|mapJoinOp
@@ -2944,7 +2892,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/*    * If the parent reduce sink of the big table side has the same emit key cols as its parent, we    * can create a bucket map join eliminating the reduce sink.    */
+comment|/*    * If the parent reduce sink of the big table side has the same emit key cols    * as its parent, we can create a bucket map join eliminating the reduce sink.    */
 specifier|private
 name|boolean
 name|checkConvertJoinBucketMapJoin
@@ -3120,7 +3068,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/*      * this is the case when the big table is a sub-query and is probably already bucketed by the      * join column in say a group by operation      */
+comment|/*      * this is the case when the big table is a sub-query and is probably      * already bucketed by the join column in say a group by operation      */
 name|boolean
 name|isSubQuery
 init|=
@@ -3818,7 +3766,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|// can safely convert the join to a map join.
+comment|//can safely convert the join to a map join.
 name|MapJoinOperator
 name|mapJoinOp
 init|=
