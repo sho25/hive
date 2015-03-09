@@ -66,10 +66,22 @@ name|String
 name|getLocalDirs
 parameter_list|()
 function_decl|;
-comment|/**    * Gets llap daemon configured memory per instance.    * @return memory per instance    */
+comment|/**    * Gets llap daemon configured executor memory per instance.    * @return memory per instance    */
 specifier|public
 name|long
-name|getMemoryPerInstance
+name|getExecutorMemoryPerInstance
+parameter_list|()
+function_decl|;
+comment|/**    * Gets llap daemon configured io memory per instance.    * @return memory per instance    */
+specifier|public
+name|long
+name|getIoMemoryPerInstance
+parameter_list|()
+function_decl|;
+comment|/**    * Checks if Llap IO is enabled    * @return true if enabled, false if not    */
+specifier|public
+name|boolean
+name|isIoEnabled
 parameter_list|()
 function_decl|;
 comment|/**    * Gets max available jvm memory.    * @return max jvm memory    */

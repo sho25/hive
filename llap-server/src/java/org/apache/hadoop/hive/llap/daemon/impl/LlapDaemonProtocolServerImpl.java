@@ -291,24 +291,6 @@ name|llap
 operator|.
 name|daemon
 operator|.
-name|LlapDaemonConfiguration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|daemon
-operator|.
 name|LlapDaemonProtocolBlockingPB
 import|;
 end_import
@@ -339,13 +321,18 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
-name|LlapDaemonConfiguration
-name|daemonConf
+name|int
+name|numHandlers
 decl_stmt|;
 specifier|private
 specifier|final
 name|ContainerRunner
 name|containerRunner
+decl_stmt|;
+specifier|private
+specifier|final
+name|int
+name|configuredPort
 decl_stmt|;
 specifier|private
 name|RPC
@@ -364,8 +351,8 @@ decl_stmt|;
 specifier|public
 name|LlapDaemonProtocolServerImpl
 parameter_list|(
-name|LlapDaemonConfiguration
-name|daemonConf
+name|int
+name|numHandlers
 parameter_list|,
 name|ContainerRunner
 name|containerRunner
@@ -375,6 +362,9 @@ argument_list|<
 name|InetSocketAddress
 argument_list|>
 name|address
+parameter_list|,
+name|int
+name|configuredPort
 parameter_list|)
 block|{
 name|super
@@ -384,9 +374,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|daemonConf
+name|numHandlers
 operator|=
-name|daemonConf
+name|numHandlers
 expr_stmt|;
 name|this
 operator|.
@@ -399,6 +389,30 @@ operator|.
 name|bindAddress
 operator|=
 name|address
+expr_stmt|;
+name|this
+operator|.
+name|configuredPort
+operator|=
+name|configuredPort
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating: "
+operator|+
+name|LlapDaemonProtocolServerImpl
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" with port configured to: "
+operator|+
+name|configuredPort
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -422,7 +436,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DEBUG: Recevied request: "
+literal|"DEBUG: Received request: "
 operator|+
 name|request
 argument_list|)
@@ -471,60 +485,15 @@ init|=
 name|getConfig
 argument_list|()
 decl_stmt|;
-name|int
-name|numHandlers
-init|=
-name|daemonConf
-operator|.
-name|getInt
-argument_list|(
-name|LlapDaemonConfiguration
-operator|.
-name|LLAP_DAEMON_RPC_NUM_HANDLERS
-argument_list|,
-name|LlapDaemonConfiguration
-operator|.
-name|LLAP_DAEMON_RPC_NUM_HANDLERS_DEFAULT
-argument_list|)
-decl_stmt|;
-name|int
-name|port
-init|=
-name|daemonConf
-operator|.
-name|getInt
-argument_list|(
-name|LlapDaemonConfiguration
-operator|.
-name|LLAP_DAEMON_RPC_PORT
-argument_list|,
-name|LlapDaemonConfiguration
-operator|.
-name|LLAP_DAEMON_RPC_PORT_DEFAULT
-argument_list|)
-decl_stmt|;
 name|InetSocketAddress
 name|addr
 init|=
 operator|new
 name|InetSocketAddress
 argument_list|(
-name|port
+name|configuredPort
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Attempting to start LlapDaemonProtocol on port="
-operator|+
-name|port
-operator|+
-literal|", with numHandlers="
-operator|+
-name|numHandlers
-argument_list|)
-expr_stmt|;
 try|try
 block|{
 name|server
@@ -569,7 +538,7 @@ name|error
 argument_list|(
 literal|"Failed to run RPC Server on port: "
 operator|+
-name|port
+name|configuredPort
 argument_list|,
 name|e
 argument_list|)
@@ -621,7 +590,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Instantiated LlapDaemonProtocol at "
+literal|"Instantiated "
+operator|+
+name|LlapDaemonProtocolBlockingPB
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" at "
 operator|+
 name|bindAddress
 argument_list|)
@@ -659,8 +637,6 @@ name|getBindAddress
 parameter_list|()
 block|{
 return|return
-name|this
-operator|.
 name|bindAddress
 operator|.
 name|get

@@ -1389,7 +1389,7 @@ specifier|final
 name|String
 name|SHUFFLE_HANDLER_LOCAL_DIRS
 init|=
-literal|"tez.shuffle.handler.local-dirs"
+literal|"llap.shuffle.handler.local-dirs"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1546,7 +1546,6 @@ specifier|private
 name|JobTokenSecretManager
 name|secretManager
 decl_stmt|;
-comment|// TODO Fix this for tez.
 specifier|public
 specifier|static
 specifier|final
@@ -1561,7 +1560,7 @@ specifier|final
 name|String
 name|SHUFFLE_PORT_CONFIG_KEY
 init|=
-literal|"tez.shuffle.port"
+literal|"llap.shuffle.port"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -2212,7 +2211,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"TezShuffleHandler"
+literal|"LlapShuffleHandler"
 operator|+
 literal|" listening on port "
 operator|+
@@ -2261,6 +2260,28 @@ name|set
 argument_list|(
 literal|true
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|public
+specifier|static
+name|void
+name|shutdown
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+if|if
+condition|(
+name|INSTANCE
+operator|!=
+literal|null
+condition|)
+block|{
+name|INSTANCE
+operator|.
+name|stop
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -2469,6 +2490,15 @@ argument_list|)
 expr_stmt|;
 return|return
 name|jt
+return|;
+block|}
+specifier|public
+name|int
+name|getPort
+parameter_list|()
+block|{
+return|return
+name|port
 return|;
 block|}
 specifier|public
