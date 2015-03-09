@@ -941,7 +941,7 @@ name|short
 operator|)
 name|Math
 operator|.
-name|min
+name|max
 argument_list|(
 name|MIN_REPLICATION
 argument_list|,
