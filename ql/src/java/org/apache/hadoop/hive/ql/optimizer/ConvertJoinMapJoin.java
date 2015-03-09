@@ -3227,6 +3227,22 @@ literal|0
 argument_list|)
 control|)
 block|{
+if|if
+condition|(
+name|listBucketCols
+operator|.
+name|size
+argument_list|()
+operator|<=
+name|colCount
+condition|)
+block|{
+comment|// can happen with virtual columns. RS would add the column to its output columns
+comment|// but it would not exist in the grandparent output columns or exprMap.
+return|return
+literal|false
+return|;
+block|}
 comment|// all columns need to be at least a subset of the parentOfParent's bucket cols
 name|ExprNodeDesc
 name|exprNodeDesc
