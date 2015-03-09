@@ -2838,6 +2838,51 @@ operator|.
 name|getPermission
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|rootHDFSDirPath
+operator|!=
+literal|null
+operator|&&
+name|rootHDFSDirPath
+operator|.
+name|toUri
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|String
+name|schema
+init|=
+name|rootHDFSDirPath
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"HDFS root scratch dir: "
+operator|+
+name|rootHDFSDirPath
+operator|+
+literal|" with schema "
+operator|+
+name|schema
+operator|+
+literal|", permission: "
+operator|+
+name|currentHDFSDirPermission
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2851,6 +2896,7 @@ operator|+
 name|currentHDFSDirPermission
 argument_list|)
 expr_stmt|;
+block|}
 comment|// If the root HDFS scratch dir already exists, make sure it is writeable.
 if|if
 condition|(
