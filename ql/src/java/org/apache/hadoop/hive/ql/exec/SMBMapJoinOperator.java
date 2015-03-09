@@ -692,10 +692,6 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
-name|firstRow
-operator|=
-literal|true
-expr_stmt|;
 name|closeCalled
 operator|=
 literal|false

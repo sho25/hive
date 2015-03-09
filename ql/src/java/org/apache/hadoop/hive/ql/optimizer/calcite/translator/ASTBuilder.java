@@ -1275,7 +1275,7 @@ init|=
 operator|new
 name|SimpleDateFormat
 argument_list|(
-literal|"yyyy-MM-dd hh:mm:ss"
+literal|"yyyy-MM-dd HH:mm:ss"
 argument_list|)
 decl_stmt|;
 name|val

@@ -937,13 +937,11 @@ name|dateTypeInfo
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"Parquet does not support date. See HIVE-6384"
-argument_list|)
-throw|;
+return|return
+name|PrimitiveObjectInspectorFactory
+operator|.
+name|writableDateObjectInspector
+return|;
 block|}
 elseif|else
 if|if
