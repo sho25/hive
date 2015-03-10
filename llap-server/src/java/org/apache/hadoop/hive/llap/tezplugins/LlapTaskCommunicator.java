@@ -652,6 +652,9 @@ name|credentials
 parameter_list|,
 name|boolean
 name|credentialsChanged
+parameter_list|,
+name|int
+name|priority
 parameter_list|)
 block|{
 name|super
@@ -667,6 +670,8 @@ argument_list|,
 name|credentials
 argument_list|,
 name|credentialsChanged
+argument_list|,
+name|priority
 argument_list|)
 expr_stmt|;
 name|SubmitWorkRequestProto
