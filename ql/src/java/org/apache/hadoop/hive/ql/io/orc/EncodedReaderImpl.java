@@ -2481,11 +2481,34 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+try|try
+block|{
 name|file
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+comment|// Tez might have closed our filesystem. Log and ignore error.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to close file; ignoring: "
+operator|+
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|pool

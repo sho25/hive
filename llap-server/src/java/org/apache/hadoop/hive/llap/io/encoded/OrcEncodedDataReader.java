@@ -1431,9 +1431,6 @@ block|}
 block|}
 comment|// readState has been modified for column x rgs that were fetched from cache.
 comment|// 5. Create encoded data reader.
-name|ensureOrcReader
-argument_list|()
-expr_stmt|;
 comment|// In case if we have high-level cache, we will intercept the data and add it there;
 comment|// otherwise just pass the data directly to the consumer.
 name|Consumer
@@ -1464,6 +1461,9 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|ensureOrcReader
+argument_list|()
+expr_stmt|;
 name|stripeReader
 operator|=
 name|orcReader
@@ -1982,12 +1982,6 @@ literal|null
 return|;
 block|}
 block|}
-comment|// close the stripe reader, we are done reading
-name|stripeReader
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 comment|// Done with all the things.
 name|dataConsumer
 operator|.
@@ -2014,6 +2008,12 @@ name|split
 argument_list|)
 expr_stmt|;
 block|}
+comment|// close the stripe reader, we are done reading
+name|stripeReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 return|return
 literal|null
 return|;
