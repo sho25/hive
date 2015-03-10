@@ -647,6 +647,13 @@ argument_list|)
 expr_stmt|;
 name|server
 operator|.
+name|setServerEventHandler
+argument_list|(
+name|serverEventHandler
+argument_list|)
+expr_stmt|;
+name|server
+operator|.
 name|serve
 argument_list|()
 expr_stmt|;
