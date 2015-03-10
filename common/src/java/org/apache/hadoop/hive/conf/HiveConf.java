@@ -2881,6 +2881,17 @@ operator|+
 literal|" to fire events for DML operations"
 argument_list|)
 block|,
+name|METASTORE_CLIENT_DROP_PARTITIONS_WITH_EXPRESSIONS
+argument_list|(
+literal|"hive.metastore.client.drop.partitions.using.expressions"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Choose whether dropping partitions with HCatClient pushes the partition-predicate to the metastore, "
+operator|+
+literal|"or drops partitions iteratively"
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
