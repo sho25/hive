@@ -734,7 +734,7 @@ literal|"create table "
 operator|+
 name|tableName1
 operator|+
-literal|" (i int, j int, k string) partitioned by (city string, date string) "
+literal|" (i int, j int, k string) partitioned by (city string, `date` string) "
 argument_list|)
 expr_stmt|;
 name|runCmd

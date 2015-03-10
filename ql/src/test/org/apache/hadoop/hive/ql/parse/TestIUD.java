@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -32,6 +42,22 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|Context
 import|;
 end_import
 
@@ -111,10 +137,6 @@ specifier|private
 name|ParseDriver
 name|pd
 decl_stmt|;
-specifier|private
-name|SemanticAnalyzer
-name|sA
-decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -149,20 +171,14 @@ name|setup
 parameter_list|()
 throws|throws
 name|SemanticException
+throws|,
+name|IOException
 block|{
 name|pd
 operator|=
 operator|new
 name|ParseDriver
 argument_list|()
-expr_stmt|;
-name|sA
-operator|=
-operator|new
-name|CalcitePlanner
-argument_list|(
-name|conf
-argument_list|)
 expr_stmt|;
 block|}
 name|ASTNode
@@ -177,13 +193,38 @@ block|{
 name|ASTNode
 name|nd
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|nd
+operator|=
 name|pd
 operator|.
 name|parse
 argument_list|(
 name|query
+argument_list|,
+operator|new
+name|Context
+argument_list|(
+name|conf
 argument_list|)
-decl_stmt|;
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+block|}
 return|return
 operator|(
 name|ASTNode
@@ -545,7 +586,7 @@ try|try
 block|{
 name|parse
 argument_list|(
-literal|"select * from values (3,4)"
+literal|"select * from `values` (3,4)"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -570,7 +611,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:21 missing EOF at '(' near 'values'"
+literal|"line 1:23 missing EOF at '(' near 'values'"
 argument_list|,
 name|ex
 operator|.

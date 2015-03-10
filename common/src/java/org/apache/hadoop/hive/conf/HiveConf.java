@@ -7641,6 +7641,17 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
+argument_list|(
+literal|"hive.support.sql11.reserved.keywords"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
