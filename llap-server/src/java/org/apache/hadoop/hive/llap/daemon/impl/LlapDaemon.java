@@ -91,20 +91,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -348,6 +334,20 @@ operator|.
 name|log4j
 operator|.
 name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
 import|;
 end_import
 
@@ -829,6 +829,15 @@ operator|.
 name|getUUID
 argument_list|()
 decl_stmt|;
+name|daemonConf
+operator|.
+name|set
+argument_list|(
+literal|"llap.daemon.metrics.sessionid"
+argument_list|,
+name|sessionId
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|metrics

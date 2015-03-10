@@ -35,7 +35,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_NUM_QUEUED_REQUESTS
+name|ExecutorNumQueuedRequests
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_THREAD_CPU_TIME
+name|ExecutorThreadCPUTime
 import|;
 end_import
 
@@ -75,7 +75,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_THREAD_USER_TIME
+name|ExecutorThreadUserTime
 import|;
 end_import
 
@@ -95,7 +95,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_TOTAL_ASKED_TO_DIE
+name|ExecutorTotalAskedToDie
 import|;
 end_import
 
@@ -115,7 +115,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_TOTAL_EXECUTION_FAILURE
+name|ExecutorTotalExecutionFailure
 import|;
 end_import
 
@@ -135,7 +135,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_TOTAL_INTERRUPTED
+name|ExecutorTotalInterrupted
 import|;
 end_import
 
@@ -155,7 +155,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_TOTAL_REQUESTS_HANDLED
+name|ExecutorTotalRequestsHandled
 import|;
 end_import
 
@@ -175,7 +175,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|EXECUTOR_TOTAL_SUCCESS
+name|ExecutorTotalSuccess
 import|;
 end_import
 
@@ -195,7 +195,7 @@ name|metrics
 operator|.
 name|LlapDaemonExecutorInfo
 operator|.
-name|LLAP_DAEMON_EXECUTOR_METRICS
+name|ExecutorMetrics
 import|;
 end_import
 
@@ -493,7 +493,9 @@ literal|"LlapDaemon Executor Metrics"
 argument_list|,
 name|context
 operator|=
-literal|"llap"
+name|MetricsUtils
+operator|.
+name|METRICS_CONTEXT
 argument_list|)
 specifier|public
 class|class
@@ -643,7 +645,9 @@ name|tag
 argument_list|(
 name|ProcessName
 argument_list|,
-literal|"LlapDaemon"
+name|MetricsUtils
+operator|.
+name|METRICS_PROCESS_NAME
 argument_list|)
 operator|.
 name|tag
@@ -727,7 +731,7 @@ init|=
 operator|new
 name|LlapDaemonCustomMetricsInfo
 argument_list|(
-name|EXECUTOR_THREAD_CPU_TIME
+name|ExecutorThreadCPUTime
 operator|.
 name|name
 argument_list|()
@@ -736,7 +740,7 @@ literal|"_"
 operator|+
 name|i
 argument_list|,
-name|EXECUTOR_THREAD_CPU_TIME
+name|ExecutorThreadCPUTime
 operator|.
 name|description
 argument_list|()
@@ -748,7 +752,7 @@ init|=
 operator|new
 name|LlapDaemonCustomMetricsInfo
 argument_list|(
-name|EXECUTOR_THREAD_USER_TIME
+name|ExecutorThreadUserTime
 operator|.
 name|name
 argument_list|()
@@ -757,7 +761,7 @@ literal|"_"
 operator|+
 name|i
 argument_list|,
-name|EXECUTOR_THREAD_USER_TIME
+name|ExecutorThreadUserTime
 operator|.
 name|description
 argument_list|()
@@ -849,7 +853,9 @@ name|JvmMetrics
 operator|.
 name|create
 argument_list|(
-literal|"LlapDaemon"
+name|MetricsUtils
+operator|.
+name|METRICS_PROCESS_NAME
 argument_list|,
 name|sessionId
 argument_list|,
@@ -899,19 +905,23 @@ name|collector
 operator|.
 name|addRecord
 argument_list|(
-name|LLAP_DAEMON_EXECUTOR_METRICS
+name|ExecutorMetrics
 argument_list|)
 operator|.
 name|setContext
 argument_list|(
-literal|"llap"
+name|MetricsUtils
+operator|.
+name|METRICS_CONTEXT
 argument_list|)
 operator|.
 name|tag
 argument_list|(
 name|ProcessName
 argument_list|,
-literal|"LlapDaemon"
+name|MetricsUtils
+operator|.
+name|METRICS_PROCESS_NAME
 argument_list|)
 operator|.
 name|tag
@@ -1024,7 +1034,7 @@ name|rb
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_TOTAL_REQUESTS_HANDLED
+name|ExecutorTotalRequestsHandled
 argument_list|,
 name|executorTotalRequestHandled
 operator|.
@@ -1034,7 +1044,7 @@ argument_list|)
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_NUM_QUEUED_REQUESTS
+name|ExecutorNumQueuedRequests
 argument_list|,
 name|executorNumQueuedRequests
 operator|.
@@ -1044,7 +1054,7 @@ argument_list|)
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_TOTAL_SUCCESS
+name|ExecutorTotalSuccess
 argument_list|,
 name|executorTotalSuccess
 operator|.
@@ -1054,7 +1064,7 @@ argument_list|)
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_TOTAL_EXECUTION_FAILURE
+name|ExecutorTotalExecutionFailure
 argument_list|,
 name|executorTotalExecutionFailed
 operator|.
@@ -1064,7 +1074,7 @@ argument_list|)
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_TOTAL_INTERRUPTED
+name|ExecutorTotalInterrupted
 argument_list|,
 name|executorTotalInterrupted
 operator|.
@@ -1074,7 +1084,7 @@ argument_list|)
 operator|.
 name|addCounter
 argument_list|(
-name|EXECUTOR_TOTAL_ASKED_TO_DIE
+name|ExecutorTotalAskedToDie
 argument_list|,
 name|executorTotalAskedToDie
 operator|.

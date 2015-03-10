@@ -8015,6 +8015,19 @@ argument_list|,
 literal|"Cache objects (plans, hashtables, etc) in llap"
 argument_list|)
 block|,
+name|LLAP_QUEUE_METRICS_PERCENTILE_INTERVALS
+argument_list|(
+literal|"hive.llap.queue.metrics.percentiles.intervals"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds) for"
+operator|+
+literal|"percentile latency metrics on the LLAP daemon producer-consumer queue. By default,"
+operator|+
+literal|"percentile latency metrics are disabled."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"

@@ -34,7 +34,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  */
+comment|/**  * Custom MetricsInfo to provide custom name for the metrics.  */
 end_comment
 
 begin_class

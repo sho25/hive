@@ -58,52 +58,52 @@ name|LlapDaemonCacheInfo
 implements|implements
 name|MetricsInfo
 block|{
-name|LLAP_DAEMON_CACHE_METRICS
+name|CacheMetrics
 argument_list|(
 literal|"Llap daemon cache related metrics"
 argument_list|)
 block|,
-name|CACHE_CAPACITY_REMAINING
+name|CacheCapacityRemaining
 argument_list|(
 literal|"Amount of memory available in cache in bytes"
 argument_list|)
 block|,
-name|CACHE_CAPACITY_TOTAL
+name|CacheCapacityTotal
 argument_list|(
 literal|"Total amount of memory allocated for cache in bytes"
 argument_list|)
 block|,
-name|CACHE_CAPACITY_USED
+name|CacheCapacityUsed
 argument_list|(
 literal|"Amount of memory used in cache in bytes"
 argument_list|)
 block|,
-name|CACHE_REQUESTED_BYTES
+name|CacheRequestedBytes
 argument_list|(
 literal|"Disk ranges that are requested in bytes"
 argument_list|)
 block|,
-name|CACHE_HIT_BYTES
+name|CacheHitBytes
 argument_list|(
 literal|"Disk ranges that are cached in bytes"
 argument_list|)
 block|,
-name|CACHE_HIT_RATIO
+name|CacheHitRatio
 argument_list|(
 literal|"Ratio of disk ranges cached vs requested"
 argument_list|)
 block|,
-name|CACHE_READ_REQUESTS
+name|CacheReadRequests
 argument_list|(
 literal|"Number of disk range requests to cache"
 argument_list|)
 block|,
-name|CACHE_ALLOCATED_ARENA
+name|CacheAllocatedArena
 argument_list|(
 literal|"Number of arenas allocated"
 argument_list|)
 block|,
-name|CACHE_NUM_LOCKED_BUFFERS
+name|CacheNumLockedBuffers
 argument_list|(
 literal|"Number of locked buffers in cache"
 argument_list|)

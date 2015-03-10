@@ -58,47 +58,47 @@ name|LlapDaemonExecutorInfo
 implements|implements
 name|MetricsInfo
 block|{
-name|LLAP_DAEMON_EXECUTOR_METRICS
+name|ExecutorMetrics
 argument_list|(
 literal|"Llap daemon cache related metrics"
 argument_list|)
 block|,
-name|EXECUTOR_THREAD_CPU_TIME
+name|ExecutorThreadCPUTime
 argument_list|(
 literal|"Cpu time in nanoseconds"
 argument_list|)
 block|,
-name|EXECUTOR_THREAD_USER_TIME
+name|ExecutorThreadUserTime
 argument_list|(
 literal|"User time in nanoseconds"
 argument_list|)
 block|,
-name|EXECUTOR_TOTAL_REQUESTS_HANDLED
+name|ExecutorTotalRequestsHandled
 argument_list|(
 literal|"Total number of requests handled by the container"
 argument_list|)
 block|,
-name|EXECUTOR_NUM_QUEUED_REQUESTS
+name|ExecutorNumQueuedRequests
 argument_list|(
 literal|"Number of requests queued by the container for processing"
 argument_list|)
 block|,
-name|EXECUTOR_TOTAL_SUCCESS
+name|ExecutorTotalSuccess
 argument_list|(
 literal|"Total number of requests handled by the container that succeeded"
 argument_list|)
 block|,
-name|EXECUTOR_TOTAL_EXECUTION_FAILURE
+name|ExecutorTotalExecutionFailure
 argument_list|(
 literal|"Total number of requests handled by the container that failed execution"
 argument_list|)
 block|,
-name|EXECUTOR_TOTAL_INTERRUPTED
+name|ExecutorTotalInterrupted
 argument_list|(
 literal|"Total number of requests handled by the container that got interrupted"
 argument_list|)
 block|,
-name|EXECUTOR_TOTAL_ASKED_TO_DIE
+name|ExecutorTotalAskedToDie
 argument_list|(
 literal|"Total number of requests handled by the container that were asked to die"
 argument_list|)
