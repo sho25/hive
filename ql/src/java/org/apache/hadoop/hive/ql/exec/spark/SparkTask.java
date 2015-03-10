@@ -521,28 +521,6 @@ name|spark
 operator|.
 name|status
 operator|.
-name|LocalSparkJobMonitor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|spark
-operator|.
-name|status
-operator|.
 name|SparkJobRef
 import|;
 end_import
@@ -656,6 +634,8 @@ operator|.
 name|parse
 operator|.
 name|BaseSemanticAnalyzer
+operator|.
+name|TableSpec
 import|;
 end_import
 
@@ -2320,9 +2300,7 @@ literal|null
 condition|)
 block|{
 comment|// ANALYZE command
-name|BaseSemanticAnalyzer
-operator|.
-name|tableSpec
+name|TableSpec
 name|tblSpec
 init|=
 name|work

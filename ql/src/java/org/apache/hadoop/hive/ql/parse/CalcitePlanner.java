@@ -5044,7 +5044,7 @@ name|addRuleInstance
 argument_list|(
 name|ProjectRemoveRule
 operator|.
-name|NAME_CALC_INSTANCE
+name|INSTANCE
 argument_list|)
 expr_stmt|;
 name|hepPgmBldr
@@ -5421,8 +5421,6 @@ argument_list|,
 name|HiveUnion
 operator|.
 name|UNION_REL_FACTORY
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|basePlan

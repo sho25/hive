@@ -208,6 +208,7 @@ argument_list|(
 name|arguments
 argument_list|)
 expr_stmt|;
+comment|// date str
 name|runAndVerify
 argument_list|(
 literal|"2014-01-01"
@@ -280,6 +281,25 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+comment|//wrong date str
+name|runAndVerify
+argument_list|(
+literal|"2016-02-30"
+argument_list|,
+literal|"2016-03-31"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2014-01-32"
+argument_list|,
+literal|"2014-02-28"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
 name|runAndVerify
 argument_list|(
 literal|"01/14/2014"
@@ -298,6 +318,7 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+comment|// ts str
 name|runAndVerify
 argument_list|(
 literal|"2014-01-01 10:30:45"
@@ -318,7 +339,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2014-01-31 10:30:45"
+literal|"2014-01-31 10:30:45.1"
 argument_list|,
 literal|"2014-01-31"
 argument_list|,
@@ -327,7 +348,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2014-02-02 10:30:45"
+literal|"2014-02-02 10:30:45.100"
 argument_list|,
 literal|"2014-02-28"
 argument_list|,
@@ -336,7 +357,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2014-02-28 10:30:45"
+literal|"2014-02-28 10:30:45.001"
 argument_list|,
 literal|"2014-02-28"
 argument_list|,
@@ -345,7 +366,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2016-02-03 10:30:45"
+literal|"2016-02-03 10:30:45.000000001"
 argument_list|,
 literal|"2016-02-29"
 argument_list|,
@@ -364,6 +385,43 @@ expr_stmt|;
 name|runAndVerify
 argument_list|(
 literal|"2016-02-29 10:30:45"
+argument_list|,
+literal|"2016-02-29"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+comment|// wrong ts str
+name|runAndVerify
+argument_list|(
+literal|"2016-02-30 10:30:45"
+argument_list|,
+literal|"2016-03-31"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2014-01-32 10:30:45"
+argument_list|,
+literal|"2014-02-28"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"01/14/2014 10:30:45"
+argument_list|,
+literal|null
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2016-02-28T10:30:45"
 argument_list|,
 literal|"2016-02-29"
 argument_list|,

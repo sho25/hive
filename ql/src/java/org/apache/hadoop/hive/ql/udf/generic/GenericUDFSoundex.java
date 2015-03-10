@@ -29,9 +29,11 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|codec
 operator|.
-name|StringUtils
+name|language
+operator|.
+name|Soundex
 import|;
 end_import
 
@@ -291,12 +293,12 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|IntWritable
+name|Text
 import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDFLevenstein.  *  * This function calculates the Levenshtein distance between two strings.  * Levenshtein distance is a string metric for measuring the difference between  * two sequences. Informally, the Levenshtein distance between two words is the  * minimum number of single-character edits (i.e. insertions, deletions or  * substitutions) required to change one word into the other. It is named after  * Vladimir Levenshtein, who considered this distance in 1965  *  */
+comment|/**  * GenericUDFSoundex.  *  * Soundex is an encoding used to relate similar names, but can also be used as  * a general purpose scheme to find word with similar phonemes.  *  */
 end_comment
 
 begin_class
@@ -305,35 +307,28 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"levenshtein"
+literal|"soundex"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(str1, str2) - This function calculates the Levenshtein distance between two strings."
+literal|"_FUNC_(string) - Returns soundex code of the string."
 argument_list|,
 name|extended
 operator|=
-literal|"Levenshtein distance is a string metric for measuring the difference between"
+literal|"The soundex code consist of the first letter of the name followed by three digits.\n"
 operator|+
-literal|" two sequences. Informally, the Levenshtein distance between two words is the"
+literal|"Example:\n"
 operator|+
-literal|" minimum number of single-character edits (i.e. insertions, deletions or"
-operator|+
-literal|" substitutions) required to change one word into the other. It is named after"
-operator|+
-literal|" Vladimir Levenshtein, who considered this distance in 1965."
-operator|+
-literal|"Example:\n "
-operator|+
-literal|"> SELECT _FUNC_('kitten', 'sitting');\n 3"
+literal|"> SELECT _FUNC_('Miller');\n M460"
 argument_list|)
 specifier|public
 class|class
-name|GenericUDFLevenstein
+name|GenericUDFSoundex
 extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|final
 specifier|transient
 name|Converter
 index|[]
@@ -342,10 +337,11 @@ init|=
 operator|new
 name|Converter
 index|[
-literal|2
+literal|1
 index|]
 decl_stmt|;
 specifier|private
+specifier|final
 specifier|transient
 name|PrimitiveCategory
 index|[]
@@ -354,16 +350,26 @@ init|=
 operator|new
 name|PrimitiveCategory
 index|[
-literal|2
+literal|1
 index|]
 decl_stmt|;
 specifier|private
 specifier|final
-name|IntWritable
+specifier|transient
+name|Soundex
+name|soundex
+init|=
+operator|new
+name|Soundex
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|final
+name|Text
 name|output
 init|=
 operator|new
-name|IntWritable
+name|Text
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -385,7 +391,7 @@ name|arguments
 operator|.
 name|length
 operator|!=
-literal|2
+literal|1
 condition|)
 block|{
 throw|throw
@@ -395,7 +401,7 @@ argument_list|(
 name|getFuncName
 argument_list|()
 operator|+
-literal|" requires 2 arguments, got "
+literal|" requires 1 argument, got "
 operator|+
 name|arguments
 operator|.
@@ -412,34 +418,7 @@ argument_list|,
 literal|"1st"
 argument_list|)
 expr_stmt|;
-name|checkIfPrimitive
-argument_list|(
-name|arguments
-argument_list|,
-literal|1
-argument_list|,
-literal|"2nd"
-argument_list|)
-expr_stmt|;
 name|checkIfStringGroup
-argument_list|(
-name|arguments
-argument_list|,
-literal|0
-argument_list|,
-literal|"1st"
-argument_list|)
-expr_stmt|;
-name|checkIfStringGroup
-argument_list|(
-name|arguments
-argument_list|,
-literal|1
-argument_list|,
-literal|"2nd"
-argument_list|)
-expr_stmt|;
-name|getStringConverter
 argument_list|(
 name|arguments
 argument_list|,
@@ -452,9 +431,9 @@ name|getStringConverter
 argument_list|(
 name|arguments
 argument_list|,
-literal|1
+literal|0
 argument_list|,
-literal|"2nd"
+literal|"1st"
 argument_list|)
 expr_stmt|;
 name|ObjectInspector
@@ -462,7 +441,7 @@ name|outputOI
 init|=
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableIntObjectInspector
+name|writableStringObjectInspector
 decl_stmt|;
 return|return
 name|outputOI
@@ -484,9 +463,6 @@ block|{
 name|Object
 name|obj0
 decl_stmt|;
-name|Object
-name|obj1
-decl_stmt|;
 if|if
 condition|(
 operator|(
@@ -495,20 +471,6 @@ operator|=
 name|arguments
 index|[
 literal|0
-index|]
-operator|.
-name|get
-argument_list|()
-operator|)
-operator|==
-literal|null
-operator|||
-operator|(
-name|obj1
-operator|=
-name|arguments
-index|[
-literal|1
 index|]
 operator|.
 name|get
@@ -539,38 +501,35 @@ name|toString
 argument_list|()
 decl_stmt|;
 name|String
-name|str1
-init|=
-name|textConverters
-index|[
-literal|1
-index|]
-operator|.
-name|convert
-argument_list|(
-name|obj1
-argument_list|)
-operator|.
-name|toString
-argument_list|()
+name|soundexCode
 decl_stmt|;
-name|int
-name|dist
-init|=
-name|StringUtils
+try|try
+block|{
+name|soundexCode
+operator|=
+name|soundex
 operator|.
-name|getLevenshteinDistance
+name|soundex
 argument_list|(
 name|str0
-argument_list|,
-name|str1
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IllegalArgumentException
+name|e
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|output
 operator|.
 name|set
 argument_list|(
-name|dist
+name|soundexCode
 argument_list|)
 expr_stmt|;
 return|return
@@ -780,7 +739,7 @@ name|getFuncName
 parameter_list|()
 block|{
 return|return
-literal|"levenshtein"
+literal|"soundex"
 return|;
 block|}
 block|}

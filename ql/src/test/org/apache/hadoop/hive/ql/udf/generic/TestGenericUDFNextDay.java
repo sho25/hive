@@ -385,7 +385,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2015-01-14 14:04:34"
+literal|"2015-01-14 14:04:34.1"
 argument_list|,
 literal|"Monday"
 argument_list|,
@@ -396,7 +396,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2015-01-14 14:04:34"
+literal|"2015-01-14 14:04:34.100"
 argument_list|,
 literal|"Tuesday"
 argument_list|,
@@ -407,7 +407,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2015-01-14 14:04:34"
+literal|"2015-01-14 14:04:34.001"
 argument_list|,
 literal|"wednesday"
 argument_list|,
@@ -418,7 +418,7 @@ argument_list|)
 expr_stmt|;
 name|runAndVerify
 argument_list|(
-literal|"2015-01-14 14:04:34"
+literal|"2015-01-14 14:04:34.000000001"
 argument_list|,
 literal|"thursDAY"
 argument_list|,
@@ -506,6 +506,72 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015-02-30"
+argument_list|,
+literal|"WE"
+argument_list|,
+literal|"2015-03-04"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015-02-32"
+argument_list|,
+literal|"WE"
+argument_list|,
+literal|"2015-03-11"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015-02-30 10:30:00"
+argument_list|,
+literal|"WE"
+argument_list|,
+literal|"2015-03-04"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015-02-32 10:30:00"
+argument_list|,
+literal|"WE"
+argument_list|,
+literal|"2015-03-11"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015/01/14 14:04:34"
+argument_list|,
+literal|"SAT"
+argument_list|,
+literal|null
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"2015-01-14T14:04:34"
+argument_list|,
+literal|"SAT"
+argument_list|,
+literal|"2015-01-17"
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -575,7 +641,7 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"next_day() only takes STRING/TIMESTAMP/DATEWRITABLE types as first argument, got LONG"
+literal|"next_day only takes STRING_GROUP, DATE_GROUP types as 1st argument, got LONG"
 argument_list|,
 name|e
 operator|.
@@ -653,7 +719,7 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"next_day() only takes STRING_GROUP types as second argument, got INT"
+literal|"next_day only takes STRING_GROUP types as 2nd argument, got INT"
 argument_list|,
 name|e
 operator|.

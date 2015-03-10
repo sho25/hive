@@ -550,15 +550,15 @@ operator|||
 operator|!
 name|pctx
 operator|.
-name|getQB
+name|getQueryProperties
 argument_list|()
 operator|.
-name|getIsQuery
+name|isQuery
 argument_list|()
 operator|||
 name|pctx
 operator|.
-name|getQB
+name|getQueryProperties
 argument_list|()
 operator|.
 name|isAnalyzeRewrite
@@ -566,7 +566,7 @@ argument_list|()
 operator|||
 name|pctx
 operator|.
-name|getQB
+name|getQueryProperties
 argument_list|()
 operator|.
 name|isCTAS

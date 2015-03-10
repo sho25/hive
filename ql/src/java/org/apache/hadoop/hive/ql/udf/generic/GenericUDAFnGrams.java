@@ -1294,6 +1294,17 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// A value of 0 for n indicates that the mapper processed data that does not meet
+comment|// filter criteria, so merge() should be NO-OP.
+if|if
+condition|(
+name|n
+operator|==
+literal|0
+condition|)
+block|{
+return|return;
+block|}
 if|if
 condition|(
 name|myagg

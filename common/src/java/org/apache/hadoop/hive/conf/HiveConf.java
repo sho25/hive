@@ -1095,6 +1095,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_TRY_DIRECT_SQL_DDL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
 block|}
 decl_stmt|;
 static|static
@@ -2873,6 +2879,17 @@ argument_list|,
 literal|"If true, the metastore will be asked"
 operator|+
 literal|" to fire events for DML operations"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_DROP_PARTITIONS_WITH_EXPRESSIONS
+argument_list|(
+literal|"hive.metastore.client.drop.partitions.using.expressions"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Choose whether dropping partitions with HCatClient pushes the partition-predicate to the metastore, "
+operator|+
+literal|"or drops partitions iteratively"
 argument_list|)
 block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)

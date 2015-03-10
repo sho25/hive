@@ -379,7 +379,7 @@ name|parse
 operator|.
 name|BaseSemanticAnalyzer
 operator|.
-name|tableSpec
+name|TableSpec
 import|;
 end_import
 
@@ -2502,7 +2502,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|tableSpec
+name|TableSpec
 name|tblSpec
 init|=
 name|work
