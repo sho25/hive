@@ -174,6 +174,8 @@ block|,
 name|TASK_NUM_REDUCERS
 block|,
 name|ROWS_INSERTED
+block|,
+name|SPARK_JOB_ID
 block|}
 empty_stmt|;
 comment|/**    * Listener interface.    * Parser will call handle function for each history record row, specifying    * the record type and its values    *    */
