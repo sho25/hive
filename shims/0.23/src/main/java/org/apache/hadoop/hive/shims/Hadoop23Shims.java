@@ -4098,6 +4098,13 @@ operator|.
 name|getAclStatus
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|aclStatus
+operator|!=
+literal|null
+condition|)
+block|{
 name|List
 argument_list|<
 name|AclEntry
@@ -4231,6 +4238,7 @@ argument_list|()
 block|}
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
