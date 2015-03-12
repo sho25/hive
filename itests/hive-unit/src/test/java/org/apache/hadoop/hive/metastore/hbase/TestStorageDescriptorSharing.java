@@ -886,22 +886,13 @@ name|TEST_CONN
 argument_list|)
 expr_stmt|;
 name|HBaseReadWrite
-name|hbase
-init|=
-name|HBaseReadWrite
 operator|.
-name|getInstance
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|hbase
-operator|.
-name|setConnection
+name|setTestConnection
 argument_list|(
 name|hconn
 argument_list|)
 expr_stmt|;
+comment|// HBaseReadWrite hbase = HBaseReadWrite.getInstance(conf);
 name|store
 operator|=
 operator|new

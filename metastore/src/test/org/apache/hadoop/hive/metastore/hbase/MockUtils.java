@@ -1100,6 +1100,13 @@ name|TEST_CONN
 argument_list|)
 expr_stmt|;
 name|HBaseReadWrite
+operator|.
+name|setTestConnection
+argument_list|(
+name|hconn
+argument_list|)
+expr_stmt|;
+name|HBaseReadWrite
 name|hbase
 init|=
 name|HBaseReadWrite
@@ -1109,13 +1116,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|hbase
-operator|.
-name|setConnection
-argument_list|(
-name|hconn
-argument_list|)
-expr_stmt|;
 name|HBaseStore
 name|store
 init|=

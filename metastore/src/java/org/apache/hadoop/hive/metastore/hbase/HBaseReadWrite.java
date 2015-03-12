@@ -827,6 +827,11 @@ init|=
 literal|"test_connection"
 decl_stmt|;
 specifier|private
+specifier|static
+name|HBaseConnection
+name|testConn
+decl_stmt|;
+specifier|private
 specifier|final
 specifier|static
 name|String
@@ -1102,7 +1107,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
 name|TEST_CONN
 operator|.
 name|equals
@@ -1111,6 +1115,29 @@ name|connClass
 argument_list|)
 condition|)
 block|{
+name|conn
+operator|=
+name|testConn
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Using test connection."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Instantiating connection class "
+operator|+
+name|connClass
+argument_list|)
+expr_stmt|;
 name|Class
 name|c
 init|=
@@ -9752,14 +9779,15 @@ block|}
 comment|/**    * Use this for unit testing only, so that a mock connection object can be passed in.    * @param connection Mock connection objecct    */
 annotation|@
 name|VisibleForTesting
+specifier|static
 name|void
-name|setConnection
+name|setTestConnection
 parameter_list|(
 name|HBaseConnection
 name|connection
 parameter_list|)
 block|{
-name|conn
+name|testConn
 operator|=
 name|connection
 expr_stmt|;

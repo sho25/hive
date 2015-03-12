@@ -818,6 +818,13 @@ operator|.
 name|TEST_CONN
 argument_list|)
 expr_stmt|;
+name|HBaseReadWrite
+operator|.
+name|setTestConnection
+argument_list|(
+name|hconn
+argument_list|)
+expr_stmt|;
 name|hrw
 operator|=
 name|HBaseReadWrite
@@ -825,13 +832,6 @@ operator|.
 name|getInstance
 argument_list|(
 name|conf
-argument_list|)
-expr_stmt|;
-name|hrw
-operator|.
-name|setConnection
-argument_list|(
-name|hconn
 argument_list|)
 expr_stmt|;
 name|StatsCache
