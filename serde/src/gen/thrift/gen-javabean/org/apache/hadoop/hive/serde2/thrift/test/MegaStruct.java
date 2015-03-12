@@ -14660,7 +14660,7 @@ block|{
 name|String
 name|_elem22
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem22
 operator|=
 name|iprot
@@ -14883,7 +14883,7 @@ block|{
 name|MiniStruct
 name|_elem29
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem29
 operator|=
 operator|new
@@ -15035,7 +15035,7 @@ block|{
 name|String
 name|_elem32
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem32
 operator|=
 name|iprot
@@ -15165,7 +15165,7 @@ block|{
 name|MiniStruct
 name|_elem35
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem35
 operator|=
 operator|new
@@ -15301,7 +15301,7 @@ block|{
 name|MyEnum
 name|_elem38
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem38
 operator|=
 name|MyEnum
@@ -15438,7 +15438,7 @@ block|{
 name|String
 name|_elem41
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem41
 operator|=
 name|iprot
@@ -15570,7 +15570,7 @@ block|{
 name|MyEnum
 name|_elem44
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem44
 operator|=
 name|MyEnum
@@ -15707,7 +15707,7 @@ block|{
 name|MiniStruct
 name|_elem47
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem47
 operator|=
 operator|new
@@ -19867,7 +19867,7 @@ block|{
 name|String
 name|_elem98
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem98
 operator|=
 name|iprot
@@ -20104,7 +20104,7 @@ block|{
 name|MiniStruct
 name|_elem105
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem105
 operator|=
 operator|new
@@ -20234,7 +20234,7 @@ block|{
 name|String
 name|_elem108
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem108
 operator|=
 name|iprot
@@ -20347,7 +20347,7 @@ block|{
 name|MiniStruct
 name|_elem111
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem111
 operator|=
 operator|new
@@ -20466,7 +20466,7 @@ block|{
 name|MyEnum
 name|_elem114
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem114
 operator|=
 name|MyEnum
@@ -20586,7 +20586,7 @@ block|{
 name|String
 name|_elem117
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem117
 operator|=
 name|iprot
@@ -20701,7 +20701,7 @@ block|{
 name|MyEnum
 name|_elem120
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem120
 operator|=
 name|MyEnum
@@ -20821,7 +20821,7 @@ block|{
 name|MiniStruct
 name|_elem123
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem123
 operator|=
 operator|new
