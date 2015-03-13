@@ -125,20 +125,6 @@ name|calcite
 operator|.
 name|plan
 operator|.
-name|RelOptUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|plan
-operator|.
 name|RelTraitSet
 import|;
 end_import
@@ -1659,7 +1645,7 @@ literal|false
 expr_stmt|;
 block|}
 block|}
-comment|// Is bucketJoin possible? We need correct bucketing
+comment|// Is smbJoin or bucketJoin possible? We need correct bucketing
 if|if
 condition|(
 name|bucketFitsMemory

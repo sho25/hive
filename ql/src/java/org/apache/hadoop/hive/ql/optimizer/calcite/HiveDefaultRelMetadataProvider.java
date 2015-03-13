@@ -65,22 +65,6 @@ name|rel
 operator|.
 name|metadata
 operator|.
-name|RelMdDistribution
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|metadata
-operator|.
 name|RelMetadataProvider
 import|;
 end_import
@@ -142,6 +126,28 @@ operator|.
 name|stats
 operator|.
 name|HiveRelMdDistinctRowCount
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|stats
+operator|.
+name|HiveRelMdDistribution
 import|;
 end_import
 
@@ -320,7 +326,8 @@ name|RelMetadataProvider
 name|getMetadataProvider
 parameter_list|()
 block|{
-comment|// Init HiveRelMdParallelism with max split size
+comment|// Get max split size for HiveRelMdParallelism
+specifier|final
 name|Double
 name|maxSplitSize
 init|=
@@ -340,15 +347,6 @@ operator|.
 name|ConfVars
 operator|.
 name|MAPREDMAXSPLITSIZE
-argument_list|)
-decl_stmt|;
-name|HiveRelMdParallelism
-name|hiveRelMdParallelism
-init|=
-operator|new
-name|HiveRelMdParallelism
-argument_list|(
-name|maxSplitSize
 argument_list|)
 decl_stmt|;
 comment|// Return MD provider
@@ -385,12 +383,16 @@ name|HiveRelMdMemory
 operator|.
 name|SOURCE
 argument_list|,
-name|hiveRelMdParallelism
+operator|new
+name|HiveRelMdParallelism
+argument_list|(
+name|maxSplitSize
+argument_list|)
 operator|.
 name|getMetadataProvider
 argument_list|()
 argument_list|,
-name|RelMdDistribution
+name|HiveRelMdDistribution
 operator|.
 name|SOURCE
 argument_list|,
