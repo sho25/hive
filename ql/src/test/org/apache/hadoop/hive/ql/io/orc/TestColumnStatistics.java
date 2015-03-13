@@ -2058,9 +2058,6 @@ name|stripeStats
 init|=
 name|reader
 operator|.
-name|getMetadata
-argument_list|()
-operator|.
 name|getStripeStatistics
 argument_list|()
 decl_stmt|;

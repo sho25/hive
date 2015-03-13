@@ -1285,6 +1285,7 @@ name|BloomFilterIndex
 index|[]
 name|bloomFilterIndex
 decl_stmt|;
+specifier|public
 name|Index
 parameter_list|(
 name|OrcProto

@@ -562,6 +562,16 @@ literal|8
 expr_stmt|;
 comment|// this is arbitrary
 block|}
+else|else
+block|{
+assert|assert
+name|priority
+operator|==
+name|Priority
+operator|.
+name|NORMAL
+assert|;
+block|}
 block|}
 annotation|@
 name|Override

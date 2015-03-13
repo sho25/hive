@@ -354,6 +354,7 @@ argument_list|>
 name|data
 parameter_list|)
 block|{
+comment|// TODO: data arrives in whole batches now, not in columns. We could greatly simplify this.
 name|EncodedColumnBatch
 argument_list|<
 name|BatchKey

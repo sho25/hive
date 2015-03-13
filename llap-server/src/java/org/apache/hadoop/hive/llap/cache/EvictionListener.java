@@ -20,6 +20,7 @@ package|;
 end_package
 
 begin_interface
+specifier|public
 interface|interface
 name|EvictionListener
 block|{

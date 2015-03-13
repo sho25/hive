@@ -835,12 +835,15 @@ argument_list|(
 literal|"\nStripe Statistics:"
 argument_list|)
 expr_stmt|;
-name|Metadata
-name|metadata
+name|List
+argument_list|<
+name|StripeStatistics
+argument_list|>
+name|stripeStats
 init|=
 name|reader
 operator|.
-name|getMetadata
+name|getStripeStatistics
 argument_list|()
 decl_stmt|;
 for|for
@@ -852,10 +855,7 @@ literal|0
 init|;
 name|n
 operator|<
-name|metadata
-operator|.
-name|getStripeStatistics
-argument_list|()
+name|stripeStats
 operator|.
 name|size
 argument_list|()
@@ -884,10 +884,7 @@ expr_stmt|;
 name|StripeStatistics
 name|ss
 init|=
-name|metadata
-operator|.
-name|getStripeStatistics
-argument_list|()
+name|stripeStats
 operator|.
 name|get
 argument_list|(
