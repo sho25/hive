@@ -73,7 +73,7 @@ name|LLAP_DAEMON_SITE
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -126,6 +126,14 @@ init|=
 name|LLAP_DAEMON_PREFIX
 operator|+
 literal|"yarn.shuffle.port"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|LLAP_DAEMON_YARN_SHUFFLE_PORT_DEFAULT
+init|=
+literal|15551
 decl_stmt|;
 comment|// Section for configs used in AM and executors
 specifier|public
