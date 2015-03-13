@@ -37,6 +37,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -495,10 +505,15 @@ name|warn
 argument_list|(
 literal|"Using full partition scan :"
 operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
 name|part
 operator|.
 name|getPath
 argument_list|()
+argument_list|)
 operator|+
 literal|"."
 argument_list|,
@@ -572,10 +587,15 @@ literal|"List bucketing pruner is either null or in unknown state "
 operator|+
 literal|" so that it uses full partition scan :"
 operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
 name|part
 operator|.
 name|getPath
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|finalPaths
@@ -1096,10 +1116,15 @@ name|warn
 argument_list|(
 literal|"Using full partition scan :"
 operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
 name|part
 operator|.
 name|getPath
 argument_list|()
+argument_list|)
 operator|+
 literal|"."
 argument_list|)
