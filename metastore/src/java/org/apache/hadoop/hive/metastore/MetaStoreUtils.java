@@ -3292,6 +3292,8 @@ name|Table
 name|newTable
 parameter_list|)
 block|{
+comment|//currently cascade only supports add/replace columns and
+comment|//changing column type/position/name/comments
 name|List
 argument_list|<
 name|FieldSchema
@@ -3320,8 +3322,33 @@ operator|.
 name|getCols
 argument_list|()
 decl_stmt|;
-comment|//currently cascade only supports add/replace columns and
-comment|//changing column type/position/name/comments
+return|return
+operator|!
+name|areSameColumns
+argument_list|(
+name|oldCols
+argument_list|,
+name|newCols
+argument_list|)
+return|;
+block|}
+specifier|static
+name|boolean
+name|areSameColumns
+parameter_list|(
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|oldCols
+parameter_list|,
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|newCols
+parameter_list|)
+block|{
 if|if
 condition|(
 name|oldCols
@@ -3336,7 +3363,7 @@ argument_list|()
 condition|)
 block|{
 return|return
-literal|true
+literal|false
 return|;
 block|}
 else|else
@@ -3391,13 +3418,13 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}
 block|}
 return|return
-literal|false
+literal|true
 return|;
 block|}
 comment|/**    * @return true if oldType and newType are compatible.    * Two types are compatible if we have internal functions to cast one to another.    */
