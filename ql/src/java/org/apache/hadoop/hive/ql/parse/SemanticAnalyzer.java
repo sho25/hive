@@ -64747,7 +64747,9 @@ block|}
 name|storageFormat
 operator|.
 name|fillDefaultStorageFormat
-argument_list|()
+argument_list|(
+name|isExt
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
