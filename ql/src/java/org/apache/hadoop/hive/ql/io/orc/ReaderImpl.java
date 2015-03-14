@@ -3822,7 +3822,7 @@ name|IOException
 block|{
 return|return
 operator|new
-name|MetadataReader
+name|MetadataReaderImpl
 argument_list|(
 name|fileSystem
 argument_list|,

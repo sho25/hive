@@ -1625,7 +1625,7 @@ operator|.
 name|metadata
 operator|=
 operator|new
-name|MetadataReader
+name|MetadataReaderImpl
 argument_list|(
 name|fileSystem
 argument_list|,
