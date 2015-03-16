@@ -2371,6 +2371,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"cbrt"
+argument_list|,
+name|GenericUDFCbrt
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"ceil"
 argument_list|,
 name|GenericUDFCeil
