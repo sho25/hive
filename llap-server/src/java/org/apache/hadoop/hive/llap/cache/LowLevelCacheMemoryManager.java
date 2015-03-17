@@ -356,10 +356,16 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|500
+name|Math
+operator|.
+name|min
+argument_list|(
+literal|1000
+argument_list|,
+name|nextLog
+argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// TODO#: incremental fallback
 block|}
 catch|catch
 parameter_list|(
