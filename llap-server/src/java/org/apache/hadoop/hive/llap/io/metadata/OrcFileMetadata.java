@@ -549,7 +549,9 @@ name|OrcFileMetadata
 name|ofm
 init|=
 name|createDummy
-argument_list|()
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 name|SIZE_ESTIMATORS
 operator|=
@@ -587,14 +589,19 @@ specifier|public
 specifier|static
 name|OrcFileMetadata
 name|createDummy
-parameter_list|()
+parameter_list|(
+name|int
+name|fileId
+parameter_list|)
 block|{
 name|OrcFileMetadata
 name|ofm
 init|=
 operator|new
 name|OrcFileMetadata
-argument_list|()
+argument_list|(
+name|fileId
+argument_list|)
 decl_stmt|;
 name|ofm
 operator|.
@@ -725,11 +732,20 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|// Ctor for memory estimation
+comment|// Ctor for memory estimation and tests
 specifier|private
 name|OrcFileMetadata
-parameter_list|()
+parameter_list|(
+name|int
+name|fileId
+parameter_list|)
 block|{
+name|this
+operator|.
+name|fileId
+operator|=
+name|fileId
+expr_stmt|;
 name|stripes
 operator|=
 operator|new
@@ -769,8 +785,6 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 expr_stmt|;
-name|fileId
-operator|=
 name|writerVersionNum
 operator|=
 name|metadataSize

@@ -34,6 +34,13 @@ name|boolean
 name|waitForEviction
 parameter_list|)
 function_decl|;
+name|void
+name|releaseMemory
+parameter_list|(
+name|long
+name|memUsage
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

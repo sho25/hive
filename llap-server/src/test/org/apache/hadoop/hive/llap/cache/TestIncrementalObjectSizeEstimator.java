@@ -1407,7 +1407,9 @@ init|=
 name|OrcStripeMetadata
 operator|.
 name|createDummy
-argument_list|()
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 name|HashMap
 argument_list|<
@@ -1708,7 +1710,9 @@ init|=
 name|OrcFileMetadata
 operator|.
 name|createDummy
-argument_list|()
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 name|map
 operator|=

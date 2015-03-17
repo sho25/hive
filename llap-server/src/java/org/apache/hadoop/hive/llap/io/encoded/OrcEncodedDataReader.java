@@ -1795,6 +1795,10 @@ argument_list|()
 expr_stmt|;
 name|stripeMetadata
 operator|=
+name|metadataCache
+operator|.
+name|putStripeMetadata
+argument_list|(
 operator|new
 name|OrcStripeMetadata
 argument_list|(
@@ -1807,6 +1811,7 @@ argument_list|,
 name|stripeIncludes
 argument_list|,
 name|sargColumns
+argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -1840,13 +1845,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|metadataCache
-operator|.
-name|putStripeMetadata
-argument_list|(
-name|stripeMetadata
-argument_list|)
-expr_stmt|;
 name|stripeKey
 operator|=
 operator|new
@@ -2287,15 +2285,13 @@ argument_list|,
 name|orcReader
 argument_list|)
 expr_stmt|;
+return|return
 name|metadataCache
 operator|.
 name|putFileMetadata
 argument_list|(
 name|metadata
 argument_list|)
-expr_stmt|;
-return|return
-name|metadata
 return|;
 block|}
 comment|/**    * Reads the metadata for all stripes in the file.    */
@@ -2424,6 +2420,10 @@ condition|)
 block|{
 name|value
 operator|=
+name|metadataCache
+operator|.
+name|putStripeMetadata
+argument_list|(
 operator|new
 name|OrcStripeMetadata
 argument_list|(
@@ -2437,12 +2437,6 @@ name|globalInc
 argument_list|,
 name|sargColumns
 argument_list|)
-expr_stmt|;
-name|metadataCache
-operator|.
-name|putStripeMetadata
-argument_list|(
-name|value
 argument_list|)
 expr_stmt|;
 if|if
