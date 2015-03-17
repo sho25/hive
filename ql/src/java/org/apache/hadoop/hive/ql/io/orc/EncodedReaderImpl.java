@@ -1633,7 +1633,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Resulting disk ranges to read: "
+literal|"Resulting disk ranges to read (file "
+operator|+
+name|fileId
+operator|+
+literal|"): "
 operator|+
 name|RecordReaderUtils
 operator|.
@@ -1678,7 +1682,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Disk ranges after cache (base offset "
+literal|"Disk ranges after cache (file "
+operator|+
+name|fileId
+operator|+
+literal|", base offset "
 operator|+
 name|stripeOffset
 operator|+
@@ -1729,7 +1737,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Disk ranges after disk read  (base offset "
+literal|"Disk ranges after disk read (file "
+operator|+
+name|fileId
+operator|+
+literal|", base offset "
 operator|+
 name|stripeOffset
 operator|+

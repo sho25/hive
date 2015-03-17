@@ -1010,6 +1010,8 @@ operator|-
 name|baseOffset
 argument_list|,
 name|endOffset
+operator|-
+name|baseOffset
 argument_list|)
 expr_stmt|;
 name|currentCached

@@ -6776,6 +6776,7 @@ name|desc
 argument_list|)
 return|;
 block|}
+comment|// TODO#: validate this
 specifier|private
 name|boolean
 name|validateTableScanOperator
@@ -7985,6 +7986,15 @@ operator|!
 name|r
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot vectorize UDF "
+operator|+
+name|d
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;

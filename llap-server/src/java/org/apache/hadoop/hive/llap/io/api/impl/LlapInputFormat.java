@@ -668,20 +668,6 @@ argument_list|(
 name|job
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|includedCols
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-name|includedCols
-operator|=
-literal|null
-expr_stmt|;
-comment|// Also means read all columns? WTF?
-block|}
 return|return
 operator|new
 name|LlapRecordReader

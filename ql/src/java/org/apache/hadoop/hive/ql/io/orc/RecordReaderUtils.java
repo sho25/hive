@@ -1203,7 +1203,17 @@ name|buffer
 operator|.
 name|append
 argument_list|(
-literal|", "
+literal|", {"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|buffer
+operator|.
+name|append
+argument_list|(
+literal|"{"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1219,6 +1229,13 @@ name|range
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|buffer
+operator|.
+name|append
+argument_list|(
+literal|"}"
 argument_list|)
 expr_stmt|;
 name|range
