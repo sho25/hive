@@ -6763,6 +6763,8 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+try|try
+block|{
 return|return
 operator|new
 name|HdfsEncryptionShim
@@ -6772,6 +6774,16 @@ argument_list|,
 name|conf
 argument_list|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|NoSuchMethodError
+name|e
+parameter_list|)
+block|{
+comment|// ignore error as encryption is not supported.
+comment|// let this method return the unsupported encryption shim instead
+block|}
 block|}
 return|return
 operator|new

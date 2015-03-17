@@ -879,15 +879,6 @@ range|:
 name|bls
 control|)
 block|{
-name|b
-operator|.
-name|replaceAll
-argument_list|(
-literal|"."
-argument_list|,
-literal|"_"
-argument_list|)
-expr_stmt|;
 name|blackListedConfEntries
 operator|.
 name|add
