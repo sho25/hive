@@ -237,6 +237,25 @@ name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS_DEFAULT
 init|=
 literal|5
 decl_stmt|;
+comment|/**    * Time after which a previously disabled node will be re-enabled for scheduling. This may be    * modified by an exponential back-off if failures persist    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_DAEMON_TASK_SCHEDULER_NODE_REENABLE_TIMEOUT_MILLIS
+init|=
+name|LLAP_DAEMON_PREFIX
+operator|+
+literal|"task.scheduler.node.re-enable.timeout.ms"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|long
+name|LLAP_DAEMON_TASK_SCHEDULER_NODE_REENABLE_TIMEOUT_MILLIS_DEFAULT
+init|=
+literal|2000l
+decl_stmt|;
 block|}
 end_class
 
