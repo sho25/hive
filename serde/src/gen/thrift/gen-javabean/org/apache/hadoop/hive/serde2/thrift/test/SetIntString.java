@@ -2540,7 +2540,7 @@ block|{
 name|IntString
 name|_elem84
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem84
 operator|=
 operator|new
@@ -3176,7 +3176,7 @@ block|{
 name|IntString
 name|_elem89
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem89
 operator|=
 operator|new

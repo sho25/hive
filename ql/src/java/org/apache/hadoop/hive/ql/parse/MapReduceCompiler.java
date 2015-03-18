@@ -1340,18 +1340,6 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|topOp
-operator|.
-name|getChildOperators
-argument_list|()
-operator|==
-literal|null
-condition|)
-block|{
-return|return;
-block|}
 for|for
 control|(
 name|Operator
@@ -1511,6 +1499,8 @@ operator|new
 name|PathFilter
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|accept

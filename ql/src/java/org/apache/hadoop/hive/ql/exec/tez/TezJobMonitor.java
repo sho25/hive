@@ -4224,10 +4224,6 @@ argument_list|(
 literal|"%s: -/-\t"
 argument_list|,
 name|s
-argument_list|,
-name|complete
-argument_list|,
-name|total
 argument_list|)
 argument_list|)
 expr_stmt|;

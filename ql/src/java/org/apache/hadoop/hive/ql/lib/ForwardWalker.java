@@ -256,18 +256,6 @@ argument_list|>
 operator|)
 name|nd
 decl_stmt|;
-if|if
-condition|(
-name|op
-operator|.
-name|getParentOperators
-argument_list|()
-operator|==
-literal|null
-condition|)
-block|{
-return|return;
-block|}
 name|getToWalk
 argument_list|()
 operator|.
@@ -294,6 +282,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** * walk the current operator and its descendants. * * @param nd * current operator in the graph * @throws SemanticException */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|walk

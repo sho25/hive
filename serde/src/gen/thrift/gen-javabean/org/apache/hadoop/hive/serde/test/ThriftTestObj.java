@@ -3142,7 +3142,7 @@ block|{
 name|InnerStruct
 name|_elem2
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem2
 operator|=
 operator|new
@@ -3822,7 +3822,7 @@ block|{
 name|InnerStruct
 name|_elem7
 decl_stmt|;
-comment|// optional
+comment|// required
 name|_elem7
 operator|=
 operator|new

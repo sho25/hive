@@ -73,7 +73,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|Collection
 import|;
 end_import
 
@@ -114,6 +114,18 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -189,7 +201,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|GroupByOperator
+name|KeyWrapper
 import|;
 end_import
 
@@ -207,7 +219,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|KeyWrapper
+name|Operator
 import|;
 end_import
 
@@ -403,6 +415,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|OperatorType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|util
 operator|.
 name|JavaDataModel
@@ -486,7 +518,10 @@ specifier|public
 class|class
 name|VectorGroupByOperator
 extends|extends
-name|GroupByOperator
+name|Operator
+argument_list|<
+name|GroupByDesc
+argument_list|>
 implements|implements
 name|VectorizationContextRegion
 block|{
@@ -578,6 +613,25 @@ name|VectorColumnAssign
 index|[]
 name|vectorColumnAssign
 decl_stmt|;
+specifier|private
+specifier|transient
+name|int
+name|numEntriesHashTable
+decl_stmt|;
+specifier|private
+specifier|transient
+name|long
+name|maxHashTblMemory
+decl_stmt|;
+specifier|private
+specifier|transient
+name|long
+name|maxMemory
+decl_stmt|;
+specifier|private
+name|float
+name|memoryThreshold
+decl_stmt|;
 comment|/**    * Interface for processing mode: global, hash, unsorted streaming, or group batch    */
 specifier|private
 specifier|static
@@ -638,6 +692,8 @@ implements|implements
 name|IProcessingMode
 block|{
 comment|// Overridden and used in sorted reduce group batch processing mode.
+annotation|@
+name|Override
 specifier|public
 name|void
 name|startGroup
@@ -647,6 +703,8 @@ name|HiveException
 block|{
 comment|// Do nothing.
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|endGroup
@@ -863,7 +921,7 @@ name|ProcessingModeGlobalAggregate
 extends|extends
 name|ProcessingModeBase
 block|{
-comment|/**      * In global processing mode there is only one set of aggregation buffers       */
+comment|/**      * In global processing mode there is only one set of aggregation buffers      */
 specifier|private
 name|VectorAggregationBufferRow
 name|aggregationBuffers
@@ -1006,7 +1064,7 @@ specifier|private
 name|long
 name|sumBatchSize
 decl_stmt|;
-comment|/**      * Max number of entries in the vector group by aggregation hashtables.       * Exceeding this will trigger a flush irrelevant of memory pressure condition.      */
+comment|/**      * Max number of entries in the vector group by aggregation hashtables.      * Exceeding this will trigger a flush irrelevant of memory pressure condition.      */
 specifier|private
 name|int
 name|maxHtEntries
@@ -2056,7 +2114,7 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Checks if the HT reduces the number of entries by at least minReductionHashAggr factor       * @throws HiveException      */
+comment|/**      * Checks if the HT reduces the number of entries by at least minReductionHashAggr factor      * @throws HiveException      */
 specifier|private
 name|void
 name|checkHashModeEfficiency
@@ -2137,7 +2195,7 @@ name|ProcessingModeUnsortedStreaming
 extends|extends
 name|ProcessingModeBase
 block|{
-comment|/**       * The aggregation buffers used in streaming mode      */
+comment|/**      * The aggregation buffers used in streaming mode      */
 specifier|private
 name|VectorAggregationBufferRow
 name|currentStreamingAggregators
@@ -2519,7 +2577,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Sorted reduce group batch processing mode. Each input VectorizedRowBatch will have the    * same key.  On endGroup (or close), the intermediate values are flushed.    *    * We build the output rows one-at-a-time in the output vectorized row batch (outputBatch)    * in 2 steps:    *    *   1) Just after startGroup, we copy the group key to the next position in the output batch,    *      but don't increment the size in the batch (yet).  This is done with the copyGroupKey    *      method of VectorGroupKeyHelper.  The next position is outputBatch.size    *    *      We know the same key is used for the whole batch (i.e. repeating) since that is how    *      vectorized reduce-shuffle feeds the batches to us.    *    *   2) Later at endGroup after reduce-shuffle has fed us all the input batches for the group,    *      we fill in the aggregation columns in outputBatch at outputBatch.size.  Our method     *      writeGroupRow does this and finally increments outputBatch.size.    *    */
+comment|/**    * Sorted reduce group batch processing mode. Each input VectorizedRowBatch will have the    * same key.  On endGroup (or close), the intermediate values are flushed.    *    * We build the output rows one-at-a-time in the output vectorized row batch (outputBatch)    * in 2 steps:    *    *   1) Just after startGroup, we copy the group key to the next position in the output batch,    *      but don't increment the size in the batch (yet).  This is done with the copyGroupKey    *      method of VectorGroupKeyHelper.  The next position is outputBatch.size    *    *      We know the same key is used for the whole batch (i.e. repeating) since that is how    *      vectorized reduce-shuffle feeds the batches to us.    *    *   2) Later at endGroup after reduce-shuffle has fed us all the input batches for the group,    *      we fill in the aggregation columns in outputBatch at outputBatch.size.  Our method    *      writeGroupRow does this and finally increments outputBatch.size.    *    */
 specifier|private
 class|class
 name|ProcessingModeGroupBatches
@@ -2538,7 +2596,7 @@ comment|/**      * The group vector key helper.      */
 name|VectorGroupKeyHelper
 name|groupKeyHelper
 decl_stmt|;
-comment|/**       * The group vector aggregation buffers.      */
+comment|/**      * The group vector aggregation buffers.      */
 specifier|private
 name|VectorAggregationBufferRow
 name|groupAggregators
@@ -2941,7 +2999,13 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -2950,6 +3014,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|ObjectInspector
@@ -3245,11 +3325,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|initializeChildren
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
 name|forwardCache
 operator|=
 operator|new
@@ -3319,8 +3394,11 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+return|return
+name|result
+return|;
 block|}
-comment|/**    * changes the processing mode to unsorted streaming    * This is done at the request of the hash agg mode, if the number of keys     * exceeds the minReductionHashAggr factor    * @throws HiveException     */
+comment|/**    * changes the processing mode to unsorted streaming    * This is done at the request of the hash agg mode, if the number of keys    * exceeds the minReductionHashAggr factor    * @throws HiveException    */
 specifier|private
 name|void
 name|changeToUnsortedStreamingMode
@@ -3391,7 +3469,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -3872,6 +3950,19 @@ parameter_list|()
 block|{
 return|return
 name|vOutContext
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|OperatorType
+name|getType
+parameter_list|()
+block|{
+return|return
+name|OperatorType
+operator|.
+name|GROUPBY
 return|;
 block|}
 block|}

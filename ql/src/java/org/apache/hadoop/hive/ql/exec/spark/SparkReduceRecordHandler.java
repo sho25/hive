@@ -817,6 +817,8 @@ init|=
 literal|null
 decl_stmt|;
 annotation|@
+name|Override
+annotation|@
 name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
@@ -1026,13 +1028,6 @@ index|]
 expr_stmt|;
 name|valueStringWriters
 operator|=
-operator|(
-name|List
-argument_list|<
-name|VectorExpressionWriter
-argument_list|>
-index|[]
-operator|)
 operator|new
 name|List
 index|[
@@ -1488,7 +1483,7 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|execContext
 argument_list|)
@@ -2091,7 +2086,7 @@ try|try
 block|{
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,
@@ -2323,7 +2318,7 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|batch
 argument_list|,
@@ -2363,7 +2358,7 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|batch
 argument_list|,
@@ -2538,6 +2533,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close

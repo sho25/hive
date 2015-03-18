@@ -1078,6 +1078,14 @@ name|HiveConf
 name|conf
 parameter_list|)
 function_decl|;
+comment|/**    * Set added jars path info to MetaStoreClient.    * @param addedJars the hive.added.jars.path. It is qualified paths separated by commas.    */
+name|void
+name|setHiveAddedJars
+parameter_list|(
+name|String
+name|addedJars
+parameter_list|)
+function_decl|;
 comment|/**    *  Tries to reconnect this MetaStoreClient to the MetaStore.    */
 name|void
 name|reconnect

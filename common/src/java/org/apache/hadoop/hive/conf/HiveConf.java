@@ -3472,6 +3472,33 @@ argument_list|,
 literal|"Default file format for CREATE TABLE statement. Users can explicitly override it by CREATE TABLE ... STORED AS [FORMAT]"
 argument_list|)
 block|,
+name|HIVEDEFAULTMANAGEDFILEFORMAT
+argument_list|(
+literal|"hive.default.fileformat.managed"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"TextFile"
+argument_list|,
+literal|"SequenceFile"
+argument_list|,
+literal|"RCfile"
+argument_list|,
+literal|"ORC"
+argument_list|)
+argument_list|,
+literal|"Default file format for CREATE TABLE statement applied to managed tables only. External tables will be \n"
+operator|+
+literal|"created with format specified by hive.default.fileformat. Leaving this null will result in using hive.default.fileformat \n"
+operator|+
+literal|"for all tables."
+argument_list|)
+block|,
 name|HIVEQUERYRESULTFILEFORMAT
 argument_list|(
 literal|"hive.query.result.fileformat"
@@ -7656,6 +7683,17 @@ operator|+
 literal|"  none: default(past) behavior. Implies only alphaNumeric and underscore are valid characters in identifiers.\n"
 operator|+
 literal|"  column: implies column names can contain any character."
+argument_list|)
+block|,
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
+argument_list|(
+literal|"hive.support.sql11.reserved.keywords"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
+operator|+
+literal|"The default value is true."
 argument_list|)
 block|,
 comment|// role names are case-insensitive
