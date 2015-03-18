@@ -3162,8 +3162,10 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|error
 argument_list|(
+literal|"Failed to run column stats task"
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;

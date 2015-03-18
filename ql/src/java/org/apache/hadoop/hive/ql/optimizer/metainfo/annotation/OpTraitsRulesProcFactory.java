@@ -707,7 +707,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getOpTraits
+name|getTraits
 argument_list|()
 decl_stmt|;
 if|if

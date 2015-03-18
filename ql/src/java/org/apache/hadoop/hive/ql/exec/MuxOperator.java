@@ -55,7 +55,29 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -721,7 +743,13 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -730,6 +758,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 comment|// A MuxOperator should only have a single child
 if|if
 condition|(
@@ -971,11 +1015,9 @@ operator|=
 literal|1
 expr_stmt|;
 block|}
-name|initializeChildren
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
+return|return
+name|result
+return|;
 block|}
 comment|/**    * Calls initialize on each of the children with outputObjetInspector as the    * output row format.    */
 annotation|@
@@ -1087,7 +1129,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -1217,7 +1259,7 @@ block|{
 comment|// No need to evaluate, just forward it.
 name|child
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,
@@ -1231,7 +1273,7 @@ comment|// Call the corresponding handler to evaluate this row and
 comment|// forward the result
 name|child
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|handlers
 index|[
@@ -1291,7 +1333,7 @@ comment|// Because we need to revert the tag of a row to its old tag and
 comment|// we cannot pass new tag to this method which is used to get
 comment|// the old tag from the mapping of newTagToOldTag, we bypass
 comment|// this method in MuxOperator and directly call process on children
-comment|// in processOp() method..
+comment|// in process() method..
 block|}
 annotation|@
 name|Override

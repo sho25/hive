@@ -167,7 +167,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|OpTraits
-name|getOpTraits
+name|getTraits
 parameter_list|()
 block|{
 return|return
@@ -176,7 +176,7 @@ return|;
 block|}
 specifier|public
 name|void
-name|setOpTraits
+name|setTraits
 parameter_list|(
 name|OpTraits
 name|opTraits

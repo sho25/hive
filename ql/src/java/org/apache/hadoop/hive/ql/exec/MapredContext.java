@@ -346,6 +346,13 @@ argument_list|(
 name|context
 argument_list|)
 expr_stmt|;
+name|logger
+operator|.
+name|info
+argument_list|(
+literal|"MapredContext initialized."
+argument_list|)
+expr_stmt|;
 return|return
 name|context
 return|;

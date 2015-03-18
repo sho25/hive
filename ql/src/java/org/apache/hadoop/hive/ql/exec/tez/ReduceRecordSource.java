@@ -1915,7 +1915,7 @@ try|try
 block|{
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,
@@ -2118,7 +2118,7 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|batch
 argument_list|,
@@ -2184,7 +2184,7 @@ argument_list|)
 expr_stmt|;
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|batch
 argument_list|,

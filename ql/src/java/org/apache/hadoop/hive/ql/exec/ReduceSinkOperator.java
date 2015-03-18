@@ -20,6 +20,28 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ReduceSinkDesc
+operator|.
+name|ReducerTraits
+operator|.
+name|UNIFORM
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -65,6 +87,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -76,6 +108,18 @@ operator|.
 name|util
 operator|.
 name|Random
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -491,7 +535,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|Text
+name|LongWritable
 import|;
 end_import
 
@@ -505,7 +549,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|LongWritable
+name|Text
 import|;
 end_import
 
@@ -550,28 +594,6 @@ operator|.
 name|hash
 operator|.
 name|MurmurHash
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|ReduceSinkDesc
-operator|.
-name|ReducerTraits
-operator|.
-name|UNIFORM
 import|;
 end_import
 
@@ -893,7 +915,13 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -902,6 +930,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 name|numRows
@@ -1464,11 +1508,6 @@ name|firstRow
 operator|=
 literal|true
 expr_stmt|;
-name|initializeChildren
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1503,6 +1542,9 @@ name|e
 argument_list|)
 throw|;
 block|}
+return|return
+name|result
+return|;
 block|}
 comment|/**    * Initializes array of ExprNodeEvaluator. Adds Union field for distinct    * column indices for group by.    * Puts the return values into a StructObjectInspector with output column    * names.    *    * If distinctColIndices is empty, the object inspector is same as    * {@link Operator#initEvaluatorsAndReturnStruct(ExprNodeEvaluator[], List, ObjectInspector)}    */
 specifier|protected
@@ -1761,7 +1803,7 @@ literal|"unchecked"
 argument_list|)
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -3131,6 +3173,8 @@ return|return
 name|keyWritable
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|collect
@@ -3511,6 +3555,8 @@ return|return
 name|inputAliases
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setOutputCollector

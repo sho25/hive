@@ -2302,7 +2302,7 @@ name|rows
 control|)
 name|op
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|r
 argument_list|,
