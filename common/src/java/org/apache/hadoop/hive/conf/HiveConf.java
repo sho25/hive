@@ -7974,6 +7974,15 @@ literal|"DIGEST-MD5"
 argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
 argument_list|)
+block|,
+name|NWAYJOINREORDER
+argument_list|(
+literal|"hive.reorder.nway.joins"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
+argument_list|)
 block|;
 specifier|public
 specifier|final
