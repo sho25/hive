@@ -3242,10 +3242,6 @@ argument_list|(
 literal|"hive.ql.exec.DDLTask"
 argument_list|)
 decl_stmt|;
-specifier|transient
-name|HiveConf
-name|conf
-decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -3343,12 +3339,6 @@ name|queryPlan
 argument_list|,
 name|ctx
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
 expr_stmt|;
 comment|// Pick the formatter to use to display the results.  Either the
 comment|// normal human readable output or a json object.
@@ -5220,8 +5210,6 @@ argument_list|()
 decl_stmt|;
 name|Task
 name|task
-init|=
-literal|null
 decl_stmt|;
 if|if
 condition|(
