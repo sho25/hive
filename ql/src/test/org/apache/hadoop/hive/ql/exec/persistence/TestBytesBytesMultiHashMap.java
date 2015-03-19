@@ -1225,7 +1225,6 @@ name|lastKey
 operator|+=
 literal|465623573
 expr_stmt|;
-comment|// This number is certified to be random.
 name|int
 name|len
 init|=
