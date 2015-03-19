@@ -168,6 +168,10 @@ name|int
 name|declaredLength
 decl_stmt|;
 specifier|public
+name|int
+name|allocSize
+decl_stmt|;
+specifier|public
 name|void
 name|initialize
 parameter_list|(
@@ -219,6 +223,12 @@ name|arenaIndex
 operator|=
 name|arenaIndex
 expr_stmt|;
+name|this
+operator|.
+name|allocSize
+operator|=
+name|length
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -253,10 +263,7 @@ name|getMemoryUsage
 parameter_list|()
 block|{
 return|return
-name|byteBuffer
-operator|.
-name|remaining
-argument_list|()
+name|allocSize
 return|;
 block|}
 annotation|@

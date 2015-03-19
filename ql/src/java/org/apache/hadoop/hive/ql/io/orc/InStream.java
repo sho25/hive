@@ -385,7 +385,6 @@ name|String
 name|name
 decl_stmt|;
 specifier|protected
-specifier|final
 name|long
 name|length
 decl_stmt|;
@@ -431,15 +430,6 @@ name|name
 return|;
 block|}
 specifier|public
-name|long
-name|getStreamLength
-parameter_list|()
-block|{
-return|return
-name|length
-return|;
-block|}
-specifier|public
 specifier|static
 class|class
 name|UncompressedStream
@@ -452,10 +442,6 @@ argument_list|<
 name|DiskRange
 argument_list|>
 name|bytes
-decl_stmt|;
-specifier|protected
-name|long
-name|length
 decl_stmt|;
 specifier|private
 name|long
@@ -497,6 +483,28 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+name|reset
+argument_list|(
+name|input
+argument_list|,
+name|length
+argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|reset
+parameter_list|(
+name|List
+argument_list|<
+name|DiskRange
+argument_list|>
+name|input
+parameter_list|,
+name|long
+name|length
+parameter_list|)
+block|{
 name|this
 operator|.
 name|bytes
@@ -516,6 +524,10 @@ expr_stmt|;
 name|currentOffset
 operator|=
 literal|0
+expr_stmt|;
+name|range
+operator|=
+literal|null
 expr_stmt|;
 block|}
 annotation|@
@@ -3384,8 +3396,6 @@ operator|.
 name|getByteBufferRaw
 argument_list|()
 decl_stmt|;
-comment|// After the below, position and limit will be screwed up (differently for if/else).
-comment|// We will reset the position and limit for now.
 name|int
 name|startPos
 init|=
@@ -3419,6 +3429,56 @@ argument_list|,
 name|dest
 argument_list|)
 expr_stmt|;
+comment|// Codec resets the position to 0 and limit to correct limit.
+name|dest
+operator|.
+name|position
+argument_list|(
+name|startPos
+argument_list|)
+expr_stmt|;
+name|int
+name|newLim
+init|=
+name|dest
+operator|.
+name|limit
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|newLim
+operator|>
+name|startLim
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"After codec, buffer ["
+operator|+
+name|startPos
+operator|+
+literal|", "
+operator|+
+name|startLim
+operator|+
+literal|") became ["
+operator|+
+name|dest
+operator|.
+name|position
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|newLim
+operator|+
+literal|")"
+argument_list|)
+throw|;
+block|}
 block|}
 else|else
 block|{
@@ -3432,6 +3492,48 @@ name|originalData
 argument_list|)
 expr_stmt|;
 comment|// Copy uncompressed data to cache.
+comment|// Put moves position forward by the size of the data.
+name|int
+name|newPos
+init|=
+name|dest
+operator|.
+name|position
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|newPos
+operator|>
+name|startLim
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"After copying, buffer ["
+operator|+
+name|startPos
+operator|+
+literal|", "
+operator|+
+name|startLim
+operator|+
+literal|") became ["
+operator|+
+name|newPos
+operator|+
+literal|", "
+operator|+
+name|dest
+operator|.
+name|limit
+argument_list|()
+operator|+
+literal|")"
+argument_list|)
+throw|;
 block|}
 name|dest
 operator|.
@@ -3444,9 +3546,10 @@ name|dest
 operator|.
 name|limit
 argument_list|(
-name|startLim
+name|newPos
 argument_list|)
 expr_stmt|;
+block|}
 name|chunk
 operator|.
 name|originalData

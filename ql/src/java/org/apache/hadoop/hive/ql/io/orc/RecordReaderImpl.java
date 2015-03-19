@@ -8662,9 +8662,23 @@ throw|throw
 operator|new
 name|EOFException
 argument_list|(
-literal|"Can't finish byte read from "
+literal|"Can't finish byte read of "
+operator|+
+name|len
+operator|+
+literal|"/"
+operator|+
+name|totalLength
+operator|+
+literal|" bytes for batchSize "
+operator|+
+name|batchSize
+operator|+
+literal|" from ["
 operator|+
 name|stream
+operator|+
+literal|"]"
 argument_list|)
 throw|;
 block|}

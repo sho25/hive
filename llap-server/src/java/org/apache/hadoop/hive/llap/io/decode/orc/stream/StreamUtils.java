@@ -290,6 +290,7 @@ name|positionProvider
 return|;
 block|}
 comment|/**    * Converts stream buffers to disk ranges.    * @param streamBuffer - stream buffer    * @param diskRanges - initial empty list of disk ranges    * @return - total length of disk ranges    */
+comment|// TODO: unnecessary
 specifier|public
 specifier|static
 name|long

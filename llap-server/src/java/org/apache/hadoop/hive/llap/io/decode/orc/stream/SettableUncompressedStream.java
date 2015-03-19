@@ -71,10 +71,6 @@ name|InStream
 import|;
 end_import
 
-begin_comment
-comment|/**  *  */
-end_comment
-
 begin_class
 specifier|public
 class|class
@@ -129,17 +125,12 @@ name|long
 name|length
 parameter_list|)
 block|{
-name|this
-operator|.
-name|bytes
-operator|=
+name|reset
+argument_list|(
 name|input
-expr_stmt|;
-name|this
-operator|.
+argument_list|,
 name|length
-operator|=
-name|length
+argument_list|)
 expr_stmt|;
 block|}
 block|}

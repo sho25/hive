@@ -52,7 +52,7 @@ specifier|public
 interface|interface
 name|LlapMemoryBuffer
 block|{
-comment|/** Note - position/limit of this should NOT be modified after it's in cache.   We could add a wrapper to enforce that, but for now it's shared and should be duplicated. */
+comment|/** Note - position of the raw buffer should NOT be modified ever;    * limit should not be modified after it's in cache. */
 specifier|public
 name|ByteBuffer
 name|getByteBufferRaw
