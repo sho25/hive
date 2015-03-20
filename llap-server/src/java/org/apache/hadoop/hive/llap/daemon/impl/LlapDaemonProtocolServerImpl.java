@@ -432,15 +432,6 @@ parameter_list|)
 throws|throws
 name|ServiceException
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"DEBUG: Received request: "
-operator|+
-name|request
-argument_list|)
-expr_stmt|;
 try|try
 block|{
 name|containerRunner

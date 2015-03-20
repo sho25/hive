@@ -135,6 +135,24 @@ name|LLAP_DAEMON_YARN_SHUFFLE_PORT_DEFAULT
 init|=
 literal|15551
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
+init|=
+name|LLAP_DAEMON_PREFIX
+operator|+
+literal|"shuffle.dir-watcher.enabled"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|boolean
+name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED_DEFAULT
+init|=
+literal|false
+decl_stmt|;
 comment|// Section for configs used in AM and executors
 specifier|public
 specifier|static
