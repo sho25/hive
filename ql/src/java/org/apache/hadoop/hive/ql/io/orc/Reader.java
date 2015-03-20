@@ -755,6 +755,12 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+name|MetadataReader
+name|metadata
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 

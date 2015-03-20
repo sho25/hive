@@ -354,9 +354,7 @@ argument_list|)
 argument_list|,
 literal|true
 argument_list|,
-operator|new
-name|Configuration
-argument_list|()
+literal|false
 argument_list|)
 decl_stmt|;
 for|for
@@ -721,9 +719,7 @@ argument_list|)
 argument_list|,
 literal|true
 argument_list|,
-operator|new
-name|Configuration
-argument_list|()
+literal|false
 argument_list|)
 decl_stmt|;
 for|for
