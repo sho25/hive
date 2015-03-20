@@ -2023,6 +2023,18 @@ argument_list|,
 name|interner
 argument_list|)
 expr_stmt|;
+name|GenMapRedUtils
+operator|.
+name|deriveFinalExplainAttributes
+argument_list|(
+name|rootTask
+argument_list|,
+name|pCtx
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**    * A helper function to generate a column stats task on top of map-red task. The column stats    * task fetches from the output of the map-red task, constructs the column stats object and    * persists it to the metastore.    *    * This method generates a plan with a column stats task on top of map-red task and sets up the    * appropriate metadata to be used during execution.    *    * @param qb    */
