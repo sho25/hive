@@ -118,6 +118,7 @@ comment|/**  * UnparseTranslator is used to "unparse" objects such as views when
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|UnparseTranslator
 block|{

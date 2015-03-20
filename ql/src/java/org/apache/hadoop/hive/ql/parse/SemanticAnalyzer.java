@@ -3573,7 +3573,7 @@ specifier|private
 name|ASTNode
 name|viewSelect
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|UnparseTranslator
 name|unparseTranslator
@@ -4894,7 +4894,12 @@ name|wFnSpec
 operator|.
 name|setAlias
 argument_list|(
-literal|"_wcol"
+name|wFnSpec
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|"_window_"
 operator|+
 name|wColIdx
 argument_list|)
