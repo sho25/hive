@@ -3308,7 +3308,7 @@ name|bc
 operator|.
 name|offset
 decl_stmt|;
-name|next
+name|lastCached
 operator|=
 name|addOneCompressionBuffer
 argument_list|(
@@ -3329,39 +3329,34 @@ argument_list|,
 name|toRelease
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|next
+operator|=
+operator|(
+name|lastCached
+operator|!=
+literal|null
+operator|)
+condition|?
+name|lastCached
+operator|.
+name|next
+else|:
+literal|null
+expr_stmt|;
+name|currentCOffset
+operator|=
+operator|(
 name|next
 operator|!=
 literal|null
-condition|)
-block|{
-name|currentCOffset
-operator|=
+operator|)
+condition|?
 name|next
 operator|.
 name|offset
-expr_stmt|;
-name|lastCached
-operator|=
-name|next
-operator|.
-name|prev
-expr_stmt|;
-comment|// addOne... always adds one CC and returns next range after it
-assert|assert
-name|lastCached
-operator|instanceof
-name|CacheChunk
-assert|;
-block|}
-else|else
-block|{
-name|currentCOffset
-operator|=
+else|:
 name|originalOffset
 expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
@@ -4043,10 +4038,10 @@ return|return
 name|ranges
 return|;
 block|}
-comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param ranges Iterator of all chunks, pointing at current.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the     *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The total number of compressed bytes consumed.    */
+comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param ranges Iterator of all chunks, pointing at current.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the     *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The resulting cache chunk.    */
 specifier|private
 specifier|static
-name|DiskRangeList
+name|ProcCacheChunk
 name|addOneCompressionBuffer
 parameter_list|(
 name|BufferChunk
@@ -4265,8 +4260,8 @@ argument_list|(
 name|chunkLength
 argument_list|)
 expr_stmt|;
-name|DiskRangeList
-name|next
+name|ProcCacheChunk
+name|cc
 init|=
 name|addOneCompressionBlockByteBuffer
 argument_list|(
@@ -4314,7 +4309,7 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|next
+name|cc
 return|;
 block|}
 if|if
@@ -4508,8 +4503,9 @@ argument_list|(
 name|slice
 argument_list|)
 expr_stmt|;
-name|next
-operator|=
+name|ProcCacheChunk
+name|cc
+init|=
 name|addOneCompressionBlockByteBuffer
 argument_list|(
 name|copy
@@ -4535,7 +4531,7 @@ name|toDecompress
 argument_list|,
 name|cacheBuffers
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|compressed
@@ -4560,7 +4556,7 @@ expr_stmt|;
 comment|// We copied the entire buffer.
 block|}
 return|return
-name|next
+name|cc
 return|;
 block|}
 name|remaining
@@ -4642,10 +4638,10 @@ literal|null
 return|;
 comment|// This is impossible to read from this chunk.
 block|}
-comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastPartConsumedLength The number of compressed bytes consumed from last *range* into fullCompressionBlock.    *                               Can be different from lastPartChunkLength due to header.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    */
+comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastPartConsumedLength The number of compressed bytes consumed from last *range* into fullCompressionBlock.    *                               Can be different from lastPartChunkLength due to header.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
 specifier|private
 specifier|static
-name|DiskRangeList
+name|ProcCacheChunk
 name|addOneCompressionBlockByteBuffer
 parameter_list|(
 name|ByteBuffer
@@ -4840,11 +4836,6 @@ argument_list|(
 name|cc
 argument_list|)
 expr_stmt|;
-return|return
-name|cc
-operator|.
-name|next
-return|;
 block|}
 else|else
 block|{
@@ -4879,10 +4870,10 @@ argument_list|(
 name|cc
 argument_list|)
 expr_stmt|;
-return|return
-name|lastChunk
-return|;
 block|}
+return|return
+name|cc
+return|;
 block|}
 block|}
 end_class

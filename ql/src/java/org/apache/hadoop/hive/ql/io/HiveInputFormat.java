@@ -1387,13 +1387,10 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|canWrapAnyForLlap
+name|isLlapEnabled
 parameter_list|(
 name|Configuration
 name|conf
-parameter_list|,
-name|MapWork
-name|mapWork
 parameter_list|)
 block|{
 comment|// Don't check IO - it needn't be initialized on client.
@@ -1408,7 +1405,21 @@ name|ConfVars
 operator|.
 name|LLAP_IO_ENABLED
 argument_list|)
-operator|&&
+return|;
+block|}
+specifier|public
+specifier|static
+name|boolean
+name|canWrapAnyForLlap
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|MapWork
+name|mapWork
+parameter_list|)
+block|{
+return|return
 name|Utilities
 operator|.
 name|isVectorMode

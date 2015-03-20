@@ -1089,6 +1089,17 @@ name|isLlapOn
 init|=
 name|HiveInputFormat
 operator|.
+name|isLlapEnabled
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|,
+name|canWrapAny
+init|=
+name|isLlapOn
+operator|&&
+name|HiveInputFormat
+operator|.
 name|canWrapAnyForLlap
 argument_list|(
 name|conf
@@ -1113,6 +1124,8 @@ operator|)
 decl_stmt|;
 if|if
 condition|(
+name|canWrapAny
+operator|&&
 name|hasPathToPartInfo
 condition|)
 block|{
@@ -1155,9 +1168,19 @@ operator|)
 expr_stmt|;
 block|}
 block|}
+else|else
+block|{
+name|hasNonLlap
+operator|=
+literal|true
+expr_stmt|;
+block|}
 name|llapIoDesc
 operator|=
 name|isLlapOn
+condition|?
+operator|(
+name|canWrapAny
 condition|?
 operator|(
 name|hasPathToPartInfo
@@ -1181,6 +1204,9 @@ operator|)
 operator|)
 else|:
 literal|"unknown"
+operator|)
+else|:
+literal|"no inputs"
 operator|)
 else|:
 literal|null
