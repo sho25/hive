@@ -460,7 +460,7 @@ name|EncodedReaderImpl
 implements|implements
 name|EncodedReader
 block|{
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|Log
