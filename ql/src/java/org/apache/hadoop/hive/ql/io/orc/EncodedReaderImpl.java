@@ -1608,6 +1608,29 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|listToRead
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Nothing to read for stripe ["
+operator|+
+name|stripe
+operator|+
+literal|"]"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 comment|// 2. Now, read all of the ranges from cache or disk.
 name|DiskRangeListMutateHelper
 name|toRead
