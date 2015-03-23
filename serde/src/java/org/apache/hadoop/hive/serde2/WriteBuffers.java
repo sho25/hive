@@ -143,22 +143,6 @@ name|WritableUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|hash
-operator|.
-name|MurmurHash
-import|;
-end_import
-
 begin_comment
 comment|/**  * The structure storing arbitrary amount of data as a set of fixed-size byte buffers.  * Maintains read and write pointers for convenient single-threaded writing/reading.  */
 end_comment
@@ -2818,7 +2802,7 @@ name|prevOffset
 expr_stmt|;
 block|}
 comment|// Lifted from org.apache.hadoop.util.hash.MurmurHash... but supports offset.
-specifier|private
+specifier|public
 specifier|static
 name|int
 name|murmurHash
@@ -3091,6 +3075,24 @@ literal|15
 expr_stmt|;
 return|return
 name|h
+return|;
+block|}
+comment|/**    * Write buffer size    * @return write buffer size    */
+specifier|public
+name|long
+name|size
+parameter_list|()
+block|{
+return|return
+name|writeBuffers
+operator|.
+name|size
+argument_list|()
+operator|*
+operator|(
+name|long
+operator|)
+name|wbSize
 return|;
 block|}
 block|}

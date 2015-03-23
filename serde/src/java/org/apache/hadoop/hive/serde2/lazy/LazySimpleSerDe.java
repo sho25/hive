@@ -848,7 +848,11 @@ operator|.
 name|getColumnTypes
 argument_list|()
 argument_list|,
+operator|new
+name|LazyObjectInspectorParametersImpl
+argument_list|(
 name|serdeParams
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|cachedLazyStruct

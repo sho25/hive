@@ -3262,6 +3262,30 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
+name|HIVEUSEHYBRIDGRACEHASHJOIN
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.hashtable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use hybrid"
+operator|+
+literal|"grace hash join as the join method for mapjoin."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMEMCHECKFREQ
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.memcheckfrequency"
+argument_list|,
+literal|1024
+argument_list|,
+literal|"For "
+operator|+
+literal|"hybrid grace hash join, how often (how many rows apart) we check if memory is full. "
+operator|+
+literal|"This number should be power of 2."
+argument_list|)
+block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"

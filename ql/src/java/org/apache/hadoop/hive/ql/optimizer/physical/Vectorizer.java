@@ -8718,6 +8718,25 @@ block|{
 case|case
 name|MAPJOIN
 case|:
+comment|// Disable Hybrid Grace Hash Join when vectorization is in effect, for now
+name|HiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|physicalContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEUSEHYBRIDGRACEHASHJOIN
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 case|case
 name|GROUPBY
 case|:
