@@ -70,12 +70,12 @@ parameter_list|)
 function_decl|;
 specifier|public
 name|OpTraits
-name|getOpTraits
+name|getTraits
 parameter_list|()
 function_decl|;
 specifier|public
 name|void
-name|setOpTraits
+name|setTraits
 parameter_list|(
 name|OpTraits
 name|opTraits

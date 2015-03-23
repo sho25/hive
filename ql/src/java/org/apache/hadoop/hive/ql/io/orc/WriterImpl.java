@@ -1084,6 +1084,7 @@ comment|/**  * An ORC file writer. The file is divided into stripes, which is th
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|WriterImpl
 implements|implements
@@ -2205,6 +2206,7 @@ return|return
 name|totalMemoryPool
 return|;
 block|}
+specifier|public
 specifier|static
 name|CompressionCodec
 name|createCodec

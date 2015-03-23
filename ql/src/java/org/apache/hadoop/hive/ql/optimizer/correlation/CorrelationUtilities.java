@@ -2952,7 +2952,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/** throw a exception if the input operator is null    * @param operator    * @throws HiveException    */
+comment|/**    * Throws an exception if the input operator is null    *    * @param operator    * @throws SemanticException if the input operator is null    */
 specifier|protected
 specifier|static
 name|void
@@ -2978,21 +2978,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Operator "
-operator|+
-name|operator
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|" (ID: "
-operator|+
-name|operator
-operator|.
-name|getIdentifier
-argument_list|()
-operator|+
-literal|") is null."
+literal|"Operator is null."
 argument_list|)
 throw|;
 block|}

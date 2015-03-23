@@ -302,6 +302,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -334,6 +337,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -390,6 +396,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -455,6 +464,9 @@ operator|.
 name|put
 argument_list|(
 name|kv2
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -525,6 +537,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|byte
@@ -574,6 +589,9 @@ operator|.
 name|put
 argument_list|(
 name|kv2
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|key
@@ -703,6 +721,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -854,6 +875,9 @@ operator|.
 name|put
 argument_list|(
 name|kv
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 for|for
@@ -1225,7 +1249,6 @@ name|lastKey
 operator|+=
 literal|465623573
 expr_stmt|;
-comment|// This number is certified to be random.
 name|int
 name|len
 init|=

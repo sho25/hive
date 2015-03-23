@@ -1683,7 +1683,7 @@ control|)
 block|{
 name|op
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|r
 index|[

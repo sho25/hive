@@ -1446,7 +1446,7 @@ try|try
 block|{
 name|reducer
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,

@@ -1867,16 +1867,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|op
-operator|.
-name|getChildOperators
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
 for|for
 control|(
 name|Operator
@@ -1898,7 +1888,6 @@ argument_list|(
 name|childOp
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|private

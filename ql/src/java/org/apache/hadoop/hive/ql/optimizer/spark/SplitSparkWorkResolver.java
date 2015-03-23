@@ -1228,14 +1228,14 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setOpTraits
+name|setTraits
 argument_list|(
 name|origin
 operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getOpTraits
+name|getTraits
 argument_list|()
 argument_list|)
 expr_stmt|;

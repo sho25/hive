@@ -1512,16 +1512,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-if|if
-condition|(
-name|op
-operator|.
-name|getChildOperators
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
 name|allChildren
 operator|.
 name|addAll
@@ -1532,7 +1522,6 @@ name|getChildOperators
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|ops
 operator|=

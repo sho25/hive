@@ -308,7 +308,7 @@ expr_stmt|;
 comment|// Process the batch
 name|lo
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|vrb
 argument_list|,

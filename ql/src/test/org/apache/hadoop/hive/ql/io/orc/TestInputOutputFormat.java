@@ -12440,7 +12440,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|OrcInputFormat
+name|SearchArgumentFactory
 operator|.
 name|SARG_PUSHDOWN
 argument_list|,

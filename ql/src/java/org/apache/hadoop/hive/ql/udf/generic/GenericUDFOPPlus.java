@@ -204,10 +204,9 @@ name|GenericUDF
 name|instantiateDTIUDF
 parameter_list|()
 block|{
-comment|// TODO: implement date-time/interval version of UDF
 return|return
 operator|new
-name|GenericUDFOPNumericPlus
+name|GenericUDFOPDTIPlus
 argument_list|()
 return|;
 block|}
