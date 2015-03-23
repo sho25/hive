@@ -6259,6 +6259,15 @@ argument_list|(
 name|txnId
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Setting current transaction to "
+operator|+
+name|txnId
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Set the transaction id in all of the acid file sinks
 if|if
