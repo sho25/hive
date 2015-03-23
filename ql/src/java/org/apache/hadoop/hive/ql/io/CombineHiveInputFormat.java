@@ -3321,6 +3321,14 @@ name|oldPaths
 argument_list|)
 expr_stmt|;
 block|}
+comment|// clear work from ThreadLocal after splits generated in case of thread is reused in pool.
+name|Utilities
+operator|.
+name|clearWorkMapForConf
+argument_list|(
+name|job
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
