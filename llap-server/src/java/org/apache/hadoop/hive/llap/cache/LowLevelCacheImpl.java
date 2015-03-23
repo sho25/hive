@@ -740,6 +740,14 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+name|long
+name|requestedLength
+init|=
+name|currentNotCached
+operator|.
+name|getLength
+argument_list|()
+decl_stmt|;
 comment|// Lock the buffer, validate it and add to results.
 if|if
 condition|(
@@ -869,10 +877,17 @@ name|metrics
 operator|.
 name|incrCacheHitBytes
 argument_list|(
+name|Math
+operator|.
+name|min
+argument_list|(
+name|requestedLength
+argument_list|,
 name|currentCached
 operator|.
 name|getLength
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
