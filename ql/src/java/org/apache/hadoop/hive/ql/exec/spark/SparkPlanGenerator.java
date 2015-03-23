@@ -814,6 +814,8 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+try|try
+block|{
 for|for
 control|(
 name|BaseWork
@@ -901,6 +903,17 @@ operator|.
 name|getName
 argument_list|()
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+finally|finally
+block|{
+comment|// clear all ThreadLocal cached MapWork/ReduceWork after plan generation
+comment|// as this may executed in a pool thread.
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|()
 expr_stmt|;
 block|}
 name|perfLogger
