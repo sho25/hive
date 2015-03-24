@@ -873,6 +873,8 @@ argument_list|,
 name|cachePolicy
 argument_list|,
 name|allocator
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// And finally cache policy uses cache to notify it of eviction. The cycle is complete!
