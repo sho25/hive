@@ -803,7 +803,7 @@ name|prev1
 operator|=
 name|t1
 expr_stmt|;
-name|prev1
+name|prev2
 operator|=
 name|t2
 expr_stmt|;
