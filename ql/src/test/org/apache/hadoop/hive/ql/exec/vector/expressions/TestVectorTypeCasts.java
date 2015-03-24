@@ -299,15 +299,6 @@ name|NANOS_PER_SECOND
 init|=
 literal|1000000000
 decl_stmt|;
-comment|// Number of microseconds in one second
-specifier|private
-specifier|static
-specifier|final
-name|long
-name|MICROS_PER_SECOND
-init|=
-literal|1000000
-decl_stmt|;
 annotation|@
 name|Test
 specifier|public
@@ -804,7 +795,7 @@ argument_list|(
 operator|-
 literal|2
 operator|*
-name|MICROS_PER_SECOND
+name|NANOS_PER_SECOND
 argument_list|,
 name|resultV
 operator|.
@@ -820,7 +811,7 @@ name|assertEquals
 argument_list|(
 literal|2
 operator|*
-name|MICROS_PER_SECOND
+name|NANOS_PER_SECOND
 argument_list|,
 name|resultV
 operator|.
