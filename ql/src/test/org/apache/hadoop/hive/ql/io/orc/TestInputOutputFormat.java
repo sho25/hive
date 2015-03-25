@@ -2965,6 +2965,8 @@ name|fs
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|gen

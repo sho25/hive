@@ -3845,6 +3845,9 @@ specifier|public
 name|EncodedReader
 name|encodedReader
 parameter_list|(
+name|long
+name|fileId
+parameter_list|,
 name|LowLevelCache
 name|lowLevelCache
 parameter_list|,
@@ -3887,6 +3890,8 @@ argument_list|(
 name|fileSystem
 argument_list|,
 name|path
+argument_list|,
+name|fileId
 argument_list|,
 name|useZeroCopy
 argument_list|,

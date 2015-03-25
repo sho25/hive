@@ -546,6 +546,9 @@ parameter_list|,
 name|Path
 name|path
 parameter_list|,
+name|long
+name|fileId
+parameter_list|,
 name|boolean
 name|useZeroCopy
 parameter_list|,
@@ -585,14 +588,7 @@ name|this
 operator|.
 name|fileId
 operator|=
-name|RecordReaderUtils
-operator|.
-name|getFileId
-argument_list|(
-name|fileSystem
-argument_list|,
-name|path
-argument_list|)
+name|fileId
 expr_stmt|;
 name|this
 operator|.
@@ -1913,7 +1909,7 @@ operator|=
 literal|false
 expr_stmt|;
 continue|continue;
-comment|// TODO#: this would be invalid with HL cache, where RG x col can be excluded.
+comment|// TODO: this would be invalid with HL cache, where RG x col can be excluded.
 block|}
 name|ColumnReadContext
 name|ctx

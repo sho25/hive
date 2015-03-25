@@ -3753,6 +3753,35 @@ return|return
 name|path
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|HdfsFileStatusWithId
+argument_list|>
+name|listLocatedHdfsStatus
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|path
+parameter_list|,
+name|PathFilter
+name|filter
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Not supported on old version"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

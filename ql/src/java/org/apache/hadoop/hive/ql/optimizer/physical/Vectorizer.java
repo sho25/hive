@@ -6776,7 +6776,6 @@ name|desc
 argument_list|)
 return|;
 block|}
-comment|// TODO#: validate this
 specifier|private
 name|boolean
 name|validateTableScanOperator

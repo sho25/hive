@@ -1557,8 +1557,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// TODO: this is the inefficient path
-comment|// TODO#: this is invalid; base stripe offset should be passed, return value handled.
+comment|// this is the inefficient path
+comment|// TODO: this is invalid; base stripe offset should be passed, return value handled.
 comment|//cache.putFileData(fileId, new DiskRange[] { new DiskRange(originalOffset,
 comment|//  chunkLength + OutStream.HEADER_SIZE) }, new LlapMemoryBuffer[] { cacheBuffer }, 0);
 block|}

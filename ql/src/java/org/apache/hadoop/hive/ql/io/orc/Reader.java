@@ -837,6 +837,9 @@ function_decl|;
 name|EncodedReader
 name|encodedReader
 parameter_list|(
+name|long
+name|fileId
+parameter_list|,
 name|LowLevelCache
 name|lowLevelCache
 parameter_list|,
