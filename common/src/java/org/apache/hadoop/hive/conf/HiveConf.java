@@ -8007,6 +8007,23 @@ literal|true
 argument_list|,
 literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
 argument_list|)
+block|,
+name|HIVE_LOG_N_RECORDS
+argument_list|(
+literal|"hive.log.every.n.records"
+argument_list|,
+literal|0L
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|null
+argument_list|)
+argument_list|,
+literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
+argument_list|)
 block|;
 specifier|public
 specifier|final
