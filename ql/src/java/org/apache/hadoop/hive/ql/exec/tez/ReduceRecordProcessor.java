@@ -1594,7 +1594,9 @@ block|{
 name|Utilities
 operator|.
 name|clearWorkMap
-argument_list|()
+argument_list|(
+name|jconf
+argument_list|)
 expr_stmt|;
 name|MapredContext
 operator|.

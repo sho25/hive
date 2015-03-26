@@ -803,6 +803,7 @@ name|MultiMRInput
 name|mainWorkMultiMRInput
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExecMapperContext
 name|execContext
 decl_stmt|;
@@ -2393,7 +2394,9 @@ block|{
 name|Utilities
 operator|.
 name|clearWorkMap
-argument_list|()
+argument_list|(
+name|jconf
+argument_list|)
 expr_stmt|;
 name|MapredContext
 operator|.

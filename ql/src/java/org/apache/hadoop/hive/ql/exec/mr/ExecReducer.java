@@ -1077,6 +1077,8 @@ throw|;
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|reduce
@@ -1695,7 +1697,9 @@ expr_stmt|;
 name|Utilities
 operator|.
 name|clearWorkMap
-argument_list|()
+argument_list|(
+name|jc
+argument_list|)
 expr_stmt|;
 block|}
 block|}

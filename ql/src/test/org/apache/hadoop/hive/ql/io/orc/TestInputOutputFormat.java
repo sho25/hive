@@ -8672,11 +8672,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|Utilities
-operator|.
-name|clearWorkMap
-argument_list|()
-expr_stmt|;
 name|JobConf
 name|conf
 init|=
@@ -8684,6 +8679,13 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|set

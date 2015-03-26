@@ -5230,7 +5230,9 @@ expr_stmt|;
 name|Utilities
 operator|.
 name|clearWorkMap
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -5656,6 +5658,8 @@ argument_list|(
 name|conf
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setSparkSession
