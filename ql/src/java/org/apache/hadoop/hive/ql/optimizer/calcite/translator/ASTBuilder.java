@@ -269,22 +269,6 @@ name|ParseDriver
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|util
-operator|.
-name|DateTimeMath
-import|;
-end_import
-
 begin_class
 class|class
 name|ASTBuilder
