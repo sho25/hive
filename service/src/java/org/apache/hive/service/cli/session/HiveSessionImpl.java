@@ -2223,14 +2223,9 @@ name|HiveSQLException
 name|e
 parameter_list|)
 block|{
-comment|// Cleanup opHandle in case the query is synchronous
-comment|// Async query needs to retain and pass back the opHandle for error reporting
-if|if
-condition|(
-operator|!
-name|runAsync
-condition|)
-block|{
+comment|// Refering to SQLOperation.java,there is no chance that a HiveSQLException throws and the asyn
+comment|// background operation submits to thread pool successfully at the same time. So, Cleanup
+comment|// opHandle directly when got HiveSQLException
 name|operationManager
 operator|.
 name|closeOperation
@@ -2238,7 +2233,6 @@ argument_list|(
 name|opHandle
 argument_list|)
 expr_stmt|;
-block|}
 throw|throw
 name|e
 throw|;
