@@ -155,6 +155,24 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ListObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|ObjectInspector
 import|;
 end_import
@@ -900,7 +918,7 @@ block|{
 comment|// For PARTIAL1 and COMPLETE: ObjectInspectors for original data
 specifier|private
 specifier|transient
-name|StandardListObjectInspector
+name|ListObjectInspector
 name|outerInputOI
 decl_stmt|;
 specifier|private
@@ -931,7 +949,7 @@ decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations
 specifier|private
 specifier|transient
-name|StandardListObjectInspector
+name|ListObjectInspector
 name|loi
 decl_stmt|;
 annotation|@
@@ -978,7 +996,7 @@ block|{
 name|outerInputOI
 operator|=
 operator|(
-name|StandardListObjectInspector
+name|ListObjectInspector
 operator|)
 name|parameters
 index|[
@@ -1096,7 +1114,7 @@ comment|// Init the list object inspector for handling partial aggregations
 name|loi
 operator|=
 operator|(
-name|StandardListObjectInspector
+name|ListObjectInspector
 operator|)
 name|parameters
 index|[
@@ -1253,16 +1271,10 @@ operator|)
 name|agg
 decl_stmt|;
 name|List
-argument_list|<
-name|Text
-argument_list|>
 name|partialNGrams
 init|=
 operator|(
 name|List
-argument_list|<
-name|Text
-argument_list|>
 operator|)
 name|loi
 operator|.

@@ -191,6 +191,24 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ListObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|ObjectInspector
 import|;
 end_import
@@ -245,7 +263,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|StandardListObjectInspector
+name|primitive
+operator|.
+name|DoubleObjectInspector
 import|;
 end_import
 
@@ -641,7 +661,7 @@ decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations (list of doubles)
 specifier|private
 specifier|transient
-name|StandardListObjectInspector
+name|ListObjectInspector
 name|loi
 decl_stmt|;
 annotation|@
@@ -720,7 +740,7 @@ block|{
 name|loi
 operator|=
 operator|(
-name|StandardListObjectInspector
+name|ListObjectInspector
 operator|)
 name|parameters
 index|[
@@ -1050,6 +1070,17 @@ argument_list|(
 name|partial
 argument_list|)
 decl_stmt|;
+name|DoubleObjectInspector
+name|doi
+init|=
+operator|(
+name|DoubleObjectInspector
+operator|)
+name|loi
+operator|.
+name|getListElementObjectInspector
+argument_list|()
+decl_stmt|;
 name|StdAgg
 name|myagg
 init|=
@@ -1065,6 +1096,8 @@ operator|.
 name|merge
 argument_list|(
 name|partialHistogram
+argument_list|,
+name|doi
 argument_list|)
 expr_stmt|;
 block|}
