@@ -262,7 +262,7 @@ name|rowsOnDisk
 init|=
 literal|0
 decl_stmt|;
-comment|// total number of pairs in output
+comment|// total number of objects in output
 specifier|private
 name|File
 name|parentFile
