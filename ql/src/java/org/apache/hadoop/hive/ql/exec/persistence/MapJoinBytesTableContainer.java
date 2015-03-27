@@ -2897,6 +2897,11 @@ name|Output
 name|output
 parameter_list|)
 block|{
+synchronized|synchronized
+init|(
+name|hashMap
+init|)
+block|{
 if|if
 condition|(
 name|refs
@@ -2960,6 +2965,7 @@ name|dummyRow
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|boolean
@@ -3127,6 +3133,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+synchronized|synchronized
+init|(
+name|hashMap
+init|)
+block|{
 if|if
 condition|(
 name|dummyRow
@@ -3264,7 +3275,9 @@ operator|.
 name|getFieldsAsList
 argument_list|()
 return|;
-comment|// TODO: should we unset bytes after that?
+comment|// TODO: should we unset bytes
+comment|// after that?
+block|}
 block|}
 annotation|@
 name|Override
