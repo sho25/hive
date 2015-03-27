@@ -4224,6 +4224,7 @@ operator|.
 name|SELECT_TAG
 argument_list|)
 decl_stmt|;
+comment|// Update the info of SEL operator based on the pruned reordered columns
 comment|// these are from ColumnPrunerSelectProc
 name|List
 argument_list|<
@@ -4246,22 +4247,6 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|rs
-operator|.
-name|getSignature
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|!=
-name|cols
-operator|.
-name|size
-argument_list|()
-condition|)
-block|{
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -4447,7 +4432,6 @@ argument_list|,
 name|lvFCols
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 literal|null
 return|;
