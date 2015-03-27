@@ -76,7 +76,7 @@ name|isTraceOrcEnabled
 parameter_list|()
 block|{
 return|return
-name|isTraceOrcEnabled
+literal|true
 return|;
 comment|// TODO: temporary, should be hardcoded false
 block|}

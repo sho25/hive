@@ -820,7 +820,8 @@ if|if
 condition|(
 name|curRange
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|<=
 name|desired
 operator|&&
@@ -829,7 +830,8 @@ name|desired
 operator|-
 name|curRange
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|)
 operator|<
 name|curRange
@@ -876,7 +878,8 @@ name|desired
 operator|-
 name|curRange
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// this is why we duplicate
@@ -921,7 +924,8 @@ operator|-
 literal|1
 argument_list|)
 operator|.
-name|end
+name|getEnd
+argument_list|()
 condition|)
 block|{
 name|currentOffset
@@ -974,7 +978,8 @@ name|desired
 operator|-
 name|curRange
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// this is why we duplicate
@@ -1352,11 +1357,6 @@ assert|;
 return|return;
 comment|// Next block is ready from cache.
 block|}
-name|long
-name|originalOffset
-init|=
-name|currentOffset
-decl_stmt|;
 if|if
 condition|(
 name|compressed
@@ -2279,7 +2279,8 @@ if|if
 condition|(
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|<=
 name|desired
 operator|&&
@@ -2287,7 +2288,8 @@ name|desired
 operator|<
 name|range
 operator|.
-name|end
+name|getEnd
+argument_list|()
 condition|)
 block|{
 name|currentRange
@@ -2333,7 +2335,8 @@ name|desired
 operator|-
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|compressed
@@ -2374,7 +2377,8 @@ name|desired
 operator|!=
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -2422,7 +2426,8 @@ operator|-
 literal|1
 argument_list|)
 operator|.
-name|end
+name|getEnd
+argument_list|()
 condition|)
 block|{
 name|DiskRange
@@ -2515,7 +2520,8 @@ name|desired
 operator|!=
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -2599,18 +2605,21 @@ literal|" = "
 operator|+
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|+
 literal|" to "
 operator|+
 operator|(
 name|range
 operator|.
-name|end
+name|getEnd
+argument_list|()
 operator|-
 name|range
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|)
 argument_list|)
 expr_stmt|;
@@ -3124,7 +3133,8 @@ name|cOffset
 operator|>
 name|current
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 condition|)
 block|{
 comment|// Target compression block is in the middle of the range; slice the range in two.
@@ -3222,7 +3232,8 @@ name|currentCOffset
 operator|=
 name|cc
 operator|.
-name|end
+name|getEnd
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -3306,7 +3317,8 @@ name|originalOffset
 init|=
 name|bc
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 decl_stmt|;
 name|lastCached
 operator|=
@@ -3353,7 +3365,8 @@ operator|)
 condition|?
 name|next
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 else|:
 name|originalOffset
 expr_stmt|;
@@ -4006,7 +4019,8 @@ while|while
 condition|(
 name|ranges
 operator|.
-name|end
+name|getEnd
+argument_list|()
 operator|<=
 name|cOffset
 condition|)
@@ -4022,7 +4036,8 @@ while|while
 condition|(
 name|ranges
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 operator|>
 name|cOffset
 condition|)
@@ -4094,7 +4109,8 @@ name|cbStartOffset
 init|=
 name|current
 operator|.
-name|offset
+name|getOffset
+argument_list|()
 decl_stmt|;
 name|int
 name|b0
@@ -4275,8 +4291,6 @@ name|cbEndOffset
 argument_list|,
 name|chunkLength
 argument_list|,
-name|consumedLength
-argument_list|,
 name|current
 argument_list|,
 name|cache
@@ -4316,7 +4330,8 @@ if|if
 condition|(
 name|current
 operator|.
-name|end
+name|getEnd
+argument_list|()
 operator|<
 name|cbEndOffset
 operator|&&
@@ -4518,8 +4533,6 @@ name|cbEndOffset
 argument_list|,
 name|remaining
 argument_list|,
-name|remaining
-argument_list|,
 operator|(
 name|BufferChunk
 operator|)
@@ -4638,7 +4651,7 @@ literal|null
 return|;
 comment|// This is impossible to read from this chunk.
 block|}
-comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastPartChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastPartConsumedLength The number of compressed bytes consumed from last *range* into fullCompressionBlock.    *                               Can be different from lastPartChunkLength due to header.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
+comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
 specifier|private
 specifier|static
 name|ProcCacheChunk
@@ -4657,10 +4670,7 @@ name|long
 name|cbEndOffset
 parameter_list|,
 name|int
-name|lastPartChunkLength
-parameter_list|,
-name|int
-name|lastPartConsumedLength
+name|lastChunkLength
 parameter_list|,
 name|BufferChunk
 name|lastChunk
@@ -4750,13 +4760,9 @@ name|lastChunk
 operator|+
 literal|" to consume "
 operator|+
-name|lastPartChunkLength
+name|lastChunkLength
 operator|+
-literal|" compressed / "
-operator|+
-name|lastPartConsumedLength
-operator|+
-literal|" total bytes"
+literal|" compressed bytes"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4773,14 +4779,8 @@ operator|.
 name|position
 argument_list|()
 operator|+
-name|lastPartChunkLength
+name|lastChunkLength
 argument_list|)
-expr_stmt|;
-name|lastChunk
-operator|.
-name|offset
-operator|+=
-name|lastPartConsumedLength
 expr_stmt|;
 comment|// Finally, put it in the ranges list for future use (if shared between RGs).
 comment|// Before anyone else accesses it, it would have been allocated and decompressed locally.
@@ -4820,15 +4820,6 @@ literal|" in the buffers"
 argument_list|)
 expr_stmt|;
 block|}
-assert|assert
-name|lastChunk
-operator|.
-name|offset
-operator|==
-name|lastChunk
-operator|.
-name|end
-assert|;
 name|lastChunk
 operator|.
 name|replaceSelfWith
@@ -4865,7 +4856,7 @@ expr_stmt|;
 block|}
 name|lastChunk
 operator|.
-name|insertBefore
+name|insertPartBefore
 argument_list|(
 name|cc
 argument_list|)
