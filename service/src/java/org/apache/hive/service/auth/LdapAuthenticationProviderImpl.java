@@ -252,6 +252,28 @@ operator|+
 name|ldapDomain
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|password
+operator|==
+literal|null
+operator|||
+name|password
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|AuthenticationException
+argument_list|(
+literal|"Error validating LDAP user:"
+operator|+
+literal|" a null or blank password has been provided"
+argument_list|)
+throw|;
+block|}
 comment|// setup the security principal
 name|String
 name|bindDN

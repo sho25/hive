@@ -530,7 +530,7 @@ try|try
 block|{
 name|mergeOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,

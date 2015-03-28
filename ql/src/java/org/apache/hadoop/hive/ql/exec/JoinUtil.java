@@ -460,6 +460,21 @@ specifier|public
 class|class
 name|JoinUtil
 block|{
+comment|/**    * Represents the join result between two tables    */
+specifier|public
+specifier|static
+enum|enum
+name|JoinResult
+block|{
+name|MATCH
+block|,
+comment|// A match is found
+name|NOMATCH
+block|,
+comment|// No match is found, and the current row will be dropped
+name|SPILL
+comment|// The current row has been spilled to disk, as the join is postponed
+block|}
 specifier|public
 specifier|static
 name|List

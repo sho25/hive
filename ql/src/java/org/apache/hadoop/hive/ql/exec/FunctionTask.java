@@ -481,10 +481,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|transient
-name|HiveConf
-name|conf
-decl_stmt|;
 specifier|public
 name|FunctionTask
 parameter_list|()
@@ -519,12 +515,6 @@ name|queryPlan
 argument_list|,
 name|ctx
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
 expr_stmt|;
 block|}
 annotation|@

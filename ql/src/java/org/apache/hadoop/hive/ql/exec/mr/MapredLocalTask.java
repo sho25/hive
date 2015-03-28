@@ -2617,7 +2617,7 @@ break|break;
 block|}
 name|forwardOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 operator|.
@@ -2913,7 +2913,7 @@ decl_stmt|;
 comment|// put the exe context into all the operators
 name|forwardOp
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|execContext
 argument_list|)

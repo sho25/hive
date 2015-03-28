@@ -6295,6 +6295,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 operator|.
 name|getRowGroupIndex
@@ -6429,6 +6431,8 @@ operator|.
 name|readRowIndex
 argument_list|(
 literal|1
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)

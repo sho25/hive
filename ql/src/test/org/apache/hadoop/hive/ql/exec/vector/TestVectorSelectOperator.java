@@ -833,7 +833,7 @@ argument_list|)
 decl_stmt|;
 name|vso
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|vrg
 argument_list|,

@@ -729,6 +729,7 @@ name|Long
 operator|.
 name|MAX_VALUE
 decl_stmt|;
+specifier|public
 name|ReaderOptions
 parameter_list|(
 name|Configuration

@@ -4703,6 +4703,13 @@ name|ColumnStatsDesc
 argument_list|(
 name|tbl
 operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|tbl
+operator|.
 name|getTableName
 argument_list|()
 argument_list|,
@@ -8549,7 +8556,9 @@ block|}
 name|storageFormat
 operator|.
 name|fillDefaultStorageFormat
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

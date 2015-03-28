@@ -839,6 +839,14 @@ name|methodName
 operator|.
 name|startsWith
 argument_list|(
+literal|"get_database"
+argument_list|)
+operator|&&
+operator|!
+name|methodName
+operator|.
+name|startsWith
+argument_list|(
 literal|"get_table"
 argument_list|)
 operator|&&

@@ -33,6 +33,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -67,9 +79,12 @@ name|String
 name|key
 parameter_list|)
 function_decl|;
-comment|/**    * Retrieve object from cache.    * @param key    * @param fn function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
+comment|/**    * Retrieve object from cache.    *    * @param<T>    * @param key    * @param fn    *          function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
 specifier|public
-name|Object
+parameter_list|<
+name|T
+parameter_list|>
+name|T
 name|retrieve
 parameter_list|(
 name|String
@@ -77,7 +92,30 @@ name|key
 parameter_list|,
 name|Callable
 argument_list|<
-name|?
+name|T
+argument_list|>
+name|fn
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
+comment|/**    * Retrieve object from cache asynchronously.    *    * @param<T>    * @param key    * @param fn    *          function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|Future
+argument_list|<
+name|T
+argument_list|>
+name|retrieveAsync
+parameter_list|(
+name|String
+name|key
+parameter_list|,
+name|Callable
+argument_list|<
+name|T
 argument_list|>
 name|fn
 parameter_list|)

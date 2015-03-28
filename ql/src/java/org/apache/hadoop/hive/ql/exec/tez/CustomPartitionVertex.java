@@ -1840,13 +1840,6 @@ index|]
 argument_list|)
 operator|)
 decl_stmt|;
-name|HiveSplitGenerator
-name|hiveSplitGenerator
-init|=
-operator|new
-name|HiveSplitGenerator
-argument_list|()
-decl_stmt|;
 name|Multimap
 argument_list|<
 name|Integer
@@ -1855,7 +1848,7 @@ name|InputSplit
 argument_list|>
 name|groupedSplit
 init|=
-name|hiveSplitGenerator
+name|grouper
 operator|.
 name|generateGroupedSplits
 argument_list|(
@@ -1987,13 +1980,6 @@ name|keySet
 argument_list|()
 control|)
 block|{
-name|HiveSplitGenerator
-name|hiveSplitGenerator
-init|=
-operator|new
-name|HiveSplitGenerator
-argument_list|()
-decl_stmt|;
 name|InputSplit
 index|[]
 name|inputSplitArray
@@ -2024,7 +2010,7 @@ name|InputSplit
 argument_list|>
 name|groupedSplit
 init|=
-name|hiveSplitGenerator
+name|grouper
 operator|.
 name|generateGroupedSplits
 argument_list|(

@@ -782,6 +782,8 @@ name|Object
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|call
@@ -904,7 +906,7 @@ argument_list|)
 expr_stmt|;
 name|mergeOp
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|execContext
 argument_list|)
@@ -1238,7 +1240,7 @@ name|value
 expr_stmt|;
 name|mergeOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,

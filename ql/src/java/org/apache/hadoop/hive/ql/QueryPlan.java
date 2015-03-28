@@ -1041,7 +1041,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"%1$4d%2$02d%3$02d%4$02d%5$02d%5$02d"
+literal|"%1$4d%2$02d%3$02d%4$02d%5$02d%6$02d"
 argument_list|,
 name|gc
 operator|.
@@ -3146,7 +3146,7 @@ block|}
 annotation|@
 name|SuppressWarnings
 argument_list|(
-literal|"unchecked"
+literal|"rawtypes"
 argument_list|)
 specifier|private
 name|String
@@ -3236,7 +3236,7 @@ block|}
 annotation|@
 name|SuppressWarnings
 argument_list|(
-literal|"unchecked"
+literal|"rawtypes"
 argument_list|)
 specifier|public
 name|String

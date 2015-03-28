@@ -13160,7 +13160,7 @@ literal|"Unable to determine if "
 operator|+
 name|path
 operator|+
-literal|"is encrypted: "
+literal|" is encrypted: "
 operator|+
 name|e
 argument_list|,
@@ -13366,7 +13366,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Gets the strongest encrypted table path.    *    * @param qb The QB object that contains a list of all table locations.    * @return The strongest encrypted path    * @throws HiveException if an error occurred attempting to compare the encryption strength    */
+comment|/**    * Gets the strongest encrypted table path.    *    * @param qb The QB object that contains a list of all table locations.    * @return The strongest encrypted path. It may return NULL if there are not tables encrypted, or are not HDFS tables.    * @throws HiveException if an error occurred attempting to compare the encryption strength    */
 specifier|private
 name|Path
 name|getStrongestEncryptedTablePath
@@ -13444,7 +13444,29 @@ operator|!=
 literal|null
 condition|)
 block|{
-try|try
+if|if
+condition|(
+literal|"hdfs"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tablePath
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|isPathEncrypted
+argument_list|(
+name|tablePath
+argument_list|)
+condition|)
 block|{
 if|if
 condition|(
@@ -13461,24 +13483,6 @@ block|}
 elseif|else
 if|if
 condition|(
-literal|"hdfs"
-operator|.
-name|equals
-argument_list|(
-name|tablePath
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getScheme
-argument_list|()
-argument_list|)
-operator|&&
-name|isPathEncrypted
-argument_list|(
-name|tablePath
-argument_list|)
-operator|&&
 name|comparePathKeyStrength
 argument_list|(
 name|tablePath
@@ -13495,23 +13499,6 @@ name|tablePath
 expr_stmt|;
 block|}
 block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Unable to find the most secure table path: "
-operator|+
-name|e
-argument_list|,
-name|e
-argument_list|)
-throw|;
 block|}
 block|}
 block|}
@@ -13538,7 +13525,8 @@ literal|null
 decl_stmt|,
 name|tablePath
 decl_stmt|;
-comment|// Looks for the most encrypted table location (if there is one)
+comment|// Looks for the most encrypted table location
+comment|// It may return null if there are not tables encrypted, or are not part of HDFS
 name|tablePath
 operator|=
 name|getStrongestEncryptedTablePath
@@ -13551,30 +13539,9 @@ condition|(
 name|tablePath
 operator|!=
 literal|null
-operator|&&
-name|isPathEncrypted
-argument_list|(
-name|tablePath
-argument_list|)
 condition|)
 block|{
-comment|// Only HDFS paths can be checked for encryption
-if|if
-condition|(
-literal|"hdfs"
-operator|.
-name|equals
-argument_list|(
-name|tablePath
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getScheme
-argument_list|()
-argument_list|)
-condition|)
-block|{
+comment|// At this point, tablePath is part of HDFS and it is encrypted
 if|if
 condition|(
 name|isPathReadOnly
@@ -13620,22 +13587,6 @@ operator|=
 name|tmpPath
 expr_stmt|;
 block|}
-block|}
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Encryption is not applicable to table path "
-operator|+
-name|tablePath
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 if|if
 condition|(
@@ -64793,7 +64744,9 @@ block|}
 name|storageFormat
 operator|.
 name|fillDefaultStorageFormat
-argument_list|()
+argument_list|(
+name|isExt
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -64883,6 +64836,10 @@ block|}
 name|addDbAndTabToOutputs
 argument_list|(
 name|qualifiedTabName
+argument_list|,
+name|TableType
+operator|.
+name|MANAGED_TABLE
 argument_list|)
 expr_stmt|;
 if|if
@@ -65491,6 +65448,9 @@ parameter_list|(
 name|String
 index|[]
 name|qualifiedTabName
+parameter_list|,
+name|TableType
+name|type
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -65523,13 +65483,9 @@ name|DDL_SHARED
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|outputs
-operator|.
-name|add
-argument_list|(
-operator|new
-name|WriteEntity
-argument_list|(
+name|Table
+name|t
+init|=
 operator|new
 name|Table
 argument_list|(
@@ -65543,6 +65499,22 @@ index|[
 literal|1
 index|]
 argument_list|)
+decl_stmt|;
+name|t
+operator|.
+name|setTableType
+argument_list|(
+name|type
+argument_list|)
+expr_stmt|;
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|t
 argument_list|,
 name|WriteEntity
 operator|.
@@ -65926,6 +65898,10 @@ expr_stmt|;
 name|addDbAndTabToOutputs
 argument_list|(
 name|qualTabName
+argument_list|,
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
 argument_list|)
 expr_stmt|;
 return|return

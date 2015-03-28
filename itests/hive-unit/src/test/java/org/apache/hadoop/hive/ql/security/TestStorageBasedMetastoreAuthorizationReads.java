@@ -298,7 +298,7 @@ literal|"create table "
 operator|+
 name|dbDotTable
 operator|+
-literal|"(i int) partitioned by (date string)"
+literal|"(i int) partitioned by (`date` string)"
 argument_list|)
 expr_stmt|;
 name|Assert

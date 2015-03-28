@@ -53,7 +53,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -66,7 +66,7 @@ name|HiveException
 block|{
 name|super
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,

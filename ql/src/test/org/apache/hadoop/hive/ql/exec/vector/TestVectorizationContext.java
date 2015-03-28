@@ -2624,7 +2624,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|INT_DATETIME_FAMILY
+name|INT_DATETIME_INTERVAL_FAMILY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

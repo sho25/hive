@@ -105,16 +105,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|EnumSet
 import|;
 end_import
@@ -136,6 +126,16 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TimeZone
 import|;
 end_import
 
@@ -1084,6 +1084,7 @@ comment|/**  * An ORC file writer. The file is divided into stripes, which is th
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|WriterImpl
 implements|implements
@@ -2205,6 +2206,7 @@ return|return
 name|totalMemoryPool
 return|;
 block|}
+specifier|public
 specifier|static
 name|CompressionCodec
 name|createCodec
@@ -3882,6 +3884,19 @@ operator|.
 name|addColumns
 argument_list|(
 name|getEncoding
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
+name|setWriterTimezone
+argument_list|(
+name|TimeZone
+operator|.
+name|getDefault
+argument_list|()
+operator|.
+name|getID
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7346,20 +7361,10 @@ literal|1000
 decl_stmt|;
 specifier|static
 specifier|final
-name|long
-name|BASE_TIMESTAMP
+name|String
+name|BASE_TIMESTAMP_STRING
 init|=
-name|Timestamp
-operator|.
-name|valueOf
-argument_list|(
 literal|"2015-01-01 00:00:00"
-argument_list|)
-operator|.
-name|getTime
-argument_list|()
-operator|/
-name|MILLIS_PER_SECOND
 decl_stmt|;
 specifier|private
 specifier|static
@@ -7382,6 +7387,11 @@ specifier|private
 specifier|final
 name|boolean
 name|isDirectV2
+decl_stmt|;
+specifier|private
+specifier|final
+name|long
+name|base_timestamp
 decl_stmt|;
 name|TimestampTreeWriter
 parameter_list|(
@@ -7480,6 +7490,23 @@ name|recordPosition
 argument_list|(
 name|rowIndexPosition
 argument_list|)
+expr_stmt|;
+comment|// for unit tests to set different time zones
+name|this
+operator|.
+name|base_timestamp
+operator|=
+name|Timestamp
+operator|.
+name|valueOf
+argument_list|(
+name|BASE_TIMESTAMP_STRING
+argument_list|)
+operator|.
+name|getTime
+argument_list|()
+operator|/
+name|MILLIS_PER_SECOND
 expr_stmt|;
 block|}
 annotation|@
@@ -7601,7 +7628,7 @@ operator|/
 name|MILLIS_PER_SECOND
 operator|)
 operator|-
-name|BASE_TIMESTAMP
+name|base_timestamp
 argument_list|)
 expr_stmt|;
 name|nanos

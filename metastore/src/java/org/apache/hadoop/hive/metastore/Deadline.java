@@ -291,6 +291,52 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Check whether the timer is started.    * @return    * @throws MetaException    */
+specifier|public
+specifier|static
+name|boolean
+name|isStarted
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+name|Deadline
+name|deadline
+init|=
+name|getCurrentDeadline
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|deadline
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|deadline
+operator|.
+name|startTime
+operator|>=
+literal|0
+return|;
+block|}
+else|else
+block|{
+throw|throw
+name|newMetaException
+argument_list|(
+operator|new
+name|DeadlineException
+argument_list|(
+literal|"The threadlocal Deadline is null,"
+operator|+
+literal|" please register it firstly."
+argument_list|)
+argument_list|)
+throw|;
+block|}
+block|}
 comment|/**    * start the timer before a method is invoked.    * @param method    */
 specifier|public
 specifier|static
