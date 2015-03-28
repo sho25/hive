@@ -207,6 +207,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|NoSuchObjectException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Partition
 import|;
 end_import
@@ -677,6 +695,32 @@ argument_list|(
 name|ci
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|t
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Most likely this means it's a temp table
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Can't find table "
+operator|+
+name|ci
+operator|.
+name|getFullTableName
+argument_list|()
+operator|+
+literal|", assuming it's a temp "
+operator|+
+literal|"table and moving on."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 comment|// check if no compaction set for this table
 if|if
 condition|(
@@ -698,6 +742,52 @@ name|t
 argument_list|)
 operator|+
 literal|" marked true so we will not compact it."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+comment|// Check to see if this is a table level request on a partitioned table.  If so,
+comment|// then it's a dynamic partitioning case and we shouldn't check the table itself.
+if|if
+condition|(
+name|t
+operator|.
+name|getPartitionKeys
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|t
+operator|.
+name|getPartitionKeys
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+operator|&&
+name|ci
+operator|.
+name|partName
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping entry for "
+operator|+
+name|ci
+operator|.
+name|getFullTableName
+argument_list|()
+operator|+
+literal|" as it is from dynamic"
+operator|+
+literal|" partitioning"
 argument_list|)
 expr_stmt|;
 continue|continue;

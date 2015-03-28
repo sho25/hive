@@ -1049,9 +1049,6 @@ name|void
 name|merge
 parameter_list|(
 name|List
-argument_list|<
-name|Text
-argument_list|>
 name|other
 parameter_list|)
 throws|throws
@@ -1285,9 +1282,10 @@ name|j
 operator|++
 control|)
 block|{
-name|Text
-name|word
-init|=
+name|key
+operator|.
+name|add
+argument_list|(
 name|other
 operator|.
 name|get
@@ -1296,12 +1294,6 @@ name|i
 operator|+
 name|j
 argument_list|)
-decl_stmt|;
-name|key
-operator|.
-name|add
-argument_list|(
-name|word
 operator|.
 name|toString
 argument_list|()

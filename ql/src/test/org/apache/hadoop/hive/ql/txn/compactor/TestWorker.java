@@ -1550,6 +1550,8 @@ argument_list|>
 argument_list|()
 argument_list|,
 name|sortCols
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|addBaseFile
@@ -1734,6 +1736,8 @@ argument_list|>
 argument_list|()
 argument_list|,
 name|sortCols
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|Partition

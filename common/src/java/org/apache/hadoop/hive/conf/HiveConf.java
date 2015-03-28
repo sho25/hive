@@ -3262,6 +3262,30 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
+name|HIVEUSEHYBRIDGRACEHASHJOIN
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.hashtable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use hybrid"
+operator|+
+literal|"grace hash join as the join method for mapjoin."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMEMCHECKFREQ
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.memcheckfrequency"
+argument_list|,
+literal|1024
+argument_list|,
+literal|"For "
+operator|+
+literal|"hybrid grace hash join, how often (how many rows apart) we check if memory is full. "
+operator|+
+literal|"This number should be power of 2."
+argument_list|)
+block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
@@ -8203,6 +8227,32 @@ argument_list|,
 literal|"DIGEST-MD5"
 argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
+argument_list|)
+block|,
+name|NWAYJOINREORDER
+argument_list|(
+literal|"hive.reorder.nway.joins"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
+argument_list|)
+block|,
+name|HIVE_LOG_N_RECORDS
+argument_list|(
+literal|"hive.log.every.n.records"
+argument_list|,
+literal|0L
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|null
+argument_list|)
+argument_list|,
+literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
 argument_list|)
 block|;
 specifier|public

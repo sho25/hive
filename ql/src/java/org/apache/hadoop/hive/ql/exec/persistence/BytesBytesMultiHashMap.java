@@ -229,6 +229,10 @@ specifier|private
 name|int
 name|keysAssigned
 decl_stmt|;
+specifier|private
+name|int
+name|numValues
+decl_stmt|;
 comment|/**    * Largest number of probe steps ever taken to find location for a key. When getting, we can    * conclude that they key is not in hashtable when we make this many steps and don't find it.    */
 specifier|private
 name|int
@@ -304,9 +308,6 @@ name|wbSize
 parameter_list|,
 name|long
 name|memUsage
-parameter_list|,
-name|int
-name|defaultCapacity
 parameter_list|)
 block|{
 if|if
@@ -493,8 +494,6 @@ name|wbSize
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|100000
 argument_list|)
 expr_stmt|;
 block|}
@@ -563,6 +562,9 @@ name|put
 parameter_list|(
 name|KvSource
 name|kv
+parameter_list|,
+name|int
+name|keyHashCode
 parameter_list|)
 throws|throws
 name|SerDeException
@@ -621,6 +623,13 @@ decl_stmt|;
 name|int
 name|hashCode
 init|=
+operator|(
+name|keyHashCode
+operator|==
+operator|-
+literal|1
+operator|)
+condition|?
 name|writeBuffers
 operator|.
 name|hashCode
@@ -629,6 +638,8 @@ name|keyOffset
 argument_list|,
 name|keyLength
 argument_list|)
+else|:
+name|keyHashCode
 decl_stmt|;
 name|int
 name|slot
@@ -792,6 +803,9 @@ name|ref
 argument_list|)
 expr_stmt|;
 block|}
+operator|++
+name|numValues
+expr_stmt|;
 block|}
 comment|/**    * Gets "lazy" values for a key (as a set of byte segments in underlying buffer).    * @param key Key buffer.    * @param length Length of the key in buffer.    * @param result The list to use to store the results.    * @return the state byte for the key (see class description).    */
 specifier|public
@@ -1031,6 +1045,7 @@ name|valueRef
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Number of keys in the hashmap    * @return number of keys    */
 specifier|public
 name|int
 name|size
@@ -1038,6 +1053,37 @@ parameter_list|()
 block|{
 return|return
 name|keysAssigned
+return|;
+block|}
+comment|/**    * Number of values in the hashmap    * This is equal to or bigger than number of keys, since some values may share the same key    * @return number of values    */
+specifier|public
+name|int
+name|getNumValues
+parameter_list|()
+block|{
+return|return
+name|numValues
+return|;
+block|}
+comment|/**    * Number of bytes used by the hashmap    * There are two main components that take most memory: writeBuffers and refs    * Others include instance fields: 100    * @return number of bytes    */
+specifier|public
+name|long
+name|memorySize
+parameter_list|()
+block|{
+return|return
+name|writeBuffers
+operator|.
+name|size
+argument_list|()
+operator|+
+name|refs
+operator|.
+name|length
+operator|*
+literal|8
+operator|+
+literal|100
 return|;
 block|}
 specifier|public

@@ -84,6 +84,10 @@ name|VARCHAR
 block|,
 name|CHAR
 block|,
+name|INTERVAL_YEAR_MONTH
+block|,
+name|INTERVAL_DAY_TIME
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;

@@ -109,16 +109,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
-operator|.
-name|BigDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|sql
 operator|.
 name|Date
@@ -1386,11 +1376,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-operator|new
-name|BigDecimal
-argument_list|(
-literal|4.2222
-argument_list|)
+literal|"4.2222"
 argument_list|)
 argument_list|,
 operator|new
@@ -1491,11 +1477,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-operator|new
-name|BigDecimal
-argument_list|(
-literal|2.2222
-argument_list|)
+literal|"2.2222"
 argument_list|)
 argument_list|,
 operator|new
@@ -1562,11 +1544,6 @@ init|=
 name|System
 operator|.
 name|out
-decl_stmt|;
-name|String
-name|outputFilename
-init|=
-literal|"orc-file-dump.out"
 decl_stmt|;
 name|ByteArrayOutputStream
 name|myOut
@@ -1635,7 +1612,7 @@ decl_stmt|;
 comment|// Don't be fooled by the big space in the middle, this line is quite long
 name|assertEquals
 argument_list|(
-literal|"{\"b\":true,\"bt\":10,\"s\":100,\"i\":1000,\"l\":10000,\"f\":4,\"d\":20,\"de\":\"4.222199999999999953\",\"t\":\"2014-11-25 18:09:24\",\"dt\":\"2014-11-25\",\"str\":\"string\",\"c\":\"hello                                                                                                                                                                                                                                                          \",\"vc\":\"hello\",\"m\":[{\"_key\":\"k1\",\"_value\":\"v1\"}],\"a\":[100,200],\"st\":{\"i\":10,\"s\":\"foo\"}}"
+literal|"{\"b\":true,\"bt\":10,\"s\":100,\"i\":1000,\"l\":10000,\"f\":4,\"d\":20,\"de\":\"4.2222\",\"t\":\"2014-11-25 18:09:24\",\"dt\":\"2014-11-25\",\"str\":\"string\",\"c\":\"hello                                                                                                                                                                                                                                                          \",\"vc\":\"hello\",\"m\":[{\"_key\":\"k1\",\"_value\":\"v1\"}],\"a\":[100,200],\"st\":{\"i\":10,\"s\":\"foo\"}}"
 argument_list|,
 name|lines
 index|[
@@ -1645,7 +1622,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"{\"b\":false,\"bt\":20,\"s\":200,\"i\":2000,\"l\":20000,\"f\":8,\"d\":40,\"de\":\"2.222199999999999953\",\"t\":\"2014-11-25 18:02:44\",\"dt\":\"2014-09-28\",\"str\":\"abcd\",\"c\":\"world                                                                                                                                                                                                                                                          \",\"vc\":\"world\",\"m\":[{\"_key\":\"k3\",\"_value\":\"v3\"}],\"a\":[200,300],\"st\":{\"i\":20,\"s\":\"bar\"}}"
+literal|"{\"b\":false,\"bt\":20,\"s\":200,\"i\":2000,\"l\":20000,\"f\":8,\"d\":40,\"de\":\"2.2222\",\"t\":\"2014-11-25 18:02:44\",\"dt\":\"2014-09-28\",\"str\":\"abcd\",\"c\":\"world                                                                                                                                                                                                                                                          \",\"vc\":\"world\",\"m\":[{\"_key\":\"k3\",\"_value\":\"v3\"}],\"a\":[200,300],\"st\":{\"i\":20,\"s\":\"bar\"}}"
 argument_list|,
 name|lines
 index|[

@@ -1642,17 +1642,11 @@ operator|new
 name|EOFException
 argument_list|()
 throw|;
-if|if
-condition|(
+assert|assert
 name|count
-operator|==
+operator|!=
 literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
+operator|:
 literal|"0-length read: "
 operator|+
 operator|(
@@ -1668,28 +1662,16 @@ name|pos
 operator|-
 name|startPos
 operator|)
-operator|+
-literal|" and "
-operator|+
-name|pos
-argument_list|)
-throw|;
-block|}
+assert|;
 name|pos
 operator|+=
 name|count
 expr_stmt|;
-if|if
-condition|(
+assert|assert
 name|pos
-operator|>
+operator|<=
 name|endPos
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
+operator|:
 literal|"Position "
 operator|+
 name|pos
@@ -1698,16 +1680,10 @@ literal|"> "
 operator|+
 name|endPos
 operator|+
-literal|"("
-operator|+
-name|len
-operator|+
-literal|") after reading "
+literal|" after reading "
 operator|+
 name|count
-argument_list|)
-throw|;
-block|}
+assert|;
 name|directBuf
 operator|.
 name|position
@@ -1728,6 +1704,7 @@ name|pos
 operator|==
 name|startPos
 assert|;
+comment|// Happens in q files and such.
 name|RecordReaderImpl
 operator|.
 name|LOG

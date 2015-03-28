@@ -11942,7 +11942,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|607
+literal|625
 argument_list|,
 name|split
 operator|.
@@ -11997,7 +11997,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|629
+literal|647
 argument_list|,
 name|split
 operator|.
@@ -12078,7 +12078,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|241
+literal|253
 argument_list|,
 name|combineSplit
 operator|.

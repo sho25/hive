@@ -613,9 +613,13 @@ index|]
 expr_stmt|;
 name|inputOI
 operator|=
-name|PrimitiveObjectInspectorFactory
+operator|(
+name|PrimitiveObjectInspector
+operator|)
+name|internalMergeOI
 operator|.
-name|writableByteObjectInspector
+name|getListElementObjectInspector
+argument_list|()
 expr_stmt|;
 name|loi
 operator|=
@@ -640,9 +644,13 @@ block|{
 comment|// Mode.COMPLETE, ie. no map-side aggregation, requires ordering
 name|inputOI
 operator|=
-name|PrimitiveObjectInspectorFactory
-operator|.
-name|writableByteObjectInspector
+operator|(
+name|PrimitiveObjectInspector
+operator|)
+name|parameters
+index|[
+literal|0
+index|]
 expr_stmt|;
 name|loi
 operator|=

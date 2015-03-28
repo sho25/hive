@@ -2940,6 +2940,10 @@ argument_list|,
 name|rowIndexStride
 argument_list|,
 name|types
+argument_list|,
+name|globalIncludes
+operator|.
+name|length
 argument_list|)
 expr_stmt|;
 block|}

@@ -389,7 +389,7 @@ name|getNext
 argument_list|()
 expr_stmt|;
 block|}
-name|value
+name|valueStream
 operator|.
 name|seek
 argument_list|(
