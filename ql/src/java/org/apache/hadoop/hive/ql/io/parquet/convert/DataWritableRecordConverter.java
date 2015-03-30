@@ -99,16 +99,6 @@ name|parquet
 operator|.
 name|schema
 operator|.
-name|MessageType
-import|;
-end_import
-
-begin_import
-import|import
-name|parquet
-operator|.
-name|schema
-operator|.
 name|MessageTypeParser
 import|;
 end_import
@@ -178,7 +168,7 @@ name|get
 argument_list|(
 name|DataWritableReadSupport
 operator|.
-name|HIVE_SCHEMA_KEY
+name|HIVE_TABLE_AS_PARQUET_SCHEMA
 argument_list|)
 argument_list|)
 argument_list|,

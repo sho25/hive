@@ -1451,7 +1451,7 @@ name|get
 argument_list|(
 name|DataWritableReadSupport
 operator|.
-name|HIVE_SCHEMA_KEY
+name|HIVE_TABLE_AS_PARQUET_SCHEMA
 argument_list|)
 argument_list|)
 operator|.
