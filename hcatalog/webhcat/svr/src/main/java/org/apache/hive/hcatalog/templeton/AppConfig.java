@@ -719,6 +719,15 @@ name|UNIT_TEST_MODE
 init|=
 literal|"templeton.unit.test.mode"
 decl_stmt|;
+comment|/**    * comma-separated list of artifacts to add to HADOOP_CLASSPATH evn var in    * LaunchMapper before launching Hive command    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_EXTRA_FILES
+init|=
+literal|"templeton.hive.extra.files"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
