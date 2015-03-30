@@ -2982,6 +2982,14 @@ specifier|private
 name|byte
 name|aliasFilter
 decl_stmt|;
+comment|/** Hash table wrapper; not really thread-local, just specific to the container. */
+specifier|private
+specifier|final
+name|BytesBytesMultiHashMap
+operator|.
+name|ThreadSafeGetter
+name|threadLocalHashMap
+decl_stmt|;
 specifier|private
 name|List
 argument_list|<
@@ -3054,6 +3062,13 @@ operator|new
 name|ByteArrayRef
 argument_list|()
 expr_stmt|;
+name|threadLocalHashMap
+operator|=
+name|hashMap
+operator|.
+name|createGetterForThread
+argument_list|()
+expr_stmt|;
 name|clearRows
 argument_list|()
 expr_stmt|;
@@ -3067,11 +3082,6 @@ parameter_list|(
 name|Output
 name|output
 parameter_list|)
-block|{
-synchronized|synchronized
-init|(
-name|hashMap
-init|)
 block|{
 if|if
 condition|(
@@ -3134,7 +3144,6 @@ name|dummyRow
 operator|=
 literal|null
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|refs
@@ -3366,11 +3375,6 @@ return|return
 name|result
 return|;
 block|}
-synchronized|synchronized
-init|(
-name|hashMap
-init|)
-block|{
 if|if
 condition|(
 name|currentRow
@@ -3486,7 +3490,6 @@ name|getFieldsAsList
 argument_list|()
 return|;
 comment|// TODO: should we unset bytes after that?
-block|}
 block|}
 annotation|@
 name|Override
