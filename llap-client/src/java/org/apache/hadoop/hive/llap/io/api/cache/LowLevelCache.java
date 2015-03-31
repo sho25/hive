@@ -91,6 +91,9 @@ name|range
 parameter_list|,
 name|long
 name|baseOffset
+parameter_list|,
+name|CacheChunkFactory
+name|factory
 parameter_list|)
 function_decl|;
 comment|/**    * Puts file data into cache.    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
@@ -150,7 +153,7 @@ name|LlapMemoryBuffer
 name|createUnallocated
 parameter_list|()
 function_decl|;
-name|void
+name|boolean
 name|notifyReused
 parameter_list|(
 name|LlapMemoryBuffer
@@ -161,6 +164,24 @@ name|boolean
 name|isDirectAlloc
 parameter_list|()
 function_decl|;
+specifier|public
+interface|interface
+name|CacheChunkFactory
+block|{
+name|DiskRangeList
+name|createCacheChunk
+parameter_list|(
+name|LlapMemoryBuffer
+name|buffer
+parameter_list|,
+name|long
+name|startOffset
+parameter_list|,
+name|long
+name|endOffset
+parameter_list|)
+function_decl|;
+block|}
 block|}
 end_interface
 

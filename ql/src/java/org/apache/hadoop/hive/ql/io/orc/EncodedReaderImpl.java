@@ -319,6 +319,50 @@ name|io
 operator|.
 name|orc
 operator|.
+name|InStream
+operator|.
+name|TrackedCacheChunk
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|InStream
+operator|.
+name|TrackedCacheChunkFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
 name|OrcProto
 operator|.
 name|ColumnEncoding
@@ -453,6 +497,10 @@ name|ZeroCopyReaderShim
 import|;
 end_import
 
+begin_comment
+comment|/**  * Encoded reader implementation.  *  * Note about refcounts on cache blocks.  * When we get or put blocks into cache, they are "locked" (refcount++). After that, we send the  * blocks out to processor as part of RG data; one block can be used for multiple RGs. In some  * cases, one block is sent for ALL rgs (e.g. a dictionary for string column). This is how we deal  * with this:  * For non-dictionary case:  * 1) At all times, every buffer has +1 refcount for each time we sent this block to processing.  * 2) When processor is done with an RG, it decrefs for all the blocks involved.  * 3) Additionally, we keep an extra +1 refcount "for the fetching thread". That way, if we send  *    the block to processor, and the latter decrefs it, the block won't be evicted when we want  *    to reuse it for some other RG, forcing us to do an extra disk read or cache lookup.  * 4) As we read (we always read RGs in order, and assume they are stored in physical order in the  *    file, plus that RGs are not shared between streams, AND that we read each stream from the  *    beginning), we note which blocks cannot possibly be reused anymore (next RG starts in the  *    next CB). We decref for the refcount from (3) in such case.  * 5) Given that RG end boundary in ORC is an estimate, so we can request data from cache and then  *    not use it, at the end we go thru all the blocks, and release those not released by (4).  * For dictionary case:  * 1) We have a separate refcount on the ColumnBuffer object we send to the processor. In the above  *    case, it's always 1, so when processor is done it goes directly to decrefing cache buffers.  * 2) In the dictionary case, it's increased per RG, and processors don't touch cache buffers if  *    they do not happen to decref this counter to 0.  * 3) This is done because dictionary can have many buffers; decrefing all of them for all RGs  *    is more expensive; plus, decrefing in cache may be more expensive due to cache policy/etc.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -536,6 +584,16 @@ name|OrcBatchKey
 argument_list|>
 argument_list|>
 name|consumer
+decl_stmt|;
+comment|// TODO: if used as a pool, pass in externally
+specifier|private
+specifier|final
+name|TrackedCacheChunkFactory
+name|cacheChunkFactory
+init|=
+operator|new
+name|TrackedCacheChunkFactory
+argument_list|()
 decl_stmt|;
 specifier|public
 name|EncodedReaderImpl
@@ -1687,6 +1745,8 @@ operator|.
 name|next
 argument_list|,
 name|stripeOffset
+argument_list|,
+name|cacheChunkFactory
 argument_list|)
 expr_stmt|;
 if|if
@@ -2097,6 +2157,18 @@ operator|.
 name|incRef
 argument_list|()
 expr_stmt|;
+comment|// For stripe-level streams we don't need the extra refcount on the block. See class comment about refcounts.
+name|long
+name|unlockUntilCOffset
+init|=
+name|sctx
+operator|.
+name|offset
+operator|+
+name|sctx
+operator|.
+name|length
+decl_stmt|;
 name|DiskRangeList
 name|lastCached
 init|=
@@ -2133,6 +2205,8 @@ argument_list|,
 name|sctx
 operator|.
 name|stripeLevelStream
+argument_list|,
+name|unlockUntilCOffset
 argument_list|)
 decl_stmt|;
 if|if
@@ -2227,6 +2301,12 @@ operator|+
 name|sctx
 operator|.
 name|offset
+decl_stmt|;
+comment|// See class comment about refcounts.
+name|long
+name|unlockUntilCOffset
+init|=
+name|nextCOffset
 decl_stmt|;
 name|cb
 operator|=
@@ -2360,6 +2440,8 @@ argument_list|,
 name|cache
 argument_list|,
 name|cb
+argument_list|,
+name|unlockUntilCOffset
 argument_list|)
 decl_stmt|;
 if|if
@@ -2432,10 +2514,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: this is not good; we hold all the blocks until we send them all.
-comment|//       Hard to avoid due to sharing by RGs... perhaps we can still do better.
+comment|// Release the unreleased buffers. See class comment about refcounts.
 name|DiskRangeList
-name|toFree
+name|current
 init|=
 name|toRead
 operator|.
@@ -2443,18 +2524,47 @@ name|next
 decl_stmt|;
 while|while
 condition|(
-name|toFree
+name|current
 operator|!=
 literal|null
 condition|)
 block|{
+name|DiskRangeList
+name|toFree
+init|=
+name|current
+decl_stmt|;
+name|current
+operator|=
+name|current
+operator|.
+name|next
+expr_stmt|;
 if|if
 condition|(
+operator|!
+operator|(
 name|toFree
 operator|instanceof
-name|CacheChunk
+name|TrackedCacheChunk
+operator|)
 condition|)
-block|{
+continue|continue;
+name|TrackedCacheChunk
+name|cc
+init|=
+operator|(
+name|TrackedCacheChunk
+operator|)
+name|toFree
+decl_stmt|;
+if|if
+condition|(
+name|cc
+operator|.
+name|isReleased
+condition|)
+continue|continue;
 name|LlapMemoryBuffer
 name|buffer
 init|=
@@ -2483,7 +2593,7 @@ literal|"Unlocking "
 operator|+
 name|buffer
 operator|+
-literal|" at the end of readEncodedColumns"
+literal|" for the fetching thread at the end"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2494,12 +2604,11 @@ argument_list|(
 name|buffer
 argument_list|)
 expr_stmt|;
-block|}
-name|toFree
-operator|=
-name|toFree
+name|cc
 operator|.
-name|next
+name|isReleased
+operator|=
+literal|true
 expr_stmt|;
 block|}
 block|}

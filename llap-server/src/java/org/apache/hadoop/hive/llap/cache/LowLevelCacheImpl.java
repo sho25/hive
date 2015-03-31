@@ -249,28 +249,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|RecordReaderImpl
-operator|.
-name|CacheChunk
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -528,6 +506,9 @@ name|ranges
 parameter_list|,
 name|long
 name|baseOffset
+parameter_list|,
+name|CacheChunkFactory
+name|factory
 parameter_list|)
 block|{
 if|if
@@ -640,6 +621,8 @@ argument_list|,
 name|subCache
 operator|.
 name|cache
+argument_list|,
+name|factory
 argument_list|)
 expr_stmt|;
 name|current
@@ -679,6 +662,9 @@ argument_list|,
 name|LlapDataBuffer
 argument_list|>
 name|cache
+parameter_list|,
+name|CacheChunkFactory
+name|factory
 parameter_list|)
 block|{
 name|long
@@ -896,11 +882,12 @@ name|buffer
 operator|.
 name|declaredLength
 expr_stmt|;
-name|CacheChunk
+name|DiskRangeList
 name|currentCached
 init|=
-operator|new
-name|CacheChunk
+name|factory
+operator|.
+name|createCacheChunk
 argument_list|(
 name|buffer
 argument_list|,
@@ -949,7 +936,7 @@ parameter_list|(
 name|DiskRangeList
 name|currentNotCached
 parameter_list|,
-name|CacheChunk
+name|DiskRangeList
 name|currentCached
 parameter_list|)
 block|{
@@ -2522,7 +2509,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|boolean
 name|notifyReused
 parameter_list|(
 name|LlapMemoryBuffer
@@ -2531,6 +2518,7 @@ parameter_list|)
 block|{
 comment|// notifyReused implies that buffer is already locked; it's also called once for new
 comment|// buffers that are not cached yet. Don't notify cache policy.
+return|return
 name|lockBuffer
 argument_list|(
 operator|(
@@ -2542,7 +2530,7 @@ operator|)
 argument_list|,
 literal|false
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 annotation|@
 name|Override
