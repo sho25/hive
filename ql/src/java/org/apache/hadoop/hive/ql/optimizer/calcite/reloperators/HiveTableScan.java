@@ -357,7 +357,7 @@ block|{
 specifier|private
 specifier|final
 name|RelDataType
-name|rowtype
+name|hiveTableScanRowType
 decl_stmt|;
 specifier|private
 specifier|final
@@ -436,7 +436,7 @@ name|CONVENTION
 assert|;
 name|this
 operator|.
-name|rowtype
+name|hiveTableScanRowType
 operator|=
 name|newRowtype
 expr_stmt|;
@@ -481,7 +481,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Copy TableScan operator with a new Row Schema. The new Row Schema can only    * be a subset of this TS schema.    *     * @param rowtype    * @return    */
+comment|/**    * Copy TableScan operator with a new Row Schema. The new Row Schema can only    * be a subset of this TS schema.    *     * @param newRowtype    * @return    */
 specifier|public
 name|HiveTableScan
 name|copy
@@ -506,6 +506,8 @@ name|RelOptHiveTable
 operator|)
 name|table
 operator|)
+argument_list|,
+name|newRowtype
 argument_list|)
 return|;
 block|}
@@ -517,7 +519,7 @@ name|deriveRowType
 parameter_list|()
 block|{
 return|return
-name|rowtype
+name|hiveTableScanRowType
 return|;
 block|}
 annotation|@
