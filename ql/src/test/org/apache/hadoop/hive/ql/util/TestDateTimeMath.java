@@ -9,9 +9,11 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|common
+name|ql
 operator|.
 name|util
 package|;
@@ -80,6 +82,24 @@ operator|.
 name|type
 operator|.
 name|HiveIntervalDayTime
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|util
+operator|.
+name|DateTimeMath
 import|;
 end_import
 

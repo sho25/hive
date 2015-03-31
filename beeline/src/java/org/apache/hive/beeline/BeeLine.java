@@ -4288,6 +4288,9 @@ name|boolean
 name|exitOnError
 parameter_list|)
 block|{
+name|String
+name|line
+decl_stmt|;
 while|while
 condition|(
 operator|!
@@ -4297,11 +4300,26 @@ block|{
 try|try
 block|{
 comment|// Execute one instruction; terminate on executing a script if there is an error
-if|if
-condition|(
-operator|!
-name|dispatch
+comment|// in silent mode, prevent the query and prompt being echoed back to terminal
+name|line
+operator|=
+name|getOpts
+argument_list|()
+operator|.
+name|isSilent
+argument_list|()
+condition|?
+name|reader
+operator|.
+name|readLine
 argument_list|(
+literal|null
+argument_list|,
+name|ConsoleReader
+operator|.
+name|NULL_MASK
+argument_list|)
+else|:
 name|reader
 operator|.
 name|readLine
@@ -4309,6 +4327,13 @@ argument_list|(
 name|getPrompt
 argument_list|()
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|dispatch
+argument_list|(
+name|line
 argument_list|)
 operator|&&
 name|exitOnError

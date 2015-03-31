@@ -879,6 +879,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|//Comments are separated by "\0" in columnCommentProperty, see method getSchema
+comment|//in MetaStoreUtils where this string columns.comments is generated
 name|columnComments
 operator|=
 name|Arrays
@@ -889,7 +891,7 @@ name|columnCommentProperty
 operator|.
 name|split
 argument_list|(
-literal|","
+literal|"\0"
 argument_list|)
 argument_list|)
 expr_stmt|;

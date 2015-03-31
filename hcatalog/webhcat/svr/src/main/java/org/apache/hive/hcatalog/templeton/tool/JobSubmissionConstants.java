@@ -122,6 +122,15 @@ literal|60
 operator|*
 literal|1000
 decl_stmt|;
+comment|/**    * A comma-separated list of files to be added to HADOOP_CLASSPATH in     * {@link org.apache.hive.hcatalog.templeton.tool.LaunchMapper}.  Used to localize additional    * artifacts for job submission requests.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HADOOP_CLASSPATH_EXTRAS
+init|=
+literal|"templeton.hadoop.classpath.extras"
+decl_stmt|;
 comment|/*    * The = sign in the string for TOKEN_FILE_ARG_PLACEHOLDER is required because    * org.apache.hadoop.util.GenericOptionsParser.preProcessForWindows() prepares    * arguments expecting an = sign. It will fail to prepare the arguments correctly    * without the = sign present.    */
 specifier|public
 specifier|static

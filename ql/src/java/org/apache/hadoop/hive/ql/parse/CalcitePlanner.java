@@ -763,6 +763,22 @@ name|rel
 operator|.
 name|rules
 operator|.
+name|ProjectMergeRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
 name|ProjectRemoveRule
 import|;
 end_import
@@ -5660,6 +5676,21 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+operator|new
+name|ProjectMergeRule
+argument_list|(
+literal|false
+argument_list|,
+name|HiveProject
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|hepPgm
 operator|=
 name|hepPgmBldr
@@ -6092,8 +6123,6 @@ operator|.
 name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|,
-comment|// TODO: Enable it after CALCITE-407 is fixed
-comment|// RemoveTrivialProjectRule.INSTANCE,
 operator|new
 name|HivePartitionPruneRule
 argument_list|(
