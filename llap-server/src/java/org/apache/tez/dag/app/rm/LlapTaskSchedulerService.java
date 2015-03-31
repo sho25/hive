@@ -2653,13 +2653,6 @@ literal|0
 condition|)
 block|{
 comment|// Pick the first host always. Weak attempt at cache affinity.
-name|Arrays
-operator|.
-name|sort
-argument_list|(
-name|requestedHosts
-argument_list|)
-expr_stmt|;
 name|host
 operator|=
 name|requestedHosts

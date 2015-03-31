@@ -7601,6 +7601,17 @@ argument_list|,
 literal|"Whether to generate the splits locally or in the AM (tez only)"
 argument_list|)
 block|,
+name|HIVE_TEZ_GENERATE_CONSISTENT_SPLITS
+argument_list|(
+literal|"hive.tez.input.generate.consistent.splits"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to generate consisten split"
+operator|+
+literal|"locations when generating splits in the AM"
+argument_list|)
+block|,
 name|HIVE_PREWARM_ENABLED
 argument_list|(
 literal|"hive.prewarm.enabled"
