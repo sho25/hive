@@ -962,13 +962,10 @@ name|pathToPartitionInfo
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|hiveConf
 argument_list|)
-operator|.
-name|getMapWork
-argument_list|()
 operator|.
 name|getPathToPartitionInfo
 argument_list|()

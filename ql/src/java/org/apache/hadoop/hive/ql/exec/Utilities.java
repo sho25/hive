@@ -20475,13 +20475,10 @@ literal|null
 operator|&&
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|conf
 argument_list|)
-operator|.
-name|getMapWork
-argument_list|()
 operator|.
 name|getVectorMode
 argument_list|()
