@@ -889,6 +889,10 @@ name|MetadataReader
 name|metadataReader
 decl_stmt|;
 specifier|private
+name|EncodedReader
+name|stripeReader
+decl_stmt|;
+specifier|private
 name|long
 name|fileId
 decl_stmt|;
@@ -905,6 +909,7 @@ index|[]
 name|readState
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|boolean
 name|isStopped
 init|=
@@ -1045,11 +1050,26 @@ name|void
 name|stop
 parameter_list|()
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Encoded reader is being stopped"
+argument_list|)
+expr_stmt|;
+block|}
 name|isStopped
 operator|=
 literal|true
 expr_stmt|;
-comment|// TODO: stop fetching if still in progress
 block|}
 annotation|@
 name|Override
@@ -1113,7 +1133,8 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isStopped
+name|processStop
+argument_list|()
 condition|)
 return|return
 literal|null
@@ -1417,9 +1438,7 @@ name|t
 parameter_list|)
 block|{
 name|cleanupReaders
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|consumer
 operator|.
@@ -1434,21 +1453,16 @@ return|;
 block|}
 if|if
 condition|(
-name|isStopped
+name|processStop
+argument_list|()
 condition|)
-block|{
-name|cleanupReaders
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
 return|return
 literal|null
 return|;
-block|}
 comment|// 4. Get data from high-level cache.
-comment|//    If some cols are fully in cache, this will also give us the modified list of
-comment|//    columns to read for every stripe (null means read all of them - the usual path).
+comment|//    If some cols are fully in cache, this will also give us the modified list of columns to
+comment|//    read for every stripe (null means read all of them - the usual path). In any case,
+comment|//    readState will be modified for column x rgs that were fetched from high-level cache.
 name|List
 argument_list|<
 name|Integer
@@ -1490,16 +1504,13 @@ name|t
 argument_list|)
 expr_stmt|;
 name|cleanupReaders
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 expr_stmt|;
 return|return
 literal|null
 return|;
 block|}
 block|}
-comment|// readState has been modified for column x rgs that were fetched from cache.
 comment|// 5. Create encoded data reader.
 comment|// In case if we have high-level cache, we will intercept the data and add it there;
 comment|// otherwise just pass the data directly to the consumer.
@@ -1523,11 +1534,6 @@ operator|.
 name|consumer
 else|:
 name|this
-decl_stmt|;
-name|EncodedReader
-name|stripeReader
-init|=
-literal|null
 decl_stmt|;
 try|try
 block|{
@@ -1562,9 +1568,7 @@ name|t
 argument_list|)
 expr_stmt|;
 name|cleanupReaders
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 expr_stmt|;
 return|return
 literal|null
@@ -1603,6 +1607,42 @@ operator|++
 name|stripeIxMod
 control|)
 block|{
+if|if
+condition|(
+name|processStop
+argument_list|()
+condition|)
+return|return
+literal|null
+return|;
+name|int
+name|stripeIx
+init|=
+name|stripeIxFrom
+operator|+
+name|stripeIxMod
+decl_stmt|;
+name|boolean
+index|[]
+index|[]
+name|colRgs
+init|=
+literal|null
+decl_stmt|;
+name|boolean
+index|[]
+name|stripeIncludes
+init|=
+literal|null
+decl_stmt|;
+name|OrcStripeMetadata
+name|stripeMetadata
+init|=
+literal|null
+decl_stmt|;
+name|StripeInformation
+name|stripe
+decl_stmt|;
 try|try
 block|{
 name|List
@@ -1635,16 +1675,8 @@ argument_list|()
 condition|)
 continue|continue;
 comment|// No need to read this stripe.
-name|int
-name|stripeIx
-init|=
-name|stripeIxFrom
-operator|+
-name|stripeIxMod
-decl_stmt|;
-name|StripeInformation
-name|si
-init|=
+name|stripe
+operator|=
 name|fileMetadata
 operator|.
 name|getStripes
@@ -1654,7 +1686,7 @@ name|get
 argument_list|(
 name|stripeIx
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|DebugUtils
@@ -1675,36 +1707,27 @@ name|stripeIx
 operator|+
 literal|": "
 operator|+
-name|si
+name|stripe
 operator|.
 name|getOffset
 argument_list|()
 operator|+
 literal|", "
 operator|+
-name|si
+name|stripe
 operator|.
 name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|boolean
-index|[]
-name|stripeIncludes
-init|=
-literal|null
-decl_stmt|;
-name|boolean
-index|[]
-index|[]
 name|colRgs
-init|=
+operator|=
 name|readState
 index|[
 name|stripeIxMod
 index|]
-decl_stmt|;
+expr_stmt|;
 comment|// 6.1. Determine the columns to read (usually the same as requested).
 if|if
 condition|(
@@ -1762,9 +1785,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// 6.2. Ensure we have stripe metadata. We might have read it before for RG filtering.
-name|OrcStripeMetadata
-name|stripeMetadata
-decl_stmt|;
 if|if
 condition|(
 name|stripeMetadatas
@@ -1822,7 +1842,7 @@ name|stripeKey
 argument_list|,
 name|metadataReader
 argument_list|,
-name|si
+name|stripe
 argument_list|,
 name|stripeIncludes
 argument_list|,
@@ -1932,7 +1952,7 @@ name|updateLoadedIndexes
 argument_list|(
 name|stripeMetadata
 argument_list|,
-name|si
+name|stripe
 argument_list|,
 name|stripeIncludes
 argument_list|,
@@ -1940,17 +1960,50 @@ name|sargColumns
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{
+name|consumer
+operator|.
+name|setError
+argument_list|(
+name|t
+argument_list|)
+expr_stmt|;
+name|cleanupReaders
+argument_list|()
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
+name|processStop
+argument_list|()
+condition|)
+return|return
+literal|null
+return|;
 comment|// 6.3. Finally, hand off to the stripe reader to produce the data.
 comment|//      This is a sync call that will feed data to the consumer.
+try|try
+block|{
 comment|// TODO: readEncodedColumns is not supposed to throw; errors should be propagated thru
 comment|// consumer. It is potentially holding locked buffers, and must perform its own cleanup.
+comment|// Also, currently readEncodedColumns is not stoppable. The consumer will discard the
+comment|// data it receives for one stripe. We could probably interrupt it, if it checked that.
 name|stripeReader
 operator|.
 name|readEncodedColumns
 argument_list|(
 name|stripeIx
 argument_list|,
-name|si
+name|stripe
 argument_list|,
 name|stripeMetadata
 operator|.
@@ -1987,9 +2040,7 @@ name|t
 argument_list|)
 expr_stmt|;
 name|cleanupReaders
-argument_list|(
-name|stripeReader
-argument_list|)
+argument_list|()
 expr_stmt|;
 return|return
 literal|null
@@ -2023,13 +2074,38 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Close the stripe reader, we are done reading.
-name|stripeReader
-operator|.
-name|close
+name|cleanupReaders
 argument_list|()
 expr_stmt|;
 return|return
 literal|null
+return|;
+block|}
+specifier|private
+name|boolean
+name|processStop
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|!
+name|isStopped
+condition|)
+return|return
+literal|false
+return|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Encoded data reader is stopping"
+argument_list|)
+expr_stmt|;
+name|cleanupReaders
+argument_list|()
+expr_stmt|;
+return|return
+literal|true
 return|;
 block|}
 specifier|private
@@ -2321,10 +2397,7 @@ comment|/**    * Closes the stripe readers (on error).    */
 specifier|private
 name|void
 name|cleanupReaders
-parameter_list|(
-name|EncodedReader
-name|er
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -2352,14 +2425,14 @@ block|}
 block|}
 if|if
 condition|(
-name|er
+name|stripeReader
 operator|!=
 literal|null
 condition|)
 block|{
 try|try
 block|{
-name|er
+name|stripeReader
 operator|.
 name|close
 argument_list|()
