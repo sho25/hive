@@ -1011,6 +1011,24 @@ name|selfCost
 init|=
 literal|null
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Join algorithm selection for: "
+operator|+
+name|this
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|JoinAlgorithm
@@ -1045,14 +1063,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"COMMONJOIN possible"
-argument_list|)
-expr_stmt|;
-name|LOG
+name|JoinAlgorithm
 operator|.
-name|debug
-argument_list|(
-literal|"COMMONJOIN cost: "
+name|COMMON_JOIN
+operator|+
+literal|" cost: "
 operator|+
 name|commonJoinCost
 argument_list|)
@@ -1107,14 +1122,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"MAPJOIN possible"
-argument_list|)
-expr_stmt|;
-name|LOG
+name|JoinAlgorithm
 operator|.
-name|debug
-argument_list|(
-literal|"MAPJOIN cost: "
+name|MAP_JOIN
+operator|+
+literal|" cost: "
 operator|+
 name|mapJoinCost
 argument_list|)
@@ -1169,14 +1181,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"BUCKETJOIN possible"
-argument_list|)
-expr_stmt|;
-name|LOG
+name|JoinAlgorithm
 operator|.
-name|debug
-argument_list|(
-literal|"BUCKETJOIN cost: "
+name|BUCKET_JOIN
+operator|+
+literal|" cost: "
 operator|+
 name|bucketJoinCost
 argument_list|)
@@ -1231,14 +1240,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"SMBJOIN possible"
-argument_list|)
-expr_stmt|;
-name|LOG
+name|JoinAlgorithm
 operator|.
-name|debug
-argument_list|(
-literal|"SMBJOIN cost: "
+name|SMB_JOIN
+operator|+
+literal|" cost: "
 operator|+
 name|smbJoinCost
 argument_list|)
@@ -1275,6 +1281,26 @@ break|break;
 default|default:
 comment|//TODO: Exception
 block|}
+block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|this
+operator|.
+name|joinAlgorithm
+operator|+
+literal|" selected"
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|selfCost
