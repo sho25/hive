@@ -1030,6 +1030,10 @@ argument_list|(
 name|work
 argument_list|,
 literal|null
+argument_list|,
+name|context
+operator|.
+name|leafOperatorToFollowingWork
 argument_list|)
 expr_stmt|;
 name|Operator
@@ -1659,6 +1663,15 @@ name|context
 operator|.
 name|leafOperatorToFollowingWork
 operator|.
+name|remove
+argument_list|(
+name|parent
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|leafOperatorToFollowingWork
+operator|.
 name|put
 argument_list|(
 name|parent
@@ -1930,6 +1943,10 @@ argument_list|(
 literal|null
 argument_list|,
 name|work
+argument_list|,
+name|context
+operator|.
+name|leafOperatorToFollowingWork
 argument_list|)
 expr_stmt|;
 name|tezWork
