@@ -682,6 +682,8 @@ name|sizes
 argument_list|)
 return|;
 block|}
+comment|// TODO: remove when averageTypeValueSize method RelMdSize
+comment|//       supports all types
 specifier|public
 name|Double
 name|averageTypeValueSize
@@ -721,6 +723,9 @@ name|FLOAT
 case|:
 case|case
 name|REAL
+case|:
+case|case
+name|DECIMAL
 case|:
 case|case
 name|DATE
