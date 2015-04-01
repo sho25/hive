@@ -11404,8 +11404,9 @@ argument_list|(
 name|tab
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
+name|boolean
+name|isTableWrittenTo
+init|=
 name|qb
 operator|.
 name|getParseInfo
@@ -11423,6 +11424,10 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|isTableWrittenTo
 operator|&&
 name|tab
 operator|.
@@ -11465,8 +11470,12 @@ operator|)
 operator|&&
 operator|!
 name|isAcid
+operator|&&
+name|isTableWrittenTo
 condition|)
 block|{
+comment|//isTableWrittenTo: delete from acidTbl where a in (select id from nonAcidTable)
+comment|//so only assert this if we are actually writing to this table
 comment|// isAcidTable above also checks for whether we are using an acid compliant
 comment|// transaction manager.  But that has already been caught in
 comment|// UpdateDeleteSemanticAnalyzer, so if we are updating or deleting and getting nonAcid
