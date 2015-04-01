@@ -8121,6 +8121,15 @@ operator|+
 literal|"percentile latency metrics are disabled."
 argument_list|)
 block|,
+name|LLAP_IO_THREADPOOL_SIZE
+argument_list|(
+literal|"hive.llap.io.threadpool.size"
+argument_list|,
+literal|10
+argument_list|,
+literal|"Specify the number of threads to use for low-level IO thread pool."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"

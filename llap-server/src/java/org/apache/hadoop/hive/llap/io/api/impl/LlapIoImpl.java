@@ -908,6 +908,22 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Arbitrary thread pool. Listening is used for unhandled errors for now (TODO: remove?)
+name|int
+name|numThreads
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_IO_THREADPOOL_SIZE
+argument_list|)
+decl_stmt|;
 name|executor
 operator|=
 name|MoreExecutors
@@ -918,7 +934,7 @@ name|Executors
 operator|.
 name|newFixedThreadPool
 argument_list|(
-literal|10
+name|numThreads
 argument_list|)
 argument_list|)
 expr_stmt|;
