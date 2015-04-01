@@ -3153,6 +3153,16 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|smallTblFileNames
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+if|if
+condition|(
 name|bigTblBucketNum
 operator|>=
 name|smallTblBucketNum
@@ -3224,6 +3234,7 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

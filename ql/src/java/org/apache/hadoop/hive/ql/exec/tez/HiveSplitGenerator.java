@@ -647,6 +647,11 @@ name|userPayloadProto
 decl_stmt|;
 specifier|private
 specifier|final
+name|MapWork
+name|work
+decl_stmt|;
+specifier|private
+specifier|final
 name|SplitGrouper
 name|splitGrouper
 init|=
@@ -724,16 +729,17 @@ argument_list|(
 name|jobConf
 argument_list|)
 expr_stmt|;
-name|MapWork
+name|this
+operator|.
 name|work
-init|=
+operator|=
 name|Utilities
 operator|.
 name|getMapWork
 argument_list|(
 name|jobConf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// Events can start coming in the moment the InputInitializer is created. The pruner
 comment|// must be setup and initialized here so that it sets up it's structures to start accepting events.
 comment|// Setting it up in initialize leads to a window where events may come in before the pruner is
@@ -762,6 +768,19 @@ name|initialize
 parameter_list|()
 throws|throws
 name|Exception
+block|{
+comment|// Setup the map work for this thread. Pruning modified the work instance to potentially remove
+comment|// partitions. The same work instance must be used when generating splits.
+name|Utilities
+operator|.
+name|setMapWork
+argument_list|(
+name|jobConf
+argument_list|,
+name|work
+argument_list|)
+expr_stmt|;
+try|try
 block|{
 name|boolean
 name|sendSerializedEvents
@@ -1036,13 +1055,6 @@ argument_list|,
 name|generateConsistentSplits
 argument_list|)
 decl_stmt|;
-name|Utilities
-operator|.
-name|clearWork
-argument_list|(
-name|jobConf
-argument_list|)
-expr_stmt|;
 name|inputSplitInfo
 operator|=
 operator|new
@@ -1087,6 +1099,17 @@ argument_list|,
 name|inputSplitInfo
 argument_list|)
 return|;
+block|}
+finally|finally
+block|{
+name|Utilities
+operator|.
+name|clearWork
+argument_list|(
+name|jobConf
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|List
