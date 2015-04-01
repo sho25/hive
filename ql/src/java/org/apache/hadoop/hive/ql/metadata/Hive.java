@@ -1750,7 +1750,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Hive
 name|initialValue
 parameter_list|()

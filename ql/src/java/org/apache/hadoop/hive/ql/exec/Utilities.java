@@ -7911,7 +7911,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Kryo
 name|initialValue
 parameter_list|()
@@ -8280,7 +8279,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Kryo
 name|initialValue
 parameter_list|()

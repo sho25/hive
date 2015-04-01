@@ -3653,7 +3653,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|RawStore
 name|initialValue
 parameter_list|()
@@ -3683,7 +3682,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|TxnHandler
 name|initialValue
 parameter_list|()
@@ -3740,7 +3738,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Configuration
 name|initialValue
 parameter_list|()
@@ -4005,7 +4002,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Integer
 name|initialValue
 parameter_list|()
@@ -4042,7 +4038,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|String
 name|initialValue
 parameter_list|()

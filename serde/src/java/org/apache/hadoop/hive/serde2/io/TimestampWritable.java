@@ -307,7 +307,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|DateFormat
 name|initialValue
 parameter_list|()
