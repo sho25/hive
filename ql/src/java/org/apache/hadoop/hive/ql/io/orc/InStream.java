@@ -448,7 +448,6 @@ return|return
 name|length
 return|;
 block|}
-specifier|public
 specifier|static
 class|class
 name|UncompressedStream

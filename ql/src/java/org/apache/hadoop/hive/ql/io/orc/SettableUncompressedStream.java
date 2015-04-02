@@ -13,15 +13,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|ql
 operator|.
 name|io
 operator|.
-name|decode
-operator|.
 name|orc
-operator|.
-name|stream
 package|;
 end_package
 
@@ -51,25 +47,9 @@ name|DiskRange
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|InStream
-import|;
-end_import
+begin_comment
+comment|/**  * An uncompressed stream whose underlying byte buffer can be set.  */
+end_comment
 
 begin_class
 specifier|public
