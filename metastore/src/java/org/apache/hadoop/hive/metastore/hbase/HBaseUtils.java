@@ -171,6 +171,26 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|ColumnStatisticsData
+operator|.
+name|_Fields
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|ColumnStatisticsObj
 import|;
 end_import
@@ -550,6 +570,18 @@ operator|.
 name|api
 operator|.
 name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|TFieldIdEnum
 import|;
 end_import
 
@@ -6331,10 +6363,10 @@ index|[]
 name|serializeStatsForOneColumn
 parameter_list|(
 name|ColumnStatistics
-name|stats
+name|partitionColumnStats
 parameter_list|,
 name|ColumnStatisticsObj
-name|obj
+name|colStats
 parameter_list|)
 throws|throws
 name|IOException
@@ -6357,7 +6389,7 @@ name|builder
 operator|.
 name|setLastAnalyzed
 argument_list|(
-name|stats
+name|partitionColumnStats
 operator|.
 name|getStatsDesc
 argument_list|()
@@ -6368,7 +6400,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|obj
+name|colStats
 operator|.
 name|getColType
 argument_list|()
@@ -6388,7 +6420,7 @@ name|builder
 operator|.
 name|setColumnType
 argument_list|(
-name|obj
+name|colStats
 operator|.
 name|getColType
 argument_list|()
@@ -6397,7 +6429,7 @@ expr_stmt|;
 name|ColumnStatisticsData
 name|colData
 init|=
-name|obj
+name|colStats
 operator|.
 name|getStatsData
 argument_list|()
@@ -6876,7 +6908,7 @@ name|ColumnStatisticsObj
 name|deserializeStatsForOneColumn
 parameter_list|(
 name|ColumnStatistics
-name|stats
+name|partitionColumnStats
 parameter_list|,
 name|byte
 index|[]
@@ -6900,7 +6932,7 @@ name|bytes
 argument_list|)
 decl_stmt|;
 name|ColumnStatisticsObj
-name|obj
+name|colStats
 init|=
 operator|new
 name|ColumnStatisticsObj
@@ -6914,7 +6946,14 @@ operator|.
 name|getLastAnalyzed
 argument_list|()
 decl_stmt|;
-name|stats
+if|if
+condition|(
+name|partitionColumnStats
+operator|!=
+literal|null
+condition|)
+block|{
+name|partitionColumnStats
 operator|.
 name|getStatsDesc
 argument_list|()
@@ -6927,7 +6966,7 @@ name|max
 argument_list|(
 name|lastAnalyzed
 argument_list|,
-name|stats
+name|partitionColumnStats
 operator|.
 name|getStatsDesc
 argument_list|()
@@ -6937,7 +6976,8 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|obj
+block|}
+name|colStats
 operator|.
 name|setColType
 argument_list|(
@@ -7513,7 +7553,7 @@ literal|"Woh, bad.  Unknown stats type!"
 argument_list|)
 throw|;
 block|}
-name|obj
+name|colStats
 operator|.
 name|setStatsData
 argument_list|(
@@ -7521,7 +7561,7 @@ name|colData
 argument_list|)
 expr_stmt|;
 return|return
-name|obj
+name|colStats
 return|;
 block|}
 comment|/**    * @param keyStart byte array representing the start prefix    * @return byte array corresponding to the next possible prefix    */

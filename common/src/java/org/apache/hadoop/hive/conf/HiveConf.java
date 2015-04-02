@@ -2032,17 +2032,59 @@ operator|+
 literal|"undefined and most likely undesired behavior will result"
 argument_list|)
 block|,
-name|METASTORE_HBASE_CACHE_SIZE
+name|METASTORE_HBASE_CATALOG_CACHE_SIZE
 argument_list|(
-literal|"hive.metastore.hbase.cache.size"
+literal|"hive.metastore.hbase.catalog.cache.size"
 argument_list|,
-literal|100000
+literal|50000
 argument_list|,
 literal|"Maximum number of "
 operator|+
-literal|"objects we will place in the hbase metastore cache.  The objects will be divided up by "
+literal|"objects we will place in the hbase metastore catalog cache.  The objects will be divided up by "
 operator|+
 literal|"types that we need to cache."
+argument_list|)
+block|,
+name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_SIZE
+argument_list|(
+literal|"hive.metastore.hbase.aggregate.stats.cache.size"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Maximum number of aggregate stats nodes that we will place in the hbase metastore aggregate stats cache."
+argument_list|)
+block|,
+name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
+argument_list|(
+literal|"hive.metastore.hbase.aggregate.stats.max.partitions"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Maximum number of partitions that are aggregated per cache node."
+argument_list|)
+block|,
+name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_FALSE_POSITIVE_PROBABILITY
+argument_list|(
+literal|"hive.metastore.hbase.aggregate.stats.false.positive.probability"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.01
+argument_list|,
+literal|"Maximum false positive probability for the Bloom Filter used in each aggregate stats cache node (default 1%)."
+argument_list|)
+block|,
+name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
+argument_list|(
+literal|"hive.metastore.hbase.aggregate.stats.max.variance"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.1
+argument_list|,
+literal|"Maximum tolerable variance in number of partitions between a cached node and our request (default 10%)."
 argument_list|)
 block|,
 name|METASTORE_HBASE_CACHE_TIME_TO_LIVE
@@ -2059,7 +2101,65 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Number of seconds for stats items to live in the cache"
+literal|"Number of seconds for a cached node to be active in the cache before they become stale."
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_MAX_WRITER_WAIT
+argument_list|(
+literal|"hive.metastore.hbase.cache.max.writer.wait"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Number of milliseconds a writer will wait to acquire the writelock before giving up."
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_MAX_READER_WAIT
+argument_list|(
+literal|"hive.metastore.hbase.cache.max.reader.wait"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Number of milliseconds a reader will wait to acquire the readlock before giving up."
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_MAX_FULL
+argument_list|(
+literal|"hive.metastore.hbase.cache.max.full"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.9
+argument_list|,
+literal|"Maximum cache full % after which the cache cleaner thread kicks in."
+argument_list|)
+block|,
+name|METASTORE_HBASE_CACHE_CLEAN_UNTIL
+argument_list|(
+literal|"hive.metastore.hbase.cache.clean.until"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.8
+argument_list|,
+literal|"The cleaner thread cleans until cache reaches this % full size."
 argument_list|)
 block|,
 name|METASTORE_HBASE_CONNECTION_CLASS
