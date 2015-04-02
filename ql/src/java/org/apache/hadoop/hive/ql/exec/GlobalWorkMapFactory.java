@@ -416,14 +416,7 @@ name|LlapIoProxy
 operator|.
 name|isDaemon
 argument_list|()
-condition|)
-block|{
-return|return
-name|dummy
-return|;
-block|}
-if|if
-condition|(
+operator|||
 name|HiveConf
 operator|.
 name|getVar
