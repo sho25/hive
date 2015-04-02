@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|configuration
 package|;
 end_package
 
@@ -36,12 +36,12 @@ end_import
 begin_class
 specifier|public
 class|class
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 extends|extends
 name|Configuration
 block|{
 specifier|public
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 parameter_list|(
 name|Configuration
 name|conf
@@ -59,7 +59,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 parameter_list|()
 block|{
 name|super

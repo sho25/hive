@@ -131,9 +131,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|configuration
 operator|.
-name|ContainerRunner
+name|LlapConfiguration
 import|;
 end_import
 
@@ -151,7 +151,7 @@ name|llap
 operator|.
 name|daemon
 operator|.
-name|LlapDaemonConfiguration
+name|ContainerRunner
 import|;
 end_import
 
@@ -796,11 +796,11 @@ name|daemonConf
 operator|.
 name|getBoolean
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED_DEFAULT
 argument_list|)
@@ -814,11 +814,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_NUM_HANDLERS
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_NUM_HANDLERS_DEFAULT
 argument_list|)
@@ -1210,11 +1210,11 @@ try|try
 block|{
 comment|// Cache settings will need to be setup in llap-daemon-site.xml - since the daemons don't read hive-site.xml
 comment|// Ideally, these properties should be part of LlapDameonConf rather than HiveConf
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 name|daemonConf
 init|=
 operator|new
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 argument_list|()
 decl_stmt|;
 name|int
@@ -1224,11 +1224,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS_DEFAULT
 argument_list|)
@@ -1241,7 +1241,7 @@ name|daemonConf
 operator|.
 name|getTrimmedStrings
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_WORK_DIRS
 argument_list|)
@@ -1253,11 +1253,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT_DEFAULT
 argument_list|)
@@ -1285,11 +1285,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB_DEFAULT
 argument_list|)

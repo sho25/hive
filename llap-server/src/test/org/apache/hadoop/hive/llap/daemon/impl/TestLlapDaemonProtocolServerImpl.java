@@ -95,9 +95,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|configuration
 operator|.
-name|ContainerRunner
+name|LlapConfiguration
 import|;
 end_import
 
@@ -115,7 +115,7 @@ name|llap
 operator|.
 name|daemon
 operator|.
-name|LlapDaemonConfiguration
+name|ContainerRunner
 import|;
 end_import
 
@@ -188,11 +188,11 @@ parameter_list|()
 throws|throws
 name|ServiceException
 block|{
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 name|daemonConf
 init|=
 operator|new
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 argument_list|()
 decl_stmt|;
 name|int
@@ -202,11 +202,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT_DEFAULT
 argument_list|)
@@ -218,11 +218,11 @@ name|daemonConf
 operator|.
 name|getInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_NUM_HANDLERS
 argument_list|,
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_NUM_HANDLERS_DEFAULT
 argument_list|)
