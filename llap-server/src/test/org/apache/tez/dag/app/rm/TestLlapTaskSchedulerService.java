@@ -225,9 +225,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|configuration
 operator|.
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 import|;
 end_import
 
@@ -1627,7 +1627,7 @@ name|conf
 operator|.
 name|setStrings
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|,
@@ -1642,7 +1642,7 @@ name|conf
 operator|.
 name|setInt
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|,
@@ -1653,7 +1653,7 @@ name|conf
 operator|.
 name|setLong
 argument_list|(
-name|LlapDaemonConfiguration
+name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_TASK_SCHEDULER_NODE_REENABLE_TIMEOUT_MILLIS
 argument_list|,
