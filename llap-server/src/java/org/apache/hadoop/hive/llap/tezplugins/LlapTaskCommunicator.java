@@ -163,9 +163,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|configuration
+name|daemon
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -550,11 +550,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS_DEFAULT
 argument_list|)

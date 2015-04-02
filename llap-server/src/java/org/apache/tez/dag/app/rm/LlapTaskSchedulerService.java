@@ -667,9 +667,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|configuration
+name|daemon
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -1165,11 +1165,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB_DEFAULT
 argument_list|)
@@ -1182,11 +1182,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE_DEFAULT
 argument_list|)
@@ -1199,11 +1199,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS_DEFAULT
 argument_list|)
@@ -1216,11 +1216,11 @@ name|conf
 operator|.
 name|getLong
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_TASK_SCHEDULER_NODE_REENABLE_TIMEOUT_MILLIS
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_TASK_SCHEDULER_NODE_REENABLE_TIMEOUT_MILLIS_DEFAULT
 argument_list|)
@@ -1275,7 +1275,7 @@ name|conf
 operator|.
 name|getTrimmed
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|)
@@ -1286,7 +1286,7 @@ name|checkNotNull
 argument_list|(
 name|instanceId
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 operator|+
@@ -1317,7 +1317,7 @@ name|conf
 operator|.
 name|getTrimmedStrings
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|)
@@ -1336,7 +1336,7 @@ name|length
 operator|!=
 literal|0
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 operator|+
@@ -1418,11 +1418,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT_DEFAULT
 argument_list|)

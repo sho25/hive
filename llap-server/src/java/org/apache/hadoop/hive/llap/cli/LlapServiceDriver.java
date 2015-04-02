@@ -209,9 +209,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|configuration
+name|daemon
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -712,7 +712,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|,
@@ -1176,7 +1176,7 @@ name|configs
 operator|.
 name|put
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|,
@@ -1184,11 +1184,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB_DEFAULT
 argument_list|)
@@ -1198,7 +1198,7 @@ name|configs
 operator|.
 name|put
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 argument_list|,
@@ -1206,11 +1206,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE_DEFAULT
 argument_list|)
@@ -1220,7 +1220,7 @@ name|configs
 operator|.
 name|put
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|,
@@ -1228,11 +1228,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS_DEFAULT
 argument_list|)

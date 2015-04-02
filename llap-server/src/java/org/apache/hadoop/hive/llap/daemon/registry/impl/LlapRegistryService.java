@@ -105,9 +105,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|configuration
+name|daemon
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -491,7 +491,7 @@ name|conf
 operator|.
 name|getTrimmed
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|)
@@ -633,11 +633,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_RPC_PORT_DEFAULT
 argument_list|)
@@ -672,11 +672,11 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_YARN_SHUFFLE_PORT
 argument_list|,
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_YARN_SHUFFLE_PORT_DEFAULT
 argument_list|)
@@ -801,7 +801,7 @@ argument_list|()
 operator|.
 name|startsWith
 argument_list|(
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 operator|.
 name|LLAP_DAEMON_PREFIX
 argument_list|)
