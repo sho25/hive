@@ -971,6 +971,7 @@ literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
+continue|continue;
 block|}
 comment|// TTL check
 if|if
@@ -999,6 +1000,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
 name|candidateMatchStats
 operator|.
 name|put
@@ -1016,6 +1019,7 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// We'll count misses as we iterate
 name|int
