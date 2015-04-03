@@ -4368,7 +4368,7 @@ literal|"Index table names didn't match for index: "
 operator|+
 name|indexName
 argument_list|,
-name|qIndexTableName
+name|indexTableName
 argument_list|,
 name|index
 operator|.
