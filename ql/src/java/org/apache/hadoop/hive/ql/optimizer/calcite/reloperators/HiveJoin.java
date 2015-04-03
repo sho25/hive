@@ -125,6 +125,20 @@ name|calcite
 operator|.
 name|plan
 operator|.
+name|RelOptUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|plan
+operator|.
 name|RelTraitSet
 import|;
 end_import
@@ -1023,9 +1037,14 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Join algorithm selection for: "
+literal|"Join algorithm selection for:\n"
 operator|+
+name|RelOptUtil
+operator|.
+name|toString
+argument_list|(
 name|this
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
