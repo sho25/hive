@@ -2982,6 +2982,14 @@ specifier|private
 name|byte
 name|aliasFilter
 decl_stmt|;
+comment|/** Hash table wrapper specific to the container. */
+specifier|private
+specifier|final
+name|BytesBytesMultiHashMap
+operator|.
+name|ThreadSafeGetter
+name|threadSafeHashMapGetter
+decl_stmt|;
 specifier|private
 name|List
 argument_list|<
@@ -3054,6 +3062,13 @@ operator|new
 name|ByteArrayRef
 argument_list|()
 expr_stmt|;
+name|threadSafeHashMapGetter
+operator|=
+name|hashMap
+operator|.
+name|createGetterForThread
+argument_list|()
+expr_stmt|;
 name|clearRows
 argument_list|()
 expr_stmt|;
@@ -3090,7 +3105,7 @@ block|}
 name|byte
 name|aliasFilter
 init|=
-name|hashMap
+name|threadSafeHashMapGetter
 operator|.
 name|getValueRefs
 argument_list|(
@@ -3430,7 +3445,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|hashMap
+name|threadSafeHashMapGetter
 operator|.
 name|populateValue
 argument_list|(
