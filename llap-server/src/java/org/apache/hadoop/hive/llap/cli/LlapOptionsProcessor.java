@@ -176,10 +176,6 @@ specifier|private
 name|String
 name|name
 decl_stmt|;
-specifier|private
-name|String
-name|args
-decl_stmt|;
 specifier|public
 name|LlapOptions
 parameter_list|(
@@ -447,6 +443,36 @@ literal|'a'
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"loglevel"
+argument_list|)
+operator|.
+name|withLongOpt
+argument_list|(
+literal|"loglevel"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"log levels for the llap instance"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'l'
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// [-H|--help]
 name|options
 operator|.
@@ -498,8 +524,18 @@ name|hasOption
 argument_list|(
 literal|'H'
 argument_list|)
+operator|||
+literal|false
+operator|==
+name|commandLine
+operator|.
+name|hasOption
+argument_list|(
+literal|"instances"
+argument_list|)
 condition|)
 block|{
+comment|// needs at least --instances
 name|printUsage
 argument_list|()
 expr_stmt|;
@@ -544,6 +580,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// loglevel& args are parsed by the python processor
 return|return
 operator|new
 name|LlapOptions
