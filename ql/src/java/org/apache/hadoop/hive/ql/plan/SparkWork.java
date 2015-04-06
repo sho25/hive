@@ -85,6 +85,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -217,7 +227,7 @@ argument_list|>
 name|roots
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>
@@ -232,10 +242,8 @@ argument_list|>
 name|leaves
 init|=
 operator|new
-name|HashSet
-argument_list|<
-name|BaseWork
-argument_list|>
+name|LinkedHashSet
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|protected
@@ -843,7 +851,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>
@@ -863,7 +871,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>
