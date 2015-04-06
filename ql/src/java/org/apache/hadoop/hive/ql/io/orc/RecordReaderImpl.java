@@ -2264,8 +2264,8 @@ comment|// in case failed conversion, return the default YES_NO_NULL truth value
 block|}
 catch|catch
 parameter_list|(
-name|NumberFormatException
-name|nfe
+name|Exception
+name|e
 parameter_list|)
 block|{
 if|if
@@ -2280,15 +2280,15 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"NumberFormatException when type matching predicate object"
+literal|"Exception when evaluating predicate. Skipping ORC PPD."
 operator|+
-literal|" and statistics object. Exception: "
+literal|" Exception: "
 operator|+
 name|ExceptionUtils
 operator|.
 name|getStackTrace
 argument_list|(
-name|nfe
+name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
