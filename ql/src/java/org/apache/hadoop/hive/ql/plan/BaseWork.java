@@ -260,12 +260,6 @@ name|uberMode
 init|=
 literal|false
 decl_stmt|;
-specifier|protected
-name|boolean
-name|vectorMode
-init|=
-literal|false
-decl_stmt|;
 specifier|public
 name|void
 name|setGatheringStats

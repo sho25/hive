@@ -907,6 +907,9 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|startRead
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -971,9 +974,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|startRead
-argument_list|()
-expr_stmt|;
 name|isFirst
 operator|=
 literal|false
