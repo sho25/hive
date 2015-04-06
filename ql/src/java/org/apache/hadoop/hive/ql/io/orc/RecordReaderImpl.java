@@ -762,7 +762,7 @@ literal|null
 decl_stmt|;
 specifier|private
 specifier|final
-name|RecordReaderImplFactory
+name|TreeReaderFactory
 operator|.
 name|TreeReader
 name|reader
@@ -968,7 +968,7 @@ operator|-
 literal|1
 return|;
 block|}
-comment|/**    * Find the mapping from predicate leaves to columns.    *    * @param sargLeaves  the search argument that we need to map    * @param columnNames the names of the columns    * @param rootColumn  the offset of the top level row, which offsets the    *                    result    * @return an array mapping the sarg leaves to concrete column numbers    */
+comment|/**    * Find the mapping from predicate leaves to columns.    * @param sargLeaves the search argument that we need to map    * @param columnNames the names of the columns    * @param rootColumn the offset of the top level row, which offsets the    *                   result    * @return an array mapping the sarg leaves to concrete column numbers    */
 specifier|public
 specifier|static
 name|int
@@ -1382,7 +1382,7 @@ argument_list|)
 decl_stmt|;
 name|reader
 operator|=
-name|RecordReaderImplFactory
+name|TreeReaderFactory
 operator|.
 name|createTreeReader
 argument_list|(
@@ -1544,7 +1544,7 @@ name|MAX
 block|,
 name|AFTER
 block|}
-comment|/**    * Given a point and min and max, determine if the point is before, at the    * min, in the middle, at the max, or after the range.    *    * @param point the point to test    * @param min   the minimum point    * @param max   the maximum point    * @param<T>   the type of the comparision    * @return the location of the point    */
+comment|/**    * Given a point and min and max, determine if the point is before, at the    * min, in the middle, at the max, or after the range.    * @param point the point to test    * @param min the minimum point    * @param max the maximum point    * @param<T> the type of the comparision    * @return the location of the point    */
 specifier|static
 parameter_list|<
 name|T
@@ -1645,7 +1645,7 @@ operator|.
 name|MIDDLE
 return|;
 block|}
-comment|/**    * Get the maximum value out of an index entry.    *    * @param index the index entry    * @return the object for the maximum value or null if there isn't one    */
+comment|/**    * Get the maximum value out of an index entry.    * @param index    *          the index entry    * @return the object for the maximum value or null if there isn't one    */
 specifier|static
 name|Object
 name|getMax
@@ -1814,7 +1814,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Get the minimum value out of an index entry.    *    * @param index the index entry    * @return the object for the minimum value or null if there isn't one    */
+comment|/**    * Get the minimum value out of an index entry.    * @param index    *          the index entry    * @return the object for the minimum value or null if there isn't one    */
 specifier|static
 name|Object
 name|getMin
@@ -1983,7 +1983,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Evaluate a predicate with respect to the statistics from the column    * that is referenced in the predicate.    *    * @param statsProto  the statistics for the column mentioned in the predicate    * @param predicate   the leaf predicate we need to evaluation    * @param bloomFilter    * @return the set of truth values that may be returned for the given    * predicate.    */
+comment|/**    * Evaluate a predicate with respect to the statistics from the column    * that is referenced in the predicate.    * @param statsProto the statistics for the column mentioned in the predicate    * @param predicate the leaf predicate we need to evaluation    * @param bloomFilter    * @return the set of truth values that may be returned for the given    *   predicate.    */
 specifier|static
 name|TruthValue
 name|evaluatePredicateProto
@@ -2067,7 +2067,7 @@ name|bf
 argument_list|)
 return|;
 block|}
-comment|/**    * Evaluate a predicate with respect to the statistics from the column    * that is referenced in the predicate.    *    * @param stats     the statistics for the column mentioned in the predicate    * @param predicate the leaf predicate we need to evaluation    * @return the set of truth values that may be returned for the given    * predicate.    */
+comment|/**    * Evaluate a predicate with respect to the statistics from the column    * that is referenced in the predicate.    * @param stats the statistics for the column mentioned in the predicate    * @param predicate the leaf predicate we need to evaluation    * @return the set of truth values that may be returned for the given    *   predicate.    */
 specifier|static
 name|TruthValue
 name|evaluatePredicate
@@ -2281,8 +2281,8 @@ comment|// in case failed conversion, return the default YES_NO_NULL truth value
 block|}
 catch|catch
 parameter_list|(
-name|NumberFormatException
-name|nfe
+name|Exception
+name|e
 parameter_list|)
 block|{
 if|if
@@ -2297,15 +2297,15 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"NumberFormatException when type matching predicate object"
+literal|"Exception when evaluating predicate. Skipping ORC PPD."
 operator|+
-literal|" and statistics object. Exception: "
+literal|" Exception: "
 operator|+
 name|ExceptionUtils
 operator|.
 name|getStackTrace
 argument_list|(
-name|nfe
+name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5859,7 +5859,7 @@ specifier|private
 name|boolean
 name|advanceToNextRow
 parameter_list|(
-name|RecordReaderImplFactory
+name|TreeReaderFactory
 operator|.
 name|TreeReader
 name|reader
@@ -6755,7 +6755,7 @@ specifier|private
 name|void
 name|seekToRowEntry
 parameter_list|(
-name|RecordReaderImplFactory
+name|TreeReaderFactory
 operator|.
 name|TreeReader
 name|reader

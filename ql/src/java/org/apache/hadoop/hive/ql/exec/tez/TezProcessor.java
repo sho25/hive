@@ -758,7 +758,9 @@ name|rproc
 operator|=
 operator|new
 name|ReduceRecordProcessor
-argument_list|()
+argument_list|(
+name|jobConf
+argument_list|)
 expr_stmt|;
 block|}
 name|initializeAndRunProcessor

@@ -346,6 +346,10 @@ name|void
 name|closeExpiredOperations
 parameter_list|()
 function_decl|;
+name|long
+name|getNoOperationTime
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

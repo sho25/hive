@@ -837,7 +837,9 @@ init|=
 operator|new
 name|ReduceWork
 argument_list|(
-literal|"Reducer "
+name|Utilities
+operator|.
+name|REDUCENAME
 operator|+
 operator|(
 operator|++
@@ -1263,7 +1265,9 @@ init|=
 operator|new
 name|MapWork
 argument_list|(
-literal|"Map "
+name|Utilities
+operator|.
+name|MAPNAME
 operator|+
 operator|(
 operator|++
