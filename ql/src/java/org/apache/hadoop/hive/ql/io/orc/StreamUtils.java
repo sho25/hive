@@ -43,16 +43,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -63,7 +53,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|DiskRange
+name|DiskRangeInfo
 import|;
 end_import
 
@@ -109,20 +99,6 @@ name|LlapMemoryBuffer
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
 begin_comment
 comment|/**  * Stream utility.  */
 end_comment
@@ -132,11 +108,11 @@ specifier|public
 class|class
 name|StreamUtils
 block|{
-comment|/**    * Create LlapInStream from stream buffer.    *    * @param streamName - stream name    * @param fileId - file id    * @param streamBuffer - stream buffer    * @return - LlapInStream    * @throws IOException    */
+comment|/**    * Create SettableUncompressedStream from stream buffer.    *    * @param streamName - stream name    * @param fileId - file id    * @param streamBuffer - stream buffer    * @return - SettableUncompressedStream    * @throws IOException    */
 specifier|public
 specifier|static
 name|SettableUncompressedStream
-name|createLlapInStream
+name|createSettableUncompressedStream
 parameter_list|(
 name|String
 name|streamName
@@ -163,25 +139,12 @@ return|return
 literal|null
 return|;
 block|}
-name|List
-argument_list|<
-name|DiskRange
-argument_list|>
-name|diskRanges
+name|DiskRangeInfo
+name|diskRangeInfo
 init|=
-name|Lists
-operator|.
-name|newArrayList
-argument_list|()
-decl_stmt|;
-name|long
-name|totalLength
-init|=
-name|createDiskRanges
+name|createDiskRangeInfo
 argument_list|(
 name|streamBuffer
-argument_list|,
-name|diskRanges
 argument_list|)
 decl_stmt|;
 return|return
@@ -192,33 +155,39 @@ name|fileId
 argument_list|,
 name|streamName
 argument_list|,
-name|diskRanges
+name|diskRangeInfo
+operator|.
+name|getDiskRanges
+argument_list|()
 argument_list|,
-name|totalLength
+name|diskRangeInfo
+operator|.
+name|getTotalLength
+argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Converts stream buffers to disk ranges.    * @param streamBuffer - stream buffer    * @param diskRanges - initial empty list of disk ranges    * @return - total length of disk ranges    */
-comment|// TODO: unnecessary
+comment|/**    * Converts stream buffers to disk ranges.    * @param streamBuffer - stream buffer    * @return - total length of disk ranges    */
 specifier|public
 specifier|static
-name|long
-name|createDiskRanges
+name|DiskRangeInfo
+name|createDiskRangeInfo
 parameter_list|(
 name|EncodedColumnBatch
 operator|.
 name|StreamBuffer
 name|streamBuffer
-parameter_list|,
-name|List
-argument_list|<
-name|DiskRange
-argument_list|>
-name|diskRanges
 parameter_list|)
 block|{
+name|DiskRangeInfo
+name|diskRangeInfo
+init|=
+operator|new
+name|DiskRangeInfo
+argument_list|()
+decl_stmt|;
 name|long
-name|totalLength
+name|offset
 init|=
 literal|0
 decl_stmt|;
@@ -240,11 +209,10 @@ operator|.
 name|getByteBufferDup
 argument_list|()
 decl_stmt|;
-name|RecordReaderImpl
+name|diskRangeInfo
 operator|.
-name|BufferChunk
-name|bufferChunk
-init|=
+name|addDiskRange
+argument_list|(
 operator|new
 name|RecordReaderImpl
 operator|.
@@ -252,17 +220,11 @@ name|BufferChunk
 argument_list|(
 name|buffer
 argument_list|,
-name|totalLength
+name|offset
 argument_list|)
-decl_stmt|;
-name|diskRanges
-operator|.
-name|add
-argument_list|(
-name|bufferChunk
 argument_list|)
 expr_stmt|;
-name|totalLength
+name|offset
 operator|+=
 name|buffer
 operator|.
@@ -271,7 +233,7 @@ argument_list|()
 expr_stmt|;
 block|}
 return|return
-name|totalLength
+name|diskRangeInfo
 return|;
 block|}
 block|}

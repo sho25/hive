@@ -263,7 +263,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|EncodedRecordReaderImplFactory
+name|EncodedTreeReaderFactory
 import|;
 end_import
 
@@ -323,26 +323,6 @@ name|io
 operator|.
 name|orc
 operator|.
-name|RecordReaderImplFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
 name|WriterImpl
 import|;
 end_import
@@ -358,7 +338,7 @@ name|OrcBatchKey
 argument_list|>
 block|{
 specifier|private
-name|RecordReaderImplFactory
+name|EncodedTreeReaderFactory
 operator|.
 name|TreeReader
 index|[]
@@ -638,7 +618,7 @@ name|this
 operator|.
 name|columnReaders
 operator|=
-name|EncodedRecordReaderImplFactory
+name|EncodedTreeReaderFactory
 operator|.
 name|createEncodedTreeReader
 argument_list|(
@@ -858,7 +838,7 @@ specifier|private
 name|void
 name|repositionInStreams
 parameter_list|(
-name|RecordReaderImplFactory
+name|EncodedTreeReaderFactory
 operator|.
 name|TreeReader
 index|[]
