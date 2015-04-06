@@ -7295,6 +7295,19 @@ operator|+
 literal|"  With negative value, it's checked for all of the operations regardless of state."
 argument_list|)
 block|,
+name|HIVE_SERVER2_IDLE_SESSION_CHECK_OPERATION
+argument_list|(
+literal|"hive.server2.idle.session.check.operation"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Session will be considered to be idle only if there is no activity, and there is no pending operation.\n"
+operator|+
+literal|"This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
+operator|+
+literal|"(hive.server2.session.check.interval) are enabled."
+argument_list|)
+block|,
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
