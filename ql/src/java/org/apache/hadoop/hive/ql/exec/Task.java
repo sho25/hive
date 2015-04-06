@@ -953,6 +953,8 @@ operator|=
 name|childTasks
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2192,6 +2194,7 @@ return|return
 name|exception
 return|;
 block|}
+specifier|protected
 name|void
 name|setException
 parameter_list|(
@@ -2260,6 +2263,8 @@ name|getType
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode
@@ -2273,6 +2278,8 @@ name|hashCode
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
