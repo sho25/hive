@@ -4197,6 +4197,33 @@ operator|+
 literal|"This changes the compression level of higher level compression codec (like ZLIB)."
 argument_list|)
 block|,
+name|HIVE_ORC_SPLIT_STRATEGY
+argument_list|(
+literal|"hive.exec.orc.split.strategy"
+argument_list|,
+literal|"HYBRID"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"HYBRID"
+argument_list|,
+literal|"BI"
+argument_list|,
+literal|"ETL"
+argument_list|)
+argument_list|,
+literal|"This is not a user level config. BI strategy is used when the requirement is to spend less time in split generation"
+operator|+
+literal|" as opposed to query execution (split generation does not read or cache file footers)."
+operator|+
+literal|" ETL strategy is used when spending little more time in split generation is acceptable"
+operator|+
+literal|" (split generation reads and caches file footers). HYBRID chooses between the above strategies"
+operator|+
+literal|" based on heuristics."
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"
