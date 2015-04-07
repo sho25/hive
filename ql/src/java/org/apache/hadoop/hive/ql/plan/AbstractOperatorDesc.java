@@ -151,6 +151,15 @@ argument_list|)
 throw|;
 block|}
 specifier|public
+name|boolean
+name|getVectorMode
+parameter_list|()
+block|{
+return|return
+name|vectorMode
+return|;
+block|}
+specifier|public
 name|void
 name|setVectorMode
 parameter_list|(

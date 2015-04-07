@@ -550,6 +550,18 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|NULLABLE_RECORD_SCHEMA
+init|=
+literal|"[\"null\", "
+operator|+
+name|RECORD_SCHEMA
+operator|+
+literal|"]"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|UNION_SCHEMA
 init|=
 literal|"{\n"

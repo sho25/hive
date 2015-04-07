@@ -1400,6 +1400,70 @@ index|[
 literal|0
 index|]
 expr_stmt|;
+comment|/*        * Here, we can be in one of 4 states.        *        * 1. If map join work is null implies that we have not yet traversed the big table side. We        * just need to see if we can find a reduce sink operator in the big table side. This would        * imply a reduce side operation.        *        * 2. If we don't find a reducesink in 1 it has to be the case that it is a map side operation.        *        * 3. If we have already created a work item for the big table side, we need to see if we can        * find a table scan operator in the big table side. This would imply a map side operation.        *        * 4. If we don't find a table scan operator, it has to be a reduce side operation.        */
+if|if
+condition|(
+name|mapJoinWork
+operator|==
+literal|null
+condition|)
+block|{
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|rootOp
+init|=
+name|OperatorUtils
+operator|.
+name|findSingleOperatorUpstream
+argument_list|(
+name|mapJoinOp
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|joinConf
+operator|.
+name|getPosBigTable
+argument_list|()
+argument_list|)
+argument_list|,
+name|ReduceSinkOperator
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|rootOp
+operator|==
+literal|null
+condition|)
+block|{
+comment|// likely we found a table scan operator
+name|edgeType
+operator|=
+name|EdgeType
+operator|.
+name|CUSTOM_EDGE
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// we have found a reduce sink
+name|edgeType
+operator|=
+name|EdgeType
+operator|.
+name|CUSTOM_SIMPLE_EDGE
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
 name|Operator
 argument_list|<
 name|?
@@ -1431,11 +1495,11 @@ decl_stmt|;
 if|if
 condition|(
 name|rootOp
-operator|instanceof
-name|TableScanOperator
+operator|!=
+literal|null
 condition|)
 block|{
-comment|// we will run in mapper
+comment|// likely we found a table scan operator
 name|edgeType
 operator|=
 name|EdgeType
@@ -1445,13 +1509,14 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// we will run in reducer
+comment|// we have found a reduce sink
 name|edgeType
 operator|=
 name|EdgeType
 operator|.
 name|CUSTOM_SIMPLE_EDGE
 expr_stmt|;
+block|}
 block|}
 block|}
 name|TezEdgeProperty
