@@ -256,7 +256,7 @@ specifier|public
 class|class
 name|TestStorageDescriptorSharing
 extends|extends
-name|IMockUtils
+name|HBaseIntegrationTests
 block|{
 specifier|private
 specifier|static
@@ -290,7 +290,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|startMiniCluster
 argument_list|()
@@ -306,7 +306,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|shutdownMiniCluster
 argument_list|()

@@ -798,7 +798,7 @@ specifier|public
 class|class
 name|TestHBaseStoreIntegration
 extends|extends
-name|IMockUtils
+name|HBaseIntegrationTests
 block|{
 specifier|private
 specifier|static
@@ -839,7 +839,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|startMiniCluster
 argument_list|()
@@ -855,7 +855,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|shutdownMiniCluster
 argument_list|()
@@ -7789,9 +7789,7 @@ init|=
 name|HBaseReadWrite
 operator|.
 name|getInstance
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 operator|.
 name|getUserRoles
 argument_list|(
@@ -8220,9 +8218,7 @@ init|=
 name|HBaseReadWrite
 operator|.
 name|getInstance
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 operator|.
 name|getUserRoles
 argument_list|(
@@ -10608,9 +10604,7 @@ operator|=
 name|HBaseReadWrite
 operator|.
 name|getInstance
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 operator|.
 name|getGlobalPrivs
 argument_list|()

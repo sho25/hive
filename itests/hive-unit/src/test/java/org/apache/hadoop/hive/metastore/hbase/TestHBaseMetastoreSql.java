@@ -111,17 +111,17 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Ignore
+name|Test
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|junit
+name|io
 operator|.
-name|Test
+name|File
 import|;
 end_import
 
@@ -144,7 +144,7 @@ specifier|public
 class|class
 name|TestHBaseMetastoreSql
 extends|extends
-name|IMockUtils
+name|HBaseIntegrationTests
 block|{
 specifier|private
 specifier|static
@@ -174,7 +174,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|startMiniCluster
 argument_list|()
@@ -190,7 +190,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|IMockUtils
+name|HBaseIntegrationTests
 operator|.
 name|shutdownMiniCluster
 argument_list|()

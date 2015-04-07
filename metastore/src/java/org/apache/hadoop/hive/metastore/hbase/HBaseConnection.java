@@ -115,6 +115,16 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Flush commits.  A no-op for transaction implementations since they will write at commit time.    * @param htab Table to flush    * @throws IOException    */
+name|void
+name|flush
+parameter_list|(
+name|HTableInterface
+name|htab
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**    * Create a new table    * @param tableName name of the table    * @param columnFamilies name of the column families in the table    * @throws IOException    */
 name|void
 name|createHBaseTable
