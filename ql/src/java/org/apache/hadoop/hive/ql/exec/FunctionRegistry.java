@@ -3319,6 +3319,17 @@ argument_list|)
 expr_stmt|;
 name|system
 operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"months_between"
+argument_list|,
+name|GenericUDFMonthsBetween
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
 name|registerUDF
 argument_list|(
 literal|"get_json_object"
