@@ -3374,9 +3374,46 @@ operator|.
 name|next
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|current
+operator|instanceof
+name|IncompleteCb
+condition|)
+block|{
+comment|// 2b. This is a known incomplete CB caused by ORC CB end boundaries being estimates.
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot read "
+operator|+
+name|current
+argument_list|)
+expr_stmt|;
+block|}
+name|next
+operator|=
+literal|null
+expr_stmt|;
+name|currentCOffset
+operator|=
+operator|-
+literal|1
+expr_stmt|;
+block|}
 else|else
 block|{
-comment|// 2b. This is a compressed buffer. We need to uncompress it; the buffer can comprise
+comment|// 2c. This is a compressed buffer. We need to uncompress it; the buffer can comprise
 comment|// several disk ranges, so we might need to combine them.
 name|BufferChunk
 name|bc
@@ -3420,14 +3457,6 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 block|}
-name|long
-name|originalOffset
-init|=
-name|bc
-operator|.
-name|getOffset
-argument_list|()
-decl_stmt|;
 name|lastCached
 operator|=
 name|addOneCompressionBuffer
@@ -3476,11 +3505,16 @@ operator|.
 name|getOffset
 argument_list|()
 else|:
-name|originalOffset
+operator|-
+literal|1
 expr_stmt|;
 block|}
 if|if
 condition|(
+name|next
+operator|==
+literal|null
+operator|||
 operator|(
 name|endCOffset
 operator|>=
@@ -3490,10 +3524,6 @@ name|currentCOffset
 operator|>=
 name|endCOffset
 operator|)
-operator|||
-name|next
-operator|==
-literal|null
 condition|)
 block|{
 break|break;
@@ -4244,6 +4274,49 @@ return|return
 name|ranges
 return|;
 block|}
+specifier|private
+specifier|static
+class|class
+name|IncompleteCb
+extends|extends
+name|DiskRangeList
+block|{
+specifier|public
+name|IncompleteCb
+parameter_list|(
+name|long
+name|offset
+parameter_list|,
+name|long
+name|end
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|offset
+argument_list|,
+name|end
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"incomplete CB start: "
+operator|+
+name|offset
+operator|+
+literal|" end: "
+operator|+
+name|end
+return|;
+block|}
+block|}
 comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param ranges Iterator of all chunks, pointing at current.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the     *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The resulting cache chunk.    */
 specifier|private
 specifier|static
@@ -4533,6 +4606,15 @@ name|hasContiguousNext
 argument_list|()
 condition|)
 block|{
+name|addIncompleteCompressionBuffer
+argument_list|(
+name|cbStartOffset
+argument_list|,
+name|current
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
@@ -4590,11 +4672,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Removing "
+literal|"Removing partial CB "
 operator|+
 name|current
 operator|+
-literal|" from ranges"
+literal|" from ranges after copying its contents"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4645,11 +4727,14 @@ expr_stmt|;
 comment|// There might be slices depending on this buffer.
 block|}
 block|}
+name|int
+name|extraChunkCount
+init|=
+literal|0
+decl_stmt|;
 while|while
 condition|(
-name|next
-operator|!=
-literal|null
+literal|true
 condition|)
 block|{
 if|if
@@ -4666,7 +4751,9 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Trying to extend compressed block into uncompressed block"
+literal|"Trying to extend compressed block into uncompressed block "
+operator|+
+name|next
 argument_list|)
 throw|;
 block|}
@@ -4676,6 +4763,9 @@ name|next
 operator|.
 name|getData
 argument_list|()
+expr_stmt|;
+operator|++
+name|extraChunkCount
 expr_stmt|;
 if|if
 condition|(
@@ -4798,26 +4888,6 @@ name|tmp
 init|=
 name|next
 decl_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Removing "
-operator|+
-name|tmp
-operator|+
-literal|" from ranges"
-argument_list|)
-expr_stmt|;
-block|}
 name|next
 operator|=
 name|next
@@ -4831,16 +4901,121 @@ name|next
 else|:
 literal|null
 expr_stmt|;
+if|if
+condition|(
+name|next
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removing partial CB "
+operator|+
+name|tmp
+operator|+
+literal|" from ranges after copying its contents"
+argument_list|)
+expr_stmt|;
+block|}
 name|tmp
 operator|.
 name|removeSelf
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
+name|addIncompleteCompressionBuffer
+argument_list|(
+name|cbStartOffset
+argument_list|,
+name|tmp
+argument_list|,
+name|extraChunkCount
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
 comment|// This is impossible to read from this chunk.
+block|}
+block|}
+block|}
+specifier|private
+specifier|static
+name|void
+name|addIncompleteCompressionBuffer
+parameter_list|(
+name|long
+name|cbStartOffset
+parameter_list|,
+name|DiskRangeList
+name|target
+parameter_list|,
+name|int
+name|extraChunkCount
+parameter_list|)
+block|{
+name|IncompleteCb
+name|icb
+init|=
+operator|new
+name|IncompleteCb
+argument_list|(
+name|cbStartOffset
+argument_list|,
+name|target
+operator|.
+name|getEnd
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|DebugUtils
+operator|.
+name|isTraceOrcEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Replacing "
+operator|+
+name|target
+operator|+
+literal|" (and "
+operator|+
+name|extraChunkCount
+operator|+
+literal|" previous chunks) with "
+operator|+
+name|icb
+operator|+
+literal|" in the buffers"
+argument_list|)
+expr_stmt|;
+block|}
+name|target
+operator|.
+name|replaceSelfWith
+argument_list|(
+name|icb
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk     * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
 specifier|private
