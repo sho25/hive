@@ -153,6 +153,24 @@ name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED_DEFAULT
 init|=
 literal|false
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_DAEMON_LIVENESS_HEARTBEAT_INTERVAL_MS
+init|=
+name|LLAP_DAEMON_PREFIX
+operator|+
+literal|"liveness.heartbeat.interval-ms"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|long
+name|LLAP_DAEMON_LIVENESS_HEARTBEAT_INTERVAL_MS_DEFAULT
+init|=
+literal|5000l
+decl_stmt|;
 comment|// Section for configs used in AM and executors
 specifier|public
 specifier|static

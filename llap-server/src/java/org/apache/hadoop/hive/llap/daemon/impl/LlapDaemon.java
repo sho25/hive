@@ -949,6 +949,8 @@ operator|=
 operator|new
 name|ContainerRunnerImpl
 argument_list|(
+name|daemonConf
+argument_list|,
 name|numExecutors
 argument_list|,
 name|localDirs
