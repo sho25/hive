@@ -1248,19 +1248,15 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|clear
+name|discardData
 parameter_list|()
 block|{
-comment|// This will make the object completely unusable. Semantics of clear are not defined...
-name|this
-operator|.
+comment|// This will make the object completely unusable. We could reset to default state instead...
 name|writeBuffers
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
 name|refs
 operator|=
 operator|new
@@ -1269,9 +1265,9 @@ index|[
 literal|1
 index|]
 expr_stmt|;
-name|this
-operator|.
 name|keysAssigned
+operator|=
+name|numValues
 operator|=
 literal|0
 expr_stmt|;

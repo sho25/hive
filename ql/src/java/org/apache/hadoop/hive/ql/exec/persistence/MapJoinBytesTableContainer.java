@@ -2398,11 +2398,7 @@ name|void
 name|clear
 parameter_list|()
 block|{
-name|hashMap
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
+comment|// Don't clear the hash table - reuse is possible. GC will take care of it.
 block|}
 annotation|@
 name|Override

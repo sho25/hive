@@ -2063,7 +2063,7 @@ name|partition
 operator|.
 name|hashMap
 operator|.
-name|clear
+name|discardData
 argument_list|()
 expr_stmt|;
 block|}
@@ -2307,7 +2307,6 @@ return|return
 name|toSpillPartitionId
 return|;
 block|}
-comment|/* Clean up in memory hashtables */
 annotation|@
 name|Override
 specifier|public
@@ -2315,32 +2314,7 @@ name|void
 name|clear
 parameter_list|()
 block|{
-for|for
-control|(
-name|HashPartition
-name|hp
-range|:
-name|hashPartitions
-control|)
-block|{
-if|if
-condition|(
-name|hp
-operator|.
-name|hashMap
-operator|!=
-literal|null
-condition|)
-block|{
-name|hp
-operator|.
-name|hashMap
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-block|}
-block|}
+comment|// Don't clear in-memory hashtables - they might be cached.
 block|}
 annotation|@
 name|Override

@@ -2689,6 +2689,8 @@ operator|instanceof
 name|HybridHashTableContainer
 condition|)
 block|{
+comment|// TODO: most of the below code should be moved inside HybridHashTableContainer.
+comment|//       Ideally, even the instanceof should not exist; instead, an API on MJTC.
 name|HybridHashTableContainer
 name|hybridHtContainer
 init|=
@@ -2770,7 +2772,7 @@ operator|.
 name|getHashMapFromMemory
 argument_list|()
 operator|.
-name|clear
+name|discardData
 argument_list|()
 expr_stmt|;
 block|}
@@ -2949,6 +2951,10 @@ expr_stmt|;
 block|}
 block|}
 block|}
+name|mapJoinTables
+operator|=
+literal|null
+expr_stmt|;
 name|cache
 operator|.
 name|release
