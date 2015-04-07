@@ -151,9 +151,11 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|reloperators
+name|cost
 operator|.
-name|HiveJoin
+name|HiveCostModel
+operator|.
+name|JoinAlgorithm
 import|;
 end_import
 
@@ -176,8 +178,6 @@ operator|.
 name|reloperators
 operator|.
 name|HiveJoin
-operator|.
-name|JoinAlgorithm
 import|;
 end_import
 
