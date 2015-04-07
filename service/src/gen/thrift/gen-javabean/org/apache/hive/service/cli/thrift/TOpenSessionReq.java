@@ -1271,7 +1271,7 @@ name|thrift
 operator|.
 name|TProtocolVersion
 operator|.
-name|HIVE_CLI_SERVICE_PROTOCOL_V7
+name|HIVE_CLI_SERVICE_PROTOCOL_V8
 expr_stmt|;
 block|}
 specifier|public
@@ -1477,7 +1477,7 @@ name|thrift
 operator|.
 name|TProtocolVersion
 operator|.
-name|HIVE_CLI_SERVICE_PROTOCOL_V7
+name|HIVE_CLI_SERVICE_PROTOCOL_V8
 expr_stmt|;
 name|this
 operator|.
