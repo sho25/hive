@@ -68,6 +68,17 @@ specifier|private
 name|String
 name|message
 decl_stmt|;
+specifier|public
+enum|enum
+name|Scope
+block|{
+name|DB
+block|,
+name|TABLE
+block|,
+name|UNKNOWN
+block|}
+empty_stmt|;
 name|HCatNotificationEvent
 parameter_list|(
 name|NotificationEvent
@@ -124,6 +135,47 @@ parameter_list|()
 block|{
 return|return
 name|eventId
+return|;
+block|}
+specifier|public
+name|Scope
+name|getEventScope
+parameter_list|()
+block|{
+comment|// Eventually, we want this to be a richer description of having
+comment|// a DB, TABLE, ROLE, etc scope. For now, we have a trivial impl
+comment|// of having only DB and TABLE scopes, as determined by whether
+comment|// or not the tableName is null.
+if|if
+condition|(
+name|dbName
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|tableName
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|Scope
+operator|.
+name|TABLE
+return|;
+block|}
+return|return
+name|Scope
+operator|.
+name|DB
+return|;
+block|}
+return|return
+name|Scope
+operator|.
+name|UNKNOWN
 return|;
 block|}
 specifier|public
