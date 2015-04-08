@@ -449,16 +449,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|concurrent
 operator|.
 name|TimeUnit
@@ -979,7 +969,7 @@ name|t
 argument_list|,
 name|partitionEvent
 operator|.
-name|getPartitions
+name|getPartitionIterator
 argument_list|()
 argument_list|)
 operator|.
