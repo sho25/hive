@@ -939,6 +939,35 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
+comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @param deleteData Whether to delete the underlying data.    * @throws HCatException,ConnectionFailureException    */
+specifier|public
+specifier|abstract
+name|void
+name|dropPartitions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partitionSpec
+parameter_list|,
+name|boolean
+name|ifExists
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|HCatException
+function_decl|;
 comment|/**    * List partitions by filter.    *    * @param dbName The database name.    * @param tblName The table name.    * @param filter The filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return list of partitions    * @throws HCatException    */
 specifier|public
 specifier|abstract
