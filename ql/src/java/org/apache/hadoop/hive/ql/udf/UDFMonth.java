@@ -191,6 +191,24 @@ name|serde2
 operator|.
 name|io
 operator|.
+name|HiveIntervalYearMonthWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
 name|TimestampWritable
 import|;
 end_import
@@ -237,10 +255,20 @@ literal|"month"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(date) - Returns the month of date"
+literal|"_FUNC_(param) - Returns the month component of the date/timestamp/interval"
 argument_list|,
 name|extended
 operator|=
+literal|"param can be one of:\n"
+operator|+
+literal|"1. A string in the format of 'yyyy-MM-dd HH:mm:ss' or 'yyyy-MM-dd'.\n"
+operator|+
+literal|"2. A date value\n"
+operator|+
+literal|"3. A timestamp value\n"
+operator|+
+literal|"4. A year-month interval value"
+operator|+
 literal|"Example:\n"
 operator|+
 literal|"> SELECT _FUNC_('2009-07-30') FROM src LIMIT 1;\n"
@@ -464,6 +492,42 @@ name|Calendar
 operator|.
 name|MONTH
 argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|IntWritable
+name|evaluate
+parameter_list|(
+name|HiveIntervalYearMonthWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+name|result
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getHiveIntervalYearMonth
+argument_list|()
+operator|.
+name|getMonths
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

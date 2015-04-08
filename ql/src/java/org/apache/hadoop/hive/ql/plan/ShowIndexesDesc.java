@@ -43,6 +43,26 @@ name|Path
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * ShowIndexesDesc.  * Returns table index information per SQL syntax.  */
 end_comment
@@ -54,6 +74,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Show Indexes"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class

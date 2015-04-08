@@ -527,6 +527,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|CalciteSemanticException
+operator|.
+name|UnsupportedFeature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ParseUtils
@@ -1508,6 +1530,10 @@ argument_list|()
 operator|.
 name|getCanonicalName
 argument_list|()
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Schema_less_table
 argument_list|)
 throw|;
 block|}
@@ -2763,6 +2789,10 @@ name|getExprString
 argument_list|()
 operator|+
 literal|" is not a valid decimal"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Invalid_decimal
 argument_list|)
 throw|;
 comment|// TODO: return createNullLiteral(literal);

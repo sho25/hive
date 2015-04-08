@@ -313,6 +313,26 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|JobConf
@@ -733,9 +753,13 @@ name|displayName
 operator|=
 literal|"Path -> Alias"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -786,9 +810,13 @@ name|displayName
 operator|=
 literal|"Truncated Path -> Alias"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -925,9 +953,13 @@ name|displayName
 operator|=
 literal|"Path -> Partition"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -1193,9 +1225,13 @@ name|displayName
 operator|=
 literal|"Split Sample"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|HashMap
@@ -1659,6 +1695,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Map Operator Tree"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Set
@@ -2226,9 +2278,13 @@ name|displayName
 operator|=
 literal|"Path -> Bucketed Columns"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -2254,9 +2310,13 @@ name|displayName
 operator|=
 literal|"Path -> Sorted Columns"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -2342,9 +2402,13 @@ name|displayName
 operator|=
 literal|"Sampling"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|String
