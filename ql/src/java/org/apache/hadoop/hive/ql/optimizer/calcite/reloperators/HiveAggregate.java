@@ -435,24 +435,10 @@ name|groupSet
 parameter_list|)
 block|{
 return|return
-name|RelMetadataQuery
-operator|.
-name|distribution
-argument_list|(
-name|child
-argument_list|)
-operator|.
-name|getKeys
-argument_list|()
-operator|.
-name|containsAll
-argument_list|(
-name|groupSet
-operator|.
-name|asList
-argument_list|()
-argument_list|)
+literal|false
 return|;
+comment|//TODO: Enable this again
+comment|/*     return RelMetadataQuery.distribution(child).getKeys().             containsAll(groupSet.asList());             */
 block|}
 annotation|@
 name|Override
