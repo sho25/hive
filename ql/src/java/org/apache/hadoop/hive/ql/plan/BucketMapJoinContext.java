@@ -159,6 +159,26 @@ name|BucketMatcher
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * was inner class of MapreLocalWork. context for bucket mapjoin (or smb join)  */
 end_comment
@@ -683,9 +703,13 @@ name|displayName
 operator|=
 literal|"Alias Bucket File Name Mapping"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -774,9 +798,13 @@ name|displayName
 operator|=
 literal|"Alias Bucket Base File Name Mapping"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -835,9 +863,13 @@ name|displayName
 operator|=
 literal|"Alias Bucket Output File Name Mapping"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map

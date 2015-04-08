@@ -6442,6 +6442,17 @@ operator|+
 literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
 argument_list|)
 block|,
+name|HIVE_EXPLAIN_USER
+argument_list|(
+literal|"hive.explain.user"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to show explain result at user level.\n"
+operator|+
+literal|"When enabled, will log EXPLAIN output for the query at user level."
+argument_list|)
+block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
