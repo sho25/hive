@@ -23,26 +23,6 @@ name|expressions
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Random
-import|;
-end_import
-
 begin_comment
 comment|/**  * A high-performance set implementation used to support fast set membership testing,  * using Cuckoo hashing. This is used to support fast tests of the form  *  *       column IN (<list-of-values )  *  * For double, we simply layer over the implementation for long. Double.doubleToRawLongBits  * is used to convert a 64-bit double to a 64-bit long with bit-for-bit fidelity.  */
 end_comment

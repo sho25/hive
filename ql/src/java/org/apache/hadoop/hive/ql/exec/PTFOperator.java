@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -61,15 +71,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
+name|concurrent
 operator|.
-name|conf
-operator|.
-name|Configuration
+name|Future
 import|;
 end_import
 
@@ -81,11 +89,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
 name|conf
 operator|.
-name|HiveConf
+name|Configuration
 import|;
 end_import
 
@@ -465,7 +471,13 @@ comment|/*    * 1. Find out if the operator is invoked at Map-Side or Reduce-sid
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -474,11 +486,26 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|jobConf
+argument_list|)
+decl_stmt|;
 name|hiveConf
 operator|=
 name|jobConf
 expr_stmt|;
-comment|// if the parent is ExtractOperator, this invocation is from reduce-side
 name|isMapOperator
 operator|=
 name|conf
@@ -557,13 +584,9 @@ name|firstMapRow
 operator|=
 literal|true
 expr_stmt|;
-name|super
-operator|.
-name|initializeOp
-argument_list|(
-name|jobConf
-argument_list|)
-expr_stmt|;
+return|return
+name|result
+return|;
 block|}
 annotation|@
 name|Override
@@ -599,7 +622,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -869,7 +892,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-comment|/*        * Why cannot we just use the ExprNodeEvaluator on the column?        * - because on the reduce-side it is initialized based on the rowOI of the HiveTable        *   and not the OI of the ExtractOp ( the parent of this Operator on the reduce-side)        */
+comment|/*        * Why cannot we just use the ExprNodeEvaluator on the column?        * - because on the reduce-side it is initialized based on the rowOI of the HiveTable        *   and not the OI of the parent of this Operator on the reduce-side        */
 name|keyFields
 index|[
 name|i

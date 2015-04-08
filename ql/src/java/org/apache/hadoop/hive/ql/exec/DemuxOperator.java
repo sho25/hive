@@ -45,6 +45,26 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -68,6 +88,18 @@ operator|.
 name|Map
 operator|.
 name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -415,7 +447,13 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -424,6 +462,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 comment|// A DemuxOperator should have at least one child
 if|if
 condition|(
@@ -894,20 +948,29 @@ name|childOperatorTags
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
 literal|"newChildOperatorsTag "
 operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
 name|newChildOperatorsTag
 argument_list|)
-expr_stmt|;
-name|initializeChildren
-argument_list|(
-name|hconf
 argument_list|)
 expr_stmt|;
+block|}
+return|return
+name|result
+return|;
 block|}
 specifier|private
 name|int
@@ -1049,6 +1112,11 @@ name|State
 operator|.
 name|INIT
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1079,6 +1147,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -1095,6 +1164,11 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
 block|{
 name|LOG
 operator|.
@@ -1134,6 +1208,7 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 comment|// We need to initialize those MuxOperators first because if we first
 comment|// initialize other operators, the states of all parents of those MuxOperators
 comment|// are INIT (including this DemuxOperator),
@@ -1248,6 +1323,11 @@ name|i
 operator|++
 control|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1286,6 +1366,7 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -1343,7 +1424,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -1382,7 +1463,7 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 condition|)
 block|{
 name|cntrs
@@ -1406,7 +1487,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|id
 operator|+
@@ -1476,7 +1557,7 @@ else|else
 block|{
 name|child
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,
@@ -1570,6 +1651,11 @@ index|[
 name|newTag
 index|]
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1598,6 +1684,7 @@ operator|+
 literal|" rows"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * We assume that the input rows associated with the same key are ordered by    * the tag. Because a tag maps to a childindex, when we see a new childIndex,    * we will not see the last childIndex (lastChildIndex) again before we start    * a new key group. So, we can call flush the buffer of children    * from lastChildIndex (inclusive) to currentChildIndex (exclusive) and    * propagate processGroup to those children.    * @param currentChildIndex the childIndex we have right now.    * @throws HiveException    */

@@ -420,7 +420,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|TestSemanticAnalyzer
+name|TestUpdateDeleteSemanticAnalyzer
 operator|.
 name|class
 operator|.
@@ -1804,6 +1804,10 @@ argument_list|,
 literal|false
 argument_list|,
 literal|false
+argument_list|,
+literal|false
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|ExplainTask

@@ -423,20 +423,12 @@ name|children
 parameter_list|)
 block|{
 return|return
-name|udfName
-operator|+
-literal|"("
-operator|+
-name|StringUtils
-operator|.
-name|join
+name|getStandardDisplayString
 argument_list|(
-name|children
+name|udfName
 argument_list|,
-literal|", "
+name|children
 argument_list|)
-operator|+
-literal|")"
 return|;
 block|}
 specifier|protected

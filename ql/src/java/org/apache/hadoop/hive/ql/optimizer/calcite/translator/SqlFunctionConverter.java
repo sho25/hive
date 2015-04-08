@@ -429,6 +429,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|CalciteSemanticException
+operator|.
+name|UnsupportedFeature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ASTNode
@@ -833,7 +855,7 @@ name|RelDataType
 name|retType
 parameter_list|)
 throws|throws
-name|CalciteSemanticException
+name|SemanticException
 block|{
 comment|// handle overloaded methods first
 if|if
@@ -1551,6 +1573,11 @@ operator|(
 name|GenericUDF
 operator|)
 name|udf
+argument_list|,
+name|fi
+operator|.
+name|getResources
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -2883,6 +2910,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"<=> is not yet supported for cbo."
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Less_than_equal_greater_than
 argument_list|)
 throw|;
 block|}

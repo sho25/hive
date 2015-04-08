@@ -853,7 +853,9 @@ name|Path
 argument_list|(
 name|main
 operator|+
-literal|"_flush_length"
+name|AcidUtils
+operator|.
+name|DELTA_SIDE_FILE_SUFFIX
 argument_list|)
 return|;
 block|}

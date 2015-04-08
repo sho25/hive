@@ -49,7 +49,7 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|LinkedBlockingQueue
+name|SynchronousQueue
 import|;
 end_import
 
@@ -422,6 +422,7 @@ name|Server
 argument_list|()
 expr_stmt|;
 comment|// Server thread pool
+comment|// Start with minWorkerThreads, expand till maxWorkerThreads and reject subsequent requests
 name|String
 name|threadPoolName
 init|=
@@ -444,7 +445,7 @@ operator|.
 name|SECONDS
 argument_list|,
 operator|new
-name|LinkedBlockingQueue
+name|SynchronousQueue
 argument_list|<
 name|Runnable
 argument_list|>

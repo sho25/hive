@@ -968,6 +968,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_FILTER_HOOK
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_RAW_STORE_IMPL
 block|,
 name|HiveConf
@@ -1028,6 +1034,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|,
 name|HiveConf
@@ -1083,6 +1095,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_TRY_DIRECT_SQL_DDL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_TIMEOUT
 block|}
 decl_stmt|;
 static|static
@@ -1651,7 +1669,7 @@ literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Do not report an error if DROP TABLE/VIEW/Index specifies a non-existent table/view/index"
+literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/index/function"
 argument_list|)
 block|,
 name|HIVEIGNOREMAPJOINHINT
@@ -2555,6 +2573,17 @@ operator|+
 literal|"False: Warn if the version information stored in metastore doesn't match with one from in Hive jars."
 argument_list|)
 block|,
+name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
+argument_list|(
+literal|"hive.metastore.schema.verification.record.version"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true the current MS version is recorded in the VERSION table. If this is disabled and verification is\n"
+operator|+
+literal|" enabled the MS will be unusable."
+argument_list|)
+block|,
 name|METASTORE_AUTO_START_MECHANISM_MODE
 argument_list|(
 literal|"datanucleus.autoStartMechanismMode"
@@ -2833,6 +2862,21 @@ operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
 argument_list|)
 block|,
+name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|(
+literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Thrift does not support nulls in maps, so any nulls present in maps retrieved from ORM must "
+operator|+
+literal|"either be pruned or converted to empty strings. Some backing dbs such as Oracle persist empty strings "
+operator|+
+literal|"as nulls, so we should set this parameter if we wish to reverse that behaviour. For others, "
+operator|+
+literal|"pruning is the correct behaviour"
+argument_list|)
+block|,
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
@@ -2973,7 +3017,31 @@ literal|"hive.metastore.filter.hook"
 argument_list|,
 literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
 argument_list|,
-literal|"Metastore hook class for filtering the metadata read results"
+literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager"
+operator|+
+literal|"is set to instance of HiveAuthorizerFactory, then this value is ignored."
+argument_list|)
+block|,
+name|FIRE_EVENTS_FOR_DML
+argument_list|(
+literal|"hive.metastore.dml.events"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the metastore will be asked"
+operator|+
+literal|" to fire events for DML operations"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_DROP_PARTITIONS_WITH_EXPRESSIONS
+argument_list|(
+literal|"hive.metastore.client.drop.partitions.using.expressions"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Choose whether dropping partitions with HCatClient pushes the partition-predicate to the metastore, "
+operator|+
+literal|"or drops partitions iteratively"
 argument_list|)
 block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
@@ -3296,39 +3364,6 @@ argument_list|,
 literal|"Whether there is skew in data to optimize group by queries"
 argument_list|)
 block|,
-name|HIVE_OPTIMIZE_MULTI_GROUPBY_COMMON_DISTINCTS
-argument_list|(
-literal|"hive.optimize.multigroupby.common.distincts"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether to optimize a multi-groupby query with the same distinct.\n"
-operator|+
-literal|"Consider a query like:\n"
-operator|+
-literal|"\n"
-operator|+
-literal|"  from src\n"
-operator|+
-literal|"    insert overwrite table dest1 select col1, count(distinct colx) group by col1\n"
-operator|+
-literal|"    insert overwrite table dest2 select col2, count(distinct colx) group by col2;\n"
-operator|+
-literal|"\n"
-operator|+
-literal|"With this parameter set to true, first we spray by the distinct value (colx), and then\n"
-operator|+
-literal|"perform the 2 groups bys. This makes sense if map-side aggregation is turned off. However,\n"
-operator|+
-literal|"with maps-side aggregation, it might be useful in some cases to treat the 2 inserts independently, \n"
-operator|+
-literal|"thereby performing the query above in 2MR jobs instead of 3 (due to spraying by distinct key first).\n"
-operator|+
-literal|"If this parameter is turned off, we don't consider the fact that the distinct key is the same across\n"
-operator|+
-literal|"different MR jobs."
-argument_list|)
-block|,
 name|HIVEJOINEMITINTERVAL
 argument_list|(
 literal|"hive.join.emit.interval"
@@ -3377,6 +3412,30 @@ argument_list|,
 literal|"Whether Hive should use memory-optimized hash table for MapJoin. Only works on Tez,\n"
 operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
+argument_list|)
+block|,
+name|HIVEUSEHYBRIDGRACEHASHJOIN
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.hashtable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use hybrid"
+operator|+
+literal|"grace hash join as the join method for mapjoin."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMEMCHECKFREQ
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.memcheckfrequency"
+argument_list|,
+literal|1024
+argument_list|,
+literal|"For "
+operator|+
+literal|"hybrid grace hash join, how often (how many rows apart) we check if memory is full. "
+operator|+
+literal|"This number should be power of 2."
 argument_list|)
 block|,
 name|HIVEHASHTABLEWBSIZE
@@ -3587,6 +3646,33 @@ literal|"ORC"
 argument_list|)
 argument_list|,
 literal|"Default file format for CREATE TABLE statement. Users can explicitly override it by CREATE TABLE ... STORED AS [FORMAT]"
+argument_list|)
+block|,
+name|HIVEDEFAULTMANAGEDFILEFORMAT
+argument_list|(
+literal|"hive.default.fileformat.managed"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"TextFile"
+argument_list|,
+literal|"SequenceFile"
+argument_list|,
+literal|"RCfile"
+argument_list|,
+literal|"ORC"
+argument_list|)
+argument_list|,
+literal|"Default file format for CREATE TABLE statement applied to managed tables only. External tables will be \n"
+operator|+
+literal|"created with format specified by hive.default.fileformat. Leaving this null will result in using hive.default.fileformat \n"
+operator|+
+literal|"for all tables."
 argument_list|)
 block|,
 name|HIVEQUERYRESULTFILEFORMAT
@@ -3825,6 +3911,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether Hive is running in test mode. If yes, it turns on sampling and prefixes the output tablename."
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEPREFIX
@@ -3834,6 +3922,8 @@ argument_list|,
 literal|"test_"
 argument_list|,
 literal|"In test mode, specfies prefixes for the output table"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODESAMPLEFREQ
@@ -3853,6 +3943,8 @@ operator|+
 literal|"  INSERT OVERWRITE TABLE test_dest\n"
 operator|+
 literal|"  SELECT col1 from src TABLESAMPLE (BUCKET 1 out of 32 on rand(1))"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODENOSAMPLE
@@ -3862,6 +3954,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"In test mode, specifies comma separated table names which would not apply sampling"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATAGGR
@@ -3871,6 +3965,8 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVETESTMODEDUMMYSTATPUB
@@ -3880,6 +3976,19 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"internal variable for test"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|HIVETESTCURRENTTIMESTAMP
+argument_list|(
+literal|"hive.test.currenttimestamp"
+argument_list|,
+literal|null
+argument_list|,
+literal|"current timestamp for test"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|HIVEMERGEMAPFILES
@@ -4056,6 +4165,17 @@ operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
 argument_list|)
 block|,
+name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
+argument_list|(
+literal|"hive.parquet.timestamp.skip.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
+operator|+
+literal|"on reading parquet files from other tools"
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
@@ -4227,6 +4347,33 @@ argument_list|,
 literal|"Define the compression strategy to use while writing data. \n"
 operator|+
 literal|"This changes the compression level of higher level compression codec (like ZLIB)."
+argument_list|)
+block|,
+name|HIVE_ORC_SPLIT_STRATEGY
+argument_list|(
+literal|"hive.exec.orc.split.strategy"
+argument_list|,
+literal|"HYBRID"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"HYBRID"
+argument_list|,
+literal|"BI"
+argument_list|,
+literal|"ETL"
+argument_list|)
+argument_list|,
+literal|"This is not a user level config. BI strategy is used when the requirement is to spend less time in split generation"
+operator|+
+literal|" as opposed to query execution (split generation does not read or cache file footers)."
+operator|+
+literal|" ETL strategy is used when spending little more time in split generation is acceptable"
+operator|+
+literal|" (split generation reads and caches file footers). HYBRID chooses between the above strategies"
+operator|+
+literal|" based on heuristics."
 argument_list|)
 block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
@@ -6447,6 +6594,17 @@ operator|+
 literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
 argument_list|)
 block|,
+name|HIVE_EXPLAIN_USER
+argument_list|(
+literal|"hive.explain.user"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to show explain result at user level.\n"
+operator|+
+literal|"When enabled, will log EXPLAIN output for the query at user level."
+argument_list|)
+block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
@@ -7327,6 +7485,19 @@ operator|+
 literal|"  With negative value, it's checked for all of the operations regardless of state."
 argument_list|)
 block|,
+name|HIVE_SERVER2_IDLE_SESSION_CHECK_OPERATION
+argument_list|(
+literal|"hive.server2.idle.session.check.operation"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Session will be considered to be idle only if there is no activity, and there is no pending operation.\n"
+operator|+
+literal|"This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
+operator|+
+literal|"(hive.server2.session.check.interval) are enabled."
+argument_list|)
+block|,
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
@@ -7724,6 +7895,17 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
+argument_list|(
+literal|"hive.support.sql11.reserved.keywords"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
@@ -7915,7 +8097,135 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"remote spark client JobHandle future timeout value in seconds."
+literal|"Timeout for requests from Hive client to remote Spark driver."
+argument_list|)
+block|,
+name|SPARK_JOB_MONITOR_TIMEOUT
+argument_list|(
+literal|"hive.spark.job.monitor.timeout"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for job monitor to get Spark job state."
+argument_list|)
+block|,
+name|SPARK_RPC_CLIENT_CONNECT_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.connect.timeout"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for remote Spark driver in connecting back to Hive client."
+argument_list|)
+block|,
+name|SPARK_RPC_CLIENT_HANDSHAKE_TIMEOUT
+argument_list|(
+literal|"hive.spark.client.server.connect.timeout"
+argument_list|,
+literal|"90000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for handshake between Hive client and remote Spark driver.  Checked by both processes."
+argument_list|)
+block|,
+name|SPARK_RPC_SECRET_RANDOM_BITS
+argument_list|(
+literal|"hive.spark.client.secret.bits"
+argument_list|,
+literal|"256"
+argument_list|,
+literal|"Number of bits of randomness in the generated secret for communication between Hive client and remote Spark driver. "
+operator|+
+literal|"Rounded down to the nearest multiple of 8."
+argument_list|)
+block|,
+name|SPARK_RPC_MAX_THREADS
+argument_list|(
+literal|"hive.spark.client.rpc.threads"
+argument_list|,
+literal|8
+argument_list|,
+literal|"Maximum number of threads for remote Spark driver's RPC event loop."
+argument_list|)
+block|,
+name|SPARK_RPC_MAX_MESSAGE_SIZE
+argument_list|(
+literal|"hive.spark.client.rpc.max.size"
+argument_list|,
+literal|50
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum message size in bytes for communication between Hive client and remote Spark driver. Default is 50MB."
+argument_list|)
+block|,
+name|SPARK_RPC_CHANNEL_LOG_LEVEL
+argument_list|(
+literal|"hive.spark.client.channel.log.level"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Channel logging level for remote Spark driver.  One of {DEBUG, ERROR, INFO, TRACE, WARN}."
+argument_list|)
+block|,
+name|SPARK_RPC_SASL_MECHANISM
+argument_list|(
+literal|"hive.spark.client.rpc.sasl.mechanisms"
+argument_list|,
+literal|"DIGEST-MD5"
+argument_list|,
+literal|"Name of the SASL mechanism to use for authentication."
+argument_list|)
+block|,
+name|NWAYJOINREORDER
+argument_list|(
+literal|"hive.reorder.nway.joins"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
+argument_list|)
+block|,
+name|HIVE_LOG_N_RECORDS
+argument_list|(
+literal|"hive.log.every.n.records"
+argument_list|,
+literal|0L
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|null
+argument_list|)
+argument_list|,
+literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
 argument_list|)
 block|;
 specifier|public
@@ -9135,11 +9445,9 @@ throw|;
 block|}
 name|isSparkConfigUpdated
 operator|=
-name|name
-operator|.
-name|startsWith
+name|isSparkRelatedConfig
 argument_list|(
-literal|"spark"
+name|name
 argument_list|)
 expr_stmt|;
 name|set
@@ -9149,6 +9457,106 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+block|}
+comment|/**    * check whether spark related property is updated, which includes spark configurations,    * RSC configurations and yarn configuration in Spark on YARN mode.    * @param name    * @return    */
+specifier|private
+name|boolean
+name|isSparkRelatedConfig
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+name|boolean
+name|result
+init|=
+literal|false
+decl_stmt|;
+if|if
+condition|(
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"spark"
+argument_list|)
+condition|)
+block|{
+comment|// Spark property.
+name|result
+operator|=
+literal|true
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"yarn"
+argument_list|)
+condition|)
+block|{
+comment|// YARN property in Spark on YARN mode.
+name|String
+name|sparkMaster
+init|=
+name|get
+argument_list|(
+literal|"spark.master"
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|sparkMaster
+operator|!=
+literal|null
+operator|&&
+operator|(
+name|sparkMaster
+operator|.
+name|equals
+argument_list|(
+literal|"yarn-client"
+argument_list|)
+operator|||
+name|sparkMaster
+operator|.
+name|equals
+argument_list|(
+literal|"yarn-cluster"
+argument_list|)
+operator|)
+condition|)
+block|{
+name|result
+operator|=
+literal|true
+expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|.
+name|startsWith
+argument_list|(
+literal|"hive.spark"
+argument_list|)
+condition|)
+block|{
+comment|// Remote Spark Context property.
+name|result
+operator|=
+literal|true
+expr_stmt|;
+block|}
+return|return
+name|result
+return|;
 block|}
 specifier|public
 specifier|static

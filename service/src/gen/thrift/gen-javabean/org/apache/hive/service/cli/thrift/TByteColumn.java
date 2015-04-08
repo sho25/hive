@@ -2664,7 +2664,7 @@ block|{
 name|byte
 name|_elem64
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem64
 operator|=
 name|iprot
@@ -3206,7 +3206,7 @@ block|{
 name|byte
 name|_elem69
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem69
 operator|=
 name|iprot

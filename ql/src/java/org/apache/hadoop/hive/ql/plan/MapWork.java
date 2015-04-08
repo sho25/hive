@@ -301,7 +301,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|OpParseContext
+name|SplitSample
 import|;
 end_import
 
@@ -317,9 +317,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|plan
 operator|.
-name|SplitSample
+name|Explain
+operator|.
+name|Level
 import|;
 end_import
 
@@ -583,13 +585,6 @@ specifier|private
 name|Long
 name|minSplitSizePerRack
 decl_stmt|;
-specifier|private
-specifier|final
-name|int
-name|tag
-init|=
-literal|0
-decl_stmt|;
 comment|//use sampled partitioning
 specifier|private
 name|int
@@ -614,20 +609,6 @@ literal|2
 decl_stmt|;
 comment|// sampling on task running
 comment|// the following two are used for join processing
-specifier|private
-name|LinkedHashMap
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-argument_list|,
-name|OpParseContext
-argument_list|>
-name|opParseCtxMap
-decl_stmt|;
 specifier|private
 name|boolean
 name|leftInputJoin
@@ -772,9 +753,13 @@ name|displayName
 operator|=
 literal|"Path -> Alias"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -825,9 +810,13 @@ name|displayName
 operator|=
 literal|"Truncated Path -> Alias"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -964,9 +953,13 @@ name|displayName
 operator|=
 literal|"Path -> Partition"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -1232,9 +1225,13 @@ name|displayName
 operator|=
 literal|"Split Sample"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|HashMap
@@ -1698,6 +1695,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Map Operator Tree"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Set
@@ -2219,50 +2232,6 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|LinkedHashMap
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-argument_list|,
-name|OpParseContext
-argument_list|>
-name|getOpParseCtxMap
-parameter_list|()
-block|{
-return|return
-name|opParseCtxMap
-return|;
-block|}
-specifier|public
-name|void
-name|setOpParseCtxMap
-parameter_list|(
-name|LinkedHashMap
-argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-argument_list|,
-name|OpParseContext
-argument_list|>
-name|opParseCtxMap
-parameter_list|)
-block|{
-name|this
-operator|.
-name|opParseCtxMap
-operator|=
-name|opParseCtxMap
-expr_stmt|;
-block|}
-specifier|public
 name|Path
 name|getTmpHDFSPath
 parameter_list|()
@@ -2309,9 +2278,13 @@ name|displayName
 operator|=
 literal|"Path -> Bucketed Columns"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -2337,9 +2310,13 @@ name|displayName
 operator|=
 literal|"Path -> Sorted Columns"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -2425,9 +2402,13 @@ name|displayName
 operator|=
 literal|"Sampling"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|String

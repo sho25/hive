@@ -2683,6 +2683,14 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCurrentTxn
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|console

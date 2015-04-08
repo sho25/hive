@@ -397,10 +397,8 @@ argument_list|)
 expr_stmt|;
 name|FunctionRegistry
 operator|.
-name|registerGenericUDF
+name|registerTemporaryUDF
 argument_list|(
-literal|false
-argument_list|,
 literal|"SOME_MACRO"
 argument_list|,
 name|GenericUDFMacro
@@ -428,10 +426,8 @@ name|Exception
 block|{
 name|FunctionRegistry
 operator|.
-name|registerGenericUDF
+name|registerTemporaryUDF
 argument_list|(
-literal|false
-argument_list|,
 literal|"SOME_MACRO"
 argument_list|,
 name|GenericUDFMacro

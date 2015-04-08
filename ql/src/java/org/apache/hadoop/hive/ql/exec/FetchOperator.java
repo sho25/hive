@@ -125,20 +125,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Iterators
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -845,6 +831,20 @@ name|AnnotationUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Iterators
+import|;
+end_import
+
 begin_comment
 comment|/**  * FetchTask implementation.  **/
 end_comment
@@ -929,6 +929,7 @@ name|StructObjectInspector
 name|vcsOI
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|VirtualColumn
@@ -1479,7 +1480,7 @@ condition|)
 block|{
 name|operator
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|context
 argument_list|)
@@ -1587,14 +1588,6 @@ argument_list|)
 condition|)
 block|{
 return|return
-operator|(
-name|InputFormat
-argument_list|<
-name|WritableComparable
-argument_list|,
-name|Writable
-argument_list|>
-operator|)
 name|ReflectionUtils
 operator|.
 name|newInstance
@@ -2881,7 +2874,7 @@ control|)
 block|{
 name|operator
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 argument_list|,
@@ -2939,7 +2932,7 @@ name|HiveException
 block|{
 name|operator
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 operator|.
@@ -4055,6 +4048,7 @@ operator|-
 literal|1
 decl_stmt|;
 specifier|private
+specifier|final
 name|InputFormat
 name|inputFormat
 decl_stmt|;

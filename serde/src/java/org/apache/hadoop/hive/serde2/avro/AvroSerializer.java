@@ -81,6 +81,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -116,6 +126,20 @@ operator|.
 name|Schema
 operator|.
 name|Type
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|avro
+operator|.
+name|generic
+operator|.
+name|GenericArray
 import|;
 end_import
 
@@ -1199,6 +1223,12 @@ parameter_list|(
 specifier|final
 name|Schema
 name|schema
+parameter_list|,
+name|Set
+argument_list|<
+name|Schema
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return
@@ -1219,6 +1249,12 @@ name|makeInstance
 parameter_list|(
 name|Object
 name|seed
+parameter_list|,
+name|Set
+argument_list|<
+name|Object
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return
@@ -1844,7 +1880,9 @@ argument_list|>
 name|deserialized
 init|=
 operator|new
-name|ArrayList
+name|GenericData
+operator|.
+name|Array
 argument_list|<
 name|Object
 argument_list|>
@@ -1853,6 +1891,8 @@ name|list
 operator|.
 name|size
 argument_list|()
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|TypeInfo

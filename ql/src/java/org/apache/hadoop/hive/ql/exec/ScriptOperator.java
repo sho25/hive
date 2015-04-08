@@ -115,6 +115,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashSet
 import|;
 end_import
@@ -166,6 +176,18 @@ operator|.
 name|util
 operator|.
 name|TimerTask
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -879,15 +901,6 @@ range|:
 name|bls
 control|)
 block|{
-name|b
-operator|.
-name|replaceAll
-argument_list|(
-literal|"."
-argument_list|,
-literal|"_"
-argument_list|)
-expr_stmt|;
 name|blackListedConfEntries
 operator|.
 name|add
@@ -1347,7 +1360,13 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -1356,6 +1375,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
 name|firstRow
 operator|=
 literal|true
@@ -1466,12 +1501,6 @@ operator|.
 name|getObjectInspector
 argument_list|()
 expr_stmt|;
-comment|// initialize all children before starting the script
-name|initializeChildren
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1494,6 +1523,9 @@ name|e
 argument_list|)
 throw|;
 block|}
+return|return
+name|result
+return|;
 block|}
 name|boolean
 name|isBrokenPipeException
@@ -1580,6 +1612,11 @@ name|void
 name|displayBrokenPipeInfo
 parameter_list|()
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1605,6 +1642,7 @@ operator|+
 literal|"=true; to ignore it."
 argument_list|)
 expr_stmt|;
+block|}
 return|return;
 block|}
 specifier|private
@@ -1661,7 +1699,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -1823,6 +1861,11 @@ argument_list|(
 name|cmdArgs
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1864,6 +1907,7 @@ operator|+
 name|alias
 argument_list|)
 expr_stmt|;
+block|}
 name|ProcessBuilder
 name|pb
 init|=
@@ -2923,6 +2967,8 @@ operator|=
 name|rowInspector
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processLine
@@ -2973,6 +3019,8 @@ name|rowInspector
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -3319,6 +3367,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|processLine
@@ -3409,6 +3459,11 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3416,6 +3471,7 @@ argument_list|(
 literal|"ErrorStreamProcessor calling reporter.progress()"
 argument_list|)
 expr_stmt|;
+block|}
 name|lastReportTime
 operator|=
 name|now
@@ -3520,6 +3576,8 @@ operator|+=
 name|len
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -3625,6 +3683,11 @@ name|row
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3636,6 +3699,7 @@ operator|+
 literal|" done"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

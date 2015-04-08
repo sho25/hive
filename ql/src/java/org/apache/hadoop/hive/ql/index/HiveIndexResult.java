@@ -255,7 +255,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -881,7 +881,7 @@ index|[
 name|index
 index|]
 operator|==
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|DefaultSeparators
 index|[
@@ -1025,7 +1025,7 @@ index|[
 name|currentEnd
 index|]
 operator|==
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|DefaultSeparators
 index|[

@@ -83,6 +83,26 @@ name|Path
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * Map Join operator Descriptor implementation.  *  */
 end_comment
@@ -94,6 +114,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"HashTable Sink Operator"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class
@@ -1126,9 +1162,13 @@ name|displayName
 operator|=
 literal|"filter mappings"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -1194,6 +1234,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"keys"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|Map
@@ -1319,9 +1375,13 @@ name|displayName
 operator|=
 literal|"Position of Big Table"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|int

@@ -47,19 +47,19 @@ block|,
 name|ALL
 block|}
 empty_stmt|;
-comment|/**    * Indicates whether a given transaction has been committed and should be    * viewed as valid for read.    * @param txnid id for the transaction    * @return true if committed, false otherwise    */
+comment|/**    * Indicates whether a given transaction is valid. Note that valid may have different meanings    * for different implementations, as some will only want to see committed transactions and some    * both committed and aborted.    * @param txnid id for the transaction    * @return true if valid, false otherwise    */
 specifier|public
 name|boolean
-name|isTxnCommitted
+name|isTxnValid
 parameter_list|(
 name|long
 name|txnid
 parameter_list|)
 function_decl|;
-comment|/**    * Find out if a range of transaction ids have been committed.    * @param minTxnId minimum txnid to look for, inclusive    * @param maxTxnId maximum txnid to look for, inclusive    * @return Indicate whether none, some, or all of these transactions have been    * committed.    */
+comment|/**    * Find out if a range of transaction ids are valid.  Note that valid may have different meanings    * for different implementations, as some will only want to see committed transactions and some    * both committed and aborted.    * @param minTxnId minimum txnid to look for, inclusive    * @param maxTxnId maximum txnid to look for, inclusive    * @return Indicate whether none, some, or all of these transactions are valid.    */
 specifier|public
 name|RangeResponse
-name|isTxnRangeCommitted
+name|isTxnRangeValid
 parameter_list|(
 name|long
 name|minTxnId
@@ -89,11 +89,11 @@ name|long
 name|getHighWatermark
 parameter_list|()
 function_decl|;
-comment|/**    * Get the list of transactions under the high water mark that are still    * open.    * @return a list of open transaction ids    */
+comment|/**    * Get the list of transactions under the high water mark that are not valid.  Note that invalid    * may have different meanings for different implementations, as some will only want to see open    * transactions and some both open and aborted.    * @return a list of invalid transaction ids    */
 specifier|public
 name|long
 index|[]
-name|getOpenTransactions
+name|getInvalidTransactions
 parameter_list|()
 function_decl|;
 block|}

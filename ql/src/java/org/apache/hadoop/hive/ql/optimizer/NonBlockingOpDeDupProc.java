@@ -1068,20 +1068,6 @@ argument_list|)
 expr_stmt|;
 comment|// We need to use the OpParseContext of the child SelectOperator to replace the
 comment|// the OpParseContext of the parent SelectOperator.
-name|pctx
-operator|.
-name|updateOpParseCtx
-argument_list|(
-name|pSEL
-argument_list|,
-name|pctx
-operator|.
-name|removeOpParseCtx
-argument_list|(
-name|cSEL
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|pSEL
 operator|.
 name|removeChildAndAdoptItsChildren

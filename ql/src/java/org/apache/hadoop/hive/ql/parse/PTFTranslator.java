@@ -2773,6 +2773,16 @@ argument_list|(
 name|outputShape
 argument_list|)
 expr_stmt|;
+name|def
+operator|.
+name|setReferencedColumns
+argument_list|(
+name|tFn
+operator|.
+name|getReferencedColumns
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|def
 return|;

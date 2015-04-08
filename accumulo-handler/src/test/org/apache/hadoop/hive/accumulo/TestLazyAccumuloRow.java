@@ -269,7 +269,7 @@ name|serde2
 operator|.
 name|lazy
 operator|.
-name|LazySimpleSerDe
+name|LazySerDeParameters
 import|;
 end_import
 
@@ -506,7 +506,7 @@ name|columns
 argument_list|,
 name|types
 argument_list|,
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|DefaultSeparators
 argument_list|,
@@ -1058,7 +1058,7 @@ name|columns
 argument_list|,
 name|types
 argument_list|,
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|DefaultSeparators
 argument_list|,
@@ -1723,7 +1723,7 @@ name|columns
 argument_list|,
 name|types
 argument_list|,
-name|LazySimpleSerDe
+name|LazySerDeParameters
 operator|.
 name|DefaultSeparators
 argument_list|,

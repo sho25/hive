@@ -33,7 +33,7 @@ name|java
 operator|.
 name|net
 operator|.
-name|URL
+name|URI
 import|;
 end_import
 
@@ -101,31 +101,50 @@ argument_list|>
 name|job
 parameter_list|)
 function_decl|;
+comment|/**    * Asks the remote context to run a job immediately.    *<p/>    * Normally, the remote context will queue jobs and execute them based on how many worker    * threads have been configured. This method will run the submitted job in the same thread    * processing the RPC message, so that queueing does not apply.    *<p/>    * It's recommended that this method only be used to run code that finishes quickly. This    * avoids interfering with the normal operation of the context.    *<p/>    * Note: the {@link JobContext#monitor()} functionality is not available when using this method.    *    * @param job The job to execute.    * @return A future to monitor the result of the job.    */
+parameter_list|<
+name|T
+extends|extends
+name|Serializable
+parameter_list|>
+name|Future
+argument_list|<
+name|T
+argument_list|>
+name|run
+parameter_list|(
+name|Job
+argument_list|<
+name|T
+argument_list|>
+name|job
+parameter_list|)
+function_decl|;
 comment|/**    * Stops the remote context.    *    * Any pending jobs will be cancelled, and the remote context will be torn down.    */
 name|void
 name|stop
 parameter_list|()
 function_decl|;
-comment|/**    * Adds a jar file to the running remote context.    *    * Note that the URL should be reachable by the Spark driver process. If running the driver    * in cluster mode, it may reside on a different host, meaning "file:" URLs have to exist    * on that node (and not on the client machine).    *    * @param url The location of the jar file.    * @return A future that can be used to monitor the operation.    */
+comment|/**    * Adds a jar file to the running remote context.    *    * Note that the URL should be reachable by the Spark driver process. If running the driver    * in cluster mode, it may reside on a different host, meaning "file:" URLs have to exist    * on that node (and not on the client machine).    *    * @param uri The location of the jar file.    * @return A future that can be used to monitor the operation.    */
 name|Future
 argument_list|<
 name|?
 argument_list|>
 name|addJar
 parameter_list|(
-name|URL
-name|url
+name|URI
+name|uri
 parameter_list|)
 function_decl|;
-comment|/**    * Adds a file to the running remote context.    *    * Note that the URL should be reachable by the Spark driver process. If running the driver    * in cluster mode, it may reside on a different host, meaning "file:" URLs have to exist    * on that node (and not on the client machine).    *    * @param url The location of the file.    * @return A future that can be used to monitor the operation.    */
+comment|/**    * Adds a file to the running remote context.    *    * Note that the URL should be reachable by the Spark driver process. If running the driver    * in cluster mode, it may reside on a different host, meaning "file:" URLs have to exist    * on that node (and not on the client machine).    *    * @param uri The location of the file.    * @return A future that can be used to monitor the operation.    */
 name|Future
 argument_list|<
 name|?
 argument_list|>
 name|addFile
 parameter_list|(
-name|URL
-name|url
+name|URI
+name|uri
 parameter_list|)
 function_decl|;
 comment|/**    * Get the count of executors.    */

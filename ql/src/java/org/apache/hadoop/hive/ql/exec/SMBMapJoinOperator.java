@@ -65,6 +65,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collections
 import|;
 end_import
@@ -96,6 +106,18 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -668,7 +690,13 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -685,17 +713,22 @@ name|initDone
 operator|=
 literal|true
 expr_stmt|;
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
 name|super
 operator|.
 name|initializeOp
 argument_list|(
 name|hconf
 argument_list|)
-expr_stmt|;
-name|firstRow
-operator|=
-literal|true
-expr_stmt|;
+decl_stmt|;
 name|closeCalled
 operator|=
 literal|false
@@ -1014,6 +1047,9 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+return|return
+name|result
+return|;
 block|}
 annotation|@
 name|Override
@@ -1242,7 +1278,7 @@ argument_list|)
 expr_stmt|;
 name|ts
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|getExecContext
 argument_list|()
@@ -1432,7 +1468,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -2918,6 +2954,11 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2931,6 +2972,7 @@ name|getFileId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|bucketMatcher
 operator|.
 name|setAliasBucketFileNameMapping
@@ -3057,7 +3099,7 @@ return|return;
 block|}
 name|forwardOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 operator|.
@@ -3956,6 +3998,11 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3967,6 +4014,7 @@ operator|+
 literal|" rows"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
@@ -4185,7 +4233,7 @@ comment|// Pass the row though the operator tree. It is guaranteed that not more
 comment|// be produced from a input row.
 name|forwardOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|nextRow
 operator|.

@@ -22,12 +22,26 @@ package|;
 end_package
 
 begin_import
-import|import
-name|org
-operator|.
+import|import static
 name|junit
 operator|.
-name|Test
+name|framework
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|junit
+operator|.
+name|framework
+operator|.
+name|Assert
+operator|.
+name|fail
 import|;
 end_import
 
@@ -102,26 +116,12 @@ import|;
 end_import
 
 begin_import
-import|import static
+import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|fail
+name|Test
 import|;
 end_import
 

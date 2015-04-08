@@ -26,6 +26,7 @@ comment|/**  * An interface used for seeking to a row index.  */
 end_comment
 
 begin_interface
+specifier|public
 interface|interface
 name|PositionProvider
 block|{

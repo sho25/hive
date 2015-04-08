@@ -444,7 +444,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * This class populates the following operator traits for the entire operator tree:  * 1. Bucketing columns.  * 2. Table  * 3. Pruned partitions  *   * Bucketing columns refer to not to the bucketing columns from the table object but instead  * to the dynamic 'bucketing' done by operators such as reduce sinks and group-bys.  * All the operators have a translation from their input names to the output names corresponding  * to the bucketing column. The colExprMap that is a part of every operator is used in this  * transformation.  *   * The table object is used for the base-case in map-reduce when deciding to perform a bucket  * map join. This object is used in the BucketMapJoinProc to find if number of files for the  * table correspond to the number of buckets specified in the meta data.  *   * The pruned partition information has the same purpose as the table object at the moment.  *   * The traits of sorted-ness etc. can be populated as well for future optimizations to make use of.  */
+comment|/*  * This class populates the following operator traits for the entire operator tree:  * 1. Bucketing columns.  * 2. Table  * 3. Pruned partitions  *  * Bucketing columns refer to not to the bucketing columns from the table object but instead  * to the dynamic 'bucketing' done by operators such as reduce sinks and group-bys.  * All the operators have a translation from their input names to the output names corresponding  * to the bucketing column. The colExprMap that is a part of every operator is used in this  * transformation.  *  * The table object is used for the base-case in map-reduce when deciding to perform a bucket  * map join. This object is used in the BucketMapJoinProc to find if number of files for the  * table correspond to the number of buckets specified in the meta data.  *  * The pruned partition information has the same purpose as the table object at the moment.  *  * The traits of sorted-ness etc. can be populated as well for future optimizations to make use of.  */
 end_comment
 
 begin_class
@@ -530,7 +530,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/*    * Reduce sink operator is the de-facto operator     * for determining keyCols (emit keys of a map phase)    */
+comment|/*    * Reduce sink operator is the de-facto operator    * for determining keyCols (emit keys of a map phase)    */
 specifier|public
 specifier|static
 class|class
@@ -702,7 +702,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getOpTraits
+name|getTraits
 argument_list|()
 decl_stmt|;
 if|if
@@ -745,7 +745,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/*    * Table scan has the table object and pruned partitions that has information such as    * bucketing, sorting, etc. that is used later for optimization.    */
+comment|/*    * Table scan has the table object and pruned partitions that has information    * such as bucketing, sorting, etc. that is used later for optimization.    */
 specifier|public
 specifier|static
 class|class
@@ -824,7 +824,8 @@ argument_list|,
 name|pGraphContext
 argument_list|)
 decl_stmt|;
-comment|// The number of files for the table should be same as number of buckets.
+comment|// The number of files for the table should be same as number of
+comment|// buckets.
 name|int
 name|bucketCount
 init|=
@@ -1131,6 +1132,7 @@ name|sortCols
 argument_list|)
 expr_stmt|;
 block|}
+comment|// num reduce sinks hardcoded to 0 because TS has no parents
 name|OpTraits
 name|opTraits
 init|=
@@ -1655,8 +1657,9 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-if|if
-condition|(
+name|OpTraits
+name|parentOpTraits
+init|=
 name|selOp
 operator|.
 name|getParentOperators
@@ -1669,24 +1672,17 @@ argument_list|)
 operator|.
 name|getOpTraits
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|parentOpTraits
 operator|!=
 literal|null
 condition|)
 block|{
 name|numBuckets
 operator|=
-name|selOp
-operator|.
-name|getParentOperators
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getOpTraits
-argument_list|()
+name|parentOpTraits
 operator|.
 name|getNumBuckets
 argument_list|()
@@ -1800,6 +1796,12 @@ name|pos
 init|=
 literal|0
 decl_stmt|;
+name|int
+name|numReduceSinks
+init|=
+literal|0
+decl_stmt|;
+comment|// will be set to the larger of the parents
 for|for
 control|(
 name|Operator
@@ -1868,6 +1870,14 @@ name|nodeOutputs
 argument_list|)
 expr_stmt|;
 block|}
+name|OpTraits
+name|parentOpTraits
+init|=
+name|rsOp
+operator|.
+name|getOpTraits
+argument_list|()
+decl_stmt|;
 name|bucketColsList
 operator|.
 name|add
@@ -1876,10 +1886,7 @@ name|getOutputColNames
 argument_list|(
 name|joinOp
 argument_list|,
-name|rsOp
-operator|.
-name|getOpTraits
-argument_list|()
+name|parentOpTraits
 operator|.
 name|getBucketColNames
 argument_list|()
@@ -1896,10 +1903,7 @@ name|getOutputColNames
 argument_list|(
 name|joinOp
 argument_list|,
-name|rsOp
-operator|.
-name|getOpTraits
-argument_list|()
+name|parentOpTraits
 operator|.
 name|getSortCols
 argument_list|()
@@ -2112,7 +2116,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/*    *  When we have operators that have multiple parents, it is not    *  clear which parent's traits we need to propagate forward.    */
+comment|/*    * When we have operators that have multiple parents, it is not clear which    * parent's traits we need to propagate forward.    */
 specifier|public
 specifier|static
 class|class
@@ -2145,20 +2149,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|OpTraits
-name|opTraits
-init|=
-operator|new
-name|OpTraits
-argument_list|(
-literal|null
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -2181,6 +2171,20 @@ name|OperatorDesc
 argument_list|>
 operator|)
 name|nd
+decl_stmt|;
+name|OpTraits
+name|opTraits
+init|=
+operator|new
+name|OpTraits
+argument_list|(
+literal|null
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|null
+argument_list|)
 decl_stmt|;
 name|operator
 operator|.

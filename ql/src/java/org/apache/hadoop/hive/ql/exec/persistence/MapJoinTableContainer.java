@@ -25,6 +25,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -46,6 +56,24 @@ operator|.
 name|exec
 operator|.
 name|ExprNodeEvaluator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|JoinUtil
 import|;
 end_import
 
@@ -188,7 +216,9 @@ interface|interface
 name|ReusableGetAdaptor
 block|{
 comment|/**      * Changes current rows to which adaptor is referring to the rows corresponding to      * the key represented by a VHKW object, and writers and batch used to interpret it.      */
-name|void
+name|JoinUtil
+operator|.
+name|JoinResult
 name|setFromVector
 parameter_list|(
 name|VectorHashKeyWrapper
@@ -205,7 +235,9 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**      * Changes current rows to which adaptor is referring to the rows corresponding to      * the key represented by a row object, and fields and ois used to interpret it.      */
-name|void
+name|JoinUtil
+operator|.
+name|JoinResult
 name|setFromRow
 parameter_list|(
 name|Object
@@ -227,12 +259,16 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**      * Changes current rows to which adaptor is referring to the rows corresponding to      * the key that another adaptor has already deserialized via setFromVector/setFromRow.      */
-name|void
+name|JoinUtil
+operator|.
+name|JoinResult
 name|setFromOther
 parameter_list|(
 name|ReusableGetAdaptor
 name|other
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 comment|/**      * Checks whether the current key has any nulls.      */
 name|boolean
@@ -278,6 +314,8 @@ throws|throws
 name|SerDeException
 throws|,
 name|HiveException
+throws|,
+name|IOException
 function_decl|;
 comment|/**    * Indicates to the container that the puts have ended; table is now r/o.    */
 name|void
@@ -303,6 +341,11 @@ parameter_list|()
 function_decl|;
 name|void
 name|dumpMetrics
+parameter_list|()
+function_decl|;
+comment|/**    * Checks if the container has spilled any data onto disk.    * This is only applicable for HybridHashTableContainer.    */
+name|boolean
+name|hasSpill
 parameter_list|()
 function_decl|;
 block|}

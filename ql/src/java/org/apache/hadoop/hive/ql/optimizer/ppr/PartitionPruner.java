@@ -898,7 +898,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|// All columns of the expression must be parttioned columns
+comment|// All columns of the expression must be partitioned columns
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -1014,7 +1014,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Get the partition list for the table that satisfies the partition pruner    * condition.    *    * @param tab    *          the table object for the alias    * @param prunerExpr    *          the pruner expression for the alias    * @param conf    *          for checking whether "strict" mode is on.    * @param alias    *          for generating error message only.    * @param prunedPartitionsMap    *          cached result for the table    * @return the partition list for the table that satisfies the partition    *         pruner condition.    * @throws HiveException    */
+comment|/**    * Get the partition list for the table that satisfies the partition pruner    * condition.    *    * @param tab    *          the table object for the alias    * @param prunerExpr    *          the pruner expression for the alias    * @param conf    *          for checking whether "strict" mode is on.    * @param alias    *          for generating error message only.    * @param prunedPartitionsMap    *          cached result for the table    * @return the partition list for the table that satisfies the partition    *         pruner condition.    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|PrunedPartitionList
@@ -1042,6 +1042,14 @@ name|prunedPartitionsMap
 parameter_list|)
 throws|throws
 name|SemanticException
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
+condition|)
 block|{
 name|LOG
 operator|.
@@ -1080,6 +1088,7 @@ name|trace
 argument_list|(
 literal|"prune Expression = "
 operator|+
+operator|(
 name|prunerExpr
 operator|==
 literal|null
@@ -1087,8 +1096,10 @@ condition|?
 literal|""
 else|:
 name|prunerExpr
+operator|)
 argument_list|)
 expr_stmt|;
+block|}
 name|String
 name|key
 init|=
@@ -1271,6 +1282,14 @@ argument_list|)
 condition|)
 block|{
 comment|// Non-strict mode, and all the predicates are on non-partition columns - get everything.
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -1282,6 +1301,7 @@ operator|+
 literal|" was null after compacting"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|getAllPartsFromCacheOrServer
 argument_list|(
@@ -1329,6 +1349,14 @@ argument_list|)
 return|;
 block|}
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -1345,6 +1373,7 @@ operator|+
 name|oldFilter
 argument_list|)
 expr_stmt|;
+block|}
 name|key
 operator|=
 name|key
@@ -2208,7 +2237,7 @@ condition|(
 operator|!
 name|FunctionRegistry
 operator|.
-name|isNativeFuncExpr
+name|isBuiltInFuncExpr
 argument_list|(
 operator|(
 name|ExprNodeGenericFuncDesc
@@ -3166,6 +3195,14 @@ condition|)
 block|{
 comment|// Reject default partitions if we couldn't determine whether we should include it or not.
 comment|// Note that predicate would only contains partition column parts of original predicate.
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -3175,6 +3212,7 @@ operator|+
 name|partName
 argument_list|)
 expr_stmt|;
+block|}
 name|partIter
 operator|.
 name|remove
@@ -3186,6 +3224,14 @@ name|hasUnknownPartitions
 operator||=
 name|isUnknown
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -3205,6 +3251,7 @@ operator|+
 name|partName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

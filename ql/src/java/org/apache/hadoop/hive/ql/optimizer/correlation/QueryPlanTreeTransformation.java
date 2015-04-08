@@ -1584,16 +1584,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-name|pCtx
-operator|.
-name|getOpParseCtx
-argument_list|()
-operator|.
-name|remove
-argument_list|(
-name|rsop
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 block|}

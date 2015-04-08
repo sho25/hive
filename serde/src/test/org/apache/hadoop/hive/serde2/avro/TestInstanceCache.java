@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|junit
@@ -131,6 +141,12 @@ name|makeInstance
 parameter_list|(
 name|Foo
 name|hv
+parameter_list|,
+name|Set
+argument_list|<
+name|Foo
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return
@@ -158,6 +174,8 @@ operator|.
 name|retrieve
 argument_list|(
 name|f1
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -186,6 +204,8 @@ operator|.
 name|retrieve
 argument_list|(
 name|f2
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -249,6 +269,12 @@ name|makeInstance
 parameter_list|(
 name|String
 name|hv
+parameter_list|,
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|seenSchemas
 parameter_list|)
 block|{
 return|return
@@ -275,6 +301,8 @@ operator|.
 name|retrieve
 argument_list|(
 literal|"one"
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|Wrapper
@@ -288,6 +316,8 @@ operator|.
 name|retrieve
 argument_list|(
 literal|"two"
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|Wrapper
@@ -301,6 +331,8 @@ operator|.
 name|retrieve
 argument_list|(
 literal|"one"
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -321,6 +353,8 @@ operator|.
 name|retrieve
 argument_list|(
 literal|"two"
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame

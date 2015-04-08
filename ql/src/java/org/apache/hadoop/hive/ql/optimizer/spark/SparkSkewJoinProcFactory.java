@@ -841,8 +841,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|reduceSinkSet

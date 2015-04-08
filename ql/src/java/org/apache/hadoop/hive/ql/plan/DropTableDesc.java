@@ -59,6 +59,26 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * DropTableDesc.  * TODO: this is currently used for both drop table and drop partitions.  */
 end_comment
@@ -70,6 +90,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Drop Table"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class
@@ -252,6 +288,9 @@ name|expectView
 parameter_list|,
 name|boolean
 name|ignoreProtection
+parameter_list|,
+name|boolean
+name|ifPurge
 parameter_list|)
 block|{
 name|this
@@ -345,6 +384,12 @@ name|expectView
 operator|=
 name|expectView
 expr_stmt|;
+name|this
+operator|.
+name|ifPurge
+operator|=
+name|ifPurge
+expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */
 annotation|@
@@ -353,6 +398,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"table"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|String

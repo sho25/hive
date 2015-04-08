@@ -2087,7 +2087,7 @@ block|{
 name|TTypeEntry
 name|_elem32
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem32
 operator|=
 operator|new
@@ -2532,7 +2532,7 @@ block|{
 name|TTypeEntry
 name|_elem37
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem37
 operator|=
 operator|new

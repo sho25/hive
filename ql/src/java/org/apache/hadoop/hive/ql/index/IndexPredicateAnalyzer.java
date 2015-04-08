@@ -1194,6 +1194,8 @@ name|Object
 modifier|...
 name|nodeOutputs
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 if|if
 condition|(

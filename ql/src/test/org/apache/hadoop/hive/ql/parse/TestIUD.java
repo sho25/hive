@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -32,6 +42,22 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|Context
 import|;
 end_import
 
@@ -111,10 +137,6 @@ specifier|private
 name|ParseDriver
 name|pd
 decl_stmt|;
-specifier|private
-name|SemanticAnalyzer
-name|sA
-decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -149,20 +171,14 @@ name|setup
 parameter_list|()
 throws|throws
 name|SemanticException
+throws|,
+name|IOException
 block|{
 name|pd
 operator|=
 operator|new
 name|ParseDriver
 argument_list|()
-expr_stmt|;
-name|sA
-operator|=
-operator|new
-name|CalcitePlanner
-argument_list|(
-name|conf
-argument_list|)
 expr_stmt|;
 block|}
 name|ASTNode
@@ -177,13 +193,38 @@ block|{
 name|ASTNode
 name|nd
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|nd
+operator|=
 name|pd
 operator|.
 name|parse
 argument_list|(
 name|query
+argument_list|,
+operator|new
+name|Context
+argument_list|(
+name|conf
 argument_list|)
-decl_stmt|;
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|e
+operator|.
+name|printStackTrace
+argument_list|()
+expr_stmt|;
+block|}
 return|return
 operator|(
 name|ASTNode
@@ -545,7 +586,7 @@ try|try
 block|{
 name|parse
 argument_list|(
-literal|"select * from values (3,4)"
+literal|"select * from `values` (3,4)"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -570,7 +611,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:21 missing EOF at '(' near 'values'"
+literal|"line 1:23 missing EOF at '(' near 'values'"
 argument_list|,
 name|ex
 operator|.
@@ -758,6 +799,57 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * same as testInsertIntoTableAsSelectFromNamedVirtTable but with column list on target table    * @throws ParseException    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertIntoTableAsSelectFromNamedVirtTableNamedCol
+parameter_list|()
+throws|throws
+name|ParseException
+block|{
+name|ASTNode
+name|ast
+init|=
+name|parse
+argument_list|(
+literal|"insert into page_view(c1,c2) select a,b as c from (values (1,2),(3,4)) as VC(a,b) where b = 9"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_QUERY "
+operator|+
+literal|"(TOK_FROM "
+operator|+
+literal|"(TOK_VIRTUAL_TABLE "
+operator|+
+literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+operator|+
+literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
+operator|+
+literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view)) (TOK_TABCOLNAME c1 c2)) "
+operator|+
+literal|"(TOK_SELECT "
+operator|+
+literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL a)) "
+operator|+
+literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL b) c)) "
+operator|+
+literal|"(TOK_WHERE (= (TOK_TABLE_OR_COL b) 9))))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -794,6 +886,72 @@ operator|+
 literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
 operator|+
 literal|"(TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Same as testInsertIntoTableFromAnonymousTable1Row but with column list on target table    * @throws ParseException    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertIntoTableFromAnonymousTable1RowNamedCol
+parameter_list|()
+throws|throws
+name|ParseException
+block|{
+name|ASTNode
+name|ast
+init|=
+name|parse
+argument_list|(
+literal|"insert into page_view(a,b) values(1,2)"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_QUERY "
+operator|+
+literal|"(TOK_FROM "
+operator|+
+literal|"(TOK_VIRTUAL_TABLE "
+operator|+
+literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+operator|+
+literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2))"
+operator|+
+literal|")"
+operator|+
+literal|") "
+operator|+
+literal|"(TOK_INSERT "
+operator|+
+literal|"(TOK_INSERT_INTO "
+operator|+
+literal|"(TOK_TAB (TOK_TABNAME page_view)) "
+operator|+
+literal|"(TOK_TABCOLNAME a b)"
+operator|+
+comment|//this is "extra" piece we get vs previous query
+literal|") "
+operator|+
+literal|"(TOK_SELECT "
+operator|+
+literal|"(TOK_SELEXPR TOK_ALLCOLREF)"
+operator|+
+literal|")"
+operator|+
+literal|")"
+operator|+
+literal|")"
 argument_list|,
 name|ast
 operator|.

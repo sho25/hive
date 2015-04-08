@@ -390,7 +390,7 @@ control|)
 block|{
 name|selectOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|sourceData
 index|[

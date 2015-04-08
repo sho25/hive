@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -66,6 +76,18 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
 import|;
 end_import
 
@@ -535,7 +557,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|processOp
+name|process
 parameter_list|(
 name|Object
 name|row
@@ -939,6 +961,11 @@ argument_list|,
 name|values
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -948,6 +975,7 @@ operator|+
 name|partitionSpecs
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// find which column contains the raw data size (both partitioned and non partitioned
 name|int
@@ -1172,7 +1200,13 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|void
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -1181,11 +1215,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|initializeChildren
+name|Collection
+argument_list|<
+name|Future
+argument_list|<
+name|?
+argument_list|>
+argument_list|>
+name|result
+init|=
+name|super
+operator|.
+name|initializeOp
 argument_list|(
 name|hconf
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|inputFileChanged
 operator|=
 literal|false
@@ -1197,7 +1242,9 @@ operator|==
 literal|null
 condition|)
 block|{
-return|return;
+return|return
+name|result
+return|;
 block|}
 name|rowLimit
 operator|=
@@ -1215,7 +1262,9 @@ name|isGatherStats
 argument_list|()
 condition|)
 block|{
-return|return;
+return|return
+name|result
+return|;
 block|}
 name|this
 operator|.
@@ -1301,8 +1350,13 @@ literal|0
 condition|)
 block|{
 comment|// NON PARTITIONED table
-return|return;
+return|return
+name|result
+return|;
 block|}
+return|return
+name|result
+return|;
 block|}
 annotation|@
 name|Override
@@ -1520,6 +1574,11 @@ argument_list|)
 condition|)
 block|{
 comment|// just return, stats gathering should not block the main query.
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1527,6 +1586,7 @@ argument_list|(
 literal|"StatsPublishing error: cannot connect to database."
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isStatsReliable
@@ -1726,6 +1786,11 @@ argument_list|)
 throw|;
 block|}
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1742,6 +1807,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

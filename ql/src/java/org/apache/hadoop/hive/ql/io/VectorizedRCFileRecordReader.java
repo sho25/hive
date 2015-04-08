@@ -893,8 +893,6 @@ parameter_list|()
 block|{
 name|VectorizedRowBatch
 name|result
-init|=
-literal|null
 decl_stmt|;
 try|try
 block|{
@@ -912,6 +910,7 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
+throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
@@ -919,7 +918,7 @@ literal|"Error creating a batch"
 argument_list|,
 name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 return|return
 name|result
@@ -1093,6 +1092,7 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
@@ -1100,7 +1100,7 @@ literal|"Error while getting next row"
 argument_list|,
 name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 name|value
 operator|.

@@ -63,7 +63,27 @@ name|parse
 operator|.
 name|BaseSemanticAnalyzer
 operator|.
-name|tableSpec
+name|TableSpec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
 import|;
 end_import
 
@@ -78,6 +98,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Stats-Aggr Operator"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class
@@ -94,7 +130,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|tableSpec
+name|TableSpec
 name|tableSpecs
 decl_stmt|;
 comment|// source table spec -- for TableScanOperator
@@ -162,7 +198,7 @@ block|{   }
 specifier|public
 name|StatsWork
 parameter_list|(
-name|tableSpec
+name|TableSpec
 name|tableSpecs
 parameter_list|)
 block|{
@@ -216,7 +252,7 @@ name|statsReliable
 expr_stmt|;
 block|}
 specifier|public
-name|tableSpec
+name|TableSpec
 name|getTableSpecs
 parameter_list|()
 block|{
@@ -262,9 +298,13 @@ name|displayName
 operator|=
 literal|"Stats Aggregation Key Prefix"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|String

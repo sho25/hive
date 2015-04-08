@@ -234,7 +234,7 @@ decl_stmt|;
 name|PTFDesc
 name|ptfDesc
 decl_stmt|;
-comment|/*    * - called during translation.    * - invokes createEvaluator which must be implemented by a subclass    * - sets up the evaluator with references to the TableDef, PartitionClass, PartitonMemsize and    *   the transformsRawInput boolean.    */
+comment|/*    * - called during translation.    * - invokes createEvaluator which must be implemented by a subclass    * - sets up the evaluator with references to the TableDef, PartitionClass, PartitionMemsize and    *   the transformsRawInput boolean.    */
 specifier|public
 name|void
 name|initialize
@@ -525,6 +525,21 @@ name|PartitionedTableFunctionDef
 name|tDef
 parameter_list|)
 function_decl|;
+comment|/**    * Provide referenced columns names to be used in partition function    *    * @return null for unknown (will get all columns from table including virtual columns)     * @throws SemanticException    */
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getReferencedColumns
+parameter_list|()
+throws|throws
+name|SemanticException
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

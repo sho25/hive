@@ -2664,7 +2664,7 @@ block|{
 name|int
 name|_elem80
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem80
 operator|=
 name|iprot
@@ -3206,7 +3206,7 @@ block|{
 name|int
 name|_elem85
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem85
 operator|=
 name|iprot

@@ -113,9 +113,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|common
 operator|.
-name|HiveConf
+name|JavaUtils
 import|;
 end_import
 
@@ -1952,9 +1952,9 @@ extends|extends
 name|TableFunctionResolver
 argument_list|>
 operator|)
-name|Class
+name|JavaUtils
 operator|.
-name|forName
+name|loadClass
 argument_list|(
 name|className
 argument_list|)

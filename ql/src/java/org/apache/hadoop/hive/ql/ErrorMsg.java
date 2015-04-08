@@ -1983,6 +1983,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|DROP_NATIVE_FUNCTION
+argument_list|(
+literal|10301
+argument_list|,
+literal|"Cannot drop native function"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

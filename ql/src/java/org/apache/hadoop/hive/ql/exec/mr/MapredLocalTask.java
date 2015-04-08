@@ -729,38 +729,6 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|HadoopShims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
 name|Utils
 import|;
 end_import
@@ -942,6 +910,10 @@ specifier|private
 name|Process
 name|executor
 decl_stmt|;
+specifier|private
+name|SecureCmdDoAs
+name|secureDoAs
+decl_stmt|;
 specifier|public
 name|MapredLocalTask
 parameter_list|()
@@ -1087,7 +1059,7 @@ init|=
 operator|new
 name|SimpleDateFormat
 argument_list|(
-literal|"yyyy-mm-dd hh:mm:ss"
+literal|"yyyy-MM-dd HH:mm:ss"
 argument_list|)
 decl_stmt|;
 return|return
@@ -1888,15 +1860,14 @@ block|{
 comment|//If kerberos security is enabled, and HS2 doAs is enabled,
 comment|// then additional params need to be set so that the command is run as
 comment|// intended user
-name|SecureCmdDoAs
 name|secureDoAs
-init|=
+operator|=
 operator|new
 name|SecureCmdDoAs
 argument_list|(
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|secureDoAs
 operator|.
 name|addEnv
@@ -2155,11 +2126,6 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 name|LOG
 operator|.
 name|error
@@ -2167,9 +2133,8 @@ argument_list|(
 literal|"Exception: "
 operator|+
 name|e
-operator|.
-name|getMessage
-argument_list|()
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 return|return
@@ -2177,6 +2142,22 @@ operator|(
 literal|1
 operator|)
 return|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|secureDoAs
+operator|!=
+literal|null
+condition|)
+block|{
+name|secureDoAs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public
@@ -2636,7 +2617,7 @@ break|break;
 block|}
 name|forwardOp
 operator|.
-name|processOp
+name|process
 argument_list|(
 name|row
 operator|.
@@ -2932,7 +2913,7 @@ decl_stmt|;
 comment|// put the exe context into all the operators
 name|forwardOp
 operator|.
-name|setExecContext
+name|passExecContext
 argument_list|(
 name|execContext
 argument_list|)

@@ -301,6 +301,18 @@ name|org
 operator|.
 name|apache
 operator|.
+name|avro
+operator|.
+name|UnresolvedUnionException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|commons
 operator|.
 name|logging
@@ -1227,6 +1239,25 @@ operator|.
 name|Field
 name|field
 init|=
+name|AvroSerdeUtils
+operator|.
+name|isNullableType
+argument_list|(
+name|fileSchema
+argument_list|)
+condition|?
+name|AvroSerdeUtils
+operator|.
+name|getOtherTypeFromNullableType
+argument_list|(
+name|fileSchema
+argument_list|)
+operator|.
+name|getField
+argument_list|(
+name|columnName
+argument_list|)
+else|:
 name|fileSchema
 operator|.
 name|getField
@@ -1975,6 +2006,8 @@ condition|)
 block|{
 comment|// The fileSchema may have the null value in a different position, so
 comment|// we need to get the correct tag
+try|try
+block|{
 name|tag
 operator|=
 name|GenericData
@@ -2002,6 +2035,84 @@ name|tag
 argument_list|)
 expr_stmt|;
 block|}
+catch|catch
+parameter_list|(
+name|UnresolvedUnionException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|String
+name|datumClazz
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|datum
+operator|!=
+literal|null
+condition|)
+block|{
+name|datumClazz
+operator|=
+name|datum
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
+block|}
+name|String
+name|msg
+init|=
+literal|"File schema union could not resolve union. fileSchema = "
+operator|+
+name|fileSchema
+operator|+
+literal|", recordSchema = "
+operator|+
+name|recordSchema
+operator|+
+literal|", datum class = "
+operator|+
+name|datumClazz
+operator|+
+literal|": "
+operator|+
+name|e
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+comment|// This occurs when the datum type is different between
+comment|// the file and record schema. For example if datum is long
+comment|// and the field in the file schema is int. See HIVE-9462.
+comment|// in this case we will re-use the record schema as the file
+comment|// schema, Ultimately we need to clean this code up and will
+comment|// do as a follow-on to HIVE-9462.
+name|currentFileSchema
+operator|=
+name|schema
+expr_stmt|;
+block|}
+block|}
 else|else
 block|{
 name|currentFileSchema
@@ -2024,6 +2135,8 @@ operator|.
 name|generateTypeInfo
 argument_list|(
 name|schema
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 return|;

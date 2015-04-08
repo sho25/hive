@@ -35,6 +35,15 @@ name|ARCHIVES
 init|=
 literal|"-archives"
 decl_stmt|;
+comment|/**    * http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/CommandsManual.html#Generic_Options    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|FILES
+init|=
+literal|"-files"
+decl_stmt|;
 specifier|protected
 name|AppConfig
 name|appConf

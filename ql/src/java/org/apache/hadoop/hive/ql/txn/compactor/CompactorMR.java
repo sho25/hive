@@ -131,6 +131,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|JavaUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|ValidTxnList
 import|;
 end_import
@@ -147,7 +163,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnListImpl
+name|ValidReadTxnList
 import|;
 end_import
 
@@ -3228,7 +3244,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidTxnListImpl
+name|ValidReadTxnList
 argument_list|(
 name|jobConf
 operator|.
@@ -4220,9 +4236,9 @@ block|{
 name|Class
 name|c
 init|=
-name|Class
+name|JavaUtils
 operator|.
-name|forName
+name|loadClass
 argument_list|(
 name|classname
 argument_list|)

@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Copyright (c) Microsoft Corporation  *  * Licensed under the Apache License, Version 2.0 (the "License");  * you may not use this file except in compliance with the License.  * You may obtain a copy of the License at  *  * http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -86,7 +86,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This code was originally written for Microsoft PolyBase.  *  * Represents an unsigned 128-bit integer. This is the basis for  * {@link Decimal128} and {@link SignedInt128}. This object is much faster and  * more compact than BigInteger, but has many limitations below.  *<ul>  *<li>Always consumes 128 bits (4 int32) even if the values is, say, 3.</li>  *<li>Cannot handle values larger than 10**38.</li>  *<li>Does not support some of arithmetic operations that is not required in  * SQL (e.g., exact POWER/SQRT).</li>  *</ul>  */
+comment|/**  * This code was based on code from Microsoft's PolyBase.  *  * Represents an unsigned 128-bit integer. This is the basis for  * {@link Decimal128} and {@link SignedInt128}. This object is much faster and  * more compact than BigInteger, but has many limitations below.  *<ul>  *<li>Always consumes 128 bits (4 int32) even if the values is, say, 3.</li>  *<li>Cannot handle values larger than 10**38.</li>  *<li>Does not support some of arithmetic operations that is not required in  * SQL (e.g., exact POWER/SQRT).</li>  *</ul>  */
 end_comment
 
 begin_class
