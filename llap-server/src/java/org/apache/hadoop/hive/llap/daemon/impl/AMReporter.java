@@ -1138,6 +1138,26 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Add back to the queue for the next heartbeat, and schedule the actual heartbeat
+name|amNodeInfo
+operator|.
+name|setNextHeartbeatTime
+argument_list|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|+
+name|heartbeatInterval
+argument_list|)
+expr_stmt|;
+name|pendingHeartbeatQueeu
+operator|.
+name|add
+argument_list|(
+name|amNodeInfo
+argument_list|)
+expr_stmt|;
 name|executor
 operator|.
 name|submit
