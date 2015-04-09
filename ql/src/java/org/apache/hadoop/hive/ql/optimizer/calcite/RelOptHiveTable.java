@@ -679,11 +679,6 @@ name|hiveTblMetadata
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
-name|tblAlias
-decl_stmt|;
-specifier|private
-specifier|final
 name|ImmutableList
 argument_list|<
 name|ColumnInfo
@@ -805,9 +800,6 @@ parameter_list|,
 name|String
 name|qualifiedTblName
 parameter_list|,
-name|String
-name|tblAlias
-parameter_list|,
 name|RelDataType
 name|rowType
 parameter_list|,
@@ -864,12 +856,6 @@ operator|.
 name|hiveTblMetadata
 operator|=
 name|hiveTblMetadata
-expr_stmt|;
-name|this
-operator|.
-name|tblAlias
-operator|=
-name|tblAlias
 expr_stmt|;
 name|this
 operator|.
@@ -1226,10 +1212,6 @@ argument_list|,
 name|this
 operator|.
 name|name
-argument_list|,
-name|this
-operator|.
-name|tblAlias
 argument_list|,
 name|newRowType
 argument_list|,
@@ -1741,36 +1723,6 @@ parameter_list|()
 block|{
 return|return
 name|hiveTblMetadata
-return|;
-block|}
-specifier|public
-name|String
-name|getTableAlias
-parameter_list|()
-block|{
-comment|// NOTE: Calcite considers tbls to be equal if their names are the same.
-comment|// Hence
-comment|// we need to provide Calcite the fully qualified table name
-comment|// (dbname.tblname)
-comment|// and not the user provided aliases.
-comment|// However in HIVE DB name can not appear in select list; in case of join
-comment|// where table names differ only in DB name, Hive would require user
-comment|// introducing explicit aliases for tbl.
-if|if
-condition|(
-name|tblAlias
-operator|==
-literal|null
-condition|)
-return|return
-name|hiveTblMetadata
-operator|.
-name|getTableName
-argument_list|()
-return|;
-else|else
-return|return
-name|tblAlias
 return|;
 block|}
 specifier|private

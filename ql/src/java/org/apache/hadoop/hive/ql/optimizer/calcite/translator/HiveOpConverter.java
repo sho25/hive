@@ -1809,7 +1809,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * TODO: 1. PPD needs to get pushed in to TS    *     * @param scanRel    * @return    */
+comment|/**    * TODO: 1. PPD needs to get pushed in to TS    *    * @param scanRel    * @return    */
 name|OpAttr
 name|visit
 parameter_list|(
@@ -2028,7 +2028,7 @@ decl_stmt|;
 name|String
 name|tableAlias
 init|=
-name|ht
+name|scanRel
 operator|.
 name|getTableAlias
 argument_list|()
@@ -2464,9 +2464,6 @@ name|exprCols
 operator|.
 name|add
 argument_list|(
-operator|(
-name|ExprNodeDesc
-operator|)
 name|projectRel
 operator|.
 name|getChildExps
@@ -3483,9 +3480,6 @@ argument_list|)
 decl_stmt|;
 name|resultOp
 operator|=
-operator|(
-name|LimitOperator
-operator|)
 name|OperatorFactory
 operator|.
 name|getAndMakeChild
@@ -4864,9 +4858,6 @@ name|descriptors
 init|=
 name|buildBacktrackFromReduceSink
 argument_list|(
-operator|(
-name|ReduceSinkOperator
-operator|)
 name|rsOp
 argument_list|,
 name|input
@@ -6833,9 +6824,6 @@ name|tabAlias
 parameter_list|)
 block|{
 return|return
-operator|(
-name|ExprNodeDesc
-operator|)
 name|rn
 operator|.
 name|accept

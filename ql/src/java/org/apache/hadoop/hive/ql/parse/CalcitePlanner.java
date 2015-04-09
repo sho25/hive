@@ -8968,8 +8968,6 @@ name|relOptSchema
 argument_list|,
 name|fullyQualifiedTabName
 argument_list|,
-name|tableAlias
-argument_list|,
 name|rowType
 argument_list|,
 name|tabMetaData
@@ -9012,6 +9010,17 @@ name|CONVENTION
 argument_list|)
 argument_list|,
 name|optTable
+argument_list|,
+literal|null
+operator|==
+name|tableAlias
+condition|?
+name|tabMetaData
+operator|.
+name|getTableName
+argument_list|()
+else|:
+name|tableAlias
 argument_list|)
 expr_stmt|;
 comment|// 6. Add Schema(RR) to RelNode-Schema map

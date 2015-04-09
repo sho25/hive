@@ -399,6 +399,20 @@ name|Integer
 argument_list|>
 name|neededColIndxsFrmReloptHT
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|tblAlias
+decl_stmt|;
+specifier|public
+name|String
+name|getTableAlias
+parameter_list|()
+block|{
+return|return
+name|tblAlias
+return|;
+block|}
 comment|/**    * Creates a HiveTableScan.    *    * @param cluster    *          Cluster    * @param traitSet    *          Traits    * @param table    *          Table    * @param table    *          HiveDB table    */
 specifier|public
 name|HiveTableScan
@@ -411,6 +425,9 @@ name|traitSet
 parameter_list|,
 name|RelOptHiveTable
 name|table
+parameter_list|,
+name|String
+name|alias
 parameter_list|)
 block|{
 name|this
@@ -420,6 +437,8 @@ argument_list|,
 name|traitSet
 argument_list|,
 name|table
+argument_list|,
+name|alias
 argument_list|,
 name|table
 operator|.
@@ -439,6 +458,9 @@ name|traitSet
 parameter_list|,
 name|RelOptHiveTable
 name|table
+parameter_list|,
+name|String
+name|alias
 parameter_list|,
 name|RelDataType
 name|newRowtype
@@ -466,6 +488,12 @@ name|HiveRelNode
 operator|.
 name|CONVENTION
 assert|;
+name|this
+operator|.
+name|tblAlias
+operator|=
+name|alias
+expr_stmt|;
 name|this
 operator|.
 name|hiveTableScanRowType
@@ -513,7 +541,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Copy TableScan operator with a new Row Schema. The new Row Schema can only    * be a subset of this TS schema.    *     * @param newRowtype    * @return    */
+comment|/**    * Copy TableScan operator with a new Row Schema. The new Row Schema can only    * be a subset of this TS schema.    *    * @param newRowtype    * @return    */
 specifier|public
 name|HiveTableScan
 name|copy
@@ -538,6 +566,10 @@ name|RelOptHiveTable
 operator|)
 name|table
 operator|)
+argument_list|,
+name|this
+operator|.
+name|tblAlias
 argument_list|,
 name|newRowtype
 argument_list|)

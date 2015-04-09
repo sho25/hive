@@ -673,6 +673,28 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|reloperators
+operator|.
+name|HiveTableScan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|translator
 operator|.
 name|SqlFunctionConverter
@@ -770,10 +792,12 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|RelNode
 name|root
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveAST
 name|hiveAST
 decl_stmt|;
@@ -1518,9 +1542,6 @@ block|{
 name|HiveSort
 name|hiveLimit
 init|=
-operator|(
-name|HiveSort
-operator|)
 name|limit
 decl_stmt|;
 name|RexNode
@@ -1583,9 +1604,6 @@ block|{
 name|HiveSort
 name|hiveSort
 init|=
-operator|(
-name|HiveSort
-operator|)
 name|order
 decl_stmt|;
 if|if
@@ -1623,9 +1641,6 @@ operator|=
 operator|new
 name|Schema
 argument_list|(
-operator|(
-name|HiveSort
-operator|)
 name|hiveSort
 argument_list|)
 expr_stmt|;
@@ -2486,6 +2501,7 @@ name|Schema
 name|schema
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|useTypeQualInLiteral
 decl_stmt|;
@@ -3557,12 +3573,9 @@ name|tabName
 init|=
 operator|(
 operator|(
-name|RelOptHiveTable
+name|HiveTableScan
 operator|)
 name|scan
-operator|.
-name|getTable
-argument_list|()
 operator|)
 operator|.
 name|getTableAlias
@@ -3971,7 +3984,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * Assumption:<br>      * 1. Project will always be child of Sort.<br>      * 2. In Calcite every projection in Project is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *       * @param order      *          Hive Sort Node      * @return Schema      */
+comment|/**      * Assumption:<br>      * 1. Project will always be child of Sort.<br>      * 2. In Calcite every projection in Project is uniquely named      * (unambigous) without using table qualifier (table name).<br>      *      * @param order      *          Hive Sort Node      * @return Schema      */
 specifier|public
 name|Schema
 parameter_list|(
