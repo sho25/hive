@@ -1071,7 +1071,13 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_TXN_MAX_OPEN_BATCH
-block|,       }
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
 specifier|public
@@ -5332,6 +5338,15 @@ argument_list|,
 literal|"Standard error expressed in percentage. Provides a tradeoff between accuracy and compute cost. \n"
 operator|+
 literal|"A lower value for error indicates higher accuracy and a higher compute cost."
+argument_list|)
+block|,
+name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+argument_list|(
+literal|"hive.metastore.stats.ndv.densityfunction"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use density function to estimate the NDV for the whole table based on the NDV of partitions"
 argument_list|)
 block|,
 name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
