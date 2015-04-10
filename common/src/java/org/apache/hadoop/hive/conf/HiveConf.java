@@ -6765,24 +6765,6 @@ argument_list|,
 literal|"Maximum message size in bytes a HS2 server will accept."
 argument_list|)
 block|,
-name|HIVE_SERVER2_THRIFT_HTTP_MIN_WORKER_THREADS
-argument_list|(
-literal|"hive.server2.thrift.http.min.worker.threads"
-argument_list|,
-literal|5
-argument_list|,
-literal|"Minimum number of worker threads when in HTTP mode."
-argument_list|)
-block|,
-name|HIVE_SERVER2_THRIFT_HTTP_MAX_WORKER_THREADS
-argument_list|(
-literal|"hive.server2.thrift.http.max.worker.threads"
-argument_list|,
-literal|500
-argument_list|,
-literal|"Maximum number of worker threads when in HTTP mode."
-argument_list|)
-block|,
 name|HIVE_SERVER2_THRIFT_HTTP_MAX_IDLE_TIME
 argument_list|(
 literal|"hive.server2.thrift.http.max.idle.time"
