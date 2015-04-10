@@ -2769,7 +2769,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Recevied ping from unknown node: "
+literal|"Received ping from unknown node: "
 operator|+
 name|hostname
 operator|+

@@ -153,6 +153,7 @@ name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED_DEFAULT
 init|=
 literal|false
 decl_stmt|;
+comment|// This needs to be kept below the task timeout interval, but otherwise as high as possible to avoid unnecessary traffic.
 specifier|public
 specifier|static
 specifier|final
@@ -169,7 +170,7 @@ specifier|final
 name|long
 name|LLAP_DAEMON_LIVENESS_HEARTBEAT_INTERVAL_MS_DEFAULT
 init|=
-literal|5000l
+literal|10000l
 decl_stmt|;
 comment|// Section for configs used in AM and executors
 specifier|public
