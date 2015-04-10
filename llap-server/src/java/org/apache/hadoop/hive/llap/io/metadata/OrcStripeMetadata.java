@@ -564,7 +564,7 @@ name|SIZE_ESTIMATORS
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
+specifier|private
 name|OrcStripeMetadata
 parameter_list|(
 name|long

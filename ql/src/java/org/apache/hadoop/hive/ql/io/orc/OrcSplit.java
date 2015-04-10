@@ -832,20 +832,6 @@ name|readLong
 argument_list|()
 expr_stmt|;
 block|}
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# Got file ID "
-operator|+
-name|fileId
-operator|+
-literal|" for "
-operator|+
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 name|FileMetaInfo
 name|getFileMetaInfo
