@@ -885,13 +885,11 @@ name|setProperty
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_LOGGING_OPERATION_VERBOSE
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
 operator|.
 name|varname
 argument_list|,
-literal|""
-operator|+
-literal|true
+literal|"verbose"
 argument_list|)
 expr_stmt|;
 name|Statement

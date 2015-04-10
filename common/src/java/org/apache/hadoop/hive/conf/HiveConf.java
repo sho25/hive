@@ -6406,13 +6406,35 @@ argument_list|,
 literal|"Top level directory where operation logs are stored if logging functionality is enabled"
 argument_list|)
 block|,
-name|HIVE_SERVER2_LOGGING_OPERATION_VERBOSE
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
 argument_list|(
-literal|"hive.server2.logging.operation.verbose"
+literal|"hive.server2.logging.operation.level"
 argument_list|,
-literal|false
+literal|"EXECUTION"
 argument_list|,
-literal|"When true, HS2 operation logs available for clients will be verbose"
+operator|new
+name|StringSet
+argument_list|(
+literal|"NONE"
+argument_list|,
+literal|"EXECUTION"
+argument_list|,
+literal|"PERFORMANCE"
+argument_list|,
+literal|"VERBOSE"
+argument_list|)
+argument_list|,
+literal|"HS2 operation logging mode available to clients to be set at session level.\n"
+operator|+
+literal|"For this to work, hive.server2.logging.operation.enabled should be set to true.\n"
+operator|+
+literal|"  NONE: Ignore any logging\n"
+operator|+
+literal|"  EXECUTION: Log completion of tasks\n"
+operator|+
+literal|"  PERFORMANCE: Execution + Performance logs \n"
+operator|+
+literal|"  VERBOSE: All logs"
 argument_list|)
 block|,
 comment|// logging configuration

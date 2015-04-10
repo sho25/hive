@@ -1079,6 +1079,11 @@ name|toString
 argument_list|()
 argument_list|,
 name|operationLogFile
+argument_list|,
+name|parentSession
+operator|.
+name|getHiveConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
