@@ -2283,7 +2283,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|// Iterate thru all the filecaches. This is best-effort.
-comment|// If these super-long-lived iterator affects the map in some bad way,
+comment|// If these super-long-lived iterators affect the map in some bad way,
 comment|// we'd need to sleep once per round instead.
 name|Iterator
 argument_list|<
@@ -2305,6 +2305,11 @@ argument_list|()
 operator|.
 name|iterator
 argument_list|()
+decl_stmt|;
+name|boolean
+name|isPastEndTime
+init|=
+literal|false
 decl_stmt|;
 while|while
 condition|(
@@ -2379,14 +2384,41 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
+name|long
+name|time
+init|=
+operator|-
+literal|1
+decl_stmt|;
+name|isPastEndTime
+operator|=
+name|isPastEndTime
+operator|||
+operator|(
+operator|(
+name|time
+operator|=
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+operator|)
+operator|>=
+name|endTime
+operator|)
+expr_stmt|;
 name|Thread
 operator|.
 name|sleep
 argument_list|(
 operator|(
+operator|(
 name|leftToCheck
 operator|<=
 literal|0
+operator|)
+operator|||
+name|isPastEndTime
 operator|)
 condition|?
 literal|1
@@ -2394,10 +2426,7 @@ else|:
 operator|(
 name|endTime
 operator|-
-name|System
-operator|.
-name|nanoTime
-argument_list|()
+name|time
 operator|)
 operator|/
 operator|(
