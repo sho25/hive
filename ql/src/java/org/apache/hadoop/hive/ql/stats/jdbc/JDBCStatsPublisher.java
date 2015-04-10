@@ -528,10 +528,12 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-name|stmt
+name|Utilities
 operator|.
 name|setQueryTimeout
 argument_list|(
+name|stmt
+argument_list|,
 name|timeout
 argument_list|)
 expr_stmt|;
@@ -1516,10 +1518,12 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-name|stmt
+name|Utilities
 operator|.
 name|setQueryTimeout
 argument_list|(
+name|stmt
+argument_list|,
 name|timeout
 argument_list|)
 expr_stmt|;
