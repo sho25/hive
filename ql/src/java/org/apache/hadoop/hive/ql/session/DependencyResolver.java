@@ -43,6 +43,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|URL
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Arrays
@@ -330,14 +340,26 @@ argument_list|()
 operator|)
 condition|)
 block|{
-name|ivysettingsPath
-operator|=
+name|URL
+name|ivysetttingsResource
+init|=
 name|ClassLoader
 operator|.
 name|getSystemResource
 argument_list|(
 literal|"ivysettings.xml"
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|ivysetttingsResource
+operator|!=
+literal|null
+condition|)
+block|{
+name|ivysettingsPath
+operator|=
+name|ivysetttingsResource
 operator|.
 name|getFile
 argument_list|()
@@ -353,6 +375,7 @@ operator|+
 literal|" will be used"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    *    * @param uri    * @return List of URIs of downloaded jars    * @throws URISyntaxException    * @throws IOException    */

@@ -4577,6 +4577,13 @@ argument_list|()
 expr_stmt|;
 name|reader
 operator|.
+name|setExpandEvents
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|reader
+operator|.
 name|setBellEnabled
 argument_list|(
 literal|false

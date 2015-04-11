@@ -620,6 +620,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+name|assigners
+operator|!=
+literal|null
+condition|)
+block|{
 assert|assert
 operator|(
 name|outputBatch
@@ -631,6 +638,7 @@ operator|.
 name|length
 operator|)
 assert|;
+block|}
 name|outputBatch
 operator|.
 name|reset

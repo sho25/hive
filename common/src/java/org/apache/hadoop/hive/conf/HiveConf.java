@@ -1071,7 +1071,13 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_TXN_MAX_OPEN_BATCH
-block|,       }
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
 specifier|public
@@ -5354,6 +5360,15 @@ operator|+
 literal|"A lower value for error indicates higher accuracy and a higher compute cost."
 argument_list|)
 block|,
+name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+argument_list|(
+literal|"hive.metastore.stats.ndv.densityfunction"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use density function to estimate the NDV for the whole table based on the NDV of partitions"
+argument_list|)
+block|,
 name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
 argument_list|(
 literal|"hive.stats.key.prefix.max.length"
@@ -6411,13 +6426,35 @@ argument_list|,
 literal|"Top level directory where operation logs are stored if logging functionality is enabled"
 argument_list|)
 block|,
-name|HIVE_SERVER2_LOGGING_OPERATION_VERBOSE
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
 argument_list|(
-literal|"hive.server2.logging.operation.verbose"
+literal|"hive.server2.logging.operation.level"
 argument_list|,
-literal|false
+literal|"EXECUTION"
 argument_list|,
-literal|"When true, HS2 operation logs available for clients will be verbose"
+operator|new
+name|StringSet
+argument_list|(
+literal|"NONE"
+argument_list|,
+literal|"EXECUTION"
+argument_list|,
+literal|"PERFORMANCE"
+argument_list|,
+literal|"VERBOSE"
+argument_list|)
+argument_list|,
+literal|"HS2 operation logging mode available to clients to be set at session level.\n"
+operator|+
+literal|"For this to work, hive.server2.logging.operation.enabled should be set to true.\n"
+operator|+
+literal|"  NONE: Ignore any logging\n"
+operator|+
+literal|"  EXECUTION: Log completion of tasks\n"
+operator|+
+literal|"  PERFORMANCE: Execution + Performance logs \n"
+operator|+
+literal|"  VERBOSE: All logs"
 argument_list|)
 block|,
 comment|// logging configuration
@@ -6746,24 +6783,6 @@ operator|*
 literal|1024
 argument_list|,
 literal|"Maximum message size in bytes a HS2 server will accept."
-argument_list|)
-block|,
-name|HIVE_SERVER2_THRIFT_HTTP_MIN_WORKER_THREADS
-argument_list|(
-literal|"hive.server2.thrift.http.min.worker.threads"
-argument_list|,
-literal|5
-argument_list|,
-literal|"Minimum number of worker threads when in HTTP mode."
-argument_list|)
-block|,
-name|HIVE_SERVER2_THRIFT_HTTP_MAX_WORKER_THREADS
-argument_list|(
-literal|"hive.server2.thrift.http.max.worker.threads"
-argument_list|,
-literal|500
-argument_list|,
-literal|"Maximum number of worker threads when in HTTP mode."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_MAX_IDLE_TIME
