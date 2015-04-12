@@ -1990,6 +1990,15 @@ argument_list|,
 literal|"Cannot drop native function"
 argument_list|)
 block|,
+name|UPDATE_CANNOT_UPDATE_BUCKET_VALUE
+argument_list|(
+literal|10302
+argument_list|,
+literal|"Updating values of bucketing columns is not supported.  Column {0}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

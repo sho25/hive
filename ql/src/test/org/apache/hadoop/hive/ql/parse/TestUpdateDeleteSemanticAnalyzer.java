@@ -840,7 +840,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update T set a = 5"
+literal|"update T set b = 5"
 argument_list|,
 literal|"testUpdateAllNonPartitioned"
 argument_list|)
@@ -895,7 +895,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update T set a = 5 where b> 5"
+literal|"update T set b = 5 where b> 5"
 argument_list|,
 literal|"testUpdateAllNonPartitionedWhere"
 argument_list|)
@@ -950,7 +950,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update U set a = 5"
+literal|"update U set b = 5"
 argument_list|,
 literal|"testUpdateAllPartitioned"
 argument_list|)
@@ -1005,7 +1005,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update U set a = 5 where b> 5"
+literal|"update U set b = 5 where b> 5"
 argument_list|,
 literal|"testUpdateAllPartitionedWhere"
 argument_list|)
@@ -1060,7 +1060,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update U set a = 5 where ds = 'today'"
+literal|"update U set b = 5 where ds = 'today'"
 argument_list|,
 literal|"testUpdateOnePartition"
 argument_list|)
@@ -1115,7 +1115,7 @@ name|rc
 init|=
 name|parseAndAnalyze
 argument_list|(
-literal|"update U set a = 5 where ds = 'today' and b> 5"
+literal|"update U set b = 5 where ds = 'today' and b> 5"
 argument_list|,
 literal|"testUpdateOnePartitionWhere"
 argument_list|)
@@ -1480,7 +1480,7 @@ name|getDb
 argument_list|()
 expr_stmt|;
 comment|// I have to create the tables here (rather than in setup()) because I need the Hive
-comment|// connection, which is conviently created by the semantic analyzer.
+comment|// connection, which is conveniently created by the semantic analyzer.
 name|Map
 argument_list|<
 name|String
