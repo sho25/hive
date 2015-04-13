@@ -11875,6 +11875,7 @@ argument_list|(
 name|qb
 argument_list|)
 decl_stmt|;
+comment|// 1. Gather GB Expressions (AST) (GB + Aggregations)
 comment|// NOTE: Multi Insert is not supported
 name|String
 name|detsClauseName
@@ -11890,6 +11891,132 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+comment|// Check and transform group by *. This will only happen for select distinct *.
+comment|// Here the "genSelectPlan" is being leveraged.
+comment|// The main benefits are (1) remove virtual columns that should
+comment|// not be included in the group by; (2) add the fully qualified column names to unParseTranslator
+comment|// so that view is supported. The drawback is that an additional SEL op is added. If it is
+comment|// not necessary, it will be removed by NonBlockingOpDeDupProc Optimizer because it will match
+comment|// SEL%SEL% rule.
+name|ASTNode
+name|selExprList
+init|=
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getSelForClause
+argument_list|(
+name|detsClauseName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|selExprList
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_SELECTDI
+operator|&&
+name|selExprList
+operator|.
+name|getChildCount
+argument_list|()
+operator|==
+literal|1
+operator|&&
+name|selExprList
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getChildCount
+argument_list|()
+operator|==
+literal|1
+condition|)
+block|{
+name|ASTNode
+name|node
+init|=
+operator|(
+name|ASTNode
+operator|)
+name|selExprList
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|node
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_ALLCOLREF
+condition|)
+block|{
+name|srcRel
+operator|=
+name|genSelectLogicalPlan
+argument_list|(
+name|qb
+argument_list|,
+name|srcRel
+argument_list|,
+name|srcRel
+argument_list|)
+expr_stmt|;
+name|RowResolver
+name|rr
+init|=
+name|this
+operator|.
+name|relToHiveRR
+operator|.
+name|get
+argument_list|(
+name|srcRel
+argument_list|)
+decl_stmt|;
+name|qbp
+operator|.
+name|setSelExprForClause
+argument_list|(
+name|detsClauseName
+argument_list|,
+name|SemanticAnalyzer
+operator|.
+name|genSelectDIAST
+argument_list|(
+name|rr
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|List
 argument_list|<
 name|ASTNode
@@ -11920,7 +12047,45 @@ argument_list|(
 name|detsClauseName
 argument_list|)
 decl_stmt|;
-comment|// NOTE: Multi Insert is not supported
+name|boolean
+name|hasGrpByAstExprs
+init|=
+operator|(
+name|grpByAstExprs
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|grpByAstExprs
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|?
+literal|true
+else|:
+literal|false
+decl_stmt|;
+name|boolean
+name|hasAggregationTrees
+init|=
+operator|(
+name|aggregationTrees
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|aggregationTrees
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|?
+literal|true
+else|:
+literal|false
+decl_stmt|;
+specifier|final
 name|boolean
 name|cubeRollupGrpSetPresent
 init|=
@@ -11953,7 +12118,7 @@ name|isEmpty
 argument_list|()
 operator|)
 decl_stmt|;
-comment|// 0. Sanity check
+comment|// 2. Sanity check
 if|if
 condition|(
 name|conf
@@ -12120,171 +12285,6 @@ throw|;
 block|}
 block|}
 block|}
-comment|// 1. Gather GB Expressions (AST) (GB + Aggregations)
-comment|// Check and transform group by *. This will only happen for select distinct *.
-comment|// Here the "genSelectPlan" is being leveraged.
-comment|// The main benefits are (1) remove virtual columns that should
-comment|// not be included in the group by; (2) add the fully qualified column names to unParseTranslator
-comment|// so that view is supported. The drawback is that an additional SEL op is added. If it is
-comment|// not necessary, it will be removed by NonBlockingOpDeDupProc Optimizer because it will match
-comment|// SEL%SEL% rule.
-name|ASTNode
-name|selExprList
-init|=
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|getSelForClause
-argument_list|(
-name|detsClauseName
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|selExprList
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
-operator|.
-name|TOK_SELECTDI
-operator|&&
-name|selExprList
-operator|.
-name|getChildCount
-argument_list|()
-operator|==
-literal|1
-operator|&&
-name|selExprList
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getChildCount
-argument_list|()
-operator|==
-literal|1
-condition|)
-block|{
-name|ASTNode
-name|node
-init|=
-operator|(
-name|ASTNode
-operator|)
-name|selExprList
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|node
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
-operator|.
-name|TOK_ALLCOLREF
-condition|)
-block|{
-name|srcRel
-operator|=
-name|genSelectLogicalPlan
-argument_list|(
-name|qb
-argument_list|,
-name|srcRel
-argument_list|,
-name|srcRel
-argument_list|)
-expr_stmt|;
-name|RowResolver
-name|rr
-init|=
-name|this
-operator|.
-name|relToHiveRR
-operator|.
-name|get
-argument_list|(
-name|srcRel
-argument_list|)
-decl_stmt|;
-name|qbp
-operator|.
-name|setSelExprForClause
-argument_list|(
-name|detsClauseName
-argument_list|,
-name|SemanticAnalyzer
-operator|.
-name|genSelectDIAST
-argument_list|(
-name|rr
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-name|boolean
-name|hasGrpByAstExprs
-init|=
-operator|(
-name|grpByAstExprs
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|grpByAstExprs
-operator|.
-name|isEmpty
-argument_list|()
-operator|)
-condition|?
-literal|true
-else|:
-literal|false
-decl_stmt|;
-name|boolean
-name|hasAggregationTrees
-init|=
-operator|(
-name|aggregationTrees
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|aggregationTrees
-operator|.
-name|isEmpty
-argument_list|()
-operator|)
-condition|?
-literal|true
-else|:
-literal|false
-decl_stmt|;
 if|if
 condition|(
 name|hasGrpByAstExprs
@@ -12318,7 +12318,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// 2. Input, Output Row Resolvers
+comment|// 3. Input, Output Row Resolvers
 name|RowResolver
 name|groupByInputRowResolver
 init|=
@@ -12350,7 +12350,7 @@ condition|(
 name|hasGrpByAstExprs
 condition|)
 block|{
-comment|// 3. Construct GB Keys (ExprNode)
+comment|// 4. Construct GB Keys (ExprNode)
 for|for
 control|(
 name|int
@@ -12449,7 +12449,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// 4. GroupingSets, Cube, Rollup
+comment|// 5. GroupingSets, Cube, Rollup
 name|int
 name|groupingColsSize
 init|=
@@ -12604,7 +12604,7 @@ operator|++
 expr_stmt|;
 block|}
 block|}
-comment|// 5. Construct aggregation function Info
+comment|// 6. Construct aggregation function Info
 name|ArrayList
 argument_list|<
 name|AggInfo
@@ -12641,7 +12641,7 @@ name|values
 argument_list|()
 control|)
 block|{
-comment|// 5.1 Determine type of UDAF
+comment|// 6.1 Determine type of UDAF
 comment|// This is the GenericUDAF name
 name|String
 name|aggName
@@ -12685,7 +12685,7 @@ name|HiveParser
 operator|.
 name|TOK_FUNCTIONSTAR
 decl_stmt|;
-comment|// 5.2 Convert UDAF Params to ExprNodeDesc
+comment|// 6.2 Convert UDAF Params to ExprNodeDesc
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -12872,7 +12872,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// 6. If GroupingSets, Cube, Rollup were used, we account grouping__id
+comment|// 7. If GroupingSets, Cube, Rollup were used, we account grouping__id
 if|if
 condition|(
 name|groupingSets
@@ -12935,7 +12935,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 7. We create the group_by operator
+comment|// 8. We create the group_by operator
 name|gbRel
 operator|=
 name|genGBRelNode
