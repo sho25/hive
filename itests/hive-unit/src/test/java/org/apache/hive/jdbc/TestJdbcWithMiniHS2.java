@@ -1516,7 +1516,7 @@ name|hiveConf
 init|=
 literal|"hive.cli.print.header=true;hive.server2.async.exec.shutdown.timeout=20;"
 operator|+
-literal|"hive.server2.async.exec.threads=30;hive.server2.thrift.http.max.worker.threads=15"
+literal|"hive.server2.async.exec.threads=30;hive.server2.thrift.max.worker.threads=15"
 decl_stmt|;
 comment|// Set some conf vars
 name|String
@@ -1595,7 +1595,7 @@ name|verifyConfProperty
 argument_list|(
 name|stmt
 argument_list|,
-literal|"hive.server2.thrift.http.max.worker.threads"
+literal|"hive.server2.thrift.max.worker.threads"
 argument_list|,
 literal|"15"
 argument_list|)
