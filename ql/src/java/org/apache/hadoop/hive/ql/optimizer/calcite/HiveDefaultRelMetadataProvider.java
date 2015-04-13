@@ -530,6 +530,10 @@ name|ImmutableList
 operator|.
 name|of
 argument_list|(
+name|HiveRelMdDistinctRowCount
+operator|.
+name|SOURCE
+argument_list|,
 operator|new
 name|HiveRelMdCost
 argument_list|(
@@ -538,10 +542,6 @@ argument_list|)
 operator|.
 name|getMetadataProvider
 argument_list|()
-argument_list|,
-name|HiveRelMdDistinctRowCount
-operator|.
-name|SOURCE
 argument_list|,
 name|HiveRelMdSelectivity
 operator|.
