@@ -29,27 +29,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
 import|;
 end_import
 
@@ -357,21 +337,6 @@ operator|.
 name|getNeededColIndxsFrmReloptHT
 argument_list|()
 decl_stmt|;
-name|Set
-argument_list|<
-name|Integer
-argument_list|>
-name|needColsSet
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|Integer
-argument_list|>
-argument_list|(
-name|neededcolsLst
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|ColStatistics
@@ -391,6 +356,8 @@ operator|.
 name|getColStat
 argument_list|(
 name|neededcolsLst
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Obtain list of col stats, or use default if they are not available
@@ -441,7 +408,7 @@ control|)
 block|{
 if|if
 condition|(
-name|needColsSet
+name|neededcolsLst
 operator|.
 name|contains
 argument_list|(
@@ -474,7 +441,7 @@ name|field
 init|=
 name|scan
 operator|.
-name|getPrunedRowType
+name|getRowType
 argument_list|()
 operator|.
 name|getFieldList
