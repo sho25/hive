@@ -208,6 +208,13 @@ operator|.
 name|buffer
 argument_list|)
 expr_stmt|;
+name|SmallTableCache
+operator|.
+name|initialize
+argument_list|(
+name|jobConf
+argument_list|)
+expr_stmt|;
 name|setupMRLegacyConfigs
 argument_list|()
 expr_stmt|;
