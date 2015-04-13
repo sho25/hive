@@ -779,6 +779,17 @@ operator|.
 name|getPartCols
 argument_list|()
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|bucketingCols
+init|=
+name|mTable
+operator|.
+name|getBucketCols
+argument_list|()
+decl_stmt|;
 name|rewrittenQueryStr
 operator|.
 name|append
@@ -1169,6 +1180,33 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+comment|//updating bucket column should move row from one file to another - not supported
+if|if
+condition|(
+name|bucketingCols
+operator|!=
+literal|null
+operator|&&
+name|bucketingCols
+operator|.
+name|contains
+argument_list|(
+name|columnName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|UPDATE_CANNOT_UPDATE_BUCKET_VALUE
+argument_list|,
+name|columnName
+argument_list|)
+throw|;
 block|}
 comment|// This means that in UPDATE T SET x = _something_
 comment|// _something_ can be whatever is supported in SELECT _something_
