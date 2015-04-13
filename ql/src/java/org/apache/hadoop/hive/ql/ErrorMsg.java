@@ -2056,6 +2056,34 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+argument_list|(
+literal|20006
+argument_list|,
+literal|"Operation {0} is not allowed when autoCommit=true."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|//todo: better SQLState?
+name|OP_NOT_ALLOWED_IN_TXN
+argument_list|(
+literal|20007
+argument_list|,
+literal|"Operation {0} is not allowed in a transaction.  TransactionID={1}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|OP_NOT_ALLOWED_WITHOUT_TXN
+argument_list|(
+literal|2008
+argument_list|,
+literal|"Operation {0} is not allowed since autoCommit=false and there is no active transaction"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 30000 range starts here ========================//
 name|STATSPUBLISHER_NOT_OBTAINED
 argument_list|(
@@ -2355,7 +2383,7 @@ name|mesg
 operator|.
 name|replaceAll
 argument_list|(
-literal|"\\{.*\\}"
+literal|"\\{[0-9]+\\}"
 argument_list|,
 literal|".*"
 argument_list|)
