@@ -147,7 +147,7 @@ name|calcite
 operator|.
 name|cost
 operator|.
-name|HiveRelMdCost
+name|HiveOnTezCostModel
 import|;
 end_import
 
@@ -169,7 +169,7 @@ name|calcite
 operator|.
 name|cost
 operator|.
-name|HiveOnTezCostModel
+name|HiveRelMdCost
 import|;
 end_import
 
@@ -457,44 +457,20 @@ name|EXTENDED_COST_MODEL
 argument_list|)
 condition|)
 block|{
-specifier|final
-name|Double
-name|maxMemory
-init|=
-operator|(
-name|double
-operator|)
-name|HiveConf
-operator|.
-name|getLongVar
-argument_list|(
-name|this
-operator|.
-name|hiveConf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVECONVERTJOINNOCONDITIONALTASKTHRESHOLD
-argument_list|)
-decl_stmt|;
 name|cm
 operator|=
-operator|new
 name|HiveOnTezCostModel
-argument_list|(
-name|maxMemory
-argument_list|)
+operator|.
+name|INSTANCE
 expr_stmt|;
 block|}
 else|else
 block|{
 name|cm
 operator|=
-operator|new
 name|HiveDefaultCostModel
-argument_list|()
+operator|.
+name|INSTANCE
 expr_stmt|;
 block|}
 comment|// Get max split size for HiveRelMdParallelism
