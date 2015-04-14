@@ -382,14 +382,6 @@ operator|)
 name|getTypeInfo
 argument_list|()
 decl_stmt|;
-name|PrimitiveCategory
-name|pc
-init|=
-name|pti
-operator|.
-name|getPrimitiveCategory
-argument_list|()
-decl_stmt|;
 comment|// Convert from Java to Writable
 name|Object
 name|writableValue
