@@ -159,9 +159,33 @@ name|java
 operator|.
 name|util
 operator|.
+name|TreeSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|regex
 operator|.
 name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|ArrayUtils
 import|;
 end_import
 
@@ -1930,6 +1954,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+name|String
+name|contextName
+decl_stmt|;
+specifier|private
+name|int
+name|level
+decl_stmt|;
 name|VectorExpressionDescriptor
 name|vMap
 decl_stmt|;
@@ -1967,6 +1999,9 @@ comment|// a list of columns names and maps them to 0..n-1 indices.
 specifier|public
 name|VectorizationContext
 parameter_list|(
+name|String
+name|contextName
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -1974,6 +2009,36 @@ argument_list|>
 name|initialColumnNames
 parameter_list|)
 block|{
+name|this
+operator|.
+name|contextName
+operator|=
+name|contextName
+expr_stmt|;
+name|level
+operator|=
+literal|0
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"VectorizationContext consructor contextName "
+operator|+
+name|contextName
+operator|+
+literal|" level "
+operator|+
+name|level
+operator|+
+literal|" initialColumnNames "
+operator|+
+name|initialColumnNames
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|projectionColumnNames
@@ -2077,8 +2142,34 @@ comment|// Constructor to with the individual addInitialColumn method
 comment|// followed by a call to finishedAddingInitialColumns.
 specifier|public
 name|VectorizationContext
-parameter_list|()
+parameter_list|(
+name|String
+name|contextName
+parameter_list|)
 block|{
+name|this
+operator|.
+name|contextName
+operator|=
+name|contextName
+expr_stmt|;
+name|level
+operator|=
+literal|0
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"VectorizationContext consructor contextName "
+operator|+
+name|contextName
+operator|+
+literal|" level "
+operator|+
+name|level
+argument_list|)
+expr_stmt|;
 name|projectedColumns
 operator|=
 operator|new
@@ -2137,10 +2228,40 @@ comment|// Keeps existing output column map, etc.
 specifier|public
 name|VectorizationContext
 parameter_list|(
+name|String
+name|contextName
+parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|)
 block|{
+name|this
+operator|.
+name|contextName
+operator|=
+name|contextName
+expr_stmt|;
+name|level
+operator|=
+name|vContext
+operator|.
+name|level
+operator|+
+literal|1
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"VectorizationContext consructor reference contextName "
+operator|+
+name|contextName
+operator|+
+literal|" level "
+operator|+
+name|level
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|projectedColumns
@@ -2456,17 +2577,6 @@ specifier|private
 name|OutputColumnManager
 name|ocm
 decl_stmt|;
-comment|// File key is used by operators to retrieve the scratch vectors
-comment|// from mapWork at runtime. The operators that modify the structure of
-comment|// a vector row batch, need to allocate scratch vectors as well. Every
-comment|// operator that creates a new Vectorization context should set a unique
-comment|// fileKey.
-specifier|private
-name|String
-name|fileKey
-init|=
-literal|null
-decl_stmt|;
 comment|// Set of UDF classes for type casting data types in row-mode.
 specifier|private
 specifier|static
@@ -2654,30 +2764,6 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
-name|String
-name|getFileKey
-parameter_list|()
-block|{
-return|return
-name|fileKey
-return|;
-block|}
-specifier|public
-name|void
-name|setFileKey
-parameter_list|(
-name|String
-name|fileKey
-parameter_list|)
-block|{
-name|this
-operator|.
-name|fileKey
-operator|=
-name|fileKey
-expr_stmt|;
-block|}
 specifier|protected
 name|int
 name|getInputColumnIndex
@@ -2859,6 +2945,7 @@ argument_list|(
 name|normalizedTypeName
 argument_list|)
 decl_stmt|;
+comment|// LOG.info("allocateOutputColumn for hiveTypeName " + hiveTypeName + " column " + (initialOutputCol + relativeCol));
 return|return
 name|initialOutputCol
 operator|+
@@ -3043,6 +3130,88 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|public
+name|int
+index|[]
+name|currentScratchColumns
+parameter_list|()
+block|{
+name|TreeSet
+argument_list|<
+name|Integer
+argument_list|>
+name|treeSet
+init|=
+operator|new
+name|TreeSet
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|Integer
+name|col
+range|:
+name|usedOutputColumns
+control|)
+block|{
+name|treeSet
+operator|.
+name|add
+argument_list|(
+name|initialOutputCol
+operator|+
+name|col
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|ArrayUtils
+operator|.
+name|toPrimitive
+argument_list|(
+name|treeSet
+operator|.
+name|toArray
+argument_list|(
+operator|new
+name|Integer
+index|[
+literal|0
+index|]
+argument_list|)
+argument_list|)
+return|;
+block|}
+block|}
+specifier|public
+name|int
+name|allocateScratchColumn
+parameter_list|(
+name|String
+name|hiveTypeName
+parameter_list|)
+block|{
+return|return
+name|ocm
+operator|.
+name|allocateOutputColumn
+argument_list|(
+name|hiveTypeName
+argument_list|)
+return|;
+block|}
+specifier|public
+name|int
+index|[]
+name|currentScratchColumns
+parameter_list|()
+block|{
+return|return
+name|ocm
+operator|.
+name|currentScratchColumns
+argument_list|()
+return|;
 block|}
 specifier|private
 name|VectorExpression
@@ -14104,6 +14273,15 @@ argument_list|)
 throw|;
 block|}
 specifier|public
+name|int
+name|firstOutputColumnIndex
+parameter_list|()
+block|{
+return|return
+name|firstOutputColumnIndex
+return|;
+block|}
+specifier|public
 name|Map
 argument_list|<
 name|Integer
@@ -14193,17 +14371,20 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Context key "
+literal|"Context name "
 argument_list|)
 operator|.
 name|append
 argument_list|(
-name|getFileKey
-argument_list|()
+name|contextName
 argument_list|)
 operator|.
 name|append
 argument_list|(
+literal|", level "
+operator|+
+name|level
+operator|+
 literal|", "
 argument_list|)
 expr_stmt|;
@@ -14301,7 +14482,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"sortedProjectionColumnMap "
+literal|"sorted projectionColumnMap "
 argument_list|)
 operator|.
 name|append
@@ -14345,7 +14526,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"sortedScratchColumnTypeMap "
+literal|"sorted scratchColumnTypeMap "
 argument_list|)
 operator|.
 name|append

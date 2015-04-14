@@ -752,9 +752,19 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Extra bytes detected at the end of the row! Ignoring similar "
+literal|"Extra bytes detected at the end of the row! "
 operator|+
-literal|"problems."
+literal|"Last field end "
+operator|+
+name|lastFieldByteEnd
+operator|+
+literal|" and serialize buffer end "
+operator|+
+name|structByteEnd
+operator|+
+literal|". "
+operator|+
+literal|"Ignoring similar problems."
 argument_list|)
 expr_stmt|;
 block|}
@@ -789,7 +799,19 @@ literal|"only got "
 operator|+
 name|fieldId
 operator|+
-literal|"! Ignoring similar problems."
+literal|"! "
+operator|+
+literal|"Last field end "
+operator|+
+name|lastFieldByteEnd
+operator|+
+literal|" and serialize buffer end "
+operator|+
+name|structByteEnd
+operator|+
+literal|". "
+operator|+
+literal|"Ignoring similar problems."
 argument_list|)
 expr_stmt|;
 block|}

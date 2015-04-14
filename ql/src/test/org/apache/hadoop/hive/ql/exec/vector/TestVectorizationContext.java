@@ -3404,7 +3404,9 @@ name|vc
 init|=
 operator|new
 name|VectorizationContext
-argument_list|()
+argument_list|(
+literal|"name"
+argument_list|)
 decl_stmt|;
 name|vc
 operator|.
@@ -3783,6 +3785,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -3951,6 +3955,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -4071,6 +4077,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -4190,6 +4198,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -4302,6 +4312,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -4411,6 +4423,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -4522,6 +4536,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -4664,6 +4680,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -5004,6 +5022,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -5423,6 +5443,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -5665,6 +5687,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -6037,6 +6061,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -6327,6 +6353,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -6673,6 +6701,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -6914,6 +6944,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7083,6 +7115,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7213,6 +7247,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7343,6 +7379,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7492,6 +7530,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7646,6 +7686,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7800,6 +7842,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -7934,6 +7978,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -8008,6 +8054,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -8316,6 +8364,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -9002,6 +9052,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -9268,6 +9320,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -9463,6 +9517,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -9657,6 +9713,8 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 expr_stmt|;
@@ -10257,6 +10315,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;
@@ -10681,6 +10741,8 @@ init|=
 operator|new
 name|VectorizationContext
 argument_list|(
+literal|"name"
+argument_list|,
 name|columns
 argument_list|)
 decl_stmt|;

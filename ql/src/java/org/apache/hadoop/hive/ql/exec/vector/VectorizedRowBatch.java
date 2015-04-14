@@ -766,7 +766,7 @@ operator|=
 name|valueWriters
 expr_stmt|;
 block|}
-comment|/**    * Resets the row batch to default state    *  - sets selectedInUse to false    *  - sets size to 0    *  - sets endOfFile to false    *  - resets each column    */
+comment|/**    * Resets the row batch to default state    *  - sets selectedInUse to false    *  - sets size to 0    *  - sets endOfFile to false    *  - resets each column    *  - inits each column    */
 specifier|public
 name|void
 name|reset
@@ -802,6 +802,11 @@ block|{
 name|vc
 operator|.
 name|reset
+argument_list|()
+expr_stmt|;
+name|vc
+operator|.
+name|init
 argument_list|()
 expr_stmt|;
 block|}

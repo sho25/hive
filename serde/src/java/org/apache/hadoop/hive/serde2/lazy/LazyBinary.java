@@ -310,7 +310,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// todo this should be configured in serde
-specifier|private
+specifier|public
+specifier|static
 name|byte
 index|[]
 name|decodeIfNeeded

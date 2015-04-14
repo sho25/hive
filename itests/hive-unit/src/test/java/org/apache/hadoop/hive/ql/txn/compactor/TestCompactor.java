@@ -3332,7 +3332,7 @@ literal|"update "
 operator|+
 name|tblName
 operator|+
-literal|" set a = 3"
+literal|" set b = 'fred' where a = 1"
 argument_list|,
 name|driver
 argument_list|)

@@ -17,6 +17,30 @@ name|cli
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|log4j
+operator|.
+name|Layout
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|log4j
+operator|.
+name|PatternLayout
+import|;
+end_import
+
 begin_comment
 comment|/**  * CLIServiceUtils.  *  */
 end_comment
@@ -33,6 +57,30 @@ name|char
 name|SEARCH_STRING_ESCAPE
 init|=
 literal|'\\'
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Layout
+name|verboseLayout
+init|=
+operator|new
+name|PatternLayout
+argument_list|(
+literal|"%d{yy/MM/dd HH:mm:ss} %p %c{2}: %m%n"
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Layout
+name|nonVerboseLayout
+init|=
+operator|new
+name|PatternLayout
+argument_list|(
+literal|"%-5p : %m%n"
+argument_list|)
 decl_stmt|;
 comment|/**    * Convert a SQL search pattern into an equivalent Java Regex.    *    * @param pattern input which may contain '%' or '_' wildcard characters, or    * these characters escaped using {@link #getSearchStringEscape()}.    * @return replace %/_ with regex search characters, also handle escaped    * characters.    */
 specifier|public

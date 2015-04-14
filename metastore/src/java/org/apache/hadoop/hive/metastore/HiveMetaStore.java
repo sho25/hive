@@ -31679,7 +31679,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_database"
+literal|"get_function"
 argument_list|,
 name|func
 operator|!=
