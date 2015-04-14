@@ -473,6 +473,36 @@ literal|'l'
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"chaosmonkey"
+argument_list|)
+operator|.
+name|withLongOpt
+argument_list|(
+literal|"chaosmonkey"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"chaosmonkey interval"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'m'
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// [-H|--help]
 name|options
 operator|.
@@ -580,7 +610,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-comment|// loglevel& args are parsed by the python processor
+comment|// loglevel, chaosmonkey& args are parsed by the python processor
 return|return
 operator|new
 name|LlapOptions

@@ -260,6 +260,25 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|LLAP_DAEMON_SERVICE_REFRESH_INTERVAL
+init|=
+name|LLAP_DAEMON_PREFIX
+operator|+
+literal|"service.refresh.interval"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|LLAP_DAEMON_SERVICE_REFRESH_INTERVAL_DEFAULT
+init|=
+literal|60
+decl_stmt|;
+comment|// seconds
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS
 init|=
 name|LLAP_DAEMON_PREFIX
