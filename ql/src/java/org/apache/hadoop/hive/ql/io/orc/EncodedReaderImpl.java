@@ -2600,6 +2600,10 @@ operator|.
 name|stripeLevelStream
 argument_list|,
 name|unlockUntilCOffset
+argument_list|,
+name|sctx
+operator|.
+name|offset
 argument_list|)
 decl_stmt|;
 if|if
@@ -2847,6 +2851,10 @@ argument_list|,
 name|cb
 argument_list|,
 name|unlockUntilCOffset
+argument_list|,
+name|sctx
+operator|.
+name|offset
 argument_list|)
 decl_stmt|;
 if|if
