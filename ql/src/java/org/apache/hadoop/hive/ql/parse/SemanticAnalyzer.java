@@ -1553,6 +1553,28 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|calcite
+operator|.
+name|CalciteSemanticException
+operator|.
+name|UnsupportedFeature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|unionproc
 operator|.
 name|UnionProcContext
@@ -11404,8 +11426,9 @@ argument_list|(
 name|tab
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
+name|boolean
+name|isTableWrittenTo
+init|=
 name|qb
 operator|.
 name|getParseInfo
@@ -11423,6 +11446,10 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|isTableWrittenTo
 operator|&&
 name|tab
 operator|.
@@ -11465,8 +11492,12 @@ operator|)
 operator|&&
 operator|!
 name|isAcid
+operator|&&
+name|isTableWrittenTo
 condition|)
 block|{
+comment|//isTableWrittenTo: delete from acidTbl where a in (select id from nonAcidTable)
+comment|//so only assert this if we are actually writing to this table
 comment|// isAcidTable above also checks for whether we are using an acid compliant
 comment|// transaction manager.  But that has already been caught in
 comment|// UpdateDeleteSemanticAnalyzer, so if we are updating or deleting and getting nonAcid
@@ -19445,6 +19476,10 @@ operator|+
 name|oColInfo
 operator|+
 literal|" due to duplication, see previous warnings"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -66245,6 +66280,11 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|boolean
+name|isByPos
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|HiveConf
@@ -66260,10 +66300,13 @@ operator|.
 name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS
 argument_list|)
 operator|==
-literal|false
+literal|true
 condition|)
 block|{
-return|return;
+name|isByPos
+operator|=
+literal|true
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -66457,6 +66500,11 @@ operator|.
 name|Number
 condition|)
 block|{
+if|if
+condition|(
+name|isByPos
+condition|)
+block|{
 name|int
 name|pos
 init|=
@@ -66527,6 +66575,22 @@ name|selectExpCnt
 argument_list|)
 argument_list|)
 throw|;
+block|}
+block|}
+else|else
+block|{
+name|warn
+argument_list|(
+literal|"Using constant number  "
+operator|+
+name|node
+operator|.
+name|getText
+argument_list|()
+operator|+
+literal|" in group by. If you try to use position alias when hive.groupby.orderby.position.alias is false, the position alias will be ignored."
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -66661,6 +66725,11 @@ condition|)
 block|{
 if|if
 condition|(
+name|isByPos
+condition|)
+block|{
+if|if
+condition|(
 operator|!
 name|isAllCol
 condition|)
@@ -66751,6 +66820,23 @@ name|getMsg
 argument_list|()
 argument_list|)
 throw|;
+block|}
+block|}
+else|else
+block|{
+comment|//if not using position alias and it is a number.
+name|warn
+argument_list|(
+literal|"Using constant number "
+operator|+
+name|node
+operator|.
+name|getText
+argument_list|()
+operator|+
+literal|" in order by. If you try to use position alias when hive.groupby.orderby.position.alias is false, the position alias will be ignored."
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -71838,6 +71924,32 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|void
+name|warn
+parameter_list|(
+name|String
+name|msg
+parameter_list|)
+block|{
+name|SessionState
+operator|.
+name|getConsole
+argument_list|()
+operator|.
+name|printInfo
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Warning: %s"
+argument_list|,
+name|msg
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

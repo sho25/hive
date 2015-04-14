@@ -2664,7 +2664,7 @@ block|{
 name|double
 name|_elem96
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem96
 operator|=
 name|iprot
@@ -3206,7 +3206,7 @@ block|{
 name|double
 name|_elem101
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem101
 operator|=
 name|iprot

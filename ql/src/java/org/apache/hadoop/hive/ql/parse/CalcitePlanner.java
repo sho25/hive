@@ -731,6 +731,22 @@ name|rel
 operator|.
 name|rules
 operator|.
+name|ProjectMergeRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|rules
+operator|.
 name|ProjectRemoveRule
 import|;
 end_import
@@ -1530,6 +1546,28 @@ operator|.
 name|calcite
 operator|.
 name|TraitsUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|CalciteSemanticException
+operator|.
+name|UnsupportedFeature
 import|;
 end_import
 
@@ -2860,6 +2898,15 @@ argument_list|(
 literal|"CBO Succeeded; optimized logical plan."
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan optimized by CBO."
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -2899,6 +2946,15 @@ argument_list|(
 literal|"CBO failed due to missing column stats (see previous errors), skipping CBO"
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO due to missing statistics. Please check log for more details."
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -2911,6 +2967,75 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|CalciteSemanticException
+condition|)
+block|{
+name|CalciteSemanticException
+name|calciteSemanticException
+init|=
+operator|(
+name|CalciteSemanticException
+operator|)
+name|e
+decl_stmt|;
+name|UnsupportedFeature
+name|unsupportedFeature
+init|=
+name|calciteSemanticException
+operator|.
+name|getUnsupportedFeature
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|unsupportedFeature
+operator|!=
+literal|null
+condition|)
+block|{
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO due to missing feature ["
+operator|+
+name|unsupportedFeature
+operator|+
+literal|"]."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO."
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO."
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -3024,6 +3149,15 @@ block|}
 block|}
 else|else
 block|{
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO."
+argument_list|)
+expr_stmt|;
 name|skipCalcitePlan
 operator|=
 literal|true
@@ -5070,6 +5204,21 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+operator|new
+name|ProjectMergeRule
+argument_list|(
+literal|false
+argument_list|,
+name|HiveProject
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|hepPgm
 operator|=
 name|hepPgmBldr
@@ -5390,8 +5539,6 @@ operator|.
 name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|,
-comment|// TODO: Enable it after CALCITE-407 is fixed
-comment|// RemoveTrivialProjectRule.INSTANCE,
 operator|new
 name|HivePartitionPruneRule
 argument_list|(
@@ -7123,6 +7270,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Unique_join
 argument_list|)
 throw|;
 block|}
@@ -7668,6 +7819,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Table_sample_clauses
 argument_list|)
 throw|;
 block|}
@@ -8258,6 +8413,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Filter expression with non-boolean return type."
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Filter_expression_with_non_boolean_return_type
 argument_list|)
 throw|;
 block|}
@@ -11325,6 +11484,10 @@ name|grpbyExpr
 operator|.
 name|dump
 argument_list|()
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Invalid_column_reference
 argument_list|)
 throw|;
 name|addToGBExpr
@@ -12473,6 +12636,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -12578,6 +12745,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -12602,6 +12773,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -12631,6 +12806,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -12883,6 +13062,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Duplicates detected when adding columns to RR: see previous message"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -14758,6 +14941,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Hint
 argument_list|)
 throw|;
 block|}
@@ -14815,6 +15002,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Select_transform
 argument_list|)
 throw|;
 block|}
@@ -14928,6 +15119,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|UDTF
 argument_list|)
 throw|;
 block|}
@@ -15435,6 +15630,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Distinct without an aggreggation."
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Distinct_without_an_aggreggation
 argument_list|)
 throw|;
 block|}
@@ -15590,6 +15789,10 @@ operator|+
 name|colInfo
 operator|+
 literal|" due to duplication, see previous warnings"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Duplicates_in_RR
 argument_list|)
 throw|;
 block|}
@@ -15982,6 +16185,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Subquery
 argument_list|)
 throw|;
 block|}
@@ -16078,6 +16285,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Unsupported"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Others
 argument_list|)
 throw|;
 block|}
@@ -16690,6 +16901,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 literal|"Having clause without any group-by."
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Having_clause_without_any_groupby
 argument_list|)
 throw|;
 block|}
@@ -17049,6 +17264,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Select_alias_in_having_clause
 argument_list|)
 throw|;
 block|}
@@ -17304,6 +17523,10 @@ operator|new
 name|CalciteSemanticException
 argument_list|(
 name|msg
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Multi_insert
 argument_list|)
 throw|;
 block|}

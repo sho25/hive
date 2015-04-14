@@ -1004,14 +1004,17 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|"The target server failed to respond"
-argument_list|,
 name|cause
 operator|.
 name|getMessage
 argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"failed to respond"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

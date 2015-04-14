@@ -660,7 +660,7 @@ expr_stmt|;
 name|String
 name|msg
 init|=
-literal|"Started "
+literal|"Starting "
 operator|+
 name|ThriftBinaryCLIService
 operator|.
@@ -689,6 +689,11 @@ name|info
 argument_list|(
 name|msg
 argument_list|)
+expr_stmt|;
+name|server
+operator|.
+name|serve
+argument_list|()
 expr_stmt|;
 block|}
 catch|catch

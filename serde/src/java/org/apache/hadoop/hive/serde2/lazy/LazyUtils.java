@@ -972,7 +972,7 @@ name|write
 argument_list|(
 name|bytes
 argument_list|,
-literal|0
+name|start
 argument_list|,
 name|len
 argument_list|)

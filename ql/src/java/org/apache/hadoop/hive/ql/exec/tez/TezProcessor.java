@@ -749,6 +749,9 @@ operator|new
 name|MapRecordProcessor
 argument_list|(
 name|jobConf
+argument_list|,
+name|getContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -758,7 +761,12 @@ name|rproc
 operator|=
 operator|new
 name|ReduceRecordProcessor
+argument_list|(
+name|jobConf
+argument_list|,
+name|getContext
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 name|initializeAndRunProcessor
@@ -813,11 +821,6 @@ name|rproc
 operator|.
 name|init
 argument_list|(
-name|jobConf
-argument_list|,
-name|getContext
-argument_list|()
-argument_list|,
 name|mrReporter
 argument_list|,
 name|inputs

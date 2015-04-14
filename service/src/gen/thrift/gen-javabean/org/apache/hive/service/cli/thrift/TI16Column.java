@@ -2664,7 +2664,7 @@ block|{
 name|short
 name|_elem72
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem72
 operator|=
 name|iprot
@@ -3206,7 +3206,7 @@ block|{
 name|short
 name|_elem77
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem77
 operator|=
 name|iprot

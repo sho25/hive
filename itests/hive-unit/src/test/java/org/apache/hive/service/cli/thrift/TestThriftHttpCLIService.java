@@ -652,6 +652,10 @@ argument_list|(
 name|USERNAME
 argument_list|,
 name|PASSWORD
+argument_list|,
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;

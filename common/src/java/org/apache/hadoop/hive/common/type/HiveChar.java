@@ -162,7 +162,7 @@ literal|" "
 argument_list|)
 return|;
 block|}
-specifier|protected
+specifier|public
 name|String
 name|getPaddedValue
 parameter_list|()

@@ -2111,8 +2111,8 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|Path
-name|path
+name|FileStatus
+name|fileStatus
 init|=
 name|FileUtils
 operator|.
@@ -2121,16 +2121,6 @@ argument_list|(
 name|fs
 argument_list|,
 name|filePath
-argument_list|)
-decl_stmt|;
-name|FileStatus
-name|fileStatus
-init|=
-name|fs
-operator|.
-name|getFileStatus
-argument_list|(
-name|path
 argument_list|)
 decl_stmt|;
 if|if

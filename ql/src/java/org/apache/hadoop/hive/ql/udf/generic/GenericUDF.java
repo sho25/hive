@@ -2634,6 +2634,18 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
+comment|// if string can not be parsed converter will return null
+if|if
+condition|(
+name|writableValue
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|Timestamp
 name|ts
 init|=

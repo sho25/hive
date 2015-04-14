@@ -486,6 +486,8 @@ decl_stmt|;
 comment|// Some of these tests require intercepting System.exit() using the SecurityManager.
 comment|// It is safer to  register/unregister our SecurityManager during setup/teardown instead
 comment|// of doing it within the individual test cases.
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setUp
@@ -510,6 +512,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|tearDown
@@ -1977,14 +1981,6 @@ name|String
 argument_list|>
 name|env
 init|=
-operator|(
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-operator|)
 name|System
 operator|.
 name|getenv
@@ -2258,22 +2254,18 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-name|ConsoleReader
-name|getConsoleReader
+name|void
+name|setupConsoleReader
 parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|ConsoleReader
-name|reslt
-init|=
+name|reader
+operator|=
 operator|new
 name|FakeConsoleReader
 argument_list|()
-decl_stmt|;
-return|return
-name|reslt
-return|;
+expr_stmt|;
 block|}
 block|}
 specifier|private

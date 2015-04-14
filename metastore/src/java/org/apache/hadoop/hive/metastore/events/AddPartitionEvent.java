@@ -278,19 +278,7 @@ return|return
 name|table
 return|;
 block|}
-comment|/**    * @return List of partitions.    */
-specifier|public
-name|List
-argument_list|<
-name|Partition
-argument_list|>
-name|getPartitions
-parameter_list|()
-block|{
-return|return
-name|partitions
-return|;
-block|}
+comment|// Note : List<Partition> getPartitions() removed with HIVE-9609 because it will result in OOM errors with large add_partitions.
 comment|/**    * @return Iterator for partitions.    */
 specifier|public
 name|Iterator
@@ -299,6 +287,22 @@ name|Partition
 argument_list|>
 name|getPartitionIterator
 parameter_list|()
+block|{
+if|if
+condition|(
+name|partitions
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|partitions
+operator|.
+name|iterator
+argument_list|()
+return|;
+block|}
+else|else
 block|{
 return|return
 name|partitionSpecProxy
@@ -312,6 +316,7 @@ operator|.
 name|getPartitionIterator
 argument_list|()
 return|;
+block|}
 block|}
 block|}
 end_class

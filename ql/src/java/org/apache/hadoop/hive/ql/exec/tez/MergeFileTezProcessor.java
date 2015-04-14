@@ -158,7 +158,12 @@ name|rproc
 operator|=
 operator|new
 name|MergeFileRecordProcessor
+argument_list|(
+name|jobConf
+argument_list|,
+name|getContext
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|initializeAndRunProcessor
 argument_list|(

@@ -159,6 +159,26 @@ name|Operator
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * MapredLocalWork.  *  */
 end_comment
@@ -170,6 +190,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Map Reduce Local Work"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class
@@ -440,6 +476,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Alias -> Map Local Operator Tree"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -517,6 +569,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Alias -> Map Local Tables"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|LinkedHashMap
@@ -626,9 +694,13 @@ name|displayName
 operator|=
 literal|"Bucket Mapjoin Context"
 argument_list|,
-name|normalExplain
+name|explainLevels
 operator|=
-literal|false
+block|{
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|BucketMapJoinContext

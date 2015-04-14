@@ -3014,6 +3014,36 @@ name|HiveException
 throws|,
 name|SerDeException
 block|{
+comment|// Merge the sidefile into the newly created hash table
+comment|// This is where the spilling may happen again
+name|KeyValueContainer
+name|kvContainer
+init|=
+name|partition
+operator|.
+name|getSidefileKVContainer
+argument_list|()
+decl_stmt|;
+name|int
+name|rowCount
+init|=
+name|kvContainer
+operator|.
+name|size
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Hybrid Grace Hash Join: Number of rows restored from KeyValueContainer: "
+operator|+
+name|kvContainer
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Deserialize the on-disk hash table
 comment|// We're sure this part is smaller than memory limit
 name|BytesBytesMultiHashMap
@@ -3022,16 +3052,17 @@ init|=
 name|partition
 operator|.
 name|getHashMapFromDisk
-argument_list|()
-decl_stmt|;
-name|int
+argument_list|(
 name|rowCount
-init|=
+argument_list|)
+decl_stmt|;
+name|rowCount
+operator|+=
 name|restoredHashMap
 operator|.
 name|getNumValues
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|LOG
 operator|.
 name|info
@@ -3043,38 +3074,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Hybrid Grace Hash Join: Number of rows restored from hashmap: "
+literal|"Hybrid Grace Hash Join: Number of rows in hashmap: "
 operator|+
 name|rowCount
-argument_list|)
-expr_stmt|;
-comment|// Merge the sidefile into the newly created hash table
-comment|// This is where the spilling may happen again
-name|KeyValueContainer
-name|kvContainer
-init|=
-name|partition
-operator|.
-name|getSidefileKVContainer
-argument_list|()
-decl_stmt|;
-name|rowCount
-operator|+=
-name|kvContainer
-operator|.
-name|size
-argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Hybrid Grace Hash Join: Number of rows restored from KeyValueContainer: "
-operator|+
-name|kvContainer
-operator|.
-name|size
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// If based on the new key count, keyCount is smaller than a threshold,
@@ -3097,15 +3099,13 @@ operator|/
 literal|2
 condition|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
+name|LOG
+operator|.
+name|info
 argument_list|(
-literal|"Hybrid Grace Hash Join: Hash table cannot be reloaded since it"
-operator|+
-literal|" will be greater than memory limit. Recursive spilling is currently not supported"
+literal|"Hybrid Grace Hash Join: Hash table reload can fail since it will be greater than memory limit. Recursive spilling is currently not supported"
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|KeyValueHelper
 name|writeHelper
