@@ -5862,7 +5862,7 @@ block|{
 name|ResourceUri
 name|_elem422
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem422
 operator|=
 operator|new
@@ -7024,7 +7024,7 @@ block|{
 name|ResourceUri
 name|_elem427
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem427
 operator|=
 operator|new

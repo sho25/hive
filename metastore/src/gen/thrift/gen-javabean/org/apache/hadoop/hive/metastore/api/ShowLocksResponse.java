@@ -2061,7 +2061,7 @@ block|{
 name|ShowLocksResponseElement
 name|_elem462
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem462
 operator|=
 operator|new
@@ -2567,7 +2567,7 @@ block|{
 name|ShowLocksResponseElement
 name|_elem467
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem467
 operator|=
 operator|new
