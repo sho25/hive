@@ -106,7 +106,7 @@ specifier|public
 name|WritableHiveDecimalObjectInspector
 parameter_list|()
 block|{   }
-specifier|protected
+specifier|public
 name|WritableHiveDecimalObjectInspector
 parameter_list|(
 name|DecimalTypeInfo

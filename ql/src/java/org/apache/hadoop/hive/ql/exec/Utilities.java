@@ -4106,16 +4106,11 @@ specifier|public
 specifier|static
 name|Map
 argument_list|<
-name|String
-argument_list|,
-name|Map
-argument_list|<
 name|Integer
 argument_list|,
 name|String
 argument_list|>
-argument_list|>
-name|getMapWorkAllScratchColumnVectorTypeMaps
+name|getMapWorkVectorScratchColumnTypeMap
 parameter_list|(
 name|Configuration
 name|hiveConf
@@ -4132,7 +4127,7 @@ decl_stmt|;
 return|return
 name|mapWork
 operator|.
-name|getAllScratchColumnVectorTypeMaps
+name|getVectorScratchColumnTypeMap
 argument_list|()
 return|;
 block|}
