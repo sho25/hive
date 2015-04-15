@@ -355,24 +355,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|MapredWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|PartitionDesc
 import|;
 end_import
@@ -1014,16 +996,12 @@ name|scratchColumnTypeMap
 operator|=
 name|Utilities
 operator|.
-name|getMapWorkAllScratchColumnVectorTypeMaps
+name|getMapWorkVectorScratchColumnTypeMap
 argument_list|(
 name|hiveConf
 argument_list|)
-operator|.
-name|get
-argument_list|(
-name|partitionPath
-argument_list|)
 expr_stmt|;
+comment|// LOG.info("VectorizedRowBatchCtx init scratchColumnTypeMap " + scratchColumnTypeMap.toString());
 name|Properties
 name|partProps
 init|=
@@ -3365,9 +3343,16 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"No type found for column type entry "
+literal|"No type entry found for column "
 operator|+
 name|i
+operator|+
+literal|" in map "
+operator|+
+name|scratchColumnTypeMap
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -3402,6 +3387,7 @@ block|}
 block|}
 comment|/**    * Get the scale and precision for the given decimal type string. The decimal type is assumed to be    * of the format decimal(precision,scale) e.g. decimal(20,10).    * @param decimalType The given decimal type string.    * @return An integer array of size 2 with first element set to precision and second set to scale.    */
 specifier|private
+specifier|static
 name|int
 index|[]
 name|getScalePrecisionFromDecimalType
@@ -3480,7 +3466,8 @@ return|return
 name|precScale
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|ColumnVector
 name|allocateColumnVector
 parameter_list|(

@@ -90,6 +90,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * @return whether the row container has at least 1 row.    * NOTE: Originally we named this isEmpty, but that name conflicted with another interface.    */
+specifier|public
+name|boolean
+name|hasRows
+parameter_list|()
+throws|throws
+name|HiveException
+function_decl|;
+comment|/**    * @return whether the row container has 1 row.    */
+specifier|public
+name|boolean
+name|isSingleRow
+parameter_list|()
+throws|throws
+name|HiveException
+function_decl|;
 comment|/**    * @return number of elements in the RowContainer    */
 specifier|public
 name|int

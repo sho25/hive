@@ -2683,7 +2683,7 @@ block|{
 name|ByteBuffer
 name|_elem112
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem112
 operator|=
 name|iprot
@@ -3225,7 +3225,7 @@ block|{
 name|ByteBuffer
 name|_elem117
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem117
 operator|=
 name|iprot

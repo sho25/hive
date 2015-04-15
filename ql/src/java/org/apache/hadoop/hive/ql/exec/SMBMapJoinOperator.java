@@ -1950,10 +1950,8 @@ index|[
 name|pos
 index|]
 operator|.
-name|rowCount
+name|hasRows
 argument_list|()
-operator|>
-literal|0
 condition|)
 block|{
 name|dataInCache

@@ -49,6 +49,26 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
+import|;
+end_import
+
 begin_comment
 comment|/**  * ColumnStatsUpdateWork implementation. ColumnStatsUpdateWork will persist the  * colStats into metastore. Work corresponds to statement like ALTER TABLE  * src_stat UPDATE STATISTICS for column key SET  * ('numDVs'='1111','avgColLen'='1.111'); ALTER TABLE src_stat_part  * PARTITION(partitionId=100) UPDATE STATISTICS for column value SET  * ('maxColLen'='4444','avgColLen'='44.4');  */
 end_comment
@@ -60,6 +80,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"Column Stats Update Work"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 class|class

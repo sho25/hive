@@ -2557,7 +2557,7 @@ block|{
 name|PartitionWithoutSD
 name|_elem246
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem246
 operator|=
 operator|new
@@ -3199,7 +3199,7 @@ block|{
 name|PartitionWithoutSD
 name|_elem251
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem251
 operator|=
 operator|new

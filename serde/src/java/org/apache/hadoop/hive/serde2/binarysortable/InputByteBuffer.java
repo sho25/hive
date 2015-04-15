@@ -200,6 +200,20 @@ return|return
 name|end
 return|;
 block|}
+specifier|public
+specifier|final
+name|boolean
+name|isEof
+parameter_list|()
+block|{
+return|return
+operator|(
+name|start
+operator|>=
+name|end
+operator|)
+return|;
+block|}
 comment|/**    * Returns the underlying byte array.    */
 specifier|public
 specifier|final

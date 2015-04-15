@@ -701,7 +701,7 @@ literal|"create table "
 operator|+
 name|acidTableName
 operator|+
-literal|" (i int, j int) clustered by (i) into 2 buckets "
+literal|" (i int, j int, k int) clustered by (k) into 2 buckets "
 operator|+
 literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
@@ -1818,7 +1818,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|1
+literal|2
 argument_list|,
 name|tableObj
 operator|.

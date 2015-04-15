@@ -225,24 +225,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
-operator|.
-name|hive_metastoreConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|events
 operator|.
 name|AddPartitionEvent
@@ -458,16 +440,6 @@ operator|.
 name|messaging
 operator|.
 name|MessageFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
 import|;
 end_import
 
@@ -929,13 +901,6 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|event
-operator|!=
-literal|null
-condition|)
-block|{
 name|event
 operator|.
 name|setDbName
@@ -961,7 +926,6 @@ argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
 specifier|public
@@ -1005,7 +969,7 @@ name|t
 argument_list|,
 name|partitionEvent
 operator|.
-name|getPartitions
+name|getPartitionIterator
 argument_list|()
 argument_list|)
 operator|.
@@ -1170,13 +1134,6 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|event
-operator|!=
-literal|null
-condition|)
-block|{
 name|event
 operator|.
 name|setDbName
@@ -1202,7 +1159,6 @@ argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/**    * @param dbEvent database event    * @throws MetaException    */
 specifier|public

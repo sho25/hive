@@ -438,20 +438,10 @@ operator|=
 operator|new
 name|VectorizationContext
 argument_list|(
-name|vContext
-argument_list|)
-expr_stmt|;
-comment|// Set a fileKey, although this operator doesn't use it.
-name|vOutContext
-operator|.
-name|setFileKey
-argument_list|(
-name|vContext
-operator|.
-name|getFileKey
+name|getName
 argument_list|()
-operator|+
-literal|"/_SELECT_"
+argument_list|,
+name|vContext
 argument_list|)
 expr_stmt|;
 name|vOutContext

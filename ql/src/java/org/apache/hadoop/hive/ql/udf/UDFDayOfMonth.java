@@ -191,6 +191,24 @@ name|serde2
 operator|.
 name|io
 operator|.
+name|HiveIntervalDayTimeWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
 name|TimestampWritable
 import|;
 end_import
@@ -237,13 +255,19 @@ literal|"day,dayofmonth"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(date) - Returns the date of the month of date"
+literal|"_FUNC_(param) - Returns the day of the month of date/timestamp, or day component of interval"
 argument_list|,
 name|extended
 operator|=
-literal|"date is a string in the format of 'yyyy-MM-dd HH:mm:ss' or "
+literal|"param can be one of:\n"
 operator|+
-literal|"'yyyy-MM-dd'.\n"
+literal|"1. A string in the format of 'yyyy-MM-dd HH:mm:ss' or 'yyyy-MM-dd'.\n"
+operator|+
+literal|"2. A date value\n"
+operator|+
+literal|"3. A timestamp value\n"
+operator|+
+literal|"4. A day-time interval value"
 operator|+
 literal|"Example:\n "
 operator|+
@@ -463,6 +487,42 @@ name|Calendar
 operator|.
 name|DAY_OF_MONTH
 argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|result
+return|;
+block|}
+specifier|public
+name|IntWritable
+name|evaluate
+parameter_list|(
+name|HiveIntervalDayTimeWritable
+name|i
+parameter_list|)
+block|{
+if|if
+condition|(
+name|i
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+name|result
+operator|.
+name|set
+argument_list|(
+name|i
+operator|.
+name|getHiveIntervalDayTime
+argument_list|()
+operator|.
+name|getDays
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

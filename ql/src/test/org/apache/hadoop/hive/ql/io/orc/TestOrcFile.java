@@ -1543,6 +1543,11 @@ name|item
 argument_list|)
 expr_stmt|;
 block|}
+name|result
+operator|.
+name|flip
+argument_list|()
+expr_stmt|;
 return|return
 name|result
 return|;

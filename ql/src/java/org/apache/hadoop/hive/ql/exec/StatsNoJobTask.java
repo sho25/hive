@@ -1730,7 +1730,6 @@ name|isDir
 argument_list|()
 condition|)
 block|{
-comment|// TODO: do we need to wrap for Llap here? probably later when stats are cached?
 name|InputFormat
 argument_list|<
 name|?

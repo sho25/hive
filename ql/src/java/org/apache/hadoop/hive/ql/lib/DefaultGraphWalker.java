@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|IdentityHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -132,7 +142,7 @@ argument_list|()
 decl_stmt|;
 specifier|protected
 specifier|final
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|Node
 argument_list|,
@@ -141,7 +151,7 @@ argument_list|>
 name|retMap
 init|=
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|Node
 argument_list|,
