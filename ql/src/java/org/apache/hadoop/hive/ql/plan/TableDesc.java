@@ -219,11 +219,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|HiveStringUtils
 import|;
 end_import
 
@@ -239,7 +241,7 @@ name|common
 operator|.
 name|util
 operator|.
-name|HiveStringUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -466,7 +468,7 @@ block|{
 name|Deserializer
 name|de
 init|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(

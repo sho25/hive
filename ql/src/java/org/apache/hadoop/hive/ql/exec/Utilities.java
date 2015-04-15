@@ -2389,7 +2389,7 @@ name|hadoop
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|Shell
 import|;
 end_import
 
@@ -2399,11 +2399,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|Shell
+name|ReflectionUtil
 import|;
 end_import
 
@@ -9285,7 +9287,7 @@ decl_stmt|;
 name|CompressionCodec
 name|codec
 init|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -9425,7 +9427,7 @@ decl_stmt|;
 name|CompressionCodec
 name|codec
 init|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -9596,7 +9598,7 @@ operator|=
 operator|(
 name|CompressionCodec
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -9687,7 +9689,7 @@ operator|=
 operator|(
 name|CompressionCodec
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -17202,7 +17204,7 @@ init|=
 operator|(
 name|ReworkMapredInputFormat
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
