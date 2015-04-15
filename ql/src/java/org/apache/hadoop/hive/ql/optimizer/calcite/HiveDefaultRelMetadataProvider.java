@@ -453,7 +453,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|EXTENDED_COST_MODEL
+name|HIVE_CBO_EXTENDED_COST_MODEL
 argument_list|)
 condition|)
 block|{
@@ -461,7 +461,10 @@ name|cm
 operator|=
 name|HiveOnTezCostModel
 operator|.
-name|INSTANCE
+name|getCostModel
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -470,7 +473,8 @@ name|cm
 operator|=
 name|HiveDefaultCostModel
 operator|.
-name|INSTANCE
+name|getCostModel
+argument_list|()
 expr_stmt|;
 block|}
 comment|// Get max split size for HiveRelMdParallelism
