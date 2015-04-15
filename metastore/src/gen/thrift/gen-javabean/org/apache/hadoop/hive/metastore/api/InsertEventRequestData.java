@@ -2079,7 +2079,7 @@ block|{
 name|String
 name|_elem510
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem510
 operator|=
 name|iprot
@@ -2518,7 +2518,7 @@ block|{
 name|String
 name|_elem515
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem515
 operator|=
 name|iprot

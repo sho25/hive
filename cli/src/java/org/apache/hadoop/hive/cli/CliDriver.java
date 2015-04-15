@@ -4484,6 +4484,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"WARNING: Hive CLI is deprecated and migration to Beeline is recommended."
+argument_list|)
+expr_stmt|;
 comment|// add shutdown hook to flush the history to history file
 name|Runtime
 operator|.

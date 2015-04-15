@@ -2087,7 +2087,7 @@ block|{
 name|NotificationEvent
 name|_elem502
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem502
 operator|=
 operator|new
@@ -2532,7 +2532,7 @@ block|{
 name|NotificationEvent
 name|_elem507
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem507
 operator|=
 operator|new
