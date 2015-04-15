@@ -814,6 +814,14 @@ name|Job
 name|job
 parameter_list|)
 function_decl|;
+specifier|public
+name|void
+name|startPauseMonitor
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+function_decl|;
 comment|/**    * Check wether MR is configured to run in local-mode    * @param conf    * @return    */
 specifier|public
 name|boolean
