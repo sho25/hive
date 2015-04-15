@@ -311,11 +311,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -624,7 +626,7 @@ decl_stmt|;
 name|Deserializer
 name|inputKeyDeserializer
 init|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -668,7 +670,7 @@ decl_stmt|;
 name|Deserializer
 name|inputValueDeserializer
 init|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
