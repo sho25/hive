@@ -994,7 +994,8 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-comment|//@Test
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testReadTimestampFormat_0_11
