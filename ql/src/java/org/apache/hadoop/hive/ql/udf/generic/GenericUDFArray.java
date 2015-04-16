@@ -197,6 +197,26 @@ name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|VoidObjectInspector
+import|;
+end_import
+
 begin_comment
 comment|/**  * GenericUDFArray.  *  */
 end_comment
@@ -257,9 +277,7 @@ name|GenericUDFUtils
 operator|.
 name|ReturnObjectInspectorResolver
 name|returnOIResolver
-decl_stmt|;
-name|returnOIResolver
-operator|=
+init|=
 operator|new
 name|GenericUDFUtils
 operator|.
@@ -267,7 +285,7 @@ name|ReturnObjectInspectorResolver
 argument_list|(
 literal|true
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 for|for
 control|(
 name|int

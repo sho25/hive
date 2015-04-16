@@ -164,6 +164,16 @@ decl_stmt|;
 name|boolean
 name|isCookieEnabled
 decl_stmt|;
+comment|// NB: The purpose of isSSL flag is as follows:
+comment|// This flag is useful when the HS2 server sends a secure cookie and
+comment|// the client is in a non-ssl mode. Here, the client replay of the cookie
+comment|// doesnt reach the server. If we don't send credentials in such a scenario,
+comment|// the server  would send a 401 error back to the client.
+comment|// Thus, we would need 2 cycles instead of 1 cycle to process an incoming request if
+comment|// isSSL is absent.
+name|boolean
+name|isSSL
+decl_stmt|;
 name|String
 name|cookieName
 decl_stmt|;
@@ -199,6 +209,9 @@ name|cs
 parameter_list|,
 name|String
 name|cn
+parameter_list|,
+name|boolean
+name|isSSL
 parameter_list|)
 block|{
 name|this
@@ -230,6 +243,12 @@ operator|.
 name|cookieStore
 operator|=
 name|cs
+expr_stmt|;
+name|this
+operator|.
+name|isSSL
+operator|=
+name|isSSL
 expr_stmt|;
 name|isCookieEnabled
 operator|=
@@ -297,7 +316,8 @@ block|}
 comment|// Generate the kerberos ticket under the following scenarios:
 comment|// 1. Cookie Authentication is disabled OR
 comment|// 2. The first time when the request is sent OR
-comment|// 3. The server returns a 401, which sometimes means the cookie has expired
+comment|// 3. The server returns a 401, which sometimes means the cookie has expired OR
+comment|// 4. The cookie is secured where as the client connect does not use SSL
 if|if
 condition|(
 operator|!
@@ -333,6 +353,8 @@ argument_list|(
 name|cookieStore
 argument_list|,
 name|cookieName
+argument_list|,
+name|isSSL
 argument_list|)
 operator|)
 operator|)

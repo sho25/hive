@@ -7991,7 +7991,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Starting command: "
+literal|"Starting command(queryId="
+operator|+
+name|queryId
+operator|+
+literal|"): "
 operator|+
 name|queryStr
 argument_list|)

@@ -517,7 +517,7 @@ name|hadoop
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|StringUtils
 import|;
 end_import
 
@@ -527,11 +527,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|StringUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -1049,7 +1051,7 @@ argument_list|,
 name|?
 argument_list|>
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -1744,7 +1746,7 @@ argument_list|,
 name|?
 argument_list|>
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(

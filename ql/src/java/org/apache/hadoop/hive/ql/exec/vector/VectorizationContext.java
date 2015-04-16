@@ -6707,6 +6707,24 @@ index|[
 name|i
 index|]
 operator|=
+operator|(
+literal|null
+operator|==
+name|scalarValue
+operator|)
+condition|?
+name|getConstantVectorExpression
+argument_list|(
+literal|null
+argument_list|,
+name|child
+operator|.
+name|getTypeInfo
+argument_list|()
+argument_list|,
+name|childrenMode
+argument_list|)
+else|:
 name|scalarValue
 expr_stmt|;
 block|}
@@ -8897,9 +8915,6 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-operator|(
-name|Float
-operator|)
 name|scalar
 argument_list|)
 argument_list|)
@@ -8918,9 +8933,6 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-operator|(
-name|Double
-operator|)
 name|scalar
 argument_list|)
 argument_list|)
@@ -9999,7 +10011,7 @@ name|returnType
 argument_list|)
 return|;
 block|}
-comment|/*       * Timestamp, float, and double types are handled by the legacy code path. See isLegacyPathUDF.      */
+comment|/*      * Timestamp, float, and double types are handled by the legacy code path. See isLegacyPathUDF.      */
 throw|throw
 operator|new
 name|HiveException
@@ -12094,9 +12106,6 @@ argument_list|()
 condition|)
 block|{
 return|return
-operator|(
-name|HiveDecimal
-operator|)
 name|constDesc
 operator|.
 name|getValue
@@ -14353,6 +14362,8 @@ return|return
 name|map
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

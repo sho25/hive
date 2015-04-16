@@ -717,11 +717,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -1582,7 +1584,7 @@ init|=
 operator|(
 name|SerDe
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -1692,7 +1694,7 @@ init|=
 operator|(
 name|SerDe
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
