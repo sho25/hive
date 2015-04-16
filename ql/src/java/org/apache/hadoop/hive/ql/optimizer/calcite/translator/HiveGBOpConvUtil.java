@@ -377,6 +377,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|CalciteSemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveCalciteUtil
 import|;
 end_import
@@ -786,6 +806,7 @@ name|GenericUDAFEvaluator
 name|udafEvaluator
 decl_stmt|;
 specifier|private
+specifier|final
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
@@ -821,6 +842,7 @@ class|class
 name|GBInfo
 block|{
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -835,6 +857,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -849,6 +872,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|TypeInfo
@@ -863,6 +887,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -877,6 +902,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|Integer
@@ -899,6 +925,7 @@ name|boolean
 name|grpIdFunctionNeeded
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -913,6 +940,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|TypeInfo
@@ -927,6 +955,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -941,6 +970,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|List
@@ -961,6 +991,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -975,6 +1006,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|UDAFAttrs
@@ -1168,6 +1200,8 @@ parameter_list|,
 name|HiveConf
 name|hc
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|GBInfo
 name|gbInfo
@@ -1249,9 +1283,6 @@ name|RexInputRef
 argument_list|(
 name|i
 argument_list|,
-operator|(
-name|RelDataType
-operator|)
 name|aggInputRel
 operator|.
 name|getRowType
@@ -1974,8 +2005,7 @@ name|distColIndicesOfUDAF
 argument_list|)
 expr_stmt|;
 block|}
-try|try
-block|{
+comment|// special handling for count, similar to PlanModifierForASTConv::replaceEmptyGroupAggr()
 name|udafAttrs
 operator|.
 name|udafEvaluator
@@ -2007,24 +2037,29 @@ name|udafAttrs
 operator|.
 name|isDistinctUDAF
 argument_list|,
+name|udafAttrs
+operator|.
+name|udafParams
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|&&
+literal|"count"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|udafAttrs
+operator|.
+name|udafName
+argument_list|)
+condition|?
+literal|true
+else|:
 literal|false
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SemanticException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 name|gbInfo
 operator|.
 name|udafAttrs
@@ -2221,7 +2256,7 @@ return|return
 name|translatedGBOpAttr
 return|;
 block|}
-comment|/**    * GB-RS-GB1    *     * Construct GB-RS-GB Pipe line. User has enabled Map Side GB, specified no    * skew and Grp Set is below the threshold.    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * GB-RS-GB1    *    * Construct GB-RS-GB Pipe line. User has enabled Map Side GB, specified no    * skew and Grp Set is below the threshold.    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -2422,7 +2457,7 @@ return|return
 name|reduceSideGB2
 return|;
 block|}
-comment|/**    * GB-RS-GB1-RS-GB2    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * GB-RS-GB1-RS-GB2    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -2487,7 +2522,7 @@ name|gbInfo
 argument_list|)
 return|;
 block|}
-comment|/**    * GB-RS-GB1-RS-GB2    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * GB-RS-GB1-RS-GB2    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -2552,7 +2587,7 @@ name|gbInfo
 argument_list|)
 return|;
 block|}
-comment|/**    * GB-RS-GB2    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * GB-RS-GB2    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -2654,7 +2689,7 @@ return|return
 name|reduceSideGB2
 return|;
 block|}
-comment|/**    * RS-Gb1    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * RS-Gb1    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -2712,7 +2747,7 @@ return|return
 name|reduceSideGB1NoMapGB
 return|;
 block|}
-comment|/**    * RS-GB1-RS-GB2    *     * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
+comment|/**    * RS-GB1-RS-GB2    *    * @param inputOpAf    * @param aggRel    * @param gbInfo    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -6043,7 +6078,7 @@ name|rsGBOp
 argument_list|)
 return|;
 block|}
-comment|/**    * RS-GB0    *     * @param inputOpAf    * @param gbInfo    * @param gbMode    * @return    * @throws SemanticException    */
+comment|/**    * RS-GB0    *    * @param inputOpAf    * @param gbInfo    * @param gbMode    * @return    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|OpAttr
@@ -7589,7 +7624,7 @@ name|grpSetColExpr
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Get Reduce Keys for RS following MapSide GB    *     * @param reduceKeys    *          assumed to be deduped list of exprs    * @param outputKeyColumnNames    * @param colExprMap    * @return List of ExprNodeDesc of ReduceKeys    * @throws SemanticException    */
+comment|/**    * Get Reduce Keys for RS following MapSide GB    *    * @param reduceKeys    *          assumed to be deduped list of exprs    * @param outputKeyColumnNames    * @param colExprMap    * @return List of ExprNodeDesc of ReduceKeys    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|ArrayList
@@ -7811,7 +7846,7 @@ return|return
 name|reduceKeys
 return|;
 block|}
-comment|/**    * Get Value Keys for RS following MapSide GB    *     * @param GroupByOperator    *          MapSide GB    * @param outputKeyColumnNames    * @param colExprMap    * @return List of ExprNodeDesc of Values    * @throws SemanticException    */
+comment|/**    * Get Value Keys for RS following MapSide GB    *    * @param GroupByOperator    *          MapSide GB    * @param outputKeyColumnNames    * @param colExprMap    * @return List of ExprNodeDesc of Values    * @throws SemanticException    */
 specifier|private
 specifier|static
 name|ArrayList
