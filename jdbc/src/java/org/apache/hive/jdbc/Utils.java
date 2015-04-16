@@ -2476,7 +2476,7 @@ return|return
 name|version
 return|;
 block|}
-comment|/**    * The function iterates through the list of cookies in the cookiestore and tries to    * match them with the cookieName. If there is a match, the cookieStore already    * has a valid cookie and the client need not send Credentials for validation purpose.    * @param cookieStore The cookie Store    * @param cookieName Name of the cookie which needs to be validated    * @return true or false based on whether the client needs to send the credentials or    * not to the server.    */
+comment|/**    * The function iterates through the list of cookies in the cookiestore and tries to    * match them with the cookieName. If there is a match, the cookieStore already    * has a valid cookie and the client need not send Credentials for validation purpose.    * @param cookieStore The cookie Store    * @param cookieName Name of the cookie which needs to be validated    * @param isSSL Whether this is a http/https connection    * @return true or false based on whether the client needs to send the credentials or    * not to the server.    */
 specifier|static
 name|boolean
 name|needToSendCredentials
@@ -2486,6 +2486,9 @@ name|cookieStore
 parameter_list|,
 name|String
 name|cookieName
+parameter_list|,
+name|boolean
+name|isSSL
 parameter_list|)
 block|{
 if|if
@@ -2522,6 +2525,22 @@ range|:
 name|cookies
 control|)
 block|{
+comment|// If this is a secured cookie and the current connection is non-secured,
+comment|// then, skip this cookie. We need to skip this cookie because, the cookie
+comment|// replay will not be transmitted to the server.
+if|if
+condition|(
+name|c
+operator|.
+name|isSecure
+argument_list|()
+operator|&&
+operator|!
+name|isSSL
+condition|)
+block|{
+continue|continue;
+block|}
 if|if
 condition|(
 name|c

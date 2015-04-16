@@ -2085,6 +2085,8 @@ argument_list|,
 name|cookieStore
 argument_list|,
 name|cookieName
+argument_list|,
+name|useSsl
 argument_list|)
 expr_stmt|;
 block|}
@@ -2105,6 +2107,8 @@ argument_list|,
 name|cookieStore
 argument_list|,
 name|cookieName
+argument_list|,
+name|useSsl
 argument_list|)
 expr_stmt|;
 block|}

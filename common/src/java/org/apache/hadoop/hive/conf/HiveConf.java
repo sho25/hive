@@ -6801,6 +6801,69 @@ operator|+
 literal|"excessive threads are killed after this time interval."
 argument_list|)
 block|,
+comment|// Cookie based authentication
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.auth.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true, HiveServer2 in HTTP transport mode, will use cookie based authentication mechanism."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_MAX_AGE
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.max.age"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Maximum age in seconds for server side cookie used by HS2 in HTTP mode."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_DOMAIN
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.domain"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Domain for the HS2 generated cookies"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_PATH
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.path"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Path for the HS2 generated cookies"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.is.secure"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Secure attribute of the HS2 generated cookie."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_HTTPONLY
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.is.httponly"
+argument_list|,
+literal|true
+argument_list|,
+literal|"HttpOnly attribute of the HS2 generated cookie."
+argument_list|)
+block|,
 comment|// binary transport settings
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|(

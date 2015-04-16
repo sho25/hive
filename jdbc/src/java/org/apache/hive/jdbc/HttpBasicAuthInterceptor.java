@@ -189,6 +189,9 @@ decl_stmt|;
 name|String
 name|cookieName
 decl_stmt|;
+name|boolean
+name|isSSL
+decl_stmt|;
 specifier|public
 name|HttpBasicAuthInterceptor
 parameter_list|(
@@ -203,6 +206,9 @@ name|cookieStore
 parameter_list|,
 name|String
 name|cn
+parameter_list|,
+name|boolean
+name|isSSL
 parameter_list|)
 block|{
 if|if
@@ -247,6 +253,12 @@ name|cookieName
 operator|=
 name|cn
 expr_stmt|;
+name|this
+operator|.
+name|isSSL
+operator|=
+name|isSSL
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -286,6 +298,7 @@ comment|// Add the authentication details under the following scenarios:
 comment|// 1. Cookie Authentication is disabled OR
 comment|// 2. The first time when the request is sent OR
 comment|// 3. The server returns a 401, which sometimes means the cookie has expired
+comment|// 4. The cookie is secured where as the client connect does not use SSL
 if|if
 condition|(
 operator|!
@@ -321,6 +334,8 @@ argument_list|(
 name|cookieStore
 argument_list|,
 name|cookieName
+argument_list|,
+name|isSSL
 argument_list|)
 operator|)
 operator|)
