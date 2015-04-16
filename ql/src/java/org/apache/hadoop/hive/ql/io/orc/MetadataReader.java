@@ -468,7 +468,6 @@ name|readBloomFilter
 init|=
 literal|false
 decl_stmt|;
-comment|// TODO#: HERE
 if|if
 condition|(
 name|sargColumns

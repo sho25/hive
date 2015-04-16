@@ -2242,6 +2242,13 @@ operator|.
 name|configureInputJobProps
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Configuring input job properties"
+argument_list|)
+expr_stmt|;
 name|String
 name|snapshotName
 init|=
@@ -2511,6 +2518,13 @@ comment|//input job properties
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Configuring output job properties"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isHBaseGenerateHFiles
