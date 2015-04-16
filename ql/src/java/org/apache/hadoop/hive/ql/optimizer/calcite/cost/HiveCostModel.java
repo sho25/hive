@@ -402,7 +402,7 @@ name|JoinAlgorithm
 block|{
 specifier|public
 name|String
-name|getName
+name|toString
 parameter_list|()
 function_decl|;
 specifier|public
