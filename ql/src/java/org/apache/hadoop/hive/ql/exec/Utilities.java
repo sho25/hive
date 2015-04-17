@@ -14060,7 +14060,7 @@ parameter_list|(
 name|TableDesc
 name|tbl
 parameter_list|,
-name|JobConf
+name|Configuration
 name|job
 parameter_list|)
 block|{

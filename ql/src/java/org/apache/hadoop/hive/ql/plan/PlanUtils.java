@@ -4328,7 +4328,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"configureInputJobProperties not found "
 operator|+
@@ -4370,7 +4370,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"configureOutputJobProperties not found"
 operator|+
