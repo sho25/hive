@@ -9094,6 +9094,19 @@ name|tableAlias
 argument_list|,
 name|qb
 argument_list|)
+argument_list|,
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CBO_RETPATH_HIVEOP
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// 6. Add Schema(RR) to RelNode-Schema map

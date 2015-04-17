@@ -2242,7 +2242,7 @@ name|put
 argument_list|(
 name|scanRel
 operator|.
-name|getQbID
+name|getConcatQbIDAlias
 argument_list|()
 argument_list|,
 name|ts
