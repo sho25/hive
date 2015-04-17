@@ -3272,11 +3272,11 @@ name|HIVEUSEHYBRIDGRACEHASHJOIN
 argument_list|(
 literal|"hive.mapjoin.hybridgrace.hashtable"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to use hybrid"
 operator|+
-literal|"grace hash join as the join method for mapjoin."
+literal|"grace hash join as the join method for mapjoin. Tez only."
 argument_list|)
 block|,
 name|HIVEHYBRIDGRACEHASHJOINMEMCHECKFREQ
