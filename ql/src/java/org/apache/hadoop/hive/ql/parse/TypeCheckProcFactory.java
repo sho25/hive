@@ -2200,7 +2200,7 @@ name|ExprNodeConstantDesc
 argument_list|(
 name|typeInfo
 argument_list|,
-name|strVal
+name|hd
 argument_list|)
 return|;
 block|}
