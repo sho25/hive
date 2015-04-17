@@ -5464,6 +5464,8 @@ operator|++
 name|idx
 control|)
 block|{
+comment|// fs.permission.AccessControlException removed by HADOOP-11356, but Hive users on older
+comment|// Hadoop versions may still see this exception .. have to reference by name.
 if|if
 condition|(
 name|curErr
@@ -5479,18 +5481,17 @@ operator|.
 name|AccessControlException
 operator|||
 name|curErr
-operator|instanceof
-name|org
 operator|.
-name|apache
+name|getClass
+argument_list|()
 operator|.
-name|hadoop
+name|getName
+argument_list|()
 operator|.
-name|fs
-operator|.
-name|permission
-operator|.
-name|AccessControlException
+name|equals
+argument_list|(
+literal|"org.apache.hadoop.fs.permission.AccessControlException"
+argument_list|)
 condition|)
 block|{
 name|Exception
