@@ -801,6 +801,17 @@ name|joinAlgorithm
 expr_stmt|;
 block|}
 specifier|public
+name|JoinAlgorithm
+name|getJoinAlgorithm
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|joinAlgorithm
+return|;
+block|}
+specifier|public
 name|ImmutableList
 argument_list|<
 name|RelCollation
