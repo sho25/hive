@@ -3277,6 +3277,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"date_format"
+argument_list|,
+name|GenericUDFDateFormat
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"date_add"
 argument_list|,
 name|GenericUDFDateAdd
