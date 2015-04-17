@@ -4000,8 +4000,11 @@ block|{
 if|if
 condition|(
 name|typeA
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|typeB
+argument_list|)
 condition|)
 block|{
 return|return

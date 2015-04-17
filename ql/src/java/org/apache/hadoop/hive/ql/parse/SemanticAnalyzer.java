@@ -46802,6 +46802,24 @@ name|commonType
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+comment|// For the case no implicit type conversion, e.g., varchar(5) and varchar(10),
+comment|// pick the common type for all the keys since during run-time, same key type is assumed.
+name|keys
+index|[
+name|i
+index|]
+index|[
+name|k
+index|]
+operator|.
+name|setTypeInfo
+argument_list|(
+name|commonType
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 return|return
