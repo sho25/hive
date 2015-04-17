@@ -2240,9 +2240,9 @@ name|topOps
 operator|.
 name|put
 argument_list|(
-name|ht
+name|scanRel
 operator|.
-name|getQBID
+name|getQbID
 argument_list|()
 argument_list|,
 name|ts

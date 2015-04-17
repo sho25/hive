@@ -404,6 +404,11 @@ specifier|final
 name|String
 name|tblAlias
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|qbID
+decl_stmt|;
 specifier|public
 name|String
 name|getTableAlias
@@ -411,6 +416,15 @@ parameter_list|()
 block|{
 return|return
 name|tblAlias
+return|;
+block|}
+specifier|public
+name|String
+name|getQbID
+parameter_list|()
+block|{
+return|return
+name|qbID
 return|;
 block|}
 comment|/**    * Creates a HiveTableScan.    *    * @param cluster    *          Cluster    * @param traitSet    *          Traits    * @param table    *          Table    * @param table    *          HiveDB table    */
@@ -428,6 +442,9 @@ name|table
 parameter_list|,
 name|String
 name|alias
+parameter_list|,
+name|String
+name|qbID
 parameter_list|)
 block|{
 name|this
@@ -439,6 +456,8 @@ argument_list|,
 name|table
 argument_list|,
 name|alias
+argument_list|,
+name|qbID
 argument_list|,
 name|table
 operator|.
@@ -461,6 +480,9 @@ name|table
 parameter_list|,
 name|String
 name|alias
+parameter_list|,
+name|String
+name|qbID
 parameter_list|,
 name|RelDataType
 name|newRowtype
@@ -493,6 +515,12 @@ operator|.
 name|tblAlias
 operator|=
 name|alias
+expr_stmt|;
+name|this
+operator|.
+name|qbID
+operator|=
+name|qbID
 expr_stmt|;
 name|this
 operator|.
@@ -570,6 +598,10 @@ argument_list|,
 name|this
 operator|.
 name|tblAlias
+argument_list|,
+name|this
+operator|.
+name|qbID
 argument_list|,
 name|newRowtype
 argument_list|)

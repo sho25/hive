@@ -9056,13 +9056,6 @@ argument_list|,
 name|partitionCache
 argument_list|,
 name|noColsMissingStats
-argument_list|,
-name|getAliasId
-argument_list|(
-name|tableAlias
-argument_list|,
-name|qb
-argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// 5. Build Hive Table Scan Rel
@@ -9094,6 +9087,13 @@ name|getTableName
 argument_list|()
 else|:
 name|tableAlias
+argument_list|,
+name|getAliasId
+argument_list|(
+name|tableAlias
+argument_list|,
+name|qb
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// 6. Add Schema(RR) to RelNode-Schema map
