@@ -1238,6 +1238,7 @@ name|counters
 operator|!=
 literal|null
 operator|&&
+operator|(
 name|conf
 operator|.
 name|getBoolVar
@@ -1250,6 +1251,14 @@ name|ConfVars
 operator|.
 name|TEZ_EXEC_SUMMARY
 argument_list|)
+operator|||
+name|Utilities
+operator|.
+name|isPerfOrAboveLogging
+argument_list|(
+name|conf
+argument_list|)
+operator|)
 condition|)
 block|{
 for|for
