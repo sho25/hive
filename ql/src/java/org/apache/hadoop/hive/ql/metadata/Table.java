@@ -2059,6 +2059,28 @@ return|return
 name|outputFormatClass
 return|;
 block|}
+comment|/**    * Marker SemanticException, so that processing that allows for table validation failures    * and appropriately handles them can recover from these types of SemanticExceptions    */
+specifier|public
+class|class
+name|ValidationFailureSemanticException
+extends|extends
+name|SemanticException
+block|{
+specifier|public
+name|ValidationFailureSemanticException
+parameter_list|(
+name|String
+name|s
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+empty_stmt|;
 specifier|final
 specifier|public
 name|void
@@ -2114,7 +2136,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|ValidationFailureSemanticException
 argument_list|(
 literal|"table is not partitioned but partition spec exists: "
 operator|+
@@ -2139,7 +2161,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|ValidationFailureSemanticException
 argument_list|(
 literal|"table is partitioned but partition spec is not specified"
 argument_list|)
@@ -2200,7 +2222,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|ValidationFailureSemanticException
 argument_list|(
 literal|"Partition spec "
 operator|+
@@ -2229,7 +2251,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|ValidationFailureSemanticException
 argument_list|(
 literal|"partition spec "
 operator|+

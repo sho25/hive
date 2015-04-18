@@ -6325,6 +6325,21 @@ block|,
 comment|// temporary variable for testing. This is added just to turn off this feature in case of a bug in
 comment|// deployment. It has not been documented in hive-default.xml intentionally, this should be removed
 comment|// once the feature is stable
+name|HIVE_EXIM_RESTRICT_IMPORTS_INTO_REPLICATED_TABLES
+argument_list|(
+literal|"hive.exim.strict.repl.tables"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Parameter that determines if 'regular' (non-replication) export dumps can be\n"
+operator|+
+literal|"imported on to tables that are the target of replication. If this parameter is\n"
+operator|+
+literal|"set, regular imports will check if the destination table(if it exists) has a "
+operator|+
+literal|"'repl.last.id' set on it. If so, it will fail."
+argument_list|)
+block|,
 name|HIVE_MAPPER_CANNOT_SPAN_MULTIPLE_PARTITIONS
 argument_list|(
 literal|"hive.mapper.cannot.span.multiple.partitions"

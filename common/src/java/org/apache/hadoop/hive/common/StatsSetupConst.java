@@ -447,6 +447,17 @@ name|STATS_GENERATED_VIA_STATS_TASK
 init|=
 literal|"STATS_GENERATED_VIA_STATS_TASK"
 decl_stmt|;
+comment|// This string constant is used by AlterHandler to figure out that it should not attempt to
+comment|// update stats. It is set by any client-side task which wishes to signal that no stats
+comment|// update should take place, such as with replication.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DO_NOT_UPDATE_STATS
+init|=
+literal|"DO_NOT_UPDATE_STATS"
+decl_stmt|;
 comment|// This string constant will be persisted in metastore to indicate whether corresponding
 comment|// table or partition's statistics are accurate or not.
 specifier|public
