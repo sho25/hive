@@ -667,6 +667,38 @@ name|localDirs
 operator|=
 name|localDirs
 expr_stmt|;
+name|int
+name|waitQueueSize
+init|=
+name|daemonConf
+operator|.
+name|getInt
+argument_list|(
+name|LlapConfiguration
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
+argument_list|,
+name|LlapConfiguration
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE_DEFAULT
+argument_list|)
+decl_stmt|;
+name|boolean
+name|enablePreemption
+init|=
+name|daemonConf
+operator|.
+name|getBoolean
+argument_list|(
+name|LlapConfiguration
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION
+argument_list|,
+name|LlapConfiguration
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION_DEFAULT
+argument_list|)
+decl_stmt|;
 name|LOG
 operator|.
 name|info
@@ -709,6 +741,14 @@ operator|+
 literal|", jvmAvailableMemory="
 operator|+
 name|maxJvmMemory
+operator|+
+literal|", waitQueueSize= "
+operator|+
+name|waitQueueSize
+operator|+
+literal|", enablePreemption= "
+operator|+
+name|enablePreemption
 argument_list|)
 expr_stmt|;
 name|long
@@ -952,6 +992,10 @@ argument_list|(
 name|daemonConf
 argument_list|,
 name|numExecutors
+argument_list|,
+name|waitQueueSize
+argument_list|,
+name|enablePreemption
 argument_list|,
 name|localDirs
 argument_list|,
