@@ -691,16 +691,6 @@ argument_list|)
 operator|.
 name|item
 argument_list|(
-literal|"table"
-argument_list|,
-name|table
-operator|.
-name|getQualifiedName
-argument_list|()
-argument_list|)
-operator|.
-name|item
-argument_list|(
 literal|"qbid:alias"
 argument_list|,
 name|concatQbIDAlias

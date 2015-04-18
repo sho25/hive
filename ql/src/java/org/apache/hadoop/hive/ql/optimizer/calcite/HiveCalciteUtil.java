@@ -519,24 +519,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|ColumnInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|VirtualColumn
@@ -2890,7 +2872,7 @@ name|getFieldCount
 argument_list|()
 decl_stmt|;
 comment|// 1. Split leaf join predicate to expressions from left, right
-name|RelOptUtil
+name|HiveRelOptUtil
 operator|.
 name|splitJoinCondition
 argument_list|(
