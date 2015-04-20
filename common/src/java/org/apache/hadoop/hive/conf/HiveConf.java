@@ -3246,6 +3246,90 @@ argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
 block|,
+name|HIVE_CBO_RETPATH_HIVEOP
+argument_list|(
+literal|"hive.cbo.returnpath.hiveop"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control calcite plan to hive operator conversion"
+argument_list|)
+block|,
+name|HIVE_CBO_EXTENDED_COST_MODEL
+argument_list|(
+literal|"hive.cbo.costmodel.extended"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling the extended cost model based on"
+operator|+
+literal|"CPU, IO and cardinality. Otherwise, the cost model is based on cardinality."
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_CPU
+argument_list|(
+literal|"hive.cbo.costmodel.cpu"
+argument_list|,
+literal|"0.000001"
+argument_list|,
+literal|"Default cost of a comparison"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_NET
+argument_list|(
+literal|"hive.cbo.costmodel.network"
+argument_list|,
+literal|"150.0"
+argument_list|,
+literal|"Default cost of a transfering a byte over network;"
+operator|+
+literal|" expressed as multiple of CPU cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_LFS_WRITE
+argument_list|(
+literal|"hive.cbo.costmodel.local.fs.write"
+argument_list|,
+literal|"4.0"
+argument_list|,
+literal|"Default cost of writing a byte to local FS;"
+operator|+
+literal|" expressed as multiple of NETWORK cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_LFS_READ
+argument_list|(
+literal|"hive.cbo.costmodel.local.fs.read"
+argument_list|,
+literal|"4.0"
+argument_list|,
+literal|"Default cost of reading a byte from local FS;"
+operator|+
+literal|" expressed as multiple of NETWORK cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_HDFS_WRITE
+argument_list|(
+literal|"hive.cbo.costmodel.hdfs.write"
+argument_list|,
+literal|"10.0"
+argument_list|,
+literal|"Default cost of writing a byte to HDFS;"
+operator|+
+literal|" expressed as multiple of Local FS write cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_HDFS_READ
+argument_list|(
+literal|"hive.cbo.costmodel.hdfs.read"
+argument_list|,
+literal|"1.5"
+argument_list|,
+literal|"Default cost of reading a byte from HDFS;"
+operator|+
+literal|" expressed as multiple of Local FS read cost"
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE

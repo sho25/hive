@@ -3373,7 +3373,7 @@ name|PrunedPartitionList
 argument_list|>
 name|opToPartList
 decl_stmt|;
-specifier|private
+specifier|protected
 name|HashMap
 argument_list|<
 name|String
@@ -3388,7 +3388,6 @@ argument_list|>
 name|topOps
 decl_stmt|;
 specifier|private
-specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -3402,8 +3401,7 @@ argument_list|>
 argument_list|>
 name|topSelOps
 decl_stmt|;
-specifier|private
-specifier|final
+specifier|protected
 name|LinkedHashMap
 argument_list|<
 name|Operator
@@ -3597,7 +3595,7 @@ specifier|private
 name|ASTNode
 name|viewSelect
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|UnparseTranslator
 name|unparseTranslator
@@ -4918,7 +4916,12 @@ name|wFnSpec
 operator|.
 name|setAlias
 argument_list|(
-literal|"_wcol"
+name|wFnSpec
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|"_window_"
 operator|+
 name|wColIdx
 argument_list|)
@@ -22544,7 +22547,8 @@ return|return
 name|ret
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|int
 name|setBit
 parameter_list|(
@@ -25990,19 +25994,23 @@ name|autogenColAliasPrfxIncludeFuncName
 return|;
 block|}
 comment|/**    * Class to store GenericUDAF related information.    */
+specifier|public
 specifier|static
 class|class
 name|GenericUDAFInfo
 block|{
+specifier|public
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|convertedParameters
 decl_stmt|;
+specifier|public
 name|GenericUDAFEvaluator
 name|genericUDAFEvaluator
 decl_stmt|;
+specifier|public
 name|TypeInfo
 name|returnType
 decl_stmt|;
@@ -26176,6 +26184,7 @@ name|result
 return|;
 block|}
 comment|/**    * Returns the GenericUDAFEvaluator for the aggregation. This is called once    * for each GroupBy aggregation.    */
+specifier|public
 specifier|static
 name|GenericUDAFEvaluator
 name|getGenericUDAFEvaluator
@@ -26276,6 +26285,7 @@ name|result
 return|;
 block|}
 comment|/**    * Returns the GenericUDAFInfo struct for the aggregation.    *    * @param aggName    *          The name of the UDAF.    * @param aggParameters    *          The exprNodeDesc of the original parameters    * @param aggTree    *          The ASTNode node of the UDAF in the query.    * @return GenericUDAFInfo    * @throws SemanticException    *           when the UDAF is not found or has problems.    */
+specifier|public
 specifier|static
 name|GenericUDAFInfo
 name|getGenericUDAFInfo
@@ -26425,6 +26435,7 @@ return|return
 name|r
 return|;
 block|}
+specifier|public
 specifier|static
 name|GenericUDAFEvaluator
 operator|.
@@ -26542,7 +26553,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Check if the given internalName represents a constant parameter in aggregation parameters    * of an aggregation tree.    * This method is only invoked when map-side aggregation is not involved. In this case,    * every parameter in every aggregation tree should already have a corresponding ColumnInfo,    * which is generated when the corresponding ReduceSinkOperator of the GroupByOperator being    * generating is generated. If we find that this parameter is a constant parameter,    * we will return the corresponding ExprNodeDesc in reduceValues, and we will not need to    * use a new ExprNodeColumnDesc, which can not be treated as a constant parameter, for this    * parameter (since the writableObjectInspector of a ExprNodeColumnDesc will not be    * a instance of ConstantObjectInspector).    *    * @param reduceValues    *          value columns of the corresponding ReduceSinkOperator    * @param internalName    *          the internal name of this parameter    * @return the ExprNodeDesc of the constant parameter if the given internalName represents    *         a constant parameter; otherwise, return null    */
-specifier|private
+specifier|public
+specifier|static
 name|ExprNodeDesc
 name|isConstantParameterInAggregationParameters
 parameter_list|(
@@ -34306,7 +34318,6 @@ return|return
 literal|false
 return|;
 block|}
-specifier|private
 name|void
 name|checkExpressionsForGroupingSet
 parameter_list|(
@@ -36358,7 +36369,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|private
+specifier|protected
 name|Operator
 name|genFileSinkPlan
 parameter_list|(
@@ -56273,7 +56284,7 @@ return|return
 name|equalsExpr
 return|;
 block|}
-specifier|private
+specifier|protected
 name|String
 name|getAliasId
 parameter_list|(
