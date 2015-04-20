@@ -15748,6 +15748,31 @@ index|[
 literal|1
 index|]
 expr_stmt|;
+if|if
+condition|(
+name|tmpColAlias
+operator|.
+name|contains
+argument_list|(
+literal|"."
+argument_list|)
+operator|||
+name|tmpColAlias
+operator|.
+name|contains
+argument_list|(
+literal|":"
+argument_list|)
+condition|)
+block|{
+name|tmpColAlias
+operator|=
+name|cInfo
+operator|.
+name|getInternalName
+argument_list|()
+expr_stmt|;
+block|}
 comment|// Prepend column names with '_o_' if it starts with '_c'
 comment|/*          * Hive treats names that start with '_c' as internalNames; so change          * the names so we don't run into this issue when converting back to          * Hive AST.          */
 if|if
