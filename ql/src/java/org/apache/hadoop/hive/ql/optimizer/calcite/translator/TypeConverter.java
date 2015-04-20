@@ -1893,7 +1893,7 @@ block|}
 else|else
 block|{
 return|return
-name|convertPrimtiveType
+name|convertPrimitiveType
 argument_list|(
 name|rType
 argument_list|)
@@ -2070,7 +2070,7 @@ block|}
 specifier|public
 specifier|static
 name|TypeInfo
-name|convertPrimtiveType
+name|convertPrimitiveType
 parameter_list|(
 name|RelDataType
 name|rType
