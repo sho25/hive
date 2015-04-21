@@ -1517,24 +1517,6 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Failed to run task: "
-operator|+
-name|taskSpec
-operator|.
-name|getTaskAttemptID
-argument_list|()
-operator|+
-literal|" on containerId: "
-operator|+
-name|containerId
-argument_list|,
-name|t
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|t
@@ -1597,6 +1579,24 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unable to run task: "
+operator|+
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+operator|+
+literal|" on containerId: "
+operator|+
+name|containerId
+operator|+
+literal|", Service Busy"
+argument_list|)
+expr_stmt|;
 name|getTaskCommunicatorContext
 argument_list|()
 operator|.
@@ -1618,6 +1618,24 @@ block|}
 else|else
 block|{
 comment|// All others from the remote service cause the task to FAIL.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to run task: "
+operator|+
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+operator|+
+literal|" on containerId: "
+operator|+
+name|containerId
+argument_list|,
+name|t
+argument_list|)
+expr_stmt|;
 name|getTaskCommunicatorContext
 argument_list|()
 operator|.
@@ -1650,6 +1668,24 @@ operator|instanceof
 name|IOException
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unable to run task: "
+operator|+
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+operator|+
+literal|" on containerId: "
+operator|+
+name|containerId
+operator|+
+literal|", Communication Error"
+argument_list|)
+expr_stmt|;
 name|getTaskCommunicatorContext
 argument_list|()
 operator|.
@@ -1671,6 +1707,24 @@ block|}
 else|else
 block|{
 comment|// Anything else is a FAIL.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to run task: "
+operator|+
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+operator|+
+literal|" on containerId: "
+operator|+
+name|containerId
+argument_list|,
+name|t
+argument_list|)
+expr_stmt|;
 name|getTaskCommunicatorContext
 argument_list|()
 operator|.

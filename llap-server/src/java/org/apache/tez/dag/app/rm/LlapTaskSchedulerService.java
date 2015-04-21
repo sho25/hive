@@ -95,6 +95,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -293,20 +303,6 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|atomic
-operator|.
-name|AtomicLong
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
 name|locks
 operator|.
 name|ReentrantReadWriteLock
@@ -432,42 +428,6 @@ operator|.
 name|impl
 operator|.
 name|LlapRegistryService
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|yarn
-operator|.
-name|api
-operator|.
-name|records
-operator|.
-name|ApplicationAttemptId
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|yarn
-operator|.
-name|api
-operator|.
-name|records
-operator|.
-name|ApplicationId
 import|;
 end_import
 
@@ -746,6 +706,8 @@ specifier|private
 name|ServiceInstanceSet
 name|activeInstances
 decl_stmt|;
+comment|// Tracks all instances, including ones which have been disabled in the past.
+comment|// LinkedHashMap to provide the same iteration order when selecting a random host.
 annotation|@
 name|VisibleForTesting
 specifier|final
@@ -758,43 +720,11 @@ argument_list|>
 name|instanceToNodeMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-annotation|@
-name|VisibleForTesting
-specifier|final
-name|Set
-argument_list|<
-name|ServiceInstance
-argument_list|>
-name|instanceBlackList
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|ServiceInstance
-argument_list|>
-argument_list|()
-decl_stmt|;
-annotation|@
-name|VisibleForTesting
-comment|// Tracks currently allocated containers.
-specifier|final
-name|Map
-argument_list|<
-name|ContainerId
-argument_list|,
-name|String
-argument_list|>
-name|containerToInstanceMap
-init|=
-operator|new
-name|HashMap
-argument_list|<>
-argument_list|()
-decl_stmt|;
+comment|// TODO Ideally, remove elements from this once it's known that no tasks are linked to the instance (all deallocated)
 comment|// Tracks tasks which could not be allocated immediately.
 annotation|@
 name|VisibleForTesting
@@ -865,6 +795,7 @@ name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+comment|// Queue for disabled nodes. Nodes make it out of this queue when their expiration timeout is hit.
 annotation|@
 name|VisibleForTesting
 specifier|final
@@ -872,7 +803,7 @@ name|DelayQueue
 argument_list|<
 name|NodeInfo
 argument_list|>
-name|disabledNodes
+name|disabledNodesQueue
 init|=
 operator|new
 name|DelayQueue
@@ -1627,27 +1558,47 @@ try|try
 block|{
 for|for
 control|(
+name|Entry
+argument_list|<
 name|ServiceInstance
-name|inst
+argument_list|,
+name|NodeInfo
+argument_list|>
+name|entry
 range|:
 name|instanceToNodeMap
 operator|.
-name|keySet
+name|entrySet
 argument_list|()
 control|)
 block|{
 if|if
 condition|(
-name|inst
+name|entry
+operator|.
+name|getKey
+argument_list|()
 operator|.
 name|isAlive
+argument_list|()
+operator|&&
+operator|!
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|isDisabled
 argument_list|()
 condition|)
 block|{
 name|Resource
 name|r
 init|=
-name|inst
+name|entry
+operator|.
+name|getKey
+argument_list|()
 operator|.
 name|getResource
 argument_list|()
@@ -2131,23 +2082,6 @@ return|return
 literal|false
 return|;
 block|}
-name|String
-name|hostForContainer
-init|=
-name|containerToInstanceMap
-operator|.
-name|remove
-argument_list|(
-name|taskInfo
-operator|.
-name|containerId
-argument_list|)
-decl_stmt|;
-assert|assert
-name|hostForContainer
-operator|!=
-literal|null
-assert|;
 name|ServiceInstance
 name|assignedInstance
 init|=
@@ -2317,6 +2251,8 @@ operator|+
 name|containerId
 argument_list|)
 expr_stmt|;
+comment|// Containers are not being tracked for re-use.
+comment|// This is safe to ignore since a deallocate task should have come in earlier.
 return|return
 literal|null
 return|;
@@ -2388,7 +2324,7 @@ name|appCallbackExecutor
 argument_list|)
 return|;
 block|}
-comment|/**    * @param requestedHosts the list of preferred hosts. null implies any host    * @return    */
+comment|/**    * @param request the list of preferred hosts. null implies any host    * @return    */
 specifier|private
 name|ServiceInstance
 name|selectHost
@@ -2425,6 +2361,22 @@ operator|<=
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Refreshing instances since total memory is 0"
+argument_list|)
+expr_stmt|;
+block|}
 name|refreshInstances
 argument_list|()
 expr_stmt|;
@@ -2452,6 +2404,12 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|int
+name|prefHostCount
+init|=
+operator|-
+literal|1
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -2460,6 +2418,9 @@ range|:
 name|requestedHosts
 control|)
 block|{
+name|prefHostCount
+operator|++
+expr_stmt|;
 comment|// Pick the first host always. Weak attempt at cache affinity.
 name|Set
 argument_list|<
@@ -2491,6 +2452,16 @@ range|:
 name|instances
 control|)
 block|{
+name|NodeInfo
+name|nodeInfo
+init|=
+name|instanceToNodeMap
+operator|.
+name|get
+argument_list|(
+name|inst
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|inst
@@ -2498,15 +2469,17 @@ operator|.
 name|isAlive
 argument_list|()
 operator|&&
-name|instanceToNodeMap
+name|nodeInfo
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|nodeInfo
 operator|.
-name|containsKey
-argument_list|(
-name|inst
-argument_list|)
+name|isDisabled
+argument_list|()
 condition|)
 block|{
-comment|// only allocate from the "available" list
 comment|// TODO Change this to work off of what we think is remaining capacity for an
 comment|// instance
 name|LOG
@@ -2520,6 +2493,14 @@ operator|+
 literal|" when looking for "
 operator|+
 name|host
+operator|+
+literal|". FirstRequestedHost="
+operator|+
+operator|(
+name|prefHostCount
+operator|==
+literal|0
+operator|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -2531,21 +2512,29 @@ block|}
 block|}
 block|}
 comment|/* fall through - miss in locality (random scheduling) */
+name|Entry
+argument_list|<
 name|ServiceInstance
+argument_list|,
+name|NodeInfo
+argument_list|>
 index|[]
 name|all
 init|=
 name|instanceToNodeMap
 operator|.
-name|keySet
+name|entrySet
 argument_list|()
 operator|.
 name|toArray
 argument_list|(
 operator|new
-name|ServiceInstance
+name|Entry
 index|[
-literal|0
+name|instanceToNodeMap
+operator|.
+name|size
+argument_list|()
 index|]
 argument_list|)
 decl_stmt|;
@@ -2589,7 +2578,12 @@ name|i
 operator|++
 control|)
 block|{
+name|Entry
+argument_list|<
 name|ServiceInstance
+argument_list|,
+name|NodeInfo
+argument_list|>
 name|inst
 init|=
 name|all
@@ -2609,7 +2603,19 @@ if|if
 condition|(
 name|inst
 operator|.
+name|getKey
+argument_list|()
+operator|.
 name|isAlive
+argument_list|()
+operator|&&
+operator|!
+name|inst
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|isDisabled
 argument_list|()
 condition|)
 block|{
@@ -2621,11 +2627,18 @@ literal|"Assigning "
 operator|+
 name|inst
 operator|+
-literal|" when looking for any host"
+literal|" when looking for any host, from #hosts="
+operator|+
+name|all
+operator|.
+name|length
 argument_list|)
 expr_stmt|;
 return|return
 name|inst
+operator|.
+name|getKey
+argument_list|()
 return|;
 block|}
 block|}
@@ -2639,6 +2652,13 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+comment|// TODO Ideally, each refresh operation should addNodes if they don't already exist.
+comment|// Even better would be to get notifications from the service impl when a node gets added or removed.
+comment|// Instead of having to walk through the entire list. The computation of a node getting added or
+comment|// removed already exists in the DynamicRegistry implementation.
+comment|// This will only happen if no allocations are possible, which means all other nodes have
+comment|// been blacklisted.
+comment|// TODO Look for new nodes more often. See comment above.
 comment|/* check again whether nodes are disabled or just missing */
 name|writeLock
 operator|.
@@ -2668,15 +2688,6 @@ operator|.
 name|isAlive
 argument_list|()
 operator|&&
-name|instanceBlackList
-operator|.
-name|contains
-argument_list|(
-name|inst
-argument_list|)
-operator|==
-literal|false
-operator|&&
 name|instanceToNodeMap
 operator|.
 name|containsKey
@@ -2688,6 +2699,17 @@ literal|false
 condition|)
 block|{
 comment|/* that's a good node, not added to the allocations yet */
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Found a new node: "
+operator|+
+name|inst
+operator|+
+literal|". Adding to node list and disabling to trigger scheduling"
+argument_list|)
+expr_stmt|;
 name|addNode
 argument_list|(
 name|inst
@@ -2704,6 +2726,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// mark it as disabled to let the pending tasks go there
+comment|// TODO If disabling the instance, have it wake up immediately instead of waiting.
+comment|// Ideally get rid of this requirement, by having all tasks allocated via a queue.
 name|disableInstance
 argument_list|(
 name|inst
@@ -2769,6 +2793,15 @@ name|NodeInfo
 name|node
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding node: "
+operator|+
+name|inst
+argument_list|)
+expr_stmt|;
 name|instanceToNodeMap
 operator|.
 name|put
@@ -2778,6 +2811,7 @@ argument_list|,
 name|node
 argument_list|)
 expr_stmt|;
+comment|// TODO Trigger a scheduling run each time a new node is added.
 block|}
 specifier|private
 name|void
@@ -2803,10 +2837,23 @@ name|isBusy
 argument_list|()
 condition|)
 block|{
+comment|// If the node being re-enabled was not marked busy previously, then it was disabled due to
+comment|// some other failure. Refresh the service list to see if it's been removed permanently.
 name|refreshInstances
 argument_list|()
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Attempting to re-enable node: "
+operator|+
+name|nodeInfo
+operator|.
+name|host
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|nodeInfo
@@ -2821,26 +2868,6 @@ name|nodeInfo
 operator|.
 name|enableNode
 argument_list|()
-expr_stmt|;
-name|instanceBlackList
-operator|.
-name|remove
-argument_list|(
-name|nodeInfo
-operator|.
-name|host
-argument_list|)
-expr_stmt|;
-name|instanceToNodeMap
-operator|.
-name|put
-argument_list|(
-name|nodeInfo
-operator|.
-name|host
-argument_list|,
-name|nodeInfo
-argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -2897,7 +2924,7 @@ name|nodeInfo
 init|=
 name|instanceToNodeMap
 operator|.
-name|remove
+name|get
 argument_list|(
 name|instance
 argument_list|)
@@ -2907,6 +2934,11 @@ condition|(
 name|nodeInfo
 operator|==
 literal|null
+operator|||
+name|nodeInfo
+operator|.
+name|isDisabled
+argument_list|()
 condition|)
 block|{
 if|if
@@ -2932,13 +2964,6 @@ block|}
 block|}
 else|else
 block|{
-name|instanceBlackList
-operator|.
-name|add
-argument_list|(
-name|instance
-argument_list|)
-expr_stmt|;
 name|nodeInfo
 operator|.
 name|disableNode
@@ -2955,7 +2980,7 @@ argument_list|)
 expr_stmt|;
 comment|// daemon failure vs daemon busy
 comment|// TODO: handle task to container map events in case of hard failures
-name|disabledNodes
+name|disabledNodesQueue
 operator|.
 name|add
 argument_list|(
@@ -2982,7 +3007,7 @@ literal|" for "
 operator|+
 name|nodeReEnableTimeout
 operator|+
-literal|" seconds"
+literal|" milli-seconds"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3434,21 +3459,6 @@ argument_list|,
 name|taskInfo
 argument_list|)
 expr_stmt|;
-name|containerToInstanceMap
-operator|.
-name|put
-argument_list|(
-name|container
-operator|.
-name|getId
-argument_list|()
-argument_list|,
-name|host
-operator|.
-name|getWorkerIdentity
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -3532,7 +3542,7 @@ block|{
 name|NodeInfo
 name|nodeInfo
 init|=
-name|disabledNodes
+name|disabledNodesQueue
 operator|.
 name|take
 argument_list|()
@@ -3657,6 +3667,14 @@ name|cumulativeBackoffFactor
 init|=
 literal|1.0f
 decl_stmt|;
+comment|// A node could be disabled for reasons other than being busy.
+specifier|private
+name|boolean
+name|disabled
+init|=
+literal|false
+decl_stmt|;
+comment|// If disabled, the node could be marked as busy.
 specifier|private
 name|boolean
 name|busy
@@ -3699,6 +3717,10 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
+name|disabled
+operator|=
+literal|false
+expr_stmt|;
 block|}
 name|void
 name|disableNode
@@ -3715,6 +3737,10 @@ operator|.
 name|getTime
 argument_list|()
 decl_stmt|;
+name|disabled
+operator|=
+literal|true
+expr_stmt|;
 if|if
 condition|(
 name|numSuccessfulTasksAtLastBlacklist
@@ -3760,13 +3786,11 @@ name|void
 name|registerTaskSuccess
 parameter_list|()
 block|{
-name|this
-operator|.
-name|busy
-operator|=
-literal|false
-expr_stmt|;
-comment|// if a task exited, we might have free slots
+comment|// TODO If a task succeeds, we may have free slots. Mark the node as !busy. Ideally take it out
+comment|// of the queue for more allocations.
+comment|// For now, not chanigng the busy status,
+comment|// this.busy = false;
+comment|// this.disabled = false;
 name|numSuccessfulTasks
 operator|++
 expr_stmt|;
@@ -3795,6 +3819,15 @@ return|return
 name|busy
 return|;
 block|}
+specifier|public
+name|boolean
+name|isDisabled
+parameter_list|()
+block|{
+return|return
+name|disabled
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -3806,12 +3839,21 @@ name|unit
 parameter_list|)
 block|{
 return|return
+name|unit
+operator|.
+name|convert
+argument_list|(
 name|expireTimeMillis
 operator|-
 name|clock
 operator|.
 name|getTime
 argument_list|()
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -4532,153 +4574,6 @@ name|assigned
 operator|=
 literal|true
 expr_stmt|;
-block|}
-block|}
-specifier|static
-class|class
-name|ContainerFactory
-block|{
-specifier|final
-name|ApplicationAttemptId
-name|customAppAttemptId
-decl_stmt|;
-name|AtomicLong
-name|nextId
-decl_stmt|;
-specifier|public
-name|ContainerFactory
-parameter_list|(
-name|AppContext
-name|appContext
-parameter_list|,
-name|long
-name|appIdLong
-parameter_list|)
-block|{
-name|this
-operator|.
-name|nextId
-operator|=
-operator|new
-name|AtomicLong
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|ApplicationId
-name|appId
-init|=
-name|ApplicationId
-operator|.
-name|newInstance
-argument_list|(
-name|appIdLong
-argument_list|,
-name|appContext
-operator|.
-name|getApplicationAttemptId
-argument_list|()
-operator|.
-name|getApplicationId
-argument_list|()
-operator|.
-name|getId
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|this
-operator|.
-name|customAppAttemptId
-operator|=
-name|ApplicationAttemptId
-operator|.
-name|newInstance
-argument_list|(
-name|appId
-argument_list|,
-name|appContext
-operator|.
-name|getApplicationAttemptId
-argument_list|()
-operator|.
-name|getAttemptId
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-specifier|public
-name|Container
-name|createContainer
-parameter_list|(
-name|Resource
-name|capability
-parameter_list|,
-name|Priority
-name|priority
-parameter_list|,
-name|String
-name|hostname
-parameter_list|,
-name|int
-name|port
-parameter_list|)
-block|{
-name|ContainerId
-name|containerId
-init|=
-name|ContainerId
-operator|.
-name|newContainerId
-argument_list|(
-name|customAppAttemptId
-argument_list|,
-name|nextId
-operator|.
-name|getAndIncrement
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|NodeId
-name|nodeId
-init|=
-name|NodeId
-operator|.
-name|newInstance
-argument_list|(
-name|hostname
-argument_list|,
-name|port
-argument_list|)
-decl_stmt|;
-name|String
-name|nodeHttpAddress
-init|=
-literal|"hostname:0"
-decl_stmt|;
-comment|// TODO: include UI ports
-name|Container
-name|container
-init|=
-name|Container
-operator|.
-name|newInstance
-argument_list|(
-name|containerId
-argument_list|,
-name|nodeId
-argument_list|,
-name|nodeHttpAddress
-argument_list|,
-name|capability
-argument_list|,
-name|priority
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
-return|return
-name|container
-return|;
 block|}
 block|}
 block|}

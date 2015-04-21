@@ -89,6 +89,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -151,15 +161,17 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|apache
+name|google
 operator|.
-name|hadoop
+name|common
 operator|.
-name|conf
+name|util
 operator|.
-name|Configuration
+name|concurrent
+operator|.
+name|ThreadFactoryBuilder
 import|;
 end_import
 
@@ -171,9 +183,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|conf
 operator|.
-name|PathNotFoundException
+name|Configuration
 import|;
 end_import
 
@@ -344,24 +356,6 @@ operator|.
 name|RegistryUtils
 operator|.
 name|ServiceRecordMarshal
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|registry
-operator|.
-name|client
-operator|.
-name|exceptions
-operator|.
-name|InvalidRecordException
 import|;
 end_import
 
@@ -556,16 +550,24 @@ name|RegistryOperationsService
 name|client
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|instanceName
 decl_stmt|;
 specifier|private
+specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
 specifier|private
+specifier|final
 name|ServiceRecordMarshal
 name|encoder
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|path
 decl_stmt|;
 specifier|private
 specifier|final
@@ -618,6 +620,23 @@ operator|.
 name|newScheduledThreadPool
 argument_list|(
 literal|1
+argument_list|,
+operator|new
+name|ThreadFactoryBuilder
+argument_list|()
+operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+operator|.
+name|setNameFormat
+argument_list|(
+literal|"LlapYarnRegistryRefresher"
+argument_list|)
+operator|.
+name|build
+argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -721,6 +740,33 @@ name|RegistryUtils
 operator|.
 name|ServiceRecordMarshal
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|path
+operator|=
+name|RegistryPathUtils
+operator|.
+name|join
+argument_list|(
+name|RegistryUtils
+operator|.
+name|componentPath
+argument_list|(
+name|RegistryUtils
+operator|.
+name|currentUser
+argument_list|()
+argument_list|,
+name|SERVICE_CLASS
+argument_list|,
+name|instanceName
+argument_list|,
+literal|"workers"
+argument_list|)
+argument_list|,
+literal|"worker-"
+argument_list|)
 expr_stmt|;
 name|refreshDelay
 operator|=
@@ -837,28 +883,9 @@ name|getPath
 parameter_list|()
 block|{
 return|return
-name|RegistryPathUtils
+name|this
 operator|.
-name|join
-argument_list|(
-name|RegistryUtils
-operator|.
-name|componentPath
-argument_list|(
-name|RegistryUtils
-operator|.
-name|currentUser
-argument_list|()
-argument_list|,
-name|SERVICE_CLASS
-argument_list|,
-name|instanceName
-argument_list|,
-literal|"workers"
-argument_list|)
-argument_list|,
-literal|"worker-"
-argument_list|)
+name|path
 return|;
 block|}
 annotation|@
@@ -1233,11 +1260,12 @@ name|void
 name|kill
 parameter_list|()
 block|{
+comment|// May be possible to generate a notification back to the scheduler from here.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Killing "
+literal|"Killing service instance: "
 operator|+
 name|this
 argument_list|)
@@ -1340,9 +1368,16 @@ literal|":"
 operator|+
 name|rpcPort
 operator|+
+literal|" with resources="
+operator|+
+name|getResource
+argument_list|()
+operator|+
 literal|"]"
 return|;
 block|}
+comment|// Relying on the identity hashCode and equality, since refreshing instances retains the old copy
+comment|// of an already known instance.
 block|}
 specifier|private
 class|class
@@ -1350,6 +1385,9 @@ name|DynamicServiceInstanceSet
 implements|implements
 name|ServiceInstanceSet
 block|{
+comment|// LinkedHashMap to retain iteration order.
+specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -1357,10 +1395,16 @@ argument_list|,
 name|ServiceInstance
 argument_list|>
 name|instances
+init|=
+operator|new
+name|LinkedHashMap
+argument_list|<>
+argument_list|()
 decl_stmt|;
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|Map
 argument_list|<
 name|String
@@ -1370,13 +1414,20 @@ argument_list|>
 name|getAll
 parameter_list|()
 block|{
+comment|// Return a copy. Instances may be modified during a refresh.
 return|return
+operator|new
+name|LinkedHashMap
+argument_list|<>
+argument_list|(
 name|instances
+argument_list|)
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|ServiceInstance
 name|getInstance
 parameter_list|(
@@ -1396,7 +1447,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|void
 name|refresh
 parameter_list|()
@@ -1449,6 +1499,12 @@ name|path
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Synchronize after reading the service records from the external service (ZK)
+synchronized|synchronized
+init|(
+name|this
+init|)
+block|{
 name|Set
 argument_list|<
 name|String
@@ -1561,7 +1617,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-elseif|else
+else|else
+block|{
 if|if
 condition|(
 name|LOG
@@ -1586,6 +1643,7 @@ operator|+
 name|instance
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|latestKeys
@@ -1632,6 +1690,7 @@ name|latestKeys
 argument_list|)
 condition|)
 block|{
+comment|// This is all the records which have not checked in, and are effectively dead.
 for|for
 control|(
 name|String
@@ -1684,6 +1743,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|// oldKeys contains the set of dead instances at this point.
 name|this
 operator|.
 name|instances
@@ -1711,14 +1771,19 @@ block|{
 name|this
 operator|.
 name|instances
-operator|=
+operator|.
+name|putAll
+argument_list|(
 name|freshInstances
+argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|Set
 argument_list|<
 name|ServiceInstance
@@ -1729,6 +1794,8 @@ name|String
 name|host
 parameter_list|)
 block|{
+comment|// TODO Maybe store this as a map which is populated during construction, to avoid walking
+comment|// the map on each request.
 name|Set
 argument_list|<
 name|ServiceInstance

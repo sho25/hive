@@ -123,31 +123,7 @@ name|mockito
 operator|.
 name|Mockito
 operator|.
-name|doAnswer
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
 name|mock
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|never
 import|;
 end_import
 
@@ -333,22 +309,6 @@ name|yarn
 operator|.
 name|util
 operator|.
-name|Clock
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|yarn
-operator|.
-name|util
-operator|.
 name|SystemClock
 import|;
 end_import
@@ -438,18 +398,6 @@ operator|.
 name|mockito
 operator|.
 name|ArgumentCaptor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|mortbay
-operator|.
-name|log
-operator|.
-name|Log
 import|;
 end_import
 
@@ -892,7 +840,7 @@ name|tsWrapper
 operator|.
 name|ts
 operator|.
-name|disabledNodes
+name|disabledNodesQueue
 operator|.
 name|peek
 argument_list|()
@@ -1321,7 +1269,7 @@ name|tsWrapper
 operator|.
 name|ts
 operator|.
-name|disabledNodes
+name|disabledNodesQueue
 operator|.
 name|size
 argument_list|()
