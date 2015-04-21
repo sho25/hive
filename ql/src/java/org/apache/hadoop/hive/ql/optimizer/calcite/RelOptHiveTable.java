@@ -1868,7 +1868,12 @@ argument_list|,
 name|getRowType
 argument_list|()
 argument_list|,
-literal|true
+name|HiveCalciteUtil
+operator|.
+name|getInputRefs
+argument_list|(
+name|pruneNode
+argument_list|)
 argument_list|,
 name|this
 operator|.
