@@ -3556,7 +3556,7 @@ block|}
 name|IntegerWriter
 name|createIntegerWriter
 parameter_list|(
-name|OutStream
+name|PositionedOutputStream
 name|output
 parameter_list|,
 name|boolean
@@ -6225,43 +6225,6 @@ block|{
 comment|// Write the dictionary by traversing the red-black tree writing out
 comment|// the bytes and lengths; and creating the map from the original order
 comment|// to the final sorted order.
-if|if
-condition|(
-name|dictionary
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isWarnEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Empty dictionary. Suppressing dictionary stream."
-argument_list|)
-expr_stmt|;
-block|}
-name|stringOutput
-operator|.
-name|suppress
-argument_list|()
-expr_stmt|;
-name|lengthOutput
-operator|.
-name|suppress
-argument_list|()
-expr_stmt|;
-block|}
 name|dictionary
 operator|.
 name|visit
