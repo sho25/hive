@@ -4197,7 +4197,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4220,7 +4220,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4243,7 +4243,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4266,7 +4266,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4289,7 +4289,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4312,7 +4312,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4545,7 +4545,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4568,7 +4568,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4591,7 +4591,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4614,7 +4614,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4637,7 +4637,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4696,7 +4696,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4719,7 +4719,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4742,7 +4742,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4765,7 +4765,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4788,7 +4788,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4874,7 +4874,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4897,7 +4897,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4920,7 +4920,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -4943,7 +4943,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5029,7 +5029,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5052,7 +5052,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5075,7 +5075,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5098,7 +5098,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5121,7 +5121,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5144,7 +5144,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5167,7 +5167,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES
+name|YES_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -5226,7 +5226,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|YES_NO
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -10681,7 +10681,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -10706,7 +10706,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -10834,7 +10834,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -10859,7 +10859,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -10884,7 +10884,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11111,7 +11111,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11136,7 +11136,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11264,7 +11264,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11289,7 +11289,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11314,7 +11314,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11545,7 +11545,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11570,7 +11570,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11700,7 +11700,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11725,7 +11725,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -11750,7 +11750,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12012,7 +12012,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12046,7 +12046,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12191,7 +12191,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12225,7 +12225,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12259,7 +12259,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12521,7 +12521,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12555,7 +12555,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12700,7 +12700,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12734,7 +12734,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -12768,7 +12768,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13029,7 +13029,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13062,7 +13062,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13208,7 +13208,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|NO
+name|NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13241,7 +13241,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13274,7 +13274,7 @@ name|assertEquals
 argument_list|(
 name|TruthValue
 operator|.
-name|YES_NO
+name|YES_NO_NULL
 argument_list|,
 name|RecordReaderImpl
 operator|.
@@ -13420,6 +13420,8 @@ argument_list|(
 literal|"10"
 argument_list|,
 literal|"200"
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 decl_stmt|;

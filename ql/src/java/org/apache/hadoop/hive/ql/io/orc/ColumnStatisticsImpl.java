@@ -3774,6 +3774,13 @@ name|getHasNull
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
+name|hasNull
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 name|ColumnStatisticsImpl
 parameter_list|()
