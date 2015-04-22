@@ -118,6 +118,10 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|protected
+name|String
+name|name
+decl_stmt|;
 specifier|private
 name|TreeMap
 argument_list|<
@@ -158,6 +162,45 @@ name|typeName
 operator|=
 name|typeName
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"(value column: "
+operator|+
+name|valueColumn
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", type name: "
+operator|+
+name|typeName
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
 block|}
 block|}
 specifier|public
@@ -260,8 +303,17 @@ block|}
 block|}
 specifier|public
 name|VectorColumnOrderedMap
-parameter_list|()
+parameter_list|(
+name|String
+name|name
+parameter_list|)
 block|{
+name|this
+operator|.
+name|name
+operator|=
+name|name
+expr_stmt|;
 name|orderedTreeMap
 operator|=
 operator|new
@@ -300,13 +352,28 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|Error
+name|RuntimeException
 argument_list|(
-literal|"Duplicate column "
+name|name
+operator|+
+literal|" duplicate column "
 operator|+
 name|orderedColumn
 operator|+
-literal|" in ordered column map"
+literal|" in ordered column map "
+operator|+
+name|orderedTreeMap
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" when adding value column "
+operator|+
+name|valueColumn
+operator|+
+literal|", type "
+operator|+
+name|typeName
 argument_list|)
 throw|;
 block|}

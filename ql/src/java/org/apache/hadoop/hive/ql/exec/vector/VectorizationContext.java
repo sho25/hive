@@ -2836,11 +2836,12 @@ parameter_list|(
 name|ExprNodeColumnDesc
 name|colExpr
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
+comment|// Call the regular method since it does error checking.
 return|return
-name|projectionColumnMap
-operator|.
-name|get
+name|getInputColumnIndex
 argument_list|(
 name|colExpr
 operator|.

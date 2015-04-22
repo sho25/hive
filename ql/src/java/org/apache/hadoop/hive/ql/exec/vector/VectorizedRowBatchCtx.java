@@ -3613,7 +3613,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|Error
+name|RuntimeException
 argument_list|(
 literal|"Cannot allocate vector column for "
 operator|+

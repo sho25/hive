@@ -7737,6 +7737,72 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable native (i.e. non-pass through) vectorization\n"
+operator|+
+literal|"of queries using MapJoin.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_MULTIKEY_ONLY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.multikey.only.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to restrict use of native vector map join hash tables to\n"
+operator|+
+literal|"the MultiKey in queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_MINMAX_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.minmax.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vector map join hash tables to\n"
+operator|+
+literal|"use max / max filtering for integer join queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_OVERFLOW_REPEATED_THRESHOLD
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.overflow.repeated.threshold"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The number of small table rows for a match in vector map join hash tables\n"
+operator|+
+literal|"where we use the repeated field optimization in overflow vectorized row batch for join queries using MapJoin.\n"
+operator|+
+literal|"A value of -1 means do use the join result optimization.  Otherwise, threshold value can be 0 to maximum integer."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_FAST_HASHTABLE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.fast.hashtable.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable use of native fast vector map join hash tables in\n"
+operator|+
+literal|"queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
 argument_list|(
 literal|"hive.vectorized.groupby.checkinterval"

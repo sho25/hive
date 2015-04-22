@@ -839,6 +839,20 @@ name|useOptimizedTables
 operator|=
 literal|false
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|describeOi
+argument_list|(
+literal|"Not using optimized hash table. "
+operator|+
+literal|"Only a subset of mapjoin keys is supported. Unsupported key: "
+argument_list|,
+name|keyOi
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -937,6 +951,21 @@ argument_list|,
 name|keyCount
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using tableContainer "
+operator|+
+name|tableContainer
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+argument_list|)
+expr_stmt|;
 while|while
 condition|(
 name|kvReader

@@ -871,7 +871,7 @@ specifier|transient
 name|boolean
 name|hashTblInitedOnce
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|ReusableGetAdaptor
 index|[]
@@ -893,19 +893,19 @@ name|boolean
 name|hybridMapJoinLeftover
 decl_stmt|;
 comment|// whether there's spilled data to be processed
-specifier|private
+specifier|protected
 specifier|transient
 name|MapJoinBytesTableContainer
 name|currentSmallTable
 decl_stmt|;
 comment|// reloaded hashmap from disk
-specifier|private
+specifier|protected
 specifier|transient
 name|int
 name|tag
 decl_stmt|;
 comment|// big table alias
-specifier|private
+specifier|protected
 specifier|transient
 name|int
 name|smallTable
@@ -959,6 +959,23 @@ block|{
 name|defaultStartGroup
 argument_list|()
 expr_stmt|;
+block|}
+specifier|protected
+name|HashTableLoader
+name|getHashTableLoader
+parameter_list|(
+name|Configuration
+name|hconf
+parameter_list|)
+block|{
+return|return
+name|HashTableLoaderFactory
+operator|.
+name|getLoader
+argument_list|(
+name|hconf
+argument_list|)
+return|;
 block|}
 annotation|@
 name|Override
@@ -1076,9 +1093,7 @@ argument_list|)
 expr_stmt|;
 name|loader
 operator|=
-name|HashTableLoaderFactory
-operator|.
-name|getLoader
+name|getHashTableLoader
 argument_list|(
 name|hconf
 argument_list|)
@@ -1805,7 +1820,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
+specifier|protected
 name|Pair
 argument_list|<
 name|MapJoinTableContainer
@@ -3080,7 +3095,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Reload hashtable from the hash partition.    * It can have two steps:    * 1) Deserialize a serialized hash table, and    * 2) Merge every key/value pair from small table container into the hash table    * @param partition hash partition to process    * @param hybridHtContainer Hybrid hashtable container    * @throws IOException    * @throws ClassNotFoundException    * @throws HiveException    * @throws SerDeException    */
-specifier|private
+specifier|protected
 name|void
 name|reloadHashTable
 parameter_list|(
@@ -3312,7 +3327,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Iterate over the big table row container and feed process() with leftover rows    * @param partition the hash partition being brought back to memory at the moment    * @throws HiveException    */
+comment|/**    * Iterate over the big table row container and feed process() with leftover rows    * @param partition the hash partition being brought back to memory at the moment    * @throws HiveException    * @throws IOException    */
 specifier|protected
 name|void
 name|reProcessBigTable
@@ -3322,6 +3337,8 @@ name|partition
 parameter_list|)
 throws|throws
 name|HiveException
+throws|,
+name|IOException
 block|{
 name|ObjectContainer
 name|bigTable

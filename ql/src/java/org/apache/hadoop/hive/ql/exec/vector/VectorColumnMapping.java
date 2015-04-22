@@ -31,28 +31,6 @@ name|Arrays
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|VectorColumnOrderedMap
-operator|.
-name|Mapping
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class collects column information for copying a row from one VectorizedRowBatch to  * same/another batch.  */
 end_comment
@@ -92,7 +70,10 @@ name|vectorColumnMapping
 decl_stmt|;
 specifier|public
 name|VectorColumnMapping
-parameter_list|()
+parameter_list|(
+name|String
+name|name
+parameter_list|)
 block|{
 name|this
 operator|.
@@ -100,7 +81,9 @@ name|vectorColumnMapping
 operator|=
 operator|new
 name|VectorColumnOrderedMap
-argument_list|()
+argument_list|(
+name|name
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
