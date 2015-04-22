@@ -301,13 +301,13 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|zooKeeperClient
 operator|.
 name|start
 argument_list|()
 expr_stmt|;
-try|try
-block|{
 name|serverHosts
 operator|=
 name|zooKeeperClient
