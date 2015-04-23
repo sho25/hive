@@ -413,6 +413,18 @@ name|startsWith
 argument_list|(
 literal|"hive.llap."
 argument_list|)
+operator|||
+name|kv
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|startsWith
+argument_list|(
+name|LlapConfiguration
+operator|.
+name|LLAP_PREFIX
+argument_list|)
 condition|)
 block|{
 comment|// TODO: read this somewhere useful, like the task scheduler
@@ -754,6 +766,31 @@ name|memory
 argument_list|,
 name|vcores
 argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"FixedServiceInstance{"
+operator|+
+literal|"host="
+operator|+
+name|host
+operator|+
+literal|", memory="
+operator|+
+name|memory
+operator|+
+literal|", vcores="
+operator|+
+name|vcores
+operator|+
+literal|'}'
 return|;
 block|}
 block|}
