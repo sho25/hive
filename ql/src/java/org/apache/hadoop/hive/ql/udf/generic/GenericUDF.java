@@ -2577,7 +2577,7 @@ name|date
 return|;
 block|}
 specifier|protected
-name|Date
+name|Timestamp
 name|getTimestampValue
 parameter_list|(
 name|DeferredObject
