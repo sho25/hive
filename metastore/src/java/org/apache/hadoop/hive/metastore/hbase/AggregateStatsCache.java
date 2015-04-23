@@ -197,6 +197,20 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|locks
 operator|.
 name|Lock
@@ -278,12 +292,15 @@ name|int
 name|maxCacheNodes
 decl_stmt|;
 comment|// Current nodes in the cache
-comment|// TODO: Make access threadsafe!!!
 specifier|private
-name|int
+name|AtomicInteger
 name|currentNodes
 init|=
+operator|new
+name|AtomicInteger
+argument_list|(
 literal|0
+argument_list|)
 decl_stmt|;
 comment|// Run the cleaner thread when the cache is maxFull% full
 specifier|private
@@ -652,12 +669,16 @@ return|return
 name|maxCacheNodes
 return|;
 block|}
+comment|// Don't want to lock on this, so this may return approximate value
 name|int
 name|getCurrentNodes
 parameter_list|()
 block|{
 return|return
 name|currentNodes
+operator|.
+name|intValue
+argument_list|()
 return|;
 block|}
 name|int
@@ -1177,7 +1198,8 @@ block|{
 comment|// If we have no space in the cache, run cleaner thread
 if|if
 condition|(
-name|currentNodes
+name|getCurrentNodes
+argument_list|()
 operator|/
 name|maxCacheNodes
 operator|>
@@ -1306,8 +1328,10 @@ operator|.
 name|updateLastAccessTime
 argument_list|()
 expr_stmt|;
-operator|++
 name|currentNodes
+operator|.
+name|getAndIncrement
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1544,8 +1568,10 @@ operator|.
 name|remove
 argument_list|()
 expr_stmt|;
-operator|--
 name|currentNodes
+operator|.
+name|getAndDecrement
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1592,7 +1618,8 @@ comment|// If the expired nodes did not result in cache being cleanUntil% in siz
 comment|// start removing LRU nodes
 while|while
 condition|(
-name|currentNodes
+name|getCurrentNodes
+argument_list|()
 operator|/
 name|maxCacheNodes
 operator|>
@@ -1829,8 +1856,10 @@ operator|.
 name|remove
 argument_list|()
 expr_stmt|;
-operator|--
 name|currentNodes
+operator|.
+name|getAndDecrement
+argument_list|()
 expr_stmt|;
 return|return;
 block|}
@@ -1890,8 +1919,10 @@ argument_list|(
 name|deleteIndex
 argument_list|)
 expr_stmt|;
-operator|--
 name|currentNodes
+operator|.
+name|getAndDecrement
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1953,7 +1984,6 @@ name|timeToLive
 return|;
 block|}
 comment|/**    * Key object for the stats cache hashtable    */
-specifier|private
 specifier|static
 class|class
 name|Key
@@ -2333,10 +2363,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * TODO: capture some metrics for the cache    */
-class|class
-name|Metrics
-block|{    }
 comment|/**    * Intermediate object, used to collect hits& misses for each cache node that is evaluate for an    * incoming request    */
 specifier|private
 specifier|static
@@ -2393,6 +2419,10 @@ name|shouldSkip
 expr_stmt|;
 block|}
 block|}
+comment|/**    * TODO: capture some metrics for the cache    */
+class|class
+name|Metrics
+block|{    }
 comment|/**    * TODO: implement memory management for the cache    */
 specifier|static
 class|class
