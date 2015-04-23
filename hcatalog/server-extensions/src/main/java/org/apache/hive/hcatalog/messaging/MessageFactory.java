@@ -155,6 +155,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * Abstract Factory for the construction of HCatalog message instances.  */
 end_comment
@@ -488,12 +498,15 @@ argument_list|>
 name|partitions
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for building AlterPartitionMessage    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
+comment|/**    * Factory method for building AlterPartitionMessage    * @param table The table in which the partition is being altered    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
 specifier|public
 specifier|abstract
 name|AlterPartitionMessage
 name|buildAlterPartitionMessage
 parameter_list|(
+name|Table
+name|table
+parameter_list|,
 name|Partition
 name|before
 parameter_list|,
@@ -526,8 +539,10 @@ parameter_list|,
 name|String
 name|table
 parameter_list|,
-name|List
+name|Map
 argument_list|<
+name|String
+argument_list|,
 name|String
 argument_list|>
 name|partVals

@@ -27,6 +27,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * HCat message sent when an insert is done to a table or partition.  */
 end_comment
@@ -58,14 +68,16 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
-comment|/**    * Get the list of partition values.  Will be null if this insert is to a table and not a    * partition.    * @return List of partition values, or null.    */
+comment|/**    * Get the map of partition keyvalues.  Will be null if this insert is to a table and not a    * partition.    * @return Map of partition keyvalues, or null.    */
 specifier|public
 specifier|abstract
-name|List
+name|Map
 argument_list|<
 name|String
+argument_list|,
+name|String
 argument_list|>
-name|getPartitionValues
+name|getPartitionKeyValues
 parameter_list|()
 function_decl|;
 comment|/**    * Get the list of files created as a result of this DML operation.  May be null.    * @return List of new files, or null.    */

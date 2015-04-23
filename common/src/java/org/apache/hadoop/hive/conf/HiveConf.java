@@ -6424,6 +6424,17 @@ operator|+
 literal|"'repl.last.id' set on it. If so, it will fail."
 argument_list|)
 block|,
+name|HIVE_REPL_TASK_FACTORY
+argument_list|(
+literal|"hive.repl.task.factory"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Parameter that can be used to override which ReplicationTaskFactory will be\n"
+operator|+
+literal|"used to instantiate ReplicationTask events. Override for third party repl plugins"
+argument_list|)
+block|,
 name|HIVE_MAPPER_CANNOT_SPAN_MULTIPLE_PARTITIONS
 argument_list|(
 literal|"hive.mapper.cannot.span.multiple.partitions"
