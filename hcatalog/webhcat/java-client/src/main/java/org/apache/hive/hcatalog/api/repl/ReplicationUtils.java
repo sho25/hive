@@ -838,6 +838,13 @@ parameter_list|)
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|mapping
+operator|!=
+literal|null
+condition|)
+block|{
 return|return
 name|mapping
 operator|.
@@ -847,18 +854,20 @@ name|s
 argument_list|)
 return|;
 block|}
+block|}
 catch|catch
 parameter_list|(
 name|IllegalArgumentException
 name|iae
 parameter_list|)
 block|{
-comment|// The key wasn't present in the mapping, and the function didn't take care of returning
-comment|// a default value. We return the key itself, since no mapping was available
+comment|// The key wasn't present in the mapping, and the function didn't
+comment|// return a default value - ignore, and use our default.
+block|}
+comment|// We return the key itself, since no mapping was available/returned
 return|return
 name|s
 return|;
-block|}
 block|}
 specifier|public
 specifier|static
