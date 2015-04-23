@@ -5862,6 +5862,32 @@ name|PrimitiveObjectInspector
 name|oi
 parameter_list|)
 block|{
+return|return
+name|getTimestamp
+argument_list|(
+name|o
+argument_list|,
+name|oi
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|Timestamp
+name|getTimestamp
+parameter_list|(
+name|Object
+name|o
+parameter_list|,
+name|PrimitiveObjectInspector
+name|inputOI
+parameter_list|,
+name|boolean
+name|intToTimestampInSeconds
+parameter_list|)
+block|{
 if|if
 condition|(
 name|o
@@ -5885,7 +5911,7 @@ literal|0
 decl_stmt|;
 switch|switch
 condition|(
-name|oi
+name|inputOI
 operator|.
 name|getPrimitiveCategory
 argument_list|()
@@ -5908,7 +5934,7 @@ operator|(
 operator|(
 name|BooleanObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -5927,6 +5953,8 @@ operator|.
 name|longToTimestamp
 argument_list|(
 name|longValue
+argument_list|,
+name|intToTimestampInSeconds
 argument_list|)
 expr_stmt|;
 break|break;
@@ -5939,7 +5967,7 @@ operator|(
 operator|(
 name|ByteObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -5954,6 +5982,8 @@ operator|.
 name|longToTimestamp
 argument_list|(
 name|longValue
+argument_list|,
+name|intToTimestampInSeconds
 argument_list|)
 expr_stmt|;
 break|break;
@@ -5966,7 +5996,7 @@ operator|(
 operator|(
 name|ShortObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -5981,6 +6011,8 @@ operator|.
 name|longToTimestamp
 argument_list|(
 name|longValue
+argument_list|,
+name|intToTimestampInSeconds
 argument_list|)
 expr_stmt|;
 break|break;
@@ -5993,7 +6025,7 @@ operator|(
 operator|(
 name|IntObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -6008,6 +6040,8 @@ operator|.
 name|longToTimestamp
 argument_list|(
 name|longValue
+argument_list|,
+name|intToTimestampInSeconds
 argument_list|)
 expr_stmt|;
 break|break;
@@ -6020,7 +6054,7 @@ operator|(
 operator|(
 name|LongObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -6035,6 +6069,8 @@ operator|.
 name|longToTimestamp
 argument_list|(
 name|longValue
+argument_list|,
+name|intToTimestampInSeconds
 argument_list|)
 expr_stmt|;
 break|break;
@@ -6051,7 +6087,7 @@ operator|(
 operator|(
 name|FloatObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -6074,7 +6110,7 @@ operator|(
 operator|(
 name|DoubleObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|get
@@ -6097,7 +6133,7 @@ operator|(
 operator|(
 name|HiveDecimalObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|getPrimitiveJavaObject
@@ -6116,7 +6152,7 @@ init|=
 operator|(
 name|StringObjectInspector
 operator|)
-name|oi
+name|inputOI
 decl_stmt|;
 name|String
 name|s
@@ -6150,7 +6186,7 @@ name|getString
 argument_list|(
 name|o
 argument_list|,
-name|oi
+name|inputOI
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6167,7 +6203,7 @@ operator|(
 operator|(
 name|DateObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|getPrimitiveWritableObject
@@ -6192,7 +6228,7 @@ operator|(
 operator|(
 name|TimestampObjectInspector
 operator|)
-name|oi
+name|inputOI
 operator|)
 operator|.
 name|getPrimitiveWritableObject
@@ -6211,7 +6247,7 @@ name|RuntimeException
 argument_list|(
 literal|"Hive 2 Internal error: unknown type: "
 operator|+
-name|oi
+name|inputOI
 operator|.
 name|getTypeName
 argument_list|()

@@ -4114,6 +4114,17 @@ operator|+
 literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
+name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
+argument_list|(
+literal|"hive.int.timestamp.conversion.in.seconds"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Boolean/tinyint/smallint/int/bigint value is interpreted as milliseconds during the timestamp conversion.\n"
+operator|+
+literal|"Set this flag to true to interpret the value as seconds to be consistent with float/double."
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
