@@ -533,6 +533,14 @@ name|DEFAULT_COOKIE_NAMES_HS2
 init|=
 literal|"hive.server2.auth"
 decl_stmt|;
+comment|// The http header prefix for additional headers which have to be appended to the request
+specifier|static
+specifier|final
+name|String
+name|HTTP_HEADER_PREFIX
+init|=
+literal|"http.header."
+decl_stmt|;
 comment|// Non-configurable params:
 comment|// Currently supports JKS keystore format
 specifier|static
