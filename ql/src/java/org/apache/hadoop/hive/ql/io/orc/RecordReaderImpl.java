@@ -5244,6 +5244,50 @@ operator|+
 name|buffer
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|DiskRange
+name|sliceAndShift
+parameter_list|(
+name|long
+name|offset
+parameter_list|,
+name|long
+name|end
+parameter_list|,
+name|long
+name|shiftBy
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Cache chunk cannot be sliced - attempted ["
+operator|+
+name|this
+operator|.
+name|offset
+operator|+
+literal|", "
+operator|+
+name|this
+operator|.
+name|end
+operator|+
+literal|") to ["
+operator|+
+name|offset
+operator|+
+literal|", "
+operator|+
+name|end
+operator|+
+literal|") "
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/**    * Plan the ranges of the file that we need to read given the list of    * columns and row groups.    *    * @param streamList        the list of streams available    * @param indexes           the indexes that have been loaded    * @param includedColumns   which columns are needed    * @param includedRowGroups which row groups are needed    * @param isCompressed      does the file have generic compression    * @param encodings         the encodings for each column    * @param types             the types of the columns    * @param compressionSize   the compression block size    * @return the list of disk ranges that will be loaded    */
 specifier|static

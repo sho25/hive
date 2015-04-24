@@ -445,6 +445,7 @@ expr_stmt|;
 block|}
 comment|/** Splits current element in the list, using DiskRange::slice */
 specifier|public
+specifier|final
 name|DiskRangeList
 name|split
 parameter_list|(
@@ -543,20 +544,6 @@ expr_stmt|;
 block|}
 return|return
 name|result
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|int
-name|getLength
-parameter_list|()
-block|{
-return|return
-name|super
-operator|.
-name|getLength
-argument_list|()
 return|;
 block|}
 specifier|public

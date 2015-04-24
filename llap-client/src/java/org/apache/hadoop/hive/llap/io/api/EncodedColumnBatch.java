@@ -95,6 +95,11 @@ specifier|public
 name|int
 name|streamKind
 decl_stmt|;
+comment|/** Base offset from the beginning of the indexable unit;      * CB in compressed, stream in uncompressed file. */
+specifier|public
+name|int
+name|indexBaseOffset
+decl_stmt|;
 comment|// StreamBuffer can be reused for many RGs (e.g. dictionary case). To avoid locking every
 comment|// LlapMemoryBuffer 500 times, have a separate refcount on StreamBuffer itself.
 specifier|public
@@ -118,6 +123,10 @@ block|{
 name|streamKind
 operator|=
 name|kind
+expr_stmt|;
+name|indexBaseOffset
+operator|=
+literal|0
 expr_stmt|;
 block|}
 specifier|public

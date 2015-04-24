@@ -1300,8 +1300,9 @@ name|result
 operator|.
 name|indexInHeap
 operator|=
-operator|-
-literal|1
+name|LlapCacheableBuffer
+operator|.
+name|NOT_IN_CACHE
 expr_stmt|;
 operator|--
 name|heapSize
@@ -1695,7 +1696,7 @@ condition|(
 name|buffer
 operator|.
 name|indexInHeap
-operator|==
+operator|!=
 name|LlapCacheableBuffer
 operator|.
 name|IN_LIST

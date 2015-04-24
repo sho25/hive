@@ -68,6 +68,10 @@ name|boolean
 name|isDirectAlloc
 parameter_list|()
 function_decl|;
+name|int
+name|getMaxAllocation
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

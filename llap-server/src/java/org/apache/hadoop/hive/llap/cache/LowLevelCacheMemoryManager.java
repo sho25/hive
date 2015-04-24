@@ -446,7 +446,6 @@ return|;
 block|}
 annotation|@
 name|Override
-comment|// Not used by the data cache.
 specifier|public
 name|void
 name|releaseMemory

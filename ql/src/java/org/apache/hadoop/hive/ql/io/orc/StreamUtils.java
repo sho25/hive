@@ -184,13 +184,22 @@ name|diskRangeInfo
 init|=
 operator|new
 name|DiskRangeInfo
-argument_list|()
+argument_list|(
+name|streamBuffer
+operator|.
+name|indexBaseOffset
+argument_list|)
 decl_stmt|;
 name|long
 name|offset
 init|=
-literal|0
+name|diskRangeInfo
+operator|.
+name|getTotalLength
+argument_list|()
 decl_stmt|;
+comment|// See ctor comment.
+comment|// TODO: we should get rid of this
 for|for
 control|(
 name|LlapMemoryBuffer

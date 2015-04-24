@@ -139,6 +139,15 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|UNKNOWN_CACHED_LENGTH
+init|=
+operator|-
+literal|1
+decl_stmt|;
 specifier|protected
 specifier|final
 name|AtomicInteger
@@ -154,7 +163,7 @@ specifier|public
 name|ByteBuffer
 name|byteBuffer
 decl_stmt|;
-comment|/** Allocator uses this to remember which arena to alloc from.    * TODO Could wrap ByteBuffer instead? This needs reference anyway. */
+comment|/** Allocator uses this to remember which arena to alloc from. */
 specifier|public
 name|int
 name|arenaIndex
@@ -162,14 +171,17 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|/** ORC cache uses this to store compressed length; buffer is cached uncompressed, but    * the lookup is on compressed ranges, so we need to know this. */
-specifier|public
-name|int
-name|declaredLength
-decl_stmt|;
+comment|/** Allocator uses this to remember the allocation size. */
 specifier|public
 name|int
 name|allocSize
+decl_stmt|;
+comment|/** ORC cache uses this to store compressed length; buffer is cached uncompressed, but    * the lookup is on compressed ranges, so we need to know this. */
+specifier|public
+name|int
+name|declaredCachedLength
+init|=
+name|UNKNOWN_CACHED_LENGTH
 decl_stmt|;
 specifier|public
 name|void

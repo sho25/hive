@@ -56,12 +56,16 @@ name|DiskRange
 argument_list|>
 name|diskRanges
 decl_stmt|;
+comment|// TODO: use DiskRangeList instead
 name|long
 name|totalLength
 decl_stmt|;
 specifier|public
 name|DiskRangeInfo
-parameter_list|()
+parameter_list|(
+name|int
+name|indexBaseOffset
+parameter_list|)
 block|{
 name|this
 operator|.
@@ -72,11 +76,19 @@ operator|.
 name|newArrayList
 argument_list|()
 expr_stmt|;
+comment|// Some data is missing from the stream for PPD uncompressed read (because index offset is
+comment|// relative to the entire stream and we only read part of stream if RGs are filtered; unlike
+comment|// with compressed data where PPD only filters CBs, so we always get full CB, and index offset
+comment|// is relative to CB). To take care of the case when UncompressedStream goes seeking around by
+comment|// its incorrect (relative to partial stream) index offset, we will increase the length by our
+comment|// offset-relative-to-the-stream, and also account for it in buffers (see createDiskRangeInfo).
+comment|// So, index offset now works; as long as noone seeks into this data before the RG (why would
+comment|// they), everything works. This is hacky... Stream shouldn't depend on having all the data.
 name|this
 operator|.
 name|totalLength
 operator|=
-literal|0
+name|indexBaseOffset
 expr_stmt|;
 block|}
 specifier|public
