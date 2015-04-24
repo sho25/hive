@@ -1886,7 +1886,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|resetMatchLocalityForAllHeldContainers
+name|dagComplete
 parameter_list|()
 block|{
 comment|// This is effectively DAG completed, and can be used to reset statistics being tracked.

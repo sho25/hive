@@ -229,6 +229,24 @@ name|YarnRuntimeException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|runtime
+operator|.
+name|library
+operator|.
+name|api
+operator|.
+name|TezRuntimeConfiguration
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -845,6 +863,19 @@ operator|.
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|,
 name|execBytesPerService
+argument_list|)
+expr_stmt|;
+comment|// Optimize local fetch does not work with LLAP due to different local directories
+comment|// used by containers and LLAP
+name|clusterSpecificConfiguration
+operator|.
+name|setBoolean
+argument_list|(
+name|TezRuntimeConfiguration
+operator|.
+name|TEZ_RUNTIME_OPTIMIZE_LOCAL_FETCH
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
