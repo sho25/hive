@@ -2062,6 +2062,19 @@ name|Path
 name|path
 parameter_list|)
 function_decl|;
+comment|/**    * Reads data into ByteBuffer.    * @param file File.    * @param dest Buffer.    * @return Number of bytes read, just like file.read. If any bytes were read, dest position    *         will be set to old position + number of bytes read.    */
+name|int
+name|readByteBuffer
+parameter_list|(
+name|FSDataInputStream
+name|file
+parameter_list|,
+name|ByteBuffer
+name|dest
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 
