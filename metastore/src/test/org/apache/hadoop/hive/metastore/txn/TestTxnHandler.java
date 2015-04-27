@@ -8537,6 +8537,13 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Starting deadlock test"
+argument_list|)
+expr_stmt|;
 name|Connection
 name|conn
 init|=
