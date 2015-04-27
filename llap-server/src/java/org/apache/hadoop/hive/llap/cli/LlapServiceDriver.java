@@ -528,7 +528,7 @@ argument_list|()
 argument_list|,
 name|configured
 operator|.
-name|getRaw
+name|get
 argument_list|(
 name|kv
 operator|.
