@@ -11209,6 +11209,12 @@ operator|.
 name|restrictList
 argument_list|)
 expr_stmt|;
+name|modWhiteListPattern
+operator|=
+name|other
+operator|.
+name|modWhiteListPattern
+expr_stmt|;
 block|}
 specifier|public
 name|Properties
