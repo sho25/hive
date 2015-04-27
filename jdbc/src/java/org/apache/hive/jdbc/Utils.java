@@ -541,6 +541,58 @@ name|HTTP_HEADER_PREFIX
 init|=
 literal|"http.header."
 decl_stmt|;
+comment|// --------------- Begin 2 way ssl options -------------------------
+comment|// Use two way ssl. This param will take effect only when ssl=true
+specifier|static
+specifier|final
+name|String
+name|USE_TWO_WAY_SSL
+init|=
+literal|"twoWay"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|TRUE
+init|=
+literal|"true"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|SSL_KEY_STORE
+init|=
+literal|"sslKeyStore"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|SSL_KEY_STORE_PASSWORD
+init|=
+literal|"keyStorePassword"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|SSL_KEY_STORE_TYPE
+init|=
+literal|"JKS"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|SUNX509_ALGORITHM_STRING
+init|=
+literal|"SunX509"
+decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|SUNJSSE_ALGORITHM_STRING
+init|=
+literal|"SunJSSE"
+decl_stmt|;
+comment|// --------------- End 2 way ssl options ----------------------------
 comment|// Non-configurable params:
 comment|// Currently supports JKS keystore format
 specifier|static
