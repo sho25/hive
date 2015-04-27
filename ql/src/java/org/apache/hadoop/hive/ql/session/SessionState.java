@@ -2490,16 +2490,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"No Tez session required at this point. hive.execution.engine=mr."
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 name|startSs
 return|;
