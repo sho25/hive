@@ -2987,7 +2987,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
+comment|/**    * This is expected to be a no-op when in local mode,    * which means that the implementation will return null.    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
 name|String
 name|getDelegationToken
 parameter_list|(

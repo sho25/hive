@@ -9468,20 +9468,15 @@ name|MetaException
 throws|,
 name|TException
 block|{
+comment|// This is expected to be a no-op, so we will return null when we use local metastore.
 if|if
 condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"getDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 return|return
 name|client
@@ -9513,15 +9508,9 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"renewDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return
+literal|0
+return|;
 block|}
 return|return
 name|client
@@ -9551,15 +9540,7 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"renewDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return;
 block|}
 name|client
 operator|.
