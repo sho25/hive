@@ -867,6 +867,22 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Failed to get a spark session: "
+operator|+
+name|e
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
 name|e
 parameter_list|)
