@@ -9,15 +9,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|io
-operator|.
-name|filters
+name|util
 package|;
 end_package
 
@@ -47,40 +43,6 @@ name|Arrays
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcProto
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|primitives
-operator|.
-name|Longs
-import|;
-end_import
-
 begin_comment
 comment|/**  * BloomFilter is a probabilistic data structure for set membership check. BloomFilters are  * highly space efficient when compared to using a HashSet. Because of the probabilistic nature of  * bloom filter false positive (element not present in bloom filter but test() says true) are  * possible but false negatives are not possible (if element is present then test() will never  * say false). The false positive probability is configurable (default: 5%) depending on which  * storage requirement may increase or decrease. Lower the false positive probability greater  * is the space requirement.  * Bloom filters are sensitive to number of elements that will be inserted in the bloom filter.  * During the creation of bloom filter expected number of entries must be specified. If the number  * of insertions exceed the specified initial number of entries then false positive probability will  * increase accordingly.  *  * Internally, this implementation of bloom filter uses Murmur3 fast non-cryptographic hash  * algorithm. Although Murmur2 is slightly faster than Murmur3 in Java, it suffers from hash  * collisions for specific sequence of repeating bytes. Check the following link for more info  * https://code.google.com/p/smhasher/wiki/MurmurHash2Flaw  */
 end_comment
@@ -98,18 +60,22 @@ name|DEFAULT_FPP
 init|=
 literal|0.05
 decl_stmt|;
-specifier|private
+specifier|protected
 name|BitSet
 name|bitSet
 decl_stmt|;
-specifier|private
+specifier|protected
 name|int
-name|m
+name|numBits
 decl_stmt|;
-specifier|private
+specifier|protected
 name|int
-name|k
+name|numHashFunctions
 decl_stmt|;
+specifier|public
+name|BloomFilter
+parameter_list|()
+block|{   }
 specifier|public
 name|BloomFilter
 parameter_list|(
@@ -170,7 +136,7 @@ decl_stmt|;
 comment|// make 'm' multiple of 64
 name|this
 operator|.
-name|m
+name|numBits
 operator|=
 name|nb
 operator|+
@@ -190,13 +156,13 @@ operator|)
 expr_stmt|;
 name|this
 operator|.
-name|k
+name|numHashFunctions
 operator|=
 name|optimalNumOfHashFunctions
 argument_list|(
 name|expectedEntries
 argument_list|,
-name|m
+name|numBits
 argument_list|)
 expr_stmt|;
 name|this
@@ -206,59 +172,8 @@ operator|=
 operator|new
 name|BitSet
 argument_list|(
-name|m
+name|numBits
 argument_list|)
-expr_stmt|;
-block|}
-specifier|public
-name|BloomFilter
-parameter_list|(
-name|OrcProto
-operator|.
-name|BloomFilter
-name|bloomFilter
-parameter_list|)
-block|{
-name|this
-operator|.
-name|bitSet
-operator|=
-operator|new
-name|BitSet
-argument_list|(
-name|Longs
-operator|.
-name|toArray
-argument_list|(
-name|bloomFilter
-operator|.
-name|getBitsetList
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|k
-operator|=
-name|bloomFilter
-operator|.
-name|getNumHashFunctions
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|m
-operator|=
-operator|(
-name|int
-operator|)
-name|this
-operator|.
-name|bitSet
-operator|.
-name|bitSize
-argument_list|()
 expr_stmt|;
 block|}
 specifier|static
@@ -465,7 +380,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|k
+name|numHashFunctions
 condition|;
 name|i
 operator|++
@@ -501,7 +416,7 @@ name|pos
 init|=
 name|combinedHash
 operator|%
-name|m
+name|numBits
 decl_stmt|;
 name|bitSet
 operator|.
@@ -694,7 +609,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|k
+name|numHashFunctions
 condition|;
 name|i
 operator|++
@@ -730,7 +645,7 @@ name|pos
 init|=
 name|combinedHash
 operator|%
-name|m
+name|numBits
 decl_stmt|;
 if|if
 condition|(
@@ -967,7 +882,7 @@ name|getNumHashFunctions
 parameter_list|()
 block|{
 return|return
-name|k
+name|numHashFunctions
 return|;
 block|}
 specifier|public
@@ -993,11 +908,11 @@ block|{
 return|return
 literal|"m: "
 operator|+
-name|m
+name|numBits
 operator|+
 literal|" k: "
 operator|+
-name|k
+name|numHashFunctions
 return|;
 block|}
 comment|/**    * Merge the specified bloom filter with current bloom filter.    *    * @param that - bloom filter to merge    */
@@ -1017,19 +932,19 @@ name|that
 operator|&&
 name|this
 operator|.
-name|m
+name|numBits
 operator|==
 name|that
 operator|.
-name|m
+name|numBits
 operator|&&
 name|this
 operator|.
-name|k
+name|numHashFunctions
 operator|==
 name|that
 operator|.
-name|k
+name|numHashFunctions
 condition|)
 block|{
 name|this
@@ -1083,15 +998,17 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Bare metal bit set implementation. For performance reasons, this implementation does not check    * for index bounds nor expand the bit set size if the specified index is greater than the size.    */
-specifier|private
+specifier|public
 class|class
 name|BitSet
 block|{
+specifier|private
 specifier|final
 name|long
 index|[]
 name|data
 decl_stmt|;
+specifier|public
 name|BitSet
 parameter_list|(
 name|long
@@ -1127,6 +1044,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * Deserialize long array as bit set.      *      * @param data - bit array      */
+specifier|public
 name|BitSet
 parameter_list|(
 name|long
@@ -1151,6 +1069,7 @@ name|data
 expr_stmt|;
 block|}
 comment|/**      * Sets the bit at specified index.      *      * @param index - position      */
+specifier|public
 name|void
 name|set
 parameter_list|(
@@ -1173,6 +1092,7 @@ operator|)
 expr_stmt|;
 block|}
 comment|/**      * Returns true if the bit is set in the specified index.      *      * @param index - position      * @return - value at the bit position      */
+specifier|public
 name|boolean
 name|get
 parameter_list|(
@@ -1200,6 +1120,7 @@ literal|0
 return|;
 block|}
 comment|/**      * Number of bits      */
+specifier|public
 name|long
 name|bitSize
 parameter_list|()
@@ -1217,6 +1138,7 @@ operator|.
 name|SIZE
 return|;
 block|}
+specifier|public
 name|long
 index|[]
 name|getData
@@ -1227,6 +1149,7 @@ name|data
 return|;
 block|}
 comment|/**      * Combines the two BitArrays using bitwise OR.      */
+specifier|public
 name|void
 name|putAll
 parameter_list|(

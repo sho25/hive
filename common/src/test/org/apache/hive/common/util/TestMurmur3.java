@@ -9,15 +9,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|io
-operator|.
-name|filters
+name|util
 package|;
 end_package
 

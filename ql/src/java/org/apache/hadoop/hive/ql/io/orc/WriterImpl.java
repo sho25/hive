@@ -317,7 +317,7 @@ name|io
 operator|.
 name|filters
 operator|.
-name|BloomFilter
+name|BloomFilterIO
 import|;
 end_import
 
@@ -3192,7 +3192,7 @@ name|bloomFilterStream
 decl_stmt|;
 specifier|protected
 specifier|final
-name|BloomFilter
+name|BloomFilterIO
 name|bloomFilter
 decl_stmt|;
 specifier|protected
@@ -3475,7 +3475,7 @@ expr_stmt|;
 name|bloomFilter
 operator|=
 operator|new
-name|BloomFilter
+name|BloomFilterIO
 argument_list|(
 name|streamFactory
 operator|.

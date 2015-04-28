@@ -395,7 +395,7 @@ name|io
 operator|.
 name|filters
 operator|.
-name|BloomFilter
+name|BloomFilterIO
 import|;
 end_import
 
@@ -2011,7 +2011,7 @@ argument_list|(
 name|cs
 argument_list|)
 decl_stmt|;
-name|BloomFilter
+name|BloomFilterIO
 name|bf
 init|=
 literal|null
@@ -2026,7 +2026,7 @@ block|{
 name|bf
 operator|=
 operator|new
-name|BloomFilter
+name|BloomFilterIO
 argument_list|(
 name|bloomFilter
 argument_list|)
@@ -2061,7 +2061,7 @@ parameter_list|,
 name|PredicateLeaf
 name|predicate
 parameter_list|,
-name|BloomFilter
+name|BloomFilterIO
 name|bloomFilter
 parameter_list|)
 block|{
@@ -2115,7 +2115,7 @@ parameter_list|,
 name|boolean
 name|hasNull
 parameter_list|,
-name|BloomFilter
+name|BloomFilterIO
 name|bloomFilter
 parameter_list|)
 block|{
@@ -3047,7 +3047,7 @@ parameter_list|,
 name|Object
 name|predObj
 parameter_list|,
-name|BloomFilter
+name|BloomFilterIO
 name|bloomFilter
 parameter_list|,
 name|boolean
@@ -3172,7 +3172,7 @@ specifier|static
 name|TruthValue
 name|checkInBloomFilter
 parameter_list|(
-name|BloomFilter
+name|BloomFilterIO
 name|bf
 parameter_list|,
 name|Object
