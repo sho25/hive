@@ -616,6 +616,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|char
+name|COLUMN_COMMENTS_DELIMITER
+init|=
+literal|'\0'
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|String
 name|LBRACKET
 init|=
