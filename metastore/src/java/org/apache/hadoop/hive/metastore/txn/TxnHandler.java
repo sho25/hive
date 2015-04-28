@@ -445,7 +445,7 @@ specifier|private
 name|int
 name|ALLOWED_REPEATED_DEADLOCKS
 init|=
-literal|5
+literal|10
 decl_stmt|;
 specifier|static
 specifier|final
@@ -486,6 +486,10 @@ comment|/**    * Number of consecutive deadlocks we have seen    */
 specifier|protected
 name|int
 name|deadlockCnt
+decl_stmt|;
+specifier|private
+name|long
+name|deadlockRetryInterval
 decl_stmt|;
 specifier|protected
 name|HiveConf
@@ -649,6 +653,12 @@ name|ConfVars
 operator|.
 name|HMSHANDLERATTEMPTS
 argument_list|)
+expr_stmt|;
+name|deadlockRetryInterval
+operator|=
+name|retryInterval
+operator|/
+literal|10
 expr_stmt|;
 block|}
 specifier|public
@@ -1369,6 +1379,11 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
+comment|// Reset deadlock count since this is a new transaction
 name|int
 name|numTxns
 init|=
@@ -2167,6 +2182,10 @@ name|TxnAbortedException
 throws|,
 name|MetaException
 block|{
+name|deadlockCnt
+operator|=
+literal|0
+expr_stmt|;
 try|try
 block|{
 name|Connection
@@ -5324,6 +5343,27 @@ operator|+
 literal|", trying again."
 argument_list|)
 expr_stmt|;
+comment|// Pause for a just a bit for retrying to avoid immediately jumping back into the deadlock.
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|deadlockRetryInterval
+operator|*
+name|deadlockCnt
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ie
+parameter_list|)
+block|{
+comment|// NOP
+block|}
 throw|throw
 operator|new
 name|RetryException
