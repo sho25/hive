@@ -2087,6 +2087,12 @@ comment|// No data to read for this stripe. Check if we have some included index
 if|if
 condition|(
 name|hasIndexOnlyCols
+operator|&&
+operator|(
+name|includedRgs
+operator|==
+literal|null
+operator|)
 condition|)
 block|{
 name|OrcEncodedColumnBatch
