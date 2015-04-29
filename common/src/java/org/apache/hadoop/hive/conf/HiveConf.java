@@ -8049,7 +8049,11 @@ literal|"hive.typecheck.on.insert"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"This property has been extended to control "
+operator|+
+literal|"whether to check, convert, and normalize partition value to conform to its column type in "
+operator|+
+literal|"partition operations including but not limited to insert, such as alter, describe etc."
 argument_list|)
 block|,
 name|HIVE_HADOOP_CLASSPATH
