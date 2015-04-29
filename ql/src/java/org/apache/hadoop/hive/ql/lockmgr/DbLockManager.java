@@ -57,6 +57,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|JavaUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|HiveMetaStoreClient
@@ -655,9 +671,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Unlocking id:"
+literal|"Unlocking "
 operator|+
-name|lockId
+name|hiveLock
 argument_list|)
 expr_stmt|;
 name|client
@@ -674,9 +690,6 @@ name|locks
 operator|.
 name|remove
 argument_list|(
-operator|(
-name|DbHiveLock
-operator|)
 name|hiveLock
 argument_list|)
 decl_stmt|;
@@ -1051,6 +1064,22 @@ operator|%
 name|Integer
 operator|.
 name|MAX_VALUE
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|lockId
 argument_list|)
 return|;
 block|}

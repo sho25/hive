@@ -647,6 +647,22 @@ name|loader
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Utility method for ACID to normalize logging info    * @param extLockId LockResponse.lockid    */
+specifier|public
+specifier|static
+name|String
+name|lockIdToString
+parameter_list|(
+name|long
+name|extLockId
+parameter_list|)
+block|{
+return|return
+literal|"lockid:"
+operator|+
+name|extLockId
+return|;
+block|}
 specifier|private
 name|JavaUtils
 parameter_list|()

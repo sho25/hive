@@ -169,6 +169,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|JavaUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|ValidTxnList
 import|;
 end_import
@@ -5942,6 +5958,8 @@ specifier|final
 name|long
 name|intLockId
 decl_stmt|;
+comment|//0 means there is no transaction, i.e. it a select statement which is not part of
+comment|//explicit transaction or a IUD statement that is not writing to ACID table
 specifier|private
 specifier|final
 name|long
@@ -6190,6 +6208,7 @@ argument_list|(
 literal|"hl_txnid"
 argument_list|)
 expr_stmt|;
+comment|//returns 0 if value is NULL
 block|}
 name|LockInfo
 parameter_list|(
@@ -6307,11 +6326,9 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"extLockId:"
-operator|+
-name|Long
+name|JavaUtils
 operator|.
-name|toString
+name|lockIdToString
 argument_list|(
 name|extLockId
 argument_list|)
@@ -8716,6 +8733,7 @@ parameter_list|)
 block|{
 return|return
 operator|(
+operator|(
 name|desiredLock
 operator|.
 name|isDbLock
@@ -8769,6 +8787,42 @@ operator|==
 name|LockType
 operator|.
 name|EXCLUSIVE
+operator|)
+operator|)
+operator|||
+comment|//different locks from same txn should not conflict with each other
+operator|(
+name|desiredLock
+operator|.
+name|txnId
+operator|!=
+literal|0
+operator|&&
+name|desiredLock
+operator|.
+name|txnId
+operator|==
+name|existingLock
+operator|.
+name|txnId
+operator|)
+operator|||
+comment|//txnId=0 means it's a select or IUD which does not write to ACID table, e.g
+comment|//insert overwrite table T partition(p=1) select a,b from T and autoCommit=true
+operator|(
+name|desiredLock
+operator|.
+name|txnId
+operator|==
+literal|0
+operator|&&
+name|desiredLock
+operator|.
+name|extLockId
+operator|==
+name|existingLock
+operator|.
+name|extLockId
 operator|)
 return|;
 block|}
