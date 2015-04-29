@@ -43,6 +43,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -102,6 +120,10 @@ comment|/**  * ReplicationTask captures the concept of what it'd take to replica
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
 specifier|public
 specifier|abstract
 class|class

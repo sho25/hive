@@ -1143,6 +1143,10 @@ throws|throws
 name|HCatException
 function_decl|;
 comment|/**    * Get an iterator that iterates over a list of replication tasks needed to replicate all the    * events that have taken place for a given db/table.    * @param lastEventId : The last event id that was processed for this reader. The returned    *                    replication tasks will start from this point forward    * @param maxEvents : Maximum number of events to consider for generating the    *                  replication tasks. If< 1, then all available events will be considered.    * @param dbName : The database name for which we're interested in the events for.    * @param tableName : The table name for which we're interested in the events for - if null,    *                  then this function will behave as if it were running at a db level.    * @return an iterator over a list of replication events that can be processed one by one.    * @throws HCatException    */
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
 specifier|public
 specifier|abstract
 name|Iterator
@@ -1167,6 +1171,19 @@ throws|throws
 name|HCatException
 function_decl|;
 comment|/**    * Get a list of notifications    * @param lastEventId The last event id that was consumed by this reader.  The returned    *                    notifications will start at the next eventId available this eventId that    *                    matches the filter.    * @param maxEvents Maximum number of events to return.  If< 1, then all available events will    *                  be returned.    * @param filter Filter to determine if message should be accepted.  If null, then all    *               available events up to maxEvents will be returned.    * @return list of notifications, sorted by eventId.  It is guaranteed that the events are in    * the order that the operations were done on the database.    * @throws HCatException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"Hive"
+block|}
+argument_list|)
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
 specifier|public
 specifier|abstract
 name|List
@@ -1190,6 +1207,19 @@ throws|throws
 name|HCatException
 function_decl|;
 comment|/**    * Get the most recently used notification id.    * @return    * @throws HCatException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"Hive"
+block|}
+argument_list|)
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
 specifier|public
 specifier|abstract
 name|long
