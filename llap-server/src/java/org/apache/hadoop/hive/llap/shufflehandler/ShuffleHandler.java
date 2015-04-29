@@ -2776,13 +2776,16 @@ return|return
 name|port
 return|;
 block|}
-comment|/**    * Register an application and it's associated credentials and user information.    * @param applicationIdString    * @param appToken    * @param user    */
+comment|/**    * Register an application and it's associated credentials and user information.    * @param applicationIdString    * @param dagIdentifier    * @param appToken    * @param user    */
 specifier|public
 name|void
-name|registerApplication
+name|registerDag
 parameter_list|(
 name|String
 name|applicationIdString
+parameter_list|,
+name|int
+name|dagIdentifier
 parameter_list|,
 name|Token
 argument_list|<
@@ -2860,11 +2863,13 @@ try|try
 block|{
 name|dirWatcher
 operator|.
-name|registerApplicationDir
+name|registerDagDir
 argument_list|(
 name|appDir
 argument_list|,
 name|applicationIdString
+argument_list|,
+name|dagIdentifier
 argument_list|,
 name|user
 argument_list|,
@@ -2900,6 +2905,33 @@ block|}
 block|}
 specifier|public
 name|void
+name|unregisterDag
+parameter_list|(
+name|String
+name|dir
+parameter_list|,
+name|String
+name|applicationIdString
+parameter_list|,
+name|int
+name|dagIdentifier
+parameter_list|)
+block|{
+name|dirWatcher
+operator|.
+name|unregisterDagDir
+argument_list|(
+name|dir
+argument_list|,
+name|applicationIdString
+argument_list|,
+name|dagIdentifier
+argument_list|)
+expr_stmt|;
+comment|// TODO Cleanup registered tokens and dag info
+block|}
+specifier|public
+name|void
 name|unregisterApplication
 parameter_list|(
 name|String
@@ -2911,7 +2943,6 @@ argument_list|(
 name|applicationIdString
 argument_list|)
 expr_stmt|;
-comment|// TOOD Unregister from the dirWatcher
 block|}
 specifier|protected
 name|void
@@ -3480,6 +3511,10 @@ name|jobId
 argument_list|,
 name|key
 operator|.
+name|dagId
+argument_list|,
+name|key
+operator|.
 name|user
 argument_list|)
 decl_stmt|;
@@ -4026,6 +4061,20 @@ argument_list|(
 literal|"job"
 argument_list|)
 decl_stmt|;
+specifier|final
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|dagIdQ
+init|=
+name|q
+operator|.
+name|get
+argument_list|(
+literal|"dag"
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|LOG
@@ -4057,6 +4106,10 @@ literal|"\n  jobId: "
 operator|+
 name|jobQ
 operator|+
+literal|"\n  dagId: "
+operator|+
+name|dagIdQ
+operator|+
 literal|"\n  keepAlive: "
 operator|+
 name|keepAliveParam
@@ -4074,6 +4127,10 @@ operator|==
 literal|null
 operator|||
 name|jobQ
+operator|==
+literal|null
+operator||
+name|dagIdQ
 operator|==
 literal|null
 condition|)
@@ -4104,6 +4161,13 @@ name|size
 argument_list|()
 operator|!=
 literal|1
+operator|||
+name|dagIdQ
+operator|.
+name|size
+argument_list|()
+operator|!=
+literal|1
 condition|)
 block|{
 name|sendError
@@ -4122,6 +4186,9 @@ name|reduceId
 decl_stmt|;
 name|String
 name|jobId
+decl_stmt|;
+name|int
+name|dagId
 decl_stmt|;
 try|try
 block|{
@@ -4146,6 +4213,20 @@ operator|.
 name|get
 argument_list|(
 literal|0
+argument_list|)
+expr_stmt|;
+name|dagId
+operator|=
+name|Integer
+operator|.
+name|parseInt
+argument_list|(
+name|dagIdQ
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -4320,6 +4401,8 @@ name|mapIds
 argument_list|,
 name|jobId
 argument_list|,
+name|dagId
+argument_list|,
 name|user
 argument_list|,
 name|reduceId
@@ -4420,6 +4503,8 @@ operator|=
 name|getMapOutputInfo
 argument_list|(
 name|jobId
+argument_list|,
+name|dagId
 argument_list|,
 name|mapId
 argument_list|,
@@ -4573,6 +4658,9 @@ parameter_list|(
 name|String
 name|jobId
 parameter_list|,
+name|int
+name|dagId
+parameter_list|,
 name|String
 name|mapId
 parameter_list|,
@@ -4597,6 +4685,8 @@ operator|new
 name|AttemptPathIdentifier
 argument_list|(
 name|jobId
+argument_list|,
+name|dagId
 argument_list|,
 name|user
 argument_list|,
@@ -4747,6 +4837,9 @@ parameter_list|,
 name|String
 name|jobId
 parameter_list|,
+name|int
+name|dagId
+parameter_list|,
 name|String
 name|user
 parameter_list|,
@@ -4791,6 +4884,8 @@ init|=
 name|getMapOutputInfo
 argument_list|(
 name|jobId
+argument_list|,
+name|dagId
 argument_list|,
 name|mapId
 argument_list|,
@@ -5882,11 +5977,14 @@ parameter_list|(
 name|String
 name|jobIdString
 parameter_list|,
+name|int
+name|dagId
+parameter_list|,
 name|String
 name|user
 parameter_list|)
 block|{
-comment|// $x/$user/appcache/$appId/output/$mapId
+comment|// $x/$user/appcache/$appId/${dagId}/output/$mapId
 comment|// TODO: Once Shuffle is out of NM, this can use MR APIs to convert
 comment|// between App and Job
 name|String
@@ -5965,6 +6063,10 @@ argument_list|(
 name|appID
 argument_list|)
 operator|+
+literal|"/"
+operator|+
+name|dagId
+operator|+
 literal|"/output"
 operator|+
 literal|"/"
@@ -6023,6 +6125,11 @@ name|jobId
 decl_stmt|;
 specifier|private
 specifier|final
+name|int
+name|dagId
+decl_stmt|;
+specifier|private
+specifier|final
 name|String
 name|user
 decl_stmt|;
@@ -6037,6 +6144,9 @@ parameter_list|(
 name|String
 name|jobId
 parameter_list|,
+name|int
+name|dagId
+parameter_list|,
 name|String
 name|user
 parameter_list|,
@@ -6049,6 +6159,12 @@ operator|.
 name|jobId
 operator|=
 name|jobId
+expr_stmt|;
+name|this
+operator|.
+name|dagId
+operator|=
+name|dagId
 expr_stmt|;
 name|this
 operator|.
@@ -6113,15 +6229,11 @@ name|o
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|attemptId
-operator|.
-name|equals
-argument_list|(
+name|dagId
+operator|!=
 name|that
 operator|.
-name|attemptId
-argument_list|)
+name|dagId
 condition|)
 block|{
 return|return
@@ -6146,7 +6258,14 @@ literal|false
 return|;
 block|}
 return|return
-literal|true
+name|attemptId
+operator|.
+name|equals
+argument_list|(
+name|that
+operator|.
+name|attemptId
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -6164,6 +6283,14 @@ operator|.
 name|hashCode
 argument_list|()
 decl_stmt|;
+name|result
+operator|=
+literal|31
+operator|*
+name|result
+operator|+
+name|dagId
+expr_stmt|;
 name|result
 operator|=
 literal|31
@@ -6189,15 +6316,25 @@ block|{
 return|return
 literal|"AttemptPathIdentifier{"
 operator|+
-literal|"attemptId='"
+literal|"jobId='"
 operator|+
-name|attemptId
+name|jobId
 operator|+
 literal|'\''
 operator|+
-literal|", jobId='"
+literal|", dagId="
 operator|+
-name|jobId
+name|dagId
+operator|+
+literal|", user='"
+operator|+
+name|user
+operator|+
+literal|'\''
+operator|+
+literal|", attemptId='"
+operator|+
+name|attemptId
 operator|+
 literal|'\''
 operator|+

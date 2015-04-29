@@ -308,19 +308,11 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"LlapNodeId{"
-operator|+
-literal|"hostname='"
-operator|+
 name|hostname
 operator|+
-literal|'\''
-operator|+
-literal|", port="
+literal|":"
 operator|+
 name|port
-operator|+
-literal|'}'
 return|;
 block|}
 block|}

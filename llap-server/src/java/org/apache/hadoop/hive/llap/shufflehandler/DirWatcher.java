@@ -409,7 +409,7 @@ name|Type
 block|{
 name|BASE
 block|,
-comment|// App Base Dir
+comment|// App Base Dir / ${dagDir}
 name|OUTPUT
 block|,
 comment|// appBase/output/
@@ -652,13 +652,16 @@ expr_stmt|;
 block|}
 comment|/**    * Register a base dir for an application    * @param pathString the full path including jobId, user - /${local.dir}/appCache/${appId}/userCache/${user}    * @param appId the appId    * @param user the user    * @param expiry when to expire the watch - in ms    * @throws IOException    */
 name|void
-name|registerApplicationDir
+name|registerDagDir
 parameter_list|(
 name|String
 name|pathString
 parameter_list|,
 name|String
 name|appId
+parameter_list|,
+name|int
+name|dagIdentifier
 parameter_list|,
 name|String
 name|user
@@ -669,6 +672,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|// The path string contains the dag Identifier
 name|Path
 name|path
 init|=
@@ -700,6 +704,8 @@ operator|.
 name|BASE
 argument_list|,
 name|appId
+argument_list|,
+name|dagIdentifier
 argument_list|,
 name|user
 argument_list|)
@@ -740,6 +746,21 @@ name|watchedPathInfo
 argument_list|)
 expr_stmt|;
 comment|// TODO Watches on the output dirs need to be cancelled at some point. For now - via the expiry.
+block|}
+name|void
+name|unregisterDagDir
+parameter_list|(
+name|String
+name|pathString
+parameter_list|,
+name|String
+name|appId
+parameter_list|,
+name|int
+name|dagIdentifier
+parameter_list|)
+block|{
+comment|// TODO Implement to remove all watches for the specified pathString and it's sub-tree
 block|}
 comment|/**    * Invoke when a pathIdentifier has been found, or is no longer of interest    * @param pathIdentifier    */
 name|void
@@ -1375,7 +1396,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"DEBUG: Found unexpected directory: "
+literal|"DEBUG: Found unexpected directory while looking for OUTPUT: "
 operator|+
 name|event
 operator|.
@@ -2049,6 +2070,10 @@ name|String
 name|appId
 decl_stmt|;
 specifier|final
+name|int
+name|dagId
+decl_stmt|;
+specifier|final
 name|String
 name|user
 decl_stmt|;
@@ -2075,6 +2100,9 @@ parameter_list|,
 name|String
 name|jobId
 parameter_list|,
+name|int
+name|dagId
+parameter_list|,
 name|String
 name|user
 parameter_list|)
@@ -2096,6 +2124,12 @@ operator|.
 name|appId
 operator|=
 name|jobId
+expr_stmt|;
+name|this
+operator|.
+name|dagId
+operator|=
+name|dagId
 expr_stmt|;
 name|this
 operator|.
@@ -2155,6 +2189,14 @@ name|user
 expr_stmt|;
 name|this
 operator|.
+name|dagId
+operator|=
+name|other
+operator|.
+name|dagId
+expr_stmt|;
+name|this
+operator|.
 name|type
 operator|=
 name|type
@@ -2178,6 +2220,8 @@ operator|new
 name|AttemptPathIdentifier
 argument_list|(
 name|appId
+argument_list|,
+name|dagId
 argument_list|,
 name|user
 argument_list|,
