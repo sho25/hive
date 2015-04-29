@@ -73,6 +73,26 @@ name|Table
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -87,8 +107,11 @@ name|table
 decl_stmt|;
 specifier|private
 specifier|final
+name|Iterable
+argument_list|<
 name|Partition
-name|partition
+argument_list|>
+name|partitions
 decl_stmt|;
 specifier|private
 specifier|final
@@ -129,9 +152,14 @@ name|table
 expr_stmt|;
 name|this
 operator|.
-name|partition
+name|partitions
 operator|=
+name|Collections
+operator|.
+name|singletonList
+argument_list|(
 name|partition
+argument_list|)
 expr_stmt|;
 comment|// In HiveMetaStore, the deleteData flag indicates whether DFS data should be
 comment|// removed on a drop.
@@ -142,14 +170,20 @@ operator|=
 name|deleteData
 expr_stmt|;
 block|}
-comment|/**    * @return the partition    */
+comment|/**    * @return the partitions    */
 specifier|public
+name|Iterator
+argument_list|<
 name|Partition
-name|getPartition
+argument_list|>
+name|getPartitionIterator
 parameter_list|()
 block|{
 return|return
-name|partition
+name|partitions
+operator|.
+name|iterator
+argument_list|()
 return|;
 block|}
 comment|/**    * @return the table    */

@@ -1045,7 +1045,7 @@ name|t
 argument_list|,
 name|partitionEvent
 operator|.
-name|getPartition
+name|getPartitionIterator
 argument_list|()
 argument_list|)
 operator|.
