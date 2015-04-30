@@ -190,7 +190,9 @@ name|errMsg
 init|=
 literal|"Metastore Authorization api invocation for "
 operator|+
-literal|"remote metastore is disabled in this configuration."
+literal|"remote metastore is disabled in this configuration. Run commands via jdbc/odbc clients "
+operator|+
+literal|"via HiveServer2 that is using embedded metastore."
 decl_stmt|;
 annotation|@
 name|Override
