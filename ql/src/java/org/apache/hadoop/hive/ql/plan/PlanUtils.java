@@ -978,7 +978,7 @@ name|TableDesc
 name|getDefaultTableDesc
 parameter_list|(
 name|CreateTableDesc
-name|localDirectoryDesc
+name|directoryDesc
 parameter_list|,
 name|String
 name|cols
@@ -1011,7 +1011,7 @@ decl_stmt|;
 empty_stmt|;
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|==
 literal|null
 condition|)
@@ -1032,7 +1032,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getFieldDelim
 argument_list|()
@@ -1048,7 +1048,7 @@ name|serdeConstants
 operator|.
 name|FIELD_DELIM
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getFieldDelim
 argument_list|()
@@ -1062,7 +1062,7 @@ name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getFieldDelim
 argument_list|()
@@ -1071,7 +1071,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getLineDelim
 argument_list|()
@@ -1087,7 +1087,7 @@ name|serdeConstants
 operator|.
 name|LINE_DELIM
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getLineDelim
 argument_list|()
@@ -1096,7 +1096,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getCollItemDelim
 argument_list|()
@@ -1112,7 +1112,7 @@ name|serdeConstants
 operator|.
 name|COLLECTION_DELIM
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getCollItemDelim
 argument_list|()
@@ -1121,7 +1121,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getMapKeyDelim
 argument_list|()
@@ -1137,7 +1137,7 @@ name|serdeConstants
 operator|.
 name|MAPKEY_DELIM
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getMapKeyDelim
 argument_list|()
@@ -1146,7 +1146,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getFieldEscape
 argument_list|()
@@ -1162,7 +1162,7 @@ name|serdeConstants
 operator|.
 name|ESCAPE_CHAR
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getFieldEscape
 argument_list|()
@@ -1171,7 +1171,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getSerName
 argument_list|()
@@ -1187,7 +1187,7 @@ name|serdeConstants
 operator|.
 name|SERIALIZATION_LIB
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getSerName
 argument_list|()
@@ -1196,7 +1196,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getOutputFormat
 argument_list|()
@@ -1212,7 +1212,7 @@ name|JavaUtils
 operator|.
 name|loadClass
 argument_list|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getOutputFormat
 argument_list|()
@@ -1222,7 +1222,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getNullFormat
 argument_list|()
@@ -1238,7 +1238,7 @@ name|serdeConstants
 operator|.
 name|SERIALIZATION_NULL_FORMAT
 argument_list|,
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getNullFormat
 argument_list|()
@@ -1247,7 +1247,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getTblProps
 argument_list|()
@@ -1259,7 +1259,7 @@ name|properties
 operator|.
 name|putAll
 argument_list|(
-name|localDirectoryDesc
+name|directoryDesc
 operator|.
 name|getTblProps
 argument_list|()
