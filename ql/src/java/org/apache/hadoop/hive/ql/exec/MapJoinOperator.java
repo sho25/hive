@@ -846,7 +846,7 @@ specifier|transient
 name|ObjectCache
 name|cache
 decl_stmt|;
-specifier|protected
+specifier|private
 name|HashTableLoader
 name|loader
 decl_stmt|;
@@ -3052,6 +3052,12 @@ name|release
 argument_list|(
 name|cacheKey
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|loader
+operator|=
+literal|null
 expr_stmt|;
 name|super
 operator|.
