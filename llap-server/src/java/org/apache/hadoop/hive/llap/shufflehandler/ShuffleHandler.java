@@ -2575,7 +2575,7 @@ operator|.
 name|get
 argument_list|()
 argument_list|,
-literal|"ShuffleHandler must be started before invoking started"
+literal|"ShuffleHandler must be started before invoking get"
 argument_list|)
 expr_stmt|;
 return|return
@@ -2917,6 +2917,13 @@ name|int
 name|dagIdentifier
 parameter_list|)
 block|{
+if|if
+condition|(
+name|dirWatcher
+operator|!=
+literal|null
+condition|)
+block|{
 name|dirWatcher
 operator|.
 name|unregisterDagDir
@@ -2928,6 +2935,7 @@ argument_list|,
 name|dagIdentifier
 argument_list|)
 expr_stmt|;
+block|}
 comment|// TODO Cleanup registered tokens and dag info
 block|}
 specifier|public
