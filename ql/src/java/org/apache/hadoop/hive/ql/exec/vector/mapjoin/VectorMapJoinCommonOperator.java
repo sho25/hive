@@ -4020,21 +4020,6 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
-comment|// TEMPORARY -- Set this up for Hybrid Grace logic in MapJoinOperator.closeOp
-name|hashMapRowGetters
-operator|=
-operator|new
-name|ReusableGetAdaptor
-index|[
-name|mapJoinTables
-operator|.
-name|length
-index|]
-expr_stmt|;
-name|smallTable
-operator|=
-name|posSingleVectorMapJoinSmallTable
-expr_stmt|;
 block|}
 specifier|protected
 name|void

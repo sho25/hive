@@ -1763,6 +1763,12 @@ name|keysAssigned
 operator|=
 literal|0
 expr_stmt|;
+name|this
+operator|.
+name|numValues
+operator|=
+literal|0
+expr_stmt|;
 block|}
 specifier|public
 name|void

@@ -475,9 +475,6 @@ parameter_list|,
 name|MapJoinTableContainerSerDe
 index|[]
 name|mapJoinTableSerdes
-parameter_list|,
-name|long
-name|memUsage
 parameter_list|)
 throws|throws
 name|HiveException
@@ -648,8 +645,6 @@ argument_list|,
 name|hconf
 argument_list|,
 name|keyCount
-argument_list|,
-name|memUsage
 argument_list|)
 decl_stmt|;
 while|while

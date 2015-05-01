@@ -117,10 +117,6 @@ name|int
 name|writeBuffersSize
 decl_stmt|;
 specifier|protected
-name|long
-name|memUsage
-decl_stmt|;
-specifier|protected
 name|int
 name|metricPutConflict
 decl_stmt|;
@@ -218,9 +214,6 @@ name|loadFactor
 parameter_list|,
 name|int
 name|writeBuffersSize
-parameter_list|,
-name|long
-name|memUsage
 parameter_list|)
 block|{
 name|initialCapacity
@@ -280,12 +273,6 @@ operator|.
 name|writeBuffersSize
 operator|=
 name|writeBuffersSize
-expr_stmt|;
-name|this
-operator|.
-name|memUsage
-operator|=
-name|memUsage
 expr_stmt|;
 block|}
 block|}
