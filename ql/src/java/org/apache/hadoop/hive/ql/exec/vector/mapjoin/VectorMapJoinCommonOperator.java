@@ -1085,6 +1085,17 @@ specifier|protected
 name|VectorColumnSourceMapping
 name|smallTableMapping
 decl_stmt|;
+comment|// These are the output columns for the small table and the outer small table keys.
+specifier|protected
+name|int
+index|[]
+name|smallTableOutputVectorColumns
+decl_stmt|;
+specifier|protected
+name|int
+index|[]
+name|bigTableOuterKeyOutputVectorColumns
+decl_stmt|;
 comment|// These are the columns in the big and small table that are ByteColumnVector columns.
 comment|// We create data buffers for these columns so we can copy strings into those columns by value.
 specifier|protected
@@ -2226,6 +2237,20 @@ expr_stmt|;
 name|smallTableMapping
 operator|.
 name|finalize
+argument_list|()
+expr_stmt|;
+name|bigTableOuterKeyOutputVectorColumns
+operator|=
+name|bigTableOuterKeyMapping
+operator|.
+name|getOutputColumns
+argument_list|()
+expr_stmt|;
+name|smallTableOutputVectorColumns
+operator|=
+name|smallTableMapping
+operator|.
+name|getOutputColumns
 argument_list|()
 expr_stmt|;
 comment|// Which big table and small table columns are ByteColumnVector and need have their data buffer

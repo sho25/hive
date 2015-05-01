@@ -1411,10 +1411,7 @@ control|(
 name|int
 name|column
 range|:
-name|bigTableOuterKeyMapping
-operator|.
-name|getOutputColumns
-argument_list|()
+name|bigTableOuterKeyOutputVectorColumns
 control|)
 block|{
 name|overflowBatch
@@ -1475,10 +1472,7 @@ control|(
 name|int
 name|column
 range|:
-name|bigTableOuterKeyMapping
-operator|.
-name|getOutputColumns
-argument_list|()
+name|bigTableOuterKeyOutputVectorColumns
 control|)
 block|{
 name|ColumnVector

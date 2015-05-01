@@ -95,6 +95,26 @@ name|exec
 operator|.
 name|vector
 operator|.
+name|ColumnVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
 name|VectorizationContext
 import|;
 end_import
@@ -510,6 +530,42 @@ index|]
 expr_stmt|;
 block|}
 comment|/*    * Inner join (hash map).    */
+comment|/**    * Do the per-batch setup for an inner join.    */
+specifier|protected
+name|void
+name|innerPerBatchSetup
+parameter_list|(
+name|VectorizedRowBatch
+name|batch
+parameter_list|)
+block|{
+comment|// For join operators that can generate small table results, reset their
+comment|// (target) scratch columns.
+for|for
+control|(
+name|int
+name|column
+range|:
+name|smallTableOutputVectorColumns
+control|)
+block|{
+name|ColumnVector
+name|smallTableColumn
+init|=
+name|batch
+operator|.
+name|cols
+index|[
+name|column
+index|]
+decl_stmt|;
+name|smallTableColumn
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 comment|/**    * Generate the inner join output results for one vectorized row batch.    *    * @param batch    *          The big table batch with any matching and any non matching rows both as    *          selected in use.    * @param allMatchs    *          A subset of the rows of the batch that are matches.    * @param allMatchCount    *          Number of matches in allMatchs.    * @param equalKeySeriesHashMapResultIndices    *          For each equal key series, the index into the hashMapResult.    * @param equalKeySeriesAllMatchIndices    *          For each equal key series, the logical index into allMatchs.    * @param equalKeySeriesIsSingleValue    *          For each equal key series, whether there is 1 or multiple small table values.    * @param equalKeySeriesDuplicateCounts    *          For each equal key series, the number of duplicates or equal keys.    * @param equalKeySeriesCount    *          Number of single value matches.    * @param spills    *          A subset of the rows of the batch that are spills.    * @param spillHashMapResultIndices    *          For each entry in spills, the index into the hashMapResult.    * @param spillCount    *          Number of spills in spills.    * @param hashMapResults    *          The array of all hash map results for the batch.    * @param hashMapResultCount    *          Number of entries in hashMapResults.    */
 specifier|protected
 name|int

@@ -467,6 +467,9 @@ block|}
 name|batchCounter
 operator|++
 expr_stmt|;
+comment|// Do the per-batch setup for an inner big-only join.
+comment|// (Currently none)
+comment|// innerBigOnlyPerBatchSetup(batch);
 comment|// For inner joins, we may apply the filter(s) now.
 for|for
 control|(
