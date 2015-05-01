@@ -71378,7 +71378,8 @@ return|;
 block|}
 comment|// Even if the table is of Acid type, if we aren't working with an Acid compliant TxnManager
 comment|// then return false.
-specifier|private
+specifier|public
+specifier|static
 name|boolean
 name|isAcidTable
 parameter_list|(
