@@ -1470,6 +1470,13 @@ name|addedArchives
 argument_list|)
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|stripHivePasswordDetails
+argument_list|(
+name|job
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|jobExecHelper
