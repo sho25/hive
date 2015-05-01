@@ -5294,6 +5294,21 @@ argument_list|,
 literal|"Probability with which a row will be chosen."
 argument_list|)
 block|,
+name|HIVEOPTIMIZEDISTINCTREWRITE
+argument_list|(
+literal|"hive.optimize.distinct.rewrite"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When applicable this "
+operator|+
+literal|"optimization rewrites distinct aggregates from a single stage to multi-stage "
+operator|+
+literal|"aggregation. This may not be optimal in all cases. Ideally, whether to trigger it or "
+operator|+
+literal|"not should be cost based decision. Until Hive formalizes cost model for this, this is config driven."
+argument_list|)
+block|,
 comment|// whether to optimize union followed by select followed by filesink
 comment|// It creates sub-directories in the final output, so should not be turned on in systems
 comment|// where MAPREDUCE-1501 is not present

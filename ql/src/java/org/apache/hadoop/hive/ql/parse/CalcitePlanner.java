@@ -1903,6 +1903,28 @@ name|calcite
 operator|.
 name|rules
 operator|.
+name|HiveExpandDistinctAggregatesRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
 name|HiveFilterJoinRule
 import|;
 end_import
@@ -6324,6 +6346,57 @@ block|{
 comment|// TODO: Decorelation of subquery should be done before attempting
 comment|// Partition Pruning; otherwise Expression evaluation may try to execute
 comment|// corelated sub query.
+comment|//0. Distinct aggregate rewrite
+comment|// Run this optimization early, since it is expanding the operator pipeline.
+if|if
+condition|(
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"tez"
+argument_list|)
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTIMIZEDISTINCTREWRITE
+argument_list|)
+condition|)
+block|{
+comment|// Its not clear, if this rewrite is always performant on MR, since extra map phase
+comment|// introduced for 2nd MR job may offset gains of this multi-stage aggregation.
+comment|// We need a cost model for MR to enable this on MR.
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+name|HiveExpandDistinctAggregatesRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+block|}
 comment|// 1. Push Down Semi Joins
 name|basePlan
 operator|=
