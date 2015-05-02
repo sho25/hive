@@ -3002,9 +3002,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
 name|fileStatus
 operator|.
-name|isFile
+name|isDir
 argument_list|()
 condition|)
 block|{
@@ -3180,14 +3181,7 @@ block|}
 block|}
 block|}
 block|}
-elseif|else
-if|if
-condition|(
-name|fileStatus
-operator|.
-name|isDirectory
-argument_list|()
-condition|)
+else|else
 block|{
 name|FileStatus
 index|[]
@@ -3558,27 +3552,6 @@ throw|;
 block|}
 block|}
 block|}
-block|}
-else|else
-block|{
-comment|// Should never happen
-specifier|final
-name|String
-name|msg
-init|=
-literal|"Unknown file type being asked to be moved, erroring out"
-decl_stmt|;
-throw|throw
-operator|new
-name|HCatException
-argument_list|(
-name|ErrorType
-operator|.
-name|ERROR_MOVE_FAILED
-argument_list|,
-name|msg
-argument_list|)
-throw|;
 block|}
 block|}
 comment|/**    * Find the final name of a given output file, given the output directory    * and the work directory. If immutable, attempt to create file of name    * _aN till we find an item that does not exist.    * @param file the file to move    * @param src the source directory    * @param dest the target directory    * @return the final path for the specific output file    * @throws java.io.IOException    */

@@ -973,7 +973,7 @@ if|if
 condition|(
 name|fileStatus
 operator|.
-name|isDirectory
+name|isDir
 argument_list|()
 condition|)
 block|{
