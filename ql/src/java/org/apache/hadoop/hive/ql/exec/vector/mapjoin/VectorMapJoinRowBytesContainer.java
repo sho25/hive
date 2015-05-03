@@ -1277,8 +1277,6 @@ specifier|public
 name|void
 name|clear
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
