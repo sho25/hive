@@ -113,6 +113,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|SequenceInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|lang
 operator|.
 name|reflect
@@ -4397,12 +4407,38 @@ literal|null
 condition|)
 block|{
 comment|// ### NOTE: fix for sf.net bug 879425.
+comment|// Working around an issue in jline-2.1.2, see https://github.com/jline/jline/issues/10
+comment|// by appending a newline to the end of inputstream
+name|InputStream
+name|inputStreamAppendedNewline
+init|=
+operator|new
+name|SequenceInputStream
+argument_list|(
+name|inputStream
+argument_list|,
+operator|new
+name|ByteArrayInputStream
+argument_list|(
+operator|(
+operator|new
+name|String
+argument_list|(
+literal|"\n"
+argument_list|)
+operator|)
+operator|.
+name|getBytes
+argument_list|()
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|consoleReader
 operator|=
 operator|new
 name|ConsoleReader
 argument_list|(
-name|inputStream
+name|inputStreamAppendedNewline
 argument_list|,
 name|getOutputStream
 argument_list|()
