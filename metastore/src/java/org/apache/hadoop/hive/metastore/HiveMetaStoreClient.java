@@ -2917,6 +2917,9 @@ throw|;
 block|}
 else|else
 block|{
+name|close
+argument_list|()
+expr_stmt|;
 comment|// Swap the first element of the metastoreUris[] with a random element from the rest
 comment|// of the array. Rationale being that this method will generally be called when the default
 comment|// connection has died and the default connection is likely to be the first array element.
@@ -3787,9 +3790,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
-literal|"Unable to shutdown local metastore client"
+literal|"Unable to shutdown metastore client. Will try closing transport directly."
 argument_list|,
 name|e
 argument_list|)
