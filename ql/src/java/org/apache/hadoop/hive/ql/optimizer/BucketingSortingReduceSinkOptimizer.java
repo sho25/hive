@@ -649,6 +649,22 @@ name|SelectDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|ShimLoader
+import|;
+end_import
+
 begin_comment
 comment|/**  * This transformation does optimization for enforcing bucketing and sorting.  * For a query of the form:  * insert overwrite table T1 select * from T2;  * where T1 and T2 are bucketized/sorted on the same keys, we don't need a reducer to  * enforce bucketing and sorting.  *  * It also optimizes queries of the form:  * insert overwrite table T1  * select * from T1 join T2 on T1.key = T2.key  * where T1, T2 and T3 are bucketized/sorted on the same key 'key', we don't need a reducer  * to enforce bucketing and sorting  */
 end_comment
@@ -1414,14 +1430,18 @@ control|)
 block|{
 if|if
 condition|(
-operator|!
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|isDirectory
+argument_list|(
 name|srcs
 index|[
 name|pos
 index|]
-operator|.
-name|isFile
-argument_list|()
+argument_list|)
 condition|)
 block|{
 throw|throw
