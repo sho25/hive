@@ -4313,11 +4313,21 @@ comment|// Execute one instruction; terminate on executing a script if there is 
 comment|// in silent mode, prevent the query and prompt being echoed back to terminal
 name|line
 operator|=
+operator|(
 name|getOpts
 argument_list|()
 operator|.
 name|isSilent
 argument_list|()
+operator|&&
+name|getOpts
+argument_list|()
+operator|.
+name|getScriptFile
+argument_list|()
+operator|!=
+literal|null
+operator|)
 condition|?
 name|reader
 operator|.
