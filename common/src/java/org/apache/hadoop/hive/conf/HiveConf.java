@@ -12153,6 +12153,12 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVEDEFAULTMANAGEDFILEFORMAT
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|HIVEENFORCEBUCKETING
 operator|.
 name|varname
@@ -12333,6 +12339,12 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|HIVE_QUOTEDID_SUPPORT
 operator|.
 name|varname
@@ -12346,6 +12358,18 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_STATS_COLLECT_PART_LEVEL_STATS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
 operator|.
 name|varname
 block|,
@@ -12370,6 +12394,12 @@ block|,
 name|ConfVars
 operator|.
 name|MAXREDUCERS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|NWAYJOINREORDER
 operator|.
 name|varname
 block|,
@@ -12421,6 +12451,8 @@ literal|"hive\\.exec\\.mode.local\\..*"
 block|,
 literal|"hive\\.exec\\.orc\\..*"
 block|,
+literal|"hive\\.explain\\..*"
+block|,
 literal|"hive\\.fetch.task\\..*"
 block|,
 literal|"hive\\.hbase\\..*"
@@ -12435,6 +12467,8 @@ literal|"hive\\.join\\..*"
 block|,
 literal|"hive\\.limit\\..*"
 block|,
+literal|"hive\\.log\\..*"
+block|,
 literal|"hive\\.mapjoin\\..*"
 block|,
 literal|"hive\\.merge\\..*"
@@ -12445,9 +12479,13 @@ literal|"hive\\.orc\\..*"
 block|,
 literal|"hive\\.outerjoin\\..*"
 block|,
+literal|"hive\\.parquet\\..*"
+block|,
 literal|"hive\\.ppd\\..*"
 block|,
 literal|"hive\\.prewarm\\..*"
+block|,
+literal|"hive\\.server2\\.proxy\\.user"
 block|,
 literal|"hive\\.skewjoin\\..*"
 block|,
@@ -12480,6 +12518,8 @@ block|,
 literal|"tez\\.task\\..*"
 block|,
 literal|"tez\\.runtime\\..*"
+block|,
+literal|"tez.queue.name"
 block|,   }
 decl_stmt|;
 comment|/**    * Apply system properties to this object if the property name is defined in ConfVars    * and the value is non-null and not an empty string.    */
