@@ -788,6 +788,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_CLIENT_SOCKET_LIFETIME
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTOREPWD
 block|,
 name|HiveConf
@@ -2153,6 +2159,27 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"MetaStore Client socket timeout in seconds"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_SOCKET_LIFETIME
+argument_list|(
+literal|"hive.metastore.client.socket.lifetime"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MetaStore Client socket lifetime in seconds. After this time is exceeded, client\n"
+operator|+
+literal|"reconnects on the next MetaStore operation. A value of 0s means the connection\n"
+operator|+
+literal|"has an infinite lifetime."
 argument_list|)
 block|,
 name|METASTOREPWD
