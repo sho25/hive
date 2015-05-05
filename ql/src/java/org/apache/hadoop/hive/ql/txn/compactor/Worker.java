@@ -513,11 +513,16 @@ name|void
 name|run
 parameter_list|()
 block|{
+do|do
+block|{
+name|boolean
+name|launchedJob
+init|=
+literal|false
+decl_stmt|;
 comment|// Make sure nothing escapes this run method and kills the metastore at large,
 comment|// so wrap it in a big catch Throwable statement.
 try|try
-block|{
-do|do
 block|{
 name|CompactionInfo
 name|ci
@@ -861,6 +866,10 @@ operator|new
 name|CompactorMR
 argument_list|()
 decl_stmt|;
+name|launchedJob
+operator|=
+literal|true
+expr_stmt|;
 try|try
 block|{
 if|if
@@ -1008,16 +1017,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-do|while
-condition|(
-operator|!
-name|stop
-operator|.
-name|get
-argument_list|()
-condition|)
-do|;
-block|}
 catch|catch
 parameter_list|(
 name|Throwable
@@ -1032,7 +1031,7 @@ literal|"Caught an exception in the main loop of compactor worker "
 operator|+
 name|name
 operator|+
-literal|", exiting "
+literal|", "
 operator|+
 name|StringUtils
 operator|.
@@ -1043,6 +1042,48 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// If we didn't try to launch a job it either means there was no work to do or we got
+comment|// here as the result of a communication failure with the DB.  Either way we want to wait
+comment|// a bit before we restart the loop.
+if|if
+condition|(
+operator|!
+name|launchedJob
+operator|&&
+operator|!
+name|stop
+operator|.
+name|get
+argument_list|()
+condition|)
+block|{
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|SLEEP_TIME
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{         }
+block|}
+block|}
+do|while
+condition|(
+operator|!
+name|stop
+operator|.
+name|get
+argument_list|()
+condition|)
+do|;
 block|}
 annotation|@
 name|Override
