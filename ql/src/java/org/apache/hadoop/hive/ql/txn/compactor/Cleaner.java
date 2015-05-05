@@ -517,10 +517,6 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-comment|// Make sure nothing escapes this run method and kills the metastore at large,
-comment|// so wrap it in a big catch Throwable statement.
-try|try
-block|{
 name|long
 name|startedAt
 init|=
@@ -529,6 +525,10 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
+comment|// Make sure nothing escapes this run method and kills the metastore at large,
+comment|// so wrap it in a big catch Throwable statement.
+try|try
+block|{
 comment|// First look for all the compactions that are waiting to be cleaned.  If we have not
 comment|// seen an entry before, look for all the locks held on that table or partition and
 comment|// record them.  We will then only clean the partition once all of those locks have been
@@ -829,39 +829,6 @@ block|}
 block|}
 block|}
 block|}
-comment|// Now, go back to bed until it's time to do this again
-name|long
-name|elapsedTime
-init|=
-name|System
-operator|.
-name|currentTimeMillis
-argument_list|()
-operator|-
-name|startedAt
-decl_stmt|;
-if|if
-condition|(
-name|elapsedTime
-operator|>=
-name|cleanerCheckInterval
-operator|||
-name|stop
-operator|.
-name|get
-argument_list|()
-condition|)
-continue|continue;
-else|else
-name|Thread
-operator|.
-name|sleep
-argument_list|(
-name|cleanerCheckInterval
-operator|-
-name|elapsedTime
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -896,6 +863,54 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+comment|// Now, go back to bed until it's time to do this again
+name|long
+name|elapsedTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|startedAt
+decl_stmt|;
+if|if
+condition|(
+name|elapsedTime
+operator|>=
+name|cleanerCheckInterval
+operator|||
+name|stop
+operator|.
+name|get
+argument_list|()
+condition|)
+block|{
+continue|continue;
+block|}
+else|else
+block|{
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|cleanerCheckInterval
+operator|-
+name|elapsedTime
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ie
+parameter_list|)
+block|{
+comment|// What can I do about it?
+block|}
 block|}
 block|}
 do|while
