@@ -1021,6 +1021,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -5601,8 +5615,7 @@ block|{
 comment|// get the key to store in map
 name|key
 operator|=
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|value
 argument_list|)
@@ -5872,6 +5885,50 @@ return|return
 name|localized
 return|;
 block|}
+comment|/**    * @param path    * @return URI corresponding to the path.    */
+specifier|private
+specifier|static
+name|URI
+name|createURI
+parameter_list|(
+name|String
+name|path
+parameter_list|)
+throws|throws
+name|URISyntaxException
+block|{
+if|if
+condition|(
+operator|!
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+comment|// If this is not windows shell, path better follow unix convention.
+comment|// Else, the below call will throw an URISyntaxException
+return|return
+operator|new
+name|URI
+argument_list|(
+name|path
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|new
+name|Path
+argument_list|(
+name|path
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+return|;
+block|}
+block|}
 specifier|private
 specifier|static
 name|String
@@ -5886,8 +5943,7 @@ block|{
 name|URI
 name|uri
 init|=
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|value
 argument_list|)
@@ -5990,8 +6046,7 @@ block|{
 name|URI
 name|uri
 init|=
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|value
 argument_list|)
@@ -6060,8 +6115,7 @@ name|Arrays
 operator|.
 name|asList
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|downloadResource
 argument_list|(
@@ -6258,8 +6312,7 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|value
 argument_list|)
@@ -6493,8 +6546,7 @@ condition|)
 block|{
 name|key
 operator|=
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|value
 argument_list|)
