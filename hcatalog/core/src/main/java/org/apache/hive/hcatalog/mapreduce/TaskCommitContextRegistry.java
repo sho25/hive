@@ -239,15 +239,18 @@ name|key
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"No callback registered for TaskAttemptID:"
 operator|+
 name|key
+operator|+
+literal|". Skipping."
 argument_list|)
-throw|;
+expr_stmt|;
+return|return;
 block|}
 try|try
 block|{
@@ -402,15 +405,18 @@ name|key
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"No callback registered for TaskAttemptID:"
 operator|+
 name|key
+operator|+
+literal|". Skipping."
 argument_list|)
-throw|;
+expr_stmt|;
+return|return;
 block|}
 try|try
 block|{
