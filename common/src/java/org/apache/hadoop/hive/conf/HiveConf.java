@@ -5930,7 +5930,7 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|"600000ms"
+literal|"1200000ms"
 argument_list|,
 operator|new
 name|TimeValidator
