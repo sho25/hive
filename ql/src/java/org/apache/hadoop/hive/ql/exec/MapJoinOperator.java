@@ -826,7 +826,7 @@ specifier|transient
 name|ObjectCache
 name|cache
 decl_stmt|;
-specifier|private
+specifier|protected
 name|HashTableLoader
 name|loader
 decl_stmt|;
@@ -3198,6 +3198,12 @@ name|clearAllTableContainers
 argument_list|()
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|loader
+operator|=
+literal|null
+expr_stmt|;
 name|super
 operator|.
 name|closeOp
