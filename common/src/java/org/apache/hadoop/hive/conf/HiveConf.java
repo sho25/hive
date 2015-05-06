@@ -6687,7 +6687,7 @@ name|HIVE_REPL_TASK_FACTORY
 argument_list|(
 literal|"hive.repl.task.factory"
 argument_list|,
-literal|""
+literal|"org.apache.hive.hcatalog.api.repl.exim.EximReplicationTaskFactory"
 argument_list|,
 literal|"Parameter that can be used to override which ReplicationTaskFactory will be\n"
 operator|+
