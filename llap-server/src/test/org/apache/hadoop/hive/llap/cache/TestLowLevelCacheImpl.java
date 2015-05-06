@@ -427,7 +427,7 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|void
 name|allocateMultiple
 parameter_list|(
 name|LlapMemoryBuffer
@@ -484,9 +484,6 @@ operator|=
 name|buf
 expr_stmt|;
 block|}
-return|return
-literal|true
-return|;
 block|}
 annotation|@
 name|Override
@@ -587,6 +584,23 @@ name|setEvictionListener
 parameter_list|(
 name|EvictionListener
 name|listener
+parameter_list|)
+block|{     }
+specifier|public
+name|String
+name|debugDumpForOom
+parameter_list|()
+block|{
+return|return
+literal|""
+return|;
+block|}
+specifier|public
+name|void
+name|setParentDebugDumper
+parameter_list|(
+name|LlapOomDebugDump
+name|dumper
 parameter_list|)
 block|{     }
 block|}

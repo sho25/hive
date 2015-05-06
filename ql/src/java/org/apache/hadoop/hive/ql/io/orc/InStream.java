@@ -3929,9 +3929,6 @@ operator|++
 name|ix
 expr_stmt|;
 block|}
-name|boolean
-name|canAlloc
-init|=
 name|cache
 operator|.
 name|getAllocator
@@ -3943,21 +3940,7 @@ name|targetBuffers
 argument_list|,
 name|bufferSize
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|canAlloc
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Cannot allocate"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 comment|// 4. Now decompress (or copy) the data into cache buffers.
 for|for
 control|(
@@ -5426,9 +5409,6 @@ operator|++
 name|ix
 expr_stmt|;
 block|}
-name|boolean
-name|canAlloc
-init|=
 name|cache
 operator|.
 name|getAllocator
@@ -5451,21 +5431,7 @@ else|:
 name|partSize
 argument_list|)
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|canAlloc
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Cannot allocate"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 comment|// 4. Now copy the data into cache buffers.
 name|ix
 operator|=
@@ -5713,9 +5679,6 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
-name|boolean
-name|canAlloc
-init|=
 name|cache
 operator|.
 name|getAllocator
@@ -5734,21 +5697,7 @@ operator|-
 name|partOffset
 argument_list|)
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|canAlloc
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Cannot allocate"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 name|LlapMemoryBuffer
 name|buffer
 init|=
@@ -5827,9 +5776,6 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
-name|boolean
-name|canAlloc
-init|=
 name|cache
 operator|.
 name|getAllocator
@@ -5844,21 +5790,7 @@ operator|.
 name|getLength
 argument_list|()
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|canAlloc
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Cannot allocate"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 name|LlapMemoryBuffer
 name|buffer
 init|=

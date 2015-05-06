@@ -614,7 +614,7 @@ comment|// TODO: would it make sense to return buffers asynchronously?
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|void
 name|allocateMultiple
 parameter_list|(
 name|LlapMemoryBuffer
@@ -624,6 +624,8 @@ parameter_list|,
 name|int
 name|size
 parameter_list|)
+throws|throws
+name|LlapCacheOutOfMemoryException
 block|{
 assert|assert
 name|size
@@ -839,9 +841,7 @@ name|dest
 operator|.
 name|length
 condition|)
-return|return
-literal|true
-return|;
+return|return;
 if|if
 condition|(
 name|newIx
@@ -850,12 +850,16 @@ operator|-
 literal|1
 condition|)
 block|{
-comment|// Shouldn't happen.
+comment|// TODO: check if it can still happen; count should take care of this.
 name|ix
 operator|=
 name|newIx
 expr_stmt|;
 block|}
+name|ix
+operator|=
+name|newIx
+expr_stmt|;
 if|if
 condition|(
 operator|(
@@ -880,7 +884,38 @@ name|startIndex
 condition|)
 do|;
 block|}
-comment|// Then try to split bigger blocks. TODO: again, ideally we would tryLock at least once
+comment|// TODO: this is very hacky.
+comment|// We called reserveMemory so we know that somewhere in there, there's memory waiting for us.
+comment|// However, we have a class of rare race conditions related to the order of locking/checking of
+comment|// different allocation areas. Simple case - say we have 2 arenas, 256Kb available in arena 2.
+comment|// We look at arena 1; someone deallocs 256Kb from arena 1 and allocs the same from arena 2;
+comment|// we look at arena 2 and find no memory. Or, for single arena, 2 threads reserve 256k each,
+comment|// and a single 1Mb block is available. When the 1st thread locks the 1Mb freelist, the 2nd one
+comment|// might have already examined the 256k and 512k lists, finding nothing. Blocks placed by (1)
+comment|// into smaller lists after its split is done will not be found by (2); given that freelist
+comment|// locks don't overlap, (2) may even run completely between the time (1) takes out the 1Mb
+comment|// block and the time it returns the remaining 768Kb.
+comment|// Two solutions to this are some form of cross-thread helping (threads putting "demand"
+comment|// into some sort of queues that deallocate and split will examine), or having and "actor"
+comment|// allocator thread (or threads per arena).
+comment|// The 2nd one is probably much simpler and will allow us to get rid of a lot of sync code.
+comment|// But for now we will just retry 5 times 0_o
+for|for
+control|(
+name|int
+name|attempt
+init|=
+literal|0
+init|;
+name|attempt
+operator|<
+literal|5
+condition|;
+operator|++
+name|attempt
+control|)
+block|{
+comment|// Try to split bigger blocks. TODO: again, ideally we would tryLock at least once
 for|for
 control|(
 name|int
@@ -934,15 +969,20 @@ name|dest
 operator|.
 name|length
 condition|)
-return|return
-literal|true
-return|;
+return|return;
 name|ix
 operator|=
 name|newIx
 expr_stmt|;
 block|}
-comment|// Then try to allocate memory if we haven't allocated all the way to maxSize yet; very rare.
+if|if
+condition|(
+name|attempt
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Try to allocate memory if we haven't allocated all the way to maxSize yet; very rare.
 for|for
 control|(
 name|int
@@ -988,13 +1028,66 @@ name|dest
 operator|.
 name|length
 condition|)
-return|return
-literal|true
-return|;
+return|return;
 block|}
-return|return
-literal|false
-return|;
+block|}
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to allocate despite reserved memory; will retry "
+operator|+
+name|attempt
+argument_list|)
+expr_stmt|;
+block|}
+name|String
+name|msg
+init|=
+literal|"Failed to allocate "
+operator|+
+name|size
+operator|+
+literal|"; at "
+operator|+
+name|ix
+operator|+
+literal|" out of "
+operator|+
+name|dest
+operator|.
+name|length
+decl_stmt|;
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+operator|+
+literal|"\nALLOCATOR STATE:\n"
+operator|+
+name|debugDump
+argument_list|()
+operator|+
+literal|"\nPARENT STATE:\n"
+operator|+
+name|memoryManager
+operator|.
+name|debugDumpForOom
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|LlapCacheOutOfMemoryException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
 block|}
 annotation|@
 name|Override
@@ -1138,13 +1231,6 @@ name|result
 argument_list|)
 expr_stmt|;
 block|}
-name|result
-operator|.
-name|append
-argument_list|(
-literal|"\n"
-argument_list|)
-expr_stmt|;
 return|return
 name|result
 operator|.
@@ -1500,100 +1586,6 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|headers
-operator|.
-name|length
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|byte
-name|header
-init|=
-name|headers
-index|[
-name|i
-index|]
-decl_stmt|;
-if|if
-condition|(
-name|header
-operator|==
-literal|0
-condition|)
-continue|continue;
-name|int
-name|freeListIx
-init|=
-name|freeListFromHeader
-argument_list|(
-name|header
-argument_list|)
-decl_stmt|,
-name|offset
-init|=
-name|offsetFromHeaderIndex
-argument_list|(
-name|i
-argument_list|)
-decl_stmt|;
-name|boolean
-name|isFree
-init|=
-operator|(
-name|header
-operator|&
-literal|1
-operator|)
-operator|==
-literal|0
-decl_stmt|;
-name|result
-operator|.
-name|append
-argument_list|(
-literal|"\n  block "
-operator|+
-name|i
-operator|+
-literal|" at "
-operator|+
-name|offset
-operator|+
-literal|": size "
-operator|+
-operator|(
-literal|1
-operator|<<
-operator|(
-name|freeListIx
-operator|+
-name|minAllocLog2
-operator|)
-operator|)
-operator|+
-literal|", "
-operator|+
-operator|(
-name|isFree
-condition|?
-literal|"free"
-else|:
-literal|"allocated"
-operator|)
-argument_list|)
-expr_stmt|;
-block|}
 name|int
 name|allocSize
 init|=
@@ -1695,6 +1687,100 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|headers
+operator|.
+name|length
+condition|;
+operator|++
+name|i
+control|)
+block|{
+name|byte
+name|header
+init|=
+name|headers
+index|[
+name|i
+index|]
+decl_stmt|;
+if|if
+condition|(
+name|header
+operator|==
+literal|0
+condition|)
+continue|continue;
+name|int
+name|freeListIx
+init|=
+name|freeListFromHeader
+argument_list|(
+name|header
+argument_list|)
+decl_stmt|,
+name|offset
+init|=
+name|offsetFromHeaderIndex
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isFree
+init|=
+operator|(
+name|header
+operator|&
+literal|1
+operator|)
+operator|==
+literal|0
+decl_stmt|;
+name|result
+operator|.
+name|append
+argument_list|(
+literal|"\n  block "
+operator|+
+name|i
+operator|+
+literal|" at "
+operator|+
+name|offset
+operator|+
+literal|": size "
+operator|+
+operator|(
+literal|1
+operator|<<
+operator|(
+name|freeListIx
+operator|+
+name|minAllocLog2
+operator|)
+operator|)
+operator|+
+literal|", "
+operator|+
+operator|(
+name|isFree
+condition|?
+literal|"free"
+else|:
+literal|"allocated"
+operator|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|private
@@ -1937,27 +2023,41 @@ name|length
 condition|)
 block|{
 name|int
-name|splitWays
+name|splitWaysLog2
 init|=
-literal|1
-operator|<<
 operator|(
 name|splitListIx
 operator|-
 name|freeListIx
 operator|)
 decl_stmt|;
+assert|assert
+name|splitWaysLog2
+operator|>
+literal|0
+assert|;
+name|int
+name|splitWays
+init|=
+literal|1
+operator|<<
+name|splitWaysLog2
+decl_stmt|;
+comment|// How many ways each block splits into target size.
 name|int
 name|lastSplitBlocksRemaining
 init|=
 operator|-
 literal|1
-decl_stmt|,
+decl_stmt|;
+comment|// How many target-sized blocks remain from last split.
+name|int
 name|lastSplitNextHeader
 init|=
 operator|-
 literal|1
 decl_stmt|;
+comment|// The header index for the beginning of the remainder.
 name|FreeList
 name|splitList
 init|=
@@ -2017,6 +2117,7 @@ argument_list|,
 name|remaining
 argument_list|)
 decl_stmt|;
+comment|// We split it splitWays and take toTake.
 name|remaining
 operator|-=
 name|toTake
@@ -2027,6 +2128,8 @@ name|splitWays
 operator|-
 name|toTake
 expr_stmt|;
+comment|// Whatever remains.
+comment|// Take toTake blocks by splitting the block at origOffset.
 for|for
 control|(
 init|;
@@ -2056,6 +2159,7 @@ index|]
 operator|=
 name|headerData
 expr_stmt|;
+comment|// TODO: this could be done out of the lock, we only need to take the blocks out.
 operator|(
 operator|(
 name|LlapDataBuffer
@@ -2082,6 +2186,7 @@ name|lastSplitNextHeader
 operator|=
 name|headerIx
 expr_stmt|;
+comment|// If anything remains, this is where it starts.
 name|headerIx
 operator|=
 name|data
@@ -2093,6 +2198,7 @@ operator|+
 literal|4
 argument_list|)
 expr_stmt|;
+comment|// Get next item from the free list.
 block|}
 name|replaceListHeadUnderLock
 argument_list|(
@@ -2101,6 +2207,7 @@ argument_list|,
 name|headerIx
 argument_list|)
 expr_stmt|;
+comment|// In the end, update free list head.
 block|}
 finally|finally
 block|{
@@ -2884,6 +2991,11 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|private
+specifier|static
+class|class
+name|Request
+block|{    }
 specifier|private
 specifier|static
 class|class

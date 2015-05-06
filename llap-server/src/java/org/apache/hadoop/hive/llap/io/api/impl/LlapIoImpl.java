@@ -925,6 +925,13 @@ name|metadataCache
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|cachePolicy
+operator|.
+name|setParentDebugDumper
+argument_list|(
+name|orcCache
+argument_list|)
+expr_stmt|;
 name|orcCache
 operator|.
 name|init

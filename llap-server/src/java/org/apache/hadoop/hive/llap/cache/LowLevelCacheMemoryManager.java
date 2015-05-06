@@ -488,6 +488,22 @@ argument_list|)
 condition|)
 do|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|debugDumpForOom
+parameter_list|()
+block|{
+return|return
+literal|"cache state\n"
+operator|+
+name|evictor
+operator|.
+name|debugDumpForOom
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

@@ -83,6 +83,17 @@ block|}
 specifier|public
 specifier|static
 name|boolean
+name|isTraceRangesEnabled
+parameter_list|()
+block|{
+return|return
+literal|true
+return|;
+comment|// TODO: temporary, should be hardcoded false
+block|}
+specifier|public
+specifier|static
+name|boolean
 name|isTraceLockingEnabled
 parameter_list|()
 block|{

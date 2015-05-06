@@ -47,6 +47,8 @@ begin_interface
 specifier|public
 interface|interface
 name|LowLevelCachePolicy
+extends|extends
+name|LlapOomDebugDump
 block|{
 name|void
 name|cache
@@ -84,6 +86,13 @@ name|setEvictionListener
 parameter_list|(
 name|EvictionListener
 name|listener
+parameter_list|)
+function_decl|;
+name|void
+name|setParentDebugDumper
+parameter_list|(
+name|LlapOomDebugDump
+name|dumper
 parameter_list|)
 function_decl|;
 block|}

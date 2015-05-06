@@ -23,6 +23,8 @@ begin_interface
 specifier|public
 interface|interface
 name|MemoryManager
+extends|extends
+name|LlapOomDebugDump
 block|{
 name|boolean
 name|reserveMemory
