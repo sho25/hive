@@ -151,7 +151,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -318,6 +318,22 @@ operator|.
 name|util
 operator|.
 name|Tool
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|hcatalog
+operator|.
+name|common
+operator|.
+name|HCatUtil
 import|;
 end_import
 
@@ -1064,11 +1080,12 @@ throws|,
 name|InterruptedException
 block|{
 specifier|final
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
-operator|new
-name|HiveMetaStoreClient
+name|HCatUtil
+operator|.
+name|getHiveMetastoreClient
 argument_list|(
 name|c
 argument_list|)
@@ -1111,6 +1128,11 @@ name|client
 operator|.
 name|getDelegationToken
 argument_list|(
+name|c
+operator|.
+name|getUser
+argument_list|()
+argument_list|,
 name|u
 argument_list|)
 return|;

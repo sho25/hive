@@ -99,7 +99,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -655,7 +655,7 @@ parameter_list|,
 name|OutputJobInfo
 name|outputJobInfo
 parameter_list|,
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|,
 name|Configuration
@@ -770,6 +770,11 @@ name|client
 operator|.
 name|getDelegationToken
 argument_list|(
+name|ugi
+operator|.
+name|getUserName
+argument_list|()
+argument_list|,
 name|ugi
 operator|.
 name|getUserName
@@ -929,7 +934,7 @@ parameter_list|,
 name|OutputJobInfo
 name|outputJobInfo
 parameter_list|,
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|,
 name|Configuration
@@ -970,7 +975,7 @@ comment|// case the HCAT_KEY_TOKEN_SIGNATURE property in the conf will not be se
 name|void
 name|cancelToken
 parameter_list|(
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|,
 name|JobContext

@@ -215,6 +215,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|MetaStoreUtils
 import|;
 end_import
@@ -342,22 +358,6 @@ operator|.
 name|metadata
 operator|.
 name|HiveStorageHandler
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStoreClient
 import|;
 end_import
 
@@ -2756,7 +2756,7 @@ specifier|private
 name|void
 name|updateTableSchema
 parameter_list|(
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|,
 name|Table
@@ -4405,7 +4405,7 @@ expr_stmt|;
 block|}
 return|return;
 block|}
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -4447,7 +4447,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -5406,6 +5406,8 @@ name|p
 operator|.
 name|getValues
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -5626,7 +5628,7 @@ argument_list|(
 literal|"Cancelling delegation token for the job."
 argument_list|)
 expr_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -5650,7 +5652,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)

@@ -1021,7 +1021,7 @@ comment|// Otherwise the cache doesn't play well with the second test method wit
 comment|// tearDown() of the previous test
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)
