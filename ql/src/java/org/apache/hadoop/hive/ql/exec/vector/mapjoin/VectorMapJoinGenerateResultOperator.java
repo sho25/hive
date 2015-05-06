@@ -2212,6 +2212,16 @@ operator|+
 literal|" reProcessBigTable enter..."
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|spillReplayBatch
+operator|==
+literal|null
+condition|)
+block|{
+comment|// The process method was not called -- no big table rows.
+return|return;
+block|}
 name|HashPartition
 name|partition
 init|=
