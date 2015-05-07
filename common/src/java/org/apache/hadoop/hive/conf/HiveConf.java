@@ -12366,12 +12366,6 @@ name|varname
 block|,
 name|ConfVars
 operator|.
-name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
 name|HIVE_QUOTEDID_SUPPORT
 operator|.
 name|varname
