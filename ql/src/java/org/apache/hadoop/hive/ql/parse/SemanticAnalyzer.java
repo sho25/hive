@@ -45493,7 +45493,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|kindex
+name|vindex
 operator|>=
 literal|0
 condition|)
