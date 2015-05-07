@@ -954,6 +954,17 @@ throw|;
 block|}
 block|}
 block|}
+specifier|public
+name|void
+name|abort
+parameter_list|()
+block|{
+name|rproc
+operator|.
+name|abort
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * KVOutputCollector. OutputCollector that writes using KVWriter.    * Must be initialized before it is used.    *    */
 annotation|@
 name|SuppressWarnings
