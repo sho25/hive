@@ -3135,6 +3135,15 @@ argument_list|(
 literal|"Plan optimized by CBO."
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboSucceeded
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
