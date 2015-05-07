@@ -3488,14 +3488,6 @@ empty_stmt|;
 block|}
 decl_stmt|;
 comment|/**    * default port on which to start the Hive server    */
-specifier|private
-specifier|static
-specifier|final
-name|int
-name|DEFAULT_HIVE_METASTORE_PORT
-init|=
-literal|9083
-decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -33799,10 +33791,9 @@ name|HiveMetastoreCli
 extends|extends
 name|CommonCliOptions
 block|{
+specifier|private
 name|int
 name|port
-init|=
-name|DEFAULT_HIVE_METASTORE_PORT
 decl_stmt|;
 annotation|@
 name|SuppressWarnings
@@ -33811,13 +33802,33 @@ literal|"static-access"
 argument_list|)
 specifier|public
 name|HiveMetastoreCli
-parameter_list|()
+parameter_list|(
+name|Configuration
+name|configuration
+parameter_list|)
 block|{
 name|super
 argument_list|(
 literal|"hivemetastore"
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|port
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|configuration
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_SERVER_PORT
 argument_list|)
 expr_stmt|;
 comment|// -p port
@@ -33839,7 +33850,9 @@ name|withDescription
 argument_list|(
 literal|"Hive Metastore port number, default:"
 operator|+
-name|DEFAULT_HIVE_METASTORE_PORT
+name|this
+operator|.
+name|port
 argument_list|)
 operator|.
 name|create
@@ -33896,6 +33909,8 @@ operator|+
 literal|"line syntax (run with -h to see usage information)"
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
 name|port
 operator|=
 operator|new
@@ -33920,6 +33935,8 @@ literal|'p'
 argument_list|)
 condition|)
 block|{
+name|this
+operator|.
 name|port
 operator|=
 name|Integer
@@ -33955,6 +33972,8 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|this
+operator|.
 name|port
 operator|=
 name|Integer
@@ -33966,6 +33985,17 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+specifier|public
+name|int
+name|getPort
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|port
+return|;
 block|}
 block|}
 comment|/**    * @param args    */
@@ -33988,12 +34018,25 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|HiveConf
+name|conf
+init|=
+operator|new
+name|HiveConf
+argument_list|(
+name|HMSHandler
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 name|HiveMetastoreCli
 name|cli
 init|=
 operator|new
 name|HiveMetastoreCli
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|cli
 operator|.
@@ -34103,17 +34146,6 @@ name|msg
 argument_list|)
 expr_stmt|;
 block|}
-name|HiveConf
-name|conf
-init|=
-operator|new
-name|HiveConf
-argument_list|(
-name|HMSHandler
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 comment|// set all properties specified on the command line
 for|for
 control|(
@@ -34244,7 +34276,8 @@ name|startMetaStore
 argument_list|(
 name|cli
 operator|.
-name|port
+name|getPort
+argument_list|()
 argument_list|,
 name|ShimLoader
 operator|.

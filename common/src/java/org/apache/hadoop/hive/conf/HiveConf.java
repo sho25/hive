@@ -764,6 +764,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_SERVER_PORT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORETHRIFTCONNECTIONRETRIES
 block|,
 name|HiveConf
@@ -2125,6 +2131,15 @@ argument_list|,
 literal|1
 argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
+argument_list|)
+block|,
+name|METASTORE_SERVER_PORT
+argument_list|(
+literal|"hive.metastore.port"
+argument_list|,
+literal|9083
+argument_list|,
+literal|"Hive metastore listener port"
 argument_list|)
 block|,
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
