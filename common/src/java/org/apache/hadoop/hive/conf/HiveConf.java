@@ -6596,19 +6596,6 @@ operator|+
 literal|"set by SQL standard authorization instead of replacing it entirely."
 argument_list|)
 block|,
-name|HIVE_AUTHORIZATION_HDFS_LIST_STATUS_BATCH_SIZE
-argument_list|(
-literal|"hive.authprovider.hdfs.liststatus.batch.size"
-argument_list|,
-literal|1000
-argument_list|,
-literal|"Number of FileStatus objects to be queried for when listing files, for HDFS-based authorization.\n"
-operator|+
-literal|"Note: If this exceeds dfs.ls.limit (as set in hdfs-site.xml), DFSClient might use the smaller value as \n"
-operator|+
-literal|"the batch-size, internally."
-argument_list|)
-block|,
 name|HIVE_CLI_PRINT_HEADER
 argument_list|(
 literal|"hive.cli.print.header"
