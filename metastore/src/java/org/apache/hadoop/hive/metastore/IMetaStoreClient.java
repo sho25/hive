@@ -43,6 +43,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -420,6 +438,16 @@ operator|.
 name|thrift
 operator|.
 name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
 import|;
 end_import
 
@@ -2987,7 +3015,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
+comment|/**    * This is expected to be a no-op when in local mode,    * which means that the implementation will return null.    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
 name|String
 name|getDelegationToken
 parameter_list|(
@@ -3025,6 +3053,13 @@ throws|throws
 name|MetaException
 throws|,
 name|TException
+function_decl|;
+specifier|public
+name|String
+name|getTokenStrForm
+parameter_list|()
+throws|throws
+name|IOException
 function_decl|;
 name|void
 name|createFunction
@@ -3314,6 +3349,15 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * A filter provided by the client that determines if a given notification event should be    * returned.    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCatalog"
+block|}
+argument_list|)
 interface|interface
 name|NotificationFilter
 block|{
@@ -3327,6 +3371,15 @@ parameter_list|)
 function_decl|;
 block|}
 comment|/**    * Get the next set of notifications from the database.    * @param lastEventId The last event id that was consumed by this reader.  The returned    *                    notifications will start at the next eventId available after this eventId.    * @param maxEvents Maximum number of events to return.  If< 1, then all available events will    *                  be returned.    * @param filter User provided filter to remove unwanted events.  If null, all events will be    *               returned.    * @return list of notifications, sorted by eventId.  It is guaranteed that the events are in    * the order that the operations were done on the database.    * @throws TException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCatalog"
+block|}
+argument_list|)
 name|NotificationEventResponse
 name|getNextNotification
 parameter_list|(
@@ -3343,6 +3396,15 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Get the last used notification event id.    * @return last used id    * @throws TException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCatalog"
+block|}
+argument_list|)
 name|CurrentNotificationEventId
 name|getCurrentNotificationEventId
 parameter_list|()
@@ -3350,6 +3412,15 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Request that the metastore fire an event.  Currently this is only supported for DML    * operations, since the metastore knows when DDL operations happen.    * @param request    * @return response, type depends on type of request    * @throws TException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"Apache Hive, HCatalog"
+block|}
+argument_list|)
 name|FireEventResponse
 name|fireListenerEvent
 parameter_list|(

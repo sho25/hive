@@ -824,7 +824,7 @@ specifier|private
 name|LazySimpleSerializeWrite
 parameter_list|()
 block|{   }
-comment|/*    * Set the buffer that will receive the serialized data.    */
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will be reset.    */
 annotation|@
 name|Override
 specifier|public
@@ -845,6 +845,28 @@ name|output
 operator|.
 name|reset
 argument_list|()
+expr_stmt|;
+name|index
+operator|=
+literal|0
+expr_stmt|;
+block|}
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will NOT be reset.    */
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setAppend
+parameter_list|(
+name|Output
+name|output
+parameter_list|)
+block|{
+name|this
+operator|.
+name|output
+operator|=
+name|output
 expr_stmt|;
 name|index
 operator|=

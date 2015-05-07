@@ -1540,7 +1540,12 @@ name|ENCRYPTED_TABLE
 argument_list|,
 literal|"a int, b string"
 argument_list|,
+name|WindowsPathUtil
+operator|.
+name|getHdfsUriString
+argument_list|(
 name|encryptedTablePath
+argument_list|)
 argument_list|,
 name|driver
 argument_list|)

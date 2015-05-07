@@ -1227,6 +1227,20 @@ name|fields
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|props
+operator|.
+name|setProperty
+argument_list|(
+literal|"columns.comments"
+argument_list|,
+name|MetaStoreUtils
+operator|.
+name|getColumnCommentsFromFieldSchema
+argument_list|(
+name|fields
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// setting these props to match LazySimpleSerde
 name|props
 operator|.

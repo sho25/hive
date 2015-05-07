@@ -1904,6 +1904,15 @@ name|abort
 operator|=
 literal|true
 expr_stmt|;
+name|Utilities
+operator|.
+name|setReduceWork
+argument_list|(
+name|jc
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|e

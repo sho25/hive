@@ -215,6 +215,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|MetaException
@@ -395,7 +411,7 @@ name|Cache
 argument_list|<
 name|HiveClientCacheKey
 argument_list|,
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 name|hiveCache
 decl_stmt|;
@@ -499,8 +515,8 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|HiveMetaStoreClient
-name|getNonCachedHiveClient
+name|IMetaStoreClient
+name|getNonCachedHiveMetastoreClient
 parameter_list|(
 name|HiveConf
 name|hiveConf
@@ -557,7 +573,7 @@ name|RemovalListener
 argument_list|<
 name|HiveClientCacheKey
 argument_list|,
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 name|removalListener
 init|=
@@ -566,7 +582,7 @@ name|RemovalListener
 argument_list|<
 name|HiveClientCacheKey
 argument_list|,
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 argument_list|()
 block|{
@@ -580,12 +596,12 @@ name|RemovalNotification
 argument_list|<
 name|HiveClientCacheKey
 argument_list|,
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 name|notification
 parameter_list|)
 block|{
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|hiveMetaStoreClient
 init|=
 name|notification
@@ -797,7 +813,7 @@ name|ConcurrentMap
 argument_list|<
 name|HiveClientCacheKey
 argument_list|,
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 name|elements
 init|=
@@ -808,7 +824,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|cacheableHiveMetaStoreClient
 range|:
 name|elements
@@ -854,7 +870,7 @@ expr_stmt|;
 block|}
 comment|/**    * Returns a cached client if exists or else creates one, caches and returns it. It also checks that the client is    * healthy and can be reused    * @param hiveConf    * @return the hive client    * @throws MetaException    * @throws IOException    * @throws LoginException    */
 specifier|public
-name|HiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|get
 parameter_list|(
 specifier|final
@@ -882,8 +898,8 @@ name|getThreadId
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|CacheableHiveMetaStoreClient
-name|hiveMetaStoreClient
+name|ICacheableMetaStoreClient
+name|cacheableHiveMetaStoreClient
 init|=
 literal|null
 decl_stmt|;
@@ -894,14 +910,14 @@ init|(
 name|CACHE_TEARDOWN_LOCK
 init|)
 block|{
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|=
 name|getOrCreate
 argument_list|(
 name|cacheKey
 argument_list|)
 expr_stmt|;
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|.
 name|acquire
 argument_list|()
@@ -910,7 +926,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|.
 name|isOpen
 argument_list|()
@@ -928,19 +944,19 @@ argument_list|(
 name|cacheKey
 argument_list|)
 expr_stmt|;
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|=
 name|getOrCreate
 argument_list|(
 name|cacheKey
 argument_list|)
 expr_stmt|;
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 operator|.
 name|acquire
 argument_list|()
@@ -948,12 +964,12 @@ expr_stmt|;
 block|}
 block|}
 return|return
-name|hiveMetaStoreClient
+name|cacheableHiveMetaStoreClient
 return|;
 block|}
 comment|/**    * Return from cache if exists else create/cache and return    * @param cacheKey    * @return    * @throws IOException    * @throws MetaException    * @throws LoginException    */
 specifier|private
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|getOrCreate
 parameter_list|(
 specifier|final
@@ -979,14 +995,14 @@ argument_list|,
 operator|new
 name|Callable
 argument_list|<
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 argument_list|>
 argument_list|()
 block|{
 annotation|@
 name|Override
 specifier|public
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|call
 parameter_list|()
 throws|throws
@@ -1311,13 +1327,53 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Add # of current users on HiveMetaStoreClient, so that the client can be cleaned when no one is using it.    */
 specifier|public
+interface|interface
+name|ICacheableMetaStoreClient
+extends|extends
+name|IMetaStoreClient
+block|{
+name|void
+name|acquire
+parameter_list|()
+function_decl|;
+name|void
+name|release
+parameter_list|()
+function_decl|;
+name|void
+name|setExpiredFromCache
+parameter_list|()
+function_decl|;
+name|AtomicInteger
+name|getUsers
+parameter_list|()
+function_decl|;
+name|boolean
+name|isClosed
+parameter_list|()
+function_decl|;
+name|boolean
+name|isOpen
+parameter_list|()
+function_decl|;
+name|void
+name|tearDownIfUnused
+parameter_list|()
+function_decl|;
+name|void
+name|tearDown
+parameter_list|()
+function_decl|;
+block|}
+comment|/**    * Add # of current users on HiveMetaStoreClient, so that the client can be cleaned when no one is using it.    */
 specifier|static
 class|class
 name|CacheableHiveMetaStoreClient
 extends|extends
 name|HiveMetaStoreClient
+implements|implements
+name|ICacheableMetaStoreClient
 block|{
 specifier|private
 specifier|final
@@ -1358,7 +1414,6 @@ literal|60
 operator|*
 literal|1000
 decl_stmt|;
-specifier|public
 name|CacheableHiveMetaStoreClient
 parameter_list|(
 specifier|final
@@ -1366,7 +1421,7 @@ name|HiveConf
 name|conf
 parameter_list|,
 specifier|final
-name|int
+name|Integer
 name|timeout
 parameter_list|)
 throws|throws
@@ -1395,7 +1450,7 @@ operator|+
 name|EXPIRY_TIME_EXTENSION_IN_MILLIS
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|acquire
 parameter_list|()
@@ -1406,7 +1461,7 @@ name|incrementAndGet
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|release
 parameter_list|()
@@ -1436,8 +1491,18 @@ return|return
 name|isClosed
 return|;
 block|}
+comment|/*      * Used only for Debugging or testing purposes      */
+specifier|public
+name|AtomicInteger
+name|getUsers
+parameter_list|()
+block|{
+return|return
+name|users
+return|;
+block|}
 comment|/**      * Make a call to hive meta store and see if the client is still usable. Some calls where the user provides      * invalid data renders the client unusable for future use (example: create a table with very long table name)      * @return      */
-specifier|protected
+specifier|public
 name|boolean
 name|isOpen
 parameter_list|()
@@ -1445,7 +1510,7 @@ block|{
 try|try
 block|{
 comment|// Look for an unlikely database name and see if either MetaException or TException is thrown
-name|this
+name|super
 operator|.
 name|getDatabases
 argument_list|(
@@ -1495,7 +1560,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**      * Tear down only if      *  1. There are no active user      *  2. It has expired from the cache      */
-specifier|private
+specifier|public
 name|void
 name|tearDownIfUnused
 parameter_list|()
@@ -1520,7 +1585,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**      * Close if not closed already      */
-specifier|protected
+specifier|public
 specifier|synchronized
 name|void
 name|tearDown

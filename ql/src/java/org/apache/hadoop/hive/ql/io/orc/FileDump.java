@@ -219,7 +219,7 @@ name|io
 operator|.
 name|filters
 operator|.
-name|BloomFilter
+name|BloomFilterIO
 import|;
 end_import
 
@@ -1605,7 +1605,7 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|BloomFilter
+name|BloomFilterIO
 name|stripeLevelBF
 init|=
 literal|null
@@ -1662,11 +1662,11 @@ name|getBloomFilterList
 argument_list|()
 control|)
 block|{
-name|BloomFilter
+name|BloomFilterIO
 name|toMerge
 init|=
 operator|new
-name|BloomFilter
+name|BloomFilterIO
 argument_list|(
 name|bf
 argument_list|)
@@ -1753,7 +1753,7 @@ specifier|static
 name|String
 name|getBloomFilterStats
 parameter_list|(
-name|BloomFilter
+name|BloomFilterIO
 name|bf
 parameter_list|)
 block|{

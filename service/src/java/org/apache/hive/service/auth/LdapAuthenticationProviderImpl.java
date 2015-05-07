@@ -262,6 +262,16 @@ name|password
 operator|.
 name|isEmpty
 argument_list|()
+operator|||
+name|password
+operator|.
+name|getBytes
+argument_list|()
+index|[
+literal|0
+index|]
+operator|==
+literal|0
 condition|)
 block|{
 throw|throw

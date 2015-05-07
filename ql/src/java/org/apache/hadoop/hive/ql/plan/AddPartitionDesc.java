@@ -583,6 +583,11 @@ name|partitions
 init|=
 literal|null
 decl_stmt|;
+name|boolean
+name|replaceMode
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * For serialization only.    */
 specifier|public
 name|AddPartitionDesc
@@ -1064,6 +1069,34 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+return|;
+block|}
+comment|/**    * @param replaceMode Determine if this AddPartition should behave like a replace-into alter instead    */
+specifier|public
+name|void
+name|setReplaceMode
+parameter_list|(
+name|boolean
+name|replaceMode
+parameter_list|)
+block|{
+name|this
+operator|.
+name|replaceMode
+operator|=
+name|replaceMode
+expr_stmt|;
+block|}
+comment|/**    * @return true if this AddPartition should behave like a replace-into alter instead    */
+specifier|public
+name|boolean
+name|getReplaceMode
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|replaceMode
 return|;
 block|}
 block|}

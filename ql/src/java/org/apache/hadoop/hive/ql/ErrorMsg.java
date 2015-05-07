@@ -1999,6 +1999,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|IMPORT_INTO_STRICT_REPL_TABLE
+argument_list|(
+literal|10303
+argument_list|,
+literal|"Non-repl import disallowed against table that is a destination of replication."
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

@@ -309,6 +309,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Writable
 import|;
 end_import
@@ -582,7 +596,7 @@ name|ParquetRecordReaderWrapper
 implements|implements
 name|RecordReader
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ArrayWritable
 argument_list|>
@@ -1141,7 +1155,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|Void
+name|NullWritable
 name|createKey
 parameter_list|()
 block|{
@@ -1236,7 +1250,7 @@ name|boolean
 name|next
 parameter_list|(
 specifier|final
-name|Void
+name|NullWritable
 name|key
 parameter_list|,
 specifier|final

@@ -887,6 +887,93 @@ literal|"]"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testConfigWhiteList
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// create tables as user1
+name|Connection
+name|hs2Conn
+init|=
+name|getConnection
+argument_list|(
+literal|"user1"
+argument_list|)
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+name|hs2Conn
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.metastore.uris=x"
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"exception expected"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Cannot modify hive.metastore.uris at runtime. "
+operator|+
+literal|"It is not in list of params that are allowed to be modified at runtime"
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|msg
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.exec.reducers.bytes.per.reducer=10000"
+argument_list|)
+expr_stmt|;
+comment|//no exception should be thrown
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 end_class
 

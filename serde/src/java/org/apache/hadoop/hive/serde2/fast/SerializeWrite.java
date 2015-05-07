@@ -158,7 +158,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Directly serialize with the caller writing field-by-field a serialization format.  *   * The caller is responsible for calling the write method for the right type of each field  * (or calling writeNull if the field is a NULL).  *   */
+comment|/*  * Directly serialize with the caller writing field-by-field a serialization format.  *  * The caller is responsible for calling the write method for the right type of each field  * (or calling writeNull if the field is a NULL).  *  */
 end_comment
 
 begin_interface
@@ -166,9 +166,17 @@ specifier|public
 interface|interface
 name|SerializeWrite
 block|{
-comment|/*    * Set the buffer that will receive the serialized data.    */
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will be reset.    */
 name|void
 name|set
+parameter_list|(
+name|Output
+name|output
+parameter_list|)
+function_decl|;
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will NOT be reset.    */
+name|void
+name|setAppend
 parameter_list|(
 name|Output
 name|output

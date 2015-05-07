@@ -81,6 +81,26 @@ name|RelCollationTraitDef
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|HiveConfigContext
+import|;
+end_import
+
 begin_comment
 comment|/**  * Refinement of {@link org.apache.calcite.plan.volcano.VolcanoPlanner} for Hive.  *   *<p>  * It uses {@link org.apache.hadoop.hive.ql.optimizer.calcite.cost.HiveCost} as  * its cost model.  */
 end_comment
@@ -103,7 +123,10 @@ decl_stmt|;
 comment|/** Creates a HiveVolcanoPlanner. */
 specifier|public
 name|HiveVolcanoPlanner
-parameter_list|()
+parameter_list|(
+name|HiveConfigContext
+name|conf
+parameter_list|)
 block|{
 name|super
 argument_list|(
@@ -111,7 +134,7 @@ name|HiveCost
 operator|.
 name|FACTORY
 argument_list|,
-literal|null
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -119,7 +142,10 @@ specifier|public
 specifier|static
 name|RelOptPlanner
 name|createPlanner
-parameter_list|()
+parameter_list|(
+name|HiveConfigContext
+name|conf
+parameter_list|)
 block|{
 specifier|final
 name|VolcanoPlanner
@@ -127,7 +153,9 @@ name|planner
 init|=
 operator|new
 name|HiveVolcanoPlanner
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|planner
 operator|.

@@ -263,7 +263,7 @@ decl_stmt|;
 comment|// table descriptor of the final
 specifier|private
 name|CreateTableDesc
-name|localDirectoryDesc
+name|directoryDesc
 init|=
 literal|null
 decl_stmt|;
@@ -1156,26 +1156,26 @@ expr_stmt|;
 block|}
 specifier|public
 name|CreateTableDesc
-name|getLLocalDirectoryDesc
+name|getDirectoryDesc
 parameter_list|()
 block|{
 return|return
-name|localDirectoryDesc
+name|directoryDesc
 return|;
 block|}
 specifier|public
 name|void
-name|setLocalDirectoryDesc
+name|setDirectoryDesc
 parameter_list|(
 name|CreateTableDesc
-name|localDirectoryDesc
+name|directoryDesc
 parameter_list|)
 block|{
 name|this
 operator|.
-name|localDirectoryDesc
+name|directoryDesc
 operator|=
-name|localDirectoryDesc
+name|directoryDesc
 expr_stmt|;
 block|}
 comment|/**    * Whether this QB is for a CREATE-TABLE-AS-SELECT.    */

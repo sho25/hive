@@ -245,7 +245,7 @@ name|io
 operator|.
 name|filters
 operator|.
-name|BloomFilter
+name|BloomFilterIO
 import|;
 end_import
 
@@ -1374,7 +1374,7 @@ argument_list|)
 expr_stmt|;
 name|bloomFilterFpp
 operator|=
-name|BloomFilter
+name|BloomFilterIO
 operator|.
 name|DEFAULT_FPP
 expr_stmt|;

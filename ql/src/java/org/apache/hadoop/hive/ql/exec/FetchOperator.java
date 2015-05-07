@@ -3803,9 +3803,8 @@ operator|.
 name|getDeserializerClass
 argument_list|()
 decl_stmt|;
-name|String
-index|[]
-name|schemaProps
+name|SerDeSpec
+name|spec
 init|=
 name|AnnotationUtils
 operator|.
@@ -3817,6 +3816,25 @@ name|SerDeSpec
 operator|.
 name|class
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+literal|null
+operator|==
+name|spec
+condition|)
+block|{
+comment|// Serde may not have this optional annotation defined in which case be conservative
+comment|// and say conversion is needed.
+return|return
+literal|true
+return|;
+block|}
+name|String
+index|[]
+name|schemaProps
+init|=
+name|spec
 operator|.
 name|schemaProps
 argument_list|()

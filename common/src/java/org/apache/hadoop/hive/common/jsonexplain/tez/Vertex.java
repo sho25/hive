@@ -1071,6 +1071,11 @@ comment|// print operators
 if|if
 condition|(
 name|hasMultiReduceOp
+operator|&&
+operator|!
+name|callingVertex
+operator|.
+name|union
 condition|)
 block|{
 comment|// find the right op

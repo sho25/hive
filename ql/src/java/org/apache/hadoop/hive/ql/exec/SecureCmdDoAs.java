@@ -155,22 +155,6 @@ name|UserGroupInformation
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|token
-operator|.
-name|Token
-import|;
-end_import
-
 begin_comment
 comment|/**  * SecureCmdDoAs - Helper class for setting parameters and env necessary for  * being able to run child jvm as intended user.  * Used only when kerberos security is used  *  */
 end_comment
@@ -231,14 +215,18 @@ operator|new
 name|Credentials
 argument_list|()
 decl_stmt|;
-comment|// Use method addDelegationTokens instead of getDelegationToken to get all the tokens including KMS.
-name|fs
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
 operator|.
 name|addDelegationTokens
 argument_list|(
-name|uname
+name|fs
 argument_list|,
 name|cred
+argument_list|,
+name|uname
 argument_list|)
 expr_stmt|;
 name|tokenFile
