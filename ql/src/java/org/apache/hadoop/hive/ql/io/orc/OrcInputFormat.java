@@ -6221,7 +6221,7 @@ literal|" projected_columns_uncompressed_size: "
 operator|+
 name|split
 operator|.
-name|getProjectedColumnsUncompressedSize
+name|getColumnarProjectionSize
 argument_list|()
 argument_list|)
 expr_stmt|;

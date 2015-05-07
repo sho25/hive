@@ -607,6 +607,10 @@ name|class
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+operator|new
+name|ColumnarSplitSizeEstimator
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|LOG
