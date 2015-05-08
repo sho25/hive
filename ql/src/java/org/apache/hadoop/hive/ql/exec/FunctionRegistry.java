@@ -2859,6 +2859,17 @@ argument_list|)
 expr_stmt|;
 name|system
 operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"sha2"
+argument_list|,
+name|GenericUDFSha2
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
 name|registerUDF
 argument_list|(
 literal|"md5"
