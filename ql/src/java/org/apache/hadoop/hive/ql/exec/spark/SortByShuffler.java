@@ -259,6 +259,17 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getName
+parameter_list|()
+block|{
+return|return
+literal|"SortBy"
+return|;
+block|}
 specifier|private
 specifier|static
 class|class
