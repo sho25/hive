@@ -131,6 +131,20 @@ name|concurrent
 operator|.
 name|atomic
 operator|.
+name|AtomicBoolean
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
 name|AtomicInteger
 import|;
 end_import
@@ -907,6 +921,7 @@ name|RuntimeTask
 name|task
 decl_stmt|;
 specifier|private
+specifier|final
 name|EventMetaData
 name|updateEventMetadata
 decl_stmt|;
@@ -939,6 +954,28 @@ specifier|private
 specifier|final
 name|AtomicLong
 name|requestCounter
+decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicBoolean
+name|finalEventQueued
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicBoolean
+name|askedToDie
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
 decl_stmt|;
 specifier|private
 name|LinkedBlockingQueue
@@ -1244,6 +1281,9 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// This is OK because the pending events will be sent via the succeeded/failed messages.
+comment|// TaskDone is set before taskSucceeded/taskFailed are sent out - which is what causes the
+comment|// thread to exit
 name|LOG
 operator|.
 name|warn
@@ -1394,6 +1434,14 @@ operator|.
 name|incrementAndGet
 argument_list|()
 decl_stmt|;
+name|int
+name|fromEventId
+init|=
+name|task
+operator|.
+name|getNextFromEventId
+argument_list|()
+decl_stmt|;
 name|TezHeartbeatRequest
 name|request
 init|=
@@ -1411,10 +1459,7 @@ operator|.
 name|getTaskAttemptID
 argument_list|()
 argument_list|,
-name|task
-operator|.
-name|getEventCounter
-argument_list|()
+name|fromEventId
 argument_list|,
 name|maxEventsToGet
 argument_list|)
@@ -1481,6 +1526,13 @@ operator|.
 name|info
 argument_list|(
 literal|"Received should die response from AM"
+argument_list|)
+expr_stmt|;
+name|askedToDie
+operator|.
+name|set
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 return|return
@@ -1582,6 +1634,16 @@ block|}
 block|}
 else|else
 block|{
+name|task
+operator|.
+name|setNextFromEventId
+argument_list|(
+name|response
+operator|.
+name|getNextFromEventId
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|response
@@ -1630,6 +1692,17 @@ name|getEvents
 argument_list|()
 operator|.
 name|size
+argument_list|()
+operator|+
+literal|" fromEventId="
+operator|+
+name|fromEventId
+operator|+
+literal|" nextFromEventId="
+operator|+
+name|response
+operator|.
+name|getNextFromEventId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1762,6 +1835,18 @@ name|IOException
 throws|,
 name|TezException
 block|{
+comment|// Ensure only one final event is ever sent.
+if|if
+condition|(
+operator|!
+name|finalEventQueued
+operator|.
+name|getAndSet
+argument_list|(
+literal|true
+argument_list|)
+condition|)
+block|{
 name|TezEvent
 name|statusUpdateEvent
 init|=
@@ -1805,6 +1890,23 @@ argument_list|)
 operator|.
 name|shouldDie
 return|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"A final task state event has already been sent. Not sending again"
+argument_list|)
+expr_stmt|;
+return|return
+name|askedToDie
+operator|.
+name|get
+argument_list|()
+return|;
+block|}
 block|}
 specifier|private
 name|TaskStatusUpdateEvent
@@ -1900,6 +2002,18 @@ name|IOException
 throws|,
 name|TezException
 block|{
+comment|// Ensure only one final event is ever sent.
+if|if
+condition|(
+operator|!
+name|finalEventQueued
+operator|.
+name|getAndSet
+argument_list|(
+literal|true
+argument_list|)
+condition|)
+block|{
 name|TezEvent
 name|statusUpdateEvent
 init|=
@@ -1984,6 +2098,23 @@ argument_list|)
 operator|.
 name|shouldDie
 return|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"A final task state event has already been sent. Not sending again"
+argument_list|)
+expr_stmt|;
+return|return
+name|askedToDie
+operator|.
+name|get
+argument_list|()
+return|;
+block|}
 block|}
 specifier|private
 name|void
