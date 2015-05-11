@@ -611,6 +611,17 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// Use a final variable to properly parameterize the processVectorInspector closure.
+comment|// Using a member variable in the closure will not do the right thing...
+specifier|final
+name|int
+name|parameterizePosBigTable
+init|=
+name|conf
+operator|.
+name|getPosBigTable
+argument_list|()
+decl_stmt|;
 comment|// Code borrowed from VectorReduceSinkOperator.initializeOp
 name|VectorExpressionWriterFactory
 operator|.
@@ -621,7 +632,7 @@ name|StructObjectInspector
 operator|)
 name|inputObjInspectors
 index|[
-literal|0
+name|parameterizePosBigTable
 index|]
 argument_list|,
 operator|new
@@ -650,7 +661,7 @@ name|writers
 expr_stmt|;
 name|inputObjInspectors
 index|[
-literal|0
+name|parameterizePosBigTable
 index|]
 operator|=
 name|objectInspector

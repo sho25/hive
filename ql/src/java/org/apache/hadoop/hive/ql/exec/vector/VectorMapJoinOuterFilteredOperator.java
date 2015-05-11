@@ -205,11 +205,20 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+specifier|final
+name|int
+name|posBigTable
+init|=
+name|conf
+operator|.
+name|getPosBigTable
+argument_list|()
+decl_stmt|;
 comment|// We need a input object inspector that is for the row we will extract out of the
 comment|// vectorized row batch, not for example, an original inspector for an ORC table, etc.
 name|inputObjInspectors
 index|[
-literal|0
+name|posBigTable
 index|]
 operator|=
 name|VectorizedBatchUtil
@@ -221,7 +230,7 @@ name|StructObjectInspector
 operator|)
 name|inputObjInspectors
 index|[
-literal|0
+name|posBigTable
 index|]
 argument_list|)
 expr_stmt|;
