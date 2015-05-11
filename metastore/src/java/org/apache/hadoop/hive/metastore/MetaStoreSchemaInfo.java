@@ -229,6 +229,14 @@ argument_list|,
 literal|"1.0.0"
 argument_list|,
 literal|"0.14.0"
+argument_list|,
+literal|"1.0.1"
+argument_list|,
+literal|"1.0.0"
+argument_list|,
+literal|"1.1.1"
+argument_list|,
+literal|"1.1.0"
 argument_list|)
 decl_stmt|;
 specifier|public
