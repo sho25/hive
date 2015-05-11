@@ -4592,7 +4592,7 @@ literal|"hive.orc.cache.stripe.details.size"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Cache size for keeping meta info about orc splits cached in the client."
+literal|"Max cache size for keeping meta info about orc splits cached in the client."
 argument_list|)
 block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
