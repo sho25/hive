@@ -1341,7 +1341,15 @@ name|tableRowSize
 operator|=
 name|estimatedTableSize
 operator|/
+operator|(
 name|keyCount
+operator|!=
+literal|0
+condition|?
+name|keyCount
+else|:
+literal|1
+operator|)
 expr_stmt|;
 name|memoryCheckFrequency
 operator|=
