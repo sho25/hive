@@ -330,6 +330,8 @@ name|queryInfo
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO Start tracking individual fragments, so that taskKilled etc messages
+comment|// can be routed through this layer to simplify the interfaces.
 block|}
 name|String
 index|[]

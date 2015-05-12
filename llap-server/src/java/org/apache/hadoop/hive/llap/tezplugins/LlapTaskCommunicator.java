@@ -1907,9 +1907,9 @@ argument_list|(
 name|taskAttemptID
 argument_list|)
 expr_stmt|;
-comment|// TODO Inform the daemon that this task is no longer running.
-comment|// Currently, a task will end up moving into the RUNNING queue and will
-comment|// be told that it needs to die since it isn't recognized.
+comment|// This will also be invoked for tasks which have been KILLED / rejected by the daemon.
+comment|// Informing the daemon becomes necessary once the LlapScheduler supports preemption
+comment|// and/or starts attempting to kill tasks which may be running on a node.
 block|}
 annotation|@
 name|Override
@@ -2531,6 +2531,39 @@ literal|"]"
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|taskKilled
+parameter_list|(
+name|TezTaskAttemptID
+name|taskAttemptId
+parameter_list|)
+block|{
+comment|// TODO Unregister the task for state updates, which could in turn unregister the node.
+name|getTaskCommunicatorContext
+argument_list|()
+operator|.
+name|taskKilled
+argument_list|(
+name|taskAttemptId
+argument_list|,
+name|TaskAttemptEndReason
+operator|.
+name|INTERRUPTED_BY_SYSTEM
+argument_list|,
+literal|"Attempt preempted"
+argument_list|)
+expr_stmt|;
+name|entityTracker
+operator|.
+name|unregisterTaskAttempt
+argument_list|(
+name|taskAttemptId
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

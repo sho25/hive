@@ -34,6 +34,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
+name|Mockito
+operator|.
+name|mock
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -80,6 +92,24 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|daemon
+operator|.
+name|KilledTaskHandler
 import|;
 end_import
 
@@ -465,6 +495,13 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+name|mock
+argument_list|(
+name|KilledTaskHandler
+operator|.
+name|class
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|this

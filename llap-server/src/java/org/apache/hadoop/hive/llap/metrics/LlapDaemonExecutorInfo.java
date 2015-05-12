@@ -102,6 +102,11 @@ name|ExecutorTotalAskedToDie
 argument_list|(
 literal|"Total number of requests handled by the container that were asked to die"
 argument_list|)
+block|,
+name|PreemptionTimeLost
+argument_list|(
+literal|"Total time lost due to task preemptions"
+argument_list|)
 block|;
 specifier|private
 specifier|final

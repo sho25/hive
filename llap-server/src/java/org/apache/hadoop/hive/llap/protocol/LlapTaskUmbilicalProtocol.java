@@ -173,6 +173,14 @@ name|int
 name|port
 parameter_list|)
 function_decl|;
+specifier|public
+name|void
+name|taskKilled
+parameter_list|(
+name|TezTaskAttemptID
+name|taskAttemptId
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

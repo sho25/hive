@@ -169,18 +169,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|log4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|tez
 operator|.
 name|runtime
@@ -301,6 +289,26 @@ name|ThreadFactoryBuilder
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * Task executor service provides method for scheduling tasks. Tasks submitted to executor service  * are submitted to wait queue for scheduling. Wait queue tasks are ordered based on the priority  * of the task. The internal wait queue scheduler moves tasks from wait queue when executor slots  * are available or when a higher priority task arrives and will schedule it for execution.  * When pre-emption is enabled, the tasks from wait queue can replace(pre-empt) a running task.  * The pre-empted task is reported back to the Application Master(AM) for it to be rescheduled.  *<p/>  * Because of the concurrent nature of task submission, the position of the task in wait queue is  * held as long the scheduling of the task from wait queue (with or without pre-emption) is complete.  * The order of pre-emption is based on the ordering in the pre-emption queue. All tasks that cannot  * run to completion immediately (canFinish = false) are added to pre-emption queue.  *<p/>  * When all the executor threads are occupied and wait queue is full, the task scheduler will  * throw RejectedExecutionException.  *<p/>  * Task executor service can be shut down which will terminated all running tasks and reject all  * new tasks. Shutting down of the task executor service can be done gracefully or immediately.  */
 end_comment
@@ -321,7 +329,7 @@ specifier|final
 name|Logger
 name|LOG
 init|=
-name|Logger
+name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
@@ -910,6 +918,7 @@ specifier|private
 name|boolean
 name|trySchedule
 parameter_list|(
+specifier|final
 name|TaskRunnerCallable
 name|task
 parameter_list|)
@@ -1164,13 +1173,13 @@ literal|" by interrupting the thread."
 argument_list|)
 expr_stmt|;
 block|}
-name|pFuture
+name|pRequest
 operator|.
-name|cancel
-argument_list|(
-literal|true
-argument_list|)
+name|killTask
+argument_list|()
 expr_stmt|;
+comment|// TODO. Ideally, should wait for the thread to complete and fall off before assuming the
+comment|// slot is available for the next task.
 name|removeTaskFromPreemptionList
 argument_list|(
 name|pRequest
@@ -1218,11 +1227,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|notifyAM
-argument_list|(
-name|pRequest
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 comment|// try to submit the task from wait queue to executor service. If it gets rejected the
@@ -1592,23 +1596,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
-specifier|private
-name|void
-name|notifyAM
-parameter_list|(
-name|TaskRunnerCallable
-name|request
-parameter_list|)
-block|{
-comment|// TODO: Report to AM of pre-emption and rejection
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Notifying to AM of preemption is not implemented yet!"
-argument_list|)
-expr_stmt|;
 block|}
 comment|// TODO: llap daemon should call this to gracefully shutdown the task executor service
 specifier|public
