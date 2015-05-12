@@ -187,9 +187,7 @@ name|runtime
 operator|.
 name|task
 operator|.
-name|TezChild
-operator|.
-name|ContainerExecutionResult
+name|TaskRunner2Result
 import|;
 end_import
 
@@ -925,7 +923,7 @@ try|try
 block|{
 name|ListenableFuture
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 name|future
 init|=
@@ -938,7 +936,7 @@ argument_list|)
 decl_stmt|;
 name|FutureCallback
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 name|wrappedCallback
 init|=
@@ -1233,7 +1231,7 @@ try|try
 block|{
 name|ListenableFuture
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 name|future
 init|=
@@ -1246,7 +1244,7 @@ argument_list|)
 decl_stmt|;
 name|FutureCallback
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 name|wrappedCallback
 init|=
@@ -1380,7 +1378,7 @@ name|task
 parameter_list|,
 name|ListenableFuture
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 name|future
 parameter_list|)
@@ -1421,7 +1419,7 @@ name|InternalCompletionListener
 implements|implements
 name|FutureCallback
 argument_list|<
-name|ContainerExecutionResult
+name|TaskRunner2Result
 argument_list|>
 block|{
 specifier|private
@@ -1452,7 +1450,7 @@ specifier|public
 name|void
 name|onSuccess
 parameter_list|(
-name|ContainerExecutionResult
+name|TaskRunner2Result
 name|result
 parameter_list|)
 block|{
