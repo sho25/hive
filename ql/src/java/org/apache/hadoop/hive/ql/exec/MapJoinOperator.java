@@ -3275,10 +3275,6 @@ name|clearAllTableContainers
 argument_list|()
 expr_stmt|;
 block|}
-name|mapJoinTables
-operator|=
-literal|null
-expr_stmt|;
 name|this
 operator|.
 name|loader

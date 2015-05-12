@@ -1862,6 +1862,18 @@ name|typeName
 argument_list|)
 expr_stmt|;
 comment|// Collect columns we copy from the big table batch to the overflow batch.
+if|if
+condition|(
+operator|!
+name|bigTableRetainedMapping
+operator|.
+name|containsOutputColumn
+argument_list|(
+name|batchColumnIndex
+argument_list|)
+condition|)
+block|{
+comment|// Tolerate repeated use of a big table column.
 name|bigTableRetainedMapping
 operator|.
 name|add
@@ -1873,6 +1885,7 @@ argument_list|,
 name|typeName
 argument_list|)
 expr_stmt|;
+block|}
 name|nextOutputColumn
 operator|++
 expr_stmt|;

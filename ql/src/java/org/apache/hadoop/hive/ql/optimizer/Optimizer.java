@@ -502,24 +502,8 @@ name|Transform
 argument_list|>
 argument_list|()
 expr_stmt|;
-comment|// If we are translating Calcite operators into Hive operators, we need
-comment|// additional postprocessing
-if|if
-condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|hiveConf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_CBO_RETPATH_HIVEOP
-argument_list|)
-condition|)
-block|{
+comment|// Add the additional postprocessing transformations needed if
+comment|// we are translating Calcite operators into Hive operators.
 name|transformations
 operator|.
 name|add
@@ -529,7 +513,6 @@ name|HiveOpConverterPostProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 comment|// Add the transformation that computes the lineage information.
 name|transformations
 operator|.

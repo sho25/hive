@@ -1357,11 +1357,13 @@ argument_list|)
 decl_stmt|;
 name|reader
 operator|=
-name|TreeReaderFactory
+name|RecordReaderFactory
 operator|.
 name|createTreeReader
 argument_list|(
 literal|0
+argument_list|,
+name|conf
 argument_list|,
 name|types
 argument_list|,

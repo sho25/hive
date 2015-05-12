@@ -93,69 +93,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|EnumSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Function
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Iterators
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
 import|;
 end_import
 
@@ -198,6 +136,20 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|DefaultFileAccess
 import|;
 end_import
 
@@ -1737,65 +1689,6 @@ name|InterruptedException
 throws|,
 name|Exception
 block|{
-name|checkFileAccessWithImpersonation
-argument_list|(
-name|fs
-argument_list|,
-name|Iterators
-operator|.
-name|singletonIterator
-argument_list|(
-name|stat
-argument_list|)
-argument_list|,
-name|EnumSet
-operator|.
-name|of
-argument_list|(
-name|action
-argument_list|)
-argument_list|,
-name|user
-argument_list|)
-expr_stmt|;
-block|}
-comment|/**    * Perform a check to determine if the user is able to access the file passed in.    * If the user name passed in is different from the current user, this method will    * attempt to do impersonate the user to do the check; the current user should be    * able to create proxy users in this case.    * @param fs   FileSystem of the path to check    * @param statuses FileStatus instances representing the file    * @param actions The FsActions that will be checked    * @param user User name of the user that will be checked for access.  If the user name    *             is null or the same as the current user, no user impersonation will be done    *             and the check will be done as the current user. Otherwise the file access    *             check will be performed within a doAs() block to use the access privileges    *             of this user. In this case the user must be configured to impersonate other    *             users, otherwise this check will fail with error.    * @throws IOException    * @throws AccessControlException    * @throws InterruptedException    * @throws Exception    */
-specifier|public
-specifier|static
-name|void
-name|checkFileAccessWithImpersonation
-parameter_list|(
-specifier|final
-name|FileSystem
-name|fs
-parameter_list|,
-specifier|final
-name|Iterator
-argument_list|<
-name|FileStatus
-argument_list|>
-name|statuses
-parameter_list|,
-specifier|final
-name|EnumSet
-argument_list|<
-name|FsAction
-argument_list|>
-name|actions
-parameter_list|,
-specifier|final
-name|String
-name|user
-parameter_list|)
-throws|throws
-name|IOException
-throws|,
-name|AccessControlException
-throws|,
-name|InterruptedException
-throws|,
-name|Exception
-block|{
 name|UserGroupInformation
 name|ugi
 init|=
@@ -1836,14 +1729,13 @@ name|checkFileAccess
 argument_list|(
 name|fs
 argument_list|,
-name|statuses
+name|stat
 argument_list|,
-name|actions
+name|action
 argument_list|)
 expr_stmt|;
+return|return;
 block|}
-else|else
-block|{
 comment|// Otherwise, try user impersonation. Current user must be configured to do user impersonation.
 name|UserGroupInformation
 name|proxyUser
@@ -1907,9 +1799,9 @@ name|checkFileAccess
 argument_list|(
 name|fsAsUser
 argument_list|,
-name|statuses
+name|stat
 argument_list|,
-name|actions
+name|action
 argument_list|)
 expr_stmt|;
 return|return
@@ -1919,7 +1811,6 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/**    * Check if user userName has permissions to perform the given FsAction action    * on all files under the file whose FileStatus fileStatus is provided    *    * @param fs    * @param fileStatus    * @param userName    * @param action    * @return    * @throws IOException    */
 specifier|public
@@ -3090,7 +2981,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Checks if delete can be performed on given path by given user.    * If file does not exist it just returns without throwing an Exception    * @param path    * @param conf    * @param user    * @throws Exception    */
+comment|/**    * Checks if delete can be performed on given path by given user.    * If file does not exist it just returns without throwing an Exception    * @param path    * @param conf    * @param user    * @throws AccessControlException    * @throws InterruptedException    * @throws Exception    */
 specifier|public
 specifier|static
 name|void
@@ -3106,8 +2997,22 @@ name|String
 name|user
 parameter_list|)
 throws|throws
+name|AccessControlException
+throws|,
+name|InterruptedException
+throws|,
 name|Exception
 block|{
+comment|// This requires ability to delete the given path.
+comment|// The following 2 conditions should be satisfied for this-
+comment|// 1. Write permissions on parent dir
+comment|// 2. If sticky bit is set on parent dir then one of following should be
+comment|// true
+comment|//   a. User is owner of the current dir/file
+comment|//   b. User is owner of the parent dir
+comment|//   Super users are also allowed to drop the file, but there is no good way of checking
+comment|//   if a user is a super user. Also super users running hive queries is not a common
+comment|//   use case. super users can also do a chown to be able to drop the file
 if|if
 condition|(
 name|path
@@ -3118,7 +3023,6 @@ block|{
 comment|// no file/dir to be deleted
 return|return;
 block|}
-comment|// check user has write permissions on the parent dir
 specifier|final
 name|FileSystem
 name|fs
@@ -3130,6 +3034,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// check user has write permissions on the parent dir
 name|FileStatus
 name|stat
 init|=
@@ -3165,73 +3070,17 @@ block|{
 comment|// no file/dir to be deleted
 return|return;
 block|}
-name|checkDeletePermission
-argument_list|(
-name|fs
-argument_list|,
-name|Lists
-operator|.
-name|newArrayList
-argument_list|(
-name|stat
-argument_list|)
-argument_list|,
-name|conf
-argument_list|,
-name|user
-argument_list|)
-expr_stmt|;
-block|}
-comment|/**    * Checks if delete can be performed on given path by given user.    * If file does not exist it just returns without throwing an Exception    * @param fs The FileSystem instance    * @param fileStatuses The FileStatus instances for the paths being checked.    * @param conf Configuration, corresponding to the FileSystem.    * @param user The user, whose permission is to be checked.    * @throws Exception    */
-specifier|public
-specifier|static
-name|void
-name|checkDeletePermission
-parameter_list|(
-name|FileSystem
-name|fs
-parameter_list|,
-name|Iterable
-argument_list|<
-name|FileStatus
-argument_list|>
-name|fileStatuses
-parameter_list|,
-name|Configuration
-name|conf
-parameter_list|,
-name|String
-name|user
-parameter_list|)
-throws|throws
-name|Exception
-block|{
-comment|// This requires ability to delete the given path.
-comment|// The following 2 conditions should be satisfied for this-
-comment|// 1. Write permissions on parent dir
-comment|// 2. If sticky bit is set on parent dir then one of following should be
-comment|// true
-comment|//   a. User is owner of the current dir/file
-comment|//   b. User is owner of the parent dir
 name|FileUtils
 operator|.
 name|checkFileAccessWithImpersonation
 argument_list|(
 name|fs
 argument_list|,
-name|fileStatuses
-operator|.
-name|iterator
-argument_list|()
+name|stat
 argument_list|,
-name|EnumSet
-operator|.
-name|of
-argument_list|(
 name|FsAction
 operator|.
 name|WRITE
-argument_list|)
 argument_list|,
 name|user
 argument_list|)
@@ -3253,160 +3102,45 @@ name|supportStickyBit
 argument_list|()
 condition|)
 block|{
-comment|// No support for sticky-bit.
+comment|// not supports sticky bit
 return|return;
 block|}
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|allParentPaths
+comment|// check if sticky bit is set on the parent dir
+name|FileStatus
+name|parStatus
 init|=
-name|Lists
+name|fs
 operator|.
-name|newArrayList
+name|getFileStatus
 argument_list|(
-name|Iterators
-operator|.
-name|transform
-argument_list|(
-name|fileStatuses
-operator|.
-name|iterator
-argument_list|()
-argument_list|,
-operator|new
-name|Function
-argument_list|<
-name|FileStatus
-argument_list|,
-name|Path
-argument_list|>
-argument_list|()
-block|{
-annotation|@
-name|Override
-specifier|public
-name|Path
-name|apply
-parameter_list|(
-name|FileStatus
-name|input
-parameter_list|)
-block|{
-return|return
-name|input
-operator|.
-name|getPath
-argument_list|()
+name|path
 operator|.
 name|getParent
 argument_list|()
-return|;
-block|}
-block|}
-argument_list|)
 argument_list|)
 decl_stmt|;
-name|Iterator
-argument_list|<
-name|FileStatus
-argument_list|>
-name|childStatusIterator
-init|=
-name|fileStatuses
-operator|.
-name|iterator
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|parentPaths
-range|:
-name|Lists
-operator|.
-name|partition
-argument_list|(
-name|allParentPaths
-argument_list|,
-name|getListStatusBatchSize
-argument_list|(
-name|conf
-argument_list|)
-argument_list|)
-control|)
-block|{
-for|for
-control|(
-name|FileStatus
-name|parentFileStatus
-range|:
-name|fs
-operator|.
-name|listStatus
-argument_list|(
-name|parentPaths
-operator|.
-name|toArray
-argument_list|(
-operator|new
-name|Path
-index|[
-name|parentPaths
-operator|.
-name|size
-argument_list|()
-index|]
-argument_list|)
-argument_list|)
-control|)
-block|{
-assert|assert
-name|childStatusIterator
-operator|.
-name|hasNext
-argument_list|()
-operator|:
-literal|"Number of parent-file-statuses doesn't match children."
-assert|;
-name|FileStatus
-name|childFileStatus
-init|=
-name|childStatusIterator
-operator|.
-name|next
-argument_list|()
-decl_stmt|;
-comment|// Check sticky-bits on parent-dirs.
 if|if
 condition|(
+operator|!
 name|shims
 operator|.
 name|hasStickyBit
 argument_list|(
-name|parentFileStatus
+name|parStatus
 operator|.
 name|getPermission
 argument_list|()
 argument_list|)
-operator|&&
-operator|!
-name|parentFileStatus
-operator|.
-name|getOwner
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|user
-argument_list|)
-operator|&&
-operator|!
-name|childFileStatus
+condition|)
+block|{
+comment|// no sticky bit, so write permission on parent dir is sufficient
+comment|// no further checks needed
+return|return;
+block|}
+comment|// check if user is owner of parent dir
+if|if
+condition|(
+name|parStatus
 operator|.
 name|getOwner
 argument_list|()
@@ -3417,66 +3151,57 @@ name|user
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|IOException
+return|return;
+block|}
+comment|// check if user is owner of current dir/file
+name|FileStatus
+name|childStatus
+init|=
+name|fs
+operator|.
+name|getFileStatus
 argument_list|(
+name|path
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|childStatus
+operator|.
+name|getOwner
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|user
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+name|String
+name|msg
+init|=
 name|String
 operator|.
 name|format
 argument_list|(
-literal|"Permission Denied: User %s can't delete %s because sticky bit is\""
+literal|"Permission Denied: User %s can't delete %s because sticky bit is"
 operator|+
-literal|" set on the parent dir and user does not own this file or its parent\""
+literal|" set on the parent dir and user does not own this file or its parent"
 argument_list|,
 name|user
 argument_list|,
-name|childFileStatus
-operator|.
-name|getPath
-argument_list|()
+name|path
 argument_list|)
+decl_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|msg
 argument_list|)
 throw|;
-block|}
-block|}
-comment|// for_each( parent_path );
-block|}
-comment|// for_each( batch_of_parentPaths );
-assert|assert
-operator|!
-name|childStatusIterator
-operator|.
-name|hasNext
-argument_list|()
-operator|:
-literal|"Did not process all file-statuses."
-assert|;
-block|}
-comment|// static void checkDeletePermission();
-specifier|private
-specifier|static
-name|int
-name|getListStatusBatchSize
-parameter_list|(
-name|Configuration
-name|configuration
-parameter_list|)
-block|{
-return|return
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|configuration
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_AUTHORIZATION_HDFS_LIST_STATUS_BATCH_SIZE
-argument_list|)
-return|;
 block|}
 comment|/**    * Attempts to get file status.  This method differs from the FileSystem API in that it returns    * null instead of throwing FileNotFoundException if the path does not exist.    *    * @param fs file system to check    * @param path file system path to check    * @return FileStatus for path or null if path does not exist    * @throws IOException if there is an I/O error    */
 specifier|public

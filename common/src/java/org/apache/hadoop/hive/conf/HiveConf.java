@@ -764,6 +764,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_SERVER_PORT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORETHRIFTCONNECTIONRETRIES
 block|,
 name|HiveConf
@@ -2125,6 +2131,15 @@ argument_list|,
 literal|1
 argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
+argument_list|)
+block|,
+name|METASTORE_SERVER_PORT
+argument_list|(
+literal|"hive.metastore.port"
+argument_list|,
+literal|9083
+argument_list|,
+literal|"Hive metastore listener port"
 argument_list|)
 block|,
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
@@ -4586,7 +4601,7 @@ literal|"hive.orc.cache.stripe.details.size"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Cache size for keeping meta info about orc splits cached in the client."
+literal|"Max cache size for keeping meta info about orc splits cached in the client."
 argument_list|)
 block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
@@ -5286,6 +5301,21 @@ name|RatioValidator
 argument_list|()
 argument_list|,
 literal|"Probability with which a row will be chosen."
+argument_list|)
+block|,
+name|HIVEOPTIMIZEDISTINCTREWRITE
+argument_list|(
+literal|"hive.optimize.distinct.rewrite"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When applicable this "
+operator|+
+literal|"optimization rewrites distinct aggregates from a single stage to multi-stage "
+operator|+
+literal|"aggregation. This may not be optimal in all cases. Ideally, whether to trigger it or "
+operator|+
+literal|"not should be cost based decision. Until Hive formalizes cost model for this, this is config driven."
 argument_list|)
 block|,
 comment|// whether to optimize union followed by select followed by filesink
@@ -6603,19 +6633,6 @@ operator|+
 literal|"of updating the original list means that you can append to the defaults\n"
 operator|+
 literal|"set by SQL standard authorization instead of replacing it entirely."
-argument_list|)
-block|,
-name|HIVE_AUTHORIZATION_HDFS_LIST_STATUS_BATCH_SIZE
-argument_list|(
-literal|"hive.authprovider.hdfs.liststatus.batch.size"
-argument_list|,
-literal|1000
-argument_list|,
-literal|"Number of FileStatus objects to be queried for when listing files, for HDFS-based authorization.\n"
-operator|+
-literal|"Note: If this exceeds dfs.ls.limit (as set in hdfs-site.xml), DFSClient might use the smaller value as \n"
-operator|+
-literal|"the batch-size, internally."
 argument_list|)
 block|,
 name|HIVE_CLI_PRINT_HEADER
@@ -12624,12 +12641,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
 operator|.
 name|varname
 block|,

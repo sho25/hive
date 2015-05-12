@@ -7257,7 +7257,6 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-empty_stmt|;
 if|if
 condition|(
 name|txnMgr
@@ -7442,6 +7441,11 @@ literal|null
 expr_stmt|;
 block|}
 block|}
+name|registry
+operator|.
+name|closeCUDFLoaders
+argument_list|()
+expr_stmt|;
 name|dropSessionPaths
 argument_list|(
 name|conf

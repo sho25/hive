@@ -327,7 +327,7 @@ comment|// Nodes go stale after this
 specifier|private
 specifier|final
 name|long
-name|timeToLive
+name|timeToLiveMs
 decl_stmt|;
 comment|// Max time when waiting for write locks on node list
 specifier|private
@@ -406,7 +406,7 @@ name|int
 name|maxPartsPerCacheNode
 parameter_list|,
 name|long
-name|timeToLive
+name|timeToLiveMs
 parameter_list|,
 name|float
 name|falsePositiveProbability
@@ -441,9 +441,9 @@ name|maxPartsPerCacheNode
 expr_stmt|;
 name|this
 operator|.
-name|timeToLive
+name|timeToLiveMs
 operator|=
-name|timeToLive
+name|timeToLiveMs
 expr_stmt|;
 name|this
 operator|.
@@ -547,7 +547,7 @@ name|METASTORE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
 argument_list|)
 decl_stmt|;
 name|long
-name|timeToLive
+name|timeToLiveMs
 init|=
 name|HiveConf
 operator|.
@@ -565,6 +565,8 @@ name|TimeUnit
 operator|.
 name|SECONDS
 argument_list|)
+operator|*
+literal|1000
 decl_stmt|;
 comment|// False positives probability we are ready to tolerate for the underlying bloom filter
 name|float
@@ -681,7 +683,7 @@ name|maxCacheNodes
 argument_list|,
 name|maxPartitionsPerCacheNode
 argument_list|,
-name|timeToLive
+name|timeToLiveMs
 argument_list|,
 name|falsePositiveProbability
 argument_list|,
@@ -1043,7 +1045,7 @@ argument_list|>
 name|candidates
 parameter_list|)
 block|{
-comment|// Hits, misses, shouldSkip for a node
+comment|// Hits, misses tracked for a candidate node
 name|MatchStats
 name|matchStats
 decl_stmt|;
@@ -1174,30 +1176,37 @@ control|)
 block|{
 for|for
 control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
 name|AggrColStats
-name|candidate
+argument_list|,
+name|MatchStats
+argument_list|>
+name|entry
 range|:
-name|candidates
-control|)
-block|{
-name|matchStats
-operator|=
 name|candidateMatchStats
 operator|.
-name|get
-argument_list|(
-name|candidate
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|matchStats
-operator|==
-literal|null
-condition|)
+name|entrySet
+argument_list|()
+control|)
 block|{
-continue|continue;
-block|}
+name|AggrColStats
+name|candidate
+init|=
+name|entry
+operator|.
+name|getKey
+argument_list|()
+decl_stmt|;
+name|matchStats
+operator|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|candidate
@@ -2186,6 +2195,7 @@ name|aggrColStats
 parameter_list|)
 block|{
 return|return
+operator|(
 name|System
 operator|.
 name|currentTimeMillis
@@ -2194,8 +2204,9 @@ operator|-
 name|aggrColStats
 operator|.
 name|lastAccessTime
+operator|)
 operator|>
-name|timeToLive
+name|timeToLiveMs
 return|;
 block|}
 comment|/**    * Key object for the stats cache hashtable    */
@@ -2376,15 +2387,15 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"Database: "
+literal|"database:"
 operator|+
 name|dbName
 operator|+
-literal|", Table: "
+literal|", table:"
 operator|+
 name|tblName
 operator|+
-literal|", Column: "
+literal|", column:"
 operator|+
 name|colName
 return|;
