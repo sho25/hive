@@ -287,6 +287,7 @@ name|T1
 argument_list|>
 name|results
 decl_stmt|;
+comment|// Hold the aggregation results for each row in the partition
 name|int
 name|numRows
 decl_stmt|;
@@ -560,6 +561,7 @@ name|T2
 argument_list|>
 name|intermediateVals
 decl_stmt|;
+comment|// Keep track of S[0..x]
 name|SumAvgStreamingState
 parameter_list|(
 name|AggregationBuffer
@@ -691,7 +693,7 @@ name|reset
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**        * After the number of rows processed is more than the size of FOLLOWING window,        * we can generate a PTF result for a previous row when a new row gets processed.        * @return        */
+comment|/**        * For the cases "X preceding and Y preceding" or the number of processed rows        * is more than the size of FOLLOWING window, we are able to generate a PTF result        * for a previous row.        * @return        */
 specifier|public
 name|boolean
 name|hasResultReady
@@ -707,11 +709,11 @@ operator|.
 name|getEnd
 argument_list|()
 operator|.
-name|getAmt
+name|getRelativeOffset
 argument_list|()
 return|;
 block|}
-comment|/**        * Retrieve the next stored intermediate result to generate the result for next available row        */
+comment|/**        * Retrieve the next stored intermediate result, i.e.,        * Get S[x-1] in the computation of S[x..y] = S[y] - S[x-1].        */
 specifier|public
 name|T2
 name|retrieveNextIntermediateValue
@@ -728,31 +730,22 @@ operator|.
 name|isUnbounded
 argument_list|()
 operator|&&
-operator|(
+operator|!
+name|this
+operator|.
+name|intermediateVals
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
 name|this
 operator|.
 name|numRows
-operator|-
-name|wFrameDef
-operator|.
-name|getEnd
-argument_list|()
-operator|.
-name|getAmt
-argument_list|()
-operator|)
 operator|>=
-operator|(
 name|wFrameDef
 operator|.
-name|getStart
+name|getWindowSize
 argument_list|()
-operator|.
-name|getAmt
-argument_list|()
-operator|+
-literal|1
-operator|)
 condition|)
 block|{
 return|return
@@ -831,7 +824,49 @@ argument_list|,
 name|parameters
 argument_list|)
 expr_stmt|;
-comment|// Generate the result for a previous row, of whose window all the rows have been processed.
+comment|// We need to insert 'null' before processing first row for the case: X preceding and y preceding
+if|if
+condition|(
+name|ss
+operator|.
+name|numRows
+operator|==
+literal|0
+condition|)
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+name|wFrameDef
+operator|.
+name|getEnd
+argument_list|()
+operator|.
+name|getRelativeOffset
+argument_list|()
+init|;
+name|i
+operator|<
+literal|0
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|ss
+operator|.
+name|results
+operator|.
+name|add
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// Generate the result for the windowing ending at the current row
 if|if
 condition|(
 name|ss
@@ -859,6 +894,20 @@ operator|!
 name|wFrameDef
 operator|.
 name|isStartUnbounded
+argument_list|()
+operator|&&
+name|ss
+operator|.
+name|numRows
+operator|+
+literal|1
+operator|>=
+name|wFrameDef
+operator|.
+name|getStart
+argument_list|()
+operator|.
+name|getRelativeOffset
 argument_list|()
 condition|)
 block|{
@@ -913,13 +962,28 @@ operator|.
 name|wrappedBuf
 argument_list|)
 decl_stmt|;
-comment|// After all the rows are processed, continue to generate results for the rows that results haven't generate
+comment|// After all the rows are processed, continue to generate results for the rows that results haven't generated.
+comment|// For the case: X following and Y following, process first Y-X results and then insert X nulls.
+comment|// For the case X preceding and Y following, process Y results.
 for|for
 control|(
 name|int
 name|i
 init|=
+name|Math
+operator|.
+name|max
+argument_list|(
 literal|0
+argument_list|,
+name|wFrameDef
+operator|.
+name|getStart
+argument_list|()
+operator|.
+name|getRelativeOffset
+argument_list|()
+argument_list|)
 init|;
 name|i
 operator|<
@@ -928,7 +992,7 @@ operator|.
 name|getEnd
 argument_list|()
 operator|.
-name|getAmt
+name|getRelativeOffset
 argument_list|()
 condition|;
 name|i
@@ -945,6 +1009,42 @@ name|getNextResult
 argument_list|(
 name|ss
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|ss
+operator|.
+name|numRows
+operator|++
+expr_stmt|;
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|wFrameDef
+operator|.
+name|getStart
+argument_list|()
+operator|.
+name|getRelativeOffset
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|ss
+operator|.
+name|results
+operator|.
+name|add
+argument_list|(
+literal|null
 argument_list|)
 expr_stmt|;
 name|ss

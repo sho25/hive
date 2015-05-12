@@ -79,25 +79,48 @@ return|return
 name|direction
 return|;
 block|}
+comment|/**    * Returns if the bound is PRECEDING.    * @return if the bound is PRECEDING    */
 specifier|public
-name|void
-name|setDirection
-parameter_list|(
-name|Direction
-name|direction
-parameter_list|)
+name|boolean
+name|isPreceding
+parameter_list|()
 block|{
-name|this
-operator|.
-name|direction
-operator|=
-name|direction
-expr_stmt|;
+return|return
+literal|false
+return|;
 block|}
+comment|/**    * Returns if the bound is FOLLOWING.    * @return if the bound is FOLLOWING    */
+specifier|public
+name|boolean
+name|isFollowing
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|/**    * Returns if the bound is CURRENT ROW.    * @return if the bound is CURRENT ROW    */
+specifier|public
+name|boolean
+name|isCurrentRow
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|/**    * Returns offset from XX PRECEDING/FOLLOWING.    *    * @return offset from XX PRECEDING/FOLLOWING    */
 specifier|public
 specifier|abstract
 name|int
 name|getAmt
+parameter_list|()
+function_decl|;
+comment|/**    * Returns signed offset from XX PRECEDING/FOLLOWING. Nagative for preceding.    *    * @return signed offset from XX PRECEDING/FOLLOWING    */
+specifier|public
+specifier|abstract
+name|int
+name|getRelativeOffset
 parameter_list|()
 function_decl|;
 specifier|public
