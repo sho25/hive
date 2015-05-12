@@ -94,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDF Class for SQL construct "COALESCE(a, b, c)".  *   * NOTES: 1. a, b and c should have the same TypeInfo, or an exception will be  * thrown.  */
+comment|/**  * GenericUDF Class for SQL construct "COALESCE(a, b, c)".  *  * NOTES: 1. a, b and c should have the same TypeInfo, or an exception will be  * thrown.  */
 end_comment
 
 begin_class
