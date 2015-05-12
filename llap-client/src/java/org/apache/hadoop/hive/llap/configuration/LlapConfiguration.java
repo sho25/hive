@@ -336,7 +336,7 @@ specifier|final
 name|int
 name|LLAP_DAEMON_COMMUNICATOR_NUM_THREADS_DEFAULT
 init|=
-literal|5
+literal|10
 decl_stmt|;
 comment|/**    * Minimum time after which a previously disabled node will be re-enabled for scheduling. This may    * be modified by an exponential back-off if failures persist    */
 specifier|public
@@ -449,6 +449,44 @@ name|boolean
 name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION_DEFAULT
 init|=
 literal|false
+decl_stmt|;
+comment|/** Amount of time to wait on a connection failure to an LLAP daemon */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_TASK_COMMUNICATOR_CONNECTION_TIMEOUT_MILLIS
+init|=
+name|LLAP_PREFIX
+operator|+
+literal|"task.communicator.connection.timeout-millis"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|long
+name|LLAP_TASK_COMMUNICATOR_CONNECTION_TIMEOUT_MILLIS_DEFAULT
+init|=
+literal|16000
+decl_stmt|;
+comment|/** Sleep duration while waiting for a connection failure */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_TASK_COMMUNICATOR_CONNECTION_SLEEP_BETWEEN_RETRIES_MILLIS
+init|=
+name|LLAP_PREFIX
+operator|+
+literal|"task.communicator.connection.sleep-between-retries-millis"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|long
+name|LLAP_TASK_COMMUNICATOR_CONNECTION_SLEEP_BETWEEN_RETRIES_MILLIS_DEFAULT
+init|=
+literal|2000l
 decl_stmt|;
 block|}
 end_class

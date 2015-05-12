@@ -1034,6 +1034,8 @@ operator|new
 name|TaskCommunicator
 argument_list|(
 name|numThreads
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
