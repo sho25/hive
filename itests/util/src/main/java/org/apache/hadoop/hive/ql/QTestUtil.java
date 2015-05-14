@@ -6131,6 +6131,10 @@ condition|(
 name|rc
 operator|!=
 literal|0
+operator|&&
+operator|!
+name|ignoreErrors
+argument_list|()
 condition|)
 block|{
 break|break;
@@ -6168,6 +6172,25 @@ comment|// reset
 block|}
 return|return
 name|rc
+return|;
+block|}
+comment|/**    * This allows a .q file to continue executing after a statement runs into an error which is convenient    * if you want to use another hive cmd after the failure to sanity check the state of the system.    */
+specifier|private
+name|boolean
+name|ignoreErrors
+parameter_list|()
+block|{
+return|return
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|CLIIGNOREERRORS
+argument_list|)
 return|;
 block|}
 specifier|private

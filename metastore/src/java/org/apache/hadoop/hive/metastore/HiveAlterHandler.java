@@ -439,6 +439,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|ipc
+operator|.
+name|RemoteException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|common
@@ -1817,7 +1831,7 @@ literal|" to "
 operator|+
 name|destPath
 operator|+
-literal|" is failed"
+literal|" failed"
 argument_list|)
 throw|;
 block|}
@@ -1828,6 +1842,23 @@ name|IOException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Alter Table operation for "
+operator|+
+name|dbname
+operator|+
+literal|"."
+operator|+
+name|name
+operator|+
+literal|" failed."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 name|boolean
 name|revertMetaDataTransaction
 init|=
@@ -1844,7 +1875,10 @@ name|msdb
 operator|.
 name|alterTable
 argument_list|(
-name|dbname
+name|newt
+operator|.
+name|getDbName
+argument_list|()
 argument_list|,
 name|newt
 operator|.
@@ -1892,7 +1926,10 @@ name|msdb
 operator|.
 name|alterPartition
 argument_list|(
-name|dbname
+name|newt
+operator|.
+name|getDbName
+argument_list|()
 argument_list|,
 name|name
 argument_list|,
@@ -2025,17 +2062,22 @@ throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"Unable to access old location "
-operator|+
-name|srcPath
-operator|+
-literal|" for table "
+literal|"Alter Table operation for "
 operator|+
 name|dbname
 operator|+
 literal|"."
 operator|+
 name|name
+operator|+
+literal|" failed to move data due to: '"
+operator|+
+name|getSimpleMessage
+argument_list|(
+name|e
+argument_list|)
+operator|+
+literal|"' See hive log file for details."
 argument_list|)
 throw|;
 block|}
@@ -2055,6 +2097,71 @@ literal|"Committing the alter table transaction was not successful."
 argument_list|)
 throw|;
 block|}
+block|}
+comment|/**    * RemoteExceptionS from hadoop RPC wrap the stack trace into e.getMessage() which makes    * logs/stack traces confusing.    * @param ex    * @return    */
+name|String
+name|getSimpleMessage
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+if|if
+condition|(
+name|ex
+operator|instanceof
+name|RemoteException
+condition|)
+block|{
+name|String
+name|msg
+init|=
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|msg
+operator|==
+literal|null
+operator|||
+operator|!
+name|msg
+operator|.
+name|contains
+argument_list|(
+literal|"\n"
+argument_list|)
+condition|)
+block|{
+return|return
+name|msg
+return|;
+block|}
+return|return
+name|msg
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+name|msg
+operator|.
+name|indexOf
+argument_list|(
+literal|'\n'
+argument_list|)
+argument_list|)
+return|;
+block|}
+return|return
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+return|;
 block|}
 specifier|public
 name|Partition

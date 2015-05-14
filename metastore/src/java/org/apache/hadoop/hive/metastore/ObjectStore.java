@@ -16528,6 +16528,10 @@ name|MetaException
 argument_list|(
 literal|"table "
 operator|+
+name|dbname
+operator|+
+literal|"."
+operator|+
 name|name
 operator|+
 literal|" doesn't exist"
