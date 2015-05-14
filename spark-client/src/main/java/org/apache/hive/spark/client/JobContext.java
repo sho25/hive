@@ -184,7 +184,7 @@ name|getMonitoredJobs
 parameter_list|()
 function_decl|;
 comment|/**    * Return all added jar path which added through AddJarJob.    */
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>

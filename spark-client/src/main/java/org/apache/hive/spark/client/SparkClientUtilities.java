@@ -73,6 +73,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -176,14 +186,16 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Add new elements to the classpath.    *    * @param newPaths Array of classpath elements    */
+comment|/**    * Add new elements to the classpath.    *    * @param newPaths Set of classpath elements    */
 specifier|public
 specifier|static
 name|void
 name|addToClassPath
 parameter_list|(
+name|Set
+argument_list|<
 name|String
-index|[]
+argument_list|>
 name|newPaths
 parameter_list|,
 name|Configuration
@@ -410,6 +422,22 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+operator|new
+name|File
+argument_list|(
+name|localFile
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -424,7 +452,7 @@ name|localFile
 argument_list|)
 expr_stmt|;
 name|FileSystem
-name|fs
+name|remoteFS
 init|=
 name|remoteFile
 operator|.
@@ -433,7 +461,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|fs
+name|remoteFS
 operator|.
 name|copyToLocalFile
 argument_list|(
@@ -442,6 +470,7 @@ argument_list|,
 name|localFile
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|urlFromPathString
 argument_list|(
