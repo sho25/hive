@@ -283,7 +283,7 @@ argument_list|,
 name|valueLength
 argument_list|)
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastBytesHashMap add first keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap add first keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
 name|keysAssigned
 operator|++
 expr_stmt|;
@@ -291,7 +291,7 @@ block|}
 else|else
 block|{
 comment|// Add another value.
-comment|// LOG.info("VectorMapJoinFastBytesHashMap add more keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap add more keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
 name|slotTriples
 index|[
 name|tripleIndex
@@ -317,7 +317,7 @@ argument_list|,
 name|valueLength
 argument_list|)
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastBytesHashMap add more new valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap add more new valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
 block|}
 block|}
 annotation|@
@@ -411,7 +411,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// LOG.info("VectorMapJoinFastBytesHashMap lookup hashCode " + Long.toHexString(hashCode) + " valueRefWord " + Long.toHexString(valueRefWord) + " (valueStore != null) " + (valueStore != null));
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap lookup hashCode " + Long.toHexString(hashCode) + " valueRefWord " + Long.toHexString(valueRefWord) + " (valueStore != null) " + (valueStore != null));
 name|optimizedHashMapResult
 operator|.
 name|set

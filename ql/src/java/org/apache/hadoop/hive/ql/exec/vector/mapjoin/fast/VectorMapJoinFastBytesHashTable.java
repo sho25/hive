@@ -417,7 +417,7 @@ operator|==
 literal|0
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastBytesHashMap findWriteSlot slot " + slot + " tripleIndex " + tripleIndex + " empty");
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap findWriteSlot slot " + slot + " tripleIndex " + tripleIndex + " empty");
 name|isNewKey
 operator|=
 literal|true
@@ -453,7 +453,7 @@ name|keyLength
 argument_list|)
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastBytesHashMap findWriteSlot slot " + slot + " tripleIndex " + tripleIndex + " existing");
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap findWriteSlot slot " + slot + " tripleIndex " + tripleIndex + " existing");
 name|isNewKey
 operator|=
 literal|false
@@ -761,7 +761,7 @@ expr_stmt|;
 comment|// debugDumpKeyProbe(keyOffset, keyLength, hashCode, slot);
 block|}
 comment|// Use old value reference word.
-comment|// LOG.info("VectorMapJoinFastLongHashTable expandAndRehash key " + tableKey + " slot " + newSlot + " newPairIndex " + newPairIndex + " empty slot (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash key " + tableKey + " slot " + newSlot + " newPairIndex " + newPairIndex + " empty slot (i = " + i + ")");
 name|newSlotTriples
 index|[
 name|newTripleIndex
@@ -823,7 +823,7 @@ expr_stmt|;
 name|metricExpands
 operator|++
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
+comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
 block|}
 specifier|protected
 name|long
@@ -882,7 +882,7 @@ name|slot
 operator|*
 literal|3
 decl_stmt|;
-comment|// LOG.info("VectorMapJoinFastBytesHashMap findReadSlot slot keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(hashCode) + " entry hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
+comment|// LOG.debug("VectorMapJoinFastBytesHashMap findReadSlot slot keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(hashCode) + " entry hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
 if|if
 condition|(
 name|slotTriples

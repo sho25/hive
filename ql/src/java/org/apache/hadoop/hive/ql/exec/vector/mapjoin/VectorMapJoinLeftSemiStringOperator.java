@@ -551,12 +551,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// We rebuild in-place the selected array with rows destine to be forwarded.
-name|int
-name|numSel
-init|=
-literal|0
-decl_stmt|;
 comment|/*        * Single-Column String specific declarations.        */
 comment|// The one join column for this specialized class.
 name|BytesColumnVector
@@ -689,8 +683,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|numSel
-operator|=
 name|finishLeftSemiRepeated
 argument_list|(
 name|batch
@@ -904,6 +896,7 @@ name|saveKeyBatchIndex
 operator|=
 name|batchIndex
 expr_stmt|;
+comment|/*              * Single-Column String specific lookup key.              */
 name|byte
 index|[]
 name|keyBytes
@@ -1135,19 +1128,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|numSel
-operator|=
 name|finishLeftSemi
 argument_list|(
 name|batch
 argument_list|,
-name|allMatchs
-argument_list|,
 name|allMatchCount
-argument_list|,
-name|spills
-argument_list|,
-name|spillHashMapResultIndices
 argument_list|,
 name|spillCount
 argument_list|,
@@ -1159,18 +1144,6 @@ name|hashSetResults
 argument_list|)
 expr_stmt|;
 block|}
-name|batch
-operator|.
-name|selectedInUse
-operator|=
-literal|true
-expr_stmt|;
-name|batch
-operator|.
-name|size
-operator|=
-name|numSel
-expr_stmt|;
 if|if
 condition|(
 name|batch

@@ -495,43 +495,19 @@ expr_stmt|;
 block|}
 comment|//-----------------------------------------------------------------------------------------------
 comment|/*    * Inner big table only join (hash multi-set).    */
-comment|/**    * Generate the inner big table only join output results for one vectorized row batch.    *    * @param batch    *          The big table batch with any matching and any non matching rows both as    *          selected in use.    * @param allMatchs    *          A subset of the rows of the batch that are matches.    * @param allMatchCount    *          Number of matches in allMatchs.    * @param equalKeySeriesValueCounts    *          For each equal key series, whether the number of (empty) small table values.    * @param equalKeySeriesAllMatchIndices    *          For each equal key series, the logical index into allMatchs.    * @param equalKeySeriesDuplicateCounts    *          For each equal key series, the number of duplicates or equal keys.    * @param equalKeySeriesCount    *          Number of single value matches.    * @param spills    *          A subset of the rows of the batch that are spills.    * @param spillHashMapResultIndices    *          For each entry in spills, the index into the hashMapResult.    * @param spillCount    *          Number of spills in spills.    * @param hashTableResults    *          The array of all hash table results for the batch. We need the    *          VectorMapJoinHashTableResult for the spill information.    * @param hashMapResultCount    *          Number of entries in hashMapResults.    *    **/
+comment|/**    * Generate the inner big table only join output results for one vectorized row batch.    *    * @param batch    *          The big table batch with any matching and any non matching rows both as    *          selected in use.    * @param allMatchCount    *          Number of matches in allMatchs.    * @param equalKeySeriesCount    *          Number of single value matches.    * @param spillCount    *          Number of spills in spills.    * @param hashTableResults    *          The array of all hash table results for the batch. We need the    *          VectorMapJoinHashTableResult for the spill information.    * @param hashMapResultCount    *          Number of entries in hashMapResults.    *    **/
 specifier|protected
-name|int
+name|void
 name|finishInnerBigOnly
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|,
 name|int
-index|[]
-name|allMatchs
-parameter_list|,
-name|int
 name|allMatchCount
-parameter_list|,
-name|long
-index|[]
-name|equalKeySeriesValueCounts
-parameter_list|,
-name|int
-index|[]
-name|equalKeySeriesAllMatchIndices
-parameter_list|,
-name|int
-index|[]
-name|equalKeySeriesDuplicateCounts
 parameter_list|,
 name|int
 name|equalKeySeriesCount
-parameter_list|,
-name|int
-index|[]
-name|spills
-parameter_list|,
-name|int
-index|[]
-name|spillHashMapResultIndices
 parameter_list|,
 name|int
 name|spillCount
@@ -548,11 +524,28 @@ name|HiveException
 throws|,
 name|IOException
 block|{
-name|int
-name|numSel
-init|=
+comment|// Get rid of spills before we start modifying the batch.
+if|if
+condition|(
+name|spillCount
+operator|>
 literal|0
-decl_stmt|;
+condition|)
+block|{
+name|spillHashMapBatch
+argument_list|(
+name|batch
+argument_list|,
+name|hashTableResults
+argument_list|,
+name|spills
+argument_list|,
+name|spillHashMapResultIndices
+argument_list|,
+name|spillCount
+argument_list|)
+expr_stmt|;
+block|}
 comment|/*      * Optimize by running value expressions only over the matched rows.      */
 if|if
 condition|(
@@ -575,6 +568,11 @@ name|allMatchCount
 argument_list|)
 expr_stmt|;
 block|}
+name|int
+name|numSel
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -654,30 +652,18 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-if|if
-condition|(
-name|spillCount
-operator|>
-literal|0
-condition|)
-block|{
-name|spillHashMapBatch
-argument_list|(
 name|batch
-argument_list|,
-name|hashTableResults
-argument_list|,
-name|spills
-argument_list|,
-name|spillHashMapResultIndices
-argument_list|,
-name|spillCount
-argument_list|)
-expr_stmt|;
-block|}
-return|return
+operator|.
+name|size
+operator|=
 name|numSel
-return|;
+expr_stmt|;
+name|batch
+operator|.
+name|selectedInUse
+operator|=
+literal|true
+expr_stmt|;
 block|}
 comment|/**    * Generate the single value match inner big table only join output results for a match.    *    * @param batch    *          The big table batch.    * @param allMatchs    *          A subset of the rows of the batch that are matches.    * @param allMatchesIndex    *          The logical index into allMatchs of the first equal key.    * @param duplicateCount    *          The number of duplicates or equal keys.    * @param numSel    *          The current count of rows in the rebuilding of the selected array.    *    * @return    *          The new count of selected rows.    */
 specifier|private
@@ -705,9 +691,9 @@ name|HiveException
 throws|,
 name|IOException
 block|{
-comment|// LOG.info("generateHashMultiSetResultSingleValue enter...");
+comment|// LOG.debug("generateHashMultiSetResultSingleValue enter...");
 comment|// Generate result within big table batch itself.
-comment|// LOG.info("generateHashMultiSetResultSingleValue with big table...");
+comment|// LOG.debug("generateHashMultiSetResultSingleValue with big table...");
 for|for
 control|(
 name|int
@@ -775,7 +761,7 @@ name|HiveException
 throws|,
 name|IOException
 block|{
-comment|// LOG.info("generateHashMultiSetResultMultiValue allMatchesIndex " + allMatchesIndex + " duplicateCount " + duplicateCount + " count " + count);
+comment|// LOG.debug("generateHashMultiSetResultMultiValue allMatchesIndex " + allMatchesIndex + " duplicateCount " + duplicateCount + " count " + count);
 comment|// TODO: Look at repeating optimizations...
 for|for
 control|(
@@ -962,7 +948,7 @@ literal|0
 return|;
 block|}
 specifier|protected
-name|int
+name|void
 name|finishInnerBigOnlyRepeated
 parameter_list|(
 name|VectorizedRowBatch
@@ -981,11 +967,6 @@ name|HiveException
 throws|,
 name|IOException
 block|{
-name|int
-name|numSel
-init|=
-literal|0
-decl_stmt|;
 switch|switch
 condition|(
 name|joinResult
@@ -1020,14 +1001,27 @@ expr_stmt|;
 block|}
 block|}
 comment|// Generate special repeated case.
+name|int
 name|numSel
-operator|=
+init|=
 name|generateHashMultiSetResultRepeatedAll
 argument_list|(
 name|batch
 argument_list|,
 name|hashMultiSetResult
 argument_list|)
+decl_stmt|;
+name|batch
+operator|.
+name|size
+operator|=
+name|numSel
+expr_stmt|;
+name|batch
+operator|.
+name|selectedInUse
+operator|=
+literal|true
 expr_stmt|;
 break|break;
 case|case
@@ -1044,16 +1038,25 @@ operator|)
 name|hashMultiSetResult
 argument_list|)
 expr_stmt|;
+name|batch
+operator|.
+name|size
+operator|=
+literal|0
+expr_stmt|;
 break|break;
 case|case
 name|NOMATCH
 case|:
 comment|// No match for entire batch.
+name|batch
+operator|.
+name|size
+operator|=
+literal|0
+expr_stmt|;
 break|break;
 block|}
-return|return
-name|numSel
-return|;
 block|}
 block|}
 end_class
