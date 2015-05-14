@@ -691,7 +691,7 @@ specifier|final
 name|int
 name|MIN_TERMINAL_WIDTH
 init|=
-literal|90
+literal|92
 decl_stmt|;
 specifier|private
 specifier|static
@@ -717,7 +717,7 @@ specifier|final
 name|String
 name|HEADER_FORMAT
 init|=
-literal|"%16s%10s %11s  %5s  %9s  %7s  %7s  %6s  %6s"
+literal|"%16s%10s %11s  %5s  %9s  %7s  %7s  %6s  %6s  "
 decl_stmt|;
 specifier|private
 specifier|static
@@ -725,7 +725,7 @@ specifier|final
 name|String
 name|VERTEX_FORMAT
 init|=
-literal|"%-16s%10s %11s  %5s  %9s  %7s  %7s  %6s  %6s"
+literal|"%-16s%10s %11s  %5s  %9s  %7s  %7s  %6s  %6s  "
 decl_stmt|;
 specifier|private
 specifier|static

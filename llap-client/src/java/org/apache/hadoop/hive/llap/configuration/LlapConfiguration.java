@@ -448,7 +448,7 @@ specifier|final
 name|boolean
 name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION_DEFAULT
 init|=
-literal|false
+literal|true
 decl_stmt|;
 comment|/** Amount of time to wait on a connection failure to an LLAP daemon */
 specifier|public
