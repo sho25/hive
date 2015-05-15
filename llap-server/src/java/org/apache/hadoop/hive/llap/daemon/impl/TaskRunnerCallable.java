@@ -125,18 +125,6 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|TimeUnit
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
 name|atomic
 operator|.
 name|AtomicLong
@@ -1625,21 +1613,15 @@ operator|.
 name|stop
 argument_list|()
 operator|.
-name|elapsed
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
+name|elapsedMillis
+argument_list|()
+argument_list|;       if
+operator|(
 name|LOG
 operator|.
 name|isDebugEnabled
 argument_list|()
-condition|)
+operator|)
 block|{
 name|LOG
 operator|.
@@ -1657,8 +1639,7 @@ operator|+
 name|canFinish
 argument_list|()
 argument_list|)
-expr_stmt|;
-block|}
+block|;       }
 block|}
 block|}
 comment|/**    * Attempt to kill a running task. If the task has not started running, it will not start.    * If it's already running, a kill request will be sent to it.    *    * The AM will be informed about the task kill.    */
@@ -2303,12 +2284,8 @@ name|elapsed
 init|=
 name|killtimerWatch
 operator|.
-name|elapsed
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
+name|elapsedMillis
+argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
@@ -2326,23 +2303,16 @@ name|incrPreemptionTimeLost
 argument_list|(
 name|runtimeWatch
 operator|.
-name|elapsed
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
-argument_list|)
-expr_stmt|;
+name|elapsedMillis
+argument_list|()
+argument_list|;
 name|metrics
 operator|.
 name|incrExecutorTotalKilled
 argument_list|()
-expr_stmt|;
-break|break;
-case|case
+argument_list|;           break;         case
 name|COMMUNICATION_FAILURE
-case|:
+operator|:
 name|LOG
 operator|.
 name|info
@@ -2351,16 +2321,14 @@ literal|"Failed to run {} due to communication failure"
 argument_list|,
 name|requestId
 argument_list|)
-expr_stmt|;
+argument_list|;
 name|metrics
 operator|.
 name|incrExecutorTotalExecutionFailed
 argument_list|()
-expr_stmt|;
-break|break;
-case|case
+argument_list|;           break;         case
 name|TASK_ERROR
-case|:
+operator|:
 name|LOG
 operator|.
 name|info
@@ -2369,13 +2337,12 @@ literal|"Failed to run {} due to task error"
 argument_list|,
 name|requestId
 argument_list|)
-expr_stmt|;
+argument_list|;
 name|metrics
 operator|.
 name|incrExecutorTotalExecutionFailed
 argument_list|()
-expr_stmt|;
-break|break;
+argument_list|;           break;
 block|}
 name|taskRunnerCallable
 operator|.
