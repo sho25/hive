@@ -284,6 +284,9 @@ argument_list|(
 name|results
 argument_list|,
 name|selectedColumns
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|allColumns
 argument_list|,
