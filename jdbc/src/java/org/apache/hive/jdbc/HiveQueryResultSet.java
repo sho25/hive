@@ -2389,6 +2389,17 @@ return|return
 name|rowsFetched
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isClosed
+parameter_list|()
+block|{
+return|return
+name|isClosed
+return|;
+block|}
 block|}
 end_class
 
