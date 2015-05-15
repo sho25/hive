@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|udf
+operator|.
+name|generic
 package|;
 end_package
 
@@ -46,42 +48,6 @@ operator|.
 name|framework
 operator|.
 name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|UDFArgumentException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Hive
 import|;
 end_import
 
@@ -163,7 +129,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 import|;
 end_import
 
@@ -258,7 +224,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestGenericUDFDateAdd
+name|TestGenericUDFDateSub
 extends|extends
 name|TestCase
 block|{
@@ -269,11 +235,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 name|udf
 init|=
 operator|new
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -358,9 +324,9 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"date_add() test for STRING failed "
+literal|"date_sub() test for STRING failed "
 argument_list|,
-literal|"2009-07-22"
+literal|"2009-07-18"
 argument_list|,
 name|output
 operator|.
@@ -462,11 +428,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 name|udf
 init|=
 operator|new
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -567,9 +533,9 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"date_add() test for TIMESTAMP failed "
+literal|"date_sub() test for TIMESTAMP failed "
 argument_list|,
-literal|"2009-07-23"
+literal|"2009-07-17"
 argument_list|,
 name|output
 operator|.
@@ -671,11 +637,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 name|udf
 init|=
 operator|new
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -768,9 +734,9 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"date_add() test for DATEWRITABLE failed "
+literal|"date_sub() test for DATEWRITABLE failed "
 argument_list|,
-literal|"2009-07-24"
+literal|"2009-07-16"
 argument_list|,
 name|output
 operator|.
@@ -872,11 +838,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 name|udf
 init|=
 operator|new
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -971,7 +937,7 @@ name|assertEquals
 argument_list|(
 literal|"date_add() test for BYTE failed "
 argument_list|,
-literal|"2009-07-24"
+literal|"2009-07-16"
 argument_list|,
 name|output
 operator|.
@@ -987,11 +953,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 name|udf
 init|=
 operator|new
-name|GenericUDFDateAdd
+name|GenericUDFDateSub
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -1086,7 +1052,7 @@ name|assertEquals
 argument_list|(
 literal|"date_add() test for SHORT failed "
 argument_list|,
-literal|"2009-07-24"
+literal|"2009-07-16"
 argument_list|,
 name|output
 operator|.

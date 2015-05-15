@@ -173,11 +173,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|metastore
 operator|.
-name|metadata
-operator|.
-name|HiveStorageHandler
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -191,9 +189,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|HiveMetaStoreClient
+name|metadata
+operator|.
+name|HiveStorageHandler
 import|;
 end_import
 
@@ -569,7 +569,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -590,7 +590,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)

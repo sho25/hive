@@ -199,16 +199,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|EnumSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -2088,7 +2078,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Hive Metastore Client.  * The public implementation of IMetaStoreClient. Methods not inherited from IMetaStoreClient  * are not public and can change. Hence this is marked as unstable.  */
+comment|/**  * Hive Metastore Client.  * The public implementation of IMetaStoreClient. Methods not inherited from IMetaStoreClient  * are not public and can change. Hence this is marked as unstable.  * For users who require retry mechanism when the connection between metastore and client is  * broken, RetryingMetaStoreClient class should be used.  */
 end_comment
 
 begin_class
@@ -2927,6 +2917,9 @@ throw|;
 block|}
 else|else
 block|{
+name|close
+argument_list|()
+expr_stmt|;
 comment|// Swap the first element of the metastoreUris[] with a random element from the rest
 comment|// of the array. Rationale being that this method will generally be called when the default
 comment|// connection has died and the default connection is likely to be the first array element.
@@ -3797,9 +3790,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
-literal|"Unable to shutdown local metastore client"
+literal|"Unable to shutdown metastore client. Will try closing transport directly."
 argument_list|,
 name|e
 argument_list|)

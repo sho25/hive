@@ -426,6 +426,13 @@ name|isStringFamily
 argument_list|(
 name|outputType
 argument_list|)
+operator|||
+name|outputType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"binary"
+argument_list|)
 condition|)
 block|{
 name|stringIndices

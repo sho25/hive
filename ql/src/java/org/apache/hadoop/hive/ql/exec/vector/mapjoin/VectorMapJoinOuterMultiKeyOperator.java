@@ -519,6 +519,12 @@ block|}
 name|batchCounter
 operator|++
 expr_stmt|;
+comment|// Do the per-batch setup for an outer join.
+name|outerPerBatchSetup
+argument_list|(
+name|batch
+argument_list|)
+expr_stmt|;
 comment|// For outer join, DO NOT apply filters yet.  It is incorrect for outer join to
 comment|// apply the filter before hash table matching.
 specifier|final

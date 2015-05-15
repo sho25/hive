@@ -466,6 +466,14 @@ decl_stmt|;
 specifier|static
 specifier|final
 specifier|private
+name|int
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+init|=
+literal|100
+decl_stmt|;
+specifier|static
+specifier|final
+specifier|private
 name|Log
 name|LOG
 init|=
@@ -1787,35 +1795,18 @@ operator|.
 name|TRANSACTION_SERIALIZABLE
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|Long
-argument_list|>
-name|txnids
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|Long
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-name|txnids
-operator|.
-name|add
-argument_list|(
-name|txnid
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|abortTxns
 argument_list|(
 name|dbConn
 argument_list|,
-name|txnids
+name|Collections
+operator|.
+name|singletonList
+argument_list|(
+name|txnid
+argument_list|)
 argument_list|)
 operator|!=
 literal|1
@@ -7088,18 +7079,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to commit"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|commit
-argument_list|()
-expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -9667,7 +9646,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Abort timed out transactions.  This calls abortTxn(), which does a commit,
+comment|// Abort timed out transactions.  This does a commit,
 comment|// and thus should be done before any calls to heartbeat that will leave
 comment|// open transactions on the underlying database.
 specifier|private
@@ -9681,6 +9660,8 @@ throws|throws
 name|SQLException
 throws|,
 name|MetaException
+throws|,
+name|RetryException
 block|{
 name|long
 name|now
@@ -9756,6 +9737,13 @@ argument_list|()
 decl_stmt|;
 comment|// Limit the number of timed out transactions we do in one pass to keep from generating a
 comment|// huge delete statement
+do|do
+block|{
+name|deadTxns
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -9765,7 +9753,7 @@ literal|0
 init|;
 name|i
 operator|<
-literal|20
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 operator|&&
 name|rs
 operator|.
@@ -9775,6 +9763,7 @@ condition|;
 name|i
 operator|++
 control|)
+block|{
 name|deadTxns
 operator|.
 name|add
@@ -9787,6 +9776,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 comment|// We don't care whether all of the transactions get deleted or not,
 comment|// if some didn't it most likely means someone else deleted them in the interum
 if|if
@@ -9805,6 +9795,71 @@ argument_list|,
 name|deadTxns
 argument_list|)
 expr_stmt|;
+block|}
+do|while
+condition|(
+name|deadTxns
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+do|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to commit"
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to rollback"
+argument_list|)
+expr_stmt|;
+name|rollbackDBConn
+argument_list|(
+name|dbConn
+argument_list|)
+expr_stmt|;
+name|checkRetryable
+argument_list|(
+name|dbConn
+argument_list|,
+name|e
+argument_list|,
+literal|"abortTxn"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Unable to update transaction database "
+operator|+
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+throw|;
 block|}
 finally|finally
 block|{

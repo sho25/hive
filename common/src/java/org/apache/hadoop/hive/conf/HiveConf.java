@@ -764,6 +764,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_SERVER_PORT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORETHRIFTCONNECTIONRETRIES
 block|,
 name|HiveConf
@@ -783,6 +789,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_CLIENT_SOCKET_TIMEOUT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_LIFETIME
 block|,
 name|HiveConf
 operator|.
@@ -2121,6 +2133,15 @@ argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
 argument_list|)
 block|,
+name|METASTORE_SERVER_PORT
+argument_list|(
+literal|"hive.metastore.port"
+argument_list|,
+literal|9083
+argument_list|,
+literal|"Hive metastore listener port"
+argument_list|)
+block|,
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
 argument_list|(
 literal|"hive.metastore.client.connect.retry.delay"
@@ -2153,6 +2174,27 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"MetaStore Client socket timeout in seconds"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_SOCKET_LIFETIME
+argument_list|(
+literal|"hive.metastore.client.socket.lifetime"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MetaStore Client socket lifetime in seconds. After this time is exceeded, client\n"
+operator|+
+literal|"reconnects on the next MetaStore operation. A value of 0s means the connection\n"
+operator|+
+literal|"has an infinite lifetime."
 argument_list|)
 block|,
 name|METASTOREPWD
@@ -3560,6 +3602,28 @@ operator|+
 literal|"hybrid grace hash join, how often (how many rows apart) we check if memory is full. "
 operator|+
 literal|"This number should be power of 2."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMINWBSIZE
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.minwbsize"
+argument_list|,
+literal|524288
+argument_list|,
+literal|"For hybrid grace"
+operator|+
+literal|" hash join, the minimum write buffer size used by optimized hashtable. Default is 512 KB."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMINNUMPARTITIONS
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.minnumpartitions"
+argument_list|,
+literal|16
+argument_list|,
+literal|"For"
+operator|+
+literal|" hybrid grace hash join, the minimum number of partitions to create."
 argument_list|)
 block|,
 name|HIVEHASHTABLEWBSIZE
@@ -5908,7 +5972,7 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|"600000ms"
+literal|"1200000ms"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -6625,7 +6689,7 @@ name|HIVE_REPL_TASK_FACTORY
 argument_list|(
 literal|"hive.repl.task.factory"
 argument_list|,
-literal|""
+literal|"org.apache.hive.hcatalog.api.repl.exim.EximReplicationTaskFactory"
 argument_list|,
 literal|"Parameter that can be used to override which ReplicationTaskFactory will be\n"
 operator|+
@@ -12131,6 +12195,12 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVEDEFAULTMANAGEDFILEFORMAT
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|HIVEENFORCEBUCKETING
 operator|.
 name|varname
@@ -12329,6 +12399,18 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|JOB_DEBUG_CAPTURE_STACKTRACES
 operator|.
 name|varname
@@ -12348,6 +12430,12 @@ block|,
 name|ConfVars
 operator|.
 name|MAXREDUCERS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|NWAYJOINREORDER
 operator|.
 name|varname
 block|,
@@ -12399,6 +12487,8 @@ literal|"hive\\.exec\\.mode.local\\..*"
 block|,
 literal|"hive\\.exec\\.orc\\..*"
 block|,
+literal|"hive\\.explain\\..*"
+block|,
 literal|"hive\\.fetch.task\\..*"
 block|,
 literal|"hive\\.hbase\\..*"
@@ -12413,6 +12503,8 @@ literal|"hive\\.join\\..*"
 block|,
 literal|"hive\\.limit\\..*"
 block|,
+literal|"hive\\.log\\..*"
+block|,
 literal|"hive\\.mapjoin\\..*"
 block|,
 literal|"hive\\.merge\\..*"
@@ -12423,9 +12515,13 @@ literal|"hive\\.orc\\..*"
 block|,
 literal|"hive\\.outerjoin\\..*"
 block|,
+literal|"hive\\.parquet\\..*"
+block|,
 literal|"hive\\.ppd\\..*"
 block|,
 literal|"hive\\.prewarm\\..*"
+block|,
+literal|"hive\\.server2\\.proxy\\.user"
 block|,
 literal|"hive\\.skewjoin\\..*"
 block|,
@@ -12458,6 +12554,8 @@ block|,
 literal|"tez\\.task\\..*"
 block|,
 literal|"tez\\.runtime\\..*"
+block|,
+literal|"tez.queue.name"
 block|,   }
 decl_stmt|;
 comment|/**    * Apply system properties to this object if the property name is defined in ConfVars    * and the value is non-null and not an empty string.    */

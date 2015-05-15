@@ -455,10 +455,6 @@ name|long
 name|keyCount
 decl_stmt|;
 specifier|private
-name|long
-name|memUsage
-decl_stmt|;
-specifier|private
 name|VectorMapJoinFastHashTable
 name|VectorMapJoinFastHashTable
 decl_stmt|;
@@ -473,9 +469,6 @@ name|hconf
 parameter_list|,
 name|long
 name|keyCount
-parameter_list|,
-name|long
-name|memUsage
 parameter_list|)
 throws|throws
 name|SerDeException
@@ -558,17 +551,10 @@ name|keyCount
 operator|=
 name|keyCount
 expr_stmt|;
-name|this
-operator|.
-name|memUsage
-operator|=
-name|memUsage
-expr_stmt|;
 comment|// LOG.info("VectorMapJoinFastTableContainer load keyCountAdj " + keyCountAdj);
 comment|// LOG.info("VectorMapJoinFastTableContainer load threshold " + threshold);
 comment|// LOG.info("VectorMapJoinFastTableContainer load loadFactor " + loadFactor);
 comment|// LOG.info("VectorMapJoinFastTableContainer load wbSize " + wbSize);
-comment|// LOG.info("VectorMapJoinFastTableContainer load memUsage " + memUsage);
 name|int
 name|newThreshold
 init|=
@@ -730,8 +716,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -754,8 +738,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -778,8 +760,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -808,8 +788,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -828,8 +806,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -848,8 +824,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -878,8 +852,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -898,8 +870,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;
@@ -918,8 +888,6 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
-argument_list|,
-name|memUsage
 argument_list|)
 expr_stmt|;
 break|break;

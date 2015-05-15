@@ -488,6 +488,9 @@ block|}
 name|batchCounter
 operator|++
 expr_stmt|;
+comment|// Do the per-batch setup for an left semi join.
+comment|// (Currently none)
+comment|// leftSemiPerBatchSetup(batch);
 comment|// For left semi joins, we may apply the filter(s) now.
 for|for
 control|(

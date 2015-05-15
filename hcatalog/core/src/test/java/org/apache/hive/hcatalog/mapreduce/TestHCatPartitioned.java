@@ -239,16 +239,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|BeforeClass
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Test
 import|;
 end_import
@@ -542,7 +532,7 @@ literal|"part0"
 argument_list|,
 name|serdeConstants
 operator|.
-name|STRING_TYPE_NAME
+name|INT_TYPE_NAME
 argument_list|,
 literal|""
 argument_list|)
@@ -654,7 +644,7 @@ name|put
 argument_list|(
 literal|"part0"
 argument_list|,
-literal|"p0value1"
+literal|"501"
 argument_list|)
 expr_stmt|;
 name|runMRCreate
@@ -690,7 +680,7 @@ name|put
 argument_list|(
 literal|"PART0"
 argument_list|,
-literal|"p0value2"
+literal|"502"
 argument_list|)
 expr_stmt|;
 name|runMRCreate
@@ -820,7 +810,7 @@ name|put
 argument_list|(
 literal|"px0"
 argument_list|,
-literal|"p0value2"
+literal|"502"
 argument_list|)
 expr_stmt|;
 try|try
@@ -906,7 +896,7 @@ name|put
 argument_list|(
 literal|"px"
 argument_list|,
-literal|"p1value2"
+literal|"512"
 argument_list|)
 expr_stmt|;
 try|try
@@ -1040,7 +1030,7 @@ name|runMRRead
 argument_list|(
 literal|10
 argument_list|,
-literal|"part0 = \"p0value1\""
+literal|"part0 = \"501\""
 argument_list|)
 expr_stmt|;
 if|if
@@ -1067,14 +1057,14 @@ name|runMRRead
 argument_list|(
 literal|20
 argument_list|,
-literal|"part0 = \"p0value2\""
+literal|"part0 = \"502\""
 argument_list|)
 expr_stmt|;
 name|runMRRead
 argument_list|(
 literal|30
 argument_list|,
-literal|"part0 = \"p0value1\" or part0 = \"p0value2\""
+literal|"part0 = \"501\" or part0 = \"502\""
 argument_list|)
 expr_stmt|;
 block|}
@@ -1098,14 +1088,14 @@ name|runMRRead
 argument_list|(
 literal|40
 argument_list|,
-literal|"part0 = \"p0value2\""
+literal|"part0 = \"502\""
 argument_list|)
 expr_stmt|;
 name|runMRRead
 argument_list|(
 literal|50
 argument_list|,
-literal|"part0 = \"p0value1\" or part0 = \"p0value2\""
+literal|"part0 = \"501\" or part0 = \"502\""
 argument_list|)
 expr_stmt|;
 block|}
@@ -1275,7 +1265,7 @@ name|put
 argument_list|(
 literal|"part0"
 argument_list|,
-literal|"p0value5"
+literal|"505"
 argument_list|)
 expr_stmt|;
 name|runMRCreate
@@ -1421,7 +1411,7 @@ name|put
 argument_list|(
 literal|"part0"
 argument_list|,
-literal|"p0value6"
+literal|"506"
 argument_list|)
 expr_stmt|;
 name|partitionColumns
@@ -1785,7 +1775,7 @@ name|runMRRead
 argument_list|(
 literal|20
 argument_list|,
-literal|"part0 = \"p0value6\""
+literal|"part0 = \"506\""
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1882,7 +1872,7 @@ argument_list|(
 literal|4
 argument_list|)
 argument_list|,
-literal|"p0value6"
+literal|506
 argument_list|)
 expr_stmt|;
 name|i
@@ -2098,7 +2088,7 @@ name|put
 argument_list|(
 literal|"part0"
 argument_list|,
-literal|"p0value8"
+literal|"508"
 argument_list|)
 expr_stmt|;
 name|Exception

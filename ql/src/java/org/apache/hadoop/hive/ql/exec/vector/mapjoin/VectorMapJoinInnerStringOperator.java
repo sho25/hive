@@ -443,6 +443,12 @@ block|}
 name|batchCounter
 operator|++
 expr_stmt|;
+comment|// Do the per-batch setup for an inner join.
+name|innerPerBatchSetup
+argument_list|(
+name|batch
+argument_list|)
+expr_stmt|;
 comment|// For inner joins, we may apply the filter(s) now.
 for|for
 control|(

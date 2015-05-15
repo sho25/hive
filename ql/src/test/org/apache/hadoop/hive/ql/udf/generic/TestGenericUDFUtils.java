@@ -16,26 +16,18 @@ operator|.
 name|ql
 operator|.
 name|udf
+operator|.
+name|generic
 package|;
 end_package
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -87,8 +79,6 @@ begin_class
 specifier|public
 class|class
 name|TestGenericUDFUtils
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test

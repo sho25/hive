@@ -760,12 +760,12 @@ name|d
 operator|=
 literal|null
 expr_stmt|;
+block|}
 name|TxnDbUtil
 operator|.
 name|cleanDb
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 finally|finally
 block|{
@@ -1282,6 +1282,152 @@ argument_list|,
 name|stringifyValues
 argument_list|(
 name|updatedData2
+argument_list|)
+argument_list|,
+name|rs2
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * https://issues.apache.org/jira/browse/HIVE-10151    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBucketizedInputFormat
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|tableData
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|2
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p=1) (a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|"(a,b) select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" where p = 1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+argument_list|)
+decl_stmt|;
+comment|//no order by as it's just 1 row
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" didn't match:"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"(a,b) select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" where p = 1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+argument_list|)
+decl_stmt|;
+comment|//no order by as it's just 1 row
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" didn't match:"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|tableData
 argument_list|)
 argument_list|,
 name|rs2

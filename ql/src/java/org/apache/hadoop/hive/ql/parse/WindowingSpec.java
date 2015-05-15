@@ -2263,7 +2263,22 @@ name|RangeBoundarySpec
 operator|)
 name|other
 decl_stmt|;
+comment|// Valid range is "range/rows between 10 preceding and 2 preceding" for preceding case
 return|return
+name|this
+operator|.
+name|direction
+operator|==
+name|Direction
+operator|.
+name|PRECEDING
+condition|?
+name|rb
+operator|.
+name|amt
+operator|-
+name|amt
+else|:
 name|amt
 operator|-
 name|rb
@@ -2551,7 +2566,22 @@ name|ValueBoundarySpec
 operator|)
 name|other
 decl_stmt|;
+comment|// Valid range is "range/rows between 10 preceding and 2 preceding" for preceding case
 return|return
+name|this
+operator|.
+name|direction
+operator|==
+name|Direction
+operator|.
+name|PRECEDING
+condition|?
+name|vb
+operator|.
+name|amt
+operator|-
+name|amt
+else|:
 name|amt
 operator|-
 name|vb

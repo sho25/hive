@@ -346,6 +346,7 @@ specifier|private
 name|float
 name|hashtableMemoryUsage
 decl_stmt|;
+comment|// This is a percentage value between 0 and 1
 specifier|protected
 name|boolean
 name|genJoinKeys

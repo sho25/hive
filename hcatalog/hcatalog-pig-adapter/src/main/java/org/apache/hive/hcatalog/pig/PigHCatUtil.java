@@ -73,16 +73,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Calendar
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -225,7 +215,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -633,18 +623,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|joda
-operator|.
-name|time
-operator|.
-name|DateTimeZone
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -939,7 +917,7 @@ return|;
 block|}
 specifier|private
 specifier|static
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|getHiveMetaClient
 parameter_list|(
 name|String
@@ -1042,7 +1020,7 @@ block|{
 return|return
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -1280,7 +1258,7 @@ name|table
 init|=
 literal|null
 decl_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
