@@ -1223,6 +1223,19 @@ expr_stmt|;
 comment|// that means user is asking metastore to move data to new location
 comment|// corresponding to the new name
 comment|// get new location
+name|Database
+name|db
+init|=
+name|msdb
+operator|.
+name|getDatabase
+argument_list|(
+name|newt
+operator|.
+name|getDbName
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|Path
 name|databasePath
 init|=
@@ -1230,12 +1243,9 @@ name|constructRenamedPath
 argument_list|(
 name|wh
 operator|.
-name|getDefaultDatabasePath
+name|getDatabasePath
 argument_list|(
-name|newt
-operator|.
-name|getDbName
-argument_list|()
+name|db
 argument_list|)
 argument_list|,
 name|srcPath
