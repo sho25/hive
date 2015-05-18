@@ -7962,13 +7962,23 @@ operator|.
 name|getQueryId
 argument_list|()
 decl_stmt|;
+comment|// Get the query string from the conf file as the compileInternal() method might
+comment|// hide sensitive information during query redaction.
 name|String
 name|queryStr
 init|=
-name|plan
+name|HiveConf
 operator|.
-name|getQueryStr
-argument_list|()
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYSTRING
+argument_list|)
 decl_stmt|;
 name|maxthreads
 operator|=
