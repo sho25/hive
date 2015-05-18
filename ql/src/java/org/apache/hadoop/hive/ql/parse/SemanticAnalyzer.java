@@ -3404,6 +3404,7 @@ argument_list|>
 name|topOps
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashMap
 argument_list|<
 name|String
@@ -10493,7 +10494,7 @@ return|return
 name|phase1Result
 return|;
 block|}
-comment|/**    * This is phase1 of supporting specifying schema in insert statement    * insert into foo(z,y) select a,b from bar;    * @see #handleInsertStatementSpec(java.util.List, String, RowResolver, RowResolver, QB, ASTNode)     * @throws SemanticException    */
+comment|/**    * This is phase1 of supporting specifying schema in insert statement    * insert into foo(z,y) select a,b from bar;    * @see #handleInsertStatementSpec(java.util.List, String, RowResolver, RowResolver, QB, ASTNode)    * @throws SemanticException    */
 specifier|private
 name|void
 name|handleInsertStatementSpecPhase1
@@ -25319,7 +25320,7 @@ return|return
 name|output
 return|;
 block|}
-comment|/**    * This modifies the Select projections when the Select is part of an insert statement and    * the insert statement specifies a column list for the target table, e.g.    * create table source (a int, b int);    * create table target (x int, y int, z int);    * insert into target(z,x) select * from source    *     * Once the * is resolved to 'a,b', this list needs to rewritten to 'b,null,a' so that it looks    * as if the original query was written as    * insert into target select b, null, a from source    *     * if target schema is not specified, this is no-op    *     * @see #handleInsertStatementSpecPhase1(ASTNode, QBParseInfo, org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx)     * @throws SemanticException    */
+comment|/**    * This modifies the Select projections when the Select is part of an insert statement and    * the insert statement specifies a column list for the target table, e.g.    * create table source (a int, b int);    * create table target (x int, y int, z int);    * insert into target(z,x) select * from source    *    * Once the * is resolved to 'a,b', this list needs to rewritten to 'b,null,a' so that it looks    * as if the original query was written as    * insert into target select b, null, a from source    *    * if target schema is not specified, this is no-op    *    * @see #handleInsertStatementSpecPhase1(ASTNode, QBParseInfo, org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx)    * @throws SemanticException    */
 specifier|private
 name|void
 name|handleInsertStatementSpec
@@ -53524,7 +53525,8 @@ name|distinctExprs
 return|;
 block|}
 comment|// see if there are any distinct expressions
-specifier|private
+specifier|protected
+specifier|static
 name|boolean
 name|distinctExprsExists
 parameter_list|(

@@ -3684,6 +3684,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|needToLogMessage
+argument_list|,
+name|qb
 argument_list|)
 decl_stmt|;
 if|if
@@ -3744,6 +3746,9 @@ name|topLevelQB
 parameter_list|,
 name|boolean
 name|verbose
+parameter_list|,
+name|QB
+name|qb
 parameter_list|)
 block|{
 name|boolean
@@ -3794,6 +3799,11 @@ literal|1
 operator|)
 operator|||
 name|isInTest
+operator|||
+name|distinctExprsExists
+argument_list|(
+name|qb
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -17664,6 +17674,8 @@ name|LOG
 operator|.
 name|isDebugEnabled
 argument_list|()
+argument_list|,
+name|qb
 argument_list|)
 decl_stmt|;
 if|if
