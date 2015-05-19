@@ -159,6 +159,7 @@ return|;
 block|}
 block|}
 specifier|public
+specifier|synchronized
 name|boolean
 name|isEmpty
 parameter_list|()
@@ -171,6 +172,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
+specifier|synchronized
 name|E
 name|peek
 parameter_list|()
@@ -183,6 +185,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
+specifier|synchronized
 name|E
 name|take
 parameter_list|()
@@ -197,6 +200,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
+specifier|synchronized
 name|void
 name|remove
 parameter_list|(
