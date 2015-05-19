@@ -3102,6 +3102,13 @@ argument_list|,
 name|queryId
 argument_list|,
 name|operationName
+argument_list|,
+name|getSchema
+argument_list|(
+name|sem
+argument_list|,
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|conf
