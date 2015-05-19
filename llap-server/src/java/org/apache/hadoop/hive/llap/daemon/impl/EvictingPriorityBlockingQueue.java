@@ -44,6 +44,7 @@ name|E
 parameter_list|>
 block|{
 specifier|private
+specifier|final
 name|PriorityBlockingDeque
 argument_list|<
 name|E
@@ -51,6 +52,7 @@ argument_list|>
 name|deque
 decl_stmt|;
 specifier|private
+specifier|final
 name|Comparator
 argument_list|<
 name|E

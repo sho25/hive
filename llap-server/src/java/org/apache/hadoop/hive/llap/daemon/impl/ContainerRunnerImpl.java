@@ -733,12 +733,6 @@ name|localAddress
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
-index|[]
-name|localDirsBase
-decl_stmt|;
-specifier|private
-specifier|final
 name|Map
 argument_list|<
 name|String
@@ -865,12 +859,6 @@ name|numExecutors
 operator|+
 literal|". Must be> 0"
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|localDirsBase
-operator|=
-name|localDirsBase
 expr_stmt|;
 name|this
 operator|.
