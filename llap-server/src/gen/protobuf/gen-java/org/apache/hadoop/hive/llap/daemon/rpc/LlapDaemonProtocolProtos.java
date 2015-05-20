@@ -31196,6 +31196,17 @@ name|long
 name|getFirstAttemptStartTime
 parameter_list|()
 function_decl|;
+comment|// optional int64 current_attempt_start_time = 6;
+comment|/**      *<code>optional int64 current_attempt_start_time = 6;</code>      */
+name|boolean
+name|hasCurrentAttemptStartTime
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional int64 current_attempt_start_time = 6;</code>      */
+name|long
+name|getCurrentAttemptStartTime
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code FragmentRuntimeInfo}    */
 specifier|public
@@ -31526,6 +31537,23 @@ operator||=
 literal|0x00000010
 expr_stmt|;
 name|firstAttemptStartTime_
+operator|=
+name|input
+operator|.
+name|readInt64
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|48
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+name|currentAttemptStartTime_
 operator|=
 name|input
 operator|.
@@ -32022,6 +32050,47 @@ return|return
 name|firstAttemptStartTime_
 return|;
 block|}
+comment|// optional int64 current_attempt_start_time = 6;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|CURRENT_ATTEMPT_START_TIME_FIELD_NUMBER
+init|=
+literal|6
+decl_stmt|;
+specifier|private
+name|long
+name|currentAttemptStartTime_
+decl_stmt|;
+comment|/**      *<code>optional int64 current_attempt_start_time = 6;</code>      */
+specifier|public
+name|boolean
+name|hasCurrentAttemptStartTime
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional int64 current_attempt_start_time = 6;</code>      */
+specifier|public
+name|long
+name|getCurrentAttemptStartTime
+parameter_list|()
+block|{
+return|return
+name|currentAttemptStartTime_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -32044,6 +32113,10 @@ operator|=
 literal|0L
 expr_stmt|;
 name|firstAttemptStartTime_
+operator|=
+literal|0L
+expr_stmt|;
+name|currentAttemptStartTime_
 operator|=
 literal|0L
 expr_stmt|;
@@ -32221,6 +32294,29 @@ argument_list|(
 literal|5
 argument_list|,
 name|firstAttemptStartTime_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeInt64
+argument_list|(
+literal|6
+argument_list|,
+name|currentAttemptStartTime_
 argument_list|)
 expr_stmt|;
 block|}
@@ -32416,6 +32512,37 @@ argument_list|(
 literal|5
 argument_list|,
 name|firstAttemptStartTime_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeInt64Size
+argument_list|(
+literal|6
+argument_list|,
+name|currentAttemptStartTime_
 argument_list|)
 expr_stmt|;
 block|}
@@ -32760,6 +32887,41 @@ name|result
 operator|=
 name|result
 operator|&&
+operator|(
+name|hasCurrentAttemptStartTime
+argument_list|()
+operator|==
+name|other
+operator|.
+name|hasCurrentAttemptStartTime
+argument_list|()
+operator|)
+expr_stmt|;
+if|if
+condition|(
+name|hasCurrentAttemptStartTime
+argument_list|()
+condition|)
+block|{
+name|result
+operator|=
+name|result
+operator|&&
+operator|(
+name|getCurrentAttemptStartTime
+argument_list|()
+operator|==
+name|other
+operator|.
+name|getCurrentAttemptStartTime
+argument_list|()
+operator|)
+expr_stmt|;
+block|}
+name|result
+operator|=
+name|result
+operator|&&
 name|getUnknownFields
 argument_list|()
 operator|.
@@ -32964,6 +33126,37 @@ operator|+
 name|hashLong
 argument_list|(
 name|getFirstAttemptStartTime
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|hasCurrentAttemptStartTime
+argument_list|()
+condition|)
+block|{
+name|hash
+operator|=
+operator|(
+literal|37
+operator|*
+name|hash
+operator|)
+operator|+
+name|CURRENT_ATTEMPT_START_TIME_FIELD_NUMBER
+expr_stmt|;
+name|hash
+operator|=
+operator|(
+literal|53
+operator|*
+name|hash
+operator|)
+operator|+
+name|hashLong
+argument_list|(
+name|getCurrentAttemptStartTime
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -33890,6 +34083,19 @@ operator|~
 literal|0x00000010
 operator|)
 expr_stmt|;
+name|currentAttemptStartTime_
+operator|=
+literal|0L
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -34242,6 +34448,30 @@ name|firstAttemptStartTime_
 operator|=
 name|firstAttemptStartTime_
 expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|currentAttemptStartTime_
+operator|=
+name|currentAttemptStartTime_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -34465,6 +34695,23 @@ argument_list|(
 name|other
 operator|.
 name|getFirstAttemptStartTime
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasCurrentAttemptStartTime
+argument_list|()
+condition|)
+block|{
+name|setCurrentAttemptStartTime
+argument_list|(
+name|other
+operator|.
+name|getCurrentAttemptStartTime
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -35028,6 +35275,89 @@ literal|0x00000010
 operator|)
 expr_stmt|;
 name|firstAttemptStartTime_
+operator|=
+literal|0L
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional int64 current_attempt_start_time = 6;
+specifier|private
+name|long
+name|currentAttemptStartTime_
+decl_stmt|;
+comment|/**        *<code>optional int64 current_attempt_start_time = 6;</code>        */
+specifier|public
+name|boolean
+name|hasCurrentAttemptStartTime
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000020
+operator|)
+operator|==
+literal|0x00000020
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional int64 current_attempt_start_time = 6;</code>        */
+specifier|public
+name|long
+name|getCurrentAttemptStartTime
+parameter_list|()
+block|{
+return|return
+name|currentAttemptStartTime_
+return|;
+block|}
+comment|/**        *<code>optional int64 current_attempt_start_time = 6;</code>        */
+specifier|public
+name|Builder
+name|setCurrentAttemptStartTime
+parameter_list|(
+name|long
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000020
+expr_stmt|;
+name|currentAttemptStartTime_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional int64 current_attempt_start_time = 6;</code>        */
+specifier|public
+name|Builder
+name|clearCurrentAttemptStartTime
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000020
+operator|)
+expr_stmt|;
+name|currentAttemptStartTime_
 operator|=
 literal|0L
 expr_stmt|;
@@ -71812,7 +72142,7 @@ literal|"\030\007 \003(\0132\024.GroupInputSpecProto\022\032\n\022vertex_p"
 operator|+
 literal|"arallelism\030\010 \001(\005\022\027\n\017fragment_number\030\t \001("
 operator|+
-literal|"\005\022\026\n\016attempt_number\030\n \001(\005\"\300\001\n\023FragmentRu"
+literal|"\005\022\026\n\016attempt_number\030\n \001(\005\"\344\001\n\023FragmentRu"
 block|,
 literal|"ntimeInfo\022#\n\033num_self_and_upstream_tasks"
 operator|+
@@ -71822,71 +72152,71 @@ literal|"d_tasks\030\002 \001(\005\022\033\n\023within_dag_priority\030\003 \001
 operator|+
 literal|"(\005\022\026\n\016dag_start_time\030\004 \001(\003\022 \n\030first_atte"
 operator|+
-literal|"mpt_start_time\030\005 \001(\003\"\266\002\n\026SubmitWorkReque"
+literal|"mpt_start_time\030\005 \001(\003\022\"\n\032current_attempt_"
 operator|+
-literal|"stProto\022\033\n\023container_id_string\030\001 \001(\t\022\017\n\007"
+literal|"start_time\030\006 \001(\003\"\266\002\n\026SubmitWorkRequestPr"
 operator|+
-literal|"am_host\030\002 \001(\t\022\017\n\007am_port\030\003 \001(\005\022\030\n\020token_"
+literal|"oto\022\033\n\023container_id_string\030\001 \001(\t\022\017\n\007am_h"
 operator|+
-literal|"identifier\030\004 \001(\t\022\032\n\022credentials_binary\030\005"
+literal|"ost\030\002 \001(\t\022\017\n\007am_port\030\003 \001(\005\022\030\n\020token_iden"
 operator|+
-literal|" \001(\014\022\014\n\004user\030\006 \001(\t\022\035\n\025application_id_str"
+literal|"tifier\030\004 \001(\t\022\032\n\022credentials_binary\030\005 \001(\014"
 operator|+
-literal|"ing\030\007 \001(\t\022\032\n\022app_attempt_number\030\010 \001(\005\022)\n"
+literal|"\022\014\n\004user\030\006 \001(\t\022\035\n\025application_id_string\030"
 block|,
-literal|"\rfragment_spec\030\t \001(\0132\022.FragmentSpecProto"
+literal|"\007 \001(\t\022\032\n\022app_attempt_number\030\010 \001(\005\022)\n\rfra"
 operator|+
-literal|"\0223\n\025fragment_runtime_info\030\n \001(\0132\024.Fragme"
+literal|"gment_spec\030\t \001(\0132\022.FragmentSpecProto\0223\n\025"
 operator|+
-literal|"ntRuntimeInfo\"\031\n\027SubmitWorkResponseProto"
+literal|"fragment_runtime_info\030\n \001(\0132\024.FragmentRu"
 operator|+
-literal|"\"f\n\036SourceStateUpdatedRequestProto\022\020\n\010da"
+literal|"ntimeInfo\"\031\n\027SubmitWorkResponseProto\"f\n\036"
 operator|+
-literal|"g_name\030\001 \001(\t\022\020\n\010src_name\030\002 \001(\t\022 \n\005state\030"
+literal|"SourceStateUpdatedRequestProto\022\020\n\010dag_na"
 operator|+
-literal|"\003 \001(\0162\021.SourceStateProto\"!\n\037SourceStateU"
+literal|"me\030\001 \001(\t\022\020\n\010src_name\030\002 \001(\t\022 \n\005state\030\003 \001("
 operator|+
-literal|"pdatedResponseProto\"X\n\031QueryCompleteRequ"
+literal|"\0162\021.SourceStateProto\"!\n\037SourceStateUpdat"
 operator|+
-literal|"estProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030\002"
+literal|"edResponseProto\"X\n\031QueryCompleteRequestP"
 operator|+
-literal|" \001(\t\022\027\n\014delete_delay\030\003 \001(\003:\0010\"\034\n\032QueryCo"
+literal|"roto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030\002 \001(\t"
 operator|+
-literal|"mpleteResponseProto\"\245\001\n\035TerminateFragmen"
+literal|"\022\027\n\014delete_delay\030\003 \001(\003:\0010\"\034\n\032QueryComple"
 block|,
-literal|"tRequestProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_n"
+literal|"teResponseProto\"\245\001\n\035TerminateFragmentReq"
 operator|+
-literal|"ame\030\002 \001(\t\022\032\n\022dag_attempt_number\030\003 \001(\005\022\023\n"
+literal|"uestProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030"
 operator|+
-literal|"\013vertex_name\030\004 \001(\t\022\027\n\017fragment_number\030\005 "
+literal|"\002 \001(\t\022\032\n\022dag_attempt_number\030\003 \001(\005\022\023\n\013ver"
 operator|+
-literal|"\001(\005\022\026\n\016attempt_number\030\006 \001(\005\" \n\036Terminate"
+literal|"tex_name\030\004 \001(\t\022\027\n\017fragment_number\030\005 \001(\005\022"
 operator|+
-literal|"FragmentResponseProto*2\n\020SourceStateProt"
+literal|"\026\n\016attempt_number\030\006 \001(\005\" \n\036TerminateFrag"
 operator|+
-literal|"o\022\017\n\013S_SUCCEEDED\020\001\022\r\n\tS_RUNNING\020\0022\316\002\n\022Ll"
+literal|"mentResponseProto*2\n\020SourceStateProto\022\017\n"
 operator|+
-literal|"apDaemonProtocol\022?\n\nsubmitWork\022\027.SubmitW"
+literal|"\013S_SUCCEEDED\020\001\022\r\n\tS_RUNNING\020\0022\316\002\n\022LlapDa"
 operator|+
-literal|"orkRequestProto\032\030.SubmitWorkResponseProt"
+literal|"emonProtocol\022?\n\nsubmitWork\022\027.SubmitWorkR"
 operator|+
-literal|"o\022W\n\022sourceStateUpdated\022\037.SourceStateUpd"
+literal|"equestProto\032\030.SubmitWorkResponseProto\022W\n"
 operator|+
-literal|"atedRequestProto\032 .SourceStateUpdatedRes"
+literal|"\022sourceStateUpdated\022\037.SourceStateUpdated"
 block|,
-literal|"ponseProto\022H\n\rqueryComplete\022\032.QueryCompl"
+literal|"RequestProto\032 .SourceStateUpdatedRespons"
 operator|+
-literal|"eteRequestProto\032\033.QueryCompleteResponseP"
+literal|"eProto\022H\n\rqueryComplete\022\032.QueryCompleteR"
 operator|+
-literal|"roto\022T\n\021terminateFragment\022\036.TerminateFra"
+literal|"equestProto\032\033.QueryCompleteResponseProto"
 operator|+
-literal|"gmentRequestProto\032\037.TerminateFragmentRes"
+literal|"\022T\n\021terminateFragment\022\036.TerminateFragmen"
 operator|+
-literal|"ponseProtoBH\n&org.apache.hadoop.hive.lla"
+literal|"tRequestProto\032\037.TerminateFragmentRespons"
 operator|+
-literal|"p.daemon.rpcB\030LlapDaemonProtocolProtos\210\001"
+literal|"eProtoBH\n&org.apache.hadoop.hive.llap.da"
 operator|+
-literal|"\001\240\001\001"
+literal|"emon.rpcB\030LlapDaemonProtocolProtos\210\001\001\240\001\001"
 block|}
 decl_stmt|;
 name|com
@@ -72219,6 +72549,8 @@ block|,
 literal|"DagStartTime"
 block|,
 literal|"FirstAttemptStartTime"
+block|,
+literal|"CurrentAttemptStartTime"
 block|, }
 argument_list|)
 expr_stmt|;

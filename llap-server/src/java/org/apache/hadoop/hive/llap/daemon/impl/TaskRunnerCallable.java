@@ -2674,6 +2674,21 @@ name|getFirstAttemptStartTime
 argument_list|()
 return|;
 block|}
+specifier|public
+name|long
+name|getCurrentAttemptStartTime
+parameter_list|()
+block|{
+return|return
+name|request
+operator|.
+name|getFragmentRuntimeInfo
+argument_list|()
+operator|.
+name|getCurrentAttemptStartTime
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

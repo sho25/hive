@@ -837,6 +837,16 @@ name|fragmentNumber
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|builder
+operator|.
+name|setCurrentAttemptStartTime
+argument_list|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|builder
 operator|.
