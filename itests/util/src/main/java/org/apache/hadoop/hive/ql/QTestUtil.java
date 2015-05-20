@@ -4491,15 +4491,6 @@ expr_stmt|;
 name|clearKeysCreatedInTests
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|clusterType
-operator|!=
-name|MiniClusterType
-operator|.
-name|encrypted
-condition|)
-block|{
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf
@@ -4526,7 +4517,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 comment|// propagate new conf to meta store
-block|}
 name|setup
 operator|.
 name|preTest
