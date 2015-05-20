@@ -661,6 +661,25 @@ name|WaitQueueWorkerCallback
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"TaskExecutorService started with parameters: "
+operator|+
+literal|"numExecutors="
+operator|+
+name|numExecutors
+operator|+
+literal|", waitQueueSize="
+operator|+
+name|waitQueueSize
+operator|+
+literal|", enablePreemption="
+operator|+
+name|enablePreemption
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Worker that takes tasks from wait queue and schedule it for execution.    */
 specifier|private
@@ -726,15 +745,44 @@ init|(
 name|waitLock
 init|)
 block|{
-comment|// KKK Is this a tight loop when there's only finishable tasks available ?
+name|boolean
+name|shouldWait
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
-operator|!
 name|task
 operator|.
 name|canFinish
 argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|numSlotsAvailable
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|0
 operator|&&
+name|preemptionQueue
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|shouldWait
+operator|=
+literal|true
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+if|if
+condition|(
 name|numSlotsAvailable
 operator|.
 name|get
@@ -743,13 +791,24 @@ operator|==
 literal|0
 condition|)
 block|{
+name|shouldWait
+operator|=
+literal|true
+expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|shouldWait
+condition|)
+block|{
+comment|// Another task at a higher priority may have come in during the wait. Lookup the
+comment|// queue again to pick up the task at the highest priority.
 name|waitLock
 operator|.
 name|wait
 argument_list|()
 expr_stmt|;
-comment|// Another task at a higher priority may have come in during the wait. Lookup the
-comment|// queue again to pick up the task at the highest priority.
 continue|continue;
 block|}
 block|}
@@ -858,6 +917,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Wait queue scheduler worker exited with failure!"
+argument_list|,
+name|t
 argument_list|)
 expr_stmt|;
 block|}
@@ -1145,9 +1206,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Invoking kill task for {} due to pre-emption."
+literal|"Invoking kill task for {} due to pre-emption to run {}"
 argument_list|,
 name|pRequest
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|,
+name|task
 operator|.
 name|getRequestId
 argument_list|()

@@ -500,6 +500,7 @@ name|AMReporter
 extends|extends
 name|AbstractService
 block|{
+comment|// TODO In case of a failure to heartbeat, tasks for the specific DAG should ideally be KILLED
 comment|/*   registrations and un-registrations will happen as and when tasks are submitted or are removed.   reference counting is likely required.    A connection needs to be established to each app master.    Ignore exceptions when communicating with the AM.   At a later point, report back saying the AM is dead so that tasks can be removed from the running queue.    Use a cachedThreadPool so that a few AMs going down does not affect other AppMasters.    Race: When a task completes - it sends out it's message via the regular TaskReporter. The AM after this may run another DAG,   or may die. This may need to be consolidated with the LlapTaskReporter. Try ensuring there's no race between the two.    Single thread which sends heartbeats to AppMasters as events drain off a queue.    */
 specifier|private
 specifier|static
