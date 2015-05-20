@@ -952,7 +952,8 @@ specifier|private
 name|LlapDaemonExecutorMetrics
 name|metrics
 decl_stmt|;
-specifier|protected
+specifier|private
+specifier|final
 name|String
 name|requestId
 decl_stmt|;
@@ -2161,6 +2162,23 @@ parameter_list|()
 block|{
 return|return
 name|requestId
+operator|+
+literal|" {canFinish: "
+operator|+
+name|canFinish
+argument_list|()
+operator|+
+literal|" vertexParallelism: "
+operator|+
+name|getVertexParallelism
+argument_list|()
+operator|+
+literal|" firstAttemptStartTime: "
+operator|+
+name|getFirstAttemptStartTime
+argument_list|()
+operator|+
+literal|"}"
 return|;
 block|}
 annotation|@
@@ -2835,6 +2853,21 @@ name|getFragmentSpec
 argument_list|()
 operator|.
 name|getTaskAttemptIdString
+argument_list|()
+return|;
+block|}
+specifier|public
+name|long
+name|getFirstAttemptStartTime
+parameter_list|()
+block|{
+return|return
+name|request
+operator|.
+name|getFragmentRuntimeInfo
+argument_list|()
+operator|.
+name|getFirstAttemptStartTime
 argument_list|()
 return|;
 block|}

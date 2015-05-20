@@ -560,6 +560,9 @@ name|fragmentNumber
 parameter_list|,
 name|int
 name|parallelism
+parameter_list|,
+name|int
+name|attemptStartTime
 parameter_list|)
 block|{
 name|ApplicationId
@@ -723,6 +726,24 @@ argument_list|(
 literal|"MockToken_1"
 argument_list|)
 operator|.
+name|setFragmentRuntimeInfo
+argument_list|(
+name|LlapDaemonProtocolProtos
+operator|.
+name|FragmentRuntimeInfo
+operator|.
+name|newBuilder
+argument_list|()
+operator|.
+name|setFirstAttemptStartTime
+argument_list|(
+name|attemptStartTime
+argument_list|)
+operator|.
+name|build
+argument_list|()
+argument_list|)
+operator|.
 name|build
 argument_list|()
 return|;
@@ -747,6 +768,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|false
@@ -765,6 +788,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|false
@@ -783,6 +808,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|false
@@ -801,6 +828,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|false
@@ -819,6 +848,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|false
@@ -984,6 +1015,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|true
@@ -1001,6 +1034,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|true
@@ -1018,6 +1053,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|true
@@ -1035,6 +1072,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|true
@@ -1052,6 +1091,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|true
@@ -1216,6 +1257,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|1
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|true
@@ -1233,6 +1276,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|1
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|false
@@ -1250,6 +1295,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|1
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|true
@@ -1267,6 +1314,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|1
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|false
@@ -1284,6 +1333,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|true
@@ -1355,10 +1406,9 @@ name|r3
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// same priority with r1
 name|assertEquals
 argument_list|(
-name|r3
+name|r1
 argument_list|,
 name|queue
 operator|.
@@ -1366,7 +1416,6 @@ name|peek
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// same priority with r2
 name|assertNull
 argument_list|(
 name|queue
@@ -1379,7 +1428,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|r3
+name|r1
 argument_list|,
 name|queue
 operator|.
@@ -1390,7 +1439,7 @@ expr_stmt|;
 comment|// offer accepted and r2 gets evicted
 name|assertEquals
 argument_list|(
-name|r2
+name|r4
 argument_list|,
 name|queue
 operator|.
@@ -1398,16 +1447,6 @@ name|offer
 argument_list|(
 name|r5
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|r3
-argument_list|,
-name|queue
-operator|.
-name|take
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1422,6 +1461,16 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+name|r3
+argument_list|,
+name|queue
+operator|.
+name|take
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
 name|r5
 argument_list|,
 name|queue
@@ -1432,7 +1481,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|r4
+name|r2
 argument_list|,
 name|queue
 operator|.
@@ -1450,6 +1499,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|true
@@ -1467,6 +1518,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|false
@@ -1484,6 +1537,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|true
@@ -1501,6 +1556,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|false
@@ -1518,6 +1575,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|true
@@ -1682,6 +1741,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|true
@@ -1699,6 +1760,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|false
@@ -1716,6 +1779,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|false
@@ -1733,6 +1798,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|false
@@ -1750,6 +1817,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|true
@@ -1914,6 +1983,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|false
@@ -1931,6 +2002,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|true
@@ -1948,6 +2021,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|true
@@ -1965,6 +2040,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|true
@@ -1982,6 +2059,8 @@ argument_list|(
 literal|5
 argument_list|,
 literal|10
+argument_list|,
+literal|500
 argument_list|)
 argument_list|,
 literal|true
@@ -2157,6 +2236,8 @@ argument_list|(
 literal|1
 argument_list|,
 literal|2
+argument_list|,
+literal|100
 argument_list|)
 argument_list|,
 literal|false
@@ -2175,6 +2256,8 @@ argument_list|(
 literal|2
 argument_list|,
 literal|4
+argument_list|,
+literal|200
 argument_list|)
 argument_list|,
 literal|false
@@ -2193,6 +2276,8 @@ argument_list|(
 literal|3
 argument_list|,
 literal|6
+argument_list|,
+literal|300
 argument_list|)
 argument_list|,
 literal|false
@@ -2211,6 +2296,8 @@ argument_list|(
 literal|4
 argument_list|,
 literal|8
+argument_list|,
+literal|400
 argument_list|)
 argument_list|,
 literal|false

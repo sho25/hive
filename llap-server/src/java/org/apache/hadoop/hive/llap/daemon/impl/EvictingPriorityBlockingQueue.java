@@ -218,6 +218,21 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+specifier|synchronized
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|deque
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 
