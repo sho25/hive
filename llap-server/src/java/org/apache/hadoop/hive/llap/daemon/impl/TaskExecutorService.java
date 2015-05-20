@@ -734,7 +734,7 @@ name|task
 operator|.
 name|canFinish
 argument_list|()
-operator|&&
+operator|||
 name|numSlotsAvailable
 operator|.
 name|get
