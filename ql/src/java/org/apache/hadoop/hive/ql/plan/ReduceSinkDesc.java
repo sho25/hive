@@ -51,18 +51,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -391,11 +379,11 @@ operator|.
 name|Operation
 name|writeType
 decl_stmt|;
-comment|// whether we'll enforce the sort order of the RS
+comment|// whether this RS is deduplicated
 specifier|private
 specifier|transient
 name|boolean
-name|enforceSort
+name|isDeduplicated
 init|=
 literal|false
 decl_stmt|;
@@ -838,9 +826,9 @@ argument_list|()
 expr_stmt|;
 name|desc
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
-name|enforceSort
+name|isDeduplicated
 argument_list|)
 expr_stmt|;
 name|desc
@@ -1927,16 +1915,16 @@ return|;
 block|}
 specifier|public
 name|boolean
-name|isEnforceSort
+name|isDeduplicated
 parameter_list|()
 block|{
 return|return
-name|enforceSort
+name|isDeduplicated
 return|;
 block|}
 specifier|public
 name|void
-name|setEnforceSort
+name|setDeduplicated
 parameter_list|(
 name|boolean
 name|isDeduplicated
@@ -1944,7 +1932,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|enforceSort
+name|isDeduplicated
 operator|=
 name|isDeduplicated
 expr_stmt|;
