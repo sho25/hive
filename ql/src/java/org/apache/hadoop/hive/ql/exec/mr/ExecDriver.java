@@ -3302,15 +3302,6 @@ name|killJob
 argument_list|()
 expr_stmt|;
 block|}
-name|HadoopJobExecHelper
-operator|.
-name|runningJobs
-operator|.
-name|remove
-argument_list|(
-name|rj
-argument_list|)
-expr_stmt|;
 name|jobID
 operator|=
 name|rj
@@ -3328,7 +3319,27 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{       }
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|HadoopJobExecHelper
+operator|.
+name|runningJobs
+operator|.
+name|remove
+argument_list|(
+name|rj
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// get the list of Dynamic partition paths
 try|try
