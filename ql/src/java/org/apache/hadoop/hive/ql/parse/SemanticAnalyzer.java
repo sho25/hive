@@ -7773,11 +7773,11 @@ name|String
 name|cteName
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|qId
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 if|if

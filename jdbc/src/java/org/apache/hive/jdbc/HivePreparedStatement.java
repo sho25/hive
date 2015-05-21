@@ -497,11 +497,11 @@ return|return
 name|sql
 return|;
 block|}
-name|StringBuffer
+name|StringBuilder
 name|newSql
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 name|sql
 argument_list|)

@@ -3119,11 +3119,11 @@ name|DAGClient
 name|dagClient
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|reportBuffer
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|int
@@ -4170,11 +4170,11 @@ argument_list|>
 name|progressMap
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|reportBuffer
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|SortedSet
