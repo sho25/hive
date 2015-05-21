@@ -2980,7 +2980,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)
@@ -3109,7 +3109,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)
@@ -3238,7 +3238,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)
@@ -3379,7 +3379,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)
@@ -3473,7 +3473,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)
@@ -3577,7 +3577,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|setEnforceSort
+name|setDeduplicated
 argument_list|(
 literal|true
 argument_list|)

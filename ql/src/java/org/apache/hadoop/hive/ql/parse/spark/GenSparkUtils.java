@@ -2502,7 +2502,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|isEnforceSort
+name|isDeduplicated
 argument_list|()
 condition|)
 block|{
