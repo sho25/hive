@@ -877,7 +877,36 @@ argument_list|,
 name|sourceState
 argument_list|)
 expr_stmt|;
-comment|// TODO HIVE-10758 source completion notifications
+name|QueryInfo
+name|queryInfo
+init|=
+name|queryInfoMap
+operator|.
+name|get
+argument_list|(
+name|dagName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|queryInfo
+operator|!=
+literal|null
+condition|)
+block|{
+name|queryInfo
+operator|.
+name|sourceStateUpdated
+argument_list|(
+name|sourceName
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Could be null if there's a race between the threads processing requests, with a
+comment|// dag finish processed earlier.
+block|}
 block|}
 specifier|private
 name|ReadWriteLock

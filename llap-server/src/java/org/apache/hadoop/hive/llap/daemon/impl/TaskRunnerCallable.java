@@ -2056,6 +2056,15 @@ name|requestId
 return|;
 block|}
 specifier|public
+name|QueryFragmentInfo
+name|getFragmentInfo
+parameter_list|()
+block|{
+return|return
+name|fragmentInfo
+return|;
+block|}
+specifier|public
 name|TaskRunnerCallback
 name|getCallback
 parameter_list|()
