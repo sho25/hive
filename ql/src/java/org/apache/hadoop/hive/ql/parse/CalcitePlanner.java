@@ -3057,6 +3057,31 @@ operator|=
 name|getOptimizedHiveOPDag
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"CBO Succeeded; optimized logical plan."
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan optimized by CBO."
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ctx
+operator|.
+name|setCboSucceeded
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
