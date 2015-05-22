@@ -25428,7 +25428,7 @@ name|String
 name|dest
 parameter_list|,
 name|RowResolver
-name|out_rwsch
+name|outputRR
 parameter_list|,
 name|RowResolver
 name|inputRR
@@ -25629,7 +25629,7 @@ name|put
 argument_list|(
 name|targetCol
 argument_list|,
-name|out_rwsch
+name|outputRR
 operator|.
 name|getColumnInfos
 argument_list|()
@@ -25986,9 +25986,9 @@ specifier|final
 name|String
 name|tableAlias
 init|=
-literal|""
+literal|null
 decl_stmt|;
-comment|//is this OK? this column doesn't come from any table
+comment|//this column doesn't come from any table
 name|ColumnInfo
 name|colInfo
 init|=
@@ -26017,6 +26017,23 @@ argument_list|(
 name|colInfo
 argument_list|)
 expr_stmt|;
+name|outputRR
+operator|.
+name|addMappingOnly
+argument_list|(
+name|colInfo
+operator|.
+name|getTabAlias
+argument_list|()
+argument_list|,
+name|colInfo
+operator|.
+name|getInternalName
+argument_list|()
+argument_list|,
+name|colInfo
+argument_list|)
+expr_stmt|;
 block|}
 name|colListPos
 operator|++
@@ -26034,7 +26051,7 @@ argument_list|(
 name|new_col_list
 argument_list|)
 expr_stmt|;
-name|out_rwsch
+name|outputRR
 operator|.
 name|setRowSchema
 argument_list|(
