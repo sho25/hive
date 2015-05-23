@@ -334,7 +334,7 @@ block|{
 return|return
 name|Category
 operator|.
-name|PRIMITIVE
+name|STRUCT
 return|;
 block|}
 annotation|@
