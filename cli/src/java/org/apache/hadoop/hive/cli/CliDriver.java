@@ -2214,13 +2214,6 @@ name|isBlank
 argument_list|(
 name|command
 argument_list|)
-operator|||
-name|command
-operator|.
-name|startsWith
-argument_list|(
-literal|"--"
-argument_list|)
 condition|)
 block|{
 continue|continue;
