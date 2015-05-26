@@ -1082,7 +1082,9 @@ name|registry
 operator|=
 operator|new
 name|LlapRegistryService
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private

@@ -1017,7 +1017,9 @@ name|registry
 init|=
 operator|new
 name|LlapRegistryService
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|volatile
