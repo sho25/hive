@@ -3612,7 +3612,7 @@ literal|524288
 argument_list|,
 literal|"For hybrid grace"
 operator|+
-literal|" hash join, the minimum write buffer size used by optimized hashtable. Default is 512 KB."
+literal|"Hash join, the minimum write buffer size used by optimized hashtable. Default is 512 KB."
 argument_list|)
 block|,
 name|HIVEHYBRIDGRACEHASHJOINMINNUMPARTITIONS
@@ -3623,14 +3623,14 @@ literal|16
 argument_list|,
 literal|"For"
 operator|+
-literal|" hybrid grace hash join, the minimum number of partitions to create."
+literal|"Hybrid grace hash join, the minimum number of partitions to create."
 argument_list|)
 block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
 argument_list|,
-literal|10
+literal|8
 operator|*
 literal|1024
 operator|*
