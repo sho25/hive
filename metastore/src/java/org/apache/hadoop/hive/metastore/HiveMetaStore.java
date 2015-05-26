@@ -10131,8 +10131,13 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|// tblPath will be null when tbl is a view. We skip the following if block in that case.
 if|if
 condition|(
+name|tblPath
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|ifPurge
 condition|)
