@@ -257,9 +257,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|ObjectArrayWritable
 import|;
 end_import
 
@@ -376,7 +380,7 @@ name|DataWritableReadSupport
 extends|extends
 name|ReadSupport
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 block|{
 specifier|public
@@ -1208,7 +1212,7 @@ name|Override
 specifier|public
 name|RecordMaterializer
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|prepareForRead
 parameter_list|(

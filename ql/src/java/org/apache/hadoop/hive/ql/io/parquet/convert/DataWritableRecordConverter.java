@@ -53,9 +53,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|ObjectArrayWritable
 import|;
 end_import
 
@@ -124,7 +128,7 @@ name|DataWritableRecordConverter
 extends|extends
 name|RecordMaterializer
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 block|{
 specifier|private
@@ -179,7 +183,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|ArrayWritable
+name|ObjectArrayWritable
 name|getCurrentRecord
 parameter_list|()
 block|{

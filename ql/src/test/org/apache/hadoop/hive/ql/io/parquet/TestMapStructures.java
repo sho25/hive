@@ -81,9 +81,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|ObjectArrayWritable
 import|;
 end_import
 
@@ -480,7 +484,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -521,7 +525,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -902,7 +906,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -954,7 +958,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -1409,7 +1413,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -1457,7 +1461,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -2012,7 +2016,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -2073,7 +2077,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -2409,7 +2413,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -2444,7 +2448,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -2780,7 +2784,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -2815,7 +2819,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=
@@ -3430,7 +3434,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
-name|ArrayWritable
+name|ObjectArrayWritable
 name|expected
 init|=
 name|record
@@ -3512,7 +3516,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|ArrayWritable
+name|ObjectArrayWritable
 argument_list|>
 name|records
 init|=

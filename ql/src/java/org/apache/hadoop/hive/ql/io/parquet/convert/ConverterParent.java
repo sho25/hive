@@ -25,20 +25,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -57,7 +43,7 @@ parameter_list|(
 name|int
 name|index
 parameter_list|,
-name|Writable
+name|Object
 name|value
 parameter_list|)
 function_decl|;
