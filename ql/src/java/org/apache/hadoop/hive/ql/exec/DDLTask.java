@@ -27660,6 +27660,14 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Make qualified location for a database .    *    * @param database    *          Database.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DATABASE_PATH_SUFFIX
+init|=
+literal|".db"
+decl_stmt|;
 specifier|private
 name|void
 name|makeLocationQualified
@@ -27737,7 +27745,7 @@ operator|.
 name|toLowerCase
 argument_list|()
 operator|+
-literal|".db"
+name|DATABASE_PATH_SUFFIX
 argument_list|)
 argument_list|)
 argument_list|)

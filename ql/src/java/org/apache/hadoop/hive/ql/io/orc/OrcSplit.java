@@ -249,7 +249,6 @@ name|WriterVersion
 name|writerVersion
 decl_stmt|;
 specifier|private
-specifier|transient
 name|Long
 name|fileId
 decl_stmt|;

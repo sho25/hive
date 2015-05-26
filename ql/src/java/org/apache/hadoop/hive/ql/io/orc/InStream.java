@@ -169,6 +169,24 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|counters
+operator|.
+name|LowLevelCacheCounters
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|io
 operator|.
 name|api
@@ -3623,7 +3641,7 @@ name|int
 name|originalCbIndex
 decl_stmt|;
 block|}
-comment|/**    * Uncompresses part of the stream. RGs can overlap, so we cannot just go and decompress    * and remove what we have returned. We will keep iterator as a "hint" point.    * @param fileName File name for cache keys.    * @param baseOffset Absolute offset of boundaries and ranges relative to file, for cache keys.    * @param start Ordered ranges containing file data. Helpful if they point close to cOffset.    * @param cOffset Start offset to decompress.    * @param endCOffset End offset to decompress; estimate, partial CBs will be ignored.    * @param zcr Zero-copy reader, if any, to release discarded buffers.    * @param codec Compression codec.    * @param bufferSize Compressed buffer (CB) size.    * @param cache Low-level cache to cache new data.    * @param streamBuffer Stream buffer, to add the results.    * @param unlockUntilCOffset The offset until which the buffers can be unlocked in cache, as    *                           they will not be used in future calls (see the class comment in    *                           EncodedReaderImpl about refcounts).    * @return Last buffer cached during decomrpession. Cache buffers are never removed from    *         the master list, so they are safe to keep as iterators for various streams.    */
+comment|/**    * Uncompresses part of the stream. RGs can overlap, so we cannot just go and decompress    * and remove what we have returned. We will keep iterator as a "hint" point.    * @param fileName File name for cache keys.    * @param baseOffset Absolute offset of boundaries and ranges relative to file, for cache keys.    * @param start Ordered ranges containing file data. Helpful if they point close to cOffset.    * @param cOffset Start offset to decompress.    * @param endCOffset End offset to decompress; estimate, partial CBs will be ignored.    * @param zcr Zero-copy reader, if any, to release discarded buffers.    * @param codec Compression codec.    * @param bufferSize Compressed buffer (CB) size.    * @param cache Low-level cache to cache new data.    * @param streamBuffer Stream buffer, to add the results.    * @param unlockUntilCOffset The offset until which the buffers can be unlocked in cache, as    *                           they will not be used in future calls (see the class comment in    *                           EncodedReaderImpl about refcounts).    * @param qfCounters    * @return Last buffer cached during decomrpession. Cache buffers are never removed from    *         the master list, so they are safe to keep as iterators for various streams.    */
 comment|// TODO: move to EncodedReaderImpl
 comment|// TODO: this method has too many arguments... perhaps we can clean it up
 specifier|public
@@ -3666,6 +3684,9 @@ name|unlockUntilCOffset
 parameter_list|,
 name|long
 name|streamOffset
+parameter_list|,
+name|LowLevelCacheCounters
+name|qfCounters
 parameter_list|)
 throws|throws
 name|IOException
@@ -4079,6 +4100,8 @@ argument_list|,
 name|Priority
 operator|.
 name|NORMAL
+argument_list|,
+name|qfCounters
 argument_list|)
 decl_stmt|;
 name|processCacheCollisions
@@ -4678,7 +4701,7 @@ return|return
 name|lastUncompressed
 return|;
 block|}
-comment|/**    * To achieve some sort of consistent cache boundaries, we will cache streams deterministically;    * in segments starting w/stream start, and going for either stream size or maximum allocation.    * If we are not reading the entire segment's worth of data, then we will not cache the partial    * RGs; the breakage of cache assumptions (no interleaving blocks, etc.) is way too much PITA    * to handle just for this case.    * We could avoid copy in non-zcr case and manage the buffer that was not allocated by our    * allocator. Uncompressed case is not mainline though so let's not complicate it.    */
+comment|/**    * To achieve some sort of consistent cache boundaries, we will cache streams deterministically;    * in segments starting w/stream start, and going for either stream size or maximum allocation.    * If we are not reading the entire segment's worth of data, then we will not cache the partial    * RGs; the breakage of cache assumptions (no interleaving blocks, etc.) is way too much PITA    * to handle just for this case.    * We could avoid copy in non-zcr case and manage the buffer that was not allocated by our    * allocator. Uncompressed case is not mainline though so let's not complicate it.    * @param qfCounters    */
 specifier|public
 specifier|static
 name|DiskRangeList
@@ -4704,6 +4727,9 @@ name|zcr
 parameter_list|,
 name|LowLevelCache
 name|cache
+parameter_list|,
+name|LowLevelCacheCounters
+name|qfCounters
 parameter_list|)
 throws|throws
 name|IOException
@@ -5536,6 +5562,8 @@ argument_list|,
 name|Priority
 operator|.
 name|NORMAL
+argument_list|,
+name|qfCounters
 argument_list|)
 decl_stmt|;
 name|processCacheCollisions

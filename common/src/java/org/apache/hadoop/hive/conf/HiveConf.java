@@ -8601,6 +8601,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|LLAP_ORC_ENABLE_TIME_COUNTERS
+argument_list|(
+literal|"hive.llap.io.orc.time.counters"
+argument_list|,
+literal|true
+argument_list|,
+literal|""
+argument_list|)
+block|,
 name|LLAP_AUTO_ALLOW_UBER
 argument_list|(
 literal|"hive.llap.auto.allow.uber"

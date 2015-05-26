@@ -87,9 +87,8 @@ name|isTraceRangesEnabled
 parameter_list|()
 block|{
 return|return
-literal|true
+literal|false
 return|;
-comment|// TODO: temporary, should be hardcoded false
 block|}
 specifier|public
 specifier|static
