@@ -1364,9 +1364,12 @@ name|pos
 operator|++
 index|]
 operator|=
+name|record
+argument_list|(
 name|createRecord
 argument_list|(
 name|elementType
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1426,9 +1429,12 @@ index|]
 operator|=
 name|record
 argument_list|(
+name|record
+argument_list|(
 name|createRecord
 argument_list|(
 name|keyValueType
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;

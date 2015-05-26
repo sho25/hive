@@ -510,6 +510,10 @@ name|set
 argument_list|(
 name|index
 argument_list|,
+name|HiveGroupConverter
+operator|.
+name|wrapList
+argument_list|(
 operator|new
 name|ArrayWritable
 argument_list|(
@@ -529,6 +533,7 @@ operator|.
 name|size
 argument_list|()
 index|]
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -766,6 +771,8 @@ name|set
 argument_list|(
 name|index
 argument_list|,
+name|wrapList
+argument_list|(
 operator|new
 name|ArrayWritable
 argument_list|(
@@ -785,6 +792,7 @@ operator|.
 name|size
 argument_list|()
 index|]
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)

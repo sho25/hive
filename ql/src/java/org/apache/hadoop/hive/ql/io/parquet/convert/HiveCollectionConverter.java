@@ -59,6 +59,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -392,6 +402,8 @@ name|set
 argument_list|(
 name|index
 argument_list|,
+name|wrapList
+argument_list|(
 operator|new
 name|ArrayWritable
 argument_list|(
@@ -406,8 +418,12 @@ argument_list|(
 operator|new
 name|Writable
 index|[
-literal|0
+name|list
+operator|.
+name|size
+argument_list|()
 index|]
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)

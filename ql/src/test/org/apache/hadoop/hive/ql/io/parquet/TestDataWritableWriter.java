@@ -1793,6 +1793,8 @@ name|hiveRecord
 init|=
 name|createGroup
 argument_list|(
+name|createGroup
+argument_list|(
 name|createArray
 argument_list|(
 name|createInt
@@ -1806,6 +1808,7 @@ argument_list|,
 name|createInt
 argument_list|(
 literal|2
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1970,6 +1973,8 @@ name|createGroup
 argument_list|(
 name|createArray
 argument_list|(
+name|createArray
+argument_list|(
 name|createString
 argument_list|(
 literal|"key1"
@@ -2003,6 +2008,7 @@ argument_list|)
 argument_list|,
 name|createNull
 argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -2226,7 +2232,11 @@ name|hiveRecord
 init|=
 name|createGroup
 argument_list|(
+name|createGroup
+argument_list|(
 name|createArray
+argument_list|(
+name|createGroup
 argument_list|(
 name|createArray
 argument_list|(
@@ -2238,6 +2248,8 @@ argument_list|,
 name|createInt
 argument_list|(
 literal|2
+argument_list|)
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)

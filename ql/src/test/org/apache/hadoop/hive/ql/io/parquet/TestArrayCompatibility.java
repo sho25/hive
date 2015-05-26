@@ -357,6 +357,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 operator|new
@@ -375,6 +377,7 @@ operator|new
 name|IntWritable
 argument_list|(
 literal|36
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -641,6 +644,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -670,6 +675,7 @@ operator|new
 name|FloatWritable
 argument_list|(
 literal|2.0f
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -861,6 +867,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 operator|new
@@ -879,6 +887,7 @@ operator|new
 name|IntWritable
 argument_list|(
 literal|36
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1130,6 +1139,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -1147,6 +1158,7 @@ operator|new
 name|LongWritable
 argument_list|(
 literal|2345L
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1338,6 +1350,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 operator|new
@@ -1356,6 +1370,7 @@ operator|new
 name|IntWritable
 argument_list|(
 literal|36
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1607,6 +1622,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -1624,6 +1641,7 @@ operator|new
 name|LongWritable
 argument_list|(
 literal|2345L
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1876,6 +1894,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 operator|new
@@ -1888,6 +1908,7 @@ operator|new
 name|LongWritable
 argument_list|(
 literal|2345L
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2197,6 +2218,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -2226,6 +2249,7 @@ operator|new
 name|DoubleWritable
 argument_list|(
 literal|180.0
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -2619,6 +2643,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -2650,6 +2676,7 @@ operator|new
 name|DoubleWritable
 argument_list|(
 literal|180.0
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -3030,6 +3057,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -3059,6 +3088,7 @@ operator|new
 name|DoubleWritable
 argument_list|(
 literal|0.0
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -3440,6 +3470,8 @@ decl_stmt|;
 name|ArrayWritable
 name|expected
 init|=
+name|record
+argument_list|(
 name|list
 argument_list|(
 name|record
@@ -3469,6 +3501,7 @@ operator|new
 name|DoubleWritable
 argument_list|(
 literal|0.0
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
