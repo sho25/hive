@@ -149,13 +149,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
-name|ObjectArrayWritable
+name|ArrayWritable
 import|;
 end_import
 
@@ -224,7 +220,7 @@ name|FileInputFormat
 argument_list|<
 name|NullWritable
 argument_list|,
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 block|{
 specifier|private
@@ -246,7 +242,7 @@ specifier|private
 specifier|final
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|realInput
 decl_stmt|;
@@ -265,7 +261,7 @@ argument_list|(
 operator|new
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 argument_list|(
 name|DataWritableReadSupport
@@ -281,7 +277,7 @@ parameter_list|(
 specifier|final
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|inputFormat
 parameter_list|)
@@ -325,7 +321,7 @@ name|RecordReader
 argument_list|<
 name|NullWritable
 argument_list|,
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|getRecordReader
 parameter_list|(
@@ -436,7 +432,7 @@ name|RecordReader
 argument_list|<
 name|NullWritable
 argument_list|,
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 operator|)
 operator|new

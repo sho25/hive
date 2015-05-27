@@ -207,13 +207,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
-name|ObjectArrayWritable
+name|ArrayWritable
 import|;
 end_import
 
@@ -228,6 +224,20 @@ operator|.
 name|io
 operator|.
 name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Writable
 import|;
 end_import
 
@@ -396,7 +406,7 @@ name|VectorizedRowBatchCtx
 name|rbCtx
 decl_stmt|;
 specifier|private
-name|ObjectArrayWritable
+name|ArrayWritable
 name|internalValues
 decl_stmt|;
 specifier|private
@@ -413,7 +423,7 @@ name|VectorizedParquetRecordReader
 parameter_list|(
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|realInput
 parameter_list|,
@@ -675,9 +685,9 @@ literal|true
 expr_stmt|;
 break|break;
 block|}
-name|Object
+name|Writable
 index|[]
-name|values
+name|writables
 init|=
 name|internalValues
 operator|.
@@ -702,7 +712,7 @@ name|buildAssigners
 argument_list|(
 name|outputBatch
 argument_list|,
-name|values
+name|writables
 argument_list|)
 expr_stmt|;
 block|}
@@ -715,7 +725,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|values
+name|writables
 operator|.
 name|length
 condition|;
@@ -730,7 +740,7 @@ index|]
 operator|.
 name|assignObjectValue
 argument_list|(
-name|values
+name|writables
 index|[
 name|i
 index|]
@@ -775,7 +785,7 @@ specifier|private
 specifier|final
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|realInput
 decl_stmt|;
@@ -784,7 +794,7 @@ name|VectorizedParquetInputFormat
 parameter_list|(
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|realInput
 parameter_list|)

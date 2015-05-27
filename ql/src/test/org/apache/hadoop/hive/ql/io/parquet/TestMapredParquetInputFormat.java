@@ -41,13 +41,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
-name|ObjectArrayWritable
+name|ArrayWritable
 import|;
 end_import
 
@@ -106,7 +102,7 @@ argument_list|(
 operator|(
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 operator|)
 name|mock

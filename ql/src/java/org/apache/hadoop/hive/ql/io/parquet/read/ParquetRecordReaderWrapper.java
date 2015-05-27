@@ -295,6 +295,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|ArrayWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|NullWritable
 import|;
 end_import
@@ -307,13 +321,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|io
 operator|.
-name|ObjectArrayWritable
+name|Writable
 import|;
 end_import
 
@@ -588,7 +598,7 @@ name|RecordReader
 argument_list|<
 name|NullWritable
 argument_list|,
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 block|{
 specifier|public
@@ -625,14 +635,14 @@ name|RecordReader
 argument_list|<
 name|Void
 argument_list|,
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|realReader
 decl_stmt|;
 comment|// expect readReader return same Key& Value objects (common case)
 comment|// this avoids extra serialization& deserialization of these objects
 specifier|private
-name|ObjectArrayWritable
+name|ArrayWritable
 name|valueObj
 init|=
 literal|null
@@ -681,7 +691,7 @@ parameter_list|(
 specifier|final
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|newInputFormat
 parameter_list|,
@@ -724,7 +734,7 @@ parameter_list|(
 specifier|final
 name|ParquetInputFormat
 argument_list|<
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|>
 name|newInputFormat
 parameter_list|,
@@ -967,10 +977,14 @@ comment|// Should initialize the value for createValue
 name|valueObj
 operator|=
 operator|new
-name|ObjectArrayWritable
+name|ArrayWritable
 argument_list|(
+name|Writable
+operator|.
+name|class
+argument_list|,
 operator|new
-name|Object
+name|Writable
 index|[
 name|schemaSize
 index|]
@@ -1152,7 +1166,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|ObjectArrayWritable
+name|ArrayWritable
 name|createValue
 parameter_list|()
 block|{
@@ -1240,7 +1254,7 @@ name|NullWritable
 name|key
 parameter_list|,
 specifier|final
-name|ObjectArrayWritable
+name|ArrayWritable
 name|value
 parameter_list|)
 throws|throws
@@ -1288,7 +1302,7 @@ literal|false
 return|;
 block|}
 specifier|final
-name|ObjectArrayWritable
+name|ArrayWritable
 name|tmpCurValue
 init|=
 name|realReader
@@ -1304,7 +1318,7 @@ name|tmpCurValue
 condition|)
 block|{
 specifier|final
-name|Object
+name|Writable
 index|[]
 name|arrValue
 init|=
@@ -1314,7 +1328,7 @@ name|get
 argument_list|()
 decl_stmt|;
 specifier|final
-name|Object
+name|Writable
 index|[]
 name|arrCurrent
 init|=

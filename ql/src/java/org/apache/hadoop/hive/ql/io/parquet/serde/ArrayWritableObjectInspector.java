@@ -115,9 +115,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|io
+name|objectinspector
 operator|.
-name|ObjectArrayWritable
+name|ObjectInspector
 import|;
 end_import
 
@@ -135,7 +135,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|ObjectInspector
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -339,6 +339,20 @@ name|VarcharTypeInfo
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|ArrayWritable
+import|;
+end_import
+
 begin_comment
 comment|/**  *  * The ArrayWritableObjectInspector will inspect an ArrayWritable, considering it as a Hive struct.<br />  * It can also inspect a List if Hive decides to inspect the result of an inspection.  *  */
 end_comment
@@ -346,7 +360,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 extends|extends
 name|SettableStructObjectInspector
 block|{
@@ -390,7 +404,7 @@ argument_list|>
 name|fieldsByName
 decl_stmt|;
 specifier|public
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 parameter_list|(
 specifier|final
 name|StructTypeInfo
@@ -539,7 +553,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaDoubleObjectInspector
+name|writableDoubleObjectInspector
 return|;
 block|}
 elseif|else
@@ -558,7 +572,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaBooleanObjectInspector
+name|writableBooleanObjectInspector
 return|;
 block|}
 elseif|else
@@ -577,7 +591,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaFloatObjectInspector
+name|writableFloatObjectInspector
 return|;
 block|}
 elseif|else
@@ -596,7 +610,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaIntObjectInspector
+name|writableIntObjectInspector
 return|;
 block|}
 elseif|else
@@ -615,7 +629,7 @@ block|{
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|javaLongObjectInspector
+name|writableLongObjectInspector
 return|;
 block|}
 elseif|else
@@ -675,7 +689,7 @@ condition|)
 block|{
 return|return
 operator|new
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 argument_list|(
 operator|(
 name|StructTypeInfo
@@ -1077,15 +1091,15 @@ if|if
 condition|(
 name|data
 operator|instanceof
-name|ObjectArrayWritable
+name|ArrayWritable
 condition|)
 block|{
 specifier|final
-name|ObjectArrayWritable
+name|ArrayWritable
 name|arr
 init|=
 operator|(
-name|ObjectArrayWritable
+name|ArrayWritable
 operator|)
 name|data
 decl_stmt|;
@@ -1204,22 +1218,22 @@ if|if
 condition|(
 name|data
 operator|instanceof
-name|ObjectArrayWritable
+name|ArrayWritable
 condition|)
 block|{
 specifier|final
-name|ObjectArrayWritable
+name|ArrayWritable
 name|arr
 init|=
 operator|(
-name|ObjectArrayWritable
+name|ArrayWritable
 operator|)
 name|data
 decl_stmt|;
 specifier|final
 name|Object
 index|[]
-name|arrObjects
+name|arrWritable
 init|=
 name|arr
 operator|.
@@ -1227,11 +1241,18 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
+operator|new
+name|ArrayList
+argument_list|<
+name|Object
+argument_list|>
+argument_list|(
 name|Arrays
 operator|.
 name|asList
 argument_list|(
-name|arrObjects
+name|arrWritable
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -1396,11 +1417,11 @@ literal|false
 return|;
 block|}
 specifier|final
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 name|other
 init|=
 operator|(
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 operator|)
 name|obj
 decl_stmt|;

@@ -251,6 +251,7 @@ name|Object
 name|o
 parameter_list|)
 block|{
+comment|// Accept int writables and convert them.
 if|if
 condition|(
 name|o
@@ -270,26 +271,6 @@ name|o
 argument_list|)
 operator|.
 name|get
-argument_list|()
-return|;
-block|}
-elseif|else
-if|if
-condition|(
-name|o
-operator|instanceof
-name|Integer
-condition|)
-block|{
-return|return
-operator|(
-operator|(
-name|Integer
-operator|)
-name|o
-operator|)
-operator|.
-name|byteValue
 argument_list|()
 return|;
 block|}

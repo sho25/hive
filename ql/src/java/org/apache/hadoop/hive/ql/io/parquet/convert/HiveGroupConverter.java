@@ -422,7 +422,7 @@ parameter_list|(
 name|int
 name|index
 parameter_list|,
-name|Object
+name|Writable
 name|value
 parameter_list|)
 function_decl|;

@@ -107,7 +107,7 @@ name|parquet
 operator|.
 name|serde
 operator|.
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 import|;
 end_import
 
@@ -827,7 +827,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 name|getObjectInspector
 parameter_list|(
 specifier|final
@@ -878,7 +878,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|ObjectArrayWritableObjectInspector
+name|ArrayWritableObjectInspector
 argument_list|(
 name|rowTypeInfo
 argument_list|)
