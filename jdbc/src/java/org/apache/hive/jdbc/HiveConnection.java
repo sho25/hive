@@ -1757,6 +1757,22 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Transport Used for JDBC connection: "
+operator|+
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|TRANSPORT_MODE
+argument_list|)
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|SQLException
@@ -1963,6 +1979,37 @@ name|TException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"JDBC Connection Parameters used : useSSL = "
+operator|+
+name|useSsl
+operator|+
+literal|" , httpPath  = "
+operator|+
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|HTTP_PATH
+argument_list|)
+operator|+
+literal|" Authentication type = "
+operator|+
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|String
 name|msg
 init|=
