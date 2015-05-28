@@ -8003,6 +8003,25 @@ return|return
 literal|false
 return|;
 block|}
+if|if
+condition|(
+name|desc
+operator|.
+name|pruneGroupingSetId
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Pruning grouping set id not supported in vector mode"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 name|boolean
 name|ret
 init|=
