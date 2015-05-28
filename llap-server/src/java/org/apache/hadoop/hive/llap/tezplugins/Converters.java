@@ -432,7 +432,7 @@ name|fromString
 argument_list|(
 name|FragmentSpecProto
 operator|.
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -670,7 +670,7 @@ argument_list|()
 decl_stmt|;
 name|builder
 operator|.
-name|setTaskAttemptIdString
+name|setFragmentIdentifierString
 argument_list|(
 name|taskSpec
 operator|.

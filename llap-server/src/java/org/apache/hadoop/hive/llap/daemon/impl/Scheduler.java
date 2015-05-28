@@ -55,6 +55,14 @@ parameter_list|)
 throws|throws
 name|RejectedExecutionException
 function_decl|;
+comment|/**    * Attempt to kill the fragment with the specified fragmentId    * @param fragmentId    */
+name|void
+name|killFragment
+parameter_list|(
+name|String
+name|fragmentId
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

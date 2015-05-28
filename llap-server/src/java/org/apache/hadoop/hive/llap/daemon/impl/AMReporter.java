@@ -712,6 +712,15 @@ operator|.
 name|LLAP_DAEMON_LIVENESS_HEARTBEAT_INTERVAL_MS_DEFAULT
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"AMReporter running with NodeId: {}"
+argument_list|,
+name|nodeId
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -1065,10 +1074,10 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|info
 argument_list|(
 operator|(
-literal|"Ignoring unexpected unregisterRequest for am at: "
+literal|"Ignoring duplocate unregisterRequest for am at: "
 operator|+
 name|amLocation
 operator|+

@@ -17872,22 +17872,22 @@ name|protobuf
 operator|.
 name|MessageOrBuilder
 block|{
-comment|// optional string task_attempt_id_string = 1;
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|// optional string fragment_identifier_string = 1;
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 name|boolean
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 name|com
 operator|.
 name|google
@@ -17895,7 +17895,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getTaskAttemptIdStringBytes
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 function_decl|;
 comment|// optional string dag_name = 2;
@@ -18628,7 +18628,7 @@ name|bitField0_
 operator||=
 literal|0x00000001
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|input
 operator|.
@@ -19449,12 +19449,12 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// optional string task_attempt_id_string = 1;
+comment|// optional string fragment_identifier_string = 1;
 specifier|public
 specifier|static
 specifier|final
 name|int
-name|TASK_ATTEMPT_ID_STRING_FIELD_NUMBER
+name|FRAGMENT_IDENTIFIER_STRING_FIELD_NUMBER
 init|=
 literal|1
 decl_stmt|;
@@ -19464,12 +19464,12 @@ operator|.
 name|lang
 operator|.
 name|Object
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 decl_stmt|;
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 specifier|public
 name|boolean
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 parameter_list|()
 block|{
 return|return
@@ -19484,14 +19484,14 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 specifier|public
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 parameter_list|()
 block|{
 name|java
@@ -19501,7 +19501,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -19567,7 +19567,7 @@ name|isValidUtf8
 argument_list|()
 condition|)
 block|{
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|s
 expr_stmt|;
@@ -19577,7 +19577,7 @@ name|s
 return|;
 block|}
 block|}
-comment|/**      *<code>optional string task_attempt_id_string = 1;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 1;</code>      */
 specifier|public
 name|com
 operator|.
@@ -19586,7 +19586,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getTaskAttemptIdStringBytes
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 block|{
 name|java
@@ -19596,7 +19596,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -19638,7 +19638,7 @@ operator|)
 name|ref
 argument_list|)
 decl_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|b
 expr_stmt|;
@@ -20870,7 +20870,7 @@ name|void
 name|initFields
 parameter_list|()
 block|{
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 literal|""
 expr_stmt|;
@@ -21031,7 +21031,7 @@ name|writeBytes
 argument_list|(
 literal|1
 argument_list|,
-name|getTaskAttemptIdStringBytes
+name|getFragmentIdentifierStringBytes
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -21342,7 +21342,7 @@ name|computeBytesSize
 argument_list|(
 literal|1
 argument_list|,
-name|getTaskAttemptIdStringBytes
+name|getFragmentIdentifierStringBytes
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -21825,18 +21825,18 @@ operator|=
 name|result
 operator|&&
 operator|(
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 argument_list|()
 operator|==
 name|other
 operator|.
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 argument_list|()
 operator|)
 expr_stmt|;
 if|if
 condition|(
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
@@ -21844,14 +21844,14 @@ name|result
 operator|=
 name|result
 operator|&&
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 argument_list|()
 operator|.
 name|equals
 argument_list|(
 name|other
 operator|.
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -22182,7 +22182,7 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
@@ -22194,7 +22194,7 @@ operator|*
 name|hash
 operator|)
 operator|+
-name|TASK_ATTEMPT_ID_STRING_FIELD_NUMBER
+name|FRAGMENT_IDENTIFIER_STRING_FIELD_NUMBER
 expr_stmt|;
 name|hash
 operator|=
@@ -22204,7 +22204,7 @@ operator|*
 name|hash
 operator|)
 operator|+
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 argument_list|()
 operator|.
 name|hashCode
@@ -23357,7 +23357,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 literal|""
 expr_stmt|;
@@ -23843,9 +23843,9 @@ expr_stmt|;
 block|}
 name|result
 operator|.
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 expr_stmt|;
 if|if
 condition|(
@@ -24343,7 +24343,7 @@ if|if
 condition|(
 name|other
 operator|.
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
@@ -24351,11 +24351,11 @@ name|bitField0_
 operator||=
 literal|0x00000001
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|other
 operator|.
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 expr_stmt|;
 name|onChanged
 argument_list|()
@@ -25044,21 +25044,21 @@ specifier|private
 name|int
 name|bitField0_
 decl_stmt|;
-comment|// optional string task_attempt_id_string = 1;
+comment|// optional string fragment_identifier_string = 1;
 specifier|private
 name|java
 operator|.
 name|lang
 operator|.
 name|Object
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 init|=
 literal|""
 decl_stmt|;
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|boolean
-name|hasTaskAttemptIdString
+name|hasFragmentIdentifierString
 parameter_list|()
 block|{
 return|return
@@ -25073,14 +25073,14 @@ literal|0x00000001
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 parameter_list|()
 block|{
 name|java
@@ -25090,7 +25090,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -25129,7 +25129,7 @@ operator|.
 name|toStringUtf8
 argument_list|()
 decl_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|s
 expr_stmt|;
@@ -25151,7 +25151,7 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|com
 operator|.
@@ -25160,7 +25160,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getTaskAttemptIdStringBytes
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 block|{
 name|java
@@ -25170,7 +25170,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -25208,7 +25208,7 @@ operator|)
 name|ref
 argument_list|)
 decl_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|b
 expr_stmt|;
@@ -25232,10 +25232,10 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|Builder
-name|setTaskAttemptIdString
+name|setFragmentIdentifierString
 parameter_list|(
 name|java
 operator|.
@@ -25262,7 +25262,7 @@ name|bitField0_
 operator||=
 literal|0x00000001
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|value
 expr_stmt|;
@@ -25273,10 +25273,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|Builder
-name|clearTaskAttemptIdString
+name|clearFragmentIdentifierString
 parameter_list|()
 block|{
 name|bitField0_
@@ -25288,12 +25288,12 @@ operator|~
 literal|0x00000001
 operator|)
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|getDefaultInstance
 argument_list|()
 operator|.
-name|getTaskAttemptIdString
+name|getFragmentIdentifierString
 argument_list|()
 expr_stmt|;
 name|onChanged
@@ -25303,10 +25303,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional string task_attempt_id_string = 1;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 1;</code>        */
 specifier|public
 name|Builder
-name|setTaskAttemptIdStringBytes
+name|setFragmentIdentifierStringBytes
 parameter_list|(
 name|com
 operator|.
@@ -25335,7 +25335,7 @@ name|bitField0_
 operator||=
 literal|0x00000001
 expr_stmt|;
-name|taskAttemptIdString_
+name|fragmentIdentifierString_
 operator|=
 name|value
 expr_stmt|;
@@ -60266,33 +60266,22 @@ name|ByteString
 name|getDagNameBytes
 parameter_list|()
 function_decl|;
-comment|// optional int32 dag_attempt_number = 3;
-comment|/**      *<code>optional int32 dag_attempt_number = 3;</code>      */
+comment|// optional string fragment_identifier_string = 7;
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 name|boolean
-name|hasDagAttemptNumber
+name|hasFragmentIdentifierString
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional int32 dag_attempt_number = 3;</code>      */
-name|int
-name|getDagAttemptNumber
-parameter_list|()
-function_decl|;
-comment|// optional string vertex_name = 4;
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
-name|boolean
-name|hasVertexName
-parameter_list|()
-function_decl|;
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getVertexName
+name|getFragmentIdentifierString
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 name|com
 operator|.
 name|google
@@ -60300,29 +60289,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getVertexNameBytes
-parameter_list|()
-function_decl|;
-comment|// optional int32 fragment_number = 5;
-comment|/**      *<code>optional int32 fragment_number = 5;</code>      */
-name|boolean
-name|hasFragmentNumber
-parameter_list|()
-function_decl|;
-comment|/**      *<code>optional int32 fragment_number = 5;</code>      */
-name|int
-name|getFragmentNumber
-parameter_list|()
-function_decl|;
-comment|// optional int32 attempt_number = 6;
-comment|/**      *<code>optional int32 attempt_number = 6;</code>      */
-name|boolean
-name|hasAttemptNumber
-parameter_list|()
-function_decl|;
-comment|/**      *<code>optional int32 attempt_number = 6;</code>      */
-name|int
-name|getAttemptNumber
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 function_decl|;
 block|}
@@ -60613,69 +60580,18 @@ expr_stmt|;
 break|break;
 block|}
 case|case
-literal|24
+literal|58
 case|:
 block|{
 name|bitField0_
 operator||=
 literal|0x00000004
 expr_stmt|;
-name|dagAttemptNumber_
-operator|=
-name|input
-operator|.
-name|readInt32
-argument_list|()
-expr_stmt|;
-break|break;
-block|}
-case|case
-literal|34
-case|:
-block|{
-name|bitField0_
-operator||=
-literal|0x00000008
-expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|input
 operator|.
 name|readBytes
-argument_list|()
-expr_stmt|;
-break|break;
-block|}
-case|case
-literal|40
-case|:
-block|{
-name|bitField0_
-operator||=
-literal|0x00000010
-expr_stmt|;
-name|fragmentNumber_
-operator|=
-name|input
-operator|.
-name|readInt32
-argument_list|()
-expr_stmt|;
-break|break;
-block|}
-case|case
-literal|48
-case|:
-block|{
-name|bitField0_
-operator||=
-literal|0x00000020
-expr_stmt|;
-name|attemptNumber_
-operator|=
-name|input
-operator|.
-name|readInt32
 argument_list|()
 expr_stmt|;
 break|break;
@@ -61389,55 +61305,14 @@ name|ref
 return|;
 block|}
 block|}
-comment|// optional int32 dag_attempt_number = 3;
+comment|// optional string fragment_identifier_string = 7;
 specifier|public
 specifier|static
 specifier|final
 name|int
-name|DAG_ATTEMPT_NUMBER_FIELD_NUMBER
+name|FRAGMENT_IDENTIFIER_STRING_FIELD_NUMBER
 init|=
-literal|3
-decl_stmt|;
-specifier|private
-name|int
-name|dagAttemptNumber_
-decl_stmt|;
-comment|/**      *<code>optional int32 dag_attempt_number = 3;</code>      */
-specifier|public
-name|boolean
-name|hasDagAttemptNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-return|;
-block|}
-comment|/**      *<code>optional int32 dag_attempt_number = 3;</code>      */
-specifier|public
-name|int
-name|getDagAttemptNumber
-parameter_list|()
-block|{
-return|return
-name|dagAttemptNumber_
-return|;
-block|}
-comment|// optional string vertex_name = 4;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|VERTEX_NAME_FIELD_NUMBER
-init|=
-literal|4
+literal|7
 decl_stmt|;
 specifier|private
 name|java
@@ -61445,12 +61320,12 @@ operator|.
 name|lang
 operator|.
 name|Object
-name|vertexName_
+name|fragmentIdentifierString_
 decl_stmt|;
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 specifier|public
 name|boolean
-name|hasVertexName
+name|hasFragmentIdentifierString
 parameter_list|()
 block|{
 return|return
@@ -61458,21 +61333,21 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000008
+literal|0x00000004
 operator|)
 operator|==
-literal|0x00000008
+literal|0x00000004
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 specifier|public
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getVertexName
+name|getFragmentIdentifierString
 parameter_list|()
 block|{
 name|java
@@ -61482,7 +61357,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|vertexName_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -61548,7 +61423,7 @@ name|isValidUtf8
 argument_list|()
 condition|)
 block|{
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|s
 expr_stmt|;
@@ -61558,7 +61433,7 @@ name|s
 return|;
 block|}
 block|}
-comment|/**      *<code>optional string vertex_name = 4;</code>      */
+comment|/**      *<code>optional string fragment_identifier_string = 7;</code>      */
 specifier|public
 name|com
 operator|.
@@ -61567,7 +61442,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getVertexNameBytes
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 block|{
 name|java
@@ -61577,7 +61452,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|vertexName_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -61619,7 +61494,7 @@ operator|)
 name|ref
 argument_list|)
 decl_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|b
 expr_stmt|;
@@ -61643,88 +61518,6 @@ name|ref
 return|;
 block|}
 block|}
-comment|// optional int32 fragment_number = 5;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|FRAGMENT_NUMBER_FIELD_NUMBER
-init|=
-literal|5
-decl_stmt|;
-specifier|private
-name|int
-name|fragmentNumber_
-decl_stmt|;
-comment|/**      *<code>optional int32 fragment_number = 5;</code>      */
-specifier|public
-name|boolean
-name|hasFragmentNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000010
-operator|)
-operator|==
-literal|0x00000010
-operator|)
-return|;
-block|}
-comment|/**      *<code>optional int32 fragment_number = 5;</code>      */
-specifier|public
-name|int
-name|getFragmentNumber
-parameter_list|()
-block|{
-return|return
-name|fragmentNumber_
-return|;
-block|}
-comment|// optional int32 attempt_number = 6;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|ATTEMPT_NUMBER_FIELD_NUMBER
-init|=
-literal|6
-decl_stmt|;
-specifier|private
-name|int
-name|attemptNumber_
-decl_stmt|;
-comment|/**      *<code>optional int32 attempt_number = 6;</code>      */
-specifier|public
-name|boolean
-name|hasAttemptNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000020
-operator|)
-operator|==
-literal|0x00000020
-operator|)
-return|;
-block|}
-comment|/**      *<code>optional int32 attempt_number = 6;</code>      */
-specifier|public
-name|int
-name|getAttemptNumber
-parameter_list|()
-block|{
-return|return
-name|attemptNumber_
-return|;
-block|}
 specifier|private
 name|void
 name|initFields
@@ -61738,21 +61531,9 @@ name|dagName_
 operator|=
 literal|""
 expr_stmt|;
-name|dagAttemptNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 literal|""
-expr_stmt|;
-name|fragmentNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|attemptNumber_
-operator|=
-literal|0
 expr_stmt|;
 block|}
 specifier|private
@@ -61879,81 +61660,12 @@ condition|)
 block|{
 name|output
 operator|.
-name|writeInt32
-argument_list|(
-literal|3
-argument_list|,
-name|dagAttemptNumber_
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000008
-operator|)
-operator|==
-literal|0x00000008
-operator|)
-condition|)
-block|{
-name|output
-operator|.
 name|writeBytes
 argument_list|(
-literal|4
+literal|7
 argument_list|,
-name|getVertexNameBytes
+name|getFragmentIdentifierStringBytes
 argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000010
-operator|)
-operator|==
-literal|0x00000010
-operator|)
-condition|)
-block|{
-name|output
-operator|.
-name|writeInt32
-argument_list|(
-literal|5
-argument_list|,
-name|fragmentNumber_
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000020
-operator|)
-operator|==
-literal|0x00000020
-operator|)
-condition|)
-block|{
-name|output
-operator|.
-name|writeInt32
-argument_list|(
-literal|6
-argument_list|,
-name|attemptNumber_
 argument_list|)
 expr_stmt|;
 block|}
@@ -62084,105 +61796,12 @@ name|protobuf
 operator|.
 name|CodedOutputStream
 operator|.
-name|computeInt32Size
-argument_list|(
-literal|3
-argument_list|,
-name|dagAttemptNumber_
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000008
-operator|)
-operator|==
-literal|0x00000008
-operator|)
-condition|)
-block|{
-name|size
-operator|+=
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|CodedOutputStream
-operator|.
 name|computeBytesSize
 argument_list|(
-literal|4
+literal|7
 argument_list|,
-name|getVertexNameBytes
+name|getFragmentIdentifierStringBytes
 argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000010
-operator|)
-operator|==
-literal|0x00000010
-operator|)
-condition|)
-block|{
-name|size
-operator|+=
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|CodedOutputStream
-operator|.
-name|computeInt32Size
-argument_list|(
-literal|5
-argument_list|,
-name|fragmentNumber_
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000020
-operator|)
-operator|==
-literal|0x00000020
-operator|)
-condition|)
-block|{
-name|size
-operator|+=
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|CodedOutputStream
-operator|.
-name|computeInt32Size
-argument_list|(
-literal|6
-argument_list|,
-name|attemptNumber_
 argument_list|)
 expr_stmt|;
 block|}
@@ -62425,18 +62044,18 @@ operator|=
 name|result
 operator|&&
 operator|(
-name|hasDagAttemptNumber
+name|hasFragmentIdentifierString
 argument_list|()
 operator|==
 name|other
 operator|.
-name|hasDagAttemptNumber
+name|hasFragmentIdentifierString
 argument_list|()
 operator|)
 expr_stmt|;
 if|if
 condition|(
-name|hasDagAttemptNumber
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
@@ -62444,121 +62063,16 @@ name|result
 operator|=
 name|result
 operator|&&
-operator|(
-name|getDagAttemptNumber
-argument_list|()
-operator|==
-name|other
-operator|.
-name|getDagAttemptNumber
-argument_list|()
-operator|)
-expr_stmt|;
-block|}
-name|result
-operator|=
-name|result
-operator|&&
-operator|(
-name|hasVertexName
-argument_list|()
-operator|==
-name|other
-operator|.
-name|hasVertexName
-argument_list|()
-operator|)
-expr_stmt|;
-if|if
-condition|(
-name|hasVertexName
-argument_list|()
-condition|)
-block|{
-name|result
-operator|=
-name|result
-operator|&&
-name|getVertexName
+name|getFragmentIdentifierString
 argument_list|()
 operator|.
 name|equals
 argument_list|(
 name|other
 operator|.
-name|getVertexName
+name|getFragmentIdentifierString
 argument_list|()
 argument_list|)
-expr_stmt|;
-block|}
-name|result
-operator|=
-name|result
-operator|&&
-operator|(
-name|hasFragmentNumber
-argument_list|()
-operator|==
-name|other
-operator|.
-name|hasFragmentNumber
-argument_list|()
-operator|)
-expr_stmt|;
-if|if
-condition|(
-name|hasFragmentNumber
-argument_list|()
-condition|)
-block|{
-name|result
-operator|=
-name|result
-operator|&&
-operator|(
-name|getFragmentNumber
-argument_list|()
-operator|==
-name|other
-operator|.
-name|getFragmentNumber
-argument_list|()
-operator|)
-expr_stmt|;
-block|}
-name|result
-operator|=
-name|result
-operator|&&
-operator|(
-name|hasAttemptNumber
-argument_list|()
-operator|==
-name|other
-operator|.
-name|hasAttemptNumber
-argument_list|()
-operator|)
-expr_stmt|;
-if|if
-condition|(
-name|hasAttemptNumber
-argument_list|()
-condition|)
-block|{
-name|result
-operator|=
-name|result
-operator|&&
-operator|(
-name|getAttemptNumber
-argument_list|()
-operator|==
-name|other
-operator|.
-name|getAttemptNumber
-argument_list|()
-operator|)
 expr_stmt|;
 block|}
 name|result
@@ -62691,7 +62205,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|hasDagAttemptNumber
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
@@ -62703,7 +62217,7 @@ operator|*
 name|hash
 operator|)
 operator|+
-name|DAG_ATTEMPT_NUMBER_FIELD_NUMBER
+name|FRAGMENT_IDENTIFIER_STRING_FIELD_NUMBER
 expr_stmt|;
 name|hash
 operator|=
@@ -62713,94 +62227,10 @@ operator|*
 name|hash
 operator|)
 operator|+
-name|getDagAttemptNumber
-argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|hasVertexName
-argument_list|()
-condition|)
-block|{
-name|hash
-operator|=
-operator|(
-literal|37
-operator|*
-name|hash
-operator|)
-operator|+
-name|VERTEX_NAME_FIELD_NUMBER
-expr_stmt|;
-name|hash
-operator|=
-operator|(
-literal|53
-operator|*
-name|hash
-operator|)
-operator|+
-name|getVertexName
+name|getFragmentIdentifierString
 argument_list|()
 operator|.
 name|hashCode
-argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|hasFragmentNumber
-argument_list|()
-condition|)
-block|{
-name|hash
-operator|=
-operator|(
-literal|37
-operator|*
-name|hash
-operator|)
-operator|+
-name|FRAGMENT_NUMBER_FIELD_NUMBER
-expr_stmt|;
-name|hash
-operator|=
-operator|(
-literal|53
-operator|*
-name|hash
-operator|)
-operator|+
-name|getFragmentNumber
-argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|hasAttemptNumber
-argument_list|()
-condition|)
-block|{
-name|hash
-operator|=
-operator|(
-literal|37
-operator|*
-name|hash
-operator|)
-operator|+
-name|ATTEMPT_NUMBER_FIELD_NUMBER
-expr_stmt|;
-name|hash
-operator|=
-operator|(
-literal|53
-operator|*
-name|hash
-operator|)
-operator|+
-name|getAttemptNumber
 argument_list|()
 expr_stmt|;
 block|}
@@ -63687,20 +63117,7 @@ operator|~
 literal|0x00000002
 operator|)
 expr_stmt|;
-name|dagAttemptNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000004
-operator|)
-expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 literal|""
 expr_stmt|;
@@ -63710,33 +63127,7 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000008
-operator|)
-expr_stmt|;
-name|fragmentNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000010
-operator|)
-expr_stmt|;
-name|attemptNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000020
+literal|0x00000004
 operator|)
 expr_stmt|;
 return|return
@@ -64039,81 +63430,9 @@ expr_stmt|;
 block|}
 name|result
 operator|.
-name|dagAttemptNumber_
+name|fragmentIdentifierString_
 operator|=
-name|dagAttemptNumber_
-expr_stmt|;
-if|if
-condition|(
-operator|(
-operator|(
-name|from_bitField0_
-operator|&
-literal|0x00000008
-operator|)
-operator|==
-literal|0x00000008
-operator|)
-condition|)
-block|{
-name|to_bitField0_
-operator||=
-literal|0x00000008
-expr_stmt|;
-block|}
-name|result
-operator|.
-name|vertexName_
-operator|=
-name|vertexName_
-expr_stmt|;
-if|if
-condition|(
-operator|(
-operator|(
-name|from_bitField0_
-operator|&
-literal|0x00000010
-operator|)
-operator|==
-literal|0x00000010
-operator|)
-condition|)
-block|{
-name|to_bitField0_
-operator||=
-literal|0x00000010
-expr_stmt|;
-block|}
-name|result
-operator|.
-name|fragmentNumber_
-operator|=
-name|fragmentNumber_
-expr_stmt|;
-if|if
-condition|(
-operator|(
-operator|(
-name|from_bitField0_
-operator|&
-literal|0x00000020
-operator|)
-operator|==
-literal|0x00000020
-operator|)
-condition|)
-block|{
-name|to_bitField0_
-operator||=
-literal|0x00000020
-expr_stmt|;
-block|}
-name|result
-operator|.
-name|attemptNumber_
-operator|=
-name|attemptNumber_
+name|fragmentIdentifierString_
 expr_stmt|;
 name|result
 operator|.
@@ -64305,73 +63624,22 @@ if|if
 condition|(
 name|other
 operator|.
-name|hasDagAttemptNumber
-argument_list|()
-condition|)
-block|{
-name|setDagAttemptNumber
-argument_list|(
-name|other
-operator|.
-name|getDagAttemptNumber
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|other
-operator|.
-name|hasVertexName
+name|hasFragmentIdentifierString
 argument_list|()
 condition|)
 block|{
 name|bitField0_
 operator||=
-literal|0x00000008
+literal|0x00000004
 expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|other
 operator|.
-name|vertexName_
+name|fragmentIdentifierString_
 expr_stmt|;
 name|onChanged
 argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|other
-operator|.
-name|hasFragmentNumber
-argument_list|()
-condition|)
-block|{
-name|setFragmentNumber
-argument_list|(
-name|other
-operator|.
-name|getFragmentNumber
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|other
-operator|.
-name|hasAttemptNumber
-argument_list|()
-condition|)
-block|{
-name|setAttemptNumber
-argument_list|(
-name|other
-operator|.
-name|getAttemptNumber
-argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 name|this
@@ -65132,104 +64400,21 @@ return|return
 name|this
 return|;
 block|}
-comment|// optional int32 dag_attempt_number = 3;
-specifier|private
-name|int
-name|dagAttemptNumber_
-decl_stmt|;
-comment|/**        *<code>optional int32 dag_attempt_number = 3;</code>        */
-specifier|public
-name|boolean
-name|hasDagAttemptNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-return|;
-block|}
-comment|/**        *<code>optional int32 dag_attempt_number = 3;</code>        */
-specifier|public
-name|int
-name|getDagAttemptNumber
-parameter_list|()
-block|{
-return|return
-name|dagAttemptNumber_
-return|;
-block|}
-comment|/**        *<code>optional int32 dag_attempt_number = 3;</code>        */
-specifier|public
-name|Builder
-name|setDagAttemptNumber
-parameter_list|(
-name|int
-name|value
-parameter_list|)
-block|{
-name|bitField0_
-operator||=
-literal|0x00000004
-expr_stmt|;
-name|dagAttemptNumber_
-operator|=
-name|value
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|/**        *<code>optional int32 dag_attempt_number = 3;</code>        */
-specifier|public
-name|Builder
-name|clearDagAttemptNumber
-parameter_list|()
-block|{
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000004
-operator|)
-expr_stmt|;
-name|dagAttemptNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|// optional string vertex_name = 4;
+comment|// optional string fragment_identifier_string = 7;
 specifier|private
 name|java
 operator|.
 name|lang
 operator|.
 name|Object
-name|vertexName_
+name|fragmentIdentifierString_
 init|=
 literal|""
 decl_stmt|;
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|boolean
-name|hasVertexName
+name|hasFragmentIdentifierString
 parameter_list|()
 block|{
 return|return
@@ -65237,21 +64422,21 @@ operator|(
 operator|(
 name|bitField0_
 operator|&
-literal|0x00000008
+literal|0x00000004
 operator|)
 operator|==
-literal|0x00000008
+literal|0x00000004
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|java
 operator|.
 name|lang
 operator|.
 name|String
-name|getVertexName
+name|getFragmentIdentifierString
 parameter_list|()
 block|{
 name|java
@@ -65261,7 +64446,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|vertexName_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -65300,7 +64485,7 @@ operator|.
 name|toStringUtf8
 argument_list|()
 decl_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|s
 expr_stmt|;
@@ -65322,7 +64507,7 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|com
 operator|.
@@ -65331,7 +64516,7 @@ operator|.
 name|protobuf
 operator|.
 name|ByteString
-name|getVertexNameBytes
+name|getFragmentIdentifierStringBytes
 parameter_list|()
 block|{
 name|java
@@ -65341,7 +64526,7 @@ operator|.
 name|Object
 name|ref
 init|=
-name|vertexName_
+name|fragmentIdentifierString_
 decl_stmt|;
 if|if
 condition|(
@@ -65379,7 +64564,7 @@ operator|)
 name|ref
 argument_list|)
 decl_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|b
 expr_stmt|;
@@ -65403,10 +64588,10 @@ name|ref
 return|;
 block|}
 block|}
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|Builder
-name|setVertexName
+name|setFragmentIdentifierString
 parameter_list|(
 name|java
 operator|.
@@ -65431,9 +64616,9 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000008
+literal|0x00000004
 expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|value
 expr_stmt|;
@@ -65444,10 +64629,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|Builder
-name|clearVertexName
+name|clearFragmentIdentifierString
 parameter_list|()
 block|{
 name|bitField0_
@@ -65456,15 +64641,15 @@ operator|(
 name|bitField0_
 operator|&
 operator|~
-literal|0x00000008
+literal|0x00000004
 operator|)
 expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|getDefaultInstance
 argument_list|()
 operator|.
-name|getVertexName
+name|getFragmentIdentifierString
 argument_list|()
 expr_stmt|;
 name|onChanged
@@ -65474,10 +64659,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional string vertex_name = 4;</code>        */
+comment|/**        *<code>optional string fragment_identifier_string = 7;</code>        */
 specifier|public
 name|Builder
-name|setVertexNameBytes
+name|setFragmentIdentifierStringBytes
 parameter_list|(
 name|com
 operator|.
@@ -65504,177 +64689,11 @@ throw|;
 block|}
 name|bitField0_
 operator||=
-literal|0x00000008
+literal|0x00000004
 expr_stmt|;
-name|vertexName_
+name|fragmentIdentifierString_
 operator|=
 name|value
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|// optional int32 fragment_number = 5;
-specifier|private
-name|int
-name|fragmentNumber_
-decl_stmt|;
-comment|/**        *<code>optional int32 fragment_number = 5;</code>        */
-specifier|public
-name|boolean
-name|hasFragmentNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000010
-operator|)
-operator|==
-literal|0x00000010
-operator|)
-return|;
-block|}
-comment|/**        *<code>optional int32 fragment_number = 5;</code>        */
-specifier|public
-name|int
-name|getFragmentNumber
-parameter_list|()
-block|{
-return|return
-name|fragmentNumber_
-return|;
-block|}
-comment|/**        *<code>optional int32 fragment_number = 5;</code>        */
-specifier|public
-name|Builder
-name|setFragmentNumber
-parameter_list|(
-name|int
-name|value
-parameter_list|)
-block|{
-name|bitField0_
-operator||=
-literal|0x00000010
-expr_stmt|;
-name|fragmentNumber_
-operator|=
-name|value
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|/**        *<code>optional int32 fragment_number = 5;</code>        */
-specifier|public
-name|Builder
-name|clearFragmentNumber
-parameter_list|()
-block|{
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000010
-operator|)
-expr_stmt|;
-name|fragmentNumber_
-operator|=
-literal|0
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|// optional int32 attempt_number = 6;
-specifier|private
-name|int
-name|attemptNumber_
-decl_stmt|;
-comment|/**        *<code>optional int32 attempt_number = 6;</code>        */
-specifier|public
-name|boolean
-name|hasAttemptNumber
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000020
-operator|)
-operator|==
-literal|0x00000020
-operator|)
-return|;
-block|}
-comment|/**        *<code>optional int32 attempt_number = 6;</code>        */
-specifier|public
-name|int
-name|getAttemptNumber
-parameter_list|()
-block|{
-return|return
-name|attemptNumber_
-return|;
-block|}
-comment|/**        *<code>optional int32 attempt_number = 6;</code>        */
-specifier|public
-name|Builder
-name|setAttemptNumber
-parameter_list|(
-name|int
-name|value
-parameter_list|)
-block|{
-name|bitField0_
-operator||=
-literal|0x00000020
-expr_stmt|;
-name|attemptNumber_
-operator|=
-name|value
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|/**        *<code>optional int32 attempt_number = 6;</code>        */
-specifier|public
-name|Builder
-name|clearAttemptNumber
-parameter_list|()
-block|{
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000020
-operator|)
-expr_stmt|;
-name|attemptNumber_
-operator|=
-literal|0
 expr_stmt|;
 name|onChanged
 argument_list|()
@@ -72126,97 +71145,95 @@ literal|"\n\016group_vertices\030\002 \003(\t\0227\n\027merged_input_d"
 block|,
 literal|"escriptor\030\003 \001(\0132\026.EntityDescriptorProto\""
 operator|+
-literal|"\327\002\n\021FragmentSpecProto\022\036\n\026task_attempt_id"
+literal|"\333\002\n\021FragmentSpecProto\022\"\n\032fragment_identi"
 operator|+
-literal|"_string\030\001 \001(\t\022\020\n\010dag_name\030\002 \001(\t\022\023\n\013verte"
+literal|"fier_string\030\001 \001(\t\022\020\n\010dag_name\030\002 \001(\t\022\023\n\013v"
 operator|+
-literal|"x_name\030\003 \001(\t\0224\n\024processor_descriptor\030\004 \001"
+literal|"ertex_name\030\003 \001(\t\0224\n\024processor_descriptor"
 operator|+
-literal|"(\0132\026.EntityDescriptorProto\022!\n\013input_spec"
+literal|"\030\004 \001(\0132\026.EntityDescriptorProto\022!\n\013input_"
 operator|+
-literal|"s\030\005 \003(\0132\014.IOSpecProto\022\"\n\014output_specs\030\006 "
+literal|"specs\030\005 \003(\0132\014.IOSpecProto\022\"\n\014output_spec"
 operator|+
-literal|"\003(\0132\014.IOSpecProto\0221\n\023grouped_input_specs"
+literal|"s\030\006 \003(\0132\014.IOSpecProto\0221\n\023grouped_input_s"
 operator|+
-literal|"\030\007 \003(\0132\024.GroupInputSpecProto\022\032\n\022vertex_p"
+literal|"pecs\030\007 \003(\0132\024.GroupInputSpecProto\022\032\n\022vert"
 operator|+
-literal|"arallelism\030\010 \001(\005\022\027\n\017fragment_number\030\t \001("
+literal|"ex_parallelism\030\010 \001(\005\022\027\n\017fragment_number\030"
 operator|+
-literal|"\005\022\026\n\016attempt_number\030\n \001(\005\"\344\001\n\023FragmentRu"
+literal|"\t \001(\005\022\026\n\016attempt_number\030\n \001(\005\"\344\001\n\023Fragme"
 block|,
-literal|"ntimeInfo\022#\n\033num_self_and_upstream_tasks"
+literal|"ntRuntimeInfo\022#\n\033num_self_and_upstream_t"
 operator|+
-literal|"\030\001 \001(\005\022-\n%num_self_and_upstream_complete"
+literal|"asks\030\001 \001(\005\022-\n%num_self_and_upstream_comp"
 operator|+
-literal|"d_tasks\030\002 \001(\005\022\033\n\023within_dag_priority\030\003 \001"
+literal|"leted_tasks\030\002 \001(\005\022\033\n\023within_dag_priority"
 operator|+
-literal|"(\005\022\026\n\016dag_start_time\030\004 \001(\003\022 \n\030first_atte"
+literal|"\030\003 \001(\005\022\026\n\016dag_start_time\030\004 \001(\003\022 \n\030first_"
 operator|+
-literal|"mpt_start_time\030\005 \001(\003\022\"\n\032current_attempt_"
+literal|"attempt_start_time\030\005 \001(\003\022\"\n\032current_atte"
 operator|+
-literal|"start_time\030\006 \001(\003\"\266\002\n\026SubmitWorkRequestPr"
+literal|"mpt_start_time\030\006 \001(\003\"\266\002\n\026SubmitWorkReque"
 operator|+
-literal|"oto\022\033\n\023container_id_string\030\001 \001(\t\022\017\n\007am_h"
+literal|"stProto\022\033\n\023container_id_string\030\001 \001(\t\022\017\n\007"
 operator|+
-literal|"ost\030\002 \001(\t\022\017\n\007am_port\030\003 \001(\005\022\030\n\020token_iden"
+literal|"am_host\030\002 \001(\t\022\017\n\007am_port\030\003 \001(\005\022\030\n\020token_"
 operator|+
-literal|"tifier\030\004 \001(\t\022\032\n\022credentials_binary\030\005 \001(\014"
+literal|"identifier\030\004 \001(\t\022\032\n\022credentials_binary\030\005"
 operator|+
-literal|"\022\014\n\004user\030\006 \001(\t\022\035\n\025application_id_string\030"
+literal|" \001(\014\022\014\n\004user\030\006 \001(\t\022\035\n\025application_id_str"
 block|,
-literal|"\007 \001(\t\022\032\n\022app_attempt_number\030\010 \001(\005\022)\n\rfra"
+literal|"ing\030\007 \001(\t\022\032\n\022app_attempt_number\030\010 \001(\005\022)\n"
 operator|+
-literal|"gment_spec\030\t \001(\0132\022.FragmentSpecProto\0223\n\025"
+literal|"\rfragment_spec\030\t \001(\0132\022.FragmentSpecProto"
 operator|+
-literal|"fragment_runtime_info\030\n \001(\0132\024.FragmentRu"
+literal|"\0223\n\025fragment_runtime_info\030\n \001(\0132\024.Fragme"
 operator|+
-literal|"ntimeInfo\"\031\n\027SubmitWorkResponseProto\"f\n\036"
+literal|"ntRuntimeInfo\"\031\n\027SubmitWorkResponseProto"
 operator|+
-literal|"SourceStateUpdatedRequestProto\022\020\n\010dag_na"
+literal|"\"f\n\036SourceStateUpdatedRequestProto\022\020\n\010da"
 operator|+
-literal|"me\030\001 \001(\t\022\020\n\010src_name\030\002 \001(\t\022 \n\005state\030\003 \001("
+literal|"g_name\030\001 \001(\t\022\020\n\010src_name\030\002 \001(\t\022 \n\005state\030"
 operator|+
-literal|"\0162\021.SourceStateProto\"!\n\037SourceStateUpdat"
+literal|"\003 \001(\0162\021.SourceStateProto\"!\n\037SourceStateU"
 operator|+
-literal|"edResponseProto\"X\n\031QueryCompleteRequestP"
+literal|"pdatedResponseProto\"X\n\031QueryCompleteRequ"
 operator|+
-literal|"roto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030\002 \001(\t"
+literal|"estProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030\002"
 operator|+
-literal|"\022\027\n\014delete_delay\030\003 \001(\003:\0010\"\034\n\032QueryComple"
+literal|" \001(\t\022\027\n\014delete_delay\030\003 \001(\003:\0010\"\034\n\032QueryCo"
 block|,
-literal|"teResponseProto\"\245\001\n\035TerminateFragmentReq"
+literal|"mpleteResponseProto\"g\n\035TerminateFragment"
 operator|+
-literal|"uestProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_name\030"
+literal|"RequestProto\022\020\n\010query_id\030\001 \001(\t\022\020\n\010dag_na"
 operator|+
-literal|"\002 \001(\t\022\032\n\022dag_attempt_number\030\003 \001(\005\022\023\n\013ver"
+literal|"me\030\002 \001(\t\022\"\n\032fragment_identifier_string\030\007"
 operator|+
-literal|"tex_name\030\004 \001(\t\022\027\n\017fragment_number\030\005 \001(\005\022"
+literal|" \001(\t\" \n\036TerminateFragmentResponseProto*2"
 operator|+
-literal|"\026\n\016attempt_number\030\006 \001(\005\" \n\036TerminateFrag"
+literal|"\n\020SourceStateProto\022\017\n\013S_SUCCEEDED\020\001\022\r\n\tS"
 operator|+
-literal|"mentResponseProto*2\n\020SourceStateProto\022\017\n"
+literal|"_RUNNING\020\0022\316\002\n\022LlapDaemonProtocol\022?\n\nsub"
 operator|+
-literal|"\013S_SUCCEEDED\020\001\022\r\n\tS_RUNNING\020\0022\316\002\n\022LlapDa"
+literal|"mitWork\022\027.SubmitWorkRequestProto\032\030.Submi"
 operator|+
-literal|"emonProtocol\022?\n\nsubmitWork\022\027.SubmitWorkR"
+literal|"tWorkResponseProto\022W\n\022sourceStateUpdated"
 operator|+
-literal|"equestProto\032\030.SubmitWorkResponseProto\022W\n"
+literal|"\022\037.SourceStateUpdatedRequestProto\032 .Sour"
 operator|+
-literal|"\022sourceStateUpdated\022\037.SourceStateUpdated"
+literal|"ceStateUpdatedResponseProto\022H\n\rqueryComp"
 block|,
-literal|"RequestProto\032 .SourceStateUpdatedRespons"
+literal|"lete\022\032.QueryCompleteRequestProto\032\033.Query"
 operator|+
-literal|"eProto\022H\n\rqueryComplete\022\032.QueryCompleteR"
+literal|"CompleteResponseProto\022T\n\021terminateFragme"
 operator|+
-literal|"equestProto\032\033.QueryCompleteResponseProto"
+literal|"nt\022\036.TerminateFragmentRequestProto\032\037.Ter"
 operator|+
-literal|"\022T\n\021terminateFragment\022\036.TerminateFragmen"
+literal|"minateFragmentResponseProtoBH\n&org.apach"
 operator|+
-literal|"tRequestProto\032\037.TerminateFragmentRespons"
+literal|"e.hadoop.hive.llap.daemon.rpcB\030LlapDaemo"
 operator|+
-literal|"eProtoBH\n&org.apache.hadoop.hive.llap.da"
-operator|+
-literal|"emon.rpcB\030LlapDaemonProtocolProtos\210\001\001\240\001\001"
+literal|"nProtocolProtos\210\001\001\240\001\001"
 block|}
 decl_stmt|;
 name|com
@@ -72482,7 +71499,7 @@ operator|.
 name|String
 index|[]
 block|{
-literal|"TaskAttemptIdString"
+literal|"FragmentIdentifierString"
 block|,
 literal|"DagName"
 block|,
@@ -72854,13 +71871,7 @@ literal|"QueryId"
 block|,
 literal|"DagName"
 block|,
-literal|"DagAttemptNumber"
-block|,
-literal|"VertexName"
-block|,
-literal|"FragmentNumber"
-block|,
-literal|"AttemptNumber"
+literal|"FragmentIdentifierString"
 block|, }
 argument_list|)
 expr_stmt|;
