@@ -25214,6 +25214,8 @@ name|posn
 operator|+
 literal|1
 expr_stmt|;
+name|out_rwsch
+operator|=
 name|handleInsertStatementSpec
 argument_list|(
 name|col_list
@@ -25415,7 +25417,7 @@ return|;
 block|}
 comment|/**    * This modifies the Select projections when the Select is part of an insert statement and    * the insert statement specifies a column list for the target table, e.g.    * create table source (a int, b int);    * create table target (x int, y int, z int);    * insert into target(z,x) select * from source    *    * Once the * is resolved to 'a,b', this list needs to rewritten to 'b,null,a' so that it looks    * as if the original query was written as    * insert into target select b, null, a from source    *    * if target schema is not specified, this is no-op    *    * @see #handleInsertStatementSpecPhase1(ASTNode, QBParseInfo, org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx)    * @throws SemanticException    */
 specifier|private
-name|void
+name|RowResolver
 name|handleInsertStatementSpec
 parameter_list|(
 name|List
@@ -25468,7 +25470,9 @@ literal|null
 condition|)
 block|{
 comment|//no insert schema was specified
-return|return;
+return|return
+name|outputRR
+return|;
 block|}
 if|if
 condition|(
@@ -25867,6 +25871,13 @@ comment|//these must be after non-partition cols
 block|}
 block|}
 block|}
+name|RowResolver
+name|newOutputRR
+init|=
+operator|new
+name|RowResolver
+argument_list|()
+decl_stmt|;
 comment|//now make the select produce<regular columns>,<dynamic partition columns> with
 comment|//where missing columns are NULL-filled
 for|for
@@ -25921,10 +25932,20 @@ name|colListPos
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|newSchema
+name|newOutputRR
 operator|.
-name|add
+name|put
 argument_list|(
+name|ci
+operator|.
+name|getTabAlias
+argument_list|()
+argument_list|,
+name|ci
+operator|.
+name|getInternalName
+argument_list|()
+argument_list|,
 name|ci
 argument_list|)
 expr_stmt|;
@@ -26010,16 +26031,9 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-name|newSchema
+name|newOutputRR
 operator|.
-name|add
-argument_list|(
-name|colInfo
-argument_list|)
-expr_stmt|;
-name|outputRR
-operator|.
-name|addMappingOnly
+name|put
 argument_list|(
 name|colInfo
 operator|.
@@ -26051,17 +26065,9 @@ argument_list|(
 name|new_col_list
 argument_list|)
 expr_stmt|;
-name|outputRR
-operator|.
-name|setRowSchema
-argument_list|(
-operator|new
-name|RowSchema
-argument_list|(
-name|newSchema
-argument_list|)
-argument_list|)
-expr_stmt|;
+return|return
+name|newOutputRR
+return|;
 block|}
 name|String
 name|recommendName
