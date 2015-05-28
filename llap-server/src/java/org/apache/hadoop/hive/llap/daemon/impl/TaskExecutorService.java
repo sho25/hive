@@ -1414,11 +1414,6 @@ literal|false
 decl_stmt|;
 try|try
 block|{
-synchronized|synchronized
-init|(
-name|lock
-init|)
-block|{
 name|boolean
 name|canFinish
 init|=
@@ -1430,6 +1425,8 @@ operator|.
 name|canFinish
 argument_list|()
 decl_stmt|;
+comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
+comment|// and registrations are mutually exclusive.
 name|boolean
 name|stateChanged
 init|=
@@ -1441,6 +1438,11 @@ argument_list|(
 name|canFinish
 argument_list|)
 decl_stmt|;
+synchronized|synchronized
+init|(
+name|lock
+init|)
+block|{
 name|ListenableFuture
 argument_list|<
 name|TaskRunner2Result
@@ -1518,11 +1520,19 @@ condition|)
 block|{
 if|if
 condition|(
+operator|(
 operator|!
 name|canFinish
 operator|&&
 operator|!
 name|stateChanged
+operator|)
+operator|||
+operator|(
+name|canFinish
+operator|&&
+name|stateChanged
+operator|)
 condition|)
 block|{
 if|if
@@ -2641,6 +2651,8 @@ expr_stmt|;
 block|}
 comment|// Methods are synchronized primarily for visibility.
 comment|/**      *      * @param currentFinishableState      * @return true if the current state is the same as the currentFinishableState. false if the state has already changed.      */
+comment|// Synchronized to avoid register / unregister clobbering each other.
+comment|// Don't invoke from within a scheduler lock
 specifier|public
 specifier|synchronized
 name|boolean
@@ -2681,6 +2693,8 @@ literal|true
 return|;
 block|}
 block|}
+comment|// Synchronized to avoid register / unregister clobbering each other.
+comment|// Don't invoke from within a scheduler lock
 specifier|public
 specifier|synchronized
 name|void
@@ -2813,6 +2827,7 @@ operator|+
 literal|'}'
 return|;
 block|}
+comment|// No task lock. But acquires lock on the scheduler
 annotation|@
 name|Override
 specifier|public
