@@ -857,6 +857,20 @@ name|KeeperException
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|yammer
+operator|.
+name|metrics
+operator|.
+name|core
+operator|.
+name|MetricsRegistry
+import|;
+end_import
+
 begin_comment
 comment|/**  * HBaseStorageHandler provides a HiveStorageHandler implementation for  * HBase.  */
 end_comment
@@ -2242,6 +2256,13 @@ operator|.
 name|configureInputJobProps
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Configuring input job properties"
+argument_list|)
+expr_stmt|;
 name|String
 name|snapshotName
 init|=
@@ -2511,6 +2532,13 @@ comment|//input job properties
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Configuring output job properties"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isHBaseGenerateHFiles
@@ -2872,6 +2900,37 @@ operator|.
 name|class
 argument_list|,
 name|TableInputFormatBase
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|jobConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_HBASE_SNAPSHOT_NAME
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// There is an extra dependency on MetricsRegistry for snapshot IF.
+name|TableMapReduceUtil
+operator|.
+name|addDependencyJars
+argument_list|(
+name|jobConf
+argument_list|,
+name|MetricsRegistry
 operator|.
 name|class
 argument_list|)

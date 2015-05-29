@@ -76,7 +76,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is there to help testing, and to help initial development  * and will be the default Replication Task for under-development replication  * tasks to override.  *  * This is not intended to be a permanent class, and will likely move to the test  * package after initial implementation.  */
+comment|/**  * Noop replication task - a replication task that is actionable,  * does not need any further info, and returns NoopCommands.  *  * Useful for testing, and also for tasks that need to be represented  * but actually do nothing.  */
 end_comment
 
 begin_class

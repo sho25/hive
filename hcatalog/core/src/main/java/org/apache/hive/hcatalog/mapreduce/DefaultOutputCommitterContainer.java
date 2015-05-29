@@ -55,7 +55,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -433,7 +433,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//Cancel HCat and JobTracker tokens
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -457,7 +457,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)

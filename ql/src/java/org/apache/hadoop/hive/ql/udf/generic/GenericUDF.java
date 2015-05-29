@@ -606,6 +606,7 @@ implements|implements
 name|DeferredObject
 block|{
 specifier|private
+specifier|final
 name|Object
 name|value
 decl_stmt|;
@@ -932,6 +933,8 @@ name|children
 parameter_list|)
 function_decl|;
 comment|/**    * Close GenericUDF.    * This is only called in runtime of MapRedTask.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close
@@ -1569,9 +1572,6 @@ name|ObjectInspectorConverters
 operator|.
 name|getConverter
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|arguments
 index|[
 name|i
@@ -1652,6 +1652,9 @@ case|:
 case|case
 name|INT
 case|:
+case|case
+name|VOID
+case|:
 break|break;
 default|default:
 throw|throw
@@ -1683,9 +1686,6 @@ name|ObjectInspectorConverters
 operator|.
 name|getConverter
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|arguments
 index|[
 name|i
@@ -1800,9 +1800,6 @@ name|ObjectInspectorConverters
 operator|.
 name|getConverter
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|arguments
 index|[
 name|i
@@ -1876,9 +1873,6 @@ name|ObjectInspectorConverters
 operator|.
 name|getConverter
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|arguments
 index|[
 name|i
@@ -1974,6 +1968,9 @@ name|TIMESTAMP
 case|:
 case|case
 name|DATE
+case|:
+case|case
+name|VOID
 case|:
 name|outOi
 operator|=
@@ -2580,7 +2577,7 @@ name|date
 return|;
 block|}
 specifier|protected
-name|Date
+name|Timestamp
 name|getTimestampValue
 parameter_list|(
 name|DeferredObject

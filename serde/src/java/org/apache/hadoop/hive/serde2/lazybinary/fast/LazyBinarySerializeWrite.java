@@ -421,7 +421,7 @@ specifier|private
 name|LazyBinarySerializeWrite
 parameter_list|()
 block|{   }
-comment|/*    * Set the buffer that will receive the serialized data.    */
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will be reset.    */
 annotation|@
 name|Override
 specifier|public
@@ -454,6 +454,39 @@ expr_stmt|;
 name|nullOffset
 operator|=
 literal|0
+expr_stmt|;
+block|}
+comment|/*    * Set the buffer that will receive the serialized data.  The output buffer will NOT be reset.    */
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setAppend
+parameter_list|(
+name|Output
+name|output
+parameter_list|)
+block|{
+name|this
+operator|.
+name|output
+operator|=
+name|output
+expr_stmt|;
+name|fieldIndex
+operator|=
+literal|0
+expr_stmt|;
+name|nullByte
+operator|=
+literal|0
+expr_stmt|;
+name|nullOffset
+operator|=
+name|output
+operator|.
+name|getLength
+argument_list|()
 expr_stmt|;
 block|}
 comment|/*    * Reset the previously supplied buffer that will receive the serialized data.    */

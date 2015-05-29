@@ -61,7 +61,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -613,7 +613,9 @@ argument_list|(
 literal|1000
 argument_list|)
 decl_stmt|;
-name|HiveMetaStoreClient
+name|HiveClientCache
+operator|.
+name|ICacheableMetaStoreClient
 name|client
 init|=
 name|cache
@@ -648,7 +650,9 @@ argument_list|,
 literal|10
 argument_list|)
 expr_stmt|;
-name|HiveMetaStoreClient
+name|HiveClientCache
+operator|.
+name|ICacheableMetaStoreClient
 name|client2
 init|=
 name|cache
@@ -666,8 +670,14 @@ expr_stmt|;
 name|assertEquals
 argument_list|(
 name|client
+operator|.
+name|getUsers
+argument_list|()
 argument_list|,
 name|client2
+operator|.
+name|getUsers
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|client2
@@ -698,7 +708,7 @@ argument_list|(
 literal|1000
 argument_list|)
 decl_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 name|cache
@@ -728,7 +738,7 @@ literal|" "
 argument_list|)
 expr_stmt|;
 comment|// URIs are checked for string equivalence, even spaces make them different
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client2
 init|=
 name|cache
@@ -778,14 +788,9 @@ argument_list|)
 decl_stmt|;
 name|HiveClientCache
 operator|.
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|client
 init|=
-operator|(
-name|HiveClientCache
-operator|.
-name|CacheableHiveMetaStoreClient
-operator|)
 name|cache
 operator|.
 name|get
@@ -805,7 +810,9 @@ argument_list|(
 literal|2500
 argument_list|)
 expr_stmt|;
-name|HiveMetaStoreClient
+name|HiveClientCache
+operator|.
+name|ICacheableMetaStoreClient
 name|client2
 init|=
 name|cache
@@ -869,13 +876,13 @@ name|GetHiveClient
 implements|implements
 name|Callable
 argument_list|<
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 argument_list|>
 block|{
 annotation|@
 name|Override
 specifier|public
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|call
 parameter_list|()
 throws|throws
@@ -907,7 +914,7 @@ argument_list|)
 decl_stmt|;
 name|Callable
 argument_list|<
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 argument_list|>
 name|worker1
 init|=
@@ -917,7 +924,7 @@ argument_list|()
 decl_stmt|;
 name|Callable
 argument_list|<
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 argument_list|>
 name|worker2
 init|=
@@ -927,7 +934,7 @@ argument_list|()
 decl_stmt|;
 name|Future
 argument_list|<
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 argument_list|>
 name|clientFuture1
 init|=
@@ -940,7 +947,7 @@ argument_list|)
 decl_stmt|;
 name|Future
 argument_list|<
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 argument_list|>
 name|clientFuture2
 init|=
@@ -951,7 +958,7 @@ argument_list|(
 name|worker2
 argument_list|)
 decl_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client1
 init|=
 name|clientFuture1
@@ -959,7 +966,7 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client2
 init|=
 name|clientFuture2
@@ -1010,14 +1017,9 @@ argument_list|)
 decl_stmt|;
 name|HiveClientCache
 operator|.
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|client1
 init|=
-operator|(
-name|HiveClientCache
-operator|.
-name|CacheableHiveMetaStoreClient
-operator|)
 name|cache
 operator|.
 name|get
@@ -1041,14 +1043,9 @@ expr_stmt|;
 comment|// URIs are checked for string equivalence, even spaces make them different
 name|HiveClientCache
 operator|.
-name|CacheableHiveMetaStoreClient
+name|ICacheableMetaStoreClient
 name|client2
 init|=
-operator|(
-name|HiveClientCache
-operator|.
-name|CacheableHiveMetaStoreClient
-operator|)
 name|cache
 operator|.
 name|get

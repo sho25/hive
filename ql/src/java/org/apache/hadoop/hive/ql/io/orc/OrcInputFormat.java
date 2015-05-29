@@ -2586,6 +2586,11 @@ argument_list|(
 name|cacheStripeDetailsSize
 argument_list|)
 operator|.
+name|maximumSize
+argument_list|(
+name|cacheStripeDetailsSize
+argument_list|)
+operator|.
 name|softValues
 argument_list|()
 operator|.

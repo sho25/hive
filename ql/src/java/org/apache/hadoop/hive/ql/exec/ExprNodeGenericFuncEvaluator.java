@@ -424,13 +424,11 @@ operator|(
 name|eval
 operator|instanceof
 name|ExprNodeConstantEvaluator
-operator|||
-name|eval
-operator|instanceof
-name|ExprNodeNullEvaluator
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|get

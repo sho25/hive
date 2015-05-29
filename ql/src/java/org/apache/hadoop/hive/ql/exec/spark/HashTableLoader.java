@@ -558,9 +558,6 @@ parameter_list|,
 name|MapJoinTableContainerSerDe
 index|[]
 name|mapJoinTableSerdes
-parameter_list|,
-name|long
-name|memUsage
 parameter_list|)
 throws|throws
 name|HiveException

@@ -59,11 +59,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Suppress underlying stream.    */
-name|void
-name|suppress
-parameter_list|()
-function_decl|;
 comment|/**    * Flush the buffer    * @throws IOException    */
 name|void
 name|flush

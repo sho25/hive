@@ -83,22 +83,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Writable
@@ -243,21 +227,12 @@ operator|.
 name|InputSplit
 name|baseMapRedSplit
 decl_stmt|;
-comment|/** The schema for the HCatTable */
-specifier|private
-name|HCatSchema
-name|tableSchema
-decl_stmt|;
-specifier|private
-name|HiveConf
-name|hiveConf
-decl_stmt|;
 comment|/**    * Instantiates a new hcat split.    */
 specifier|public
 name|HCatSplit
 parameter_list|()
 block|{   }
-comment|/**    * Instantiates a new hcat split.    *    * @param partitionInfo the partition info    * @param baseMapRedSplit the base mapred split    * @param tableSchema the table level schema    */
+comment|/**    * Instantiates a new hcat split.    *    * @param partitionInfo the partition info    * @param baseMapRedSplit the base mapred split    */
 specifier|public
 name|HCatSplit
 parameter_list|(
@@ -274,9 +249,6 @@ name|mapred
 operator|.
 name|InputSplit
 name|baseMapRedSplit
-parameter_list|,
-name|HCatSchema
-name|tableSchema
 parameter_list|)
 block|{
 name|this
@@ -291,12 +263,6 @@ operator|.
 name|baseMapRedSplit
 operator|=
 name|baseMapRedSplit
-expr_stmt|;
-name|this
-operator|.
-name|tableSchema
-operator|=
-name|tableSchema
 expr_stmt|;
 block|}
 comment|/**    * Gets the partition info.    * @return the partitionInfo    */
@@ -348,10 +314,28 @@ name|HCatSchema
 name|getTableSchema
 parameter_list|()
 block|{
+assert|assert
+name|this
+operator|.
+name|partitionInfo
+operator|.
+name|getTableInfo
+argument_list|()
+operator|!=
+literal|null
+operator|:
+literal|"TableInfo should have been set at this point."
+assert|;
 return|return
 name|this
 operator|.
-name|tableSchema
+name|partitionInfo
+operator|.
+name|getTableInfo
+argument_list|()
+operator|.
+name|getAllColumns
+argument_list|()
 return|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.mapreduce.InputSplit#getLength()    */
@@ -617,28 +601,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|String
-name|tableSchemaString
-init|=
-name|WritableUtils
-operator|.
-name|readString
-argument_list|(
-name|input
-argument_list|)
-decl_stmt|;
-name|tableSchema
-operator|=
-operator|(
-name|HCatSchema
-operator|)
-name|HCatUtil
-operator|.
-name|deserialize
-argument_list|(
-name|tableSchemaString
-argument_list|)
-expr_stmt|;
 block|}
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.io.Writable#write(java.io.DataOutput)    */
 annotation|@
@@ -702,26 +664,6 @@ operator|.
 name|write
 argument_list|(
 name|output
-argument_list|)
-expr_stmt|;
-comment|//write the table schema into output
-name|String
-name|tableSchemaString
-init|=
-name|HCatUtil
-operator|.
-name|serialize
-argument_list|(
-name|tableSchema
-argument_list|)
-decl_stmt|;
-name|WritableUtils
-operator|.
-name|writeString
-argument_list|(
-name|output
-argument_list|,
-name|tableSchemaString
 argument_list|)
 expr_stmt|;
 block|}

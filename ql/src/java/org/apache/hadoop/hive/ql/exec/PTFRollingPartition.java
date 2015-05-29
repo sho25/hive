@@ -87,7 +87,7 @@ name|plan
 operator|.
 name|ptf
 operator|.
-name|WindowFunctionDef
+name|WindowFrameDef
 import|;
 end_import
 
@@ -174,13 +174,13 @@ comment|/*    * num rows whose output is evaluated.    */
 name|int
 name|numRowsProcessed
 decl_stmt|;
-comment|/*    * number rows to maintain before nextRowToProcess    */
+comment|/*    * Relative start position of the windowing. Can be negative.    */
 name|int
-name|precedingSpan
+name|startPos
 decl_stmt|;
-comment|/*    * number rows to maintain after nextRowToProcess    */
+comment|/*    * Relative end position of the windowing. Can be negative.    */
 name|int
-name|followingSpan
+name|endPos
 decl_stmt|;
 comment|/*    * number of rows received.    */
 name|int
@@ -210,10 +210,10 @@ name|StructObjectInspector
 name|outputOI
 parameter_list|,
 name|int
-name|precedingSpan
+name|startPos
 parameter_list|,
 name|int
-name|succeedingSpan
+name|endPos
 parameter_list|)
 throws|throws
 name|HiveException
@@ -233,15 +233,15 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|precedingSpan
+name|startPos
 operator|=
-name|precedingSpan
+name|startPos
 expr_stmt|;
 name|this
 operator|.
-name|followingSpan
+name|endPos
 operator|=
-name|succeedingSpan
+name|endPos
 expr_stmt|;
 name|currWindow
 operator|=
@@ -251,9 +251,11 @@ argument_list|<
 name|Object
 argument_list|>
 argument_list|(
-name|precedingSpan
+name|endPos
+operator|-
+name|startPos
 operator|+
-name|followingSpan
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -382,7 +384,8 @@ if|if
 condition|(
 name|numRowsProcessed
 operator|>
-name|precedingSpan
+operator|-
+name|startPos
 condition|)
 block|{
 name|currWindow
@@ -408,12 +411,13 @@ operator|>=
 name|numRowsReceived
 return|;
 block|}
+comment|/**    * Gets the next row index that the data within the window are available and can be processed    * @param wFrameDef    * @return    */
 specifier|public
 name|int
 name|rowToProcess
 parameter_list|(
-name|WindowFunctionDef
-name|wFn
+name|WindowFrameDef
+name|wFrameDef
 parameter_list|)
 block|{
 name|int
@@ -421,18 +425,22 @@ name|rowToProcess
 init|=
 name|numRowsReceived
 operator|-
-name|wFn
+literal|1
+operator|-
+name|Math
 operator|.
-name|getWindowFrame
-argument_list|()
+name|max
+argument_list|(
+literal|0
+argument_list|,
+name|wFrameDef
 operator|.
 name|getEnd
 argument_list|()
 operator|.
-name|getAmt
+name|getRelativeOffset
 argument_list|()
-operator|-
-literal|1
+argument_list|)
 decl_stmt|;
 return|return
 name|rowToProcess

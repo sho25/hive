@@ -317,7 +317,7 @@ name|io
 operator|.
 name|filters
 operator|.
-name|BloomFilter
+name|BloomFilterIO
 import|;
 end_import
 
@@ -3192,7 +3192,7 @@ name|bloomFilterStream
 decl_stmt|;
 specifier|protected
 specifier|final
-name|BloomFilter
+name|BloomFilterIO
 name|bloomFilter
 decl_stmt|;
 specifier|protected
@@ -3475,7 +3475,7 @@ expr_stmt|;
 name|bloomFilter
 operator|=
 operator|new
-name|BloomFilter
+name|BloomFilterIO
 argument_list|(
 name|streamFactory
 operator|.
@@ -3556,7 +3556,7 @@ block|}
 name|IntegerWriter
 name|createIntegerWriter
 parameter_list|(
-name|OutStream
+name|PositionedOutputStream
 name|output
 parameter_list|,
 name|boolean
@@ -6225,43 +6225,6 @@ block|{
 comment|// Write the dictionary by traversing the red-black tree writing out
 comment|// the bytes and lengths; and creating the map from the original order
 comment|// to the final sorted order.
-if|if
-condition|(
-name|dictionary
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isWarnEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Empty dictionary. Suppressing dictionary stream."
-argument_list|)
-expr_stmt|;
-block|}
-name|stringOutput
-operator|.
-name|suppress
-argument_list|()
-expr_stmt|;
-name|lengthOutput
-operator|.
-name|suppress
-argument_list|()
-expr_stmt|;
-block|}
 name|dictionary
 operator|.
 name|visit

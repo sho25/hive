@@ -5038,7 +5038,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false true: 3750"
+literal|"count: 7500 hasNull: true true: 3750"
 argument_list|,
 name|stats
 index|[
@@ -5123,7 +5123,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false min: 1024 max: 2048 sum: 11520000"
+literal|"count: 7500 hasNull: true min: 1024 max: 2048 sum: 11520000"
 argument_list|,
 name|stats
 index|[
@@ -5194,7 +5194,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false min: 9223372036854775807 max: 9223372036854775807"
+literal|"count: 7500 hasNull: true min: 9223372036854775807 max: 9223372036854775807"
 argument_list|,
 name|stats
 index|[
@@ -5266,7 +5266,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false min: -15.0 max: -5.0 sum: -75000.0"
+literal|"count: 7500 hasNull: true min: -15.0 max: -5.0 sum: -75000.0"
 argument_list|,
 name|stats
 index|[
@@ -5333,7 +5333,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false min: bye max: hi sum: 0"
+literal|"count: 7500 hasNull: true min: bye max: hi sum: 0"
 argument_list|,
 name|stats
 index|[
@@ -5348,7 +5348,7 @@ comment|// old orc format will not have binary statistics. toString() will show 
 comment|// the general column statistics
 name|assertEquals
 argument_list|(
-literal|"count: 7500 hasNull: false"
+literal|"count: 7500 hasNull: true"
 argument_list|,
 name|stats
 index|[

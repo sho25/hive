@@ -535,6 +535,12 @@ name|isTemporary
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|boolean
+name|replaceMode
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|CreateTableDesc
 parameter_list|()
@@ -2688,6 +2694,32 @@ name|isTemporary
 operator|=
 name|isTemporary
 expr_stmt|;
+block|}
+comment|/**    * @param replaceMode Determine if this CreateTable should behave like a replace-into alter instead    */
+specifier|public
+name|void
+name|setReplaceMode
+parameter_list|(
+name|boolean
+name|replaceMode
+parameter_list|)
+block|{
+name|this
+operator|.
+name|replaceMode
+operator|=
+name|replaceMode
+expr_stmt|;
+block|}
+comment|/**    * @return true if this CreateTable should behave like a replace-into alter instead    */
+specifier|public
+name|boolean
+name|getReplaceMode
+parameter_list|()
+block|{
+return|return
+name|replaceMode
+return|;
 block|}
 block|}
 end_class

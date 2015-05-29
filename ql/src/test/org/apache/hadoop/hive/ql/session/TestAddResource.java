@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -135,6 +139,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -223,6 +241,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -261,7 +293,9 @@ argument_list|,
 literal|"."
 argument_list|)
 operator|+
-literal|"/"
+name|File
+operator|.
+name|pathSeparator
 decl_stmt|;
 specifier|private
 name|HiveConf
@@ -425,8 +459,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -438,8 +471,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -451,8 +483,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -464,8 +495,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -477,8 +507,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -564,8 +593,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)
@@ -665,8 +693,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -678,8 +705,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -691,8 +717,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -704,8 +729,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -717,8 +741,7 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -826,8 +849,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)
@@ -952,8 +974,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -965,8 +986,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -978,8 +998,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -991,8 +1010,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1004,8 +1022,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1017,8 +1034,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1030,8 +1046,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1144,8 +1159,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)
@@ -1191,6 +1205,50 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
+comment|/**    * @param path    * @return URI corresponding to the path.    */
+specifier|private
+specifier|static
+name|URI
+name|createURI
+parameter_list|(
+name|String
+name|path
+parameter_list|)
+throws|throws
+name|URISyntaxException
+block|{
+if|if
+condition|(
+operator|!
+name|Shell
+operator|.
+name|WINDOWS
+condition|)
+block|{
+comment|// If this is not windows shell, path better follow unix convention.
+comment|// Else, the below call will throw an URISyntaxException
+return|return
+operator|new
+name|URI
+argument_list|(
+name|path
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|new
+name|Path
+argument_list|(
+name|path
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+return|;
+block|}
 block|}
 comment|// Test when two jars are added with shared dependencies and one jar is deleted, the shared dependencies should not be deleted
 annotation|@
@@ -1275,8 +1333,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1288,8 +1345,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1301,8 +1357,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1314,8 +1369,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1327,8 +1381,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1340,8 +1393,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1353,8 +1405,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1519,8 +1570,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)
@@ -1714,8 +1764,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1727,8 +1776,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1740,8 +1788,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1753,8 +1800,7 @@ name|list1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1766,8 +1812,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1779,8 +1824,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1792,8 +1836,7 @@ name|list2
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1805,8 +1848,7 @@ name|list3
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1818,8 +1860,7 @@ name|list3
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -1831,8 +1872,7 @@ name|list3
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|TEST_JAR_DIR
 operator|+
@@ -2032,8 +2072,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)
@@ -2146,8 +2185,7 @@ name|actual
 operator|.
 name|add
 argument_list|(
-operator|new
-name|URI
+name|createURI
 argument_list|(
 name|dependency
 argument_list|)

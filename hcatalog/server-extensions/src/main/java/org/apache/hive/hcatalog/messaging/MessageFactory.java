@@ -155,6 +155,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * Abstract Factory for the construction of HCatalog message instances.  */
 end_comment
@@ -488,12 +498,15 @@ argument_list|>
 name|partitions
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for building AlterPartitionMessage    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
+comment|/**    * Factory method for building AlterPartitionMessage    * @param table The table in which the partition is being altered    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
 specifier|public
 specifier|abstract
 name|AlterPartitionMessage
 name|buildAlterPartitionMessage
 parameter_list|(
+name|Table
+name|table
+parameter_list|,
 name|Partition
 name|before
 parameter_list|,
@@ -501,7 +514,7 @@ name|Partition
 name|after
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partition The Partition being dropped.    * @return DropPartitionMessage instance.    */
+comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partitions The set of partitions being dropped.    * @return DropPartitionMessage instance.    */
 specifier|public
 specifier|abstract
 name|DropPartitionMessage
@@ -510,8 +523,11 @@ parameter_list|(
 name|Table
 name|table
 parameter_list|,
+name|Iterator
+argument_list|<
 name|Partition
-name|partition
+argument_list|>
+name|partitions
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for building insert message    * @param db Name of the database the insert occurred in    * @param table Name of the table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null    *                 if the insert was done into a non-partitioned table    * @param files List of files created as a result of the insert, may be null.    * @return instance of InsertMessage    */
@@ -526,8 +542,10 @@ parameter_list|,
 name|String
 name|table
 parameter_list|,
-name|List
+name|Map
 argument_list|<
+name|String
+argument_list|,
 name|String
 argument_list|>
 name|partVals

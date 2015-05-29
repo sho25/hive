@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -415,9 +419,19 @@ argument_list|(
 literal|"acidTbl"
 argument_list|)
 block|,
+name|ACIDTBLPART
+argument_list|(
+literal|"acidTblPart"
+argument_list|)
+block|,
 name|NONACIDORCTBL
 argument_list|(
 literal|"nonAcidOrcTbl"
+argument_list|)
+block|,
+name|NONACIDPART
+argument_list|(
+literal|"nonAcidPart"
 argument_list|)
 block|;
 specifier|private
@@ -459,6 +473,9 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|tearDown
+argument_list|()
+expr_stmt|;
 name|hiveConf
 operator|=
 operator|new
@@ -648,6 +665,21 @@ literal|"create table "
 operator|+
 name|Table
 operator|.
+name|ACIDTBLPART
+operator|+
+literal|"(a int, b int) partitioned by (p string) clustered by (a) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|Table
+operator|.
 name|NONACIDORCTBL
 operator|+
 literal|"(a int, b int) clustered by (a) into "
@@ -655,6 +687,17 @@ operator|+
 name|BUCKET_COUNT
 operator|+
 literal|" buckets stored as orc TBLPROPERTIES ('transactional'='false')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+operator|+
+literal|"(a int, b int) partitioned by (p string) stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
 block|}
@@ -721,12 +764,12 @@ name|d
 operator|=
 literal|null
 expr_stmt|;
+block|}
 name|TxnDbUtil
 operator|.
 name|cleanDb
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 finally|finally
 block|{
@@ -809,6 +852,191 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 decl_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUpdateMixedCase
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|tableData
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|3
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|"(a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set B = 7 where A=1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|updatedData
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|7
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|3
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Update failed"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|updatedData
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set B = B + 1 where A=1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|updatedData2
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|8
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|3
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Update failed"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|updatedData2
+argument_list|)
+argument_list|,
+name|rs2
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -1063,6 +1291,379 @@ argument_list|,
 name|rs2
 argument_list|)
 expr_stmt|;
+block|}
+comment|/**    * https://issues.apache.org/jira/browse/HIVE-10151    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBucketizedInputFormat
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|tableData
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|2
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p=1) (a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|"(a,b) select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" where p = 1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+argument_list|)
+decl_stmt|;
+comment|//no order by as it's just 1 row
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" didn't match:"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"(a,b) select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" where p = 1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+argument_list|)
+decl_stmt|;
+comment|//no order by as it's just 1 row
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" didn't match:"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|tableData
+argument_list|)
+argument_list|,
+name|rs2
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertOverwriteWithSelfJoin
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|part1Data
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|7
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"(a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|part1Data
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|//this works because logically we need S lock on NONACIDORCTBL to read and X lock to write, but
+comment|//LockRequestBuilder dedups locks on the same entity to only keep the highest level lock requested
+name|runStatementOnDriver
+argument_list|(
+literal|"insert overwrite table "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" select 2, 9 from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" T inner join "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" S on T.a=S.a"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|joinData
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|9
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Self join non-part insert overwrite failed"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|joinData
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|part2Data
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+operator|+
+literal|" partition(p=1) (a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|part1Data
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+operator|+
+literal|" partition(p=2) (a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|part2Data
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|//here we need X lock on p=1 partition to write and S lock on 'table' to read which should
+comment|//not block each other since they are part of the same txn
+name|runStatementOnDriver
+argument_list|(
+literal|"insert overwrite table "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+operator|+
+literal|" partition(p=1) select a,b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDPART
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|updatedData
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|7
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|8
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Insert overwrite partition failed"
+argument_list|,
+name|stringifyValues
+argument_list|(
+name|updatedData
+argument_list|)
+argument_list|,
+name|rs2
+argument_list|)
+expr_stmt|;
+comment|//insert overwrite not supported for ACID tables
 block|}
 comment|/**    * takes raw data and turns it into a string as if from Driver.getResults()    * sorts rows in dictionary order    */
 specifier|private

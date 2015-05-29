@@ -1045,7 +1045,7 @@ name|t
 argument_list|,
 name|partitionEvent
 operator|.
-name|getPartition
+name|getPartitionIterator
 argument_list|()
 argument_list|)
 operator|.
@@ -1125,6 +1125,11 @@ name|msgFactory
 operator|.
 name|buildAlterPartitionMessage
 argument_list|(
+name|partitionEvent
+operator|.
+name|getTable
+argument_list|()
+argument_list|,
 name|before
 argument_list|,
 name|after
@@ -1325,7 +1330,7 @@ argument_list|()
 argument_list|,
 name|insertEvent
 operator|.
-name|getPartitions
+name|getPartitionKeyValues
 argument_list|()
 argument_list|,
 name|insertEvent

@@ -121,7 +121,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -437,7 +437,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -473,7 +473,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 operator|new
 name|HiveConf

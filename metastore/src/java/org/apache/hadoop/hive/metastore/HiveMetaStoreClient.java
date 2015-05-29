@@ -199,16 +199,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|EnumSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -336,6 +326,24 @@ operator|.
 name|common
 operator|.
 name|ValidTxnList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
 import|;
 end_import
 
@@ -2070,7 +2078,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Hive Metastore Client.  * The public implementation of IMetaStoreClient. Methods not inherited from IMetaStoreClient  * are not public and can change. Hence this is marked as unstable.  */
+comment|/**  * Hive Metastore Client.  * The public implementation of IMetaStoreClient. Methods not inherited from IMetaStoreClient  * are not public and can change. Hence this is marked as unstable.  * For users who require retry mechanism when the connection between metastore and client is  * broken, RetryingMetaStoreClient class should be used.  */
 end_comment
 
 begin_class
@@ -2909,6 +2917,9 @@ throw|;
 block|}
 else|else
 block|{
+name|close
+argument_list|()
+expr_stmt|;
 comment|// Swap the first element of the metastoreUris[] with a random element from the rest
 comment|// of the array. Rationale being that this method will generally be called when the default
 comment|// connection has died and the default connection is likely to be the first array element.
@@ -3779,9 +3790,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
-literal|"Unable to shutdown local metastore client"
+literal|"Unable to shutdown metastore client. Will try closing transport directly."
 argument_list|,
 name|e
 argument_list|)
@@ -9468,20 +9479,15 @@ name|MetaException
 throws|,
 name|TException
 block|{
+comment|// This is expected to be a no-op, so we will return null when we use local metastore.
 if|if
 condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"getDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 return|return
 name|client
@@ -9513,15 +9519,9 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"renewDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return
+literal|0
+return|;
 block|}
 return|return
 name|client
@@ -9551,15 +9551,7 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"renewDelegationToken() can be "
-operator|+
-literal|"called only in thrift (non local) mode"
-argument_list|)
-throw|;
+return|return;
 block|}
 name|client
 operator|.
@@ -10138,6 +10130,15 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCatalog"
+block|}
+argument_list|)
+annotation|@
 name|Override
 specifier|public
 name|NotificationEventResponse
@@ -10264,6 +10265,15 @@ return|;
 block|}
 block|}
 annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"HCatalog"
+block|}
+argument_list|)
+annotation|@
 name|Override
 specifier|public
 name|CurrentNotificationEventId
@@ -10279,6 +10289,15 @@ name|get_current_notificationEventId
 argument_list|()
 return|;
 block|}
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"Apache Hive, HCatalog"
+block|}
+argument_list|)
 annotation|@
 name|Override
 specifier|public

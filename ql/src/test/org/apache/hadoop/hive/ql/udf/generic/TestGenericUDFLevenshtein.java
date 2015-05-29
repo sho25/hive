@@ -406,7 +406,7 @@ name|assertEquals
 argument_list|(
 literal|"levenshtein test"
 argument_list|,
-literal|"levenshtein only takes STRING_GROUP types as 1st argument, got INT"
+literal|"levenshtein only takes STRING_GROUP, VOID_GROUP types as 1st argument, got INT"
 argument_list|,
 name|e
 operator|.
@@ -486,7 +486,7 @@ name|assertEquals
 argument_list|(
 literal|"levenshtein test"
 argument_list|,
-literal|"levenshtein only takes STRING_GROUP types as 2nd argument, got FLOAT"
+literal|"levenshtein only takes STRING_GROUP, VOID_GROUP types as 2nd argument, got FLOAT"
 argument_list|,
 name|e
 operator|.

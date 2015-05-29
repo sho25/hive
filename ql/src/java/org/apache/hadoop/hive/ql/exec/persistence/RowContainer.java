@@ -433,11 +433,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -1114,7 +1116,7 @@ condition|)
 block|{
 name|inputFormat
 operator|=
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(

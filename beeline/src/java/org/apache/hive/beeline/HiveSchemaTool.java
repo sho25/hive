@@ -1736,6 +1736,18 @@ argument_list|(
 literal|"TRANSACTION_READ_COMMITTED"
 argument_list|)
 expr_stmt|;
+comment|// We can be pretty sure that an entire line can be processed as a single command since
+comment|// we always add a line separator at the end while calling dbCommandParser.buildCommand.
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|setEntireLineAsCommand
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|int
 name|status
 init|=

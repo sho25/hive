@@ -1076,6 +1076,54 @@ name|argList
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Fix to HIVE-10541: Beeline requires a newline at the end of each query in a file.    * Otherwise, the last line of cmd in the script will be ignored.    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testLastLineCmdInScriptFile
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"show databases;\nshow tables;"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|" testbeelinetable1 "
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|argList
+init|=
+name|getBaseArgs
+argument_list|(
+name|miniHS2
+operator|.
+name|getBaseJdbcURL
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|,
+name|argList
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Test Beeline -hivevar option. User can specify --hivevar name=value on Beeline command line.    * In the script, user should be able to use it in the form of ${name}, which will be substituted with    * the value.    * @throws Throwable    */
 annotation|@
 name|Test

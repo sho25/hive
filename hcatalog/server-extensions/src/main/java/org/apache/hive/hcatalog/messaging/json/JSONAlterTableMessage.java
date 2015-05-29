@@ -130,6 +130,11 @@ name|JsonProperty
 name|Long
 name|timestamp
 decl_stmt|;
+comment|/**    * Default constructor, needed for Jackson.    */
+specifier|public
+name|JSONAlterTableMessage
+parameter_list|()
+block|{}
 specifier|public
 name|JSONAlterTableMessage
 parameter_list|(

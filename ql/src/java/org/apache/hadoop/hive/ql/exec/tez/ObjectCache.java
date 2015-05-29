@@ -437,6 +437,33 @@ block|}
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|remove
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removing key: "
+operator|+
+name|key
+argument_list|)
+expr_stmt|;
+name|registry
+operator|.
+name|delete
+argument_list|(
+name|key
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

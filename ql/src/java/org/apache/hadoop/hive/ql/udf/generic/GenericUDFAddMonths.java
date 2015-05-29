@@ -94,6 +94,30 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorUtils
+operator|.
+name|PrimitiveGrouping
+operator|.
+name|VOID_GROUP
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -429,6 +453,8 @@ argument_list|,
 name|STRING_GROUP
 argument_list|,
 name|DATE_GROUP
+argument_list|,
+name|VOID_GROUP
 argument_list|)
 expr_stmt|;
 name|checkArgGroups
@@ -440,6 +466,8 @@ argument_list|,
 name|inputTypes
 argument_list|,
 name|NUMERIC_GROUP
+argument_list|,
+name|VOID_GROUP
 argument_list|)
 expr_stmt|;
 name|obtainDateConverter

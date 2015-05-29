@@ -2656,7 +2656,7 @@ block|{
 name|TxnInfo
 name|_elem430
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem430
 operator|=
 operator|new
@@ -3147,7 +3147,7 @@ block|{
 name|TxnInfo
 name|_elem435
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem435
 operator|=
 operator|new

@@ -1132,10 +1132,13 @@ expr_stmt|;
 name|String
 name|columnName
 init|=
+name|normalizeColName
+argument_list|(
 name|colName
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 decl_stmt|;
 comment|// Make sure this isn't one of the partitioning columns, that's not supported.
 if|if
@@ -2228,10 +2231,13 @@ name|setRCols
 operator|.
 name|add
 argument_list|(
+name|normalizeColName
+argument_list|(
 name|colName
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -2269,6 +2275,23 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+comment|/**    * Column names are stored in metastore in lower case, regardless of the CREATE TABLE statement.    * Unfortunately there is no single place that normalizes the input query.    * @param colName not null    */
+specifier|private
+specifier|static
+name|String
+name|normalizeColName
+parameter_list|(
+name|String
+name|colName
+parameter_list|)
+block|{
+return|return
+name|colName
+operator|.
+name|toLowerCase
+argument_list|()
+return|;
 block|}
 block|}
 end_class

@@ -728,6 +728,8 @@ argument_list|(
 name|gbyOp
 argument_list|,
 name|vContext
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|Assert

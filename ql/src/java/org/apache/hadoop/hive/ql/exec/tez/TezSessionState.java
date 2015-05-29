@@ -1403,7 +1403,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Close a tez session. Will cleanup any tez/am related resources. After closing a session    * no further DAGs can be executed against it.    * @param keepTmpDir whether or not to remove the scratch dir at the same time.    * @throws IOException    * @throws TezException    */
+comment|/**    * Close a tez session. Will cleanup any tez/am related resources. After closing a session no    * further DAGs can be executed against it.    *     * @param keepTmpDir    *          whether or not to remove the scratch dir at the same time.    * @throws Exception    */
 specifier|public
 name|void
 name|close
@@ -1412,9 +1412,7 @@ name|boolean
 name|keepTmpDir
 parameter_list|)
 throws|throws
-name|TezException
-throws|,
-name|IOException
+name|Exception
 block|{
 if|if
 condition|(

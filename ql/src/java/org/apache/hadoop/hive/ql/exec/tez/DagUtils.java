@@ -6459,6 +6459,13 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|stripHivePasswordDetails
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 return|return
 name|conf
 return|;

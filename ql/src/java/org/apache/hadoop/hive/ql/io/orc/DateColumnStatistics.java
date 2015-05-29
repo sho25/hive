@@ -23,19 +23,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|io
-operator|.
-name|DateWritable
+name|Date
 import|;
 end_import
 
@@ -51,12 +43,12 @@ extends|extends
 name|ColumnStatistics
 block|{
 comment|/**    * Get the minimum value for the column.    * @return minimum value    */
-name|DateWritable
+name|Date
 name|getMinimum
 parameter_list|()
 function_decl|;
 comment|/**    * Get the maximum value for the column.    * @return maximum value    */
-name|DateWritable
+name|Date
 name|getMaximum
 parameter_list|()
 function_decl|;
