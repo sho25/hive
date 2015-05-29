@@ -168,6 +168,14 @@ name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
 init|=
 literal|"__MR_JOB_TAGS_OPTION=MR_JOB_TAGS_JOBID__"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HADOOP_CLASSPATH
+init|=
+literal|"HADOOP_CLASSPATH"
+decl_stmt|;
 comment|/**    * constants needed for Pig job submission    * The string values here are what Pig expects to see in it's environment    */
 specifier|public
 specifier|static
