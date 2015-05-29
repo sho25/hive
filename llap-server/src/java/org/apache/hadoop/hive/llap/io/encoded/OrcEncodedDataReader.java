@@ -4239,7 +4239,13 @@ name|offset
 operator|>
 name|stripeStart
 condition|)
+block|{
+comment|// We assume splits will never start in the middle of the stripe.
+operator|++
+name|stripeIx
+expr_stmt|;
 continue|continue;
+block|}
 if|if
 condition|(
 name|stripeIxFrom
@@ -4290,6 +4296,10 @@ operator|>=
 name|maxOffset
 condition|)
 block|{
+name|stripeIxTo
+operator|=
+name|stripeIx
+expr_stmt|;
 if|if
 condition|(
 name|DebugUtils
@@ -4328,10 +4338,6 @@ literal|" stripes"
 argument_list|)
 expr_stmt|;
 block|}
-name|stripeIxTo
-operator|=
-name|stripeIx
-expr_stmt|;
 break|break;
 block|}
 operator|++
