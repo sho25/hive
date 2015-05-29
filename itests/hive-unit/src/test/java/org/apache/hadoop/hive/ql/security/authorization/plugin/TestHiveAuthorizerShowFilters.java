@@ -310,7 +310,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test HiveAuthorizer api invocation  */
+comment|/**  * Test HiveAuthorizer api invocation for filtering objects  */
 end_comment
 
 begin_class
