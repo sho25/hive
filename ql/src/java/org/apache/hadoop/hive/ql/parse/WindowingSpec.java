@@ -1136,7 +1136,7 @@ name|Direction
 operator|.
 name|PRECEDING
 operator|&&
-name|start
+name|end
 operator|.
 name|getAmt
 argument_list|()

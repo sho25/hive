@@ -1258,6 +1258,19 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVEHASHTABLEWBSIZE
+argument_list|)
+argument_list|,
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVEHYBRIDGRACEHASHJOINMINNUMPARTITIONS
 argument_list|)
 argument_list|,
@@ -1288,6 +1301,9 @@ name|memCheckFreq
 parameter_list|,
 name|int
 name|minWbSize
+parameter_list|,
+name|int
+name|maxWbSize
 parameter_list|,
 name|int
 name|minNumParts
@@ -1514,6 +1530,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// Cap WriteBufferSize to avoid large preallocations
 name|writeBufferSize
 operator|=
 name|writeBufferSize
@@ -1522,7 +1539,14 @@ name|minWbSize
 condition|?
 name|minWbSize
 else|:
+name|Math
+operator|.
+name|min
+argument_list|(
+name|maxWbSize
+argument_list|,
 name|writeBufferSize
+argument_list|)
 expr_stmt|;
 name|LOG
 operator|.

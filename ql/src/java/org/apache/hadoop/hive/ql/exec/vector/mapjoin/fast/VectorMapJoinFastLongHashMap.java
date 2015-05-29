@@ -343,7 +343,7 @@ argument_list|(
 name|key
 argument_list|)
 decl_stmt|;
-comment|// LOG.info("VectorMapJoinFastLongHashMap lookup " + key + " hashCode " + hashCode);
+comment|// LOG.debug("VectorMapJoinFastLongHashMap lookup " + key + " hashCode " + hashCode);
 name|long
 name|valueRef
 init|=

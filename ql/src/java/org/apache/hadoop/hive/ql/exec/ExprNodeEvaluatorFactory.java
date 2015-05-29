@@ -147,24 +147,6 @@ name|ExprNodeGenericFuncDesc
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|ExprNodeNullDesc
-import|;
-end_import
-
 begin_comment
 comment|/**  * ExprNodeEvaluatorFactory.  *  */
 end_comment
@@ -261,25 +243,6 @@ name|ExprNodeFieldEvaluator
 argument_list|(
 operator|(
 name|ExprNodeFieldDesc
-operator|)
-name|desc
-argument_list|)
-return|;
-block|}
-comment|// Null node, a constant node with value NULL and no type information
-if|if
-condition|(
-name|desc
-operator|instanceof
-name|ExprNodeNullDesc
-condition|)
-block|{
-return|return
-operator|new
-name|ExprNodeNullEvaluator
-argument_list|(
-operator|(
-name|ExprNodeNullDesc
 operator|)
 name|desc
 argument_list|)

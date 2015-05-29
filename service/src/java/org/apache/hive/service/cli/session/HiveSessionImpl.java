@@ -3544,6 +3544,8 @@ argument_list|,
 name|orientation
 argument_list|,
 name|maxRows
+argument_list|,
+name|hiveConf
 argument_list|)
 return|;
 block|}

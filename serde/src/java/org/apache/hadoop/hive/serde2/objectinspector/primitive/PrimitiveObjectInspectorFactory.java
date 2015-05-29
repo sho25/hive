@@ -2451,7 +2451,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Failed to create JavaHiveVarcharObjectInspector for "
+literal|"Failed to create Java ObjectInspector for "
 operator|+
 name|typeInfo
 argument_list|)

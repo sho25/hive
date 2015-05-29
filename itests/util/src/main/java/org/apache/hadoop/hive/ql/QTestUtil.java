@@ -2790,6 +2790,15 @@ name|getKeyProviderURI
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|setInt
+argument_list|(
+literal|"fs.trash.interval"
+argument_list|,
+literal|50
+argument_list|)
+expr_stmt|;
 name|dfs
 operator|=
 name|shims
@@ -4372,6 +4381,16 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|encrypted
 argument_list|)
 expr_stmt|;
 block|}
@@ -4647,15 +4666,6 @@ expr_stmt|;
 name|clearKeysCreatedInTests
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|clusterType
-operator|!=
-name|MiniClusterType
-operator|.
-name|encrypted
-condition|)
-block|{
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf
@@ -4682,7 +4692,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 comment|// propagate new conf to meta store
-block|}
 name|setup
 operator|.
 name|preTest
@@ -6359,6 +6368,10 @@ condition|(
 name|rc
 operator|!=
 literal|0
+operator|&&
+operator|!
+name|ignoreErrors
+argument_list|()
 condition|)
 block|{
 break|break;
@@ -6396,6 +6409,25 @@ comment|// reset
 block|}
 return|return
 name|rc
+return|;
+block|}
+comment|/**    * This allows a .q file to continue executing after a statement runs into an error which is convenient    * if you want to use another hive cmd after the failure to sanity check the state of the system.    */
+specifier|private
+name|boolean
+name|ignoreErrors
+parameter_list|()
+block|{
+return|return
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|CLIIGNOREERRORS
+argument_list|)
 return|;
 block|}
 specifier|private

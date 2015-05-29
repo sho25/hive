@@ -1038,6 +1038,42 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMultiInsert
+parameter_list|()
+throws|throws
+name|ParseException
+block|{
+name|ASTNode
+name|ast
+init|=
+name|parse
+argument_list|(
+literal|"from S insert into T1 select a, b insert into T2 select c, d"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TABNAME S))) "
+operator|+
+literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME T1))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL a)) (TOK_SELEXPR (TOK_TABLE_OR_COL b)))) "
+operator|+
+literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME T2))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL c)) (TOK_SELEXPR (TOK_TABLE_OR_COL d)))))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

@@ -6654,6 +6654,12 @@ decl_stmt|;
 name|Object
 name|writableValue
 init|=
+name|value
+operator|==
+literal|null
+condition|?
+name|value
+else|:
 name|ObjectInspectorConverters
 operator|.
 name|getConverter

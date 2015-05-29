@@ -2662,7 +2662,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|taskName
 operator|+
@@ -2683,7 +2683,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|taskName
 operator|+
@@ -2852,7 +2852,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|taskName
 operator|+
@@ -3943,13 +3943,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"VectorMapJoinInnerCommonOperator commonSetup begin..."
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|LOG
@@ -3958,6 +3951,13 @@ name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"VectorMapJoinInnerCommonOperator commonSetup begin..."
+argument_list|)
+expr_stmt|;
 name|displayBatchColumns
 argument_list|(
 name|batch

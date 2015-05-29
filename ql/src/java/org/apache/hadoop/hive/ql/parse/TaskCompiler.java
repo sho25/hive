@@ -2245,9 +2245,16 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// This is a column stats task. According to the semantic, there should be
+comment|// only one MR task in the rootTask.
 name|rootTasks
 operator|.
-name|add
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|addDependentTask
 argument_list|(
 name|cStatsTask
 argument_list|)

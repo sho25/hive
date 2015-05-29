@@ -1524,9 +1524,9 @@ name|reset
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Generate optimized results when entire batch key is repeated and it matched the hash map.    *    * @param batch    *          The big table batch.    * @param hashMapResult    *          The hash map results for the repeated key.    * @return    *          The new count of selected rows.    */
+comment|/**    * Generate optimized results when entire batch key is repeated and it matched the hash map.    *    * @param batch    *          The big table batch.    * @param hashMapResult    *          The hash map results for the repeated key.    */
 specifier|protected
-name|int
+name|void
 name|generateHashMapResultRepeatedAll
 parameter_list|(
 name|VectorizedRowBatch
@@ -1646,9 +1646,12 @@ name|size
 argument_list|)
 expr_stmt|;
 block|}
-return|return
+name|batch
+operator|.
+name|size
+operator|=
 name|numSel
-return|;
+expr_stmt|;
 block|}
 comment|//-----------------------------------------------------------------------------------------------
 comment|/*    * Spill.    */
@@ -1949,7 +1952,7 @@ operator|.
 name|finishRow
 argument_list|()
 expr_stmt|;
-comment|//  LOG.info("spillSerializeRow spilled batchIndex " + batchIndex + ", length " + length);
+comment|//  LOG.debug("spillSerializeRow spilled batchIndex " + batchIndex + ", length " + length);
 block|}
 specifier|protected
 name|void
@@ -2181,15 +2184,24 @@ name|needHashTableSetup
 operator|=
 literal|true
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 name|CLASS_NAME
 operator|+
 literal|" reloadHashTable!"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -2203,15 +2215,24 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 name|CLASS_NAME
 operator|+
 literal|" reProcessBigTable enter..."
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|spillReplayBatch
@@ -2294,7 +2315,7 @@ operator|.
 name|currentLength
 argument_list|()
 decl_stmt|;
-comment|//      LOG.info(CLASS_NAME + " reProcessBigTable serialized row #" + rowCount + ", offset " + offset + ", length " + length);
+comment|//      LOG.debug(CLASS_NAME + " reProcessBigTable serialized row #" + rowCount + ", offset " + offset + ", length " + length);
 name|bigTableVectorDeserializeRow
 operator|.
 name|setBytes
@@ -2333,19 +2354,7 @@ operator|.
 name|DEFAULT_SIZE
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"reProcessBigTable going to call process with spillReplayBatch.size "
-operator|+
-name|spillReplayBatch
-operator|.
-name|size
-operator|+
-literal|" rows"
-argument_list|)
-expr_stmt|;
+comment|// LOG.debug("reProcessBigTable going to call process with spillReplayBatch.size " + spillReplayBatch.size + " rows");
 name|process
 argument_list|(
 name|spillReplayBatch
@@ -2374,19 +2383,7 @@ operator|>
 literal|0
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"reProcessBigTable going to call process with spillReplayBatch.size "
-operator|+
-name|spillReplayBatch
-operator|.
-name|size
-operator|+
-literal|" rows"
-argument_list|)
-expr_stmt|;
+comment|// LOG.debug("reProcessBigTable going to call process with spillReplayBatch.size " + spillReplayBatch.size + " rows");
 name|process
 argument_list|(
 name|spillReplayBatch
@@ -2434,9 +2431,17 @@ name|e
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 name|CLASS_NAME
 operator|+
@@ -2451,6 +2456,7 @@ operator|+
 literal|" batches processed"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|//-----------------------------------------------------------------------------------------------
 comment|/*    * Forwarding.    */
@@ -2591,9 +2597,17 @@ name|forwardOverflow
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"VectorMapJoinInnerLongOperator closeOp "
 operator|+
@@ -2603,8 +2617,83 @@ literal|" batches processed"
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 comment|//-----------------------------------------------------------------------------------------------
 comment|/*    * Debug.    */
+specifier|public
+name|boolean
+name|verifyMonotonicallyIncreasing
+parameter_list|(
+name|int
+index|[]
+name|selected
+parameter_list|,
+name|int
+name|size
+parameter_list|)
+block|{
+if|if
+condition|(
+name|size
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+name|int
+name|prevBatchIndex
+init|=
+name|selected
+index|[
+literal|0
+index|]
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|1
+init|;
+name|i
+operator|<
+name|size
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|int
+name|batchIndex
+init|=
+name|selected
+index|[
+name|i
+index|]
+decl_stmt|;
+if|if
+condition|(
+name|batchIndex
+operator|<=
+name|prevBatchIndex
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+name|prevBatchIndex
+operator|=
+name|batchIndex
+expr_stmt|;
+block|}
+return|return
+literal|true
+return|;
+block|}
 specifier|public
 specifier|static
 name|String

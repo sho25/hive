@@ -208,6 +208,25 @@ name|size
 index|]
 expr_stmt|;
 block|}
+comment|/**    * Additional reset work for BytesColumnVector (releasing scratch bytes for by value strings).    */
+annotation|@
+name|Override
+specifier|public
+name|void
+name|reset
+parameter_list|()
+block|{
+name|super
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
+name|initBuffer
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 comment|/** Set a field by reference.    *    * @param elementNum index within column vector to set    * @param sourceBuf container of source data    * @param start start byte position within source    * @param length  length of source byte sequence    */
 specifier|public
 name|void

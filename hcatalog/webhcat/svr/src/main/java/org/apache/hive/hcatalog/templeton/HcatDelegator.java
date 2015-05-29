@@ -4528,7 +4528,7 @@ name|SimpleWebException
 argument_list|(
 name|HttpStatus
 operator|.
-name|INTERNAL_SERVER_ERROR_500
+name|NOT_FOUND_404
 argument_list|,
 literal|"Internal error, unable to find column "
 operator|+
@@ -4606,7 +4606,7 @@ name|SimpleWebException
 argument_list|(
 name|HttpStatus
 operator|.
-name|INTERNAL_SERVER_ERROR_500
+name|NOT_FOUND_404
 argument_list|,
 literal|"unable to find column "
 operator|+

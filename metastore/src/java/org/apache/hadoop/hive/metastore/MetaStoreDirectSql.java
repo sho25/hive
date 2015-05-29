@@ -7137,6 +7137,15 @@ argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|colStatsAggrFromDB
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|ColumnStatisticsObj
 name|colStatsAggr
 init|=
@@ -7172,6 +7181,7 @@ argument_list|,
 name|bloomFilter
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

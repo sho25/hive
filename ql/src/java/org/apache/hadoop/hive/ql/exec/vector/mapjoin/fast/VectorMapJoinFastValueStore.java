@@ -278,7 +278,7 @@ name|long
 name|valueRefWord
 parameter_list|)
 block|{
-comment|// LOG.info("VectorMapJoinFastValueStore set valueRefWord " + Long.toHexString(valueRefWord));
+comment|// LOG.debug("VectorMapJoinFastValueStore set valueRefWord " + Long.toHexString(valueRefWord));
 name|this
 operator|.
 name|valueStore
@@ -1496,7 +1496,7 @@ operator|.
 name|allBitsOnBitShifted
 expr_stmt|;
 block|}
-comment|// LOG.info("VectorMapJoinFastValueStore addFirst valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " valueRefWord " + Long.toHexString(valueRefWord));
+comment|// LOG.debug("VectorMapJoinFastValueStore addFirst valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " valueRefWord " + Long.toHexString(valueRefWord));
 comment|// The lower bits are the absolute value offset.
 name|valueRefWord
 operator||=
@@ -1623,7 +1623,7 @@ operator|!=
 literal|0
 operator|)
 decl_stmt|;
-comment|// LOG.info("VectorMapJoinFastValueStore addMore isOldValueLast " + isOldValueLast + " oldSmallValueLength " + oldSmallValueLength + " oldAbsoluteValueOffset " + oldAbsoluteValueOffset + " oldValueRef " + Long.toHexString(oldValueRef));
+comment|// LOG.debug("VectorMapJoinFastValueStore addMore isOldValueLast " + isOldValueLast + " oldSmallValueLength " + oldSmallValueLength + " oldAbsoluteValueOffset " + oldAbsoluteValueOffset + " oldValueRef " + Long.toHexString(oldValueRef));
 comment|/*      * Write information about the old value (which becomes our next) at the beginning      * of our new value.      */
 name|long
 name|newAbsoluteOffset
@@ -1808,7 +1808,7 @@ name|newValueRef
 operator||=
 name|newAbsoluteOffset
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastValueStore addMore valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " newValueRef " + Long.toHexString(newValueRef));
+comment|// LOG.debug("VectorMapJoinFastValueStore addMore valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " newValueRef " + Long.toHexString(newValueRef));
 return|return
 name|newValueRef
 return|;

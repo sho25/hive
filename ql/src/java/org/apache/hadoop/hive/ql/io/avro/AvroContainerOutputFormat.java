@@ -61,9 +61,9 @@ name|apache
 operator|.
 name|avro
 operator|.
-name|mapred
+name|file
 operator|.
-name|AvroOutputFormat
+name|CodecFactory
 operator|.
 name|DEFAULT_DEFLATE_LEVEL
 import|;

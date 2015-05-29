@@ -923,8 +923,6 @@ name|fieldName
 operator|=
 name|fieldName
 expr_stmt|;
-comment|//HCatUtil.assertNotNull(fieldName, "fieldName cannot be null");//seems sometimes it can be
-comment|// null, for ARRAY types in particular (which may be a complex type)
 name|this
 operator|.
 name|category
@@ -939,19 +937,23 @@ name|typeInfo
 operator|=
 name|typeInfo
 expr_stmt|;
-name|HCatUtil
-operator|.
-name|assertNotNull
-argument_list|(
+if|if
+condition|(
 name|typeInfo
-argument_list|,
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
 literal|"typeInfo cannot be null; fieldName="
 operator|+
 name|fieldName
-argument_list|,
-literal|null
 argument_list|)
-expr_stmt|;
+throw|;
+block|}
 name|type
 operator|=
 name|Type

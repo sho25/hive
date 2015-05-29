@@ -571,7 +571,7 @@ argument_list|,
 name|keyCount
 argument_list|)
 decl_stmt|;
-comment|// LOG.info("VectorMapJoinFastTableContainer load newThreshold " + newThreshold);
+comment|// LOG.debug("VectorMapJoinFastTableContainer load newThreshold " + newThreshold);
 name|VectorMapJoinFastHashTable
 operator|=
 name|createHashTable

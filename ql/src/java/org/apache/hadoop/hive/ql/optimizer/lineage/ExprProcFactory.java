@@ -523,24 +523,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|ExprNodeNullDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|OperatorDesc
 import|;
 end_import
@@ -895,10 +877,6 @@ operator|(
 name|nd
 operator|instanceof
 name|ExprNodeConstantDesc
-operator|||
-name|nd
-operator|instanceof
-name|ExprNodeNullDesc
 operator|)
 assert|;
 comment|// Create a dependency that has no basecols

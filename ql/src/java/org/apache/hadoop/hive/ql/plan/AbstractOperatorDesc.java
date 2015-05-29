@@ -81,7 +81,6 @@ init|=
 literal|false
 decl_stmt|;
 specifier|protected
-specifier|transient
 name|Statistics
 name|statistics
 decl_stmt|;

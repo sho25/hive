@@ -979,22 +979,12 @@ decl_stmt|;
 specifier|public
 name|State
 parameter_list|(
-name|int
-name|numPreceding
-parameter_list|,
-name|int
-name|numFollowing
-parameter_list|,
 name|AggregationBuffer
 name|buf
 parameter_list|)
 block|{
 name|super
 argument_list|(
-name|numPreceding
-argument_list|,
-name|numFollowing
-argument_list|,
 name|buf
 argument_list|)
 expr_stmt|;
@@ -1186,10 +1176,6 @@ return|return
 operator|new
 name|State
 argument_list|(
-name|numPreceding
-argument_list|,
-name|numFollowing
-argument_list|,
 name|underlying
 argument_list|)
 return|;
@@ -1285,8 +1271,6 @@ decl_stmt|;
 comment|/*        * add row to chain. except in case of UNB preceding: - only 1 firstVal        * needs to be tracked.        */
 if|if
 condition|(
-name|s
-operator|.
 name|numPreceding
 operator|!=
 name|BoundarySpec
@@ -1339,11 +1323,7 @@ name|s
 operator|.
 name|numRows
 operator|>=
-operator|(
-name|s
-operator|.
 name|numFollowing
-operator|)
 condition|)
 block|{
 comment|/*          * if skipNulls is true and there are no rows in valueChain => all rows          * in partition are null so far; so add null in o/p          */
@@ -1427,8 +1407,6 @@ name|idx
 decl_stmt|;
 if|if
 condition|(
-name|s
-operator|.
 name|numPreceding
 operator|!=
 name|BoundarySpec
@@ -1441,12 +1419,8 @@ name|numRows
 operator|>
 name|fIdx
 operator|+
-name|s
-operator|.
 name|numPreceding
 operator|+
-name|s
-operator|.
 name|numFollowing
 condition|)
 block|{
@@ -1510,8 +1484,6 @@ literal|0
 init|;
 name|i
 operator|<
-name|s
-operator|.
 name|numFollowing
 condition|;
 name|i
@@ -1559,8 +1531,6 @@ name|idx
 decl_stmt|;
 if|if
 condition|(
-name|s
-operator|.
 name|numPreceding
 operator|!=
 name|BoundarySpec
@@ -1573,12 +1543,8 @@ name|numRows
 operator|>
 name|fIdx
 operator|+
-name|s
-operator|.
 name|numPreceding
 operator|+
-name|s
-operator|.
 name|numFollowing
 operator|&&
 operator|!

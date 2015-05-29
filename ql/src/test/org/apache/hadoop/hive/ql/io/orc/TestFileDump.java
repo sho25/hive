@@ -2188,7 +2188,7 @@ argument_list|)
 operator|.
 name|bloomFilterColumns
 argument_list|(
-literal|"s"
+literal|"S"
 argument_list|)
 decl_stmt|;
 name|Writer

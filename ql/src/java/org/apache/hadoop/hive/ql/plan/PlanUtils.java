@@ -2202,6 +2202,27 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|crtTblDesc
+operator|.
+name|getSerdeProps
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|properties
+operator|.
+name|putAll
+argument_list|(
+name|crtTblDesc
+operator|.
+name|getSerdeProps
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// replace the default input& output file format with those found in
 comment|// crtTblDesc
 name|Class
