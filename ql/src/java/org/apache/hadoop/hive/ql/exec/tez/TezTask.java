@@ -2280,6 +2280,14 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|// Clear the work map after build. TODO: remove caching instead?
+name|Utilities
+operator|.
+name|clearWorkMap
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|perfLogger
 operator|.
 name|PerfLogEnd
