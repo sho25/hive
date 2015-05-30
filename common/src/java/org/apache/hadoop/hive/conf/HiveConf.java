@@ -8613,6 +8613,31 @@ argument_list|)
 argument_list|,
 literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
 argument_list|)
+block|,
+name|HIVE_MSCK_PATH_VALIDATION
+argument_list|(
+literal|"hive.msck.path.validation"
+argument_list|,
+literal|"throw"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"throw"
+argument_list|,
+literal|"skip"
+argument_list|,
+literal|"ignore"
+argument_list|)
+argument_list|,
+literal|"The approach msck should take with HDFS "
+operator|+
+literal|"directories that are partition-like but contain unsupported characters. 'throw' (an "
+operator|+
+literal|"exception) is the default; 'skip' will skip the invalid directories and still repair the"
+operator|+
+literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
+argument_list|)
 block|;
 specifier|public
 specifier|final
