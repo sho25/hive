@@ -7742,7 +7742,7 @@ name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
 argument_list|,
-literal|"0ms"
+literal|"6h"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7767,7 +7767,7 @@ name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.session.timeout"
 argument_list|,
-literal|"0ms"
+literal|"7d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7784,7 +7784,7 @@ name|HIVE_SERVER2_IDLE_OPERATION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.operation.timeout"
 argument_list|,
-literal|"0ms"
+literal|"5d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7805,11 +7805,11 @@ name|HIVE_SERVER2_IDLE_SESSION_CHECK_OPERATION
 argument_list|(
 literal|"hive.server2.idle.session.check.operation"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Session will be considered to be idle only if there is no activity, and there is no pending operation.\n"
 operator|+
-literal|"This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
+literal|" This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
 operator|+
 literal|"(hive.server2.session.check.interval) are enabled."
 argument_list|)
