@@ -107,7 +107,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|TestUtil
+name|UtilsForTest
 import|;
 end_import
 
@@ -727,7 +727,7 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|TestUtil
+name|UtilsForTest
 operator|.
 name|setNewDerbyDbLocation
 argument_list|(
