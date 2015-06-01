@@ -332,6 +332,16 @@ specifier|static
 name|Driver
 name|driver
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|NAME_PREFIX
+init|=
+literal|"TestViewEntity5"
+operator|.
+name|toLowerCase
+argument_list|()
+decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -438,6 +448,37 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|prefix
+init|=
+literal|"tunionview"
+operator|+
+name|NAME_PREFIX
+decl_stmt|;
+specifier|final
+name|String
+name|tab1
+init|=
+name|prefix
+operator|+
+literal|"t1"
+decl_stmt|;
+specifier|final
+name|String
+name|tab2
+init|=
+name|prefix
+operator|+
+literal|"t2"
+decl_stmt|;
+specifier|final
+name|String
+name|view1
+init|=
+name|prefix
+operator|+
+literal|"v1"
+decl_stmt|;
 name|int
 name|ret
 init|=
@@ -445,7 +486,11 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table t1(id int)"
+literal|"create table "
+operator|+
+name|tab1
+operator|+
+literal|"(id int)"
 argument_list|)
 operator|.
 name|getResponseCode
@@ -466,7 +511,11 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table t2(id int)"
+literal|"create table "
+operator|+
+name|tab2
+operator|+
+literal|"(id int)"
 argument_list|)
 operator|.
 name|getResponseCode
@@ -487,9 +536,29 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create view v1 as select t.id from "
+literal|"create view "
 operator|+
-literal|"(select t1.id from t1 union all select t2.id from t2) as t"
+name|view1
+operator|+
+literal|" as select t.id from "
+operator|+
+literal|"(select "
+operator|+
+name|tab1
+operator|+
+literal|".id from "
+operator|+
+name|tab1
+operator|+
+literal|" union all select "
+operator|+
+name|tab2
+operator|+
+literal|".id from "
+operator|+
+name|tab2
+operator|+
+literal|") as t"
 argument_list|)
 operator|.
 name|getResponseCode
@@ -508,13 +577,17 @@ name|driver
 operator|.
 name|compile
 argument_list|(
-literal|"select * from v1"
+literal|"select * from "
+operator|+
+name|view1
 argument_list|)
 expr_stmt|;
 comment|// view entity
 name|assertEquals
 argument_list|(
-literal|"default@v1"
+literal|"default@"
+operator|+
+name|view1
 argument_list|,
 name|CheckInputReadEntity
 operator|.
@@ -530,7 +603,9 @@ expr_stmt|;
 comment|// first table in union query with view as parent
 name|assertEquals
 argument_list|(
-literal|"default@t1"
+literal|"default@"
+operator|+
+name|tab1
 argument_list|,
 name|CheckInputReadEntity
 operator|.
@@ -543,9 +618,26 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertFalse
+argument_list|(
+literal|"Table is not direct input"
+argument_list|,
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+index|[
+literal|1
+index|]
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default@v1"
+literal|"default@"
+operator|+
+name|view1
 argument_list|,
 name|CheckInputReadEntity
 operator|.
@@ -570,7 +662,9 @@ expr_stmt|;
 comment|// second table in union query with view as parent
 name|assertEquals
 argument_list|(
-literal|"default@t2"
+literal|"default@"
+operator|+
+name|tab2
 argument_list|,
 name|CheckInputReadEntity
 operator|.
@@ -583,9 +677,26 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertFalse
+argument_list|(
+literal|"Table is not direct input"
+argument_list|,
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+index|[
+literal|2
+index|]
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default@v1"
+literal|"default@"
+operator|+
+name|view1
 argument_list|,
 name|CheckInputReadEntity
 operator|.
@@ -604,6 +715,153 @@ name|next
 argument_list|()
 operator|.
 name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Verify that the parent entities are captured correctly for view in subquery    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testViewInSubQuery
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|prefix
+init|=
+literal|"tvsubquery"
+operator|+
+name|NAME_PREFIX
+decl_stmt|;
+specifier|final
+name|String
+name|tab1
+init|=
+name|prefix
+operator|+
+literal|"t"
+decl_stmt|;
+specifier|final
+name|String
+name|view1
+init|=
+name|prefix
+operator|+
+literal|"v"
+decl_stmt|;
+name|int
+name|ret
+init|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|tab1
+operator|+
+literal|"(id int)"
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create view "
+operator|+
+name|view1
+operator|+
+literal|" as select * from "
+operator|+
+name|tab1
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|compile
+argument_list|(
+literal|"select * from "
+operator|+
+name|view1
+argument_list|)
+expr_stmt|;
+comment|// view entity
+name|assertEquals
+argument_list|(
+literal|"default@"
+operator|+
+name|view1
+argument_list|,
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+index|[
+literal|0
+index|]
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// table as second read entity
+name|assertEquals
+argument_list|(
+literal|"default@"
+operator|+
+name|tab1
+argument_list|,
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+index|[
+literal|1
+index|]
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+literal|"Table is not direct input"
+argument_list|,
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+index|[
+literal|1
+index|]
+operator|.
+name|isDirect
 argument_list|()
 argument_list|)
 expr_stmt|;

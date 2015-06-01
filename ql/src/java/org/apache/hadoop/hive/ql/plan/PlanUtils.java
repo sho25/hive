@@ -5243,8 +5243,16 @@ condition|(
 name|input
 operator|==
 literal|null
+operator|&&
+name|currentInput
+operator|!=
+literal|null
 condition|)
 block|{
+comment|// To handle the case of - select * from (select * from V1) A;
+comment|// the currentInput != null check above is needed.
+comment|// the alias list that case would be A:V1:T. Lookup on A would return null,
+comment|// we need to go further to find the view inside it.
 return|return
 name|currentInput
 return|;
