@@ -710,7 +710,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Unregonized Thrift TTypeId value: "
+literal|"Unrecognized Thrift TTypeId value: "
 operator|+
 name|tType
 argument_list|)
