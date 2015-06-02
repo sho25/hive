@@ -4018,6 +4018,29 @@ name|fsToken
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getFileId
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|String
+name|path
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Not supported on old version"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

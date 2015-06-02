@@ -2145,6 +2145,19 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Gets file ID. Only supported on hadoop-2.    * @return inode ID of the file.    */
+name|long
+name|getFileId
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|String
+name|path
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 
