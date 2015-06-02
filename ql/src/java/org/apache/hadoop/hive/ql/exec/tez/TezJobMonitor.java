@@ -2673,11 +2673,11 @@ argument_list|()
 decl_stmt|;
 specifier|final
 name|int
-name|killedTasks
+name|killedTaskAttempts
 init|=
 name|progress
 operator|.
-name|getKilledTaskCount
+name|getKilledTaskAttemptCount
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -3047,7 +3047,7 @@ name|totalTasks
 argument_list|,
 name|failedTaskAttempts
 argument_list|,
-name|killedTasks
+name|killedTaskAttempts
 argument_list|,
 name|secondsFormat
 operator|.
@@ -3278,7 +3278,7 @@ name|killed
 init|=
 name|progress
 operator|.
-name|getKilledTaskCount
+name|getKilledTaskAttemptCount
 argument_list|()
 decl_stmt|;
 comment|// To get vertex status we can use DAGClient.getVertexStatus(), but it will be expensive to
