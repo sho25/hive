@@ -1692,11 +1692,11 @@ name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|msg
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|"delta size: "
 argument_list|)

@@ -1854,7 +1854,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|showTablePartitons
+name|showTablePartitions
 parameter_list|(
 name|DataOutputStream
 name|out

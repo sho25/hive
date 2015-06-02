@@ -2745,11 +2745,11 @@ argument_list|()
 decl_stmt|;
 specifier|final
 name|int
-name|killedTasks
+name|killedTaskAttempts
 init|=
 name|progress
 operator|.
-name|getKilledTaskCount
+name|getKilledTaskAttemptCount
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -3119,7 +3119,7 @@ name|totalTasks
 argument_list|,
 name|failedTaskAttempts
 argument_list|,
-name|killedTasks
+name|killedTaskAttempts
 argument_list|,
 name|secondsFormat
 operator|.
@@ -3191,11 +3191,11 @@ name|DAGClient
 name|dagClient
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|reportBuffer
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|int
@@ -3350,7 +3350,7 @@ name|killed
 init|=
 name|progress
 operator|.
-name|getKilledTaskCount
+name|getKilledTaskAttemptCount
 argument_list|()
 decl_stmt|;
 comment|// To get vertex status we can use DAGClient.getVertexStatus(), but it will be expensive to
@@ -4332,11 +4332,11 @@ argument_list|>
 name|progressMap
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|reportBuffer
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|SortedSet

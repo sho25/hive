@@ -348,7 +348,7 @@ function_decl|;
 comment|/**    * Show the table partitions.    */
 specifier|public
 name|void
-name|showTablePartitons
+name|showTablePartitions
 parameter_list|(
 name|DataOutputStream
 name|out

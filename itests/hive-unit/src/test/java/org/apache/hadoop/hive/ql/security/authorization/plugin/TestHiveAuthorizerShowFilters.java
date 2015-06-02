@@ -107,6 +107,20 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|UtilsForTest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -310,7 +324,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test HiveAuthorizer api invocation  */
+comment|/**  * Test HiveAuthorizer api invocation for filtering objects  */
 end_comment
 
 begin_class
@@ -711,6 +725,20 @@ operator|.
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+name|UtilsForTest
+operator|.
+name|setNewDerbyDbLocation
+argument_list|(
+name|conf
+argument_list|,
+name|TestHiveAuthorizerShowFilters
+operator|.
+name|class
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|SessionState

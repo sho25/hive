@@ -2163,6 +2163,12 @@ argument_list|(
 name|fullPrincipal
 argument_list|)
 expr_stmt|;
+return|return
+name|fullKerberosName
+operator|.
+name|getShortName
+argument_list|()
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -2178,12 +2184,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return
-name|fullKerberosName
-operator|.
-name|getServiceName
-argument_list|()
-return|;
 block|}
 block|}
 specifier|private

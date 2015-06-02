@@ -617,6 +617,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|boolean
 name|isSparkConfigUpdated
 init|=
@@ -7751,7 +7752,7 @@ name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
 argument_list|,
-literal|"0ms"
+literal|"6h"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7776,7 +7777,7 @@ name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.session.timeout"
 argument_list|,
-literal|"0ms"
+literal|"7d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7793,7 +7794,7 @@ name|HIVE_SERVER2_IDLE_OPERATION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.operation.timeout"
 argument_list|,
-literal|"0ms"
+literal|"5d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7814,11 +7815,11 @@ name|HIVE_SERVER2_IDLE_SESSION_CHECK_OPERATION
 argument_list|(
 literal|"hive.server2.idle.session.check.operation"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Session will be considered to be idle only if there is no activity, and there is no pending operation.\n"
 operator|+
-literal|"This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
+literal|" This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
 operator|+
 literal|"(hive.server2.session.check.interval) are enabled."
 argument_list|)
@@ -8871,6 +8872,31 @@ literal|null
 argument_list|)
 argument_list|,
 literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
+argument_list|)
+block|,
+name|HIVE_MSCK_PATH_VALIDATION
+argument_list|(
+literal|"hive.msck.path.validation"
+argument_list|,
+literal|"throw"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"throw"
+argument_list|,
+literal|"skip"
+argument_list|,
+literal|"ignore"
+argument_list|)
+argument_list|,
+literal|"The approach msck should take with HDFS "
+operator|+
+literal|"directories that are partition-like but contain unsupported characters. 'throw' (an "
+operator|+
+literal|"exception) is the default; 'skip' will skip the invalid directories and still repair the"
+operator|+
+literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
 block|;
 specifier|public
@@ -10088,13 +10114,41 @@ literal|"of parameters that can't be modified at runtime"
 argument_list|)
 throw|;
 block|}
-name|isSparkConfigUpdated
-operator|=
-name|isSparkRelatedConfig
+name|String
+name|oldValue
+init|=
+name|name
+operator|!=
+literal|null
+condition|?
+name|get
 argument_list|(
 name|name
 argument_list|)
-expr_stmt|;
+else|:
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|name
+operator|==
+literal|null
+operator|||
+name|value
+operator|==
+literal|null
+operator|||
+operator|!
+name|value
+operator|.
+name|equals
+argument_list|(
+name|oldValue
+argument_list|)
+condition|)
+block|{
+comment|// When either name or value is null, the set method below will fail,
+comment|// and throw IllegalArgumentException
 name|set
 argument_list|(
 name|name
@@ -10102,6 +10156,14 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+name|isSparkConfigUpdated
+operator|=
+name|isSparkRelatedConfig
+argument_list|(
+name|name
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * check whether spark related property is updated, which includes spark configurations,    * RSC configurations and yarn configuration in Spark on YARN mode.    * @param name    * @return    */
 specifier|private
@@ -12505,12 +12567,6 @@ name|varname
 block|,
 name|ConfVars
 operator|.
-name|HIVEGROUPBYSKEW
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
 name|HIVEHASHTABLELOADFACTOR
 operator|.
 name|varname
@@ -12761,9 +12817,13 @@ literal|"hive\\.exec\\.mode.local\\..*"
 block|,
 literal|"hive\\.exec\\.orc\\..*"
 block|,
+literal|"hive\\.exec\\.parallel.*"
+block|,
 literal|"hive\\.explain\\..*"
 block|,
 literal|"hive\\.fetch.task\\..*"
+block|,
+literal|"hive\\.groupby\\..*"
 block|,
 literal|"hive\\.hbase\\..*"
 block|,
@@ -12813,6 +12873,12 @@ literal|"mapred\\.reduce\\..*"
 block|,
 literal|"mapred\\.output\\.compression\\.codec"
 block|,
+literal|"mapred\\.job\\.queuename"
+block|,
+literal|"mapred\\.output\\.compression\\.type"
+block|,
+literal|"mapred\\.min\\.split\\.size"
+block|,
 literal|"mapreduce\\.job\\.reduce\\.slowstart\\.completedmaps"
 block|,
 literal|"mapreduce\\.job\\.queuename"
@@ -12822,6 +12888,10 @@ block|,
 literal|"mapreduce\\.map\\..*"
 block|,
 literal|"mapreduce\\.reduce\\..*"
+block|,
+literal|"mapreduce\\.output\\.fileoutputformat\\.compress\\.codec"
+block|,
+literal|"mapreduce\\.output\\.fileoutputformat\\.compress\\.type"
 block|,
 literal|"tez\\.am\\..*"
 block|,

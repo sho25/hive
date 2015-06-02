@@ -362,11 +362,11 @@ condition|)
 block|{
 return|return;
 block|}
-name|StringBuffer
+name|StringBuilder
 name|reportBuffer
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|SimpleDateFormat
