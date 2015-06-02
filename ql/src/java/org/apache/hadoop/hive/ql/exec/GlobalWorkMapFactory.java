@@ -435,6 +435,14 @@ operator|.
 name|isDaemon
 argument_list|()
 operator|||
+operator|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|!=
+literal|null
+operator|&&
 name|SessionState
 operator|.
 name|get
@@ -442,6 +450,7 @@ argument_list|()
 operator|.
 name|isHiveServerQuery
 argument_list|()
+operator|)
 operator|||
 name|HiveConf
 operator|.
