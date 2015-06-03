@@ -743,13 +743,7 @@ decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
-name|Collection
-argument_list|<
-name|Future
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
+name|void
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -758,22 +752,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|Collection
-argument_list|<
-name|Future
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|result
-init|=
 name|super
 operator|.
 name|initializeOp
 argument_list|(
 name|hconf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// A MuxOperator should only have a single child
 if|if
 condition|(
@@ -1015,9 +1000,6 @@ operator|=
 literal|1
 expr_stmt|;
 block|}
-return|return
-name|result
-return|;
 block|}
 comment|/**    * Calls initialize on each of the children with outputObjetInspector as the    * output row format.    */
 annotation|@

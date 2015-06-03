@@ -190,13 +190,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|Collection
-argument_list|<
-name|Future
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
+name|void
 name|initializeOp
 parameter_list|(
 name|Configuration
@@ -236,29 +230,17 @@ argument_list|)
 expr_stmt|;
 comment|// Call super VectorMapJoinOuterFilteredOperator, which calls super MapJoinOperator with
 comment|// new input inspector.
-name|Collection
-argument_list|<
-name|Future
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-name|result
-init|=
 name|super
 operator|.
 name|initializeOp
 argument_list|(
 name|hconf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|firstBatch
 operator|=
 literal|true
 expr_stmt|;
-return|return
-name|result
-return|;
 block|}
 annotation|@
 name|Override
