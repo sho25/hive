@@ -179,7 +179,7 @@ expr_stmt|;
 name|descs
 operator|=
 operator|new
-name|String
+name|Object
 index|[
 name|Desc
 operator|.
