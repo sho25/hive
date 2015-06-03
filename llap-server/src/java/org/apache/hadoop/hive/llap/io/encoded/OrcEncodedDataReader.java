@@ -1307,6 +1307,19 @@ argument_list|,
 name|split
 argument_list|)
 expr_stmt|;
+name|counters
+operator|.
+name|setDesc
+argument_list|(
+name|QueryFragmentCounters
+operator|.
+name|Desc
+operator|.
+name|FILE
+argument_list|,
+name|fileId
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|fileMetadata
@@ -1390,6 +1403,25 @@ literal|null
 return|;
 comment|// No data to read.
 block|}
+name|counters
+operator|.
+name|setDesc
+argument_list|(
+name|QueryFragmentCounters
+operator|.
+name|Desc
+operator|.
+name|STRIPES
+argument_list|,
+name|stripeIxFrom
+operator|+
+literal|","
+operator|+
+name|readState
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
 comment|// 3. Apply SARG if needed, and otherwise determine what RGs to read.
 name|int
 name|stride

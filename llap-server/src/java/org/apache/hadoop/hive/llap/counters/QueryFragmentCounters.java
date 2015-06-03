@@ -137,7 +137,13 @@ specifier|static
 enum|enum
 name|Desc
 block|{
+name|MACHINE
+block|,
 name|TABLE
+block|,
+name|FILE
+block|,
+name|STRIPES
 block|}
 specifier|private
 specifier|final
@@ -146,7 +152,7 @@ name|fixedCounters
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
+name|Object
 index|[]
 name|descs
 decl_stmt|;
@@ -236,7 +242,7 @@ name|setCounter
 argument_list|(
 name|Counter
 operator|.
-name|HDFS_TIME_US
+name|CONSUMER_TIME_US
 argument_list|,
 operator|-
 literal|1
@@ -371,7 +377,7 @@ parameter_list|(
 name|Desc
 name|key
 parameter_list|,
-name|String
+name|Object
 name|desc
 parameter_list|)
 block|{
@@ -528,6 +534,16 @@ literal|", "
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|descs
+index|[
+name|i
+index|]
+operator|!=
+literal|null
+condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -538,6 +554,7 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|sb
 operator|.
