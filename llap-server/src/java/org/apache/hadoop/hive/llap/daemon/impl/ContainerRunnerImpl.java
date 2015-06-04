@@ -475,7 +475,7 @@ name|hadoop
 operator|.
 name|service
 operator|.
-name|AbstractService
+name|CompositeService
 import|;
 end_import
 
@@ -664,7 +664,7 @@ specifier|public
 class|class
 name|ContainerRunnerImpl
 extends|extends
-name|AbstractService
+name|CompositeService
 implements|implements
 name|ContainerRunner
 implements|,
@@ -846,6 +846,11 @@ argument_list|,
 name|localDirsBase
 argument_list|)
 expr_stmt|;
+name|addIfService
+argument_list|(
+name|queryTracker
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|executorService
@@ -881,6 +886,11 @@ name|localShufflePort
 argument_list|)
 argument_list|,
 name|localEnv
+argument_list|)
+expr_stmt|;
+name|addIfService
+argument_list|(
+name|executorService
 argument_list|)
 expr_stmt|;
 comment|// 80% of memory considered for accounted buffers. Rest for objects.
@@ -975,10 +985,12 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|)
+throws|throws
+name|Exception
 block|{
-name|queryTracker
+name|super
 operator|.
-name|init
+name|serviceInit
 argument_list|(
 name|conf
 argument_list|)
@@ -990,11 +1002,13 @@ specifier|public
 name|void
 name|serviceStart
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 comment|// The node id will only be available at this point, since the server has been started in LlapDaemon
-name|queryTracker
+name|super
 operator|.
-name|start
+name|serviceStart
 argument_list|()
 expr_stmt|;
 name|LlapNodeId
@@ -1055,6 +1069,11 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|super
+operator|.
+name|serviceStop
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|amReporter
@@ -1072,16 +1091,6 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|queryTracker
-operator|.
-name|stop
-argument_list|()
-expr_stmt|;
-name|super
-operator|.
-name|serviceStop
-argument_list|()
-expr_stmt|;
 block|}
 annotation|@
 name|Override

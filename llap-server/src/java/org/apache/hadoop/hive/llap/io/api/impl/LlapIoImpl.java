@@ -992,6 +992,11 @@ argument_list|(
 literal|"IO-Elevator-Thread-%d"
 argument_list|)
 operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+operator|.
 name|build
 argument_list|()
 argument_list|)
@@ -1140,6 +1145,11 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+name|executor
+operator|.
+name|shutdownNow
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class
