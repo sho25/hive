@@ -3665,6 +3665,7 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
@@ -3721,6 +3722,7 @@ block|}
 comment|// Thread local configuration is needed as many threads could make changes
 comment|// to the conf using the connection hook
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
