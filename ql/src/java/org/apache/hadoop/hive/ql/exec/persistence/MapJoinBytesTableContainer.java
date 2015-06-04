@@ -3311,13 +3311,6 @@ name|aliasFilter
 decl_stmt|;
 comment|/** Hash table wrapper specific to the container. */
 specifier|private
-specifier|final
-name|BytesBytesMultiHashMap
-operator|.
-name|ThreadSafeGetter
-name|threadSafeHashMapGetter
-decl_stmt|;
-specifier|private
 name|BytesBytesMultiHashMap
 operator|.
 name|Result
@@ -3382,13 +3375,6 @@ operator|new
 name|ByteArrayRef
 argument_list|()
 expr_stmt|;
-name|threadSafeHashMapGetter
-operator|=
-name|hashMap
-operator|.
-name|createGetterForThread
-argument_list|()
-expr_stmt|;
 name|hashMapResult
 operator|=
 operator|new
@@ -3413,7 +3399,7 @@ parameter_list|)
 block|{
 name|aliasFilter
 operator|=
-name|threadSafeHashMapGetter
+name|hashMap
 operator|.
 name|getValueResult
 argument_list|(

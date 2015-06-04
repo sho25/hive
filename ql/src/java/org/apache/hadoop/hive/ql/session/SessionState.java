@@ -4182,6 +4182,7 @@ name|out
 return|;
 block|}
 specifier|public
+specifier|static
 name|PrintStream
 name|getInfoStream
 parameter_list|()
@@ -4220,6 +4221,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
+specifier|static
 name|PrintStream
 name|getErrStream
 parameter_list|()

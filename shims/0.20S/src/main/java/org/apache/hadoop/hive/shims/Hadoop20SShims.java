@@ -1170,18 +1170,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
-name|startPauseMonitor
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
-block|{
-comment|/* no supported */
-block|}
-annotation|@
-name|Override
-specifier|public
 name|boolean
 name|isLocalMode
 parameter_list|(
