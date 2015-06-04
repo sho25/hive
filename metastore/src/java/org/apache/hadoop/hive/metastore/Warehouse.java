@@ -1192,11 +1192,6 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-name|closeFs
-argument_list|(
-name|fs
-argument_list|)
-expr_stmt|;
 name|MetaStoreUtils
 operator|.
 name|logAndThrowMetaException
@@ -2722,11 +2717,6 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-name|closeFs
-argument_list|(
-name|fs
-argument_list|)
-expr_stmt|;
 name|MetaStoreUtils
 operator|.
 name|logAndThrowMetaException
