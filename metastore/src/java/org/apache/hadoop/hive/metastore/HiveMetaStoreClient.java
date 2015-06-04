@@ -257,6 +257,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -2149,6 +2163,18 @@ name|String
 argument_list|>
 name|currentMetaVars
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|AtomicInteger
+name|connCount
+init|=
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
 comment|// for thrift connects
 specifier|private
 name|int
@@ -3430,6 +3456,18 @@ operator|.
 name|open
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Opened a connection to metastore, current connections: "
+operator|+
+name|connCount
+operator|.
+name|incrementAndGet
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|isConnected
 operator|=
 literal|true
@@ -3818,6 +3856,18 @@ name|transport
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closed a connection to metastore, current connections: "
+operator|+
+name|connCount
+operator|.
+name|decrementAndGet
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -10373,16 +10423,6 @@ specifier|final
 name|IMetaStoreClient
 name|client
 decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|Object
-name|lock
-init|=
-name|SynchronizedHandler
-operator|.
-name|class
-decl_stmt|;
 name|SynchronizedHandler
 parameter_list|(
 name|IMetaStoreClient
@@ -10399,6 +10439,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|Object
 name|invoke
 parameter_list|(
@@ -10417,11 +10458,6 @@ name|Throwable
 block|{
 try|try
 block|{
-synchronized|synchronized
-init|(
-name|lock
-init|)
-block|{
 return|return
 name|method
 operator|.
@@ -10432,7 +10468,6 @@ argument_list|,
 name|args
 argument_list|)
 return|;
-block|}
 block|}
 catch|catch
 parameter_list|(
