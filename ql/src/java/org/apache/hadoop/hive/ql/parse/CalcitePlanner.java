@@ -2035,6 +2035,28 @@ name|calcite
 operator|.
 name|rules
 operator|.
+name|HivePreFilteringRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
 name|HiveRelFieldTrimmer
 import|;
 end_import
@@ -6556,7 +6578,7 @@ name|INSTANCE
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 3. PPD
+comment|// 3. Constant propagation, common filter extraction, and PPD
 name|basePlan
 operator|=
 name|hepPlan
@@ -6578,6 +6600,10 @@ argument_list|,
 name|ReduceExpressionsRule
 operator|.
 name|JOIN_INSTANCE
+argument_list|,
+name|HivePreFilteringRule
+operator|.
+name|INSTANCE
 argument_list|,
 operator|new
 name|HiveFilterProjectTransposeRule
@@ -6601,14 +6627,6 @@ argument_list|)
 argument_list|,
 operator|new
 name|HiveFilterSetOpTransposeRule
-argument_list|(
-name|HiveFilter
-operator|.
-name|DEFAULT_FILTER_FACTORY
-argument_list|)
-argument_list|,
-operator|new
-name|FilterMergeRule
 argument_list|(
 name|HiveFilter
 operator|.
