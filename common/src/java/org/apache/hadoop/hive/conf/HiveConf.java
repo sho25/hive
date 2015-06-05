@@ -7203,6 +7203,17 @@ argument_list|,
 literal|"Bind host on which to run the HiveServer2 Thrift service."
 argument_list|)
 block|,
+name|HIVE_SERVER2_PARALLEL_COMPILATION
+argument_list|(
+literal|"hive.driver.parallel.compilation"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to\n"
+operator|+
+literal|"enable parallel compilation between sessions on HiveServer2. The default is false."
+argument_list|)
+block|,
 comment|// http (over thrift) transport settings
 name|HIVE_SERVER2_THRIFT_HTTP_PORT
 argument_list|(

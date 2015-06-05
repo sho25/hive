@@ -610,7 +610,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenTezUtils is a collection of shared helper methods to produce  * TezWork  */
+comment|/**  * GenTezUtils is a collection of shared helper methods to produce TezWork.  * All the methods in this class should be static, but some aren't; this is to facilitate testing.  * Methods are made non-static on as needed basis.  */
 end_comment
 
 begin_class
@@ -631,63 +631,14 @@ argument_list|(
 name|GenTezUtils
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// sequence number is used to name vertices (e.g.: Map 1, Reduce 14, ...)
-specifier|private
-name|int
-name|sequenceNumber
-init|=
-literal|0
-decl_stmt|;
-comment|// singleton
-specifier|private
-specifier|static
-name|GenTezUtils
-name|utils
-decl_stmt|;
 specifier|public
-specifier|static
-name|GenTezUtils
-name|getUtils
-parameter_list|()
-block|{
-if|if
-condition|(
-name|utils
-operator|==
-literal|null
-condition|)
-block|{
-name|utils
-operator|=
-operator|new
-name|GenTezUtils
-argument_list|()
-expr_stmt|;
-block|}
-return|return
-name|utils
-return|;
-block|}
-specifier|protected
 name|GenTezUtils
 parameter_list|()
 block|{   }
 specifier|public
-name|void
-name|resetSequenceNumber
-parameter_list|()
-block|{
-name|sequenceNumber
-operator|=
-literal|0
-expr_stmt|;
-block|}
-specifier|public
+specifier|static
 name|UnionWork
 name|createUnionWork
 parameter_list|(
@@ -718,10 +669,10 @@ name|UnionWork
 argument_list|(
 literal|"Union "
 operator|+
-operator|(
-operator|++
-name|sequenceNumber
-operator|)
+name|context
+operator|.
+name|nextSequenceNumber
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|context
@@ -758,6 +709,7 @@ name|unionWork
 return|;
 block|}
 specifier|public
+specifier|static
 name|ReduceWork
 name|createReduceWork
 parameter_list|(
@@ -858,10 +810,10 @@ name|Utilities
 operator|.
 name|REDUCENAME
 operator|+
-operator|(
-operator|++
-name|sequenceNumber
-operator|)
+name|context
+operator|.
+name|nextSequenceNumber
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -1154,7 +1106,8 @@ return|return
 name|reduceWork
 return|;
 block|}
-specifier|protected
+specifier|private
+specifier|static
 name|void
 name|setupReduceSink
 parameter_list|(
@@ -1286,10 +1239,10 @@ name|Utilities
 operator|.
 name|MAPNAME
 operator|+
-operator|(
-operator|++
-name|sequenceNumber
-operator|)
+name|context
+operator|.
+name|nextSequenceNumber
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -1449,6 +1402,7 @@ expr_stmt|;
 block|}
 comment|// removes any union operator and clones the plan
 specifier|public
+specifier|static
 name|void
 name|removeUnionOperators
 parameter_list|(
@@ -2191,6 +2145,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
+specifier|static
 name|void
 name|processFileSink
 parameter_list|(
@@ -2371,6 +2326,7 @@ block|}
 block|}
 comment|/**    * processAppMasterEvent sets up the event descriptor and the MapWork.    *    * @param procCtx    * @param event    */
 specifier|public
+specifier|static
 name|void
 name|processAppMasterEvent
 parameter_list|(
@@ -2691,6 +2647,7 @@ expr_stmt|;
 block|}
 comment|/**    * getEncosingWork finds the BaseWork any given operator belongs to.    */
 specifier|public
+specifier|static
 name|BaseWork
 name|getEnclosingWork
 parameter_list|(
@@ -2771,6 +2728,7 @@ return|;
 block|}
 comment|/*    * findRoots returns all root operators (in ops) that result in operator op    */
 specifier|private
+specifier|static
 name|void
 name|findRoots
 parameter_list|(
@@ -2847,6 +2805,7 @@ block|}
 block|}
 comment|/**    * Remove an operator branch. When we see a fork, we know it's time to do the removal.    * @param event the leaf node of which branch to be removed    */
 specifier|public
+specifier|static
 name|void
 name|removeBranch
 parameter_list|(
