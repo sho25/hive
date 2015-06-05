@@ -87,6 +87,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|RejectedExecutionException
@@ -1159,6 +1169,14 @@ name|getAttemptNumber
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1171,6 +1189,7 @@ name|request
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 comment|// This is the start of container-annotated logging.
 comment|// TODO Reduce the length of this string. Way too verbose at the moment.
 name|String
@@ -2363,6 +2382,21 @@ name|taskAttemptId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|getExecutorStatus
+parameter_list|()
+block|{
+return|return
+name|executorService
+operator|.
+name|getExecutorsStatus
+argument_list|()
+return|;
 block|}
 block|}
 end_class

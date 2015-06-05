@@ -23,6 +23,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|management
@@ -64,6 +74,15 @@ comment|/**    * CSV list of local directories    * @return local dirs    */
 specifier|public
 name|String
 name|getLocalDirs
+parameter_list|()
+function_decl|;
+comment|/**    * Executor states.    * @return Executor states.    */
+specifier|public
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|getExecutorsStatus
 parameter_list|()
 function_decl|;
 comment|/**    * Gets llap daemon configured executor memory per instance.    * @return memory per instance    */
