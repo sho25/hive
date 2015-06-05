@@ -1765,6 +1765,8 @@ operator|.
 name|DATA
 condition|)
 block|{
+comment|// We have a stream for included column, but in future it might have no data streams.
+comment|// It's more like "has at least one column included that has an index stream".
 name|hasIndexOnlyCols
 operator|=
 name|hasIndexOnlyCols
@@ -2121,6 +2123,7 @@ literal|null
 condition|)
 block|{
 comment|// No data to read for this stripe. Check if we have some included index-only columns.
+comment|// TODO: there may be a bug here. Could there be partial RG filtering on index-only column?
 if|if
 condition|(
 name|hasIndexOnlyCols

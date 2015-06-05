@@ -1913,17 +1913,18 @@ index|[
 name|stripeIxMod
 index|]
 expr_stmt|;
-assert|assert
+comment|// We assume that NO_RGS value is only set from SARG filter and for all columns;
+comment|// intermediate changes for individual columns will unset values in the array.
+comment|// Skip this case for 0-column read. We could probably special-case it just like we do
+comment|// in EncodedReaderImpl, but for now it's not that important.
+if|if
+condition|(
 name|colRgs
 operator|.
 name|length
 operator|>
 literal|0
-assert|;
-comment|// We assume that NO_RGS value is only set from SARG filter and for all columns;
-comment|// intermediate changes for individual columns will unset values in the array.
-if|if
-condition|(
+operator|&&
 name|colRgs
 index|[
 literal|0
