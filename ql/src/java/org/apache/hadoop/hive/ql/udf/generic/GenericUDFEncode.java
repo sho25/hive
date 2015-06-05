@@ -363,7 +363,7 @@ literal|"_FUNC_(str, str) - Encode the first argument using the second argument 
 argument_list|,
 name|extended
 operator|=
-literal|"Possible options for the character set are 'US_ASCII', 'ISO-8859-1',\n"
+literal|"Possible options for the character set are 'US-ASCII', 'ISO-8859-1',\n"
 operator|+
 literal|"'UTF-8', 'UTF-16BE', 'UTF-16LE', and 'UTF-16'. If either argument\n"
 operator|+

@@ -151,7 +151,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -331,6 +331,22 @@ name|hive
 operator|.
 name|hcatalog
 operator|.
+name|common
+operator|.
+name|HCatUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|hcatalog
+operator|.
 name|templeton
 operator|.
 name|AppConfig
@@ -382,7 +398,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Map Reduce job that will start another job.  *  * We have a single Mapper job that starts a child MR job.  The parent  * monitors the child child job and ends when the child job exits.  In  * addition, we  *  * - write out the parent job id so the caller can record it.  * - run a keep alive thread so the job doesn't end.  * - Optionally, store the stdout, stderr, and exit value of the child  *   in hdfs files.  *     * A note on security.  When jobs are submitted through WebHCat that use HCatalog, it means that  * metastore access is required.  Hive queries, of course, need metastore access.  This in turn  * requires delegation token to be obtained for metastore in a<em>secure cluster</em>.  Since we  * can't usually parse the job to find out if it is using metastore, we require 'usehcatalog'  * parameter supplied in the REST call.  WebHcat takes care of cancelling the token when the job  * is complete.  */
+comment|/**  * A Map Reduce job that will start another job.  *  * We have a single Mapper job that starts a child MR job.  The parent  * monitors the child child job and ends when the child job exits.  In  * addition, we  *  * - write out the parent job id so the caller can record it.  * - run a keep alive thread so the job doesn't end.  * - Optionally, store the stdout, stderr, and exit value of the child  *   in hdfs files.  *  * A note on security.  When jobs are submitted through WebHCat that use HCatalog, it means that  * metastore access is required.  Hive queries, of course, need metastore access.  This in turn  * requires delegation token to be obtained for metastore in a<em>secure cluster</em>.  Since we  * can't usually parse the job to find out if it is using metastore, we require 'usehcatalog'  * parameter supplied in the REST call.  WebHcat takes care of cancelling the token when the job  * is complete.  */
 end_comment
 
 begin_class
@@ -437,7 +453,13 @@ name|conf
 parameter_list|)
 block|{
 name|super
-argument_list|()
+argument_list|(
+operator|new
+name|Configuration
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -1039,6 +1061,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|run
@@ -1051,11 +1075,12 @@ throws|,
 name|InterruptedException
 block|{
 specifier|final
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
-operator|new
-name|HiveMetaStoreClient
+name|HCatUtil
+operator|.
+name|getHiveMetastoreClient
 argument_list|(
 name|c
 argument_list|)
@@ -1072,6 +1097,8 @@ name|String
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|run
@@ -1096,6 +1123,11 @@ name|client
 operator|.
 name|getDelegationToken
 argument_list|(
+name|c
+operator|.
+name|getUser
+argument_list|()
+argument_list|,
 name|u
 argument_list|)
 return|;

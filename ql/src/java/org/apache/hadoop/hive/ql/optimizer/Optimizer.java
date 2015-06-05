@@ -97,6 +97,28 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|calcite
+operator|.
+name|translator
+operator|.
+name|HiveOpConverterPostProc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|correlation
 operator|.
 name|CorrelationOptimizer
@@ -479,6 +501,17 @@ argument_list|<
 name|Transform
 argument_list|>
 argument_list|()
+expr_stmt|;
+comment|// Add the additional postprocessing transformations needed if
+comment|// we are translating Calcite operators into Hive operators.
+name|transformations
+operator|.
+name|add
+argument_list|(
+operator|new
+name|HiveOpConverterPostProc
+argument_list|()
+argument_list|)
 expr_stmt|;
 comment|// Add the transformation that computes the lineage information.
 name|transformations
@@ -1067,6 +1100,20 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVEIDENTITYPROJECTREMOVER
+argument_list|)
+operator|&&
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CBO_RETPATH_HIVEOP
 argument_list|)
 condition|)
 block|{

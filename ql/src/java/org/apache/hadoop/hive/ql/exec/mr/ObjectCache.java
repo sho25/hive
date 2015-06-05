@@ -386,6 +386,18 @@ block|}
 block|}
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|remove
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+block|{
+comment|// nothing to do
+block|}
 block|}
 end_class
 

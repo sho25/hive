@@ -657,7 +657,7 @@ control|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Checking to see if we should compact "
 operator|+
@@ -687,7 +687,7 @@ block|{
 comment|// Most likely this means it's a temp table
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Can't find table "
 operator|+
@@ -698,7 +698,7 @@ argument_list|()
 operator|+
 literal|", assuming it's a temp "
 operator|+
-literal|"table and moving on."
+literal|"table or has been dropped and moving on."
 argument_list|)
 expr_stmt|;
 continue|continue;
@@ -812,6 +812,35 @@ argument_list|(
 name|ci
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|p
+operator|==
+literal|null
+operator|&&
+name|ci
+operator|.
+name|partName
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Can't find partition "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
+operator|+
+literal|", assuming it has been dropped and moving on."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 name|StorageDescriptor
 name|sd
 init|=
@@ -1640,11 +1669,11 @@ name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|msg
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|"delta size: "
 argument_list|)

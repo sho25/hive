@@ -163,6 +163,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|io
+operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapred
 operator|.
 name|FileInputFormat
@@ -204,7 +218,7 @@ name|MapredParquetInputFormat
 extends|extends
 name|FileInputFormat
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ArrayWritable
 argument_list|>
@@ -305,7 +319,7 @@ name|mapred
 operator|.
 name|RecordReader
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ArrayWritable
 argument_list|>
@@ -416,7 +430,7 @@ return|return
 operator|(
 name|RecordReader
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ArrayWritable
 argument_list|>

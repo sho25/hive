@@ -267,6 +267,7 @@ name|SHOW_COMPACTIONS
 block|,
 name|SHOW_TRANSACTIONS
 block|,
+comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,
 name|RESET
@@ -278,6 +279,33 @@ block|,
 name|DELETE
 block|,
 name|COMPILE
+block|,
+comment|// ==== Hive command operations ends here ==== //
+comment|// ==== HiveServer2 metadata api types start here ==== //
+comment|// these corresponds to various java.sql.DatabaseMetaData calls.
+name|GET_CATALOGS
+block|,
+comment|// DatabaseMetaData.getCatalogs()  catalogs are actually not supported in
+comment|// hive, so this is a no-op
+name|GET_COLUMNS
+block|,
+comment|// getColumns(String catalog, String schemaPattern, String
+comment|// tableNamePattern, String columnNamePattern)
+name|GET_FUNCTIONS
+block|,
+comment|// getFunctions(String catalog, String schemaPattern, String functionNamePattern)
+name|GET_SCHEMAS
+block|,
+comment|// getSchemas()
+name|GET_TABLES
+block|,
+comment|// getTables(String catalog, String schemaPattern, String tableNamePattern, String[] types)
+name|GET_TABLETYPES
+block|,
+comment|// getTableTypes()
+name|GET_TYPEINFO
+comment|// getTypeInfo()
+comment|// ==== HiveServer2 metadata api types ends here ==== //
 block|}
 end_enum
 

@@ -107,9 +107,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorFactory
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -129,7 +127,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|StringObjectInspector
+name|PrimitiveObjectInspectorFactory
 import|;
 end_import
 
@@ -195,12 +193,12 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|String
+name|Object
 name|input
 init|=
 operator|(
 operator|(
-name|StringObjectInspector
+name|PrimitiveObjectInspector
 operator|)
 name|argumentOIs
 index|[
@@ -221,11 +219,14 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|input
+literal|"true"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"true"
+name|input
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -238,11 +239,14 @@ block|}
 elseif|else
 if|if
 condition|(
-name|input
+literal|"false"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"false"
+name|input
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 condition|)
 block|{

@@ -617,6 +617,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|boolean
 name|isSparkConfigUpdated
 init|=
@@ -764,6 +765,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_SERVER_PORT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORETHRIFTCONNECTIONRETRIES
 block|,
 name|HiveConf
@@ -783,6 +790,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_CLIENT_SOCKET_TIMEOUT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_SOCKET_LIFETIME
 block|,
 name|HiveConf
 operator|.
@@ -1077,6 +1090,66 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_ENABLED
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_SIZE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_FPP
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_TTL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_WRITER_WAIT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_READER_WAIT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_FULL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AGGREGATE_STATS_CACHE_CLEAN_UNTIL
 block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
@@ -2213,6 +2286,15 @@ argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
 argument_list|)
 block|,
+name|METASTORE_SERVER_PORT
+argument_list|(
+literal|"hive.metastore.port"
+argument_list|,
+literal|9083
+argument_list|,
+literal|"Hive metastore listener port"
+argument_list|)
+block|,
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
 argument_list|(
 literal|"hive.metastore.client.connect.retry.delay"
@@ -2245,6 +2327,27 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"MetaStore Client socket timeout in seconds"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_SOCKET_LIFETIME
+argument_list|(
+literal|"hive.metastore.client.socket.lifetime"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MetaStore Client socket lifetime in seconds. After this time is exceeded, client\n"
+operator|+
+literal|"reconnects on the next MetaStore operation. A value of 0s means the connection\n"
+operator|+
+literal|"has an infinite lifetime."
 argument_list|)
 block|,
 name|METASTOREPWD
@@ -3050,6 +3153,141 @@ operator|+
 literal|"or drops partitions iteratively"
 argument_list|)
 block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_ENABLED
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether aggregate stats caching is enabled or not."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_SIZE
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.size"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Maximum number of aggregate stats nodes that we will place in the metastore aggregate stats cache."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.max.partitions"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Maximum number of partitions that are aggregated per cache node."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_FPP
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.fpp"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.01
+argument_list|,
+literal|"Maximum false positive probability for the Bloom Filter used in each aggregate stats cache node (default 1%)."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.max.variance"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.01
+argument_list|,
+literal|"Maximum tolerable variance in number of partitions between a cached node and our request (default 1%)."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_TTL
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.ttl"
+argument_list|,
+literal|"600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Number of seconds for a cached node to be active in the cache before they become stale."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_WRITER_WAIT
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.max.writer.wait"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Number of milliseconds a writer will wait to acquire the writelock before giving up."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_READER_WAIT
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.max.reader.wait"
+argument_list|,
+literal|"1000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Number of milliseconds a reader will wait to acquire the readlock before giving up."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_MAX_FULL
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.max.full"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.9
+argument_list|,
+literal|"Maximum cache full % after which the cache cleaner thread kicks in."
+argument_list|)
+block|,
+name|METASTORE_AGGREGATE_STATS_CACHE_CLEAN_UNTIL
+argument_list|(
+literal|"hive.metastore.aggregate.stats.cache.clean.until"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.8
+argument_list|,
+literal|"The cleaner thread cleans until cache reaches this % full size."
+argument_list|)
+block|,
+name|METASTORE_METRICS
+argument_list|(
+literal|"hive.metastore.metrics.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable metrics on the metastore."
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
@@ -3398,6 +3636,90 @@ argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
 block|,
+name|HIVE_CBO_RETPATH_HIVEOP
+argument_list|(
+literal|"hive.cbo.returnpath.hiveop"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control calcite plan to hive operator conversion"
+argument_list|)
+block|,
+name|HIVE_CBO_EXTENDED_COST_MODEL
+argument_list|(
+literal|"hive.cbo.costmodel.extended"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling the extended cost model based on"
+operator|+
+literal|"CPU, IO and cardinality. Otherwise, the cost model is based on cardinality."
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_CPU
+argument_list|(
+literal|"hive.cbo.costmodel.cpu"
+argument_list|,
+literal|"0.000001"
+argument_list|,
+literal|"Default cost of a comparison"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_NET
+argument_list|(
+literal|"hive.cbo.costmodel.network"
+argument_list|,
+literal|"150.0"
+argument_list|,
+literal|"Default cost of a transfering a byte over network;"
+operator|+
+literal|" expressed as multiple of CPU cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_LFS_WRITE
+argument_list|(
+literal|"hive.cbo.costmodel.local.fs.write"
+argument_list|,
+literal|"4.0"
+argument_list|,
+literal|"Default cost of writing a byte to local FS;"
+operator|+
+literal|" expressed as multiple of NETWORK cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_LFS_READ
+argument_list|(
+literal|"hive.cbo.costmodel.local.fs.read"
+argument_list|,
+literal|"4.0"
+argument_list|,
+literal|"Default cost of reading a byte from local FS;"
+operator|+
+literal|" expressed as multiple of NETWORK cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_HDFS_WRITE
+argument_list|(
+literal|"hive.cbo.costmodel.hdfs.write"
+argument_list|,
+literal|"10.0"
+argument_list|,
+literal|"Default cost of writing a byte to HDFS;"
+operator|+
+literal|" expressed as multiple of Local FS write cost"
+argument_list|)
+block|,
+name|HIVE_CBO_COST_MODEL_HDFS_READ
+argument_list|(
+literal|"hive.cbo.costmodel.hdfs.read"
+argument_list|,
+literal|"1.5"
+argument_list|,
+literal|"Default cost of reading a byte from HDFS;"
+operator|+
+literal|" expressed as multiple of Local FS read cost"
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
@@ -3424,11 +3746,11 @@ name|HIVEUSEHYBRIDGRACEHASHJOIN
 argument_list|(
 literal|"hive.mapjoin.hybridgrace.hashtable"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to use hybrid"
 operator|+
-literal|"grace hash join as the join method for mapjoin."
+literal|"grace hash join as the join method for mapjoin. Tez only."
 argument_list|)
 block|,
 name|HIVEHYBRIDGRACEHASHJOINMEMCHECKFREQ
@@ -3444,11 +3766,33 @@ operator|+
 literal|"This number should be power of 2."
 argument_list|)
 block|,
+name|HIVEHYBRIDGRACEHASHJOINMINWBSIZE
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.minwbsize"
+argument_list|,
+literal|524288
+argument_list|,
+literal|"For hybrid grace"
+operator|+
+literal|"Hash join, the minimum write buffer size used by optimized hashtable. Default is 512 KB."
+argument_list|)
+block|,
+name|HIVEHYBRIDGRACEHASHJOINMINNUMPARTITIONS
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.minnumpartitions"
+argument_list|,
+literal|16
+argument_list|,
+literal|"For"
+operator|+
+literal|"Hybrid grace hash join, the minimum number of partitions to create."
+argument_list|)
+block|,
 name|HIVEHASHTABLEWBSIZE
 argument_list|(
 literal|"hive.mapjoin.optimized.hashtable.wbsize"
 argument_list|,
-literal|10
+literal|8
 operator|*
 literal|1024
 operator|*
@@ -4182,6 +4526,17 @@ operator|+
 literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
+name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
+argument_list|(
+literal|"hive.int.timestamp.conversion.in.seconds"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Boolean/tinyint/smallint/int/bigint value is interpreted as milliseconds during the timestamp conversion.\n"
+operator|+
+literal|"Set this flag to true to interpret the value as seconds to be consistent with float/double."
+argument_list|)
+block|,
 name|HIVE_ORC_FILE_MEMORY_POOL
 argument_list|(
 literal|"hive.exec.orc.memory.pool"
@@ -4399,7 +4754,7 @@ literal|"hive.orc.cache.stripe.details.size"
 argument_list|,
 literal|10000
 argument_list|,
-literal|"Cache size for keeping meta info about orc splits cached in the client."
+literal|"Max cache size for keeping meta info about orc splits cached in the client."
 argument_list|)
 block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
@@ -5101,6 +5456,21 @@ argument_list|,
 literal|"Probability with which a row will be chosen."
 argument_list|)
 block|,
+name|HIVEOPTIMIZEDISTINCTREWRITE
+argument_list|(
+literal|"hive.optimize.distinct.rewrite"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When applicable this "
+operator|+
+literal|"optimization rewrites distinct aggregates from a single stage to multi-stage "
+operator|+
+literal|"aggregation. This may not be optimal in all cases. Ideally, whether to trigger it or "
+operator|+
+literal|"not should be cost based decision. Until Hive formalizes cost model for this, this is config driven."
+argument_list|)
+block|,
 comment|// whether to optimize union followed by select followed by filesink
 comment|// It creates sub-directories in the final output, so should not be turned on in systems
 comment|// where MAPREDUCE-1501 is not present
@@ -5779,7 +6149,7 @@ name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.zookeeper.session.timeout"
 argument_list|,
-literal|"600000ms"
+literal|"1200000ms"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -6477,6 +6847,32 @@ block|,
 comment|// temporary variable for testing. This is added just to turn off this feature in case of a bug in
 comment|// deployment. It has not been documented in hive-default.xml intentionally, this should be removed
 comment|// once the feature is stable
+name|HIVE_EXIM_RESTRICT_IMPORTS_INTO_REPLICATED_TABLES
+argument_list|(
+literal|"hive.exim.strict.repl.tables"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Parameter that determines if 'regular' (non-replication) export dumps can be\n"
+operator|+
+literal|"imported on to tables that are the target of replication. If this parameter is\n"
+operator|+
+literal|"set, regular imports will check if the destination table(if it exists) has a "
+operator|+
+literal|"'repl.last.id' set on it. If so, it will fail."
+argument_list|)
+block|,
+name|HIVE_REPL_TASK_FACTORY
+argument_list|(
+literal|"hive.repl.task.factory"
+argument_list|,
+literal|"org.apache.hive.hcatalog.api.repl.exim.EximReplicationTaskFactory"
+argument_list|,
+literal|"Parameter that can be used to override which ReplicationTaskFactory will be\n"
+operator|+
+literal|"used to instantiate ReplicationTask events. Override for third party repl plugins"
+argument_list|)
+block|,
 name|HIVE_MAPPER_CANNOT_SPAN_MULTIPLE_PARTITIONS
 argument_list|(
 literal|"hive.mapper.cannot.span.multiple.partitions"
@@ -6589,6 +6985,15 @@ operator|+
 literal|"  VERBOSE: All logs"
 argument_list|)
 block|,
+name|HIVE_SERVER2_METRICS_ENABLED
+argument_list|(
+literal|"hive.server2.metrics.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable metrics on the HiveServer2."
+argument_list|)
+block|,
 comment|// logging configuration
 name|HIVE_LOG4J_FILE
 argument_list|(
@@ -6663,6 +7068,62 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether to include function name in the column alias auto generated by Hive."
+argument_list|)
+block|,
+name|HIVE_METRICS_CLASS
+argument_list|(
+literal|"hive.service.metrics.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics"
+argument_list|,
+literal|"org.apache.hadoop.hive.common.metrics.LegacyMetrics"
+argument_list|)
+argument_list|,
+literal|"Hive metrics subsystem implementation class."
+argument_list|)
+block|,
+name|HIVE_METRICS_REPORTER
+argument_list|(
+literal|"hive.service.metrics.reporter"
+argument_list|,
+literal|"JSON_FILE, JMX"
+argument_list|,
+literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, comma separated list of JMX, CONSOLE, JSON_FILE"
+argument_list|)
+block|,
+name|HIVE_METRICS_JSON_FILE_LOCATION
+argument_list|(
+literal|"hive.service.metrics.file.location"
+argument_list|,
+literal|"file:///tmp/my-logging.properties"
+argument_list|,
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of JSON metrics file.  "
+operator|+
+literal|"This file will get overwritten at every interval."
+argument_list|)
+block|,
+name|HIVE_METRICS_JSON_FILE_INTERVAL
+argument_list|(
+literal|"hive.service.metrics.file.frequency"
+argument_list|,
+literal|"5s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, "
+operator|+
+literal|"the frequency of updating JSON metrics file."
 argument_list|)
 block|,
 name|HIVE_PERF_LOGGER
@@ -6951,6 +7412,69 @@ argument_list|,
 literal|"Keepalive time for an idle http worker thread. When the number of workers exceeds min workers, "
 operator|+
 literal|"excessive threads are killed after this time interval."
+argument_list|)
+block|,
+comment|// Cookie based authentication
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.auth.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true, HiveServer2 in HTTP transport mode, will use cookie based authentication mechanism."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_MAX_AGE
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.max.age"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Maximum age in seconds for server side cookie used by HS2 in HTTP mode."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_DOMAIN
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.domain"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Domain for the HS2 generated cookies"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_PATH
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.path"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Path for the HS2 generated cookies"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.is.secure"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Secure attribute of the HS2 generated cookie."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_HTTPONLY
+argument_list|(
+literal|"hive.server2.thrift.http.cookie.is.httponly"
+argument_list|,
+literal|true
+argument_list|,
+literal|"HttpOnly attribute of the HS2 generated cookie."
 argument_list|)
 block|,
 comment|// binary transport settings
@@ -7445,7 +7969,7 @@ name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
 argument_list|,
-literal|"0ms"
+literal|"6h"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7470,7 +7994,7 @@ name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.session.timeout"
 argument_list|,
-literal|"0ms"
+literal|"7d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7487,7 +8011,7 @@ name|HIVE_SERVER2_IDLE_OPERATION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.operation.timeout"
 argument_list|,
-literal|"0ms"
+literal|"5d"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -7508,11 +8032,11 @@ name|HIVE_SERVER2_IDLE_SESSION_CHECK_OPERATION
 argument_list|(
 literal|"hive.server2.idle.session.check.operation"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Session will be considered to be idle only if there is no activity, and there is no pending operation.\n"
 operator|+
-literal|"This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
+literal|" This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
 operator|+
 literal|"(hive.server2.session.check.interval) are enabled."
 argument_list|)
@@ -7727,6 +8251,72 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable native (i.e. non-pass through) vectorization\n"
+operator|+
+literal|"of queries using MapJoin.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_MULTIKEY_ONLY_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.multikey.only.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to restrict use of native vector map join hash tables to\n"
+operator|+
+literal|"the MultiKey in queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_MINMAX_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.minmax.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vector map join hash tables to\n"
+operator|+
+literal|"use max / max filtering for integer join queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_OVERFLOW_REPEATED_THRESHOLD
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.overflow.repeated.threshold"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The number of small table rows for a match in vector map join hash tables\n"
+operator|+
+literal|"where we use the repeated field optimization in overflow vectorized row batch for join queries using MapJoin.\n"
+operator|+
+literal|"A value of -1 means do use the join result optimization.  Otherwise, threshold value can be 0 to maximum integer."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_MAPJOIN_NATIVE_FAST_HASHTABLE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.mapjoin.native.fast.hashtable.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable use of native fast vector map join hash tables in\n"
+operator|+
+literal|"queries using MapJoin.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_GROUPBY_CHECKINTERVAL
 argument_list|(
 literal|"hive.vectorized.groupby.checkinterval"
@@ -7765,7 +8355,11 @@ literal|"hive.typecheck.on.insert"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"This property has been extended to control "
+operator|+
+literal|"whether to check, convert, and normalize partition value to conform to its column type in "
+operator|+
+literal|"partition operations including but not limited to insert, such as alter, describe etc."
 argument_list|)
 block|,
 name|HIVE_HADOOP_CLASSPATH
@@ -8245,6 +8839,31 @@ literal|null
 argument_list|)
 argument_list|,
 literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
+argument_list|)
+block|,
+name|HIVE_MSCK_PATH_VALIDATION
+argument_list|(
+literal|"hive.msck.path.validation"
+argument_list|,
+literal|"throw"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"throw"
+argument_list|,
+literal|"skip"
+argument_list|,
+literal|"ignore"
+argument_list|)
+argument_list|,
+literal|"The approach msck should take with HDFS "
+operator|+
+literal|"directories that are partition-like but contain unsupported characters. 'throw' (an "
+operator|+
+literal|"exception) is the default; 'skip' will skip the invalid directories and still repair the"
+operator|+
+literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
 block|;
 specifier|public
@@ -9462,13 +10081,41 @@ literal|"of parameters that can't be modified at runtime"
 argument_list|)
 throw|;
 block|}
-name|isSparkConfigUpdated
-operator|=
-name|isSparkRelatedConfig
+name|String
+name|oldValue
+init|=
+name|name
+operator|!=
+literal|null
+condition|?
+name|get
 argument_list|(
 name|name
 argument_list|)
-expr_stmt|;
+else|:
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|name
+operator|==
+literal|null
+operator|||
+name|value
+operator|==
+literal|null
+operator|||
+operator|!
+name|value
+operator|.
+name|equals
+argument_list|(
+name|oldValue
+argument_list|)
+condition|)
+block|{
+comment|// When either name or value is null, the set method below will fail,
+comment|// and throw IllegalArgumentException
 name|set
 argument_list|(
 name|name
@@ -9476,6 +10123,14 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+name|isSparkConfigUpdated
+operator|=
+name|isSparkRelatedConfig
+argument_list|(
+name|name
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * check whether spark related property is updated, which includes spark configurations,    * RSC configurations and yarn configuration in Spark on YARN mode.    * @param name    * @return    */
 specifier|private
@@ -11111,6 +11766,12 @@ operator|.
 name|restrictList
 argument_list|)
 expr_stmt|;
+name|modWhiteListPattern
+operator|=
+name|other
+operator|.
+name|modWhiteListPattern
+expr_stmt|;
 block|}
 specifier|public
 name|Properties
@@ -11837,6 +12498,12 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVEDEFAULTMANAGEDFILEFORMAT
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|HIVEENFORCEBUCKETING
 operator|.
 name|varname
@@ -11862,12 +12529,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVEEXPREVALUATIONCACHE
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVEGROUPBYSKEW
 operator|.
 name|varname
 block|,
@@ -12035,6 +12696,18 @@ name|varname
 block|,
 name|ConfVars
 operator|.
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
 name|JOB_DEBUG_CAPTURE_STACKTRACES
 operator|.
 name|varname
@@ -12054,6 +12727,12 @@ block|,
 name|ConfVars
 operator|.
 name|MAXREDUCERS
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|NWAYJOINREORDER
 operator|.
 name|varname
 block|,
@@ -12105,7 +12784,13 @@ literal|"hive\\.exec\\.mode.local\\..*"
 block|,
 literal|"hive\\.exec\\.orc\\..*"
 block|,
+literal|"hive\\.exec\\.parallel.*"
+block|,
+literal|"hive\\.explain\\..*"
+block|,
 literal|"hive\\.fetch.task\\..*"
+block|,
+literal|"hive\\.groupby\\..*"
 block|,
 literal|"hive\\.hbase\\..*"
 block|,
@@ -12119,6 +12804,8 @@ literal|"hive\\.join\\..*"
 block|,
 literal|"hive\\.limit\\..*"
 block|,
+literal|"hive\\.log\\..*"
+block|,
 literal|"hive\\.mapjoin\\..*"
 block|,
 literal|"hive\\.merge\\..*"
@@ -12129,9 +12816,13 @@ literal|"hive\\.orc\\..*"
 block|,
 literal|"hive\\.outerjoin\\..*"
 block|,
+literal|"hive\\.parquet\\..*"
+block|,
 literal|"hive\\.ppd\\..*"
 block|,
 literal|"hive\\.prewarm\\..*"
+block|,
+literal|"hive\\.server2\\.proxy\\.user"
 block|,
 literal|"hive\\.skewjoin\\..*"
 block|,
@@ -12149,6 +12840,12 @@ literal|"mapred\\.reduce\\..*"
 block|,
 literal|"mapred\\.output\\.compression\\.codec"
 block|,
+literal|"mapred\\.job\\.queuename"
+block|,
+literal|"mapred\\.output\\.compression\\.type"
+block|,
+literal|"mapred\\.min\\.split\\.size"
+block|,
 literal|"mapreduce\\.job\\.reduce\\.slowstart\\.completedmaps"
 block|,
 literal|"mapreduce\\.job\\.queuename"
@@ -12159,11 +12856,17 @@ literal|"mapreduce\\.map\\..*"
 block|,
 literal|"mapreduce\\.reduce\\..*"
 block|,
+literal|"mapreduce\\.output\\.fileoutputformat\\.compress\\.codec"
+block|,
+literal|"mapreduce\\.output\\.fileoutputformat\\.compress\\.type"
+block|,
 literal|"tez\\.am\\..*"
 block|,
 literal|"tez\\.task\\..*"
 block|,
 literal|"tez\\.runtime\\..*"
+block|,
+literal|"tez.queue.name"
 block|,   }
 decl_stmt|;
 comment|/**    * Apply system properties to this object if the property name is defined in ConfVars    * and the value is non-null and not an empty string.    */

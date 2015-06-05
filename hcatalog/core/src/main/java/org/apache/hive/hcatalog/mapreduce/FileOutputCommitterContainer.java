@@ -215,6 +215,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|MetaStoreUtils
 import|;
 end_import
@@ -342,22 +358,6 @@ operator|.
 name|metadata
 operator|.
 name|HiveStorageHandler
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStoreClient
 import|;
 end_import
 
@@ -2756,7 +2756,7 @@ specifier|private
 name|void
 name|updateTableSchema
 parameter_list|(
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 parameter_list|,
 name|Table
@@ -3002,9 +3002,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
 name|fileStatus
 operator|.
-name|isFile
+name|isDir
 argument_list|()
 condition|)
 block|{
@@ -3180,14 +3181,7 @@ block|}
 block|}
 block|}
 block|}
-elseif|else
-if|if
-condition|(
-name|fileStatus
-operator|.
-name|isDirectory
-argument_list|()
-condition|)
+else|else
 block|{
 name|FileStatus
 index|[]
@@ -3558,27 +3552,6 @@ throw|;
 block|}
 block|}
 block|}
-block|}
-else|else
-block|{
-comment|// Should never happen
-specifier|final
-name|String
-name|msg
-init|=
-literal|"Unknown file type being asked to be moved, erroring out"
-decl_stmt|;
-throw|throw
-operator|new
-name|HCatException
-argument_list|(
-name|ErrorType
-operator|.
-name|ERROR_MOVE_FAILED
-argument_list|,
-name|msg
-argument_list|)
-throw|;
 block|}
 block|}
 comment|/**    * Find the final name of a given output file, given the output directory    * and the work directory. If immutable, attempt to create file of name    * _aN till we find an item that does not exist.    * @param file the file to move    * @param src the source directory    * @param dest the target directory    * @return the final path for the specific output file    * @throws java.io.IOException    */
@@ -4432,7 +4405,7 @@ expr_stmt|;
 block|}
 return|return;
 block|}
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -4474,7 +4447,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -5433,6 +5406,8 @@ name|p
 operator|.
 name|getValues
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -5653,7 +5628,7 @@ argument_list|(
 literal|"Cancelling delegation token for the job."
 argument_list|)
 expr_stmt|;
-name|HiveMetaStoreClient
+name|IMetaStoreClient
 name|client
 init|=
 literal|null
@@ -5677,7 +5652,7 @@ name|client
 operator|=
 name|HCatUtil
 operator|.
-name|getHiveClient
+name|getHiveMetastoreClient
 argument_list|(
 name|hiveConf
 argument_list|)

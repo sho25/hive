@@ -79,6 +79,7 @@ block|,
 name|UNKNOWN
 block|}
 empty_stmt|;
+specifier|public
 name|HCatNotificationEvent
 parameter_list|(
 name|NotificationEvent

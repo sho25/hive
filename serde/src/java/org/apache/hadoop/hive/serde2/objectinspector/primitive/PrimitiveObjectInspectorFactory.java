@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Map
 import|;
 end_import
 
@@ -47,7 +47,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|concurrent
+operator|.
+name|ConcurrentHashMap
 import|;
 end_import
 
@@ -714,7 +716,7 @@ decl_stmt|;
 comment|// Map from PrimitiveTypeInfo to AbstractPrimitiveWritableObjectInspector.
 specifier|private
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|PrimitiveTypeInfo
 argument_list|,
@@ -723,7 +725,7 @@ argument_list|>
 name|cachedPrimitiveWritableInspectorCache
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|PrimitiveTypeInfo
 argument_list|,
@@ -1395,7 +1397,7 @@ decl_stmt|;
 comment|// Map from PrimitiveTypeInfo to AbstractPrimitiveJavaObjectInspector.
 specifier|private
 specifier|static
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|PrimitiveTypeInfo
 argument_list|,
@@ -1404,7 +1406,7 @@ argument_list|>
 name|cachedPrimitiveJavaInspectorCache
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|PrimitiveTypeInfo
 argument_list|,
@@ -2023,15 +2025,30 @@ name|typeInfo
 argument_list|)
 throw|;
 block|}
+name|AbstractPrimitiveWritableObjectInspector
+name|prev
+init|=
 name|cachedPrimitiveWritableInspectorCache
 operator|.
-name|put
+name|putIfAbsent
 argument_list|(
 name|typeInfo
 argument_list|,
 name|result
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|prev
+operator|!=
+literal|null
+condition|)
+block|{
+name|result
+operator|=
+name|prev
 expr_stmt|;
+block|}
 return|return
 name|result
 return|;
@@ -2434,21 +2451,36 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Failed to create JavaHiveVarcharObjectInspector for "
+literal|"Failed to create Java ObjectInspector for "
 operator|+
 name|typeInfo
 argument_list|)
 throw|;
 block|}
+name|AbstractPrimitiveJavaObjectInspector
+name|prev
+init|=
 name|cachedPrimitiveJavaInspectorCache
 operator|.
-name|put
+name|putIfAbsent
 argument_list|(
 name|typeInfo
 argument_list|,
 name|result
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|prev
+operator|!=
+literal|null
+condition|)
+block|{
+name|result
+operator|=
+name|prev
 expr_stmt|;
+block|}
 return|return
 name|result
 return|;

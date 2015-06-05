@@ -122,6 +122,15 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * Removes the specified key from the object cache.    *    * @param key - key to be removed    */
+specifier|public
+name|void
+name|remove
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

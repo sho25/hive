@@ -3225,11 +3225,11 @@ case|case
 name|UNION
 case|:
 block|{
-name|StringBuffer
+name|StringBuilder
 name|result
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|result
@@ -6654,6 +6654,12 @@ decl_stmt|;
 name|Object
 name|writableValue
 init|=
+name|value
+operator|==
+literal|null
+condition|?
+name|value
+else|:
 name|ObjectInspectorConverters
 operator|.
 name|getConverter

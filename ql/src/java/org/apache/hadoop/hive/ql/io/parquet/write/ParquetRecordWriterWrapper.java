@@ -109,6 +109,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Writable
 import|;
 end_import
@@ -284,7 +298,7 @@ name|ParquetRecordWriterWrapper
 implements|implements
 name|RecordWriter
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ParquetHiveRecord
 argument_list|>
@@ -332,7 +346,7 @@ name|mapreduce
 operator|.
 name|RecordWriter
 argument_list|<
-name|Void
+name|NullWritable
 argument_list|,
 name|ParquetHiveRecord
 argument_list|>
@@ -709,7 +723,7 @@ name|void
 name|write
 parameter_list|(
 specifier|final
-name|Void
+name|NullWritable
 name|key
 parameter_list|,
 specifier|final

@@ -1830,11 +1830,11 @@ literal|0
 condition|)
 block|{
 comment|// Remove entries from txn_components, as there may be aborted txn components
-name|StringBuffer
+name|StringBuilder
 name|buf
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|buf
@@ -2203,11 +2203,11 @@ operator|>
 literal|0
 condition|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|buf
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|"delete from TXNS where txn_id in ("
 argument_list|)
@@ -2256,16 +2256,21 @@ argument_list|(
 literal|")"
 argument_list|)
 expr_stmt|;
+name|String
+name|bufStr
+init|=
+name|buf
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
 literal|"Going to execute update<"
 operator|+
-name|buf
-operator|.
-name|toString
-argument_list|()
+name|bufStr
 operator|+
 literal|">"
 argument_list|)
@@ -2277,10 +2282,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-name|buf
-operator|.
-name|toString
-argument_list|()
+name|bufStr
 argument_list|)
 decl_stmt|;
 name|LOG

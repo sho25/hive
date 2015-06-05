@@ -410,7 +410,7 @@ name|ArrayWritable
 name|internalValues
 decl_stmt|;
 specifier|private
-name|Void
+name|NullWritable
 name|internalKey
 decl_stmt|;
 specifier|private

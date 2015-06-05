@@ -641,7 +641,7 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"next_day only takes STRING_GROUP, DATE_GROUP types as 1st argument, got LONG"
+literal|"next_day only takes STRING_GROUP, DATE_GROUP, VOID_GROUP types as 1st argument, got LONG"
 argument_list|,
 name|e
 operator|.
@@ -719,7 +719,7 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"next_day only takes STRING_GROUP types as 2nd argument, got INT"
+literal|"next_day only takes STRING_GROUP, VOID_GROUP types as 2nd argument, got INT"
 argument_list|,
 name|e
 operator|.

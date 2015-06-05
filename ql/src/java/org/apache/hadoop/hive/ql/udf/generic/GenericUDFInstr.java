@@ -216,7 +216,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Generic UDF for string function<code>INSTR(str,substr)</code>. This mimcs  * the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_instr  *   *<pre>  * usage:  * INSTR(str, substr)  *</pre>  *<p>  */
+comment|/**  * Generic UDF for string function<code>INSTR(str,substr)</code>. This mimcs  * the function from MySQL  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#function_instr  *  *<pre>  * usage:  * INSTR(str, substr)  *</pre>  *<p>  */
 end_comment
 
 begin_class

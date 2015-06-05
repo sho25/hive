@@ -23,7 +23,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Map
 import|;
 end_import
 
@@ -59,11 +59,13 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
-name|List
+name|Map
 argument_list|<
 name|String
+argument_list|,
+name|String
 argument_list|>
-name|getValues
+name|getKeyValues
 parameter_list|()
 function_decl|;
 annotation|@
@@ -89,7 +91,7 @@ argument_list|)
 throw|;
 if|if
 condition|(
-name|getValues
+name|getKeyValues
 argument_list|()
 operator|==
 literal|null

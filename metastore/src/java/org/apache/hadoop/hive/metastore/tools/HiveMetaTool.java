@@ -1368,11 +1368,11 @@ block|}
 block|}
 specifier|private
 name|void
-name|printTblPropURIUpdateSummary
+name|printPropURIUpdateSummary
 parameter_list|(
 name|ObjectStore
 operator|.
-name|UpdateMStorageDescriptorTblPropURIRetVal
+name|UpdatePropURIRetVal
 name|retVal
 parameter_list|,
 name|String
@@ -1380,17 +1380,14 @@ name|tablePropKey
 parameter_list|,
 name|boolean
 name|isDryRun
-parameter_list|)
-block|{
+parameter_list|,
 name|String
 name|tblName
-init|=
-operator|new
+parameter_list|,
 name|String
-argument_list|(
-literal|"SD_PARAMS"
-argument_list|)
-decl_stmt|;
+name|methodName
+parameter_list|)
+block|{
 if|if
 condition|(
 name|retVal
@@ -1404,7 +1401,11 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"Encountered error while executing updateMStorageDescriptorTblPropURI - "
+literal|"Encountered error while executing "
+operator|+
+name|methodName
+operator|+
+literal|" - "
 operator|+
 literal|"commit of JDO transaction failed. Failed to update FSRoot locations in "
 operator|+
@@ -1907,6 +1908,52 @@ literal|"Looking for value of "
 operator|+
 name|tablePropKey
 operator|+
+literal|" key in TABLE_PARAMS table "
+operator|+
+literal|"to update.."
+argument_list|)
+expr_stmt|;
+name|ObjectStore
+operator|.
+name|UpdatePropURIRetVal
+name|updateTblPropURIRetVal
+init|=
+name|objStore
+operator|.
+name|updateTblPropURI
+argument_list|(
+name|oldURI
+argument_list|,
+name|newURI
+argument_list|,
+name|tablePropKey
+argument_list|,
+name|isDryRun
+argument_list|)
+decl_stmt|;
+name|printPropURIUpdateSummary
+argument_list|(
+name|updateTblPropURIRetVal
+argument_list|,
+name|tablePropKey
+argument_list|,
+name|isDryRun
+argument_list|,
+literal|"TABLE_PARAMS"
+argument_list|,
+literal|"updateTblPropURI"
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Looking for value of "
+operator|+
+name|tablePropKey
+operator|+
 literal|" key in SD_PARAMS table "
 operator|+
 literal|"to update.."
@@ -1914,8 +1961,8 @@ argument_list|)
 expr_stmt|;
 name|ObjectStore
 operator|.
-name|UpdateMStorageDescriptorTblPropURIRetVal
-name|updateTblPropURIRetVal
+name|UpdatePropURIRetVal
+name|updatePropURIRetVal
 init|=
 name|objStore
 operator|.
@@ -1930,13 +1977,17 @@ argument_list|,
 name|isDryRun
 argument_list|)
 decl_stmt|;
-name|printTblPropURIUpdateSummary
+name|printPropURIUpdateSummary
 argument_list|(
-name|updateTblPropURIRetVal
+name|updatePropURIRetVal
 argument_list|,
 name|tablePropKey
 argument_list|,
 name|isDryRun
+argument_list|,
+literal|"SD_PARAMS"
+argument_list|,
+literal|"updateMStorageDescriptorTblPropURI"
 argument_list|)
 expr_stmt|;
 block|}

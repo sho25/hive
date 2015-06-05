@@ -1698,8 +1698,8 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-comment|// if there are union all operators we need to add the work to the set
-comment|// of union operators.
+comment|// if there are union all operators, it means that the walking context contains union all operators.
+comment|// please see more details of context.currentUnionOperator in GenTezWorkWalker
 name|UnionWork
 name|unionWork
 decl_stmt|;
@@ -1741,12 +1741,45 @@ argument_list|(
 name|operator
 argument_list|)
 expr_stmt|;
+comment|// finally connect the union work with work
+name|connectUnionWorkWithWork
+argument_list|(
+name|unionWork
+argument_list|,
+name|work
+argument_list|,
+name|tezWork
+argument_list|,
+name|context
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
-comment|// first time through. we need to create a union work object and add this
-comment|// work to it. Subsequent work should reference the union and not the actual
-comment|// work.
+comment|// we've not seen this terminal before. we need to check
+comment|// rootUnionWorkMap which contains the information of mapping the root
+comment|// operator of a union work to a union work
+name|unionWork
+operator|=
+name|context
+operator|.
+name|rootUnionWorkMap
+operator|.
+name|get
+argument_list|(
+name|root
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|unionWork
+operator|==
+literal|null
+condition|)
+block|{
+comment|// if unionWork is null, it means it is the first time. we need to
+comment|// create a union work object and add this work to it. Subsequent
+comment|// work should reference the union and not the actual work.
 name|unionWork
 operator|=
 name|utils
@@ -1755,74 +1788,33 @@ name|createUnionWork
 argument_list|(
 name|context
 argument_list|,
+name|root
+argument_list|,
 name|operator
 argument_list|,
 name|tezWork
 argument_list|)
 expr_stmt|;
-block|}
-comment|// finally hook everything up
-name|LOG
-operator|.
-name|debug
+comment|// finally connect the union work with work
+name|connectUnionWorkWithWork
 argument_list|(
-literal|"Connecting union work ("
-operator|+
 name|unionWork
-operator|+
-literal|") with work ("
-operator|+
+argument_list|,
 name|work
-operator|+
-literal|")"
-argument_list|)
-expr_stmt|;
-name|TezEdgeProperty
-name|edgeProp
-init|=
-operator|new
-name|TezEdgeProperty
-argument_list|(
-name|EdgeType
-operator|.
-name|CONTAINS
-argument_list|)
-decl_stmt|;
+argument_list|,
 name|tezWork
-operator|.
-name|connect
-argument_list|(
-name|unionWork
 argument_list|,
-name|work
-argument_list|,
-name|edgeProp
-argument_list|)
-expr_stmt|;
-name|unionWork
-operator|.
-name|addUnionOperators
-argument_list|(
 name|context
-operator|.
-name|currentUnionOperators
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 name|context
 operator|.
 name|currentUnionOperators
 operator|.
 name|clear
 argument_list|()
-expr_stmt|;
-name|context
-operator|.
-name|workWithUnionOperators
-operator|.
-name|add
-argument_list|(
-name|work
-argument_list|)
 expr_stmt|;
 name|work
 operator|=
@@ -2520,6 +2512,79 @@ operator|-
 literal|1
 argument_list|)
 return|;
+block|}
+specifier|private
+name|void
+name|connectUnionWorkWithWork
+parameter_list|(
+name|UnionWork
+name|unionWork
+parameter_list|,
+name|BaseWork
+name|work
+parameter_list|,
+name|TezWork
+name|tezWork
+parameter_list|,
+name|GenTezProcContext
+name|context
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Connecting union work ("
+operator|+
+name|unionWork
+operator|+
+literal|") with work ("
+operator|+
+name|work
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+name|TezEdgeProperty
+name|edgeProp
+init|=
+operator|new
+name|TezEdgeProperty
+argument_list|(
+name|EdgeType
+operator|.
+name|CONTAINS
+argument_list|)
+decl_stmt|;
+name|tezWork
+operator|.
+name|connect
+argument_list|(
+name|unionWork
+argument_list|,
+name|work
+argument_list|,
+name|edgeProp
+argument_list|)
+expr_stmt|;
+name|unionWork
+operator|.
+name|addUnionOperators
+argument_list|(
+name|context
+operator|.
+name|currentUnionOperators
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|workWithUnionOperators
+operator|.
+name|add
+argument_list|(
+name|work
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

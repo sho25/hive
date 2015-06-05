@@ -944,13 +944,10 @@ name|pathToPartitionInfo
 init|=
 name|Utilities
 operator|.
-name|getMapRedWork
+name|getMapWork
 argument_list|(
 name|hiveConf
 argument_list|)
-operator|.
-name|getMapWork
-argument_list|()
 operator|.
 name|getPathToPartitionInfo
 argument_list|()
@@ -3613,7 +3610,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|Error
+name|RuntimeException
 argument_list|(
 literal|"Cannot allocate vector column for "
 operator|+

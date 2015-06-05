@@ -91,7 +91,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Collections
 import|;
 end_import
 
@@ -120,14 +120,11 @@ specifier|private
 name|long
 name|eventId
 decl_stmt|;
+comment|/**    * Trivial ctor to support Writable reflections instantiation    * do not expect to use this object as-is, unless you call    * readFields after using this ctor    */
 specifier|public
 name|NoopCommand
 parameter_list|()
-block|{
-comment|// trivial ctor to support Writable reflections instantiation
-comment|// do not expect to use this object as-is, unless you call
-comment|// readFields after using this ctor
-block|}
+block|{   }
 specifier|public
 name|NoopCommand
 parameter_list|(
@@ -153,11 +150,9 @@ name|get
 parameter_list|()
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -194,11 +189,9 @@ name|getUndo
 parameter_list|()
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -213,11 +206,9 @@ name|cleanupLocationsPerRetry
 parameter_list|()
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -232,11 +223,9 @@ name|cleanupLocationsAfterEvent
 parameter_list|()
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -269,12 +258,7 @@ name|writeDatum
 argument_list|(
 name|dataOutput
 argument_list|,
-name|Long
-operator|.
-name|valueOf
-argument_list|(
 name|eventId
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -293,7 +277,6 @@ block|{
 name|eventId
 operator|=
 operator|(
-operator|(
 name|Long
 operator|)
 name|ReaderWriter
@@ -302,10 +285,6 @@ name|readDatum
 argument_list|(
 name|dataInput
 argument_list|)
-operator|)
-operator|.
-name|longValue
-argument_list|()
 expr_stmt|;
 block|}
 block|}

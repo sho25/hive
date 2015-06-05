@@ -25,26 +25,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|OutputStream
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -303,6 +283,22 @@ return|return
 name|v
 operator|*
 literal|1000000000
+return|;
+block|}
+comment|/* Convert an integer value in milliseconds since the epoch to a timestamp value    * for use in a long column vector, which is represented in nanoseconds since the epoch.    */
+specifier|public
+specifier|static
+name|long
+name|millisecondsLongToTimestamp
+parameter_list|(
+name|long
+name|v
+parameter_list|)
+block|{
+return|return
+name|v
+operator|*
+literal|1000000
 return|;
 block|}
 comment|// Convert seconds since the epoch (with fraction) to nanoseconds, as a long integer.

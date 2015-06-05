@@ -311,6 +311,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|AfterClass
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Before
 import|;
 end_import
@@ -336,7 +346,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Unit tests for {@link DbTxnManager}.  */
+comment|/**  * Unit tests for {@link DbTxnManager}.  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  */
 end_comment
 
 begin_class

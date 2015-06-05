@@ -2274,23 +2274,31 @@ return|return
 name|t
 return|;
 block|}
-comment|/**    * Converts the time in seconds to a timestamp.    * @param timeInSeconds time in seconds    * @return the timestamp    */
+comment|/**    * Converts the time in seconds or milliseconds to a timestamp.    * @param time time in seconds or in milliseconds    * @return the timestamp    */
 specifier|public
 specifier|static
 name|Timestamp
 name|longToTimestamp
 parameter_list|(
 name|long
-name|timeInSeconds
+name|time
+parameter_list|,
+name|boolean
+name|intToTimestampInSeconds
 parameter_list|)
 block|{
+comment|// If the time is in seconds, converts it to milliseconds first.
 return|return
 operator|new
 name|Timestamp
 argument_list|(
-name|timeInSeconds
+name|intToTimestampInSeconds
+condition|?
+name|time
 operator|*
 literal|1000
+else|:
+name|time
 argument_list|)
 return|;
 block|}

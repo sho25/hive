@@ -3073,6 +3073,29 @@ argument_list|,
 name|command
 argument_list|)
 decl_stmt|;
+name|String
+name|operationName
+init|=
+name|ctx
+operator|.
+name|getExplain
+argument_list|()
+condition|?
+name|HiveOperation
+operator|.
+name|EXPLAIN
+operator|.
+name|getOperationName
+argument_list|()
+else|:
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCommandType
+argument_list|()
+decl_stmt|;
 name|plan
 operator|=
 operator|new
@@ -3093,13 +3116,7 @@ argument_list|)
 argument_list|,
 name|queryId
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getCommandType
-argument_list|()
+name|operationName
 argument_list|)
 expr_stmt|;
 name|conf
@@ -7977,13 +7994,23 @@ operator|.
 name|getQueryId
 argument_list|()
 decl_stmt|;
+comment|// Get the query string from the conf file as the compileInternal() method might
+comment|// hide sensitive information during query redaction.
 name|String
 name|queryStr
 init|=
-name|plan
+name|HiveConf
 operator|.
-name|getQueryStr
-argument_list|()
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYSTRING
+argument_list|)
 decl_stmt|;
 name|maxthreads
 operator|=
@@ -8006,7 +8033,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Starting command: "
+literal|"Starting command(queryId="
+operator|+
+name|queryId
+operator|+
+literal|"): "
 operator|+
 name|queryStr
 argument_list|)

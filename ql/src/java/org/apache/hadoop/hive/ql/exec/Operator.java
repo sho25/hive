@@ -4994,6 +4994,7 @@ return|return
 name|useBucketizedHiveInputFormat
 return|;
 block|}
+comment|/**    * Before setting this to {@code true} make sure it's not reading ACID tables    * @param useBucketizedHiveInputFormat    */
 specifier|public
 name|void
 name|setUseBucketizedHiveInputFormat

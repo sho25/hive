@@ -645,6 +645,13 @@ argument_list|(
 name|sargs
 argument_list|)
 expr_stmt|;
+name|server
+operator|.
+name|setServerEventHandler
+argument_list|(
+name|serverEventHandler
+argument_list|)
+expr_stmt|;
 name|String
 name|msg
 init|=

@@ -2650,7 +2650,7 @@ block|{
 name|long
 name|_elem438
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem438
 operator|=
 name|iprot
@@ -3137,7 +3137,7 @@ block|{
 name|long
 name|_elem443
 decl_stmt|;
-comment|// required
+comment|// optional
 name|_elem443
 operator|=
 name|iprot
