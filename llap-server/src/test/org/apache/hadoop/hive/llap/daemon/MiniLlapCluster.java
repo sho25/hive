@@ -286,6 +286,11 @@ name|llapIoEnabled
 decl_stmt|;
 specifier|private
 specifier|final
+name|boolean
+name|ioIsDirect
+decl_stmt|;
+specifier|private
+specifier|final
 name|long
 name|ioBytesPerService
 decl_stmt|;
@@ -332,6 +337,9 @@ parameter_list|,
 name|boolean
 name|llapIoEnabled
 parameter_list|,
+name|boolean
+name|ioIsDirect
+parameter_list|,
 name|long
 name|ioBytesPerService
 parameter_list|,
@@ -350,6 +358,8 @@ argument_list|,
 name|execBytePerService
 argument_list|,
 name|llapIoEnabled
+argument_list|,
+name|ioIsDirect
 argument_list|,
 name|ioBytesPerService
 argument_list|,
@@ -372,6 +382,9 @@ name|execMemoryPerService
 parameter_list|,
 name|boolean
 name|llapIoEnabled
+parameter_list|,
+name|boolean
+name|ioIsDirect
 parameter_list|,
 name|long
 name|ioBytesPerService
@@ -687,6 +700,12 @@ name|execMemoryPerService
 expr_stmt|;
 name|this
 operator|.
+name|ioIsDirect
+operator|=
+name|ioIsDirect
+expr_stmt|;
+name|this
+operator|.
 name|llapIoEnabled
 operator|=
 name|llapIoEnabled
@@ -783,6 +802,8 @@ argument_list|,
 name|execBytesPerService
 argument_list|,
 name|llapIoEnabled
+argument_list|,
+name|ioIsDirect
 argument_list|,
 name|ioBytesPerService
 argument_list|,
