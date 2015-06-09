@@ -409,6 +409,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ServerUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -2105,6 +2121,14 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|// Cleanup the scratch dir before starting
+name|ServerUtils
+operator|.
+name|cleanUpScratchDir
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
 name|server
 operator|=
 operator|new
