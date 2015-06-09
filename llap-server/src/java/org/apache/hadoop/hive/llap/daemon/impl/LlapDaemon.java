@@ -630,6 +630,11 @@ name|containerRunner
 decl_stmt|;
 specifier|private
 specifier|final
+name|AMReporter
+name|amReporter
+decl_stmt|;
+specifier|private
+specifier|final
 name|LlapRegistryService
 name|registry
 decl_stmt|;
@@ -1167,6 +1172,18 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
+name|amReporter
+operator|=
+operator|new
+name|AMReporter
+argument_list|(
+name|address
+argument_list|,
+name|daemonConf
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
 name|server
 operator|=
 operator|new
@@ -1179,11 +1196,6 @@ argument_list|,
 name|address
 argument_list|,
 name|rpcPort
-argument_list|)
-expr_stmt|;
-name|addIfService
-argument_list|(
-name|server
 argument_list|)
 expr_stmt|;
 name|this
@@ -1210,6 +1222,8 @@ argument_list|,
 name|executorMemoryBytes
 argument_list|,
 name|metrics
+argument_list|,
+name|amReporter
 argument_list|)
 expr_stmt|;
 name|addIfService
@@ -1243,6 +1257,19 @@ expr_stmt|;
 name|addIfService
 argument_list|(
 name|webServices
+argument_list|)
+expr_stmt|;
+comment|// Bring up the server only after all other components have started.
+name|addIfService
+argument_list|(
+name|server
+argument_list|)
+expr_stmt|;
+comment|// AMReporter after the server so that it gets the correct address. It knows how to deal with
+comment|// requests before it is started.
+name|addIfService
+argument_list|(
+name|amReporter
 argument_list|)
 expr_stmt|;
 block|}
@@ -1418,16 +1445,24 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|serviceStart
-argument_list|()
-expr_stmt|;
+comment|// Start the Shuffle service before the listener - until it's a service as well.
 name|ShuffleHandler
 operator|.
 name|initializeAndStart
 argument_list|(
 name|shuffleHandlerConf
+argument_list|)
+expr_stmt|;
+name|super
+operator|.
+name|serviceStart
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"LlapDaemon serviceStart complete"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1443,11 +1478,11 @@ operator|.
 name|serviceStop
 argument_list|()
 expr_stmt|;
+name|ShuffleHandler
+operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
-name|ShuffleHandler
-operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;

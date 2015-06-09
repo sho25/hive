@@ -173,6 +173,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicReference
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -530,7 +544,7 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-specifier|final
+specifier|volatile
 name|LlapNodeId
 name|nodeId
 decl_stmt|;
@@ -560,6 +574,14 @@ init|=
 operator|new
 name|DelayQueue
 argument_list|()
+decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicReference
+argument_list|<
+name|InetSocketAddress
+argument_list|>
+name|localAddress
 decl_stmt|;
 specifier|private
 specifier|final
@@ -604,8 +626,11 @@ decl_stmt|;
 specifier|public
 name|AMReporter
 parameter_list|(
-name|LlapNodeId
-name|nodeId
+name|AtomicReference
+argument_list|<
+name|InetSocketAddress
+argument_list|>
+name|localAddress
 parameter_list|,
 name|Configuration
 name|conf
@@ -623,9 +648,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|nodeId
+name|localAddress
 operator|=
-name|nodeId
+name|localAddress
 expr_stmt|;
 name|this
 operator|.
@@ -722,15 +747,6 @@ argument_list|,
 name|LlapConfiguration
 operator|.
 name|LLAP_DAEMON_LIVENESS_HEARTBEAT_INTERVAL_MS_DEFAULT
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"AMReporter running with NodeId: {}"
-argument_list|,
-name|nodeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -849,14 +865,36 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+name|nodeId
+operator|=
+name|LlapNodeId
+operator|.
+name|getInstance
+argument_list|(
+name|localAddress
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getHostName
+argument_list|()
+argument_list|,
+name|localAddress
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getPort
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Started service: "
-operator|+
-name|getName
-argument_list|()
+literal|"AMReporter running with NodeId: {}"
+argument_list|,
+name|nodeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -1119,7 +1157,7 @@ operator|.
 name|info
 argument_list|(
 operator|(
-literal|"Ignoring duplocate unregisterRequest for am at: "
+literal|"Ignoring duplicate unregisterRequest for am at: "
 operator|+
 name|amLocation
 operator|+
@@ -1192,6 +1230,8 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Even if the service hasn't started up. It's OK to make this invocation since this will
+comment|// only happen after the AtomicReference address has been populated. Not adding an additional check.
 name|ListenableFuture
 argument_list|<
 name|Void
