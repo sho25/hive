@@ -1577,11 +1577,11 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|keyOrder
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 for|for

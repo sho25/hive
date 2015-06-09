@@ -3268,7 +3268,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// 1. Split leaf join predicate to expressions from left, right
-name|HiveRelOptUtil
+name|RelOptUtil
 operator|.
 name|splitJoinCondition
 argument_list|(

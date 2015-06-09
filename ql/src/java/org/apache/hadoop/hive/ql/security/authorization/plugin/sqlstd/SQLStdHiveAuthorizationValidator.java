@@ -983,6 +983,40 @@ name|HiveAuthzContext
 name|context
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Obtained following objects in  filterListCmdObjects "
+operator|+
+name|listObjs
+operator|+
+literal|" for user "
+operator|+
+name|authenticator
+operator|.
+name|getUserName
+argument_list|()
+operator|+
+literal|". Context Info: "
+operator|+
+name|context
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|listObjs
 return|;

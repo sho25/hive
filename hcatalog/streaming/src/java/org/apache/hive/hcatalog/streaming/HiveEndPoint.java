@@ -1984,11 +1984,11 @@ name|partKeys
 argument_list|)
 throw|;
 block|}
-name|StringBuffer
+name|StringBuilder
 name|buff
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 name|partKeys
 operator|.

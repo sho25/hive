@@ -236,7 +236,7 @@ literal|"Exactly one argument is expected."
 argument_list|)
 throw|;
 block|}
-if|if
+switch|switch
 condition|(
 name|parameters
 index|[
@@ -245,21 +245,29 @@ index|]
 operator|.
 name|getCategory
 argument_list|()
-operator|!=
-name|ObjectInspector
-operator|.
-name|Category
-operator|.
-name|PRIMITIVE
 condition|)
 block|{
+case|case
+name|PRIMITIVE
+case|:
+case|case
+name|STRUCT
+case|:
+case|case
+name|MAP
+case|:
+case|case
+name|LIST
+case|:
+break|break;
+default|default:
 throw|throw
 operator|new
 name|UDFArgumentTypeException
 argument_list|(
 literal|0
 argument_list|,
-literal|"Only primitive type arguments are accepted but "
+literal|"Only primitive, struct, list or map type arguments are accepted but "
 operator|+
 name|parameters
 index|[

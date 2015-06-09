@@ -209,11 +209,11 @@ name|cause
 parameter_list|)
 block|{
 comment|//Initial message is just the error type message
-name|StringBuffer
+name|StringBuilder
 name|message
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 name|HCatException
 operator|.

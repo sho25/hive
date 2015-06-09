@@ -972,7 +972,6 @@ name|getLocations
 argument_list|()
 return|;
 block|}
-comment|// TODO#: THIS
 annotation|@
 name|Override
 specifier|public

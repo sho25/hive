@@ -334,13 +334,6 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|Warehouse
-operator|.
-name|closeFs
-argument_list|(
-name|fs
-argument_list|)
-expr_stmt|;
 name|MetaStoreUtils
 operator|.
 name|logAndThrowMetaException

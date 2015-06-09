@@ -1799,7 +1799,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Fold input expression desc.    *    * If desc is a UDF and all parameters are constants, evaluate it. If desc is a column expression,    * find it from propagated constants, and if there is, replace it with constant.    *    * @param desc folding expression    * @param constants current propagated constant map    * @param cppCtx    * @param op processing operator    * @param propagate if true, assignment expressions will be added to constants.    * @return fold expression    * @throws UDFArgumentException    */
+comment|/**    * Fold input expression desc.    *    * This function recursively checks if any subexpression of a specified expression    * can be evaluated to be constant and replaces such subexpression with the constant.    * If the expression is a derterministic UDF and all the subexpressions are constants,    * the value will be calculated immediately (during compilation time vs. runtime).    * e.g.:    *   concat(year, month) => 200112 for year=2001, month=12 since concat is deterministic UDF    *   unix_timestamp(time) => unix_timestamp(123) for time=123 since unix_timestamp is nonderministic UDF    * @param desc folding expression    * @param constants current propagated constant map    * @param cppCtx    * @param op processing operator    * @param propagate if true, assignment expressions will be added to constants.    * @return fold expression    * @throws UDFArgumentException    */
 specifier|private
 specifier|static
 name|ExprNodeDesc
@@ -1851,7 +1851,6 @@ name|ExprNodeGenericFuncDesc
 operator|)
 name|desc
 decl_stmt|;
-comment|// The function must be deterministic, or we can't fold it.
 name|GenericUDF
 name|udf
 init|=
@@ -1860,33 +1859,6 @@ operator|.
 name|getGenericUDF
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|isDeterministicUdf
-argument_list|(
-name|udf
-argument_list|)
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Function "
-operator|+
-name|udf
-operator|.
-name|getClass
-argument_list|()
-operator|+
-literal|" undeterministic, quit folding."
-argument_list|)
-expr_stmt|;
-return|return
-name|desc
-return|;
-block|}
 name|boolean
 name|propagateNext
 init|=
@@ -1947,7 +1919,49 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If all child expressions are constants, evaluate UDF immediately
+comment|// Don't evalulate nondeterministic function since the value can only calculate during runtime.
+if|if
+condition|(
+operator|!
+name|isDeterministicUdf
+argument_list|(
+name|udf
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Function "
+operator|+
+name|udf
+operator|.
+name|getClass
+argument_list|()
+operator|+
+literal|" is undeterministic. Don't evalulating immediately."
+argument_list|)
+expr_stmt|;
+operator|(
+operator|(
+name|ExprNodeGenericFuncDesc
+operator|)
+name|desc
+operator|)
+operator|.
+name|setChildren
+argument_list|(
+name|newExprs
+argument_list|)
+expr_stmt|;
+return|return
+name|desc
+return|;
+block|}
+else|else
+block|{
+comment|// If all child expressions of deterministic function are constants, evaluate such UDF immediately
 name|ExprNodeDesc
 name|constant
 init|=
@@ -2041,7 +2055,7 @@ expr_stmt|;
 block|}
 comment|// If in some selected binary operators (=, is null, etc), one of the
 comment|// expressions are
-comment|// constant, add them to colToConstatns as half-deterministic columns.
+comment|// constant, add them to colToConstants as half-deterministic columns.
 if|if
 condition|(
 name|propagate
@@ -2061,6 +2075,7 @@ argument_list|,
 name|constants
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|desc

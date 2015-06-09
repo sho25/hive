@@ -55,6 +55,20 @@ specifier|abstract
 class|class
 name|ColumnVector
 block|{
+comment|/*    * The current kinds of column vectors.    */
+specifier|public
+specifier|static
+enum|enum
+name|Type
+block|{
+name|LONG
+block|,
+name|DOUBLE
+block|,
+name|BYTES
+block|,
+name|DECIMAL
+block|}
 comment|/*    * If hasNulls is true, then this array contains true if the value    * is null, otherwise false. The array is always allocated, so a batch can be re-used    * later and nulls added.    */
 specifier|public
 name|boolean

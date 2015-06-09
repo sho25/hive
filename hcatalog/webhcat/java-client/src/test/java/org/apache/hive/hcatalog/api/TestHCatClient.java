@@ -1130,6 +1130,8 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
+literal|"test."
+operator|+
 name|HiveConf
 operator|.
 name|ConfVars
