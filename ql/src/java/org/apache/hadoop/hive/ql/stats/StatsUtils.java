@@ -2108,6 +2108,20 @@ condition|(
 literal|null
 operator|==
 name|aggrStats
+operator|||
+literal|null
+operator|==
+name|aggrStats
+operator|.
+name|getColStats
+argument_list|()
+operator|||
+name|aggrStats
+operator|.
+name|getColStatsSize
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 comment|// There are some partitions with no state (or we didn't fetch any state).

@@ -10838,6 +10838,17 @@ name|MetaException
 throws|,
 name|TException
 block|{
+if|if
+condition|(
+name|colNames
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+return|return
+literal|null
+return|;
+comment|// Nothing to aggregate.
 name|PartitionsStatsRequest
 name|req
 init|=
