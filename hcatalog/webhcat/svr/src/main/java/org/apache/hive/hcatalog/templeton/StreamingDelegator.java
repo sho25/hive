@@ -188,6 +188,9 @@ parameter_list|,
 name|boolean
 name|enableLog
 parameter_list|,
+name|Boolean
+name|enableJobReconnect
+parameter_list|,
 name|JobType
 name|jobType
 parameter_list|)
@@ -275,6 +278,8 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|enableLog
+argument_list|,
+name|enableJobReconnect
 argument_list|,
 name|jobType
 argument_list|)
