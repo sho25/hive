@@ -10782,7 +10782,9 @@ argument_list|,
 name|fs
 operator|.
 name|getDefaultReplication
-argument_list|()
+argument_list|(
+name|path
+argument_list|)
 argument_list|,
 name|blockSize
 argument_list|)
