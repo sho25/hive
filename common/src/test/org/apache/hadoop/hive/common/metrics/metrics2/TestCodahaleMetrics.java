@@ -451,7 +451,7 @@ name|CodahaleMetrics
 operator|)
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|)
 operator|.
@@ -470,7 +470,7 @@ name|Exception
 block|{
 name|MetricsFactory
 operator|.
-name|deInit
+name|close
 argument_list|()
 expr_stmt|;
 block|}
@@ -505,7 +505,7 @@ control|)
 block|{
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|startScope
@@ -515,7 +515,7 @@ argument_list|)
 expr_stmt|;
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|endScope
@@ -593,7 +593,7 @@ control|)
 block|{
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|incrementCounter
@@ -695,7 +695,7 @@ name|Exception
 block|{
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|startScope
@@ -705,7 +705,7 @@ argument_list|)
 expr_stmt|;
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|endScope
@@ -809,7 +809,7 @@ control|)
 block|{
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 operator|.
 name|incrementCounter
