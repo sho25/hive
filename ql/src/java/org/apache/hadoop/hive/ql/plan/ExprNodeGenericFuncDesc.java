@@ -723,6 +723,13 @@ argument_list|(
 literal|"("
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|chidren
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|int
@@ -771,6 +778,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|sb
 operator|.

@@ -2757,23 +2757,21 @@ operator|<
 name|minAllocSize
 condition|)
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"ORC compression buffer size ("
 operator|+
 name|bufferSize
 operator|+
-literal|") is smaller than"
+literal|") is smaller than LLAP low-level "
 operator|+
-literal|" LLAP low-level cache minimum allocation size ("
+literal|"cache minimum allocation size ("
 operator|+
 name|minAllocSize
 operator|+
-literal|"). Decrease"
-operator|+
-literal|" the value for "
+literal|"). Decrease the value for "
 operator|+
 name|HiveConf
 operator|.
@@ -2783,8 +2781,10 @@ name|LLAP_ORC_CACHE_MIN_ALLOC
 operator|.
 name|toString
 argument_list|()
+operator|+
+literal|" to avoid wasting memory"
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 block|}
 specifier|private
