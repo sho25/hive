@@ -175,24 +175,6 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
 name|StandardListObjectInspector
 import|;
 end_import
@@ -224,7 +206,7 @@ block|}
 comment|// For PARTIAL1 and COMPLETE: ObjectInspectors for original data
 specifier|private
 specifier|transient
-name|PrimitiveObjectInspector
+name|ObjectInspector
 name|inputOI
 decl_stmt|;
 comment|// For PARTIAL2 and FINAL: ObjectInspectors for partial aggregations (list
@@ -300,9 +282,6 @@ condition|)
 block|{
 name|inputOI
 operator|=
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|parameters
 index|[
 literal|0
@@ -313,9 +292,6 @@ name|ObjectInspectorFactory
 operator|.
 name|getStandardListObjectInspector
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|ObjectInspectorUtils
 operator|.
 name|getStandardObjectInspector
@@ -343,9 +319,6 @@ block|{
 comment|//no map aggregation.
 name|inputOI
 operator|=
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|ObjectInspectorUtils
 operator|.
 name|getStandardObjectInspector
@@ -357,9 +330,6 @@ index|]
 argument_list|)
 expr_stmt|;
 return|return
-operator|(
-name|StandardListObjectInspector
-operator|)
 name|ObjectInspectorFactory
 operator|.
 name|getStandardListObjectInspector
@@ -382,9 +352,6 @@ index|]
 expr_stmt|;
 name|inputOI
 operator|=
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|internalMergeOI
 operator|.
 name|getListElementObjectInspector

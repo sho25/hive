@@ -7379,6 +7379,24 @@ argument_list|)
 return|;
 block|}
 block|}
+else|else
+block|{
+comment|// Since we're reusing the compiled plan, we need to update its start time for current run
+name|plan
+operator|.
+name|setQueryStartTime
+argument_list|(
+name|perfLogger
+operator|.
+name|getStartTime
+argument_list|(
+name|PerfLogger
+operator|.
+name|DRIVER_RUN
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|// the reason that we set the txn manager for the cxt here is because each
 comment|// query has its own ctx object. The txn mgr is shared across the
 comment|// same instance of Driver, which can run multiple queries.

@@ -240,6 +240,9 @@ name|completedUrl
 parameter_list|,
 name|boolean
 name|enablelog
+parameter_list|,
+name|Boolean
+name|enableJobReconnect
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -283,6 +286,8 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|)
 decl_stmt|;
 return|return
@@ -334,6 +339,9 @@ name|completedUrl
 parameter_list|,
 name|boolean
 name|enablelog
+parameter_list|,
+name|Boolean
+name|enableJobReconnect
 parameter_list|)
 throws|throws
 name|BadParam
@@ -374,6 +382,8 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -681,6 +691,9 @@ name|completedUrl
 parameter_list|,
 name|boolean
 name|enablelog
+parameter_list|,
+name|Boolean
+name|enableJobReconnect
 parameter_list|)
 throws|throws
 name|URISyntaxException
@@ -795,6 +808,8 @@ argument_list|,
 name|allFiles
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|,
 name|JobType
 operator|.

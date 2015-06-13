@@ -258,6 +258,9 @@ parameter_list|,
 name|boolean
 name|enablelog
 parameter_list|,
+name|Boolean
+name|enableJobReconnect
+parameter_list|,
 name|String
 name|libdir
 parameter_list|)
@@ -363,6 +366,8 @@ name|completedUrl
 argument_list|,
 name|enablelog
 argument_list|,
+name|enableJobReconnect
+argument_list|,
 name|libdir
 argument_list|)
 decl_stmt|;
@@ -404,6 +409,9 @@ parameter_list|,
 name|boolean
 name|enablelog
 parameter_list|,
+name|Boolean
+name|enableJobReconnect
+parameter_list|,
 name|String
 name|libdir
 parameter_list|)
@@ -444,6 +452,8 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|,
 name|libdir
 argument_list|)
@@ -767,6 +777,9 @@ parameter_list|,
 name|boolean
 name|enablelog
 parameter_list|,
+name|Boolean
+name|enableJobReconnect
+parameter_list|,
 name|String
 name|libdir
 parameter_list|)
@@ -1031,6 +1044,8 @@ argument_list|,
 name|allFiles
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|,
 name|JobType
 operator|.

@@ -620,6 +620,7 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
@@ -654,6 +655,7 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
@@ -718,6 +720,7 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<
@@ -793,6 +796,7 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
+specifier|static
 specifier|final
 name|ThreadLocal
 argument_list|<

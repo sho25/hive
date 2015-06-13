@@ -834,9 +834,6 @@ parameter_list|(
 name|Path
 name|path
 parameter_list|,
-name|HiveConf
-name|conf
-parameter_list|,
 name|JobConf
 name|job
 parameter_list|)
@@ -971,9 +968,6 @@ parameter_list|(
 name|FetchWork
 name|work
 parameter_list|,
-name|HiveConf
-name|conf
-parameter_list|,
 name|JobConf
 name|job
 parameter_list|,
@@ -989,10 +983,12 @@ block|{
 name|int
 name|sampleNum
 init|=
-name|conf
+name|HiveConf
 operator|.
 name|getIntVar
 argument_list|(
+name|job
+argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
@@ -1003,10 +999,12 @@ decl_stmt|;
 name|float
 name|samplePercent
 init|=
-name|conf
+name|HiveConf
 operator|.
 name|getFloatVar
 argument_list|(
+name|job
+argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
