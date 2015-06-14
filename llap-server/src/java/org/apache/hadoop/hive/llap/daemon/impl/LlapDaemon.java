@@ -1289,14 +1289,6 @@ name|total
 init|=
 literal|0
 decl_stmt|;
-name|MemoryMXBean
-name|m
-init|=
-name|ManagementFactory
-operator|.
-name|getMemoryMXBean
-argument_list|()
-decl_stmt|;
 for|for
 control|(
 name|MemoryPoolMXBean
@@ -1359,6 +1351,19 @@ name|sz
 expr_stmt|;
 block|}
 block|}
+comment|// round up to the next MB
+name|total
+operator|+=
+operator|(
+name|total
+operator|%
+operator|(
+literal|1024
+operator|*
+literal|1024
+operator|)
+operator|)
+expr_stmt|;
 return|return
 name|total
 return|;
