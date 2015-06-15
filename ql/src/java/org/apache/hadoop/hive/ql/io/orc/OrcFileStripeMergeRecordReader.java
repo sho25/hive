@@ -506,6 +506,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|stripeIdx
+operator|++
+expr_stmt|;
 continue|continue;
 block|}
 return|return
