@@ -1667,6 +1667,24 @@ name|userName
 operator|=
 name|userName
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"SessionState user: "
+operator|+
+name|userName
+argument_list|)
+expr_stmt|;
+block|}
 name|isSilent
 operator|=
 name|conf
