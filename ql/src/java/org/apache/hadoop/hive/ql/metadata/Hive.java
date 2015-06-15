@@ -14112,6 +14112,21 @@ operator|.
 name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|srcs
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+name|success
+operator|=
+literal|true
+expr_stmt|;
+comment|// Nothing to move.
+block|}
 for|for
 control|(
 name|FileStatus
