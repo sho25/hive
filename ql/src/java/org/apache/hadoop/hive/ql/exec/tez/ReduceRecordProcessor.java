@@ -577,6 +577,20 @@ name|KeyValuesReader
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
 begin_comment
 comment|/**  * Process input from tez LogicalInput and write output - for a map plan  * Just pump the records through the query plan.  */
 end_comment
@@ -599,10 +613,6 @@ decl_stmt|;
 specifier|private
 name|ObjectCache
 name|cache
-decl_stmt|;
-specifier|private
-name|String
-name|cacheKey
 decl_stmt|;
 specifier|public
 specifier|static
@@ -785,8 +795,9 @@ operator|.
 name|HIVEQUERYID
 argument_list|)
 decl_stmt|;
+name|String
 name|cacheKey
-operator|=
+init|=
 name|queryId
 operator|+
 name|processorContext
@@ -795,6 +806,15 @@ name|getTaskVertexName
 argument_list|()
 operator|+
 name|REDUCE_PLAN_KEY
+decl_stmt|;
+name|cacheKeys
+operator|=
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|cacheKey
+argument_list|)
 expr_stmt|;
 name|reduceWork
 operator|=

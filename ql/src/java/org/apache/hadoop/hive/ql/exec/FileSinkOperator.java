@@ -979,6 +979,20 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
 begin_comment
 comment|/**  * File Sink operator implementation.  **/
 end_comment
@@ -5351,9 +5365,9 @@ name|String
 argument_list|>
 name|defaultKey
 init|=
-name|Arrays
+name|Lists
 operator|.
-name|asList
+name|newArrayList
 argument_list|(
 name|lbCtx
 operator|.

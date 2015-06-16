@@ -1360,6 +1360,27 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using tables from cache: "
+operator|+
+name|pair
+operator|.
+name|getLeft
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// let's use the table from the cache.
 name|mapJoinTables
 operator|=
@@ -2634,7 +2655,17 @@ block|{
 name|String
 name|msg
 init|=
-literal|"Unexpected exception: "
+literal|"Unexpected exception from "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" : "
 operator|+
 name|e
 operator|.
