@@ -172,6 +172,8 @@ parameter_list|,
 name|int
 name|port
 parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 specifier|public
 name|void
@@ -180,6 +182,8 @@ parameter_list|(
 name|TezTaskAttemptID
 name|taskAttemptId
 parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 block|}
 end_interface

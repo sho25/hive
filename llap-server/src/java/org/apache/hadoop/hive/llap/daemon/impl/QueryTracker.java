@@ -61,6 +61,24 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|configuration
+operator|.
+name|LlapConfiguration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|daemon
 operator|.
 name|rpc
@@ -162,6 +180,16 @@ operator|.
 name|util
 operator|.
 name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
 import|;
 end_import
 
@@ -313,6 +341,11 @@ specifier|final
 name|FileSystem
 name|localFs
 decl_stmt|;
+specifier|private
+specifier|final
+name|long
+name|defaultDeleteDelaySeconds
+decl_stmt|;
 comment|// TODO At the moment there's no way of knowing whether a query is running or not.
 comment|// A race is possible between dagComplete and registerFragment - where the registerFragment
 comment|// is processed after a dagCompletes.
@@ -438,6 +471,23 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|this
+operator|.
+name|defaultDeleteDelaySeconds
+operator|=
+name|conf
+operator|.
+name|getLong
+argument_list|(
+name|LlapConfiguration
+operator|.
+name|LLAP_FILE_CLEANUP_DELAY_SECONDS
+argument_list|,
+name|LlapConfiguration
+operator|.
+name|LLAP_FILE_CLEANUP_DELAY_SECONDS_DEFAULT
+argument_list|)
+expr_stmt|;
 name|queryFileCleaner
 operator|=
 operator|new
@@ -687,7 +737,10 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Register completion for a query    * @param queryId    * @param dagName    * @param deleteDelay    */
-name|void
+name|List
+argument_list|<
+name|QueryFragmentInfo
+argument_list|>
 name|queryComplete
 parameter_list|(
 name|String
@@ -700,6 +753,19 @@ name|long
 name|deleteDelay
 parameter_list|)
 block|{
+if|if
+condition|(
+name|deleteDelay
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+name|deleteDelay
+operator|=
+name|defaultDeleteDelaySeconds
+expr_stmt|;
+block|}
 name|ReadWriteLock
 name|dagLock
 init|=
@@ -769,6 +835,12 @@ argument_list|,
 name|dagName
 argument_list|)
 expr_stmt|;
+return|return
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+return|;
 block|}
 name|String
 index|[]
@@ -822,6 +894,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// Clearing this before sending a kill is OK, since canFinish will change to false.
+comment|// Ideally this should be a state machine where kills are issued to the executor,
+comment|// and the structures are cleaned up once all tasks complete. New requests, however, should not
+comment|// be allowed after a query complete is received.
 name|sourceCompletionMap
 operator|.
 name|remove
@@ -836,6 +912,12 @@ argument_list|(
 name|dagName
 argument_list|)
 expr_stmt|;
+return|return
+name|queryInfo
+operator|.
+name|getRegisteredFragments
+argument_list|()
+return|;
 comment|// TODO HIVE-10762 Issue a kill message to all running fragments for this container.
 comment|// TODO HIVE-10535 Cleanup map join cache
 block|}

@@ -233,6 +233,24 @@ name|llap
 operator|.
 name|daemon
 operator|.
+name|QueryFailedHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|daemon
+operator|.
 name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
@@ -2787,6 +2805,8 @@ parameter_list|,
 name|int
 name|port
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 name|entityTracker
 operator|.
@@ -2834,6 +2854,8 @@ parameter_list|(
 name|TezTaskAttemptID
 name|taskAttemptId
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 comment|// TODO Unregister the task for state updates, which could in turn unregister the node.
 name|getTaskCommunicatorContext

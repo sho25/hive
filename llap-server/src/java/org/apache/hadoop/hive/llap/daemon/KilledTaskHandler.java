@@ -93,6 +93,12 @@ name|JobTokenIdentifier
 argument_list|>
 name|jobToken
 parameter_list|,
+name|String
+name|queryId
+parameter_list|,
+name|String
+name|dagName
+parameter_list|,
 name|TezTaskAttemptID
 name|taskAttemptId
 parameter_list|)

@@ -1497,7 +1497,6 @@ block|}
 block|}
 block|}
 specifier|private
-specifier|static
 class|class
 name|WaitQueueWorkerCallback
 implements|implements
@@ -1513,6 +1512,24 @@ name|Object
 name|result
 parameter_list|)
 block|{
+if|if
+condition|(
+name|isShutdown
+operator|.
+name|get
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Wait queue scheduler worker exited with success!"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|error
@@ -1520,6 +1537,26 @@ argument_list|(
 literal|"Wait queue scheduler worker exited with success!"
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|getDefaultUncaughtExceptionHandler
+argument_list|()
+operator|.
+name|uncaughtException
+argument_list|(
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+argument_list|,
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"WaitQueue worked exited before shutdown"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

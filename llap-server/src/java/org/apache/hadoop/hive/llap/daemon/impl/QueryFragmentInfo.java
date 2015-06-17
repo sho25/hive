@@ -346,6 +346,18 @@ return|return
 name|attemptNumber
 return|;
 block|}
+specifier|public
+name|String
+name|getFragmentIdentifierString
+parameter_list|()
+block|{
+return|return
+name|fragmentSpec
+operator|.
+name|getFragmentIdentifierString
+argument_list|()
+return|;
+block|}
 comment|/**    * Check whether a task can run to completion or may end up blocking on it's sources.    * This currently happens via looking up source state.    * TODO: Eventually, this should lookup the Hive Processor to figure out whether    * it's reached a state where it can finish - especially in cases of failures    * after data has been fetched.    *    * @return true if the task can finish, false otherwise    */
 specifier|public
 name|boolean
