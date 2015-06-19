@@ -1939,17 +1939,6 @@ annotation|@
 name|Override
 specifier|public
 name|String
-name|getUsername
-parameter_list|()
-block|{
-return|return
-name|username
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
 name|getPassword
 parameter_list|()
 block|{
@@ -3683,7 +3672,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|owner
@@ -3725,7 +3714,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|getUserFromToken
@@ -3769,7 +3758,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|getUserFromToken
