@@ -284,7 +284,7 @@ name|Exception
 block|{
 name|MetricsFactory
 operator|.
-name|deInit
+name|close
 argument_list|()
 expr_stmt|;
 name|HiveConf
@@ -326,7 +326,7 @@ name|LegacyMetrics
 operator|)
 name|MetricsFactory
 operator|.
-name|getMetricsInstance
+name|getInstance
 argument_list|()
 expr_stmt|;
 block|}
@@ -341,7 +341,7 @@ name|Exception
 block|{
 name|MetricsFactory
 operator|.
-name|deInit
+name|close
 argument_list|()
 expr_stmt|;
 block|}

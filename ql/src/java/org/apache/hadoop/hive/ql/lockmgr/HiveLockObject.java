@@ -189,6 +189,12 @@ operator|=
 name|removeDelimiter
 argument_list|(
 name|queryStr
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|queryStr
 operator|.
 name|trim
 argument_list|()

@@ -4196,14 +4196,6 @@ specifier|final
 name|long
 name|rowIndexStride
 decl_stmt|;
-specifier|private
-specifier|final
-name|OrcProto
-operator|.
-name|BloomFilterIndex
-index|[]
-name|bloomFilterIndices
-decl_stmt|;
 comment|// same as the above array, but indices are set to true
 specifier|private
 specifier|final
@@ -4260,19 +4252,6 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
-name|bloomFilterIndices
-operator|=
-operator|new
-name|OrcProto
-operator|.
-name|BloomFilterIndex
-index|[
-name|types
-operator|.
-name|size
-argument_list|()
-index|]
-expr_stmt|;
 name|this
 operator|.
 name|rowIndexStride
@@ -4328,6 +4307,12 @@ operator|.
 name|RowIndex
 index|[]
 name|indexes
+parameter_list|,
+name|OrcProto
+operator|.
+name|BloomFilterIndex
+index|[]
+name|bloomFilterIndices
 parameter_list|)
 throws|throws
 name|IOException
@@ -4457,6 +4442,10 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
+name|bloomFilterIndices
+operator|!=
+literal|null
+operator|&&
 name|bloomFilterIndices
 index|[
 name|filterColumns
@@ -4694,6 +4683,8 @@ name|currentStripe
 argument_list|)
 argument_list|,
 name|indexes
+argument_list|,
+name|bloomFilterIndices
 argument_list|)
 return|;
 block|}

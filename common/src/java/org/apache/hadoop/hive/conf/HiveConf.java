@@ -6948,7 +6948,7 @@ name|HIVE_METRICS_JSON_FILE_LOCATION
 argument_list|(
 literal|"hive.service.metrics.file.location"
 argument_list|,
-literal|"file:///tmp/my-logging.properties"
+literal|"file:///tmp/report.json"
 argument_list|,
 literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of JSON metrics file.  "
 operator|+
@@ -12698,6 +12698,8 @@ literal|"mapreduce\\.job\\.reduce\\.slowstart\\.completedmaps"
 block|,
 literal|"mapreduce\\.job\\.queuename"
 block|,
+literal|"mapreduce\\.job\\.tags"
+block|,
 literal|"mapreduce\\.input\\.fileinputformat\\.split\\.minsize"
 block|,
 literal|"mapreduce\\.map\\..*"
@@ -12715,7 +12717,7 @@ block|,
 literal|"tez\\.runtime\\..*"
 block|,
 literal|"tez.queue.name"
-block|,   }
+block|,    }
 decl_stmt|;
 comment|/**    * Apply system properties to this object if the property name is defined in ConfVars    * and the value is non-null and not an empty string.    */
 specifier|private

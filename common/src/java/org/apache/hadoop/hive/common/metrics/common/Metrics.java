@@ -66,21 +66,11 @@ specifier|public
 interface|interface
 name|Metrics
 block|{
-comment|/**    * Initialize Metrics system with given Hive configuration.    * @param conf    */
-specifier|public
-name|void
-name|init
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|)
-throws|throws
-name|Exception
-function_decl|;
+comment|//Must declare CTOR taking in HiveConf.
 comment|/**    * Deinitializes the Metrics system.    */
 specifier|public
 name|void
-name|deInit
+name|close
 parameter_list|()
 throws|throws
 name|Exception

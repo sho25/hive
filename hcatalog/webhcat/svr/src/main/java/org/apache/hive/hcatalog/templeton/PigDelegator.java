@@ -266,6 +266,9 @@ name|completedUrl
 parameter_list|,
 name|boolean
 name|enablelog
+parameter_list|,
+name|Boolean
+name|enableJobReconnect
 parameter_list|)
 throws|throws
 name|NotAuthorizedException
@@ -309,6 +312,8 @@ argument_list|,
 name|completedUrl
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|)
 decl_stmt|;
 return|return
@@ -324,7 +329,7 @@ name|args
 argument_list|)
 return|;
 block|}
-comment|/**    * @param execute pig query string to be executed    * @param srcFile pig query file to be executed    * @param pigArgs pig command line arguments    * @param otherFiles  files to be copied to the map reduce cluster    * @param statusdir status dir location    * @param usesHcatalog whether the command uses hcatalog/needs to connect    *         to hive metastore server    * @param completedUrl call back url    * @return list of arguments    * @throws BadParam    * @throws IOException    * @throws InterruptedException    */
+comment|/**    * @param execute pig query string to be executed    * @param srcFile pig query file to be executed    * @param pigArgs pig command line arguments    * @param otherFiles  files to be copied to the map reduce cluster    * @param statusdir status dir location    * @param usesHcatalog whether the command uses hcatalog/needs to connect    *         to hive metastore server    * @param completedUrl call back url    * @param enablelog    * @param enableJobReconnect    * @return list of arguments    * @throws BadParam    * @throws IOException    * @throws InterruptedException    */
 specifier|private
 name|List
 argument_list|<
@@ -358,6 +363,9 @@ name|completedUrl
 parameter_list|,
 name|boolean
 name|enablelog
+parameter_list|,
+name|Boolean
+name|enableJobReconnect
 parameter_list|)
 throws|throws
 name|BadParam
@@ -486,6 +494,8 @@ argument_list|,
 name|allFiles
 argument_list|,
 name|enablelog
+argument_list|,
+name|enableJobReconnect
 argument_list|,
 name|JobType
 operator|.

@@ -15486,7 +15486,8 @@ name|getBound
 argument_list|(
 name|wndSpec
 operator|.
-name|windowFrame
+name|getWindowFrame
+argument_list|()
 operator|.
 name|start
 argument_list|,
@@ -15500,7 +15501,8 @@ name|getBound
 argument_list|(
 name|wndSpec
 operator|.
-name|windowFrame
+name|getWindowFrame
+argument_list|()
 operator|.
 name|end
 argument_list|,
@@ -15514,7 +15516,8 @@ operator|(
 operator|(
 name|wndSpec
 operator|.
-name|windowFrame
+name|getWindowFrame
+argument_list|()
 operator|.
 name|start
 operator|instanceof
@@ -15524,7 +15527,8 @@ operator|||
 operator|(
 name|wndSpec
 operator|.
-name|windowFrame
+name|getWindowFrame
+argument_list|()
 operator|.
 name|end
 operator|instanceof

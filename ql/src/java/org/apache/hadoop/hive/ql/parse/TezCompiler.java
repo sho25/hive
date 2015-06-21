@@ -723,6 +723,26 @@ name|ql
 operator|.
 name|optimizer
 operator|.
+name|ConstantPropagateProcCtx
+operator|.
+name|ConstantPropagateOption
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
 name|ConvertJoinMapJoin
 import|;
 end_import
@@ -2573,6 +2593,8 @@ argument_list|)
 expr_stmt|;
 comment|// need a new run of the constant folding because we might have created lots
 comment|// of "and true and true" conditions.
+comment|// Rather than run the full constant folding just need to shortcut AND/OR expressions
+comment|// involving constant true/false values.
 if|if
 condition|(
 name|procCtx
@@ -2589,7 +2611,11 @@ condition|)
 block|{
 operator|new
 name|ConstantPropagate
-argument_list|()
+argument_list|(
+name|ConstantPropagateOption
+operator|.
+name|SHORTCUT
+argument_list|)
 operator|.
 name|transform
 argument_list|(

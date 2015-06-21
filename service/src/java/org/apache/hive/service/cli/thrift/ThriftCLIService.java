@@ -83,6 +83,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -581,6 +595,16 @@ specifier|protected
 specifier|static
 name|HiveAuthFactory
 name|hiveAuthFactory
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|AtomicInteger
+name|sessionCount
+init|=
+operator|new
+name|AtomicInteger
+argument_list|()
 decl_stmt|;
 specifier|protected
 name|int
@@ -1714,6 +1738,18 @@ name|sessionHandle
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Opened a session, current sessions: "
+operator|+
+name|sessionCount
+operator|.
+name|incrementAndGet
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2352,6 +2388,18 @@ operator|.
 name|closeSession
 argument_list|(
 name|sessionHandle
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closed a session, current sessions: "
+operator|+
+name|sessionCount
+operator|.
+name|decrementAndGet
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|resp
