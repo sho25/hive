@@ -571,10 +571,7 @@ name|internalName
 operator|+
 literal|": "
 operator|+
-name|objectInspector
-operator|.
-name|getTypeName
-argument_list|()
+name|typeName
 return|;
 block|}
 specifier|public
