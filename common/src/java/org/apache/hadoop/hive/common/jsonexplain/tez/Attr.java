@@ -23,6 +23,7 @@ end_package
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|Attr
 implements|implements
@@ -31,9 +32,13 @@ argument_list|<
 name|Attr
 argument_list|>
 block|{
+specifier|public
+specifier|final
 name|String
 name|name
 decl_stmt|;
+specifier|public
+specifier|final
 name|String
 name|value
 decl_stmt|;

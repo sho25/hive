@@ -6888,7 +6888,7 @@ name|HIVE_EXPLAIN_USER
 argument_list|(
 literal|"hive.explain.user"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to show explain result at user level.\n"
 operator|+
