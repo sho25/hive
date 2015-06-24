@@ -3490,6 +3490,16 @@ argument_list|(
 name|newLoader
 argument_list|)
 expr_stmt|;
+name|runtimeSerializationKryo
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setClassLoader
+argument_list|(
+name|newLoader
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 name|path
