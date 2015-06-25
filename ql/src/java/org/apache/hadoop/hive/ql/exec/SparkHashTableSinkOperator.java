@@ -976,6 +976,7 @@ parameter_list|)
 block|{
 comment|// No problem, use a new name
 block|}
+block|}
 comment|// TODO find out numOfPartitions for the big table
 name|int
 name|numOfPartitions
@@ -996,7 +997,6 @@ argument_list|,
 name|numOfPartitions
 argument_list|)
 expr_stmt|;
-block|}
 name|htsOperator
 operator|.
 name|console
