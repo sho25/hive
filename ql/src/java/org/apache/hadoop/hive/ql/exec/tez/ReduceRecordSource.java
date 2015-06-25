@@ -2492,23 +2492,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|/* batch.toString depends on this */
-name|batch
-operator|.
-name|setValueWriters
-argument_list|(
-name|valueStringWriters
-operator|.
-name|toArray
-argument_list|(
-operator|new
-name|VectorExpressionWriter
-index|[
-literal|0
-index|]
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|rowString
 operator|=
 name|batch
