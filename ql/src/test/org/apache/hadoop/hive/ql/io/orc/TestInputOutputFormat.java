@@ -83,6 +83,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|FileNotFoundException
 import|;
 end_import
@@ -93,7 +103,27 @@ name|java
 operator|.
 name|io
 operator|.
+name|FileOutputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|PrintWriter
 import|;
 end_import
 
@@ -684,6 +714,28 @@ operator|.
 name|OrcInputFormat
 operator|.
 name|SplitStrategy
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcInputFormat
+operator|.
+name|SplitStrategyKind
 import|;
 end_import
 
@@ -2802,6 +2854,446 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|FileSystem
+name|generateMockFiles
+parameter_list|(
+specifier|final
+name|int
+name|count
+parameter_list|,
+specifier|final
+name|int
+name|size
+parameter_list|)
+block|{
+specifier|final
+name|byte
+index|[]
+name|data
+init|=
+operator|new
+name|byte
+index|[
+name|size
+index|]
+decl_stmt|;
+name|MockFile
+index|[]
+name|files
+init|=
+operator|new
+name|MockFile
+index|[
+name|count
+index|]
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|count
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|files
+index|[
+name|i
+index|]
+operator|=
+operator|new
+name|MockFile
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"mock:/a/b/part-%d"
+argument_list|,
+name|i
+argument_list|)
+argument_list|,
+name|size
+argument_list|,
+name|data
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+operator|new
+name|MockFileSystem
+argument_list|(
+name|conf
+argument_list|,
+name|files
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSplitStrategySelection
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"mapreduce.input.fileinputformat.split.maxsize"
+argument_list|,
+literal|"500"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setLong
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_CACHE_STRIPE_DETAILS_SIZE
+operator|.
+name|varname
+argument_list|,
+literal|100
+argument_list|)
+expr_stmt|;
+specifier|final
+name|int
+index|[]
+name|counts
+init|=
+block|{
+literal|1
+block|,
+literal|10
+block|,
+literal|100
+block|,
+literal|256
+block|}
+decl_stmt|;
+specifier|final
+name|int
+index|[]
+name|sizes
+init|=
+block|{
+literal|100
+block|,
+literal|1000
+block|}
+decl_stmt|;
+specifier|final
+name|int
+index|[]
+name|numSplits
+init|=
+block|{
+literal|1
+block|,
+literal|9
+block|,
+literal|10
+block|,
+literal|11
+block|,
+literal|99
+block|,
+literal|111
+block|}
+decl_stmt|;
+specifier|final
+name|String
+index|[]
+name|strategyResults
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 1 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 100 size for 111 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 1 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 1 files x 1000 size for 111 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 1 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 100 size for 111 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 1 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 10 files x 1000 size for 111 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 1 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 9 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 10 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 11 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 100 size for 111 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 1 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 100 files x 1000 size for 111 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 1 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 9 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 10 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 11 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 99 splits */
+literal|"BISplitStrategy"
+block|,
+comment|/* 256 files x 100 size for 111 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 1 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 9 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 10 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 11 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 99 splits */
+literal|"ETLSplitStrategy"
+block|,
+comment|/* 256 files x 1000 size for 111 splits */
+block|}
+decl_stmt|;
+name|int
+name|k
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|int
+name|c
+range|:
+name|counts
+control|)
+block|{
+for|for
+control|(
+name|int
+name|s
+range|:
+name|sizes
+control|)
+block|{
+specifier|final
+name|FileSystem
+name|fs
+init|=
+name|generateMockFiles
+argument_list|(
+name|c
+argument_list|,
+name|s
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|int
+name|n
+range|:
+name|numSplits
+control|)
+block|{
+specifier|final
+name|OrcInputFormat
+operator|.
+name|Context
+name|context
+init|=
+operator|new
+name|OrcInputFormat
+operator|.
+name|Context
+argument_list|(
+name|conf
+argument_list|,
+name|n
+argument_list|)
+decl_stmt|;
+name|OrcInputFormat
+operator|.
+name|FileGenerator
+name|gen
+init|=
+operator|new
+name|OrcInputFormat
+operator|.
+name|FileGenerator
+argument_list|(
+name|context
+argument_list|,
+name|fs
+argument_list|,
+operator|new
+name|MockPath
+argument_list|(
+name|fs
+argument_list|,
+literal|"mock:/a/b"
+argument_list|)
+argument_list|)
+decl_stmt|;
+specifier|final
+name|SplitStrategy
+name|splitStrategy
+init|=
+name|gen
+operator|.
+name|call
+argument_list|()
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Split strategy for %d files x %d size for %d splits"
+argument_list|,
+name|c
+argument_list|,
+name|s
+argument_list|,
+name|n
+argument_list|)
+argument_list|,
+name|splitStrategy
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|strategyResults
+index|[
+name|k
+operator|++
+index|]
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 block|}
 annotation|@
 name|Test
@@ -7792,7 +8284,7 @@ argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
-literal|1
+literal|0
 operator|==
 name|splits
 operator|.
