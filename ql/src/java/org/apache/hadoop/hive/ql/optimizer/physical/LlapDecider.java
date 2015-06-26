@@ -876,10 +876,12 @@ implements|implements
 name|Dispatcher
 block|{
 specifier|private
+specifier|final
 name|PhysicalContext
 name|pctx
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
@@ -1817,6 +1819,8 @@ operator|new
 name|NodeProcessor
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -1870,6 +1874,8 @@ operator|new
 name|NodeProcessor
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -1942,6 +1948,8 @@ operator|new
 name|NodeProcessor
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -2017,6 +2025,8 @@ operator|new
 name|NodeProcessor
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process

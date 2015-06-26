@@ -1776,7 +1776,7 @@ return|return
 name|newTmpJars
 return|;
 block|}
-comment|/**    * connect adds an edge between a and b. Both nodes have    * to be added prior to calling connect.    * @param      */
+comment|/**    * connect adds an edge between a and b. Both nodes have    * to be added prior to calling connect.    * @param    */
 specifier|public
 name|void
 name|connect
@@ -1971,6 +1971,37 @@ name|get
 argument_list|(
 name|w
 argument_list|)
+return|;
+block|}
+specifier|public
+name|boolean
+name|getLlapMode
+parameter_list|()
+block|{
+for|for
+control|(
+name|BaseWork
+name|work
+range|:
+name|getAllWork
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|work
+operator|.
+name|getLlapMode
+argument_list|()
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+block|}
+return|return
+literal|false
 return|;
 block|}
 block|}

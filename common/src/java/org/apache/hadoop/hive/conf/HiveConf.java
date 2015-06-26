@@ -8983,6 +8983,16 @@ literal|"exception) is the default; 'skip' will skip the invalid directories and
 operator|+
 literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
+block|,
+name|HIVE_SERVER2_LLAP_CONCURRENT_QUERIES
+argument_list|(
+literal|"hive.server2.llap.concurrent.queries"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The number of queries allowed in parallel via llap. Negative number implies 'infinite'."
+argument_list|)
 block|;
 specifier|public
 specifier|final
