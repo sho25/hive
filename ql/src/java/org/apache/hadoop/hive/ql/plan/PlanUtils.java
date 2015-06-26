@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -2202,6 +2212,27 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|crtTblDesc
+operator|.
+name|getSerdeProps
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|properties
+operator|.
+name|putAll
+argument_list|(
+name|crtTblDesc
+operator|.
+name|getSerdeProps
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// replace the default input& output file format with those found in
 comment|// crtTblDesc
 name|Class
@@ -2459,11 +2490,11 @@ comment|// In tez we use a different way of transmitting the hash table.
 comment|// We basically use ReduceSinkOperators and set the transfer to
 comment|// be broadcast (instead of partitioned). As a consequence we use
 comment|// a different SerDe than in the MR mapjoin case.
-name|StringBuffer
+name|StringBuilder
 name|order
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 for|for
@@ -4872,11 +4903,11 @@ argument_list|>
 name|exprs
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -4945,9 +4976,11 @@ parameter_list|(
 name|ExprNodeDesc
 name|expr
 parameter_list|,
-name|StringBuffer
+name|Appendable
 name|sb
 parameter_list|)
+block|{
+try|try
 block|{
 name|sb
 operator|.
@@ -4983,6 +5016,21 @@ argument_list|(
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|public
 specifier|static
@@ -5222,8 +5270,16 @@ condition|(
 name|input
 operator|==
 literal|null
+operator|&&
+name|currentInput
+operator|!=
+literal|null
 condition|)
 block|{
+comment|// To handle the case of - select * from (select * from V1) A;
+comment|// the currentInput != null check above is needed.
+comment|// the alias list that case would be A:V1:T. Lookup on A would return null,
+comment|// we need to go further to find the view inside it.
 return|return
 name|currentInput
 return|;

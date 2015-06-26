@@ -369,7 +369,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|OperationLog
 name|initialValue
 parameter_list|()

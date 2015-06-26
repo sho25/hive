@@ -2773,13 +2773,11 @@ try|try
 block|{
 name|handleSampling
 argument_list|(
-name|driverContext
+name|ctx
 argument_list|,
 name|mWork
 argument_list|,
 name|job
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|job
@@ -3302,15 +3300,6 @@ name|killJob
 argument_list|()
 expr_stmt|;
 block|}
-name|HadoopJobExecHelper
-operator|.
-name|runningJobs
-operator|.
-name|remove
-argument_list|(
-name|rj
-argument_list|)
-expr_stmt|;
 name|jobID
 operator|=
 name|rj
@@ -3328,7 +3317,27 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{       }
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|HadoopJobExecHelper
+operator|.
+name|runningJobs
+operator|.
+name|remove
+argument_list|(
+name|rj
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// get the list of Dynamic partition paths
 try|try
@@ -3472,7 +3481,7 @@ specifier|private
 name|void
 name|handleSampling
 parameter_list|(
-name|DriverContext
+name|Context
 name|context
 parameter_list|,
 name|MapWork
@@ -3480,9 +3489,6 @@ name|mWork
 parameter_list|,
 name|JobConf
 name|job
-parameter_list|,
-name|HiveConf
-name|conf
 parameter_list|)
 throws|throws
 name|Exception
@@ -3607,9 +3613,6 @@ name|Path
 name|tmpPath
 init|=
 name|context
-operator|.
-name|getCtx
-argument_list|()
 operator|.
 name|getExternalTmpPath
 argument_list|(
@@ -3830,8 +3833,6 @@ name|createSampler
 argument_list|(
 name|fetchWork
 argument_list|,
-name|conf
-argument_list|,
 name|job
 argument_list|,
 name|ts
@@ -3843,7 +3844,7 @@ name|ts
 operator|.
 name|initialize
 argument_list|(
-name|conf
+name|job
 argument_list|,
 operator|new
 name|ObjectInspector
@@ -3906,8 +3907,6 @@ operator|.
 name|writePartitionKeys
 argument_list|(
 name|partitionFile
-argument_list|,
-name|conf
 argument_list|,
 name|job
 argument_list|)

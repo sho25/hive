@@ -2649,7 +2649,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|InetAddress
 name|initialValue
 parameter_list|()
@@ -2690,7 +2689,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|AuthenticationMethod
 name|initialValue
 parameter_list|()
@@ -2721,7 +2719,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|String
 name|initialValue
 parameter_list|()

@@ -890,6 +890,8 @@ argument_list|,
 name|instanceName
 argument_list|,
 name|zookeepers
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Mockito

@@ -828,14 +828,6 @@ name|Job
 name|job
 parameter_list|)
 function_decl|;
-specifier|public
-name|void
-name|startPauseMonitor
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
-function_decl|;
 comment|/**    * Check wether MR is configured to run in local-mode    * @param conf    * @return    */
 specifier|public
 name|boolean
@@ -1415,6 +1407,21 @@ comment|/**      * Kills all jobs tagged with the given tag that have been start
 specifier|public
 name|void
 name|killJobs
+parameter_list|(
+name|String
+name|tag
+parameter_list|,
+name|long
+name|timestamp
+parameter_list|)
+function_decl|;
+comment|/**      * Returns all jobs tagged with the given tag that have been started after the      * given timestamp. Returned jobIds are MapReduce JobIds.      */
+specifier|public
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|getJobs
 parameter_list|(
 name|String
 name|tag

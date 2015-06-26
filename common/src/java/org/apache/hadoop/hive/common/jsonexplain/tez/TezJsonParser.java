@@ -207,14 +207,14 @@ end_import
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|TezJsonParser
 implements|implements
 name|JsonParser
 block|{
-name|JSONObject
-name|inputObject
-decl_stmt|;
+specifier|public
+specifier|final
 name|Map
 argument_list|<
 name|String
@@ -222,10 +222,17 @@ argument_list|,
 name|Stage
 argument_list|>
 name|stages
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|Stage
+argument_list|>
+argument_list|()
 decl_stmt|;
-name|PrintStream
-name|outputStream
-decl_stmt|;
+empty_stmt|;
 specifier|protected
 specifier|final
 name|Log
@@ -233,7 +240,7 @@ name|LOG
 decl_stmt|;
 comment|// the object that has been printed.
 specifier|public
-specifier|static
+specifier|final
 name|Set
 argument_list|<
 name|Object
@@ -245,9 +252,10 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|// the vertex that should be inlined.<Operator, list of Vertex that is inlined>
+comment|// the vertex that should be inlined.<Operator, list of Vertex that is
+comment|// inlined>
 specifier|public
-specifier|static
+specifier|final
 name|Map
 argument_list|<
 name|Op
@@ -290,7 +298,10 @@ block|}
 specifier|public
 name|void
 name|extractStagesAndPlans
-parameter_list|()
+parameter_list|(
+name|JSONObject
+name|inputObject
+parameter_list|)
 throws|throws
 name|JSONException
 throws|,
@@ -303,19 +314,6 @@ throws|,
 name|IOException
 block|{
 comment|// extract stages
-name|this
-operator|.
-name|stages
-operator|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|Stage
-argument_list|>
-argument_list|()
-expr_stmt|;
 name|JSONObject
 name|dependency
 init|=
@@ -328,6 +326,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|dependency
+operator|!=
+literal|null
+operator|&&
 name|dependency
 operator|.
 name|length
@@ -362,6 +364,8 @@ operator|new
 name|Stage
 argument_list|(
 name|stageName
+argument_list|,
+name|this
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -424,6 +428,10 @@ decl_stmt|;
 if|if
 condition|(
 name|stagePlans
+operator|!=
+literal|null
+operator|&&
+name|stagePlans
 operator|.
 name|length
 argument_list|()
@@ -471,7 +479,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * @param indentFlag    * help to generate correct indent    * @return     */
+comment|/**    * @param indentFlag    *          help to generate correct indent    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -541,7 +549,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * @param indentFlag    * @param tail    * help to generate correct indent with a specific tail    * @return    */
+comment|/**    * @param indentFlag    * @param tail    *          help to generate correct indent with a specific tail    * @return    */
 specifier|public
 specifier|static
 name|String
@@ -655,7 +663,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"JsonParser is parsing\n"
+literal|"JsonParser is parsing:"
 operator|+
 name|inputObject
 operator|.
@@ -665,21 +673,18 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|inputObject
-operator|=
-name|inputObject
-expr_stmt|;
-name|this
-operator|.
-name|outputStream
-operator|=
-name|outputStream
-expr_stmt|;
-name|this
-operator|.
 name|extractStagesAndPlans
-argument_list|()
+argument_list|(
+name|inputObject
+argument_list|)
 expr_stmt|;
+name|Printer
+name|printer
+init|=
+operator|new
+name|Printer
+argument_list|()
+decl_stmt|;
 comment|// print out the cbo info
 if|if
 condition|(
@@ -691,7 +696,7 @@ literal|"cboInfo"
 argument_list|)
 condition|)
 block|{
-name|outputStream
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -703,7 +708,7 @@ literal|"cboInfo"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|outputStream
+name|printer
 operator|.
 name|println
 argument_list|()
@@ -741,7 +746,7 @@ operator|>
 literal|0
 condition|)
 block|{
-name|outputStream
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -769,11 +774,11 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|sb
@@ -851,7 +856,7 @@ literal|")"
 argument_list|)
 expr_stmt|;
 block|}
-name|outputStream
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -862,7 +867,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|outputStream
+name|printer
 operator|.
 name|println
 argument_list|()
@@ -908,16 +913,25 @@ name|candidate
 operator|.
 name|print
 argument_list|(
-name|outputStream
+name|printer
 argument_list|,
 name|indentFlag
 argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|outputStream
+operator|.
+name|println
+argument_list|(
+name|printer
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
-specifier|static
 name|void
 name|addInline
 parameter_list|(
@@ -984,7 +998,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 name|boolean
 name|isInline
 parameter_list|(

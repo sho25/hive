@@ -52,6 +52,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|ENABLE_JOB_RECONNECT
+init|=
+literal|"templeton.enablejobreconnect"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|JOB_TYPE
 init|=
 literal|"templeton.jobtype"
@@ -122,6 +130,16 @@ literal|60
 operator|*
 literal|1000
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|POLL_JOBPROGRESS_MSEC
+init|=
+literal|30
+operator|*
+literal|1000
+decl_stmt|;
 comment|/**    * A comma-separated list of files to be added to HADOOP_CLASSPATH in     * {@link org.apache.hive.hcatalog.templeton.tool.LaunchMapper}.  Used to localize additional    * artifacts for job submission requests.    */
 specifier|public
 specifier|static
@@ -167,6 +185,14 @@ name|String
 name|MAPREDUCE_JOB_TAGS_ARG_PLACEHOLDER
 init|=
 literal|"__MR_JOB_TAGS_OPTION=MR_JOB_TAGS_JOBID__"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HADOOP_CLASSPATH
+init|=
+literal|"HADOOP_CLASSPATH"
 decl_stmt|;
 comment|/**    * constants needed for Pig job submission    * The string values here are what Pig expects to see in it's environment    */
 specifier|public

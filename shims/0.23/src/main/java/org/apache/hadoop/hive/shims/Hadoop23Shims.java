@@ -1636,77 +1636,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
-name|startPauseMonitor
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
-block|{
-try|try
-block|{
-name|Class
-operator|.
-name|forName
-argument_list|(
-literal|"org.apache.hadoop.util.JvmPauseMonitor"
-argument_list|)
-expr_stmt|;
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|JvmPauseMonitor
-name|pauseMonitor
-init|=
-operator|new
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|JvmPauseMonitor
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|pauseMonitor
-operator|.
-name|start
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|t
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Could not initiate the JvmPauseMonitor thread."
-operator|+
-literal|" GCs and Pauses may not be "
-operator|+
-literal|"warned upon."
-argument_list|,
-name|t
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Override
-specifier|public
 name|boolean
 name|isLocalMode
 parameter_list|(
@@ -4157,7 +4086,14 @@ name|file
 operator|+
 literal|" "
 operator|+
-literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true. "
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"The details are: "
 operator|+
 name|e
 argument_list|,
@@ -4428,7 +4364,14 @@ name|target
 operator|+
 literal|" "
 operator|+
-literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true. "
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"The details are: "
 operator|+
 name|e
 argument_list|,
@@ -6463,6 +6406,27 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+literal|"hdfs"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|path
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getScheme
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
 block|}
 return|return
 operator|(

@@ -2659,6 +2659,21 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|,
+name|ConfVars
+operator|.
+name|METASTORE_TRY_DIRECT_SQL
+argument_list|)
+condition|)
+block|{
 name|directSql
 operator|=
 operator|new
@@ -2669,6 +2684,7 @@ argument_list|,
 name|hiveConf
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|LOG
 operator|.
@@ -16527,6 +16543,10 @@ operator|new
 name|MetaException
 argument_list|(
 literal|"table "
+operator|+
+name|dbname
+operator|+
+literal|"."
 operator|+
 name|name
 operator|+

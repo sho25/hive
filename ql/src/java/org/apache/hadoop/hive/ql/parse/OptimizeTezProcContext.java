@@ -274,6 +274,14 @@ name|WriteEntity
 argument_list|>
 name|outputs
 decl_stmt|;
+comment|/* Two of the optimization rules, ConvertJoinMapJoin and RemoveDynamicPruningBySize, are put into      stats dependent optimizations and run together in TezCompiler. There's no guarantee which one      runs first, but in either case, the prior one may have removed a chain which the latter one is      not aware of. So we need to remember the leaf node(s) of that chain so it can be skipped.       For example, as ConvertJoinMapJoin is removing the reduce sink, it may also have removed a      dynamic partition pruning operator chain. However, RemoveDynamicPruningBySize doesn't know this      and still tries to traverse that removed chain which will cause NPE.       This may also happen when RemoveDynamicPruningBySize happens first.     */
+specifier|public
+name|HashSet
+argument_list|<
+name|AppMasterEventOperator
+argument_list|>
+name|pruningOpsRemovedByPriorOpt
+decl_stmt|;
 specifier|public
 specifier|final
 name|Set
@@ -363,6 +371,17 @@ operator|.
 name|outputs
 operator|=
 name|outputs
+expr_stmt|;
+name|this
+operator|.
+name|pruningOpsRemovedByPriorOpt
+operator|=
+operator|new
+name|HashSet
+argument_list|<
+name|AppMasterEventOperator
+argument_list|>
+argument_list|()
 expr_stmt|;
 block|}
 specifier|public

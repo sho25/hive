@@ -276,6 +276,13 @@ name|runner
 operator|=
 literal|null
 expr_stmt|;
+name|result
+operator|.
+name|setRunning
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Launches a task, and sets its exit value in the result variable.    */

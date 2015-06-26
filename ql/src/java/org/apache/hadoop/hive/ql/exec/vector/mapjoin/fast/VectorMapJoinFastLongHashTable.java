@@ -635,7 +635,7 @@ operator|==
 literal|0
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastLongHashTable add key " + key + " slot " + slot + " pairIndex " + pairIndex + " empty slot (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable add key " + key + " slot " + slot + " pairIndex " + pairIndex + " empty slot (i = " + i + ")");
 name|isNewKey
 operator|=
 literal|true
@@ -659,7 +659,7 @@ operator|==
 name|tableKey
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastLongHashTable add key " + key + " slot " + slot + " pairIndex " + pairIndex + " found key (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable add key " + key + " slot " + slot + " pairIndex " + pairIndex + " found key (i = " + i + ")");
 name|isNewKey
 operator|=
 literal|false
@@ -722,7 +722,7 @@ name|i
 expr_stmt|;
 comment|// debugDumpKeyProbe(keyOffset, keyLength, hashCode, slot);
 block|}
-comment|// LOG.info("VectorMapJoinFastLongHashTable add slot " + slot + " hashCode " + Long.toHexString(hashCode));
+comment|// LOG.debug("VectorMapJoinFastLongHashTable add slot " + slot + " hashCode " + Long.toHexString(hashCode));
 name|assignSlot
 argument_list|(
 name|slot
@@ -991,7 +991,7 @@ expr_stmt|;
 comment|// debugDumpKeyProbe(keyOffset, keyLength, hashCode, slot);
 block|}
 comment|// Use old value reference word.
-comment|// LOG.info("VectorMapJoinFastLongHashTable expandAndRehash key " + tableKey + " slot " + newSlot + " newPairIndex " + newPairIndex + " empty slot (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash key " + tableKey + " slot " + newSlot + " newPairIndex " + newPairIndex + " empty slot (i = " + i + ")");
 name|newSlotPairs
 index|[
 name|newPairIndex
@@ -1044,7 +1044,7 @@ expr_stmt|;
 name|metricExpands
 operator|++
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
+comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
 block|}
 specifier|protected
 name|long
@@ -1110,7 +1110,7 @@ literal|0
 condition|)
 block|{
 comment|// Given that we do not delete, an empty slot means no match.
-comment|// LOG.info("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " empty slot (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " empty slot (i = " + i + ")");
 return|return
 operator|-
 literal|1
@@ -1133,7 +1133,7 @@ operator|==
 name|tableKey
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " found key (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " found key (i = " + i + ")");
 return|return
 name|slotPairs
 index|[
@@ -1156,9 +1156,9 @@ operator|>
 name|largestNumberOfSteps
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastLongHashTable findReadSlot returning not found");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot returning not found");
 comment|// We know we never went that far when we were inserting.
-comment|// LOG.info("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " largestNumberOfSteps " + largestNumberOfSteps + " (i = " + i + ")");
+comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " largestNumberOfSteps " + largestNumberOfSteps + " (i = " + i + ")");
 return|return
 operator|-
 literal|1

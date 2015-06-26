@@ -6023,6 +6023,12 @@ operator|.
 name|sql
 argument_list|(
 name|line
+argument_list|,
+name|getOpts
+argument_list|()
+operator|.
+name|getEntireLineAsCommand
+argument_list|()
 argument_list|)
 return|;
 block|}

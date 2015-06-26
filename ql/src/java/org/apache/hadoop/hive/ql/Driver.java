@@ -3058,6 +3058,29 @@ argument_list|,
 name|command
 argument_list|)
 decl_stmt|;
+name|String
+name|operationName
+init|=
+name|ctx
+operator|.
+name|getExplain
+argument_list|()
+condition|?
+name|HiveOperation
+operator|.
+name|EXPLAIN
+operator|.
+name|getOperationName
+argument_list|()
+else|:
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCommandType
+argument_list|()
+decl_stmt|;
 name|plan
 operator|=
 operator|new
@@ -3078,13 +3101,7 @@ argument_list|)
 argument_list|,
 name|queryId
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getCommandType
-argument_list|()
+name|operationName
 argument_list|)
 expr_stmt|;
 name|conf
@@ -7223,6 +7240,24 @@ argument_list|)
 return|;
 block|}
 block|}
+else|else
+block|{
+comment|// Since we're reusing the compiled plan, we need to update its start time for current run
+name|plan
+operator|.
+name|setQueryStartTime
+argument_list|(
+name|perfLogger
+operator|.
+name|getStartTime
+argument_list|(
+name|PerfLogger
+operator|.
+name|DRIVER_RUN
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|// the reason that we set the txn manager for the cxt here is because each
 comment|// query has its own ctx object. The txn mgr is shared across the
 comment|// same instance of Driver, which can run multiple queries.
@@ -7962,13 +7997,23 @@ operator|.
 name|getQueryId
 argument_list|()
 decl_stmt|;
+comment|// Get the query string from the conf file as the compileInternal() method might
+comment|// hide sensitive information during query redaction.
 name|String
 name|queryStr
 init|=
-name|plan
+name|HiveConf
 operator|.
-name|getQueryStr
-argument_list|()
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYSTRING
+argument_list|)
 decl_stmt|;
 name|maxthreads
 operator|=

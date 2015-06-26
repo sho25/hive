@@ -1734,11 +1734,11 @@ argument_list|>
 name|colLst
 parameter_list|)
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -2325,11 +2325,6 @@ argument_list|(
 operator|new
 name|ColStatistics
 argument_list|(
-name|hiveTblMetadata
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
 name|c
 argument_list|,
 literal|null
@@ -2562,11 +2557,6 @@ operator|=
 operator|new
 name|ColStatistics
 argument_list|(
-name|hiveTblMetadata
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
 name|partColNamesThatRqrStats
 operator|.
 name|get

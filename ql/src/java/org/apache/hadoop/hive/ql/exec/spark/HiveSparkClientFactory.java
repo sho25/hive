@@ -719,6 +719,15 @@ argument_list|(
 literal|"spark.master"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|set
+argument_list|(
+literal|"spark.master"
+argument_list|,
+name|sparkMaster
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(

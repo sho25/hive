@@ -499,6 +499,8 @@ name|IdentityConverter
 implements|implements
 name|Converter
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|convert
@@ -817,9 +819,6 @@ name|PrimitiveObjectInspectorConverter
 operator|.
 name|HiveDecimalConverter
 argument_list|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
 name|inputOI
 argument_list|,
 operator|(
@@ -1136,9 +1135,6 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveWritableObjectInspector
 argument_list|(
-operator|(
-name|PrimitiveTypeInfo
-operator|)
 name|primOutputOI
 operator|.
 name|getTypeInfo

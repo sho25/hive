@@ -130,7 +130,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|IOContext
 name|initialValue
 parameter_list|()

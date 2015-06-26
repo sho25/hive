@@ -33,7 +33,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|ArrayWritable
+name|Writable
 import|;
 end_import
 
@@ -43,16 +43,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
-begin_import
-import|import
 name|parquet
 operator|.
 name|io
@@ -65,6 +55,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|io
@@ -77,6 +71,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|io
@@ -89,6 +87,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -99,6 +101,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -109,6 +115,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -119,6 +129,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -385,32 +399,6 @@ argument_list|,
 name|index
 argument_list|,
 name|parent
-argument_list|)
-return|;
-block|}
-comment|/**    * The original list and map conversion didn't remove the synthetic layer and    * the ObjectInspector had to remove it. This is a temporary fix that adds an    * extra layer for the ObjectInspector to remove.    */
-specifier|static
-name|ArrayWritable
-name|wrapList
-parameter_list|(
-name|ArrayWritable
-name|list
-parameter_list|)
-block|{
-return|return
-operator|new
-name|ArrayWritable
-argument_list|(
-name|Writable
-operator|.
-name|class
-argument_list|,
-operator|new
-name|Writable
-index|[]
-block|{
-name|list
-block|}
 argument_list|)
 return|;
 block|}

@@ -729,6 +729,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -741,6 +745,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -928,6 +936,40 @@ name|Object
 name|getLiteral
 parameter_list|()
 block|{
+comment|// To get around a kryo 2.22 bug while deserialize a Timestamp into Date
+comment|// (https://github.com/EsotericSoftware/kryo/issues/88)
+comment|// When we see a Date, convert back into Timestamp
+if|if
+condition|(
+name|literal
+operator|instanceof
+name|java
+operator|.
+name|util
+operator|.
+name|Date
+condition|)
+block|{
+return|return
+operator|new
+name|Timestamp
+argument_list|(
+operator|(
+operator|(
+name|java
+operator|.
+name|util
+operator|.
+name|Date
+operator|)
+name|literal
+operator|)
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
+return|;
+block|}
 return|return
 name|literal
 return|;

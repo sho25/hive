@@ -746,7 +746,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -1122,6 +1122,7 @@ specifier|private
 name|Thread
 name|startDriver
 parameter_list|(
+specifier|final
 name|RpcServer
 name|rpcServer
 parameter_list|,
@@ -2749,6 +2750,15 @@ operator|!=
 literal|0
 condition|)
 block|{
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+literal|"Child process exited before connecting back"
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|warn

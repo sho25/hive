@@ -937,7 +937,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**      * Convert the return Object if necessary (when the ObjectInspectors of      * different possibilities are not all the same). If reuse is true,       * the result Object will be the same object as the last invocation       * (as long as the oi is the same)      */
+comment|/**      * Convert the return Object if necessary (when the ObjectInspectors of      * different possibilities are not all the same). If reuse is true,      * the result Object will be the same object as the last invocation      * (as long as the oi is the same)      */
 specifier|public
 name|Object
 name|convertIfNecessary

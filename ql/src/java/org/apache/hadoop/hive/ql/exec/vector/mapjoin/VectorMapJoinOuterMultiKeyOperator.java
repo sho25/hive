@@ -519,14 +519,6 @@ block|}
 name|batchCounter
 operator|++
 expr_stmt|;
-comment|// Do the per-batch setup for an outer join.
-name|outerPerBatchSetup
-argument_list|(
-name|batch
-argument_list|)
-expr_stmt|;
-comment|// For outer join, DO NOT apply filters yet.  It is incorrect for outer join to
-comment|// apply the filter before hash table matching.
 specifier|final
 name|int
 name|inputLogicalSize
@@ -566,6 +558,170 @@ expr_stmt|;
 block|}
 return|return;
 block|}
+comment|// Do the per-batch setup for an outer join.
+name|outerPerBatchSetup
+argument_list|(
+name|batch
+argument_list|)
+expr_stmt|;
+comment|// For outer join, remember our input rows before ON expression filtering or before
+comment|// hash table matching so we can generate results for all rows (matching and non matching)
+comment|// later.
+name|boolean
+name|inputSelectedInUse
+init|=
+name|batch
+operator|.
+name|selectedInUse
+decl_stmt|;
+if|if
+condition|(
+name|inputSelectedInUse
+condition|)
+block|{
+comment|// if (!verifyMonotonicallyIncreasing(batch.selected, batch.size)) {
+comment|//   throw new HiveException("batch.selected is not in sort order and unique");
+comment|// }
+name|System
+operator|.
+name|arraycopy
+argument_list|(
+name|batch
+operator|.
+name|selected
+argument_list|,
+literal|0
+argument_list|,
+name|inputSelected
+argument_list|,
+literal|0
+argument_list|,
+name|inputLogicalSize
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Filtering for outer join just removes rows available for hash table matching.
+name|boolean
+name|someRowsFilteredOut
+init|=
+literal|false
+decl_stmt|;
+if|if
+condition|(
+name|bigTableFilterExpressions
+operator|.
+name|length
+operator|>
+literal|0
+condition|)
+block|{
+comment|// Since the input
+for|for
+control|(
+name|VectorExpression
+name|ve
+range|:
+name|bigTableFilterExpressions
+control|)
+block|{
+name|ve
+operator|.
+name|evaluate
+argument_list|(
+name|batch
+argument_list|)
+expr_stmt|;
+block|}
+name|someRowsFilteredOut
+operator|=
+operator|(
+name|batch
+operator|.
+name|size
+operator|!=
+name|inputLogicalSize
+operator|)
+expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|batch
+operator|.
+name|selectedInUse
+condition|)
+block|{
+if|if
+condition|(
+name|inputSelectedInUse
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|CLASS_NAME
+operator|+
+literal|" inputSelected "
+operator|+
+name|intArrayToRangesString
+argument_list|(
+name|inputSelected
+argument_list|,
+name|inputLogicalSize
+argument_list|)
+operator|+
+literal|" filtered batch.selected "
+operator|+
+name|intArrayToRangesString
+argument_list|(
+name|batch
+operator|.
+name|selected
+argument_list|,
+name|batch
+operator|.
+name|size
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|CLASS_NAME
+operator|+
+literal|" inputLogicalSize "
+operator|+
+name|inputLogicalSize
+operator|+
+literal|" filtered batch.selected "
+operator|+
+name|intArrayToRangesString
+argument_list|(
+name|batch
+operator|.
+name|selected
+argument_list|,
+name|batch
+operator|.
+name|size
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
 comment|// Perform any key expressions.  Results will go into scratch columns.
 if|if
 condition|(
@@ -591,12 +747,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// We rebuild in-place the selected array with rows destine to be forwarded.
-name|int
-name|numSel
-init|=
-literal|0
-decl_stmt|;
 comment|/*        * Multi-Key specific declarations.        */
 comment|// None.
 comment|/*        * Multi-Key Long check for repeating.        */
@@ -714,10 +864,30 @@ name|joinResult
 decl_stmt|;
 if|if
 condition|(
+name|batch
+operator|.
+name|size
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Whole repeated key batch was filtered out.
+name|joinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
 name|someKeyInputColumnIsNull
 condition|)
 block|{
-comment|// Any null key column is no match for whole batch.
+comment|// Any (repeated) null key column is no match for whole batch.
 name|joinResult
 operator|=
 name|JoinUtil
@@ -810,8 +980,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|numSel
-operator|=
 name|finishOuterRepeated
 argument_list|(
 name|batch
@@ -823,7 +991,11 @@ index|[
 literal|0
 index|]
 argument_list|,
-name|scratch1
+name|someRowsFilteredOut
+argument_list|,
+name|inputSelectedInUse
+argument_list|,
+name|inputLogicalSize
 argument_list|)
 expr_stmt|;
 block|}
@@ -867,21 +1039,18 @@ name|batch
 operator|.
 name|selectedInUse
 decl_stmt|;
-comment|// For outer join we must apply the filter after match and cause some matches to become
-comment|// non-matches, we do not track non-matches here.  Instead we remember all non spilled rows
-comment|// and compute non matches later in finishOuter.
 name|int
 name|hashMapResultCount
 init|=
 literal|0
 decl_stmt|;
 name|int
-name|matchCount
+name|allMatchCount
 init|=
 literal|0
 decl_stmt|;
 name|int
-name|nonSpillCount
+name|equalKeySeriesCount
 init|=
 literal|0
 decl_stmt|;
@@ -889,6 +1058,11 @@ name|int
 name|spillCount
 init|=
 literal|0
+decl_stmt|;
+name|boolean
+name|atLeastOneNonMatch
+init|=
+name|someRowsFilteredOut
 decl_stmt|;
 comment|/*          * Multi-Key specific variables.          */
 name|Output
@@ -921,7 +1095,9 @@ literal|0
 init|;
 name|logical
 operator|<
-name|inputLogicalSize
+name|batch
+operator|.
+name|size
 condition|;
 name|logical
 operator|++
@@ -941,6 +1117,7 @@ else|:
 name|logical
 operator|)
 decl_stmt|;
+comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, taskName + ", " + getOperatorId() + " candidate " + CLASS_NAME + " batch");
 comment|/*            * Multi-Key outer null detection.            */
 comment|// Generate binary sortable key for current row in vectorized row batch.
 name|keyVectorSerializeWrite
@@ -973,14 +1150,9 @@ comment|//
 comment|//    Let a current MATCH equal key series keep going, or
 comment|//    Let a current SPILL equal key series keep going, or
 comment|//    Let a current NOMATCH keep not matching.
-comment|// Remember non-matches for Outer Join.
-name|nonSpills
-index|[
-name|nonSpillCount
-operator|++
-index|]
+name|atLeastOneNonMatch
 operator|=
-name|batchIndex
+literal|true
 expr_stmt|;
 comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " NULL");
 block|}
@@ -1009,7 +1181,7 @@ condition|(
 name|haveSaveKey
 condition|)
 block|{
-comment|// Move on with our count(s).
+comment|// Move on with our counts.
 switch|switch
 condition|(
 name|saveJoinResult
@@ -1018,6 +1190,13 @@ block|{
 case|case
 name|MATCH
 case|:
+name|hashMapResultCount
+operator|++
+expr_stmt|;
+name|equalKeySeriesCount
+operator|++
+expr_stmt|;
+break|break;
 case|case
 name|SPILL
 case|:
@@ -1086,13 +1265,7 @@ name|hashMapResultCount
 index|]
 argument_list|)
 expr_stmt|;
-comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " New Key " + saveJoinResult.name());
-block|}
-else|else
-block|{
-comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " Key Continues " + saveJoinResult.name());
-block|}
-comment|/*              * Common outer join result processing.              */
+comment|/*                * Common outer join result processing.                */
 switch|switch
 condition|(
 name|saveJoinResult
@@ -1101,31 +1274,49 @@ block|{
 case|case
 name|MATCH
 case|:
-name|matchs
+name|equalKeySeriesHashMapResultIndices
 index|[
-name|matchCount
-index|]
-operator|=
-name|batchIndex
-expr_stmt|;
-name|matchHashMapResultIndices
-index|[
-name|matchCount
+name|equalKeySeriesCount
 index|]
 operator|=
 name|hashMapResultCount
 expr_stmt|;
-name|matchCount
-operator|++
-expr_stmt|;
-name|nonSpills
+name|equalKeySeriesAllMatchIndices
 index|[
-name|nonSpillCount
+name|equalKeySeriesCount
+index|]
+operator|=
+name|allMatchCount
+expr_stmt|;
+name|equalKeySeriesIsSingleValue
+index|[
+name|equalKeySeriesCount
+index|]
+operator|=
+name|hashMapResults
+index|[
+name|hashMapResultCount
+index|]
+operator|.
+name|isSingleRow
+argument_list|()
+expr_stmt|;
+name|equalKeySeriesDuplicateCounts
+index|[
+name|equalKeySeriesCount
+index|]
+operator|=
+literal|1
+expr_stmt|;
+name|allMatchs
+index|[
+name|allMatchCount
 operator|++
 index|]
 operator|=
 name|batchIndex
 expr_stmt|;
+comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " MATCH isSingleValue " + equalKeySeriesIsSingleValue[equalKeySeriesCount] + " currentKey " + currentKey);
 break|break;
 case|case
 name|SPILL
@@ -1151,25 +1342,18 @@ break|break;
 case|case
 name|NOMATCH
 case|:
-name|nonSpills
-index|[
-name|nonSpillCount
-operator|++
-index|]
+name|atLeastOneNonMatch
 operator|=
-name|batchIndex
+literal|true
 expr_stmt|;
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " NOMATCH duplicate");
+comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " NOMATCH" + " currentKey " + currentKey);
 break|break;
 block|}
 block|}
-block|}
-if|if
-condition|(
-name|haveSaveKey
-condition|)
+else|else
 block|{
-comment|// Account for last equal key sequence.
+comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " Key Continues " + saveKey + " " + saveJoinResult.name());
+comment|// Series of equal keys.
 switch|switch
 condition|(
 name|saveJoinResult
@@ -1178,6 +1362,76 @@ block|{
 case|case
 name|MATCH
 case|:
+name|equalKeySeriesDuplicateCounts
+index|[
+name|equalKeySeriesCount
+index|]
+operator|++
+expr_stmt|;
+name|allMatchs
+index|[
+name|allMatchCount
+operator|++
+index|]
+operator|=
+name|batchIndex
+expr_stmt|;
+comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " MATCH duplicate");
+break|break;
+case|case
+name|SPILL
+case|:
+name|spills
+index|[
+name|spillCount
+index|]
+operator|=
+name|batchIndex
+expr_stmt|;
+name|spillHashMapResultIndices
+index|[
+name|spillCount
+index|]
+operator|=
+name|hashMapResultCount
+expr_stmt|;
+name|spillCount
+operator|++
+expr_stmt|;
+break|break;
+case|case
+name|NOMATCH
+case|:
+comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " NOMATCH duplicate");
+break|break;
+block|}
+block|}
+comment|// if (!verifyMonotonicallyIncreasing(allMatchs, allMatchCount)) {
+comment|//   throw new HiveException("allMatchs is not in sort order and unique");
+comment|// }
+block|}
+block|}
+if|if
+condition|(
+name|haveSaveKey
+condition|)
+block|{
+comment|// Update our counts for the last key.
+switch|switch
+condition|(
+name|saveJoinResult
+condition|)
+block|{
+case|case
+name|MATCH
+case|:
+name|hashMapResultCount
+operator|++
+expr_stmt|;
+name|equalKeySeriesCount
+operator|++
+expr_stmt|;
+break|break;
 case|case
 name|SPILL
 case|:
@@ -1209,32 +1463,80 @@ literal|" batch #"
 operator|+
 name|batchCounter
 operator|+
-literal|" matchs "
+literal|" allMatchs "
 operator|+
 name|intArrayToRangesString
 argument_list|(
-name|matchs
+name|allMatchs
 argument_list|,
-name|matchCount
+name|allMatchCount
 argument_list|)
 operator|+
-literal|" matchHashMapResultIndices "
+literal|" equalKeySeriesHashMapResultIndices "
 operator|+
 name|intArrayToRangesString
 argument_list|(
-name|matchHashMapResultIndices
+name|equalKeySeriesHashMapResultIndices
 argument_list|,
-name|matchCount
+name|equalKeySeriesCount
 argument_list|)
 operator|+
-literal|" nonSpills "
+literal|" equalKeySeriesAllMatchIndices "
 operator|+
 name|intArrayToRangesString
 argument_list|(
-name|nonSpills
+name|equalKeySeriesAllMatchIndices
 argument_list|,
-name|nonSpillCount
+name|equalKeySeriesCount
 argument_list|)
+operator|+
+literal|" equalKeySeriesIsSingleValue "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|Arrays
+operator|.
+name|copyOfRange
+argument_list|(
+name|equalKeySeriesIsSingleValue
+argument_list|,
+literal|0
+argument_list|,
+name|equalKeySeriesCount
+argument_list|)
+argument_list|)
+operator|+
+literal|" equalKeySeriesDuplicateCounts "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|Arrays
+operator|.
+name|copyOfRange
+argument_list|(
+name|equalKeySeriesDuplicateCounts
+argument_list|,
+literal|0
+argument_list|,
+name|equalKeySeriesCount
+argument_list|)
+argument_list|)
+operator|+
+literal|" atLeastOneNonMatch "
+operator|+
+name|atLeastOneNonMatch
+operator|+
+literal|" inputSelectedInUse "
+operator|+
+name|inputSelectedInUse
+operator|+
+literal|" inputLogicalSize "
+operator|+
+name|inputLogicalSize
 operator|+
 literal|" spills "
 operator|+
@@ -1275,49 +1577,26 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// We will generate results for all matching and non-matching rows.
-comment|// Note that scratch1 is undefined at this point -- it's preallocated storage.
-name|numSel
-operator|=
 name|finishOuter
 argument_list|(
 name|batch
 argument_list|,
-name|matchs
+name|allMatchCount
 argument_list|,
-name|matchHashMapResultIndices
+name|equalKeySeriesCount
 argument_list|,
-name|matchCount
+name|atLeastOneNonMatch
 argument_list|,
-name|nonSpills
+name|inputSelectedInUse
 argument_list|,
-name|nonSpillCount
-argument_list|,
-name|spills
-argument_list|,
-name|spillHashMapResultIndices
+name|inputLogicalSize
 argument_list|,
 name|spillCount
 argument_list|,
-name|hashMapResults
-argument_list|,
 name|hashMapResultCount
-argument_list|,
-name|scratch1
 argument_list|)
 expr_stmt|;
 block|}
-name|batch
-operator|.
-name|selectedInUse
-operator|=
-literal|true
-expr_stmt|;
-name|batch
-operator|.
-name|size
-operator|=
-name|numSel
-expr_stmt|;
 if|if
 condition|(
 name|batch

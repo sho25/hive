@@ -587,12 +587,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// We rebuild in-place the selected array with rows destine to be forwarded.
-name|int
-name|numSel
-init|=
-literal|0
-decl_stmt|;
 comment|/*        * Multi-Key specific declarations.        */
 comment|// None.
 comment|/*        * Multi-Key check for repeating.        */
@@ -753,8 +747,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|numSel
-operator|=
 name|finishInnerRepeated
 argument_list|(
 name|batch
@@ -956,7 +948,7 @@ name|haveSaveKey
 operator|=
 literal|true
 expr_stmt|;
-comment|/*              * Multi-Key specific save key and lookup.              */
+comment|/*              * Multi-Key specific save key.              */
 name|temp
 operator|=
 name|saveKeyOutput
@@ -1291,50 +1283,20 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|numSel
-operator|=
 name|finishInner
 argument_list|(
 name|batch
 argument_list|,
-name|allMatchs
-argument_list|,
 name|allMatchCount
-argument_list|,
-name|equalKeySeriesHashMapResultIndices
-argument_list|,
-name|equalKeySeriesAllMatchIndices
-argument_list|,
-name|equalKeySeriesIsSingleValue
-argument_list|,
-name|equalKeySeriesDuplicateCounts
 argument_list|,
 name|equalKeySeriesCount
 argument_list|,
-name|spills
-argument_list|,
-name|spillHashMapResultIndices
-argument_list|,
 name|spillCount
-argument_list|,
-name|hashMapResults
 argument_list|,
 name|hashMapResultCount
 argument_list|)
 expr_stmt|;
 block|}
-name|batch
-operator|.
-name|selectedInUse
-operator|=
-literal|true
-expr_stmt|;
-name|batch
-operator|.
-name|size
-operator|=
-name|numSel
-expr_stmt|;
 if|if
 condition|(
 name|batch

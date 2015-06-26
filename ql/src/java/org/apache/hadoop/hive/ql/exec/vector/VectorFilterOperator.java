@@ -234,18 +234,10 @@ literal|null
 decl_stmt|;
 comment|// Temporary selected vector
 specifier|private
-specifier|final
+specifier|transient
 name|int
 index|[]
 name|temporarySelected
-init|=
-operator|new
-name|int
-index|[
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
-index|]
 decl_stmt|;
 comment|// filterMode is 1 if condition is always true, -1 if always false
 comment|// and 0 if condition needs to be computed.
@@ -424,6 +416,16 @@ literal|1
 expr_stmt|;
 block|}
 block|}
+name|temporarySelected
+operator|=
+operator|new
+name|int
+index|[
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
+index|]
+expr_stmt|;
 return|return
 name|result
 return|;

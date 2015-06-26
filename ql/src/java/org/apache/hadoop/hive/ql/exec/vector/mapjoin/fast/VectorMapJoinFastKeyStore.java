@@ -388,7 +388,7 @@ name|keyRefWord
 operator||=
 name|absoluteKeyOffset
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastKeyStore add keyLength " + keyLength + " absoluteKeyOffset " + absoluteKeyOffset + " keyRefWord " + Long.toHexString(keyRefWord));
+comment|// LOG.debug("VectorMapJoinFastKeyStore add keyLength " + keyLength + " absoluteKeyOffset " + absoluteKeyOffset + " keyRefWord " + Long.toHexString(keyRefWord));
 return|return
 name|keyRefWord
 return|;
@@ -442,7 +442,7 @@ operator|.
 name|allBitsOn
 operator|)
 decl_stmt|;
-comment|// LOG.info("VectorMapJoinFastKeyStore equalKey keyLength " + keyLength + " isKeyLengthSmall " + isKeyLengthSmall + " storedKeyLengthLength " + storedKeyLengthLength + " keyRefWord " + Long.toHexString(keyRefWord));
+comment|// LOG.debug("VectorMapJoinFastKeyStore equalKey keyLength " + keyLength + " isKeyLengthSmall " + isKeyLengthSmall + " storedKeyLengthLength " + storedKeyLengthLength + " keyRefWord " + Long.toHexString(keyRefWord));
 if|if
 condition|(
 name|isKeyLengthSmall
@@ -499,7 +499,7 @@ operator|!=
 name|keyLength
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastKeyStore equalKey no match big length");
+comment|// LOG.debug("VectorMapJoinFastKeyStore equalKey no match big length");
 return|return
 literal|false
 return|;
@@ -569,13 +569,13 @@ name|i
 index|]
 condition|)
 block|{
-comment|// LOG.info("VectorMapJoinFastKeyStore equalKey no match on bytes");
+comment|// LOG.debug("VectorMapJoinFastKeyStore equalKey no match on bytes");
 return|return
 literal|false
 return|;
 block|}
 block|}
-comment|// LOG.info("VectorMapJoinFastKeyStore equalKey match on bytes");
+comment|// LOG.debug("VectorMapJoinFastKeyStore equalKey match on bytes");
 return|return
 literal|true
 return|;
