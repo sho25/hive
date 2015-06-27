@@ -8780,6 +8780,27 @@ literal|"exception) is the default; 'skip' will skip the invalid directories and
 operator|+
 literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
+block|,
+name|HIVE_TEZ_ENABLE_MEMORY_MANAGER
+argument_list|(
+literal|"hive.tez.enable.memory.manager"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable memory manager for tez"
+argument_list|)
+block|,
+name|HIVE_HASH_TABLE_INFLATION_FACTOR
+argument_list|(
+literal|"hive.hash.table.inflation.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|2.0
+argument_list|,
+literal|"Expected inflation factor between disk/in memory representation of hash tables"
+argument_list|)
 block|;
 specifier|public
 specifier|final
