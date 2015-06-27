@@ -22,26 +22,6 @@ package|;
 end_package
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_ORC_ZEROCOPY
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -231,9 +211,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
+name|io
+operator|.
+name|FileFormatException
 import|;
 end_import
 
@@ -273,9 +255,11 @@ name|ql
 operator|.
 name|io
 operator|.
-name|sarg
+name|orc
 operator|.
-name|SearchArgument
+name|OrcProto
+operator|.
+name|UserMetadataItem
 import|;
 end_import
 
@@ -295,9 +279,29 @@ name|io
 operator|.
 name|orc
 operator|.
-name|OrcProto
+name|RecordReaderImpl
 operator|.
-name|UserMetadataItem
+name|BufferChunk
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|sarg
+operator|.
+name|SearchArgument
 import|;
 end_import
 
@@ -348,28 +352,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|RecordReaderImpl
-operator|.
-name|BufferChunk
 import|;
 end_import
 
@@ -1168,7 +1150,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|FileFormatException
 argument_list|(
 literal|"Malformed ORC file "
 operator|+
@@ -1289,7 +1271,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|FileFormatException
 argument_list|(
 literal|"Malformed ORC file "
 operator|+
