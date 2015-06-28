@@ -2010,7 +2010,9 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Error acquiring metastore connection"
+literal|"Failed to get metastore connection: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
