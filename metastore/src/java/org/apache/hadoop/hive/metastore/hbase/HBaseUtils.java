@@ -761,7 +761,7 @@ specifier|static
 name|char
 name|KEY_SEPARATOR
 init|=
-literal|':'
+literal|'\u0001'
 decl_stmt|;
 specifier|final
 specifier|static
@@ -5705,7 +5705,7 @@ name|k
 operator|.
 name|split
 argument_list|(
-literal|":"
+name|KEY_SEPARATOR_STR
 argument_list|)
 return|;
 block|}
