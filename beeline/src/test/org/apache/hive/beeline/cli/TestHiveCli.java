@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *<p/>  * http://www.apache.org/licenses/LICENSE-2.0  *<p/>  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -234,6 +234,22 @@ name|SOURCE_CONTEXT
 init|=
 literal|"create table if not exists test.testSrcTbl(a string, b string);"
 decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|String
+name|SOURCE_CONTEXT2
+init|=
+literal|"create table if not exists test.testSrcTbl2(a string);"
+decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|String
+name|SOURCE_CONTEXT3
+init|=
+literal|"create table if not exists test.testSrcTbl3(a string);"
+decl_stmt|;
 specifier|final
 specifier|static
 name|String
@@ -327,7 +343,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|IOException
+name|Throwable
 name|e
 parameter_list|)
 block|{
@@ -440,7 +456,7 @@ name|verifyCMD
 argument_list|(
 literal|"!lss\n"
 argument_list|,
-literal|"Failed to execute lss"
+literal|"Unknown command: lss"
 argument_list|,
 name|errS
 argument_list|,
@@ -485,7 +501,7 @@ parameter_list|()
 block|{
 name|verifyCMD
 argument_list|(
-literal|"\nshow tables\nquit\n"
+literal|"\nshow tables;\nquit;\n"
 argument_list|,
 literal|"Database does not exist: invalidDB"
 argument_list|,
@@ -556,11 +572,9 @@ operator|.
 name|getPath
 argument_list|()
 operator|+
-literal|"\n"
+literal|";"
 operator|+
-literal|"desc testSrcTbl\n"
-operator|+
-literal|"quit\n"
+literal|"desc testSrcTbl;\nquit;\n"
 argument_list|,
 literal|"col_name"
 argument_list|,
@@ -577,6 +591,61 @@ block|}
 argument_list|,
 name|ERRNO_OK
 argument_list|)
+expr_stmt|;
+name|f
+operator|.
+name|delete
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSourceCmd2
+parameter_list|()
+block|{
+name|File
+name|f
+init|=
+name|generateTmpFile
+argument_list|(
+name|SOURCE_CONTEXT3
+argument_list|)
+decl_stmt|;
+name|verifyCMD
+argument_list|(
+literal|"source "
+operator|+
+name|f
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|";"
+operator|+
+literal|"desc testSrcTbl3;\nquit;\n"
+argument_list|,
+literal|"col_name"
+argument_list|,
+name|os
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"--database"
+block|,
+literal|"test"
+block|}
+argument_list|,
+name|ERRNO_OK
+argument_list|)
+expr_stmt|;
+name|f
+operator|.
+name|delete
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -695,6 +764,75 @@ block|}
 argument_list|,
 name|ERRNO_ARGS
 argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testVariables
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"set system:xxx=5;\nset system:yyy=${system:xxx};\nset system:yyy;"
+argument_list|,
+literal|""
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testVariablesForSource
+parameter_list|()
+block|{
+name|File
+name|f
+init|=
+name|generateTmpFile
+argument_list|(
+name|SOURCE_CONTEXT2
+argument_list|)
+decl_stmt|;
+name|verifyCMD
+argument_list|(
+literal|"set hiveconf:zzz="
+operator|+
+name|f
+operator|.
+name|getAbsolutePath
+argument_list|()
+operator|+
+literal|";\nsource ${hiveconf:zzz};\ndesc testSrcTbl2;"
+argument_list|,
+literal|"col_name"
+argument_list|,
+name|os
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"--database"
+block|,
+literal|"test"
+block|}
+argument_list|,
+name|ERRNO_OK
+argument_list|)
+expr_stmt|;
+name|f
+operator|.
+name|delete
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
