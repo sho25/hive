@@ -1543,13 +1543,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Test
-argument_list|(
-name|timeout
-operator|=
-literal|5000
-argument_list|)
+comment|// Flaky test disabled @Test(timeout=5000)
 specifier|public
 name|void
 name|testNodeReEnabled
