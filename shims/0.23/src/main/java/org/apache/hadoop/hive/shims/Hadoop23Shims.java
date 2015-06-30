@@ -4627,7 +4627,14 @@ name|file
 operator|+
 literal|" "
 operator|+
-literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true. "
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"The details are: "
 operator|+
 name|e
 argument_list|,
@@ -4898,7 +4905,14 @@ name|target
 operator|+
 literal|" "
 operator|+
-literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true: "
+literal|"does not support ACLs but dfs.namenode.acls.enabled is set to true. "
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"The details are: "
 operator|+
 name|e
 argument_list|,

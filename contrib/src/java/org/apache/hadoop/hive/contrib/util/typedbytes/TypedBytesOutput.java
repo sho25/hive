@@ -151,7 +151,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Object
 name|initialValue
 parameter_list|()

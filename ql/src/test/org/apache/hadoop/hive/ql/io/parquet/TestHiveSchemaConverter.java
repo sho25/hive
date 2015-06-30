@@ -155,6 +155,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -165,6 +169,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -175,6 +183,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -185,6 +197,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -195,6 +211,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -207,6 +227,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -771,6 +795,10 @@ name|getFieldCount
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -835,6 +863,10 @@ name|getFieldCount
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema

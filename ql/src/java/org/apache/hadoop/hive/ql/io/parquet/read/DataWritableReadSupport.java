@@ -279,6 +279,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|hadoop
@@ -291,6 +295,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|hadoop
@@ -303,6 +311,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|io
@@ -315,6 +327,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -325,6 +341,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -335,6 +355,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -345,6 +369,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -355,6 +383,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|schema
@@ -943,6 +975,10 @@ comment|/**    * It creates the readContext for Parquet side with the requested 
 annotation|@
 name|Override
 specifier|public
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|hadoop
@@ -1230,6 +1266,10 @@ name|MessageType
 name|fileSchema
 parameter_list|,
 specifier|final
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|hadoop

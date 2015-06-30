@@ -97,7 +97,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|ByteArrayInputStream
 name|initialValue
 parameter_list|()

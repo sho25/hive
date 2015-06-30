@@ -1711,7 +1711,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"openTxns"
+literal|"openTxns("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1871,7 +1875,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"abortTxn"
+literal|"abortTxn("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2130,7 +2138,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"commitTxn"
+literal|"commitTxn("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2246,7 +2258,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"lock"
+literal|"lock("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2354,7 +2370,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"lockNoWait"
+literal|"lockNoWait("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2511,7 +2531,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"checkLock"
+literal|"checkLock("
+operator|+
+name|rqst
+operator|+
+literal|" )"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -2770,7 +2794,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"unlock"
+literal|"unlock("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -3294,7 +3322,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"showLocks"
+literal|"showLocks("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -3460,7 +3492,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"heartbeat"
+literal|"heartbeat("
+operator|+
+name|ids
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -3670,7 +3706,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"heartbeatTxnRange"
+literal|"heartbeatTxnRange("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -4150,7 +4190,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"compact"
+literal|"compact("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -4530,7 +4574,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"showCompact"
+literal|"showCompact("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -4788,7 +4836,11 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"addDynamicPartitions"
+literal|"addDynamicPartitions("
+operator|+
+name|rqst
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -5201,7 +5253,7 @@ name|dbConn
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Determine if an exception was such that it makse sense to retry.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param conn database connection    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.RetryException when deadlock    * detected and retry count has not been exceeded.    */
+comment|/**    * Determine if an exception was such that it makse sense to retry.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param conn database connection    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.RetryException when deadlock    * detected and retry count has not been exceeded.    * TODO: make "caller" more elaborate like include lockId for example    */
 specifier|protected
 name|void
 name|checkRetryable
@@ -5339,6 +5391,13 @@ operator|<
 name|ALLOWED_REPEATED_DEADLOCKS
 condition|)
 block|{
+name|long
+name|waitInterval
+init|=
+name|deadlockRetryInterval
+operator|*
+name|deadlockCnt
+decl_stmt|;
 name|LOG
 operator|.
 name|warn
@@ -5347,7 +5406,21 @@ literal|"Deadlock detected in "
 operator|+
 name|caller
 operator|+
-literal|", trying again."
+literal|". Will wait "
+operator|+
+name|waitInterval
+operator|+
+literal|"ms try again up to "
+operator|+
+operator|(
+name|ALLOWED_REPEATED_DEADLOCKS
+operator|-
+name|deadlockCnt
+operator|+
+literal|1
+operator|)
+operator|+
+literal|" times."
 argument_list|)
 expr_stmt|;
 comment|// Pause for a just a bit for retrying to avoid immediately jumping back into the deadlock.
@@ -5357,9 +5430,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-name|deadlockRetryInterval
-operator|*
-name|deadlockCnt
+name|waitInterval
 argument_list|)
 expr_stmt|;
 block|}
@@ -5414,6 +5485,36 @@ operator|<
 name|retryLimit
 condition|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Retryable error detected in "
+operator|+
+name|caller
+operator|+
+literal|".  Will wait "
+operator|+
+name|retryInterval
+operator|+
+literal|"ms and retry up to "
+operator|+
+operator|(
+name|retryLimit
+operator|-
+name|retryNum
+operator|+
+literal|1
+operator|)
+operator|+
+literal|" times.  Error: "
+operator|+
+name|getMessage
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|Thread
@@ -5432,22 +5533,6 @@ parameter_list|)
 block|{
 comment|//
 block|}
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Retryable error detected in "
-operator|+
-name|caller
-operator|+
-literal|", trying again: "
-operator|+
-name|getMessage
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-expr_stmt|;
 throw|throw
 operator|new
 name|RetryException

@@ -6897,7 +6897,7 @@ name|HIVE_EXPLAIN_USER
 argument_list|(
 literal|"hive.explain.user"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to show explain result at user level.\n"
 operator|+
@@ -7679,6 +7679,73 @@ argument_list|,
 literal|null
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPDNPATTERN
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|null
+argument_list|,
+literal|"COLON-separated list of patterns to use to find DNs for group entities in this directory.\n"
+operator|+
+literal|"Use %s where the actual group name is to be substituted for.\n"
+operator|+
+literal|"For example: CN=%s,CN=Groups,DC=subdomain,DC=domain,DC=com."
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPFILTER
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupFilter"
+argument_list|,
+literal|null
+argument_list|,
+literal|"COMMA-separated list of LDAP Group names (short name not full DNs).\n"
+operator|+
+literal|"For example: HiveAdmins,HadoopAdmins,Administrators"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_USERDNPATTERN
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|null
+argument_list|,
+literal|"COLON-separated list of patterns to use to find DNs for users in this directory.\n"
+operator|+
+literal|"Use %s where the actual group name is to be substituted for.\n"
+operator|+
+literal|"For example: CN=%s,CN=Users,DC=subdomain,DC=domain,DC=com."
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_USERFILTER
+argument_list|(
+literal|"hive.server2.authentication.ldap.userFilter"
+argument_list|,
+literal|null
+argument_list|,
+literal|"COMMA-separated list of LDAP usernames (just short names, not full DNs).\n"
+operator|+
+literal|"For example: hiveuser,impalauser,hiveadmin,hadoopadmin"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY
+argument_list|(
+literal|"hive.server2.authentication.ldap.customLDAPQuery"
+argument_list|,
+literal|null
+argument_list|,
+literal|"A full LDAP query that LDAP Atn provider uses to execute against LDAP Server.\n"
+operator|+
+literal|"If this query returns a null resultset, the LDAP Provider fails the Authentication\n"
+operator|+
+literal|"request, succeeds if the user is part of the resultset."
+operator|+
+literal|"For example: (&(objectClass=group)(objectClass=top)(instanceType=4)(cn=Domain*)) \n"
+operator|+
+literal|"(&(objectClass=person)(|(sAMAccountName=admin)(|(memberOf=CN=Domain Admins,CN=Users,DC=domain,DC=com)"
+operator|+
+literal|"(memberOf=CN=Administrators,CN=Builtin,DC=domain,DC=com))))"
 argument_list|)
 block|,
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
@@ -8992,6 +9059,27 @@ operator|-
 literal|1
 argument_list|,
 literal|"The number of queries allowed in parallel via llap. Negative number implies 'infinite'."
+argument_list|)
+block|,
+name|HIVE_TEZ_ENABLE_MEMORY_MANAGER
+argument_list|(
+literal|"hive.tez.enable.memory.manager"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable memory manager for tez"
+argument_list|)
+block|,
+name|HIVE_HASH_TABLE_INFLATION_FACTOR
+argument_list|(
+literal|"hive.hash.table.inflation.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|2.0
+argument_list|,
+literal|"Expected inflation factor between disk/in memory representation of hash tables"
 argument_list|)
 block|;
 specifier|public

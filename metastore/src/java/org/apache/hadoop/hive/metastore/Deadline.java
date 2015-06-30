@@ -142,7 +142,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Deadline
 name|initialValue
 parameter_list|()

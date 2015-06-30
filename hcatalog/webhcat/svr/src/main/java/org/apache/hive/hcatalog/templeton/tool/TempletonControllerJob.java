@@ -803,6 +803,14 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|UserGroupInformation
+operator|.
+name|isSecurityEnabled
+argument_list|()
+condition|)
+block|{
 name|Token
 argument_list|<
 name|DelegationTokenIdentifier
@@ -836,6 +844,7 @@ argument_list|,
 name|mrdt
 argument_list|)
 expr_stmt|;
+block|}
 name|String
 name|metastoreTokenStrForm
 init|=

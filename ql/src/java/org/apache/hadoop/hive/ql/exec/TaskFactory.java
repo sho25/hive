@@ -1095,7 +1095,6 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-specifier|synchronized
 name|Integer
 name|initialValue
 parameter_list|()

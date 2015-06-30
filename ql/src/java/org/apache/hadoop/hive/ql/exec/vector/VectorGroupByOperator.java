@@ -2579,7 +2579,7 @@ block|}
 comment|/**    * Sorted reduce group batch processing mode. Each input VectorizedRowBatch will have the    * same key.  On endGroup (or close), the intermediate values are flushed.    *    * We build the output rows one-at-a-time in the output vectorized row batch (outputBatch)    * in 2 steps:    *    *   1) Just after startGroup, we copy the group key to the next position in the output batch,    *      but don't increment the size in the batch (yet).  This is done with the copyGroupKey    *      method of VectorGroupKeyHelper.  The next position is outputBatch.size    *    *      We know the same key is used for the whole batch (i.e. repeating) since that is how    *      vectorized reduce-shuffle feeds the batches to us.    *    *   2) Later at endGroup after reduce-shuffle has fed us all the input batches for the group,    *      we fill in the aggregation columns in outputBatch at outputBatch.size.  Our method    *      writeGroupRow does this and finally increments outputBatch.size.    *    */
 specifier|private
 class|class
-name|ProcessingModeGroupBatches
+name|ProcessingModeReduceMergePartialKeys
 extends|extends
 name|ProcessingModeBase
 block|{
@@ -2948,7 +2948,7 @@ operator|.
 name|getVectorDesc
 argument_list|()
 operator|.
-name|isReduce
+name|isReduceMergePartial
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3166,17 +3166,21 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+name|outputKeyLength
+operator|>
+literal|0
+operator|&&
 operator|!
 name|conf
 operator|.
 name|getVectorDesc
 argument_list|()
 operator|.
-name|isVectorGroupBatches
+name|isReduceMergePartial
 argument_list|()
 condition|)
 block|{
-comment|// These data structures are only used by the map-side processing modes.
+comment|// These data structures are only used by the non Reduce Merge-Partial Keys processing modes.
 name|keyWrappersBatch
 operator|=
 name|VectorHashKeyWrapperBatch
@@ -3326,6 +3330,7 @@ operator|==
 literal|0
 condition|)
 block|{
+comment|// Hash and MergePartial global aggregation are both handled here.
 name|processingMode
 operator|=
 name|this
@@ -3343,7 +3348,7 @@ operator|.
 name|getVectorDesc
 argument_list|()
 operator|.
-name|isVectorGroupBatches
+name|isReduceMergePartial
 argument_list|()
 condition|)
 block|{
@@ -3353,7 +3358,7 @@ operator|=
 name|this
 operator|.
 expr|new
-name|ProcessingModeGroupBatches
+name|ProcessingModeReduceMergePartialKeys
 argument_list|()
 expr_stmt|;
 block|}

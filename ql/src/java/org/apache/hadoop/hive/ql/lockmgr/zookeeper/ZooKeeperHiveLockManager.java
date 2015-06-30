@@ -1193,6 +1193,28 @@ parameter_list|)
 throws|throws
 name|LockException
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Acquiring lock for "
+operator|+
+name|key
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" with mode "
+operator|+
+name|key
+operator|.
+name|getData
+argument_list|()
+operator|.
+name|getLockMode
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|int
 name|tryNum
 init|=

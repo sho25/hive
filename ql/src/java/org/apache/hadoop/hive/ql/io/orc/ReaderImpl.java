@@ -22,26 +22,6 @@ package|;
 end_package
 
 begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_ORC_ZEROCOPY
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -395,6 +375,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|FileFormatException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|orc
 operator|.
 name|OrcProto
@@ -417,9 +415,11 @@ name|ql
 operator|.
 name|io
 operator|.
-name|sarg
+name|orc
 operator|.
-name|SearchArgument
+name|OrcProto
+operator|.
+name|UserMetadataItem
 import|;
 end_import
 
@@ -439,9 +439,29 @@ name|io
 operator|.
 name|orc
 operator|.
-name|OrcProto
+name|RecordReaderImpl
 operator|.
-name|UserMetadataItem
+name|BufferChunk
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|sarg
+operator|.
+name|SearchArgument
 import|;
 end_import
 
@@ -492,28 +512,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|RecordReaderImpl
-operator|.
-name|BufferChunk
 import|;
 end_import
 
@@ -1300,7 +1298,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|FileFormatException
 argument_list|(
 literal|"Malformed ORC file "
 operator|+
@@ -1421,7 +1419,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|FileFormatException
 argument_list|(
 literal|"Malformed ORC file "
 operator|+
@@ -3590,6 +3588,41 @@ name|colName
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|String
+name|s
+init|=
+literal|"Cannot find field for: "
+operator|+
+name|colName
+operator|+
+literal|" in "
+decl_stmt|;
+for|for
+control|(
+name|String
+name|fn
+range|:
+name|fieldNames
+control|)
+block|{
+name|s
+operator|+=
+name|fn
+operator|+
+literal|", "
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 comment|// a single field may span multiple columns. find start and end column
 comment|// index for the requested field
 name|int
@@ -3892,16 +3925,18 @@ operator|!=
 literal|null
 operator|)
 operator|&&
-operator|(
 name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
 name|conf
 argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVE_ORC_ZEROCOPY
 argument_list|)
-operator|)
 decl_stmt|;
 return|return
 operator|new

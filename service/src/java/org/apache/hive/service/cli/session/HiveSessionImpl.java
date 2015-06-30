@@ -1958,17 +1958,6 @@ annotation|@
 name|Override
 specifier|public
 name|String
-name|getUsername
-parameter_list|()
-block|{
-return|return
-name|username
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
 name|getPassword
 parameter_list|()
 block|{
@@ -2040,7 +2029,9 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Error acquiring metastore connection"
+literal|"Failed to get metastore connection: "
+operator|+
+name|e
 argument_list|,
 name|e
 argument_list|)
@@ -3751,7 +3742,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|owner
@@ -3793,7 +3784,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|getUserFromToken
@@ -3837,7 +3828,7 @@ name|HiveAuthFactory
 operator|.
 name|verifyProxyAccess
 argument_list|(
-name|getUsername
+name|getUserName
 argument_list|()
 argument_list|,
 name|getUserFromToken
