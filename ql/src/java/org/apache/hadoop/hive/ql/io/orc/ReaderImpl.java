@@ -3310,6 +3310,41 @@ name|colName
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|String
+name|s
+init|=
+literal|"Cannot find field for: "
+operator|+
+name|colName
+operator|+
+literal|" in "
+decl_stmt|;
+for|for
+control|(
+name|String
+name|fn
+range|:
+name|fieldNames
+control|)
+block|{
+name|s
+operator|+=
+name|fn
+operator|+
+literal|", "
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 comment|// a single field may span multiple columns. find start and end column
 comment|// index for the requested field
 name|int
