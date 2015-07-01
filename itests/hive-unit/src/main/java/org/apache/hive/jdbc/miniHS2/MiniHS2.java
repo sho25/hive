@@ -1014,15 +1014,6 @@ argument_list|,
 name|uriString
 argument_list|,
 literal|1
-argument_list|,
-literal|false
-argument_list|,
-name|baseDir
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|"/staging"
 argument_list|)
 expr_stmt|;
 break|break;
