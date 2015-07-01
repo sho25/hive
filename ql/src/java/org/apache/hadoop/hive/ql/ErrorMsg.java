@@ -3071,6 +3071,18 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|static
+specifier|final
+name|String
+name|LINE_SEP
+init|=
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"line.separator"
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 name|void
@@ -3135,8 +3147,6 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|HiveUtils
-operator|.
 name|LINE_SEP
 argument_list|)
 expr_stmt|;
@@ -3154,8 +3164,6 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|HiveUtils
-operator|.
 name|LINE_SEP
 argument_list|)
 expr_stmt|;
