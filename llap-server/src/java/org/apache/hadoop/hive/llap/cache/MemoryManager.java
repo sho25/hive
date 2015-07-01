@@ -43,6 +43,13 @@ name|long
 name|memUsage
 parameter_list|)
 function_decl|;
+name|void
+name|updateMaxSize
+parameter_list|(
+name|long
+name|maxSize
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

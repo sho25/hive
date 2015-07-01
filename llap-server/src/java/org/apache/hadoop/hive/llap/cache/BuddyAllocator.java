@@ -299,8 +299,9 @@ operator|.
 name|LLAP_ORC_CACHE_ARENA_SIZE
 argument_list|)
 expr_stmt|;
-name|maxSize
-operator|=
+name|long
+name|maxSizeVal
+init|=
 name|HiveConf
 operator|.
 name|getLongVar
@@ -311,7 +312,7 @@ name|ConfVars
 operator|.
 name|LLAP_ORC_CACHE_MAX_SIZE
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|LlapIoImpl
@@ -352,7 +353,7 @@ name|arenaSize
 operator|+
 literal|". total size "
 operator|+
-name|maxSize
+name|maxSizeVal
 argument_list|)
 expr_stmt|;
 block|}
@@ -375,7 +376,7 @@ throw|;
 block|}
 if|if
 condition|(
-name|maxSize
+name|maxSizeVal
 operator|<
 name|arenaSize
 operator|||
@@ -406,7 +407,7 @@ name|arenaSize
 operator|+
 literal|", "
 operator|+
-name|maxSize
+name|maxSizeVal
 argument_list|)
 throw|;
 block|}
@@ -468,15 +469,53 @@ block|}
 if|if
 condition|(
 operator|(
-name|maxSize
+name|maxSizeVal
 operator|%
 name|arenaSize
 operator|)
 operator|>
 literal|0
-operator|||
+condition|)
+block|{
+name|long
+name|oldMaxSize
+init|=
+name|maxSizeVal
+decl_stmt|;
+name|maxSizeVal
+operator|=
 operator|(
-name|maxSize
+name|maxSizeVal
+operator|/
+name|arenaSize
+operator|)
+operator|*
+name|arenaSize
+expr_stmt|;
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Rounding cache size to "
+operator|+
+name|maxSizeVal
+operator|+
+literal|" from "
+operator|+
+name|oldMaxSize
+operator|+
+literal|" to be divisible by arena size "
+operator|+
+name|arenaSize
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+name|maxSizeVal
 operator|/
 name|arenaSize
 operator|)
@@ -490,16 +529,27 @@ throw|throw
 operator|new
 name|AssertionError
 argument_list|(
-literal|"Cache size not consistent with arena size: "
+literal|"Too many arenas needed to allocate the cache: "
 operator|+
 name|arenaSize
 operator|+
 literal|","
 operator|+
-name|maxSize
+name|maxSizeVal
 argument_list|)
 throw|;
 block|}
+name|maxSize
+operator|=
+name|maxSizeVal
+expr_stmt|;
+name|memoryManager
+operator|.
+name|updateMaxSize
+argument_list|(
+name|maxSize
+argument_list|)
+expr_stmt|;
 name|minAllocLog2
 operator|=
 literal|31

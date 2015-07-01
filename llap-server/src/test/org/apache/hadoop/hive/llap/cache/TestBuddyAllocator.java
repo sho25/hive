@@ -319,6 +319,16 @@ return|return
 literal|""
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|updateMaxSize
+parameter_list|(
+name|long
+name|maxSize
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
