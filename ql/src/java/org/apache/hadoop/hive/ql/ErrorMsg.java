@@ -2248,23 +2248,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|ORC_CORRUPTED_READ
-argument_list|(
-literal|30018
-argument_list|,
-literal|"Corruption in ORC data encountered. To skip reading corrupted "
-operator|+
-literal|"data, set "
-operator|+
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_ORC_SKIP_CORRUPT_DATA
-operator|+
-literal|" to true"
-argument_list|)
-block|,
 name|INVALID_FILE_FORMAT_IN_LOAD
 argument_list|(
 literal|30019
