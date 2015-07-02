@@ -89,9 +89,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|io
 operator|.
-name|Utilities
+name|IOContext
 import|;
 end_import
 
@@ -109,7 +109,7 @@ name|ql
 operator|.
 name|io
 operator|.
-name|IOContext
+name|IOContextMap
 import|;
 end_import
 
@@ -260,7 +260,7 @@ name|jc
 expr_stmt|;
 name|ioCxt
 operator|=
-name|IOContext
+name|IOContextMap
 operator|.
 name|get
 argument_list|(
@@ -273,7 +273,7 @@ name|void
 name|clear
 parameter_list|()
 block|{
-name|IOContext
+name|IOContextMap
 operator|.
 name|clear
 argument_list|()
@@ -510,21 +510,6 @@ block|{
 return|return
 name|ioCxt
 return|;
-block|}
-specifier|public
-name|void
-name|setIoCxt
-parameter_list|(
-name|IOContext
-name|ioCxt
-parameter_list|)
-block|{
-name|this
-operator|.
-name|ioCxt
-operator|=
-name|ioCxt
-expr_stmt|;
 block|}
 block|}
 end_class
