@@ -1080,7 +1080,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An ORC file writer. The file is divided into stripes, which is the natural  * unit of work when reading. Each stripe is buffered in memory until the  * memory reaches the stripe size and then it is written out broken down by  * columns. Each column is written by a TreeWriter that is specific to that  * type of column. TreeWriters may have children TreeWriters that handle the  * sub-types. Each of the TreeWriters writes the column's data as a set of  * streams.  *  * This class is synchronized so that multi-threaded access is ok. In  * particular, because the MemoryManager is shared between writers, this class  * assumes that checkMemory may be called from a separate thread.  */
+comment|/**  * An ORC file writer. The file is divided into stripes, which is the natural  * unit of work when reading. Each stripe is buffered in memory until the  * memory reaches the stripe size and then it is written out broken down by  * columns. Each column is written by a TreeWriter that is specific to that  * type of column. TreeWriters may have children TreeWriters that handle the  * sub-types. Each of the TreeWriters writes the column's data as a set of  * streams.  *  * This class is unsynchronized like most Stream objects, so from the creation of an OrcFile and all  * access to a single instance has to be from a single thread.  *   * There are no known cases where these happen between different threads today.  *   * Caveat: the MemoryManager is created during WriterOptions create, that has to be confined to a single  * thread as well.  *   */
 end_comment
 
 begin_class
@@ -2344,7 +2344,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|boolean
 name|checkMemory
 parameter_list|(
@@ -12509,7 +12508,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|void
 name|addUserMetadata
 parameter_list|(
@@ -12547,11 +12545,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-synchronized|synchronized
-init|(
-name|this
-init|)
-block|{
 name|treeWriter
 operator|.
 name|write
@@ -12582,7 +12575,6 @@ block|{
 name|createRowIndexEntry
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 block|}
 name|memoryManager
@@ -12624,11 +12616,6 @@ name|path
 argument_list|)
 expr_stmt|;
 comment|// actually close the file
-synchronized|synchronized
-init|(
-name|this
-init|)
-block|{
 name|flushStripe
 argument_list|()
 expr_stmt|;
@@ -12674,7 +12661,6 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-block|}
 comment|/**    * Raw data size will be compute when writing the file footer. Hence raw data    * size value will be available only after closing the writer.    */
 annotation|@
 name|Override
@@ -12702,7 +12688,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|long
 name|writeIntermediateFooter
 parameter_list|()
