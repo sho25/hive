@@ -946,12 +946,11 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-name|ErrorMsg
-operator|.
-name|ORC_CORRUPTED_READ
-operator|.
-name|getMsg
-argument_list|()
+literal|"Corruption in ORC data encountered. To skip"
+operator|+
+literal|" reading corrupted data, set hive.exec.orc.skip.corrupt.data to"
+operator|+
+literal|" true"
 argument_list|)
 throw|;
 block|}

@@ -3154,6 +3154,13 @@ name|text
 operator|.
 name|getBytes
 argument_list|()
+argument_list|,
+literal|0
+argument_list|,
+name|text
+operator|.
+name|getLength
+argument_list|()
 argument_list|)
 operator|.
 name|getBytes
