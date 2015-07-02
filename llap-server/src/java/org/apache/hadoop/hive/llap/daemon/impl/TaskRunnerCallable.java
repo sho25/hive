@@ -2867,7 +2867,7 @@ return|;
 block|}
 specifier|public
 name|long
-name|getCurrentAttemptStartTime
+name|getDagStartTime
 parameter_list|()
 block|{
 return|return
@@ -2876,7 +2876,7 @@ operator|.
 name|getFragmentRuntimeInfo
 argument_list|()
 operator|.
-name|getCurrentAttemptStartTime
+name|getDagStartTime
 argument_list|()
 return|;
 block|}
