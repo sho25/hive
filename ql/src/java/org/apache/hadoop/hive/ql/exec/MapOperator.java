@@ -4099,6 +4099,20 @@ name|dummyOp
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|Map
+argument_list|<
+name|Integer
+argument_list|,
+name|DummyStoreOperator
+argument_list|>
+name|getConnectedOperators
+parameter_list|()
+block|{
+return|return
+name|connectedOperators
+return|;
+block|}
 block|}
 end_class
 

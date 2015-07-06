@@ -3463,7 +3463,6 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
-return|return;
 block|}
 specifier|public
 name|boolean

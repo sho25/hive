@@ -1596,6 +1596,26 @@ expr_stmt|;
 block|}
 block|}
 block|}
+operator|(
+call|(
+name|TezContext
+call|)
+argument_list|(
+name|MapredContext
+operator|.
+name|get
+argument_list|()
+argument_list|)
+operator|)
+operator|.
+name|setDummyOpsMap
+argument_list|(
+name|mapOp
+operator|.
+name|getConnectedOperators
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// initialize map operator
 name|mapOp
 operator|.
