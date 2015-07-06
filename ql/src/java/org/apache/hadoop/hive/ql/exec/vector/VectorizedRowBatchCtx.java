@@ -3139,10 +3139,10 @@ decl_stmt|;
 name|String
 name|sVal
 init|=
-operator|(
-name|String
-operator|)
 name|value
+operator|.
+name|toString
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
