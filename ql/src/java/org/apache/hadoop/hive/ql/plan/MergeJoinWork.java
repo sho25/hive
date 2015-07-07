@@ -698,24 +698,6 @@ name|dummyOp
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|List
-argument_list|<
-name|HashTableDummyOperator
-argument_list|>
-name|getDummyOps
-parameter_list|()
-block|{
-return|return
-name|getMainWork
-argument_list|()
-operator|.
-name|getDummyOps
-argument_list|()
-return|;
-block|}
 block|}
 end_class
 
