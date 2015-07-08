@@ -1658,6 +1658,8 @@ argument_list|,
 name|testName
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 return|return

@@ -667,22 +667,6 @@ name|rel
 operator|.
 name|rules
 operator|.
-name|JoinPushTransitivePredicatesRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
 name|JoinToMultiJoinRule
 import|;
 end_import
@@ -1954,6 +1938,28 @@ operator|.
 name|rules
 operator|.
 name|HiveJoinAddNotNullRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
+name|HiveJoinCommuteRule
 import|;
 end_import
 
@@ -6212,7 +6218,75 @@ operator|.
 name|findBestExp
 argument_list|()
 expr_stmt|;
-comment|// 4. Run rule to fix windowing issue when it is done over
+comment|// 4. Run rule to try to remove projects on top of join operators
+name|hepPgmBldr
+operator|=
+operator|new
+name|HepProgramBuilder
+argument_list|()
+operator|.
+name|addMatchOrder
+argument_list|(
+name|HepMatchOrder
+operator|.
+name|BOTTOM_UP
+argument_list|)
+expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+name|HiveJoinCommuteRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+name|hepPlanner
+operator|=
+operator|new
+name|HepPlanner
+argument_list|(
+name|hepPgmBldr
+operator|.
+name|build
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|hepPlanner
+operator|.
+name|registerMetadataProviders
+argument_list|(
+name|list
+argument_list|)
+expr_stmt|;
+name|cluster
+operator|.
+name|setMetadataProvider
+argument_list|(
+operator|new
+name|CachingRelMetadataProvider
+argument_list|(
+name|chainedProvider
+argument_list|,
+name|hepPlanner
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|hepPlanner
+operator|.
+name|setRoot
+argument_list|(
+name|calciteOptimizedPlan
+argument_list|)
+expr_stmt|;
+name|calciteOptimizedPlan
+operator|=
+name|hepPlanner
+operator|.
+name|findBestExp
+argument_list|()
+expr_stmt|;
+comment|// 5. Run rule to fix windowing issue when it is done over
 comment|// aggregation columns (HIVE-10627)
 name|hepPgmBldr
 operator|=
@@ -6281,7 +6355,7 @@ operator|.
 name|findBestExp
 argument_list|()
 expr_stmt|;
-comment|// 5. Run rules to aid in translation from Calcite tree to Hive tree
+comment|// 6. Run rules to aid in translation from Calcite tree to Hive tree
 if|if
 condition|(
 name|HiveConf
@@ -6296,7 +6370,7 @@ name|HIVE_CBO_RETPATH_HIVEOP
 argument_list|)
 condition|)
 block|{
-comment|// 5.1. Merge join into multijoin operators (if possible)
+comment|// 6.1. Merge join into multijoin operators (if possible)
 name|hepPgmBldr
 operator|=
 operator|new
@@ -6436,7 +6510,7 @@ argument_list|(
 name|calciteOptimizedPlan
 argument_list|)
 expr_stmt|;
-comment|// 5.2.  Introduce exchange operators below join/multijoin operators
+comment|// 6.2.  Introduce exchange operators below join/multijoin operators
 name|hepPgmBldr
 operator|=
 operator|new

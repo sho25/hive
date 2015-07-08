@@ -1974,7 +1974,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Gets hive object for the current thread. If one is not initialized then a    * new one is created If the new configuration is different in metadata conf    * vars then a new one is created.    *    * @param c    *          new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
+comment|/**    * Gets hive object for the current thread. If one is not initialized then a    * new one is created If the new configuration is different in metadata conf    * vars, or the owner will be different then a new one is created.    *    * @param c    *          new Hive Configuration    * @return Hive object for current thread    * @throws HiveException    *    */
 specifier|public
 specifier|static
 name|Hive
@@ -1999,6 +1999,12 @@ condition|(
 name|db
 operator|==
 literal|null
+operator|||
+operator|!
+name|db
+operator|.
+name|isCurrentUserOwner
+argument_list|()
 operator|||
 operator|(
 name|db
@@ -2364,6 +2370,18 @@ name|close
 argument_list|()
 expr_stmt|;
 name|metaStoreClient
+operator|=
+literal|null
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|owner
+operator|!=
+literal|null
+condition|)
+block|{
+name|owner
 operator|=
 literal|null
 expr_stmt|;

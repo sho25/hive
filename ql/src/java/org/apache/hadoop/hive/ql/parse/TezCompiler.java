@@ -995,6 +995,26 @@ name|optimizer
 operator|.
 name|physical
 operator|.
+name|SerializeFilter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|physical
+operator|.
 name|StageIDsRearranger
 import|;
 end_import
@@ -3737,6 +3757,22 @@ literal|"Skipping llap decider"
 argument_list|)
 expr_stmt|;
 block|}
+comment|//  This optimizer will serialize all filters that made it to the
+comment|//  table scan operator to avoid having to do it multiple times on
+comment|//  the backend. If you have a physical optimization that changes
+comment|//  table scans or filters, you have to invoke it before this one.
+name|physicalCtx
+operator|=
+operator|new
+name|SerializeFilter
+argument_list|()
+operator|.
+name|resolve
+argument_list|(
+name|physicalCtx
+argument_list|)
+expr_stmt|;
+return|return;
 block|}
 block|}
 end_class
