@@ -6948,9 +6948,9 @@ name|HIVE_METRICS_JSON_FILE_LOCATION
 argument_list|(
 literal|"hive.service.metrics.file.location"
 argument_list|,
-literal|"file:///tmp/report.json"
+literal|"/tmp/report.json"
 argument_list|,
-literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of JSON metrics file.  "
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of local JSON metrics file.  "
 operator|+
 literal|"This file will get overwritten at every interval."
 argument_list|)
