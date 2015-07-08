@@ -5496,7 +5496,7 @@ name|HivePrincipal
 argument_list|>
 name|principals
 init|=
-name|AuthorizationUtils
+name|authorizer
 operator|.
 name|getHivePrincipals
 argument_list|(
@@ -5605,7 +5605,7 @@ name|getPrincipalDesc
 argument_list|()
 argument_list|)
 argument_list|,
-name|AuthorizationUtils
+name|authorizer
 operator|.
 name|getHivePrivilegeObject
 argument_list|(
@@ -5713,7 +5713,7 @@ name|HivePrincipal
 argument_list|>
 name|hivePrincipals
 init|=
-name|AuthorizationUtils
+name|authorizer
 operator|.
 name|getHivePrincipals
 argument_list|(
@@ -5726,7 +5726,7 @@ name|HivePrivilege
 argument_list|>
 name|hivePrivileges
 init|=
-name|AuthorizationUtils
+name|authorizer
 operator|.
 name|getHivePrivileges
 argument_list|(
@@ -5736,7 +5736,7 @@ decl_stmt|;
 name|HivePrivilegeObject
 name|hivePrivObject
 init|=
-name|AuthorizationUtils
+name|authorizer
 operator|.
 name|getHivePrivilegeObject
 argument_list|(
