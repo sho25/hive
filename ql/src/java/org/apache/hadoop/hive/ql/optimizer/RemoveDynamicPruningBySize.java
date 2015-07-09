@@ -367,9 +367,6 @@ argument_list|)
 expr_stmt|;
 name|GenTezUtils
 operator|.
-name|getUtils
-argument_list|()
-operator|.
 name|removeBranch
 argument_list|(
 name|event

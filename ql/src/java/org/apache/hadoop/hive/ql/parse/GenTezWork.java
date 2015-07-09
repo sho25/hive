@@ -554,14 +554,11 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// instance of shared utils
 specifier|private
+specifier|final
 name|GenTezUtils
 name|utils
-init|=
-literal|null
 decl_stmt|;
-comment|/**    * Constructor takes utils as parameter to facilitate testing    */
 specifier|public
 name|GenTezWork
 parameter_list|(
@@ -805,7 +802,7 @@ else|else
 block|{
 name|work
 operator|=
-name|utils
+name|GenTezUtils
 operator|.
 name|createReduceWork
 argument_list|(
@@ -1782,7 +1779,7 @@ comment|// create a union work object and add this work to it. Subsequent
 comment|// work should reference the union and not the actual work.
 name|unionWork
 operator|=
-name|utils
+name|GenTezUtils
 operator|.
 name|createUnionWork
 argument_list|(

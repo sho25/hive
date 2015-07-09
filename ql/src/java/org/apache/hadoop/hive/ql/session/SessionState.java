@@ -229,6 +229,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|locks
+operator|.
+name|ReentrantLock
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1165,6 +1179,16 @@ specifier|protected
 name|ClassLoader
 name|parentLoader
 decl_stmt|;
+comment|// Session-scope compile lock.
+specifier|private
+specifier|final
+name|ReentrantLock
+name|compileLock
+init|=
+operator|new
+name|ReentrantLock
+argument_list|()
+decl_stmt|;
 comment|/**    * current configuration.    */
 specifier|protected
 name|HiveConf
@@ -1590,6 +1614,15 @@ name|isSilent
 operator|=
 name|isSilent
 expr_stmt|;
+block|}
+specifier|public
+name|ReentrantLock
+name|getCompileLock
+parameter_list|()
+block|{
+return|return
+name|compileLock
+return|;
 block|}
 specifier|public
 name|boolean

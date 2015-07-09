@@ -238,7 +238,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * HiveSessionImplwithUGI.  * HiveSession with connecting user's UGI and delegation token if required  */
+comment|/**  *  * HiveSessionImplwithUGI.  * HiveSession with connecting user's UGI and delegation token if required.  * Note: this object may be shared between threads in HS2.  */
 end_comment
 
 begin_class
