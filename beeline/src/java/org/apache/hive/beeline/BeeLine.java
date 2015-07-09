@@ -4840,7 +4840,12 @@ argument_list|(
 name|initStream
 argument_list|)
 argument_list|,
-literal|true
+operator|!
+name|getOpts
+argument_list|()
+operator|.
+name|getForce
+argument_list|()
 argument_list|)
 return|;
 block|}
