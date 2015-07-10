@@ -217,6 +217,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|CalciteSemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveCalciteUtil
 import|;
 end_import
@@ -352,7 +372,7 @@ specifier|final
 name|JoinPredicateInfo
 name|joinPredInfo
 decl_stmt|;
-comment|/**    * Constructs a MultiJoin.    *    * @param cluster               cluster that join belongs to    * @param inputs                inputs into this multi-join    * @param condition            join filter applicable to this join node    * @param rowType               row type of the join result of this node    * @param joinInputs                * @param joinTypes             the join type corresponding to each input; if    *                              an input is null-generating in a left or right    *                              outer join, the entry indicates the type of    *                              outer join; otherwise, the entry is set to    *                              INNER    */
+comment|/**    * Constructs a MultiJoin.    *    * @param cluster               cluster that join belongs to    * @param inputs                inputs into this multi-join    * @param condition            join filter applicable to this join node    * @param rowType               row type of the join result of this node    * @param joinInputs    * @param joinTypes             the join type corresponding to each input; if    *                              an input is null-generating in a left or right    *                              outer join, the entry indicates the type of    *                              outer join; otherwise, the entry is set to    *                              INNER    */
 specifier|public
 name|HiveMultiJoin
 parameter_list|(
@@ -464,6 +484,8 @@ operator|=
 name|containsOuter
 argument_list|()
 expr_stmt|;
+try|try
+block|{
 name|this
 operator|.
 name|joinPredInfo
@@ -477,6 +499,21 @@ argument_list|(
 name|this
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CalciteSemanticException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -546,6 +583,8 @@ name|joinTypes
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelWriter
 name|explainTerms
@@ -710,6 +749,8 @@ name|joinsString
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelDataType
 name|deriveRowType
@@ -719,6 +760,8 @@ return|return
 name|rowType
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -750,6 +793,8 @@ name|condition
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelNode
 name|accept
