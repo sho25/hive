@@ -2070,7 +2070,7 @@ name|tableAlias
 init|=
 name|scanRel
 operator|.
-name|getTableAlias
+name|getConcatQbIDAlias
 argument_list|()
 decl_stmt|;
 name|String
@@ -2318,10 +2318,7 @@ name|topOps
 operator|.
 name|put
 argument_list|(
-name|scanRel
-operator|.
-name|getConcatQbIDAlias
-argument_list|()
+name|tableAlias
 argument_list|,
 name|ts
 argument_list|)
