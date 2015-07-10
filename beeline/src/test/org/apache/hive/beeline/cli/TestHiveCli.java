@@ -436,6 +436,10 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"The expected keyword doesn't occur in the output: "
+operator|+
+name|output
+argument_list|,
 name|output
 operator|.
 name|contains
