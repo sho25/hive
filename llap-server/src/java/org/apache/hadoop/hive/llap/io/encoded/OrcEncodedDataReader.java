@@ -3575,7 +3575,17 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-else|else
+comment|// We might have got an old value from cache; recheck it has indexes.
+if|if
+condition|(
+operator|!
+name|value
+operator|.
+name|hasAllIndexes
+argument_list|(
+name|globalInc
+argument_list|)
+condition|)
 block|{
 if|if
 condition|(
