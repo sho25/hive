@@ -2673,7 +2673,7 @@ specifier|private
 specifier|final
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;
@@ -2701,7 +2701,7 @@ name|isOriginal
 parameter_list|,
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 parameter_list|,
@@ -2803,7 +2803,7 @@ name|isOriginal
 decl_stmt|;
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;
@@ -2837,7 +2837,7 @@ name|isOriginal
 parameter_list|,
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 parameter_list|,
@@ -3198,7 +3198,7 @@ name|isOriginal
 decl_stmt|;
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;
@@ -3234,7 +3234,7 @@ name|isOriginal
 parameter_list|,
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 parameter_list|,
@@ -3437,7 +3437,7 @@ name|dir
 decl_stmt|;
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;
@@ -3459,7 +3459,7 @@ name|numBuckets
 parameter_list|,
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 parameter_list|,
@@ -3704,7 +3704,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 init|=
@@ -4118,7 +4118,7 @@ specifier|private
 specifier|final
 name|List
 argument_list|<
-name|Long
+name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;

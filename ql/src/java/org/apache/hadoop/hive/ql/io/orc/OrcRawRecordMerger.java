@@ -492,7 +492,7 @@ specifier|private
 name|OrcStruct
 name|extraValue
 decl_stmt|;
-comment|/**    * A RecordIdentifier extended with the current transaction id. This is the    * key of our merge sort with the originalTransaction, bucket, and rowId    * ascending and the currentTransaction descending. This means that if the    * reader is collapsing events to just the last update, just the first    * instance of each record is required.    */
+comment|/**    * A RecordIdentifier extended with the current transaction id. This is the    * key of our merge sort with the originalTransaction, bucket, and rowId    * ascending and the currentTransaction, statementId descending. This means that if the    * reader is collapsing events to just the last update, just the first    * instance of each record is required.    */
 specifier|final
 specifier|static
 class|class
@@ -504,6 +504,11 @@ specifier|private
 name|long
 name|currentTransactionId
 decl_stmt|;
+specifier|private
+name|int
+name|statementId
+decl_stmt|;
+comment|//sort on this descending, like currentTransactionId
 specifier|public
 name|ReaderKey
 parameter_list|()
@@ -521,6 +526,8 @@ literal|1
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -540,6 +547,40 @@ name|long
 name|currentTransactionId
 parameter_list|)
 block|{
+name|this
+argument_list|(
+name|originalTransaction
+argument_list|,
+name|bucket
+argument_list|,
+name|rowId
+argument_list|,
+name|currentTransactionId
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**      * @param statementId - set this to 0 if N/A      */
+specifier|public
+name|ReaderKey
+parameter_list|(
+name|long
+name|originalTransaction
+parameter_list|,
+name|int
+name|bucket
+parameter_list|,
+name|long
+name|rowId
+parameter_list|,
+name|long
+name|currentTransactionId
+parameter_list|,
+name|int
+name|statementId
+parameter_list|)
+block|{
 name|super
 argument_list|(
 name|originalTransaction
@@ -554,6 +595,12 @@ operator|.
 name|currentTransactionId
 operator|=
 name|currentTransactionId
+expr_stmt|;
+name|this
+operator|.
+name|statementId
+operator|=
+name|statementId
 expr_stmt|;
 block|}
 annotation|@
@@ -584,6 +631,17 @@ operator|)
 operator|.
 name|currentTransactionId
 expr_stmt|;
+name|statementId
+operator|=
+operator|(
+operator|(
+name|ReaderKey
+operator|)
+name|other
+operator|)
+operator|.
+name|statementId
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -600,6 +658,9 @@ name|rowId
 parameter_list|,
 name|long
 name|currentTransactionId
+parameter_list|,
+name|int
+name|statementId
 parameter_list|)
 block|{
 name|setValues
@@ -616,6 +677,12 @@ operator|.
 name|currentTransactionId
 operator|=
 name|currentTransactionId
+expr_stmt|;
+name|this
+operator|.
+name|statementId
+operator|=
+name|statementId
 expr_stmt|;
 block|}
 annotation|@
@@ -646,6 +713,18 @@ name|other
 operator|)
 operator|.
 name|currentTransactionId
+operator|&&
+name|statementId
+operator|==
+operator|(
+operator|(
+name|ReaderKey
+operator|)
+name|other
+operator|)
+operator|.
+name|statementId
+comment|//consistent with compareTo()
 return|;
 block|}
 annotation|@
@@ -716,6 +795,29 @@ operator|-
 literal|1
 return|;
 block|}
+if|if
+condition|(
+name|statementId
+operator|!=
+name|oth
+operator|.
+name|statementId
+condition|)
+block|{
+return|return
+name|statementId
+operator|<
+name|oth
+operator|.
+name|statementId
+condition|?
+operator|+
+literal|1
+else|:
+operator|-
+literal|1
+return|;
+block|}
 block|}
 else|else
 block|{
@@ -727,6 +829,30 @@ block|}
 block|}
 return|return
 name|sup
+return|;
+block|}
+comment|/**      * This means 1 txn modified the same row more than once      */
+specifier|private
+name|boolean
+name|isSameRow
+parameter_list|(
+name|ReaderKey
+name|other
+parameter_list|)
+block|{
+return|return
+name|compareRow
+argument_list|(
+name|other
+argument_list|)
+operator|==
+literal|0
+operator|&&
+name|currentTransactionId
+operator|==
+name|other
+operator|.
+name|currentTransactionId
 return|;
 block|}
 specifier|public
@@ -781,6 +907,10 @@ literal|", currentTxn: "
 operator|+
 name|currentTransactionId
 operator|+
+literal|", statementId: "
+operator|+
+name|statementId
+operator|+
 literal|"}"
 return|;
 block|}
@@ -813,7 +943,12 @@ specifier|final
 name|int
 name|bucket
 decl_stmt|;
-comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param bucket the bucket number for the file      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @throws IOException      */
+specifier|private
+specifier|final
+name|int
+name|statementId
+decl_stmt|;
+comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param bucket the bucket number for the file      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @param statementId id of SQL statement within a transaction      * @throws IOException      */
 name|ReaderPair
 parameter_list|(
 name|ReaderKey
@@ -835,6 +970,9 @@ name|ReaderImpl
 operator|.
 name|Options
 name|options
+parameter_list|,
+name|int
+name|statementId
 parameter_list|)
 throws|throws
 name|IOException
@@ -872,6 +1010,12 @@ name|rowsOptions
 argument_list|(
 name|options
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|statementId
+operator|=
+name|statementId
 expr_stmt|;
 comment|// advance the reader until we reach the minimum key
 do|do
@@ -966,6 +1110,8 @@ name|getCurrentTransaction
 argument_list|(
 name|nextRecord
 argument_list|)
+argument_list|,
+name|statementId
 argument_list|)
 expr_stmt|;
 comment|// if this record is larger than maxKey, we need to stop
@@ -1092,6 +1238,8 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|options
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -1377,6 +1525,8 @@ argument_list|,
 name|nextRowId
 argument_list|,
 literal|0L
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 if|if
@@ -2090,7 +2240,7 @@ name|validTxnList
 operator|=
 name|validTxnList
 expr_stmt|;
-comment|// modify the optins to reflect the event instead of the base row
+comment|// modify the options to reflect the event instead of the base row
 name|Reader
 operator|.
 name|Options
@@ -2228,6 +2378,8 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|eventOptions
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -2316,6 +2468,18 @@ argument_list|,
 name|bucket
 argument_list|)
 decl_stmt|;
+name|AcidUtils
+operator|.
+name|ParsedDelta
+name|deltaDir
+init|=
+name|AcidUtils
+operator|.
+name|parsedDelta
+argument_list|(
+name|delta
+argument_list|)
+decl_stmt|;
 name|FileSystem
 name|fs
 init|=
@@ -2390,6 +2554,11 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|eventOptions
+argument_list|,
+name|deltaDir
+operator|.
+name|getStatementId
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -2808,14 +2977,33 @@ condition|)
 block|{
 continue|continue;
 block|}
+comment|/*for multi-statement txns, you may have multiple events for the same       * row in the same (current) transaction.  We want to collapse these to just the last one       * regardless whether we are minor compacting.  Consider INSERT/UPDATE/UPDATE of the       * same row in the same txn.  There is no benefit passing along anything except the last       * event.  If we did want to pass it along, we'd have to include statementId in the row       * returned so that compaction could write it out or make minor minor compaction understand       * how to write out delta files in delta_xxx_yyy_stid format.  There doesn't seem to be any       * value in this.*/
+name|boolean
+name|isSameRow
+init|=
+name|prevKey
+operator|.
+name|isSameRow
+argument_list|(
+operator|(
+name|ReaderKey
+operator|)
+name|recordIdentifier
+argument_list|)
+decl_stmt|;
 comment|// if we are collapsing, figure out if this is a new row
 if|if
 condition|(
 name|collapse
+operator|||
+name|isSameRow
 condition|)
 block|{
 name|keysSame
 operator|=
+operator|(
+name|collapse
+operator|&&
 name|prevKey
 operator|.
 name|compareRow
@@ -2824,6 +3012,11 @@ name|recordIdentifier
 argument_list|)
 operator|==
 literal|0
+operator|)
+operator|||
+operator|(
+name|isSameRow
+operator|)
 expr_stmt|;
 if|if
 condition|(

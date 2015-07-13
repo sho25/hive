@@ -426,6 +426,17 @@ name|recordIdColumn
 argument_list|(
 name|recordIdColumn
 argument_list|)
+operator|.
+name|finalDestination
+argument_list|(
+name|partitionPath
+argument_list|)
+operator|.
+name|statementId
+argument_list|(
+operator|-
+literal|1
+argument_list|)
 argument_list|)
 return|;
 block|}

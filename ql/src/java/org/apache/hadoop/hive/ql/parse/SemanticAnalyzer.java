@@ -39319,6 +39319,8 @@ name|getPartnCols
 argument_list|()
 argument_list|,
 name|dpCtx
+argument_list|,
+name|dest_path
 argument_list|)
 decl_stmt|;
 comment|// If this is an insert, update, or delete on an ACID table then mark that so the

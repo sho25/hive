@@ -173,6 +173,10 @@ name|boolean
 name|supportsAcid
 parameter_list|()
 function_decl|;
+name|int
+name|getStatementId
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

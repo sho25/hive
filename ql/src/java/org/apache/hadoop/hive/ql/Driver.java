@@ -6391,6 +6391,16 @@ argument_list|(
 name|txnId
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setStatementId
+argument_list|(
+name|txnMgr
+operator|.
+name|getStatementId
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|// TODO Once we move to cross query transactions we need to add the open transaction to
