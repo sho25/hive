@@ -364,6 +364,14 @@ name|joinTypes
 decl_stmt|;
 specifier|private
 specifier|final
+name|ImmutableList
+argument_list|<
+name|RexNode
+argument_list|>
+name|filters
+decl_stmt|;
+specifier|private
+specifier|final
 name|boolean
 name|outerJoin
 decl_stmt|;
@@ -372,7 +380,7 @@ specifier|final
 name|JoinPredicateInfo
 name|joinPredInfo
 decl_stmt|;
-comment|/**    * Constructs a MultiJoin.    *    * @param cluster               cluster that join belongs to    * @param inputs                inputs into this multi-join    * @param condition            join filter applicable to this join node    * @param rowType               row type of the join result of this node    * @param joinInputs    * @param joinTypes             the join type corresponding to each input; if    *                              an input is null-generating in a left or right    *                              outer join, the entry indicates the type of    *                              outer join; otherwise, the entry is set to    *                              INNER    */
+comment|/**    * Constructs a MultiJoin.    *    * @param cluster               cluster that join belongs to    * @param inputs                inputs into this multi-join    * @param condition             join filter applicable to this join node    * @param rowType               row type of the join result of this node    * @param joinInputs                * @param joinTypes             the join type corresponding to each input; if    *                              an input is null-generating in a left or right    *                              outer join, the entry indicates the type of    *                              outer join; otherwise, the entry is set to    *                              INNER    * @param filters               filters associated with each join    *                              input    */
 specifier|public
 name|HiveMultiJoin
 parameter_list|(
@@ -386,7 +394,7 @@ argument_list|>
 name|inputs
 parameter_list|,
 name|RexNode
-name|joinFilter
+name|condition
 parameter_list|,
 name|RelDataType
 name|rowType
@@ -407,6 +415,12 @@ argument_list|<
 name|JoinRelType
 argument_list|>
 name|joinTypes
+parameter_list|,
+name|List
+argument_list|<
+name|RexNode
+argument_list|>
+name|filters
 parameter_list|)
 block|{
 name|super
@@ -436,7 +450,7 @@ name|this
 operator|.
 name|condition
 operator|=
-name|joinFilter
+name|condition
 expr_stmt|;
 name|this
 operator|.
@@ -475,6 +489,17 @@ operator|.
 name|copyOf
 argument_list|(
 name|joinTypes
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|filters
+operator|=
+name|ImmutableList
+operator|.
+name|copyOf
+argument_list|(
+name|filters
 argument_list|)
 expr_stmt|;
 name|this
@@ -580,6 +605,8 @@ argument_list|,
 name|joinInputs
 argument_list|,
 name|joinTypes
+argument_list|,
+name|filters
 argument_list|)
 return|;
 block|}
@@ -844,6 +871,8 @@ argument_list|,
 name|joinInputs
 argument_list|,
 name|joinTypes
+argument_list|,
+name|filters
 argument_list|)
 return|;
 block|}
@@ -896,6 +925,19 @@ parameter_list|()
 block|{
 return|return
 name|joinTypes
+return|;
+block|}
+comment|/**    * @return join conditions filters    */
+specifier|public
+name|List
+argument_list|<
+name|RexNode
+argument_list|>
+name|getJoinFilters
+parameter_list|()
+block|{
+return|return
+name|filters
 return|;
 block|}
 comment|/**    * @return the join predicate information    */

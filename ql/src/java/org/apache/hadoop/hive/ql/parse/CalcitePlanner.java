@@ -8452,8 +8452,9 @@ argument_list|)
 expr_stmt|;
 name|joinRel
 operator|=
-operator|new
 name|HiveSemiJoin
+operator|.
+name|getSemiJoin
 argument_list|(
 name|cluster
 argument_list|,

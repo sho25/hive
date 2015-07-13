@@ -1344,42 +1344,6 @@ block|}
 block|}
 block|}
 block|}
-comment|//      if ((rangeOp == null)
-comment|//&& ((leftKey == null) || (rightKey == null))) {
-comment|//        // no equality join keys found yet:
-comment|//        // try transforming the condition to
-comment|//        // equality "join" conditions, e.g.
-comment|//        //     f(LHS)> 0 ===> ( f(LHS)> 0 ) = TRUE,
-comment|//        // and make the RHS produce TRUE, but only if we're strictly
-comment|//        // looking for equi-joins
-comment|//        final ImmutableBitSet projRefs = InputFinder.bits(condition);
-comment|//        leftKey = null;
-comment|//        rightKey = null;
-comment|//
-comment|//        boolean foundInput = false;
-comment|//        for (int i = 0; i< inputs.size()&& !foundInput; i++) {
-comment|//          final int lowerLimit = inputsRange[i].nextSetBit(0);
-comment|//          final int upperLimit = inputsRange[i].length();
-comment|//          if (projRefs.nextSetBit(lowerLimit)< upperLimit) {
-comment|//            leftInput = i;
-comment|//            leftFields = inputs.get(leftInput).getRowType().getFieldList();
-comment|//
-comment|//            leftKey = condition.accept(
-comment|//                new RelOptUtil.RexInputConverter(
-comment|//                    rexBuilder,
-comment|//                    leftFields,
-comment|//                    leftFields,
-comment|//                    adjustments));
-comment|//
-comment|//            rightKey = rexBuilder.makeLiteral(true);
-comment|//
-comment|//            // effectively performing an equality comparison
-comment|//            kind = SqlKind.EQUALS;
-comment|//
-comment|//            foundInput = true;
-comment|//          }
-comment|//        }
-comment|//      }
 if|if
 condition|(
 operator|(
