@@ -826,6 +826,22 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|arenaCount
+operator|<
+literal|0
+condition|)
+block|{
+name|arenaCount
+operator|=
+operator|-
+name|arenaCount
+operator|-
+literal|1
+expr_stmt|;
+comment|// Next arena is being allocated.
+block|}
 name|long
 name|threadId
 init|=
@@ -1987,9 +2003,9 @@ operator|.
 name|lock
 argument_list|()
 expr_stmt|;
-comment|// TODO: write some comments for this method
 try|try
 block|{
+comment|// Try to allocate from target-sized free list, maybe we'll get lucky.
 name|ix
 operator|=
 name|allocateFromFreeListUnderLock
@@ -2045,6 +2061,7 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// Header for newly allocated used blocks.
 name|int
 name|headerStep
 init|=
@@ -2052,6 +2069,7 @@ literal|1
 operator|<<
 name|freeListIx
 decl_stmt|;
+comment|// Number of headers (smallest blocks) per target block.
 name|int
 name|splitListIx
 init|=
@@ -2059,6 +2077,10 @@ name|freeListIx
 operator|+
 literal|1
 decl_stmt|;
+comment|// Next free list from which we will be splitting.
+comment|// Each iteration of this loop tries to split blocks from one level of the free list into
+comment|// target size blocks; if we cannot satisfy the allocation from the free list containing the
+comment|// blocks of a particular size, we'll try to split yet larger blocks, until we run out.
 while|while
 condition|(
 name|remaining
@@ -2132,6 +2154,7 @@ name|splitList
 operator|.
 name|listHead
 decl_stmt|;
+comment|// Index of the next free block to split.
 while|while
 condition|(
 name|headerIx
@@ -2155,6 +2178,8 @@ name|offset
 init|=
 name|origOffset
 decl_stmt|;
+comment|// We will split the block at headerIx [splitWays] ways, and take [toTake] blocks,
+comment|// which will leave [lastSplitBlocksRemaining] free blocks of target size.
 name|int
 name|toTake
 init|=
@@ -2167,7 +2192,6 @@ argument_list|,
 name|remaining
 argument_list|)
 decl_stmt|;
-comment|// We split it splitWays and take toTake.
 name|remaining
 operator|-=
 name|toTake
@@ -2179,7 +2203,7 @@ operator|-
 name|toTake
 expr_stmt|;
 comment|// Whatever remains.
-comment|// Take toTake blocks by splitting the block at origOffset.
+comment|// Take toTake blocks by splitting the block at offset.
 for|for
 control|(
 init|;
@@ -2239,16 +2263,11 @@ expr_stmt|;
 comment|// If anything remains, this is where it starts.
 name|headerIx
 operator|=
-name|data
-operator|.
-name|getInt
+name|getNextFreeListItem
 argument_list|(
 name|origOffset
-operator|+
-literal|4
 argument_list|)
 expr_stmt|;
-comment|// Get next item from the free list.
 block|}
 name|replaceListHeadUnderLock
 argument_list|(
@@ -2276,8 +2295,11 @@ operator|==
 literal|0
 condition|)
 block|{
-comment|// We have just obtained all we needed by splitting at lastSplitBlockOffset; now
-comment|// we need to put the space remaining from that block into lower free lists.
+comment|// We have just obtained all we needed by splitting some block; now we need
+comment|// to put the space remaining from that block into lower free lists.
+comment|// We'll put at most one block into each list, since 2 blocks can always be combined
+comment|// to make a larger-level block. Each bit in the remaining target-sized blocks count
+comment|// is one block in a list offset from target-sized list by bit index.
 name|int
 name|newListIndex
 init|=
@@ -2450,42 +2472,47 @@ name|int
 name|size
 parameter_list|)
 block|{
-if|if
+while|while
 condition|(
-name|data
-operator|==
-literal|null
+literal|true
 condition|)
 block|{
-synchronized|synchronized
-init|(
-name|this
-init|)
-block|{
-comment|// Never goes from non-null to null, so this is the only place we need sync.
-if|if
-condition|(
-name|data
-operator|==
-literal|null
-condition|)
-block|{
-name|init
-argument_list|()
-expr_stmt|;
+name|int
+name|arenaCount
+init|=
 name|allocatedArenas
 operator|.
-name|incrementAndGet
+name|get
 argument_list|()
+decl_stmt|,
+name|allocArenaCount
+init|=
+name|arenaCount
+decl_stmt|;
+if|if
+condition|(
+name|arenaCount
+operator|<
+literal|0
+condition|)
+block|{
+name|allocArenaCount
+operator|=
+operator|-
+name|arenaCount
+operator|-
+literal|1
 expr_stmt|;
-name|metrics
-operator|.
-name|incrAllocatedArena
-argument_list|()
-expr_stmt|;
+comment|// Someone is allocating an arena.
 block|}
-block|}
-block|}
+if|if
+condition|(
+name|allocArenaCount
+operator|>
+name|arenaIx
+condition|)
+block|{
+comment|// Someone already allocated this arena; just do the usual thing.
 return|return
 name|allocateWithSplit
 argument_list|(
@@ -2500,6 +2527,149 @@ argument_list|,
 name|size
 argument_list|)
 return|;
+block|}
+if|if
+condition|(
+operator|(
+name|arenaIx
+operator|+
+literal|1
+operator|)
+operator|==
+operator|-
+name|arenaCount
+condition|)
+block|{
+comment|// Someone is allocating this arena. Wait a bit and recheck.
+try|try
+block|{
+synchronized|synchronized
+init|(
+name|this
+init|)
+block|{
+name|this
+operator|.
+name|wait
+argument_list|(
+literal|100
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|interrupt
+argument_list|()
+expr_stmt|;
+comment|// Restore interrupt, won't handle here.
+block|}
+continue|continue;
+block|}
+comment|// Either this arena is being allocated, or it is already allocated, or it is next. The
+comment|// caller should not try to allocate another arena before waiting for the previous one.
+assert|assert
+name|arenaCount
+operator|==
+name|arenaIx
+operator|:
+literal|"Arena count "
+operator|+
+name|arenaCount
+operator|+
+literal|" but "
+operator|+
+name|arenaIx
+operator|+
+literal|" is not being allocated"
+assert|;
+if|if
+condition|(
+operator|!
+name|allocatedArenas
+operator|.
+name|compareAndSet
+argument_list|(
+name|arenaCount
+argument_list|,
+operator|-
+name|arenaCount
+operator|-
+literal|1
+argument_list|)
+condition|)
+block|{
+continue|continue;
+comment|// CAS race, look again.
+block|}
+assert|assert
+name|data
+operator|==
+literal|null
+assert|;
+name|init
+argument_list|()
+expr_stmt|;
+name|boolean
+name|isCommited
+init|=
+name|allocatedArenas
+operator|.
+name|compareAndSet
+argument_list|(
+operator|-
+name|arenaCount
+operator|-
+literal|1
+argument_list|,
+name|arenaCount
+operator|+
+literal|1
+argument_list|)
+decl_stmt|;
+assert|assert
+name|isCommited
+assert|;
+synchronized|synchronized
+init|(
+name|this
+init|)
+block|{
+name|this
+operator|.
+name|notifyAll
+argument_list|()
+expr_stmt|;
+block|}
+name|metrics
+operator|.
+name|incrAllocatedArena
+argument_list|()
+expr_stmt|;
+return|return
+name|allocateWithSplit
+argument_list|(
+name|arenaIx
+argument_list|,
+name|freeListIx
+argument_list|,
+name|dest
+argument_list|,
+name|ix
+argument_list|,
+name|size
+argument_list|)
+return|;
+block|}
 block|}
 specifier|public
 name|int
@@ -2582,13 +2752,9 @@ argument_list|)
 expr_stmt|;
 name|current
 operator|=
-name|data
-operator|.
-name|getInt
+name|getNextFreeListItem
 argument_list|(
 name|offset
-operator|+
-literal|4
 argument_list|)
 expr_stmt|;
 operator|(
@@ -2625,6 +2791,42 @@ argument_list|)
 expr_stmt|;
 return|return
 name|ix
+return|;
+block|}
+specifier|private
+name|int
+name|getPrevFreeListItem
+parameter_list|(
+name|int
+name|offset
+parameter_list|)
+block|{
+return|return
+name|data
+operator|.
+name|getInt
+argument_list|(
+name|offset
+argument_list|)
+return|;
+block|}
+specifier|private
+name|int
+name|getNextFreeListItem
+parameter_list|(
+name|int
+name|offset
+parameter_list|)
+block|{
+return|return
+name|data
+operator|.
+name|getInt
+argument_list|(
+name|offset
+operator|+
+literal|4
+argument_list|)
 return|;
 block|}
 specifier|private
@@ -2876,9 +3078,7 @@ name|listHead
 argument_list|)
 decl_stmt|;
 assert|assert
-name|data
-operator|.
-name|getInt
+name|getPrevFreeListItem
 argument_list|(
 name|oldHeadOffset
 argument_list|)
@@ -2955,22 +3155,16 @@ argument_list|)
 decl_stmt|,
 name|bpHeaderIx
 init|=
-name|data
-operator|.
-name|getInt
+name|getPrevFreeListItem
 argument_list|(
 name|bOffset
 argument_list|)
 decl_stmt|,
 name|bnHeaderIx
 init|=
-name|data
-operator|.
-name|getInt
+name|getNextFreeListItem
 argument_list|(
 name|bOffset
-operator|+
-literal|4
 argument_list|)
 decl_stmt|;
 if|if
