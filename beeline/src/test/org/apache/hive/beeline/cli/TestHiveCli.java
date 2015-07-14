@@ -432,11 +432,22 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|output
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-literal|"The expected keyword doesn't occur in the output: "
+literal|"The expected keyword "
+operator|+
+name|keywords
+operator|+
+literal|"doesn't occur in the output: "
 operator|+
 name|output
 argument_list|,
@@ -463,6 +474,27 @@ argument_list|,
 literal|"Unknown command: lss"
 argument_list|,
 name|errS
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSetPromptValue
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"set hive.cli.prompt=MYCLI;SHOW\nTABLES;"
+argument_list|,
+literal|"MYCLI> "
+argument_list|,
+name|os
 argument_list|,
 literal|null
 argument_list|,

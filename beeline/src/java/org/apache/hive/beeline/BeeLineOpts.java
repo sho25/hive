@@ -2306,6 +2306,15 @@ operator|=
 name|delimiterForDSV
 expr_stmt|;
 block|}
+specifier|public
+name|HiveConf
+name|getConf
+parameter_list|()
+block|{
+return|return
+name|conf
+return|;
+block|}
 block|}
 end_class
 
