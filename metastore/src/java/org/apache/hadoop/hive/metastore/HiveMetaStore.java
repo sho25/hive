@@ -34848,7 +34848,7 @@ expr_stmt|;
 comment|// Server will create new threads up to max as necessary. After an idle
 comment|// period, it will destroy threads to keep the number of threads in the
 comment|// pool to min.
-name|int
+name|long
 name|maxMessageSize
 init|=
 name|conf
