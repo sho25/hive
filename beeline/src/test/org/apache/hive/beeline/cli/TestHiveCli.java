@@ -232,7 +232,7 @@ specifier|static
 name|String
 name|SOURCE_CONTEXT
 init|=
-literal|"create table if not exists test.testSrcTbl(a string, b string);"
+literal|"create table if not exists test.testSrcTbl(sc1 string);"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -240,7 +240,7 @@ specifier|static
 name|String
 name|SOURCE_CONTEXT2
 init|=
-literal|"create table if not exists test.testSrcTbl2(a string);"
+literal|"create table if not exists test.testSrcTbl2(sc2 string);"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -248,7 +248,7 @@ specifier|static
 name|String
 name|SOURCE_CONTEXT3
 init|=
-literal|"create table if not exists test.testSrcTbl3(a string);"
+literal|"create table if not exists test.testSrcTbl3(sc3 string);"
 decl_stmt|;
 specifier|final
 specifier|static
@@ -580,7 +580,7 @@ literal|";"
 operator|+
 literal|"desc testSrcTbl;\nquit;\n"
 argument_list|,
-literal|"col_name"
+literal|"sc1"
 argument_list|,
 name|os
 argument_list|,
@@ -630,7 +630,7 @@ literal|";"
 operator|+
 literal|"desc testSrcTbl3;\nquit;\n"
 argument_list|,
-literal|"col_name"
+literal|"sc3"
 argument_list|,
 name|os
 argument_list|,
@@ -817,7 +817,7 @@ argument_list|()
 operator|+
 literal|";\nsource ${hiveconf:zzz};\ndesc testSrcTbl2;"
 argument_list|,
-literal|"col_name"
+literal|"sc2"
 argument_list|,
 name|os
 argument_list|,
