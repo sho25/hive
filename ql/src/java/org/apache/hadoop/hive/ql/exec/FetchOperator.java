@@ -1800,9 +1800,9 @@ index|[
 name|i
 index|]
 operator|=
-name|TypeInfoUtils
+name|PrimitiveObjectInspectorFactory
 operator|.
-name|getStandardJavaObjectInspectorFromTypeInfo
+name|getPrimitiveWritableObjectInspector
 argument_list|(
 name|TypeInfoFactory
 operator|.
