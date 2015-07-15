@@ -1362,11 +1362,14 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
 name|amNodeInfo
 operator|.
 name|decrementAndGetTaskCount
 argument_list|()
 expr_stmt|;
+block|}
 comment|// Not removing this here. Will be removed when taken off the queue and discovered to have 0
 comment|// pending tasks.
 block|}
