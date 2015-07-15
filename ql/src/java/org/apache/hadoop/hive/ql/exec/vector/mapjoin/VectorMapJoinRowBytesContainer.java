@@ -1330,6 +1330,13 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|parentFile
+operator|!=
+literal|null
+condition|)
+block|{
 try|try
 block|{
 name|FileUtil
@@ -1345,7 +1352,8 @@ parameter_list|(
 name|Throwable
 name|ignored
 parameter_list|)
-block|{     }
+block|{       }
+block|}
 name|parentFile
 operator|=
 literal|null
