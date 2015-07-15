@@ -284,17 +284,6 @@ specifier|private
 specifier|static
 specifier|final
 name|boolean
-name|isLogDebugEnabled
-init|=
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|boolean
 name|isLogInfoEnabled
 init|=
 name|LOG
@@ -302,10 +291,6 @@ operator|.
 name|isInfoEnabled
 argument_list|()
 decl_stmt|;
-specifier|public
-name|LlapObjectCache
-parameter_list|()
-block|{   }
 annotation|@
 name|Override
 specifier|public
@@ -318,6 +303,11 @@ parameter_list|)
 block|{
 comment|// nothing to do, soft references will clean themselves up
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 annotation|@
 name|Override
 specifier|public

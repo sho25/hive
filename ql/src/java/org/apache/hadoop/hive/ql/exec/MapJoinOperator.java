@@ -1037,8 +1037,9 @@ argument_list|()
 decl_stmt|;
 comment|// On Tez only: The hash map might already be cached in the container we run
 comment|// the task in. On MR: The cache is a no-op.
-name|cacheKey
-operator|=
+name|String
+name|queryId
+init|=
 name|HiveConf
 operator|.
 name|getVar
@@ -1051,8 +1052,10 @@ name|ConfVars
 operator|.
 name|HIVEQUERYID
 argument_list|)
-operator|+
-literal|"__HASH_MAP_"
+decl_stmt|;
+name|cacheKey
+operator|=
+literal|"HASH_MAP_"
 operator|+
 name|this
 operator|.
@@ -1068,6 +1071,8 @@ operator|.
 name|getCache
 argument_list|(
 name|hconf
+argument_list|,
+name|queryId
 argument_list|)
 expr_stmt|;
 name|loader
