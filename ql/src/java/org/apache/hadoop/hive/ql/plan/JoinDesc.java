@@ -1268,6 +1268,17 @@ argument_list|>
 name|getKeysString
 parameter_list|()
 block|{
+if|if
+condition|(
+name|joinKeys
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|Map
 argument_list|<
 name|Byte
