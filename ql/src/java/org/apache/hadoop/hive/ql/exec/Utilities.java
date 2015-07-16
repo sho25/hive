@@ -4089,7 +4089,7 @@ block|{
 comment|// happens. e.g.: no reduce work.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"File not found: "
 operator|+
