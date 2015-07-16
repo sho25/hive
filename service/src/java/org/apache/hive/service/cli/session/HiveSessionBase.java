@@ -192,10 +192,6 @@ name|getSessionHandle
 parameter_list|()
 function_decl|;
 name|String
-name|getUsername
-parameter_list|()
-function_decl|;
-name|String
 name|getPassword
 parameter_list|()
 function_decl|;

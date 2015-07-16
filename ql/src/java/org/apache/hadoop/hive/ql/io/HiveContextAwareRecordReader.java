@@ -906,7 +906,7 @@ name|getIOContext
 parameter_list|()
 block|{
 return|return
-name|IOContext
+name|IOContextMap
 operator|.
 name|get
 argument_list|(

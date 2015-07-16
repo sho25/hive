@@ -122,6 +122,44 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Decrements a counter of the given name by 1.    * @param name    * @return    * @throws IOException    */
+specifier|public
+name|Long
+name|decrementCounter
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Decrements a counter of the given name by "decrement"    * @param name    * @param decrement    * @return    * @throws IOException    */
+specifier|public
+name|Long
+name|decrementCounter
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|long
+name|decrement
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Adds a metrics-gauge to track variable.  For example, number of open database connections.    * @param name name of gauge    * @param variable variable to track.    * @throws IOException    */
+specifier|public
+name|void
+name|addGauge
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+specifier|final
+name|MetricsVariable
+name|variable
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

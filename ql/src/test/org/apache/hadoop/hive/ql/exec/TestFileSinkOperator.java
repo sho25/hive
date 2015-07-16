@@ -2157,6 +2157,7 @@ argument_list|(
 name|partColNames
 argument_list|)
 expr_stmt|;
+comment|//todo: does this need the finalDestination?
 name|desc
 operator|=
 operator|new
@@ -2181,6 +2182,8 @@ argument_list|,
 name|partCols
 argument_list|,
 name|dpCtx
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}

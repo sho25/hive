@@ -976,6 +976,11 @@ name|join
 operator|.
 name|getJoinTypes
 argument_list|()
+argument_list|,
+name|join
+operator|.
+name|getJoinFilters
+argument_list|()
 argument_list|)
 decl_stmt|;
 return|return

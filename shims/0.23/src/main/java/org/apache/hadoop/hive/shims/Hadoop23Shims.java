@@ -4161,6 +4161,20 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+comment|//If there is no group of a file, no need to call chgrp
+if|if
+condition|(
+name|group
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|group
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|run
 argument_list|(
 name|fsShell
@@ -4182,6 +4196,7 @@ argument_list|()
 block|}
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isExtendedAclEnabled

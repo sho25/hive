@@ -2234,8 +2234,26 @@ parameter_list|)
 throws|throws
 name|AvroSerdeException
 block|{
+comment|// Calculate tags individually since the schema can evolve and can have different tags. In worst case, both schemas are same
+comment|// and we would end up doing calculations twice to get the same tag
 name|int
-name|tag
+name|fsTag
+init|=
+name|GenericData
+operator|.
+name|get
+argument_list|()
+operator|.
+name|resolveUnion
+argument_list|(
+name|fileSchema
+argument_list|,
+name|datum
+argument_list|)
+decl_stmt|;
+comment|// Determine index of value from fileSchema
+name|int
+name|rsTag
 init|=
 name|GenericData
 operator|.
@@ -2249,7 +2267,7 @@ argument_list|,
 name|datum
 argument_list|)
 decl_stmt|;
-comment|// Determine index of value
+comment|// Determine index of value from recordSchema
 name|Object
 name|desered
 init|=
@@ -2270,7 +2288,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|tag
+name|fsTag
 argument_list|)
 argument_list|,
 name|recordSchema
@@ -2280,7 +2298,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|tag
+name|rsTag
 argument_list|)
 argument_list|,
 name|columnType
@@ -2290,7 +2308,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-name|tag
+name|rsTag
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2303,7 +2321,7 @@ argument_list|(
 operator|(
 name|byte
 operator|)
-name|tag
+name|rsTag
 argument_list|,
 name|desered
 argument_list|)

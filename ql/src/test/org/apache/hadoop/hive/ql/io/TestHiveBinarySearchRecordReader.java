@@ -639,7 +639,7 @@ argument_list|)
 expr_stmt|;
 name|ioContext
 operator|=
-name|IOContext
+name|IOContextMap
 operator|.
 name|get
 argument_list|(

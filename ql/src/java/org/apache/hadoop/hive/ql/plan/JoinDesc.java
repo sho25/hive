@@ -1710,6 +1710,17 @@ name|l
 return|;
 block|}
 specifier|public
+name|ExprNodeDesc
+index|[]
+index|[]
+name|getJoinKeys
+parameter_list|()
+block|{
+return|return
+name|joinKeys
+return|;
+block|}
+specifier|public
 name|JoinCondDesc
 index|[]
 name|getConds
