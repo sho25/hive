@@ -3475,7 +3475,43 @@ name|metastore
 operator|.
 name|MetaStoreUtils
 operator|.
-name|*
+name|DEFAULT_DATABASE_COMMENT
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+operator|.
+name|DEFAULT_DATABASE_NAME
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+operator|.
+name|validateName
 import|;
 end_import
 
@@ -17075,41 +17111,8 @@ range|:
 name|parts
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|ignoreProtection
-operator|&&
-operator|!
-name|MetaStoreUtils
-operator|.
-name|canDropPartition
-argument_list|(
-name|tbl
-argument_list|,
-name|part
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Table "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
-operator|+
-literal|" Partition "
-operator|+
-name|part
-operator|+
-literal|" is protected from being dropped"
-argument_list|)
-throw|;
-block|}
+comment|// TODO - we need to speed this up for the normal path where all partitions are under
+comment|// the table and we don't have to stat every partition
 name|firePreEvent
 argument_list|(
 operator|new

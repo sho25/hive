@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -158,6 +148,16 @@ operator|.
 name|plan
 operator|.
 name|AlterTableDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
 import|;
 end_import
 
@@ -578,12 +578,6 @@ name|ARCHIVE
 case|:
 case|case
 name|UNARCHIVE
-case|:
-case|case
-name|ALTERPROTECTMODE
-case|:
-case|case
-name|ALTERPARTITIONPROTECTMODE
 case|:
 case|case
 name|ALTERLOCATION
