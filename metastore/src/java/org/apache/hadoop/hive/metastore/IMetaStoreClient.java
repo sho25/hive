@@ -1540,15 +1540,15 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tblName    * @param dbName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+comment|/**    * @param dbName    * @param tblName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
 name|Partition
 name|getPartition
 parameter_list|(
 name|String
-name|tblName
+name|dbName
 parameter_list|,
 name|String
-name|dbName
+name|tblName
 parameter_list|,
 name|List
 argument_list|<
