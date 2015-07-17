@@ -590,8 +590,9 @@ specifier|final
 name|AtomicInteger
 name|numSlotsAvailable
 decl_stmt|;
+annotation|@
+name|VisibleForTesting
 comment|// Tracks known tasks.
-specifier|private
 specifier|final
 name|ConcurrentMap
 argument_list|<
@@ -1325,7 +1326,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Attempting to schedule task {}, canFinish={}. Current state: preemptionQueueSize={}, numSlotsAvailable={}"
+literal|"Attempting to schedule task {}, canFinish={}. Current state: preemptionQueueSize={}, numSlotsAvailable={}, waitQueueSize={}"
 argument_list|,
 name|task
 operator|.
@@ -1348,6 +1349,11 @@ argument_list|,
 name|numSlotsAvailable
 operator|.
 name|get
+argument_list|()
+argument_list|,
+name|waitQueue
+operator|.
+name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1658,12 +1664,38 @@ argument_list|,
 name|taskWrapper
 argument_list|)
 expr_stmt|;
+comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
+comment|// if the fragment moves in or out of the finishable state.
+name|boolean
+name|canFinish
+init|=
+name|taskWrapper
+operator|.
+name|getTaskRunnerCallable
+argument_list|()
+operator|.
+name|canFinish
+argument_list|()
+decl_stmt|;
+comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
+comment|// and registrations are mutually exclusive.
+name|taskWrapper
+operator|.
+name|maybeRegisterForFinishedStateNotifications
+argument_list|(
+name|canFinish
+argument_list|)
+expr_stmt|;
 name|TaskWrapper
 name|evictedTask
 decl_stmt|;
 try|try
 block|{
-comment|// Don't need a lock. Not subscribed for notifications yet, and marked as inWaitQueue
+synchronized|synchronized
+init|(
+name|lock
+init|)
+block|{
 name|evictedTask
 operator|=
 name|waitQueue
@@ -1673,6 +1705,14 @@ argument_list|(
 name|taskWrapper
 argument_list|)
 expr_stmt|;
+name|taskWrapper
+operator|.
+name|setIsInWaitQueue
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1689,6 +1729,11 @@ operator|.
 name|getRequestId
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|taskWrapper
+operator|.
+name|maybeUnregisterForFinishedStateNotifications
+argument_list|()
 expr_stmt|;
 throw|throw
 name|e
@@ -1743,6 +1788,13 @@ name|evictedTask
 operator|.
 name|maybeUnregisterForFinishedStateNotifications
 argument_list|()
+expr_stmt|;
+name|evictedTask
+operator|.
+name|setIsInWaitQueue
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 name|evictedTask
 operator|.
@@ -1939,6 +1991,11 @@ literal|false
 decl_stmt|;
 try|try
 block|{
+synchronized|synchronized
+init|(
+name|lock
+init|)
+block|{
 name|boolean
 name|canFinish
 init|=
@@ -1950,24 +2007,6 @@ operator|.
 name|canFinish
 argument_list|()
 decl_stmt|;
-comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
-comment|// and registrations are mutually exclusive.
-name|boolean
-name|stateChanged
-init|=
-operator|!
-name|taskWrapper
-operator|.
-name|maybeRegisterForFinishedStateNotifications
-argument_list|(
-name|canFinish
-argument_list|)
-decl_stmt|;
-synchronized|synchronized
-init|(
-name|lock
-init|)
-block|{
 name|ListenableFuture
 argument_list|<
 name|TaskRunner2Result
@@ -1997,8 +2036,7 @@ name|TaskRunner2Result
 argument_list|>
 name|wrappedCallback
 init|=
-operator|new
-name|InternalCompletionListener
+name|createInternalCompletionListener
 argument_list|(
 name|taskWrapper
 argument_list|)
@@ -2045,19 +2083,8 @@ condition|)
 block|{
 if|if
 condition|(
-operator|(
 operator|!
 name|canFinish
-operator|&&
-operator|!
-name|stateChanged
-operator|)
-operator|||
-operator|(
-name|canFinish
-operator|&&
-name|stateChanged
-operator|)
 condition|)
 block|{
 if|if
@@ -2267,7 +2294,7 @@ name|taskWrapper
 argument_list|)
 condition|)
 block|{
-comment|// Put element back onlt if it existed.
+comment|// Put element back only if it existed.
 name|waitQueue
 operator|.
 name|offer
@@ -2450,8 +2477,25 @@ return|return
 name|taskWrapper
 return|;
 block|}
-specifier|private
-specifier|final
+annotation|@
+name|VisibleForTesting
+name|InternalCompletionListener
+name|createInternalCompletionListener
+parameter_list|(
+name|TaskWrapper
+name|taskWrapper
+parameter_list|)
+block|{
+return|return
+operator|new
+name|InternalCompletionListener
+argument_list|(
+name|taskWrapper
+argument_list|)
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
 class|class
 name|InternalCompletionListener
 implements|implements
@@ -3345,7 +3389,7 @@ specifier|private
 name|boolean
 name|inWaitQueue
 init|=
-literal|true
+literal|false
 decl_stmt|;
 specifier|private
 name|boolean
@@ -3561,6 +3605,27 @@ operator|+
 literal|", registeredForNotifications="
 operator|+
 name|registeredForNotifications
+operator|+
+literal|", canFinish="
+operator|+
+name|taskRunnerCallable
+operator|.
+name|canFinish
+argument_list|()
+operator|+
+literal|", firstAttemptStartTime="
+operator|+
+name|taskRunnerCallable
+operator|.
+name|getFirstAttemptStartTime
+argument_list|()
+operator|+
+literal|", vertexParallelism="
+operator|+
+name|taskRunnerCallable
+operator|.
+name|getVertexParallelism
+argument_list|()
 operator|+
 literal|'}'
 return|;
