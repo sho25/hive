@@ -1652,6 +1652,32 @@ argument_list|,
 name|this
 argument_list|)
 decl_stmt|;
+name|TaskWrapper
+name|evictedTask
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|lock
+init|)
+block|{
+comment|// If the queue does not have capacity, it does not throw a Rejection. Instead it will
+comment|// return the task with the lowest priority, which could be the task which is currently being processed.
+name|evictedTask
+operator|=
+name|waitQueue
+operator|.
+name|offer
+argument_list|(
+name|taskWrapper
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|evictedTask
+operator|!=
+name|taskWrapper
+condition|)
+block|{
 name|knownTasks
 operator|.
 name|put
@@ -1664,47 +1690,6 @@ argument_list|,
 name|taskWrapper
 argument_list|)
 expr_stmt|;
-comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
-comment|// if the fragment moves in or out of the finishable state.
-name|boolean
-name|canFinish
-init|=
-name|taskWrapper
-operator|.
-name|getTaskRunnerCallable
-argument_list|()
-operator|.
-name|canFinish
-argument_list|()
-decl_stmt|;
-comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
-comment|// and registrations are mutually exclusive.
-name|taskWrapper
-operator|.
-name|maybeRegisterForFinishedStateNotifications
-argument_list|(
-name|canFinish
-argument_list|)
-expr_stmt|;
-name|TaskWrapper
-name|evictedTask
-decl_stmt|;
-try|try
-block|{
-synchronized|synchronized
-init|(
-name|lock
-init|)
-block|{
-name|evictedTask
-operator|=
-name|waitQueue
-operator|.
-name|offer
-argument_list|(
-name|taskWrapper
-argument_list|)
-expr_stmt|;
 name|taskWrapper
 operator|.
 name|setIsInWaitQueue
@@ -1712,33 +1697,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|RejectedExecutionException
-name|e
-parameter_list|)
-block|{
-name|knownTasks
-operator|.
-name|remove
-argument_list|(
-name|taskWrapper
-operator|.
-name|getRequestId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|taskWrapper
-operator|.
-name|maybeUnregisterForFinishedStateNotifications
-argument_list|()
-expr_stmt|;
-throw|throw
-name|e
-throw|;
-block|}
 if|if
 condition|(
 name|isInfoEnabled
@@ -1762,6 +1720,74 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"wait queue full, size={}. {} not added"
+argument_list|,
+name|waitQueue
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|task
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|evictedTask
+operator|.
+name|getTaskRunnerCallable
+argument_list|()
+operator|.
+name|killTask
+argument_list|()
+expr_stmt|;
+throw|throw
+operator|new
+name|RejectedExecutionException
+argument_list|(
+literal|"Wait queue full"
+argument_list|)
+throw|;
+block|}
+block|}
+comment|// At this point, the task has been added into the queue. It may have caused an eviction for
+comment|// some other task.
+comment|// This registration has to be done after knownTasks has been populated.
+comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
+comment|// if the fragment moves in or out of the finishable state.
+name|boolean
+name|canFinish
+init|=
+name|taskWrapper
+operator|.
+name|getTaskRunnerCallable
+argument_list|()
+operator|.
+name|canFinish
+argument_list|()
+decl_stmt|;
+comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
+comment|// and registrations are mutually exclusive.
+name|taskWrapper
+operator|.
+name|maybeRegisterForFinishedStateNotifications
+argument_list|(
+name|canFinish
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isDebugEnabled
@@ -1784,6 +1810,16 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|knownTasks
+operator|.
+name|remove
+argument_list|(
+name|evictedTask
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|evictedTask
 operator|.
 name|maybeUnregisterForFinishedStateNotifications
