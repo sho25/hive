@@ -1266,9 +1266,6 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isSparkExecEngine
-operator|||
-operator|(
 name|pctx
 operator|.
 name|getContext
@@ -1279,7 +1276,9 @@ argument_list|()
 operator|&&
 operator|!
 name|isTezExecEngine
-operator|)
+operator|&&
+operator|!
+name|isSparkExecEngine
 condition|)
 block|{
 name|transformations

@@ -8663,6 +8663,30 @@ argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
 argument_list|)
 block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by writing\n"
+operator|+
+literal|"to a temporary HDFS file, and read later for removing unnecessary partitions."
+argument_list|)
+block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning.max.data.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum total data size in dynamic pruning."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"

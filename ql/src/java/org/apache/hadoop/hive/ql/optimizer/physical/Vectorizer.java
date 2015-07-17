@@ -6931,6 +6931,9 @@ case|:
 case|case
 name|EVENT
 case|:
+case|case
+name|SPARKPRUNINGSINK
+case|:
 name|ret
 operator|=
 literal|true
@@ -7135,6 +7138,9 @@ name|LIMIT
 case|:
 case|case
 name|EVENT
+case|:
+case|case
+name|SPARKPRUNINGSINK
 case|:
 name|ret
 operator|=
