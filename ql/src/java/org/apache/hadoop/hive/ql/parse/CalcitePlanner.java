@@ -6302,6 +6302,14 @@ name|HiveJoinProjectTransposeRule
 operator|.
 name|BOTH_PROJECT
 argument_list|,
+name|HiveJoinProjectTransposeRule
+operator|.
+name|LEFT_PROJECT
+argument_list|,
+name|HiveJoinProjectTransposeRule
+operator|.
+name|RIGHT_PROJECT
+argument_list|,
 name|HiveJoinToMultiJoinRule
 operator|.
 name|INSTANCE
