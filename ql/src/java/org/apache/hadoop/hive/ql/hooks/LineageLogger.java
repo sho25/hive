@@ -952,20 +952,6 @@ argument_list|(
 name|out
 argument_list|)
 decl_stmt|;
-name|writer
-operator|.
-name|setIndent
-argument_list|(
-literal|"  "
-argument_list|)
-expr_stmt|;
-name|out
-operator|.
-name|append
-argument_list|(
-literal|"POSTHOOK: LINEAGE: "
-argument_list|)
-expr_stmt|;
 name|String
 name|queryStr
 init|=
@@ -1266,7 +1252,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// In none test mode, emit to a log file,
+comment|// In non-test mode, emit to a log file,
 comment|// which can be different from the normal hive.log.
 comment|// For example, using NoDeleteRollingFileAppender to
 comment|// log to some file with different rolling policy.
