@@ -348,6 +348,11 @@ name|boolean
 name|hasSpill
 parameter_list|()
 function_decl|;
+comment|/**    * Return the size of the hash table    */
+name|int
+name|size
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

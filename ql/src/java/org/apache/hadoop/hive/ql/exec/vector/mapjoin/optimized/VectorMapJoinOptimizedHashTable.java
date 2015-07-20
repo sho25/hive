@@ -526,6 +526,20 @@ operator|)
 name|hashMapRowGetter
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+return|return
+name|originalTableContainer
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

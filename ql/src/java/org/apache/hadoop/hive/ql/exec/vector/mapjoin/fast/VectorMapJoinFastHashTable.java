@@ -275,6 +275,17 @@ operator|=
 name|writeBuffersSize
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+return|return
+name|keysAssigned
+return|;
+block|}
 block|}
 end_class
 
