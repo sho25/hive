@@ -23,14 +23,17 @@ end_package
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|Connection
 block|{
 specifier|public
+specifier|final
 name|String
 name|type
 decl_stmt|;
 specifier|public
+specifier|final
 name|Vertex
 name|from
 decl_stmt|;

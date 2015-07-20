@@ -95,6 +95,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -135,8 +149,22 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|locks
+operator|.
+name|ReentrantLock
+import|;
+end_import
+
 begin_comment
-comment|/**  * Implements a memory manager that keeps a global context of how many ORC  * writers there are and manages the memory between them. For use cases with  * dynamic partitions, it is easy to end up with many writers in the same task.  * By managing the size of each allocation, we try to cut down the size of each  * allocation and keep the task from running out of memory.  *  * This class is thread safe and uses synchronization around the shared state  * to prevent race conditions.  */
+comment|/**  * Implements a memory manager that keeps a global context of how many ORC  * writers there are and manages the memory between them. For use cases with  * dynamic partitions, it is easy to end up with many writers in the same task.  * By managing the size of each allocation, we try to cut down the size of each  * allocation and keep the task from running out of memory.  *   * This class is not thread safe, but is re-entrant - ensure creation and all  * invocations are triggered from the same thread.  */
 end_comment
 
 begin_class
@@ -209,6 +237,40 @@ name|rowsAddedSinceCheck
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+specifier|final
+name|OwnedLock
+name|ownerLock
+init|=
+operator|new
+name|OwnedLock
+argument_list|()
+decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"serial"
+argument_list|)
+specifier|private
+specifier|static
+class|class
+name|OwnedLock
+extends|extends
+name|ReentrantLock
+block|{
+specifier|public
+name|Thread
+name|getOwner
+parameter_list|()
+block|{
+return|return
+name|super
+operator|.
+name|getOwner
+argument_list|()
+return|;
+block|}
+block|}
 specifier|private
 specifier|static
 class|class
@@ -312,9 +374,42 @@ operator|*
 name|maxLoad
 argument_list|)
 expr_stmt|;
+name|ownerLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * Light weight thread-safety check for multi-threaded access patterns    */
+specifier|private
+name|void
+name|checkOwner
+parameter_list|()
+block|{
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|ownerLock
+operator|.
+name|isHeldByCurrentThread
+argument_list|()
+argument_list|,
+literal|"Owner thread expected %s, got %s"
+argument_list|,
+name|ownerLock
+operator|.
+name|getOwner
+argument_list|()
+argument_list|,
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Add a new writer's memory allocation to the pool. We use the path    * as a unique key to ensure that we don't get duplicates.    * @param path the file that is being written    * @param requestedAllocation the requested buffer size    */
-specifier|synchronized
 name|void
 name|addWriter
 parameter_list|(
@@ -330,6 +425,9 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|checkOwner
+argument_list|()
+expr_stmt|;
 name|WriterInfo
 name|oldVal
 init|=
@@ -405,7 +503,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Remove the given writer from the pool.    * @param path the file that has been closed    */
-specifier|synchronized
 name|void
 name|removeWriter
 parameter_list|(
@@ -415,6 +512,9 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|checkOwner
+argument_list|()
+expr_stmt|;
 name|WriterInfo
 name|val
 init|=
@@ -488,7 +588,6 @@ name|totalMemoryPool
 return|;
 block|}
 comment|/**    * The scaling factor for each allocation to ensure that the pool isn't    * oversubscribed.    * @return a fraction between 0.0 and 1.0 of the requested size that is    * available for each writer.    */
-specifier|synchronized
 name|double
 name|getAllocationScale
 parameter_list|()
@@ -498,7 +597,6 @@ name|currentScale
 return|;
 block|}
 comment|/**    * Give the memory manager an opportunity for doing a memory check.    * @throws IOException    */
-specifier|synchronized
 name|void
 name|addedRow
 parameter_list|()
@@ -525,6 +623,9 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+name|checkOwner
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|debug

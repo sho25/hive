@@ -23,18 +23,6 @@ end_package
 
 begin_import
 import|import
-name|parquet
-operator|.
-name|filter2
-operator|.
-name|predicate
-operator|.
-name|FilterPredicate
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -429,6 +417,12 @@ argument_list|>
 name|getLeaves
 parameter_list|()
 function_decl|;
+comment|/**    * Get the expression tree. This should only needed for file formats that    * need to translate the expression to an internal form.    */
+specifier|public
+name|ExpressionTree
+name|getExpression
+parameter_list|()
+function_decl|;
 comment|/**    * Evaluate the entire predicate based on the values for the leaf predicates.    * @param leaves the value of each leaf predicate    * @return the value of hte entire predicate    */
 specifier|public
 name|TruthValue
@@ -443,12 +437,6 @@ comment|/**    * Serialize the SARG as a kyro object and return the base64 strin
 specifier|public
 name|String
 name|toKryo
-parameter_list|()
-function_decl|;
-comment|/**    * Translate the search argument to the filter predicate parquet used    * @return    */
-specifier|public
-name|FilterPredicate
-name|toFilterPredicate
 parameter_list|()
 function_decl|;
 comment|/**    * A builder object for contexts outside of Hive where it isn't easy to    * get a ExprNodeDesc. The user must call startOr, startAnd, or startNot    * before adding any leaves.    */

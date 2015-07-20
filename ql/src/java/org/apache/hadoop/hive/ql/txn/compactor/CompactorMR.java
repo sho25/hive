@@ -3532,7 +3532,15 @@ name|bucket
 argument_list|(
 name|bucket
 argument_list|)
+operator|.
+name|statementId
+argument_list|(
+operator|-
+literal|1
+argument_list|)
 expr_stmt|;
+comment|//setting statementId == -1 makes compacted delta files use
+comment|//delta_xxxx_yyyy format
 comment|// Instantiate the underlying output format
 annotation|@
 name|SuppressWarnings

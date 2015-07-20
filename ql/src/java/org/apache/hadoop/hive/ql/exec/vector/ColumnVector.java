@@ -409,6 +409,19 @@ parameter_list|()
 block|{
 comment|// Do nothing by default
 block|}
+comment|/**      * Print the value for this column into the given string builder.      * @param buffer the buffer to print into      * @param row the id of the row to print      */
+specifier|public
+specifier|abstract
+name|void
+name|stringifyValue
+parameter_list|(
+name|StringBuilder
+name|buffer
+parameter_list|,
+name|int
+name|row
+parameter_list|)
+function_decl|;
 block|}
 end_class
 

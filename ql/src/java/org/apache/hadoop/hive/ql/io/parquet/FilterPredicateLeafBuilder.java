@@ -53,6 +53,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -65,6 +69,10 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -77,6 +85,10 @@ end_import
 
 begin_import
 import|import static
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -91,6 +103,10 @@ end_import
 
 begin_import
 import|import static
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2

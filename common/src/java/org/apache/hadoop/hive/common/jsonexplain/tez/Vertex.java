@@ -35,16 +35,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|PrintStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -119,31 +109,57 @@ end_import
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|Vertex
+implements|implements
+name|Comparable
+argument_list|<
+name|Vertex
+argument_list|>
 block|{
 specifier|public
+specifier|final
 name|String
 name|name
 decl_stmt|;
+comment|//tezJsonParser
+specifier|public
+specifier|final
+name|TezJsonParser
+name|parser
+decl_stmt|;
 comment|// vertex's parent connections.
 specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Connection
 argument_list|>
 name|parentConnections
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
 decl_stmt|;
 comment|// vertex's children vertex.
 specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Vertex
 argument_list|>
 name|children
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
 decl_stmt|;
 comment|// the jsonObject for this vertex
 specifier|public
+specifier|final
 name|JSONObject
 name|vertexObject
 decl_stmt|;
@@ -160,24 +176,39 @@ name|dummy
 decl_stmt|;
 comment|// the rootOps in this vertex
 specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Op
 argument_list|>
 name|rootOps
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
 decl_stmt|;
 comment|// we create a dummy vertex for a mergejoin branch for a self join if this
 comment|// vertex is a mergejoin
 specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Vertex
 argument_list|>
 name|mergeJoinDummyVertexs
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
 decl_stmt|;
 comment|// whether this vertex has multiple reduce operators
+specifier|public
 name|boolean
 name|hasMultiReduceOp
+init|=
+literal|false
 decl_stmt|;
 specifier|public
 name|Vertex
@@ -187,6 +218,9 @@ name|name
 parameter_list|,
 name|JSONObject
 name|vertexObject
+parameter_list|,
+name|TezJsonParser
+name|tezJsonParser
 parameter_list|)
 block|{
 name|super
@@ -244,47 +278,9 @@ name|vertexObject
 operator|=
 name|vertexObject
 expr_stmt|;
-name|this
-operator|.
-name|parentConnections
+name|parser
 operator|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|children
-operator|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|rootOps
-operator|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|mergeJoinDummyVertexs
-operator|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|hasMultiReduceOp
-operator|=
-literal|false
+name|tezJsonParser
 expr_stmt|;
 block|}
 specifier|public
@@ -401,8 +397,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// this is the case when we have a map-side SMB join
-comment|// one input of the join is treated as a dummy vertex
 elseif|else
 if|if
 condition|(
@@ -414,6 +408,8 @@ literal|"Join:"
 argument_list|)
 condition|)
 block|{
+comment|// this is the case when we have a map-side SMB join
+comment|// one input of the join is treated as a dummy vertex
 name|JSONArray
 name|array
 init|=
@@ -461,6 +457,8 @@ argument_list|(
 literal|""
 argument_list|,
 name|mpOpTree
+argument_list|,
+name|parser
 argument_list|)
 decl_stmt|;
 name|v
@@ -483,13 +481,71 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+elseif|else
+if|if
+condition|(
+name|key
+operator|.
+name|equals
+argument_list|(
+literal|"Merge File Operator"
+argument_list|)
+condition|)
+block|{
+name|JSONObject
+name|opTree
+init|=
+name|vertexObject
+operator|.
+name|getJSONObject
+argument_list|(
+name|key
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|opTree
+operator|.
+name|has
+argument_list|(
+literal|"Map Operator Tree:"
+argument_list|)
+condition|)
+block|{
+name|extractOp
+argument_list|(
+name|opTree
+operator|.
+name|getJSONArray
+argument_list|(
+literal|"Map Operator Tree:"
+argument_list|)
+operator|.
+name|getJSONObject
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 throw|throw
 operator|new
 name|Exception
 argument_list|(
-literal|"unsupported operator tree in vertex "
+literal|"Merge File Operator does not have a Map Operator Tree"
+argument_list|)
+throw|;
+block|}
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|Exception
+argument_list|(
+literal|"Unsupported operator tree in vertex "
 operator|+
 name|this
 operator|.
@@ -856,6 +912,8 @@ argument_list|,
 name|operator
 argument_list|,
 name|this
+argument_list|,
+name|parser
 argument_list|)
 decl_stmt|;
 if|if
@@ -904,8 +962,8 @@ specifier|public
 name|void
 name|print
 parameter_list|(
-name|PrintStream
-name|out
+name|Printer
+name|printer
 parameter_list|,
 name|List
 argument_list|<
@@ -927,7 +985,7 @@ block|{
 comment|// print vertexname
 if|if
 condition|(
-name|TezJsonParser
+name|parser
 operator|.
 name|printSet
 operator|.
@@ -947,7 +1005,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -976,7 +1034,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -999,7 +1057,7 @@ expr_stmt|;
 block|}
 return|return;
 block|}
-name|TezJsonParser
+name|parser
 operator|.
 name|printSet
 operator|.
@@ -1015,7 +1073,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -1050,7 +1108,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -1125,7 +1183,7 @@ name|choose
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|indentFlag
 argument_list|,
@@ -1172,7 +1230,7 @@ name|op
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|indentFlag
 argument_list|,
@@ -1186,7 +1244,7 @@ name|op
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|indentFlag
 argument_list|,
@@ -1292,7 +1350,7 @@ name|from
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|unionFlag
 argument_list|,
@@ -1368,6 +1426,30 @@ name|hasMultiReduceOp
 operator|=
 literal|true
 expr_stmt|;
+block|}
+comment|//The following code should be gone after HIVE-11075 using topological order
+annotation|@
+name|Override
+specifier|public
+name|int
+name|compareTo
+parameter_list|(
+name|Vertex
+name|o
+parameter_list|)
+block|{
+return|return
+name|this
+operator|.
+name|name
+operator|.
+name|compareTo
+argument_list|(
+name|o
+operator|.
+name|name
+argument_list|)
+return|;
 block|}
 block|}
 end_class

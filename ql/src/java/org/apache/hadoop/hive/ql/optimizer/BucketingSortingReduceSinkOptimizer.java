@@ -3234,6 +3234,27 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|selectDesc
+operator|.
+name|getColList
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|<
+name|bucketPositions
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+comment|// Some columns in select are pruned. This may happen if those are constants.
+return|return
+literal|null
+return|;
+block|}
 comment|// Only columns can be selected for both sorted and bucketed positions
 for|for
 control|(

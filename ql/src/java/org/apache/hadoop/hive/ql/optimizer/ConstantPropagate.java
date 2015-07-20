@@ -877,6 +877,14 @@ name|opToDelete
 argument_list|)
 expr_stmt|;
 block|}
+name|cppCtx
+operator|.
+name|getOpToDelete
+argument_list|()
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 return|return
 name|pGraphContext
 return|;

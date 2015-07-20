@@ -61,10 +61,6 @@ name|HiveProject
 import|;
 end_import
 
-begin_comment
-comment|//Currently not used, turn this on later
-end_comment
-
 begin_class
 specifier|public
 class|class

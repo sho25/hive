@@ -4429,7 +4429,7 @@ operator|>=
 literal|0
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|rowVal
 argument_list|,
@@ -4479,7 +4479,7 @@ operator|>=
 literal|0
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|sortKey
 argument_list|,
@@ -4787,7 +4787,7 @@ name|size
 argument_list|()
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|sortKey
 argument_list|,
@@ -4841,7 +4841,7 @@ name|size
 argument_list|()
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|rowVal
 argument_list|,
@@ -5036,7 +5036,7 @@ operator|>=
 literal|0
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|rowVal
 argument_list|,
@@ -5086,7 +5086,7 @@ operator|>=
 literal|0
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|sortKey
 argument_list|,
@@ -5419,7 +5419,7 @@ name|size
 argument_list|()
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|sortKey
 argument_list|,
@@ -5473,7 +5473,7 @@ name|size
 argument_list|()
 operator|&&
 operator|!
-name|isGreater
+name|isDistanceGreater
 argument_list|(
 name|rowVal
 argument_list|,
@@ -5552,10 +5552,11 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**      * Checks if the distance of v2 to v1 is greater than the given amt.      * @return True if the value of v1 - v2 is greater than amt or either value is null.      */
 specifier|public
 specifier|abstract
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1
@@ -5567,6 +5568,7 @@ name|int
 name|amt
 parameter_list|)
 function_decl|;
+comment|/**      * Checks if the values of v1 or v2 are the same.      * @return True if both values are the same or both are nulls.      */
 specifier|public
 specifier|abstract
 name|boolean
@@ -5771,7 +5773,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1
@@ -5963,7 +5965,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1
@@ -6155,7 +6157,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1
@@ -6206,18 +6208,14 @@ decl_stmt|;
 if|if
 condition|(
 name|d1
-operator|==
+operator|!=
 literal|null
-operator|||
+operator|&&
 name|d2
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 name|d1
 operator|.
@@ -6232,6 +6230,17 @@ operator|>
 name|amt
 return|;
 block|}
+return|return
+name|d1
+operator|!=
+literal|null
+operator|||
+name|d2
+operator|!=
+literal|null
+return|;
+comment|// True if only one value is null
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -6284,18 +6293,14 @@ decl_stmt|;
 if|if
 condition|(
 name|d1
-operator|==
+operator|!=
 literal|null
-operator|||
+operator|&&
 name|d2
-operator|==
+operator|!=
 literal|null
 condition|)
 block|{
-return|return
-literal|false
-return|;
-block|}
 return|return
 name|d1
 operator|.
@@ -6304,6 +6309,17 @@ argument_list|(
 name|d2
 argument_list|)
 return|;
+block|}
+return|return
+name|d1
+operator|==
+literal|null
+operator|&&
+name|d2
+operator|==
+literal|null
+return|;
+comment|// True if both are null
 block|}
 block|}
 specifier|public
@@ -6340,7 +6356,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1
@@ -6544,7 +6560,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isGreater
+name|isDistanceGreater
 parameter_list|(
 name|Object
 name|v1

@@ -1664,7 +1664,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Serialize a struct object without writing the byte size. This function is    * shared by both row serialization and struct serialization.    *    * @param byteStream    *          the byte stream storing the serialization data    * @param obj    *          the struct object to serialize    * @param objInspector    *          the struct object inspector    * @param warnedOnceNullMapKey a boolean indicating whether a warning    *          has been issued once already when encountering null map keys    */
+comment|/**    * Serialize a struct object without writing the byte size. This function is    * shared by both row serialization and struct serialization.    *    * @param byteStream    *          the byte stream storing the serialization data    * @param fieldData    *          the struct object to serialize    * @param fieldOis    *          the struct object inspector    * @param warnedOnceNullMapKey a boolean indicating whether a warning    *          has been issued once already when encountering null map keys    */
 specifier|private
 specifier|static
 name|void
@@ -1965,6 +1965,31 @@ specifier|public
 name|boolean
 name|value
 decl_stmt|;
+block|}
+specifier|private
+specifier|static
+name|void
+name|writeDateToByteStream
+parameter_list|(
+name|RandomAccessOutput
+name|byteStream
+parameter_list|,
+name|DateWritable
+name|date
+parameter_list|)
+block|{
+name|LazyBinaryUtils
+operator|.
+name|writeVInt
+argument_list|(
+name|byteStream
+argument_list|,
+name|date
+operator|.
+name|getDays
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * A recursive function that serialize an object to a byte buffer based on its    * object inspector.    *    * @param byteStream    *          the byte stream storing the serialization data    * @param obj    *          the object to serialize    * @param objInspector    *          the object inspector    * @param skipLengthPrefix a boolean indicating whether length prefix is    *          needed for list/map/struct    * @param warnedOnceNullMapKey a boolean indicating whether a warning    *          has been issued once already when encountering null map keys    */
 specifier|public
@@ -2535,11 +2560,11 @@ argument_list|(
 name|obj
 argument_list|)
 decl_stmt|;
-name|d
-operator|.
-name|writeToByteStream
+name|writeDateToByteStream
 argument_list|(
 name|byteStream
+argument_list|,
+name|d
 argument_list|)
 expr_stmt|;
 return|return;

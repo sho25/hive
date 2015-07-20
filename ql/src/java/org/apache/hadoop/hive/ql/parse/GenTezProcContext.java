@@ -640,6 +640,13 @@ name|OperatorDesc
 argument_list|>
 name|parentOfRoot
 decl_stmt|;
+comment|// sequence number is used to name vertices (e.g.: Map 1, Reduce 14, ...)
+specifier|private
+name|int
+name|sequenceNumber
+init|=
+literal|0
+decl_stmt|;
 comment|// tez task we're currently processing
 specifier|public
 name|TezTask
@@ -1385,6 +1392,17 @@ argument_list|(
 name|currentTask
 argument_list|)
 expr_stmt|;
+block|}
+comment|/** Not thread-safe. */
+specifier|public
+name|int
+name|nextSequenceNumber
+parameter_list|()
+block|{
+return|return
+operator|++
+name|sequenceNumber
+return|;
 block|}
 block|}
 end_class

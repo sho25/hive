@@ -4831,6 +4831,25 @@ argument_list|(
 name|o2
 argument_list|)
 decl_stmt|;
+comment|// The IEEE 754 floating point spec specifies that signed -0.0 and 0.0 should be treated as equal.
+if|if
+condition|(
+name|v1
+operator|==
+literal|0.0f
+operator|&&
+name|v2
+operator|==
+literal|0.0f
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
+else|else
+block|{
+comment|// Float.compare() treats -0.0 and 0.0 as different
 return|return
 name|Float
 operator|.
@@ -4841,6 +4860,7 @@ argument_list|,
 name|v2
 argument_list|)
 return|;
+block|}
 block|}
 case|case
 name|DOUBLE
@@ -4876,6 +4896,25 @@ argument_list|(
 name|o2
 argument_list|)
 decl_stmt|;
+comment|// The IEEE 754 floating point spec specifies that signed -0.0 and 0.0 should be treated as equal.
+if|if
+condition|(
+name|v1
+operator|==
+literal|0.0d
+operator|&&
+name|v2
+operator|==
+literal|0.0d
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
+else|else
+block|{
+comment|// Double.compare() treats -0.0 and 0.0 as different
 return|return
 name|Double
 operator|.
@@ -4886,6 +4925,7 @@ argument_list|,
 name|v2
 argument_list|)
 return|;
+block|}
 block|}
 case|case
 name|STRING

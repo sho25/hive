@@ -362,14 +362,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|ORC_GET_SPLITS
-init|=
-literal|"OrcGetSplits"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|SPARK_SUBMIT_TO_RUNNING
 init|=
 literal|"SparkSubmitToRunning"

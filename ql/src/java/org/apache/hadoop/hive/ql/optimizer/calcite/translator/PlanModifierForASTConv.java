@@ -1631,6 +1631,13 @@ operator|instanceof
 name|Join
 condition|)
 block|{
+comment|// In Hive AST, right child of join cannot be another join,
+comment|// thus we need to introduce a project on top of it.
+comment|// But we only need the additional project if the left child
+comment|// is another join too; if it is not, ASTConverter will swap
+comment|// the join inputs, leaving the join operator on the left.
+comment|// This will help triggering multijoin recognition methods that
+comment|// are embedded in SemanticAnalyzer.
 if|if
 condition|(
 operator|(
@@ -1644,6 +1651,20 @@ name|getRight
 argument_list|()
 operator|==
 name|joinNode
+operator|&&
+operator|(
+operator|(
+operator|(
+name|Join
+operator|)
+name|parent
+operator|)
+operator|.
+name|getLeft
+argument_list|()
+operator|instanceof
+name|Join
+operator|)
 condition|)
 block|{
 name|validParent
@@ -1686,7 +1707,7 @@ name|validParent
 init|=
 literal|true
 decl_stmt|;
-comment|// TOODO: Verify GB having is not a seperate filter (if so we shouldn't
+comment|// TODO: Verify GB having is not a separate filter (if so we shouldn't
 comment|// introduce derived table)
 if|if
 condition|(

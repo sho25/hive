@@ -688,10 +688,24 @@ name|isFirstKey
 init|=
 literal|true
 decl_stmt|;
-comment|// TODO remove this after memory manager is in
+comment|// Get the total available memory from memory manager
 name|long
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 init|=
+name|desc
+operator|.
+name|getMemoryNeeded
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|totalMapJoinMemory
+operator|<=
+literal|0
+condition|)
+block|{
+name|totalMapJoinMemory
+operator|=
 name|HiveConf
 operator|.
 name|getLongVar
@@ -704,7 +718,8 @@ name|ConfVars
 operator|.
 name|HIVECONVERTJOINNOCONDITIONALTASKTHRESHOLD
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|long
 name|processMaxMemory
 init|=
@@ -721,7 +736,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 operator|>
 name|processMaxMemory
 condition|)
@@ -746,9 +761,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"noConditionalTaskThreshold value of "
+literal|"totalMapJoinMemory value of "
 operator|+
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 operator|+
 literal|" is greater than the max memory size of "
 operator|+
@@ -756,7 +771,7 @@ name|processMaxMemory
 argument_list|)
 expr_stmt|;
 comment|// Don't want to attempt to grab more memory than we have available .. percentage is a bit arbitrary
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 operator|=
 call|(
 name|long
@@ -895,7 +910,7 @@ name|desc
 argument_list|,
 name|totalSize
 argument_list|,
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 argument_list|)
 expr_stmt|;
 comment|// Using biggest small table, calculate number of partitions to create for each small table
@@ -1234,7 +1249,7 @@ block|{
 comment|// binary join
 name|memory
 operator|=
-name|noConditionalTaskThreshold
+name|totalMapJoinMemory
 expr_stmt|;
 block|}
 block|}

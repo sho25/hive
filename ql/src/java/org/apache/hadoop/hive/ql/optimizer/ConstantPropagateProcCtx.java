@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -55,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|HashSet
 import|;
 end_import
 
@@ -65,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Iterator
 import|;
 end_import
 
@@ -88,6 +78,16 @@ operator|.
 name|Map
 operator|.
 name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -282,7 +282,7 @@ name|opToConstantExprs
 decl_stmt|;
 specifier|private
 specifier|final
-name|List
+name|Set
 argument_list|<
 name|Operator
 argument_list|<
@@ -344,7 +344,7 @@ expr_stmt|;
 name|opToDelete
 operator|=
 operator|new
-name|ArrayList
+name|HashSet
 argument_list|<
 name|Operator
 argument_list|<
@@ -1109,7 +1109,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|Operator
 argument_list|<

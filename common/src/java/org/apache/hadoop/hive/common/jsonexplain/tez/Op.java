@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|PrintStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -103,24 +93,40 @@ end_import
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|Op
 block|{
+specifier|public
+specifier|final
 name|String
 name|name
 decl_stmt|;
+comment|//tezJsonParser
+specifier|public
+specifier|final
+name|TezJsonParser
+name|parser
+decl_stmt|;
+specifier|public
+specifier|final
 name|String
 name|operatorId
 decl_stmt|;
+specifier|public
 name|Op
 name|parent
 decl_stmt|;
+specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Op
 argument_list|>
 name|children
 decl_stmt|;
+specifier|public
+specifier|final
 name|List
 argument_list|<
 name|Attr
@@ -128,15 +134,21 @@ argument_list|>
 name|attrs
 decl_stmt|;
 comment|// the jsonObject for this operator
+specifier|public
+specifier|final
 name|JSONObject
 name|opObject
 decl_stmt|;
 comment|// the vertex that this operator belongs to
+specifier|public
+specifier|final
 name|Vertex
 name|vertex
 decl_stmt|;
 comment|// the vertex that this operator output to if this operator is a
 comment|// ReduceOutputOperator
+specifier|public
+specifier|final
 name|String
 name|outputVertexName
 decl_stmt|;
@@ -169,6 +181,9 @@ name|opObject
 parameter_list|,
 name|Vertex
 name|vertex
+parameter_list|,
+name|TezJsonParser
+name|tezJsonParser
 parameter_list|)
 throws|throws
 name|JSONException
@@ -217,6 +232,12 @@ operator|.
 name|vertex
 operator|=
 name|vertex
+expr_stmt|;
+name|this
+operator|.
+name|parser
+operator|=
+name|tezJsonParser
 expr_stmt|;
 block|}
 specifier|private
@@ -349,7 +370,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|TezJsonParser
+name|parser
 operator|.
 name|addInline
 argument_list|(
@@ -488,18 +509,7 @@ expr_stmt|;
 block|}
 block|}
 comment|// inline merge join operator in a self-join
-elseif|else
-if|if
-condition|(
-name|this
-operator|.
-name|name
-operator|.
-name|equals
-argument_list|(
-literal|"Merge Join Operator"
-argument_list|)
-condition|)
+else|else
 block|{
 if|if
 condition|(
@@ -522,7 +532,7 @@ operator|.
 name|mergeJoinDummyVertexs
 control|)
 block|{
-name|TezJsonParser
+name|parser
 operator|.
 name|addInline
 argument_list|(
@@ -539,16 +549,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|Exception
-argument_list|(
-literal|"Unknown join operator"
-argument_list|)
-throw|;
 block|}
 block|}
 specifier|private
@@ -589,8 +589,8 @@ specifier|public
 name|void
 name|print
 parameter_list|(
-name|PrintStream
-name|out
+name|Printer
+name|printer
 parameter_list|,
 name|List
 argument_list|<
@@ -607,7 +607,7 @@ block|{
 comment|// print name
 if|if
 condition|(
-name|TezJsonParser
+name|parser
 operator|.
 name|printSet
 operator|.
@@ -617,7 +617,7 @@ name|this
 argument_list|)
 condition|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -638,7 +638,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-name|TezJsonParser
+name|parser
 operator|.
 name|printSet
 operator|.
@@ -653,7 +653,7 @@ operator|!
 name|branchOfJoinOp
 condition|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -673,7 +673,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -697,16 +697,25 @@ name|branchOfJoinOp
 operator|=
 literal|false
 expr_stmt|;
-comment|// if this operator is a join operator
+comment|// if this operator is a Map Join Operator or a Merge Join Operator
 if|if
 condition|(
 name|this
 operator|.
 name|name
 operator|.
-name|contains
+name|equals
 argument_list|(
-literal|"Join"
+literal|"Map Join Operator"
+argument_list|)
+operator|||
+name|this
+operator|.
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"Merge Join Operator"
 argument_list|)
 condition|)
 block|{
@@ -764,7 +773,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|TezJsonParser
+name|parser
 operator|.
 name|isInline
 argument_list|(
@@ -858,7 +867,7 @@ range|:
 name|attrs
 control|)
 block|{
-name|out
+name|printer
 operator|.
 name|println
 argument_list|(
@@ -879,7 +888,7 @@ block|}
 comment|// print inline vertex
 if|if
 condition|(
-name|TezJsonParser
+name|parser
 operator|.
 name|inlineMap
 operator|.
@@ -898,7 +907,7 @@ literal|0
 init|;
 name|index
 operator|<
-name|TezJsonParser
+name|parser
 operator|.
 name|inlineMap
 operator|.
@@ -917,7 +926,7 @@ block|{
 name|Connection
 name|connection
 init|=
-name|TezJsonParser
+name|parser
 operator|.
 name|inlineMap
 operator|.
@@ -982,7 +991,7 @@ name|from
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|vertexFlag
 argument_list|,
@@ -1038,7 +1047,7 @@ name|parent
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|parentFlag
 argument_list|,
@@ -1131,7 +1140,7 @@ name|v
 operator|.
 name|print
 argument_list|(
-name|out
+name|printer
 argument_list|,
 name|vertexFlag
 argument_list|,

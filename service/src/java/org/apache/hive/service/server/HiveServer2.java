@@ -1938,6 +1938,10 @@ comment|// Remove this server instance from ZooKeeper if dynamic service discove
 if|if
 condition|(
 name|hiveConf
+operator|!=
+literal|null
+operator|&&
+name|hiveConf
 operator|.
 name|getBoolVar
 argument_list|(
@@ -1974,6 +1978,10 @@ comment|// There should already be an instance of the session pool manager.
 comment|// If not, ignoring is fine while stopping HiveServer2.
 if|if
 condition|(
+name|hiveConf
+operator|!=
+literal|null
+operator|&&
 name|hiveConf
 operator|.
 name|getBoolVar
@@ -2016,6 +2024,10 @@ block|}
 block|}
 if|if
 condition|(
+name|hiveConf
+operator|!=
+literal|null
+operator|&&
 name|hiveConf
 operator|.
 name|getVar
