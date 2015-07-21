@@ -2422,18 +2422,6 @@ operator|.
 name|MAX_VALUE
 argument_list|)
 expr_stmt|;
-comment|// Turn off the sarg before pushing it to delta.  We never want to push a sarg to a delta as
-comment|// it can produce wrong results (if the latest valid version of the record is filtered out by
-comment|// the sarg) or ArrayOutOfBounds errors (when the sarg is applied to a delete record)
-name|eventOptions
-operator|.
-name|searchArgument
-argument_list|(
-literal|null
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|deltaDirectory
@@ -2537,9 +2525,75 @@ name|length
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Reader
+operator|.
+name|Options
+name|deltaEventOptions
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|eventOptions
+operator|.
+name|getSearchArgument
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Turn off the sarg before pushing it to delta.  We never want to push a sarg to a delta as
+comment|// it can produce wrong results (if the latest valid version of the record is filtered out by
+comment|// the sarg) or ArrayOutOfBounds errors (when the sarg is applied to a delete record)
+comment|// unless the delta only has insert events
+name|OrcRecordUpdater
+operator|.
+name|AcidStats
+name|acidStats
+init|=
+name|OrcRecordUpdater
+operator|.
+name|parseAcidStats
+argument_list|(
+name|deltaReader
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|acidStats
+operator|.
+name|deletes
+operator|>
+literal|0
+operator|||
+name|acidStats
+operator|.
+name|updates
+operator|>
+literal|0
+condition|)
+block|{
+name|deltaEventOptions
+operator|=
+name|eventOptions
+operator|.
+name|clone
+argument_list|()
+operator|.
+name|searchArgument
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|ReaderPair
 name|deltaPair
-init|=
+decl_stmt|;
+name|deltaPair
+operator|=
 operator|new
 name|ReaderPair
 argument_list|(
@@ -2553,6 +2607,12 @@ name|minKey
 argument_list|,
 name|maxKey
 argument_list|,
+name|deltaEventOptions
+operator|!=
+literal|null
+condition|?
+name|deltaEventOptions
+else|:
 name|eventOptions
 argument_list|,
 name|deltaDir
@@ -2560,7 +2620,7 @@ operator|.
 name|getStatementId
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|deltaPair
