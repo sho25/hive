@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -196,12 +206,14 @@ import|;
 end_import
 
 begin_comment
-comment|/** Utility class that can create new table partitions within the {@link IMetaStoreClient meta store}. */
+comment|/**  * A {@link PartitionHelper} implementation that uses the {@link IMetaStoreClient meta store} to both create partitions  * and obtain information concerning partitions. Exercise care when using this from within workers that are running in a  * cluster as it may overwhelm the meta store database instance. As an alternative, consider using the  * {@link WarehousePartitionHelper}, collecting the affected partitions as an output of your merge job, and then  * retrospectively adding partitions in your client.  */
 end_comment
 
 begin_class
 class|class
-name|CreatePartitionHelper
+name|MetaStorePartitionHelper
+implements|implements
+name|PartitionHelper
 block|{
 specifier|private
 specifier|static
@@ -213,7 +225,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|CreatePartitionHelper
+name|MetaStorePartitionHelper
 operator|.
 name|class
 argument_list|)
@@ -233,7 +245,12 @@ specifier|final
 name|String
 name|tableName
 decl_stmt|;
-name|CreatePartitionHelper
+specifier|private
+specifier|final
+name|Path
+name|tablePath
+decl_stmt|;
+name|MetaStorePartitionHelper
 parameter_list|(
 name|IMetaStoreClient
 name|metaStoreClient
@@ -243,6 +260,9 @@ name|databaseName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|Path
+name|tablePath
 parameter_list|)
 block|{
 name|this
@@ -250,6 +270,12 @@ operator|.
 name|metaStoreClient
 operator|=
 name|metaStoreClient
+expr_stmt|;
+name|this
+operator|.
+name|tablePath
+operator|=
+name|tablePath
 expr_stmt|;
 name|this
 operator|.
@@ -265,6 +291,9 @@ name|tableName
 expr_stmt|;
 block|}
 comment|/** Returns the expected {@link Path} for a given partition value. */
+annotation|@
+name|Override
+specifier|public
 name|Path
 name|getPathForPartition
 parameter_list|(
@@ -277,11 +306,6 @@ parameter_list|)
 throws|throws
 name|WorkerException
 block|{
-try|try
-block|{
-name|String
-name|location
-decl_stmt|;
 if|if
 condition|(
 name|newPartitionValues
@@ -290,28 +314,30 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|location
-operator|=
-name|metaStoreClient
+name|LOG
 operator|.
-name|getTable
+name|debug
 argument_list|(
+literal|"Using path {} for unpartitioned table {}.{}"
+argument_list|,
+name|tablePath
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
 argument_list|)
-operator|.
-name|getSd
-argument_list|()
-operator|.
-name|getLocation
-argument_list|()
 expr_stmt|;
+return|return
+name|tablePath
+return|;
 block|}
 else|else
 block|{
+try|try
+block|{
+name|String
 name|location
-operator|=
+init|=
 name|metaStoreClient
 operator|.
 name|getPartition
@@ -328,8 +354,7 @@ argument_list|()
 operator|.
 name|getLocation
 argument_list|()
-expr_stmt|;
-block|}
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -404,7 +429,11 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
 comment|/** Creates the specified partition if it does not already exist. Does nothing if the table is unpartitioned. */
+annotation|@
+name|Override
+specifier|public
 name|void
 name|createPartitionIfNotExists
 parameter_list|(
@@ -638,6 +667,21 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|close
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|metaStoreClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class
