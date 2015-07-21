@@ -3344,9 +3344,6 @@ argument_list|,
 name|plan
 argument_list|,
 name|tree
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -3594,8 +3591,8 @@ parameter_list|,
 name|QueryPlan
 name|plan
 parameter_list|,
-name|String
-name|astStringTree
+name|ASTNode
+name|astTree
 parameter_list|)
 throws|throws
 name|IOException
@@ -3661,7 +3658,7 @@ name|getJSONPlan
 argument_list|(
 name|ps
 argument_list|,
-name|astStringTree
+name|astTree
 argument_list|,
 name|rootTasks
 argument_list|,
