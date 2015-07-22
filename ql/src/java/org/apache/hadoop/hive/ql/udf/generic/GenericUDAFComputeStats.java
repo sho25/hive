@@ -2421,11 +2421,11 @@ operator|.
 name|primitive2
 argument_list|()
 operator|+
-name|model
+name|numDV
 operator|.
 name|lengthFor
 argument_list|(
-name|numDV
+name|model
 argument_list|)
 return|;
 block|}
@@ -4484,11 +4484,11 @@ argument_list|(
 name|columnType
 argument_list|)
 operator|+
-name|model
+name|numDV
 operator|.
 name|lengthFor
 argument_list|(
-name|numDV
+name|model
 argument_list|)
 return|;
 block|}

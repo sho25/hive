@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -55,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|HashSet
 import|;
 end_import
 
@@ -65,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Iterator
 import|;
 end_import
 
@@ -88,6 +78,16 @@ operator|.
 name|Map
 operator|.
 name|Entry
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -224,6 +224,19 @@ name|ConstantPropagateProcCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
+specifier|public
+enum|enum
+name|ConstantPropagateOption
+block|{
+name|FULL
+block|,
+comment|// Do full constant propagation
+name|SHORTCUT
+block|,
+comment|// Only perform expression short-cutting - remove unnecessary AND/OR operators
+comment|// if one of the child conditions is true/false.
+block|}
+empty_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -269,7 +282,7 @@ name|opToConstantExprs
 decl_stmt|;
 specifier|private
 specifier|final
-name|List
+name|Set
 argument_list|<
 name|Operator
 argument_list|<
@@ -280,9 +293,32 @@ argument_list|>
 argument_list|>
 name|opToDelete
 decl_stmt|;
+specifier|private
+name|ConstantPropagateOption
+name|constantPropagateOption
+init|=
+name|ConstantPropagateOption
+operator|.
+name|FULL
+decl_stmt|;
 specifier|public
 name|ConstantPropagateProcCtx
 parameter_list|()
+block|{
+name|this
+argument_list|(
+name|ConstantPropagateOption
+operator|.
+name|FULL
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|ConstantPropagateProcCtx
+parameter_list|(
+name|ConstantPropagateOption
+name|option
+parameter_list|)
 block|{
 name|opToConstantExprs
 operator|=
@@ -308,7 +344,7 @@ expr_stmt|;
 name|opToDelete
 operator|=
 operator|new
-name|ArrayList
+name|HashSet
 argument_list|<
 name|Operator
 argument_list|<
@@ -318,6 +354,12 @@ name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|constantPropagateOption
+operator|=
+name|option
 expr_stmt|;
 block|}
 specifier|public
@@ -1067,7 +1109,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|Operator
 argument_list|<
@@ -1082,6 +1124,30 @@ block|{
 return|return
 name|opToDelete
 return|;
+block|}
+specifier|public
+name|ConstantPropagateOption
+name|getConstantPropagateOption
+parameter_list|()
+block|{
+return|return
+name|constantPropagateOption
+return|;
+block|}
+specifier|public
+name|void
+name|setConstantPropagateOption
+parameter_list|(
+name|ConstantPropagateOption
+name|constantPropagateOption
+parameter_list|)
+block|{
+name|this
+operator|.
+name|constantPropagateOption
+operator|=
+name|constantPropagateOption
+expr_stmt|;
 block|}
 block|}
 end_class

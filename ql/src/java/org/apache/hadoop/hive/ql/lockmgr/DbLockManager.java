@@ -363,7 +363,7 @@ try|try
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Requesting: queryId="
 operator|+
@@ -387,9 +387,13 @@ decl_stmt|;
 comment|//link lockId to queryId
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
-literal|"Response "
+literal|"Response to queryId="
+operator|+
+name|queryId
+operator|+
+literal|" "
 operator|+
 name|res
 argument_list|)

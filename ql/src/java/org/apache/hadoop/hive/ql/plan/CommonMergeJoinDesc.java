@@ -149,6 +149,19 @@ return|return
 name|mapJoinConversionPos
 return|;
 block|}
+specifier|public
+name|void
+name|setBigTablePosition
+parameter_list|(
+name|int
+name|pos
+parameter_list|)
+block|{
+name|mapJoinConversionPos
+operator|=
+name|pos
+expr_stmt|;
+block|}
 block|}
 end_class
 

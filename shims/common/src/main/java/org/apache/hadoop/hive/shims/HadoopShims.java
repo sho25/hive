@@ -1415,6 +1415,21 @@ name|long
 name|timestamp
 parameter_list|)
 function_decl|;
+comment|/**      * Returns all jobs tagged with the given tag that have been started after the      * given timestamp. Returned jobIds are MapReduce JobIds.      */
+specifier|public
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|getJobs
+parameter_list|(
+name|String
+name|tag
+parameter_list|,
+name|long
+name|timestamp
+parameter_list|)
+function_decl|;
 block|}
 comment|/**    * Create a proxy file system that can serve a given scheme/authority using some    * other file system.    */
 specifier|public

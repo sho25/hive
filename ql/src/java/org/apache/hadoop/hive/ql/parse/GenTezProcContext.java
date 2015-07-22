@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -640,6 +650,13 @@ name|OperatorDesc
 argument_list|>
 name|parentOfRoot
 decl_stmt|;
+comment|// sequence number is used to name vertices (e.g.: Map 1, Reduce 14, ...)
+specifier|private
+name|int
+name|sequenceNumber
+init|=
+literal|0
+decl_stmt|;
 comment|// tez task we're currently processing
 specifier|public
 name|TezTask
@@ -714,6 +731,21 @@ name|BaseWork
 argument_list|>
 argument_list|>
 name|mapJoinWorkMap
+decl_stmt|;
+comment|// Mapping of reducesink to mapjoin operators
+comment|// Only used for dynamic partitioned hash joins (mapjoin operator in the reducer)
+specifier|public
+specifier|final
+name|Map
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|MapJoinOperator
+argument_list|>
+name|smallTableParentToMapJoinMap
 decl_stmt|;
 comment|// a map to keep track of which root generated which work
 specifier|public
@@ -929,6 +961,21 @@ argument_list|>
 argument_list|>
 name|tsToEventMap
 decl_stmt|;
+comment|// When processing dynamic partitioned hash joins, some of the small tables may not get processed
+comment|// before the mapjoin's parents are removed during GenTezWork.process(). This is to keep
+comment|// track of which small tables haven't been processed yet.
+specifier|public
+name|Map
+argument_list|<
+name|MapJoinOperator
+argument_list|,
+name|Set
+argument_list|<
+name|ReduceSinkOperator
+argument_list|>
+argument_list|>
+name|mapJoinToUnprocessedSmallTableReduceSinks
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1091,6 +1138,22 @@ name|List
 argument_list|<
 name|ReduceSinkOperator
 argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|smallTableParentToMapJoinMap
+operator|=
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+argument_list|,
+name|MapJoinOperator
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1378,6 +1441,22 @@ name|currentMergeJoinOperator
 operator|=
 literal|null
 expr_stmt|;
+name|this
+operator|.
+name|mapJoinToUnprocessedSmallTableReduceSinks
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|MapJoinOperator
+argument_list|,
+name|Set
+argument_list|<
+name|ReduceSinkOperator
+argument_list|>
+argument_list|>
+argument_list|()
+expr_stmt|;
 name|rootTasks
 operator|.
 name|add
@@ -1385,6 +1464,17 @@ argument_list|(
 name|currentTask
 argument_list|)
 expr_stmt|;
+block|}
+comment|/** Not thread-safe. */
+specifier|public
+name|int
+name|nextSequenceNumber
+parameter_list|()
+block|{
+return|return
+operator|++
+name|sequenceNumber
+return|;
 block|}
 block|}
 end_class

@@ -316,14 +316,26 @@ literal|0
 decl_stmt|;
 comment|// transaction id for this operation
 specifier|private
+name|int
+name|statementId
+init|=
+operator|-
+literal|1
+decl_stmt|;
+specifier|private
 specifier|transient
 name|Table
 name|table
+decl_stmt|;
+specifier|private
+name|Path
+name|destPath
 decl_stmt|;
 specifier|public
 name|FileSinkDesc
 parameter_list|()
 block|{   }
+comment|/**    * @param destPath - the final destination for data    */
 specifier|public
 name|FileSinkDesc
 parameter_list|(
@@ -369,6 +381,9 @@ parameter_list|,
 specifier|final
 name|DynamicPartitionCtx
 name|dpCtx
+parameter_list|,
+name|Path
+name|destPath
 parameter_list|)
 block|{
 name|this
@@ -438,6 +453,12 @@ operator|=
 name|DPSortState
 operator|.
 name|NONE
+expr_stmt|;
+name|this
+operator|.
+name|destPath
+operator|=
+name|destPath
 expr_stmt|;
 block|}
 specifier|public
@@ -551,6 +572,8 @@ argument_list|,
 name|partitionCols
 argument_list|,
 name|dpCtx
+argument_list|,
+name|destPath
 argument_list|)
 decl_stmt|;
 name|ret
@@ -940,7 +963,6 @@ return|return
 name|temporary
 return|;
 block|}
-comment|/**    * @param totalFiles the totalFiles to set    */
 specifier|public
 name|void
 name|setTemporary
@@ -1534,6 +1556,38 @@ parameter_list|()
 block|{
 return|return
 name|txnId
+return|;
+block|}
+specifier|public
+name|void
+name|setStatementId
+parameter_list|(
+name|int
+name|id
+parameter_list|)
+block|{
+name|statementId
+operator|=
+name|id
+expr_stmt|;
+block|}
+comment|/**    * See {@link org.apache.hadoop.hive.ql.io.AcidOutputFormat.Options#statementId(int)}    */
+specifier|public
+name|int
+name|getStatementId
+parameter_list|()
+block|{
+return|return
+name|statementId
+return|;
+block|}
+specifier|public
+name|Path
+name|getDestPath
+parameter_list|()
+block|{
+return|return
+name|destPath
 return|;
 block|}
 specifier|public

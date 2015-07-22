@@ -227,6 +227,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|CalciteSemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveCalciteUtil
 operator|.
 name|JoinLeafPredicateInfo
@@ -399,6 +419,8 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 if|if
 condition|(
@@ -438,6 +460,8 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 name|double
 name|ndvCrossProduct
@@ -1034,7 +1058,7 @@ return|return
 name|ndvCrossProduct
 return|;
 block|}
-comment|/**    *     * @param j    * @param additionalPredicate    * @return if predicate is the join condition return (true, joinCond)    * else return (false, minusPred)    */
+comment|/**    *    * @param j    * @param additionalPredicate    * @return if predicate is the join condition return (true, joinCond)    * else return (false, minusPred)    */
 specifier|private
 name|Pair
 argument_list|<
@@ -1144,7 +1168,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Compute Max NDV to determine Join Selectivity.    *     * @param jlpi    * @param colStatMap    *          Immutable Map of Projection Index (in Join Schema) to Column Stat    * @param rightProjOffSet    * @return    */
+comment|/**    * Compute Max NDV to determine Join Selectivity.    *    * @param jlpi    * @param colStatMap    *          Immutable Map of Projection Index (in Join Schema) to Column Stat    * @param rightProjOffSet    * @return    */
 specifier|private
 specifier|static
 name|Double

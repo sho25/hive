@@ -404,6 +404,14 @@ name|txnId
 init|=
 literal|0
 decl_stmt|;
+comment|/**    * assigns a unique monotonically increasing ID to each statement    * which is part of an open transaction.  This is used by storage    * layer (see {@link org.apache.hadoop.hive.ql.io.AcidUtils#deltaSubdir(long, long, int)})    * to keep apart multiple writes of the same data within the same transaction    * Also see {@link org.apache.hadoop.hive.ql.io.AcidOutputFormat.Options}    */
+specifier|private
+name|int
+name|statementId
+init|=
+operator|-
+literal|1
+decl_stmt|;
 name|DbTxnManager
 parameter_list|()
 block|{   }
@@ -477,6 +485,10 @@ name|openTxn
 argument_list|(
 name|user
 argument_list|)
+expr_stmt|;
+name|statementId
+operator|=
+literal|0
 expr_stmt|;
 name|LOG
 operator|.
@@ -616,7 +628,7 @@ decl_stmt|;
 comment|//link queryId to txnId
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Setting lock request transaction to "
 operator|+
@@ -1147,6 +1159,17 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|txnId
+operator|>
+literal|0
+condition|)
+block|{
+name|statementId
+operator|++
+expr_stmt|;
+block|}
 name|LockState
 name|lockState
 init|=
@@ -1319,6 +1342,11 @@ name|txnId
 operator|=
 literal|0
 expr_stmt|;
+name|statementId
+operator|=
+operator|-
+literal|1
+expr_stmt|;
 block|}
 block|}
 annotation|@
@@ -1427,6 +1455,11 @@ block|{
 name|txnId
 operator|=
 literal|0
+expr_stmt|;
+name|statementId
+operator|=
+operator|-
+literal|1
 expr_stmt|;
 block|}
 block|}
@@ -1890,6 +1923,17 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getStatementId
+parameter_list|()
+block|{
+return|return
+name|statementId
+return|;
 block|}
 block|}
 end_class

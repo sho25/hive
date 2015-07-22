@@ -658,6 +658,11 @@ name|Reporter
 operator|.
 name|NULL
 argument_list|)
+operator|.
+name|finalDestination
+argument_list|(
+name|root
+argument_list|)
 decl_stmt|;
 name|RecordUpdater
 name|updater
@@ -1491,6 +1496,11 @@ operator|.
 name|recordIdColumn
 argument_list|(
 literal|1
+argument_list|)
+operator|.
+name|finalDestination
+argument_list|(
+name|root
 argument_list|)
 decl_stmt|;
 name|RecordUpdater

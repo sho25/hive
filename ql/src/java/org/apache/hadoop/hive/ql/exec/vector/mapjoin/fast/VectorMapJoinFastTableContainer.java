@@ -1020,6 +1020,20 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+return|return
+name|VectorMapJoinFastHashTable
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
 comment|/*   @Override   public com.esotericsoftware.kryo.io.Output getHybridBigTableSpillOutput(int partitionId) {     throw new RuntimeException("Not applicable");   }   */
 block|}
 end_class

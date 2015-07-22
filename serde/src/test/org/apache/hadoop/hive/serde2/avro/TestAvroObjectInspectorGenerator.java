@@ -590,6 +590,90 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|UNION_SCHEMA_2
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"test.a.rossa\",\n"
+operator|+
+literal|"  \"name\": \"oneUnion\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\":\"aUnion\",\n"
+operator|+
+literal|"      \"type\":[\"null\", \"int\", \"string\"]\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|UNION_SCHEMA_3
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"test.a.rossa\",\n"
+operator|+
+literal|"  \"name\": \"oneUnion\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\":\"aUnion\",\n"
+operator|+
+literal|"      \"type\":[\"float\",\"int\"]\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|UNION_SCHEMA_4
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"test.a.rossa\",\n"
+operator|+
+literal|"  \"name\": \"oneUnion\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\":\"aUnion\",\n"
+operator|+
+literal|"      \"type\":[\"int\",\"float\",\"long\"]\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|ENUM_SCHEMA
 init|=
 literal|"{\n"

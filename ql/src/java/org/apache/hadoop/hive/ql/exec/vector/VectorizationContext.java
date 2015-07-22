@@ -14143,7 +14143,7 @@ name|AggregationDesc
 name|desc
 parameter_list|,
 name|boolean
-name|isReduce
+name|isReduceMergePartial
 parameter_list|)
 throws|throws
 name|HiveException
@@ -14364,7 +14364,7 @@ name|Mode
 operator|.
 name|HASH
 operator|&&
-name|isReduce
+name|isReduceMergePartial
 condition|)
 block|{
 continue|continue;
@@ -14384,7 +14384,7 @@ operator|.
 name|MERGEPARTIAL
 operator|&&
 operator|!
-name|isReduce
+name|isReduceMergePartial
 condition|)
 block|{
 continue|continue;
@@ -14494,9 +14494,9 @@ operator|.
 name|name
 argument_list|()
 operator|+
-literal|" (reduce-side = "
+literal|" (reduce-merge-partial = "
 operator|+
-name|isReduce
+name|isReduceMergePartial
 operator|+
 literal|")"
 argument_list|)

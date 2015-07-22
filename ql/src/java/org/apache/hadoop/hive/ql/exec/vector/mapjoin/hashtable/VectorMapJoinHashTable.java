@@ -109,6 +109,11 @@ name|HiveException
 throws|,
 name|IOException
 function_decl|;
+comment|/**    * Get hash table size    */
+name|int
+name|size
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

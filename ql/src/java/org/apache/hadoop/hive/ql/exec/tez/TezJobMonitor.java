@@ -965,7 +965,10 @@ control|(
 name|TezSessionState
 name|s
 range|:
-name|TezSessionState
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
 operator|.
 name|getOpenSessions
 argument_list|()

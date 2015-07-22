@@ -448,9 +448,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -503,9 +500,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -558,9 +552,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -613,9 +604,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -668,9 +656,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -723,9 +708,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -778,9 +760,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -833,9 +812,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -888,9 +864,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -943,9 +916,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -998,9 +968,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1053,9 +1020,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1108,9 +1072,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1163,9 +1124,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1220,9 +1178,6 @@ argument_list|,
 name|rc
 operator|.
 name|ast
-operator|.
-name|dump
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1658,6 +1613,8 @@ argument_list|,
 name|testName
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 return|return
@@ -1682,8 +1639,8 @@ parameter_list|,
 name|QueryPlan
 name|plan
 parameter_list|,
-name|String
-name|astStringTree
+name|ASTNode
+name|astTree
 parameter_list|)
 throws|throws
 name|IOException
@@ -1759,7 +1716,7 @@ operator|.
 name|getFetchTask
 argument_list|()
 argument_list|,
-name|astStringTree
+name|astTree
 argument_list|,
 name|sem
 argument_list|,

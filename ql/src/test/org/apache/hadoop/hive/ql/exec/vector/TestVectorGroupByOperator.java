@@ -12796,7 +12796,7 @@ argument_list|()
 decl_stmt|;
 name|vectorDesc
 operator|.
-name|setIsReduce
+name|setIsReduceMergePartial
 argument_list|(
 literal|true
 argument_list|)

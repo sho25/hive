@@ -230,6 +230,12 @@ operator|new
 name|LineageInfo
 argument_list|()
 expr_stmt|;
+name|index
+operator|=
+operator|new
+name|Index
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Adds a mapping from the load work to the file sink operator.    *    * @param dir The directory name.    * @param fop The file sink operator.    */
 specifier|public
@@ -356,21 +362,15 @@ return|return
 name|linfo
 return|;
 block|}
-comment|/**    * Sets the index for the lineage state.    *    * @param index The index derived from lineage context.    */
+comment|/**    * Gets the index for the lineage state.    *    * @return Index.    */
 specifier|public
-name|void
-name|setIndex
-parameter_list|(
 name|Index
-name|index
-parameter_list|)
+name|getIndex
+parameter_list|()
 block|{
-name|this
-operator|.
+return|return
 name|index
-operator|=
-name|index
-expr_stmt|;
+return|;
 block|}
 comment|/**    * Clear all lineage states    */
 specifier|public

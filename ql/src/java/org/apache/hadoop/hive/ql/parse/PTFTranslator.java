@@ -4222,6 +4222,9 @@ case|case
 name|TIMESTAMP
 case|:
 case|case
+name|DATE
+case|:
+case|case
 name|STRING
 case|:
 break|break;

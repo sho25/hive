@@ -1902,11 +1902,11 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
-name|model
+name|histogram
 operator|.
 name|lengthFor
 argument_list|(
-name|histogram
+name|model
 argument_list|)
 operator|+
 name|model

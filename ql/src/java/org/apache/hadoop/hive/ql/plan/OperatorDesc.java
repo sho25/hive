@@ -91,6 +91,19 @@ argument_list|>
 name|getOpProps
 parameter_list|()
 function_decl|;
+specifier|public
+name|long
+name|getMemoryNeeded
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setMemoryNeeded
+parameter_list|(
+name|long
+name|memoryNeeded
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
