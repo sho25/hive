@@ -280,6 +280,16 @@ name|DELETE
 block|,
 name|COMPILE
 block|,
+name|START_TRANSACTION
+block|,
+name|COMMIT
+block|,
+name|ROLLBACK
+block|,
+name|SET_AUTOCOMMIT
+block|,
+name|ALTERTABLE_EXCHANGEPARTITION
+block|,
 comment|// ==== Hive command operations ends here ==== //
 comment|// ==== HiveServer2 metadata api types start here ==== //
 comment|// these corresponds to various java.sql.DatabaseMetaData calls.

@@ -2017,13 +2017,16 @@ operator|<
 literal|1
 condition|)
 block|{
+comment|//this can be reasonable for an empty txn START/COMMIT
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Expected to move at least one record from txn_components to "
 operator|+
-literal|"completed_txn_components when committing txn!"
+literal|"completed_txn_components when committing txn! txnid:"
+operator|+
+name|txnid
 argument_list|)
 expr_stmt|;
 block|}
@@ -7202,7 +7205,7 @@ name|SQLException
 block|{
 comment|// We want to minimize the number of concurrent lock requests being issued.  If we do not we
 comment|// get a large number of deadlocks in the database, since this method has to both clean
-comment|// timedout locks and insert new locks.  This synchronization barrier will not eliminiate all
+comment|// timedout locks and insert new locks.  This synchronization barrier will not eliminate all
 comment|// deadlocks, and the code is still resilient in the face of a database deadlock.  But it
 comment|// will reduce the number.  This could have been done via a lock table command in the
 comment|// underlying database, but was not for two reasons.  One, different databases have different
@@ -7801,6 +7804,7 @@ argument_list|,
 name|extLockId
 argument_list|)
 decl_stmt|;
+comment|//being acquired now
 name|LockResponse
 name|response
 init|=

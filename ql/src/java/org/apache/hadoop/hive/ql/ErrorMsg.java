@@ -2084,7 +2084,7 @@ argument_list|)
 block|,
 name|OP_NOT_ALLOWED_WITHOUT_TXN
 argument_list|(
-literal|2008
+literal|20008
 argument_list|,
 literal|"Operation {0} is not allowed since autoCommit=false and there is no active transaction"
 argument_list|,

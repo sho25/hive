@@ -651,10 +651,6 @@ name|HiveLock
 argument_list|>
 name|hiveLocks
 decl_stmt|;
-specifier|protected
-name|HiveLockManager
-name|hiveLockMgr
-decl_stmt|;
 comment|// Transaction manager for this query
 specifier|protected
 name|HiveTxnManager

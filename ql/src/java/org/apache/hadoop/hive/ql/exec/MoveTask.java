@@ -2689,7 +2689,10 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getCurrentTxn
+name|getTxnMgr
+argument_list|()
+operator|.
+name|getCurrentTxnId
 argument_list|()
 argument_list|)
 decl_stmt|;
