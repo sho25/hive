@@ -19,6 +19,20 @@ name|hbase
 package|;
 end_package
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
 comment|/**  * A simple metric to count how many times something occurs.  */
 end_comment
@@ -105,6 +119,16 @@ name|bldr
 operator|.
 name|toString
 argument_list|()
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+name|long
+name|getCnt
+parameter_list|()
+block|{
+return|return
+name|cnt
 return|;
 block|}
 block|}
