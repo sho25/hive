@@ -95,6 +95,11 @@ decl_stmt|;
 name|Exception
 name|exception
 decl_stmt|;
+name|boolean
+name|withReturn
+init|=
+literal|false
+decl_stmt|;
 name|Query
 parameter_list|()
 block|{   }
@@ -287,6 +292,22 @@ operator|=
 name|sqlSelect
 expr_stmt|;
 block|}
+comment|/**    * Set whether the cursor is returned to the caller    */
+specifier|public
+name|void
+name|setWithReturn
+parameter_list|(
+name|boolean
+name|withReturn
+parameter_list|)
+block|{
+name|this
+operator|.
+name|withReturn
+operator|=
+name|withReturn
+expr_stmt|;
+block|}
 comment|/**    * Set an execution error    */
 specifier|public
 name|void
@@ -339,6 +360,16 @@ parameter_list|()
 block|{
 return|return
 name|conn
+return|;
+block|}
+comment|/**    * Check if the cursor defined as a return cursor to client    */
+specifier|public
+name|boolean
+name|getWithReturn
+parameter_list|()
+block|{
+return|return
+name|withReturn
 return|;
 block|}
 comment|/**    * Return error information    */
