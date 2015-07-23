@@ -27,7 +27,7 @@ name|cask
 operator|.
 name|tephra
 operator|.
-name|hbase98
+name|hbase10
 operator|.
 name|coprocessor
 operator|.
@@ -332,11 +332,7 @@ name|emptyParameters
 init|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|protected
@@ -395,6 +391,19 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|testingTephra
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing with Tephra"
+argument_list|)
+expr_stmt|;
+block|}
 name|utility
 operator|=
 operator|new

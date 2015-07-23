@@ -115,7 +115,7 @@ name|cask
 operator|.
 name|tephra
 operator|.
-name|hbase98
+name|hbase10
 operator|.
 name|TransactionAwareHTable
 import|;
@@ -129,7 +129,7 @@ name|cask
 operator|.
 name|tephra
 operator|.
-name|hbase98
+name|hbase10
 operator|.
 name|coprocessor
 operator|.
