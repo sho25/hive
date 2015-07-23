@@ -159,22 +159,6 @@ name|Resource
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|dag
-operator|.
-name|app
-operator|.
-name|AppContext
-import|;
-end_import
-
 begin_class
 class|class
 name|ContainerFactory
@@ -189,8 +173,8 @@ decl_stmt|;
 specifier|public
 name|ContainerFactory
 parameter_list|(
-name|AppContext
-name|appContext
+name|ApplicationAttemptId
+name|appAttemptId
 parameter_list|,
 name|long
 name|appIdLong
@@ -215,10 +199,7 @@ name|newInstance
 argument_list|(
 name|appIdLong
 argument_list|,
-name|appContext
-operator|.
-name|getApplicationAttemptId
-argument_list|()
+name|appAttemptId
 operator|.
 name|getApplicationId
 argument_list|()
@@ -237,10 +218,7 @@ name|newInstance
 argument_list|(
 name|appId
 argument_list|,
-name|appContext
-operator|.
-name|getApplicationAttemptId
-argument_list|()
+name|appAttemptId
 operator|.
 name|getAttemptId
 argument_list|()
