@@ -712,6 +712,7 @@ comment|/**  * Class to manage storing object in and reading them from HBase.  *
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|HBaseReadWrite
 block|{
@@ -858,6 +859,7 @@ init|=
 literal|"no.use.cache"
 decl_stmt|;
 comment|/**    * List of tables in HBase    */
+specifier|public
 specifier|final
 specifier|static
 name|String
@@ -888,6 +890,7 @@ block|,
 name|TABLE_TABLE
 block|}
 decl_stmt|;
+specifier|public
 specifier|final
 specifier|static
 name|Map
@@ -1457,6 +1460,7 @@ name|boolean
 name|entireRoleTableInCache
 decl_stmt|;
 comment|/**    * Get the instance of HBaseReadWrite for the current thread.  This is intended to be used by    * {@link org.apache.hadoop.hive.metastore.hbase.HBaseStore} since it creates the thread local    * version of this class.    * @param configuration Configuration object    * @return thread's instance of HBaseReadWrite    */
+specifier|public
 specifier|static
 name|HBaseReadWrite
 name|getInstance
