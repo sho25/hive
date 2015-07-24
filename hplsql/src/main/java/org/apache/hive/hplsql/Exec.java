@@ -1139,7 +1139,7 @@ specifier|public
 name|void
 name|stackPush
 parameter_list|(
-name|boolean
+name|Boolean
 name|val
 parameter_list|)
 block|{
@@ -4052,7 +4052,7 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"Unhandled exception in PL/HQL"
+literal|"Unhandled exception in HPL/SQL"
 argument_list|)
 expr_stmt|;
 block|}
@@ -6132,6 +6132,32 @@ return|return
 literal|0
 return|;
 block|}
+comment|/**    * Cursor attribute %ISOPEN, %FOUND and %NOTFOUND    */
+annotation|@
+name|Override
+specifier|public
+name|Integer
+name|visitExpr_cursor_attribute
+parameter_list|(
+name|HplsqlParser
+operator|.
+name|Expr_cursor_attributeContext
+name|ctx
+parameter_list|)
+block|{
+name|exec
+operator|.
+name|expr
+operator|.
+name|execCursorAttribute
+argument_list|(
+name|ctx
+argument_list|)
+expr_stmt|;
+return|return
+literal|0
+return|;
+block|}
 comment|/**    * Function call    */
 annotation|@
 name|Override
@@ -6697,6 +6723,30 @@ operator|.
 name|stmt
 operator|.
 name|return_
+argument_list|(
+name|ctx
+argument_list|)
+return|;
+block|}
+comment|/**     * SET session options    */
+annotation|@
+name|Override
+specifier|public
+name|Integer
+name|visitSet_current_schema_option
+parameter_list|(
+name|HplsqlParser
+operator|.
+name|Set_current_schema_optionContext
+name|ctx
+parameter_list|)
+block|{
+return|return
+name|exec
+operator|.
+name|stmt
+operator|.
+name|setCurrentSchema
 argument_list|(
 name|ctx
 argument_list|)
