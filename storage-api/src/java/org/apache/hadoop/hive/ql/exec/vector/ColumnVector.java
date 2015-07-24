@@ -53,7 +53,6 @@ name|ColumnVector
 block|{
 comment|/*    * The current kinds of column vectors.    */
 specifier|public
-specifier|static
 enum|enum
 name|Type
 block|{
@@ -64,6 +63,14 @@ block|,
 name|BYTES
 block|,
 name|DECIMAL
+block|,
+name|STRUCT
+block|,
+name|LIST
+block|,
+name|MAP
+block|,
+name|UNION
 block|}
 comment|/*    * If hasNulls is true, then this array contains true if the value    * is null, otherwise false. The array is always allocated, so a batch can be re-used    * later and nulls added.    */
 specifier|public
@@ -114,6 +121,14 @@ name|isRepeating
 operator|=
 literal|false
 expr_stmt|;
+name|preFlattenNoNulls
+operator|=
+literal|true
+expr_stmt|;
+name|preFlattenIsRepeating
+operator|=
+literal|false
+expr_stmt|;
 block|}
 comment|/**      * Resets the column to default state      *  - fills the isNull array with false      *  - sets noNulls to true      *  - sets isRepeating to false      */
 specifier|public
@@ -123,8 +138,7 @@ parameter_list|()
 block|{
 if|if
 condition|(
-literal|false
-operator|==
+operator|!
 name|noNulls
 condition|)
 block|{
@@ -143,6 +157,14 @@ operator|=
 literal|true
 expr_stmt|;
 name|isRepeating
+operator|=
+literal|false
+expr_stmt|;
+name|preFlattenNoNulls
+operator|=
+literal|true
+expr_stmt|;
+name|preFlattenIsRepeating
 operator|=
 literal|false
 expr_stmt|;
@@ -166,7 +188,7 @@ function_decl|;
 comment|// Simplify vector by brute-force flattening noNulls if isRepeating
 comment|// This can be used to reduce combinatorial explosion of code paths in VectorExpressions
 comment|// with many arguments.
-specifier|public
+specifier|protected
 name|void
 name|flattenRepeatingNulls
 parameter_list|(
@@ -263,7 +285,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-specifier|public
+specifier|protected
 name|void
 name|flattenNoNulls
 parameter_list|(
@@ -307,17 +329,12 @@ name|j
 operator|++
 control|)
 block|{
-name|int
-name|i
-init|=
+name|isNull
+index|[
 name|sel
 index|[
 name|j
 index|]
-decl_stmt|;
-name|isNull
-index|[
-name|i
 index|]
 operator|=
 literal|false
@@ -372,7 +389,7 @@ operator|=
 name|noNulls
 expr_stmt|;
 block|}
-comment|/**      * Set the element in this column vector from the given input vector.      */
+comment|/**      * Set the element in this column vector from the given input vector.      * This method can assume that the output does not have isRepeating set.      */
 specifier|public
 specifier|abstract
 name|void
@@ -395,6 +412,88 @@ name|init
 parameter_list|()
 block|{
 comment|// Do nothing by default
+block|}
+comment|/**      * Ensure the ColumnVector can hold at least size values.      * This method is deliberately *not* recursive because the complex types      * can easily have more (or less) children than the upper levels.      * @param size the new minimum size      * @param presesrveData should the old data be preserved?      */
+specifier|public
+name|void
+name|ensureSize
+parameter_list|(
+name|int
+name|size
+parameter_list|,
+name|boolean
+name|presesrveData
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isNull
+operator|.
+name|length
+operator|<
+name|size
+condition|)
+block|{
+name|boolean
+index|[]
+name|oldArray
+init|=
+name|isNull
+decl_stmt|;
+name|isNull
+operator|=
+operator|new
+name|boolean
+index|[
+name|size
+index|]
+expr_stmt|;
+if|if
+condition|(
+name|presesrveData
+operator|&&
+operator|!
+name|noNulls
+condition|)
+block|{
+if|if
+condition|(
+name|isRepeating
+condition|)
+block|{
+name|isNull
+index|[
+literal|0
+index|]
+operator|=
+name|oldArray
+index|[
+literal|0
+index|]
+expr_stmt|;
+block|}
+else|else
+block|{
+name|System
+operator|.
+name|arraycopy
+argument_list|(
+name|oldArray
+argument_list|,
+literal|0
+argument_list|,
+name|isNull
+argument_list|,
+literal|0
+argument_list|,
+name|oldArray
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 block|}
 comment|/**      * Print the value for this column into the given string builder.      * @param buffer the buffer to print into      * @param row the id of the row to print      */
 specifier|public
