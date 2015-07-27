@@ -3514,9 +3514,6 @@ operator|.
 name|hashTableImplementationType
 argument_list|()
 decl_stmt|;
-name|HashTableLoader
-name|hashTableLoader
-decl_stmt|;
 switch|switch
 condition|(
 name|vectorDesc

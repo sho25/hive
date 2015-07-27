@@ -254,6 +254,7 @@ name|LLAP_OBJECT_CACHE_ENABLED
 argument_list|)
 condition|)
 block|{
+comment|// LLAP object cache, unlike others, does not use globals. Thus, get the existing one.
 return|return
 name|getLlapObjectCache
 argument_list|(
@@ -362,6 +363,19 @@ parameter_list|)
 block|{
 comment|// If order of events (i.e. dagstart and fragmentstart) was guaranteed, we could just
 comment|// create the cache when dag starts, and blindly return it to execution here.
+if|if
+condition|(
+name|queryId
+operator|==
+literal|null
+condition|)
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Query ID cannot be null"
+argument_list|)
+throw|;
 name|ObjectCache
 name|result
 init|=
@@ -407,13 +421,13 @@ literal|null
 operator|&&
 name|LOG
 operator|.
-name|isDebugEnabled
+name|isInfoEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Created object cache for "
 operator|+
@@ -446,13 +460,13 @@ if|if
 condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
+name|isInfoEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Removing object cache for "
 operator|+
