@@ -76,7 +76,7 @@ init|=
 literal|"org.apache.hadoop.hive.llap.io.api.impl.LlapIoImpl"
 decl_stmt|;
 comment|// Llap server depends on Hive execution, so the reverse cannot be true. We create the I/O
-comment|// singleton once (on daemon startup); the said singleton server as the IO interface.
+comment|// singleton once (on daemon startup); the said singleton serves as the IO interface.
 specifier|private
 specifier|static
 name|LlapIo

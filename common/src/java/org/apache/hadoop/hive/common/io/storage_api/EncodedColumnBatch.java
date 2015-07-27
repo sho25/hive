@@ -13,11 +13,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
 name|io
 operator|.
-name|api
+name|storage_api
 package|;
 end_package
 
@@ -45,27 +45,9 @@ name|AtomicInteger
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|cache
-operator|.
-name|LlapMemoryBuffer
-import|;
-end_import
+begin_comment
+comment|/**  * A block of data for a given section of a file, similar to VRB but in encoded form.  * Stores a set of buffers for each encoded stream that is a part of each column.  */
+end_comment
 
 begin_class
 specifier|public
@@ -75,34 +57,31 @@ parameter_list|<
 name|BatchKey
 parameter_list|>
 block|{
-comment|// TODO: temporary class. Will be filled in when reading (ORC) is implemented. Need to balance
-comment|//       generality, and ability to not copy data from underlying low-level cached buffers.
+comment|/**    * Slice of the data for a stream for some column, stored inside MemoryBuffer's.    * ColumnStreamData can be reused for many EncodedColumnBatch-es (e.g. dictionary stream), so    * it tracks the number of such users via a refcount.    */
 specifier|public
 specifier|static
 class|class
-name|StreamBuffer
+name|ColumnStreamData
 block|{
-comment|// Decoder knows which stream this belongs to, and each buffer is a compression block,
-comment|// so he can figure out the offsets from metadata.
-specifier|public
+specifier|private
 name|List
 argument_list|<
-name|LlapMemoryBuffer
+name|MemoryBuffer
 argument_list|>
 name|cacheBuffers
 decl_stmt|;
-specifier|public
-name|int
-name|streamKind
-decl_stmt|;
-comment|/** Base offset from the beginning of the indexable unit;      * CB in compressed, stream in uncompressed file. */
-specifier|public
+comment|/** Base offset from the beginning of the indexable unit; for example, for ORC,      * offset from the CB in a compressed file, from the stream in uncompressed file. */
+specifier|private
 name|int
 name|indexBaseOffset
 decl_stmt|;
-comment|// StreamBuffer can be reused for many RGs (e.g. dictionary case). To avoid locking every
-comment|// LlapMemoryBuffer 500 times, have a separate refcount on StreamBuffer itself.
-specifier|public
+comment|/** Stream type; format-specific. */
+specifier|private
+name|int
+name|streamKind
+decl_stmt|;
+comment|/** Reference count. */
+specifier|private
 name|AtomicInteger
 name|refCount
 init|=
@@ -180,23 +159,90 @@ return|return
 name|i
 return|;
 block|}
+specifier|public
+name|List
+argument_list|<
+name|MemoryBuffer
+argument_list|>
+name|getCacheBuffers
+parameter_list|()
+block|{
+return|return
+name|cacheBuffers
+return|;
 block|}
 specifier|public
+name|void
+name|setCacheBuffers
+parameter_list|(
+name|List
+argument_list|<
+name|MemoryBuffer
+argument_list|>
+name|cacheBuffers
+parameter_list|)
+block|{
+name|this
+operator|.
+name|cacheBuffers
+operator|=
+name|cacheBuffers
+expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getIndexBaseOffset
+parameter_list|()
+block|{
+return|return
+name|indexBaseOffset
+return|;
+block|}
+specifier|public
+name|void
+name|setIndexBaseOffset
+parameter_list|(
+name|int
+name|indexBaseOffset
+parameter_list|)
+block|{
+name|this
+operator|.
+name|indexBaseOffset
+operator|=
+name|indexBaseOffset
+expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getStreamKind
+parameter_list|()
+block|{
+return|return
+name|streamKind
+return|;
+block|}
+block|}
+comment|/** The key that is used to map this batch to source location. */
+specifier|protected
 name|BatchKey
 name|batchKey
 decl_stmt|;
-specifier|public
-name|StreamBuffer
+comment|/** Stream data for each stream, for each included column. */
+specifier|protected
+name|ColumnStreamData
 index|[]
 index|[]
 name|columnData
 decl_stmt|;
-specifier|public
+comment|/** Column indexes included in the batch. Correspond to columnData elements. */
+specifier|protected
 name|int
 index|[]
 name|columnIxs
 decl_stmt|;
-comment|/** Generation version necessary to sync pooling reuse with the fact that two separate threads    * operate on batches - the one that decodes them, and potential separate thread w/a "stop" call    * that cleans them up. We don't want the decode thread to use the ECB that was thrown out and    * reused, so it remembers the version and checks it after making sure no cleanup thread can ever    * get to this ECB anymore. All this sync is ONLY needed because of high level cache code (sync    * in decode thread is for the map that combines columns coming from cache and from file), so    * if we throw this presently-unused code out, we'd be able to get rid of this. */
+comment|// TODO: Maybe remove when solving the pooling issue.
+comment|/** Generation version necessary to sync pooling reuse with the fact that two separate threads    * operate on batches - the one that decodes them, and potential separate thread w/a "stop" call    * that cleans them up. We don't want the decode thread to use the ECB that was thrown out and    * reused, so it remembers the version and checks it after making sure no cleanup thread can ever    * get to this ECB anymore. All this sync is ONLY needed because of high level cache code. */
 specifier|public
 name|int
 name|version
@@ -271,7 +317,7 @@ name|colIxMod
 index|]
 operator|=
 operator|new
-name|StreamBuffer
+name|ColumnStreamData
 index|[
 name|streamCount
 index|]
@@ -287,7 +333,7 @@ parameter_list|,
 name|int
 name|streamIx
 parameter_list|,
-name|StreamBuffer
+name|ColumnStreamData
 name|sb
 parameter_list|)
 block|{
@@ -304,7 +350,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|setAllStreams
+name|setAllStreamsData
 parameter_list|(
 name|int
 name|colIxMod
@@ -312,7 +358,7 @@ parameter_list|,
 name|int
 name|colIx
 parameter_list|,
-name|StreamBuffer
+name|ColumnStreamData
 index|[]
 name|sbs
 parameter_list|)
@@ -330,6 +376,75 @@ name|colIxMod
 index|]
 operator|=
 name|sbs
+expr_stmt|;
+block|}
+specifier|public
+name|BatchKey
+name|getBatchKey
+parameter_list|()
+block|{
+return|return
+name|batchKey
+return|;
+block|}
+specifier|public
+name|ColumnStreamData
+index|[]
+index|[]
+name|getColumnData
+parameter_list|()
+block|{
+return|return
+name|columnData
+return|;
+block|}
+specifier|public
+name|int
+index|[]
+name|getColumnIxs
+parameter_list|()
+block|{
+return|return
+name|columnIxs
+return|;
+block|}
+specifier|protected
+name|void
+name|resetColumnArrays
+parameter_list|(
+name|int
+name|columnCount
+parameter_list|)
+block|{
+if|if
+condition|(
+name|columnIxs
+operator|!=
+literal|null
+operator|&&
+name|columnCount
+operator|==
+name|columnIxs
+operator|.
+name|length
+condition|)
+return|return;
+name|columnIxs
+operator|=
+operator|new
+name|int
+index|[
+name|columnCount
+index|]
+expr_stmt|;
+name|columnData
+operator|=
+operator|new
+name|ColumnStreamData
+index|[
+name|columnCount
+index|]
+index|[]
 expr_stmt|;
 block|}
 block|}

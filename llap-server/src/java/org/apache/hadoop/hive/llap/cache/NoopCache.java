@@ -29,15 +29,15 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
 name|io
 operator|.
-name|api
+name|storage_api
 operator|.
 name|EncodedColumnBatch
 operator|.
-name|StreamBuffer
+name|ColumnStreamData
 import|;
 end_import
 
@@ -57,14 +57,14 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|StreamBuffer
+name|ColumnStreamData
 index|[]
 name|cacheOrGet
 parameter_list|(
 name|CacheKey
 name|key
 parameter_list|,
-name|StreamBuffer
+name|ColumnStreamData
 index|[]
 name|value
 parameter_list|)
@@ -76,7 +76,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|StreamBuffer
+name|ColumnStreamData
 index|[]
 name|get
 parameter_list|(

@@ -53,9 +53,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
-name|DebugUtils
+name|io
+operator|.
+name|storage_api
+operator|.
+name|MemoryBuffer
 import|;
 end_import
 
@@ -71,13 +75,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|cache
-operator|.
-name|LlapMemoryBuffer
+name|DebugUtils
 import|;
 end_import
 
@@ -125,7 +123,7 @@ name|LlapDataBuffer
 extends|extends
 name|LlapCacheableBuffer
 implements|implements
-name|LlapMemoryBuffer
+name|MemoryBuffer
 block|{
 comment|// For now, we don't track refcount for metadata blocks, don't clear them, don't reuse them and
 comment|// basically rely on GC to remove them. So, refcount only applies to data blocks. If that

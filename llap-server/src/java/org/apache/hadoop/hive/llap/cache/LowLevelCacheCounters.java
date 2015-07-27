@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|counters
+name|cache
 package|;
 end_package
 

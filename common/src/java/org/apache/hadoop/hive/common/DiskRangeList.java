@@ -649,7 +649,7 @@ block|}
 specifier|public
 specifier|static
 class|class
-name|DiskRangeListCreateHelper
+name|CreateHelper
 block|{
 specifier|private
 name|DiskRangeList
@@ -659,10 +659,6 @@ literal|null
 decl_stmt|,
 name|head
 decl_stmt|;
-specifier|public
-name|DiskRangeListCreateHelper
-parameter_list|()
-block|{     }
 specifier|public
 name|DiskRangeList
 name|getTail
@@ -792,12 +788,12 @@ comment|/**    * List in-place mutation helper - a bogus first element that is i
 specifier|public
 specifier|static
 class|class
-name|DiskRangeListMutateHelper
+name|MutateHelper
 extends|extends
 name|DiskRangeList
 block|{
 specifier|public
-name|DiskRangeListMutateHelper
+name|MutateHelper
 parameter_list|(
 name|DiskRangeList
 name|head

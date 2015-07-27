@@ -83,16 +83,6 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|isTraceRangesEnabled
-parameter_list|()
-block|{
-return|return
-literal|false
-return|;
-block|}
-specifier|public
-specifier|static
-name|boolean
 name|isTraceLockingEnabled
 parameter_list|()
 block|{

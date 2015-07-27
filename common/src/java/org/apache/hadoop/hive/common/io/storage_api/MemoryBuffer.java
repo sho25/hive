@@ -13,45 +13,43 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
+operator|.
+name|io
+operator|.
+name|storage_api
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
 begin_comment
-comment|/**  * Data consumer; an equivalent of a data queue for an asynchronous data producer.  */
+comment|/** Abstract interface for any class wrapping a ByteBuffer. */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|Consumer
-parameter_list|<
-name|T
-parameter_list|>
+name|MemoryBuffer
 block|{
-comment|/** Some data has been produced. */
+comment|/** Note - raw buffer should not be modified. */
 specifier|public
-name|void
-name|consumeData
-parameter_list|(
-name|T
-name|data
-parameter_list|)
-function_decl|;
-comment|/** No more data will be produced; done */
-specifier|public
-name|void
-name|setDone
+name|ByteBuffer
+name|getByteBufferRaw
 parameter_list|()
 function_decl|;
-comment|/** No more data will be produced; error during production */
 specifier|public
-name|void
-name|setError
-parameter_list|(
-name|Throwable
-name|t
-parameter_list|)
+name|ByteBuffer
+name|getByteBufferDup
+parameter_list|()
 function_decl|;
 block|}
 end_interface

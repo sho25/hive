@@ -81,6 +81,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|storage_api
+operator|.
+name|MemoryBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -102,28 +122,6 @@ operator|.
 name|HiveConf
 operator|.
 name|ConfVars
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|cache
-operator|.
-name|LlapMemoryBuffer
 import|;
 end_import
 
@@ -667,7 +665,7 @@ specifier|public
 name|void
 name|allocateMultiple
 parameter_list|(
-name|LlapMemoryBuffer
+name|MemoryBuffer
 index|[]
 name|dest
 parameter_list|,
@@ -675,7 +673,7 @@ name|int
 name|size
 parameter_list|)
 throws|throws
-name|LlapCacheOutOfMemoryException
+name|AllocatorOutOfMemoryException
 block|{
 assert|assert
 name|size
@@ -811,8 +809,7 @@ index|[
 name|i
 index|]
 operator|=
-operator|new
-name|LlapDataBuffer
+name|createUnallocated
 argument_list|()
 expr_stmt|;
 comment|// TODO: pool of objects?
@@ -1149,7 +1146,7 @@ argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|LlapCacheOutOfMemoryException
+name|AllocatorOutOfMemoryException
 argument_list|(
 name|msg
 argument_list|)
@@ -1161,7 +1158,7 @@ specifier|public
 name|void
 name|deallocate
 parameter_list|(
-name|LlapMemoryBuffer
+name|MemoryBuffer
 name|buffer
 parameter_list|)
 block|{
@@ -1179,7 +1176,7 @@ specifier|public
 name|void
 name|deallocateEvicted
 parameter_list|(
-name|LlapMemoryBuffer
+name|MemoryBuffer
 name|buffer
 parameter_list|)
 block|{
@@ -1195,7 +1192,7 @@ specifier|private
 name|void
 name|deallocateInternal
 parameter_list|(
-name|LlapMemoryBuffer
+name|MemoryBuffer
 name|buffer
 parameter_list|,
 name|boolean
@@ -1877,7 +1874,7 @@ parameter_list|,
 name|int
 name|freeListIx
 parameter_list|,
-name|LlapMemoryBuffer
+name|MemoryBuffer
 index|[]
 name|dest
 parameter_list|,
@@ -1960,7 +1957,7 @@ parameter_list|,
 name|int
 name|freeListIx
 parameter_list|,
-name|LlapMemoryBuffer
+name|MemoryBuffer
 index|[]
 name|dest
 parameter_list|,
@@ -2461,7 +2458,7 @@ parameter_list|,
 name|int
 name|freeListIx
 parameter_list|,
-name|LlapMemoryBuffer
+name|MemoryBuffer
 index|[]
 name|dest
 parameter_list|,
@@ -2698,7 +2695,7 @@ parameter_list|,
 name|int
 name|freeListIx
 parameter_list|,
-name|LlapMemoryBuffer
+name|MemoryBuffer
 index|[]
 name|dest
 parameter_list|,
@@ -3238,11 +3235,6 @@ block|}
 specifier|private
 specifier|static
 class|class
-name|Request
-block|{    }
-specifier|private
-specifier|static
-class|class
 name|FreeList
 block|{
 name|ReentrantLock
@@ -3264,6 +3256,19 @@ comment|// Index of where the buffer is; in minAllocation units
 comment|// TODO: One possible improvement - store blocks arriving left over from splits, and
 comment|//       blocks requested, to be able to wait for pending splits and reduce fragmentation.
 comment|//       However, we are trying to increase fragmentation now, since we cater to single-size.
+block|}
+annotation|@
+name|Override
+specifier|public
+name|MemoryBuffer
+name|createUnallocated
+parameter_list|()
+block|{
+return|return
+operator|new
+name|LlapDataBuffer
+argument_list|()
+return|;
 block|}
 block|}
 end_class

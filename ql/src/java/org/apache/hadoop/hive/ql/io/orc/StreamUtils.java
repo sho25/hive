@@ -67,13 +67,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
 name|io
 operator|.
-name|api
+name|storage_api
 operator|.
-name|EncodedColumnBatch
+name|MemoryBuffer
 import|;
 end_import
 
@@ -87,15 +87,15 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
 name|io
 operator|.
-name|api
+name|storage_api
 operator|.
-name|cache
+name|EncodedColumnBatch
 operator|.
-name|LlapMemoryBuffer
+name|ColumnStreamData
 import|;
 end_import
 
@@ -120,9 +120,7 @@ parameter_list|,
 name|Long
 name|fileId
 parameter_list|,
-name|EncodedColumnBatch
-operator|.
-name|StreamBuffer
+name|ColumnStreamData
 name|streamBuffer
 parameter_list|)
 throws|throws
@@ -173,9 +171,7 @@ specifier|static
 name|DiskRangeInfo
 name|createDiskRangeInfo
 parameter_list|(
-name|EncodedColumnBatch
-operator|.
-name|StreamBuffer
+name|ColumnStreamData
 name|streamBuffer
 parameter_list|)
 block|{
@@ -187,7 +183,8 @@ name|DiskRangeInfo
 argument_list|(
 name|streamBuffer
 operator|.
-name|indexBaseOffset
+name|getIndexBaseOffset
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|long
@@ -202,12 +199,13 @@ comment|// See ctor comment.
 comment|// TODO: we should get rid of this
 for|for
 control|(
-name|LlapMemoryBuffer
+name|MemoryBuffer
 name|memoryBuffer
 range|:
 name|streamBuffer
 operator|.
-name|cacheBuffers
+name|getCacheBuffers
+argument_list|()
 control|)
 block|{
 name|ByteBuffer

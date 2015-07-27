@@ -137,10 +137,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|io
-operator|.
-name|api
-operator|.
 name|cache
 operator|.
 name|LowLevelCache

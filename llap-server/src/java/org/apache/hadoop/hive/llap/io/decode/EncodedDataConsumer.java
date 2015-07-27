@@ -73,9 +73,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
-name|Consumer
+name|io
+operator|.
+name|storage_api
+operator|.
+name|EncodedColumnBatch
 import|;
 end_import
 
@@ -92,26 +96,6 @@ operator|.
 name|llap
 operator|.
 name|ConsumerFeedback
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|EncodedColumnBatch
 import|;
 end_import
 
@@ -152,6 +136,28 @@ operator|.
 name|metrics
 operator|.
 name|LlapDaemonQueueMetrics
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|llap
+operator|.
+name|Consumer
 import|;
 end_import
 
@@ -442,7 +448,8 @@ name|get
 argument_list|(
 name|data
 operator|.
-name|batchKey
+name|getBatchKey
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -462,7 +469,8 @@ name|put
 argument_list|(
 name|data
 operator|.
-name|batchKey
+name|getBatchKey
+argument_list|()
 argument_list|,
 name|data
 argument_list|)
@@ -543,7 +551,8 @@ name|remove
 argument_list|(
 name|data
 operator|.
-name|batchKey
+name|getBatchKey
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Check if someone already threw this away and changed the version.

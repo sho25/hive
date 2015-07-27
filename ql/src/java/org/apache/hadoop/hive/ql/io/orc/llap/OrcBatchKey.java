@@ -13,13 +13,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|ql
 operator|.
 name|io
 operator|.
-name|api
-operator|.
 name|orc
+operator|.
+name|llap
 package|;
 end_package
 

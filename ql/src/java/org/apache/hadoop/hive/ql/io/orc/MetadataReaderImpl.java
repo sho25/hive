@@ -583,8 +583,6 @@ argument_list|,
 name|codec
 argument_list|,
 name|bufferSize
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -649,8 +647,6 @@ argument_list|,
 name|codec
 argument_list|,
 name|bufferSize
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -795,8 +791,6 @@ argument_list|,
 name|codec
 argument_list|,
 name|bufferSize
-argument_list|,
-literal|null
 argument_list|)
 argument_list|)
 return|;

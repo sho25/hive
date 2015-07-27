@@ -81,6 +81,24 @@ name|ConfVars
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|cache
+operator|.
+name|LowLevelCacheCounters
+import|;
+end_import
+
 begin_comment
 comment|/**  * Per query counters.  */
 end_comment
