@@ -844,7 +844,13 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"ROUND second argument only takes constant"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" second argument only takes constant"
 argument_list|)
 throw|;
 block|}
@@ -883,7 +889,13 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"ROUND second argument only takes constant"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" second argument only takes constant"
 argument_list|)
 throw|;
 block|}
@@ -922,7 +934,13 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"ROUND second argument only takes constant"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" second argument only takes constant"
 argument_list|)
 throw|;
 block|}
@@ -961,7 +979,13 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"ROUND second argument only takes constant"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" second argument only takes constant"
 argument_list|)
 throw|;
 block|}
@@ -1000,7 +1024,13 @@ throw|throw
 operator|new
 name|UDFArgumentException
 argument_list|(
-literal|"ROUND scale argument out of allowed range"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" scale argument out of allowed range"
 argument_list|)
 throw|;
 block|}
@@ -1019,7 +1049,13 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"ROUND second argument only takes integer constant"
+name|getFuncName
+argument_list|()
+operator|.
+name|toUpperCase
+argument_list|()
+operator|+
+literal|" second argument only takes integer constant"
 argument_list|)
 throw|;
 block|}
@@ -1365,8 +1401,6 @@ decl_stmt|;
 name|HiveDecimal
 name|dec
 init|=
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|decimalWritable
@@ -1431,8 +1465,6 @@ argument_list|(
 operator|(
 name|byte
 operator|)
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|byteWritable
@@ -1481,8 +1513,6 @@ argument_list|(
 operator|(
 name|short
 operator|)
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|shortWritable
@@ -1531,8 +1561,6 @@ argument_list|(
 operator|(
 name|int
 operator|)
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|intWritable
@@ -1578,8 +1606,6 @@ return|return
 operator|new
 name|LongWritable
 argument_list|(
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|longWritable
@@ -1620,8 +1646,6 @@ argument_list|(
 operator|(
 name|float
 operator|)
-name|RoundUtils
-operator|.
 name|round
 argument_list|(
 name|f
@@ -1709,8 +1733,73 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
-specifier|static
+specifier|protected
+name|HiveDecimal
+name|round
+parameter_list|(
+name|HiveDecimal
+name|input
+parameter_list|,
+name|int
+name|scale
+parameter_list|)
+block|{
+return|return
+name|RoundUtils
+operator|.
+name|round
+argument_list|(
+name|input
+argument_list|,
+name|scale
+argument_list|)
+return|;
+block|}
+specifier|protected
+name|long
+name|round
+parameter_list|(
+name|long
+name|input
+parameter_list|,
+name|int
+name|scale
+parameter_list|)
+block|{
+return|return
+name|RoundUtils
+operator|.
+name|round
+argument_list|(
+name|input
+argument_list|,
+name|scale
+argument_list|)
+return|;
+block|}
+specifier|protected
+name|double
+name|round
+parameter_list|(
+name|double
+name|input
+parameter_list|,
+name|int
+name|scale
+parameter_list|)
+block|{
+return|return
+name|RoundUtils
+operator|.
+name|round
+argument_list|(
+name|input
+argument_list|,
+name|scale
+argument_list|)
+return|;
+block|}
+specifier|protected
 name|DoubleWritable
 name|round
 parameter_list|(

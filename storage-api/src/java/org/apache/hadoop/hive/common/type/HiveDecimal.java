@@ -171,6 +171,16 @@ name|BigDecimal
 operator|.
 name|ROUND_HALF_UP
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|ROUND_HALF_EVEN
+init|=
+name|BigDecimal
+operator|.
+name|ROUND_HALF_EVEN
+decl_stmt|;
 specifier|private
 name|BigDecimal
 name|bd
