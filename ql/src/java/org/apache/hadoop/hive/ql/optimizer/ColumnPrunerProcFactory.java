@@ -1182,6 +1182,13 @@ name|op
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|cppCtx
+operator|.
+name|handleFilterUnionChildren
+argument_list|(
+name|op
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
