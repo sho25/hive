@@ -466,6 +466,23 @@ name|tableInfo
 operator|=
 name|thatTableInfo
 expr_stmt|;
+name|restoreLocalInfoFromTableInfo
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * Undoes the effects of compression( dedupWithTableInfo() ) during serialization,    * and restores PartInfo fields to return original data.    * Can be called idempotently, repeatably.    */
+specifier|private
+name|void
+name|restoreLocalInfoFromTableInfo
+parameter_list|()
+block|{
+assert|assert
+name|tableInfo
+operator|!=
+literal|null
+operator|:
+literal|"TableInfo can't be null at this point."
+assert|;
 if|if
 condition|(
 name|partitionSchema
@@ -554,18 +571,12 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Serialization method. Suppresses serialization of redundant information that's already    * available from TableInfo.    */
+comment|/**    * Finds commonalities with TableInfo, and suppresses (nulls) fields if they are identical    */
 specifier|private
 name|void
-name|writeObject
-parameter_list|(
-name|ObjectOutputStream
-name|oos
-parameter_list|)
-throws|throws
-name|IOException
+name|dedupWithTableInfo
+parameter_list|()
 block|{
-comment|// Suppress commonality with TableInfo.
 assert|assert
 name|tableInfo
 operator|!=
@@ -888,9 +899,27 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
+comment|/**    * Serialization method used by java serialization.    * Suppresses serialization of redundant information that's already available from    * TableInfo before writing out, so as to minimize amount of serialized space but    * restore it back before returning, so that PartInfo object is still usable afterwards    * (See HIVE-8485 and HIVE-11344 for details.)    */
+specifier|private
+name|void
+name|writeObject
+parameter_list|(
+name|ObjectOutputStream
+name|oos
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|dedupWithTableInfo
+argument_list|()
+expr_stmt|;
 name|oos
 operator|.
 name|defaultWriteObject
+argument_list|()
+expr_stmt|;
+name|restoreLocalInfoFromTableInfo
 argument_list|()
 expr_stmt|;
 block|}
