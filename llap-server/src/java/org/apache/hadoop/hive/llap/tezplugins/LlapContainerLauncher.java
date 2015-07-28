@@ -134,13 +134,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|LlapContainerLauncher
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-argument_list|,
 name|containerLauncherContext
 argument_list|)
 expr_stmt|;

@@ -1044,7 +1044,7 @@ operator|=
 operator|new
 name|SourceStateTracker
 argument_list|(
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 argument_list|,
 name|this
@@ -1055,21 +1055,22 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|serviceInit
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
+name|initialize
+parameter_list|()
 throws|throws
 name|Exception
 block|{
 name|super
 operator|.
-name|serviceInit
-argument_list|(
-name|conf
-argument_list|)
+name|initialize
+argument_list|()
 expr_stmt|;
+name|Configuration
+name|conf
+init|=
+name|getConf
+argument_list|()
+decl_stmt|;
 name|int
 name|numThreads
 init|=
@@ -1144,12 +1145,12 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|serviceStart
+name|start
 parameter_list|()
 block|{
 name|super
 operator|.
-name|serviceStart
+name|start
 argument_list|()
 expr_stmt|;
 name|this
@@ -1164,12 +1165,12 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|serviceStop
+name|shutdown
 parameter_list|()
 block|{
 name|super
 operator|.
-name|serviceStop
+name|shutdown
 argument_list|()
 expr_stmt|;
 if|if
@@ -1200,7 +1201,7 @@ block|{
 name|Configuration
 name|conf
 init|=
-name|getConfig
+name|getConf
 argument_list|()
 decl_stmt|;
 try|try
@@ -1694,7 +1695,7 @@ throw|;
 block|}
 comment|// Have to register this up front right now. Otherwise, it's possible for the task to start
 comment|// sending out status/DONE/KILLED/FAILED messages before TAImpl knows how to handle them.
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskStartedRemotely
@@ -1839,7 +1840,7 @@ operator|+
 literal|", Service Busy"
 argument_list|)
 expr_stmt|;
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskKilled
@@ -1878,7 +1879,7 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskFailed
@@ -1928,7 +1929,7 @@ operator|+
 literal|", Communication Error"
 argument_list|)
 expr_stmt|;
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskKilled
@@ -1967,7 +1968,7 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskFailed
@@ -2547,7 +2548,7 @@ name|taskCredentials
 operator|.
 name|addAll
 argument_list|(
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|getCredentials
@@ -2578,7 +2579,7 @@ name|credentialsBinary
 operator|=
 name|serializeCredentials
 argument_list|(
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|getCredentials
@@ -2840,7 +2841,7 @@ throws|throws
 name|IOException
 block|{
 comment|// TODO Unregister the task for state updates, which could in turn unregister the node.
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskKilled
@@ -3600,7 +3601,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|taskAlive
@@ -3611,7 +3612,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getTaskCommunicatorContext
+name|getContext
 argument_list|()
 operator|.
 name|containerAlive
