@@ -468,7 +468,7 @@ name|Builder
 name|end
 parameter_list|()
 function_decl|;
-comment|/**      * Add a less than leaf to the current item on the stack.      * @param column the name of the column      * @param literal the literal      * @return this      */
+comment|/**      * Add a less than leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param literal the literal      * @return this      */
 specifier|public
 name|Builder
 name|lessThan
@@ -476,11 +476,16 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 name|literal
 parameter_list|)
 function_decl|;
-comment|/**      * Add a less than equals leaf to the current item on the stack.      * @param column the name of the column      * @param literal the literal      * @return this      */
+comment|/**      * Add a less than equals leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param literal the literal      * @return this      */
 specifier|public
 name|Builder
 name|lessThanEquals
@@ -488,11 +493,16 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 name|literal
 parameter_list|)
 function_decl|;
-comment|/**      * Add an equals leaf to the current item on the stack.      * @param column the name of the column      * @param literal the literal      * @return this      */
+comment|/**      * Add an equals leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param literal the literal      * @return this      */
 specifier|public
 name|Builder
 name|equals
@@ -500,11 +510,16 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 name|literal
 parameter_list|)
 function_decl|;
-comment|/**      * Add a null safe equals leaf to the current item on the stack.      * @param column the name of the column      * @param literal the literal      * @return this      */
+comment|/**      * Add a null safe equals leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param literal the literal      * @return this      */
 specifier|public
 name|Builder
 name|nullSafeEquals
@@ -512,11 +527,16 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 name|literal
 parameter_list|)
 function_decl|;
-comment|/**      * Add an in leaf to the current item on the stack.      * @param column the name of the column      * @param literal the literal      * @return this      */
+comment|/**      * Add an in leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param literal the literal      * @return this      */
 specifier|public
 name|Builder
 name|in
@@ -524,21 +544,31 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 modifier|...
 name|literal
 parameter_list|)
 function_decl|;
-comment|/**      * Add an is null leaf to the current item on the stack.      * @param column the name of the column      * @return this      */
+comment|/**      * Add an is null leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @return this      */
 specifier|public
 name|Builder
 name|isNull
 parameter_list|(
 name|String
 name|column
+parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
 parameter_list|)
 function_decl|;
-comment|/**      * Add a between leaf to the current item on the stack.      * @param column the name of the column      * @param lower the literal      * @param upper the literal      * @return this      */
+comment|/**      * Add a between leaf to the current item on the stack.      * @param column the name of the column      * @param type the type of the expression      * @param lower the literal      * @param upper the literal      * @return this      */
 specifier|public
 name|Builder
 name|between
@@ -546,11 +576,25 @@ parameter_list|(
 name|String
 name|column
 parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
 name|Object
 name|lower
 parameter_list|,
 name|Object
 name|upper
+parameter_list|)
+function_decl|;
+comment|/**      * Add a truth value to the expression.      * @param truth      * @return this      */
+specifier|public
+name|Builder
+name|literal
+parameter_list|(
+name|TruthValue
+name|truth
 parameter_list|)
 function_decl|;
 comment|/**      * Build and return the SearchArgument that has been defined. All of the      * starts must have been ended before this call.      * @return the new SearchArgument      */

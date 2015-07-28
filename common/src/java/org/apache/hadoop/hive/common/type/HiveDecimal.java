@@ -309,6 +309,9 @@ operator|new
 name|BigDecimal
 argument_list|(
 name|dec
+operator|.
+name|trim
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
