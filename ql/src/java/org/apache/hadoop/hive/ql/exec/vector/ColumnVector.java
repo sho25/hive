@@ -31,20 +31,6 @@ name|Arrays
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Writable
-import|;
-end_import
-
 begin_comment
 comment|/**  * ColumnVector contains the shared structure for the sub-types,  * including NULL information, and whether this vector  * repeats, i.e. has all values the same, so only the first  * one is set. This is used to accelerate query performance  * by handling a whole vector in O(1) time when applicable.  *  * The fields are public by design since this is a performance-critical  * structure that is used in the inner loop of query execution.  */
 end_comment
@@ -94,15 +80,6 @@ specifier|private
 name|boolean
 name|preFlattenNoNulls
 decl_stmt|;
-specifier|public
-specifier|abstract
-name|Writable
-name|getWritableObject
-parameter_list|(
-name|int
-name|index
-parameter_list|)
-function_decl|;
 comment|/**    * Constructor for super-class ColumnVector. This is not called directly,    * but used to initialize inherited fields.    *    * @param len Vector length    */
 specifier|public
 name|ColumnVector
