@@ -4899,6 +4899,16 @@ name|optimizedOptiqPlan
 argument_list|)
 argument_list|,
 name|topLevelFieldSchema
+argument_list|,
+name|this
+operator|.
+name|getQB
+argument_list|()
+operator|.
+name|getTableDesc
+argument_list|()
+operator|!=
+literal|null
 argument_list|)
 decl_stmt|;
 name|LOG

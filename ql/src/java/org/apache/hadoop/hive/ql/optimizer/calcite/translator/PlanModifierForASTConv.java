@@ -1239,7 +1239,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|RelNode
 name|renameTopLevelSelectInResultSchema
