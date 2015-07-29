@@ -632,7 +632,7 @@ name|hashCode
 argument_list|()
 return|;
 block|}
-comment|/* (non-Javadoc)    * In order to update a Decimal128 fast (w/o allocation) we need to expose access to the    * internal storage bytes and scale.      * @return    */
+comment|/* (non-Javadoc)    * In order to update a Decimal128 fast (w/o allocation) we need to expose access to the    * internal storage bytes and scale.    * @return    */
 specifier|public
 name|byte
 index|[]
@@ -643,7 +643,7 @@ return|return
 name|internalStorage
 return|;
 block|}
-comment|/* (non-Javadoc)    * In order to update a Decimal128 fast (w/o allocation) we need to expose access to the    * internal storage bytes and scale.      */
+comment|/* (non-Javadoc)    * In order to update a Decimal128 fast (w/o allocation) we need to expose access to the    * internal storage bytes and scale.    */
 specifier|public
 name|int
 name|getScale

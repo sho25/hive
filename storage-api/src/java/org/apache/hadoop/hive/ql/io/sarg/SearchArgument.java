@@ -433,12 +433,6 @@ index|[]
 name|leaves
 parameter_list|)
 function_decl|;
-comment|/**    * Serialize the SARG as a kyro object and return the base64 string.    *    * Hive should replace the current XML-based AST serialization for predicate pushdown    * with the Kryo serialization of the SARG because the representation is much more    * compact and focused on what is needed for predicate pushdown.    *    * @return the serialized SARG    */
-specifier|public
-name|String
-name|toKryo
-parameter_list|()
-function_decl|;
 comment|/**    * A builder object for contexts outside of Hive where it isn't easy to    * get a ExprNodeDesc. The user must call startOr, startAnd, or startNot    * before adding any leaves.    */
 specifier|public
 interface|interface
