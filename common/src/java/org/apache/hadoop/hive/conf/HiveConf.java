@@ -8765,6 +8765,30 @@ argument_list|,
 literal|"Maximum total data size in dynamic pruning."
 argument_list|)
 block|,
+name|SPARK_PREWARM_CONTAINERS
+argument_list|(
+literal|"hive.spark.prewarm.containers"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to prewarn containers for Spark."
+operator|+
+literal|"If enabled, Hive will spend no more than 60 seconds to wait for the containers to come up "
+operator|+
+literal|"before any query can be executed."
+argument_list|)
+block|,
+name|SPARK_PREWARM_NUM_CONTAINERS
+argument_list|(
+literal|"hive.spark.prewarm.num.containers"
+argument_list|,
+literal|10
+argument_list|,
+literal|"The minimum number of containers to be prewarmed for Spark."
+operator|+
+literal|"Applicable only if hive.spark.prewarm.containers is set to true."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"

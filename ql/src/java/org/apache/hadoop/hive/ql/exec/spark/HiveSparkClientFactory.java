@@ -249,18 +249,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|spark
-operator|.
-name|SparkException
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -385,9 +373,7 @@ name|HiveConf
 name|hiveconf
 parameter_list|)
 throws|throws
-name|IOException
-throws|,
-name|SparkException
+name|Exception
 block|{
 name|Map
 argument_list|<
