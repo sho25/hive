@@ -95,6 +95,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Iterator
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedList
 import|;
 end_import
@@ -2847,6 +2857,16 @@ operator|/
 name|numThreads
 argument_list|)
 decl_stmt|;
+comment|// This check is necessary because for Spark branch, the result array from
+comment|// getInputPaths() above could be empty, and therefore numThreads could be 0.
+comment|// In that case, Executors.newFixedThreadPool will fail.
+if|if
+condition|(
+name|numThreads
+operator|>
+literal|0
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3097,6 +3117,7 @@ operator|.
 name|shutdownNow
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|// Store the previous value for the path specification
 name|String

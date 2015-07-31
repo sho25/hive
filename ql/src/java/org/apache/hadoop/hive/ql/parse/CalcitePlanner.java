@@ -6532,6 +6532,7 @@ comment|//0. Distinct aggregate rewrite
 comment|// Run this optimization early, since it is expanding the operator pipeline.
 if|if
 condition|(
+operator|!
 name|conf
 operator|.
 name|getVar
@@ -6545,7 +6546,7 @@ argument_list|)
 operator|.
 name|equals
 argument_list|(
-literal|"tez"
+literal|"mr"
 argument_list|)
 operator|&&
 name|conf
