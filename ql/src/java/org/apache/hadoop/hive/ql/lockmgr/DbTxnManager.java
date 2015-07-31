@@ -91,22 +91,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|IMetaStoreClient
 import|;
 end_import
@@ -398,6 +382,7 @@ name|client
 init|=
 literal|null
 decl_stmt|;
+comment|/**    * The Metastore NEXT_TXN_ID.NTXN_NEXT is initialized to 1; it contains the next available    * transaction id.  Thus is 1 is first transaction id.    */
 specifier|private
 name|long
 name|txnId
@@ -475,6 +460,23 @@ block|{
 name|init
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|isTxnOpen
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|LockException
+argument_list|(
+literal|"Transaction already opened. txnId="
+operator|+
+name|txnId
+argument_list|)
+throw|;
+comment|//ToDo: ErrorMsg
+block|}
 try|try
 block|{
 name|txnId
@@ -513,14 +515,11 @@ throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|METASTORE_COMMUNICATION_FAILED
-operator|.
-name|getMsg
-argument_list|()
-argument_list|,
-name|e
 argument_list|)
 throw|;
 block|}
@@ -1161,9 +1160,8 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnId
-operator|>
-literal|0
+name|isTxnOpen
+argument_list|()
 condition|)
 block|{
 name|statementId
@@ -1214,18 +1212,16 @@ name|LockException
 block|{
 if|if
 condition|(
-name|txnId
-operator|==
-literal|0
+operator|!
+name|isTxnOpen
+argument_list|()
 condition|)
 block|{
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Attempt to commit before opening a "
-operator|+
-literal|"transaction"
+literal|"Attempt to commit before opening a transaction"
 argument_list|)
 throw|;
 block|}
@@ -1360,18 +1356,16 @@ name|LockException
 block|{
 if|if
 condition|(
-name|txnId
-operator|==
-literal|0
+operator|!
+name|isTxnOpen
+argument_list|()
 condition|)
 block|{
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Attempt to rollback before opening a "
-operator|+
-literal|"transaction"
+literal|"Attempt to rollback before opening a transaction"
 argument_list|)
 throw|;
 block|}
@@ -1508,9 +1502,9 @@ condition|)
 block|{
 if|if
 condition|(
-name|txnId
-operator|==
-literal|0
+operator|!
+name|isTxnOpen
+argument_list|()
 condition|)
 block|{
 comment|// No locks, no txn, we outta here.
@@ -1777,9 +1771,8 @@ try|try
 block|{
 if|if
 condition|(
-name|txnId
-operator|>
-literal|0
+name|isTxnOpen
+argument_list|()
 condition|)
 name|rollbackTxn
 argument_list|()
@@ -1923,6 +1916,30 @@ argument_list|)
 throw|;
 block|}
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isTxnOpen
+parameter_list|()
+block|{
+return|return
+name|txnId
+operator|>
+literal|0
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getCurrentTxnId
+parameter_list|()
+block|{
+return|return
+name|txnId
+return|;
 block|}
 annotation|@
 name|Override

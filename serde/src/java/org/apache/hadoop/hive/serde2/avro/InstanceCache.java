@@ -63,6 +63,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -97,9 +107,9 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
-name|Integer
+name|SeedObject
 argument_list|,
 name|Instance
 argument_list|>
@@ -108,7 +118,7 @@ init|=
 operator|new
 name|HashMap
 argument_list|<
-name|Integer
+name|SeedObject
 argument_list|,
 name|Instance
 argument_list|>
@@ -181,9 +191,6 @@ operator|.
 name|containsKey
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -207,9 +214,6 @@ operator|.
 name|get
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|)
 return|;
 block|}
@@ -242,9 +246,6 @@ operator|.
 name|put
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|,
 name|instance
 argument_list|)

@@ -5001,10 +5001,9 @@ name|rr
 operator|.
 name|put
 argument_list|(
-name|ci
+name|inputOpAf
 operator|.
-name|getTabAlias
-argument_list|()
+name|tabAlias
 argument_list|,
 name|ci
 operator|.

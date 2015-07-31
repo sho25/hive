@@ -4668,6 +4668,17 @@ operator|+
 literal|"map-join."
 argument_list|)
 block|,
+name|HIVEDYNAMICPARTITIONHASHJOIN
+argument_list|(
+literal|"hive.optimize.dynamic.partition.hashjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable dynamically partitioned hash join optimization. \n"
+operator|+
+literal|"This setting is also dependent on enabling hive.auto.convert.join"
+argument_list|)
+block|,
 name|HIVECONVERTJOIN
 argument_list|(
 literal|"hive.auto.convert.join"

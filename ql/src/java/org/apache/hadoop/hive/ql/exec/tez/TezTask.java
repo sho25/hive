@@ -1190,6 +1190,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// fetch the counters
+try|try
+block|{
 name|Set
 argument_list|<
 name|StatusGetOpts
@@ -1217,6 +1219,30 @@ operator|.
 name|getDAGCounters
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|err
+parameter_list|)
+block|{
+comment|// Don't fail execution due to counters - just don't print summary info
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to get counters: "
+operator|+
+name|err
+argument_list|,
+name|err
+argument_list|)
+expr_stmt|;
+name|counters
+operator|=
+literal|null
+expr_stmt|;
+block|}
 name|TezSessionPoolManager
 operator|.
 name|getInstance
