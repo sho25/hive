@@ -87,7 +87,7 @@ name|parquet
 operator|.
 name|read
 operator|.
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 import|;
 end_import
 
@@ -342,7 +342,7 @@ decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
@@ -454,7 +454,7 @@ name|assertEquals
 argument_list|(
 literal|"lteq(y, Binary{\"hi        \"})"
 argument_list|,
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
@@ -563,7 +563,7 @@ expr_stmt|;
 name|FilterPredicate
 name|p
 init|=
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
@@ -675,7 +675,7 @@ name|assertEquals
 argument_list|(
 literal|"lteq(y, Binary{\"hi        \"})"
 argument_list|,
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
@@ -784,7 +784,7 @@ expr_stmt|;
 name|FilterPredicate
 name|p
 init|=
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
@@ -931,7 +931,7 @@ decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
-name|ParquetRecordReaderWrapper
+name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
 argument_list|(
