@@ -152,6 +152,9 @@ decl_stmt|;
 name|Conf
 name|conf
 decl_stmt|;
+name|Meta
+name|meta
+decl_stmt|;
 name|boolean
 name|trace
 init|=
@@ -179,6 +182,13 @@ operator|=
 name|exec
 operator|.
 name|getConf
+argument_list|()
+expr_stmt|;
+name|meta
+operator|=
+name|exec
+operator|.
+name|getMeta
 argument_list|()
 expr_stmt|;
 name|trace
@@ -695,12 +705,29 @@ argument_list|()
 argument_list|,
 name|ctx
 operator|.
-name|T_OPEN_P
+name|T_TABLE
 argument_list|()
 operator|.
 name|getSymbol
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|sql
+operator|.
+name|append
+argument_list|(
+literal|" "
+operator|+
+name|evalPop
+argument_list|(
+name|ctx
+operator|.
+name|table_name
+argument_list|()
+argument_list|)
+operator|+
+literal|" ("
 argument_list|)
 expr_stmt|;
 name|int
@@ -781,13 +808,13 @@ name|sql
 operator|.
 name|append
 argument_list|(
+name|evalPop
+argument_list|(
 name|col
 operator|.
-name|ident
+name|column_name
 argument_list|()
-operator|.
-name|getText
-argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|sql
@@ -838,12 +865,9 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|sql
-operator|.
-name|append
-argument_list|(
-literal|" "
-operator|+
+name|String
+name|opt
+init|=
 name|evalPop
 argument_list|(
 name|ctx
@@ -854,8 +878,24 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|opt
+operator|!=
+literal|null
+condition|)
+block|{
+name|sql
+operator|.
+name|append
+argument_list|(
+literal|" "
+operator|+
+name|opt
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|trace
 argument_list|(
@@ -3951,6 +3991,10 @@ argument_list|()
 operator|+
 literal|" "
 operator|+
+name|meta
+operator|.
+name|normalizeIdentifierPart
+argument_list|(
 name|evalPop
 argument_list|(
 name|ctx
@@ -3961,6 +4005,7 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -4855,7 +4900,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * EXEC, EXECUTE and EXECUTE IMMEDIATE statement to execute dynamic SQL    */
+comment|/**    * EXEC, EXECUTE and EXECUTE IMMEDIATE statement to execute dynamic SQL or stored procedure    */
 specifier|public
 name|Integer
 name|exec
@@ -4868,9 +4913,16 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|trace
+name|execProc
+argument_list|(
+name|ctx
+argument_list|)
 condition|)
 block|{
+return|return
+literal|0
+return|;
+block|}
 name|trace
 argument_list|(
 name|ctx
@@ -4878,7 +4930,6 @@ argument_list|,
 literal|"EXECUTE"
 argument_list|)
 expr_stmt|;
-block|}
 name|Var
 name|vsql
 init|=
@@ -4907,7 +4958,7 @@ name|trace
 argument_list|(
 name|ctx
 argument_list|,
-literal|"Query: "
+literal|"SQL statement: "
 operator|+
 name|sql
 argument_list|)
@@ -5253,6 +5304,51 @@ argument_list|)
 expr_stmt|;
 return|return
 literal|0
+return|;
+block|}
+comment|/**    * EXEC to execute a stored procedure    */
+specifier|public
+name|Boolean
+name|execProc
+parameter_list|(
+name|HplsqlParser
+operator|.
+name|Exec_stmtContext
+name|ctx
+parameter_list|)
+block|{
+if|if
+condition|(
+name|exec
+operator|.
+name|function
+operator|.
+name|execProc
+argument_list|(
+name|ctx
+operator|.
+name|expr_func_params
+argument_list|()
+argument_list|,
+name|evalPop
+argument_list|(
+name|ctx
+operator|.
+name|expr
+argument_list|()
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+return|return
+literal|false
 return|;
 block|}
 comment|/**    * EXIT statement (leave the specified loop with a condition)    */
@@ -5887,6 +5983,10 @@ name|ctx
 argument_list|,
 literal|"USE "
 operator|+
+name|meta
+operator|.
+name|normalizeIdentifierPart
+argument_list|(
 name|evalPop
 argument_list|(
 name|ctx
@@ -5897,6 +5997,7 @@ argument_list|)
 operator|.
 name|toString
 argument_list|()
+argument_list|)
 argument_list|)
 return|;
 block|}
