@@ -684,7 +684,7 @@ name|MR_JAR_PROPERTY
 init|=
 literal|"tmpjars"
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 specifier|transient
@@ -700,6 +700,15 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|MAX_PREWARM_TIME
+init|=
+literal|30000
+decl_stmt|;
+comment|// 30s
 specifier|private
 specifier|static
 specifier|final
@@ -837,7 +846,7 @@ name|hiveConf
 argument_list|,
 name|ConfVars
 operator|.
-name|SPARK_PREWARM_CONTAINERS
+name|HIVE_PREWARM_ENABLED
 argument_list|)
 operator|&&
 name|hiveConf
@@ -877,7 +886,7 @@ operator|+
 name|minExecutors
 argument_list|)
 expr_stmt|;
-comment|// Spend at most 60s to wait for executors to come up.
+comment|// Spend at most MAX_PREWARM_TIME to wait for executors to come up.
 name|int
 name|curExecutors
 init|=
@@ -934,7 +943,7 @@ argument_list|()
 operator|-
 name|ts
 operator|<
-literal|60000
+name|MAX_PREWARM_TIME
 condition|)
 do|;
 name|LOG
@@ -967,7 +976,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|SPARK_PREWARM_NUM_CONTAINERS
+name|HIVE_PREWARM_NUM_CONTAINERS
 argument_list|)
 decl_stmt|;
 name|boolean
