@@ -11727,6 +11727,12 @@ name|other
 operator|.
 name|auxJars
 expr_stmt|;
+name|isSparkConfigUpdated
+operator|=
+name|other
+operator|.
+name|isSparkConfigUpdated
+expr_stmt|;
 name|origProp
 operator|=
 operator|(
