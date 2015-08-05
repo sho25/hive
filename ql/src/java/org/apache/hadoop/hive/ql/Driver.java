@@ -2939,6 +2939,12 @@ condition|(
 name|saHooks
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|saHooks
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|HiveSemanticAnalyzerHookContext
