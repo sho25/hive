@@ -3105,6 +3105,16 @@ argument_list|,
 name|command
 argument_list|)
 decl_stmt|;
+comment|// get the output schema
+name|schema
+operator|=
+name|getSchema
+argument_list|(
+name|sem
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
 name|plan
 operator|=
 operator|new
@@ -3133,12 +3143,7 @@ operator|.
 name|getHiveOperation
 argument_list|()
 argument_list|,
-name|getSchema
-argument_list|(
-name|sem
-argument_list|,
-name|conf
-argument_list|)
+name|schema
 argument_list|)
 expr_stmt|;
 name|conf
@@ -3200,16 +3205,6 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|// get the output schema
-name|schema
-operator|=
-name|getSchema
-argument_list|(
-name|sem
-argument_list|,
-name|conf
-argument_list|)
-expr_stmt|;
 comment|//do the authorization check
 if|if
 condition|(
