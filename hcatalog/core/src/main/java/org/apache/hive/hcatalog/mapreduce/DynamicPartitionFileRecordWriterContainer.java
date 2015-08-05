@@ -1314,7 +1314,17 @@ name|getUniqueFile
 argument_list|(
 name|currTaskContext
 argument_list|,
+name|currTaskContext
+operator|.
+name|getConfiguration
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"mapreduce.output.basename"
+argument_list|,
 literal|"part"
+argument_list|)
 argument_list|,
 literal|""
 argument_list|)
