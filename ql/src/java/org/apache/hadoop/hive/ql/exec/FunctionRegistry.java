@@ -9025,6 +9025,9 @@ name|bridge
 operator|.
 name|getBody
 argument_list|()
+operator|.
+name|clone
+argument_list|()
 argument_list|,
 name|bridge
 operator|.
