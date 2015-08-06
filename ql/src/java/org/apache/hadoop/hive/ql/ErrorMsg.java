@@ -2006,6 +2006,13 @@ argument_list|,
 literal|"Non-repl import disallowed against table that is a destination of replication."
 argument_list|)
 block|,
+name|CTAS_LOCATION_NONEMPTY
+argument_list|(
+literal|10304
+argument_list|,
+literal|"CREATE-TABLE-AS-SELECT cannot create table with location to a non-empty directory."
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
