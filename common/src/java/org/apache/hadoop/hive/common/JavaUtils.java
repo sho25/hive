@@ -647,7 +647,7 @@ name|loader
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Utility method for ACID to normalize logging info    * @param extLockId LockResponse.lockid    */
+comment|/**    * Utility method for ACID to normalize logging info.  Matches    * {@link org.apache.hadoop.hive.metastore.api.LockRequest#toString()}    */
 specifier|public
 specifier|static
 name|String
@@ -661,6 +661,22 @@ return|return
 literal|"lockid:"
 operator|+
 name|extLockId
+return|;
+block|}
+comment|/**    * Utility method for ACID to normalize logging info.  Matches    * {@link org.apache.hadoop.hive.metastore.api.LockResponse#toString()}    */
+specifier|public
+specifier|static
+name|String
+name|txnIdToString
+parameter_list|(
+name|long
+name|txnId
+parameter_list|)
+block|{
+return|return
+literal|"txnid:"
+operator|+
+name|txnId
 return|;
 block|}
 specifier|private

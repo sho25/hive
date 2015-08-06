@@ -1832,9 +1832,14 @@ throw|throw
 operator|new
 name|NoSuchTxnException
 argument_list|(
-literal|"No such transaction: "
+literal|"No such transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -2024,9 +2029,14 @@ name|info
 argument_list|(
 literal|"Expected to move at least one record from txn_components to "
 operator|+
-literal|"completed_txn_components when committing txn! txnid:"
+literal|"completed_txn_components when committing txn! "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -2673,13 +2683,23 @@ literal|"Unlocking locks associated with transaction"
 operator|+
 literal|" not permitted.  Lockid "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 operator|+
 literal|" is associated with "
 operator|+
 literal|"transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -2754,9 +2774,14 @@ throw|throw
 operator|new
 name|NoSuchLockException
 argument_list|(
-literal|"No such lock: "
+literal|"No such lock "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -6416,11 +6441,11 @@ literal|" intLockId:"
 operator|+
 name|intLockId
 operator|+
-literal|" txnId:"
+literal|" "
 operator|+
-name|Long
+name|JavaUtils
 operator|.
-name|toString
+name|txnIdToString
 argument_list|(
 name|txnId
 argument_list|)
@@ -7095,7 +7120,11 @@ literal|"update TXNS set txn_state = '"
 operator|+
 name|TXN_ABORTED
 operator|+
-literal|"' where txn_id in ("
+literal|"' where txn_state = '"
+operator|+
+name|TXN_OPEN
+operator|+
+literal|"' and txn_id in ("
 argument_list|)
 expr_stmt|;
 name|first
@@ -7180,7 +7209,7 @@ return|return
 name|updateCnt
 return|;
 block|}
-comment|/**    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @param wait whether to wait for this lock.  The function will return immediately one way or    *             another.  If true and the lock could not be acquired the response will have a    *             state of  WAITING.  The caller will then need to poll using    *             {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}. If    *             false and the  lock could not be acquired, then the response will have a state    *             of NOT_ACQUIRED.  The caller will need to call    *             {@link #lockNoWait(org.apache.hadoop.hive.metastore.api.LockRequest)} again to    *             attempt another lock.    * @return informatino on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
+comment|/**    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @param wait whether to wait for this lock.  The function will return immediately one way or    *             another.  If true and the lock could not be acquired the response will have a    *             state of  WAITING.  The caller will then need to poll using    *             {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}. If    *             false and the  lock could not be acquired, then the response will have a state    *             of NOT_ACQUIRED.  The caller will need to call    *             {@link #lockNoWait(org.apache.hadoop.hive.metastore.api.LockRequest)} again to    *             attempt another lock.    * @return information on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
 specifier|private
 name|LockResponse
 name|lock
@@ -9280,9 +9309,14 @@ throw|throw
 operator|new
 name|NoSuchTxnException
 argument_list|(
-literal|"No such transaction: "
+literal|"No such transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -9321,7 +9355,12 @@ name|TxnAbortedException
 argument_list|(
 literal|"Transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 operator|+
 literal|" already aborted"
 argument_list|)
@@ -9470,9 +9509,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Return txnid "
+literal|"Return "
 operator|+
-operator|(
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|rs
 operator|.
 name|wasNull
@@ -9482,7 +9524,7 @@ operator|-
 literal|1
 else|:
 name|txnid
-operator|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
