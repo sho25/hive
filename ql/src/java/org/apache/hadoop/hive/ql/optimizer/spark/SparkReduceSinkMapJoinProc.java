@@ -2060,6 +2060,9 @@ argument_list|)
 expr_stmt|;
 name|hashTableSinkOp
 operator|.
+name|getConf
+argument_list|()
+operator|.
 name|setTag
 argument_list|(
 name|tag

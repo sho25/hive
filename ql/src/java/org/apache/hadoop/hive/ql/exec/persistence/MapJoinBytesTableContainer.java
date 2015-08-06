@@ -4384,6 +4384,20 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+return|return
+name|hashMap
+operator|.
+name|size
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

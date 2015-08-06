@@ -233,6 +233,8 @@ name|dummyOps
 decl_stmt|;
 name|int
 name|tag
+init|=
+literal|0
 decl_stmt|;
 specifier|private
 specifier|final

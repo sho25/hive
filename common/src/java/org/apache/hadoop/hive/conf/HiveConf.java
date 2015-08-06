@@ -4677,6 +4677,17 @@ operator|+
 literal|"map-join."
 argument_list|)
 block|,
+name|HIVEDYNAMICPARTITIONHASHJOIN
+argument_list|(
+literal|"hive.optimize.dynamic.partition.hashjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable dynamically partitioned hash join optimization. \n"
+operator|+
+literal|"This setting is also dependent on enabling hive.auto.convert.join"
+argument_list|)
+block|,
 name|HIVECONVERTJOIN
 argument_list|(
 literal|"hive.auto.convert.join"
@@ -6957,9 +6968,9 @@ name|HIVE_METRICS_JSON_FILE_LOCATION
 argument_list|(
 literal|"hive.service.metrics.file.location"
 argument_list|,
-literal|"file:///tmp/report.json"
+literal|"/tmp/report.json"
 argument_list|,
-literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of JSON metrics file.  "
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, the location of local JSON metrics file.  "
 operator|+
 literal|"This file will get overwritten at every interval."
 argument_list|)
@@ -8360,7 +8371,7 @@ literal|"hive.prewarm.enabled"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Enables container prewarm for Tez (Hadoop 2 only)"
+literal|"Enables container prewarm for Tez/Spark (Hadoop 2 only)"
 argument_list|)
 block|,
 name|HIVE_PREWARM_NUM_CONTAINERS
@@ -8369,7 +8380,7 @@ literal|"hive.prewarm.numcontainers"
 argument_list|,
 literal|10
 argument_list|,
-literal|"Controls the number of containers to prewarm for Tez (Hadoop 2 only)"
+literal|"Controls the number of containers to prewarm for Tez/Spark (Hadoop 2 only)"
 argument_list|)
 block|,
 name|HIVESTAGEIDREARRANGE
@@ -8998,6 +9009,30 @@ argument_list|,
 literal|"DIGEST-MD5"
 argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
+argument_list|)
+block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by writing\n"
+operator|+
+literal|"to a temporary HDFS file, and read later for removing unnecessary partitions."
+argument_list|)
+block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning.max.data.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum total data size in dynamic pruning."
 argument_list|)
 block|,
 name|NWAYJOINREORDER

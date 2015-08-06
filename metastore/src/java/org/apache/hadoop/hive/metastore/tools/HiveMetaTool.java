@@ -714,6 +714,19 @@ operator|+
 name|query
 argument_list|)
 expr_stmt|;
+name|ObjectStore
+operator|.
+name|QueryWrapper
+name|queryWrapper
+init|=
+operator|new
+name|ObjectStore
+operator|.
+name|QueryWrapper
+argument_list|()
+decl_stmt|;
+try|try
+block|{
 name|Collection
 argument_list|<
 name|?
@@ -725,6 +738,8 @@ operator|.
 name|executeJDOQLSelect
 argument_list|(
 name|query
+argument_list|,
+name|queryWrapper
 argument_list|)
 decl_stmt|;
 if|if
@@ -787,6 +802,15 @@ literal|"Encountered error during executeJDOQLSelect -"
 operator|+
 literal|"commit of JDO transaction failed."
 argument_list|)
+expr_stmt|;
+block|}
+block|}
+finally|finally
+block|{
+name|queryWrapper
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 block|}

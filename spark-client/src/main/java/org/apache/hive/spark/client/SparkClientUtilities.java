@@ -207,9 +207,12 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|ClassLoader
-name|cloader
+name|URLClassLoader
+name|loader
 init|=
+operator|(
+name|URLClassLoader
+operator|)
 name|Thread
 operator|.
 name|currentThread
@@ -217,14 +220,6 @@ argument_list|()
 operator|.
 name|getContextClassLoader
 argument_list|()
-decl_stmt|;
-name|URLClassLoader
-name|loader
-init|=
-operator|(
-name|URLClassLoader
-operator|)
-name|cloader
 decl_stmt|;
 name|List
 argument_list|<
@@ -241,6 +236,11 @@ operator|.
 name|getURLs
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|boolean
+name|newPathAdded
+init|=
+literal|false
 decl_stmt|;
 for|for
 control|(
@@ -295,8 +295,17 @@ operator|+
 literal|"] to classpath."
 argument_list|)
 expr_stmt|;
+name|newPathAdded
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|newPathAdded
+condition|)
+block|{
 name|URLClassLoader
 name|newLoader
 init|=
@@ -330,6 +339,7 @@ argument_list|(
 name|newLoader
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Create a URL from a string representing a path to a local file.    * The path string can be just a path, or can start with file:/, file:///    * @param path  path string    * @return    */
 specifier|private

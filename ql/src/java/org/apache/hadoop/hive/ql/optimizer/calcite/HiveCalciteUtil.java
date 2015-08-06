@@ -2228,6 +2228,8 @@ parameter_list|(
 name|Join
 name|j
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 return|return
 name|constructJoinPredicateInfo
@@ -2249,6 +2251,8 @@ parameter_list|(
 name|HiveMultiJoin
 name|mj
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 return|return
 name|constructJoinPredicateInfo
@@ -2273,6 +2277,8 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 return|return
 name|constructJoinPredicateInfo
@@ -2302,6 +2308,8 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 specifier|final
 name|List
@@ -2349,6 +2357,8 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 name|JoinPredicateInfo
 name|jpi
@@ -3266,6 +3276,8 @@ parameter_list|,
 name|RexNode
 name|pe
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 name|JoinLeafPredicateInfo
 name|jlpi
@@ -3341,7 +3353,7 @@ name|otherConditions
 init|=
 name|HiveRelOptUtil
 operator|.
-name|splitJoinCondition
+name|splitHiveJoinCondition
 argument_list|(
 name|systemFieldList
 argument_list|,
@@ -4392,9 +4404,6 @@ name|RexInputRef
 argument_list|(
 name|i
 argument_list|,
-operator|(
-name|RelDataType
-operator|)
 name|inputRel
 operator|.
 name|getRowType
@@ -4449,9 +4458,6 @@ name|RexInputRef
 argument_list|(
 name|inputRefIndx
 argument_list|,
-operator|(
-name|RelDataType
-operator|)
 name|inputRel
 operator|.
 name|getRowType
@@ -4864,6 +4870,7 @@ name|Void
 argument_list|>
 block|{
 specifier|private
+specifier|final
 name|Set
 argument_list|<
 name|Integer
@@ -4890,6 +4897,8 @@ name|deep
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Void
 name|visitInputRef

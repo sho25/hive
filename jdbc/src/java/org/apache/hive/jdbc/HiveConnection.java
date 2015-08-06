@@ -1853,6 +1853,15 @@ block|}
 block|}
 block|}
 block|}
+specifier|public
+name|String
+name|getConnectedUrl
+parameter_list|()
+block|{
+return|return
+name|jdbcUriString
+return|;
+block|}
 specifier|private
 name|String
 name|getServerHttpUrl

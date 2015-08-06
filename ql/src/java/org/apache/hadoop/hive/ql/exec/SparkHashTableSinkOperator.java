@@ -449,11 +449,6 @@ specifier|final
 name|HashTableSinkOperator
 name|htsOperator
 decl_stmt|;
-comment|// The position of this table
-specifier|private
-name|byte
-name|tag
-decl_stmt|;
 specifier|public
 name|SparkHashTableSinkOperator
 parameter_list|()
@@ -496,6 +491,14 @@ operator|.
 name|getTagLength
 argument_list|()
 index|]
+decl_stmt|;
+name|byte
+name|tag
+init|=
+name|conf
+operator|.
+name|getTag
+argument_list|()
 decl_stmt|;
 name|inputOIs
 index|[
@@ -558,9 +561,10 @@ name|process
 argument_list|(
 name|row
 argument_list|,
-name|this
+name|conf
 operator|.
-name|tag
+name|getTag
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -585,6 +589,14 @@ init|=
 name|htsOperator
 operator|.
 name|mapJoinTables
+decl_stmt|;
+name|byte
+name|tag
+init|=
+name|conf
+operator|.
+name|getTag
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -958,6 +970,7 @@ parameter_list|)
 block|{
 comment|// No problem, use a new name
 block|}
+block|}
 comment|// TODO find out numOfPartitions for the big table
 name|int
 name|numOfPartitions
@@ -978,7 +991,6 @@ argument_list|,
 name|numOfPartitions
 argument_list|)
 expr_stmt|;
-block|}
 name|htsOperator
 operator|.
 name|console
@@ -1178,21 +1190,6 @@ name|tableContainer
 operator|.
 name|clear
 argument_list|()
-expr_stmt|;
-block|}
-specifier|public
-name|void
-name|setTag
-parameter_list|(
-name|byte
-name|tag
-parameter_list|)
-block|{
-name|this
-operator|.
-name|tag
-operator|=
-name|tag
 expr_stmt|;
 block|}
 comment|/**    * Implements the getName function for the Node Interface.    *    * @return the name of the operator    */

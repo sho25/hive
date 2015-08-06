@@ -557,7 +557,7 @@ name|tagToValueDesc
 operator|.
 name|get
 argument_list|(
-literal|0
+name|tag
 argument_list|)
 argument_list|)
 expr_stmt|;

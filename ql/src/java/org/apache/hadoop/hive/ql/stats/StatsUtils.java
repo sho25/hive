@@ -2093,6 +2093,30 @@ expr_stmt|;
 name|AggrStats
 name|aggrStats
 init|=
+literal|null
+decl_stmt|;
+comment|// We check the sizes of neededColumns and partNames here. If either
+comment|// size is 0, aggrStats is null after several retries. Thus, we can
+comment|// skip the step to connect to the metastore.
+if|if
+condition|(
+name|neededColumns
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+operator|&&
+name|partNames
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|aggrStats
+operator|=
 name|Hive
 operator|.
 name|get
@@ -2114,7 +2138,8 @@ name|neededColumns
 argument_list|,
 name|partNames
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 literal|null

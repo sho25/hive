@@ -1552,6 +1552,14 @@ return|return
 literal|null
 return|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -1565,6 +1573,7 @@ operator|+
 name|ti
 argument_list|)
 expr_stmt|;
+block|}
 name|ExprNodeConstantDesc
 name|c
 init|=
@@ -2014,6 +2023,14 @@ name|udf
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2028,6 +2045,7 @@ operator|+
 literal|" is undeterministic. Don't evalulating immediately."
 argument_list|)
 expr_stmt|;
+block|}
 operator|(
 operator|(
 name|ExprNodeGenericFuncDesc
@@ -2064,6 +2082,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2077,6 +2103,7 @@ operator|+
 name|shortcut
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|shortcut
 return|;
@@ -2228,6 +2255,14 @@ name|udf
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2242,6 +2277,7 @@ operator|+
 literal|" is undeterministic. Don't evalulating immediately."
 argument_list|)
 expr_stmt|;
+block|}
 operator|(
 operator|(
 name|ExprNodeGenericFuncDesc
@@ -2283,6 +2319,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2296,6 +2340,7 @@ operator|+
 name|constant
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|constant
 return|;
@@ -2322,6 +2367,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2335,6 +2388,7 @@ operator|+
 name|shortcut
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|shortcut
 return|;
@@ -2450,6 +2504,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2463,6 +2525,7 @@ operator|+
 name|col
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|col
 return|;
@@ -2815,6 +2878,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2826,6 +2897,7 @@ operator|+
 literal|" is identified as a value assignment, propagate it."
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -2900,6 +2972,14 @@ operator|instanceof
 name|ExprNodeColumnDesc
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2911,6 +2991,7 @@ operator|+
 literal|" is identified as a value assignment, propagate it."
 argument_list|)
 expr_stmt|;
+block|}
 name|ExprNodeColumnDesc
 name|c
 init|=
@@ -4506,6 +4587,14 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isErrorEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -4517,6 +4606,7 @@ operator|+
 literal|" error!"
 argument_list|)
 expr_stmt|;
+block|}
 name|ci
 operator|=
 name|rs
@@ -4542,6 +4632,14 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isErrorEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -4561,6 +4659,7 @@ name|getColumn
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
@@ -5049,6 +5148,14 @@ argument_list|(
 name|arguments
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -5070,6 +5177,7 @@ operator|+
 name|o
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|o
@@ -5201,6 +5309,14 @@ condition|)
 block|{        }
 else|else
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isErrorEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -5212,6 +5328,7 @@ operator|+
 literal|". Return value unrecoginizable."
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
@@ -5382,6 +5499,14 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -5399,6 +5524,7 @@ operator|+
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -5610,6 +5736,14 @@ operator|.
 name|getPredicate
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -5629,6 +5763,7 @@ name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|ExprNodeDesc
 name|newCondn
 init|=
@@ -5684,6 +5819,14 @@ argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -5695,6 +5838,7 @@ operator|+
 literal|" holds true. Will delete it."
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -5712,6 +5856,14 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isWarnEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|warn
@@ -5723,6 +5875,7 @@ operator|+
 literal|" holds false!"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if
@@ -5756,6 +5909,14 @@ name|FALSE
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -5775,6 +5936,7 @@ name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// merge it with the downstream col list
 name|op
 operator|.
@@ -6470,6 +6632,14 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -6488,6 +6658,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 literal|null
@@ -6844,6 +7015,14 @@ argument_list|>
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -6856,6 +7035,7 @@ name|getOperatorId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
@@ -7021,6 +7201,14 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -7030,6 +7218,7 @@ operator|+
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 name|cppCtx
 operator|.
 name|getOpToConstantExprs
@@ -7073,6 +7262,14 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -7082,6 +7279,7 @@ operator|+
 name|op
 argument_list|)
 expr_stmt|;
+block|}
 name|cppCtx
 operator|.
 name|getOpToConstantExprs
@@ -7557,6 +7755,14 @@ return|return
 literal|null
 return|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -7569,6 +7775,7 @@ name|getExprs
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|Iterator
 argument_list|<
 name|Entry
@@ -7692,6 +7899,14 @@ operator|instanceof
 name|ExprNodeConstantDesc
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -7707,6 +7922,7 @@ operator|+
 literal|" is removed."
 argument_list|)
 expr_stmt|;
+block|}
 continue|continue;
 block|}
 name|newExprs
@@ -7725,6 +7941,14 @@ name|newExprs
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -7737,6 +7961,7 @@ name|getExprs
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|List

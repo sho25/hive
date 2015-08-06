@@ -197,26 +197,6 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|ColumnVector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|VectorizedInputFormatInterface
 import|;
 end_import
@@ -319,7 +299,7 @@ name|io
 operator|.
 name|sarg
 operator|.
-name|SearchArgument
+name|ConvertAstToSearchArg
 import|;
 end_import
 
@@ -339,7 +319,7 @@ name|io
 operator|.
 name|sarg
 operator|.
-name|SearchArgumentFactory
+name|SearchArgument
 import|;
 end_import
 
@@ -940,7 +920,7 @@ name|this
 operator|.
 name|sarg
 operator|=
-name|SearchArgumentFactory
+name|ConvertAstToSearchArg
 operator|.
 name|createFromConf
 argument_list|(

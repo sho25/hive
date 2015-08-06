@@ -149,20 +149,6 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|DefaultFileAccess
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
 name|FileStatus
 import|;
 end_import
@@ -2846,6 +2832,28 @@ operator|+
 name|destPath
 argument_list|)
 expr_stmt|;
+comment|// If destPath directory exists, rename call will move the sourcePath
+comment|// into destPath without failing. So check it before renaming.
+if|if
+condition|(
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|destPath
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Cannot rename the source path. The destination "
+operator|+
+literal|"path already exists."
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 operator|!

@@ -107,22 +107,6 @@ name|rel
 operator|.
 name|type
 operator|.
-name|RelDataTypeFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|type
-operator|.
 name|RelDataTypeField
 import|;
 end_import
@@ -247,20 +231,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|calcite
-operator|.
-name|util
-operator|.
-name|Util
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|commons
 operator|.
 name|logging
@@ -285,15 +255,77 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|google
+name|apache
 operator|.
-name|common
+name|hadoop
 operator|.
-name|collect
+name|hive
 operator|.
-name|ImmutableList
+name|ql
+operator|.
+name|exec
+operator|.
+name|FunctionRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|translator
+operator|.
+name|TypeConverter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfoUtils
 import|;
 end_import
 
@@ -319,11 +351,11 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Splits out the equi-join (and optionally, a single non-equi) components    * of a join condition, and returns what's left. Projection might be    * required by the caller to provide join keys that are not direct field    * references.    *    * @param sysFieldList  list of system fields    * @param inputs        join inputs    * @param condition     join condition    * @param joinKeys      The join keys from the inputs which are equi-join    *                      keys    * @param filterNulls   The join key positions for which null values will not    *                      match. null values only match for the "is not distinct    *                      from" condition.    * @param rangeOp       if null, only locate equi-joins; otherwise, locate a    *                      single non-equi join predicate and return its operator    *                      in this list; join keys associated with the non-equi    *                      join predicate are at the end of the key lists    *                      returned    * @return What's left, never null    */
+comment|/**    * Splits out the equi-join (and optionally, a single non-equi) components    * of a join condition, and returns what's left. Projection might be    * required by the caller to provide join keys that are not direct field    * references.    *    * @param sysFieldList  list of system fields    * @param inputs        join inputs    * @param condition     join condition    * @param joinKeys      The join keys from the inputs which are equi-join    *                      keys    * @param filterNulls   The join key positions for which null values will not    *                      match. null values only match for the "is not distinct    *                      from" condition.    * @param rangeOp       if null, only locate equi-joins; otherwise, locate a    *                      single non-equi join predicate and return its operator    *                      in this list; join keys associated with the non-equi    *                      join predicate are at the end of the key lists    *                      returned    * @return What's left, never null    * @throws CalciteSemanticException    */
 specifier|public
 specifier|static
 name|RexNode
-name|splitJoinCondition
+name|splitHiveJoinCondition
 parameter_list|(
 name|List
 argument_list|<
@@ -361,6 +393,8 @@ name|SqlOperator
 argument_list|>
 name|rangeOp
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 specifier|final
 name|List
@@ -463,6 +497,8 @@ name|RexNode
 argument_list|>
 name|nonEquiList
 parameter_list|)
+throws|throws
+name|CalciteSemanticException
 block|{
 specifier|final
 name|int
@@ -494,15 +530,6 @@ init|=
 name|cluster
 operator|.
 name|getRexBuilder
-argument_list|()
-decl_stmt|;
-specifier|final
-name|RelDataTypeFactory
-name|typeFactory
-init|=
-name|cluster
-operator|.
-name|getTypeFactory
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -1179,35 +1206,49 @@ operator|!=
 name|rightKeyType
 condition|)
 block|{
-comment|// perform casting
-name|RelDataType
-name|targetKeyType
+comment|// perform casting using Hive rules
+name|TypeInfo
+name|rType
 init|=
-name|typeFactory
+name|TypeConverter
 operator|.
-name|leastRestrictive
+name|convert
 argument_list|(
-name|ImmutableList
-operator|.
-name|of
-argument_list|(
-name|leftKeyType
-argument_list|,
 name|rightKeyType
 argument_list|)
+decl_stmt|;
+name|TypeInfo
+name|lType
+init|=
+name|TypeConverter
+operator|.
+name|convert
+argument_list|(
+name|leftKeyType
+argument_list|)
+decl_stmt|;
+name|TypeInfo
+name|tgtType
+init|=
+name|FunctionRegistry
+operator|.
+name|getCommonClassForComparison
+argument_list|(
+name|lType
+argument_list|,
+name|rType
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|targetKeyType
+name|tgtType
 operator|==
 literal|null
 condition|)
 block|{
 throw|throw
-name|Util
-operator|.
-name|newInternal
+operator|new
+name|CalciteSemanticException
 argument_list|(
 literal|"Cannot find common type for join keys "
 operator|+
@@ -1229,11 +1270,35 @@ literal|")"
 argument_list|)
 throw|;
 block|}
+name|RelDataType
+name|targetKeyType
+init|=
+name|TypeConverter
+operator|.
+name|convert
+argument_list|(
+name|tgtType
+argument_list|,
+name|rexBuilder
+operator|.
+name|getTypeFactory
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|leftKeyType
 operator|!=
 name|targetKeyType
+operator|&&
+name|TypeInfoUtils
+operator|.
+name|isConversionRequiredForComparison
+argument_list|(
+name|tgtType
+argument_list|,
+name|lType
+argument_list|)
 condition|)
 block|{
 name|leftKey
@@ -1253,6 +1318,15 @@ condition|(
 name|rightKeyType
 operator|!=
 name|targetKeyType
+operator|&&
+name|TypeInfoUtils
+operator|.
+name|isConversionRequiredForComparison
+argument_list|(
+name|tgtType
+argument_list|,
+name|rType
+argument_list|)
 condition|)
 block|{
 name|rightKey
@@ -1270,42 +1344,6 @@ block|}
 block|}
 block|}
 block|}
-comment|//      if ((rangeOp == null)
-comment|//&& ((leftKey == null) || (rightKey == null))) {
-comment|//        // no equality join keys found yet:
-comment|//        // try transforming the condition to
-comment|//        // equality "join" conditions, e.g.
-comment|//        //     f(LHS)> 0 ===> ( f(LHS)> 0 ) = TRUE,
-comment|//        // and make the RHS produce TRUE, but only if we're strictly
-comment|//        // looking for equi-joins
-comment|//        final ImmutableBitSet projRefs = InputFinder.bits(condition);
-comment|//        leftKey = null;
-comment|//        rightKey = null;
-comment|//
-comment|//        boolean foundInput = false;
-comment|//        for (int i = 0; i< inputs.size()&& !foundInput; i++) {
-comment|//          final int lowerLimit = inputsRange[i].nextSetBit(0);
-comment|//          final int upperLimit = inputsRange[i].length();
-comment|//          if (projRefs.nextSetBit(lowerLimit)< upperLimit) {
-comment|//            leftInput = i;
-comment|//            leftFields = inputs.get(leftInput).getRowType().getFieldList();
-comment|//
-comment|//            leftKey = condition.accept(
-comment|//                new RelOptUtil.RexInputConverter(
-comment|//                    rexBuilder,
-comment|//                    leftFields,
-comment|//                    leftFields,
-comment|//                    adjustments));
-comment|//
-comment|//            rightKey = rexBuilder.makeLiteral(true);
-comment|//
-comment|//            // effectively performing an equality comparison
-comment|//            kind = SqlKind.EQUALS;
-comment|//
-comment|//            foundInput = true;
-comment|//          }
-comment|//        }
-comment|//      }
 if|if
 condition|(
 operator|(

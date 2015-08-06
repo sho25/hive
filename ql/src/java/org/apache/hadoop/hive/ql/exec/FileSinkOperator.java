@@ -3551,6 +3551,14 @@ comment|// in recent hadoop versions, use deleteOnExit to clean tmp files.
 if|if
 condition|(
 name|isNativeTable
+operator|&&
+name|fs
+operator|!=
+literal|null
+operator|&&
+name|fsp
+operator|!=
+literal|null
 condition|)
 block|{
 name|autoDelete

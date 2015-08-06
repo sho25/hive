@@ -1223,6 +1223,13 @@ name|sparkStatistics
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Execution completed successfully"
+argument_list|)
+expr_stmt|;
 block|}
 elseif|else
 if|if

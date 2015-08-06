@@ -398,6 +398,13 @@ condition|(
 name|src
 operator|==
 literal|null
+operator|||
+name|src
+operator|.
+name|length
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 name|highWatermark

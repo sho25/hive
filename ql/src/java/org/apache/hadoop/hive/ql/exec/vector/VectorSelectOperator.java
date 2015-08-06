@@ -759,21 +759,6 @@ throw|;
 block|}
 block|}
 comment|// Prepare output, set the projections
-name|VectorExpressionWriter
-index|[]
-name|originalValueWriters
-init|=
-name|vrg
-operator|.
-name|valueWriters
-decl_stmt|;
-name|vrg
-operator|.
-name|setValueWriters
-argument_list|(
-name|valueWriters
-argument_list|)
-expr_stmt|;
 name|int
 index|[]
 name|originalProjections
@@ -824,12 +809,6 @@ operator|.
 name|projectedColumns
 operator|=
 name|originalProjections
-expr_stmt|;
-name|vrg
-operator|.
-name|valueWriters
-operator|=
-name|originalValueWriters
 expr_stmt|;
 block|}
 specifier|static

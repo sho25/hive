@@ -20,6 +20,22 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+operator|.
+name|checkNotNull
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -684,6 +700,20 @@ operator|.
 name|runtime
 operator|.
 name|CommonToken
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|util
+operator|.
+name|ChunkList
 import|;
 end_import
 
@@ -3500,6 +3530,16 @@ argument_list|(
 name|newLoader
 argument_list|)
 expr_stmt|;
+name|runtimeSerializationKryo
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setClassLoader
+argument_list|(
+name|newLoader
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 name|path
@@ -4103,7 +4143,7 @@ block|{
 comment|// happens. e.g.: no reduce work.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"File not found: "
 operator|+
@@ -8888,6 +8928,9 @@ name|tblDesc
 parameter_list|,
 name|Partition
 name|part
+parameter_list|,
+name|boolean
+name|usePartSchemaProperties
 parameter_list|)
 throws|throws
 name|HiveException
@@ -8899,6 +8942,8 @@ argument_list|(
 name|part
 argument_list|,
 name|tblDesc
+argument_list|,
+name|usePartSchemaProperties
 argument_list|)
 return|;
 block|}
