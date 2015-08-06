@@ -2361,6 +2361,7 @@ condition|)
 block|{
 if|if
 condition|(
+operator|!
 name|isDataReaderOpen
 condition|)
 block|{
@@ -2370,6 +2371,10 @@ name|dataReader
 operator|.
 name|open
 argument_list|()
+expr_stmt|;
+name|isDataReaderOpen
+operator|=
+literal|true
 expr_stmt|;
 block|}
 name|dataReader
