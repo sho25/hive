@@ -1041,8 +1041,6 @@ name|sourcePath
 argument_list|,
 name|targetPath
 argument_list|,
-name|fs
-argument_list|,
 literal|true
 argument_list|,
 literal|false
