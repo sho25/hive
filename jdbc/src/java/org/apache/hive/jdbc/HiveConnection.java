@@ -5478,14 +5478,36 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// Per JDBC spec, if the connection is closed a SQLException should be thrown.
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Connection is closed"
 argument_list|)
 throw|;
+block|}
+comment|// Per JDBC spec, the request defines a hint to the driver to enable database optimizations.
+comment|// The read-only mode for this connection is disabled and cannot be enabled (isReadOnly always returns false).
+comment|// The most correct behavior is to throw only if the request tries to enable the read-only mode.
+if|if
+condition|(
+name|readOnly
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Enabling read-only mode not supported"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setSavepoint()    */
 annotation|@
