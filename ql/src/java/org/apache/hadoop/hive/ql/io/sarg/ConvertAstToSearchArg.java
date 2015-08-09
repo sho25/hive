@@ -23,27 +23,31 @@ end_package
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|esotericsoftware
+name|sql
 operator|.
-name|kryo
-operator|.
-name|Kryo
+name|Date
 import|;
 end_import
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|esotericsoftware
+name|sql
 operator|.
-name|kryo
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|io
+name|util
 operator|.
-name|Input
+name|List
 import|;
 end_import
 
@@ -120,24 +124,6 @@ operator|.
 name|type
 operator|.
 name|HiveChar
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|HiveVarchar
 import|;
 end_import
 
@@ -603,31 +589,27 @@ end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|sql
+name|esotericsoftware
 operator|.
-name|Date
+name|kryo
+operator|.
+name|Kryo
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|sql
+name|esotericsoftware
 operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|kryo
 operator|.
-name|util
+name|io
 operator|.
-name|List
+name|Input
 import|;
 end_import
 
@@ -989,8 +971,7 @@ operator|instanceof
 name|HiveChar
 condition|)
 block|{
-name|lit
-operator|=
+return|return
 operator|(
 operator|(
 name|HiveChar
@@ -1000,7 +981,7 @@ operator|)
 operator|.
 name|getPaddedValue
 argument_list|()
-expr_stmt|;
+return|;
 block|}
 elseif|else
 if|if
