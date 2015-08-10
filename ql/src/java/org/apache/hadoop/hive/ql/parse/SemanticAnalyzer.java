@@ -33607,14 +33607,14 @@ name|expressions
 operator|.
 name|add
 argument_list|(
-name|previous
+name|current
 argument_list|)
 expr_stmt|;
 name|expressions
 operator|.
 name|add
 argument_list|(
-name|current
+name|previous
 argument_list|)
 expr_stmt|;
 name|ExprNodeDesc
