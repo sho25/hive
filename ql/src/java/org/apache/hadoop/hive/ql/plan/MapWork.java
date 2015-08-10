@@ -388,10 +388,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
-name|boolean
-name|hadoopSupportsSplittable
-decl_stmt|;
 comment|// use LinkedHashMap to make sure the iteration order is
 comment|// deterministic, to ease testing
 specifier|private
@@ -2055,30 +2051,6 @@ name|this
 operator|.
 name|mapperCannotSpanPartns
 return|;
-block|}
-specifier|public
-name|boolean
-name|getHadoopSupportsSplittable
-parameter_list|()
-block|{
-return|return
-name|hadoopSupportsSplittable
-return|;
-block|}
-specifier|public
-name|void
-name|setHadoopSupportsSplittable
-parameter_list|(
-name|boolean
-name|hadoopSupportsSplittable
-parameter_list|)
-block|{
-name|this
-operator|.
-name|hadoopSupportsSplittable
-operator|=
-name|hadoopSupportsSplittable
-expr_stmt|;
 block|}
 specifier|public
 name|String

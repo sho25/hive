@@ -5119,15 +5119,6 @@ argument_list|,
 literal|"Whether to provide the row offset virtual column"
 argument_list|)
 block|,
-name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
-argument_list|(
-literal|"hive.hadoop.supports.splittable.combineinputformat"
-argument_list|,
-literal|false
-argument_list|,
-literal|""
-argument_list|)
-block|,
 comment|// Optimizer
 name|HIVEOPTINDEXFILTER
 argument_list|(
