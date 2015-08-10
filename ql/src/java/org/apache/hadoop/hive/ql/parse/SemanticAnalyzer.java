@@ -25345,7 +25345,7 @@ name|output
 return|;
 block|}
 comment|/**    * This modifies the Select projections when the Select is part of an insert statement and    * the insert statement specifies a column list for the target table, e.g.    * create table source (a int, b int);    * create table target (x int, y int, z int);    * insert into target(z,x) select * from source    *    * Once the * is resolved to 'a,b', this list needs to rewritten to 'b,null,a' so that it looks    * as if the original query was written as    * insert into target select b, null, a from source    *    * if target schema is not specified, this is no-op    *    * @see #handleInsertStatementSpecPhase1(ASTNode, QBParseInfo, org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx)    * @throws SemanticException    */
-specifier|private
+specifier|public
 name|RowResolver
 name|handleInsertStatementSpec
 parameter_list|(
