@@ -337,6 +337,10 @@ block|,
 name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
+block|,
+name|OrcSerde
+operator|.
+name|COMPRESSION
 block|}
 argument_list|)
 specifier|public
@@ -382,6 +386,14 @@ name|VectorizedOrcSerde
 name|vos
 init|=
 literal|null
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|COMPRESSION
+init|=
+literal|"orc.compress"
 decl_stmt|;
 specifier|final
 class|class
@@ -489,6 +501,20 @@ argument_list|(
 name|serdeConstants
 operator|.
 name|LIST_COLUMN_TYPES
+argument_list|)
+decl_stmt|;
+name|String
+name|compressType
+init|=
+name|OrcConf
+operator|.
+name|COMPRESS
+operator|.
+name|getString
+argument_list|(
+name|table
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// Parse the configuration parameters
