@@ -5325,6 +5325,17 @@ decl_stmt|;
 if|if
 condition|(
 name|privObject
+operator|.
+name|isDummy
+argument_list|()
+condition|)
+block|{
+comment|//do not authorize dummy readEntity or writeEntity
+continue|continue;
+block|}
+if|if
+condition|(
+name|privObject
 operator|instanceof
 name|ReadEntity
 operator|&&
