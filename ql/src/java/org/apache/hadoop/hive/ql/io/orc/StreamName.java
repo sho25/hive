@@ -26,6 +26,7 @@ comment|/**  * The name of a stream within a stripe.  */
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|StreamName
 implements|implements

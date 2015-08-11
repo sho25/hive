@@ -71,9 +71,11 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 operator|.
-name|MemoryBuffer
+name|EncodedColumnBatch
+operator|.
+name|ColumnStreamData
 import|;
 end_import
 
@@ -91,11 +93,9 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 operator|.
-name|EncodedColumnBatch
-operator|.
-name|ColumnStreamData
+name|MemoryBuffer
 import|;
 end_import
 

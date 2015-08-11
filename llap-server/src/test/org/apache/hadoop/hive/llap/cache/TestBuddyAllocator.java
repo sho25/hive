@@ -169,9 +169,9 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|Allocator
 operator|.
-name|MemoryBuffer
+name|AllocatorOutOfMemoryException
 import|;
 end_import
 
@@ -189,11 +189,9 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 operator|.
-name|Allocator
-operator|.
-name|AllocatorOutOfMemoryException
+name|MemoryBuffer
 import|;
 end_import
 

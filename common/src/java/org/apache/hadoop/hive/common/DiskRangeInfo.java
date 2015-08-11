@@ -29,6 +29,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|DiskRange
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google

@@ -43,7 +43,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|DiskRange
+name|DiskRangeInfo
 import|;
 end_import
 
@@ -59,7 +59,9 @@ name|hive
 operator|.
 name|common
 operator|.
-name|DiskRangeInfo
+name|io
+operator|.
+name|DiskRange
 import|;
 end_import
 

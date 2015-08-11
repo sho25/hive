@@ -42,6 +42,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|OutStream
 extends|extends
@@ -61,6 +62,7 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
+specifier|public
 specifier|static
 specifier|final
 name|int

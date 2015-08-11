@@ -17,7 +17,7 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 package|;
 end_package
 

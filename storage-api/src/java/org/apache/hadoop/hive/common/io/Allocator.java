@@ -16,10 +16,28 @@ operator|.
 name|common
 operator|.
 name|io
-operator|.
-name|storage_api
 package|;
 end_package
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|encoded
+operator|.
+name|MemoryBuffer
+import|;
+end_import
 
 begin_comment
 comment|/** An allocator provided externally to storage classes to allocate MemoryBuffer-s. */

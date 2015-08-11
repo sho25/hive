@@ -77,7 +77,7 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 operator|.
 name|EncodedColumnBatch
 import|;
@@ -155,7 +155,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|llap
+name|encoded
 operator|.
 name|Consumer
 import|;

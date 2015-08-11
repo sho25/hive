@@ -161,6 +161,8 @@ name|hive
 operator|.
 name|common
 operator|.
+name|io
+operator|.
 name|DiskRange
 import|;
 end_import
@@ -177,6 +179,8 @@ name|hive
 operator|.
 name|common
 operator|.
+name|io
+operator|.
 name|DiskRangeList
 import|;
 end_import
@@ -192,6 +196,8 @@ operator|.
 name|hive
 operator|.
 name|common
+operator|.
+name|io
 operator|.
 name|DiskRangeList
 operator|.
@@ -211,29 +217,11 @@ name|hive
 operator|.
 name|common
 operator|.
+name|io
+operator|.
 name|DiskRangeList
 operator|.
 name|MutateHelper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|io
-operator|.
-name|storage_api
-operator|.
-name|DataReader
 import|;
 end_import
 
@@ -628,6 +616,7 @@ name|codec
 argument_list|)
 return|;
 block|}
+specifier|public
 specifier|static
 name|boolean
 index|[]
@@ -749,6 +738,7 @@ operator|>=
 name|leftA
 return|;
 block|}
+specifier|public
 specifier|static
 name|void
 name|addEntireStreamToRanges
@@ -782,6 +772,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 specifier|static
 name|void
 name|addRgFilteredStreamToRanges
@@ -972,6 +963,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|public
 specifier|static
 name|long
 name|estimateRgEndOffset
@@ -1358,6 +1350,7 @@ operator|*
 literal|512
 decl_stmt|;
 comment|/**    * Is this stream part of a dictionary?    * @return is this part of a dictionary?    */
+specifier|public
 specifier|static
 name|boolean
 name|isDictionary

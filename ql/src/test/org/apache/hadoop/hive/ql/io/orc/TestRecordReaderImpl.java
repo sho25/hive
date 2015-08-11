@@ -219,6 +219,8 @@ name|hive
 operator|.
 name|common
 operator|.
+name|io
+operator|.
 name|DiskRangeList
 import|;
 end_import

@@ -16,8 +16,6 @@ operator|.
 name|common
 operator|.
 name|io
-operator|.
-name|storage_api
 package|;
 end_package
 
@@ -33,23 +31,11 @@ name|hive
 operator|.
 name|common
 operator|.
-name|DiskRange
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|io
 operator|.
-name|apache
+name|encoded
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|DiskRangeList
+name|MemoryBuffer
 import|;
 end_import
 

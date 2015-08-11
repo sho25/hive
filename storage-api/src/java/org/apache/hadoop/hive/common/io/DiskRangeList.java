@@ -14,6 +14,8 @@ operator|.
 name|hive
 operator|.
 name|common
+operator|.
+name|io
 package|;
 end_package
 

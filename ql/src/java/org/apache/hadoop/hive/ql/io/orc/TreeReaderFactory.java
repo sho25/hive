@@ -155,7 +155,7 @@ name|common
 operator|.
 name|io
 operator|.
-name|storage_api
+name|encoded
 operator|.
 name|EncodedColumnBatch
 operator|.

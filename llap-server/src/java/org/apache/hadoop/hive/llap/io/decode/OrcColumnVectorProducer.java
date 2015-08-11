@@ -269,7 +269,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|llap
+name|encoded
 operator|.
 name|Consumer
 import|;
@@ -291,7 +291,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|llap
+name|encoded
 operator|.
 name|OrcCacheKey
 import|;

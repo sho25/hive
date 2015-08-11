@@ -33,6 +33,8 @@ name|io
 operator|.
 name|orc
 operator|.
+name|encoded
+operator|.
 name|EncodedReaderImpl
 import|;
 end_import
