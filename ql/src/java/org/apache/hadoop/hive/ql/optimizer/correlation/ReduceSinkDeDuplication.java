@@ -3023,6 +3023,8 @@ operator|.
 name|getStartForGroupBy
 argument_list|(
 name|cRS
+argument_list|,
+name|dedupCtx
 argument_list|)
 decl_stmt|;
 name|GroupByOperator
@@ -3282,6 +3284,8 @@ operator|.
 name|getStartForGroupBy
 argument_list|(
 name|cRS
+argument_list|,
+name|dedupCtx
 argument_list|)
 decl_stmt|;
 name|JoinOperator
@@ -3516,6 +3520,8 @@ operator|.
 name|getStartForGroupBy
 argument_list|(
 name|cRS
+argument_list|,
+name|dedupCtx
 argument_list|)
 decl_stmt|;
 name|ReduceSinkOperator
