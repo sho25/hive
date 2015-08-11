@@ -1389,6 +1389,9 @@ name|containerId
 parameter_list|,
 name|ContainerEndReason
 name|endReason
+parameter_list|,
+name|String
+name|diagnostics
 parameter_list|)
 block|{
 name|super
@@ -1398,6 +1401,8 @@ argument_list|(
 name|containerId
 argument_list|,
 name|endReason
+argument_list|,
+name|diagnostics
 argument_list|)
 expr_stmt|;
 if|if
@@ -1852,7 +1857,7 @@ argument_list|()
 argument_list|,
 name|TaskAttemptEndReason
 operator|.
-name|SERVICE_BUSY
+name|EXECUTOR_BUSY
 argument_list|,
 literal|"Service Busy"
 argument_list|)
@@ -2007,6 +2012,9 @@ name|taskAttemptId
 parameter_list|,
 name|TaskAttemptEndReason
 name|endReason
+parameter_list|,
+name|String
+name|diagnostics
 parameter_list|)
 block|{
 name|super
@@ -2016,6 +2024,8 @@ argument_list|(
 name|taskAttemptId
 argument_list|,
 name|endReason
+argument_list|,
+name|diagnostics
 argument_list|)
 expr_stmt|;
 if|if

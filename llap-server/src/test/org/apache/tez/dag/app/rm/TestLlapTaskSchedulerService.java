@@ -2509,6 +2509,8 @@ argument_list|,
 name|succeeded
 argument_list|,
 name|endReason
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -2529,7 +2531,9 @@ literal|false
 argument_list|,
 name|TaskAttemptEndReason
 operator|.
-name|SERVICE_BUSY
+name|EXECUTOR_BUSY
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}

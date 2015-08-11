@@ -2424,6 +2424,9 @@ name|taskSucceeded
 parameter_list|,
 name|TaskAttemptEndReason
 name|endReason
+parameter_list|,
+name|String
+name|diagnostics
 parameter_list|)
 block|{
 name|writeLock
@@ -2699,7 +2702,7 @@ name|of
 argument_list|(
 name|TaskAttemptEndReason
 operator|.
-name|SERVICE_BUSY
+name|EXECUTOR_BUSY
 argument_list|,
 name|TaskAttemptEndReason
 operator|.
@@ -2741,7 +2744,7 @@ name|endReason
 operator|==
 name|TaskAttemptEndReason
 operator|.
-name|SERVICE_BUSY
+name|EXECUTOR_BUSY
 condition|)
 block|{
 name|dagStats
