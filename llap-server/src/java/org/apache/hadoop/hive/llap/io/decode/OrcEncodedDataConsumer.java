@@ -293,7 +293,7 @@ name|orc
 operator|.
 name|encoded
 operator|.
-name|EncodedReaderImpl
+name|Reader
 operator|.
 name|OrcEncodedColumnBatch
 import|;

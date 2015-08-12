@@ -341,8 +341,6 @@ name|orc
 operator|.
 name|encoded
 operator|.
-name|EncodedReaderImpl
-operator|.
 name|CacheChunk
 import|;
 end_import

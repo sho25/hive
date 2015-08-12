@@ -147,7 +147,7 @@ name|orc
 operator|.
 name|encoded
 operator|.
-name|EncodedReaderImpl
+name|Reader
 operator|.
 name|OrcEncodedColumnBatch
 import|;
@@ -158,7 +158,7 @@ specifier|public
 interface|interface
 name|EncodedReader
 block|{
-comment|// TODO#: document
+comment|/**    * Reads encoded data from ORC file.    * @param stripeIx Index of the stripe to read.    * @param stripe Externally provided metadata (from metadata reader or external cache).    * @param index Externally provided metadata (from metadata reader or external cache).    * @param encodings Externally provided metadata (from metadata reader or external cache).    * @param streams Externally provided metadata (from metadata reader or external cache).    * @param included The array of booleans indicating whether each column should be read.    * @param colRgs Arrays of rgs, per column set to true in included, that are to be read.    *               null in each respective position means all rgs for this column need to be read.    * @param consumer The sink for data that has been read.    */
 name|void
 name|readEncodedColumns
 parameter_list|(
@@ -202,12 +202,14 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Closes the reader.    */
 name|void
 name|close
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Controls the low-level debug tracing. (Hopefully) allows for optimization where tracing    * checks are entirely eliminated because this method is called with constant value, similar    * to just checking the constant in the first place.    */
 name|void
 name|setDebugTracing
 parameter_list|(

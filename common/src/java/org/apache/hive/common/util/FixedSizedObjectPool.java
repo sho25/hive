@@ -61,6 +61,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|Pool
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -84,6 +100,11 @@ name|FixedSizedObjectPool
 parameter_list|<
 name|T
 parameter_list|>
+implements|implements
+name|Pool
+argument_list|<
+name|T
+argument_list|>
 block|{
 specifier|public
 specifier|static
@@ -100,33 +121,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Object helper for objects stored in the pool.    */
-specifier|public
-specifier|static
-specifier|abstract
-class|class
-name|PoolObjectHelper
-parameter_list|<
-name|T
-parameter_list|>
-block|{
-comment|/** Called to create an object when one cannot be provided. */
-specifier|protected
-specifier|abstract
-name|T
-name|create
-parameter_list|()
-function_decl|;
-comment|/** Called before the object is put in the pool (regardless of whether put succeeds),      *  if the pool size is not 0 . */
-specifier|protected
-name|void
-name|resetBeforeOffer
-parameter_list|(
-name|T
-name|t
-parameter_list|)
-block|{}
-block|}
 comment|/**    * Ring buffer has two "markers" - where objects are present ('objects' list), and where they are    * removed ('empty' list). This class contains bit shifts and masks for one marker's components    * within a long, and provides utility methods to get/set the components.    * Marker consists of (examples here for 'objects' list; same for 'empty' list):    *  - the marker itself. Set to NO_MARKER if list is empty (e.g. no objects to take from pool),    *    otherwise contains the array index of the first element of the list.    *  - the 'delta'. Number of elements from the marker that is being modified. Each concurrent    *    modification (e.g. take call) increments this to claim an array index. Delta elements    *    from the marker cannot be touched by other threads. Delta can never overshoot the other    *    marker (or own marker if other is empty), or overflow MAX_DELTA. If delta is set to    *    NO_DELTA, it means the marker has been modified during 'take' operation and list cannot    *    be touched (see below). In any of these cases, take returns null.    *  - the 'refcount'/'rc'. Number of operations occurring on the marker. Each e.g. take incs    *    this; when the last of the overlapping operations decreases the refcount, it 'commits'    *    the modifications by moving the marker according to delta and resetting delta to 0.    *    If the other list does not exist, it's also created (i.e. first 'offer' to a new pool with    *    empty 'objects' list will create the 'objects' list); if the list is being exhausted to empty    *    by other op (e.g. pool has 2 objects, 2 takes are in progress when offer commits), the    *    marker of the other list is still reset to new location, and delta is set to NO_DELTA,    *    preventing operations on the lists until the exhausting ops commit and set delta to 0.    */
 specifier|private
 specifier|static
@@ -633,6 +627,8 @@ else|:
 literal|null
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|T
 name|take
@@ -667,9 +663,27 @@ else|:
 name|result
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|offer
+parameter_list|(
+name|T
+name|t
+parameter_list|)
+block|{
+name|tryOffer
+argument_list|(
+name|t
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|VisibleForTesting
 specifier|public
 name|boolean
-name|offer
+name|tryOffer
 parameter_list|(
 name|T
 name|t

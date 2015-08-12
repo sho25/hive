@@ -17,28 +17,6 @@ name|llap
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|encoded
-operator|.
-name|EncodedReaderImpl
-import|;
-end_import
-
 begin_comment
 comment|/**  * A class that contains debug methods; also allows enabling the logging of various  * trace messages with low runtime cost, in order to investigate reproducible bugs.  */
 end_comment
@@ -58,19 +36,6 @@ return|return
 literal|false
 return|;
 block|}
-specifier|private
-specifier|final
-specifier|static
-name|boolean
-name|isTraceOrcEnabled
-init|=
-name|EncodedReaderImpl
-operator|.
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-decl_stmt|;
 specifier|public
 specifier|static
 name|boolean
@@ -78,9 +43,8 @@ name|isTraceOrcEnabled
 parameter_list|()
 block|{
 return|return
-name|isTraceOrcEnabled
+literal|false
 return|;
-comment|// TODO: temporary, should be hardcoded false
 block|}
 specifier|public
 specifier|static
