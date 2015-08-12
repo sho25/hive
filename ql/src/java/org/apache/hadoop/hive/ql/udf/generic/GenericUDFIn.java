@@ -335,7 +335,9 @@ name|ObjectInspector
 index|[]
 name|argumentOIs
 decl_stmt|;
+comment|// this set is a copy of the arguments objects - avoid serializing
 specifier|private
+specifier|transient
 name|Set
 argument_list|<
 name|Object
