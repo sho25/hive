@@ -794,6 +794,18 @@ condition|(
 name|createHashMap
 condition|)
 block|{
+comment|// Hash map should be at least the size of our designated wbSize
+name|memUsage
+operator|=
+name|Math
+operator|.
+name|max
+argument_list|(
+name|memUsage
+argument_list|,
+name|wbSize
+argument_list|)
+expr_stmt|;
 name|hashMap
 operator|=
 operator|new
