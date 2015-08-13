@@ -7530,6 +7530,24 @@ argument_list|,
 literal|"Time that HiveServer2 will wait before responding to asynchronous calls that use long polling"
 argument_list|)
 block|,
+name|HIVE_SESSION_IMPL_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session"
+argument_list|)
+block|,
+name|HIVE_SESSION_IMPL_WITH_UGI_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.withugi.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session with UGI"
+argument_list|)
+block|,
 comment|// HiveServer2 auth configuration
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|(
