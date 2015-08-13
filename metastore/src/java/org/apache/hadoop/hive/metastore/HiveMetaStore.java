@@ -9471,20 +9471,9 @@ name|tbl
 argument_list|)
 condition|)
 block|{
-if|if
-condition|(
-name|tbl
-operator|.
-name|getPartitionKeysSize
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-comment|// Unpartitioned table
 name|MetaStoreUtils
 operator|.
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 argument_list|(
 name|db
 argument_list|,
@@ -9495,24 +9484,6 @@ argument_list|,
 name|madeDir
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// Partitioned table with no partitions.
-name|MetaStoreUtils
-operator|.
-name|updateUnpartitionedTableStatsFast
-argument_list|(
-name|db
-argument_list|,
-name|tbl
-argument_list|,
-name|wh
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 comment|// set create time
 name|long
