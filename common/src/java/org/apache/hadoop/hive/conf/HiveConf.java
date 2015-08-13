@@ -5165,6 +5165,15 @@ argument_list|,
 literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
 argument_list|)
 block|,
+name|HIVEPOINTLOOKUPOPTIMIZER
+argument_list|(
+literal|"hive.optimize.point.lookup"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to transform OR clauses in Filter operators into IN clauses"
+argument_list|)
+block|,
 comment|// Constant propagation optimizer
 name|HIVEOPTCONSTANTPROPAGATION
 argument_list|(
