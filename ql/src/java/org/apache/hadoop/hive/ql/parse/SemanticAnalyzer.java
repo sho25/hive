@@ -40032,6 +40032,64 @@ name|getNumDPCols
 argument_list|()
 expr_stmt|;
 block|}
+comment|// The numbers of input columns and output columns should match for regular query
+if|if
+condition|(
+operator|!
+name|updating
+argument_list|()
+operator|&&
+operator|!
+name|deleting
+argument_list|()
+operator|&&
+name|inColumnCnt
+operator|!=
+name|outColumnCnt
+condition|)
+block|{
+name|String
+name|reason
+init|=
+literal|"Table "
+operator|+
+name|dest
+operator|+
+literal|" has "
+operator|+
+name|outColumnCnt
+operator|+
+literal|" columns, but query has "
+operator|+
+name|inColumnCnt
+operator|+
+literal|" columns."
+decl_stmt|;
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|TARGET_TABLE_COLUMN_MISMATCH
+operator|.
+name|getMsg
+argument_list|(
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getDestForClause
+argument_list|(
+name|dest
+argument_list|)
+argument_list|,
+name|reason
+argument_list|)
+argument_list|)
+throw|;
+block|}
 comment|// Check column types
 name|boolean
 name|converted
@@ -40732,56 +40790,6 @@ block|}
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|inColumnCnt
-operator|!=
-name|outColumnCnt
-condition|)
-block|{
-name|String
-name|reason
-init|=
-literal|"Table "
-operator|+
-name|dest
-operator|+
-literal|" has "
-operator|+
-name|outColumnCnt
-operator|+
-literal|" columns, but query has "
-operator|+
-name|inColumnCnt
-operator|+
-literal|" columns."
-decl_stmt|;
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|TARGET_TABLE_COLUMN_MISMATCH
-operator|.
-name|getMsg
-argument_list|(
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|getDestForClause
-argument_list|(
-name|dest
-argument_list|)
-argument_list|,
-name|reason
-argument_list|)
-argument_list|)
-throw|;
-block|}
-elseif|else
 if|if
 condition|(
 name|dynPart
