@@ -1613,6 +1613,27 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// Round to power of 2 here, as is required by WriteBuffers
+name|writeBufferSize
+operator|=
+name|Integer
+operator|.
+name|bitCount
+argument_list|(
+name|writeBufferSize
+argument_list|)
+operator|==
+literal|1
+condition|?
+name|writeBufferSize
+else|:
+name|Integer
+operator|.
+name|highestOneBit
+argument_list|(
+name|writeBufferSize
+argument_list|)
+expr_stmt|;
 comment|// Cap WriteBufferSize to avoid large preallocations
 name|writeBufferSize
 operator|=

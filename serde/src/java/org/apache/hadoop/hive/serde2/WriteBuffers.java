@@ -278,16 +278,12 @@ literal|1
 condition|?
 name|wbSize
 else|:
-operator|(
 name|Integer
 operator|.
 name|highestOneBit
 argument_list|(
 name|wbSize
 argument_list|)
-operator|<<
-literal|1
-operator|)
 expr_stmt|;
 name|this
 operator|.
