@@ -2776,6 +2776,27 @@ argument_list|,
 name|cmd
 argument_list|)
 decl_stmt|;
+comment|// Prevent hive configurations from being visible in Spark.
+name|pb
+operator|.
+name|environment
+argument_list|()
+operator|.
+name|remove
+argument_list|(
+literal|"HIVE_HOME"
+argument_list|)
+expr_stmt|;
+name|pb
+operator|.
+name|environment
+argument_list|()
+operator|.
+name|remove
+argument_list|(
+literal|"HIVE_CONF_DIR"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isTesting
