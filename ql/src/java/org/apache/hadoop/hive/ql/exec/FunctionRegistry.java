@@ -2448,6 +2448,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"bround"
+argument_list|,
+name|GenericUDFBRound
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"floor"
 argument_list|,
 name|GenericUDFFloor
@@ -9024,6 +9035,9 @@ argument_list|,
 name|bridge
 operator|.
 name|getBody
+argument_list|()
+operator|.
+name|clone
 argument_list|()
 argument_list|,
 name|bridge

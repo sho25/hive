@@ -1363,7 +1363,7 @@ argument_list|(
 name|outputFormatClass
 argument_list|)
 operator|.
-name|toString
+name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;

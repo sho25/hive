@@ -110,9 +110,26 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
+for|for
+control|(
+name|int
+name|childIndex
+init|=
+literal|1
+init|;
+name|childIndex
+operator|<
+name|childExpressions
+operator|.
+name|length
+condition|;
+name|childIndex
+operator|++
+control|)
+block|{
 name|childExpressions
 index|[
-literal|1
+name|childIndex
 index|]
 operator|.
 name|evaluate
@@ -120,6 +137,7 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -153,6 +171,8 @@ name|Descriptor
 name|getDescriptor
 parameter_list|()
 block|{
+comment|// IMPORTANT NOTE: For Multi-AND, the VectorizationContext class will catch cases with 3 or
+comment|//                 more parameters...
 return|return
 operator|(
 operator|new

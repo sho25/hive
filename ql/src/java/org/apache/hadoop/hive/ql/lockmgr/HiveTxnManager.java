@@ -317,6 +317,31 @@ name|boolean
 name|supportsAcid
 parameter_list|()
 function_decl|;
+comment|/**    * This behaves exactly as    * https://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html#setAutoCommit(boolean)    */
+name|void
+name|setAutoCommit
+parameter_list|(
+name|boolean
+name|autoCommit
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * This behaves exactly as    * https://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html#getAutoCommit()    */
+name|boolean
+name|getAutoCommit
+parameter_list|()
+function_decl|;
+name|boolean
+name|isTxnOpen
+parameter_list|()
+function_decl|;
+comment|/**    * if {@code isTxnOpen()}, returns the currently active transaction ID    */
+name|long
+name|getCurrentTxnId
+parameter_list|()
+function_decl|;
+comment|/**    * 0..N Id of current statement within currently opened transaction    */
 name|int
 name|getStatementId
 parameter_list|()

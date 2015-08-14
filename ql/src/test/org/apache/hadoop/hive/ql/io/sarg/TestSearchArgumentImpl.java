@@ -41,18 +41,6 @@ name|framework
 operator|.
 name|Assert
 operator|.
-name|assertNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
 name|assertTrue
 import|;
 end_import
@@ -103,24 +91,6 @@ name|common
 operator|.
 name|type
 operator|.
-name|HiveDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
 name|HiveVarchar
 import|;
 end_import
@@ -139,11 +109,9 @@ name|ql
 operator|.
 name|io
 operator|.
-name|parquet
+name|orc
 operator|.
-name|read
-operator|.
-name|ParquetRecordReaderWrapper
+name|TestInputOutputFormat
 import|;
 end_import
 
@@ -166,28 +134,6 @@ operator|.
 name|SearchArgument
 operator|.
 name|TruthValue
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|sarg
-operator|.
-name|SearchArgumentImpl
-operator|.
-name|ExpressionBuilder
 import|;
 end_import
 
@@ -245,7 +191,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|HiveDecimalWritable
 import|;
 end_import
 
@@ -305,9 +251,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
+name|sql
 operator|.
-name|BigDecimal
+name|Date
 import|;
 end_import
 
@@ -526,7 +472,9 @@ name|assertEquals
 argument_list|(
 literal|"leaf-1"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -544,7 +492,9 @@ name|assertEquals
 argument_list|(
 literal|"(not leaf-1)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -565,7 +515,9 @@ name|assertEquals
 argument_list|(
 literal|"leaf-1"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -589,7 +541,9 @@ name|assertEquals
 argument_list|(
 literal|"(not leaf-1)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -616,7 +570,9 @@ name|assertEquals
 argument_list|(
 literal|"(or leaf-1 (not leaf-2))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -648,7 +604,9 @@ name|assertEquals
 argument_list|(
 literal|"(and (not leaf-1) leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -680,7 +638,9 @@ name|assertEquals
 argument_list|(
 literal|"(or (or (not leaf-1) leaf-2) leaf-3)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -726,7 +686,9 @@ name|assertEquals
 argument_list|(
 literal|"NO"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -749,7 +711,9 @@ name|assertEquals
 argument_list|(
 literal|"YES"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -772,7 +736,9 @@ name|assertEquals
 argument_list|(
 literal|"NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -795,7 +761,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NO"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -818,7 +786,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -841,7 +811,9 @@ name|assertEquals
 argument_list|(
 literal|"NO_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -864,7 +836,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NO_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|pushDownNot
 argument_list|(
@@ -897,7 +871,9 @@ name|assertEquals
 argument_list|(
 literal|"leaf-1"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -915,7 +891,9 @@ name|assertEquals
 argument_list|(
 literal|"NO"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -935,7 +913,9 @@ name|assertEquals
 argument_list|(
 literal|"(not (not leaf-1))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -959,7 +939,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1 leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -985,7 +967,9 @@ name|assertEquals
 argument_list|(
 literal|"(and (or leaf-1 leaf-2) leaf-3)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1019,7 +1003,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1 leaf-2 leaf-3 leaf-4)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1061,7 +1047,9 @@ name|assertEquals
 argument_list|(
 literal|"(or leaf-1 leaf-2 leaf-3 leaf-4)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1103,7 +1091,9 @@ name|assertEquals
 argument_list|(
 literal|"(or leaf-1 leaf-2 leaf-3 leaf-4)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1145,7 +1135,9 @@ name|assertEquals
 argument_list|(
 literal|"(or leaf-1 leaf-2 leaf-3 leaf-4 leaf-5 leaf-6)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1203,7 +1195,9 @@ name|assertEquals
 argument_list|(
 literal|"(and (not leaf-1) leaf-2 (not leaf-3) leaf-4 (not leaf-5) leaf-6)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1270,7 +1264,9 @@ name|assertEquals
 argument_list|(
 literal|"(not (and leaf-1 leaf-2 leaf-3))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|flatten
 argument_list|(
@@ -1317,7 +1313,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1345,7 +1343,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1 leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1378,7 +1378,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1 leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1418,7 +1420,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NO_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1448,7 +1452,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NO_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1476,7 +1482,9 @@ name|assertEquals
 argument_list|(
 literal|"(or leaf-1 (and leaf-2))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1512,7 +1520,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
@@ -1548,11 +1558,15 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-100)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|foldMaybe
 argument_list|(
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1704,7 +1718,9 @@ name|assertEquals
 argument_list|(
 literal|"leaf-1"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1722,7 +1738,9 @@ name|assertEquals
 argument_list|(
 literal|"NO"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1742,7 +1760,9 @@ name|assertEquals
 argument_list|(
 literal|"(not leaf-1)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1763,7 +1783,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-1 leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1789,7 +1811,9 @@ name|assertEquals
 argument_list|(
 literal|"(or (not leaf-1) leaf-2)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1818,7 +1842,9 @@ name|assertEquals
 argument_list|(
 literal|"(and (or leaf-1 leaf-2) (not leaf-3))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1857,7 +1883,9 @@ literal|"(and (or leaf-1 leaf-3) (or leaf-2 leaf-3)"
 operator|+
 literal|" (or leaf-1 leaf-4) (or leaf-2 leaf-4))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1907,7 +1935,9 @@ literal|" (or leaf-1 leaf-6) (or leaf-2 leaf-6)"
 operator|+
 literal|" (or leaf-3 leaf-6) (or leaf-4 leaf-6))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -1967,7 +1997,9 @@ literal|" (or leaf-5 leaf-6 (not leaf-7) leaf-1 leaf-4)"
 operator|+
 literal|" (or leaf-5 leaf-6 (not leaf-7) leaf-2 leaf-4))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -2066,7 +2098,9 @@ literal|" (or leaf-8 leaf-1 leaf-5 leaf-7)"
 operator|+
 literal|" (or leaf-8 leaf-2 leaf-5 leaf-7))"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -2136,7 +2170,9 @@ name|assertEquals
 argument_list|(
 literal|"YES_NO_NULL"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -2269,7 +2305,9 @@ name|assertEquals
 argument_list|(
 literal|"(and leaf-100 YES_NO_NULL)"
 argument_list|,
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -2408,7 +2446,9 @@ argument_list|)
 expr_stmt|;
 name|assertNoSharedNodes
 argument_list|(
-name|ExpressionBuilder
+name|SearchArgumentImpl
+operator|.
+name|BuilderImpl
 operator|.
 name|convertToCNF
 argument_list|(
@@ -2649,7830 +2689,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression1
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|// first_name = 'john' or
-comment|//  'greg'< first_name or
-comment|//  'alan'> first_name or
-comment|//  id> 12 or
-comment|//  13< id or
-comment|//  id< 15 or
-comment|//  16> id or
-comment|//  (id<=> 30 and first_name<=> 'owen')
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>john</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>greg</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>alan</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPGreaterThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo2\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>12</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPGreaterThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>13</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>15</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>16</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPGreaterThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>30</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqualNS\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>owen</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqualNS\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> \n"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|9
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-index|[]
-name|conditions
-init|=
-operator|new
-name|String
-index|[]
-block|{
-literal|"eq(first_name, Binary{\"john\"})"
-block|,
-comment|/* first_name = 'john' */
-literal|"not(lteq(first_name, Binary{\"greg\"}))"
-block|,
-comment|/* 'greg'< first_name */
-literal|"lt(first_name, Binary{\"alan\"})"
-block|,
-comment|/* 'alan'> first_name */
-literal|"not(lteq(id, 12))"
-block|,
-comment|/* id> 12 or */
-literal|"not(lteq(id, 13))"
-block|,
-comment|/* 13< id or */
-literal|"lt(id, 15)"
-block|,
-comment|/* id< 15 or */
-literal|"lt(id, 16)"
-block|,
-comment|/* 16> id or */
-literal|"eq(id, 30)"
-block|,
-comment|/* id<=> 30 */
-literal|"eq(first_name, Binary{\"owen\"})"
-comment|/* first_name<=> 'owen' */
-block|}
-decl_stmt|;
-name|String
-name|expected
-init|=
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"and(or(or(or(or(or(or(or(%1$s, %2$s), %3$s), %4$s), %5$s), %6$s), %7$s), %8$s), "
-operator|+
-literal|"or(or(or(or(or(or(or(%1$s, %2$s), %3$s), %4$s), %5$s), %6$s), %7$s), %9$s))"
-argument_list|,
-name|conditions
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|PredicateLeaf
-name|leaf
-init|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"john"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"greg"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"alan"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|3
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|12
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|4
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|13
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|5
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|15
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|6
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|16
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|7
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|NULL_SAFE_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|30
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|8
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|NULL_SAFE_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"owen"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(and (or leaf-0 (not leaf-1) leaf-2 (not leaf-3)"
-operator|+
-literal|" (not leaf-4) leaf-5 leaf-6 leaf-7)"
-operator|+
-literal|" (or leaf-0 (not leaf-1) leaf-2 (not leaf-3)"
-operator|+
-literal|" (not leaf-4) leaf-5 leaf-6 leaf-8))"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression2
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* first_name is null or        first_name<> 'sue' or        id>= 12 or        id<= 4; */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPNull\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>sue</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPNotEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo2\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>12</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqualOrGreaterThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>4</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqualOrLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> \n"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|4
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|String
-index|[]
-name|conditions
-init|=
-operator|new
-name|String
-index|[]
-block|{
-literal|"eq(first_name, null)"
-block|,
-comment|/* first_name is null  */
-literal|"not(eq(first_name, Binary{\"sue\"}))"
-block|,
-comment|/* first_name<> 'sue' */
-literal|"not(lt(id, 12))"
-block|,
-comment|/* id>= 12            */
-literal|"lteq(id, 4)"
-comment|/* id<= 4             */
-block|}
-decl_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"or(or(or(%1$s, %2$s), %3$s), %4$s)"
-argument_list|,
-name|conditions
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|PredicateLeaf
-name|leaf
-init|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|IS_NULL
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|null
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|null
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"sue"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|12
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|3
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN_EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|4
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(or leaf-0 (not leaf-1) (not leaf-2) leaf-3)"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression3
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* (id between 23 and 45) and        first_name = 'alan' and        substr('xxxxx', 3) == first_name and        'smith' = last_name and        substr(first_name, 3) == 'yyy' */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<boolean>false</boolean> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>23</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>45</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBetween\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo2\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>alan</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>xxxxx</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>3</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClassName\"> \n"
-operator|+
-literal|"<string>org.apache.hadoop.hive.ql.udf.UDFSubstr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfName\"> \n"
-operator|+
-literal|"<string>substr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>smith</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>last_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>3</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClassName\"> \n"
-operator|+
-literal|"<string>org.apache.hadoop.hive.ql.udf.UDFSubstr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfName\"> \n"
-operator|+
-literal|"<string>substr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>yyy</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> \n"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|3
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|String
-index|[]
-name|conditions
-init|=
-operator|new
-name|String
-index|[]
-block|{
-literal|"lt(id, 45)"
-block|,
-comment|/* id between 23 and 45 */
-literal|"not(lteq(id, 23))"
-block|,
-comment|/* id between 23 and 45 */
-literal|"eq(first_name, Binary{\"alan\"})"
-block|,
-comment|/* first_name = 'alan'  */
-literal|"eq(last_name, Binary{\"smith\"})"
-comment|/* 'smith' = last_name  */
-block|}
-decl_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"and(and(and(%1$s, %2$s), %3$s), %4$s)"
-argument_list|,
-name|conditions
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|PredicateLeaf
-name|leaf
-init|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|BETWEEN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|null
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|23
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|45
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"alan"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"last_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"smith"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(and leaf-0 leaf-1 leaf-2)"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression4
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* id<> 12 and        first_name in ('john', 'sue') and        id in (34,50) */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>12</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPNotEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo2\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>john</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo2\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>sue</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFIn\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>34</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>50</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFIn\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> \n"
-operator|+
-literal|"\n"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|3
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|String
-index|[]
-name|conditions
-init|=
-operator|new
-name|String
-index|[]
-block|{
-literal|"not(eq(id, 12))"
-block|,
-comment|/* id<> 12 */
-literal|"or(eq(first_name, Binary{\"john\"}), eq(first_name, Binary{\"sue\"}))"
-block|,
-comment|/* first_name in       ('john', 'sue') */
-literal|"or(eq(id, 34), eq(id, 50))"
-comment|/* id in (34,50) */
-block|}
-decl_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"and(and(%1$s, %2$s), %3$s)"
-argument_list|,
-name|conditions
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|PredicateLeaf
-name|leaf
-init|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|EQUALS
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|12
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|IN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"john"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"sue"
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|IN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|34
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|50
-argument_list|,
-name|leaf
-operator|.
-name|getLiteralList
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(and (not leaf-0) leaf-1 leaf-2)"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression5
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* (first_name< 'owen' or 'foobar' = substr(last_name, 4)) and     first_name between 'david' and 'greg' */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>owen</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>foobar</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>last_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>4</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"udfClassName\"> \n"
-operator|+
-literal|"<string>org.apache.hadoop.hive.ql.udf.UDFSubstr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfName\"> \n"
-operator|+
-literal|"<string>substr</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<boolean>false</boolean> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>david</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<string>greg</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBetween\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> \n"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|1
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(lt(first_name, Binary{\"greg\"}), not(lteq(first_name, Binary{\"david\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|,
-name|expected
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|STRING
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|BETWEEN
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"first_name"
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"leaf-0"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression7
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* (id< 10 and id< 11 and id< 12) or (id< 13 and id< 14 and id< 15) or        (id< 16 and id< 17) or id< 18 */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>10</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>11</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>12</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>13</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>14</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>15</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>16</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>17</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>18</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPOr\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object>\n"
-operator|+
-literal|"</java>"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|9
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(and(and(and(and(and(and(and(and(and(and(and(and(and(and(and("
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 13)), lt(id, 16)), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 13)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 13)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 14)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 14)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 14)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 15)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 15)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 15)), lt(id, 16))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 13)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 13)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 13)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 14)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 14)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 14)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 10)), lt(id, 15)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 11)), lt(id, 15)), lt(id, 17))), "
-operator|+
-literal|"or(or(or(lt(id, 18), lt(id, 12)), lt(id, 15)), lt(id, 17)))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|,
-name|expected
-argument_list|)
-expr_stmt|;
-name|PredicateLeaf
-name|leaf
-init|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|18
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|10
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|13
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|3
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|16
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|4
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|11
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|5
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|12
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|6
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|14
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|7
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|15
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|leaf
-operator|=
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|8
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaf
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaf
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaf
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|17
-argument_list|,
-name|leaf
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(and"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-2 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-2 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-2 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-6 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-6 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-6 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-7 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-7 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-7 leaf-3)"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-2 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-2 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-2 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-6 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-6 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-6 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-1 leaf-7 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-4 leaf-7 leaf-8)"
-operator|+
-literal|" (or leaf-0 leaf-5 leaf-7 leaf-8))"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression8
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* first_name = last_name */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>first_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>string</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>last_name</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> "
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|assertNull
-argument_list|(
-name|p
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"YES_NO_NULL"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression9
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* first_name = last_name */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>1</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>3</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"operator\"> \n"
-operator|+
-literal|"<boolean>true</boolean> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfClassName\"> \n"
-operator|+
-literal|"<string>org.apache.hadoop.hive.ql.udf.UDFOPPlus</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfName\"> \n"
-operator|+
-literal|"<string>+</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>4</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFBridge\"> \n"
-operator|+
-literal|"<void property=\"operator\"> \n"
-operator|+
-literal|"<boolean>true</boolean> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfClassName\"> \n"
-operator|+
-literal|"<string>org.apache.hadoop.hive.ql.udf.UDFOPPlus</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"udfName\"> \n"
-operator|+
-literal|"<string>+</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqual\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java> "
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"YES_NO_NULL"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testExpression10
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|/* id>= 10 and not (10> id) */
-name|String
-name|exprStr
-init|=
-literal|"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-operator|+
-literal|"<java version=\"1.6.0_31\" class=\"java.beans.XMLDecoder\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo0\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>int</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>10</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPEqualOrGreaterThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object id=\"PrimitiveTypeInfo1\" class=\"org.apache.hadoop.hive.serde2.typeinfo.PrimitiveTypeInfo\"> \n"
-operator|+
-literal|"<void property=\"typeName\"> \n"
-operator|+
-literal|"<string>boolean</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc\"> \n"
-operator|+
-literal|"<void property=\"children\"> \n"
-operator|+
-literal|"<object class=\"java.util.ArrayList\"> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeColumnDesc\"> \n"
-operator|+
-literal|"<void property=\"column\"> \n"
-operator|+
-literal|"<string>id</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"tabAlias\"> \n"
-operator|+
-literal|"<string>orc_people</string> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void method=\"add\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.plan.ExprNodeConstantDesc\"> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo0\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"value\"> \n"
-operator|+
-literal|"<int>10</int> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPLessThan\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPNot\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"genericUDF\"> \n"
-operator|+
-literal|"<object class=\"org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPAnd\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"<void property=\"typeInfo\"> \n"
-operator|+
-literal|"<object idref=\"PrimitiveTypeInfo1\"/> \n"
-operator|+
-literal|"</void> \n"
-operator|+
-literal|"</object> \n"
-operator|+
-literal|"</java>"
-decl_stmt|;
-name|SearchArgumentImpl
-name|sarg
-init|=
-operator|(
-name|SearchArgumentImpl
-operator|)
-name|SearchArgumentFactory
-operator|.
-name|create
-argument_list|(
-name|getFuncDesc
-argument_list|(
-name|exprStr
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|PredicateLeaf
-argument_list|>
-name|leaves
-init|=
-name|sarg
-operator|.
-name|getLeaves
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|1
-argument_list|,
-name|leaves
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(not(lt(id, 10)), not(lt(id, 10)))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Type
-operator|.
-name|INTEGER
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getType
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|PredicateLeaf
-operator|.
-name|Operator
-operator|.
-name|LESS_THAN
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getOperator
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"id"
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getColumnName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|10
-argument_list|,
-name|leaves
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLiteral
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"(and (not leaf-0) (not leaf-0))"
-argument_list|,
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNoSharedNodes
-argument_list|(
-name|sarg
-operator|.
-name|getExpression
-argument_list|()
-argument_list|,
-name|Sets
-operator|.
-expr|<
-name|ExpressionTree
-operator|>
-name|newIdentityHashSet
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|NO_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|,
-name|sarg
-operator|.
-name|evaluate
-argument_list|(
-name|values
-argument_list|(
-name|TruthValue
-operator|.
-name|YES_NO_NULL
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 specifier|private
 specifier|static
 name|TruthValue
@@ -10512,6 +2728,12 @@ name|lessThan
 argument_list|(
 literal|"x"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
 literal|10
 argument_list|)
 operator|.
@@ -10519,12 +2741,24 @@ name|lessThanEquals
 argument_list|(
 literal|"y"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
+argument_list|,
 literal|"hi"
 argument_list|)
 operator|.
 name|equals
 argument_list|(
 literal|"z"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|FLOAT
 argument_list|,
 literal|1.0
 argument_list|)
@@ -10567,11 +2801,23 @@ operator|.
 name|isNull
 argument_list|(
 literal|"x"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
 argument_list|)
 operator|.
 name|between
 argument_list|(
 literal|"y"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
 argument_list|,
 literal|10
 argument_list|,
@@ -10581,6 +2827,12 @@ operator|.
 name|in
 argument_list|(
 literal|"z"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
 argument_list|,
 literal|1
 argument_list|,
@@ -10592,6 +2844,12 @@ operator|.
 name|nullSafeEquals
 argument_list|(
 literal|"a"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
 argument_list|,
 literal|"stinger"
 argument_list|)
@@ -10623,33 +2881,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(and(not(eq(x, null)), not(and(lt(y, 20), not(lteq(y, 10))))), not(or(or(eq(z, 1), "
-operator|+
-literal|"eq(z, 2)), eq(z, 3)))), not(eq(a, Binary{\"stinger\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -10675,16 +2906,29 @@ name|lessThan
 argument_list|(
 literal|"x"
 argument_list|,
-operator|new
-name|DateWritable
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|DATE
+argument_list|,
+name|Date
+operator|.
+name|valueOf
 argument_list|(
-literal|10
+literal|"1970-1-11"
 argument_list|)
 argument_list|)
 operator|.
 name|lessThanEquals
 argument_list|(
 literal|"y"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
 argument_list|,
 operator|new
 name|HiveChar
@@ -10693,15 +2937,23 @@ literal|"hi"
 argument_list|,
 literal|10
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|equals
 argument_list|(
 literal|"z"
 argument_list|,
-name|HiveDecimal
+name|PredicateLeaf
 operator|.
-name|create
+name|Type
+operator|.
+name|DECIMAL
+argument_list|,
+operator|new
+name|HiveDecimalWritable
 argument_list|(
 literal|"1.0"
 argument_list|)
@@ -10717,28 +2969,13 @@ name|assertEquals
 argument_list|(
 literal|"leaf-0 = (LESS_THAN x 1970-01-11)\n"
 operator|+
-literal|"leaf-1 = (LESS_THAN_EQUALS y hi)\n"
+literal|"leaf-1 = (LESS_THAN_EQUALS y hi        )\n"
 operator|+
 literal|"leaf-2 = (EQUALS z 1)\n"
 operator|+
 literal|"expr = (and leaf-0 leaf-1 leaf-2)"
 argument_list|,
 name|sarg
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"lteq(y, Binary{\"hi\"})"
-argument_list|,
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
 operator|.
 name|toString
 argument_list|()
@@ -10760,45 +2997,63 @@ operator|.
 name|isNull
 argument_list|(
 literal|"x"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
 argument_list|)
 operator|.
 name|between
 argument_list|(
 literal|"y"
 argument_list|,
-name|HiveDecimal
+name|PredicateLeaf
 operator|.
-name|create
+name|Type
+operator|.
+name|DECIMAL
+argument_list|,
+operator|new
+name|HiveDecimalWritable
 argument_list|(
-literal|10
+literal|"10"
 argument_list|)
 argument_list|,
-literal|20.0
+operator|new
+name|HiveDecimalWritable
+argument_list|(
+literal|"20.0"
+argument_list|)
 argument_list|)
 operator|.
 name|in
 argument_list|(
 literal|"z"
 argument_list|,
-operator|(
-name|byte
-operator|)
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
 literal|1
 argument_list|,
-operator|(
-name|short
-operator|)
 literal|2
 argument_list|,
-operator|(
-name|int
-operator|)
 literal|3
 argument_list|)
 operator|.
 name|nullSafeEquals
 argument_list|(
 literal|"a"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
 argument_list|,
 operator|new
 name|HiveVarchar
@@ -10807,6 +3062,9 @@ literal|"stinger"
 argument_list|,
 literal|100
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|end
@@ -10822,7 +3080,7 @@ name|assertEquals
 argument_list|(
 literal|"leaf-0 = (IS_NULL x)\n"
 operator|+
-literal|"leaf-1 = (BETWEEN y 10 20.0)\n"
+literal|"leaf-1 = (BETWEEN y 10 20)\n"
 operator|+
 literal|"leaf-2 = (IN z 1 2 3)\n"
 operator|+
@@ -10831,33 +3089,6 @@ operator|+
 literal|"expr = (and (not leaf-0) (not leaf-1) (not leaf-2) (not leaf-3))"
 argument_list|,
 name|sarg
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(not(eq(x, null)), not(or(or(eq(z, 1), eq(z, 2)), eq(z, 3)))), "
-operator|+
-literal|"not(eq(a, Binary{\"stinger\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
 operator|.
 name|toString
 argument_list|()
@@ -10888,16 +3119,29 @@ name|lessThan
 argument_list|(
 literal|"x"
 argument_list|,
-operator|new
-name|DateWritable
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|DATE
+argument_list|,
+name|Date
+operator|.
+name|valueOf
 argument_list|(
-literal|10
+literal|"2005-3-12"
 argument_list|)
 argument_list|)
 operator|.
 name|lessThanEquals
 argument_list|(
 literal|"y"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
 argument_list|,
 operator|new
 name|HiveChar
@@ -10906,14 +3150,23 @@ literal|"hi"
 argument_list|,
 literal|10
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|equals
 argument_list|(
 literal|"z"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|DECIMAL
+argument_list|,
 operator|new
-name|BigDecimal
+name|HiveDecimalWritable
 argument_list|(
 literal|"1.0"
 argument_list|)
@@ -10927,30 +3180,15 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"leaf-0 = (LESS_THAN x 1970-01-11)\n"
+literal|"leaf-0 = (LESS_THAN x 2005-03-12)\n"
 operator|+
-literal|"leaf-1 = (LESS_THAN_EQUALS y hi)\n"
+literal|"leaf-1 = (LESS_THAN_EQUALS y hi        )\n"
 operator|+
-literal|"leaf-2 = (EQUALS z 1.0)\n"
+literal|"leaf-2 = (EQUALS z 1)\n"
 operator|+
 literal|"expr = (and leaf-0 leaf-1 leaf-2)"
 argument_list|,
 name|sarg
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"lteq(y, Binary{\"hi\"})"
-argument_list|,
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
 operator|.
 name|toString
 argument_list|()
@@ -10972,44 +3210,63 @@ operator|.
 name|isNull
 argument_list|(
 literal|"x"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
 argument_list|)
 operator|.
 name|between
 argument_list|(
 literal|"y"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|DECIMAL
+argument_list|,
 operator|new
-name|BigDecimal
+name|HiveDecimalWritable
 argument_list|(
-literal|10
+literal|"10"
 argument_list|)
 argument_list|,
-literal|20.0
+operator|new
+name|HiveDecimalWritable
+argument_list|(
+literal|"20.0"
+argument_list|)
 argument_list|)
 operator|.
 name|in
 argument_list|(
 literal|"z"
 argument_list|,
-operator|(
-name|byte
-operator|)
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
 literal|1
 argument_list|,
-operator|(
-name|short
-operator|)
 literal|2
 argument_list|,
-operator|(
-name|int
-operator|)
 literal|3
 argument_list|)
 operator|.
 name|nullSafeEquals
 argument_list|(
 literal|"a"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
 argument_list|,
 operator|new
 name|HiveVarchar
@@ -11018,6 +3275,9 @@ literal|"stinger"
 argument_list|,
 literal|100
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|end
@@ -11033,7 +3293,7 @@ name|assertEquals
 argument_list|(
 literal|"leaf-0 = (IS_NULL x)\n"
 operator|+
-literal|"leaf-1 = (BETWEEN y 10 20.0)\n"
+literal|"leaf-1 = (BETWEEN y 10 20)\n"
 operator|+
 literal|"leaf-2 = (IN z 1 2 3)\n"
 operator|+
@@ -11042,33 +3302,6 @@ operator|+
 literal|"expr = (and (not leaf-0) (not leaf-1) (not leaf-2) (not leaf-3))"
 argument_list|,
 name|sarg
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(not(eq(x, null)), not(or(or(eq(z, 1), eq(z, 2)), eq(z, 3)))), "
-operator|+
-literal|"not(eq(a, Binary{\"stinger\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
 operator|.
 name|toString
 argument_list|()
@@ -11099,8 +3332,14 @@ name|lessThan
 argument_list|(
 literal|"x"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
 operator|new
-name|Short
+name|Integer
 argument_list|(
 operator|(
 name|short
@@ -11113,6 +3352,12 @@ name|lessThan
 argument_list|(
 literal|"x1"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
 operator|new
 name|Integer
 argument_list|(
@@ -11124,6 +3369,12 @@ name|lessThanEquals
 argument_list|(
 literal|"y"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
+argument_list|,
 operator|new
 name|HiveChar
 argument_list|(
@@ -11131,22 +3382,37 @@ literal|"hi"
 argument_list|,
 literal|10
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|equals
 argument_list|(
 literal|"z"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|FLOAT
+argument_list|,
 operator|new
-name|Float
+name|Double
 argument_list|(
-literal|"0.22"
+literal|0.22
 argument_list|)
 argument_list|)
 operator|.
 name|equals
 argument_list|(
 literal|"z1"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|FLOAT
 argument_list|,
 operator|new
 name|Double
@@ -11167,7 +3433,7 @@ literal|"leaf-0 = (LESS_THAN x 22)\n"
 operator|+
 literal|"leaf-1 = (LESS_THAN x1 22)\n"
 operator|+
-literal|"leaf-2 = (LESS_THAN_EQUALS y hi)\n"
+literal|"leaf-2 = (LESS_THAN_EQUALS y hi        )\n"
 operator|+
 literal|"leaf-3 = (EQUALS z 0.22)\n"
 operator|+
@@ -11176,33 +3442,6 @@ operator|+
 literal|"expr = (and leaf-0 leaf-1 leaf-2 leaf-3 leaf-4)"
 argument_list|,
 name|sarg
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
-name|ParquetRecordReaderWrapper
-operator|.
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(and(and(lt(x, 22), lt(x1, 22)), lteq(y, Binary{\"hi\"})), eq(z, "
-operator|+
-literal|"0.22)), eq(z1, 0.22))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
 operator|.
 name|toString
 argument_list|()
@@ -11255,6 +3494,12 @@ name|lessThan
 argument_list|(
 literal|"x"
 argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|TIMESTAMP
+argument_list|,
 name|now
 argument_list|)
 operator|.
@@ -11267,17 +3512,19 @@ decl_stmt|;
 name|String
 name|serializedSarg
 init|=
-name|sarg
+name|TestInputOutputFormat
 operator|.
 name|toKryo
-argument_list|()
+argument_list|(
+name|sarg
+argument_list|)
 decl_stmt|;
 name|SearchArgument
 name|sarg2
 init|=
-name|SearchArgumentImpl
+name|ConvertAstToSearchArg
 operator|.
-name|fromKryo
+name|create
 argument_list|(
 name|serializedSarg
 argument_list|)
@@ -11351,6 +3598,102 @@ argument_list|,
 name|now
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|expected
+operator|=
+name|IllegalArgumentException
+operator|.
+name|class
+argument_list|)
+specifier|public
+name|void
+name|testBadLiteral
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|SearchArgument
+name|sarg
+init|=
+name|SearchArgumentFactory
+operator|.
+name|newBuilder
+argument_list|()
+operator|.
+name|startAnd
+argument_list|()
+operator|.
+name|lessThan
+argument_list|(
+literal|"x"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|INTEGER
+argument_list|,
+literal|"hi"
+argument_list|)
+operator|.
+name|end
+argument_list|()
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|expected
+operator|=
+name|IllegalArgumentException
+operator|.
+name|class
+argument_list|)
+specifier|public
+name|void
+name|testBadLiteralList
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|SearchArgument
+name|sarg
+init|=
+name|SearchArgumentFactory
+operator|.
+name|newBuilder
+argument_list|()
+operator|.
+name|startAnd
+argument_list|()
+operator|.
+name|in
+argument_list|(
+literal|"x"
+argument_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+operator|.
+name|STRING
+argument_list|,
+literal|"hi"
+argument_list|,
+literal|23
+argument_list|)
+operator|.
+name|end
+argument_list|()
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
 block|}
 block|}
 end_class

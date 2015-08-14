@@ -298,6 +298,15 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|exec
+operator|.
+name|info
+argument_list|(
+literal|null
+argument_list|,
+literal|"Starting query"
+argument_list|)
+expr_stmt|;
 name|timer
 operator|.
 name|start
@@ -447,6 +456,20 @@ name|rs
 init|=
 literal|null
 decl_stmt|;
+name|exec
+operator|.
+name|info
+argument_list|(
+literal|null
+argument_list|,
+literal|"Starting SQL statement"
+argument_list|)
+expr_stmt|;
+name|timer
+operator|.
+name|start
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|stmt
@@ -476,6 +499,28 @@ argument_list|,
 name|rs
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|info
+condition|)
+block|{
+name|exec
+operator|.
+name|info
+argument_list|(
+literal|null
+argument_list|,
+literal|"SQL statement executed successfully ("
+operator|+
+name|timer
+operator|.
+name|format
+argument_list|()
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -278,13 +278,6 @@ name|getIsVerbose
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|sessionState
-operator|.
-name|setConf
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
 name|assertTrue
 argument_list|(
 name|sessionState

@@ -216,7 +216,7 @@ name|int
 name|length
 parameter_list|)
 block|{
-name|data
+name|LazyBinarySerDe
 operator|.
 name|setFromBytes
 argument_list|(
@@ -228,6 +228,8 @@ argument_list|,
 name|start
 argument_list|,
 name|length
+argument_list|,
+name|data
 argument_list|)
 expr_stmt|;
 name|HiveDecimal

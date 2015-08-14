@@ -919,7 +919,8 @@ name|loader2
 init|=
 name|ss2
 operator|.
-name|conf
+name|getConf
+argument_list|()
 operator|.
 name|getClassLoader
 argument_list|()

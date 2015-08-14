@@ -257,9 +257,7 @@ name|locks
 operator|=
 operator|new
 name|HashSet
-argument_list|<
-name|DbHiveLock
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|this
@@ -554,10 +552,15 @@ name|error
 argument_list|(
 literal|"Transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|lock
 operator|.
 name|getTxnid
 argument_list|()
+argument_list|)
 operator|+
 literal|" already aborted."
 argument_list|)
@@ -566,14 +569,21 @@ throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_ABORTED
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|lock
+operator|.
+name|getTxnid
+argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -719,21 +729,30 @@ name|error
 argument_list|(
 literal|"Metastore could find no record of lock "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|lockId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|LOCK_NO_SUCH_LOCK
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|lockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -749,7 +768,12 @@ name|RuntimeException
 argument_list|(
 literal|"Attempt to unlock lock "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|lockId
+argument_list|)
 operator|+
 literal|"associated with an open transaction, "
 operator|+

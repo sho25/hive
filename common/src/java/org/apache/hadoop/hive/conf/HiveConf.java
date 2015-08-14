@@ -5333,15 +5333,6 @@ argument_list|,
 literal|"Whether to provide the row offset virtual column"
 argument_list|)
 block|,
-name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
-argument_list|(
-literal|"hive.hadoop.supports.splittable.combineinputformat"
-argument_list|,
-literal|false
-argument_list|,
-literal|""
-argument_list|)
-block|,
 comment|// Optimizer
 name|HIVEOPTINDEXFILTER
 argument_list|(
@@ -5386,6 +5377,15 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
+argument_list|)
+block|,
+name|HIVEPOINTLOOKUPOPTIMIZER
+argument_list|(
+literal|"hive.optimize.point.lookup"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to transform OR clauses in Filter operators into IN clauses"
 argument_list|)
 block|,
 comment|// Constant propagation optimizer
@@ -7076,9 +7076,9 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file.\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-log4j.properties found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-log4j2.xml found on the classpath.\n"
 operator|+
-literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.properties\"), \n"
+literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
@@ -7091,9 +7091,9 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file for execution mode(sub command).\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-exec-log4j.properties found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-exec-log4j2.xml found on the classpath.\n"
 operator|+
-literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.properties\"), \n"
+literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
@@ -7751,6 +7751,24 @@ name|MILLISECONDS
 argument_list|)
 argument_list|,
 literal|"Time that HiveServer2 will wait before responding to asynchronous calls that use long polling"
+argument_list|)
+block|,
+name|HIVE_SESSION_IMPL_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session"
+argument_list|)
+block|,
+name|HIVE_SESSION_IMPL_WITH_UGI_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.withugi.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session with UGI"
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration
@@ -8548,7 +8566,7 @@ literal|"hive.prewarm.enabled"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Enables container prewarm for Tez (Hadoop 2 only)"
+literal|"Enables container prewarm for Tez/Spark (Hadoop 2 only)"
 argument_list|)
 block|,
 name|HIVE_PREWARM_NUM_CONTAINERS
@@ -8557,7 +8575,7 @@ literal|"hive.prewarm.numcontainers"
 argument_list|,
 literal|10
 argument_list|,
-literal|"Controls the number of containers to prewarm for Tez (Hadoop 2 only)"
+literal|"Controls the number of containers to prewarm for Tez/Spark (Hadoop 2 only)"
 argument_list|)
 block|,
 name|HIVESTAGEIDREARRANGE
@@ -8964,6 +8982,30 @@ argument_list|,
 literal|"DIGEST-MD5"
 argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
+argument_list|)
+block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When dynamic pruning is enabled, joins on partition keys will be processed by writing\n"
+operator|+
+literal|"to a temporary HDFS file, and read later for removing unnecessary partitions."
+argument_list|)
+block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning.max.data.size"
+argument_list|,
+literal|100
+operator|*
+literal|1024
+operator|*
+literal|1024L
+argument_list|,
+literal|"Maximum total data size in dynamic pruning."
 argument_list|)
 block|,
 name|NWAYJOINREORDER
@@ -11916,6 +11958,12 @@ operator|=
 name|other
 operator|.
 name|auxJars
+expr_stmt|;
+name|isSparkConfigUpdated
+operator|=
+name|other
+operator|.
+name|isSparkConfigUpdated
 expr_stmt|;
 name|origProp
 operator|=

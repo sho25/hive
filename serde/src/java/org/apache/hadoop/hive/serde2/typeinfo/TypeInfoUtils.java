@@ -1392,6 +1392,10 @@ operator|||
 name|c
 operator|==
 literal|'.'
+operator|||
+name|c
+operator|==
+literal|' '
 return|;
 block|}
 comment|/**      * Tokenize the typeInfoString. The rule is simple: all consecutive      * alphadigits and '_', '.' are in one token, and all other characters are      * one character per token.      *      * tokenize("map<int,string>") should return      * ["map","<","int",",","string",">"]      */

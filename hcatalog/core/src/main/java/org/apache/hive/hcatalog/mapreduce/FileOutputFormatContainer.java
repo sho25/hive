@@ -775,7 +775,17 @@ name|getConfiguration
 argument_list|()
 argument_list|)
 argument_list|,
+name|context
+operator|.
+name|getConfiguration
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"mapreduce.output.basename"
+argument_list|,
 literal|"part"
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;

@@ -784,6 +784,13 @@ name|list
 index|[
 name|i
 index|]
+operator|!=
+literal|null
+operator|&&
+name|list
+index|[
+name|i
+index|]
 operator|.
 name|toLowerCase
 argument_list|()
