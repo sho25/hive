@@ -34645,7 +34645,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"log4j.configuration"
+literal|"log4j.configurationFile"
 argument_list|)
 operator|==
 literal|null
