@@ -6245,7 +6245,7 @@ comment|// the operator is EQUAL, return false due to the type mismatch
 if|if
 condition|(
 name|triedDouble
-operator|||
+operator|&&
 operator|(
 name|genericUDF
 operator|instanceof
