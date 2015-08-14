@@ -2947,7 +2947,9 @@ return|return
 name|deserializedSize
 return|;
 block|}
-specifier|private
+annotation|@
+name|Override
+specifier|public
 name|long
 name|getRawDataSizeFromColIndices
 parameter_list|(
@@ -3187,7 +3189,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Unknown primitive category."
+literal|"Unknown primitive category: "
+operator|+
+name|type
+operator|.
+name|getKind
+argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;
