@@ -347,6 +347,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|antlr
@@ -36221,7 +36235,9 @@ return|;
 block|}
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|void
 name|validateTableCols
 parameter_list|(
@@ -36309,7 +36325,19 @@ literal|"Column "
 operator|+
 name|colName
 operator|+
-literal|" doesn't exist."
+literal|" doesn't exist in table "
+operator|+
+name|table
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" in database "
+operator|+
+name|table
+operator|.
+name|getDbName
+argument_list|()
 argument_list|)
 throw|;
 block|}
