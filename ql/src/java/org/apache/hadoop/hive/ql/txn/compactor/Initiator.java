@@ -504,7 +504,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A class to initiate compactions.  This will run in a separate thread.  */
+comment|/**  * A class to initiate compactions.  This will run in a separate thread.  * It's critical that there exactly 1 of these in a given warehouse.  */
 end_comment
 
 begin_class

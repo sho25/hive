@@ -6267,6 +6267,40 @@ argument_list|,
 literal|"Time between runs of the cleaner thread"
 argument_list|)
 block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_START
+argument_list|(
+literal|"hive.timedout.txn.reaper.start"
+argument_list|,
+literal|"100s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time delay of 1st reaper run after metastore start"
+argument_list|)
+block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_INTERVAL
+argument_list|(
+literal|"hive.timedout.txn.reaper.interval"
+argument_list|,
+literal|"180s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time interval describing how often the reaper runs"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(

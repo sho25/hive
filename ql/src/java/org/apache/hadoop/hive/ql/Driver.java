@@ -6323,12 +6323,14 @@ literal|10
 return|;
 block|}
 name|boolean
-name|existingTxn
+name|initiatingTransaction
 init|=
-name|txnMgr
-operator|.
-name|isTxnOpen
-argument_list|()
+literal|false
+decl_stmt|;
+name|boolean
+name|readOnlyQueryInAutoCommit
+init|=
+literal|false
 decl_stmt|;
 if|if
 condition|(
@@ -6362,6 +6364,27 @@ name|startTxnImplicitly
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+name|txnMgr
+operator|.
+name|isTxnOpen
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Already have an open transaction txnid:"
+operator|+
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+argument_list|)
+throw|;
+block|}
 comment|// We are writing to tables in an ACID compliant way, so we need to open a transaction
 name|txnMgr
 operator|.
@@ -6369,6 +6392,33 @@ name|openTxn
 argument_list|(
 name|userFromUGI
 argument_list|)
+expr_stmt|;
+name|initiatingTransaction
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|readOnlyQueryInAutoCommit
+operator|=
+name|txnMgr
+operator|.
+name|getAutoCommit
+argument_list|()
+operator|&&
+name|plan
+operator|.
+name|getOperation
+argument_list|()
+operator|==
+name|HiveOperation
+operator|.
+name|QUERY
+operator|&&
+operator|!
+name|haveAcidWrite
+argument_list|()
 expr_stmt|;
 block|}
 comment|// Set the transaction id in all of the acid file sinks
@@ -6422,12 +6472,13 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-operator|!
-name|existingTxn
+name|initiatingTransaction
+operator|||
+name|readOnlyQueryInAutoCommit
 condition|)
 block|{
 comment|//For multi-stmt txns we should record the snapshot when txn starts but
-comment|// don't update it after that until txn completes.  Thus the check for {@code existingTxn}
+comment|// don't update it after that until txn completes.  Thus the check for {@code initiatingTransaction}
 comment|//For autoCommit=true, Read-only statements, txn is implicit, i.e. lock in the snapshot
 comment|//for each statement.
 name|recordValidTxns
@@ -7963,6 +8014,7 @@ name|CommandProcessorResponse
 name|cpr
 parameter_list|)
 block|{
+comment|//console.printError(cpr.toString());
 try|try
 block|{
 name|releaseLocksAndCommitOrRollback
