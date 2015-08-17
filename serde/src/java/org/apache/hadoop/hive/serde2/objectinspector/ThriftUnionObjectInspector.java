@@ -130,6 +130,11 @@ comment|/**  * Always use the ObjectInspectorFactory to create new ObjectInspect
 end_comment
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 specifier|public
 class|class
 name|ThriftUnionObjectInspector
@@ -317,6 +322,9 @@ specifier|protected
 name|void
 name|init
 parameter_list|(
+name|Type
+name|type
+parameter_list|,
 name|Class
 argument_list|<
 name|?
@@ -329,6 +337,12 @@ name|ObjectInspectorOptions
 name|options
 parameter_list|)
 block|{
+name|this
+operator|.
+name|type
+operator|=
+name|type
+expr_stmt|;
 name|verifyObjectClassType
 argument_list|(
 name|objectClass
@@ -424,6 +438,11 @@ argument_list|(
 literal|null
 argument_list|)
 decl_stmt|;
+synchronized|synchronized
+init|(
+name|this
+init|)
+block|{
 name|fields
 operator|=
 operator|new
@@ -516,6 +535,8 @@ argument_list|(
 name|fieldType
 argument_list|,
 name|options
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|fields
@@ -543,6 +564,11 @@ name|add
 argument_list|(
 name|reflectionObjectInspector
 argument_list|)
+expr_stmt|;
+block|}
+name|inited
+operator|=
+literal|true
 expr_stmt|;
 block|}
 block|}
@@ -579,6 +605,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|List
 argument_list|<
 name|?
