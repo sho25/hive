@@ -211,7 +211,7 @@ name|ByteBuffer
 name|getData
 parameter_list|()
 block|{
-comment|// Callers duplicate the buffer, they have to for BufferChunk
+comment|// Callers duplicate the buffer, they have to for BufferChunk; so we don't have to.
 return|return
 name|buffer
 operator|.

@@ -147,6 +147,28 @@ name|DataReader
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcProto
+operator|.
+name|Stream
+import|;
+end_import
+
 begin_comment
 comment|/**  * The interface for reading encoded data from ORC files.  */
 end_comment
@@ -232,6 +254,22 @@ name|ALL_RGS
 init|=
 operator|-
 literal|1
+decl_stmt|;
+comment|/**      * All the previous streams are data streams, this and the next ones are index streams.      * We assume the sort will stay the same for backward compat.      */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|MAX_DATA_STREAMS
+init|=
+name|Stream
+operator|.
+name|Kind
+operator|.
+name|ROW_INDEX
+operator|.
+name|getNumber
+argument_list|()
 decl_stmt|;
 specifier|public
 name|void
