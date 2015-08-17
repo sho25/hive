@@ -3309,6 +3309,8 @@ name|fs
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -3479,6 +3481,8 @@ name|fs
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|SplitStrategy
@@ -3615,6 +3619,8 @@ name|fs
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|splitStrategy
