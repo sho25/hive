@@ -1574,7 +1574,7 @@ expr_stmt|;
 comment|//remove trailing ,
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"running '"
 operator|+

@@ -841,6 +841,23 @@ name|tableData
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" where a> 1 order by a,b"
+argument_list|)
+decl_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "

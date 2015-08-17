@@ -8017,13 +8017,15 @@ argument_list|)
 expr_stmt|;
 name|Thread
 operator|.
-name|currentThread
-argument_list|()
-operator|.
 name|sleep
 argument_list|(
 literal|10
 argument_list|)
+expr_stmt|;
+name|txnHandler
+operator|.
+name|performTimeOuts
+argument_list|()
 expr_stmt|;
 name|txnHandler
 operator|.
@@ -8100,9 +8102,6 @@ argument_list|)
 expr_stmt|;
 name|Thread
 operator|.
-name|currentThread
-argument_list|()
-operator|.
 name|sleep
 argument_list|(
 literal|10
@@ -8110,7 +8109,7 @@ argument_list|)
 expr_stmt|;
 name|txnHandler
 operator|.
-name|getOpenTxns
+name|performTimeOuts
 argument_list|()
 expr_stmt|;
 name|GetOpenTxnsInfoResponse

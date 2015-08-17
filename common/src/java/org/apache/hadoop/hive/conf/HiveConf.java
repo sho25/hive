@@ -4819,6 +4819,15 @@ argument_list|,
 literal|"Max cache size for keeping meta info about orc splits cached in the client."
 argument_list|)
 block|,
+name|HIVE_ORC_INCLUDE_FILE_ID_IN_SPLITS
+argument_list|(
+literal|"hive.orc.splits.include.fileid"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Include file ID in splits on file systems thaty support it."
+argument_list|)
+block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
 argument_list|(
 literal|"hive.orc.compute.splits.num.threads"
@@ -6479,6 +6488,40 @@ name|MILLISECONDS
 argument_list|)
 argument_list|,
 literal|"Time between runs of the cleaner thread"
+argument_list|)
+block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_START
+argument_list|(
+literal|"hive.timedout.txn.reaper.start"
+argument_list|,
+literal|"100s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time delay of 1st reaper run after metastore start"
+argument_list|)
+block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_INTERVAL
+argument_list|(
+literal|"hive.timedout.txn.reaper.interval"
+argument_list|,
+literal|"180s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time interval describing how often the reaper runs"
 argument_list|)
 block|,
 comment|// For HBase storage handler
