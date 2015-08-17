@@ -344,16 +344,6 @@ argument_list|,
 literal|"execution"
 argument_list|)
 expr_stmt|;
-comment|// We need to set the below parameter to test performance level logging
-name|hiveConf
-operator|.
-name|set
-argument_list|(
-literal|"hive.ql.log.PerfLogger.level"
-argument_list|,
-literal|"INFO,DRFA"
-argument_list|)
-expr_stmt|;
 name|miniHS2
 operator|=
 operator|new
