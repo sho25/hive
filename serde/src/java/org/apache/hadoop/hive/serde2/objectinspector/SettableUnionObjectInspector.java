@@ -38,7 +38,7 @@ name|Object
 name|create
 parameter_list|()
 function_decl|;
-comment|/* Add fields to the object */
+comment|/* Add field to the object */
 specifier|public
 specifier|abstract
 name|Object
@@ -47,8 +47,8 @@ parameter_list|(
 name|Object
 name|union
 parameter_list|,
-name|ObjectInspector
-name|oi
+name|Object
+name|field
 parameter_list|)
 function_decl|;
 block|}
