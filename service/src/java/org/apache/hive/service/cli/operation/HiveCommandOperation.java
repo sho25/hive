@@ -425,6 +425,16 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
+operator|+
+literal|" and error output to file "
+operator|+
+name|sessionState
+operator|.
+name|getTmpErrOutputFile
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|sessionState
@@ -434,7 +444,7 @@ operator|=
 literal|null
 expr_stmt|;
 comment|// hive server's session input stream is not used
-comment|// open a per-session file in auto-flush mode for writing temp results
+comment|// open a per-session file in auto-flush mode for writing temp results and tmp error output
 name|sessionState
 operator|.
 name|out
@@ -456,8 +466,6 @@ argument_list|,
 literal|"UTF-8"
 argument_list|)
 expr_stmt|;
-comment|// TODO: for hadoop jobs, progress is printed out to session.err,
-comment|// we should find a way to feed back job progress to client
 name|sessionState
 operator|.
 name|err
@@ -465,9 +473,14 @@ operator|=
 operator|new
 name|PrintStream
 argument_list|(
-name|System
+operator|new
+name|FileOutputStream
+argument_list|(
+name|sessionState
 operator|.
-name|err
+name|getTmpErrOutputFile
+argument_list|()
+argument_list|)
 argument_list|,
 literal|true
 argument_list|,
@@ -583,13 +596,6 @@ name|getSessionState
 argument_list|()
 operator|.
 name|out
-argument_list|)
-expr_stmt|;
-name|IOUtils
-operator|.
-name|cleanup
-argument_list|(
-name|LOG
 argument_list|,
 name|parentSession
 operator|.
@@ -1115,6 +1121,18 @@ operator|.
 name|getTmpOutputFile
 argument_list|()
 decl_stmt|;
+name|tmp
+operator|.
+name|delete
+argument_list|()
+expr_stmt|;
+name|tmp
+operator|=
+name|sessionState
+operator|.
+name|getTmpErrOutputFile
+argument_list|()
+expr_stmt|;
 name|tmp
 operator|.
 name|delete

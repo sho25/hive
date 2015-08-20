@@ -567,7 +567,7 @@ name|verifyCMD
 argument_list|(
 literal|"\nshow tables;\nquit;"
 argument_list|,
-literal|"testTbl"
+literal|"testtbl"
 argument_list|,
 name|os
 argument_list|,
@@ -723,7 +723,7 @@ name|verifyCMD
 argument_list|(
 literal|null
 argument_list|,
-literal|"testTbl"
+literal|"testtbl"
 argument_list|,
 name|os
 argument_list|,
@@ -869,6 +869,27 @@ name|f
 operator|.
 name|delete
 argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testErrOutput
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"show tables;set system:xxx=5;set system:yyy=${system:xxx};\nlss;"
+argument_list|,
+literal|"cannot recognize input near 'lss' '<EOF>' '<EOF>'"
+argument_list|,
+name|errS
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -1065,10 +1086,10 @@ operator|new
 name|HiveCli
 argument_list|()
 expr_stmt|;
-name|redirectOutputStream
+name|initFromFile
 argument_list|()
 expr_stmt|;
-name|initFromFile
+name|redirectOutputStream
 argument_list|()
 expr_stmt|;
 block|}
