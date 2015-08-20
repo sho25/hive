@@ -2163,6 +2163,12 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|evalNull
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Subtraction operator    */
 specifier|public
@@ -2416,6 +2422,12 @@ operator|.
 name|scale
 argument_list|)
 argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|evalNull
+argument_list|()
 expr_stmt|;
 block|}
 block|}
