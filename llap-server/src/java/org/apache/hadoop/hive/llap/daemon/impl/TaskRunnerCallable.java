@@ -125,6 +125,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -990,6 +1004,9 @@ argument_list|(
 literal|false
 argument_list|)
 decl_stmt|;
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|TaskRunnerCallable
 parameter_list|(
 name|SubmitWorkRequestProto
