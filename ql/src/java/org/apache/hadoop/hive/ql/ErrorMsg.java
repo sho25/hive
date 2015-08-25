@@ -1799,16 +1799,20 @@ name|TXN_NO_SUCH_TRANSACTION
 argument_list|(
 literal|10262
 argument_list|,
-literal|"No record of transaction could be found, "
+literal|"No record of transaction {0} could be found, "
 operator|+
 literal|"may have timed out"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|TXN_ABORTED
 argument_list|(
 literal|10263
 argument_list|,
-literal|"Transaction manager has aborted the transaction."
+literal|"Transaction manager has aborted the transaction {0}."
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|DBTXNMGR_REQUIRES_CONCURRENCY
@@ -1822,9 +1826,11 @@ name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
 argument_list|,
-literal|"No record of lock could be found, "
+literal|"No record of lock {0} could be found, "
 operator|+
 literal|"may have timed out"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|LOCK_REQUEST_UNSUPPORTED
@@ -2004,6 +2010,13 @@ argument_list|(
 literal|10303
 argument_list|,
 literal|"Non-repl import disallowed against table that is a destination of replication."
+argument_list|)
+block|,
+name|CTAS_LOCATION_NONEMPTY
+argument_list|(
+literal|10304
+argument_list|,
+literal|"CREATE-TABLE-AS-SELECT cannot create table with location to a non-empty directory."
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

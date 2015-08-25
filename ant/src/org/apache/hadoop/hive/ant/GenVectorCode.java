@@ -5813,6 +5813,26 @@ block|,
 literal|""
 block|}
 block|,
+block|{
+literal|"ColumnUnaryFunc"
+block|,
+literal|"FuncBRound"
+block|,
+literal|"double"
+block|,
+literal|"double"
+block|,
+literal|"MathExpr.bround"
+block|,
+literal|""
+block|,
+literal|""
+block|,
+literal|""
+block|,
+literal|""
+block|}
+block|,
 comment|// round(longCol) returns a long and is a no-op. So it will not be implemented here.
 comment|// round(Col, N) is a special case and will be implemented separately from this template
 block|{
@@ -6549,6 +6569,16 @@ block|,
 literal|"decimal"
 block|,
 literal|"DecimalUtil.round"
+block|}
+block|,
+block|{
+literal|"DecimalColumnUnaryFunc"
+block|,
+literal|"FuncBRound"
+block|,
+literal|"decimal"
+block|,
+literal|"DecimalUtil.bround"
 block|}
 block|,
 block|{

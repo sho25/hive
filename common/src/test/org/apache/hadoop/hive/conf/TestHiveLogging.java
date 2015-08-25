@@ -49,16 +49,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -104,6 +94,16 @@ operator|.
 name|util
 operator|.
 name|HiveTestUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -496,7 +496,7 @@ decl_stmt|;
 name|String
 name|customLogName
 init|=
-literal|"hiveLog4jTest.log"
+literal|"hiveLog4j2Test.log"
 decl_stmt|;
 name|File
 name|customLogFile
@@ -513,9 +513,9 @@ name|RunTest
 argument_list|(
 name|customLogFile
 argument_list|,
-literal|"hive-log4j-test.properties"
+literal|"hive-log4j2-test.xml"
 argument_list|,
-literal|"hive-exec-log4j-test.properties"
+literal|"hive-exec-log4j2-test.xml"
 argument_list|)
 expr_stmt|;
 block|}

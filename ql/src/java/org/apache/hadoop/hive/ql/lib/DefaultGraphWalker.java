@@ -410,6 +410,14 @@ condition|(
 name|nodeOutput
 operator|!=
 literal|null
+operator|&&
+name|getDispatchedList
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|nd
+argument_list|)
 condition|)
 block|{
 name|nodeOutput

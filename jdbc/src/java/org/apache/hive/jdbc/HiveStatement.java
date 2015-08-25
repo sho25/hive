@@ -507,7 +507,7 @@ specifier|private
 name|int
 name|fetchSize
 init|=
-literal|50
+literal|1000
 decl_stmt|;
 specifier|private
 name|boolean

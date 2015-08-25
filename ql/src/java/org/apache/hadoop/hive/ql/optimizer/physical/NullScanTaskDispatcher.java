@@ -369,7 +369,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|PreOrderWalker
+name|PreOrderOnceWalker
 import|;
 end_import
 
@@ -1342,7 +1342,7 @@ name|GraphWalker
 name|ogw
 init|=
 operator|new
-name|PreOrderWalker
+name|PreOrderOnceWalker
 argument_list|(
 name|disp
 argument_list|)

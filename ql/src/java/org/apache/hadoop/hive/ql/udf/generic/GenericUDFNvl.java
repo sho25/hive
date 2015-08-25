@@ -242,7 +242,7 @@ throw|throw
 operator|new
 name|UDFArgumentTypeException
 argument_list|(
-literal|2
+literal|1
 argument_list|,
 literal|"The first and seconds arguments of function NLV should have the same type, "
 operator|+

@@ -3176,6 +3176,16 @@ return|return
 literal|1
 return|;
 block|}
+comment|// specify the default log4j2 properties file.
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"log4j.configurationFile"
+argument_list|,
+literal|"hive-log4j2.xml"
+argument_list|)
+expr_stmt|;
 name|conf
 operator|=
 operator|new

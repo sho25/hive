@@ -615,6 +615,26 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|files
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"Error : ORC files are not specified"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 name|dumpData
 condition|)
 block|{

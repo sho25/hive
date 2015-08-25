@@ -5128,15 +5128,6 @@ argument_list|,
 literal|"Whether to provide the row offset virtual column"
 argument_list|)
 block|,
-name|HIVE_COMBINE_INPUT_FORMAT_SUPPORTS_SPLITTABLE
-argument_list|(
-literal|"hive.hadoop.supports.splittable.combineinputformat"
-argument_list|,
-literal|false
-argument_list|,
-literal|""
-argument_list|)
-block|,
 comment|// Optimizer
 name|HIVEOPTINDEXFILTER
 argument_list|(
@@ -5181,6 +5172,15 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
+argument_list|)
+block|,
+name|HIVEPOINTLOOKUPOPTIMIZER
+argument_list|(
+literal|"hive.optimize.point.lookup"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to transform OR clauses in Filter operators into IN clauses"
 argument_list|)
 block|,
 comment|// Constant propagation optimizer
@@ -6276,6 +6276,40 @@ argument_list|,
 literal|"Time between runs of the cleaner thread"
 argument_list|)
 block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_START
+argument_list|(
+literal|"hive.timedout.txn.reaper.start"
+argument_list|,
+literal|"100s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time delay of 1st reaper run after metastore start"
+argument_list|)
+block|,
+name|HIVE_TIMEDOUT_TXN_REAPER_INTERVAL
+argument_list|(
+literal|"hive.timedout.txn.reaper.interval"
+argument_list|,
+literal|"180s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time interval describing how often the reaper runs"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
@@ -6791,77 +6825,6 @@ operator|+
 literal|"by record readers"
 argument_list|)
 block|,
-comment|// operation log configuration
-name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
-argument_list|(
-literal|"hive.server2.logging.operation.enabled"
-argument_list|,
-literal|true
-argument_list|,
-literal|"When true, HS2 will save operation logs and make them available for clients"
-argument_list|)
-block|,
-name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
-argument_list|(
-literal|"hive.server2.logging.operation.log.location"
-argument_list|,
-literal|"${system:java.io.tmpdir}"
-operator|+
-name|File
-operator|.
-name|separator
-operator|+
-literal|"${system:user.name}"
-operator|+
-name|File
-operator|.
-name|separator
-operator|+
-literal|"operation_logs"
-argument_list|,
-literal|"Top level directory where operation logs are stored if logging functionality is enabled"
-argument_list|)
-block|,
-name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
-argument_list|(
-literal|"hive.server2.logging.operation.level"
-argument_list|,
-literal|"EXECUTION"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"NONE"
-argument_list|,
-literal|"EXECUTION"
-argument_list|,
-literal|"PERFORMANCE"
-argument_list|,
-literal|"VERBOSE"
-argument_list|)
-argument_list|,
-literal|"HS2 operation logging mode available to clients to be set at session level.\n"
-operator|+
-literal|"For this to work, hive.server2.logging.operation.enabled should be set to true.\n"
-operator|+
-literal|"  NONE: Ignore any logging\n"
-operator|+
-literal|"  EXECUTION: Log completion of tasks\n"
-operator|+
-literal|"  PERFORMANCE: Execution + Performance logs \n"
-operator|+
-literal|"  VERBOSE: All logs"
-argument_list|)
-block|,
-name|HIVE_SERVER2_METRICS_ENABLED
-argument_list|(
-literal|"hive.server2.metrics.enabled"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Enable metrics on the HiveServer2."
-argument_list|)
-block|,
 comment|// logging configuration
 name|HIVE_LOG4J_FILE
 argument_list|(
@@ -6871,9 +6834,9 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file.\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-log4j.properties found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-log4j2.xml found on the classpath.\n"
 operator|+
-literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.properties\"), \n"
+literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
@@ -6886,9 +6849,9 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file for execution mode(sub command).\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-exec-log4j.properties found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-exec-log4j2.xml found on the classpath.\n"
 operator|+
-literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.properties\"), \n"
+literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
@@ -7225,6 +7188,118 @@ operator|+
 literal|"enable parallel compilation between sessions on HiveServer2. The default is false."
 argument_list|)
 block|,
+comment|// Tez session settings
+name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
+argument_list|(
+literal|"hive.server2.tez.default.queues"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A list of comma separated values corresponding to YARN queues of the same name.\n"
+operator|+
+literal|"When HiveServer2 is launched in Tez mode, this configuration needs to be set\n"
+operator|+
+literal|"for multiple Tez sessions to run in parallel on the cluster."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_SESSIONS_PER_DEFAULT_QUEUE
+argument_list|(
+literal|"hive.server2.tez.sessions.per.default.queue"
+argument_list|,
+literal|1
+argument_list|,
+literal|"A positive integer that determines the number of Tez sessions that should be\n"
+operator|+
+literal|"launched on each of the queues specified by \"hive.server2.tez.default.queues\".\n"
+operator|+
+literal|"Determines the parallelism on each queue."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_INITIALIZE_DEFAULT_SESSIONS
+argument_list|(
+literal|"hive.server2.tez.initialize.default.sessions"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag is used in HiveServer2 to enable a user to use HiveServer2 without\n"
+operator|+
+literal|"turning on Tez for HiveServer2. The user could potentially want to run queries\n"
+operator|+
+literal|"over Tez without the pool of sessions."
+argument_list|)
+block|,
+comment|// Operation log configuration
+name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
+argument_list|(
+literal|"hive.server2.logging.operation.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When true, HS2 will save operation logs and make them available for clients"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_LOG_LOCATION
+argument_list|(
+literal|"hive.server2.logging.operation.log.location"
+argument_list|,
+literal|"${system:java.io.tmpdir}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"${system:user.name}"
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+literal|"operation_logs"
+argument_list|,
+literal|"Top level directory where operation logs are stored if logging functionality is enabled"
+argument_list|)
+block|,
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+argument_list|(
+literal|"hive.server2.logging.operation.level"
+argument_list|,
+literal|"EXECUTION"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"NONE"
+argument_list|,
+literal|"EXECUTION"
+argument_list|,
+literal|"PERFORMANCE"
+argument_list|,
+literal|"VERBOSE"
+argument_list|)
+argument_list|,
+literal|"HS2 operation logging mode available to clients to be set at session level.\n"
+operator|+
+literal|"For this to work, hive.server2.logging.operation.enabled should be set to true.\n"
+operator|+
+literal|"  NONE: Ignore any logging\n"
+operator|+
+literal|"  EXECUTION: Log completion of tasks\n"
+operator|+
+literal|"  PERFORMANCE: Execution + Performance logs \n"
+operator|+
+literal|"  VERBOSE: All logs"
+argument_list|)
+block|,
+comment|// Enable metric collection for HiveServer2
+name|HIVE_SERVER2_METRICS_ENABLED
+argument_list|(
+literal|"hive.server2.metrics.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable metrics on the HiveServer2."
+argument_list|)
+block|,
 comment|// http (over thrift) transport settings
 name|HIVE_SERVER2_THRIFT_HTTP_PORT
 argument_list|(
@@ -7293,7 +7368,7 @@ operator|+
 literal|"excessive threads are killed after this time interval."
 argument_list|)
 block|,
-comment|// Cookie based authentication
+comment|// Cookie based authentication when using HTTP Transport
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
 argument_list|(
 literal|"hive.server2.thrift.http.cookie.auth.enabled"
@@ -7546,6 +7621,24 @@ name|MILLISECONDS
 argument_list|)
 argument_list|,
 literal|"Time that HiveServer2 will wait before responding to asynchronous calls that use long polling"
+argument_list|)
+block|,
+name|HIVE_SESSION_IMPL_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session"
+argument_list|)
+block|,
+name|HIVE_SESSION_IMPL_WITH_UGI_CLASSNAME
+argument_list|(
+literal|"hive.session.impl.withugi.classname"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Classname for custom implementation of hive session with UGI"
 argument_list|)
 block|,
 comment|// HiveServer2 auth configuration
@@ -7834,6 +7927,7 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|// SSL settings
 name|HIVE_SERVER2_USE_SSL
 argument_list|(
 literal|"hive.server2.use.SSL"
@@ -7900,15 +7994,6 @@ argument_list|,
 literal|"Comma separated list of udfs names. These udfs will not be allowed in queries."
 operator|+
 literal|" The udf black list takes precedence over udf white list"
-argument_list|)
-block|,
-name|HIVE_SECURITY_COMMAND_WHITELIST
-argument_list|(
-literal|"hive.security.command.whitelist"
-argument_list|,
-literal|"set,reset,dfs,add,list,delete,reload,compile"
-argument_list|,
-literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
 block|,
 name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
@@ -7985,6 +8070,15 @@ operator|+
 literal|" This setting takes effect only if session idle timeout (hive.server2.idle.session.timeout) and checking\n"
 operator|+
 literal|"(hive.server2.session.check.interval) are enabled."
+argument_list|)
+block|,
+name|HIVE_SECURITY_COMMAND_WHITELIST
+argument_list|(
+literal|"hive.security.command.whitelist"
+argument_list|,
+literal|"set,reset,dfs,add,list,delete,reload,compile"
+argument_list|,
+literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST
@@ -8420,45 +8514,6 @@ argument_list|,
 literal|"HIVE"
 argument_list|,
 literal|"The name of counter group for internal Hive variables (CREATED_FILE, FATAL_ERROR, etc.)"
-argument_list|)
-block|,
-name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
-argument_list|(
-literal|"hive.server2.tez.default.queues"
-argument_list|,
-literal|""
-argument_list|,
-literal|"A list of comma separated values corresponding to YARN queues of the same name.\n"
-operator|+
-literal|"When HiveServer2 is launched in Tez mode, this configuration needs to be set\n"
-operator|+
-literal|"for multiple Tez sessions to run in parallel on the cluster."
-argument_list|)
-block|,
-name|HIVE_SERVER2_TEZ_SESSIONS_PER_DEFAULT_QUEUE
-argument_list|(
-literal|"hive.server2.tez.sessions.per.default.queue"
-argument_list|,
-literal|1
-argument_list|,
-literal|"A positive integer that determines the number of Tez sessions that should be\n"
-operator|+
-literal|"launched on each of the queues specified by \"hive.server2.tez.default.queues\".\n"
-operator|+
-literal|"Determines the parallelism on each queue."
-argument_list|)
-block|,
-name|HIVE_SERVER2_TEZ_INITIALIZE_DEFAULT_SESSIONS
-argument_list|(
-literal|"hive.server2.tez.initialize.default.sessions"
-argument_list|,
-literal|false
-argument_list|,
-literal|"This flag is used in HiveServer2 to enable a user to use HiveServer2 without\n"
-operator|+
-literal|"turning on Tez for HiveServer2. The user could potentially want to run queries\n"
-operator|+
-literal|"over Tez without the pool of sessions."
 argument_list|)
 block|,
 name|HIVE_QUOTEDID_SUPPORT
@@ -11995,6 +12050,12 @@ operator|=
 name|other
 operator|.
 name|auxJars
+expr_stmt|;
+name|isSparkConfigUpdated
+operator|=
+name|other
+operator|.
+name|isSparkConfigUpdated
 expr_stmt|;
 name|origProp
 operator|=

@@ -4481,7 +4481,9 @@ comment|// setup history
 name|ByteArrayOutputStream
 name|hist
 init|=
-literal|null
+operator|new
+name|ByteArrayOutputStream
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -4506,6 +4508,8 @@ comment|// around a bug in JLine where setting the output before the
 comment|// input will clobber the history input, but setting the
 comment|// input before the output will cause the previous commands
 comment|// to not be saved to the buffer.
+try|try
+init|(
 name|FileInputStream
 name|historyIn
 init|=
@@ -4518,13 +4522,8 @@ operator|.
 name|getHistoryFile
 argument_list|()
 argument_list|)
-decl_stmt|;
-name|hist
-operator|=
-operator|new
-name|ByteArrayOutputStream
-argument_list|()
-expr_stmt|;
+init|)
+block|{
 name|int
 name|n
 decl_stmt|;
@@ -4551,11 +4550,7 @@ name|n
 argument_list|)
 expr_stmt|;
 block|}
-name|historyIn
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -429,9 +429,9 @@ condition|)
 block|{
 name|result
 operator|=
-name|conf
+name|tbl
 operator|.
-name|get
+name|getProperty
 argument_list|(
 name|attribute
 argument_list|)

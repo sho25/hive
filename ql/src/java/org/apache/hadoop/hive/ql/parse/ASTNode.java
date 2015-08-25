@@ -550,6 +550,14 @@ name|rootNode
 operator|=
 name|retNode
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rootNode
+operator|.
+name|isValidASTStr
+condition|)
+block|{
 name|rootNode
 operator|.
 name|astStr
@@ -571,6 +579,7 @@ name|isValidASTStr
 operator|=
 literal|true
 expr_stmt|;
+block|}
 return|return
 name|retNode
 return|;
@@ -614,13 +623,6 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|// The root might have changed because of tree modifications.
-comment|// Compute the new root for this tree and set the astStr.
-name|getRootNodeWithValidASTStr
-argument_list|(
-literal|false
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 name|int
@@ -898,21 +900,13 @@ name|String
 name|toStringTree
 parameter_list|()
 block|{
-comment|// The tree modifier functions invalidate the old astStr, rootNode, etc.
-comment|// Hence, we can use the memoized root node and string values here.
-name|ASTNode
-name|rootNode
-init|=
-operator|(
-name|ASTNode
-operator|)
-name|this
-operator|.
+comment|// The root might have changed because of tree modifications.
+comment|// Compute the new root for this tree and set the astStr.
 name|getRootNodeWithValidASTStr
 argument_list|(
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// If rootNotModified is false, then startIndx and endIndx will be stale.
 if|if
 condition|(

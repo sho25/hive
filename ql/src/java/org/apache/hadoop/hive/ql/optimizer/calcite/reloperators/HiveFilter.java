@@ -266,8 +266,7 @@ name|traitSet
 argument_list|,
 name|input
 argument_list|,
-name|getCondition
-argument_list|()
+name|condition
 argument_list|)
 return|;
 block|}

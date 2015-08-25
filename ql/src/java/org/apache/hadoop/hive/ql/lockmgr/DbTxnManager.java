@@ -59,6 +59,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|JavaUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|ValidTxnList
 import|;
 end_import
@@ -470,12 +486,16 @@ throw|throw
 operator|new
 name|LockException
 argument_list|(
-literal|"Transaction already opened. txnId="
+literal|"Transaction already opened. "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
 argument_list|)
+argument_list|)
 throw|;
-comment|//ToDo: ErrorMsg
 block|}
 try|try
 block|{
@@ -496,9 +516,14 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Opened txn "
+literal|"Opened "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -631,7 +656,12 @@ name|info
 argument_list|(
 literal|"Setting lock request transaction to "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 operator|+
 literal|" for queryId="
 operator|+
@@ -1238,7 +1268,12 @@ name|debug
 argument_list|(
 literal|"Committing txn "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|client
@@ -1259,23 +1294,32 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Metastore could not find txn "
+literal|"Metastore could not find "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_NO_SUCH_TRANSACTION
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1291,7 +1335,12 @@ name|error
 argument_list|(
 literal|"Transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 operator|+
 literal|" aborted"
 argument_list|)
@@ -1300,14 +1349,18 @@ throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_ABORTED
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1380,9 +1433,14 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Rolling back txn "
+literal|"Rolling back "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|client
@@ -1403,23 +1461,32 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Metastore could not find txn "
+literal|"Metastore could not find "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_NO_SUCH_TRANSACTION
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1472,7 +1539,12 @@ name|debug
 argument_list|(
 literal|"Heartbeating lock and transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|List
@@ -1581,21 +1653,30 @@ name|error
 argument_list|(
 literal|"Unable to find lock "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|lockId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|LOCK_NO_SUCH_LOCK
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|lockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1611,21 +1692,30 @@ name|error
 argument_list|(
 literal|"Unable to find transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_NO_SUCH_TRANSACTION
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1641,21 +1731,30 @@ name|error
 argument_list|(
 literal|"Transaction aborted "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnId
+argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|LockException
 argument_list|(
+name|e
+argument_list|,
 name|ErrorMsg
 operator|.
 name|TXN_ABORTED
-operator|.
-name|getMsg
-argument_list|()
 argument_list|,
-name|e
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}

@@ -119,6 +119,17 @@ argument_list|>
 name|colNames
 parameter_list|)
 function_decl|;
+comment|/**    * Get the deserialized data size of the specified columns ids    * @param colIds - internal column id (check orcfiledump for column ids)    * @return raw data size of columns    */
+name|long
+name|getRawDataSizeFromColIndices
+parameter_list|(
+name|List
+argument_list|<
+name|Integer
+argument_list|>
+name|colIds
+parameter_list|)
+function_decl|;
 comment|/**    * Get the user metadata keys.    * @return the set of metadata keys    */
 name|List
 argument_list|<

@@ -625,8 +625,6 @@ operator|new
 name|UDFArgumentTypeException
 argument_list|(
 name|i
-operator|+
-literal|1
 argument_list|,
 literal|"Only primitive type arguments are accepted but "
 operator|+
@@ -638,7 +636,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|+
-literal|" is passed. as  arguments"
+literal|" is passed."
 argument_list|)
 throw|;
 block|}
@@ -702,8 +700,6 @@ operator|new
 name|UDFArgumentTypeException
 argument_list|(
 name|i
-operator|+
-literal|1
 argument_list|,
 literal|"Only primitive type arguments are accepted but "
 operator|+
@@ -715,7 +711,7 @@ operator|.
 name|getTypeName
 argument_list|()
 operator|+
-literal|" is passed. as  arguments"
+literal|" is passed."
 argument_list|)
 throw|;
 block|}
