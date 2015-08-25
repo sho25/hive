@@ -31,6 +31,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|InetSocketAddress
@@ -376,6 +386,20 @@ operator|.
 name|io
 operator|.
 name|LongWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|Text
 import|;
 end_import
 
@@ -2155,6 +2179,36 @@ name|fs
 parameter_list|,
 name|String
 name|path
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Read data into a Text object in the fastest way possible    */
+specifier|public
+interface|interface
+name|TextReaderShim
+block|{
+comment|/**      * @param txt      * @param len      * @return bytes read      * @throws IOException      */
+name|void
+name|read
+parameter_list|(
+name|Text
+name|txt
+parameter_list|,
+name|int
+name|size
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+block|}
+comment|/**    * Wrap a TextReaderShim around an input stream. The reader shim will not    * buffer any reads from the underlying stream and will only consume bytes    * which are required for TextReaderShim.read() input.    */
+specifier|public
+name|TextReaderShim
+name|getTextReaderShim
+parameter_list|(
+name|InputStream
+name|input
 parameter_list|)
 throws|throws
 name|IOException
