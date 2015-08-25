@@ -506,6 +506,27 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testSetHeaderValue
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"create database if not exists test;\ncreate table if not exists test.testTbl(a string, b string);\nset hive.cli.print.header=true;\n select * from test.testTbl;\n"
+argument_list|,
+literal|"testtbl.a testtbl.b"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testHelp
 parameter_list|()
 block|{
