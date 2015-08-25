@@ -1710,7 +1710,7 @@ operator|+
 name|jdbcUriString
 argument_list|)
 expr_stmt|;
-comment|// We'll retry till we exhaust all HiveServer2 uris from ZooKeeper
+comment|// We'll retry till we exhaust all HiveServer2 nodes from ZooKeeper
 if|if
 condition|(
 operator|(
@@ -1748,7 +1748,7 @@ block|{
 try|try
 block|{
 comment|// Update jdbcUriString, host& port variables in connParams
-comment|// Throw an exception if all HiveServer2 uris have been exhausted,
+comment|// Throw an exception if all HiveServer2 nodes have been exhausted,
 comment|// or if we're unable to connect to ZooKeeper.
 name|Utils
 operator|.
