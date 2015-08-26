@@ -47,20 +47,6 @@ name|LogFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
 begin_comment
 comment|/** Java linked list iterator interface is convoluted, and moreover concurrent modifications  * of the same list by multiple iterators are impossible. Hence, this.  * Java also doesn't support multiple inheritance, so this cannot be done as "aspect"... */
 end_comment
@@ -508,8 +494,7 @@ operator|.
 name|offset
 return|;
 block|}
-annotation|@
-name|VisibleForTesting
+comment|// @VisibleForTesting
 specifier|public
 name|int
 name|listSize
@@ -589,8 +574,7 @@ return|return
 name|totalLength
 return|;
 block|}
-annotation|@
-name|VisibleForTesting
+comment|// @VisibleForTesting
 specifier|public
 name|DiskRangeList
 index|[]
