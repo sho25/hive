@@ -394,6 +394,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/**    * This method is used for verifying CMD to see whether the output contains the keywords provided.    *    * @param CMD    * @param keywords    * @param os    * @param options    * @param retCode    * @param contains    */
 specifier|private
 name|void
 name|verifyCMD
@@ -413,6 +414,9 @@ name|options
 parameter_list|,
 name|int
 name|retCode
+parameter_list|,
+name|boolean
+name|contains
 parameter_list|)
 block|{
 name|executeCMD
@@ -439,6 +443,11 @@ argument_list|(
 name|output
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|contains
+condition|)
+block|{
 name|Assert
 operator|.
 name|assertTrue
@@ -460,6 +469,30 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"The expected keyword \""
+operator|+
+name|keywords
+operator|+
+literal|"\" doesn't occur in the output: "
+operator|+
+name|output
+argument_list|,
+name|output
+operator|.
+name|contains
+argument_list|(
+name|keywords
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -478,6 +511,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -499,6 +534,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -520,6 +557,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -546,6 +585,8 @@ literal|"-H"
 block|}
 argument_list|,
 name|ERRNO_ARGS
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -574,6 +615,8 @@ literal|"invalidDB"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -602,6 +645,8 @@ literal|"test"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -647,6 +692,8 @@ literal|"test"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|f
@@ -697,6 +744,8 @@ literal|"test"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|f
@@ -730,6 +779,8 @@ literal|"show databases;"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -762,6 +813,8 @@ literal|"test"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -794,6 +847,8 @@ literal|"path/to/file"
 block|}
 argument_list|,
 name|ERRNO_ARGS
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -820,6 +875,8 @@ literal|"-k"
 block|}
 argument_list|,
 name|ERRNO_ARGS
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -841,6 +898,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -884,6 +943,8 @@ literal|"test"
 block|}
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|f
@@ -910,6 +971,104 @@ argument_list|,
 literal|null
 argument_list|,
 name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUseCurrentDB1
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"create database if not exists testDB; set hive.cli.print.current.db=true;use testDB;\n"
+operator|+
+literal|"use default;drop if exists testDB;"
+argument_list|,
+literal|"hive (testDB)>"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUseCurrentDB2
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"create database if not exists testDB; set hive.cli.print.current.db=true;use\ntestDB;\nuse default;drop if exists testDB;"
+argument_list|,
+literal|"hive (testDB)>"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUseCurrentDB3
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"create database if not exists testDB; set hive.cli.print.current.db=true;use  testDB;\n"
+operator|+
+literal|"use default;drop if exists testDB;"
+argument_list|,
+literal|"hive (testDB)>"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUseInvalidDB
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"set hive.cli.print.current.db=true;use invalidDB;"
+argument_list|,
+literal|"hive (invalidDB)>"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
