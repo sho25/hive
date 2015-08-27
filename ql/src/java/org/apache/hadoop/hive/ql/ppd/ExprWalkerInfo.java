@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|IdentityHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -365,7 +375,7 @@ expr_stmt|;
 name|exprInfoMap
 operator|=
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|ExprNodeDesc
 argument_list|,
@@ -376,7 +386,7 @@ expr_stmt|;
 name|newToOldExprMap
 operator|=
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|ExprNodeDesc
 argument_list|,
@@ -420,7 +430,7 @@ expr_stmt|;
 name|exprInfoMap
 operator|=
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|ExprNodeDesc
 argument_list|,
@@ -445,7 +455,7 @@ expr_stmt|;
 name|newToOldExprMap
 operator|=
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|ExprNodeDesc
 argument_list|,
