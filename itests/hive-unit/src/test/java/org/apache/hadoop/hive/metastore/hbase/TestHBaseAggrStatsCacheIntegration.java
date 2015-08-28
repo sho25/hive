@@ -1060,7 +1060,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|4
+literal|2
 argument_list|,
 name|aggrStats
 operator|.
@@ -1192,7 +1192,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"string"
+literal|"varchar"
 argument_list|,
 name|cso
 operator|.
