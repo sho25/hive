@@ -309,7 +309,7 @@ literal|null
 operator|&&
 name|StringExpr
 operator|.
-name|compare
+name|equal
 argument_list|(
 name|t
 index|[
@@ -331,8 +331,6 @@ name|start
 argument_list|,
 name|len
 argument_list|)
-operator|==
-literal|0
 return|;
 block|}
 specifier|public
