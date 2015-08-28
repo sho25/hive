@@ -193,7 +193,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|)
 operator|.
 name|between
@@ -204,11 +204,11 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|10
+literal|10L
 argument_list|,
-literal|20
+literal|20L
 argument_list|)
 comment|// Column will be removed from filter
 operator|.
@@ -220,13 +220,13 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|1
+literal|1L
 argument_list|,
-literal|2
+literal|2L
 argument_list|,
-literal|3
+literal|3L
 argument_list|)
 comment|// Column will be removed from filter
 operator|.

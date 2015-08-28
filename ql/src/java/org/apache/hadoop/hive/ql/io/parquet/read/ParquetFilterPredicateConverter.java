@@ -261,25 +261,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Translate the search argument to the filter predicate parquet uses    * @return translate the sarg into a filter predicate    */
-specifier|public
-specifier|static
-name|FilterPredicate
-name|toFilterPredicate
-parameter_list|(
-name|SearchArgument
-name|sarg
-parameter_list|)
-block|{
-return|return
-name|toFilterPredicate
-argument_list|(
-name|sarg
-argument_list|,
-literal|null
-argument_list|)
-return|;
-block|}
 comment|/**    * Translate the search argument to the filter predicate parquet uses. It includes    * only the columns from the passed schema.    * @return translate the sarg into a filter predicate    */
 specifier|public
 specifier|static
@@ -354,6 +335,8 @@ name|getLeaves
 argument_list|()
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 return|;
 block|}
@@ -376,6 +359,9 @@ argument_list|<
 name|String
 argument_list|>
 name|columns
+parameter_list|,
+name|MessageType
+name|schema
 parameter_list|)
 block|{
 name|FilterPredicate
@@ -421,6 +407,8 @@ argument_list|,
 name|leaves
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 expr_stmt|;
 block|}
@@ -436,6 +424,8 @@ argument_list|,
 name|leaves
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 comment|// constant means no filter, ignore it when it is null
@@ -493,6 +483,8 @@ argument_list|,
 name|leaves
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 expr_stmt|;
 block|}
@@ -508,6 +500,8 @@ argument_list|,
 name|leaves
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 comment|// constant means no filter, ignore it when it is null
@@ -556,6 +550,8 @@ argument_list|,
 name|leaves
 argument_list|,
 name|columns
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 if|if
@@ -600,10 +596,6 @@ comment|// If columns is null, then we need to create the leaf
 if|if
 condition|(
 name|columns
-operator|==
-literal|null
-operator|||
-name|columns
 operator|.
 name|contains
 argument_list|(
@@ -614,10 +606,25 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+name|Type
+name|parquetType
+init|=
+name|schema
+operator|.
+name|getType
+argument_list|(
+name|leaf
+operator|.
+name|getColumnName
+argument_list|()
+argument_list|)
+decl_stmt|;
 return|return
 name|buildFilterPredicateFromPredicateLeaf
 argument_list|(
 name|leaf
+argument_list|,
+name|parquetType
 argument_list|)
 return|;
 block|}
@@ -657,6 +664,9 @@ name|buildFilterPredicateFromPredicateLeaf
 parameter_list|(
 name|PredicateLeaf
 name|leaf
+parameter_list|,
+name|Type
+name|parquetType
 parameter_list|)
 block|{
 name|LeafFilterFactory
@@ -681,6 +691,8 @@ name|leaf
 operator|.
 name|getType
 argument_list|()
+argument_list|,
+name|parquetType
 argument_list|)
 expr_stmt|;
 if|if
