@@ -4538,6 +4538,13 @@ operator|.
 name|getStatsObj
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|statsObjs
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|ColumnStatisticsObj
@@ -4615,6 +4622,7 @@ name|getColName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

@@ -710,6 +710,11 @@ name|colName
 argument_list|,
 name|cso
 operator|.
+name|getColType
+argument_list|()
+argument_list|,
+name|cso
+operator|.
 name|getStatsData
 argument_list|()
 operator|.
