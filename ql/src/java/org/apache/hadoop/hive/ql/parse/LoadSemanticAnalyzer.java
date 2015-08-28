@@ -953,8 +953,9 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|void
-name|applyConstraints
+name|FileStatus
+index|[]
+name|applyConstraintsAndGetFiles
 parameter_list|(
 name|URI
 name|fromURI
@@ -971,6 +972,12 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|FileStatus
+index|[]
+name|srcs
+init|=
+literal|null
+decl_stmt|;
 comment|// local mode implies that scheme should be "file"
 comment|// we can change this going forward
 if|if
@@ -1008,10 +1015,8 @@ throw|;
 block|}
 try|try
 block|{
-name|FileStatus
-index|[]
 name|srcs
-init|=
+operator|=
 name|matchFilesOrDir
 argument_list|(
 name|FileSystem
@@ -1029,7 +1034,7 @@ argument_list|(
 name|fromURI
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|srcs
@@ -1212,6 +1217,9 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+return|return
+name|srcs
+return|;
 block|}
 annotation|@
 name|Override
@@ -1577,7 +1585,11 @@ argument_list|)
 throw|;
 block|}
 comment|// make sure the arguments make sense
-name|applyConstraints
+name|FileStatus
+index|[]
+name|files
+init|=
+name|applyConstraintsAndGetFiles
 argument_list|(
 name|fromURI
 argument_list|,
@@ -1587,7 +1599,7 @@ name|fromTree
 argument_list|,
 name|isLocal
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|// for managed tables, make sure the file formats match
 if|if
 condition|(
@@ -1610,7 +1622,7 @@ name|ensureFileFormatsMatch
 argument_list|(
 name|ts
 argument_list|,
-name|fromURI
+name|files
 argument_list|)
 expr_stmt|;
 block|}
@@ -2145,8 +2157,9 @@ parameter_list|(
 name|TableSpec
 name|ts
 parameter_list|,
-name|URI
-name|fromURI
+name|FileStatus
+index|[]
+name|fileStatuses
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -2231,17 +2244,24 @@ name|destInputFormat
 argument_list|)
 condition|)
 block|{
-name|Path
-name|inputFilePath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|fromURI
-argument_list|)
-decl_stmt|;
+for|for
+control|(
+name|FileStatus
+name|fileStatus
+range|:
+name|fileStatuses
+control|)
+block|{
 try|try
 block|{
+name|Path
+name|filePath
+init|=
+name|fileStatus
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
 name|FileSystem
 name|fs
 init|=
@@ -2249,7 +2269,10 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
-name|fromURI
+name|filePath
+operator|.
+name|toUri
+argument_list|()
 argument_list|,
 name|conf
 argument_list|)
@@ -2261,7 +2284,7 @@ name|createReader
 argument_list|(
 name|fs
 argument_list|,
-name|inputFilePath
+name|filePath
 argument_list|)
 expr_stmt|;
 block|}
@@ -2308,6 +2331,7 @@ name|getMessage
 argument_list|()
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 block|}

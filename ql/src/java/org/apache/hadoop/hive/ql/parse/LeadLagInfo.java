@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|IdentityHashMap
 import|;
 end_import
 
@@ -189,7 +189,7 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|HashMap
+name|IdentityHashMap
 argument_list|<
 name|ExprNodeDesc
 argument_list|,

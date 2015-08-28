@@ -802,7 +802,7 @@ name|haveSaveKey
 operator|||
 name|StringExpr
 operator|.
-name|compare
+name|equal
 argument_list|(
 name|vector
 index|[
@@ -834,8 +834,8 @@ index|[
 name|batchIndex
 index|]
 argument_list|)
-operator|!=
-literal|0
+operator|==
+literal|false
 condition|)
 block|{
 comment|// New key.

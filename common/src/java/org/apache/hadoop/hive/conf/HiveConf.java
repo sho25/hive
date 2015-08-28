@@ -5183,6 +5183,24 @@ argument_list|,
 literal|"Whether to transform OR clauses in Filter operators into IN clauses"
 argument_list|)
 block|,
+name|HIVEPOINTLOOKUPOPTIMIZERMIN
+argument_list|(
+literal|"hive.optimize.point.lookup.min"
+argument_list|,
+literal|31
+argument_list|,
+literal|"Minimum number of OR clauses needed to transform into IN clauses"
+argument_list|)
+block|,
+name|HIVEPOINTLOOKUPOPTIMIZEREXTRACT
+argument_list|(
+literal|"hive.optimize.point.lookup.extract"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Extract partial expressions when optimizing point lookup IN clauses"
+argument_list|)
+block|,
 comment|// Constant propagation optimizer
 name|HIVEOPTCONSTANTPROPAGATION
 argument_list|(

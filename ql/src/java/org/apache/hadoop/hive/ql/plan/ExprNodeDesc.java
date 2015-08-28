@@ -225,6 +225,28 @@ name|hashCode
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+specifier|final
+name|boolean
+name|equals
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+block|{
+comment|// prevent equals from being overridden in sub-classes
+comment|// always use ExprNodeDescEqualityWrapper
+comment|// if you need any other equality than Object.equals()
+return|return
+operator|(
+name|o
+operator|==
+name|this
+operator|)
+return|;
+block|}
 specifier|public
 name|TypeInfo
 name|getTypeInfo
