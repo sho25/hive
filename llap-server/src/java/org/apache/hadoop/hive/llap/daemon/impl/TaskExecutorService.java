@@ -1398,6 +1398,11 @@ name|get
 argument_list|()
 condition|)
 block|{
+name|RejectedExecutionException
+name|rejectedException
+init|=
+literal|null
+decl_stmt|;
 synchronized|synchronized
 init|(
 name|lock
@@ -1558,27 +1563,15 @@ comment|// Another task at a higher priority may have come in during the wait. L
 comment|// queue again to pick up the task at the highest priority.
 continue|continue;
 block|}
-block|}
-name|boolean
-name|scheduled
-init|=
+try|try
+block|{
 name|trySchedule
 argument_list|(
 name|task
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|scheduled
-condition|)
-block|{
+expr_stmt|;
 comment|// wait queue could have been re-ordered in the mean time because of concurrent task
 comment|// submission. So remove the specific task instead of the head task.
-synchronized|synchronized
-init|(
-name|lock
-init|)
-block|{
 name|waitQueue
 operator|.
 name|remove
@@ -1587,6 +1580,31 @@ name|task
 argument_list|)
 expr_stmt|;
 block|}
+catch|catch
+parameter_list|(
+name|RejectedExecutionException
+name|e
+parameter_list|)
+block|{
+name|rejectedException
+operator|=
+name|e
+expr_stmt|;
+block|}
+block|}
+comment|// Handle the rejection outside of the lock
+if|if
+condition|(
+name|rejectedException
+operator|!=
+literal|null
+condition|)
+block|{
+name|handleScheduleAttemptedRejection
+argument_list|(
+name|task
+argument_list|)
+expr_stmt|;
 block|}
 synchronized|synchronized
 init|(
@@ -1799,6 +1817,9 @@ init|)
 block|{
 comment|// If the queue does not have capacity, it does not throw a Rejection. Instead it will
 comment|// return the task with the lowest priority, which could be the task which is currently being processed.
+comment|// TODO HIVE-11687 It's possible for a bunch of tasks to come in around the same time, without the
+comment|// actual executor threads picking up any work. This will lead to unnecessary rejection of tasks.
+comment|// The wait queue should be able to fit at least (waitQueue + currentFreeExecutor slots)
 name|evictedTask
 operator|=
 name|waitQueue
@@ -2149,20 +2170,15 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
-name|boolean
+name|void
 name|trySchedule
 parameter_list|(
 specifier|final
 name|TaskWrapper
 name|taskWrapper
 parameter_list|)
-block|{
-name|boolean
-name|scheduled
-init|=
-literal|false
-decl_stmt|;
-try|try
+throws|throws
+name|RejectedExecutionException
 block|{
 synchronized|synchronized
 init|(
@@ -2300,15 +2316,13 @@ operator|.
 name|decrementAndGet
 argument_list|()
 expr_stmt|;
-name|scheduled
-operator|=
-literal|true
-expr_stmt|;
 block|}
-catch|catch
+specifier|private
+name|void
+name|handleScheduleAttemptedRejection
 parameter_list|(
-name|RejectedExecutionException
-name|e
+name|TaskWrapper
+name|taskWrapper
 parameter_list|)
 block|{
 if|if
@@ -2422,10 +2436,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
-return|return
-name|scheduled
-return|;
 block|}
 specifier|private
 name|void

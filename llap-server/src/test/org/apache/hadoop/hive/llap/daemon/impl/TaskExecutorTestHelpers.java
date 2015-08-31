@@ -821,6 +821,12 @@ name|newCondition
 argument_list|()
 decl_stmt|;
 specifier|private
+name|boolean
+name|shouldSleep
+init|=
+literal|true
+decl_stmt|;
+specifier|private
 specifier|final
 name|Condition
 name|finishedCondition
@@ -967,6 +973,11 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+if|if
+condition|(
+name|shouldSleep
+condition|)
+block|{
 name|sleepCondition
 operator|.
 name|await
@@ -978,6 +989,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1106,6 +1118,10 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|shouldSleep
+operator|=
+literal|false
+expr_stmt|;
 name|sleepCondition
 operator|.
 name|signal
@@ -1165,6 +1181,10 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+name|shouldSleep
+operator|=
+literal|false
+expr_stmt|;
 name|sleepCondition
 operator|.
 name|signal

@@ -1074,6 +1074,17 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
+name|AtomicBoolean
+name|pendingScheduleInvodations
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|final
 name|ListeningExecutorService
 name|schedulerExecutor
 decl_stmt|;
@@ -4857,6 +4868,13 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+name|pendingScheduleInvodations
+operator|.
+name|set
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|scheduleCondition
 operator|.
 name|signal
@@ -4923,11 +4941,21 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+while|while
+condition|(
+operator|!
+name|pendingScheduleInvodations
+operator|.
+name|get
+argument_list|()
+condition|)
+block|{
 name|scheduleCondition
 operator|.
 name|await
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -4980,6 +5008,17 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Set pending to false since scheduling is about to run. Any triggers up to this point
+comment|// will be handled in the next run.
+comment|// A new request may come in right after this is set to false, but before the actual scheduling.
+comment|// This will be handled in this run, but will cause an immediate run after, which is harmless.
+name|pendingScheduleInvodations
+operator|.
+name|set
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// Schedule outside of the scheduleLock - which should only be used to wait on the condition.
 name|schedulePendingTasks
 argument_list|()
