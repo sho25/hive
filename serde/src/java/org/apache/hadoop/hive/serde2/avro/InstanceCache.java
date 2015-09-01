@@ -21,34 +21,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -77,8 +49,36 @@ name|Set
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
 begin_comment
-comment|/**  * Cache for objects whose creation only depends on some other set of objects  * and therefore can be used against other equivalent versions of those  * objects.  Essentially memoizes instance creation.  *  * @param<SeedObject>  Object that determines the instance  * @param<Instance>  Instance that will be created from SeedObject.  */
+comment|/**  * Cache for objects whose creation only depends on some other set of objects and therefore can be  * used against other equivalent versions of those objects. Essentially memoizes instance creation.  *  * @param<SeedObject> Object that determines the instance. The cache uses this object as a key for  *          its hash which is why it is imperative to have appropriate equals and hashcode  *          implementation for this object for the cache to work properly  * @param<Instance> Instance that will be created from SeedObject.  */
 end_comment
 
 begin_class

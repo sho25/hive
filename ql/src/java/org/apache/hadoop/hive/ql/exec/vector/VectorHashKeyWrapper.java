@@ -801,11 +801,10 @@ condition|)
 block|{
 if|if
 condition|(
-literal|0
-operator|!=
+operator|!
 name|StringExpr
 operator|.
-name|compare
+name|equal
 argument_list|(
 name|byteValues
 index|[

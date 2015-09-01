@@ -13637,7 +13637,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|)
 operator|.
 name|end
@@ -14033,10 +14033,10 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 operator|new
-name|Integer
+name|Long
 argument_list|(
 literal|0
 argument_list|)

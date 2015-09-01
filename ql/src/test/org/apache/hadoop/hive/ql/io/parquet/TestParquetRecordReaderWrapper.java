@@ -195,6 +195,34 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
+name|MessageType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
+name|MessageTypeParser
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Test
@@ -282,7 +310,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|)
 operator|.
 name|between
@@ -293,11 +321,11 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|10
+literal|10L
 argument_list|,
-literal|20
+literal|20L
 argument_list|)
 operator|.
 name|in
@@ -308,13 +336,13 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|1
+literal|1L
 argument_list|,
-literal|2
+literal|2L
 argument_list|,
-literal|3
+literal|3L
 argument_list|)
 operator|.
 name|nullSafeEquals
@@ -339,6 +367,20 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" optional int32 x; required int32 y; required int32 z;"
+operator|+
+literal|" optional binary a;}"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -347,6 +389,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -450,6 +494,18 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" required int32 x; required binary y; required binary z;}"
+argument_list|)
+decl_stmt|;
 name|assertEquals
 argument_list|(
 literal|"lteq(y, Binary{\"hi        \"})"
@@ -459,6 +515,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 operator|.
 name|toString
@@ -486,7 +544,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|)
 operator|.
 name|between
@@ -520,13 +578,13 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|1
+literal|1L
 argument_list|,
-literal|2
+literal|2L
 argument_list|,
-literal|3
+literal|3L
 argument_list|)
 operator|.
 name|nullSafeEquals
@@ -560,6 +618,19 @@ operator|.
 name|build
 argument_list|()
 expr_stmt|;
+name|schema
+operator|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" optional int32 x; required binary y; required int32 z;"
+operator|+
+literal|" optional binary a;}"
+argument_list|)
+expr_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -568,6 +639,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -671,6 +744,18 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" required int32 x; required binary y; required binary z;}"
+argument_list|)
+decl_stmt|;
 name|assertEquals
 argument_list|(
 literal|"lteq(y, Binary{\"hi        \"})"
@@ -680,6 +765,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 operator|.
 name|toString
@@ -707,7 +794,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|)
 operator|.
 name|between
@@ -741,13 +828,13 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-literal|1
+literal|1L
 argument_list|,
-literal|2
+literal|2L
 argument_list|,
-literal|3
+literal|3L
 argument_list|)
 operator|.
 name|nullSafeEquals
@@ -781,6 +868,19 @@ operator|.
 name|build
 argument_list|()
 expr_stmt|;
+name|schema
+operator|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" optional int32 x; required binary y; required int32 z;"
+operator|+
+literal|" optional binary a;}"
+argument_list|)
+expr_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -789,6 +889,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -837,16 +939,9 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-operator|new
-name|Integer
-argument_list|(
-operator|(
-name|short
-operator|)
-literal|22
-argument_list|)
+literal|22L
 argument_list|)
 operator|.
 name|lessThan
@@ -857,13 +952,9 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
-operator|new
-name|Integer
-argument_list|(
-literal|22
-argument_list|)
+literal|22L
 argument_list|)
 operator|.
 name|lessThanEquals
@@ -928,6 +1019,20 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test {"
+operator|+
+literal|" required int32 x; required int32 x1;"
+operator|+
+literal|" required binary y; required float z; required float z1;}"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -936,6 +1041,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String

@@ -1597,7 +1597,7 @@ name|commonCat
 init|=
 name|FunctionRegistry
 operator|.
-name|getCommonCategory
+name|getPrimitiveCommonCategory
 argument_list|(
 name|left
 argument_list|,
@@ -1688,7 +1688,7 @@ name|commonCat
 init|=
 name|FunctionRegistry
 operator|.
-name|getCommonCategory
+name|getPrimitiveCommonCategory
 argument_list|(
 name|left
 argument_list|,

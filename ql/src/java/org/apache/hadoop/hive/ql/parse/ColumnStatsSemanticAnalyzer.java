@@ -1162,12 +1162,17 @@ name|whereClause
 operator|.
 name|append
 argument_list|(
+literal|"`"
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|partKey
 argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" = "
+literal|"` = "
 argument_list|)
 operator|.
 name|append
@@ -2055,7 +2060,7 @@ name|rewrittenQueryBuilder
 operator|.
 name|append
 argument_list|(
-literal|"compute_stats("
+literal|"compute_stats(`"
 argument_list|)
 expr_stmt|;
 name|rewrittenQueryBuilder
@@ -2074,7 +2079,7 @@ name|rewrittenQueryBuilder
 operator|.
 name|append
 argument_list|(
-literal|" , "
+literal|"` , "
 argument_list|)
 expr_stmt|;
 name|rewrittenQueryBuilder

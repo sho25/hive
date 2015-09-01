@@ -493,6 +493,24 @@ name|SemanticException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Utility class for index support.  * Currently used for BITMAP and AGGREGATE index  *  */
 end_comment
@@ -1421,6 +1439,14 @@ operator|new
 name|Driver
 argument_list|(
 name|builderConf
+argument_list|,
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getUserName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|driver

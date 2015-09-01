@@ -1050,8 +1050,7 @@ expr_stmt|;
 return|return;
 block|}
 comment|// move all the children to the front of queue
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|removeAll
 argument_list|(
@@ -1061,8 +1060,7 @@ name|getChildren
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|addAll
 argument_list|(
@@ -1075,8 +1073,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// add self to the end of the queue
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|add
 argument_list|(

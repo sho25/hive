@@ -1673,7 +1673,7 @@ comment|// Update table stats. For partitioned table, we update stats in
 comment|// alterPartition()
 name|MetaStoreUtils
 operator|.
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 argument_list|(
 name|db
 argument_list|,

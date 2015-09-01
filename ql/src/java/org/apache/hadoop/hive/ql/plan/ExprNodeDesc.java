@@ -225,6 +225,28 @@ name|hashCode
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+specifier|final
+name|boolean
+name|equals
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+block|{
+comment|// prevent equals from being overridden in sub-classes
+comment|// always use ExprNodeDescEqualityWrapper
+comment|// if you need any other equality than Object.equals()
+return|return
+operator|(
+name|o
+operator|==
+name|this
+operator|)
+return|;
+block|}
 specifier|public
 name|TypeInfo
 name|getTypeInfo
@@ -335,13 +357,23 @@ block|}
 comment|// This wraps an instance of an ExprNodeDesc, and makes equals work like isSame, see comment on
 comment|// isSame
 specifier|public
+specifier|final
 specifier|static
 class|class
 name|ExprNodeDescEqualityWrapper
 block|{
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|exprNodeDesc
+decl_stmt|;
+comment|// beware of any implementation whose hashcode is mutable by reference
+comment|// inserting into a Map and then changing the hashcode can make it
+comment|// disappear out of the Map during lookups
+specifier|private
+specifier|final
+name|int
+name|hashcode
 decl_stmt|;
 specifier|public
 name|ExprNodeDescEqualityWrapper
@@ -356,6 +388,21 @@ name|exprNodeDesc
 operator|=
 name|exprNodeDesc
 expr_stmt|;
+name|this
+operator|.
+name|hashcode
+operator|=
+name|exprNodeDesc
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
+name|exprNodeDesc
+operator|.
+name|hashCode
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 name|ExprNodeDesc
@@ -365,21 +412,6 @@ block|{
 return|return
 name|exprNodeDesc
 return|;
-block|}
-specifier|public
-name|void
-name|setExprNodeDesc
-parameter_list|(
-name|ExprNodeDesc
-name|exprNodeDesc
-parameter_list|)
-block|{
-name|this
-operator|.
-name|exprNodeDesc
-operator|=
-name|exprNodeDesc
-expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -436,16 +468,7 @@ name|hashCode
 parameter_list|()
 block|{
 return|return
-name|exprNodeDesc
-operator|==
-literal|null
-condition|?
-literal|0
-else|:
-name|exprNodeDesc
-operator|.
-name|hashCode
-argument_list|()
+name|hashcode
 return|;
 block|}
 comment|/* helper function to allow Set()/Collection() operations with ExprNodeDesc */
