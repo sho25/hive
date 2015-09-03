@@ -1678,14 +1678,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|MAPREDUCE_SHUFFLE_SERVICEID
-init|=
-literal|"mapreduce_shuffle"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|SHUFFLE_PORT_CONFIG_KEY
 init|=
 literal|"llap.shuffle.port"
@@ -2034,7 +2026,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|public
+specifier|private
 name|ShuffleHandler
 parameter_list|(
 name|Configuration

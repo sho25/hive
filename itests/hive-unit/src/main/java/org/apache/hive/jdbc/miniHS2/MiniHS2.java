@@ -503,6 +503,7 @@ name|MiniDFSShim
 name|dfs
 decl_stmt|;
 specifier|private
+specifier|final
 name|FileSystem
 name|localFS
 decl_stmt|;
@@ -1012,8 +1013,6 @@ argument_list|,
 literal|4
 argument_list|,
 name|uriString
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 break|break;

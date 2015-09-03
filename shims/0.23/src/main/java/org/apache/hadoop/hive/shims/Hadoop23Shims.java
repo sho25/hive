@@ -2423,9 +2423,6 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
-parameter_list|,
-name|int
-name|numDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -2439,8 +2436,6 @@ argument_list|,
 name|numberOfTaskTrackers
 argument_list|,
 name|nameNode
-argument_list|,
-name|numDir
 argument_list|)
 return|;
 block|}
@@ -2474,9 +2469,6 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
-parameter_list|,
-name|int
-name|numDir
 parameter_list|)
 throws|throws
 name|IOException

@@ -700,9 +700,6 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
-parameter_list|,
-name|int
-name|numDir
 parameter_list|)
 throws|throws
 name|IOException
