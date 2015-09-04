@@ -155,6 +155,34 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
+name|MessageType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
+name|MessageTypeParser
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Test
@@ -1378,6 +1406,18 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -1386,6 +1426,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -1635,7 +1677,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -1669,7 +1711,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|12
+literal|12L
 argument_list|,
 name|leaf
 operator|.
@@ -1692,7 +1734,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -1726,7 +1768,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|13
+literal|13L
 argument_list|,
 name|leaf
 operator|.
@@ -1749,7 +1791,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -1783,7 +1825,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|15
+literal|15L
 argument_list|,
 name|leaf
 operator|.
@@ -1806,7 +1848,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -1840,7 +1882,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|16
+literal|16L
 argument_list|,
 name|leaf
 operator|.
@@ -1863,7 +1905,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -1897,7 +1939,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|30
+literal|30L
 argument_list|,
 name|leaf
 operator|.
@@ -2455,6 +2497,18 @@ literal|"lteq(id, 4)"
 comment|/* id<= 4             */
 block|}
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -2463,6 +2517,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -2627,7 +2683,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -2661,7 +2717,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|12
+literal|12L
 argument_list|,
 name|leaf
 operator|.
@@ -2684,7 +2740,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -2718,7 +2774,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|4
+literal|4L
 argument_list|,
 name|leaf
 operator|.
@@ -3902,6 +3958,18 @@ literal|"eq(last_name, Binary{\"smith\"})"
 comment|/* 'smith' = last_name  */
 block|}
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; required binary last_name;}"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -3910,6 +3978,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -3950,7 +4020,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -3994,7 +4064,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|23
+literal|23L
 argument_list|,
 name|leaf
 operator|.
@@ -4009,7 +4079,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|45
+literal|45L
 argument_list|,
 name|leaf
 operator|.
@@ -4580,6 +4650,18 @@ literal|"or(eq(id, 34), eq(id, 50))"
 comment|/* id in (34,50) */
 block|}
 decl_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -4588,6 +4670,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -4628,7 +4712,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -4662,7 +4746,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|12
+literal|12L
 argument_list|,
 name|leaf
 operator|.
@@ -4762,7 +4846,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -4796,7 +4880,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|34
+literal|34L
 argument_list|,
 name|leaf
 operator|.
@@ -4811,7 +4895,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|50
+literal|50L
 argument_list|,
 name|leaf
 operator|.
@@ -5526,6 +5610,18 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -5534,6 +5630,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -6592,6 +6690,18 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -6600,6 +6710,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -6669,7 +6781,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6703,7 +6815,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|18
+literal|18L
 argument_list|,
 name|leaf
 operator|.
@@ -6726,7 +6838,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6760,7 +6872,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|10
+literal|10L
 argument_list|,
 name|leaf
 operator|.
@@ -6783,7 +6895,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6817,7 +6929,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|13
+literal|13L
 argument_list|,
 name|leaf
 operator|.
@@ -6840,7 +6952,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6874,7 +6986,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|16
+literal|16L
 argument_list|,
 name|leaf
 operator|.
@@ -6897,7 +7009,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6931,7 +7043,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|11
+literal|11L
 argument_list|,
 name|leaf
 operator|.
@@ -6954,7 +7066,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -6988,7 +7100,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|12
+literal|12L
 argument_list|,
 name|leaf
 operator|.
@@ -7011,7 +7123,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -7045,7 +7157,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|14
+literal|14L
 argument_list|,
 name|leaf
 operator|.
@@ -7068,7 +7180,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -7102,7 +7214,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|15
+literal|15L
 argument_list|,
 name|leaf
 operator|.
@@ -7125,7 +7237,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaf
 operator|.
@@ -7159,7 +7271,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|17
+literal|17L
 argument_list|,
 name|leaf
 operator|.
@@ -7365,6 +7477,18 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -7373,6 +7497,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|assertNull
@@ -7973,6 +8099,18 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|MessageType
+name|schema
+init|=
+name|MessageTypeParser
+operator|.
+name|parseMessageType
+argument_list|(
+literal|"message test { required int32 id;"
+operator|+
+literal|" required binary first_name; }"
+argument_list|)
+decl_stmt|;
 name|FilterPredicate
 name|p
 init|=
@@ -7981,6 +8119,8 @@ operator|.
 name|toFilterPredicate
 argument_list|(
 name|sarg
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|String
@@ -8004,7 +8144,7 @@ name|PredicateLeaf
 operator|.
 name|Type
 operator|.
-name|INTEGER
+name|LONG
 argument_list|,
 name|leaves
 operator|.
@@ -8053,7 +8193,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|10
+literal|10L
 argument_list|,
 name|leaves
 operator|.

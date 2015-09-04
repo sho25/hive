@@ -291,6 +291,21 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testCreateProcedureNoParams
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|run
+argument_list|(
+literal|"create_procedure_no_params"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testDate
 parameter_list|()
 throws|throws
@@ -1029,6 +1044,14 @@ operator|.
 name|startsWith
 argument_list|(
 literal|"log4j:"
+argument_list|)
+operator|&&
+operator|!
+name|line
+operator|.
+name|contains
+argument_list|(
+literal|"INFO Log4j"
 argument_list|)
 condition|)
 block|{

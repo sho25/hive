@@ -104,35 +104,28 @@ specifier|static
 enum|enum
 name|Type
 block|{
-name|INTEGER
+name|LONG
 parameter_list|(
-name|Integer
+name|Long
 operator|.
 name|class
 parameter_list|)
 operator|,
-comment|// all of the integer types except long
-constructor|LONG(Long.class
+comment|// all of the integer types
+constructor|FLOAT(Double.class
 block|)
 enum|,
-name|FLOAT
+comment|// float and double
+name|STRING
 parameter_list|(
-name|Double
+name|String
 operator|.
 name|class
 parameter_list|)
 operator|,
-comment|// float and double
-constructor|STRING(String.class
-block|)
-operator|,
 comment|// string, char, varchar
-name|DATE
-argument_list|(
-name|Date
-operator|.
-name|class
-argument_list|)
+constructor|DATE(Date.class
+block|)
 operator|,
 name|DECIMAL
 argument_list|(

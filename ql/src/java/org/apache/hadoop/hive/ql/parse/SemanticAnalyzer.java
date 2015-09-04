@@ -29312,6 +29312,23 @@ argument_list|,
 name|groupByInputRowResolver
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|ExprNodeDescUtils
+operator|.
+name|indexOf
+argument_list|(
+name|grpByExprNode
+argument_list|,
+name|groupByKeys
+argument_list|)
+operator|>=
+literal|0
+condition|)
+block|{
+comment|// Skip duplicated grouping keys
+continue|continue;
+block|}
 name|groupByKeys
 operator|.
 name|add

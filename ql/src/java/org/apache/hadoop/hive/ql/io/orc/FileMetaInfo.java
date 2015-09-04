@@ -41,6 +41,28 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcFile
+operator|.
+name|WriterVersion
+import|;
+end_import
+
 begin_comment
 comment|/**  * FileMetaInfo - represents file metadata stored in footer and postscript sections of the file  * that is useful for Reader implementation  *  */
 end_comment
@@ -49,6 +71,9 @@ begin_class
 class|class
 name|FileMetaInfo
 block|{
+name|ByteBuffer
+name|footerMetaAndPsBuffer
+decl_stmt|;
 specifier|final
 name|String
 name|compressionType
@@ -78,6 +103,7 @@ operator|.
 name|WriterVersion
 name|writerVersion
 decl_stmt|;
+comment|/** Ctor used when reading splits - no version list or full footer buffer. */
 name|FileMetaInfo
 parameter_list|(
 name|String
@@ -111,9 +137,12 @@ argument_list|,
 literal|null
 argument_list|,
 name|writerVersion
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** Ctor used when creating file info during init and when getting a new one. */
 specifier|public
 name|FileMetaInfo
 parameter_list|(
@@ -135,10 +164,11 @@ name|Integer
 argument_list|>
 name|versionList
 parameter_list|,
-name|OrcFile
-operator|.
 name|WriterVersion
 name|writerVersion
+parameter_list|,
+name|ByteBuffer
+name|fullFooterBuffer
 parameter_list|)
 block|{
 name|this
@@ -176,6 +206,12 @@ operator|.
 name|writerVersion
 operator|=
 name|writerVersion
+expr_stmt|;
+name|this
+operator|.
+name|footerMetaAndPsBuffer
+operator|=
+name|fullFooterBuffer
 expr_stmt|;
 block|}
 block|}

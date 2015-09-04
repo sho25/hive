@@ -91,6 +91,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|HiveInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
@@ -341,7 +359,7 @@ specifier|static
 name|int
 name|BUCKET_COUNT
 init|=
-literal|1
+literal|2
 decl_stmt|;
 annotation|@
 name|Rule
@@ -698,7 +716,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//   runStatementOnDriver("set autocommit true");
 name|dropTables
 argument_list|()
 expr_stmt|;
@@ -768,6 +785,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * this is run 2 times: 1 with PPD on, 1 with off    * Also, the queries are such that if we were to push predicate down to an update/delete delta,    * the test would produce wrong results    * @param enablePPD    * @throws Exception    */
 specifier|private
 name|void
 name|testOrcPPD
@@ -806,11 +824,23 @@ name|enablePPD
 argument_list|)
 expr_stmt|;
 comment|//enables ORC PPD
+comment|//create delta_0001_0001_0000 (should push predicate here)
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|"(a,b) "
+operator|+
+name|makeValuesClause
+argument_list|(
+operator|new
 name|int
 index|[]
 index|[]
-name|tableData
-init|=
 block|{
 block|{
 literal|1
@@ -824,20 +854,6 @@ block|,
 literal|4
 block|}
 block|}
-decl_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"insert into "
-operator|+
-name|Table
-operator|.
-name|ACIDTBL
-operator|+
-literal|"(a,b) "
-operator|+
-name|makeValuesClause
-argument_list|(
-name|tableData
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -845,19 +861,106 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|rs2
+name|explain
+decl_stmt|;
+name|String
+name|query
 init|=
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set b = 5 where a = 3"
+decl_stmt|;
+if|if
+condition|(
+name|enablePPD
+condition|)
+block|{
+name|explain
+operator|=
 name|runStatementOnDriver
 argument_list|(
+literal|"explain "
+operator|+
+name|query
+argument_list|)
+expr_stmt|;
+comment|/*       here is a portion of the above "explain".  The "filterExpr:" in the TableScan is the pushed predicate       w/o PPD, the line is simply not there, otherwise the plan is the same        Map Operator Tree:,          TableScan,           alias: acidtbl,           filterExpr: (a = 3) (type: boolean),             Filter Operator,              predicate: (a = 3) (type: boolean),              Select Operator,              ...        */
+name|assertPredicateIsPushed
+argument_list|(
+literal|"filterExpr: (a = 3)"
+argument_list|,
+name|explain
+argument_list|)
+expr_stmt|;
+block|}
+comment|//create delta_0002_0002_0000 (can't push predicate)
+name|runStatementOnDriver
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+name|query
+operator|=
 literal|"select a,b from "
 operator|+
 name|Table
 operator|.
 name|ACIDTBL
 operator|+
-literal|" where a> 1 order by a,b"
+literal|" where b = 4 order by a,b"
+expr_stmt|;
+if|if
+condition|(
+name|enablePPD
+condition|)
+block|{
+comment|/*at this point we have 2 delta files, 1 for insert 1 for update       * we should push predicate into 1st one but not 2nd.  If the following 'select' were to       * push into the 'update' delta, we'd filter out {3,5} before doing merge and thus      * produce {3,4} as the value for 2nd row.  The right result is 0-rows.*/
+name|explain
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"explain "
+operator|+
+name|query
+argument_list|)
+expr_stmt|;
+name|assertPredicateIsPushed
+argument_list|(
+literal|"filterExpr: (b = 4)"
+argument_list|,
+name|explain
+argument_list|)
+expr_stmt|;
+block|}
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs0
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|query
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Read failed"
+argument_list|,
+literal|0
+argument_list|,
+name|rs0
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "
@@ -979,7 +1082,33 @@ name|tableData2
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//now we have delta_0002_0002_0000 with inserts only (ok to push predicate)
+comment|//now we have delta_0003_0003_0000 with inserts only (ok to push predicate)
+if|if
+condition|(
+name|enablePPD
+condition|)
+block|{
+name|explain
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"explain delete from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" where a=7 and b=8"
+argument_list|)
+expr_stmt|;
+name|assertPredicateIsPushed
+argument_list|(
+literal|"filterExpr: ((a = 7) and (b = 8))"
+argument_list|,
+name|explain
+argument_list|)
+expr_stmt|;
+block|}
 name|runStatementOnDriver
 argument_list|(
 literal|"delete from "
@@ -991,19 +1120,40 @@ operator|+
 literal|" where a=7 and b=8"
 argument_list|)
 expr_stmt|;
-comment|//now we have delta_0003_0003_0000 with delete events (can't push predicate)
-name|runStatementOnDriver
-argument_list|(
-literal|"update "
+comment|//now we have delta_0004_0004_0000 with delete events
+comment|/*(can't push predicate to 'delete' delta)     * if we were to push to 'delete' delta, we'd filter out all rows since the 'row' is always NULL for     * delete events and we'd produce data as if the delete never happened*/
+name|query
+operator|=
+literal|"select a,b from "
 operator|+
 name|Table
 operator|.
 name|ACIDTBL
 operator|+
-literal|" set b = 11 where a = 9"
+literal|" where a> 1 order by a,b"
+expr_stmt|;
+if|if
+condition|(
+name|enablePPD
+condition|)
+block|{
+name|explain
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"explain "
+operator|+
+name|query
 argument_list|)
 expr_stmt|;
-comment|//and another delta with update op
+name|assertPredicateIsPushed
+argument_list|(
+literal|"filterExpr: (a> 1)"
+argument_list|,
+name|explain
+argument_list|)
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -1012,13 +1162,7 @@ name|rs1
 init|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select a,b from "
-operator|+
-name|Table
-operator|.
-name|ACIDTBL
-operator|+
-literal|" where a> 1 order by a,b"
+name|query
 argument_list|)
 decl_stmt|;
 name|int
@@ -1026,11 +1170,15 @@ index|[]
 index|[]
 name|resultData
 init|=
+operator|new
+name|int
+index|[]
+index|[]
 block|{
 block|{
 literal|3
 block|,
-literal|4
+literal|5
 block|}
 block|,
 block|{
@@ -1042,7 +1190,7 @@ block|,
 block|{
 literal|9
 block|,
-literal|11
+literal|10
 block|}
 block|}
 decl_stmt|;
@@ -1071,6 +1219,60 @@ operator|.
 name|HIVEOPTINDEXFILTER
 argument_list|,
 name|originalPpd
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+name|void
+name|assertPredicateIsPushed
+parameter_list|(
+name|String
+name|ppd
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|queryPlan
+parameter_list|)
+block|{
+for|for
+control|(
+name|String
+name|line
+range|:
+name|queryPlan
+control|)
+block|{
+if|if
+condition|(
+name|line
+operator|!=
+literal|null
+operator|&&
+name|line
+operator|.
+name|contains
+argument_list|(
+name|ppd
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+block|}
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"PPD '"
+operator|+
+name|ppd
+operator|+
+literal|"' wasn't pushed"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

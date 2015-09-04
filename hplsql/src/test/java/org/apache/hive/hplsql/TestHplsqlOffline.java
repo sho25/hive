@@ -327,6 +327,14 @@ name|startsWith
 argument_list|(
 literal|"log4j:"
 argument_list|)
+operator|&&
+operator|!
+name|line
+operator|.
+name|contains
+argument_list|(
+literal|"INFO Log4j"
+argument_list|)
 condition|)
 block|{
 name|sb

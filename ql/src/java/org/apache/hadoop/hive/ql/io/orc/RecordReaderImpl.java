@@ -3940,10 +3940,6 @@ return|;
 block|}
 break|break;
 case|case
-name|INTEGER
-case|:
-comment|// fall through
-case|case
 name|LONG
 case|:
 if|if

@@ -1253,6 +1253,13 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|stripHivePasswordDetails
+argument_list|(
+name|tezConfig
+argument_list|)
+expr_stmt|;
 name|ServicePluginsDescriptor
 name|servicePluginsDescriptor
 decl_stmt|;
