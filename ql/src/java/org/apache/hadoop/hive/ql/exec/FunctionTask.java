@@ -691,6 +691,9 @@ try|try
 block|{
 name|Hive
 operator|.
+name|get
+argument_list|()
+operator|.
 name|reloadFunctions
 argument_list|()
 expr_stmt|;
