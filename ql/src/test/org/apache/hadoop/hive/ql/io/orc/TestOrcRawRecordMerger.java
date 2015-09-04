@@ -7690,7 +7690,7 @@ specifier|final
 name|int
 name|BUCKET
 init|=
-literal|10
+literal|11
 decl_stmt|;
 name|Configuration
 name|conf

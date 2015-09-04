@@ -1790,7 +1790,7 @@ name|OrcFile
 operator|.
 name|WriterVersion
 operator|.
-name|ORIGINAL
+name|FUTURE
 return|;
 block|}
 comment|/** Extracts the necessary metadata from an externally store buffer (fullFooterBuffer). */
