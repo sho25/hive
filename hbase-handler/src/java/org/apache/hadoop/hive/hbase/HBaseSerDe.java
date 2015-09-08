@@ -584,6 +584,15 @@ name|SERIALIZATION_TYPE
 init|=
 literal|"serialization.type"
 decl_stmt|;
+comment|/**    * Defines if the prefix column from hbase should be hidden.    * It works only when @HBASE_COLUMNS_REGEX_MATCHING is true.    * Default value of this parameter is false    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HBASE_COLUMNS_PREFIX_HIDE
+init|=
+literal|"hbase.columns.mapping.prefix.hide"
+decl_stmt|;
 specifier|private
 name|ObjectInspector
 name|cachedObjectInspector
@@ -743,7 +752,6 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Parses the HBase columns mapping specifier to identify the column families, qualifiers    * and also caches the byte arrays corresponding to them. One of the Hive table    * columns maps to the HBase row key, by default the first column.    *    * @param columnsMappingSpec string hbase.columns.mapping specified when creating table    * @param doColumnRegexMatching whether to do a regex matching on the columns or not    * @return List<ColumnMapping> which contains the column mapping information by position    * @throws org.apache.hadoop.hive.serde2.SerDeException    */
 specifier|public
 specifier|static
 name|ColumnMappings
@@ -754,6 +762,35 @@ name|columnsMappingSpec
 parameter_list|,
 name|boolean
 name|doColumnRegexMatching
+parameter_list|)
+throws|throws
+name|SerDeException
+block|{
+return|return
+name|parseColumnsMapping
+argument_list|(
+name|columnsMappingSpec
+argument_list|,
+name|doColumnRegexMatching
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+comment|/**    * Parses the HBase columns mapping specifier to identify the column families, qualifiers    * and also caches the byte arrays corresponding to them. One of the Hive table    * columns maps to the HBase row key, by default the first column.    *    * @param columnsMappingSpec string hbase.columns.mapping specified when creating table    * @param doColumnRegexMatching whether to do a regex matching on the columns or not    * @param hideColumnPrefix whether to hide a prefix of column mapping in key name in a map (works only if @doColumnRegexMatching is true)    * @return List<ColumnMapping> which contains the column mapping information by position    * @throws org.apache.hadoop.hive.serde2.SerDeException    */
+specifier|public
+specifier|static
+name|ColumnMappings
+name|parseColumnsMapping
+parameter_list|(
+name|String
+name|columnsMappingSpec
+parameter_list|,
+name|boolean
+name|doColumnRegexMatching
+parameter_list|,
+name|boolean
+name|hideColumnPrefix
 parameter_list|)
 throws|throws
 name|SerDeException
@@ -1158,6 +1195,13 @@ operator|.
 name|qualifierPrefix
 argument_list|)
 expr_stmt|;
+comment|//pass a flag to hide prefixes
+name|columnMapping
+operator|.
+name|doPrefixCut
+operator|=
+name|hideColumnPrefix
+expr_stmt|;
 comment|// we weren't provided any actual qualifier name. Set these to
 comment|// null.
 name|columnMapping
@@ -1198,6 +1242,13 @@ index|[
 literal|1
 index|]
 argument_list|)
+expr_stmt|;
+comment|//if there is no prefix then we don't cut anything
+name|columnMapping
+operator|.
+name|doPrefixCut
+operator|=
+literal|false
 expr_stmt|;
 block|}
 block|}
