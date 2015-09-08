@@ -943,7 +943,7 @@ block|}
 comment|/**      * Walk the given operator.      */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(

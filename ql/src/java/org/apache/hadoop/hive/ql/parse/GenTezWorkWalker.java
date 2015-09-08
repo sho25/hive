@@ -356,7 +356,7 @@ block|}
 comment|/**    * Walk the given operator.    *    * @param nd operator being walked    */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(
