@@ -250,6 +250,14 @@ name|SOURCE_CONTEXT3
 init|=
 literal|"create table if not exists test.testSrcTbl3(sc3 string);"
 decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|String
+name|SOURCE_CONTEXT4
+init|=
+literal|"show tables;!ls;show tables;\nquit;"
+decl_stmt|;
 specifier|final
 specifier|static
 name|String
@@ -456,7 +464,7 @@ literal|"The expected keyword \""
 operator|+
 name|keywords
 operator|+
-literal|"\" doesn't occur in the output: "
+literal|"\" occur in the output: "
 operator|+
 name|output
 argument_list|,
@@ -479,7 +487,7 @@ literal|"The expected keyword \""
 operator|+
 name|keywords
 operator|+
-literal|"\" doesn't occur in the output: "
+literal|"\" should be excluded occurred in the output: "
 operator|+
 name|output
 argument_list|,
@@ -504,9 +512,32 @@ name|verifyCMD
 argument_list|(
 literal|"!lss\n"
 argument_list|,
-literal|"Unknown command: lss"
+literal|"Failed to execute lss"
 argument_list|,
 name|errS
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCmd
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|"show tables;!ls;show tables;\n"
+argument_list|,
+literal|"src"
+argument_list|,
+name|os
 argument_list|,
 literal|null
 argument_list|,
@@ -731,6 +762,58 @@ operator|+
 literal|"desc testSrcTbl3;\nquit;\n"
 argument_list|,
 literal|"sc3"
+argument_list|,
+name|os
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"--database"
+block|,
+literal|"test"
+block|}
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|f
+operator|.
+name|delete
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSourceCmd3
+parameter_list|()
+block|{
+name|File
+name|f
+init|=
+name|generateTmpFile
+argument_list|(
+name|SOURCE_CONTEXT4
+argument_list|)
+decl_stmt|;
+name|verifyCMD
+argument_list|(
+literal|"source "
+operator|+
+name|f
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|";"
+operator|+
+literal|"desc testSrcTbl4;\nquit;\n"
+argument_list|,
+literal|"src"
 argument_list|,
 name|os
 argument_list|,
@@ -1065,6 +1148,36 @@ argument_list|,
 name|os
 argument_list|,
 literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testNoErrorDB
+parameter_list|()
+block|{
+name|verifyCMD
+argument_list|(
+literal|null
+argument_list|,
+literal|"Error: Method not supported (state=,code=0)"
+argument_list|,
+name|errS
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"-e"
+block|,
+literal|"show tables;"
+block|}
 argument_list|,
 name|ERRNO_OK
 argument_list|,
