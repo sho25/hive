@@ -440,8 +440,7 @@ block|{
 name|AccumuloConnectionParameters
 name|cnxnParams
 init|=
-operator|new
-name|AccumuloConnectionParameters
+name|getConnectionParams
 argument_list|(
 name|job
 argument_list|)
@@ -480,7 +479,7 @@ name|useMockInstance
 argument_list|()
 condition|)
 block|{
-name|setAccumuloMockInstance
+name|setMockInstanceWithErrorChecking
 argument_list|(
 name|job
 argument_list|,
@@ -494,7 +493,7 @@ block|}
 else|else
 block|{
 comment|// Accumulo instance name with ZK quorum
-name|setAccumuloZooKeeperInstance
+name|setZooKeeperInstanceWithErrorChecking
 argument_list|(
 name|job
 argument_list|,
@@ -528,21 +527,20 @@ block|{
 name|UserGroupInformation
 name|ugi
 init|=
-name|UserGroupInformation
-operator|.
 name|getCurrentUser
 argument_list|()
 decl_stmt|;
 if|if
 condition|(
 operator|!
-name|ugi
-operator|.
 name|hasKerberosCredentials
-argument_list|()
+argument_list|(
+name|ugi
+argument_list|)
 condition|)
 block|{
-name|helper
+name|getHelper
+argument_list|()
 operator|.
 name|addTokenFromUserToJobConf
 argument_list|(
@@ -568,7 +566,8 @@ decl_stmt|;
 name|AuthenticationToken
 name|token
 init|=
-name|helper
+name|getHelper
+argument_list|()
 operator|.
 name|getDelegationToken
 argument_list|(
@@ -576,7 +575,7 @@ name|connector
 argument_list|)
 decl_stmt|;
 comment|// Send the DelegationToken down to the Configuration for Accumulo to use
-name|setConnectorInfo
+name|setConnectorInfoWithErrorChecking
 argument_list|(
 name|job
 argument_list|,
@@ -597,7 +596,8 @@ name|TokenIdentifier
 argument_list|>
 name|accumuloToken
 init|=
-name|helper
+name|getHelper
+argument_list|()
 operator|.
 name|getHadoopToken
 argument_list|(
@@ -612,7 +612,8 @@ literal|"Adding Hadoop Token for Accumulo to Job's Credentials"
 argument_list|)
 expr_stmt|;
 comment|// Add the Hadoop token to the JobConf
-name|helper
+name|getHelper
+argument_list|()
 operator|.
 name|mergeTokenIntoJobConf
 argument_list|(
@@ -664,7 +665,7 @@ block|}
 block|}
 else|else
 block|{
-name|setAccumuloConnectorInfo
+name|setConnectorInfoWithErrorChecking
 argument_list|(
 name|job
 argument_list|,
@@ -720,7 +721,7 @@ block|}
 comment|// Non-static methods to wrap the static AccumuloOutputFormat methods to enable testing
 specifier|protected
 name|void
-name|setAccumuloConnectorInfo
+name|setConnectorInfoWithErrorChecking
 parameter_list|(
 name|JobConf
 name|conf
@@ -775,7 +776,7 @@ literal|"deprecation"
 argument_list|)
 specifier|protected
 name|void
-name|setAccumuloZooKeeperInstance
+name|setZooKeeperInstanceWithErrorChecking
 parameter_list|(
 name|JobConf
 name|conf
@@ -802,7 +803,8 @@ block|{
 comment|// Reflection to support Accumulo 1.5. Remove when Accumulo 1.5 support is dropped
 comment|// 1.6 works with the deprecated 1.5 method, but must use reflection for 1.7-only
 comment|// SASL support
-name|helper
+name|getHelper
+argument_list|()
 operator|.
 name|setZooKeeperInstance
 argument_list|(
@@ -861,7 +863,7 @@ block|}
 block|}
 specifier|protected
 name|void
-name|setAccumuloMockInstance
+name|setMockInstanceWithErrorChecking
 parameter_list|(
 name|JobConf
 name|conf
@@ -922,6 +924,60 @@ argument_list|,
 name|tableName
 argument_list|)
 expr_stmt|;
+block|}
+name|HiveAccumuloHelper
+name|getHelper
+parameter_list|()
+block|{
+comment|// Allows mocking in testing.
+return|return
+name|helper
+return|;
+block|}
+name|AccumuloConnectionParameters
+name|getConnectionParams
+parameter_list|(
+name|JobConf
+name|conf
+parameter_list|)
+block|{
+comment|// Allows mocking in testing.
+return|return
+operator|new
+name|AccumuloConnectionParameters
+argument_list|(
+name|conf
+argument_list|)
+return|;
+block|}
+name|boolean
+name|hasKerberosCredentials
+parameter_list|(
+name|UserGroupInformation
+name|ugi
+parameter_list|)
+block|{
+comment|// Allows mocking in testing.
+return|return
+name|ugi
+operator|.
+name|hasKerberosCredentials
+argument_list|()
+return|;
+block|}
+name|UserGroupInformation
+name|getCurrentUser
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+comment|// Allows mocking in testing.
+return|return
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+return|;
 block|}
 block|}
 end_class
