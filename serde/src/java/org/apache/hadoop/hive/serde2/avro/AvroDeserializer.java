@@ -1049,7 +1049,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Adding new valid RRID :"
 operator|+
