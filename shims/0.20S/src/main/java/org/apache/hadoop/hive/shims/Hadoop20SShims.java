@@ -31,16 +31,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|Override
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|net
 operator|.
 name|InetSocketAddress
@@ -685,9 +675,7 @@ name|hadoop
 operator|.
 name|security
 operator|.
-name|token
-operator|.
-name|Token
+name|UserGroupInformation
 import|;
 end_import
 
@@ -701,7 +689,9 @@ name|hadoop
 operator|.
 name|security
 operator|.
-name|UserGroupInformation
+name|token
+operator|.
+name|Token
 import|;
 end_import
 
@@ -748,20 +738,6 @@ operator|.
 name|util
 operator|.
 name|Progressable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Tool
 import|;
 end_import
 
@@ -1511,6 +1487,9 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
+parameter_list|,
+name|boolean
+name|isLlap
 parameter_list|)
 throws|throws
 name|IOException
