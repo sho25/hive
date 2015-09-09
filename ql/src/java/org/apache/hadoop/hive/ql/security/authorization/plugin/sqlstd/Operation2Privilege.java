@@ -1944,6 +1944,24 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|op2Priv
+operator|.
+name|put
+argument_list|(
+name|HiveOperationType
+operator|.
+name|SHOW_CREATEDATABASE
+argument_list|,
+name|PrivRequirement
+operator|.
+name|newIOPrivRequirement
+argument_list|(
+name|SEL_GRANT_AR
+argument_list|,
+literal|null
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// for now allow only create-view with 'select with grant'
 comment|// the owner will also have select with grant privileges on new view
 name|op2Priv
