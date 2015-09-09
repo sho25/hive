@@ -49,6 +49,16 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -293,16 +303,6 @@ name|ReflectionUtils
 import|;
 end_import
 
-begin_import
-import|import
-name|javax
-operator|.
-name|annotation
-operator|.
-name|Nullable
-import|;
-end_import
-
 begin_comment
 comment|/**  * HBaseSerDeParameters encapsulates SerDeParameters and additional configurations that are specific for  * HBaseSerDe.  *  */
 end_comment
@@ -352,6 +352,11 @@ specifier|private
 specifier|final
 name|boolean
 name|doColumnRegexMatching
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|doColumnPrefixCut
 decl_stmt|;
 specifier|private
 specifier|final
@@ -421,6 +426,24 @@ literal|"true"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|doColumnPrefixCut
+operator|=
+name|Boolean
+operator|.
+name|valueOf
+argument_list|(
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|HBaseSerDe
+operator|.
+name|HBASE_COLUMNS_PREFIX_HIDE
+argument_list|,
+literal|"false"
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// Parse and initialize the HBase columns mapping
 name|columnMappings
 operator|=
@@ -431,6 +454,8 @@ argument_list|(
 name|columnMappingString
 argument_list|,
 name|doColumnRegexMatching
+argument_list|,
+name|doColumnPrefixCut
 argument_list|)
 expr_stmt|;
 comment|// Build the type property string if not supplied

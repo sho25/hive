@@ -1887,6 +1887,9 @@ name|byte
 index|[]
 name|qualifierPrefixBytes
 decl_stmt|;
+name|boolean
+name|doPrefixCut
+decl_stmt|;
 specifier|public
 name|String
 name|getColumnName
@@ -1990,6 +1993,15 @@ parameter_list|()
 block|{
 return|return
 name|qualifierPrefixBytes
+return|;
+block|}
+specifier|public
+name|boolean
+name|isDoPrefixCut
+parameter_list|()
+block|{
+return|return
+name|doPrefixCut
 return|;
 block|}
 specifier|public

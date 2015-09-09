@@ -138,7 +138,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 74  */
+comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 74 + 2 (MySQL)  */
 end_comment
 
 begin_class
@@ -3661,6 +3661,99 @@ argument_list|(
 literal|"Failure didn't match."
 argument_list|,
 literal|"line 1:13 Failed to recognize predicate 'WITH'. Failed rule: 'identifier' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// MySQL reserved keywords.
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_RLIKE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE RLIKE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 Failed to recognize predicate 'RLIKE'. Failed rule: 'identifier' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_REGEXP
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE REGEXP (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 Failed to recognize predicate 'REGEXP'. Failed rule: 'identifier' in table name"
 argument_list|,
 name|ex
 operator|.

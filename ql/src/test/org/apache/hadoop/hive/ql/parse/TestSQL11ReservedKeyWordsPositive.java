@@ -138,7 +138,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 74  */
+comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 74 + 2 (MySQL)  */
 end_comment
 
 begin_class
@@ -2626,6 +2626,71 @@ argument_list|(
 literal|"AST doesn't match"
 argument_list|,
 literal|"(TOK_CREATETABLE (TOK_TABNAME WITH) TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL col TOK_STRING)))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// MySQL reserved keywords.
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_RLIKE
+parameter_list|()
+throws|throws
+name|ParseException
+block|{
+name|ASTNode
+name|ast
+init|=
+name|parse
+argument_list|(
+literal|"CREATE TABLE RLIKE (col STRING)"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_CREATETABLE (TOK_TABNAME RLIKE) TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL col TOK_STRING)))"
+argument_list|,
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_REGEXP
+parameter_list|()
+throws|throws
+name|ParseException
+block|{
+name|ASTNode
+name|ast
+init|=
+name|parse
+argument_list|(
+literal|"CREATE TABLE REGEXP (col STRING)"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"AST doesn't match"
+argument_list|,
+literal|"(TOK_CREATETABLE (TOK_TABNAME REGEXP) TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL col TOK_STRING)))"
 argument_list|,
 name|ast
 operator|.

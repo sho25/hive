@@ -29327,6 +29327,14 @@ literal|0
 condition|)
 block|{
 comment|// Skip duplicated grouping keys
+name|grpByExprs
+operator|.
+name|remove
+argument_list|(
+name|i
+operator|--
+argument_list|)
+expr_stmt|;
 continue|continue;
 block|}
 name|groupByKeys

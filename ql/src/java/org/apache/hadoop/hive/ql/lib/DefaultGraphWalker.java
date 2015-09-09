@@ -228,7 +228,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * @return the doneList    */
-specifier|public
+specifier|protected
 name|Set
 argument_list|<
 name|Node
@@ -519,7 +519,7 @@ block|}
 block|}
 block|}
 comment|/**    * walk the current operator and its descendants.    *    * @param nd    *          current operator in the graph    * @throws SemanticException    */
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(

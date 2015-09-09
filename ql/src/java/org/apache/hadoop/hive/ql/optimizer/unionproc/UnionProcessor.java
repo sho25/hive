@@ -223,6 +223,24 @@ name|ql
 operator|.
 name|lib
 operator|.
+name|LevelOrderWalker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
 name|Node
 import|;
 end_import
@@ -242,24 +260,6 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|PreOrderWalker
 import|;
 end_import
 
@@ -380,7 +380,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// create a walker which walks the tree in a DFS manner while maintaining
+comment|// create a walker which walks the tree in a BFS manner while maintaining
 comment|// the operator stack.
 name|Map
 argument_list|<
@@ -521,15 +521,24 @@ argument_list|,
 name|uCtx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|LevelOrderWalker
 name|ogw
 init|=
 operator|new
-name|PreOrderWalker
+name|LevelOrderWalker
 argument_list|(
 name|disp
 argument_list|)
 decl_stmt|;
+name|ogw
+operator|.
+name|setNodeTypes
+argument_list|(
+name|UnionOperator
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Create a list of topop nodes
 name|ArrayList
 argument_list|<
@@ -696,9 +705,18 @@ expr_stmt|;
 name|ogw
 operator|=
 operator|new
-name|PreOrderWalker
+name|LevelOrderWalker
 argument_list|(
 name|disp
+argument_list|)
+expr_stmt|;
+name|ogw
+operator|.
+name|setNodeTypes
+argument_list|(
+name|FileSinkOperator
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
 comment|// Create a list of topop nodes
