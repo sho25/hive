@@ -765,6 +765,10 @@ name|int
 name|wbSize
 decl_stmt|;
 comment|// Same as above
+name|int
+name|rowsOnDisk
+decl_stmt|;
+comment|// How many rows saved to the on-disk hashmap (if on disk)
 comment|/* It may happen that there's not enough memory to instantiate a hashmap for the partition.      * In that case, we don't create the hashmap, but pretend the hashmap is directly "spilled".      */
 specifier|public
 name|HashPartition
@@ -790,6 +794,18 @@ condition|(
 name|createHashMap
 condition|)
 block|{
+comment|// Hash map should be at least the size of our designated wbSize
+name|memUsage
+operator|=
+name|Math
+operator|.
+name|max
+argument_list|(
+name|memUsage
+argument_list|,
+name|wbSize
+argument_list|)
+expr_stmt|;
 name|hashMap
 operator|=
 operator|new
@@ -961,6 +977,15 @@ name|initialCapacity
 argument_list|)
 expr_stmt|;
 block|}
+comment|// some bookkeeping
+name|rowsOnDisk
+operator|=
+literal|0
+expr_stmt|;
+name|hashMapOnDisk
+operator|=
+literal|false
+expr_stmt|;
 name|input
 operator|.
 name|close
@@ -1114,6 +1139,14 @@ name|hashMapLocalPath
 operator|=
 literal|null
 expr_stmt|;
+name|rowsOnDisk
+operator|=
+literal|0
+expr_stmt|;
+name|hashMapOnDisk
+operator|=
+literal|false
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -1165,6 +1198,46 @@ name|matchfileRowBytesContainer
 operator|=
 literal|null
 expr_stmt|;
+block|}
+block|}
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+if|if
+condition|(
+name|isHashMapOnDisk
+argument_list|()
+condition|)
+block|{
+comment|// Rows are in a combination of the on-disk hashmap and the sidefile
+return|return
+name|rowsOnDisk
+operator|+
+operator|(
+name|sidefileKVContainer
+operator|!=
+literal|null
+condition|?
+name|sidefileKVContainer
+operator|.
+name|size
+argument_list|()
+else|:
+literal|0
+operator|)
+return|;
+block|}
+else|else
+block|{
+comment|// All rows should be in the in-memory hashmap
+return|return
+name|hashMap
+operator|.
+name|size
+argument_list|()
+return|;
 block|}
 block|}
 block|}
@@ -1540,6 +1613,27 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// Round to power of 2 here, as is required by WriteBuffers
+name|writeBufferSize
+operator|=
+name|Integer
+operator|.
+name|bitCount
+argument_list|(
+name|writeBufferSize
+argument_list|)
+operator|==
+literal|1
+condition|?
+name|writeBufferSize
+else|:
+name|Integer
+operator|.
+name|highestOneBit
+argument_list|(
+name|writeBufferSize
+argument_list|)
+expr_stmt|;
 comment|// Cap WriteBufferSize to avoid large preallocations
 name|writeBufferSize
 operator|=
@@ -2661,6 +2755,12 @@ literal|"Memory usage after spilling: "
 operator|+
 name|memoryUsed
 argument_list|)
+expr_stmt|;
+name|partition
+operator|.
+name|rowsOnDisk
+operator|=
+name|inMemRowCount
 expr_stmt|;
 name|totalInMemRowCount
 operator|-=
@@ -4586,6 +4686,38 @@ operator|+
 literal|" partitions have been spilled to disk and will be processed next."
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+name|int
+name|totalSize
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|HashPartition
+name|hashPartition
+range|:
+name|hashPartitions
+control|)
+block|{
+name|totalSize
+operator|+=
+name|hashPartition
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|totalSize
+return|;
 block|}
 block|}
 end_class

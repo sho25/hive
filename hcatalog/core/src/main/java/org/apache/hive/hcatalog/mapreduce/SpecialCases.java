@@ -129,7 +129,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|OrcFile
+name|OrcConf
 import|;
 end_import
 
@@ -423,14 +423,10 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|OrcFile
-operator|.
-name|OrcTableProperties
+name|OrcConf
 name|property
 range|:
-name|OrcFile
-operator|.
-name|OrcTableProperties
+name|OrcConf
 operator|.
 name|values
 argument_list|()
@@ -441,7 +437,7 @@ name|propName
 init|=
 name|property
 operator|.
-name|getPropName
+name|getAttribute
 argument_list|()
 decl_stmt|;
 if|if

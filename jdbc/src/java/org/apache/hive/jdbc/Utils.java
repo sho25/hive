@@ -29,16 +29,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|URISyntaxException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|sql
 operator|.
 name|SQLException
@@ -232,7 +222,6 @@ specifier|public
 class|class
 name|Utils
 block|{
-specifier|public
 specifier|static
 specifier|final
 name|Log
@@ -260,7 +249,6 @@ init|=
 literal|"jdbc:hive2://"
 decl_stmt|;
 comment|/**     * If host is provided, without a port.     */
-specifier|public
 specifier|static
 specifier|final
 name|String
@@ -269,7 +257,6 @@ init|=
 literal|"10000"
 decl_stmt|;
 comment|/**    * Hive's default database name    */
-specifier|public
 specifier|static
 specifier|final
 name|String
@@ -315,7 +302,6 @@ name|HIVE_SERVER2_RETRY_FALSE
 init|=
 literal|"false"
 decl_stmt|;
-specifier|public
 specifier|static
 class|class
 name|JdbcConnectionParams
@@ -611,6 +597,8 @@ decl_stmt|;
 specifier|private
 name|int
 name|port
+init|=
+literal|0
 decl_stmt|;
 specifier|private
 name|String
@@ -1025,7 +1013,6 @@ expr_stmt|;
 block|}
 block|}
 comment|// Verify success or success_with_info status, else throw SQLException
-specifier|public
 specifier|static
 name|void
 name|verifySuccessWithInfo
@@ -1045,7 +1032,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Verify success status, else throw SQLException
-specifier|public
 specifier|static
 name|void
 name|verifySuccess
@@ -1065,7 +1051,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Verify success and optionally with_info status, else throw SQLException
-specifier|public
 specifier|static
 name|void
 name|verifySuccess
@@ -1115,7 +1100,6 @@ argument_list|)
 throw|;
 block|}
 comment|/**    * Parse JDBC connection URL    * The new format of the URL is:    * jdbc:hive2://<host1>:<port1>,<host2>:<port2>/dbName;sess_var_list?hive_conf_list#hive_var_list    * where the optional sess, conf and var lists are semicolon separated<key>=<val> pairs.    * For utilizing dynamic service discovery with HiveServer2 multiple comma separated host:port pairs can    * be specified as shown above.    * The JDBC driver resolves the list of uris and picks a specific server instance to connect to.    * Currently, dynamic service discovery using ZooKeeper is supported, in which case the host:port pairs represent a ZooKeeper ensemble.    *    * As before, if the host/port is not specified, it the driver runs an embedded hive.    * examples -    *  jdbc:hive2://ubuntu:11000/db2?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://?hive.cli.conf.printheader=true;hive.exec.mode.local.auto.inputbytes.max=9999#stab=salesTable;icol=customerID    *  jdbc:hive2://ubuntu:11000/db2;user=foo;password=bar    *    *  Connect to http://server:10001/hs2, with specified basicAuth credentials and initial database:    *  jdbc:hive2://server:10001/db;user=foo;password=bar?hive.server2.transport.mode=http;hive.server2.thrift.http.path=hs2    *    * @param uri    * @return    * @throws SQLException    */
-specifier|public
 specifier|static
 name|JdbcConnectionParams
 name|parseURL
@@ -1739,15 +1723,28 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Else substitute the dummy authority with a resolved one.
-comment|// In case of dynamic service discovery using ZooKeeper, it picks a server uri from ZooKeeper
-name|String
-name|resolvedAuthorityString
-init|=
-name|resolveAuthority
+comment|// Configure host, port and params from ZooKeeper if used,
+comment|// and substitute the dummy authority with a resolved one
+name|configureConnParams
 argument_list|(
 name|connParams
 argument_list|)
+expr_stmt|;
+comment|// We check for invalid host, port while configuring connParams with configureConnParams()
+name|String
+name|authorityStr
+init|=
+name|connParams
+operator|.
+name|getHost
+argument_list|()
+operator|+
+literal|":"
+operator|+
+name|connParams
+operator|.
+name|getPort
+argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
@@ -1755,7 +1752,7 @@ name|info
 argument_list|(
 literal|"Resolved authority: "
 operator|+
-name|resolvedAuthorityString
+name|authorityStr
 argument_list|)
 expr_stmt|;
 name|uri
@@ -1766,7 +1763,7 @@ name|replace
 argument_list|(
 name|dummyAuthorityString
 argument_list|,
-name|resolvedAuthorityString
+name|authorityStr
 argument_list|)
 expr_stmt|;
 name|connParams
@@ -1774,67 +1771,6 @@ operator|.
 name|setJdbcUriString
 argument_list|(
 name|uri
-argument_list|)
-expr_stmt|;
-comment|// Create a Java URI from the resolved URI for extracting the host/port
-name|URI
-name|resolvedAuthorityURI
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|resolvedAuthorityURI
-operator|=
-operator|new
-name|URI
-argument_list|(
-literal|null
-argument_list|,
-name|resolvedAuthorityString
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|URISyntaxException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|JdbcUriParseException
-argument_list|(
-literal|"Bad URL format: "
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-name|connParams
-operator|.
-name|setHost
-argument_list|(
-name|resolvedAuthorityURI
-operator|.
-name|getHost
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|connParams
-operator|.
-name|setPort
-argument_list|(
-name|resolvedAuthorityURI
-operator|.
-name|getPort
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2059,11 +1995,10 @@ return|return
 name|authorities
 return|;
 block|}
-comment|/**    * Get a string representing a specific host:port    * @param connParams    * @return    * @throws JdbcUriParseException    * @throws ZooKeeperHiveClientException    */
 specifier|private
 specifier|static
-name|String
-name|resolveAuthority
+name|void
+name|configureConnParams
 parameter_list|(
 name|JdbcConnectionParams
 name|connParams
@@ -2108,13 +2043,30 @@ argument_list|)
 operator|)
 condition|)
 block|{
-comment|// Resolve using ZooKeeper
-return|return
-name|resolveAuthorityUsingZooKeeper
+comment|// Set ZooKeeper ensemble in connParams for later use
+name|connParams
+operator|.
+name|setZooKeeperEnsemble
+argument_list|(
+name|joinStringArray
+argument_list|(
+name|connParams
+operator|.
+name|getAuthorityList
+argument_list|()
+argument_list|,
+literal|","
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Configure using ZooKeeper
+name|ZooKeeperHiveClientHelper
+operator|.
+name|configureConnParams
 argument_list|(
 name|connParams
 argument_list|)
-return|;
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -2149,23 +2101,35 @@ comment|// The missing "/" common typo while using secure mode, eg of such url -
 comment|// jdbc:hive2://localhost:10000;principal=hive/HiveServer2Host@YOUR-REALM.COM
 if|if
 condition|(
-operator|(
 name|jdbcURI
 operator|.
 name|getAuthority
 argument_list|()
 operator|!=
 literal|null
-operator|)
-operator|&&
-operator|(
+condition|)
+block|{
+name|String
+name|host
+init|=
 name|jdbcURI
 operator|.
 name|getHost
 argument_list|()
+decl_stmt|;
+name|int
+name|port
+init|=
+name|jdbcURI
+operator|.
+name|getPort
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|host
 operator|==
 literal|null
-operator|)
 condition|)
 block|{
 throw|throw
@@ -2185,53 +2149,51 @@ literal|". Are you missing a '/' after the hostname ?"
 argument_list|)
 throw|;
 block|}
-comment|// Return the 1st element of the array
-return|return
-name|jdbcURI
-operator|.
-name|getAuthority
-argument_list|()
-return|;
-block|}
-block|}
-comment|/**    * Read a specific host:port from ZooKeeper    * @param connParams    * @return    * @throws ZooKeeperHiveClientException    */
-specifier|private
-specifier|static
-name|String
-name|resolveAuthorityUsingZooKeeper
-parameter_list|(
-name|JdbcConnectionParams
-name|connParams
-parameter_list|)
-throws|throws
-name|ZooKeeperHiveClientException
+comment|// Set the port to default value; we do support jdbc url like:
+comment|// jdbc:hive2://localhost/db
+if|if
+condition|(
+name|port
+operator|<=
+literal|0
+condition|)
 block|{
-comment|// Set ZooKeeper ensemble in connParams for later use
-name|connParams
+name|port
+operator|=
+name|Integer
 operator|.
-name|setZooKeeperEnsemble
+name|parseInt
 argument_list|(
-name|joinStringArray
-argument_list|(
-name|connParams
+name|Utils
 operator|.
-name|getAuthorityList
-argument_list|()
-argument_list|,
-literal|","
-argument_list|)
+name|DEFAULT_PORT
 argument_list|)
 expr_stmt|;
-return|return
-name|ZooKeeperHiveClientHelper
-operator|.
-name|getNextServerUriFromZooKeeper
-argument_list|(
-name|connParams
-argument_list|)
-return|;
 block|}
-comment|/**    * Read the next server coordinates (host:port combo) from ZooKeeper. Ignore the znodes already    * explored. Also update the host, port, jdbcUriString fields of connParams.    *    * @param connParams    * @throws ZooKeeperHiveClientException    */
+name|connParams
+operator|.
+name|setHost
+argument_list|(
+name|jdbcURI
+operator|.
+name|getHost
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|connParams
+operator|.
+name|setPort
+argument_list|(
+name|jdbcURI
+operator|.
+name|getPort
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+comment|/**    * Read the next server coordinates (host:port combo) from ZooKeeper. Ignore the znodes already    * explored. Also update the host, port, jdbcUriString and other configs published by the server.    *    * @param connParams    * @throws ZooKeeperHiveClientException    */
 specifier|static
 name|void
 name|updateConnParamsFromZooKeeper
@@ -2256,58 +2218,6 @@ name|getCurrentHostZnodePath
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Get another HiveServer2 uri from ZooKeeper
-name|String
-name|serverUriString
-init|=
-name|ZooKeeperHiveClientHelper
-operator|.
-name|getNextServerUriFromZooKeeper
-argument_list|(
-name|connParams
-argument_list|)
-decl_stmt|;
-comment|// Parse serverUri to a java URI and extract host, port
-name|URI
-name|serverUri
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-comment|// Note URL_PREFIX is not a valid scheme format, therefore leaving it null in the constructor
-comment|// to construct a valid URI
-name|serverUri
-operator|=
-operator|new
-name|URI
-argument_list|(
-literal|null
-argument_list|,
-name|serverUriString
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|URISyntaxException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|ZooKeeperHiveClientException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 name|String
 name|oldServerHost
 init|=
@@ -2324,34 +2234,12 @@ operator|.
 name|getPort
 argument_list|()
 decl_stmt|;
-name|String
-name|newServerHost
-init|=
-name|serverUri
+comment|// Update connection params (including host, port) from ZooKeeper
+name|ZooKeeperHiveClientHelper
 operator|.
-name|getHost
-argument_list|()
-decl_stmt|;
-name|int
-name|newServerPort
-init|=
-name|serverUri
-operator|.
-name|getPort
-argument_list|()
-decl_stmt|;
-name|connParams
-operator|.
-name|setHost
+name|configureConnParams
 argument_list|(
-name|newServerHost
-argument_list|)
-expr_stmt|;
 name|connParams
-operator|.
-name|setPort
-argument_list|(
-name|newServerPort
 argument_list|)
 expr_stmt|;
 name|connParams
@@ -2371,12 +2259,30 @@ literal|":"
 operator|+
 name|oldServerPort
 argument_list|,
-name|newServerHost
+name|connParams
+operator|.
+name|getHost
+argument_list|()
 operator|+
 literal|":"
 operator|+
-name|newServerPort
+name|connParams
+operator|.
+name|getPort
+argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Selected HiveServer2 instance with uri: "
+operator|+
+name|connParams
+operator|.
+name|getJdbcUriString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

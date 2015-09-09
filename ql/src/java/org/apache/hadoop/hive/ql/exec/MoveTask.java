@@ -1041,8 +1041,6 @@ name|sourcePath
 argument_list|,
 name|targetPath
 argument_list|,
-name|fs
-argument_list|,
 literal|true
 argument_list|,
 literal|false
@@ -2689,7 +2687,10 @@ operator|.
 name|get
 argument_list|()
 operator|.
-name|getCurrentTxn
+name|getTxnMgr
+argument_list|()
+operator|.
+name|getCurrentTxnId
 argument_list|()
 argument_list|)
 decl_stmt|;

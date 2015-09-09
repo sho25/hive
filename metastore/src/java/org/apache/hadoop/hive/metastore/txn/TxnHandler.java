@@ -322,7 +322,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info  * {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
 end_comment
 
 begin_class
@@ -1060,11 +1060,6 @@ argument_list|(
 name|Connection
 operator|.
 name|TRANSACTION_READ_COMMITTED
-argument_list|)
-expr_stmt|;
-name|timeOutTxns
-argument_list|(
-name|dbConn
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -1832,9 +1827,14 @@ throw|throw
 operator|new
 name|NoSuchTxnException
 argument_list|(
-literal|"No such transaction: "
+literal|"No such transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -2017,13 +2017,21 @@ operator|<
 literal|1
 condition|)
 block|{
+comment|//this can be reasonable for an empty txn START/COMMIT
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Expected to move at least one record from txn_components to "
 operator|+
-literal|"completed_txn_components when committing txn!"
+literal|"completed_txn_components when committing txn! "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -2457,12 +2465,6 @@ operator|.
 name|getLockid
 argument_list|()
 decl_stmt|;
-comment|// Clean up timed out locks
-name|timeOutLocks
-argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
 comment|// Heartbeat on the lockid first, to assure that our lock is still valid.
 comment|// Then look up the lock info (hopefully in the cache).  If these locks
 comment|// are associated with a transaction then heartbeat on that as well.
@@ -2670,13 +2672,23 @@ literal|"Unlocking locks associated with transaction"
 operator|+
 literal|" not permitted.  Lockid "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 operator|+
 literal|" is associated with "
 operator|+
 literal|"transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -2751,9 +2763,14 @@ throw|throw
 operator|new
 name|NoSuchLockException
 argument_list|(
-literal|"No such lock: "
+literal|"No such lock "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -6413,11 +6430,11 @@ literal|" intLockId:"
 operator|+
 name|intLockId
 operator|+
-literal|" txnId:"
+literal|" "
 operator|+
-name|Long
+name|JavaUtils
 operator|.
-name|toString
+name|txnIdToString
 argument_list|(
 name|txnId
 argument_list|)
@@ -7092,7 +7109,11 @@ literal|"update TXNS set txn_state = '"
 operator|+
 name|TXN_ABORTED
 operator|+
-literal|"' where txn_id in ("
+literal|"' where txn_state = '"
+operator|+
+name|TXN_OPEN
+operator|+
+literal|"' and txn_id in ("
 argument_list|)
 expr_stmt|;
 name|first
@@ -7177,7 +7198,7 @@ return|return
 name|updateCnt
 return|;
 block|}
-comment|/**    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @param wait whether to wait for this lock.  The function will return immediately one way or    *             another.  If true and the lock could not be acquired the response will have a    *             state of  WAITING.  The caller will then need to poll using    *             {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}. If    *             false and the  lock could not be acquired, then the response will have a state    *             of NOT_ACQUIRED.  The caller will need to call    *             {@link #lockNoWait(org.apache.hadoop.hive.metastore.api.LockRequest)} again to    *             attempt another lock.    * @return informatino on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
+comment|/**    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @param wait whether to wait for this lock.  The function will return immediately one way or    *             another.  If true and the lock could not be acquired the response will have a    *             state of  WAITING.  The caller will then need to poll using    *             {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}. If    *             false and the  lock could not be acquired, then the response will have a state    *             of NOT_ACQUIRED.  The caller will need to call    *             {@link #lockNoWait(org.apache.hadoop.hive.metastore.api.LockRequest)} again to    *             attempt another lock.    * @return information on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
 specifier|private
 name|LockResponse
 name|lock
@@ -7202,7 +7223,7 @@ name|SQLException
 block|{
 comment|// We want to minimize the number of concurrent lock requests being issued.  If we do not we
 comment|// get a large number of deadlocks in the database, since this method has to both clean
-comment|// timedout locks and insert new locks.  This synchronization barrier will not eliminiate all
+comment|// timedout locks and insert new locks.  This synchronization barrier will not eliminate all
 comment|// deadlocks, and the code is still resilient in the face of a database deadlock.  But it
 comment|// will reduce the number.  This could have been done via a lock table command in the
 comment|// underlying database, but was not for two reasons.  One, different databases have different
@@ -7214,12 +7235,6 @@ init|(
 name|lockLock
 init|)
 block|{
-comment|// Clean up timed out locks before we attempt to acquire any.
-name|timeOutLocks
-argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -7801,6 +7816,7 @@ argument_list|,
 name|extLockId
 argument_list|)
 decl_stmt|;
+comment|//being acquired now
 name|LockResponse
 name|response
 init|=
@@ -9260,6 +9276,39 @@ name|next
 argument_list|()
 condition|)
 block|{
+name|s
+operator|=
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
+operator|+
+name|txnid
+expr_stmt|;
+name|ResultSet
+name|rs2
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+name|boolean
+name|alreadyCommitted
+init|=
+name|rs2
+operator|.
+name|next
+argument_list|()
+operator|&&
+name|rs2
+operator|.
+name|getInt
+argument_list|(
+literal|1
+argument_list|)
+operator|>
+literal|0
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -9272,13 +9321,41 @@ operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|alreadyCommitted
+condition|)
+block|{
+comment|//makes the message more informative - helps to find bugs in client code
 throw|throw
 operator|new
 name|NoSuchTxnException
 argument_list|(
-literal|"No such transaction: "
+literal|"Transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
+operator|+
+literal|" is already committed."
+argument_list|)
+throw|;
+block|}
+throw|throw
+operator|new
+name|NoSuchTxnException
+argument_list|(
+literal|"No such transaction "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -9317,11 +9394,17 @@ name|TxnAbortedException
 argument_list|(
 literal|"Transaction "
 operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|txnid
+argument_list|)
 operator|+
 literal|" already aborted"
 argument_list|)
 throw|;
+comment|//todo: add time of abort, which is not currently tracked
 block|}
 name|s
 operator|=
@@ -9466,9 +9549,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Return txnid "
+literal|"Return "
 operator|+
-operator|(
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
 name|rs
 operator|.
 name|wasNull
@@ -9478,7 +9564,7 @@ operator|-
 literal|1
 else|:
 name|txnid
-operator|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -9642,7 +9728,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Clean time out locks from the database.  This does a commit,
+comment|// Clean time out locks from the database not associated with a transactions, i.e. locks
+comment|// for read-only autoCommit=true statements.  This does a commit,
 comment|// and thus should be done before any calls to heartbeat that will leave
 comment|// open transactions.
 specifier|private
@@ -9652,10 +9739,13 @@ parameter_list|(
 name|Connection
 name|dbConn
 parameter_list|)
-throws|throws
-name|SQLException
-throws|,
-name|MetaException
+block|{
+name|Statement
+name|stmt
+init|=
+literal|null
+decl_stmt|;
+try|try
 block|{
 name|long
 name|now
@@ -9665,13 +9755,6 @@ argument_list|(
 name|dbConn
 argument_list|)
 decl_stmt|;
-name|Statement
-name|stmt
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
 name|stmt
 operator|=
 name|dbConn
@@ -9690,7 +9773,12 @@ name|now
 operator|-
 name|timeout
 operator|)
+operator|+
+literal|" and (hl_txnid = 0 or hl_txnid is NULL)"
 decl_stmt|;
+comment|//when txnid is> 0, the lock is
+comment|//associated with a txn and is handled by performTimeOuts()
+comment|//want to avoid expiring locks for a txn w/o expiring the txn itself
 name|LOG
 operator|.
 name|debug
@@ -9702,195 +9790,35 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|int
+name|deletedLocks
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to commit"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|commit
-argument_list|()
-expr_stmt|;
-block|}
-finally|finally
-block|{
-name|closeStmt
-argument_list|(
-name|stmt
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-comment|// Abort timed out transactions.  This does a commit,
-comment|// and thus should be done before any calls to heartbeat that will leave
-comment|// open transactions on the underlying database.
-specifier|private
-name|void
-name|timeOutTxns
-parameter_list|(
-name|Connection
-name|dbConn
-parameter_list|)
-throws|throws
-name|SQLException
-throws|,
-name|MetaException
-throws|,
-name|RetryException
-block|{
-name|long
-name|now
-init|=
-name|getDbTime
-argument_list|(
-name|dbConn
-argument_list|)
 decl_stmt|;
-name|Statement
-name|stmt
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|stmt
-operator|=
-name|dbConn
-operator|.
-name|createStatement
-argument_list|()
-expr_stmt|;
-comment|// Abort any timed out locks from the table.
-name|String
-name|s
-init|=
-literal|"select txn_id from TXNS where txn_state = '"
-operator|+
-name|TXN_OPEN
-operator|+
-literal|"' and txn_last_heartbeat<  "
-operator|+
-operator|(
-name|now
-operator|-
-name|timeout
-operator|)
-decl_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute query<"
-operator|+
-name|s
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|ResultSet
-name|rs
-init|=
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
-name|s
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|Long
-argument_list|>
-name|deadTxns
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|Long
-argument_list|>
-argument_list|()
-decl_stmt|;
-comment|// Limit the number of timed out transactions we do in one pass to keep from generating a
-comment|// huge delete statement
-do|do
-block|{
-name|deadTxns
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
-operator|&&
-name|rs
-operator|.
-name|next
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|deadTxns
-operator|.
-name|add
-argument_list|(
-name|rs
-operator|.
-name|getLong
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-comment|// We don't care whether all of the transactions get deleted or not,
-comment|// if some didn't it most likely means someone else deleted them in the interum
 if|if
 condition|(
-name|deadTxns
-operator|.
-name|size
-argument_list|()
+name|deletedLocks
 operator|>
 literal|0
 condition|)
-name|abortTxns
+block|{
+name|LOG
+operator|.
+name|info
 argument_list|(
-name|dbConn
-argument_list|,
-name|deadTxns
+literal|"Deleted "
+operator|+
+name|deletedLocks
+operator|+
+literal|" locks from HIVE_LOCKS due to timeout"
 argument_list|)
 expr_stmt|;
 block|}
-do|while
-condition|(
-name|deadTxns
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
-condition|)
-do|;
 name|LOG
 operator|.
 name|debug
@@ -9907,50 +9835,512 @@ block|}
 catch|catch
 parameter_list|(
 name|SQLException
-name|e
+name|ex
 parameter_list|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|error
 argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|rollbackDBConn
-argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
-name|checkRetryable
-argument_list|(
-name|dbConn
-argument_list|,
-name|e
-argument_list|,
-literal|"abortTxn"
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to update transaction database "
+literal|"Failed to purge timedout locks due to: "
 operator|+
-name|StringUtils
-operator|.
-name|stringifyException
+name|getMessage
 argument_list|(
-name|e
+name|ex
 argument_list|)
+argument_list|,
+name|ex
 argument_list|)
-throw|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to purge timedout locks due to: "
+operator|+
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
 block|}
 finally|finally
 block|{
 name|closeStmt
 argument_list|(
 name|stmt
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|/**    * Suppose you have a query "select a,b from T" and you want to limit the result set    * to the first 5 rows.  The mechanism to do that differs in different DB.    * Make {@code noSelectsqlQuery} to be "a,b from T" and this method will return the    * appropriately modified row limiting query.    */
+specifier|private
+name|String
+name|addLimitClause
+parameter_list|(
+name|Connection
+name|dbConn
+parameter_list|,
+name|int
+name|numRows
+parameter_list|,
+name|String
+name|noSelectsqlQuery
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|DatabaseProduct
+name|prod
+init|=
+name|determineDatabaseProduct
+argument_list|(
+name|dbConn
+argument_list|)
+decl_stmt|;
+switch|switch
+condition|(
+name|prod
+condition|)
+block|{
+case|case
+name|DERBY
+case|:
+comment|//http://db.apache.org/derby/docs/10.7/ref/rrefsqljoffsetfetch.html
+return|return
+literal|"select "
+operator|+
+name|noSelectsqlQuery
+operator|+
+literal|" fetch first "
+operator|+
+name|numRows
+operator|+
+literal|" rows only"
+return|;
+case|case
+name|MYSQL
+case|:
+comment|//http://www.postgresql.org/docs/7.3/static/queries-limit.html
+case|case
+name|POSTGRES
+case|:
+comment|//https://dev.mysql.com/doc/refman/5.0/en/select.html
+return|return
+literal|"select "
+operator|+
+name|noSelectsqlQuery
+operator|+
+literal|" limit "
+operator|+
+name|numRows
+return|;
+case|case
+name|ORACLE
+case|:
+comment|//newer versions (12c and later) support OFFSET/FETCH
+return|return
+literal|"select * from (select "
+operator|+
+name|noSelectsqlQuery
+operator|+
+literal|") where rownum<= "
+operator|+
+name|numRows
+return|;
+case|case
+name|SQLSERVER
+case|:
+comment|//newer versions (2012 and later) support OFFSET/FETCH
+comment|//https://msdn.microsoft.com/en-us/library/ms189463.aspx
+return|return
+literal|"select TOP("
+operator|+
+name|numRows
+operator|+
+literal|") "
+operator|+
+name|noSelectsqlQuery
+return|;
+default|default:
+name|String
+name|msg
+init|=
+literal|"Unrecognized database product name<"
+operator|+
+name|prod
+operator|+
+literal|">"
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * This will find transactions that have timed out and abort them.    * Will also delete locks which are not associated with a transaction and have timed out    * Tries to keep transactions (against metastore db) small to reduce lock contention.    */
+specifier|public
+name|void
+name|performTimeOuts
+parameter_list|()
+block|{
+name|Connection
+name|dbConn
+init|=
+literal|null
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+literal|null
+decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
+expr_stmt|;
+name|long
+name|now
+init|=
+name|getDbTime
+argument_list|(
+name|dbConn
+argument_list|)
+decl_stmt|;
+name|timeOutLocks
+argument_list|(
+name|dbConn
+argument_list|)
+expr_stmt|;
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+name|stmt
+operator|=
+name|dbConn
+operator|.
+name|createStatement
+argument_list|()
+expr_stmt|;
+name|String
+name|s
+init|=
+literal|" txn_id from TXNS where txn_state = '"
+operator|+
+name|TXN_OPEN
+operator|+
+literal|"' and txn_last_heartbeat<  "
+operator|+
+operator|(
+name|now
+operator|-
+name|timeout
+operator|)
+decl_stmt|;
+name|s
+operator|=
+name|addLimitClause
+argument_list|(
+name|dbConn
+argument_list|,
+literal|2500
+argument_list|,
+name|s
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+return|return;
+comment|//no more timedout txns
+block|}
+name|List
+argument_list|<
+name|List
+argument_list|<
+name|Long
+argument_list|>
+argument_list|>
+name|timedOutTxns
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|currentBatch
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+argument_list|)
+decl_stmt|;
+name|timedOutTxns
+operator|.
+name|add
+argument_list|(
+name|currentBatch
+argument_list|)
+expr_stmt|;
+do|do
+block|{
+name|currentBatch
+operator|.
+name|add
+argument_list|(
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|currentBatch
+operator|.
+name|size
+argument_list|()
+operator|==
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+condition|)
+block|{
+name|currentBatch
+operator|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+argument_list|)
+expr_stmt|;
+name|timedOutTxns
+operator|.
+name|add
+argument_list|(
+name|currentBatch
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+do|while
+condition|(
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+do|;
+name|close
+argument_list|(
+name|rs
+argument_list|,
+name|stmt
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+for|for
+control|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|batchToAbort
+range|:
+name|timedOutTxns
+control|)
+block|{
+name|abortTxns
+argument_list|(
+name|dbConn
+argument_list|,
+name|batchToAbort
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+comment|//todo: add TXNS.COMMENT filed and set it to 'aborted by system due to timeout'
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Aborted the following transactions due to timeout: "
+operator|+
+name|timedOutTxns
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|int
+name|numTxnsAborted
+init|=
+operator|(
+name|timedOutTxns
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+operator|)
+operator|*
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+operator|+
+name|timedOutTxns
+operator|.
+name|get
+argument_list|(
+name|timedOutTxns
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+operator|.
+name|size
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Aborted "
+operator|+
+name|numTxnsAborted
+operator|+
+literal|" transactions due to timeout"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Aborting timedout transactions failed due to "
+operator|+
+name|getMessage
+argument_list|(
+name|ex
+argument_list|)
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Aborting timedout transactions failed due to "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|close
+argument_list|(
+name|rs
+argument_list|,
+name|stmt
+argument_list|,
+name|dbConn
 argument_list|)
 expr_stmt|;
 block|}

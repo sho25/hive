@@ -301,6 +301,24 @@ name|ql
 operator|.
 name|lib
 operator|.
+name|LevelOrderWalker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|lib
+operator|.
 name|Node
 import|;
 end_import
@@ -320,24 +338,6 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|PreOrderWalker
 import|;
 end_import
 
@@ -485,7 +485,7 @@ argument_list|(
 name|pctx
 argument_list|)
 decl_stmt|;
-comment|// create a walker which walks the tree in a DFS manner while maintaining the
+comment|// create a walker which walks the tree in a BFS manner while maintaining the
 comment|// operator stack. The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
@@ -756,9 +756,11 @@ name|GraphWalker
 name|ogw
 init|=
 operator|new
-name|PreOrderWalker
+name|LevelOrderWalker
 argument_list|(
 name|disp
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 comment|// Create a list of topop nodes

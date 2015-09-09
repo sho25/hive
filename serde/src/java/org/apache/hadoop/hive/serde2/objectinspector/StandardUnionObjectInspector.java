@@ -367,8 +367,8 @@ parameter_list|(
 name|Object
 name|union
 parameter_list|,
-name|ObjectInspector
-name|oi
+name|Object
+name|field
 parameter_list|)
 block|{
 name|ArrayList
@@ -389,7 +389,7 @@ name|a
 operator|.
 name|add
 argument_list|(
-name|oi
+name|field
 argument_list|)
 expr_stmt|;
 return|return

@@ -1636,27 +1636,6 @@ name|SparkTran
 name|child
 parameter_list|)
 block|{
-if|if
-condition|(
-name|getChildren
-argument_list|(
-name|parent
-argument_list|)
-operator|.
-name|contains
-argument_list|(
-name|child
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Connection already exists"
-argument_list|)
-throw|;
-block|}
 name|rootTrans
 operator|.
 name|remove

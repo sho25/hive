@@ -36,6 +36,8 @@ name|SQLEXCEPTION
 block|,
 name|NOTFOUND
 block|,
+name|UNSUPPORTED_OPERATION
+block|,
 name|USERDEFINED
 block|}
 empty_stmt|;

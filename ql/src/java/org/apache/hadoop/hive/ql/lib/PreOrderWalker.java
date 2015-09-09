@@ -102,7 +102,7 @@ block|}
 comment|/**    * Walk the current operator and its descendants.    *     * @param nd    *          current operator in the graph    * @throws SemanticException    */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(

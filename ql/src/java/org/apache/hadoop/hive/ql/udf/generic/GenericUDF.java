@@ -942,7 +942,7 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{   }
-comment|/**    * Some functions are affected by appearing order of arguments (comparisons, for example)    */
+comment|/**    * Some functions like comparisons may be affected by appearing order of arguments.    * This is to convert a function, such as 3> x to x< 3. The flip function of    * GenericUDFOPGreaterThan is GenericUDFOPLessThan.    */
 specifier|public
 name|GenericUDF
 name|flip
@@ -951,6 +951,23 @@ block|{
 return|return
 name|this
 return|;
+block|}
+comment|/**    * Gets the negative function of the current one. E.g., GenericUDFOPNotEqual for    * GenericUDFOPEqual, or GenericUDFOPNull for GenericUDFOPNotNull.    * @return Negative function    * @throws UDFArgumentException    */
+specifier|public
+name|GenericUDF
+name|negative
+parameter_list|()
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"Negative function doesn't exist for "
+operator|+
+name|getFuncName
+argument_list|()
+argument_list|)
+throw|;
 block|}
 specifier|public
 name|String

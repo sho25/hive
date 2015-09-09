@@ -65,16 +65,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -1061,9 +1051,9 @@ specifier|private
 name|String
 name|expr
 decl_stmt|;
-comment|/**      * The list of base columns that the particular column depends on.      */
+comment|/**      * The set of base columns that the particular column depends on.      */
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|BaseColumnInfo
 argument_list|>
@@ -1123,7 +1113,7 @@ expr_stmt|;
 block|}
 comment|/**      * @return the baseCols      */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|BaseColumnInfo
 argument_list|>
@@ -1139,7 +1129,7 @@ specifier|public
 name|void
 name|setBaseCols
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|BaseColumnInfo
 argument_list|>

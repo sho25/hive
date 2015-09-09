@@ -350,6 +350,19 @@ operator|+
 literal|" is null"
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|GenericUDF
+name|negative
+parameter_list|()
+block|{
+return|return
+operator|new
+name|GenericUDFOPNotNull
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

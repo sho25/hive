@@ -2642,6 +2642,17 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Retrieve all functions.    * @return    * @throws MetaException    */
+specifier|public
+name|List
+argument_list|<
+name|Function
+argument_list|>
+name|getAllFunctions
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Retrieve list of function names based on name pattern.    * @param dbName    * @param pattern    * @return    * @throws MetaException    */
 specifier|public
 name|List

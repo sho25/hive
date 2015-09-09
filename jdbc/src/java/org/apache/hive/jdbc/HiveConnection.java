@@ -1710,7 +1710,7 @@ operator|+
 name|jdbcUriString
 argument_list|)
 expr_stmt|;
-comment|// We'll retry till we exhaust all HiveServer2 uris from ZooKeeper
+comment|// We'll retry till we exhaust all HiveServer2 nodes from ZooKeeper
 if|if
 condition|(
 operator|(
@@ -1748,7 +1748,7 @@ block|{
 try|try
 block|{
 comment|// Update jdbcUriString, host& port variables in connParams
-comment|// Throw an exception if all HiveServer2 uris have been exhausted,
+comment|// Throw an exception if all HiveServer2 nodes have been exhausted,
 comment|// or if we're unable to connect to ZooKeeper.
 name|Utils
 operator|.
@@ -1852,6 +1852,15 @@ throw|;
 block|}
 block|}
 block|}
+block|}
+specifier|public
+name|String
+name|getConnectedUrl
+parameter_list|()
+block|{
+return|return
+name|jdbcUriString
+return|;
 block|}
 specifier|private
 name|String
@@ -4801,22 +4810,25 @@ literal|"Connection is closed"
 argument_list|)
 throw|;
 block|}
+try|try
+init|(
 name|Statement
 name|stmt
 init|=
 name|createStatement
 argument_list|()
-decl_stmt|;
+init|;
 name|ResultSet
 name|res
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 literal|"SELECT current_database()"
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 operator|!
@@ -4834,29 +4846,15 @@ literal|"Failed to get schema information"
 argument_list|)
 throw|;
 block|}
-name|String
-name|schemaName
-init|=
+return|return
 name|res
 operator|.
 name|getString
 argument_list|(
 literal|1
 argument_list|)
-decl_stmt|;
-name|res
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|stmt
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-return|return
-name|schemaName
 return|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#getTransactionIsolation()    */
 annotation|@
@@ -5469,14 +5467,36 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// Per JDBC spec, if the connection is closed a SQLException should be thrown.
+if|if
+condition|(
+name|isClosed
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"Connection is closed"
 argument_list|)
 throw|;
+block|}
+comment|// Per JDBC spec, the request defines a hint to the driver to enable database optimizations.
+comment|// The read-only mode for this connection is disabled and cannot be enabled (isReadOnly always returns false).
+comment|// The most correct behavior is to throw only if the request tries to enable the read-only mode.
+if|if
+condition|(
+name|readOnly
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Enabling read-only mode not supported"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#setSavepoint()    */
 annotation|@

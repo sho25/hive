@@ -21,6 +21,36 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -47,28 +77,8 @@ name|LogFactory
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
 begin_comment
-comment|/**  * Cache for objects whose creation only depends on some other set of objects  * and therefore can be used against other equivalent versions of those  * objects.  Essentially memoizes instance creation.  *  * @param<SeedObject>  Object that determines the instance  * @param<Instance>  Instance that will be created from SeedObject.  */
+comment|/**  * Cache for objects whose creation only depends on some other set of objects and therefore can be  * used against other equivalent versions of those objects. Essentially memoizes instance creation.  *  * @param<SeedObject> Object that determines the instance. The cache uses this object as a key for  *          its hash which is why it is imperative to have appropriate equals and hashcode  *          implementation for this object for the cache to work properly  * @param<Instance> Instance that will be created from SeedObject.  */
 end_comment
 
 begin_class
@@ -97,9 +107,9 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
-name|Integer
+name|SeedObject
 argument_list|,
 name|Instance
 argument_list|>
@@ -108,7 +118,7 @@ init|=
 operator|new
 name|HashMap
 argument_list|<
-name|Integer
+name|SeedObject
 argument_list|,
 name|Instance
 argument_list|>
@@ -181,9 +191,6 @@ operator|.
 name|containsKey
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -207,9 +214,6 @@ operator|.
 name|get
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|)
 return|;
 block|}
@@ -242,9 +246,6 @@ operator|.
 name|put
 argument_list|(
 name|hv
-operator|.
-name|hashCode
-argument_list|()
 argument_list|,
 name|instance
 argument_list|)

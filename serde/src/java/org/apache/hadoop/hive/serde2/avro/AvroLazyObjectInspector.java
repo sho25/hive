@@ -818,6 +818,10 @@ name|LOG
 operator|.
 name|isDebugEnabled
 argument_list|()
+operator|&&
+name|rowField
+operator|!=
+literal|null
 condition|)
 block|{
 name|LOG
@@ -973,9 +977,6 @@ argument_list|(
 literal|"Returning ["
 operator|+
 name|rowField
-operator|.
-name|toString
-argument_list|()
 operator|+
 literal|"] for field ["
 operator|+
@@ -1205,6 +1206,12 @@ condition|(
 name|data
 operator|==
 literal|null
+operator|||
+name|data
+operator|.
+name|length
+operator|==
+literal|0
 condition|)
 block|{
 return|return
@@ -1263,6 +1270,40 @@ operator|==
 literal|null
 condition|)
 block|{
+name|offset
+operator|=
+name|schemaRetriever
+operator|.
+name|getOffset
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+name|data
+operator|.
+name|length
+operator|<
+name|offset
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Data size cannot be less than ["
+operator|+
+name|offset
+operator|+
+literal|"]. Found ["
+operator|+
+name|data
+operator|.
+name|length
+operator|+
+literal|"]"
+argument_list|)
+throw|;
+block|}
 name|rs
 operator|=
 name|schemaRetriever
@@ -1321,40 +1362,6 @@ argument_list|)
 throw|;
 block|}
 comment|// adjust the data bytes according to any possible offset that was provided
-name|offset
-operator|=
-name|schemaRetriever
-operator|.
-name|getOffset
-argument_list|()
-expr_stmt|;
-if|if
-condition|(
-name|data
-operator|.
-name|length
-operator|<
-name|offset
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-literal|"Data size cannot be less than ["
-operator|+
-name|offset
-operator|+
-literal|"]. Found ["
-operator|+
-name|data
-operator|.
-name|length
-operator|+
-literal|"]"
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 name|LOG

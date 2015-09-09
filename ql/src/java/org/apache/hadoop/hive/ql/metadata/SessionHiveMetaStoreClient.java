@@ -2659,7 +2659,7 @@ argument_list|)
 decl_stmt|;
 name|MetaStoreUtils
 operator|.
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 argument_list|(
 name|newtCopy
 argument_list|,

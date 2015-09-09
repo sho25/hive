@@ -282,7 +282,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here   */
+comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  */
 end_comment
 
 begin_class

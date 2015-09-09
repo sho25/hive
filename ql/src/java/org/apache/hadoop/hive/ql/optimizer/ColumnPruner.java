@@ -295,6 +295,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|UnionOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -811,6 +829,29 @@ name|getLimitProc
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|opRules
+operator|.
+name|put
+argument_list|(
+operator|new
+name|RuleRegExp
+argument_list|(
+literal|"R13"
+argument_list|,
+name|UnionOperator
+operator|.
+name|getOperatorName
+argument_list|()
+operator|+
+literal|"%"
+argument_list|)
+argument_list|,
+name|ColumnPrunerProcFactory
+operator|.
+name|getUnionProc
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
 name|Dispatcher
@@ -902,7 +943,7 @@ block|}
 comment|/**      * Walk the given operator.      */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(
@@ -1009,8 +1050,7 @@ expr_stmt|;
 return|return;
 block|}
 comment|// move all the children to the front of queue
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|removeAll
 argument_list|(
@@ -1020,8 +1060,7 @@ name|getChildren
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|addAll
 argument_list|(
@@ -1034,8 +1073,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// add self to the end of the queue
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|add
 argument_list|(

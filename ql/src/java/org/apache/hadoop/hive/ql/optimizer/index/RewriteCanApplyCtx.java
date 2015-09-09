@@ -321,7 +321,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|PreOrderWalker
+name|PreOrderOnceWalker
 import|;
 end_import
 
@@ -753,7 +753,7 @@ return|return
 name|parseContext
 return|;
 block|}
-comment|/**    * This method walks all the nodes starting from topOp TableScanOperator node    * and invokes methods from {@link RewriteCanApplyProcFactory} for each of the rules    * added to the opRules map. We use the {@link PreOrderWalker} for a pre-order    * traversal of the operator tree.    *    * The methods from {@link RewriteCanApplyProcFactory} set appropriate values in    * {@link RewriteVars} enum.    *    * @param topOp    * @throws SemanticException    */
+comment|/**    * This method walks all the nodes starting from topOp TableScanOperator node    * and invokes methods from {@link RewriteCanApplyProcFactory} for each of the rules    * added to the opRules map. We use the {@link PreOrderOnceWalker} for a pre-order    * traversal of the operator tree.    *    * The methods from {@link RewriteCanApplyProcFactory} set appropriate values in    * {@link RewriteVars} enum.    *    * @param topOp    * @throws SemanticException    */
 name|void
 name|populateRewriteVars
 parameter_list|(
@@ -875,7 +875,7 @@ name|GraphWalker
 name|ogw
 init|=
 operator|new
-name|PreOrderWalker
+name|PreOrderOnceWalker
 argument_list|(
 name|disp
 argument_list|)

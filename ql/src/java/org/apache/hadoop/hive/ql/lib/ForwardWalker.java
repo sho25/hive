@@ -49,60 +49,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|lib
-operator|.
-name|DefaultGraphWalker
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|Dispatcher
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|Node
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|parse
 operator|.
 name|SemanticException
@@ -134,7 +80,7 @@ name|ForwardWalker
 extends|extends
 name|DefaultGraphWalker
 block|{
-comment|/** * Constructor. * * @param disp * dispatcher to call for each op encountered */
+comment|/**    * Constructor.    *    * @param disp    * dispatcher to call for each op encountered    */
 specifier|public
 name|ForwardWalker
 parameter_list|(
@@ -256,8 +202,7 @@ argument_list|>
 operator|)
 name|nd
 decl_stmt|;
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|removeAll
 argument_list|(
@@ -267,8 +212,7 @@ name|getParentOperators
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|addAll
 argument_list|(
@@ -281,10 +225,10 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** * walk the current operator and its descendants. * * @param nd * current operator in the graph * @throws SemanticException */
+comment|/**    * walk the current operator and its descendants.    *    * @param nd    * current operator in the graph    * @throws SemanticException    */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
 name|walk
 parameter_list|(
@@ -338,8 +282,7 @@ name|nd
 argument_list|)
 condition|)
 block|{
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|addAll
 argument_list|(
@@ -365,8 +308,7 @@ expr_stmt|;
 return|return;
 block|}
 comment|// add children, self to the front of the queue in that order
-name|getToWalk
-argument_list|()
+name|toWalk
 operator|.
 name|add
 argument_list|(

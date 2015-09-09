@@ -1347,7 +1347,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 parameter_list|(
 name|Database
 name|db
@@ -1365,7 +1365,7 @@ throws|throws
 name|MetaException
 block|{
 return|return
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 argument_list|(
 name|db
 argument_list|,
@@ -1382,7 +1382,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 parameter_list|(
 name|Database
 name|db
@@ -1402,11 +1402,25 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-return|return
-name|updateUnpartitionedTableStatsFast
-argument_list|(
+name|FileStatus
+index|[]
+name|fileStatuses
+init|=
+block|{}
+decl_stmt|;
+if|if
+condition|(
 name|tbl
-argument_list|,
+operator|.
+name|getPartitionKeysSize
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Update stats only when unpartitioned
+name|fileStatuses
+operator|=
 name|wh
 operator|.
 name|getFileStatusesForUnpartitionedTable
@@ -1415,6 +1429,14 @@ name|db
 argument_list|,
 name|tbl
 argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|updateTableStatsFast
+argument_list|(
+name|tbl
+argument_list|,
+name|fileStatuses
 argument_list|,
 name|madeDir
 argument_list|,
@@ -1422,11 +1444,11 @@ name|forceRecompute
 argument_list|)
 return|;
 block|}
-comment|/**    * Updates the numFiles and totalSize parameters for the passed unpartitioned Table by querying    * the warehouse if the passed Table does not already have values for these parameters.    * @param tbl    * @param fileStatus    * @param newDir if true, the directory was just created and can be assumed to be empty    * @param forceRecompute Recompute stats even if the passed Table already has    * these parameters set    * @return true if the stats were updated, false otherwise    */
+comment|/**    * Updates the numFiles and totalSize parameters for the passed Table by querying    * the warehouse if the passed Table does not already have values for these parameters.    * @param tbl    * @param fileStatus    * @param newDir if true, the directory was just created and can be assumed to be empty    * @param forceRecompute Recompute stats even if the passed Table already has    * these parameters set    * @return true if the stats were updated, false otherwise    */
 specifier|public
 specifier|static
 name|boolean
-name|updateUnpartitionedTableStatsFast
+name|updateTableStatsFast
 parameter_list|(
 name|Table
 name|tbl
