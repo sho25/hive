@@ -3590,6 +3590,18 @@ operator|+
 literal|"because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
+name|HIVEMAPJOINOPTIMIZEDTABLEPROBEPERCENT
+argument_list|(
+literal|"hive.mapjoin.optimized.hashtable.probe.percent"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.5
+argument_list|,
+literal|"Probing space percentage of the optimized hashtable"
+argument_list|)
+block|,
 name|HIVEUSEHYBRIDGRACEHASHJOIN
 argument_list|(
 literal|"hive.mapjoin.hybridgrace.hashtable"
