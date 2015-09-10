@@ -8090,6 +8090,69 @@ operator|+
 literal|"(hive.server2.session.check.interval) are enabled."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_CLIENT_RETRY_LIMIT
+argument_list|(
+literal|"hive.server2.thrift.client.retry.limit"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of retries upon "
+operator|+
+literal|"failure of Thrift HiveServer2 calls"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_CLIENT_CONNECTION_RETRY_LIMIT
+argument_list|(
+literal|"hive.server2.thrift.client.connect.retry.limit"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of "
+operator|+
+literal|"retries while opening a connection to HiveServe2"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_CLIENT_RETRY_DELAY_SECONDS
+argument_list|(
+literal|"hive.server2.thrift.client.retry.delay.seconds"
+argument_list|,
+literal|"1s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Number of seconds for the HiveServer2 thrift client to wait between "
+operator|+
+literal|"consecutive connection attempts. Also specifies the time to wait between retrying thrift calls upon failures"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_CLIENT_USER
+argument_list|(
+literal|"hive.server2.thrift.client.user"
+argument_list|,
+literal|"anonymous"
+argument_list|,
+literal|"Username to use against thrift"
+operator|+
+literal|" client"
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_CLIENT_PASSWORD
+argument_list|(
+literal|"hive.server2.thrift.client.password"
+argument_list|,
+literal|"anonymous"
+argument_list|,
+literal|"Password to use against "
+operator|+
+literal|"thrift client"
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
