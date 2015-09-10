@@ -321,7 +321,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -414,11 +414,11 @@ condition|)
 block|{
 return|return;
 block|}
-name|HiveSort
+name|HiveSortLimit
 name|obRel
 init|=
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|topSelparentPair
 operator|.

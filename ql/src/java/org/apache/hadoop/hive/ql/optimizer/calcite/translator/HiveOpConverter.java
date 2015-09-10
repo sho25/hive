@@ -753,7 +753,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -1833,14 +1833,14 @@ if|if
 condition|(
 name|rn
 operator|instanceof
-name|HiveSort
+name|HiveSortLimit
 condition|)
 block|{
 return|return
 name|visit
 argument_list|(
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|rn
 argument_list|)
@@ -3509,7 +3509,7 @@ block|}
 name|OpAttr
 name|visit
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|sortRel
 parameter_list|)
 throws|throws

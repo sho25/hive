@@ -1797,7 +1797,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -6718,7 +6718,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -7133,7 +7133,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -14701,7 +14701,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,
@@ -14873,7 +14873,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,
