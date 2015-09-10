@@ -218,7 +218,6 @@ import|;
 end_import
 
 begin_class
-specifier|public
 class|class
 name|Utils
 block|{
@@ -240,7 +239,6 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|/**     * The required prefix for the connection URL.     */
-specifier|public
 specifier|static
 specifier|final
 name|String

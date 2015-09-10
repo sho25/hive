@@ -774,20 +774,6 @@ import|;
 end_import
 
 begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|jdbc
-operator|.
-name|Utils
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -4866,9 +4852,7 @@ name|execCommandWithPrefix
 argument_list|(
 literal|"!connect "
 operator|+
-name|Utils
-operator|.
-name|URL_PREFIX
+name|BEELINE_DEFAULT_JDBC_URL
 operator|+
 literal|" '' ''"
 argument_list|)
