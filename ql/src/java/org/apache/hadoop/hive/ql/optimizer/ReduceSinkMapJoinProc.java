@@ -1565,6 +1565,30 @@ name|bucketCount
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|keyCount
+operator|==
+literal|0
+condition|)
+block|{
+name|keyCount
+operator|=
+literal|1
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|tableSize
+operator|==
+literal|0
+condition|)
+block|{
+name|tableSize
+operator|=
+literal|1
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -1572,6 +1596,13 @@ argument_list|(
 literal|"Mapjoin "
 operator|+
 name|mapJoinOp
+operator|+
+literal|"(bucket map join = )"
+operator|+
+name|joinConf
+operator|.
+name|isBucketMapJoin
+argument_list|()
 operator|+
 literal|", pos: "
 operator|+

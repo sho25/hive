@@ -1454,6 +1454,12 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|this
+operator|.
+name|done
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|state
@@ -1712,6 +1718,8 @@ literal|" "
 operator|+
 name|getName
 argument_list|()
+operator|+
+literal|" done is reset."
 argument_list|)
 expr_stmt|;
 block|}
