@@ -2598,6 +2598,18 @@ name|dps
 argument_list|)
 expr_stmt|;
 block|}
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"line.separator"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|long
 name|startTime
 init|=
@@ -2698,7 +2710,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"\t Time taken for load dynamic partitions : "
+literal|"\t Time taken to load dynamic partitions: "
 operator|+
 operator|(
 name|System
@@ -2708,6 +2720,10 @@ argument_list|()
 operator|-
 name|startTime
 operator|)
+operator|/
+literal|1000.0
+operator|+
+literal|" seconds"
 argument_list|)
 expr_stmt|;
 if|if
@@ -2973,9 +2989,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|console
+name|LOG
 operator|.
-name|printInfo
+name|info
 argument_list|(
 literal|"\tLoading partition "
 operator|+
@@ -3000,6 +3016,10 @@ argument_list|()
 operator|-
 name|startTime
 operator|)
+operator|/
+literal|1000.0
+operator|+
+literal|" seconds"
 argument_list|)
 expr_stmt|;
 name|dc
