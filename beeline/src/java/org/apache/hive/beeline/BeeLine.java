@@ -4862,7 +4862,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|dispatch
+name|execCommandWithPrefix
 argument_list|(
 literal|"!connect "
 operator|+
@@ -6042,28 +6042,6 @@ block|}
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|line
-operator|.
-name|toLowerCase
-argument_list|()
-operator|.
-name|startsWith
-argument_list|(
-literal|"!connect"
-argument_list|)
-condition|)
-block|{
-return|return
-name|execCommandWithPrefix
-argument_list|(
-name|line
-argument_list|)
-return|;
-block|}
-else|else
-block|{
 return|return
 name|commands
 operator|.
@@ -6078,7 +6056,6 @@ name|getEntireLineAsCommand
 argument_list|()
 argument_list|)
 return|;
-block|}
 block|}
 block|}
 comment|/**    * Test whether a line requires a continuation.    *    * @param line    *          the line to be tested    *    * @return true if continuation required    */
