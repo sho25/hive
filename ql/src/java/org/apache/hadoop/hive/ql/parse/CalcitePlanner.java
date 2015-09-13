@@ -2934,13 +2934,6 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|topLevelFieldSchema
-decl_stmt|;
-specifier|private
 name|SemanticException
 name|semanticException
 decl_stmt|;
@@ -4861,7 +4854,7 @@ name|convert
 argument_list|(
 name|optimizedOptiqPlan
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|)
 expr_stmt|;
 return|return
@@ -4952,7 +4945,7 @@ argument_list|(
 name|optimizedOptiqPlan
 argument_list|)
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|,
 name|this
 operator|.
@@ -6275,7 +6268,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|topLevelFieldSchema
+name|resultSchema
 operator|=
 name|SemanticAnalyzer
 operator|.
