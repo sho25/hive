@@ -1816,11 +1816,6 @@ literal|" done is reset."
 argument_list|)
 expr_stmt|;
 block|}
-name|initializeChildren
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
 comment|// let's wait on the async ops before continuing
 name|completeInitialization
 argument_list|(
