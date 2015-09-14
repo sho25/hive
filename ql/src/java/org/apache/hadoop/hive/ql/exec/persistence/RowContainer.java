@@ -587,8 +587,9 @@ literal|false
 decl_stmt|;
 comment|// once called first, it will never be able to
 comment|// write again.
+specifier|private
 name|int
-name|acutalSplitNum
+name|actualSplitNum
 init|=
 literal|0
 decl_stmt|;
@@ -1171,7 +1172,7 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-name|acutalSplitNum
+name|actualSplitNum
 operator|=
 name|inputSplits
 operator|.
@@ -1902,7 +1903,7 @@ name|currentSplitPointer
 operator|<
 name|this
 operator|.
-name|acutalSplitNum
+name|actualSplitNum
 condition|)
 block|{
 name|JobConf
@@ -2146,7 +2147,7 @@ literal|0
 expr_stmt|;
 name|this
 operator|.
-name|acutalSplitNum
+name|actualSplitNum
 operator|=
 literal|0
 expr_stmt|;
@@ -2953,6 +2954,17 @@ name|currentWriteBlock
 operator|=
 literal|null
 expr_stmt|;
+block|}
+specifier|protected
+name|int
+name|getLastActualSplit
+parameter_list|()
+block|{
+return|return
+name|actualSplitNum
+operator|-
+literal|1
+return|;
 block|}
 block|}
 end_class
