@@ -2593,6 +2593,8 @@ specifier|final
 name|Configuration
 name|conf
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 try|try
 block|{
@@ -2850,6 +2852,13 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|e
+argument_list|)
+throw|;
 block|}
 block|}
 annotation|@
