@@ -3660,7 +3660,7 @@ name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
 decl_stmt|;
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|FieldSchema

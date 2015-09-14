@@ -47,7 +47,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -290,7 +290,7 @@ argument_list|>
 name|posToVertex
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -413,7 +413,12 @@ name|newKeys
 init|=
 operator|new
 name|JSONObject
+argument_list|(
+operator|new
+name|LinkedHashMap
+argument_list|<>
 argument_list|()
+argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -584,7 +589,7 @@ name|name
 return|;
 block|}
 block|}
-comment|/**    * @param out    * @param indentFlag    * @param branchOfJoinOp    *          This parameter is used to show if it is a branch of a Join    *          operator so that we can decide the corresponding indent.    * @throws Exception    */
+comment|/**    * @param printer    * @param indentFlag    * @param branchOfJoinOp    *          This parameter is used to show if it is a branch of a Join    *          operator so that we can decide the corresponding indent.    * @throws Exception    */
 specifier|public
 name|void
 name|print

@@ -1797,7 +1797,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -2932,13 +2932,6 @@ name|AtomicInteger
 argument_list|(
 literal|0
 argument_list|)
-decl_stmt|;
-specifier|private
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|topLevelFieldSchema
 decl_stmt|;
 specifier|private
 name|SemanticException
@@ -4861,7 +4854,7 @@ name|convert
 argument_list|(
 name|optimizedOptiqPlan
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|)
 expr_stmt|;
 return|return
@@ -4952,7 +4945,7 @@ argument_list|(
 name|optimizedOptiqPlan
 argument_list|)
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|,
 name|this
 operator|.
@@ -6275,7 +6268,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|topLevelFieldSchema
+name|resultSchema
 operator|=
 name|SemanticAnalyzer
 operator|.
@@ -6718,7 +6711,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -7133,7 +7126,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -14701,7 +14694,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,
@@ -14873,7 +14866,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,

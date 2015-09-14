@@ -1509,6 +1509,12 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|this
+operator|.
+name|done
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|state
@@ -1788,6 +1794,33 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|isLogInfoEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Initialization Done "
+operator|+
+name|id
+operator|+
+literal|" "
+operator|+
+name|getName
+argument_list|()
+operator|+
+literal|" done is reset."
+argument_list|)
+expr_stmt|;
+block|}
+name|initializeChildren
+argument_list|(
+name|hconf
+argument_list|)
+expr_stmt|;
 comment|// let's wait on the async ops before continuing
 name|completeInitialization
 argument_list|(
