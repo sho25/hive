@@ -154,7 +154,7 @@ specifier|final
 name|int
 name|MIN_TERMINAL_WIDTH
 init|=
-literal|80
+literal|94
 decl_stmt|;
 specifier|static
 name|boolean
