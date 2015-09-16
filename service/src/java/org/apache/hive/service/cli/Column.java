@@ -323,16 +323,6 @@ name|TStringColumn
 import|;
 end_import
 
-begin_import
-import|import
-name|sun
-operator|.
-name|misc
-operator|.
-name|FloatingDecimal
-import|;
-end_import
-
 begin_comment
 comment|/**  * Column.  */
 end_comment
@@ -2535,16 +2525,13 @@ condition|?
 literal|0
 else|:
 operator|new
-name|FloatingDecimal
+name|Double
 argument_list|(
-operator|(
-name|Float
-operator|)
 name|field
-argument_list|)
 operator|.
-name|doubleValue
+name|toString
 argument_list|()
+argument_list|)
 expr_stmt|;
 break|break;
 case|case
