@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -2387,6 +2397,15 @@ block|{
 comment|// each side better have 0 or more RS. if either side is unbalanced, cannot convert.
 comment|// This is a workaround for now. Right fix would be to refactor code in the
 comment|// MapRecordProcessor and ReduceRecordProcessor with respect to the sources.
+annotation|@
+name|SuppressWarnings
+argument_list|(
+block|{
+literal|"rawtypes"
+block|,
+literal|"unchecked"
+block|}
+argument_list|)
 name|Set
 argument_list|<
 name|ReduceSinkOperator
@@ -2397,6 +2416,9 @@ name|OperatorUtils
 operator|.
 name|findOperatorsUpstream
 argument_list|(
+operator|(
+name|Collection
+operator|)
 name|parentOp
 operator|.
 name|getParentOperators
