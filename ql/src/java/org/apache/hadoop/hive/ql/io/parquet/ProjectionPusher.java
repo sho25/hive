@@ -471,6 +471,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
+annotation|@
+name|Deprecated
+comment|// Uses deprecated methods on ColumnProjectionUtils
 specifier|private
 name|void
 name|pushProjectionsAndFilters
@@ -857,6 +860,9 @@ name|filterExprSerialized
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Deprecated
+comment|// Uses deprecated methods on ColumnProjectionUtils
 specifier|public
 name|JobConf
 name|pushProjectionsAndFilters

@@ -651,6 +651,7 @@ operator|new
 name|StructTypeInfo
 argument_list|()
 decl_stmt|;
+comment|// The source column names for ORC serde that will be used in the schema.
 name|rootType
 operator|.
 name|setAllStructFieldNames
