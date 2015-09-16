@@ -10008,6 +10008,9 @@ name|filterExpr
 parameter_list|,
 name|RelNode
 name|srcRel
+parameter_list|,
+name|boolean
+name|useCaching
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -10025,6 +10028,8 @@ name|get
 argument_list|(
 name|srcRel
 argument_list|)
+argument_list|,
+name|useCaching
 argument_list|)
 decl_stmt|;
 if|if
@@ -10857,6 +10862,8 @@ argument_list|(
 name|searchCond
 argument_list|,
 name|srcRel
+argument_list|,
+name|forHavingClause
 argument_list|)
 expr_stmt|;
 comment|/*            * For Not Exists and Not In, add a projection on top of the Left            * Outer Join.            */
@@ -10926,6 +10933,8 @@ argument_list|(
 name|searchCond
 argument_list|,
 name|srcRel
+argument_list|,
+name|forHavingClause
 argument_list|)
 return|;
 block|}
