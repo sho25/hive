@@ -137,6 +137,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -654,6 +672,32 @@ name|getBoolVar
 argument_list|(
 name|HIVECONVERTJOINNOCONDITIONALTASK
 argument_list|)
+operator|&&
+operator|!
+name|pctx
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_CONVERT_JOIN_BUCKET_MAPJOIN_TEZ
+argument_list|)
+operator|&&
+operator|!
+name|pctx
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEDYNAMICPARTITIONHASHJOIN
+argument_list|)
 decl_stmt|;
 comment|// If multiple rules can be matched with same cost, last rule will be choosen as a processor
 comment|// see DefaultRuleDispatcher#dispatch()
@@ -1130,7 +1174,7 @@ throws|throws
 name|SemanticException
 function_decl|;
 comment|// for JOIN-RS case, it's not possible generally to merge if child has
-comment|// more key/partition columns than parents
+comment|// less key/partition columns than parents
 specifier|protected
 name|boolean
 name|merge
@@ -1207,7 +1251,7 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|>
+operator|<
 name|pRS0c
 operator|.
 name|getKeyCols
@@ -1230,7 +1274,7 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|>
+operator|!=
 name|pRS0c
 operator|.
 name|getPartitionCols
@@ -1431,8 +1475,8 @@ decl_stmt|;
 if|if
 condition|(
 name|found
-operator|<
-literal|0
+operator|!=
+name|i
 condition|)
 block|{
 return|return
@@ -1551,8 +1595,8 @@ decl_stmt|;
 if|if
 condition|(
 name|found
-operator|<
-literal|0
+operator|!=
+name|i
 condition|)
 block|{
 return|return
