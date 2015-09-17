@@ -1209,6 +1209,9 @@ name|targetPath
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
 name|FileUtils
 operator|.
 name|mkdir
@@ -1221,7 +1224,18 @@ literal|false
 argument_list|,
 name|conf
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Failed to create local target directory for copy:"
+operator|+
+name|targetPath
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 catch|catch
