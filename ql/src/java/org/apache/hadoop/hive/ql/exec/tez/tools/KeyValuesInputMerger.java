@@ -447,15 +447,6 @@ name|Object
 name|next
 parameter_list|()
 block|{
-name|l4j
-operator|.
-name|info
-argument_list|(
-literal|"next called on "
-operator|+
-name|currentIterator
-argument_list|)
-expr_stmt|;
 return|return
 name|currentIterator
 operator|.
