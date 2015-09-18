@@ -4389,6 +4389,17 @@ name|system
 operator|.
 name|registerGenericUDAF
 argument_list|(
+literal|"$SUM0"
+argument_list|,
+operator|new
+name|GenericUDAFSumEmptyIsZero
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDAF
+argument_list|(
 literal|"count"
 argument_list|,
 operator|new
