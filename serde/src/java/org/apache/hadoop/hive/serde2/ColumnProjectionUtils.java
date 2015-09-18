@@ -43,6 +43,34 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|Log
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|logging
+operator|.
+name|LogFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|conf
@@ -62,6 +90,20 @@ operator|.
 name|util
 operator|.
 name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
 import|;
 end_import
 
@@ -103,6 +145,21 @@ specifier|final
 class|class
 name|ColumnProjectionUtils
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|Log
+name|LOG
+init|=
+name|LogFactory
+operator|.
+name|getLog
+argument_list|(
+name|ColumnProjectionUtils
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -180,6 +237,8 @@ block|}
 comment|/**    * @deprecated for backwards compatibility with<= 0.12, use setReadAllColumns    * and appendReadColumns    */
 annotation|@
 name|Deprecated
+annotation|@
+name|VisibleForTesting
 specifier|public
 specifier|static
 name|void
@@ -361,6 +420,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * This method appends read column information to configuration to use for PPD. It is    * currently called with information from TSOP. Names come from TSOP input RowSchema, and    * IDs are the indexes inside the schema (which PPD assumes correspond to indexes inside the    * files to PPD in; something that would be invalid in many cases of schema evolution).    * @param conf Config to set values to.    * @param ids Column ids.    * @param names Column names.    */
 specifier|public
 specifier|static
 name|void
@@ -382,6 +442,41 @@ argument_list|>
 name|names
 parameter_list|)
 block|{
+if|if
+condition|(
+name|ids
+operator|.
+name|size
+argument_list|()
+operator|!=
+name|names
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Read column counts do not match: "
+operator|+
+name|ids
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" ids, "
+operator|+
+name|names
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" names"
+argument_list|)
+expr_stmt|;
+block|}
 name|appendReadColumns
 argument_list|(
 name|conf
@@ -502,6 +597,8 @@ name|list
 control|)
 block|{
 comment|// it may contain duplicates, remove duplicates
+comment|// TODO: WTF? This would break many assumptions elsewhere if it did.
+comment|//       Column names' and column ids' lists are supposed to be correlated.
 name|Integer
 name|toAdd
 init|=
@@ -528,6 +625,27 @@ operator|.
 name|add
 argument_list|(
 name|toAdd
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Duplicate ID "
+operator|+
+name|toAdd
+operator|+
+literal|" in column ID list"
 argument_list|)
 expr_stmt|;
 block|}

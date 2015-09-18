@@ -3532,6 +3532,7 @@ literal|null
 return|;
 block|}
 block|}
+comment|/** Sets up needed columns for TSOP. Mainly, transfers column names from input    * RowSchema as well as the needed virtual columns, into TableScanDesc.    */
 specifier|public
 specifier|static
 name|void

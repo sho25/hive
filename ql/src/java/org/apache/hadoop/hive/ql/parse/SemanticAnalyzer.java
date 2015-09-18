@@ -56894,6 +56894,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Determine row schema for TSOP.
+comment|// Include column names from SerDe, the partition and virtual columns.
 name|rwsch
 operator|=
 operator|new

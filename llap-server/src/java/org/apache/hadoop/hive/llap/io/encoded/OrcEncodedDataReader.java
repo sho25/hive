@@ -1910,7 +1910,7 @@ name|filterColumns
 init|=
 name|RecordReaderImpl
 operator|.
-name|mapSargColumns
+name|mapSargColumnsToOrcInternalColIdx
 argument_list|(
 name|sarg
 operator|.
