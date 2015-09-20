@@ -2700,7 +2700,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -6201,7 +6201,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -6600,7 +6600,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -7399,7 +7399,7 @@ comment|// Reset the perf logger
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|(
@@ -7904,15 +7904,6 @@ argument_list|,
 name|PerfLogger
 operator|.
 name|DRIVER_RUN
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|close
-argument_list|(
-name|LOG
-argument_list|,
-name|plan
 argument_list|)
 expr_stmt|;
 comment|// Take all the driver run hooks and post-execute them.
@@ -8570,7 +8561,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()

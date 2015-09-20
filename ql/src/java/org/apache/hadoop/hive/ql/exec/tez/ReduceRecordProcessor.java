@@ -537,24 +537,6 @@ name|Reader
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
-operator|.
-name|library
-operator|.
-name|api
-operator|.
-name|KeyValuesReader
-import|;
-end_import
-
 begin_comment
 comment|/**  * Process input from tez LogicalInput and write output - for a map plan  * Just pump the records through the query plan.  */
 end_comment

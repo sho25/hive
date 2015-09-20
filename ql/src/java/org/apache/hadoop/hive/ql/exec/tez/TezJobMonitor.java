@@ -589,14 +589,6 @@ name|TreeSet
 import|;
 end_import
 
-begin_import
-import|import
-name|jline
-operator|.
-name|TerminalFactory
-import|;
-end_import
-
 begin_comment
 comment|/**  * TezJobMonitor keeps track of a tez job while it's being executed. It will  * print status to the console and retrieve final status of the job after  * completion.  */
 end_comment
@@ -786,7 +778,7 @@ specifier|final
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
