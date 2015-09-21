@@ -125,15 +125,15 @@ end_import
 
 begin_import
 import|import
-name|com
+name|org
 operator|.
-name|google
+name|apache
 operator|.
-name|common
+name|hadoop
 operator|.
-name|annotations
+name|conf
 operator|.
-name|VisibleForTesting
+name|Configuration
 import|;
 end_import
 
@@ -145,9 +145,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|fs
 operator|.
-name|Configuration
+name|FileSystem
 import|;
 end_import
 
@@ -682,6 +682,20 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
 import|;
 end_import
 
@@ -1733,8 +1747,13 @@ return|;
 block|}
 finally|finally
 block|{
-comment|// TODO Fix UGI and FS Handling. Closing UGI here causes some errors right now.
-comment|//        FileSystem.closeAllForUGI(taskUgi);
+name|FileSystem
+operator|.
+name|closeAllForUGI
+argument_list|(
+name|taskUgi
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
