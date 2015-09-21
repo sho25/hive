@@ -263,6 +263,25 @@ name|getCapacity
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Verify the scenario when maxProbeSize is a very small value, it doesn't fail
+name|BytesBytesMultiHashMap
+name|map1
+init|=
+operator|new
+name|BytesBytesMultiHashMap
+argument_list|(
+literal|1024
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.75
+argument_list|,
+literal|524288
+argument_list|,
+literal|1
+argument_list|)
+decl_stmt|;
 block|}
 annotation|@
 name|Test
