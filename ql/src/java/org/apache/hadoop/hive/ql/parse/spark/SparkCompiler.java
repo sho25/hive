@@ -1227,6 +1227,24 @@ name|SparkWork
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_comment
 comment|/**  * SparkCompiler translates the operator plan into SparkTasks.  *  * Cloned from TezCompiler.  */
 end_comment
@@ -1257,7 +1275,7 @@ specifier|final
 name|PerfLogger
 name|PERF_LOGGER
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()

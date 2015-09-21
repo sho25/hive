@@ -577,24 +577,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|runtime
-operator|.
-name|library
-operator|.
-name|api
-operator|.
-name|KeyValuesReader
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
