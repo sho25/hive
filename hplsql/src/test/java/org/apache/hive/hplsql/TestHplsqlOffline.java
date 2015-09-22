@@ -137,6 +137,21 @@ literal|"create_table_ora"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSelectDb2
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|run
+argument_list|(
+literal|"select_db2"
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Run a test file    */
 name|void
 name|run
