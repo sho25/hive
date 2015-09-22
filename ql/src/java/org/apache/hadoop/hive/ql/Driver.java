@@ -2933,6 +2933,21 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+comment|// Flush the metastore cache.  This assures that we don't pick up objects from a previous
+comment|// query running in this same thread.  This has to be done after we get our semantic
+comment|// analyzer (this is when the connection to the metastore is made) but before we analyze,
+comment|// because at that point we need access to the objects.
+name|Hive
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getMSC
+argument_list|()
+operator|.
+name|flushCache
+argument_list|()
+expr_stmt|;
 comment|// Do semantic analysis and plan generation
 if|if
 condition|(
