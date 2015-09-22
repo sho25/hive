@@ -7013,6 +7013,18 @@ name|updateCnt
 init|=
 literal|0
 decl_stmt|;
+if|if
+condition|(
+name|txnids
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 try|try
 block|{
 name|stmt
@@ -10321,7 +10333,7 @@ name|info
 argument_list|(
 literal|"Aborted the following transactions due to timeout: "
 operator|+
-name|timedOutTxns
+name|batchToAbort
 operator|.
 name|toString
 argument_list|()
