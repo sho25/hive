@@ -675,20 +675,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|calcite
-operator|.
-name|util
-operator|.
-name|ChunkList
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|commons
 operator|.
 name|codec
@@ -7034,7 +7020,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -7208,7 +7194,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -7383,7 +7369,7 @@ comment|// TODO: need proper clone. Meanwhile, let's at least keep this horror i
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -7477,7 +7463,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -14936,7 +14922,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()

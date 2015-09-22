@@ -185,7 +185,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -284,7 +284,7 @@ specifier|public
 name|Boolean
 name|isPhaseTransition
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|sort
 parameter_list|)
 block|{

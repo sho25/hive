@@ -697,6 +697,17 @@ operator|.
 name|getMemoryNeeded
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Memory manager allocates "
+operator|+
+name|totalMapJoinMemory
+operator|+
+literal|" bytes for the loading hashtable."
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|totalMapJoinMemory
@@ -966,8 +977,6 @@ name|ConfVars
 operator|.
 name|HIVEHYBRIDGRACEHASHJOINMINWBSIZE
 argument_list|)
-argument_list|,
-name|nwayConf
 argument_list|)
 expr_stmt|;
 block|}

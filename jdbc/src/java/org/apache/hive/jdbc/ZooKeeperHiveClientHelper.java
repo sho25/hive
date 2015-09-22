@@ -906,14 +906,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Set authentication configs
-comment|// Note that in JDBC driver, we have 3 auth modes: NOSASL, Kerberos and password based
-comment|// The use of "JdbcConnectionParams.AUTH_TYPE=JdbcConnectionParams.AUTH_SIMPLE" picks NOSASL
-comment|// The presence of "JdbcConnectionParams.AUTH_PRINCIPAL=<principal>" picks Kerberos
-comment|// Otherwise password based (which includes NONE, PAM, LDAP, CUSTOM)
+comment|/**          * Note: this is pretty messy, but sticking to the current implementation.          * Set authentication configs. Note that in JDBC driver, we have 3 auth modes: NOSASL,          * Kerberos (including delegation token mechanism) and password based.          * The use of JdbcConnectionParams.AUTH_TYPE==JdbcConnectionParams.AUTH_SIMPLE picks NOSASL.          * The presence of JdbcConnectionParams.AUTH_PRINCIPAL==<principal> picks Kerberos.          * If principal is absent, the presence of          * JdbcConnectionParams.AUTH_TYPE==JdbcConnectionParams.AUTH_TOKEN uses delegation token.          * Otherwise password based (which includes NONE, PAM, LDAP, CUSTOM)          */
 if|if
 condition|(
-operator|(
 name|matcher
 operator|.
 name|group
@@ -925,7 +920,22 @@ name|equals
 argument_list|(
 literal|"hive.server2.authentication"
 argument_list|)
-operator|)
+condition|)
+block|{
+comment|// NOSASL
+if|if
+condition|(
+name|matcher
+operator|.
+name|group
+argument_list|(
+literal|2
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"NOSASL"
+argument_list|)
 operator|&&
 operator|!
 operator|(
@@ -940,22 +950,26 @@ name|JdbcConnectionParams
 operator|.
 name|AUTH_TYPE
 argument_list|)
-operator|)
-condition|)
-block|{
-if|if
-condition|(
-name|matcher
+operator|&&
+name|connParams
 operator|.
-name|group
+name|getSessionVars
+argument_list|()
+operator|.
+name|get
 argument_list|(
-literal|2
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
 argument_list|)
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"NOSASL"
+name|JdbcConnectionParams
+operator|.
+name|AUTH_SIMPLE
 argument_list|)
+operator|)
 condition|)
 block|{
 name|connParams
@@ -976,20 +990,53 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Set server's kerberos principal
+comment|// KERBEROS
+comment|// If delegation token is passed from the client side, do not set the principal
 if|if
 condition|(
-operator|(
 name|matcher
 operator|.
 name|group
 argument_list|(
-literal|1
+literal|2
 argument_list|)
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 literal|"hive.server2.authentication.kerberos.principal"
+argument_list|)
+operator|&&
+operator|!
+operator|(
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
+operator|.
+name|containsKey
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
+argument_list|)
+operator|&&
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TYPE
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_TOKEN
 argument_list|)
 operator|)
 operator|&&

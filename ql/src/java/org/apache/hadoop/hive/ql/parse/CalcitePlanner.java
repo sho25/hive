@@ -1797,7 +1797,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -1842,6 +1842,28 @@ operator|.
 name|reloperators
 operator|.
 name|HiveUnion
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
+name|HiveAggregateProjectMergeRule
 import|;
 end_import
 
@@ -2932,13 +2954,6 @@ name|AtomicInteger
 argument_list|(
 literal|0
 argument_list|)
-decl_stmt|;
-specifier|private
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|topLevelFieldSchema
 decl_stmt|;
 specifier|private
 name|SemanticException
@@ -4861,7 +4876,7 @@ name|convert
 argument_list|(
 name|optimizedOptiqPlan
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|)
 expr_stmt|;
 return|return
@@ -4952,7 +4967,7 @@ argument_list|(
 name|optimizedOptiqPlan
 argument_list|)
 argument_list|,
-name|topLevelFieldSchema
+name|resultSchema
 argument_list|,
 name|this
 operator|.
@@ -6275,7 +6290,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|topLevelFieldSchema
+name|resultSchema
 operator|=
 name|SemanticAnalyzer
 operator|.
@@ -6491,6 +6506,15 @@ name|HiveProject
 operator|.
 name|DEFAULT_PROJECT_FACTORY
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|hepPgmBldr
+operator|.
+name|addRuleInstance
+argument_list|(
+name|HiveAggregateProjectMergeRule
+operator|.
+name|INSTANCE
 argument_list|)
 expr_stmt|;
 name|hepPgm
@@ -6718,7 +6742,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -7133,7 +7157,7 @@ name|HiveSemiJoin
 operator|.
 name|HIVE_SEMIJOIN_FACTORY
 argument_list|,
-name|HiveSort
+name|HiveSortLimit
 operator|.
 name|HIVE_SORT_REL_FACTORY
 argument_list|,
@@ -10015,6 +10039,9 @@ name|filterExpr
 parameter_list|,
 name|RelNode
 name|srcRel
+parameter_list|,
+name|boolean
+name|useCaching
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -10032,6 +10059,8 @@ name|get
 argument_list|(
 name|srcRel
 argument_list|)
+argument_list|,
+name|useCaching
 argument_list|)
 decl_stmt|;
 if|if
@@ -10864,6 +10893,8 @@ argument_list|(
 name|searchCond
 argument_list|,
 name|srcRel
+argument_list|,
+name|forHavingClause
 argument_list|)
 expr_stmt|;
 comment|/*            * For Not Exists and Not In, add a projection on top of the Left            * Outer Join.            */
@@ -10933,6 +10964,8 @@ argument_list|(
 name|searchCond
 argument_list|,
 name|srcRel
+argument_list|,
+name|forHavingClause
 argument_list|)
 return|;
 block|}
@@ -14701,7 +14734,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,
@@ -14873,7 +14906,7 @@ decl_stmt|;
 name|sortRel
 operator|=
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,

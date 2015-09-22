@@ -3660,7 +3660,7 @@ name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
 decl_stmt|;
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|FieldSchema
@@ -56894,6 +56894,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Determine row schema for TSOP.
+comment|// Include column names from SerDe, the partition and virtual columns.
 name|rwsch
 operator|=
 operator|new

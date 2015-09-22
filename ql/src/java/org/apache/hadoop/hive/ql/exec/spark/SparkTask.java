@@ -1004,7 +1004,7 @@ specifier|final
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()

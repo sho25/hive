@@ -725,6 +725,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|SerDe
@@ -885,7 +903,7 @@ specifier|final
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -3472,6 +3490,23 @@ argument_list|)
 expr_stmt|;
 comment|// Deserialize the on-disk hash table
 comment|// We're sure this part is smaller than memory limit
+if|if
+condition|(
+name|rowCount
+operator|<=
+literal|0
+condition|)
+block|{
+name|rowCount
+operator|=
+literal|1024
+operator|*
+literal|1024
+expr_stmt|;
+comment|// Since rowCount is used later to instantiate a BytesBytesMultiHashMap
+comment|// as the initialCapacity which cannot be 0, we provide a reasonable
+comment|// positive number here
+block|}
 name|BytesBytesMultiHashMap
 name|restoredHashMap
 init|=

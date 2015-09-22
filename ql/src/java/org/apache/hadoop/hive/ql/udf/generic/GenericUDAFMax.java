@@ -1461,6 +1461,12 @@ operator|.
 name|add
 argument_list|(
 name|r
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|r
 index|[
 literal|0
 index|]
@@ -1471,6 +1477,13 @@ operator|.
 name|numRows
 operator|++
 expr_stmt|;
+if|if
+condition|(
+name|r
+operator|!=
+literal|null
+condition|)
+block|{
 name|int
 name|fIdx
 init|=
@@ -1538,6 +1551,7 @@ argument_list|()
 else|:
 name|r
 expr_stmt|;
+block|}
 block|}
 block|}
 for|for

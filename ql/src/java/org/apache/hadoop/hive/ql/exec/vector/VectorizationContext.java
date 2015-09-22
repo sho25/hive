@@ -10055,7 +10055,7 @@ name|Mode
 operator|.
 name|PROJECTION
 argument_list|,
-literal|null
+name|returnType
 argument_list|)
 return|;
 block|}
@@ -10224,7 +10224,7 @@ name|Mode
 operator|.
 name|PROJECTION
 argument_list|,
-literal|null
+name|returnType
 argument_list|)
 return|;
 block|}
@@ -10250,7 +10250,7 @@ name|Mode
 operator|.
 name|PROJECTION
 argument_list|,
-literal|null
+name|returnType
 argument_list|)
 return|;
 block|}
@@ -10419,7 +10419,7 @@ name|Mode
 operator|.
 name|PROJECTION
 argument_list|,
-literal|null
+name|returnType
 argument_list|)
 return|;
 block|}
@@ -10445,7 +10445,7 @@ name|Mode
 operator|.
 name|PROJECTION
 argument_list|,
-literal|null
+name|returnType
 argument_list|)
 return|;
 block|}

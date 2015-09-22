@@ -283,26 +283,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|thrift
-operator|.
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
-operator|.
-name|ServerMode
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|io
 operator|.
 name|Text
@@ -548,11 +528,11 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestHadoop20SAuthBridge
+name|TestHadoopAuthBridge23
 extends|extends
 name|TestCase
 block|{
-comment|/**    * set to true when metastore token manager has intitialized token manager    * through call to HadoopThriftAuthBridge20S.Server.startDelegationTokenSecretManager    */
+comment|/**    * set to true when metastore token manager has intitialized token manager    * through call to HadoopThriftAuthBridge23.Server.startDelegationTokenSecretManager    */
 specifier|static
 specifier|volatile
 name|boolean
@@ -561,9 +541,9 @@ decl_stmt|;
 specifier|private
 specifier|static
 class|class
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 extends|extends
-name|HadoopThriftAuthBridge
+name|HadoopThriftAuthBridge23
 block|{
 annotation|@
 name|Override
@@ -979,7 +959,7 @@ operator|=
 operator|new
 name|HiveConf
 argument_list|(
-name|TestHadoop20SAuthBridge
+name|TestHadoopAuthBridge23
 operator|.
 name|class
 argument_list|)
@@ -991,7 +971,7 @@ argument_list|(
 name|port
 argument_list|,
 operator|new
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1034,7 +1014,7 @@ literal|1000
 argument_list|,
 literal|0
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1135,7 +1115,7 @@ expr_stmt|;
 name|DelegationTokenInformation
 name|tokenInfo
 init|=
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1157,7 +1137,7 @@ name|assertFalse
 argument_list|(
 literal|"duplicate token add"
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1186,7 +1166,7 @@ literal|0
 argument_list|,
 literal|0
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1235,7 +1215,7 @@ name|assertEquals
 argument_list|(
 literal|"master keys not loaded from store"
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1266,7 +1246,7 @@ name|assertNull
 argument_list|(
 literal|"token not removed from store after cancel"
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1282,7 +1262,7 @@ name|assertFalse
 argument_list|(
 literal|"token removed (again)"
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1318,7 +1298,7 @@ block|{
 comment|// expected
 block|}
 comment|// token expiration
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1342,7 +1322,7 @@ argument_list|)
 expr_stmt|;
 name|assertNotNull
 argument_list|(
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1363,7 +1343,7 @@ name|assertNull
 argument_list|(
 literal|"Expired token not removed"
 argument_list|,
-name|MyHadoopThriftAuthBridge20S
+name|MyHadoopThriftAuthBridge23
 operator|.
 name|Server
 operator|.
@@ -1469,6 +1449,30 @@ name|Exception
 block|{
 name|setup
 argument_list|()
+expr_stmt|;
+specifier|final
+name|String
+name|proxyUserName
+init|=
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+operator|.
+name|getShortUserName
+argument_list|()
+decl_stmt|;
+name|setGroupsInConf
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"*"
+block|}
+argument_list|,
+name|proxyUserName
+argument_list|)
 expr_stmt|;
 name|UserGroupInformation
 name|clientUgi
