@@ -1001,7 +1001,9 @@ argument_list|,
 name|passwd
 argument_list|)
 expr_stmt|;
-return|return
+name|Connection
+name|conn
+init|=
 name|driver
 operator|.
 name|connect
@@ -1010,6 +1012,16 @@ name|driverUrl
 argument_list|,
 name|prop
 argument_list|)
+decl_stmt|;
+name|conn
+operator|.
+name|setAutoCommit
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+return|return
+name|conn
 return|;
 block|}
 specifier|private
