@@ -8146,22 +8146,6 @@ return|return
 literal|false
 return|;
 block|}
-name|boolean
-name|isMergePartial
-init|=
-operator|(
-name|desc
-operator|.
-name|getMode
-argument_list|()
-operator|!=
-name|GroupByDesc
-operator|.
-name|Mode
-operator|.
-name|HASH
-operator|)
-decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -8193,14 +8177,39 @@ block|}
 else|else
 block|{
 comment|// ReduceWork
+name|boolean
+name|isComplete
+init|=
+name|desc
+operator|.
+name|getMode
+argument_list|()
+operator|==
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|COMPLETE
+decl_stmt|;
 if|if
 condition|(
-name|isMergePartial
+name|desc
+operator|.
+name|getMode
+argument_list|()
+operator|!=
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|HASH
 condition|)
 block|{
 comment|// Reduce Merge-Partial GROUP BY.
 comment|// A merge-partial GROUP BY is fed by grouping by keys from reduce-shuffle.  It is the
 comment|// first (or root) operator for its reduce task.
+comment|// TODO: Technically, we should also handle FINAL, PARTIAL1, PARTIAL2 and PARTIALS
+comment|//       that are not hash or complete, but aren't merge-partial, somehow.
 if|if
 condition|(
 name|desc
@@ -8274,6 +8283,9 @@ name|size
 argument_list|()
 operator|>
 literal|0
+operator|&&
+operator|!
+name|isComplete
 condition|)
 block|{
 name|LOG
@@ -8314,6 +8326,12 @@ literal|"Vectorized Reduce MergePartial GROUP BY will do global aggregation"
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|isComplete
+condition|)
+block|{
 name|vectorDesc
 operator|.
 name|setIsReduceMergePartial
@@ -8321,6 +8339,17 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|vectorDesc
+operator|.
+name|setIsReduceStreaming
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -8674,6 +8703,15 @@ operator|!
 name|r
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot vectorize UDF "
+operator|+
+name|d
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
