@@ -467,7 +467,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -1098,7 +1098,7 @@ if|if
 condition|(
 name|rel
 operator|instanceof
-name|HiveSort
+name|HiveSortLimit
 condition|)
 block|{
 if|if
@@ -1126,7 +1126,7 @@ operator|!
 name|validSortChild
 argument_list|(
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|rel
 argument_list|)
@@ -1136,7 +1136,7 @@ name|introduceDerivedTable
 argument_list|(
 operator|(
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|rel
 operator|)
@@ -1722,6 +1722,24 @@ operator|||
 name|parent
 operator|instanceof
 name|SetOp
+operator|||
+operator|(
+name|parent
+operator|instanceof
+name|Aggregate
+operator|&&
+name|filterNode
+operator|.
+name|getInputs
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|instanceof
+name|Aggregate
+operator|)
 condition|)
 block|{
 name|validParent
@@ -1854,7 +1872,7 @@ specifier|static
 name|boolean
 name|validSortChild
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|sortNode
 parameter_list|)
 block|{

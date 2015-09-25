@@ -903,7 +903,7 @@ specifier|public
 specifier|static
 name|int
 index|[]
-name|mapSargColumns
+name|mapSargColumnsToOrcInternalColIdx
 parameter_list|(
 name|List
 argument_list|<
@@ -4355,7 +4355,7 @@ argument_list|()
 expr_stmt|;
 name|filterColumns
 operator|=
-name|mapSargColumns
+name|mapSargColumnsToOrcInternalColIdx
 argument_list|(
 name|sargLeaves
 argument_list|,

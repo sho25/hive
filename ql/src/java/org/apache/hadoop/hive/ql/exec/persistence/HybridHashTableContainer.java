@@ -638,11 +638,6 @@ name|memoryUsed
 decl_stmt|;
 comment|// the actual memory used
 specifier|private
-name|int
-name|writeBufferSize
-decl_stmt|;
-comment|// write buffer size for this HybridHashTableContainer
-specifier|private
 specifier|final
 name|long
 name|tableRowSize
@@ -754,7 +749,7 @@ name|hashMapSpilledOnCreation
 decl_stmt|;
 comment|// When there's no enough memory, cannot create hashMap
 name|int
-name|threshold
+name|initialCapacity
 decl_stmt|;
 comment|// Used to create an empty BytesBytesMultiHashMap
 name|float
@@ -774,7 +769,7 @@ specifier|public
 name|HashPartition
 parameter_list|(
 name|int
-name|threshold
+name|initialCapacity
 parameter_list|,
 name|float
 name|loadFactor
@@ -783,7 +778,7 @@ name|int
 name|wbSize
 parameter_list|,
 name|long
-name|memUsage
+name|maxProbeSize
 parameter_list|,
 name|boolean
 name|createHashMap
@@ -794,14 +789,14 @@ condition|(
 name|createHashMap
 condition|)
 block|{
-comment|// Hash map should be at least the size of our designated wbSize
-name|memUsage
+comment|// Probe space should be at least equal to the size of our designated wbSize
+name|maxProbeSize
 operator|=
 name|Math
 operator|.
 name|max
 argument_list|(
-name|memUsage
+name|maxProbeSize
 argument_list|,
 name|wbSize
 argument_list|)
@@ -811,13 +806,13 @@ operator|=
 operator|new
 name|BytesBytesMultiHashMap
 argument_list|(
-name|threshold
+name|initialCapacity
 argument_list|,
 name|loadFactor
 argument_list|,
 name|wbSize
 argument_list|,
-name|memUsage
+name|maxProbeSize
 argument_list|)
 expr_stmt|;
 block|}
@@ -834,9 +829,9 @@ expr_stmt|;
 block|}
 name|this
 operator|.
-name|threshold
+name|initialCapacity
 operator|=
-name|threshold
+name|initialCapacity
 expr_stmt|;
 name|this
 operator|.
@@ -867,7 +862,7 @@ name|BytesBytesMultiHashMap
 name|getHashMapFromDisk
 parameter_list|(
 name|int
-name|initialCapacity
+name|rowCount
 parameter_list|)
 throws|throws
 name|IOException
@@ -883,14 +878,7 @@ return|return
 operator|new
 name|BytesBytesMultiHashMap
 argument_list|(
-name|Math
-operator|.
-name|max
-argument_list|(
-name|threshold
-argument_list|,
-name|initialCapacity
-argument_list|)
+name|rowCount
 argument_list|,
 name|loadFactor
 argument_list|,
@@ -964,7 +952,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|initialCapacity
+name|rowCount
 operator|>
 literal|0
 condition|)
@@ -973,7 +961,7 @@ name|restoredHashMap
 operator|.
 name|expandAndRehashToTarget
 argument_list|(
-name|initialCapacity
+name|rowCount
 argument_list|)
 expr_stmt|;
 block|}
@@ -1357,6 +1345,19 @@ operator|.
 name|HIVEHYBRIDGRACEHASHJOINMINNUMPARTITIONS
 argument_list|)
 argument_list|,
+name|HiveConf
+operator|.
+name|getFloatVar
+argument_list|(
+name|hconf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPJOINOPTIMIZEDTABLEPROBEPERCENT
+argument_list|)
+argument_list|,
 name|estimatedTableSize
 argument_list|,
 name|keyCount
@@ -1390,6 +1391,9 @@ name|maxWbSize
 parameter_list|,
 name|int
 name|minNumParts
+parameter_list|,
+name|float
+name|probePercent
 parameter_list|,
 name|long
 name|estimatedTableSize
@@ -1461,6 +1465,9 @@ operator|=
 name|nwayConf
 expr_stmt|;
 name|int
+name|writeBufferSize
+decl_stmt|;
+name|int
 name|numPartitions
 decl_stmt|;
 if|if
@@ -1482,8 +1489,6 @@ argument_list|,
 name|minNumParts
 argument_list|,
 name|minWbSize
-argument_list|,
-name|nwayConf
 argument_list|)
 expr_stmt|;
 name|writeBufferSize
@@ -1694,6 +1699,47 @@ operator|/
 name|numPartitions
 argument_list|)
 decl_stmt|;
+comment|// maxCapacity should be calculated based on a percentage of memoryThreshold, which is to divide
+comment|// row size using long size
+name|float
+name|probePercentage
+init|=
+operator|(
+name|float
+operator|)
+literal|8
+operator|/
+operator|(
+name|tableRowSize
+operator|+
+literal|8
+operator|)
+decl_stmt|;
+comment|// long_size / tableRowSize + long_size
+if|if
+condition|(
+name|probePercentage
+operator|==
+literal|1
+condition|)
+block|{
+name|probePercentage
+operator|=
+name|probePercent
+expr_stmt|;
+block|}
+name|int
+name|maxCapacity
+init|=
+call|(
+name|int
+call|)
+argument_list|(
+name|memoryThreshold
+operator|*
+name|probePercentage
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -1752,7 +1798,7 @@ name|loadFactor
 argument_list|,
 name|writeBufferSize
 argument_list|,
-name|memoryThreshold
+name|maxCapacity
 argument_list|,
 literal|true
 argument_list|)
@@ -1760,6 +1806,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// To check whether we have enough memory to allocate for another hash partition,
+comment|// we need to get the size of the first hash partition to get an idea.
 name|hashPartitions
 index|[
 name|i
@@ -1774,11 +1822,19 @@ name|loadFactor
 argument_list|,
 name|writeBufferSize
 argument_list|,
-name|memoryThreshold
+name|maxCapacity
 argument_list|,
 name|memoryUsed
 operator|+
-name|writeBufferSize
+name|hashPartitions
+index|[
+literal|0
+index|]
+operator|.
+name|hashMap
+operator|.
+name|memorySize
+argument_list|()
 operator|<
 name|memoryThreshold
 argument_list|)
@@ -1787,7 +1843,7 @@ block|}
 block|}
 else|else
 block|{
-comment|// n-way join
+comment|// n-way join, all later small tables
 comment|// For all later small tables, follow the same pattern of the previously loaded tables.
 if|if
 condition|(
@@ -1809,13 +1865,13 @@ operator|=
 operator|new
 name|HashPartition
 argument_list|(
-name|threshold
+name|initialCapacity
 argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
 argument_list|,
-name|memoryThreshold
+name|maxCapacity
 argument_list|,
 literal|false
 argument_list|)
@@ -1831,13 +1887,13 @@ operator|=
 operator|new
 name|HashPartition
 argument_list|(
-name|threshold
+name|initialCapacity
 argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
 argument_list|,
-name|memoryThreshold
+name|maxCapacity
 argument_list|,
 literal|true
 argument_list|)
@@ -2777,7 +2833,7 @@ return|return
 name|memFreed
 return|;
 block|}
-comment|/**    * Calculate how many partitions are needed.    * For n-way join, we only do this calculation once in the HashTableLoader, for the biggest small    * table. Other small tables will use the same number. They may need to adjust (usually reduce)    * their individual write buffer size in order not to exceed memory threshold.    * @param memoryThreshold memory threshold for the given table    * @param dataSize total data size for the table    * @param minNumParts minimum required number of partitions    * @param minWbSize minimum required write buffer size    * @param nwayConf the n-way join configuration    * @return number of partitions needed    */
+comment|/**    * Calculate how many partitions are needed.    * For n-way join, we only do this calculation once in the HashTableLoader, for the biggest small    * table. Other small tables will use the same number. They may need to adjust (usually reduce)    * their individual write buffer size in order not to exceed memory threshold.    * @param memoryThreshold memory threshold for the given table    * @param dataSize total data size for the table    * @param minNumParts minimum required number of partitions    * @param minWbSize minimum required write buffer size    * @return number of partitions needed    */
 specifier|public
 specifier|static
 name|int
@@ -2794,9 +2850,6 @@ name|minNumParts
 parameter_list|,
 name|int
 name|minWbSize
-parameter_list|,
-name|HybridHashTableConf
-name|nwayConf
 parameter_list|)
 throws|throws
 name|IOException

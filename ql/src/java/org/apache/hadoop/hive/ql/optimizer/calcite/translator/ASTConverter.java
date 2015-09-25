@@ -631,7 +631,7 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveSort
+name|HiveSortLimit
 import|;
 end_import
 
@@ -1481,7 +1481,7 @@ comment|/*      * 7. Order Use in Order By from the block above. RelNode has no 
 name|convertOBToASTNode
 argument_list|(
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|order
 argument_list|)
@@ -1490,7 +1490,7 @@ comment|// 8. Limit
 name|convertLimitToASTNode
 argument_list|(
 operator|(
-name|HiveSort
+name|HiveSortLimit
 operator|)
 name|limit
 argument_list|)
@@ -1506,7 +1506,7 @@ specifier|private
 name|void
 name|convertLimitToASTNode
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|limit
 parameter_list|)
 block|{
@@ -1517,7 +1517,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|HiveSort
+name|HiveSortLimit
 name|hiveLimit
 init|=
 name|limit
@@ -1568,7 +1568,7 @@ specifier|private
 name|void
 name|convertOBToASTNode
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|order
 parameter_list|)
 block|{
@@ -1579,15 +1579,15 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|HiveSort
-name|hiveSort
+name|HiveSortLimit
+name|hiveSortLimit
 init|=
 name|order
 decl_stmt|;
 if|if
 condition|(
 operator|!
-name|hiveSort
+name|hiveSortLimit
 operator|.
 name|getCollation
 argument_list|()
@@ -1619,7 +1619,7 @@ operator|=
 operator|new
 name|Schema
 argument_list|(
-name|hiveSort
+name|hiveSortLimit
 argument_list|)
 expr_stmt|;
 name|Map
@@ -1630,7 +1630,7 @@ name|RexNode
 argument_list|>
 name|obRefToCallMap
 init|=
-name|hiveSort
+name|hiveSortLimit
 operator|.
 name|getInputRefToCallMap
 argument_list|()
@@ -1646,7 +1646,7 @@ control|(
 name|RelFieldCollation
 name|c
 range|:
-name|hiveSort
+name|hiveSortLimit
 operator|.
 name|getCollation
 argument_list|()
@@ -4057,7 +4057,7 @@ comment|/**      * Assumption:<br>      * 1. Project will always be child of Sor
 specifier|public
 name|Schema
 parameter_list|(
-name|HiveSort
+name|HiveSortLimit
 name|order
 parameter_list|)
 block|{

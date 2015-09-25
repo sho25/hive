@@ -163,6 +163,8 @@ name|SHOW_TABLESTATUS
 block|,
 name|SHOW_TBLPROPERTIES
 block|,
+name|SHOW_CREATEDATABASE
+block|,
 name|SHOW_CREATETABLE
 block|,
 name|SHOWFUNCTIONS

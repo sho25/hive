@@ -3660,7 +3660,7 @@ name|PrunedPartitionList
 argument_list|>
 name|prunedPartitions
 decl_stmt|;
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|FieldSchema
@@ -38610,10 +38610,9 @@ argument_list|(
 name|colName
 argument_list|)
 expr_stmt|;
-name|col
-operator|.
-name|setType
-argument_list|(
+name|String
+name|typeName
+init|=
 name|colInfo
 operator|.
 name|getType
@@ -38621,6 +38620,40 @@ argument_list|()
 operator|.
 name|getTypeName
 argument_list|()
+decl_stmt|;
+comment|// CTAS should NOT create a VOID type
+if|if
+condition|(
+name|typeName
+operator|.
+name|equals
+argument_list|(
+name|serdeConstants
+operator|.
+name|VOID_TYPE_NAME
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|CTAS_CREATES_VOID_TYPE
+operator|.
+name|getMsg
+argument_list|(
+name|colName
+argument_list|)
+argument_list|)
+throw|;
+block|}
+name|col
+operator|.
+name|setType
+argument_list|(
+name|typeName
 argument_list|)
 expr_stmt|;
 name|field_schemas
@@ -56894,6 +56927,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// Determine row schema for TSOP.
+comment|// Include column names from SerDe, the partition and virtual columns.
 name|rwsch
 operator|=
 operator|new

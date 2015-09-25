@@ -2019,6 +2019,13 @@ argument_list|,
 literal|"CREATE-TABLE-AS-SELECT cannot create table with location to a non-empty directory."
 argument_list|)
 block|,
+name|CTAS_CREATES_VOID_TYPE
+argument_list|(
+literal|10305
+argument_list|,
+literal|"CREATE-TABLE-AS-SELECT creates a VOID type, please use CAST to specify the type, near field: "
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

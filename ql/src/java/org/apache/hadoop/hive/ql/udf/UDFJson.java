@@ -329,6 +329,16 @@ operator|.
 name|ALLOW_UNQUOTED_CONTROL_CHARS
 argument_list|)
 expr_stmt|;
+comment|// Enabled to accept quoting of all character backslash qooting mechanism
+name|JSON_FACTORY
+operator|.
+name|enable
+argument_list|(
+name|Feature
+operator|.
+name|ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static

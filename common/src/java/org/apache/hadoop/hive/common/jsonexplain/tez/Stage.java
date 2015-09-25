@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -112,32 +102,6 @@ operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|JsonParseException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|map
-operator|.
-name|JsonMappingException
 import|;
 end_import
 
@@ -1129,7 +1093,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * @param opName    * @param opObj    * @return    * @throws JSONException    * @throws JsonParseException    * @throws JsonMappingException    * @throws IOException    * @throws Exception    *           This method address the create table operator, fetch operator,    *           etc    */
+comment|/**    * @param opName    * @param opObj    * @return    * @throws Exception    *           This method address the create table operator, fetch operator,    *           etc    */
 name|Op
 name|extractOp
 parameter_list|(
@@ -1140,14 +1104,6 @@ name|JSONObject
 name|opObj
 parameter_list|)
 throws|throws
-name|JSONException
-throws|,
-name|JsonParseException
-throws|,
-name|JsonMappingException
-throws|,
-name|IOException
-throws|,
 name|Exception
 block|{
 name|List
@@ -1271,7 +1227,12 @@ name|object
 init|=
 operator|new
 name|JSONObject
+argument_list|(
+operator|new
+name|LinkedHashMap
+argument_list|<>
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|object
 operator|.
@@ -1490,8 +1451,6 @@ argument_list|>
 name|indentFlag
 parameter_list|)
 throws|throws
-name|JSONException
-throws|,
 name|Exception
 block|{
 comment|// print stagename

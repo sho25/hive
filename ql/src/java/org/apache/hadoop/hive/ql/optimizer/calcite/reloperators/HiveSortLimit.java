@@ -186,7 +186,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|HiveSort
+name|HiveSortLimit
 extends|extends
 name|Sort
 implements|implements
@@ -219,7 +219,7 @@ argument_list|>
 name|mapOfInputRefToRexCall
 decl_stmt|;
 specifier|public
-name|HiveSort
+name|HiveSortLimit
 parameter_list|(
 name|RelOptCluster
 name|cluster
@@ -265,10 +265,10 @@ name|fetch
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates a HiveSort.    *    * @param input     Input relational expression    * @param collation array of sort specifications    * @param offset    Expression for number of rows to discard before returning    *                  first row    * @param fetch     Expression for number of rows to fetch    */
+comment|/**    * Creates a HiveSortLimit.    *    * @param input     Input relational expression    * @param collation array of sort specifications    * @param offset    Expression for number of rows to discard before returning    *                  first row    * @param fetch     Expression for number of rows to fetch    */
 specifier|public
 specifier|static
-name|HiveSort
+name|HiveSortLimit
 name|create
 parameter_list|(
 name|RelNode
@@ -322,7 +322,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|cluster
 argument_list|,
@@ -341,7 +341,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|HiveSort
+name|HiveSortLimit
 name|copy
 parameter_list|(
 name|RelTraitSet
@@ -374,7 +374,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|HiveSort
+name|HiveSortLimit
 argument_list|(
 name|getCluster
 argument_list|()

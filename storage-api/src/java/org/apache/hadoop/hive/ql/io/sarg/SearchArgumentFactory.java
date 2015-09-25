@@ -22,7 +22,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * A factory for creating SearchArguments.  */
+comment|/**  * A factory for creating SearchArguments, as well as modifying those created by this factory.  */
 end_comment
 
 begin_class
@@ -45,6 +45,30 @@ operator|.
 name|BuilderImpl
 argument_list|()
 return|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|setPredicateLeafColumn
+parameter_list|(
+name|PredicateLeaf
+name|leaf
+parameter_list|,
+name|String
+name|newName
+parameter_list|)
+block|{
+name|SearchArgumentImpl
+operator|.
+name|PredicateLeafImpl
+operator|.
+name|setColumnName
+argument_list|(
+name|leaf
+argument_list|,
+name|newName
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

@@ -3502,6 +3502,11 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
+comment|/**    * Flush any catalog objects held by the metastore implementation.  Note that this does not    * flush statistics objects.  This should be called at the beginning of each query.    */
+name|void
+name|flushCache
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

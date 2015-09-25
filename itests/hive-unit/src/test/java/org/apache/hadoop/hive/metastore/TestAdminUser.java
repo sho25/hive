@@ -260,6 +260,9 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
+name|getGrantInfo
+argument_list|()
+operator|.
 name|getPrivilege
 argument_list|()
 argument_list|,
@@ -283,9 +286,6 @@ name|get
 argument_list|(
 literal|0
 argument_list|)
-operator|.
-name|getRole
-argument_list|()
 operator|.
 name|getRoleName
 argument_list|()

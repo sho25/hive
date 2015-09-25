@@ -6459,6 +6459,14 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Removing job credential entry/ cannot be set on the tasks
+name|conf
+operator|.
+name|unset
+argument_list|(
+literal|"mapreduce.job.credentials.binary"
+argument_list|)
+expr_stmt|;
 name|Utilities
 operator|.
 name|stripHivePasswordDetails

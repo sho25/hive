@@ -3086,6 +3086,24 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
+name|NONE
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|roleName
+argument_list|)
+condition|)
+block|{
+comment|// for set role NONE, clear all roles for current session.
+name|currentRoles
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 name|ALL
 operator|.
 name|equalsIgnoreCase

@@ -1172,6 +1172,33 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|int
+name|numNullRecords
+init|=
+name|retVal
+operator|.
+name|getNumNullRecords
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|numNullRecords
+operator|!=
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Number of NULL location URI: "
+operator|+
+name|numNullRecords
+operator|+
+literal|". This can happen for View or Index."
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private

@@ -2275,6 +2275,17 @@ condition|(
 name|list
 operator|==
 literal|null
+operator|||
+name|i
+operator|<
+literal|0
+operator|||
+name|i
+operator|>=
+name|getListLength
+argument_list|(
+name|list
+argument_list|)
 condition|)
 block|{
 return|return

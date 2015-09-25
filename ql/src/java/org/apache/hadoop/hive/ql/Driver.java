@@ -2714,7 +2714,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -2975,6 +2975,21 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+comment|// Flush the metastore cache.  This assures that we don't pick up objects from a previous
+comment|// query running in this same thread.  This has to be done after we get our semantic
+comment|// analyzer (this is when the connection to the metastore is made) but before we analyze,
+comment|// because at that point we need access to the objects.
+name|Hive
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getMSC
+argument_list|()
+operator|.
+name|flushCache
+argument_list|()
+expr_stmt|;
 comment|// Do semantic analysis and plan generation
 if|if
 condition|(
@@ -6243,7 +6258,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -6642,7 +6657,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
@@ -7441,7 +7456,7 @@ comment|// Reset the perf logger
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|(
@@ -7946,15 +7961,6 @@ argument_list|,
 name|PerfLogger
 operator|.
 name|DRIVER_RUN
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|close
-argument_list|(
-name|LOG
-argument_list|,
-name|plan
 argument_list|)
 expr_stmt|;
 comment|// Take all the driver run hooks and post-execute them.
@@ -8612,7 +8618,7 @@ block|{
 name|PerfLogger
 name|perfLogger
 init|=
-name|PerfLogger
+name|SessionState
 operator|.
 name|getPerfLogger
 argument_list|()
