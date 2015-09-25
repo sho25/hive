@@ -773,24 +773,6 @@ name|CliOptionsProcessor
 import|;
 end_import
 
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
-operator|.
-name|DEFAULT_DATABASE_NAME
-import|;
-end_import
-
 begin_comment
 comment|/**  * A console SQL shell with command completion.  *<p>  * TODO:  *<ul>  *<li>User-friendly connection prompts</li>  *<li>Page results</li>  *<li>Handle binary data (blob fields)</li>  *<li>Implement command aliases</li>  *<li>Stored procedure execution</li>  *<li>Binding parameters to prepared statements</li>  *<li>Scripting language</li>  *<li>XA transactions</li>  *</ul>  *  */
 end_comment
@@ -1034,6 +1016,14 @@ name|String
 name|BEELINE_DEFAULT_JDBC_URL
 init|=
 literal|"jdbc:hive2://"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DEFAULT_DATABASE_NAME
+init|=
+literal|"default"
 decl_stmt|;
 specifier|private
 specifier|static
