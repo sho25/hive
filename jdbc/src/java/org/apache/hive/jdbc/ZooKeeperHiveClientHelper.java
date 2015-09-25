@@ -831,8 +831,6 @@ name|JdbcConnectionParams
 operator|.
 name|HTTP_PATH
 argument_list|,
-literal|"/"
-operator|+
 name|matcher
 operator|.
 name|group

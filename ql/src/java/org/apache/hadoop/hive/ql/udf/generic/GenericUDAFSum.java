@@ -1969,7 +1969,7 @@ specifier|private
 name|PrimitiveObjectInspector
 name|inputOI
 decl_stmt|;
-specifier|private
+specifier|protected
 name|LongWritable
 name|result
 decl_stmt|;

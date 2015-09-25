@@ -3362,6 +3362,27 @@ name|ProcessingModeReduceMergePartialKeys
 argument_list|()
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|conf
+operator|.
+name|getVectorDesc
+argument_list|()
+operator|.
+name|isReduceStreaming
+argument_list|()
+condition|)
+block|{
+name|processingMode
+operator|=
+name|this
+operator|.
+expr|new
+name|ProcessingModeUnsortedStreaming
+argument_list|()
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|// We start in hash mode and may dynamically switch to unsorted stream mode.

@@ -3387,6 +3387,26 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|this
+operator|.
+name|getTmpOutputFile
+argument_list|()
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
+name|this
+operator|.
+name|getTmpOutputFile
+argument_list|()
+operator|.
+name|delete
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Setup authentication and authorization plugins for this session.    */
 specifier|private
