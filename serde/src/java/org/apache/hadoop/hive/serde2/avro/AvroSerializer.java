@@ -579,21 +579,6 @@ begin_class
 class|class
 name|AvroSerializer
 block|{
-specifier|private
-specifier|static
-specifier|final
-name|Log
-name|LOG
-init|=
-name|LogFactory
-operator|.
-name|getLog
-argument_list|(
-name|AvroSerializer
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 comment|/**    * The Schema to use when serializing Map keys.    * Since we're sharing this across Serializer instances, it must be immutable;    * any properties need to be added in a static initializer.    */
 specifier|private
 specifier|static

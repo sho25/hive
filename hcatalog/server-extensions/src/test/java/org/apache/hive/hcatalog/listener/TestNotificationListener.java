@@ -23,16 +23,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Arrays
 import|;
 end_import
@@ -64,6 +54,16 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Vector
 import|;
 end_import
 
@@ -554,7 +554,7 @@ argument_list|>
 name|actualMessages
 init|=
 operator|new
-name|ArrayList
+name|Vector
 argument_list|<
 name|String
 argument_list|>

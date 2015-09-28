@@ -546,7 +546,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Resetting already initialized AvroSerDe"
 argument_list|)
@@ -729,15 +729,24 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Avro schema is "
 operator|+
 name|schema
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|configuration
@@ -747,7 +756,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Configuration null, not inserting schema"
 argument_list|)
@@ -895,15 +904,24 @@ literal|"\0"
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"columnComments is "
 operator|+
 name|columnCommentProperty
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

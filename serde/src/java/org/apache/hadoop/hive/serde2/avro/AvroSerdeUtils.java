@@ -931,6 +931,14 @@ name|ioe
 parameter_list|)
 block|{
 comment|//return null only if the file system in schema is not recognized
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|String
 name|msg
 init|=
@@ -949,6 +957,7 @@ argument_list|,
 name|ioe
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
