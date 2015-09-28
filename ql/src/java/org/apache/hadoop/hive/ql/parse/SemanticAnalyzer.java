@@ -7338,9 +7338,9 @@ operator|.
 name|StringLiteral
 case|:
 return|return
-name|PlanUtils
+name|BaseSemanticAnalyzer
 operator|.
-name|stripQuotes
+name|unescapeSQLString
 argument_list|(
 name|expr
 operator|.
