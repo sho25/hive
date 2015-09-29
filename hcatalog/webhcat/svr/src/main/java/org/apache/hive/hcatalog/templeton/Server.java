@@ -5264,7 +5264,35 @@ literal|"Invalid numrecords format: numrecords should be an integer> 0"
 argument_list|)
 throw|;
 block|}
-comment|// Sort the list lexicographically
+comment|// Sort the list as requested
+switch|switch
+condition|(
+name|appConf
+operator|.
+name|getListJobsOrder
+argument_list|()
+condition|)
+block|{
+case|case
+name|lexicographicaldesc
+case|:
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|list
+argument_list|,
+name|Collections
+operator|.
+name|reverseOrder
+argument_list|()
+argument_list|)
+expr_stmt|;
+break|break;
+case|case
+name|lexicographicalasc
+case|:
+default|default:
 name|Collections
 operator|.
 name|sort
@@ -5272,6 +5300,8 @@ argument_list|(
 name|list
 argument_list|)
 expr_stmt|;
+break|break;
+block|}
 for|for
 control|(
 name|String
