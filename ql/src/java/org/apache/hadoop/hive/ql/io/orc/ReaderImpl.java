@@ -1271,13 +1271,6 @@ condition|)
 block|{
 comment|// If it isn't there, this may be the 0.11.0 version of ORC.
 comment|// Read the first 3 bytes of the file to check for the header
-name|in
-operator|.
-name|seek
-argument_list|(
-literal|0
-argument_list|)
-expr_stmt|;
 name|byte
 index|[]
 name|header
@@ -1292,6 +1285,8 @@ name|in
 operator|.
 name|readFully
 argument_list|(
+literal|0
+argument_list|,
 name|header
 argument_list|,
 literal|0
@@ -2562,15 +2557,6 @@ argument_list|,
 name|DIRECTORY_SIZE_GUESS
 argument_list|)
 decl_stmt|;
-name|file
-operator|.
-name|seek
-argument_list|(
-name|size
-operator|-
-name|readSize
-argument_list|)
-expr_stmt|;
 name|ByteBuffer
 name|buffer
 init|=
@@ -2593,6 +2579,12 @@ name|file
 operator|.
 name|readFully
 argument_list|(
+operator|(
+name|size
+operator|-
+name|readSize
+operator|)
+argument_list|,
 name|buffer
 operator|.
 name|array
@@ -2731,17 +2723,6 @@ literal|0
 condition|)
 block|{
 comment|//more bytes need to be read, seek back to the right place and read extra bytes
-name|file
-operator|.
-name|seek
-argument_list|(
-name|size
-operator|-
-name|readSize
-operator|-
-name|extra
-argument_list|)
-expr_stmt|;
 name|ByteBuffer
 name|extraBuf
 init|=
@@ -2758,6 +2739,14 @@ name|file
 operator|.
 name|readFully
 argument_list|(
+operator|(
+name|size
+operator|-
+name|readSize
+operator|-
+name|extra
+operator|)
+argument_list|,
 name|extraBuf
 operator|.
 name|array
