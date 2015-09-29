@@ -404,6 +404,42 @@ name|getCause
 argument_list|()
 throw|;
 block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|OutOfMemoryError
+condition|)
+block|{
+throw|throw
+operator|(
+name|OutOfMemoryError
+operator|)
+name|e
+operator|.
+name|getCause
+argument_list|()
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|Error
+condition|)
+block|{
+comment|// TODO: maybe we should throw this as-is too. ThriftCLIService currently catches Exception,
+comment|//       so the combination determines what would kill the HS2 executor thread. For now,
+comment|//       let's only allow OOM to propagate.
+block|}
 throw|throw
 operator|new
 name|RuntimeException

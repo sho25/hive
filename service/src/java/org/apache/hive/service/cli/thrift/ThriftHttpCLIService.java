@@ -376,11 +376,19 @@ name|ThriftHttpCLIService
 extends|extends
 name|ThriftCLIService
 block|{
+specifier|private
+specifier|final
+name|Runnable
+name|oomHook
+decl_stmt|;
 specifier|public
 name|ThriftHttpCLIService
 parameter_list|(
 name|CLIService
 name|cliService
+parameter_list|,
+name|Runnable
+name|oomHook
 parameter_list|)
 block|{
 name|super
@@ -394,6 +402,12 @@ operator|.
 name|getSimpleName
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|oomHook
+operator|=
+name|oomHook
 expr_stmt|;
 block|}
 comment|/**    * Configure Jetty to serve http requests. Example of a client connection URL:    * http://localhost:10000/servlets/thrifths2/ A gateway may cause actual target URL to differ,    * e.g. http://gateway:port/hive2/servlets/thrifths2/    */
@@ -432,7 +446,7 @@ name|ExecutorService
 name|executorService
 init|=
 operator|new
-name|ThreadPoolExecutor
+name|ThreadPoolExecutorWithOomHook
 argument_list|(
 name|minWorkerThreads
 argument_list|,
@@ -456,6 +470,8 @@ name|ThreadFactoryWithGarbageCleanup
 argument_list|(
 name|threadPoolName
 argument_list|)
+argument_list|,
+name|oomHook
 argument_list|)
 decl_stmt|;
 name|ExecutorThreadPool

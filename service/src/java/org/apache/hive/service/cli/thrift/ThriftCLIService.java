@@ -2827,6 +2827,9 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+comment|// Note: it's rather important that this (and other methods) catch Exception, not Throwable;
+comment|//       in combination with HiveSessionProxy.invoke code, perhaps unintentionally, it used
+comment|//       to also catch all errors; and now it allows OOMs only to propagate.
 name|LOG
 operator|.
 name|warn
