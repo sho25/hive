@@ -322,7 +322,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info  * {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
 end_comment
 
 begin_class
@@ -814,9 +814,12 @@ name|TxnInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state, txn_user, txn_host from TXNS"
+literal|"select txn_id, txn_state, txn_user, txn_host from TXNS where txn_id<= "
+operator|+
+name|hwm
 expr_stmt|;
 name|LOG
 operator|.
@@ -1157,9 +1160,12 @@ name|Long
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id from TXNS"
+literal|"select txn_id from TXNS where txn_id<= "
+operator|+
+name|hwm
 expr_stmt|;
 name|LOG
 operator|.
@@ -7914,7 +7920,12 @@ name|debug
 argument_list|(
 literal|"checkLock(): Setting savepoint. extLockId="
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Savepoint
@@ -9119,7 +9130,12 @@ name|NoSuchLockException
 argument_list|(
 literal|"No such lock: ("
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 operator|+
 literal|","
 operator|+
@@ -9239,7 +9255,12 @@ name|NoSuchLockException
 argument_list|(
 literal|"No such lock: "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
