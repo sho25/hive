@@ -61,6 +61,13 @@ decl_stmt|;
 specifier|public
 specifier|static
 name|String
+name|OPEN_OPERATIONS
+init|=
+literal|"open_operations"
+decl_stmt|;
+specifier|public
+specifier|static
+name|String
 name|JDO_ACTIVE_TRANSACTIONS
 init|=
 literal|"active_jdo_transactions"

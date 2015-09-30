@@ -1622,6 +1622,15 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to open session"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|session
@@ -1657,6 +1666,9 @@ argument_list|(
 literal|"Failed to open new session: "
 operator|+
 name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1689,6 +1701,15 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to execute session hooks"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|session
@@ -1721,7 +1742,12 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Failed to execute session hooks"
+literal|"Failed to execute session hooks: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
