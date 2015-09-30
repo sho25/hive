@@ -1227,7 +1227,6 @@ throws|throws
 name|HiveSQLException
 function_decl|;
 specifier|public
-specifier|final
 name|void
 name|run
 parameter_list|()
