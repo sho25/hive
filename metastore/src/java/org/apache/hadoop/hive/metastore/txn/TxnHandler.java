@@ -494,6 +494,13 @@ specifier|private
 name|DataSource
 name|connPool
 decl_stmt|;
+specifier|static
+specifier|private
+name|boolean
+name|doRetryOnConnPool
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 specifier|final
 specifier|static
@@ -5027,7 +5034,6 @@ name|RetryException
 extends|extends
 name|Exception
 block|{    }
-comment|/**    * Get a connection to the database    * @param isolationLevel desired isolation level.  If you are doing _any_ data modifications    *                       you should request serializable, else read committed should be fine.    * @return db connection    * @throws MetaException if the connection cannot be obtained    */
 specifier|protected
 name|Connection
 name|getDbConn
@@ -5037,6 +5043,22 @@ name|isolationLevel
 parameter_list|)
 throws|throws
 name|SQLException
+block|{
+name|int
+name|rc
+init|=
+name|doRetryOnConnPool
+condition|?
+literal|10
+else|:
+literal|1
+decl_stmt|;
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -5063,6 +5085,36 @@ expr_stmt|;
 return|return
 name|dbConn
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|(
+operator|--
+name|rc
+operator|)
+operator|<=
+literal|0
+condition|)
+throw|throw
+name|e
+throw|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"There is a problem with a connection from the pool, retrying"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 name|void
 name|rollbackDBConn
@@ -10609,6 +10661,11 @@ argument_list|(
 name|config
 argument_list|)
 expr_stmt|;
+name|doRetryOnConnPool
+operator|=
+literal|true
+expr_stmt|;
+comment|// Enable retries to work around BONECP bug.
 block|}
 elseif|else
 if|if
