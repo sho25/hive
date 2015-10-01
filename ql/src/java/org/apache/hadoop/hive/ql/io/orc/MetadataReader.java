@@ -773,7 +773,7 @@ name|parseFrom
 argument_list|(
 name|InStream
 operator|.
-name|create
+name|createCodedInputStream
 argument_list|(
 literal|"footer"
 argument_list|,
