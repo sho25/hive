@@ -895,6 +895,11 @@ specifier|final
 name|boolean
 name|convertMapNullsToEmptyStrings
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|defaultPartName
+decl_stmt|;
 comment|/**    * Whether direct SQL can be used with the current datastore backing {@link #pm}.    */
 specifier|private
 specifier|final
@@ -992,6 +997,19 @@ argument_list|,
 name|ConfVars
 operator|.
 name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|)
+expr_stmt|;
+name|defaultPartName
+operator|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|DEFAULTPARTITIONNAME
 argument_list|)
 expr_stmt|;
 name|String
@@ -2401,6 +2419,8 @@ argument_list|,
 name|joins
 argument_list|,
 name|dbHasJoinCastBug
+argument_list|,
+name|defaultPartName
 argument_list|)
 decl_stmt|;
 if|if
@@ -2901,14 +2921,6 @@ argument_list|()
 else|:
 literal|0
 decl_stmt|;
-if|if
-condition|(
-name|sqlResult
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
 name|timingTrace
 argument_list|(
 name|doTrace
@@ -2920,6 +2932,14 @@ argument_list|,
 name|queryTime
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|sqlResult
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 return|return
 operator|new
 name|ArrayList
@@ -3052,17 +3072,6 @@ name|sqlResult
 argument_list|)
 expr_stmt|;
 block|}
-name|timingTrace
-argument_list|(
-name|doTrace
-argument_list|,
-name|queryText
-argument_list|,
-name|start
-argument_list|,
-name|queryTime
-argument_list|)
-expr_stmt|;
 name|query
 operator|.
 name|closeAll
@@ -5861,6 +5870,11 @@ name|boolean
 name|dbHasJoinCastBug
 decl_stmt|;
 specifier|private
+specifier|final
+name|String
+name|defaultPartName
+decl_stmt|;
+specifier|private
 name|PartitionFilterGenerator
 parameter_list|(
 name|Table
@@ -5880,6 +5894,9 @@ name|joins
 parameter_list|,
 name|boolean
 name|dbHasJoinCastBug
+parameter_list|,
+name|String
+name|defaultPartName
 parameter_list|)
 block|{
 name|this
@@ -5916,6 +5933,12 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|defaultPartName
+operator|=
+name|defaultPartName
+expr_stmt|;
 block|}
 comment|/**      * Generate the ANSI SQL92 filter for the given expression tree      * @param table the table being queried      * @param params the ordered parameters for the resulting expression      * @param joins the joins necessary for the resulting expression      * @return the string representation of the expression tree      */
 specifier|private
@@ -5943,6 +5966,9 @@ name|joins
 parameter_list|,
 name|boolean
 name|dbHasJoinCastBug
+parameter_list|,
+name|String
+name|defaultPartName
 parameter_list|)
 throws|throws
 name|MetaException
@@ -5979,6 +6005,8 @@ argument_list|,
 name|joins
 argument_list|,
 name|dbHasJoinCastBug
+argument_list|,
+name|defaultPartName
 argument_list|)
 decl_stmt|;
 name|tree
@@ -6644,6 +6672,11 @@ name|nodeValue
 argument_list|)
 expr_stmt|;
 block|}
+name|String
+name|tableColumn
+init|=
+name|tableValue
+decl_stmt|;
 if|if
 condition|(
 name|colType
@@ -6654,8 +6687,6 @@ name|String
 condition|)
 block|{
 comment|// The underlying database field is varchar, we need to compare numbers.
-comment|// Note that this won't work with __HIVE_DEFAULT_PARTITION__. It will fail and fall
-comment|// back to JDO. That is by design; we could add an ugly workaround here but didn't.
 if|if
 condition|(
 name|colType
@@ -6693,6 +6724,27 @@ operator|+
 literal|" as date)"
 expr_stmt|;
 block|}
+comment|// Workaround for HIVE_DEFAULT_PARTITION - ignore it like JDO does, for now.
+name|String
+name|tableValue0
+init|=
+name|tableValue
+decl_stmt|;
+name|tableValue
+operator|=
+literal|"(case when "
+operator|+
+name|tableColumn
+operator|+
+literal|"<> ?"
+expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|defaultPartName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|dbHasJoinCastBug
@@ -6700,8 +6752,9 @@ condition|)
 block|{
 comment|// This is a workaround for DERBY-6358 and Oracle bug; it is pretty horrible.
 name|tableValue
-operator|=
-literal|"(case when \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? and "
+operator|+=
+operator|(
+literal|" and \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? and "
 operator|+
 literal|"\"FILTER"
 operator|+
@@ -6716,12 +6769,7 @@ operator|+
 literal|"\".\"INTEGER_IDX\" = "
 operator|+
 name|partColIndex
-operator|+
-literal|" then "
-operator|+
-name|tableValue
-operator|+
-literal|" else null end)"
+operator|)
 expr_stmt|;
 name|params
 operator|.
@@ -6750,6 +6798,14 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|tableValue
+operator|+=
+literal|" then "
+operator|+
+name|tableValue0
+operator|+
+literal|" else null end)"
+expr_stmt|;
 block|}
 if|if
 condition|(
