@@ -2550,7 +2550,7 @@ parameter_list|,
 name|HiveConf
 name|conf
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|FileStatus
 argument_list|>
