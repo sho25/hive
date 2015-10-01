@@ -5880,8 +5880,6 @@ name|PatternSet
 argument_list|(
 literal|"jdbc(:.*)"
 argument_list|,
-literal|"hbase"
-argument_list|,
 literal|"counter"
 argument_list|,
 literal|"custom"
@@ -5895,7 +5893,7 @@ literal|"each task writes statistics it has collected in a file on the filesyste
 operator|+
 literal|"after the job has finished. Supported values are fs (filesystem), jdbc:database (where database \n"
 operator|+
-literal|"can be derby, mysql, etc.), hbase, counter, and custom as defined in StatsSetupConst.java."
+literal|"can be derby, mysql, etc.), counter, and custom as defined in StatsSetupConst.java."
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
