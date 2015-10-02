@@ -6625,6 +6625,17 @@ argument_list|,
 literal|"Time between runs of the cleaner thread"
 argument_list|)
 block|,
+name|COMPACTOR_JOB_QUEUE
+argument_list|(
+literal|"hive.compactor.job.queue"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Used to specify name of Hadoop queue to which\n"
+operator|+
+literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
+argument_list|)
+block|,
 name|HIVE_TIMEDOUT_TXN_REAPER_START
 argument_list|(
 literal|"hive.timedout.txn.reaper.start"
