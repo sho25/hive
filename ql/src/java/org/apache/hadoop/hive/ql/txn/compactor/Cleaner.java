@@ -1325,6 +1325,13 @@ operator|+
 name|ci
 operator|.
 name|runAs
+operator|+
+literal|" for "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|UserGroupInformation
@@ -1517,6 +1524,22 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"About to remove "
+operator|+
+name|filesToDelete
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" obsolete directories from "
+operator|+
+name|location
+argument_list|)
+expr_stmt|;
 name|FileSystem
 name|fs
 init|=

@@ -568,14 +568,19 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|int
+name|updCnt
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|updCnt
 operator|!=
 literal|1
 condition|)
@@ -584,7 +589,17 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to update compaction record"
+literal|"Unable to set cq_run_as="
+operator|+
+name|user
+operator|+
+literal|" for compaction record with cq_id="
+operator|+
+name|cq_id
+operator|+
+literal|".  updCnt="
+operator|+
+name|updCnt
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -936,14 +951,19 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|int
+name|updCount
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|updCount
 operator|!=
 literal|1
 condition|)
@@ -952,7 +972,17 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to update compaction record"
+literal|"Unable to set to cq_state="
+operator|+
+name|WORKING_STATE
+operator|+
+literal|" for compaction record: "
+operator|+
+name|info
+operator|+
+literal|". updCnt="
+operator|+
+name|updCount
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1137,14 +1167,19 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|int
+name|updCnt
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|updCnt
 operator|!=
 literal|1
 condition|)
@@ -1153,7 +1188,17 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to update compaction record"
+literal|"Unable to set cq_state="
+operator|+
+name|READY_FOR_CLEANING
+operator|+
+literal|" for compaction record: "
+operator|+
+name|info
+operator|+
+literal|". updCnt="
+operator|+
+name|updCnt
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1582,7 +1627,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * This will remove an entry from the queue after    * it has been compacted.    * @param info info on the compaction entry to remove    */
+comment|/**    * This will remove an entry from the queue after    * it has been compacted.    *     * todo: possibly a problem?  Worker will start with DB in state X (wrt this partition).    * while it's working more txns will happen, against partition it's compacting.    * then this will delete state up to X and since then.  There may be new delta files created    * between compaction starting and cleaning.  These will not be compacted until more    * transactions happen.  So this ideally should only delete    * up to TXN_ID that was compacted (i.e. HWM in Worker?)  Then this can also run    * at READ_COMMITTED    *     * Also, by using this method when Worker fails, we prevent future compactions from    * running until more data is written to tale or compaction is invoked explicitly    * @param info info on the compaction entry to remove    */
 specifier|public
 name|void
 name|markCleaned
@@ -1643,14 +1688,19 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|int
+name|updCount
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|updCount
 operator|!=
 literal|1
 condition|)
@@ -1659,7 +1709,13 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to delete compaction record"
+literal|"Unable to delete compaction record: "
+operator|+
+name|info
+operator|+
+literal|".  Update count="
+operator|+
+name|updCount
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1901,6 +1957,7 @@ name|id
 argument_list|)
 expr_stmt|;
 block|}
+comment|//because 1 txn may include different partitions/tables even in auto commit mode
 name|buf
 operator|.
 name|append
@@ -2311,13 +2368,17 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Removed "
 operator|+
 name|rc
 operator|+
-literal|" records from txns"
+literal|"  empty Aborted transactions: "
+operator|+
+name|txnids
+operator|+
+literal|" from TXNS"
 argument_list|)
 expr_stmt|;
 name|LOG
