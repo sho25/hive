@@ -1005,7 +1005,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 block|,
 name|HiveConf
 operator|.
@@ -2929,13 +2929,13 @@ operator|+
 literal|"but it may also cause higher memory requirement at the client side."
 argument_list|)
 block|,
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 argument_list|(
 literal|"hive.metastore.batch.retrieve.table.partition.max"
 argument_list|,
 literal|1000
 argument_list|,
-literal|"Maximum number of table partitions that metastore internally retrieves in one batch."
+literal|"Maximum number of objects that metastore internally retrieves in one batch."
 argument_list|)
 block|,
 name|METASTORE_INIT_HOOKS
@@ -4914,6 +4914,15 @@ operator|+
 literal|" (split generation reads and caches file footers). HYBRID chooses between the above strategies"
 operator|+
 literal|" based on heuristics."
+argument_list|)
+block|,
+name|HIVE_ORC_MS_FOOTER_CACHE_ENABLED
+argument_list|(
+literal|"hive.orc.splits.ms.footer.cache.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable using file metadata cache in metastore for ORC file footers."
 argument_list|)
 block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS

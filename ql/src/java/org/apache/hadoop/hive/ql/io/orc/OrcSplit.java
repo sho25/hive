@@ -894,6 +894,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+specifier|public
 name|ReaderImpl
 operator|.
 name|FileMetaInfo

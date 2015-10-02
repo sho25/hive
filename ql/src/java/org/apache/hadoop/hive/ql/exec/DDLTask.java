@@ -22514,7 +22514,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 argument_list|)
 decl_stmt|;
 comment|// drop the table
