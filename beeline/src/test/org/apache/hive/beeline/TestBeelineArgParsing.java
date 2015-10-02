@@ -1446,6 +1446,21 @@ name|args
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|true
+argument_list|,
+name|bl
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|isHelpAsked
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Displays the usage.    */
 annotation|@
