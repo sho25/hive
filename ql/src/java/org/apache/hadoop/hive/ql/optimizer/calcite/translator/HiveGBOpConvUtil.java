@@ -339,24 +339,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|VirtualColumn
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|optimizer
 operator|.
 name|calcite
@@ -483,7 +465,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticException
+name|SemanticAnalyzer
+operator|.
+name|GenericUDAFInfo
 import|;
 end_import
 
@@ -501,9 +485,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticAnalyzer
-operator|.
-name|GenericUDAFInfo
+name|SemanticException
 import|;
 end_import
 
@@ -726,7 +708,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TODO:<br>  * 1. Change the output col/ExprNodeColumn names to external names.<br>  * 2. Verify if we need to use the "KEY."/"VALUE." in RS cols; switch to  * external names if possible.<br>  * 3. In ExprNode& in ColumnInfo the tableAlias/VirtualColumn is specified  * differently for different GB/RS in pipeline. Remove the different treatments.  * 3. VirtualColMap needs to be maintained  *  */
+comment|/**  * TODO:<br>  * 1. Change the output col/ExprNodeColumn names to external names.<br>  * 2. Verify if we need to use the "KEY."/"VALUE." in RS cols; switch to  * external names if possible.<br>  * 3. In ExprNode& in ColumnInfo the tableAlias/VirtualColumn is specified  * differently for different GB/RS in pipeline. Remove the different treatments.  * 4. VirtualColMap needs to be maintained  *  */
 end_comment
 
 begin_class
@@ -1616,6 +1598,41 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|distinctExpr
+operator|=
+name|HiveCalciteUtil
+operator|.
+name|getExprNode
+argument_list|(
+name|argLst
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+argument_list|,
+name|aggInputRel
+argument_list|,
+name|exprConv
+argument_list|)
+expr_stmt|;
+comment|// Only distinct nodes that are NOT part of the key should be added to distExprNodes
+if|if
+condition|(
+name|ExprNodeDescUtils
+operator|.
+name|indexOf
+argument_list|(
+name|distinctExpr
+argument_list|,
+name|gbInfo
+operator|.
+name|gbKeys
+argument_list|)
+operator|<
+literal|0
+condition|)
+block|{
 name|distParamInRefsToOutputPos
 operator|.
 name|put
@@ -1633,24 +1650,6 @@ name|distExprNodes
 operator|.
 name|size
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|distinctExpr
-operator|=
-name|HiveCalciteUtil
-operator|.
-name|getExprNode
-argument_list|(
-name|argLst
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-argument_list|,
-name|aggInputRel
-argument_list|,
-name|exprConv
 argument_list|)
 expr_stmt|;
 name|gbInfo
@@ -1688,6 +1687,7 @@ name|getTypeInfo
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

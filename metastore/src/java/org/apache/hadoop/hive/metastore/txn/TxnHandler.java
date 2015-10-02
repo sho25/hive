@@ -322,7 +322,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info  * {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
 end_comment
 
 begin_class
@@ -494,6 +494,13 @@ specifier|private
 name|DataSource
 name|connPool
 decl_stmt|;
+specifier|static
+specifier|private
+name|boolean
+name|doRetryOnConnPool
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 specifier|final
 specifier|static
@@ -507,11 +514,12 @@ decl_stmt|;
 comment|// Random object to lock on for the lock
 comment|// method
 comment|/**    * Number of consecutive deadlocks we have seen    */
-specifier|protected
+specifier|private
 name|int
 name|deadlockCnt
 decl_stmt|;
 specifier|private
+specifier|final
 name|long
 name|deadlockRetryInterval
 decl_stmt|;
@@ -558,10 +566,8 @@ comment|// they want to throw past the public methods.
 comment|//
 comment|// All public methods that write to the database have to check for deadlocks when a SQLException
 comment|// comes back and handle it if they see one.  This has to be done with the connection pooling
-comment|// in mind.  To do this they should call detectDeadlock AFTER rolling back the db transaction,
-comment|// and then in an outer loop they should catch DeadlockException.  In the catch for this they
-comment|// should increment the deadlock counter and recall themselves.  See commitTxn for an example.
-comment|// the connection has been closed and returned to the pool.
+comment|// in mind.  To do this they should call checkRetryable() AFTER rolling back the db transaction,
+comment|// and then they should catch RetryException and call themselves recursively. See commitTxn for an example.
 specifier|public
 name|TxnHandler
 parameter_list|(
@@ -636,10 +642,6 @@ name|TimeUnit
 operator|.
 name|MILLISECONDS
 argument_list|)
-expr_stmt|;
-name|deadlockCnt
-operator|=
-literal|0
 expr_stmt|;
 name|buildJumpTable
 argument_list|()
@@ -812,9 +814,12 @@ name|TxnInfo
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state, txn_user, txn_host from TXNS"
+literal|"select txn_id, txn_state, txn_user, txn_host from TXNS where txn_id<= "
+operator|+
+name|hwm
 expr_stmt|;
 name|LOG
 operator|.
@@ -1155,9 +1160,12 @@ name|Long
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id from TXNS"
+literal|"select txn_id from TXNS where txn_id<= "
+operator|+
+name|hwm
 expr_stmt|;
 name|LOG
 operator|.
@@ -1398,11 +1406,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|deadlockCnt
-operator|=
-literal|0
-expr_stmt|;
-comment|// Reset deadlock count since this is a new transaction
 name|int
 name|numTxns
 init|=
@@ -2209,10 +2212,6 @@ name|TxnAbortedException
 throws|,
 name|MetaException
 block|{
-name|deadlockCnt
-operator|=
-literal|0
-expr_stmt|;
 try|try
 block|{
 name|Connection
@@ -3550,13 +3549,6 @@ name|heartbeat
 argument_list|(
 name|ids
 argument_list|)
-expr_stmt|;
-block|}
-finally|finally
-block|{
-name|deadlockCnt
-operator|=
-literal|0
 expr_stmt|;
 block|}
 block|}
@@ -5027,7 +5019,6 @@ name|RetryException
 extends|extends
 name|Exception
 block|{    }
-comment|/**    * Get a connection to the database    * @param isolationLevel desired isolation level.  If you are doing _any_ data modifications    *                       you should request serializable, else read committed should be fine.    * @return db connection    * @throws MetaException if the connection cannot be obtained    */
 specifier|protected
 name|Connection
 name|getDbConn
@@ -5037,6 +5028,22 @@ name|isolationLevel
 parameter_list|)
 throws|throws
 name|SQLException
+block|{
+name|int
+name|rc
+init|=
+name|doRetryOnConnPool
+condition|?
+literal|10
+else|:
+literal|1
+decl_stmt|;
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+try|try
 block|{
 name|Connection
 name|dbConn
@@ -5064,6 +5071,36 @@ return|return
 name|dbConn
 return|;
 block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|(
+operator|--
+name|rc
+operator|)
+operator|<=
+literal|0
+condition|)
+throw|throw
+name|e
+throw|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"There is a problem with a connection from the pool, retrying"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 name|void
 name|rollbackDBConn
 parameter_list|(
@@ -5078,6 +5115,12 @@ condition|(
 name|dbConn
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|dbConn
+operator|.
+name|isClosed
+argument_list|()
 condition|)
 name|dbConn
 operator|.
@@ -5120,6 +5163,12 @@ condition|(
 name|dbConn
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|dbConn
+operator|.
+name|isClosed
+argument_list|()
 condition|)
 name|dbConn
 operator|.
@@ -5163,6 +5212,12 @@ condition|(
 name|stmt
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
 condition|)
 name|stmt
 operator|.
@@ -5270,7 +5325,7 @@ name|dbConn
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Determine if an exception was such that it makse sense to retry.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.    * @param conn database connection    * @param e exception that was thrown.    * @param caller name of the method calling this    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.RetryException when deadlock    * detected and retry count has not been exceeded.    * TODO: make "caller" more elaborate like include lockId for example    */
+comment|/**    * Determine if an exception was such that it makes sense to retry.  Unfortunately there is no standard way to do    * this, so we have to inspect the error messages and catch the telltale signs for each    * different database.  This method will throw {@code RetryException}    * if the error is retry-able.    * @param conn database connection    * @param e exception that was thrown.    * @param caller name of the method calling this (and other info useful to log)    * @throws org.apache.hadoop.hive.metastore.txn.TxnHandler.RetryException when the operation should be retried    */
 specifier|protected
 name|void
 name|checkRetryable
@@ -5296,6 +5351,13 @@ comment|// Oracle seems to return different SQLStates and messages each time,
 comment|// so I've tried to capture the different error messages (there appear to be fewer different
 comment|// error messages than SQL states).
 comment|// Derby and newer MySQL driver use the new SQLTransactionRollbackException
+name|boolean
+name|sendRetrySignal
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|dbProduct
@@ -5459,11 +5521,10 @@ parameter_list|)
 block|{
 comment|// NOP
 block|}
-throw|throw
-operator|new
-name|RetryException
-argument_list|()
-throw|;
+name|sendRetrySignal
+operator|=
+literal|true
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -5477,10 +5538,6 @@ name|caller
 operator|+
 literal|", giving up."
 argument_list|)
-expr_stmt|;
-name|deadlockCnt
-operator|=
-literal|0
 expr_stmt|;
 block|}
 block|}
@@ -5550,11 +5607,10 @@ parameter_list|)
 block|{
 comment|//
 block|}
-throw|throw
-operator|new
-name|RetryException
-argument_list|()
-throw|;
+name|sendRetrySignal
+operator|=
+literal|true
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -5574,15 +5630,18 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|retryNum
-operator|=
-literal|0
-expr_stmt|;
 block|}
 block|}
-else|else
+block|}
+finally|finally
 block|{
-comment|//if here, we got something that will propagate the error (rather than retry), so reset counters
+comment|/*if this method ends with anything except a retry signal, the caller should fail the operation       and propagate the error up to the its caller (Metastore client); thus must reset retry counters*/
+if|if
+condition|(
+operator|!
+name|sendRetrySignal
+condition|)
+block|{
 name|deadlockCnt
 operator|=
 literal|0
@@ -5591,6 +5650,18 @@ name|retryNum
 operator|=
 literal|0
 expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|sendRetrySignal
+condition|)
+block|{
+throw|throw
+operator|new
+name|RetryException
+argument_list|()
+throw|;
 block|}
 block|}
 comment|/**    * Determine the current time, using the RDBMS as a source of truth    * @param conn database connection    * @return current time in milliseconds    * @throws org.apache.hadoop.hive.metastore.api.MetaException if the time cannot be determined    */
@@ -7849,7 +7920,12 @@ name|debug
 argument_list|(
 literal|"checkLock(): Setting savepoint. extLockId="
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Savepoint
@@ -9054,7 +9130,12 @@ name|NoSuchLockException
 argument_list|(
 literal|"No such lock: ("
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 operator|+
 literal|","
 operator|+
@@ -9174,7 +9255,12 @@ name|NoSuchLockException
 argument_list|(
 literal|"No such lock: "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
 name|extLockId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -10609,6 +10695,11 @@ argument_list|(
 name|config
 argument_list|)
 expr_stmt|;
+name|doRetryOnConnPool
+operator|=
+literal|true
+expr_stmt|;
+comment|// Enable retries to work around BONECP bug.
 block|}
 elseif|else
 if|if
@@ -11356,6 +11447,7 @@ return|return
 literal|true
 return|;
 block|}
+comment|//see https://issues.apache.org/jira/browse/HIVE-9938
 block|}
 return|return
 literal|false

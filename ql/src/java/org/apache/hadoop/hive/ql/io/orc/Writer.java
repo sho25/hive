@@ -23,6 +23,24 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|ObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -60,6 +78,11 @@ specifier|public
 interface|interface
 name|Writer
 block|{
+comment|/**    * Get the schema for this writer    * @return the file schema    */
+name|TypeDescription
+name|getSchema
+parameter_list|()
+function_decl|;
 comment|/**    * Add arbitrary meta-data to the ORC file. This may be called at any point    * until the Writer is closed. If the same key is passed a second time, the    * second value will replace the first.    * @param key a key to label the data with.    * @param value the contents of the metadata.    */
 name|void
 name|addUserMetadata
