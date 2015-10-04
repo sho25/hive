@@ -3311,7 +3311,9 @@ block|}
 name|newTbl
 operator|.
 name|checkValidity
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|getMSC
 argument_list|()
@@ -4327,7 +4329,9 @@ block|}
 name|tbl
 operator|.
 name|checkValidity
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

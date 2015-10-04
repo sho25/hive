@@ -6610,6 +6610,8 @@ name|db
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 condition|)
 block|{
@@ -8419,6 +8421,8 @@ name|type
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 condition|)
 block|{
@@ -9082,6 +9086,8 @@ name|tbl
 operator|.
 name|getTableName
 argument_list|()
+argument_list|,
+name|hiveConf
 argument_list|)
 condition|)
 block|{
@@ -31594,6 +31600,8 @@ name|func
 operator|.
 name|getFunctionName
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 condition|)
 block|{

@@ -8950,6 +8950,21 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
+argument_list|(
+literal|"hive.support.special.characters.tablename"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable support for special characters in table names.\n"
+operator|+
+literal|"When it is set to false, only [a-zA-Z_0-9]+ are supported.\n"
+operator|+
+literal|"The only supported special character right now is '/'. This flag applies only to quoted table names.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
