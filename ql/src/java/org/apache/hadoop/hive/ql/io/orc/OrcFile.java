@@ -455,6 +455,17 @@ name|values
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|v
+operator|.
+name|id
+operator|<
+name|values
+operator|.
+name|length
+condition|)
+block|{
 name|values
 index|[
 name|v
@@ -464,6 +475,7 @@ index|]
 operator|=
 name|v
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public
