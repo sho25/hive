@@ -1620,14 +1620,14 @@ argument_list|()
 operator|+
 literal|"`)"
 operator|+
-literal|" from "
+literal|" from `"
 operator|+
 name|rewriteQueryCtx
 operator|.
 name|getIndexName
 argument_list|()
 operator|+
-literal|" group by "
+literal|"` group by "
 operator|+
 name|rewriteQueryCtx
 operator|.

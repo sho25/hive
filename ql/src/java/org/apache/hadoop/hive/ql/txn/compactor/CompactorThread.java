@@ -705,14 +705,21 @@ operator|.
 name|getFullPartitionName
 argument_list|()
 operator|+
-literal|" does not refer to a single partition"
+literal|" does not refer to a single partition. "
+operator|+
+name|parts
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Too many partitions"
+literal|"Too many partitions for : "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -971,14 +978,34 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to stat file as either current user or table owner, giving up"
+literal|"Unable to stat file "
+operator|+
+name|p
+operator|+
+literal|" as either current user("
+operator|+
+name|UserGroupInformation
+operator|.
+name|getLoginUser
+argument_list|()
+operator|+
+literal|") or table owner("
+operator|+
+name|t
+operator|.
+name|getOwner
+argument_list|()
+operator|+
+literal|"), giving up"
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Unable to stat file"
+literal|"Unable to stat file: "
+operator|+
+name|p
 argument_list|)
 throw|;
 block|}

@@ -2169,10 +2169,14 @@ name|rewrittenQueryBuilder
 operator|.
 name|append
 argument_list|(
+literal|"`"
+operator|+
 name|tbl
 operator|.
 name|getTableName
 argument_list|()
+operator|+
+literal|"`"
 argument_list|)
 expr_stmt|;
 name|isRewritten

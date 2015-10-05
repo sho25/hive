@@ -19745,7 +19745,9 @@ expr_stmt|;
 name|tbl
 operator|.
 name|checkValidity
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -22514,7 +22516,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 argument_list|)
 decl_stmt|;
 comment|// drop the table
@@ -25226,7 +25228,9 @@ expr_stmt|;
 name|oldview
 operator|.
 name|checkValidity
-argument_list|()
+argument_list|(
+literal|null
+argument_list|)
 expr_stmt|;
 try|try
 block|{
@@ -26274,10 +26278,15 @@ operator|.
 name|METASTOREWAREHOUSE
 argument_list|)
 argument_list|,
+name|MetaStoreUtils
+operator|.
+name|encodeTableName
+argument_list|(
 name|name
 operator|.
 name|toLowerCase
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

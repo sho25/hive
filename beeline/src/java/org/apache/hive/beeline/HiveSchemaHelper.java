@@ -548,7 +548,7 @@ throws|,
 name|IOException
 function_decl|;
 block|}
-comment|/***    * Base implemenation of NestedScriptParser    * abstractCommandParser.    *    */
+comment|/***    * Base implementation of NestedScriptParser    * abstractCommandParser.    *    */
 specifier|private
 specifier|static
 specifier|abstract

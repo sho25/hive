@@ -741,7 +741,13 @@ argument_list|(
 name|t
 argument_list|)
 operator|+
-literal|" marked true so we will not compact it."
+literal|" marked "
+operator|+
+name|hive_metastoreConstants
+operator|.
+name|TABLE_NO_AUTO_COMPACT
+operator|+
+literal|"=true so we will not compact it."
 argument_list|)
 expr_stmt|;
 continue|continue;
@@ -1933,30 +1939,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|String
-name|s
-init|=
-literal|"Requesting "
-operator|+
-name|type
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" compaction for "
-operator|+
-name|ci
-operator|.
-name|getFullPartitionName
-argument_list|()
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-name|s
-argument_list|)
-expr_stmt|;
 name|CompactionRequest
 name|rqst
 init|=
@@ -1996,6 +1978,15 @@ operator|.
 name|setRunas
 argument_list|(
 name|runAs
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Requesting compaction: "
+operator|+
+name|rqst
 argument_list|)
 expr_stmt|;
 name|txnHandler

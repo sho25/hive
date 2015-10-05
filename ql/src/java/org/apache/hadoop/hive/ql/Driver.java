@@ -6085,6 +6085,10 @@ argument_list|()
 operator|+
 literal|"/"
 operator|+
+name|MetaStoreUtils
+operator|.
+name|encodeTableName
+argument_list|(
 name|p
 operator|.
 name|getTable
@@ -6092,6 +6096,7 @@ argument_list|()
 operator|.
 name|getTableName
 argument_list|()
+argument_list|)
 operator|+
 literal|"/"
 operator|+

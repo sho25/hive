@@ -1261,6 +1261,8 @@ argument_list|,
 name|streamName
 argument_list|,
 name|layout
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|stream

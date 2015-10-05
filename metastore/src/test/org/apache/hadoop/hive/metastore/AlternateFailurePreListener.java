@@ -114,7 +114,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * AlternateFailurePreListener.  *  * An implemenation of MetaStorePreEventListener which fails every other time it's invoked,  * starting with the first time.  *  * It also records and makes available the number of times it's been invoked.  */
+comment|/**  *  * AlternateFailurePreListener.  *  * An implementation of MetaStorePreEventListener which fails every other time it's invoked,  * starting with the first time.  *  * It also records and makes available the number of times it's been invoked.  */
 end_comment
 
 begin_class

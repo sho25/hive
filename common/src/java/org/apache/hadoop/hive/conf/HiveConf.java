@@ -1005,7 +1005,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 block|,
 name|HiveConf
 operator|.
@@ -2929,13 +2929,13 @@ operator|+
 literal|"but it may also cause higher memory requirement at the client side."
 argument_list|)
 block|,
-name|METASTORE_BATCH_RETRIEVE_TABLE_PARTITION_MAX
+name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 argument_list|(
 literal|"hive.metastore.batch.retrieve.table.partition.max"
 argument_list|,
 literal|1000
 argument_list|,
-literal|"Maximum number of table partitions that metastore internally retrieves in one batch."
+literal|"Maximum number of objects that metastore internally retrieves in one batch."
 argument_list|)
 block|,
 name|METASTORE_INIT_HOOKS
@@ -4916,6 +4916,15 @@ operator|+
 literal|" based on heuristics."
 argument_list|)
 block|,
+name|HIVE_ORC_MS_FOOTER_CACHE_ENABLED
+argument_list|(
+literal|"hive.orc.splits.ms.footer.cache.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable using file metadata cache in metastore for ORC file footers."
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"
@@ -5871,8 +5880,6 @@ name|PatternSet
 argument_list|(
 literal|"jdbc(:.*)"
 argument_list|,
-literal|"hbase"
-argument_list|,
 literal|"counter"
 argument_list|,
 literal|"custom"
@@ -5886,7 +5893,7 @@ literal|"each task writes statistics it has collected in a file on the filesyste
 operator|+
 literal|"after the job has finished. Supported values are fs (filesystem), jdbc:database (where database \n"
 operator|+
-literal|"can be derby, mysql, etc.), hbase, counter, and custom as defined in StatsSetupConst.java."
+literal|"can be derby, mysql, etc.), counter, and custom as defined in StatsSetupConst.java."
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
@@ -6623,6 +6630,17 @@ name|MILLISECONDS
 argument_list|)
 argument_list|,
 literal|"Time between runs of the cleaner thread"
+argument_list|)
+block|,
+name|COMPACTOR_JOB_QUEUE
+argument_list|(
+literal|"hive.compactor.job.queue"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Used to specify name of Hadoop queue to which\n"
+operator|+
+literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
 argument_list|)
 block|,
 name|HIVE_TIMEDOUT_TXN_REAPER_START
@@ -8956,6 +8974,21 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
+argument_list|(
+literal|"hive.support.special.characters.tablename"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable support for special characters in table names.\n"
+operator|+
+literal|"When it is set to false, only [a-zA-Z_0-9]+ are supported.\n"
+operator|+
+literal|"The only supported special character right now is '/'. This flag applies only to quoted table names.\n"
 operator|+
 literal|"The default value is true."
 argument_list|)

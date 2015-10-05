@@ -640,6 +640,8 @@ name|newt
 operator|.
 name|getTableName
 argument_list|()
+argument_list|,
+name|hiveConf
 argument_list|)
 condition|)
 block|{
