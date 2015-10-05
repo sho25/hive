@@ -332,6 +332,7 @@ literal|2
 argument_list|)
 block|,
 comment|// use real column names from Hive tables
+comment|// Don't use any magic numbers here except for the below:
 name|FUTURE
 parameter_list|(
 name|Integer
@@ -415,6 +416,14 @@ operator|.
 name|id
 operator|>
 name|max
+operator|&&
+name|FUTURE
+operator|.
+name|id
+operator|!=
+name|v
+operator|.
+name|id
 condition|)
 block|{
 name|max
@@ -466,6 +475,18 @@ name|int
 name|val
 parameter_list|)
 block|{
+if|if
+condition|(
+name|val
+operator|==
+name|FUTURE
+operator|.
+name|id
+condition|)
+return|return
+name|FUTURE
+return|;
+comment|// Special handling for the magic value.
 return|return
 name|values
 index|[
