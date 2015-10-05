@@ -5229,7 +5229,7 @@ name|info
 argument_list|(
 name|addPrefix
 argument_list|(
-literal|"Opening raw store with implemenation class:"
+literal|"Opening raw store with implementation class:"
 operator|+
 name|rawStoreClassName
 argument_list|)
