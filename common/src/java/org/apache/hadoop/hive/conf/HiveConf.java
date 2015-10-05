@@ -7735,6 +7735,28 @@ operator|+
 literal|"excessive threads are killed after this time interval."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_REQUEST_HEADER_SIZE
+argument_list|(
+literal|"hive.server2.thrift.http.request.header.size"
+argument_list|,
+literal|6
+operator|*
+literal|1024
+argument_list|,
+literal|"Request header size in bytes, when using HTTP transport mode. Jetty defaults used."
+argument_list|)
+block|,
+name|HIVE_SERVER2_THRIFT_HTTP_RESPONSE_HEADER_SIZE
+argument_list|(
+literal|"hive.server2.thrift.http.response.header.size"
+argument_list|,
+literal|6
+operator|*
+literal|1024
+argument_list|,
+literal|"Response header size in bytes, when using HTTP transport mode. Jetty defaults used."
+argument_list|)
+block|,
 comment|// Cookie based authentication when using HTTP Transport
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
 argument_list|(
