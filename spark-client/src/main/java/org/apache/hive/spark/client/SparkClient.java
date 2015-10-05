@@ -163,6 +163,11 @@ argument_list|>
 name|getDefaultParallelism
 parameter_list|()
 function_decl|;
+comment|/**    * Check if remote context is still active.    */
+name|boolean
+name|isActive
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
