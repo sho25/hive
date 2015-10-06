@@ -36533,19 +36533,28 @@ throws|,
 name|InvalidInputException
 block|{
 name|String
-name|dbName
-init|=
-name|mStatsObj
-operator|.
-name|getDbName
-argument_list|()
-decl_stmt|;
-name|String
 name|tableName
 init|=
 name|mStatsObj
 operator|.
+name|getTable
+argument_list|()
+operator|.
 name|getTableName
+argument_list|()
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|mStatsObj
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getName
 argument_list|()
 decl_stmt|;
 name|String
@@ -36689,11 +36698,14 @@ throws|,
 name|InvalidInputException
 block|{
 name|String
-name|dbName
+name|partName
 init|=
 name|mStatsObj
 operator|.
-name|getDbName
+name|getPartition
+argument_list|()
+operator|.
+name|getPartitionName
 argument_list|()
 decl_stmt|;
 name|String
@@ -36701,15 +36713,30 @@ name|tableName
 init|=
 name|mStatsObj
 operator|.
+name|getPartition
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
+operator|.
 name|getTableName
 argument_list|()
 decl_stmt|;
 name|String
-name|partName
+name|dbName
 init|=
 name|mStatsObj
 operator|.
-name|getPartitionName
+name|getPartition
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getName
 argument_list|()
 decl_stmt|;
 name|String
@@ -37275,7 +37302,7 @@ decl_stmt|;
 name|String
 name|filter
 init|=
-literal|"tableName == t1&& dbName == t2&& ("
+literal|"table.tableName == t1&& table.database.name == t2&& ("
 decl_stmt|;
 name|String
 name|paramStr
@@ -38194,6 +38221,9 @@ name|String
 operator|)
 name|mStatsObj
 operator|.
+name|getPartition
+argument_list|()
+operator|.
 name|getPartitionName
 argument_list|()
 decl_stmt|;
@@ -38530,7 +38560,7 @@ decl_stmt|;
 name|String
 name|filter
 init|=
-literal|"tableName == t1&& dbName == t2&& ("
+literal|"partition.table.tableName == t1&& partition.table.database.name == t2&& ("
 decl_stmt|;
 name|Object
 index|[]
@@ -38606,7 +38636,7 @@ else|:
 literal|" || "
 operator|)
 operator|+
-literal|"partitionName == p"
+literal|"partition.partitionName == p"
 operator|+
 name|i
 expr_stmt|;
@@ -38696,7 +38726,7 @@ name|query
 operator|.
 name|setOrdering
 argument_list|(
-literal|"partitionName ascending"
+literal|"partition.partitionName ascending"
 argument_list|)
 expr_stmt|;
 annotation|@
@@ -38839,9 +38869,9 @@ name|MPartitionColumnStatistics
 operator|.
 name|class
 argument_list|,
-literal|"tableName"
+literal|"partition.table.tableName"
 argument_list|,
-literal|"dbName"
+literal|"partition.table.database.name"
 argument_list|,
 literal|"partition.partitionName"
 argument_list|)
@@ -39032,9 +39062,9 @@ condition|)
 block|{
 name|filter
 operator|=
-literal|"partition.partitionName == t1&& dbName == t2&& tableName == t3&& "
+literal|"partition.partitionName == t1&& partition.table.database.name == t2&& "
 operator|+
-literal|"colName == t4"
+literal|"partition.table.tableName == t3&& colName == t4"
 expr_stmt|;
 name|parameters
 operator|=
@@ -39047,7 +39077,9 @@ else|else
 block|{
 name|filter
 operator|=
-literal|"partition.partitionName == t1&& dbName == t2&& tableName == t3"
+literal|"partition.partitionName == t1&& partition.table.database.name == t2&& "
+operator|+
+literal|" partition.table.tableName == t3"
 expr_stmt|;
 name|parameters
 operator|=
@@ -39423,7 +39455,7 @@ condition|)
 block|{
 name|filter
 operator|=
-literal|"table.tableName == t1&& dbName == t2&& colName == t3"
+literal|"table.tableName == t1&& table.database.name == t2&& colName == t3"
 expr_stmt|;
 name|parameters
 operator|=
@@ -39434,7 +39466,7 @@ else|else
 block|{
 name|filter
 operator|=
-literal|"table.tableName == t1&& dbName == t2"
+literal|"table.tableName == t1&& table.database.name == t2"
 expr_stmt|;
 name|parameters
 operator|=
