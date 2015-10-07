@@ -250,6 +250,8 @@ operator|.
 name|avro
 operator|.
 name|AvroSerdeUtils
+operator|.
+name|AvroTableProperties
 import|;
 end_import
 
@@ -1681,9 +1683,12 @@ name|qualifierPrefix
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1704,9 +1709,12 @@ name|qualifierPrefix
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1758,9 +1766,12 @@ name|familyName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1775,9 +1786,12 @@ name|familyName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1890,9 +1904,12 @@ name|qualifierName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1911,9 +1928,12 @@ name|qualifierName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1939,9 +1959,12 @@ name|tbl
 operator|.
 name|getProperty
 argument_list|(
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_RETRIEVER
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -1973,21 +1996,30 @@ name|serType
 operator|+
 literal|"] but neither "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|", "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|", serialization.class or "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_RETRIEVER
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|" property was set"
 argument_list|)

@@ -330,6 +330,8 @@ operator|.
 name|avro
 operator|.
 name|AvroSerdeUtils
+operator|.
+name|AvroTableProperties
 import|;
 end_import
 
@@ -1139,9 +1141,12 @@ name|qualifierPrefix
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1162,9 +1167,12 @@ name|qualifierPrefix
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -1186,15 +1194,21 @@ name|SerDeException
 argument_list|(
 literal|"For an avro schema, either "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|", "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|" or "
 operator|+
@@ -1346,9 +1360,12 @@ name|familyName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1363,9 +1380,12 @@ name|familyName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -1386,9 +1406,12 @@ name|SerDeException
 argument_list|(
 literal|"For an avro schema, either "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|" property or "
 operator|+
@@ -1647,9 +1670,12 @@ name|qualifierName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|schemaUrl
@@ -1668,9 +1694,12 @@ name|qualifierName
 operator|+
 literal|"."
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -1692,15 +1721,21 @@ name|SerDeException
 argument_list|(
 literal|"For an avro schema, either "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|", "
 operator|+
-name|AvroSerdeUtils
+name|AvroTableProperties
 operator|.
 name|SCHEMA_URL
+operator|.
+name|getPropName
+argument_list|()
 operator|+
 literal|" or "
 operator|+
