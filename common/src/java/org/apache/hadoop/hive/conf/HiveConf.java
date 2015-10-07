@@ -7066,6 +7066,17 @@ argument_list|,
 literal|"Whether to print the names of the columns in query output."
 argument_list|)
 block|,
+name|HIVE_CLI_TEZ_SESSION_ASYNC
+argument_list|(
+literal|"hive.cli.tez.session.async"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to start Tez\n"
+operator|+
+literal|"session in background when running CLI with Tez, allowing CLI to be available earlier."
+argument_list|)
+block|,
 name|HIVE_ERROR_ON_EMPTY_PARTITION
 argument_list|(
 literal|"hive.error.on.empty.partition"
