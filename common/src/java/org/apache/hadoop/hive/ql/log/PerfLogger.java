@@ -522,7 +522,7 @@ name|PerfLogger
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|public
+specifier|private
 name|PerfLogger
 parameter_list|()
 block|{
