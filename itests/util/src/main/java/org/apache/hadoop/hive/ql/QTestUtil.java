@@ -5899,12 +5899,6 @@ name|clusterType
 operator|==
 name|MiniClusterType
 operator|.
-name|tez
-operator|||
-name|clusterType
-operator|==
-name|MiniClusterType
-operator|.
 name|llap
 operator|||
 name|clusterType
@@ -6268,12 +6262,6 @@ operator|!=
 literal|null
 operator|&&
 operator|(
-name|clusterType
-operator|==
-name|MiniClusterType
-operator|.
-name|tez
-operator|||
 name|clusterType
 operator|==
 name|MiniClusterType
