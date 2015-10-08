@@ -39541,23 +39541,19 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|LOG
+name|fileSinkDesc
 operator|.
-name|info
+name|setStatsTmpDir
 argument_list|(
-literal|"Set stats collection dir : "
-operator|+
 name|statsTmpLoc
 argument_list|)
 expr_stmt|;
-name|conf
+name|LOG
 operator|.
-name|set
+name|debug
 argument_list|(
-name|StatsSetupConst
-operator|.
-name|STATS_TMP_LOC
-argument_list|,
+literal|"Set stats collection dir : "
+operator|+
 name|statsTmpLoc
 argument_list|)
 expr_stmt|;
@@ -58377,21 +58373,17 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Set stats collection dir : "
 operator|+
 name|statsTmpLoc
 argument_list|)
 expr_stmt|;
-name|conf
+name|tsDesc
 operator|.
-name|set
+name|setTmpStatsDir
 argument_list|(
-name|StatsSetupConst
-operator|.
-name|STATS_TMP_LOC
-argument_list|,
 name|statsTmpLoc
 argument_list|)
 expr_stmt|;
