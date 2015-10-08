@@ -380,14 +380,6 @@ init|=
 literal|"NONE"
 decl_stmt|;
 specifier|private
-specifier|static
-specifier|final
-name|String
-name|HS2_HTTP_AUTH_MODE
-init|=
-literal|"NOSASL"
-decl_stmt|;
-specifier|private
 name|MiniHS2
 name|miniHS2
 init|=
@@ -700,6 +692,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+comment|// we need openssl
 name|Assume
 operator|.
 name|assumeTrue
@@ -712,7 +705,7 @@ operator|==
 literal|0
 argument_list|)
 expr_stmt|;
-comment|// we need openssl
+comment|// we depend on linux openssl exit codes
 name|Assume
 operator|.
 name|assumeTrue
@@ -733,7 +726,6 @@ literal|"linux"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// we depend on linux openssl exit codes
 name|setSslConfOverlay
 argument_list|(
 name|confOverlay
@@ -895,14 +887,6 @@ operator|+
 literal|";trustStorePassword="
 operator|+
 name|KEY_STORE_PASSWORD
-operator|+
-literal|"?hive.server2.transport.mode="
-operator|+
-name|HS2_HTTP_MODE
-operator|+
-literal|";hive.server2.thrift.http.path="
-operator|+
-name|HS2_HTTP_ENDPOINT
 argument_list|,
 name|System
 operator|.
@@ -2183,7 +2167,6 @@ literal|"false"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Currently http mode works with server in NOSASL auth mode& doesn't support doAs
 specifier|private
 name|void
 name|setHttpConfOverlay
@@ -2229,24 +2212,11 @@ name|put
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_AUTHENTICATION
-operator|.
-name|varname
-argument_list|,
-name|HS2_HTTP_AUTH_MODE
-argument_list|)
-expr_stmt|;
-name|confOverlay
-operator|.
-name|put
-argument_list|(
-name|ConfVars
-operator|.
 name|HIVE_SERVER2_ENABLE_DOAS
 operator|.
 name|varname
 argument_list|,
-literal|"false"
+literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
