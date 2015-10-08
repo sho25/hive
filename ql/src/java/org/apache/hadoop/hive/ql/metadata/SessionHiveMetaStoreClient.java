@@ -3485,7 +3485,8 @@ return|return
 name|newCopy
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|Map
 argument_list|<
 name|String

@@ -551,6 +551,20 @@ name|apache
 operator|.
 name|tez
 operator|.
+name|client
+operator|.
+name|TezClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
 name|common
 operator|.
 name|counters
@@ -1652,13 +1666,19 @@ argument_list|(
 name|inputOutputJars
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
+name|TezClient
+name|client
+init|=
 name|session
 operator|.
-name|isOpen
+name|getSession
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|client
+operator|==
+literal|null
 condition|)
 block|{
 comment|// can happen if the user sets the tez flag after the session was
@@ -1704,10 +1724,7 @@ operator|+
 literal|" adding additional necessary resources"
 argument_list|)
 expr_stmt|;
-name|session
-operator|.
-name|getSession
-argument_list|()
+name|client
 operator|.
 name|addAppMasterLocalFiles
 argument_list|(
