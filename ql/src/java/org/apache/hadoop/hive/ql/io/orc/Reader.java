@@ -65,28 +65,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|orc
-operator|.
-name|OrcProto
-operator|.
-name|Footer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|sarg
 operator|.
 name|SearchArgument
@@ -861,12 +839,14 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * @return Metadata reader used to read file metadata.    */
 name|MetadataReader
 name|metadata
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * @return List of integers representing version of the file, in order from major to minor.    */
 name|List
 argument_list|<
 name|Integer
@@ -874,10 +854,12 @@ argument_list|>
 name|getVersionList
 parameter_list|()
 function_decl|;
+comment|/**    * @return Gets the size of metadata, in bytes.    */
 name|int
 name|getMetadataSize
 parameter_list|()
 function_decl|;
+comment|/**    * @return Stripe statistics, in original protobuf form.    */
 name|List
 argument_list|<
 name|OrcProto
@@ -887,6 +869,7 @@ argument_list|>
 name|getOrcProtoStripeStatistics
 parameter_list|()
 function_decl|;
+comment|/**    * @return Stripe statistics.    */
 name|List
 argument_list|<
 name|StripeStatistics
@@ -894,6 +877,7 @@ argument_list|>
 name|getStripeStatistics
 parameter_list|()
 function_decl|;
+comment|/**    * @return File statistics, in original protobuf form.    */
 name|List
 argument_list|<
 name|OrcProto
@@ -903,6 +887,7 @@ argument_list|>
 name|getOrcProtoFileStatistics
 parameter_list|()
 function_decl|;
+comment|/**    * @param useZeroCopy Whether zero-copy read should be used.    * @return The default data reader that ORC is using to read bytes from disk.    */
 name|DataReader
 name|createDefaultDataReader
 parameter_list|(
@@ -910,7 +895,7 @@ name|boolean
 name|useZeroCopy
 parameter_list|)
 function_decl|;
-comment|/** Gets serialized file metadata read from disk for the purposes of caching, etc. */
+comment|/**    * @return Serialized file metadata read from disk for the purposes of caching, etc.    */
 name|ByteBuffer
 name|getSerializedFileFooter
 parameter_list|()
