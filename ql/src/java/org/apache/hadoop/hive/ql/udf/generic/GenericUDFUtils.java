@@ -793,9 +793,9 @@ name|FunctionRegistry
 operator|.
 name|getCommonClassForUnionAll
 argument_list|(
-name|oiTypeInfo
-argument_list|,
 name|rTypeInfo
+argument_list|,
+name|oiTypeInfo
 argument_list|)
 expr_stmt|;
 block|}
