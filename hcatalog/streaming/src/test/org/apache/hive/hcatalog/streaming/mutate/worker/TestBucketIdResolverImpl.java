@@ -209,7 +209,7 @@ argument_list|(
 operator|-
 literal|1L
 argument_list|,
-literal|8
+literal|1
 argument_list|,
 operator|-
 literal|1L
