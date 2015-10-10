@@ -2796,19 +2796,10 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|j
-init|=
-literal|0
-init|;
-name|j
-operator|<
+name|FileStatus
+name|f
+range|:
 name|files
-operator|.
-name|length
-condition|;
-name|j
-operator|++
 control|)
 block|{
 comment|// For each file, figure out which bucket it is.
@@ -2821,10 +2812,7 @@ name|BUCKET_DIGIT_PATTERN
 operator|.
 name|matcher
 argument_list|(
-name|files
-index|[
-name|j
-index|]
+name|f
 operator|.
 name|getPath
 argument_list|()
@@ -2837,10 +2825,7 @@ name|addFileToMap
 argument_list|(
 name|matcher
 argument_list|,
-name|files
-index|[
-name|j
-index|]
+name|f
 operator|.
 name|getPath
 argument_list|()
@@ -3060,6 +3045,13 @@ argument_list|(
 literal|"Found a non-bucket file that we thought matched the bucket pattern! "
 operator|+
 name|file
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" Matcher="
+operator|+
+name|matcher
 operator|.
 name|toString
 argument_list|()

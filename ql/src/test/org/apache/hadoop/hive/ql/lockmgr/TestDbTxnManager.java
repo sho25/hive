@@ -1793,7 +1793,7 @@ literal|"Wrong Exception3"
 argument_list|,
 name|ErrorMsg
 operator|.
-name|LOCK_NO_SUCH_LOCK
+name|TXN_ABORTED
 argument_list|,
 name|exception
 operator|.

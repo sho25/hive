@@ -9422,6 +9422,35 @@ name|txnid
 argument_list|)
 throw|;
 block|}
+comment|//update locks for this txn to the same heartbeat
+name|s
+operator|=
+literal|"update HIVE_LOCKS set hl_last_heartbeat = "
+operator|+
+name|now
+operator|+
+literal|" where hl_txnid = "
+operator|+
+name|txnid
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute update<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
