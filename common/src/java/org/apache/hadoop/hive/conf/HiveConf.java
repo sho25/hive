@@ -8917,9 +8917,7 @@ literal|"hive.tez.input.generate.consistent.splits"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether to generate consisten split"
-operator|+
-literal|"locations when generating splits in the AM"
+literal|"Whether to generate consistent split locations when generating splits in the AM"
 argument_list|)
 block|,
 name|HIVE_PREWARM_ENABLED
@@ -9209,7 +9207,7 @@ literal|"hive.llap.io.enabled"
 argument_list|,
 literal|false
 argument_list|,
-literal|""
+literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
 name|LLAP_LOW_LEVEL_CACHE
@@ -9218,7 +9216,7 @@ literal|"hive.llap.io.use.lowlevel.cache"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"Must always be true for now"
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MIN_ALLOC
@@ -9229,7 +9227,11 @@ literal|128
 operator|*
 literal|1024
 argument_list|,
-literal|""
+literal|"Minimum allocation possible from LLAP low-level cache for ORC. Allocations below that\n"
+operator|+
+literal|"will be padded to minimum allocation. Should generally be the same as expected ORC\n"
+operator|+
+literal|"compression buffer size, or next lowest power of 2. Must be power of 2."
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MAX_ALLOC
@@ -9242,7 +9244,9 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|""
+literal|"Maximum allocation possible from LLAP low-level cache for ORC. Should be as large as\n"
+operator|+
+literal|"the largest expected ORC compression buffer size. Must be power of 2."
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_ARENA_SIZE
@@ -9255,7 +9259,9 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|""
+literal|"Arena size for ORC low-level cache; cache will be allocated in arena-sized steps.\n"
+operator|+
+literal|"Must presently be a power of two."
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MAX_SIZE
@@ -9268,7 +9274,7 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|""
+literal|"Maximum size for ORC low-level cache; must be a multiple of arena size."
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
@@ -9277,7 +9283,7 @@ literal|"hive.llap.io.cache.direct"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"Whether ORC low-level cache should use direct allocation."
 argument_list|)
 block|,
 name|LLAP_USE_LRFU
@@ -9286,7 +9292,7 @@ literal|"hive.llap.io.use.lrfu"
 argument_list|,
 literal|false
 argument_list|,
-literal|""
+literal|"Whether ORC low-level cache should use LRFU cache policy instead of default (FIFO)."
 argument_list|)
 block|,
 name|LLAP_LRFU_LAMBDA
@@ -9295,7 +9301,7 @@ literal|"hive.llap.io.lrfu.lambda"
 argument_list|,
 literal|0.01f
 argument_list|,
-literal|""
+literal|"Lambda for ORC low-level cache LRFU cache policy."
 argument_list|)
 block|,
 name|LLAP_ORC_ENABLE_TIME_COUNTERS
@@ -9304,7 +9310,7 @@ literal|"hive.llap.io.orc.time.counters"
 argument_list|,
 literal|true
 argument_list|,
-literal|""
+literal|"Whether to enable time counters for LLAP IO layer (time spent in HDFS, etc.)"
 argument_list|)
 block|,
 name|LLAP_AUTO_ALLOW_UBER
@@ -9313,7 +9319,7 @@ literal|"hive.llap.auto.allow.uber"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether or not to allow the planner to run vertices in the AM"
+literal|"Whether or not to allow the planner to run vertices in the AM."
 argument_list|)
 block|,
 name|LLAP_AUTO_ENFORCE_TREE
@@ -9409,11 +9415,11 @@ literal|"hive.llap.queue.metrics.percentiles.intervals"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds) for"
+literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds)\n"
 operator|+
-literal|"percentile latency metrics on the LLAP daemon producer-consumer queue. By default,"
+literal|"for percentile latency metrics on the LLAP daemon producer-consumer queue.\n"
 operator|+
-literal|"percentile latency metrics are disabled."
+literal|"By default, percentile latency metrics are disabled."
 argument_list|)
 block|,
 name|LLAP_IO_THREADPOOL_SIZE
