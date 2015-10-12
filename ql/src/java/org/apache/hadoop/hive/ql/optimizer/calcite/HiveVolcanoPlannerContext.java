@@ -60,7 +60,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|HiveConfigContext
+name|HiveVolcanoPlannerContext
 implements|implements
 name|Context
 block|{
@@ -69,7 +69,7 @@ name|HiveAlgorithmsConf
 name|config
 decl_stmt|;
 specifier|public
-name|HiveConfigContext
+name|HiveVolcanoPlannerContext
 parameter_list|(
 name|HiveAlgorithmsConf
 name|config

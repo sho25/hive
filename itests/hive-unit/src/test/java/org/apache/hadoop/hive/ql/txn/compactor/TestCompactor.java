@@ -1380,7 +1380,7 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 4 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC"
+literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)
@@ -1411,6 +1411,8 @@ name|getPath
 argument_list|()
 operator|+
 literal|"'"
+operator|+
+literal|" TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)
@@ -3690,7 +3692,7 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC"
+literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)
@@ -4103,7 +4105,7 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC"
+literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true') "
 argument_list|,
 name|driver
 argument_list|)
@@ -4449,7 +4451,7 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC"
+literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)
@@ -4885,7 +4887,7 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC"
+literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)

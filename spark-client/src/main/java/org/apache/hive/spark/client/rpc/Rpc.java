@@ -1542,6 +1542,18 @@ name|class
 argument_list|)
 return|;
 block|}
+specifier|public
+name|boolean
+name|isActive
+parameter_list|()
+block|{
+return|return
+name|channel
+operator|.
+name|isActive
+argument_list|()
+return|;
+block|}
 comment|/**    * Send an RPC call to the remote endpoint and returns a future that can be used to monitor the    * operation.    *    * @param msg RPC call to send.    * @param retType Type of expected reply.    * @return A future used to monitor the operation.    */
 specifier|public
 parameter_list|<

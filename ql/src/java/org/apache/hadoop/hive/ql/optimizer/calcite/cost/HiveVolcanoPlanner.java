@@ -97,7 +97,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|HiveConfigContext
+name|HiveVolcanoPlannerContext
 import|;
 end_import
 
@@ -124,7 +124,7 @@ comment|/** Creates a HiveVolcanoPlanner. */
 specifier|public
 name|HiveVolcanoPlanner
 parameter_list|(
-name|HiveConfigContext
+name|HiveVolcanoPlannerContext
 name|conf
 parameter_list|)
 block|{
@@ -143,7 +143,7 @@ specifier|static
 name|RelOptPlanner
 name|createPlanner
 parameter_list|(
-name|HiveConfigContext
+name|HiveVolcanoPlannerContext
 name|conf
 parameter_list|)
 block|{
