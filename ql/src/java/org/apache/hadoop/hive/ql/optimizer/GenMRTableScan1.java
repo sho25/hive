@@ -525,6 +525,8 @@ name|GenMRTableScan1
 parameter_list|()
 block|{   }
 comment|/**    * Table Sink encountered.    * @param nd    *          the table sink operator encountered    * @param opProcCtx    *          context    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -975,6 +977,19 @@ argument_list|)
 expr_stmt|;
 name|statsWork
 operator|.
+name|setStatsTmpDir
+argument_list|(
+name|op
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getTmpStatsDir
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|statsWork
+operator|.
 name|setSourceTask
 argument_list|(
 name|currTask
@@ -1358,6 +1373,24 @@ operator|.
 name|setAggKey
 argument_list|(
 name|aggregationKey
+argument_list|)
+expr_stmt|;
+name|scanWork
+operator|.
+name|setStatsTmpDir
+argument_list|(
+name|op
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getTmpStatsDir
+argument_list|()
+argument_list|,
+name|parseCtx
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// stats work

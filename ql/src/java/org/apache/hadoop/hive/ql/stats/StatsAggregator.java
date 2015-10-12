@@ -19,38 +19,6 @@ name|stats
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Task
-import|;
-end_import
-
 begin_comment
 comment|/**  * An interface for any possible implementation for gathering statistics.  */
 end_comment
@@ -65,11 +33,8 @@ specifier|public
 name|boolean
 name|connect
 parameter_list|(
-name|Configuration
-name|hconf
-parameter_list|,
-name|Task
-name|sourceTask
+name|StatsCollectionContext
+name|scc
 parameter_list|)
 function_decl|;
 comment|/**    * This method aggregates a given statistic from all tasks (partial stats).    * After aggregation, this method also automatically removes all records    * that have been aggregated.    *    * @param keyPrefix    *          a prefix of the keys used in StatsPublisher to publish stats.    *          Any rows that starts with the same prefix will be aggregated. For example, if    *          the StatsPublisher uses the following compound key to publish stats:    *    *          the output directory name (unique per FileSinkOperator) +    *          the partition specs (only for dynamic partitions) +    *          taskID (last component of task file)    *    *          The keyPrefix for aggregation could be first 2 components. This will aggregates stats    *          across all tasks for each partition.    *    * @param statType    *          a string noting the key to be published. Ex: "numRows".    * @return a string representation of a long value, null if there are any error/exception.    */
@@ -88,7 +53,10 @@ comment|/**    * This method closes the connection to the temporary storage.    
 specifier|public
 name|boolean
 name|closeConnection
-parameter_list|()
+parameter_list|(
+name|StatsCollectionContext
+name|scc
+parameter_list|)
 function_decl|;
 comment|/**    * This method is called after all statistics have been aggregated. Since we support multiple    * statistics, we do not perform automatic cleanup after aggregation.    * After this method is called, closeConnection must be called as well.    * This method is also used to clear the temporary statistics that have been published without    * being aggregated.    * Typically this happens when a job fails, or is forcibly stopped after publishing some    * statistics.    *    * @param keyPrefix    *          a prefix of the keys used in StatsPublisher to publish stats. It is the same    *          as the first parameter in aggregateStats().    * @return true if cleanup is successful, false otherwise.    */
 specifier|public

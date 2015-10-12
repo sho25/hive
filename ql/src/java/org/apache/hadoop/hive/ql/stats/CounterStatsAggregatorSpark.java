@@ -154,11 +154,8 @@ specifier|public
 name|boolean
 name|connect
 parameter_list|(
-name|Configuration
-name|hconf
-parameter_list|,
-name|Task
-name|sourceTask
+name|StatsCollectionContext
+name|scc
 parameter_list|)
 block|{
 name|SparkTask
@@ -167,7 +164,10 @@ init|=
 operator|(
 name|SparkTask
 operator|)
-name|sourceTask
+name|scc
+operator|.
+name|getTask
+argument_list|()
 decl_stmt|;
 name|sparkCounters
 operator|=
@@ -253,7 +253,10 @@ name|Override
 specifier|public
 name|boolean
 name|closeConnection
-parameter_list|()
+parameter_list|(
+name|StatsCollectionContext
+name|scc
+parameter_list|)
 block|{
 return|return
 literal|true

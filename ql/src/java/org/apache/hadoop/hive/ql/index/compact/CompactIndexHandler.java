@@ -1421,13 +1421,6 @@ argument_list|,
 name|dbName
 argument_list|)
 decl_stmt|;
-name|super
-operator|.
-name|setStatsDir
-argument_list|(
-name|builderConf
-argument_list|)
-expr_stmt|;
 return|return
 name|rootTask
 return|;

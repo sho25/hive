@@ -29,20 +29,6 @@ name|Map
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
 begin_comment
 comment|/**  * An interface for any possible implementation for publishing statics.  */
 end_comment
@@ -57,8 +43,8 @@ specifier|public
 name|boolean
 name|init
 parameter_list|(
-name|Configuration
-name|hconf
+name|StatsCollectionContext
+name|context
 parameter_list|)
 function_decl|;
 comment|/**    * This method connects to the intermediate statistics database.    * @param hconf HiveConf that contains the connection parameters.    * @return true if connection is successful, false otherwise.    */
@@ -66,8 +52,8 @@ specifier|public
 name|boolean
 name|connect
 parameter_list|(
-name|Configuration
-name|hconf
+name|StatsCollectionContext
+name|context
 parameter_list|)
 function_decl|;
 comment|/**    * This method publishes a given statistic into a disk storage, possibly HBase or MySQL.    *    * @param fileID    *          : a string identification the statistics to be published by all mappers/reducers    *          and then gathered. The statID is unique per output partition per task, e.g.,:    *          the output directory name (uniq per FileSinkOperator) +    *          the partition specs (only for dynamic partitions) +    *          taskID (last component of task file)    * @param stats    *          : a map containing key-value pairs, where key is a string representing the statistic    *          to be published,    *          and value is a string representing the value for the given statistic    * @return true if successful, false otherwise    */
@@ -91,7 +77,10 @@ comment|/**    * This method closes the connection to the temporary storage.    
 specifier|public
 name|boolean
 name|closeConnection
-parameter_list|()
+parameter_list|(
+name|StatsCollectionContext
+name|context
+parameter_list|)
 function_decl|;
 block|}
 end_interface
