@@ -261,7 +261,7 @@ name|ql
 operator|.
 name|stats
 operator|.
-name|CounterStatsPublisher
+name|StatsCollectionContext
 import|;
 end_import
 
@@ -279,7 +279,7 @@ name|ql
 operator|.
 name|stats
 operator|.
-name|StatsCollectionContext
+name|StatsCollectionTaskIndependent
 import|;
 end_import
 
@@ -898,7 +898,7 @@ operator|!
 operator|(
 name|statsPublisher
 operator|instanceof
-name|CounterStatsPublisher
+name|StatsCollectionTaskIndependent
 operator|)
 condition|)
 block|{
