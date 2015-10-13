@@ -357,6 +357,13 @@ name|analyzer
 operator|=
 name|analyzer
 expr_stmt|;
+if|if
+condition|(
+name|analyzer
+operator|!=
+literal|null
+condition|)
+block|{
 name|this
 operator|.
 name|inputs
@@ -366,6 +373,7 @@ operator|.
 name|getInputs
 argument_list|()
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|extended
