@@ -495,6 +495,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|SemanticAnalyzer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|DfsProcessor
@@ -650,13 +668,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestJdbcDriver2  *  */
+comment|/**  * cbo_rp_TestJdbcDriver2  *  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestJdbcDriver2
+name|cbo_rp_TestJdbcDriver2
 block|{
 specifier|private
 specifier|static
@@ -668,7 +686,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|TestJdbcDriver2
+name|cbo_rp_TestJdbcDriver2
 operator|.
 name|class
 argument_list|)
@@ -801,7 +819,7 @@ init|=
 literal|0.0001f
 decl_stmt|;
 specifier|public
-name|TestJdbcDriver2
+name|cbo_rp_TestJdbcDriver2
 parameter_list|()
 block|{
 name|conf
@@ -809,7 +827,7 @@ operator|=
 operator|new
 name|HiveConf
 argument_list|(
-name|TestJdbcDriver2
+name|cbo_rp_TestJdbcDriver2
 operator|.
 name|class
 argument_list|)
@@ -1051,6 +1069,13 @@ operator|.
 name|execute
 argument_list|(
 literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.cbo.returnpath.hiveop = true"
 argument_list|)
 expr_stmt|;
 comment|// drop table. ignore error.
@@ -10421,7 +10446,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"c12_1"
+literal|"_c12"
 argument_list|,
 name|meta
 operator|.
@@ -11658,7 +11683,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"c2_2"
+literal|"_c2"
 argument_list|,
 name|meta
 operator|.
@@ -12434,7 +12459,7 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|,
-literal|"c1"
+literal|"_c1"
 argument_list|)
 expr_stmt|;
 comment|// verify the system generated column name

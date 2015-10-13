@@ -61616,6 +61616,19 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// resultSchema will be null if
+comment|// (1) cbo is disabled;
+comment|// (2) or cbo is enabled with AST return path (whether succeeded or not,
+comment|// resultSchema will be re-initialized)
+comment|// It will only be not null if cbo is enabled with new return path and it
+comment|// succeeds.
+if|if
+condition|(
+name|resultSchema
+operator|==
+literal|null
+condition|)
+block|{
 name|resultSchema
 operator|=
 name|convertRowSchemaToResultSetSchema
@@ -61644,6 +61657,7 @@ name|HIVE_RESULTSET_USE_UNIQUE_COLUMN_NAMES
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// 4. Generate Parse Context for Optimizer& Physical compiler
 name|copyInfoToQueryProperties
