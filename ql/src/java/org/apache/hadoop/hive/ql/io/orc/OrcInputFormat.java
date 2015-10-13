@@ -3760,20 +3760,42 @@ comment|//       call; this might be too much sync for many partitions and also 
 comment|//       huge metastore call result that cannot be handled with in-API batching. To have an
 comment|//       optimal number of metastore calls, we should wait for batch-size number of files (a
 comment|//       few hundreds) to become available, then call metastore.
-if|if
-condition|(
+comment|// Force local cache if we have deltas.
+name|FooterCache
+name|cache
+init|=
 name|context
 operator|.
 name|cacheStripeDetails
+condition|?
+operator|(
+name|deltas
+operator|==
+literal|null
+condition|?
+name|Context
+operator|.
+name|footerCache
+else|:
+name|Context
+operator|.
+name|localCache
+operator|)
+else|:
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|cache
+operator|!=
+literal|null
 condition|)
 block|{
 name|FileInfo
 index|[]
 name|infos
 init|=
-name|Context
-operator|.
-name|footerCache
+name|cache
 operator|.
 name|getAndValidate
 argument_list|(
