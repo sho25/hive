@@ -939,6 +939,10 @@ expr_stmt|;
 if|if
 condition|(
 name|error
+operator|&&
+name|numTestsExecuted
+operator|==
+literal|0
 condition|)
 block|{
 name|comments
