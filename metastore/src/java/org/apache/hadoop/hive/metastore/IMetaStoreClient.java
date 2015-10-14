@@ -1136,6 +1136,11 @@ name|String
 name|addedJars
 parameter_list|)
 function_decl|;
+comment|/**    * Returns true if the current client is using an in process metastore (local metastore).    *    * @return    */
+name|boolean
+name|isLocalMetaStore
+parameter_list|()
+function_decl|;
 comment|/**    *  Tries to reconnect this MetaStoreClient to the MetaStore.    */
 name|void
 name|reconnect
