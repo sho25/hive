@@ -5878,8 +5878,6 @@ argument_list|,
 operator|new
 name|PatternSet
 argument_list|(
-literal|"jdbc(:.*)"
-argument_list|,
 literal|"counter"
 argument_list|,
 literal|"custom"
@@ -5891,31 +5889,10 @@ literal|"The storage that stores temporary Hive statistics. In filesystem based 
 operator|+
 literal|"each task writes statistics it has collected in a file on the filesystem, which will be aggregated \n"
 operator|+
-literal|"after the job has finished. Supported values are fs (filesystem), jdbc:database (where database \n"
-operator|+
-literal|"can be derby, mysql, etc.), counter, and custom as defined in StatsSetupConst.java."
+literal|"after the job has finished. Supported values are fs (filesystem), counter, and custom as defined in StatsSetupConst.java."
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
-name|HIVESTATSJDBCDRIVER
-argument_list|(
-literal|"hive.stats.jdbcdriver"
-argument_list|,
-literal|"org.apache.derby.jdbc.EmbeddedDriver"
-argument_list|,
-literal|"The JDBC driver for the database that stores temporary Hive statistics."
-argument_list|)
-block|,
-name|HIVESTATSDBCONNECTIONSTRING
-argument_list|(
-literal|"hive.stats.dbconnectionstring"
-argument_list|,
-literal|"jdbc:derby:;databaseName=TempStatsStore;create=true"
-argument_list|,
-literal|"The default connection string for the database that stores temporary Hive statistics."
-argument_list|)
-block|,
-comment|// automatically create database
 name|HIVE_STATS_DEFAULT_PUBLISHER
 argument_list|(
 literal|"hive.stats.default.publisher"
@@ -5934,23 +5911,6 @@ argument_list|,
 literal|"The Java class (implementing the StatsAggregator interface) that is used by default if hive.stats.dbclass is custom type."
 argument_list|)
 block|,
-name|HIVE_STATS_JDBC_TIMEOUT
-argument_list|(
-literal|"hive.stats.jdbc.timeout"
-argument_list|,
-literal|"30s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Timeout value used by JDBC connection and statements."
-argument_list|)
-block|,
 name|HIVE_STATS_ATOMIC
 argument_list|(
 literal|"hive.stats.atomic"
@@ -5958,36 +5918,6 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"whether to update metastore stats only if all stats are available"
-argument_list|)
-block|,
-name|HIVE_STATS_RETRIES_MAX
-argument_list|(
-literal|"hive.stats.retries.max"
-argument_list|,
-literal|0
-argument_list|,
-literal|"Maximum number of retries when stats publisher/aggregator got an exception updating intermediate database. \n"
-operator|+
-literal|"Default is no tries on failures."
-argument_list|)
-block|,
-name|HIVE_STATS_RETRIES_WAIT
-argument_list|(
-literal|"hive.stats.retries.wait"
-argument_list|,
-literal|"3000ms"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
-argument_list|,
-literal|"The base waiting window before the next retry. The actual wait time is calculated by "
-operator|+
-literal|"baseWindow * failures baseWindow * (failure + 1) * (random number between [0.0,1.0])."
 argument_list|)
 block|,
 name|HIVE_STATS_COLLECT_RAWDATASIZE

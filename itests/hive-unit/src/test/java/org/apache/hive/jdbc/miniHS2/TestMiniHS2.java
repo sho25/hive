@@ -251,17 +251,17 @@ expr_stmt|;
 comment|// also check a config that has default in hiveconf
 specifier|final
 name|String
-name|STATS_TIMEOUT_KEY
+name|ZK_TIMEOUT_KEY
 init|=
 name|ConfVars
 operator|.
-name|HIVE_STATS_JDBC_TIMEOUT
+name|HIVE_ZOOKEEPER_SESSION_TIMEOUT
 operator|.
 name|varname
 decl_stmt|;
 specifier|final
 name|String
-name|STATS_TIMEOUT
+name|ZK_TIMEOUT
 init|=
 literal|"2562"
 decl_stmt|;
@@ -269,9 +269,9 @@ name|hiveConf
 operator|.
 name|set
 argument_list|(
-name|STATS_TIMEOUT_KEY
+name|ZK_TIMEOUT_KEY
 argument_list|,
-name|STATS_TIMEOUT
+name|ZK_TIMEOUT
 argument_list|)
 expr_stmt|;
 comment|// check the config used very often!
@@ -353,13 +353,13 @@ argument_list|)
 expr_stmt|;
 name|checkConfVal
 argument_list|(
-name|STATS_TIMEOUT_KEY
+name|ZK_TIMEOUT_KEY
 argument_list|,
-name|STATS_TIMEOUT_KEY
+name|ZK_TIMEOUT_KEY
 operator|+
 literal|"="
 operator|+
-name|STATS_TIMEOUT
+name|ZK_TIMEOUT
 argument_list|,
 name|stmt
 argument_list|)

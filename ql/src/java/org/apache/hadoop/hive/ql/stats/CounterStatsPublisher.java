@@ -95,8 +95,6 @@ class|class
 name|CounterStatsPublisher
 implements|implements
 name|StatsPublisher
-implements|,
-name|StatsCollectionTaskIndependent
 block|{
 specifier|private
 specifier|static

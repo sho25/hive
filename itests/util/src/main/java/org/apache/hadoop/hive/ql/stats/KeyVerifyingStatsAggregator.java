@@ -124,20 +124,6 @@ return|return
 literal|true
 return|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|cleanUp
-parameter_list|(
-name|String
-name|keyPrefix
-parameter_list|)
-block|{
-return|return
-literal|true
-return|;
-block|}
 block|}
 end_class
 
