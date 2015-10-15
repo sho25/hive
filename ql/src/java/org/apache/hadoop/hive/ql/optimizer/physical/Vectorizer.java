@@ -11084,18 +11084,10 @@ comment|// With the fast hash table implementation, we currently do not support
 comment|// Hybrid Grace Hash Join.
 if|if
 condition|(
-name|HiveConf
+name|desc
 operator|.
-name|getBoolVar
-argument_list|(
-name|hiveConf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEUSEHYBRIDGRACEHASHJOIN
-argument_list|)
+name|isHybridHashJoin
+argument_list|()
 condition|)
 block|{
 name|specialize
