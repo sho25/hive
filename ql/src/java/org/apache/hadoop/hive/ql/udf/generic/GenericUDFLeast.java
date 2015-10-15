@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDF Class for SQL construct "least(v1, v2, .. vn)".  *  * NOTES: 1. v1, v2 and vn should have the same TypeInfo, or an exception will  * be thrown.  */
+comment|/**  * GenericUDF Class for SQL construct "least(v1, v2, .. vn)".  */
 end_comment
 
 begin_class
@@ -67,7 +67,7 @@ specifier|public
 class|class
 name|GenericUDFLeast
 extends|extends
-name|GenericUDFGreatest
+name|GenericUDFBaseNwayCompare
 block|{
 annotation|@
 name|Override
@@ -83,12 +83,13 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|boolean
-name|isGreatest
+name|int
+name|getOrder
 parameter_list|()
 block|{
 return|return
-literal|false
+operator|-
+literal|1
 return|;
 block|}
 block|}
