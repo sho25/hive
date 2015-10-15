@@ -6925,21 +6925,9 @@ literal|"select "
 operator|+
 name|STATS_COLLIST
 operator|+
-literal|" from "
+literal|" from \"TAB_COL_STATS\" "
 operator|+
-name|STATS_TABLE_JOINED_TBLS
-operator|+
-literal|"where "
-operator|+
-name|STATS_DB_NAME
-operator|+
-literal|" = ? and "
-operator|+
-name|STATS_TABLE_NAME
-operator|+
-literal|" = ? "
-operator|+
-literal|"and \"COLUMN_NAME\" in ("
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -7577,21 +7565,11 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"select count(\"COLUMN_NAME\") from "
+literal|"select count(\"COLUMN_NAME\") from \"PART_COL_STATS\""
 operator|+
-name|STATS_PART_JOINED_TBLS
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
-literal|"where "
-operator|+
-name|STATS_DB_NAME
-operator|+
-literal|" = ? and "
-operator|+
-name|STATS_TABLE_NAME
-operator|+
-literal|" = ? "
-operator|+
-literal|"and \"PART_COL_STATS\".\"COLUMN_NAME\" in ("
+literal|" and \"COLUMN_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -7601,13 +7579,9 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") "
+literal|")"
 operator|+
-literal|"and "
-operator|+
-name|STATS_PARTITION_NAME
-operator|+
-literal|" in ("
+literal|" and \"PARTITION_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -7617,11 +7591,9 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") "
+literal|")"
 operator|+
-literal|"group by "
-operator|+
-name|STATS_PARTITION_NAME
+literal|" group by \"PARTITION_NAME\""
 decl_stmt|;
 name|long
 name|start
@@ -7821,9 +7793,7 @@ literal|"avg((cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)-cast(\"BIG_DECIMAL_LOW
 operator|+
 literal|"sum(\"NUM_DISTINCTS\")"
 operator|+
-literal|" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 decl_stmt|;
@@ -8085,9 +8055,7 @@ name|queryText
 operator|=
 literal|"select \"COLUMN_NAME\", \"COLUMN_TYPE\", count(\"PARTITION_NAME\") "
 operator|+
-literal|" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
@@ -8607,9 +8575,7 @@ name|queryText
 operator|=
 literal|"select \"COLUMN_NAME\", sum(\"NUM_NULLS\"), sum(\"NUM_TRUES\"), sum(\"NUM_FALSES\"), sum(\"NUM_DISTINCTS\")"
 operator|+
-literal|" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
@@ -9178,9 +9144,7 @@ literal|"select \""
 operator|+
 name|colStatName
 operator|+
-literal|"\",\"PARTITION_NAME\" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|"\",\"PARTITION_NAME\" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -9213,9 +9177,7 @@ literal|"select \""
 operator|+
 name|colStatName
 operator|+
-literal|"\",\"PARTITION_NAME\" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|"\",\"PARTITION_NAME\" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -9444,9 +9406,7 @@ literal|"avg((\"DOUBLE_HIGH_VALUE\"-\"DOUBLE_LOW_VALUE\")/\"NUM_DISTINCTS\"),"
 operator|+
 literal|"avg((cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)-cast(\"BIG_DECIMAL_LOW_VALUE\" as decimal))/\"NUM_DISTINCTS\")"
 operator|+
-literal|" from "
-operator|+
-name|PART_COL_STATS_VW
+literal|" from \"PART_COL_STATS\""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -10221,29 +10181,13 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"select "
-operator|+
-name|STATS_PARTITION_NAME
-operator|+
-literal|", "
+literal|"select \"PARTITION_NAME\", "
 operator|+
 name|STATS_COLLIST
 operator|+
-literal|" from "
+literal|" from \"PART_COL_STATS\""
 operator|+
-name|STATS_PART_JOINED_TBLS
-operator|+
-literal|" where "
-operator|+
-name|STATS_DB_NAME
-operator|+
-literal|" = ? and "
-operator|+
-name|STATS_TABLE_NAME
-operator|+
-literal|" = ? "
-operator|+
-literal|"and \"COLUMN_NAME\" in ("
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -10253,13 +10197,7 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") "
-operator|+
-literal|"and "
-operator|+
-name|STATS_PARTITION_NAME
-operator|+
-literal|" in ("
+literal|") AND \"PARTITION_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -10269,13 +10207,7 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") "
-operator|+
-literal|"order by "
-operator|+
-name|STATS_PARTITION_NAME
-operator|+
-literal|" asc"
+literal|") order by \"PARTITION_NAME\""
 decl_stmt|;
 name|Query
 name|query
@@ -10552,84 +10484,6 @@ operator|+
 literal|"\"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", \"NUM_DISTINCTS\", \"AVG_COL_LEN\", "
 operator|+
 literal|"\"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\", \"LAST_ANALYZED\" "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|STATS_PART_JOINED_TBLS
-init|=
-literal|"\"PART_COL_STATS\" "
-operator|+
-literal|"JOIN \"PARTITIONS\" ON \"PART_COL_STATS\".\"PART_ID\" = \"PARTITIONS\".\"PART_ID\" "
-operator|+
-literal|"JOIN \"TBLS\" ON \"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
-operator|+
-literal|"JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|STATS_TABLE_JOINED_TBLS
-init|=
-literal|"\"TAB_COL_STATS\" "
-operator|+
-literal|"JOIN \"TBLS\" ON \"TAB_COL_STATS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
-operator|+
-literal|"JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|PART_COL_STATS_VW
-init|=
-literal|"(SELECT \"DBS\".\"NAME\" \"DB_NAME\", "
-operator|+
-literal|"\"TBLS\".\"TBL_NAME\" \"TABLE_NAME\", \"PARTITIONS\".\"PART_NAME\" \"PARTITION_NAME\", "
-operator|+
-literal|"\"PCS\".\"COLUMN_NAME\", \"PCS\".\"COLUMN_TYPE\", \"PCS\".\"LONG_LOW_VALUE\", "
-operator|+
-literal|"\"PCS\".\"LONG_HIGH_VALUE\", \"PCS\".\"DOUBLE_HIGH_VALUE\", \"PCS\".\"DOUBLE_LOW_VALUE\", "
-operator|+
-literal|"\"PCS\".\"BIG_DECIMAL_LOW_VALUE\", \"PCS\".\"BIG_DECIMAL_HIGH_VALUE\", \"PCS\".\"NUM_NULLS\", "
-operator|+
-literal|"\"PCS\".\"NUM_DISTINCTS\", \"PCS\".\"AVG_COL_LEN\",\"PCS\".\"MAX_COL_LEN\", "
-operator|+
-literal|"\"PCS\".\"NUM_TRUES\", \"PCS\".\"NUM_FALSES\",\"PCS\".\"LAST_ANALYZED\" "
-operator|+
-literal|"FROM \"PART_COL_STATS\" \"PCS\" JOIN \"PARTITIONS\" "
-operator|+
-literal|"ON (\"PCS\".\"PART_ID\" = \"PARTITIONS\".\"PART_ID\") "
-operator|+
-literal|"JOIN \"TBLS\" ON (\"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\") "
-operator|+
-literal|"JOIN \"DBS\" ON (\"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\")) VW "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|STATS_DB_NAME
-init|=
-literal|"\"DBS\".\"NAME\" "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|STATS_TABLE_NAME
-init|=
-literal|"\"TBLS\".\"TBL_NAME\" "
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|STATS_PARTITION_NAME
-init|=
-literal|"\"PARTITIONS\".\"PART_NAME\" "
 decl_stmt|;
 specifier|private
 name|ColumnStatistics
