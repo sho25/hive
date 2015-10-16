@@ -1824,6 +1824,20 @@ argument_list|,
 literal|"\\"
 argument_list|)
 expr_stmt|;
+name|tblDesc
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|setProperty
+argument_list|(
+name|serdeConstants
+operator|.
+name|SERIALIZATION_ESCAPE_CRLF
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 comment|//enable extended nesting levels
 name|tblDesc
 operator|.

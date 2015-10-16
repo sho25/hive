@@ -484,6 +484,10 @@ name|SERIALIZATION_NULL_FORMAT
 block|,
 name|serdeConstants
 operator|.
+name|SERIALIZATION_ESCAPE_CRLF
+block|,
+name|serdeConstants
+operator|.
 name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 block|,
 name|serdeConstants

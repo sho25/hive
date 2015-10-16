@@ -656,6 +656,10 @@ name|SERIALIZATION_NULL_FORMAT
 block|,
 name|serdeConstants
 operator|.
+name|SERIALIZATION_ESCAPE_CRLF
+block|,
+name|serdeConstants
+operator|.
 name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 block|,
 name|serdeConstants
@@ -865,64 +869,6 @@ operator|.
 name|createLazyObject
 argument_list|(
 name|cachedObjectInspector
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|" initialized with: columnNames="
-operator|+
-name|serdeParams
-operator|.
-name|getColumnNames
-argument_list|()
-operator|+
-literal|" columnTypes="
-operator|+
-name|serdeParams
-operator|.
-name|getColumnTypes
-argument_list|()
-operator|+
-literal|" separator="
-operator|+
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-name|serdeParams
-operator|.
-name|getSeparators
-argument_list|()
-argument_list|)
-operator|+
-literal|" nullstring="
-operator|+
-name|serdeParams
-operator|.
-name|getNullString
-argument_list|()
-operator|+
-literal|" lastColumnTakesRest="
-operator|+
-name|serdeParams
-operator|.
-name|isLastColumnTakesRest
-argument_list|()
-operator|+
-literal|" timestampFormats="
-operator|+
-name|serdeParams
-operator|.
-name|getTimestampFormats
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|serializedSize

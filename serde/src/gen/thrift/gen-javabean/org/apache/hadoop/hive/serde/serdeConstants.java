@@ -367,6 +367,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SERIALIZATION_ESCAPE_CRLF
+init|=
+literal|"serialization.escape.crlf"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 init|=
 literal|"serialization.last.column.takes.rest"
