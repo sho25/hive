@@ -1019,7 +1019,7 @@ name|buffer
 operator|.
 name|append
 argument_list|(
-literal|'\n'
+literal|", "
 argument_list|)
 expr_stmt|;
 block|}
