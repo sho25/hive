@@ -4524,6 +4524,10 @@ name|GenericUDFCoalesce
 operator|||
 name|udf
 operator|instanceof
+name|GenericUDFNvl
+operator|||
+name|udf
+operator|instanceof
 name|GenericUDFElt
 condition|)
 block|{
@@ -7786,9 +7790,14 @@ condition|(
 name|udf
 operator|instanceof
 name|GenericUDFCoalesce
+operator|||
+name|udf
+operator|instanceof
+name|GenericUDFNvl
 condition|)
 block|{
 comment|// Coalesce is a special case because it can take variable number of arguments.
+comment|// Nvl is a specialization of the Coalesce.
 return|return
 name|getCoalesceExpression
 argument_list|(
@@ -7806,7 +7815,7 @@ operator|instanceof
 name|GenericUDFElt
 condition|)
 block|{
-comment|// Coalesce is a special case because it can take variable number of arguments.
+comment|// Elt is a special case because it can take variable number of arguments.
 return|return
 name|getEltExpression
 argument_list|(
