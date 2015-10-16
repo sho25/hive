@@ -1728,9 +1728,7 @@ argument_list|)
 expr_stmt|;
 name|nextHeaderIx
 operator|=
-name|data
-operator|.
-name|getInt
+name|getNextFreeListItem
 argument_list|(
 name|offsetFromHeaderIndex
 argument_list|(
