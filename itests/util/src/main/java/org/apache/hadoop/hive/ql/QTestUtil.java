@@ -2284,7 +2284,13 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Plug verifying metastore in for testing.
+if|if
+condition|(
+operator|!
+name|useHBaseMetastore
+condition|)
+block|{
+comment|// Plug verifying metastore in for testing DirectSQL.
 name|conf
 operator|.
 name|setVar
@@ -2298,6 +2304,7 @@ argument_list|,
 literal|"org.apache.hadoop.hive.metastore.VerifyingObjectStore"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|mr
@@ -2885,6 +2892,8 @@ name|startMiniHBaseCluster
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
 name|conf
 operator|=
 operator|new
@@ -2895,6 +2904,7 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|hadoopVer

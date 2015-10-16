@@ -1704,7 +1704,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// we need plugins to handle llap and uber mode
 name|servicePluginsDescriptor
 operator|=
 name|ServicePluginsDescriptor
