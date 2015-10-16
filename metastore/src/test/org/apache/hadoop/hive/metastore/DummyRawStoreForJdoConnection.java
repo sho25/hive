@@ -3258,6 +3258,46 @@ argument_list|>
 name|metadata
 parameter_list|)
 block|{   }
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isFileMetadataSupported
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|getFileMetadataByExpr
+parameter_list|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|fileIds
+parameter_list|,
+name|byte
+index|[]
+name|expr
+parameter_list|,
+name|ByteBuffer
+index|[]
+name|metadatas
+parameter_list|,
+name|ByteBuffer
+index|[]
+name|stripeBitsets
+parameter_list|,
+name|boolean
+index|[]
+name|eliminated
+parameter_list|)
+block|{   }
 block|}
 end_class
 

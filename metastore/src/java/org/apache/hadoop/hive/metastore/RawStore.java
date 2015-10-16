@@ -2618,6 +2618,7 @@ name|void
 name|flushCache
 parameter_list|()
 function_decl|;
+comment|/**    * @param fileIds List of file IDs from the filesystem.    * @return File metadata buffers from file metadata cache. The array is fileIds-sized, and    *         the entries (or nulls, if metadata is not in cache) correspond to fileIds in the list    */
 name|ByteBuffer
 index|[]
 name|getFileMetadata
@@ -2631,6 +2632,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * @param fileIds List of file IDs from the filesystem.    * @param metadata Metadata buffers corresponding to fileIds in the list.    */
 name|void
 name|putFileMetadata
 parameter_list|(
@@ -2645,6 +2647,40 @@ argument_list|<
 name|ByteBuffer
 argument_list|>
 name|metadata
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**    * @return Whether file metadata cache is supported by this implementation.    */
+name|boolean
+name|isFileMetadataSupported
+parameter_list|()
+function_decl|;
+comment|/**    * Gets file metadata from cache after applying a format-specific expression that can    * produce additional information based on file metadata and also filter the file list.    * @param fileIds List of file IDs from the filesystem.    * @param expr Format-specific serialized expression applicable to the files' metadatas.    * @param metadatas Output parameter; fileIds-sized array to receive the metadatas    *                  for corresponding files, if any.    * @param exprResults Output parameter; fileIds-sized array to receive the format-specific    *                    expression results for the corresponding files.    * @param eliminated Output parameter; fileIds-sized array to receive the indication of whether    *                   the corresponding files are entirely eliminated by the expression.    */
+name|void
+name|getFileMetadataByExpr
+parameter_list|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|fileIds
+parameter_list|,
+name|byte
+index|[]
+name|expr
+parameter_list|,
+name|ByteBuffer
+index|[]
+name|metadatas
+parameter_list|,
+name|ByteBuffer
+index|[]
+name|exprResults
+parameter_list|,
+name|boolean
+index|[]
+name|eliminated
 parameter_list|)
 throws|throws
 name|MetaException

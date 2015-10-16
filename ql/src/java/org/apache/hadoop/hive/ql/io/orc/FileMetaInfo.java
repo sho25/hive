@@ -68,6 +68,7 @@ comment|/**  * FileMetaInfo - represents file metadata stored in footer and post
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|FileMetaInfo
 block|{
@@ -213,6 +214,17 @@ name|footerMetaAndPsBuffer
 operator|=
 name|fullFooterBuffer
 expr_stmt|;
+block|}
+specifier|public
+name|OrcFile
+operator|.
+name|WriterVersion
+name|getWriterVersion
+parameter_list|()
+block|{
+return|return
+name|writerVersion
+return|;
 block|}
 block|}
 end_class
