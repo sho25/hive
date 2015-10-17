@@ -11349,11 +11349,36 @@ name|colNames
 operator|.
 name|isEmpty
 argument_list|()
+operator|||
+name|partNames
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Columns is empty or partNames is empty : Short-circuiting stats eval on client side."
+argument_list|)
+expr_stmt|;
 return|return
-literal|null
+operator|new
+name|AggrStats
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|()
+argument_list|,
+literal|0
+argument_list|)
 return|;
-comment|// Nothing to aggregate.
+comment|// Nothing to aggregate
+block|}
 name|PartitionsStatsRequest
 name|req
 init|=
