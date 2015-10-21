@@ -1125,6 +1125,11 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+name|condMap
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 comment|/**    * The map contains an index from the (operator, columnInfo) to the    * dependency vector for that tuple. This is used to generate the    * dependency vectors during the walk of the operator tree.    */
