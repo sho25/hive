@@ -1487,15 +1487,12 @@ name|hconn
 argument_list|)
 expr_stmt|;
 name|HBaseReadWrite
-name|hbase
-init|=
-name|HBaseReadWrite
 operator|.
-name|getInstance
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|HBaseStore
 name|store
 init|=
