@@ -95,40 +95,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|parse
@@ -1007,15 +973,6 @@ argument_list|(
 literal|10111
 argument_list|,
 literal|"Partition value contains a reserved substring"
-argument_list|)
-block|,
-name|HOLD_DDLTIME_ON_NONEXIST_PARTITIONS
-argument_list|(
-literal|10112
-argument_list|,
-literal|"HOLD_DDLTIME hint cannot be applied to dynamic "
-operator|+
-literal|"partitions or non-existent partitions"
 argument_list|)
 block|,
 name|OFFLINE_TABLE_OR_PARTITION

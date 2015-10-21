@@ -1515,16 +1515,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -7015,9 +7005,6 @@ name|boolean
 name|replace
 parameter_list|,
 name|boolean
-name|holdDDLTime
-parameter_list|,
-name|boolean
 name|inheritTableSpecs
 parameter_list|,
 name|boolean
@@ -7050,8 +7037,6 @@ name|partSpec
 argument_list|,
 name|replace
 argument_list|,
-name|holdDDLTime
-argument_list|,
 name|inheritTableSpecs
 argument_list|,
 name|isSkewedStoreAsSubdir
@@ -7062,7 +7047,7 @@ name|isAcid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param holdDDLTime if true, force [re]create the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -7083,9 +7068,6 @@ name|partSpec
 parameter_list|,
 name|boolean
 name|replace
-parameter_list|,
-name|boolean
-name|holdDDLTime
 parameter_list|,
 name|boolean
 name|inheritTableSpecs
@@ -7344,18 +7326,6 @@ name|newFiles
 argument_list|)
 expr_stmt|;
 block|}
-name|boolean
-name|forceCreate
-init|=
-operator|(
-operator|!
-name|holdDDLTime
-operator|)
-condition|?
-literal|true
-else|:
-literal|false
-decl_stmt|;
 name|newTPart
 operator|=
 name|getPartition
@@ -7364,7 +7334,7 @@ name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
-name|forceCreate
+literal|true
 argument_list|,
 name|newPartPath
 operator|.
@@ -7377,12 +7347,6 @@ name|newFiles
 argument_list|)
 expr_stmt|;
 comment|// recreate the partition if it existed before
-if|if
-condition|(
-operator|!
-name|holdDDLTime
-condition|)
-block|{
 if|if
 condition|(
 name|isSkewedStoreAsSubdir
@@ -7506,7 +7470,6 @@ argument_list|,
 name|newCreatedTpart
 argument_list|)
 return|;
-block|}
 block|}
 block|}
 catch|catch
@@ -8000,7 +7963,7 @@ return|return
 name|skewedColValueLocationMaps
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param holdDDLTime    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
 specifier|public
 name|Map
 argument_list|<
@@ -8034,9 +7997,6 @@ name|replace
 parameter_list|,
 name|int
 name|numDP
-parameter_list|,
-name|boolean
-name|holdDDLTime
 parameter_list|,
 name|boolean
 name|listBucketingEnabled
@@ -8449,8 +8409,6 @@ name|fullPartSpec
 argument_list|,
 name|replace
 argument_list|,
-name|holdDDLTime
-argument_list|,
 literal|true
 argument_list|,
 name|listBucketingEnabled
@@ -8610,7 +8568,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param holdDDLTime    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param isAcid true if this is an ACID based write    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param isAcid true if this is an ACID based write    */
 specifier|public
 name|void
 name|loadTable
@@ -8623,9 +8581,6 @@ name|tableName
 parameter_list|,
 name|boolean
 name|replace
-parameter_list|,
-name|boolean
-name|holdDDLTime
 parameter_list|,
 name|boolean
 name|isSrcLocal
@@ -8841,12 +8796,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-operator|!
-name|holdDDLTime
-condition|)
-block|{
 try|try
 block|{
 name|alterTable
@@ -8870,7 +8819,6 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
-block|}
 block|}
 name|fireInsertEvent
 argument_list|(
@@ -15731,22 +15679,6 @@ operator|.
 name|getFileSystem
 argument_list|(
 name|conf
-argument_list|)
-decl_stmt|;
-name|boolean
-name|inheritPerms
-init|=
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|)
 decl_stmt|;
 comment|// check if srcf contains nested sub-directories

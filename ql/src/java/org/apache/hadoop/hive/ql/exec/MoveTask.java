@@ -2281,11 +2281,6 @@ operator|.
 name|getReplace
 argument_list|()
 argument_list|,
-name|tbd
-operator|.
-name|getHoldDDLTime
-argument_list|()
-argument_list|,
 name|work
 operator|.
 name|isSrcLocal
@@ -2759,11 +2754,6 @@ operator|.
 name|getNumDPCols
 argument_list|()
 argument_list|,
-name|tbd
-operator|.
-name|getHoldDDLTime
-argument_list|()
-argument_list|,
 name|isSkewedStoredAsDirs
 argument_list|(
 name|tbd
@@ -3173,11 +3163,6 @@ argument_list|,
 name|tbd
 operator|.
 name|getReplace
-argument_list|()
-argument_list|,
-name|tbd
-operator|.
-name|getHoldDDLTime
 argument_list|()
 argument_list|,
 name|tbd
