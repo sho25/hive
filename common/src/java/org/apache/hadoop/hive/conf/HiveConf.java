@@ -12511,7 +12511,7 @@ name|this
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|Properties
 name|getProperties
