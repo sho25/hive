@@ -3443,6 +3443,64 @@ name|argList
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testEmbeddedBeelineOutputs
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|embeddedJdbcURL
+init|=
+name|BeeLine
+operator|.
+name|BEELINE_DEFAULT_JDBC_URL
+operator|+
+literal|"/Default"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|argList
+init|=
+name|getBaseArgs
+argument_list|(
+name|embeddedJdbcURL
+argument_list|)
+decl_stmt|;
+comment|// Set to non-zk lock manager to avoid trying to connect to zookeeper
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"set hive.lock.manager=org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager;\n"
+operator|+
+literal|"create table if not exists embeddedBeelineOutputs(d int);\n"
+operator|+
+literal|"set a=1;\nselect count(*) from embeddedBeelineOutputs;\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"Stage-1 map ="
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|,
+name|argList
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
