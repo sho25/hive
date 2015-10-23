@@ -9231,7 +9231,9 @@ literal|"hive.llap.io.lrfu.lambda"
 argument_list|,
 literal|0.01f
 argument_list|,
-literal|"Lambda for ORC low-level cache LRFU cache policy."
+literal|"Lambda for ORC low-level cache LRFU cache policy. Must be in [0, 1]. 0 makes LRFU\n"
+operator|+
+literal|"behave like LFU, 1 makes it behave like LRU, values in between balance accordingly."
 argument_list|)
 block|,
 name|LLAP_ORC_ENABLE_TIME_COUNTERS

@@ -1038,7 +1038,8 @@ block|}
 else|else
 block|{
 comment|// Splice the section that we have evicted out of the list.
-name|removeFromListUnderLock
+comment|// We have already updated the state above so no need to do that again.
+name|removeFromListUnderLockNoStateUpdate
 argument_list|(
 name|nextCandidate
 operator|.
@@ -1724,14 +1725,6 @@ argument_list|(
 name|buffer
 argument_list|)
 expr_stmt|;
-name|buffer
-operator|.
-name|indexInHeap
-operator|=
-name|LlapCacheableBuffer
-operator|.
-name|NOT_IN_CACHE
-expr_stmt|;
 block|}
 finally|finally
 block|{
@@ -1804,10 +1797,18 @@ operator|.
 name|next
 expr_stmt|;
 block|}
+name|buffer
+operator|.
+name|indexInHeap
+operator|=
+name|LlapCacheableBuffer
+operator|.
+name|NOT_IN_CACHE
+expr_stmt|;
 block|}
 specifier|private
 name|void
-name|removeFromListUnderLock
+name|removeFromListUnderLockNoStateUpdate
 parameter_list|(
 name|LlapCacheableBuffer
 name|from
