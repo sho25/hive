@@ -32,6 +32,7 @@ name|MetricsConstant
 block|{
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JVM_PAUSE_INFO
 init|=
@@ -39,6 +40,7 @@ literal|"jvm.pause.info-threshold"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JVM_PAUSE_WARN
 init|=
@@ -46,6 +48,7 @@ literal|"jvm.pause.warn-threshold"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JVM_EXTRA_SLEEP
 init|=
@@ -53,6 +56,7 @@ literal|"jvm.pause.extraSleepTime"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|OPEN_CONNECTIONS
 init|=
@@ -60,6 +64,7 @@ literal|"open_connections"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|OPEN_OPERATIONS
 init|=
@@ -67,6 +72,7 @@ literal|"open_operations"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JDO_ACTIVE_TRANSACTIONS
 init|=
@@ -74,6 +80,7 @@ literal|"active_jdo_transactions"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JDO_ROLLBACK_TRANSACTIONS
 init|=
@@ -81,6 +88,7 @@ literal|"rollbacked_jdo_transactions"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JDO_COMMIT_TRANSACTIONS
 init|=
@@ -88,6 +96,7 @@ literal|"committed_jdo_transactions"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|JDO_OPEN_TRANSACTIONS
 init|=
@@ -95,6 +104,7 @@ literal|"opened_jdo_transactions"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|METASTORE_HIVE_LOCKS
 init|=
@@ -102,6 +112,7 @@ literal|"metastore_hive_locks"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|ZOOKEEPER_HIVE_SHAREDLOCKS
 init|=
@@ -109,6 +120,7 @@ literal|"zookeeper_hive_sharedlocks"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|ZOOKEEPER_HIVE_EXCLUSIVELOCKS
 init|=
@@ -116,6 +128,7 @@ literal|"zookeeper_hive_exclusivelocks"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|ZOOKEEPER_HIVE_SEMISHAREDLOCKS
 init|=
