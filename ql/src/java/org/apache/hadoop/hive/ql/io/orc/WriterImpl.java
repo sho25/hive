@@ -1556,12 +1556,7 @@ name|bufferSize
 operator|=
 name|getEstimatedBufferSize
 argument_list|(
-name|getMemoryAvailableForORC
-argument_list|()
-argument_list|,
-name|codec
-operator|!=
-literal|null
+name|defaultStripeSize
 argument_list|,
 name|numColumns
 argument_list|,
@@ -1663,76 +1658,26 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|int
 name|getEstimatedBufferSize
 parameter_list|(
 name|long
-name|availableMem
-parameter_list|,
-name|boolean
-name|isCompressed
+name|stripeSize
 parameter_list|,
 name|int
-name|columnCount
+name|numColumns
 parameter_list|,
 name|int
 name|bs
 parameter_list|)
 block|{
-if|if
-condition|(
-name|columnCount
-operator|>
-name|COLUMN_COUNT_THRESHOLD
-condition|)
-block|{
-comment|// In BufferedStream, there are 3 outstream buffers (compressed,
-comment|// uncompressed and overflow) and list of previously compressed buffers.
-comment|// Since overflow buffer is rarely used, lets consider only 2 allocation.
-comment|// Also, initially, the list of compression buffers will be empty.
-specifier|final
-name|int
-name|outStreamBuffers
-init|=
-name|isCompressed
-condition|?
-literal|2
-else|:
-literal|1
-decl_stmt|;
-comment|// max possible streams per column is 5. For string columns, there is
-comment|// ROW_INDEX, PRESENT, DATA, LENGTH, DICTIONARY_DATA streams.
-specifier|final
-name|int
-name|maxStreams
-init|=
-literal|5
-decl_stmt|;
-comment|// Lets assume 10% memory for holding dictionary in memory and other
-comment|// object allocations
-specifier|final
-name|long
-name|miscAllocation
-init|=
-call|(
-name|long
-call|)
-argument_list|(
-literal|0.1f
-operator|*
-name|availableMem
-argument_list|)
-decl_stmt|;
-comment|// compute the available memory
-specifier|final
-name|long
-name|remainingMem
-init|=
-name|availableMem
-operator|-
-name|miscAllocation
-decl_stmt|;
+comment|// The worst case is that there are 2 big streams per a column and
+comment|// we want to guarantee that each stream gets ~10 buffers.
+comment|// This keeps buffers small enough that we don't get really small stripe
+comment|// sizes.
 name|int
 name|estBufferSize
 init|=
@@ -1740,14 +1685,12 @@ call|(
 name|int
 call|)
 argument_list|(
-name|remainingMem
+name|stripeSize
 operator|/
 operator|(
-name|maxStreams
+literal|20
 operator|*
-name|outStreamBuffers
-operator|*
-name|columnCount
+name|numColumns
 operator|)
 argument_list|)
 decl_stmt|;
@@ -1770,25 +1713,24 @@ operator|=
 name|bs
 expr_stmt|;
 block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
 literal|"WIDE TABLE - Number of columns: "
 operator|+
-name|columnCount
+name|numColumns
 operator|+
 literal|" Chosen compression buffer size: "
 operator|+
 name|estBufferSize
 argument_list|)
 expr_stmt|;
-return|return
-name|estBufferSize
-return|;
 block|}
 return|return
-name|bs
+name|estBufferSize
 return|;
 block|}
 specifier|private
@@ -1953,50 +1895,6 @@ return|return
 name|kb256
 return|;
 block|}
-block|}
-comment|// the assumption is only one ORC writer open at a time, which holds true for
-comment|// most of the cases. HIVE-6455 forces single writer case.
-specifier|private
-name|long
-name|getMemoryAvailableForORC
-parameter_list|()
-block|{
-name|double
-name|maxLoad
-init|=
-name|OrcConf
-operator|.
-name|MEMORY_POOL
-operator|.
-name|getDouble
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|long
-name|totalMemoryPool
-init|=
-name|Math
-operator|.
-name|round
-argument_list|(
-name|ManagementFactory
-operator|.
-name|getMemoryMXBean
-argument_list|()
-operator|.
-name|getHeapMemoryUsage
-argument_list|()
-operator|.
-name|getMax
-argument_list|()
-operator|*
-name|maxLoad
-argument_list|)
-decl_stmt|;
-return|return
-name|totalMemoryPool
-return|;
 block|}
 specifier|public
 specifier|static
