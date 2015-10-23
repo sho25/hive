@@ -10473,6 +10473,7 @@ name|result
 return|;
 block|}
 comment|/**    * @param fileIds file ID list.    * @return Serialized file metadata.    */
+specifier|public
 name|void
 name|getFileMetadata
 parameter_list|(
