@@ -144,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test cases focusing on drop table permission checks  */
+comment|/**  * Test cases focusing on read table permission checks  */
 end_comment
 
 begin_class
@@ -166,6 +166,23 @@ block|{
 name|readTableByOtherUser
 argument_list|(
 literal|"-rwxrwxrwx"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testReadTableSuccessWithReadOnly
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|readTableByOtherUser
+argument_list|(
+literal|"-r--r--r--"
 argument_list|,
 literal|true
 argument_list|)

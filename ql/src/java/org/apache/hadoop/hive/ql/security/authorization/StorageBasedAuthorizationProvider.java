@@ -1057,6 +1057,19 @@ literal|null
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+name|requireCreatePrivilege
+argument_list|(
+name|readRequiredPriv
+argument_list|)
+operator|||
+name|requireCreatePrivilege
+argument_list|(
+name|writeRequiredPriv
+argument_list|)
+condition|)
+block|{
 comment|// this should be the case only if this is a create partition.
 comment|// The privilege needed on the table should be ALTER_DATA, and not CREATE
 name|authorize
@@ -1078,6 +1091,19 @@ name|ALTER_DATA
 block|}
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|authorize
+argument_list|(
+name|table
+argument_list|,
+name|readRequiredPriv
+argument_list|,
+name|writeRequiredPriv
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
