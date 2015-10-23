@@ -564,13 +564,13 @@ operator|.
 name|getRuntime
 argument_list|()
 operator|.
-name|maxMemory
+name|freeMemory
 argument_list|()
 argument_list|)
 operator|-
 name|topN
 operator|*
-literal|64
+literal|64L
 expr_stmt|;
 if|if
 condition|(
