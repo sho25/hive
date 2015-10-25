@@ -6534,6 +6534,17 @@ operator|+
 literal|"a major compaction. (1.0 = 100%, so the default 0.1 = 10%.)"
 argument_list|)
 block|,
+name|COMPACTOR_MAX_NUM_DELTA
+argument_list|(
+literal|"hive.compactor.max.num.delta"
+argument_list|,
+literal|500
+argument_list|,
+literal|"Maximum number of delta files that "
+operator|+
+literal|"the compactor will attempt to handle in a single job."
+argument_list|)
+block|,
 name|HIVE_COMPACTOR_ABORTEDTXN_THRESHOLD
 argument_list|(
 literal|"hive.compactor.abortedtxn.threshold"

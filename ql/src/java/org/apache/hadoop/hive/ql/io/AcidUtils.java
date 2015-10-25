@@ -705,6 +705,28 @@ name|statementId
 argument_list|)
 return|;
 block|}
+specifier|public
+specifier|static
+name|String
+name|baseDir
+parameter_list|(
+name|long
+name|txnId
+parameter_list|)
+block|{
+return|return
+name|BASE_PREFIX
+operator|+
+name|String
+operator|.
+name|format
+argument_list|(
+name|DELTA_DIGITS
+argument_list|,
+name|txnId
+argument_list|)
+return|;
+block|}
 comment|/**    * Create a filename for a bucket file.    * @param directory the partition directory    * @param options the options for writing the bucket    * @return the filename that should store the bucket    */
 specifier|public
 specifier|static
@@ -1121,7 +1143,7 @@ name|Path
 name|getBaseDirectory
 parameter_list|()
 function_decl|;
-comment|/**      * Get the list of original files.      * @return the list of original files (eg. 000000_0)      */
+comment|/**      * Get the list of original files.  Not {@code null}.      * @return the list of original files (eg. 000000_0)      */
 name|List
 argument_list|<
 name|HdfsFileStatusWithId
@@ -1129,7 +1151,7 @@ argument_list|>
 name|getOriginalFiles
 parameter_list|()
 function_decl|;
-comment|/**      * Get the list of base and delta directories that are valid and not      * obsolete.      * @return the minimal list of current directories      */
+comment|/**      * Get the list of base and delta directories that are valid and not      * obsolete.  Not {@code null}.  List must be sorted in a specific way.      * See {@link org.apache.hadoop.hive.ql.io.AcidUtils.ParsedDelta#compareTo(org.apache.hadoop.hive.ql.io.AcidUtils.ParsedDelta)}      * for details.      * @return the minimal list of current directories      */
 name|List
 argument_list|<
 name|ParsedDelta
@@ -1137,7 +1159,7 @@ argument_list|>
 name|getCurrentDirectories
 parameter_list|()
 function_decl|;
-comment|/**      * Get the list of obsolete directories. After filtering out bases and      * deltas that are not selected by the valid transaction list, return the      * list of original files, bases, and deltas that have been replaced by      * more up to date ones.      */
+comment|/**      * Get the list of obsolete directories. After filtering out bases and      * deltas that are not selected by the valid transaction list, return the      * list of original files, bases, and deltas that have been replaced by      * more up to date ones.  Not {@code null}.      */
 name|List
 argument_list|<
 name|FileStatus
@@ -1290,7 +1312,7 @@ else|:
 name|statementId
 return|;
 block|}
-comment|/**      * Compactions (Major/Minor) merge deltas/bases but delete of old files      * happens in a different process; thus it's possible to have bases/deltas with      * overlapping txnId boundaries.  The sort order helps figure out the "best" set of files      * to use to get data.      */
+comment|/**      * Compactions (Major/Minor) merge deltas/bases but delete of old files      * happens in a different process; thus it's possible to have bases/deltas with      * overlapping txnId boundaries.  The sort order helps figure out the "best" set of files      * to use to get data.      * This sorts "wider" delta before "narrower" i.e. delta_5_20 sorts before delta_5_10 (and delta_11_20)      */
 annotation|@
 name|Override
 specifier|public
@@ -2415,6 +2437,9 @@ argument_list|(
 name|working
 argument_list|)
 expr_stmt|;
+comment|//so now, 'working' should be sorted like delta_5_20 delta_5_10 delta_11_20 delta_51_60 for example
+comment|//and we want to end up with the best set containing all relevant data: delta_5_20 delta_51_60,
+comment|//subject to list of 'exceptions' in 'txnList' (not show in above example).
 name|long
 name|current
 init|=

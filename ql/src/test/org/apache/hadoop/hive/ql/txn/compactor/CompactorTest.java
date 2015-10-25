@@ -3384,6 +3384,23 @@ name|long
 name|maxTxnId
 parameter_list|)
 block|{
+if|if
+condition|(
+name|minTxnId
+operator|!=
+name|maxTxnId
+condition|)
+block|{
+comment|//covers both streaming api and post compaction style.
+return|return
+name|makeDeltaDirNameCompacted
+argument_list|(
+name|minTxnId
+argument_list|,
+name|maxTxnId
+argument_list|)
+return|;
+block|}
 return|return
 name|useHive130DeltaDirName
 argument_list|()

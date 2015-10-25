@@ -506,6 +506,7 @@ comment|// Make sure nothing escapes this run method and kills the metastore at 
 comment|// so wrap it in a big catch Throwable statement.
 try|try
 block|{
+specifier|final
 name|CompactionInfo
 name|ci
 init|=
@@ -945,7 +946,7 @@ name|sd
 argument_list|,
 name|txns
 argument_list|,
-name|isMajor
+name|ci
 argument_list|,
 name|su
 argument_list|)
@@ -1008,7 +1009,7 @@ name|sd
 argument_list|,
 name|txns
 argument_list|,
-name|isMajor
+name|ci
 argument_list|,
 name|su
 argument_list|)
