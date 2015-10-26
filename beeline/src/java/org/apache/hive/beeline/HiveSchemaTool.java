@@ -798,7 +798,7 @@ operator|+
 name|dbVersion
 argument_list|)
 expr_stmt|;
-name|assertSameVersion
+name|assertCompatibleVersion
 argument_list|(
 name|hiveVersion
 argument_list|,
@@ -1017,7 +1017,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// verify that the new version is added to schema
-name|assertSameVersion
+name|assertCompatibleVersion
 argument_list|(
 name|MetaStoreSchemaInfo
 operator|.
@@ -1030,7 +1030,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|assertSameVersion
+name|assertCompatibleVersion
 parameter_list|(
 name|String
 name|hiveSchemaVersion
@@ -1044,10 +1044,12 @@ block|{
 if|if
 condition|(
 operator|!
-name|hiveSchemaVersion
+name|MetaStoreSchemaInfo
 operator|.
-name|equalsIgnoreCase
+name|isVersionCompatible
 argument_list|(
+name|hiveSchemaVersion
+argument_list|,
 name|dbSchemaVersion
 argument_list|)
 condition|)
@@ -1056,11 +1058,11 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Expected schema version "
+literal|"Metastore schema version is not compatible. Hive Version: "
 operator|+
 name|hiveSchemaVersion
 operator|+
-literal|", found version "
+literal|", Database Schema Version: "
 operator|+
 name|dbSchemaVersion
 argument_list|)
