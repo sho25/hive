@@ -1071,6 +1071,15 @@ name|connection
 return|;
 block|}
 specifier|public
+name|Connection
+name|getCurrentConnection
+parameter_list|()
+block|{
+return|return
+name|connection
+return|;
+block|}
+specifier|public
 name|void
 name|reconnect
 parameter_list|()

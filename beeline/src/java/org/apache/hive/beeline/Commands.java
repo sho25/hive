@@ -6368,7 +6368,7 @@ operator|.
 name|getDatabaseConnection
 argument_list|()
 operator|.
-name|getConnection
+name|getCurrentConnection
 argument_list|()
 operator|!=
 literal|null
@@ -6380,7 +6380,7 @@ operator|.
 name|getDatabaseConnection
 argument_list|()
 operator|.
-name|getConnection
+name|getCurrentConnection
 argument_list|()
 operator|.
 name|isClosed
@@ -6423,7 +6423,7 @@ operator|.
 name|getDatabaseConnection
 argument_list|()
 operator|.
-name|getConnection
+name|getCurrentConnection
 argument_list|()
 operator|.
 name|close
