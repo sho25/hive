@@ -1614,9 +1614,9 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Utilities
+name|conf
 operator|.
-name|stripHivePasswordDetails
+name|stripHiddenConfigurations
 argument_list|(
 name|tezConfig
 argument_list|)

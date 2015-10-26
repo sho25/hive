@@ -1538,9 +1538,9 @@ name|addedArchives
 argument_list|)
 expr_stmt|;
 block|}
-name|Utilities
+name|conf
 operator|.
-name|stripHivePasswordDetails
+name|stripHiddenConfigurations
 argument_list|(
 name|job
 argument_list|)

@@ -6601,9 +6601,9 @@ argument_list|(
 literal|"mapreduce.job.credentials.binary"
 argument_list|)
 expr_stmt|;
-name|Utilities
+name|hiveConf
 operator|.
-name|stripHivePasswordDetails
+name|stripHiddenConfigurations
 argument_list|(
 name|conf
 argument_list|)
