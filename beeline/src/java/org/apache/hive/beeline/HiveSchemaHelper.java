@@ -447,6 +447,9 @@ throw|;
 block|}
 return|return
 name|confVarStr
+operator|.
+name|trim
+argument_list|()
 return|;
 block|}
 specifier|public
