@@ -195,6 +195,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|FileMetadataExprType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Function
 import|;
 end_import
@@ -2656,7 +2674,7 @@ name|boolean
 name|isFileMetadataSupported
 parameter_list|()
 function_decl|;
-comment|/**    * Gets file metadata from cache after applying a format-specific expression that can    * produce additional information based on file metadata and also filter the file list.    * @param fileIds List of file IDs from the filesystem.    * @param expr Format-specific serialized expression applicable to the files' metadatas.    * @param metadatas Output parameter; fileIds-sized array to receive the metadatas    *                  for corresponding files, if any.    * @param exprResults Output parameter; fileIds-sized array to receive the format-specific    *                    expression results for the corresponding files.    * @param eliminated Output parameter; fileIds-sized array to receive the indication of whether    *                   the corresponding files are entirely eliminated by the expression.    */
+comment|/**    * Gets file metadata from cache after applying a format-specific expression that can    * produce additional information based on file metadata and also filter the file list.    * @param fileIds List of file IDs from the filesystem.    * @param expr Format-specific serialized expression applicable to the files' metadatas.    * @param type Expression type; used to determine the class that handles the metadata.    * @param metadatas Output parameter; fileIds-sized array to receive the metadatas    *                  for corresponding files, if any.    * @param exprResults Output parameter; fileIds-sized array to receive the format-specific    *                    expression results for the corresponding files.    * @param eliminated Output parameter; fileIds-sized array to receive the indication of whether    *                   the corresponding files are entirely eliminated by the expression.    */
 name|void
 name|getFileMetadataByExpr
 parameter_list|(
@@ -2665,6 +2683,9 @@ argument_list|<
 name|Long
 argument_list|>
 name|fileIds
+parameter_list|,
+name|FileMetadataExprType
+name|type
 parameter_list|,
 name|byte
 index|[]
