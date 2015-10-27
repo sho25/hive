@@ -938,6 +938,12 @@ operator|.
 name|getOperationName
 argument_list|()
 argument_list|)
+operator|&&
+operator|!
+name|plan
+operator|.
+name|isExplain
+argument_list|()
 condition|)
 block|{
 try|try
