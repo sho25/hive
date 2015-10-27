@@ -1044,6 +1044,10 @@ name|InterruptedException
 name|e
 parameter_list|)
 block|{
+name|closeTable
+argument_list|()
+expr_stmt|;
+comment|// Free up the HTable connections
 throw|throw
 operator|new
 name|IOException
@@ -2714,6 +2718,8 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|hbaseColumnsMapping
@@ -3043,6 +3049,13 @@ block|}
 return|return
 name|results
 return|;
+block|}
+finally|finally
+block|{
+name|closeTable
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
