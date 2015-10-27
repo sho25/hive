@@ -12482,17 +12482,6 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
-comment|// Set that variable to automatically collect stats during the MapReduce job
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|setIsInsertToTable
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 comment|// Add the table spec for the destination table.
 name|qb
 operator|.
@@ -12757,17 +12746,6 @@ operator|.
 name|ast
 argument_list|)
 decl_stmt|;
-comment|// Set that variable to automatically collect stats during the MapReduce job
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|setIsInsertToTable
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 comment|// Add the table spec for the destination table.
 name|qb
 operator|.
@@ -37726,14 +37704,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|isInsertToTable
-argument_list|()
-expr_stmt|;
 try|try
 block|{
 name|FileSystem
@@ -72639,19 +72609,6 @@ name|getTableDesc
 argument_list|()
 operator|!=
 literal|null
-argument_list|)
-expr_stmt|;
-name|queryProperties
-operator|.
-name|setInsertToTable
-argument_list|(
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|isInsertToTable
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|queryProperties

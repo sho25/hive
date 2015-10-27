@@ -8981,14 +8981,6 @@ name|getTableName
 argument_list|()
 operator|!=
 literal|null
-operator|&&
-name|parseCtx
-operator|.
-name|getQueryProperties
-argument_list|()
-operator|.
-name|isInsertToTable
-argument_list|()
 return|;
 block|}
 comment|/**    * Create a MapredWork based on input path, the top operator and the input    * table descriptor.    *    * @param conf    * @param topOp    *          the table scan operator that is the root of the MapReduce task.    * @param fsDesc    *          the file sink descriptor that serves as the input to this merge task.    * @param parentMR    *          the parent MapReduce work    * @param parentFS    *          the last FileSinkOperator in the parent MapReduce work    * @return the MapredWork    */

@@ -342,11 +342,6 @@ decl_stmt|;
 comment|// used for the analyze command (statistics)
 specifier|private
 name|boolean
-name|isInsertToTable
-decl_stmt|;
-comment|// used for insert overwrite command (statistics)
-specifier|private
-name|boolean
 name|isNoScanAnalyzeCommand
 decl_stmt|;
 comment|// used for the analyze command (statistics) (noscan)
@@ -2449,30 +2444,6 @@ parameter_list|()
 block|{
 return|return
 name|isAnalyzeCommand
-return|;
-block|}
-specifier|public
-name|void
-name|setIsInsertToTable
-parameter_list|(
-name|boolean
-name|isInsertToTable
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isInsertToTable
-operator|=
-name|isInsertToTable
-expr_stmt|;
-block|}
-specifier|public
-name|boolean
-name|isInsertToTable
-parameter_list|()
-block|{
-return|return
-name|isInsertToTable
 return|;
 block|}
 specifier|public
