@@ -2187,6 +2187,15 @@ index|[
 name|taskCount
 index|]
 decl_stmt|;
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|numSplitsForTask
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
 name|Multimap
 argument_list|<
 name|Integer
