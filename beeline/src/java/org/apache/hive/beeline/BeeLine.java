@@ -5925,17 +5925,9 @@ name|startsWith
 argument_list|(
 name|COMMAND_PREFIX
 argument_list|)
-operator|&&
-operator|!
-name|line
-operator|.
-name|contains
-argument_list|(
-literal|";"
-argument_list|)
 condition|)
 block|{
-comment|// handle the case "!cmd" for beeline
+comment|// handle SQLLine command in beeline which starts with ! and does not end with ;
 return|return
 name|execCommandWithPrefix
 argument_list|(
