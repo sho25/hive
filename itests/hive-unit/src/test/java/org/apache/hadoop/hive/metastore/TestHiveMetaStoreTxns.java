@@ -221,6 +221,7 @@ class|class
 name|TestHiveMetaStoreTxns
 block|{
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 init|=

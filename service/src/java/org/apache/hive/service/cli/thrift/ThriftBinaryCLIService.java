@@ -703,7 +703,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Error starting HiveServer2: could not start "
 operator|+

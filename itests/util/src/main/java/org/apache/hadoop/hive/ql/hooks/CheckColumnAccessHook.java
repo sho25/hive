@@ -161,18 +161,6 @@ name|ColumnAccessInfo
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|mortbay
-operator|.
-name|log
-operator|.
-name|Log
-import|;
-end_import
-
 begin_comment
 comment|/*  * This hook is used for verifying the column access information  * that is generated and maintained in the QueryPlan object by the  * ColumnAccessAnalyzer. All the hook does is print out the columns  * accessed from each table as recorded in the ColumnAccessInfo  * in the QueryPlan.  */
 end_comment
@@ -184,6 +172,8 @@ name|CheckColumnAccessHook
 implements|implements
 name|ExecuteWithHookContext
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -192,13 +182,6 @@ name|HookContext
 name|hookContext
 parameter_list|)
 block|{
-name|Log
-operator|.
-name|info
-argument_list|(
-literal|"Running CheckColumnAccessHook"
-argument_list|)
-expr_stmt|;
 name|HiveConf
 name|conf
 init|=

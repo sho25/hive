@@ -73,13 +73,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -87,13 +83,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -487,6 +479,16 @@ name|LoggerConfig
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * OperationManager.  *  */
 end_comment
@@ -500,12 +502,12 @@ name|AbstractService
 block|{
 specifier|private
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|OperationManager
 operator|.
@@ -691,10 +693,13 @@ name|configuration
 operator|.
 name|getLoggerConfig
 argument_list|(
-name|LogManager
+name|LoggerFactory
 operator|.
 name|getLogger
+argument_list|(
+name|getClass
 argument_list|()
+argument_list|)
 operator|.
 name|getName
 argument_list|()

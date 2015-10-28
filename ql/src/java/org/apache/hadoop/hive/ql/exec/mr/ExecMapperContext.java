@@ -37,20 +37,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|fs
@@ -150,16 +136,6 @@ specifier|public
 class|class
 name|ExecMapperContext
 block|{
-specifier|public
-specifier|static
-specifier|final
-name|Log
-name|l4j
-init|=
-name|ExecMapper
-operator|.
-name|l4j
-decl_stmt|;
 comment|// lastInputPath should be changed by the root of the operator tree ExecMapper.map()
 comment|// but kept unchanged throughout the operator tree for one row
 specifier|private

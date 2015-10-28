@@ -157,13 +157,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -171,13 +167,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -565,12 +557,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|LineageLogger
 operator|.
@@ -1280,7 +1272,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-comment|// Log the lineage info
+comment|// Logger the lineage info
 name|String
 name|lineage
 init|=
@@ -1294,7 +1286,7 @@ condition|(
 name|testMode
 condition|)
 block|{
-comment|// Log to console
+comment|// Logger to console
 name|log
 argument_list|(
 name|lineage
@@ -1346,7 +1338,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Log an error to console if available.    */
+comment|/**    * Logger an error to console if available.    */
 specifier|private
 name|void
 name|log

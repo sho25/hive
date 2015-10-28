@@ -239,13 +239,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -253,13 +249,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1127,12 +1119,12 @@ block|}
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|OrcInputFormat
 operator|.
@@ -2946,6 +2938,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ValidTxnList
 name|transactionList
 decl_stmt|;
@@ -5027,6 +5020,7 @@ name|long
 name|projColsUncompressedSize
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|OrcSplit
@@ -6819,6 +6813,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"Split strategy: "
+argument_list|,
 name|splitStrategy
 argument_list|)
 expr_stmt|;
@@ -7190,6 +7186,7 @@ name|FileMetaInfo
 name|fileMetaInfo
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|StripeStatistics
@@ -7197,6 +7194,7 @@ argument_list|>
 name|stripeStats
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|OrcProto
@@ -7206,6 +7204,7 @@ argument_list|>
 name|fileStats
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|OrcProto
@@ -7215,6 +7214,7 @@ argument_list|>
 name|types
 decl_stmt|;
 specifier|private
+specifier|final
 name|OrcFile
 operator|.
 name|WriterVersion
@@ -7650,6 +7650,8 @@ name|OrcStruct
 argument_list|>
 name|inner
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|RecordIdentifier
 name|getRecordIdentifier
@@ -9509,6 +9511,7 @@ implements|implements
 name|FooterCache
 block|{
 specifier|private
+specifier|final
 name|Cache
 argument_list|<
 name|Path

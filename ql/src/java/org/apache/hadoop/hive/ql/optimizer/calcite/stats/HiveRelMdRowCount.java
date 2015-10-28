@@ -403,13 +403,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -417,13 +413,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -459,12 +451,12 @@ block|{
 specifier|protected
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveRelMdRowCount
 operator|.
@@ -564,25 +556,15 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Identified Primary - Foreign Key relation:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Identified Primary - Foreign Key relation: {} {}"
+argument_list|,
 name|RelOptUtil
 operator|.
 name|toString
 argument_list|(
 name|join
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+argument_list|,
 name|pkfk
 argument_list|)
 expr_stmt|;
@@ -604,6 +586,8 @@ name|getRows
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Double
 name|getRowCount
@@ -665,25 +649,15 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Identified Primary - Foreign Key relation:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Identified Primary - Foreign Key relation: {} {}"
+argument_list|,
 name|RelOptUtil
 operator|.
 name|toString
 argument_list|(
 name|rel
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+argument_list|,
 name|pkfk
 argument_list|)
 expr_stmt|;
@@ -785,6 +759,8 @@ operator|=
 name|isPKSideSimple
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -849,6 +825,8 @@ operator|=
 name|distinctCount
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -906,6 +884,8 @@ operator|=
 name|selectivity
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString

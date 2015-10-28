@@ -711,7 +711,7 @@ name|printStackTrace
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Log jobs
+comment|// Logger jobs
 name|PrintWriter
 name|listWriter
 init|=
@@ -861,7 +861,7 @@ argument_list|(
 name|jobDir
 argument_list|)
 expr_stmt|;
-comment|// Log jobconf
+comment|// Logger jobconf
 try|try
 block|{
 name|logJobConf
@@ -1067,7 +1067,7 @@ name|printStackTrace
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Log attempts
+comment|// Logger attempts
 for|for
 control|(
 name|AttemptInfo

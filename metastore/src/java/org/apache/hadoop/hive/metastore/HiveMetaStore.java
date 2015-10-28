@@ -143,13 +143,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -157,13 +153,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1821,12 +1813,12 @@ block|{
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveMetaStore
 operator|.
@@ -2016,7 +2008,7 @@ block|{
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
 name|HiveMetaStore
@@ -2176,12 +2168,12 @@ comment|// command
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|auditLog
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveMetaStore
 operator|.
@@ -3540,9 +3532,11 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Unable to instantiate raw store directly in fastpath mode"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -29290,6 +29284,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Exception caught in mark partition event "
+argument_list|,
 name|original
 argument_list|)
 expr_stmt|;
@@ -29501,6 +29497,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Exception caught for isPartitionMarkedForEvent "
+argument_list|,
 name|original
 argument_list|)
 expr_stmt|;
@@ -34500,22 +34498,22 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
-literal|"Failed to start "
-operator|+
+literal|"Failed to start {}"
+argument_list|,
 name|houseKeeper
 operator|.
 name|getClass
 argument_list|()
 operator|+
-literal|".  The system will not handle "
-operator|+
+literal|".  The system will not handle {} "
+argument_list|,
 name|houseKeeper
 operator|.
 name|getServiceDescription
 argument_list|()
-operator|+
+argument_list|,
 literal|".  Root Cause: "
 argument_list|,
 name|ex

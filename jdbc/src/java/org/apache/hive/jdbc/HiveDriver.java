@@ -269,6 +269,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Checks whether a given url is in a valid format.    *    * The current uri format is: jdbc:hive://[host[:port]]    *    * jdbc:hive:// - run in embedded mode jdbc:hive://localhost - connect to    * localhost default port (10000) jdbc:hive://localhost:5050 - connect to    * localhost port 5050    *    * TODO: - write a better regex. - decide on uri format    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|acceptsURL
@@ -295,6 +297,8 @@ argument_list|)
 return|;
 block|}
 comment|/*    * As per JDBC 3.0 Spec (section 9.2)    * "If the Driver implementation understands the URL, it will return a Connection object;    * otherwise it returns null"    */
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|connect
@@ -512,6 +516,8 @@ name|version
 return|;
 block|}
 comment|/**    * Returns the major version of this driver.    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMajorVersion
@@ -525,6 +531,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * Returns the minor version of this driver.    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getMinorVersion
@@ -553,6 +561,8 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|DriverPropertyInfo
 index|[]
@@ -735,6 +745,8 @@ name|dpi
 return|;
 block|}
 comment|/**    * Returns whether the driver is JDBC compliant.    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|jdbcCompliant

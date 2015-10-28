@@ -324,6 +324,7 @@ name|EvictionAwareAllocator
 name|allocator
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicInteger
 name|newEvictions
 init|=
@@ -369,6 +370,7 @@ name|long
 name|cleanupInterval
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonCacheMetrics
 name|metrics
 decl_stmt|;
@@ -427,30 +429,19 @@ name|long
 name|cleanupInterval
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Low level cache; cleanup interval "
-operator|+
+literal|"Low level cache; cleanup interval {}"
+argument_list|,
 name|cleanupInterval
-operator|+
+argument_list|,
 literal|"sec"
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|cachePolicy
@@ -2213,6 +2204,7 @@ comment|//       In fact, CSLM has slow single-threaded operation, and one file 
 comment|//       by just one (or few) threads, so a much more simple DS with locking might be better.
 comment|//       Let's use CSLM for now, since it's available.
 specifier|private
+specifier|final
 name|ConcurrentSkipListMap
 argument_list|<
 name|Long
@@ -2231,6 +2223,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicInteger
 name|refCount
 init|=

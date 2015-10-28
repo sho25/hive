@@ -9353,7 +9353,7 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Log with int base
+comment|// Logger with int base
 name|gudfBridge
 operator|=
 operator|new
@@ -9448,7 +9448,7 @@ name|getBase
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Log with default base
+comment|// Logger with default base
 name|children2
 operator|.
 name|clear

@@ -275,34 +275,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|fs
@@ -699,6 +671,26 @@ name|TaskSchedulerDescriptor
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * Holds session state related to Tez  */
 end_comment
@@ -711,12 +703,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|TezSessionState
 operator|.
@@ -2410,7 +2402,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Close a tez session. Will cleanup any tez/am related resources. After closing a session no    * further DAGs can be executed against it.    *     * @param keepTmpDir    *          whether or not to remove the scratch dir at the same time.    * @throws Exception    */
+comment|/**    * Close a tez session. Will cleanup any tez/am related resources. After closing a session no    * further DAGs can be executed against it.    *    * @param keepTmpDir    *          whether or not to remove the scratch dir at the same time.    * @throws Exception    */
 specifier|public
 name|void
 name|close

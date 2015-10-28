@@ -203,34 +203,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|curator
 operator|.
 name|framework
@@ -362,6 +334,26 @@ operator|.
 name|common
 operator|.
 name|JvmPauseMonitor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -792,23 +784,23 @@ name|CompositeService
 block|{
 specifier|private
 specifier|static
+name|CountDownLatch
+name|deleteSignal
+decl_stmt|;
+specifier|private
+specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveServer2
 operator|.
 name|class
 argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
-name|CountDownLatch
-name|deleteSignal
 decl_stmt|;
 specifier|private
 name|CLIService
@@ -1470,7 +1462,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Unable to create HiveServer2 namespace: "
 operator|+
@@ -1679,7 +1671,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Unable to create a znode for this server instance"
 argument_list|,
@@ -3267,7 +3259,7 @@ argument_list|,
 name|LOG
 argument_list|)
 expr_stmt|;
-comment|// Log debug message from "oproc" after log4j initialize properly
+comment|// Logger debug message from "oproc" after log4j initialize properly
 name|LOG
 operator|.
 name|debug
@@ -3791,7 +3783,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Error starting HiveServer2"
 argument_list|,
@@ -3857,7 +3849,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Error deregistering HiveServer2 instances for version: "
 operator|+

@@ -2991,13 +2991,9 @@ parameter_list|,
 specifier|final
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 name|LOG
 parameter_list|)
 block|{

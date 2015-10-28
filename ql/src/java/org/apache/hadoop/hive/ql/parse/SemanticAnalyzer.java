@@ -15170,6 +15170,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15666,6 +15669,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15839,6 +15845,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15939,6 +15948,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -16829,6 +16841,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -16929,6 +16944,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -51940,6 +51958,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|JOINNODE_OUTERJOIN_MORETHAN_16
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|continueScanning
@@ -63794,6 +63815,9 @@ argument_list|(
 name|usedp
 operator|.
 name|getTable
+argument_list|()
+operator|.
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;

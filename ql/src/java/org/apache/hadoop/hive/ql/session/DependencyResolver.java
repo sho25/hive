@@ -125,34 +125,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -169,11 +141,11 @@ end_import
 
 begin_import
 import|import
-name|groovy
+name|org
 operator|.
-name|grape
+name|slf4j
 operator|.
-name|Grape
+name|LoggerFactory
 import|;
 end_import
 
@@ -183,7 +155,7 @@ name|groovy
 operator|.
 name|grape
 operator|.
-name|GrapeIvy
+name|Grape
 import|;
 end_import
 
@@ -230,9 +202,9 @@ init|=
 operator|new
 name|LogHelper
 argument_list|(
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 literal|"DependencyResolver"
 argument_list|)

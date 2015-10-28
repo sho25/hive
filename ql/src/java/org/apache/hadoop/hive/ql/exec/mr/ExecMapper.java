@@ -75,13 +75,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -89,13 +85,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -405,14 +397,6 @@ implements|implements
 name|Mapper
 block|{
 specifier|private
-specifier|static
-specifier|final
-name|String
-name|PLAN_KEY
-init|=
-literal|"__MAP_PLAN__"
-decl_stmt|;
-specifier|private
 name|MapOperator
 name|mo
 decl_stmt|;
@@ -437,12 +421,12 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|l4j
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|ExecMapper
 operator|.
@@ -459,12 +443,6 @@ name|MapredLocalWork
 name|localWork
 init|=
 literal|null
-decl_stmt|;
-specifier|private
-name|boolean
-name|isLogInfoEnabled
-init|=
-literal|false
 decl_stmt|;
 specifier|private
 name|ExecMapperContext
@@ -491,13 +469,6 @@ name|job
 argument_list|)
 expr_stmt|;
 comment|// Allocate the bean at the beginning -
-name|isLogInfoEnabled
-operator|=
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
-expr_stmt|;
 try|try
 block|{
 name|l4j
@@ -948,7 +919,7 @@ else|else
 block|{
 name|l4j
 operator|.
-name|fatal
+name|error
 argument_list|(
 name|StringUtils
 operator|.
@@ -1200,11 +1171,6 @@ name|rp
 decl_stmt|;
 specifier|private
 specifier|final
-name|Configuration
-name|conf
-decl_stmt|;
-specifier|private
-specifier|final
 name|String
 name|groupName
 decl_stmt|;
@@ -1223,12 +1189,6 @@ operator|.
 name|rp
 operator|=
 name|rp
-expr_stmt|;
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
 expr_stmt|;
 name|this
 operator|.

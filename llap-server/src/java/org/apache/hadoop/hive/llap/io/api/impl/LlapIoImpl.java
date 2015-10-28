@@ -59,13 +59,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -73,13 +69,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -110,22 +102,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|LogLevels
 import|;
 end_import
 
@@ -590,28 +566,16 @@ block|{
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|LlapIoImpl
 operator|.
 name|class
-argument_list|)
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|LogLevels
-name|LOGL
-init|=
-operator|new
-name|LogLevels
-argument_list|(
-name|LOG
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -625,10 +589,12 @@ name|ListeningExecutorService
 name|executor
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonCacheMetrics
 name|cacheMetrics
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonQueueMetrics
 name|queueMetrics
 decl_stmt|;
@@ -666,30 +632,19 @@ name|LLAP_LOW_LEVEL_CACHE
 argument_list|)
 decl_stmt|;
 comment|// High-level cache not supported yet.
-if|if
-condition|(
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Initializing LLAP IO"
-operator|+
-operator|(
+literal|"Initializing LLAP IO {}"
+argument_list|,
 name|useLowLevelCache
 condition|?
 literal|" with low level cache"
 else|:
 literal|""
-operator|)
 argument_list|)
 expr_stmt|;
-block|}
 name|String
 name|displayName
 init|=
@@ -1005,14 +960,6 @@ argument_list|,
 name|queueMetrics
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
@@ -1020,7 +967,6 @@ argument_list|(
 literal|"LLAP IO initialized"
 argument_list|)
 expr_stmt|;
-block|}
 name|registerMXBeans
 argument_list|()
 expr_stmt|;

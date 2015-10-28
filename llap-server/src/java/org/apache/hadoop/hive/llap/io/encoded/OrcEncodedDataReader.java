@@ -91,13 +91,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -105,13 +101,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -154,22 +146,6 @@ operator|.
 name|fs
 operator|.
 name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|CallableWithNdc
 import|;
 end_import
 
@@ -1141,6 +1117,20 @@ name|FixedSizedObjectPool
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|common
+operator|.
+name|CallableWithNdc
+import|;
+end_import
+
 begin_comment
 comment|/**  * This produces EncodedColumnBatch via ORC EncodedDataImpl.  * It serves as Consumer for EncodedColumnBatch too, for the high-level cache scenario where  * it inserts itself into the pipeline to put the data in cache, before passing it to the real  * consumer. It also serves as ConsumerFeedback that receives processed EncodedColumnBatch-es.  */
 end_comment
@@ -1168,12 +1158,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|OrcEncodedDataReader
 operator|.
@@ -1738,31 +1728,20 @@ operator|.
 name|startTimeCounter
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing data for "
-operator|+
+literal|"Processing data for {}"
+argument_list|,
 name|split
 operator|.
 name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|processStop
@@ -4879,7 +4858,7 @@ if|if
 condition|(
 name|LlapIoImpl
 operator|.
-name|LOGL
+name|LOG
 operator|.
 name|isDebugEnabled
 argument_list|()
@@ -5731,6 +5710,7 @@ implements|,
 name|DataCache
 block|{
 specifier|private
+specifier|final
 name|DataReader
 name|orcDataReader
 decl_stmt|;

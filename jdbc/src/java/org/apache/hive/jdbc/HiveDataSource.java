@@ -95,7 +95,9 @@ parameter_list|()
 block|{
 comment|// TODO Auto-generated constructor stub
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.DataSource#getConnection()    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.DataSource#getConnection()    */
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|getConnection
@@ -112,7 +114,9 @@ literal|""
 argument_list|)
 return|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.DataSource#getConnection(java.lang.String, java.lang.String)    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.DataSource#getConnection(java.lang.String, java.lang.String)    */
+annotation|@
+name|Override
 specifier|public
 name|Connection
 name|getConnection
@@ -155,7 +159,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.CommonDataSource#getLogWriter()    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.CommonDataSource#getLogWriter()    */
+annotation|@
+name|Override
 specifier|public
 name|PrintWriter
 name|getLogWriter
@@ -172,7 +178,9 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.CommonDataSource#getLoginTimeout()    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.CommonDataSource#getLoginTimeout()    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getLoginTimeout
@@ -205,7 +213,9 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.CommonDataSource#setLogWriter(java.io.PrintWriter)    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.CommonDataSource#setLogWriter(java.io.PrintWriter)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setLogWriter
@@ -225,7 +235,9 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see javax.sql.CommonDataSource#setLoginTimeout(int)    */
+comment|/*    * (non-Javadoc)    *    * @see javax.sql.CommonDataSource#setLoginTimeout(int)    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setLoginTimeout
@@ -245,7 +257,9 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isWrapperFor
@@ -268,7 +282,9 @@ literal|"Method not supported"
 argument_list|)
 throw|;
 block|}
-comment|/*    * (non-Javadoc)    *     * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#unwrap(java.lang.Class)    */
+annotation|@
+name|Override
 specifier|public
 parameter_list|<
 name|T

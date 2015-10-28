@@ -137,16 +137,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -163,13 +153,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -177,13 +163,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1055,20 +1037,6 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|JobClient
 import|;
 end_import
@@ -1084,20 +1052,6 @@ operator|.
 name|mapred
 operator|.
 name|JobConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
-name|Partitioner
 import|;
 end_import
 
@@ -1154,20 +1108,6 @@ operator|.
 name|log4j
 operator|.
 name|LogManager
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|logging
-operator|.
-name|log4j
-operator|.
-name|Logger
 import|;
 end_import
 
@@ -1275,12 +1215,12 @@ specifier|protected
 specifier|static
 specifier|transient
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|ExecDriver
 operator|.
@@ -3415,6 +3355,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"Failed while cleaning up "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -4674,6 +4616,14 @@ condition|)
 block|{
 comment|// If started from main(), and noLog is on, we should not output
 comment|// any logs. To turn the log on, please set -Dtest.silent=false
+name|org
+operator|.
+name|apache
+operator|.
+name|logging
+operator|.
+name|log4j
+operator|.
 name|Logger
 name|logger
 init|=
@@ -4726,12 +4676,12 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|ExecDriver
 operator|.

@@ -1185,6 +1185,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"Job close failed "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;

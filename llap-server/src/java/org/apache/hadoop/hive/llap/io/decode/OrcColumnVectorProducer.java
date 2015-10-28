@@ -362,15 +362,18 @@ name|Configuration
 name|conf
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|_skipCorrupt
 decl_stmt|;
 comment|// TODO: get rid of this
 specifier|private
+specifier|final
 name|LlapDaemonCacheMetrics
 name|cacheMetrics
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonQueueMetrics
 name|queueMetrics
 decl_stmt|;
@@ -399,16 +402,6 @@ name|LlapDaemonQueueMetrics
 name|queueMetrics
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -418,7 +411,6 @@ argument_list|(
 literal|"Initializing ORC column vector producer"
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|metadataCache
