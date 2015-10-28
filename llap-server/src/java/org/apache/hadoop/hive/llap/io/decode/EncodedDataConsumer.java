@@ -270,16 +270,15 @@ specifier|final
 name|LlapDaemonQueueMetrics
 name|queueMetrics
 decl_stmt|;
-comment|// TODO: if we were using Exchanger, pool would not be necessary here - it would be 1/N items
+comment|// Note that the pool is per EDC - within EDC, CVBs are expected to have the same schema.
 specifier|private
 specifier|final
 specifier|static
 name|int
 name|CVB_POOL_SIZE
 init|=
-literal|8
+literal|128
 decl_stmt|;
-comment|// Note that the pool is per EDC - within EDC, CVBs are expected to have the same schema.
 specifier|protected
 specifier|final
 name|FixedSizedObjectPool
@@ -360,7 +359,9 @@ parameter_list|(
 name|ColumnVectorBatch
 name|t
 parameter_list|)
-block|{           }
+block|{
+comment|// Don't reset anything, we are reusing column vectors.
+block|}
 block|}
 argument_list|)
 expr_stmt|;
