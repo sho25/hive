@@ -1687,6 +1687,11 @@ name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// For import statement, require uri rwx+owner privileges on input uri, and
+comment|// necessary privileges on the output table and database
+comment|// NOTE : privileges are only checked if the object of that type is marked as part of ReadEntity or WriteEntity
+comment|// So, if a table is present, Import will mark a table as a WriteEntity, and we'll authorize for that, and if not present,
+comment|// Import will mark the parent db as a WriteEntity, thus ensuring that we check for table creation privileges.
 name|op2Priv
 operator|.
 name|put
@@ -1697,11 +1702,58 @@ name|IMPORT
 argument_list|,
 name|PrivRequirement
 operator|.
-name|newIOPrivRequirement
+name|newPrivRequirementList
+argument_list|(
+operator|new
+name|PrivRequirement
 argument_list|(
 name|OWNER_INS_SEL_DEL_NOGRANT_AR
 argument_list|,
-name|INS_NOGRANT_AR
+name|IOType
+operator|.
+name|INPUT
+argument_list|)
+argument_list|,
+operator|new
+name|PrivRequirement
+argument_list|(
+name|arr
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|INSERT_NOGRANT
+argument_list|,
+name|SQLPrivTypeGrant
+operator|.
+name|DELETE_NOGRANT
+argument_list|)
+argument_list|,
+name|IOType
+operator|.
+name|OUTPUT
+argument_list|,
+literal|null
+argument_list|,
+name|HivePrivilegeObjectType
+operator|.
+name|TABLE_OR_VIEW
+argument_list|)
+argument_list|,
+operator|new
+name|PrivRequirement
+argument_list|(
+name|OWNER_PRIV_AR
+argument_list|,
+name|IOType
+operator|.
+name|OUTPUT
+argument_list|,
+literal|null
+argument_list|,
+name|HivePrivilegeObjectType
+operator|.
+name|DATABASE
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;

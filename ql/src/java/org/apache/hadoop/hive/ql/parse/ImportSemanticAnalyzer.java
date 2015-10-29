@@ -4622,6 +4622,25 @@ name|getDatabaseName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Since we are going to be creating a new table in a db, we should mark that db as a write entity
+comment|// so that the auth framework can go to work there.
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|parentDb
+argument_list|,
+name|WriteEntity
+operator|.
+name|WriteType
+operator|.
+name|DDL_SHARED
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isPartitioned

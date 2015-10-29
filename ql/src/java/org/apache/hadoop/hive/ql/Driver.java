@@ -4090,6 +4090,21 @@ operator|.
 name|DATABASE
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|op
+operator|.
+name|equals
+argument_list|(
+name|HiveOperation
+operator|.
+name|IMPORT
+argument_list|)
+condition|)
+block|{
+comment|// We skip DB check for import here because we already handle it above
+comment|// as a CTAS check.
 name|authorizer
 operator|.
 name|authorize
@@ -4107,6 +4122,7 @@ name|getOutputRequiredPrivileges
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 continue|continue;
 block|}
 if|if
