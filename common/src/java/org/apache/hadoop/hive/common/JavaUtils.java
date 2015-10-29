@@ -105,13 +105,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -119,13 +115,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -142,12 +134,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|JavaUtils
 operator|.
@@ -231,7 +223,7 @@ name|release
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Standard way of getting classloader in Hive code (outside of Hadoop).    *     * Uses the context loader to get access to classpaths to auxiliary and jars    * added with 'add jar' command. Falls back to current classloader.    *     * In Hadoop-related code, we use Configuration.getClassLoader().    */
+comment|/**    * Standard way of getting classloader in Hive code (outside of Hadoop).    *    * Uses the context loader to get access to classpaths to auxiliary and jars    * added with 'add jar' command. Falls back to current classloader.    *    * In Hadoop-related code, we use Configuration.getClassLoader().    */
 specifier|public
 specifier|static
 name|ClassLoader
@@ -639,13 +631,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-name|LogFactory
-operator|.
-name|release
-argument_list|(
-name|loader
-argument_list|)
-expr_stmt|;
 block|}
 comment|/**    * Utility method for ACID to normalize logging info.  Matches    * {@link org.apache.hadoop.hive.metastore.api.LockRequest#toString()}    */
 specifier|public
