@@ -45,13 +45,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -59,13 +55,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -126,12 +118,12 @@ name|NumDistinctValueEstimator
 block|{
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|NumDistinctValueEstimator
 operator|.
@@ -592,13 +584,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Number of Vectors:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Number of Vectors: {}"
+argument_list|,
 name|numBitVectors
 argument_list|)
 expr_stmt|;
@@ -606,13 +593,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Vector Size: "
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Vector Size: {}"
+argument_list|,
 name|BIT_VECTOR_SIZE
 argument_list|)
 expr_stmt|;
@@ -1528,10 +1510,6 @@ expr_stmt|;
 block|}
 name|avgLeastSigZero
 operator|=
-call|(
-name|double
-call|)
-argument_list|(
 name|sumLeastSigZero
 operator|/
 operator|(
@@ -1539,7 +1517,6 @@ name|numBitVectors
 operator|*
 literal|1.0
 operator|)
-argument_list|)
 operator|-
 operator|(
 name|Math

@@ -271,13 +271,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -285,13 +281,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1111,12 +1103,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|SessionState
 operator|.
@@ -1488,10 +1480,12 @@ name|Timestamp
 name|queryCurrentTimestamp
 decl_stmt|;
 specifier|private
+specifier|final
 name|ResourceMaps
 name|resourceMaps
 decl_stmt|;
 specifier|private
+specifier|final
 name|DependencyResolver
 name|dependencyResolver
 decl_stmt|;
@@ -4421,7 +4415,7 @@ class|class
 name|LogHelper
 block|{
 specifier|protected
-name|Log
+name|Logger
 name|LOG
 decl_stmt|;
 specifier|protected
@@ -4431,7 +4425,7 @@ decl_stmt|;
 specifier|public
 name|LogHelper
 parameter_list|(
-name|Log
+name|Logger
 name|LOG
 parameter_list|)
 block|{
@@ -4446,7 +4440,7 @@ block|}
 specifier|public
 name|LogHelper
 parameter_list|(
-name|Log
+name|Logger
 name|LOG
 parameter_list|,
 name|boolean
@@ -4861,12 +4855,12 @@ operator|==
 literal|null
 condition|)
 block|{
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 literal|"SessionState"
 argument_list|)
@@ -7768,6 +7762,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
+literal|"Failed to remove classloaders from DataNucleus "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;

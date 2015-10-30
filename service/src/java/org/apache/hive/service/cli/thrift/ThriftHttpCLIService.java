@@ -61,18 +61,6 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|ThreadPoolExecutor
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
 name|TimeUnit
 import|;
 end_import
@@ -958,7 +946,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Error starting HiveServer2: could not start "
 operator|+

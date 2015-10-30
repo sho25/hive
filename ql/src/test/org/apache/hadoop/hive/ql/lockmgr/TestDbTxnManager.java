@@ -311,11 +311,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|log4j
-operator|.
-name|LogManager
+name|LoggerFactory
 import|;
 end_import
 
@@ -403,6 +401,7 @@ class|class
 name|TestDbTxnManager
 block|{
 specifier|private
+specifier|final
 name|HiveConf
 name|conf
 init|=
@@ -421,16 +420,13 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+specifier|final
 name|Context
 name|ctx
 decl_stmt|;
 specifier|private
 name|int
 name|nextInput
-decl_stmt|;
-specifier|private
-name|int
-name|nextOutput
 decl_stmt|;
 name|HashSet
 argument_list|<
@@ -470,18 +466,6 @@ operator|new
 name|Context
 argument_list|(
 name|conf
-argument_list|)
-expr_stmt|;
-name|LogManager
-operator|.
-name|getRootLogger
-argument_list|()
-operator|.
-name|setLevel
-argument_list|(
-name|Level
-operator|.
-name|DEBUG
 argument_list|)
 expr_stmt|;
 name|tearDown
@@ -2795,10 +2779,6 @@ name|nextInput
 operator|=
 literal|1
 expr_stmt|;
-name|nextOutput
-operator|=
-literal|1
-expr_stmt|;
 name|readEntities
 operator|=
 operator|new
@@ -2903,6 +2883,7 @@ extends|extends
 name|QueryPlan
 block|{
 specifier|private
+specifier|final
 name|HashSet
 argument_list|<
 name|ReadEntity
@@ -2910,6 +2891,7 @@ argument_list|>
 name|inputs
 decl_stmt|;
 specifier|private
+specifier|final
 name|HashSet
 argument_list|<
 name|WriteEntity

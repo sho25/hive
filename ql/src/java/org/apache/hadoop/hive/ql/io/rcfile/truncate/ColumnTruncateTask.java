@@ -423,20 +423,6 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|InputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|JobClient
 import|;
 end_import
@@ -856,14 +842,6 @@ name|job
 operator|.
 name|setInputFormat
 argument_list|(
-operator|(
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|InputFormat
-argument_list|>
-operator|)
 name|JavaUtils
 operator|.
 name|loadClass
@@ -1434,6 +1412,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"Failed while cleaning up "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;

@@ -277,7 +277,6 @@ argument_list|,
 name|HCatRecord
 argument_list|>
 block|{
-comment|//  static final private Log LOG = LogFactory.getLog(HCatBaseOutputFormat.class);
 comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
 specifier|public
 specifier|static

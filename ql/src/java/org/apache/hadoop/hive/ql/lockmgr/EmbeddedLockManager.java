@@ -23,13 +23,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -37,13 +33,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -151,12 +143,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 literal|"EmbeddedHiveLockManager"
 argument_list|)
@@ -196,6 +188,8 @@ specifier|public
 name|EmbeddedLockManager
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setContext
@@ -216,6 +210,8 @@ name|refresh
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|HiveLock
 name|lock
@@ -245,6 +241,8 @@ name|sleepTime
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -275,6 +273,8 @@ name|sleepTime
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|unlock
@@ -295,6 +295,8 @@ name|sleepTime
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|releaseLocks
@@ -316,6 +318,8 @@ name|sleepTime
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -346,6 +350,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -381,11 +387,15 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|prepareRetry
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
 specifier|public
 name|void
 name|refresh
@@ -795,6 +805,8 @@ name|HiveLockObj
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -1016,6 +1028,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
+literal|"Failed to unlock "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -1347,6 +1361,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close

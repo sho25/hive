@@ -63,13 +63,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -77,13 +73,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -143,15 +135,15 @@ argument_list|,
 name|TimestampWritable
 argument_list|>
 block|{
+specifier|private
 specifier|static
 specifier|final
-specifier|private
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|LazyTimestamp
 operator|.
@@ -252,6 +244,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Unsupported encoding found "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -345,14 +339,6 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|nullTimestamp
-init|=
-literal|"NULL"
-decl_stmt|;
 comment|/**    * Writes a Timestamp in JDBC timestamp format to the output stream    * @param out    *          The output stream    * @param i    *          The Timestamp to write    * @throws IOException    */
 specifier|public
 specifier|static

@@ -12482,17 +12482,6 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
-comment|// Set that variable to automatically collect stats during the MapReduce job
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|setIsInsertToTable
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 comment|// Add the table spec for the destination table.
 name|qb
 operator|.
@@ -12757,17 +12746,6 @@ operator|.
 name|ast
 argument_list|)
 decl_stmt|;
-comment|// Set that variable to automatically collect stats during the MapReduce job
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|setIsInsertToTable
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 comment|// Add the table spec for the destination table.
 name|qb
 operator|.
@@ -15192,6 +15170,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15688,6 +15669,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15861,6 +15845,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -15961,6 +15948,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -16851,6 +16841,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -16951,6 +16944,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|OUTERJOIN_USES_FILTERS
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|joinTree
@@ -37726,14 +37722,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|isInsertToTable
-argument_list|()
-expr_stmt|;
 try|try
 block|{
 name|FileSystem
@@ -51970,6 +51958,9 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|JOINNODE_OUTERJOIN_MORETHAN_16
+operator|.
+name|getErrorCodedMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|continueScanning
@@ -63825,6 +63816,9 @@ name|usedp
 operator|.
 name|getTable
 argument_list|()
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|conflictingArchive
@@ -72639,19 +72633,6 @@ name|getTableDesc
 argument_list|()
 operator|!=
 literal|null
-argument_list|)
-expr_stmt|;
-name|queryProperties
-operator|.
-name|setInsertToTable
-argument_list|(
-name|qb
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|isInsertToTable
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|queryProperties

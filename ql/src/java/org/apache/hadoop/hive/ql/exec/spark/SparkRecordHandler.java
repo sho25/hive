@@ -25,13 +25,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -39,13 +35,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -241,12 +233,12 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|SparkRecordHandler
 operator|.
@@ -487,7 +479,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Log processed row number and used memory info.    */
+comment|/**    * Logger processed row number and used memory info.    */
 specifier|protected
 name|void
 name|logMemoryInfo
@@ -548,7 +540,7 @@ name|boolean
 name|getDone
 parameter_list|()
 function_decl|;
-comment|/**    * Log information to be logged at the end.    */
+comment|/**    * Logger information to be logged at the end.    */
 specifier|protected
 name|void
 name|logCloseInfo

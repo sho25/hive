@@ -267,13 +267,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -281,13 +277,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -662,23 +654,24 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Functions that bridge Thrift's SASL transports to Hadoop's  * SASL callback handlers and authentication classes.  */
+comment|/**  * Functions that bridge Thrift's SASL transports to Hadoop's  * SASL callback handlers and authentication classes.  * HIVE-11378 This class is not directly used anymore.  It now exists only as a shell to be  * extended by HadoopThriftAuthBridge23 in 0.23 shims.  I have made it abstract  * to avoid maintenance errors.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|abstract
 class|class
 name|HadoopThriftAuthBridge
 block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HadoopThriftAuthBridge
 operator|.
@@ -1084,6 +1077,7 @@ return|;
 block|}
 comment|/**    * Read and return Hadoop SASL configuration which can be configured using    * "hadoop.rpc.protection"    * @param conf    * @return Hadoop SASL configuration    */
 specifier|public
+specifier|abstract
 name|Map
 argument_list|<
 name|String
@@ -1095,21 +1089,7 @@ parameter_list|(
 name|Configuration
 name|conf
 parameter_list|)
-block|{
-comment|// Initialize the SaslRpcServer to ensure QOP parameters are read from conf
-name|SaslRpcServer
-operator|.
-name|init
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-return|return
-name|SaslRpcServer
-operator|.
-name|SASL_PROPS
-return|;
-block|}
+function_decl|;
 specifier|public
 specifier|static
 class|class

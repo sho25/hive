@@ -473,18 +473,6 @@ name|ShimLoader
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|mortbay
-operator|.
-name|log
-operator|.
-name|Log
-import|;
-end_import
-
 begin_comment
 comment|/**  * TestHiveMetaStoreWithEnvironmentContext. Test case for _with_environment_context  * calls in {@link org.apache.hadoop.hive.metastore.HiveMetaStore}  */
 end_comment
@@ -1186,13 +1174,6 @@ operator|.
 name|getStatus
 argument_list|()
 assert|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Creating table"
-argument_list|)
-expr_stmt|;
 name|msc
 operator|.
 name|createTable
@@ -1257,13 +1238,6 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tblName
-argument_list|)
-expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Adding partition"
 argument_list|)
 expr_stmt|;
 name|partition
@@ -1337,13 +1311,6 @@ name|partEvent
 operator|.
 name|getEnvironmentContext
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Appending partition"
 argument_list|)
 expr_stmt|;
 name|List
@@ -1425,13 +1392,6 @@ name|getEnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Renaming table"
-argument_list|)
-expr_stmt|;
 name|table
 operator|.
 name|setTableName
@@ -1496,13 +1456,6 @@ name|getEnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Renaming table back"
-argument_list|)
-expr_stmt|;
 name|table
 operator|.
 name|setTableName
@@ -1534,13 +1487,6 @@ name|size
 argument_list|()
 argument_list|,
 name|listSize
-argument_list|)
-expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Dropping partition"
 argument_list|)
 expr_stmt|;
 name|List
@@ -1620,13 +1566,6 @@ name|getEnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Dropping partition by name"
-argument_list|)
-expr_stmt|;
 name|msc
 operator|.
 name|dropPartition
@@ -1684,13 +1623,6 @@ name|dropPartByNameEvent
 operator|.
 name|getEnvironmentContext
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|Log
-operator|.
-name|debug
-argument_list|(
-literal|"Dropping table"
 argument_list|)
 expr_stmt|;
 name|msc

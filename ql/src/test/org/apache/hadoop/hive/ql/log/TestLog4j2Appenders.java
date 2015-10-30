@@ -277,7 +277,7 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
-comment|// Log to the string appender
+comment|// Logger to the string appender
 name|logger
 operator|.
 name|info

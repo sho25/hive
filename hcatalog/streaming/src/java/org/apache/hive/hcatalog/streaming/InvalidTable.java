@@ -84,7 +84,18 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|makeMsg
+argument_list|(
+name|db
+argument_list|,
+name|table
+argument_list|)
+operator|+
+literal|": "
+operator|+
 name|msg
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -103,6 +114,15 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|makeMsg
+argument_list|(
+name|db
+argument_list|,
+name|table
+argument_list|)
+operator|+
+literal|": "
+operator|+
 name|inner
 operator|.
 name|getMessage

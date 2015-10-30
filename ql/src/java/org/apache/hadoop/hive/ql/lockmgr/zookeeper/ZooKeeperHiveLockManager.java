@@ -41,34 +41,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -271,6 +243,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|net
@@ -338,12 +330,12 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 literal|"ZooKeeperHiveLockManager"
 argument_list|)
@@ -423,6 +415,8 @@ name|ZooKeeperHiveLockManager
 parameter_list|()
 block|{   }
 comment|/**    * @param ctx  The lock manager context (containing the Hive configuration file)    * Start the ZooKeeper client based on the zookeeper cluster specified in the conf.    **/
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setContext
@@ -784,6 +778,8 @@ name|parents
 return|;
 block|}
 comment|/**    * @param  lockObjects  List of objects and the modes of the locks requested    * @param  keepAlive    Whether the lock is to be persisted after the statement    *    * Acuire all the locks. Release all the locks and return null if any lock    * could not be acquired.    **/
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -1048,6 +1044,8 @@ name|hiveLocks
 return|;
 block|}
 comment|/**    * @param hiveLocks    *          list of hive locks to be released Release all the locks specified. If some of the    *          locks have already been released, ignore them    **/
+annotation|@
+name|Override
 specifier|public
 name|void
 name|releaseLocks
@@ -1145,6 +1143,8 @@ block|}
 block|}
 block|}
 comment|/**    * @param key    *          The object to be locked    * @param mode    *          The mode of the lock    * @param keepAlive    *          Whether the lock is to be persisted after the statement Acquire the    *          lock. Return null if a conflicting lock is present.    **/
+annotation|@
+name|Override
 specifier|public
 name|ZooKeeperHiveLock
 name|lock
@@ -2200,6 +2200,8 @@ argument_list|)
 return|;
 block|}
 comment|/* Remove the lock specified */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|unlock
@@ -2725,6 +2727,8 @@ throw|;
 block|}
 block|}
 comment|/* Get all locks */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2760,6 +2764,8 @@ argument_list|)
 return|;
 block|}
 comment|/* Get all locks for a particular object */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -3185,10 +3191,7 @@ expr_stmt|;
 name|HiveLock
 name|lck
 init|=
-call|(
-name|HiveLock
-call|)
-argument_list|(
+operator|(
 operator|new
 name|ZooKeeperHiveLock
 argument_list|(
@@ -3198,7 +3201,7 @@ name|obj
 argument_list|,
 name|mode
 argument_list|)
-argument_list|)
+operator|)
 decl_stmt|;
 name|locks
 operator|.
@@ -3360,6 +3363,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/* Release all transient locks, by simply closing the client */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|close

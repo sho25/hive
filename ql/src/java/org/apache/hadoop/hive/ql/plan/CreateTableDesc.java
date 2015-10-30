@@ -73,13 +73,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -87,13 +83,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -407,12 +399,12 @@ literal|1L
 decl_stmt|;
 specifier|private
 specifier|static
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|CreateTableDesc
 operator|.
@@ -2494,6 +2486,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Failed to get type info"
+argument_list|,
 name|err
 argument_list|)
 expr_stmt|;

@@ -221,11 +221,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|io
+name|service
 operator|.
-name|IOUtils
+name|ServiceUtils
 import|;
 end_import
 
@@ -355,6 +355,7 @@ extends|extends
 name|ExecuteStatementOperation
 block|{
 specifier|private
+specifier|final
 name|CommandProcessor
 name|commandProcessor
 decl_stmt|;
@@ -529,7 +530,7 @@ name|e
 argument_list|)
 expr_stmt|;
 comment|// Close file streams to avoid resource leaking
-name|IOUtils
+name|ServiceUtils
 operator|.
 name|cleanup
 argument_list|(
@@ -644,7 +645,7 @@ condition|(
 name|closeSessionStreams
 condition|)
 block|{
-name|IOUtils
+name|ServiceUtils
 operator|.
 name|cleanup
 argument_list|(
@@ -1197,7 +1198,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|IOUtils
+name|ServiceUtils
 operator|.
 name|cleanup
 argument_list|(

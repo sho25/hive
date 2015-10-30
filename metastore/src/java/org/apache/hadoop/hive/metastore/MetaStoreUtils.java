@@ -283,13 +283,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -297,13 +293,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -935,12 +927,12 @@ block|{
 specifier|protected
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 literal|"hive.log"
 argument_list|)
@@ -1440,12 +1432,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|FileStatus
-index|[]
-name|fileStatuses
-init|=
-block|{}
-decl_stmt|;
 if|if
 condition|(
 name|tbl
@@ -1457,8 +1443,10 @@ literal|0
 condition|)
 block|{
 comment|// Update stats only when unpartitioned
+name|FileStatus
+index|[]
 name|fileStatuses
-operator|=
+init|=
 name|wh
 operator|.
 name|getFileStatusesForUnpartitionedTable
@@ -1467,8 +1455,7 @@ name|db
 argument_list|,
 name|tbl
 argument_list|)
-expr_stmt|;
-block|}
+decl_stmt|;
 return|return
 name|updateTableStatsFast
 argument_list|(
@@ -1481,6 +1468,13 @@ argument_list|,
 name|forceRecompute
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 comment|/**    * Updates the numFiles and totalSize parameters for the passed Table by querying    * the warehouse if the passed Table does not already have values for these parameters.    * @param tbl    * @param fileStatus    * @param newDir if true, the directory was just created and can be assumed to be empty    * @param forceRecompute Recompute stats even if the passed Table already has    * these parameters set    * @return true if the stats were updated, false otherwise    */
 specifier|public

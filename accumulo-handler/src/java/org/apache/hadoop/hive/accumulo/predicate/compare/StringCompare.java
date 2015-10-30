@@ -33,18 +33,6 @@ name|Pattern
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|log4j
-operator|.
-name|Logger
-import|;
-end_import
-
 begin_comment
 comment|/**  * Set of comparison operations over a string constant. Used for Hive predicates involving string  * comparison.  *  * Used by {@link org.apache.hadoop.hive.accumulo.predicate.PrimitiveComparisonFilter}  */
 end_comment
@@ -61,21 +49,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"unused"
 argument_list|)
-specifier|private
-specifier|static
-specifier|final
-name|Logger
-name|log
-init|=
-name|Logger
-operator|.
-name|getLogger
-argument_list|(
-name|StringCompare
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 specifier|private
 name|String
 name|constant

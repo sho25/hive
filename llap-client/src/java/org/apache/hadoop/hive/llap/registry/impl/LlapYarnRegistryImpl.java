@@ -15,8 +15,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|impl
@@ -249,8 +247,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|ServiceInstance
@@ -269,8 +265,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|ServiceInstanceSet
@@ -288,8 +282,6 @@ operator|.
 name|hive
 operator|.
 name|llap
-operator|.
-name|daemon
 operator|.
 name|registry
 operator|.
@@ -521,7 +513,17 @@ name|org
 operator|.
 name|apache
 operator|.
-name|log4j
+name|zookeeper
+operator|.
+name|CreateMode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
 operator|.
 name|Logger
 import|;
@@ -531,27 +533,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|tez
-operator|.
-name|dag
-operator|.
-name|api
-operator|.
-name|TezUncheckedException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|zookeeper
-operator|.
-name|CreateMode
+name|LoggerFactory
 import|;
 end_import
 
@@ -582,7 +566,7 @@ specifier|final
 name|Logger
 name|LOG
 init|=
-name|Logger
+name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
@@ -1017,7 +1001,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|TezUncheckedException
+name|RuntimeException
 argument_list|(
 name|e
 argument_list|)
@@ -1031,7 +1015,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|TezUncheckedException
+name|RuntimeException
 argument_list|(
 literal|"llap service URI for "
 operator|+

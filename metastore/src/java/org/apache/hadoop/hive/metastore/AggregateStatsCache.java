@@ -21,13 +21,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -35,13 +31,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -261,12 +253,12 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|AggregateStatsCache
 operator|.
@@ -302,6 +294,7 @@ name|maxCacheNodes
 decl_stmt|;
 comment|// Current nodes in the cache
 specifier|private
+specifier|final
 name|AtomicInteger
 name|currentNodes
 init|=
@@ -367,6 +360,7 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicLong
 name|cacheHits
 init|=
@@ -377,6 +371,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicLong
 name|cacheMisses
 init|=
@@ -1003,6 +998,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"Interrupted Exception ignored "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -1101,9 +1098,6 @@ block|{
 comment|// Variance check
 if|if
 condition|(
-operator|(
-name|float
-operator|)
 name|Math
 operator|.
 name|abs
@@ -1492,6 +1486,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"Interrupted Exception ignored "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -1628,16 +1624,6 @@ name|AggrColStatsList
 argument_list|>
 name|pair
 init|=
-operator|(
-name|Map
-operator|.
-name|Entry
-argument_list|<
-name|Key
-argument_list|,
-name|AggrColStatsList
-argument_list|>
-operator|)
 name|mapIterator
 operator|.
 name|next
@@ -1649,9 +1635,6 @@ decl_stmt|;
 name|AggrColStatsList
 name|candidateList
 init|=
-operator|(
-name|AggrColStatsList
-operator|)
 name|pair
 operator|.
 name|getValue
@@ -1774,6 +1757,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"Interrupted Exception ignored "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -2190,6 +2175,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"Interrupted Exception ignored "
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -2446,6 +2433,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|ReadWriteLock
 name|lock
 init|=
@@ -2455,6 +2443,7 @@ argument_list|()
 decl_stmt|;
 comment|// Read lock for get operation
 specifier|private
+specifier|final
 name|Lock
 name|readLock
 init|=
@@ -2465,6 +2454,7 @@ argument_list|()
 decl_stmt|;
 comment|// Write lock for add, evict and clean operation
 specifier|private
+specifier|final
 name|Lock
 name|writeLock
 init|=

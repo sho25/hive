@@ -45,13 +45,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -59,13 +55,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -429,6 +421,26 @@ name|StringUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * GenericUDAFComputeStats  *  */
 end_comment
@@ -453,12 +465,12 @@ name|AbstractGenericUDAFResolver
 block|{
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|GenericUDAFComputeStats
 operator|.
@@ -1217,13 +1229,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Count of True Values:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Count of True Values: {}"
+argument_list|,
 name|myagg
 operator|.
 name|countTrues
@@ -1233,13 +1240,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Count of False Values:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Count of False Values: {}"
+argument_list|,
 name|myagg
 operator|.
 name|countFalses
@@ -1249,13 +1251,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Count of Null Values:"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
+literal|"Count of Null Values: {}"
+argument_list|,
 name|myagg
 operator|.
 name|countNulls

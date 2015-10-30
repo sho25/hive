@@ -143,13 +143,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -157,13 +153,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1821,12 +1813,12 @@ block|{
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveMetaStore
 operator|.
@@ -2016,7 +2008,7 @@ block|{
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
 name|HiveMetaStore
@@ -2176,12 +2168,12 @@ comment|// command
 specifier|public
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|auditLog
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveMetaStore
 operator|.
@@ -3540,9 +3532,11 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
 literal|"Unable to instantiate raw store directly in fastpath mode"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -29290,6 +29284,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Exception caught in mark partition event "
+argument_list|,
 name|original
 argument_list|)
 expr_stmt|;
@@ -29501,6 +29497,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Exception caught for isPartitionMarkedForEvent "
+argument_list|,
 name|original
 argument_list|)
 expr_stmt|;
@@ -31638,27 +31636,43 @@ operator|.
 name|getFileIds
 argument_list|()
 decl_stmt|;
-name|byte
-index|[]
-name|expr
-init|=
-name|req
-operator|.
-name|getExpr
-argument_list|()
-decl_stmt|;
 name|boolean
 name|needMetadata
 init|=
+operator|!
+name|req
+operator|.
+name|isSetDoGetFooters
+argument_list|()
+operator|||
 name|req
 operator|.
 name|isDoGetFooters
 argument_list|()
 decl_stmt|;
+name|FileMetadataExprType
+name|type
+init|=
+name|req
+operator|.
+name|isSetType
+argument_list|()
+condition|?
+name|req
+operator|.
+name|getType
+argument_list|()
+else|:
+name|FileMetadataExprType
+operator|.
+name|ORC_SARG
+decl_stmt|;
 name|ByteBuffer
 index|[]
 name|metadatas
 init|=
+name|needMetadata
+condition|?
 operator|new
 name|ByteBuffer
 index|[
@@ -31667,10 +31681,12 @@ operator|.
 name|size
 argument_list|()
 index|]
+else|:
+literal|null
 decl_stmt|;
 name|ByteBuffer
 index|[]
-name|stripeBitsets
+name|ppdResults
 init|=
 operator|new
 name|ByteBuffer
@@ -31701,11 +31717,16 @@ name|getFileMetadataByExpr
 argument_list|(
 name|fileIds
 argument_list|,
-name|expr
+name|type
+argument_list|,
+name|req
+operator|.
+name|getExpr
+argument_list|()
 argument_list|,
 name|metadatas
 argument_list|,
-name|stripeBitsets
+name|ppdResults
 argument_list|,
 name|eliminated
 argument_list|)
@@ -31790,7 +31811,7 @@ literal|null
 else|:
 name|handleReadOnlyBufferForThrift
 argument_list|(
-name|stripeBitsets
+name|ppdResults
 index|[
 name|i
 index|]
@@ -34477,22 +34498,22 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|fatal
+name|error
 argument_list|(
-literal|"Failed to start "
-operator|+
+literal|"Failed to start {}"
+argument_list|,
 name|houseKeeper
 operator|.
 name|getClass
 argument_list|()
 operator|+
-literal|".  The system will not handle "
-operator|+
+literal|".  The system will not handle {} "
+argument_list|,
 name|houseKeeper
 operator|.
 name|getServiceDescription
 argument_list|()
-operator|+
+argument_list|,
 literal|".  Root Cause: "
 argument_list|,
 name|ex

@@ -113,13 +113,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -127,13 +123,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -1034,12 +1026,12 @@ comment|// TODO: [HIVE-6292] aggregations could be done directly in metastore. H
 specifier|private
 specifier|static
 specifier|final
-name|Log
-name|Log
+name|Logger
+name|Logger
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|StatsOptimizer
 operator|.
@@ -1350,6 +1342,8 @@ name|LongSubType
 block|{
 name|BIGINT
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -1365,6 +1359,8 @@ block|}
 block|,
 name|INT
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -1383,6 +1379,8 @@ block|}
 block|,
 name|SMALLINT
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -1401,6 +1399,8 @@ block|}
 block|,
 name|TINYINT
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -1431,6 +1431,8 @@ name|DoubleSubType
 block|{
 name|DOUBLE
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -1446,6 +1448,8 @@ block|}
 block|,
 name|FLOAT
 block|{
+annotation|@
+name|Override
 name|Object
 name|cast
 parameter_list|(
@@ -2586,7 +2590,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2627,7 +2631,7 @@ operator|<
 literal|1
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2682,7 +2686,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2727,7 +2731,7 @@ operator|==
 name|nullCnt
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2805,7 +2809,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2850,7 +2854,7 @@ operator|<
 literal|1
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -2948,7 +2952,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3067,7 +3071,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3124,7 +3128,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3291,7 +3295,7 @@ break|break;
 block|}
 default|default:
 comment|// unsupported type
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3672,7 +3676,7 @@ block|}
 break|break;
 block|}
 default|default:
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3775,7 +3779,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -3963,7 +3967,7 @@ break|break;
 block|}
 default|default:
 comment|// unsupported type
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4345,7 +4349,7 @@ break|break;
 block|}
 default|default:
 comment|// unsupported type
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4372,7 +4376,7 @@ block|}
 else|else
 block|{
 comment|// Unsupported aggregation.
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4692,7 +4696,7 @@ parameter_list|)
 block|{
 comment|// this is best effort optimization, bail out in error conditions and
 comment|// try generate and execute slower plan
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4727,7 +4731,7 @@ operator|>
 literal|1
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|error
 argument_list|(
@@ -4747,7 +4751,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4838,7 +4842,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -4918,7 +4922,7 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -5003,6 +5007,24 @@ name|getPartitions
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+operator|!
+name|StatsSetupConst
+operator|.
+name|areStatsUptoDate
+argument_list|(
+name|part
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|long
 name|partRowCnt
 init|=
@@ -5030,7 +5052,7 @@ operator|<
 literal|1
 condition|)
 block|{
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(
@@ -5055,6 +5077,24 @@ block|}
 else|else
 block|{
 comment|// unpartitioned table
+if|if
+condition|(
+operator|!
+name|StatsSetupConst
+operator|.
+name|areStatsUptoDate
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|rowCnt
 operator|=
 name|Long
@@ -5080,7 +5120,7 @@ condition|)
 block|{
 comment|// if rowCnt< 1 than its either empty table or table on which stats are not
 comment|//  computed We assume the worse and don't attempt to optimize.
-name|Log
+name|Logger
 operator|.
 name|debug
 argument_list|(

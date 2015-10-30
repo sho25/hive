@@ -864,7 +864,10 @@ name|boolean
 name|isDone
 init|=
 literal|false
-decl_stmt|,
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
 name|isClosed
 init|=
 literal|false
@@ -1621,6 +1624,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
+literal|"Llap counters: {}"
+argument_list|,
 name|counters
 argument_list|)
 expr_stmt|;

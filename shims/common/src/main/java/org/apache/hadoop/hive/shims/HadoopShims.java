@@ -101,16 +101,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|security
-operator|.
-name|PrivilegedExceptionAction
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Comparator
@@ -159,20 +149,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|security
-operator|.
-name|auth
-operator|.
-name|login
-operator|.
-name|LoginException
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -182,34 +158,6 @@ operator|.
 name|annotations
 operator|.
 name|VisibleForTesting
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
 import|;
 end_import
 
@@ -354,24 +302,6 @@ operator|.
 name|permission
 operator|.
 name|FsPermission
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-operator|.
-name|StoragePolicyValue
 import|;
 end_import
 
@@ -652,7 +582,7 @@ specifier|public
 interface|interface
 name|HadoopShims
 block|{
-comment|/**    * Constructs and Returns TaskAttempt Log Url    * or null if the TaskLogServlet is not available    *    *  @return TaskAttempt Log Url    */
+comment|/**    * Constructs and Returns TaskAttempt Logger Url    * or null if the TaskLogServlet is not available    *    *  @return TaskAttempt Logger Url    */
 name|String
 name|getTaskAttemptLogUrl
 parameter_list|(

@@ -926,13 +926,6 @@ name|useExternalMS
 init|=
 literal|false
 decl_stmt|;
-specifier|private
-specifier|static
-name|boolean
-name|useExternalMSForReplication
-init|=
-literal|false
-decl_stmt|;
 specifier|public
 specifier|static
 class|class
@@ -8252,16 +8245,16 @@ name|assertEquals
 argument_list|(
 literal|"Table after deserialization should have been identical to sourceTable."
 argument_list|,
+name|HCatTable
+operator|.
+name|NO_DIFF
+argument_list|,
 name|sourceTable
 operator|.
 name|diff
 argument_list|(
 name|targetTable
 argument_list|)
-argument_list|,
-name|HCatTable
-operator|.
-name|NO_DIFF
 argument_list|)
 expr_stmt|;
 comment|// Create table on Target.
@@ -8296,16 +8289,16 @@ name|assertEquals
 argument_list|(
 literal|"Table after deserialization should have been identical to sourceTable."
 argument_list|,
+name|HCatTable
+operator|.
+name|NO_DIFF
+argument_list|,
 name|sourceTable
 operator|.
 name|diff
 argument_list|(
 name|targetTable
 argument_list|)
-argument_list|,
-name|HCatTable
-operator|.
-name|NO_DIFF
 argument_list|)
 expr_stmt|;
 comment|// Modify sourceTable.
@@ -8570,16 +8563,16 @@ name|assertEquals
 argument_list|(
 literal|"After propagating schema changes, source and target tables should have been equivalent."
 argument_list|,
+name|HCatTable
+operator|.
+name|NO_DIFF
+argument_list|,
 name|targetTable
 operator|.
 name|diff
 argument_list|(
 name|sourceTable
 argument_list|)
-argument_list|,
-name|HCatTable
-operator|.
-name|NO_DIFF
 argument_list|)
 expr_stmt|;
 block|}
@@ -8893,6 +8886,8 @@ name|assertEquals
 argument_list|(
 literal|"Unexpected number of partitions. "
 argument_list|,
+literal|1
+argument_list|,
 name|sourceMetaStore
 operator|.
 name|getPartitions
@@ -8904,8 +8899,6 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 comment|// Verify that partition_1 was added correctly, and properties were inherited from the HCatTable.
@@ -8927,14 +8920,14 @@ name|assertEquals
 argument_list|(
 literal|"Column schema doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getColumns
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getCols
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getColumns
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -8942,14 +8935,14 @@ name|assertEquals
 argument_list|(
 literal|"InputFormat doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getInputFormat
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getInputFileFormat
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getInputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -8957,14 +8950,14 @@ name|assertEquals
 argument_list|(
 literal|"OutputFormat doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getOutputFormat
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getOutputFileFormat
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getOutputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -8972,14 +8965,14 @@ name|assertEquals
 argument_list|(
 literal|"SerDe doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getSerDe
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getSerdeLib
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getSerDe
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -8987,12 +8980,12 @@ name|assertEquals
 argument_list|(
 literal|"SerDe params don't match."
 argument_list|,
-name|addedPartition_1
+name|sourceTable
 operator|.
 name|getSerdeParams
 argument_list|()
 argument_list|,
-name|sourceTable
+name|addedPartition_1
 operator|.
 name|getSerdeParams
 argument_list|()
@@ -9089,16 +9082,16 @@ name|assertEquals
 argument_list|(
 literal|"Created table doesn't match the source."
 argument_list|,
+name|HCatTable
+operator|.
+name|NO_DIFF
+argument_list|,
 name|targetTable
 operator|.
 name|diff
 argument_list|(
 name|sourceTable
 argument_list|)
-argument_list|,
-name|HCatTable
-operator|.
-name|NO_DIFF
 argument_list|)
 expr_stmt|;
 comment|// Modify Table schema at the source.
@@ -9383,12 +9376,12 @@ name|assertEquals
 argument_list|(
 literal|"Expected the same number of partitions. "
 argument_list|,
-name|targetPartitions
+name|sourcePartitions
 operator|.
 name|size
 argument_list|()
 argument_list|,
-name|sourcePartitions
+name|targetPartitions
 operator|.
 name|size
 argument_list|()
@@ -9818,6 +9811,8 @@ name|assertEquals
 argument_list|(
 literal|"Unexpected number of partitions. "
 argument_list|,
+literal|1
+argument_list|,
 name|sourceMetaStore
 operator|.
 name|getPartitions
@@ -9829,8 +9824,6 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 comment|// Verify that partition_1 was added correctly, and properties were inherited from the HCatTable.
@@ -9852,14 +9845,14 @@ name|assertEquals
 argument_list|(
 literal|"Column schema doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getColumns
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getCols
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getColumns
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -9867,14 +9860,14 @@ name|assertEquals
 argument_list|(
 literal|"InputFormat doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getInputFormat
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getInputFileFormat
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getInputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -9882,14 +9875,14 @@ name|assertEquals
 argument_list|(
 literal|"OutputFormat doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getOutputFormat
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getOutputFileFormat
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getOutputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -9897,14 +9890,14 @@ name|assertEquals
 argument_list|(
 literal|"SerDe doesn't match."
 argument_list|,
-name|addedPartition_1
-operator|.
-name|getSerDe
-argument_list|()
-argument_list|,
 name|sourceTable
 operator|.
 name|getSerdeLib
+argument_list|()
+argument_list|,
+name|addedPartition_1
+operator|.
+name|getSerDe
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -9912,12 +9905,12 @@ name|assertEquals
 argument_list|(
 literal|"SerDe params don't match."
 argument_list|,
-name|addedPartition_1
+name|sourceTable
 operator|.
 name|getSerdeParams
 argument_list|()
 argument_list|,
-name|sourceTable
+name|addedPartition_1
 operator|.
 name|getSerdeParams
 argument_list|()
@@ -10014,16 +10007,16 @@ name|assertEquals
 argument_list|(
 literal|"Created table doesn't match the source."
 argument_list|,
+name|HCatTable
+operator|.
+name|NO_DIFF
+argument_list|,
 name|targetTable
 operator|.
 name|diff
 argument_list|(
 name|sourceTable
 argument_list|)
-argument_list|,
-name|HCatTable
-operator|.
-name|NO_DIFF
 argument_list|)
 expr_stmt|;
 comment|// Modify Table schema at the source.

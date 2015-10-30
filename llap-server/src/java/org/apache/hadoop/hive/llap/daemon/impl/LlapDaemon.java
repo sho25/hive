@@ -231,8 +231,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|impl

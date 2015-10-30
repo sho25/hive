@@ -463,18 +463,6 @@ begin_import
 import|import
 name|com
 operator|.
-name|esotericsoftware
-operator|.
-name|minlog
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
 name|google
 operator|.
 name|common
@@ -659,15 +647,6 @@ name|CalciteSemanticException
 name|e
 parameter_list|)
 block|{
-name|Log
-operator|.
-name|trace
-argument_list|(
-literal|"Failed to add is not null filter on join "
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
 return|return;
 block|}
 name|Set

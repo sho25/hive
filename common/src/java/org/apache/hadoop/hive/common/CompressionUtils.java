@@ -261,34 +261,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|tools
 operator|.
 name|zip
@@ -311,6 +283,26 @@ name|ZipOutputStream
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class contains methods used for the purposes of compression, this class  * should not be accessed from code run in Hadoop.  */
 end_comment
@@ -322,12 +314,12 @@ name|CompressionUtils
 block|{
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|CompressionUtils
 operator|.
@@ -653,7 +645,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Untar an input file into an output file.    *     * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *     * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *     * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
+comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
 specifier|public
 specifier|static
 name|List
@@ -688,7 +680,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Untar an input file into an output file.    *     * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *     * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *     * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
+comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
 specifier|public
 specifier|static
 name|List

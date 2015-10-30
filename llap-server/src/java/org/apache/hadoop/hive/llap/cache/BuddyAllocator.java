@@ -182,6 +182,7 @@ index|[]
 name|arenas
 decl_stmt|;
 specifier|private
+specifier|final
 name|AtomicInteger
 name|allocatedArenas
 init|=
@@ -311,24 +312,14 @@ operator|.
 name|LLAP_ORC_CACHE_MAX_SIZE
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Buddy allocator with "
-operator|+
+literal|"Buddy allocator with {}"
+argument_list|,
 operator|(
 name|isDirect
 condition|?
@@ -336,25 +327,24 @@ literal|"direct"
 else|:
 literal|"byte"
 operator|)
-operator|+
-literal|" buffers; allocation sizes "
-operator|+
+argument_list|,
+literal|" buffers; allocation sizes {} "
+argument_list|,
 name|minAllocation
-operator|+
-literal|" - "
-operator|+
+argument_list|,
+literal|" - {}"
+argument_list|,
 name|maxAllocation
-operator|+
-literal|", arena size "
-operator|+
+argument_list|,
+literal|", arena size {}"
+argument_list|,
 name|arenaSize
-operator|+
-literal|". total size "
-operator|+
+argument_list|,
+literal|". total size {}"
+argument_list|,
 name|maxSizeVal
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|minAllocation

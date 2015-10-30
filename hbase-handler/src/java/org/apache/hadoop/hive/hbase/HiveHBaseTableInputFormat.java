@@ -71,13 +71,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -85,13 +81,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -893,12 +885,12 @@ argument_list|>
 block|{
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|HiveHBaseTableInputFormat
 operator|.
@@ -1044,6 +1036,10 @@ name|InterruptedException
 name|e
 parameter_list|)
 block|{
+name|closeTable
+argument_list|()
+expr_stmt|;
+comment|// Free up the HTable connections
 throw|throw
 operator|new
 name|IOException
@@ -2714,6 +2710,8 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|hbaseColumnsMapping
@@ -3043,6 +3041,13 @@ block|}
 return|return
 name|results
 return|;
+block|}
+finally|finally
+block|{
+name|closeTable
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class

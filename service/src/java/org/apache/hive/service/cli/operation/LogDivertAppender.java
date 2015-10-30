@@ -343,6 +343,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -374,10 +384,14 @@ block|{
 specifier|private
 specifier|static
 specifier|final
+name|org
+operator|.
+name|slf4j
+operator|.
 name|Logger
 name|LOG
 init|=
-name|LogManager
+name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
@@ -484,6 +498,7 @@ name|OperationManager
 name|operationManager
 decl_stmt|;
 specifier|private
+specifier|final
 name|StringOutputStreamManager
 name|manager
 decl_stmt|;
@@ -673,6 +688,7 @@ name|LoggingLevel
 name|loggingMode
 decl_stmt|;
 specifier|private
+specifier|final
 name|OperationManager
 name|operationManager
 decl_stmt|;

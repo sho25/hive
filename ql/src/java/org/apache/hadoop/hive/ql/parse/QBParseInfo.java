@@ -117,13 +117,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|Log
+name|Logger
 import|;
 end_import
 
@@ -131,13 +127,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|commons
-operator|.
-name|logging
-operator|.
-name|LogFactory
+name|LoggerFactory
 import|;
 end_import
 
@@ -342,11 +334,6 @@ decl_stmt|;
 comment|// used for the analyze command (statistics)
 specifier|private
 name|boolean
-name|isInsertToTable
-decl_stmt|;
-comment|// used for insert overwrite command (statistics)
-specifier|private
-name|boolean
 name|isNoScanAnalyzeCommand
 decl_stmt|;
 comment|// used for the analyze command (statistics) (noscan)
@@ -506,12 +493,12 @@ argument_list|)
 specifier|private
 specifier|static
 specifier|final
-name|Log
+name|Logger
 name|LOG
 init|=
-name|LogFactory
+name|LoggerFactory
 operator|.
-name|getLog
+name|getLogger
 argument_list|(
 name|QBParseInfo
 operator|.
@@ -2449,30 +2436,6 @@ parameter_list|()
 block|{
 return|return
 name|isAnalyzeCommand
-return|;
-block|}
-specifier|public
-name|void
-name|setIsInsertToTable
-parameter_list|(
-name|boolean
-name|isInsertToTable
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isInsertToTable
-operator|=
-name|isInsertToTable
-expr_stmt|;
-block|}
-specifier|public
-name|boolean
-name|isInsertToTable
-parameter_list|()
-block|{
-return|return
-name|isInsertToTable
 return|;
 block|}
 specifier|public
