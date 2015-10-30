@@ -4282,15 +4282,23 @@ name|SERDESUSINGMETASTOREFORSCHEMA
 argument_list|(
 literal|"hive.serdes.using.metastore.for.schema"
 argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde,org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe,"
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde,"
 operator|+
-literal|"org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe,org.apache.hadoop.hive.serde2.dynamic_type.DynamicSerDe,"
+literal|"org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe,"
 operator|+
-literal|"org.apache.hadoop.hive.serde2.MetadataTypedColumnsetSerDe,org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe,"
+literal|"org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe,"
 operator|+
-literal|"org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe,org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe"
+literal|"org.apache.hadoop.hive.serde2.dynamic_type.DynamicSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.MetadataTypedColumnsetSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe"
 argument_list|,
-literal|"SerDes retriving schema from metastore. This an internal parameter. Check with the hive dev. team"
+literal|"SerDes retrieving schema from metastore. This is an internal parameter."
 argument_list|)
 block|,
 name|HIVEHISTORYFILELOC

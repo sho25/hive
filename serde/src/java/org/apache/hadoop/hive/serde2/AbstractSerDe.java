@@ -23,6 +23,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Properties
 import|;
 end_import
@@ -220,6 +230,25 @@ literal|""
 else|:
 name|configErrors
 return|;
+block|}
+comment|/**    * @rturn Whether the SerDe that can store schema both inside and outside of metastore    *        does, in fact, store it inside metastore, based on table parameters.    */
+specifier|public
+name|boolean
+name|shouldStoreFieldsInMetastore
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|tableParams
+parameter_list|)
+block|{
+return|return
+literal|false
+return|;
+comment|// The default, unless SerDe overrides it. TODO#
 block|}
 block|}
 end_class

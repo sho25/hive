@@ -62568,6 +62568,11 @@ argument_list|(
 name|fieldSchema
 argument_list|)
 expr_stmt|;
+comment|// TODO: there's a potential problem here if some table uses external schema like Avro,
+comment|//       with a very large type name. It seems like the view does not derive the SerDe from
+comment|//       the table, so it won't be able to just get the type from the deserializer like the
+comment|//       table does; we won't be able to properly store the type in the RDBMS metastore.
+comment|//       Not sure if these large cols could be in resultSchema. Ignore this for now 0_o
 name|derivedSchema
 operator|.
 name|set
