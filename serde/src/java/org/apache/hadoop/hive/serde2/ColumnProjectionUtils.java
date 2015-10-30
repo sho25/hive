@@ -612,8 +612,6 @@ name|list
 control|)
 block|{
 comment|// it may contain duplicates, remove duplicates
-comment|// TODO: WTF? This would break many assumptions elsewhere if it did.
-comment|//       Column names' and column ids' lists are supposed to be correlated.
 name|Integer
 name|toAdd
 init|=
@@ -643,27 +641,10 @@ name|toAdd
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Duplicate ID "
-operator|+
-name|toAdd
-operator|+
-literal|" in column ID list"
-argument_list|)
-expr_stmt|;
-block|}
+comment|// NOTE: some code uses this list to correlate with column names, and yet these lists may
+comment|//       contain duplicates, which this call will remove and the other won't. As far as I can
+comment|//       tell, no code will actually use these two methods together; all is good if the code
+comment|//       gets the ID list without relying on this method. Or maybe it just works by magic.
 block|}
 return|return
 name|result
