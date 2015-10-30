@@ -547,7 +547,6 @@ block|}
 comment|// Set host
 if|if
 condition|(
-operator|(
 name|matcher
 operator|.
 name|group
@@ -559,16 +558,6 @@ name|equals
 argument_list|(
 literal|"hive.server2.thrift.bind.host"
 argument_list|)
-operator|)
-operator|&&
-operator|(
-name|connParams
-operator|.
-name|getHost
-argument_list|()
-operator|==
-literal|null
-operator|)
 condition|)
 block|{
 name|connParams
@@ -640,7 +629,6 @@ block|}
 comment|// Set port
 if|if
 condition|(
-operator|(
 name|matcher
 operator|.
 name|group
@@ -652,17 +640,6 @@ name|equals
 argument_list|(
 literal|"hive.server2.thrift.port"
 argument_list|)
-operator|)
-operator|&&
-operator|!
-operator|(
-name|connParams
-operator|.
-name|getPort
-argument_list|()
-operator|>
-literal|0
-operator|)
 condition|)
 block|{
 name|connParams
