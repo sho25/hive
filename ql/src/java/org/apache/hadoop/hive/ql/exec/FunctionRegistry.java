@@ -10360,6 +10360,26 @@ name|functionName
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Unregisters all the functions under the database dbName    * @param dbName specified database name    * @throws HiveException    */
+specifier|public
+specifier|static
+name|void
+name|unregisterPermanentFunctions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|system
+operator|.
+name|unregisterFunctions
+argument_list|(
+name|dbName
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|FunctionRegistry
 parameter_list|()
