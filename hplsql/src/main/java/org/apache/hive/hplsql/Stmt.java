@@ -5312,12 +5312,12 @@ name|function
 operator|.
 name|execProc
 argument_list|(
+name|name
+argument_list|,
 name|ctx
 operator|.
 name|expr_func_params
 argument_list|()
-argument_list|,
-name|name
 argument_list|)
 condition|)
 block|{

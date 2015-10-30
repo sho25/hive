@@ -34,12 +34,11 @@ specifier|public
 class|class
 name|Scope
 block|{
-comment|// Types
 specifier|public
 enum|enum
 name|Type
 block|{
-name|FILE
+name|GLOBAL
 block|,
 name|BEGIN_END
 block|,
@@ -47,10 +46,11 @@ name|LOOP
 block|,
 name|HANDLER
 block|,
+name|PACKAGE
+block|,
 name|ROUTINE
 block|}
 empty_stmt|;
-comment|// Local variables
 name|ArrayList
 argument_list|<
 name|Var
@@ -64,7 +64,6 @@ name|Var
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// Condition handlers
 name|ArrayList
 argument_list|<
 name|Handler
@@ -84,6 +83,9 @@ decl_stmt|;
 name|Type
 name|type
 decl_stmt|;
+name|Package
+name|pack
+decl_stmt|;
 name|Scope
 parameter_list|(
 name|Type
@@ -101,6 +103,12 @@ operator|.
 name|type
 operator|=
 name|type
+expr_stmt|;
+name|this
+operator|.
+name|pack
+operator|=
+literal|null
 expr_stmt|;
 block|}
 name|Scope
@@ -123,6 +131,43 @@ operator|.
 name|type
 operator|=
 name|type
+expr_stmt|;
+name|this
+operator|.
+name|pack
+operator|=
+literal|null
+expr_stmt|;
+block|}
+name|Scope
+parameter_list|(
+name|Scope
+name|parent
+parameter_list|,
+name|Type
+name|type
+parameter_list|,
+name|Package
+name|pack
+parameter_list|)
+block|{
+name|this
+operator|.
+name|parent
+operator|=
+name|parent
+expr_stmt|;
+name|this
+operator|.
+name|type
+operator|=
+name|type
+expr_stmt|;
+name|this
+operator|.
+name|pack
+operator|=
+name|pack
 expr_stmt|;
 block|}
 comment|/**    * Add a local variable    */

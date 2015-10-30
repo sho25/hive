@@ -104,7 +104,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execDbmsOutputPutLine
+name|dbmsOutputPutLine
 argument_list|(
 name|ctx
 argument_list|)
@@ -135,7 +135,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFileFopen
+name|utlFileFopen
 argument_list|(
 name|ctx
 argument_list|)
@@ -166,7 +166,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFileGetLine
+name|utlFileGetLine
 argument_list|(
 name|ctx
 argument_list|)
@@ -197,7 +197,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFilePutLine
+name|utlFilePutLine
 argument_list|(
 name|ctx
 argument_list|)
@@ -228,7 +228,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFilePut
+name|utlFilePut
 argument_list|(
 name|ctx
 argument_list|)
@@ -259,7 +259,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFileFclose
+name|utlFileFclose
 argument_list|(
 name|ctx
 argument_list|)
@@ -271,7 +271,7 @@ expr_stmt|;
 block|}
 comment|/**    * Print a text message    */
 name|void
-name|execDbmsOutputPutLine
+name|dbmsOutputPutLine
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -292,7 +292,13 @@ operator|>
 literal|0
 condition|)
 block|{
-name|visit
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+name|evalPop
 argument_list|(
 name|ctx
 operator|.
@@ -304,20 +310,6 @@ operator|.
 name|expr
 argument_list|()
 argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-name|exec
-operator|.
-name|stackPop
-argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -325,7 +317,7 @@ block|}
 comment|/**    * Execute UTL_FILE.FOPEN function    */
 specifier|public
 name|void
-name|execUtlFileFopen
+name|utlFileFopen
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -537,7 +529,7 @@ expr_stmt|;
 block|}
 comment|/**    * Read a text line from an open file    */
 name|void
-name|execUtlFileGetLine
+name|utlFileGetLine
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -797,7 +789,7 @@ block|}
 comment|/**    * Execute UTL_FILE.PUT_LINE function    */
 specifier|public
 name|void
-name|execUtlFilePutLine
+name|utlFilePutLine
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -805,7 +797,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFilePut
+name|utlFilePut
 argument_list|(
 name|ctx
 argument_list|,
@@ -817,7 +809,7 @@ block|}
 comment|/**    * Execute UTL_FILE.PUT function    */
 specifier|public
 name|void
-name|execUtlFilePut
+name|utlFilePut
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -825,7 +817,7 @@ name|Expr_func_paramsContext
 name|ctx
 parameter_list|)
 block|{
-name|execUtlFilePut
+name|utlFilePut
 argument_list|(
 name|ctx
 argument_list|,
@@ -836,7 +828,7 @@ expr_stmt|;
 block|}
 comment|/**    * Write a string to file    */
 name|void
-name|execUtlFilePut
+name|utlFilePut
 parameter_list|(
 name|HplsqlParser
 operator|.
@@ -1012,7 +1004,7 @@ block|}
 block|}
 comment|/**    * Execute UTL_FILE.FCLOSE function    */
 name|void
-name|execUtlFileFclose
+name|utlFileFclose
 parameter_list|(
 name|HplsqlParser
 operator|.

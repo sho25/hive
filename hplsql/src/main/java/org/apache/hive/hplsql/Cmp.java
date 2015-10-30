@@ -142,6 +142,11 @@ name|failedTestsHighDiff
 init|=
 literal|0
 decl_stmt|;
+name|int
+name|failedTestsHighDiff10
+init|=
+literal|0
+decl_stmt|;
 name|Cmp
 parameter_list|(
 name|Exec
@@ -503,7 +508,15 @@ literal|", "
 operator|+
 name|failedTestsHighDiff
 operator|+
-literal|" failed tests with more than 0.01% difference"
+literal|" tests with more than 0.01% difference"
+expr_stmt|;
+name|message
+operator|+=
+literal|", "
+operator|+
+name|failedTestsHighDiff10
+operator|+
+literal|" tests with more than 10% difference"
 expr_stmt|;
 block|}
 block|}
@@ -924,6 +937,24 @@ expr_stmt|;
 name|failedTestsHighDiff
 operator|++
 expr_stmt|;
+if|if
+condition|(
+name|diff
+operator|.
+name|compareTo
+argument_list|(
+name|BigDecimal
+operator|.
+name|TEN
+argument_list|)
+operator|>
+literal|0
+condition|)
+block|{
+name|failedTestsHighDiff10
+operator|++
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -936,6 +967,9 @@ block|}
 else|else
 block|{
 name|failedTestsHighDiff
+operator|++
+expr_stmt|;
+name|failedTestsHighDiff10
 operator|++
 expr_stmt|;
 block|}
