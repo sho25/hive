@@ -15,8 +15,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 package|;
 end_package

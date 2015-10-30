@@ -15,8 +15,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 package|;
 end_package
@@ -31,68 +29,55 @@ name|IOException
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Set
-import|;
-end_import
+begin_comment
+comment|/**  * ServiceRegistry interface for switching between fixed host and dynamic registry implementations.  */
+end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|ServiceInstanceSet
+name|ServiceRegistry
 block|{
-comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return    */
-specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|ServiceInstance
-argument_list|>
-name|getAll
-parameter_list|()
-function_decl|;
-comment|/**    * Get an instance by worker identity.    *     * @param name    * @return    */
-specifier|public
-name|ServiceInstance
-name|getInstance
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-function_decl|;
-comment|/**    * Get a list of service instances for a given host.    *     * The list could include dead and alive instances.    *     * @param host    * @return    */
-specifier|public
-name|Set
-argument_list|<
-name|ServiceInstance
-argument_list|>
-name|getByHost
-parameter_list|(
-name|String
-name|host
-parameter_list|)
-function_decl|;
-comment|/**    * Refresh the instance set from registry backing store.    *     * @throws IOException    */
+comment|/**    * Start the service registry    *     * @throws InterruptedException    */
 specifier|public
 name|void
-name|refresh
+name|start
 parameter_list|()
+throws|throws
+name|InterruptedException
+function_decl|;
+comment|/**    * Stop the service registry    *     * @throws InterruptedException    */
+specifier|public
+name|void
+name|stop
+parameter_list|()
+throws|throws
+name|InterruptedException
+function_decl|;
+comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *     * @throws IOException    */
+specifier|public
+name|void
+name|register
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Remove the current registration cleanly (implementation defined cleanup)    *     * @throws IOException    */
+specifier|public
+name|void
+name|unregister
+parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Client API to get the list of instances registered via the current registry key.    *     * @param component    * @return    * @throws IOException    */
+specifier|public
+name|ServiceInstanceSet
+name|getInstances
+parameter_list|(
+name|String
+name|component
+parameter_list|)
 throws|throws
 name|IOException
 function_decl|;

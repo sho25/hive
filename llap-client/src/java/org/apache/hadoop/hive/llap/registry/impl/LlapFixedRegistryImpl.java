@@ -15,8 +15,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|impl
@@ -161,8 +159,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|ServiceInstance
@@ -181,8 +177,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|registry
 operator|.
 name|ServiceInstanceSet
@@ -200,8 +194,6 @@ operator|.
 name|hive
 operator|.
 name|llap
-operator|.
-name|daemon
 operator|.
 name|registry
 operator|.
