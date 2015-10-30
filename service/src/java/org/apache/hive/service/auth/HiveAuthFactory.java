@@ -759,8 +759,8 @@ comment|// start delegation token manager
 try|try
 block|{
 comment|// rawStore is only necessary for DBTokenStore
-name|Object
-name|rawStore
+name|HMSHandler
+name|baseHandler
 init|=
 literal|null
 decl_stmt|;
@@ -793,9 +793,8 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|HMSHandler
 name|baseHandler
-init|=
+operator|=
 operator|new
 name|HiveMetaStore
 operator|.
@@ -807,13 +806,6 @@ name|conf
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
-name|rawStore
-operator|=
-name|baseHandler
-operator|.
-name|getMS
-argument_list|()
 expr_stmt|;
 block|}
 name|saslServer
@@ -822,7 +814,7 @@ name|startDelegationTokenSecretManager
 argument_list|(
 name|conf
 argument_list|,
-name|rawStore
+name|baseHandler
 argument_list|,
 name|ServerMode
 operator|.

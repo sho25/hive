@@ -215,9 +215,6 @@ name|HMSHandler
 argument_list|(
 literal|"Test handler"
 argument_list|)
-operator|.
-name|getMS
-argument_list|()
 argument_list|,
 literal|null
 argument_list|)

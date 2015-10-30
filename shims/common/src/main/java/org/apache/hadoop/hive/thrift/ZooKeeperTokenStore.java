@@ -2289,7 +2289,7 @@ name|void
 name|init
 parameter_list|(
 name|Object
-name|objectStore
+name|hmsHandler
 parameter_list|,
 name|ServerMode
 name|smode

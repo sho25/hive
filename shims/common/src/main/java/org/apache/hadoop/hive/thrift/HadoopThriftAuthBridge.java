@@ -2230,7 +2230,7 @@ name|Configuration
 name|conf
 parameter_list|,
 name|Object
-name|rawStore
+name|hms
 parameter_list|,
 name|ServerMode
 name|smode
@@ -2298,7 +2298,7 @@ name|dts
 operator|.
 name|init
 argument_list|(
-name|rawStore
+name|hms
 argument_list|,
 name|smode
 argument_list|)
