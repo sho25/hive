@@ -5777,19 +5777,6 @@ argument_list|,
 literal|"exploit intra-query correlations."
 argument_list|)
 block|,
-name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
-argument_list|(
-literal|"hive.mapred.supports.subdirectories"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether the version of Hadoop which is running supports sub-directories for tables/partitions. \n"
-operator|+
-literal|"Many Hive optimizations can be applied if the Hadoop version supports sub-directories for\n"
-operator|+
-literal|"tables/partitions. It was added by MAPREDUCE-1501"
-argument_list|)
-block|,
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|(
 literal|"hive.optimize.skewjoin.compiletime"
@@ -13575,12 +13562,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_FILE_MAX_FOOTER
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
 operator|.
 name|varname
 block|,

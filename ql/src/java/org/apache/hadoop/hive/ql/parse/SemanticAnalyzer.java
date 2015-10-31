@@ -39593,17 +39593,6 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_HADOOP_SUPPORTS_SUBDIRECTORIES
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
 name|set
 argument_list|(
 name|AcidUtils

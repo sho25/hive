@@ -1262,19 +1262,6 @@ argument_list|,
 literal|"Alter table skewed location doesn't have location map."
 argument_list|)
 block|,
-name|SUPPORT_DIR_MUST_TRUE_FOR_LIST_BUCKETING
-argument_list|(
-literal|10199
-argument_list|,
-literal|"hive.mapred.supports.subdirectories must be true"
-operator|+
-literal|" if any one of following is true: "
-operator|+
-literal|" hive.optimize.listbucketing , mapred.input.dir.recursive"
-operator|+
-literal|" and hive.optimize.union.remove."
-argument_list|)
-block|,
 name|SKEWED_TABLE_NO_COLUMN_NAME
 argument_list|(
 literal|10200
