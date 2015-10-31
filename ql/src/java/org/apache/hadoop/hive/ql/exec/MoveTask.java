@@ -843,6 +843,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -2962,7 +2972,7 @@ operator|.
 name|setOutputs
 argument_list|(
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|WriteEntity
 argument_list|>

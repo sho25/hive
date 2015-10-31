@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashSet
 import|;
 end_import
 
@@ -141,7 +141,7 @@ class|class
 name|HiveIndexQueryContext
 block|{
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -218,7 +218,7 @@ literal|null
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -233,7 +233,7 @@ specifier|public
 name|void
 name|addAdditionalSemanticInputs
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -254,7 +254,7 @@ operator|.
 name|additionalSemanticInputs
 operator|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|ReadEntity
 argument_list|>

@@ -58440,6 +58440,15 @@ name|partitions
 control|)
 block|{
 comment|// inputs.add(new ReadEntity(partn)); // is this needed at all?
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"XXX: adding part: "
+operator|+
+name|partn
+argument_list|)
+expr_stmt|;
 name|outputs
 operator|.
 name|add
