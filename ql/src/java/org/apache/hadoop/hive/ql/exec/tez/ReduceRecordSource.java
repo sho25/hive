@@ -828,10 +828,16 @@ literal|false
 decl_stmt|;
 specifier|private
 name|VectorDeserializeRow
+argument_list|<
+name|BinarySortableDeserializeRead
+argument_list|>
 name|keyBinarySortableDeserializeToRow
 decl_stmt|;
 specifier|private
 name|VectorDeserializeRow
+argument_list|<
+name|LazyBinaryDeserializeRead
+argument_list|>
 name|valueLazyBinaryDeserializeToRow
 decl_stmt|;
 specifier|private
@@ -1257,6 +1263,9 @@ name|keyBinarySortableDeserializeToRow
 operator|=
 operator|new
 name|VectorDeserializeRow
+argument_list|<
+name|BinarySortableDeserializeRead
+argument_list|>
 argument_list|(
 operator|new
 name|BinarySortableDeserializeRead
@@ -1305,6 +1314,9 @@ name|valueLazyBinaryDeserializeToRow
 operator|=
 operator|new
 name|VectorDeserializeRow
+argument_list|<
+name|LazyBinaryDeserializeRead
+argument_list|>
 argument_list|(
 operator|new
 name|LazyBinaryDeserializeRead
@@ -2343,6 +2355,8 @@ operator|.
 name|getLength
 argument_list|()
 decl_stmt|;
+comment|// l4j.info("ReduceRecordSource processVectorGroup keyBytes " + keyLength + " " +
+comment|//     VectorizedBatchUtil.displayBytes(keyBytes, 0, keyLength));
 name|keyBinarySortableDeserializeToRow
 operator|.
 name|setBytes
@@ -2436,6 +2450,8 @@ operator|.
 name|getLength
 argument_list|()
 decl_stmt|;
+comment|// l4j.info("ReduceRecordSource processVectorGroup valueBytes " + valueLength + " " +
+comment|//     VectorizedBatchUtil.displayBytes(valueBytes, 0, valueLength));
 name|valueLazyBinaryDeserializeToRow
 operator|.
 name|setBytes

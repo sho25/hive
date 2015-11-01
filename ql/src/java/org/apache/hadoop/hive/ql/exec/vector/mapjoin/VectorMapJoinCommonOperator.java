@@ -1236,6 +1236,9 @@ comment|// in a vectorized row batch.
 specifier|protected
 specifier|transient
 name|VectorDeserializeRow
+argument_list|<
+name|LazyBinaryDeserializeRead
+argument_list|>
 name|smallTableVectorDeserializeRow
 decl_stmt|;
 comment|// This a 2nd batch with the same "column schema" as the big table batch that can be used to
@@ -3265,6 +3268,9 @@ name|smallTableVectorDeserializeRow
 operator|=
 operator|new
 name|VectorDeserializeRow
+argument_list|<
+name|LazyBinaryDeserializeRead
+argument_list|>
 argument_list|(
 operator|new
 name|LazyBinaryDeserializeRead

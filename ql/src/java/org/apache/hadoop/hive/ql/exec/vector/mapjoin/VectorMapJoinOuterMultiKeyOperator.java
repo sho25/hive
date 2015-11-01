@@ -1119,9 +1119,6 @@ argument_list|(
 name|currentKeyOutput
 argument_list|)
 expr_stmt|;
-name|boolean
-name|isNull
-init|=
 name|keyVectorSerializeWrite
 operator|.
 name|serializeWrite
@@ -1130,10 +1127,13 @@ name|batch
 argument_list|,
 name|batchIndex
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
-name|isNull
+name|keyVectorSerializeWrite
+operator|.
+name|getHasAnyNulls
+argument_list|()
 condition|)
 block|{
 comment|// Have that the NULL does not interfere with the current equal key series, if there

@@ -297,7 +297,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|PrimitiveTypeInfo
+name|TypeInfo
 import|;
 end_import
 
@@ -328,10 +328,10 @@ specifier|public
 interface|interface
 name|DeserializeRead
 block|{
-comment|/*    * The primitive type information for all fields.    */
-name|PrimitiveTypeInfo
+comment|/*    * The type information for all fields.    */
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 parameter_list|()
 function_decl|;
 comment|/*    * Set the range of bytes to be deserialized.    */

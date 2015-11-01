@@ -113,6 +113,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HashCodeUtil
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -346,9 +362,9 @@ block|}
 name|long
 name|hashCode
 init|=
-name|VectorMapJoinFastBytesHashUtil
+name|HashCodeUtil
 operator|.
-name|hashKey
+name|murmurHash
 argument_list|(
 name|keyBytes
 argument_list|,

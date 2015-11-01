@@ -165,6 +165,22 @@ name|BytesWritable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HashCodeUtil
+import|;
+end_import
+
 begin_comment
 comment|/*  * An single long value multi-set optimized for vector map join.  */
 end_comment
@@ -292,9 +308,9 @@ expr_stmt|;
 name|long
 name|hashCode
 init|=
-name|VectorMapJoinFastLongHashUtil
+name|HashCodeUtil
 operator|.
-name|hashKey
+name|calculateLongHashCode
 argument_list|(
 name|key
 argument_list|)

@@ -467,6 +467,24 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
+name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
 name|VarcharTypeInfo
 import|;
 end_import
@@ -507,6 +525,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazySimpleDeserializeRead
 implements|implements
@@ -531,9 +550,9 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 decl_stmt|;
 specifier|private
 name|byte
@@ -677,9 +696,9 @@ decl_stmt|;
 specifier|public
 name|LazySimpleDeserializeRead
 parameter_list|(
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 parameter_list|,
 name|byte
 name|separator
@@ -690,9 +709,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|primitiveTypeInfos
+name|typeInfos
 operator|=
-name|primitiveTypeInfos
+name|typeInfos
 expr_stmt|;
 name|this
 operator|.
@@ -733,7 +752,7 @@ argument_list|()
 expr_stmt|;
 name|fieldCount
 operator|=
-name|primitiveTypeInfos
+name|typeInfos
 operator|.
 name|length
 expr_stmt|;
@@ -761,17 +780,17 @@ specifier|private
 name|LazySimpleDeserializeRead
 parameter_list|()
 block|{   }
-comment|/*    * The primitive type information for all fields.    */
+comment|/*    * The type information for all fields.    */
 annotation|@
 name|Override
 specifier|public
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 parameter_list|()
 block|{
 return|return
-name|primitiveTypeInfos
+name|typeInfos
 return|;
 block|}
 comment|/*    * Set the range of bytes to be deserialized.    */
@@ -1104,10 +1123,15 @@ block|}
 block|}
 switch|switch
 condition|(
-name|primitiveTypeInfos
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
+operator|)
 operator|.
 name|getPrimitiveCategory
 argument_list|()
@@ -2271,7 +2295,7 @@ operator|=
 operator|(
 name|DecimalTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
@@ -2337,10 +2361,15 @@ name|Error
 argument_list|(
 literal|"Unexpected primitive category "
 operator|+
-name|primitiveTypeInfos
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
+operator|)
 operator|.
 name|getPrimitiveCategory
 argument_list|()
@@ -2751,7 +2780,7 @@ argument_list|(
 operator|(
 name|CharTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
@@ -2942,7 +2971,7 @@ argument_list|(
 operator|(
 name|VarcharTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]

@@ -687,6 +687,22 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HashCodeUtil
+import|;
+end_import
+
 begin_comment
 comment|/**  * Table container that serializes keys and values using LazyBinarySerDe into  * BytesBytesMultiHashMap, with very low memory overhead. However,  * there may be some perf overhead when retrieving rows.  */
 end_comment
@@ -1884,7 +1900,7 @@ operator|)
 name|key
 decl_stmt|;
 return|return
-name|WriteBuffers
+name|HashCodeUtil
 operator|.
 name|murmurHash
 argument_list|(
@@ -2474,7 +2490,7 @@ name|getLength
 argument_list|()
 decl_stmt|;
 return|return
-name|WriteBuffers
+name|HashCodeUtil
 operator|.
 name|murmurHash
 argument_list|(

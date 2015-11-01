@@ -5670,6 +5670,24 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|public
+name|boolean
+name|getIsReduceSink
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+specifier|public
+name|String
+name|getReduceOutputName
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

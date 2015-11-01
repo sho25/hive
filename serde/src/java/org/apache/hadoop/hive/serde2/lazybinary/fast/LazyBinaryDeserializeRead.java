@@ -387,6 +387,24 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
+name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
 name|VarcharTypeInfo
 import|;
 end_import
@@ -397,6 +415,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|LazyBinaryDeserializeRead
 implements|implements
@@ -421,9 +440,9 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 decl_stmt|;
 specifier|private
 name|byte
@@ -490,20 +509,20 @@ decl_stmt|;
 specifier|public
 name|LazyBinaryDeserializeRead
 parameter_list|(
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 parameter_list|)
 block|{
 name|this
 operator|.
-name|primitiveTypeInfos
+name|typeInfos
 operator|=
-name|primitiveTypeInfos
+name|typeInfos
 expr_stmt|;
 name|fieldCount
 operator|=
-name|primitiveTypeInfos
+name|typeInfos
 operator|.
 name|length
 expr_stmt|;
@@ -537,15 +556,15 @@ specifier|private
 name|LazyBinaryDeserializeRead
 parameter_list|()
 block|{   }
-comment|/*    * The primitive type information for all fields.    */
+comment|/*    * The type information for all fields.    */
 specifier|public
-name|PrimitiveTypeInfo
+name|TypeInfo
 index|[]
-name|primitiveTypeInfos
+name|typeInfos
 parameter_list|()
 block|{
 return|return
-name|primitiveTypeInfos
+name|typeInfos
 return|;
 block|}
 comment|/*    * Set the range of bytes to be deserialized.    */
@@ -706,10 +725,15 @@ block|}
 comment|// We have a field and are positioned to it.
 if|if
 condition|(
-name|primitiveTypeInfos
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
+operator|)
 operator|.
 name|getPrimitiveCategory
 argument_list|()
@@ -1782,7 +1806,7 @@ argument_list|(
 operator|(
 name|CharTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
@@ -1971,7 +1995,7 @@ argument_list|(
 operator|(
 name|VarcharTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]
@@ -3085,7 +3109,7 @@ operator|=
 operator|(
 name|DecimalTypeInfo
 operator|)
-name|primitiveTypeInfos
+name|typeInfos
 index|[
 name|fieldIndex
 index|]

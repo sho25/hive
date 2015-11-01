@@ -110,6 +110,19 @@ return|return
 name|count
 return|;
 block|}
+specifier|public
+name|void
+name|setWritePosition
+parameter_list|(
+name|int
+name|writePosition
+parameter_list|)
+block|{
+name|count
+operator|=
+name|writePosition
+expr_stmt|;
+block|}
 comment|/**    * {@inheritDoc}    */
 annotation|@
 name|Override

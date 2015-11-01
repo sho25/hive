@@ -227,7 +227,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|VectorSerializeRowNoNulls
+name|VectorSerializeRow
 import|;
 end_import
 
@@ -336,8 +336,8 @@ comment|// Object that can take a set of columns in row in a vectorized row batc
 comment|// Known to not have any nulls.
 specifier|private
 specifier|transient
-name|VectorSerializeRowNoNulls
-name|keyVectorSerializeWriteNoNulls
+name|VectorSerializeRow
+name|keyVectorSerializeWrite
 decl_stmt|;
 comment|// The BinarySortable serialization of the current key.
 specifier|private
@@ -429,10 +429,10 @@ name|batch
 argument_list|)
 expr_stmt|;
 comment|/*          * Initialize Multi-Key members for this specialized class.          */
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|=
 operator|new
-name|VectorSerializeRowNoNulls
+name|VectorSerializeRow
 argument_list|(
 operator|new
 name|BinarySortableSerializeWrite
@@ -443,7 +443,7 @@ name|length
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|.
 name|init
 argument_list|(
@@ -657,22 +657,39 @@ comment|/*          * Repeating.          */
 comment|// All key input columns are repeating.  Generate key once.  Lookup once.
 comment|// Since the key is repeated, we must use entry 0 regardless of selectedInUse.
 comment|/*          * Multi-Key specific repeated lookup.          */
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|.
 name|setOutput
 argument_list|(
 name|currentKeyOutput
 argument_list|)
 expr_stmt|;
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|.
-name|serializeWriteNoNulls
+name|serializeWrite
 argument_list|(
 name|batch
 argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|keyVectorSerializeWrite
+operator|.
+name|getHasAnyNulls
+argument_list|()
+condition|)
+block|{
+comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Null key not expected in MapJoin"
+argument_list|)
+throw|;
+block|}
 name|byte
 index|[]
 name|keyBytes
@@ -868,22 +885,39 @@ operator|)
 decl_stmt|;
 comment|/*            * Multi-Key get key.            */
 comment|// Generate binary sortable key for current row in vectorized row batch.
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|.
 name|setOutput
 argument_list|(
 name|currentKeyOutput
 argument_list|)
 expr_stmt|;
-name|keyVectorSerializeWriteNoNulls
+name|keyVectorSerializeWrite
 operator|.
-name|serializeWriteNoNulls
+name|serializeWrite
 argument_list|(
 name|batch
 argument_list|,
 name|batchIndex
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|keyVectorSerializeWrite
+operator|.
+name|getHasAnyNulls
+argument_list|()
+condition|)
+block|{
+comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Null key not expected in MapJoin"
+argument_list|)
+throw|;
+block|}
 comment|/*            * Equal key series checking.            */
 if|if
 condition|(

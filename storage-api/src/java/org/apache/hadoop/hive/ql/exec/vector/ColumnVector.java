@@ -53,9 +53,13 @@ name|ColumnVector
 block|{
 comment|/*    * The current kinds of column vectors.    */
 specifier|public
+specifier|static
 enum|enum
 name|Type
 block|{
+name|NONE
+block|,
+comment|// Useful when the type of column vector has not be determined yet.
 name|LONG
 block|,
 name|DOUBLE
