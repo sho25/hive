@@ -164,11 +164,11 @@ specifier|private
 specifier|static
 specifier|final
 name|boolean
-name|isInfoEnabled
+name|isDebugEnabled
 init|=
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -184,12 +184,12 @@ block|{
 comment|// nothing to do
 if|if
 condition|(
-name|isInfoEnabled
+name|isDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|key
 operator|+
@@ -223,12 +223,12 @@ try|try
 block|{
 if|if
 condition|(
-name|isInfoEnabled
+name|isDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Creating "
 operator|+

@@ -6347,7 +6347,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"MapWorkVectorizationNodeProcessor process going to walk the operator stack to get vectorization context for "
 operator|+
@@ -6385,9 +6385,17 @@ name|vContext
 operator|!=
 literal|null
 assert|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"MapWorkVectorizationNodeProcessor process operator "
 operator|+
@@ -6404,6 +6412,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// When Vectorized GROUPBY outputs rows instead of vectorized row batchs, we don't
 comment|// vectorize the operators below it.
 if|if
@@ -12690,7 +12699,7 @@ break|break;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"vectorizeOperator "
 operator|+
@@ -12713,7 +12722,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"vectorizeOperator "
 operator|+

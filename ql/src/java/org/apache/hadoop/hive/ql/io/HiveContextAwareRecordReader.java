@@ -950,13 +950,14 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Processing file "
 operator|+
 name|inputPath
 argument_list|)
 expr_stmt|;
+comment|// Logged at INFO in multiple other places.
 name|initDone
 operator|=
 literal|true

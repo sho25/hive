@@ -224,11 +224,11 @@ specifier|private
 specifier|static
 specifier|final
 name|boolean
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 init|=
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -356,12 +356,12 @@ condition|)
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Found "
 operator|+
@@ -457,12 +457,12 @@ condition|)
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Found "
 operator|+
@@ -518,12 +518,12 @@ try|try
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Caching new object for key: "
 operator|+
@@ -639,15 +639,21 @@ name|String
 name|key
 parameter_list|)
 block|{
+if|if
+condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Removing key: "
 operator|+
 name|key
 argument_list|)
 expr_stmt|;
+block|}
 name|registry
 operator|.
 name|invalidate

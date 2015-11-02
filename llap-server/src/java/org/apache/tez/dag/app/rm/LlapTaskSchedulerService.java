@@ -2218,7 +2218,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DEBUG: BlacklistNode not supported"
+literal|"BlacklistNode not supported"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2236,7 +2236,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DEBUG: unBlacklistNode not supported"
+literal|"unBlacklistNode not supported"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2823,9 +2823,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Ignoring deallocateContainer for containerId: "
+literal|"Ignoring deallocateContainer for containerId: "
 operator|+
 name|containerId
 argument_list|)

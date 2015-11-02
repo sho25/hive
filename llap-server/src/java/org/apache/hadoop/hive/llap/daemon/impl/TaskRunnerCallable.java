@@ -1943,9 +1943,9 @@ block|{
 comment|// If the task hasn't started, and it is killed - report back to the AM that the task has been killed.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DBG: Reporting taskKilled for non-started fragment {}"
+literal|"Reporting taskKilled for non-started fragment {}"
 argument_list|,
 name|getRequestId
 argument_list|()
@@ -2460,7 +2460,7 @@ name|SUCCESS
 case|:
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Successfully finished {}"
 argument_list|,

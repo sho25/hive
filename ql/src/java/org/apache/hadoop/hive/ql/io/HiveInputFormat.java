@@ -1311,15 +1311,24 @@ return|return
 name|inputFormat
 return|;
 block|}
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Wrapping "
 operator|+
 name|inputFormat
 argument_list|)
 expr_stmt|;
+block|}
 annotation|@
 name|SuppressWarnings
 argument_list|(

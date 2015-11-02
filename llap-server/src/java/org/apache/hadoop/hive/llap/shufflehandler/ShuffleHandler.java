@@ -2813,9 +2813,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Registering watches for AppDirs: appId="
+literal|"Registering watches for AppDirs: appId="
 operator|+
 name|applicationIdString
 argument_list|)
@@ -3370,9 +3370,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: PathCacheEviction: "
+literal|"PathCacheEviction: "
 operator|+
 name|notification
 operator|.
@@ -3554,9 +3554,9 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Loaded : "
+literal|"Loaded : "
 operator|+
 name|key
 operator|+
@@ -3653,9 +3653,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Registering "
+literal|"Registering "
 operator|+
 name|identifier
 operator|+
@@ -4695,17 +4695,28 @@ argument_list|(
 name|identifier
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"DEBUG: Retrieved pathInfo for "
+literal|"Retrieved pathInfo for "
 operator|+
 name|identifier
 operator|+
-literal|" check for corresponding loaded messages to determine whether it was loaded or cached"
+literal|" check for corresponding "
+operator|+
+literal|"loaded messages to determine whether it was loaded or cached"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -1498,9 +1498,9 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Registering request with the ShuffleHandler"
+literal|"Registering request with the ShuffleHandler"
 argument_list|)
 expr_stmt|;
 name|ShuffleHandler

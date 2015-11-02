@@ -1310,7 +1310,7 @@ return|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Looking for table scans where optimization is applicable"
 argument_list|)
@@ -1433,7 +1433,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.

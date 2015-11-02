@@ -2161,9 +2161,17 @@ name|level
 operator|=
 literal|0
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"VectorizationContext consructor contextName "
 operator|+
@@ -2176,11 +2184,9 @@ operator|+
 literal|" initialColumnNames "
 operator|+
 name|initialColumnNames
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|projectionColumnNames
@@ -2299,9 +2305,17 @@ name|level
 operator|=
 literal|0
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"VectorizationContext consructor contextName "
 operator|+
@@ -2312,6 +2326,7 @@ operator|+
 name|level
 argument_list|)
 expr_stmt|;
+block|}
 name|projectedColumns
 operator|=
 operator|new

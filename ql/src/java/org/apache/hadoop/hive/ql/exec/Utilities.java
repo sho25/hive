@@ -3665,7 +3665,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"***************non-local mode***************"
 argument_list|)
@@ -3685,7 +3685,7 @@ name|path
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"local path = "
 operator|+
@@ -3787,7 +3787,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Open file to read in plan: "
 operator|+

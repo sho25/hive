@@ -1304,7 +1304,7 @@ argument_list|()
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"using hash aggregation processing mode"
 argument_list|)

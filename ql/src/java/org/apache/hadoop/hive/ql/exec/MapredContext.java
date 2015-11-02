@@ -340,7 +340,7 @@ argument_list|)
 expr_stmt|;
 name|logger
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"MapredContext initialized."
 argument_list|)

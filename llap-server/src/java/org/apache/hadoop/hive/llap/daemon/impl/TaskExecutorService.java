@@ -1857,12 +1857,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isInfoEnabled
+name|isDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"{} added to wait queue. Current wait queue size={}"
 argument_list|,
@@ -2254,12 +2254,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isInfoEnabled
+name|isDebugEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"{} scheduled for execution. canFinish={}"
 argument_list|,
@@ -2464,9 +2464,9 @@ block|{
 comment|// Re-order the wait queue
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Re-ordering the wait queue since {} finishable state moved to {}"
+literal|"Re-ordering the wait queue since {} finishable state moved to {}"
 argument_list|,
 name|taskWrapper
 operator|.
@@ -2528,9 +2528,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Removing {} from preemption queue because it's state changed to {}"
+literal|"Removing {} from preemption queue because it's state changed to {}"
 argument_list|,
 name|taskWrapper
 operator|.
@@ -2573,9 +2573,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"DEBUG: Adding {} to preemption queue since finishable state changed to {}"
+literal|"Adding {} to preemption queue since finishable state changed to {}"
 argument_list|,
 name|taskWrapper
 operator|.
@@ -2910,9 +2910,14 @@ operator|.
 name|incrementAndGet
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|isDebugEnabled
+condition|)
+block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Task {} complete. WaitQueueSize={}, numSlotsAvailable={}, preemptionQueueSize={}"
 argument_list|,
@@ -2937,6 +2942,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 synchronized|synchronized
 init|(
 name|lock
@@ -3526,7 +3532,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DEBUG: Received finishable state update for {}, state={}"
+literal|"Received finishable state update for {}, state={}"
 argument_list|,
 name|taskRunnerCallable
 operator|.

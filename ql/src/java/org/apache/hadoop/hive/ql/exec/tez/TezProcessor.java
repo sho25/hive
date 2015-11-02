@@ -828,9 +828,17 @@ argument_list|)
 expr_stmt|;
 comment|// in case of broadcast-join read the broadcast edge inputs
 comment|// (possibly asynchronously)
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Running task: "
 operator|+
@@ -841,6 +849,7 @@ name|getUniqueIdentifier
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 synchronized|synchronized
 init|(
 name|this

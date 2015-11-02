@@ -1190,7 +1190,7 @@ name|SemanticException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Processing for "
 operator|+
@@ -4605,6 +4605,15 @@ name|ExprWalkerInfo
 name|ewi
 parameter_list|)
 block|{
+if|if
+condition|(
+operator|!
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+return|return;
 for|for
 control|(
 name|Entry
@@ -4627,25 +4636,46 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|LOG
-operator|.
-name|info
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
 argument_list|(
-literal|"Pushdown Predicates of "
-operator|+
+literal|"Pushdown predicates of "
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|nd
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" For Alias : "
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" for alias "
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|e
 operator|.
 name|getKey
 argument_list|()
 argument_list|)
-expr_stmt|;
+operator|.
+name|append
+argument_list|(
+literal|": "
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isFirst
+init|=
+literal|true
+decl_stmt|;
 for|for
 control|(
 name|ExprNodeDesc
@@ -4657,12 +4687,28 @@ name|getValue
 argument_list|()
 control|)
 block|{
-name|LOG
+if|if
+condition|(
+operator|!
+name|isFirst
+condition|)
+block|{
+name|sb
 operator|.
-name|info
+name|append
 argument_list|(
-literal|"\t"
-operator|+
+literal|"; "
+argument_list|)
+expr_stmt|;
+block|}
+name|isFirst
+operator|=
+literal|false
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
 name|n
 operator|.
 name|getExprString
@@ -4670,6 +4716,16 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|sb
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**      * Take current operators pushdown predicates and merges them with      * children's pushdown predicates.      *      * @param nd      *          current operator      * @param owi      *          operator context during this walk      * @param ewi      *          pushdown predicates (part of expression walker info)      * @param aliases      *          aliases that this operator can pushdown. null means that all      *          aliases can be pushed down      * @throws SemanticException      */
