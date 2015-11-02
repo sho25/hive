@@ -312,14 +312,24 @@ operator|.
 name|LLAP_ORC_CACHE_MAX_SIZE
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Buddy allocator with {}"
-argument_list|,
+literal|"Buddy allocator with "
+operator|+
 operator|(
 name|isDirect
 condition|?
@@ -327,24 +337,25 @@ literal|"direct"
 else|:
 literal|"byte"
 operator|)
-argument_list|,
-literal|" buffers; allocation sizes {} "
-argument_list|,
+operator|+
+literal|" buffers; allocation sizes "
+operator|+
 name|minAllocation
-argument_list|,
-literal|" - {}"
-argument_list|,
+operator|+
+literal|" - "
+operator|+
 name|maxAllocation
-argument_list|,
-literal|", arena size {}"
-argument_list|,
+operator|+
+literal|", arena size "
+operator|+
 name|arenaSize
-argument_list|,
-literal|". total size {}"
-argument_list|,
+operator|+
+literal|". total size "
+operator|+
 name|maxSizeVal
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|minAllocation

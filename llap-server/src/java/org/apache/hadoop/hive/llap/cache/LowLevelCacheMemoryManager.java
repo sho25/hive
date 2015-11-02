@@ -208,17 +208,28 @@ argument_list|(
 name|maxSize
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cache memory manager initialized with max size {}"
-argument_list|,
+literal|"Cache memory manager initialized with max size "
+operator|+
 name|maxSize
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

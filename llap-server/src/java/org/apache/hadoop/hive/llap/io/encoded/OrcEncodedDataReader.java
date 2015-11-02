@@ -1728,20 +1728,31 @@ operator|.
 name|startTimeCounter
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing data for {}"
-argument_list|,
+literal|"Processing data for "
+operator|+
 name|split
 operator|.
 name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|processStop
@@ -4858,7 +4869,7 @@ if|if
 condition|(
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOGL
 operator|.
 name|isDebugEnabled
 argument_list|()

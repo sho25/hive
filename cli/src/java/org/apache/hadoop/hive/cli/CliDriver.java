@@ -959,6 +959,14 @@ argument_list|(
 literal|"CliDriver"
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -973,6 +981,7 @@ literal|"java.class.path"
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|console
 operator|=
 operator|new

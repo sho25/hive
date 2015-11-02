@@ -429,19 +429,30 @@ name|long
 name|cleanupInterval
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LlapIoImpl
+operator|.
+name|LOGL
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Low level cache; cleanup interval {}"
-argument_list|,
+literal|"Low level cache; cleanup interval "
+operator|+
 name|cleanupInterval
-argument_list|,
+operator|+
 literal|"sec"
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|cachePolicy
