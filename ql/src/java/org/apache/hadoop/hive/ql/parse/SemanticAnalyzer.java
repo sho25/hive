@@ -66215,6 +66215,12 @@ name|containsKey
 argument_list|(
 name|tblName
 argument_list|)
+operator|&&
+operator|!
+name|ctx
+operator|.
+name|getExplain
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -66270,6 +66276,12 @@ argument_list|()
 argument_list|,
 literal|false
 argument_list|)
+operator|&&
+operator|!
+name|ctx
+operator|.
+name|getExplain
+argument_list|()
 condition|)
 block|{
 throw|throw
