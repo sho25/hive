@@ -217,6 +217,18 @@ name|FileSplit
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|OrcProto
+import|;
+end_import
+
 begin_comment
 comment|/** An InputFormat for ORC files. Keys are meaningless,  * value is the OrcStruct object */
 end_comment

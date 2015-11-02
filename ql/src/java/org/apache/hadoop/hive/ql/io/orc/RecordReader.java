@@ -59,6 +59,14 @@ begin_interface
 specifier|public
 interface|interface
 name|RecordReader
+extends|extends
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|RecordReader
 block|{
 comment|/**    * Does the reader have more rows available.    * @return true if there are more rows    * @throws java.io.IOException    */
 name|boolean
@@ -73,47 +81,6 @@ name|next
 parameter_list|(
 name|Object
 name|previous
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Read the next row batch. The size of the batch to read cannot be controlled    * by the callers. Caller need to look at VectorizedRowBatch.size of the retunred    * object to know the batch size read.    * @param previousBatch a row batch object that can be reused by the reader    * @return the row batch that was read    * @throws java.io.IOException    */
-name|VectorizedRowBatch
-name|nextBatch
-parameter_list|(
-name|VectorizedRowBatch
-name|previousBatch
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Get the row number of the row that will be returned by the following    * call to next().    * @return the row number from 0 to the number of rows in the file    * @throws java.io.IOException    */
-name|long
-name|getRowNumber
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Get the progress of the reader through the rows.    * @return a fraction between 0.0 and 1.0 of rows read    * @throws java.io.IOException    */
-name|float
-name|getProgress
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Release the resources associated with the given reader.    * @throws java.io.IOException    */
-name|void
-name|close
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Seek to a particular row number.    */
-name|void
-name|seekToRow
-parameter_list|(
-name|long
-name|rowCount
 parameter_list|)
 throws|throws
 name|IOException

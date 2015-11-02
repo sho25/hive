@@ -325,6 +325,30 @@ name|Reporter
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|OrcProto
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
 begin_comment
 comment|/**  * A MapReduce/Hive input format for ORC files.  */
 end_comment
@@ -433,7 +457,7 @@ comment|/**        * Do we have schema on read in the configuration variables?  
 name|TypeDescription
 name|schema
 init|=
-name|OrcUtils
+name|OrcInputFormat
 operator|.
 name|getDesiredRowTypeDescr
 argument_list|(
