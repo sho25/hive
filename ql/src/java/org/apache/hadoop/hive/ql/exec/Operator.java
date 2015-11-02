@@ -3818,14 +3818,9 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-name|statsMap
-operator|.
-name|get
-argument_list|(
 name|e
-argument_list|)
 operator|.
-name|toString
+name|getValue
 argument_list|()
 argument_list|)
 operator|.
