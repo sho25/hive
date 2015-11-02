@@ -9250,19 +9250,17 @@ operator|+
 literal|"the largest expected ORC compression buffer size. Must be power of 2."
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_ARENA_SIZE
+name|LLAP_ORC_CACHE_ARENA_COUNT
 argument_list|(
-literal|"hive.llap.io.cache.orc.arena.size"
+literal|"hive.llap.io.cache.orc.arena.count"
 argument_list|,
-literal|128
-operator|*
-literal|1024
-operator|*
-literal|1024
+literal|8
 argument_list|,
-literal|"Arena size for ORC low-level cache; cache will be allocated in arena-sized steps.\n"
+literal|"Arena count for LLAP low-level cache; cache will be allocated in the steps of\n"
 operator|+
-literal|"Must presently be a power of two."
+literal|"(size/arena_count) bytes. This size must be<= 1Gb and>= max allocation; if it is\n"
+operator|+
+literal|"not the case, an adjusted size will be used. Using powers of 2 is recommended."
 argument_list|)
 block|,
 name|LLAP_ORC_CACHE_MAX_SIZE

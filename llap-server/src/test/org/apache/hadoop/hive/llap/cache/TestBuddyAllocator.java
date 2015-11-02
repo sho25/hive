@@ -319,6 +319,16 @@ name|long
 name|maxSize
 parameter_list|)
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|void
+name|forceReservedMemory
+parameter_list|(
+name|int
+name|memoryToEvict
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -2182,10 +2192,12 @@ name|setInt
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ARENA_SIZE
+name|LLAP_ORC_CACHE_ARENA_COUNT
 operator|.
 name|varname
 argument_list|,
+name|total
+operator|/
 name|arena
 argument_list|)
 expr_stmt|;

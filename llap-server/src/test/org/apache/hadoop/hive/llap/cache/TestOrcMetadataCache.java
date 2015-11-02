@@ -289,6 +289,16 @@ name|long
 name|maxSize
 parameter_list|)
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|void
+name|forceReservedMemory
+parameter_list|(
+name|int
+name|memoryToEvict
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test

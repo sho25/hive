@@ -50,6 +50,13 @@ name|long
 name|maxSize
 parameter_list|)
 function_decl|;
+name|void
+name|forceReservedMemory
+parameter_list|(
+name|int
+name|memoryToEvict
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
