@@ -517,10 +517,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -663,10 +660,7 @@ block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -706,10 +700,7 @@ block|{
 comment|/*          * NOT Repeating.          */
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -1046,10 +1037,7 @@ block|}
 block|}
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG

@@ -2401,10 +2401,7 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|int
@@ -2935,10 +2932,7 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -3052,10 +3046,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -3187,10 +3178,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 comment|// Determine the name of our map or reduce task for debug tracing.
@@ -3362,10 +3350,7 @@ literal|true
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|int
@@ -3959,10 +3944,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
@@ -4012,10 +3994,7 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
+name|isLogDebugEnabled
 condition|)
 block|{
 name|LOG
