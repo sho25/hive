@@ -1721,6 +1721,22 @@ name|JobConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|ShutdownHookManager
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -1765,6 +1781,13 @@ name|LogHelper
 argument_list|(
 name|LOG
 argument_list|)
+decl_stmt|;
+specifier|static
+specifier|final
+name|int
+name|SHUTDOWN_HOOK_PRIORITY
+init|=
+literal|0
 decl_stmt|;
 specifier|private
 name|int
@@ -2799,6 +2822,10 @@ expr_stmt|;
 try|try
 block|{
 comment|// Initialize the transaction manager.  This must be done before analyze is called.
+specifier|final
+name|HiveTxnManager
+name|txnManager
+init|=
 name|SessionState
 operator|.
 name|get
@@ -2807,6 +2834,57 @@ operator|.
 name|initTxnMgr
 argument_list|(
 name|conf
+argument_list|)
+decl_stmt|;
+comment|// In case when user Ctrl-C twice to kill Hive CLI JVM, we want to release locks
+name|ShutdownHookManager
+operator|.
+name|addShutdownHook
+argument_list|(
+operator|new
+name|Runnable
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|void
+name|run
+parameter_list|()
+block|{
+try|try
+block|{
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+literal|false
+argument_list|,
+name|txnManager
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|LockException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception when releasing locks in ShutdownHook for Driver: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+argument_list|,
+name|SHUTDOWN_HOOK_PRIORITY
 argument_list|)
 expr_stmt|;
 name|command
@@ -3613,7 +3691,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Returns EXPLAIN EXTENDED output for a semantically    * analyzed query.    *    * @param sem semantic analyzer for analyzed query    * @param plan query plan    * @param astStringTree AST tree dump    * @throws java.io.IOException    */
+comment|/**    * Returns EXPLAIN EXTENDED output for a semantically    * analyzed query.    *    * @param sem semantic analyzer for analyzed query    * @param plan query plan    * @param astTree AST tree dump    * @throws java.io.IOException    */
 specifier|private
 name|String
 name|getExplainOutput
@@ -6655,13 +6733,16 @@ name|isEmpty
 argument_list|()
 return|;
 block|}
-comment|/**    * @param commit if there is an open transaction and if true, commit,    *               if false rollback.  If there is no open transaction this parameter is ignored.    *    **/
+comment|/**    * @param commit if there is an open transaction and if true, commit,    *               if false rollback.  If there is no open transaction this parameter is ignored.    * @param txnManager an optional existing transaction manager retrieved earlier from the session    *    **/
 specifier|private
 name|void
 name|releaseLocksAndCommitOrRollback
 parameter_list|(
 name|boolean
 name|commit
+parameter_list|,
+name|HiveTxnManager
+name|txnManager
 parameter_list|)
 throws|throws
 name|LockException
@@ -6685,6 +6766,16 @@ operator|.
 name|RELEASE_LOCKS
 argument_list|)
 expr_stmt|;
+name|HiveTxnManager
+name|txnMgr
+decl_stmt|;
+if|if
+condition|(
+name|txnManager
+operator|==
+literal|null
+condition|)
+block|{
 name|SessionState
 name|ss
 init|=
@@ -6693,14 +6784,21 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-name|HiveTxnManager
 name|txnMgr
-init|=
+operator|=
 name|ss
 operator|.
 name|getTxnMgr
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+name|txnMgr
+operator|=
+name|txnManager
+expr_stmt|;
+block|}
 comment|// If we've opened a transaction we need to commit or rollback rather than explicitly
 comment|// releasing the locks.
 if|if
@@ -7405,6 +7503,8 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -7895,6 +7995,8 @@ comment|/*here, if there is an open txn, we want to commit it; this behavior mat
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|txnManager
@@ -8026,6 +8128,8 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -8045,6 +8149,8 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -8184,6 +8290,8 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -11366,6 +11474,8 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
