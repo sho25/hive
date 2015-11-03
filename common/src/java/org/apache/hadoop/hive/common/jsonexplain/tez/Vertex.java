@@ -210,6 +210,13 @@ name|hasMultiReduceOp
 init|=
 literal|false
 decl_stmt|;
+comment|// execution mode
+specifier|public
+name|String
+name|executionMode
+init|=
+literal|""
+decl_stmt|;
 specifier|public
 name|Vertex
 parameter_list|(
@@ -538,6 +545,29 @@ literal|"Merge File Operator does not have a Map Operator Tree"
 argument_list|)
 throw|;
 block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|key
+operator|.
+name|equals
+argument_list|(
+literal|"Execution mode:"
+argument_list|)
+condition|)
+block|{
+name|executionMode
+operator|=
+literal|" "
+operator|+
+name|vertexObject
+operator|.
+name|getString
+argument_list|(
+name|key
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -1095,6 +1125,10 @@ operator|+
 name|type
 operator|+
 literal|"]"
+operator|+
+name|this
+operator|.
+name|executionMode
 argument_list|)
 expr_stmt|;
 block|}
@@ -1122,6 +1156,10 @@ operator|+
 name|this
 operator|.
 name|name
+operator|+
+name|this
+operator|.
+name|executionMode
 argument_list|)
 expr_stmt|;
 block|}
