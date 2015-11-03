@@ -4600,8 +4600,22 @@ name|index
 operator|++
 control|)
 block|{
+comment|// The following check is only a guard against failures.
+comment|// TODO: Knowing which expr is constant in GBY's aggregation function
+comment|// arguments could be better done using Metadata provider of Calcite.
 if|if
 condition|(
+name|exprs
+operator|!=
+literal|null
+operator|&&
+name|index
+operator|<
+name|exprs
+operator|.
+name|size
+argument_list|()
+operator|&&
 name|exprs
 operator|.
 name|get
