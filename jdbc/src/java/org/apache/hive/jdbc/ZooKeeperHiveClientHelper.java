@@ -967,7 +967,7 @@ name|matcher
 operator|.
 name|group
 argument_list|(
-literal|2
+literal|1
 argument_list|)
 operator|.
 name|equalsIgnoreCase
