@@ -443,6 +443,14 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|int
+name|DEFAULT_FETCH_SIZE
+init|=
+literal|1000
+decl_stmt|;
+specifier|private
 specifier|final
 name|HiveConnection
 name|connection
@@ -485,7 +493,7 @@ specifier|private
 name|int
 name|fetchSize
 init|=
-literal|1000
+name|DEFAULT_FETCH_SIZE
 decl_stmt|;
 specifier|private
 name|boolean
@@ -1975,10 +1983,44 @@ argument_list|(
 literal|"setFetchSize"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|rows
+operator|>
+literal|0
+condition|)
+block|{
 name|fetchSize
 operator|=
 name|rows
 expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|rows
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Javadoc for Statement interface states that if the value is zero
+comment|// then "fetch size" hint is ignored.
+comment|// In this case it means reverting it to the default value.
+name|fetchSize
+operator|=
+name|DEFAULT_FETCH_SIZE
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Fetch size must be greater or equal to 0"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#setMaxFieldSize(int)    */
 annotation|@
