@@ -12987,33 +12987,7 @@ operator|instanceof
 name|ExprNodeConstantDesc
 condition|)
 block|{
-if|if
-condition|(
-operator|(
-operator|(
-name|ExprNodeConstantDesc
-operator|)
-name|child
-operator|)
-operator|.
-name|getValue
-argument_list|()
-operator|==
-literal|null
-condition|)
-block|{
-comment|// cannot handle constant null at the moment
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Unable to vectorize custom UDF. Custom udf containing "
-operator|+
-literal|"constant null argument cannot be currently vectorized."
-argument_list|)
-throw|;
-block|}
-comment|// this is a constant
+comment|// this is a constant (or null)
 name|argDescs
 index|[
 name|i

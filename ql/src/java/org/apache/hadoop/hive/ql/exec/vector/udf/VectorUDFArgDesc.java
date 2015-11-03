@@ -297,6 +297,17 @@ name|void
 name|prepareConstant
 parameter_list|()
 block|{
+specifier|final
+name|Object
+name|writableValue
+decl_stmt|;
+if|if
+condition|(
+name|constExpr
+operator|!=
+literal|null
+condition|)
+block|{
 name|PrimitiveCategory
 name|pc
 init|=
@@ -314,9 +325,8 @@ name|getPrimitiveCategory
 argument_list|()
 decl_stmt|;
 comment|// Convert from Java to Writable
-name|Object
 name|writableValue
-init|=
+operator|=
 name|PrimitiveObjectInspectorFactory
 operator|.
 name|getPrimitiveJavaObjectInspector
@@ -331,7 +341,15 @@ operator|.
 name|getValue
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+name|writableValue
+operator|=
+literal|null
+expr_stmt|;
+block|}
 name|constObjVal
 operator|=
 operator|new
