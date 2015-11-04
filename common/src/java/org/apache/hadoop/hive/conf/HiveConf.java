@@ -5009,10 +5009,13 @@ name|HIVELIMITPUSHDOWNMEMORYUSAGE
 argument_list|(
 literal|"hive.limit.pushdown.memory.usage"
 argument_list|,
-operator|-
-literal|1f
+literal|0.1f
 argument_list|,
-literal|"The max memory to be used for hash in RS operator for top K selection."
+operator|new
+name|RatioValidator
+argument_list|()
+argument_list|,
+literal|"The fraction of available memory to be used for buffering rows in Reducesink operator for limit pushdown optimization."
 argument_list|)
 block|,
 name|HIVELIMITTABLESCANPARTITION
