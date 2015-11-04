@@ -1573,6 +1573,9 @@ name|writeHiveDecimal
 parameter_list|(
 name|HiveDecimal
 name|dec
+parameter_list|,
+name|int
+name|scale
 parameter_list|)
 throws|throws
 name|IOException

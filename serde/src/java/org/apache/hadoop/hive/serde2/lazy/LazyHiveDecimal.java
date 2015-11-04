@@ -480,6 +480,9 @@ name|outputStream
 parameter_list|,
 name|HiveDecimal
 name|hiveDecimal
+parameter_list|,
+name|int
+name|scale
 parameter_list|)
 throws|throws
 name|IOException
@@ -510,8 +513,10 @@ name|encode
 argument_list|(
 name|hiveDecimal
 operator|.
-name|toString
-argument_list|()
+name|toFormatString
+argument_list|(
+name|scale
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|outputStream

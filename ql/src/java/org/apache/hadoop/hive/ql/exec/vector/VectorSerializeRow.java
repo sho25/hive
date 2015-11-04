@@ -2410,6 +2410,10 @@ index|]
 operator|.
 name|getHiveDecimal
 argument_list|()
+argument_list|,
+name|colVector
+operator|.
+name|scale
 argument_list|)
 expr_stmt|;
 return|return
@@ -2458,6 +2462,10 @@ index|]
 operator|.
 name|getHiveDecimal
 argument_list|()
+argument_list|,
+name|colVector
+operator|.
+name|scale
 argument_list|)
 expr_stmt|;
 return|return
