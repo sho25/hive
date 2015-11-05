@@ -4511,7 +4511,7 @@ literal|"new"
 argument_list|,
 name|Type
 operator|.
-name|FLOAT
+name|STRING
 argument_list|,
 literal|""
 argument_list|)

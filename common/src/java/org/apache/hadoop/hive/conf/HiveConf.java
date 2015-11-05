@@ -3183,7 +3183,7 @@ name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"If true (default is false), ALTER TABLE operations which change the type of a\n"
 operator|+

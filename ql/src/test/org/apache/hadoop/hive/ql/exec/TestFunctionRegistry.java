@@ -615,7 +615,7 @@ name|assertEquals
 argument_list|(
 name|convertible
 argument_list|,
-name|FunctionRegistry
+name|TypeInfoUtils
 operator|.
 name|implicitConvertible
 argument_list|(
