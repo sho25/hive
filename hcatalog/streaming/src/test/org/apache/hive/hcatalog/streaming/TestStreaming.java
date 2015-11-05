@@ -1583,7 +1583,7 @@ name|dbName2
 argument_list|,
 name|tblName2
 argument_list|,
-name|partitionVals
+literal|null
 argument_list|,
 name|colNames
 argument_list|,
@@ -1591,7 +1591,7 @@ name|colTypes
 argument_list|,
 name|bucketCols
 argument_list|,
-name|partNames
+literal|null
 argument_list|,
 name|loc2
 argument_list|,
@@ -3304,7 +3304,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// 1) Basic
+comment|// For partitioned table, partitionVals are specified
 name|HiveEndPoint
 name|endPt
 init|=
@@ -3338,7 +3338,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-comment|// 2) Leave partition unspecified
+comment|// For unpartitioned table, partitionVals are not specified
 name|endPt
 operator|=
 operator|new
@@ -3346,9 +3346,9 @@ name|HiveEndPoint
 argument_list|(
 name|metaStoreURI
 argument_list|,
-name|dbName
+name|dbName2
 argument_list|,
-name|tblName
+name|tblName2
 argument_list|,
 literal|null
 argument_list|)
@@ -3366,6 +3366,144 @@ name|close
 argument_list|()
 expr_stmt|;
 comment|// should not throw
+comment|// For partitioned table, partitionVals are not specified
+try|try
+block|{
+name|endPt
+operator|=
+operator|new
+name|HiveEndPoint
+argument_list|(
+name|metaStoreURI
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+name|connection
+operator|=
+name|endPt
+operator|.
+name|newConnection
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"ConnectionError was not thrown"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|connection
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ConnectionError
+name|e
+parameter_list|)
+block|{
+comment|// expecting this exception
+name|String
+name|errMsg
+init|=
+literal|"doesn't specify any partitions for partitioned table"
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|endsWith
+argument_list|(
+name|errMsg
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// For unpartitioned table, partition values are specified
+try|try
+block|{
+name|endPt
+operator|=
+operator|new
+name|HiveEndPoint
+argument_list|(
+name|metaStoreURI
+argument_list|,
+name|dbName2
+argument_list|,
+name|tblName2
+argument_list|,
+name|partitionVals
+argument_list|)
+expr_stmt|;
+name|connection
+operator|=
+name|endPt
+operator|.
+name|newConnection
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"ConnectionError was not thrown"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|connection
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ConnectionError
+name|e
+parameter_list|)
+block|{
+comment|// expecting this exception
+name|String
+name|errMsg
+init|=
+literal|"specifies partitions for unpartitioned table"
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|endsWith
+argument_list|(
+name|errMsg
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Test
