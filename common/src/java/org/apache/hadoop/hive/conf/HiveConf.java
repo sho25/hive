@@ -4104,26 +4104,13 @@ name|HIVE_MAP_GROUPBY_SORT
 argument_list|(
 literal|"hive.map.groupby.sorted"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"If the bucketing/sorting properties of the table exactly match the grouping key, whether to perform \n"
 operator|+
 literal|"the group by in the mapper by using BucketizedHiveInputFormat. The only downside to this\n"
 operator|+
 literal|"is that it limits the number of mappers to the number of files."
-argument_list|)
-block|,
-name|HIVE_MAP_GROUPBY_SORT_TESTMODE
-argument_list|(
-literal|"hive.map.groupby.sorted.testmode"
-argument_list|,
-literal|false
-argument_list|,
-literal|"If the bucketing/sorting properties of the table exactly match the grouping key, whether to perform \n"
-operator|+
-literal|"the group by in the mapper by using BucketizedHiveInputFormat. If the test mode is set, the plan\n"
-operator|+
-literal|"is not converted, but a query property is set to denote the same."
 argument_list|)
 block|,
 name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS

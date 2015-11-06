@@ -1389,7 +1389,6 @@ name|HIVE_VECTORIZATION_ENABLED
 argument_list|)
 condition|)
 block|{
-comment|// In test mode, dont change the query plan. However, setup a query property
 name|pGraphContext
 operator|.
 name|getQueryProperties
@@ -1400,24 +1399,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|hiveConf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_MAP_GROUPBY_SORT_TESTMODE
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
 name|ReduceSinkOperator
 name|reduceSinkOp
 init|=
@@ -2817,7 +2798,6 @@ name|int
 name|depth
 parameter_list|)
 block|{
-comment|// In test mode, dont change the query plan. However, setup a query property
 name|pGraphContext
 operator|.
 name|getQueryProperties
@@ -2828,24 +2808,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_MAP_GROUPBY_SORT_TESTMODE
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
 if|if
 condition|(
 name|removeChildren
