@@ -12696,6 +12696,15 @@ operator|.
 name|restrictList
 argument_list|)
 expr_stmt|;
+name|hiddenSet
+operator|.
+name|addAll
+argument_list|(
+name|other
+operator|.
+name|hiddenSet
+argument_list|)
+expr_stmt|;
 name|modWhiteListPattern
 operator|=
 name|other
