@@ -8541,6 +8541,15 @@ argument_list|,
 literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
 argument_list|)
 block|,
+name|HIVE_CONF_INTERNAL_VARIABLE_LIST
+argument_list|(
+literal|"hive.conf.internal.variable.list"
+argument_list|,
+literal|"hive.added.files.path,hive.added.jars.path,hive.added.archives.path"
+argument_list|,
+literal|"Comma separated list of variables which are used internally and should not be configurable."
+argument_list|)
+block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
 comment|// outputs are ready
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
@@ -10883,7 +10892,7 @@ name|name
 operator|+
 literal|" at runtime. It is in the list"
 operator|+
-literal|"of parameters that can't be modified at runtime"
+literal|" of parameters that can't be modified at runtime"
 argument_list|)
 throw|;
 block|}
@@ -14456,6 +14465,50 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|String
+name|internalVariableListStr
+init|=
+name|this
+operator|.
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_CONF_INTERNAL_VARIABLE_LIST
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|internalVariableListStr
+operator|!=
+literal|null
+condition|)
+block|{
+for|for
+control|(
+name|String
+name|entry
+range|:
+name|internalVariableListStr
+operator|.
+name|split
+argument_list|(
+literal|","
+argument_list|)
+control|)
+block|{
+name|restrictList
+operator|.
+name|add
+argument_list|(
+name|entry
+operator|.
+name|trim
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|restrictList
 operator|.
 name|add
@@ -14485,6 +14538,17 @@ argument_list|(
 name|ConfVars
 operator|.
 name|HIVE_CONF_HIDDEN_LIST
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|restrictList
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_CONF_INTERNAL_VARIABLE_LIST
 operator|.
 name|varname
 argument_list|)
