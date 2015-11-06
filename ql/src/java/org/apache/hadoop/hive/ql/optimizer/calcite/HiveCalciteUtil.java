@@ -1742,6 +1742,8 @@ name|newLeftFields
 operator|.
 name|get
 argument_list|(
+name|origLeftInputSize
+operator|+
 name|i
 argument_list|)
 operator|.
@@ -1757,10 +1759,12 @@ name|rexBuilder
 operator|.
 name|makeInputRef
 argument_list|(
-name|newLeftFields
+name|newRightFields
 operator|.
 name|get
 argument_list|(
+name|origRightInputSize
+operator|+
 name|i
 argument_list|)
 operator|.
