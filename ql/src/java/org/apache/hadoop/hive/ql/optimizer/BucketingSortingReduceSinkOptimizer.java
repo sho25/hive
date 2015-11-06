@@ -3264,6 +3264,26 @@ range|:
 name|bucketPositions
 control|)
 block|{
+if|if
+condition|(
+name|pos
+operator|>=
+name|selectDesc
+operator|.
+name|getColList
+argument_list|()
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+comment|// e.g., INSERT OVERWRITE TABLE temp1 SELECT  c0,  c0 FROM temp2;
+comment|// In such a case Select Op will only have one instance of c0 and RS would have two.
+comment|// So, locating bucketCol in such cases will generate error. So, bail out.
+return|return
+literal|null
+return|;
+block|}
 name|ExprNodeDesc
 name|selectColList
 init|=
