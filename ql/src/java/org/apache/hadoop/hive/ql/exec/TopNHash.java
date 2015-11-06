@@ -541,6 +541,35 @@ expr_stmt|;
 return|return;
 comment|// topN == 0 will cause a short-circuit, don't need any initialization
 block|}
+comment|// Used Memory = totalMemory() - freeMemory();
+comment|// Total Free Memory = maxMemory() - Used Memory;
+name|long
+name|totalFreeMemory
+init|=
+name|Runtime
+operator|.
+name|getRuntime
+argument_list|()
+operator|.
+name|maxMemory
+argument_list|()
+operator|-
+name|Runtime
+operator|.
+name|getRuntime
+argument_list|()
+operator|.
+name|totalMemory
+argument_list|()
+operator|+
+name|Runtime
+operator|.
+name|getRuntime
+argument_list|()
+operator|.
+name|freeMemory
+argument_list|()
+decl_stmt|;
 comment|// limit * 64 : compensation of arrays for key/value/hashcodes
 name|this
 operator|.
@@ -552,13 +581,7 @@ call|)
 argument_list|(
 name|memUsage
 operator|*
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
-operator|.
-name|freeMemory
-argument_list|()
+name|totalFreeMemory
 argument_list|)
 operator|-
 name|topN
