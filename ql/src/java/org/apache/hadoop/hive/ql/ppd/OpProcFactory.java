@@ -4610,7 +4610,7 @@ condition|(
 operator|!
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 condition|)
 return|return;
@@ -4718,7 +4718,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sb
 operator|.
