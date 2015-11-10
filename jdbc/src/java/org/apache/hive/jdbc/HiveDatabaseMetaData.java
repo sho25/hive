@@ -3138,13 +3138,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|schemaPattern
-operator|!=
-literal|null
-condition|)
-block|{
 name|getTableReq
 operator|.
 name|setSchemaName
@@ -3152,7 +3145,6 @@ argument_list|(
 name|schemaPattern
 argument_list|)
 expr_stmt|;
-block|}
 try|try
 block|{
 name|getTableResp
