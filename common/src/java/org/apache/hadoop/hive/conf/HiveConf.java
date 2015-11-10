@@ -13689,6 +13689,12 @@ operator|.
 name|TASKLOG_DEBUG_TIMEOUT
 operator|.
 name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVEQUERYID
+operator|.
+name|varname
 block|,   }
 decl_stmt|;
 comment|/**    * Default list of regexes for config parameters that are modifiable with    * sql standard authorization enabled    */

@@ -1476,6 +1476,9 @@ comment|// Set current OperationLog in this async thread for keeping on saving q
 name|registerCurrentOperationLog
 argument_list|()
 expr_stmt|;
+name|registerLoggingContext
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 name|runQuery
@@ -1507,6 +1510,9 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|unregisterLoggingContext
+argument_list|()
+expr_stmt|;
 name|unregisterOperationLog
 argument_list|()
 expr_stmt|;

@@ -367,6 +367,20 @@ block|{
 comment|//Running a normal async query with no exceptions,then no need to close opHandle
 name|session
 operator|.
+name|open
+argument_list|(
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
 name|executeStatementAsync
 argument_list|(
 name|hql
