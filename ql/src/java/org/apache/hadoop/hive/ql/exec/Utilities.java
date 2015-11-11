@@ -13106,6 +13106,23 @@ control|)
 block|{
 try|try
 block|{
+name|String
+name|onefile
+init|=
+name|realFile
+argument_list|(
+name|one
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|onefile
+operator|!=
+literal|null
+condition|)
+block|{
 name|realFiles
 operator|.
 name|add
@@ -13118,6 +13135,21 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"The file "
+operator|+
+name|one
+operator|+
+literal|" does not exist."
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
