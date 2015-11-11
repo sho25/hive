@@ -518,6 +518,16 @@ name|isDebugEnabled
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|Object
+name|UNKNOWN_VALUE
+init|=
+operator|new
+name|Object
+argument_list|()
+decl_stmt|;
+specifier|private
 specifier|final
 name|Path
 name|path
@@ -1861,8 +1871,9 @@ block|}
 else|else
 block|{
 return|return
-literal|null
+name|UNKNOWN_VALUE
 return|;
+comment|// null is not safe here
 block|}
 block|}
 comment|/**    * Evaluate a predicate with respect to the statistics from the column    * that is referenced in the predicate.    * @param statsProto the statistics for the column mentioned in the predicate    * @param predicate the leaf predicate we need to evaluation    * @param bloomFilter    * @return the set of truth values that may be returned for the given    *   predicate.    */
@@ -2054,6 +2065,20 @@ operator|.
 name|NULL
 return|;
 block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|min
+operator|==
+name|UNKNOWN_VALUE
+condition|)
+block|{
+return|return
+name|TruthValue
+operator|.
+name|YES_NO_NULL
+return|;
 block|}
 name|TruthValue
 name|result
