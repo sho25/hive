@@ -1979,6 +1979,20 @@ argument_list|(
 name|r
 argument_list|)
 expr_stmt|;
+comment|// Add original tree as well for potential alternative transformation.
+comment|// This is modeled after LoptOptimizeJoinRule::findBestOrderings() in
+comment|// which rule adds multiple transformations and Planner picks the cheapest one.
+comment|// Hep planner will automatically pick the one with lower cost among two.
+comment|// For details, see: HepPlanner:applyTransformationResults()
+comment|// In this case, if ndv is close to # of rows, i.e., group by is not resulting
+comment|// in any deduction, doing this transformation is not useful.
+name|call
+operator|.
+name|transformTo
+argument_list|(
+name|aggregate
+argument_list|)
+expr_stmt|;
 block|}
 comment|/** Computes the closure of a set of columns according to a given list of    * constraints. Each 'x = y' constraint causes bit y to be set if bit x is    * set, and vice versa. */
 specifier|private
