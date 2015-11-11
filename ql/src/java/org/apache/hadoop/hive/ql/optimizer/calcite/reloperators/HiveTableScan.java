@@ -169,22 +169,6 @@ name|rel
 operator|.
 name|core
 operator|.
-name|RelFactories
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|core
-operator|.
 name|TableScan
 import|;
 end_import
@@ -262,6 +246,20 @@ operator|.
 name|rex
 operator|.
 name|RexNode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|tools
+operator|.
+name|RelBuilder
 import|;
 end_import
 
@@ -791,10 +789,8 @@ name|RelDataTypeField
 argument_list|>
 name|extraFields
 parameter_list|,
-name|RelFactories
-operator|.
-name|ProjectFactory
-name|projectFactory
+name|RelBuilder
+name|relBuilder
 parameter_list|)
 block|{
 comment|// 1. If the schema is the same then bail out
@@ -991,12 +987,15 @@ argument_list|)
 decl_stmt|;
 comment|// 5. Add Proj on top of TS
 return|return
-name|projectFactory
+name|relBuilder
 operator|.
-name|createProject
+name|push
 argument_list|(
 name|newHT
-argument_list|,
+argument_list|)
+operator|.
+name|project
+argument_list|(
 name|exprList
 argument_list|,
 operator|new
@@ -1008,6 +1007,9 @@ argument_list|(
 name|fieldNames
 argument_list|)
 argument_list|)
+operator|.
+name|build
+argument_list|()
 return|;
 block|}
 specifier|public

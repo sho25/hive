@@ -4174,7 +4174,7 @@ name|cinfoLst
 init|=
 name|createColInfos
 argument_list|(
-name|inputOp
+name|resultOp
 argument_list|)
 decl_stmt|;
 name|resultOp
@@ -8292,21 +8292,6 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
-comment|// UNIQUE
-if|if
-condition|(
-name|join
-operator|.
-name|isDistinct
-argument_list|()
-condition|)
-block|{
-return|return
-name|JoinType
-operator|.
-name|UNIQUE
-return|;
-block|}
 comment|// SEMIJOIN
 if|if
 condition|(
@@ -8365,6 +8350,7 @@ name|RIGHTOUTER
 expr_stmt|;
 break|break;
 default|default:
+comment|// TODO: UNIQUE JOIN
 name|resultJoinType
 operator|=
 name|JoinType

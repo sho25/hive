@@ -1959,6 +1959,13 @@ name|orderRelNode
 argument_list|(
 name|child
 argument_list|)
+operator|&&
+name|HiveCalciteUtil
+operator|.
+name|limitRelNode
+argument_list|(
+name|child
+argument_list|)
 operator|)
 operator|&&
 operator|!
