@@ -375,6 +375,9 @@ name|val
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -383,6 +386,8 @@ block|{
 name|addBytes
 argument_list|(
 name|val
+argument_list|,
+literal|0
 argument_list|,
 name|val
 operator|.
@@ -398,6 +403,9 @@ parameter_list|(
 name|byte
 index|[]
 name|val
+parameter_list|,
+name|int
+name|offset
 parameter_list|,
 name|int
 name|length
@@ -424,6 +432,8 @@ operator|.
 name|hash64
 argument_list|(
 name|val
+argument_list|,
+name|offset
 argument_list|,
 name|length
 argument_list|)
@@ -610,6 +620,9 @@ name|val
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 return|;
 block|}
@@ -617,6 +630,8 @@ return|return
 name|testBytes
 argument_list|(
 name|val
+argument_list|,
+literal|0
 argument_list|,
 name|val
 operator|.
@@ -631,6 +646,9 @@ parameter_list|(
 name|byte
 index|[]
 name|val
+parameter_list|,
+name|int
+name|offset
 parameter_list|,
 name|int
 name|length
@@ -652,6 +670,8 @@ operator|.
 name|hash64
 argument_list|(
 name|val
+argument_list|,
+name|offset
 argument_list|,
 name|length
 argument_list|)

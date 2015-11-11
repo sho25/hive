@@ -6859,6 +6859,14 @@ operator|/
 name|totalRowCount
 return|;
 block|}
+name|MetadataReader
+name|getMetadataReader
+parameter_list|()
+block|{
+return|return
+name|metadata
+return|;
+block|}
 specifier|private
 name|int
 name|findStripe

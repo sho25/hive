@@ -471,6 +471,8 @@ name|hash64
 argument_list|(
 name|data
 argument_list|,
+literal|0
+argument_list|,
 name|data
 operator|.
 name|length
@@ -489,6 +491,9 @@ index|[]
 name|data
 parameter_list|,
 name|int
+name|offset
+parameter_list|,
+name|int
 name|length
 parameter_list|)
 block|{
@@ -496,6 +501,8 @@ return|return
 name|hash64
 argument_list|(
 name|data
+argument_list|,
+name|offset
 argument_list|,
 name|length
 argument_list|,
@@ -512,6 +519,9 @@ parameter_list|(
 name|byte
 index|[]
 name|data
+parameter_list|,
+name|int
+name|offset
 parameter_list|,
 name|int
 name|length
@@ -566,6 +576,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 index|]
 operator|&
@@ -579,6 +591,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|1
@@ -597,6 +611,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|2
@@ -615,6 +631,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|3
@@ -633,6 +651,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|4
@@ -651,6 +671,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|5
@@ -669,6 +691,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|6
@@ -687,6 +711,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i8
 operator|+
 literal|7
@@ -769,6 +795,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|6
@@ -790,6 +818,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|5
@@ -811,6 +841,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|4
@@ -832,6 +864,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|3
@@ -853,6 +887,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|2
@@ -874,6 +910,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|1
@@ -895,6 +933,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 index|]
 operator|&
@@ -958,6 +998,8 @@ name|hash128
 argument_list|(
 name|data
 argument_list|,
+literal|0
+argument_list|,
 name|data
 operator|.
 name|length
@@ -966,7 +1008,7 @@ name|DEFAULT_SEED
 argument_list|)
 return|;
 block|}
-comment|/**    * Murmur3 128-bit variant.    *    * @param data   - input byte array    * @param length - length of array    * @param seed   - seed. (default is 0)    * @return - hashcode (2 longs)    */
+comment|/**    * Murmur3 128-bit variant.    *    * @param data   - input byte array    * @param offset - the first element of array    * @param length - length of array    * @param seed   - seed. (default is 0)    * @return - hashcode (2 longs)    */
 specifier|public
 specifier|static
 name|long
@@ -976,6 +1018,9 @@ parameter_list|(
 name|byte
 index|[]
 name|data
+parameter_list|,
+name|int
+name|offset
 parameter_list|,
 name|int
 name|length
@@ -1035,6 +1080,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 index|]
 operator|&
@@ -1048,6 +1095,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|1
@@ -1066,6 +1115,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|2
@@ -1084,6 +1135,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|3
@@ -1102,6 +1155,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|4
@@ -1120,6 +1175,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|5
@@ -1138,6 +1195,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|6
@@ -1156,6 +1215,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|7
@@ -1176,6 +1237,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|8
@@ -1191,6 +1254,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|9
@@ -1209,6 +1274,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|10
@@ -1227,6 +1294,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|11
@@ -1245,6 +1314,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|12
@@ -1263,6 +1334,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|13
@@ -1281,6 +1354,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|14
@@ -1299,6 +1374,8 @@ name|long
 operator|)
 name|data
 index|[
+name|offset
+operator|+
 name|i16
 operator|+
 literal|15
@@ -1441,6 +1518,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|14
@@ -1462,6 +1541,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|13
@@ -1483,6 +1564,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|12
@@ -1504,6 +1587,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|11
@@ -1525,6 +1610,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|10
@@ -1546,6 +1633,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|9
@@ -1567,6 +1656,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|8
@@ -1609,6 +1700,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|7
@@ -1630,6 +1723,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|6
@@ -1651,6 +1746,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|5
@@ -1672,6 +1769,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|4
@@ -1693,6 +1792,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|3
@@ -1714,6 +1815,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|2
@@ -1735,6 +1838,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 operator|+
 literal|1
@@ -1756,6 +1861,8 @@ call|)
 argument_list|(
 name|data
 index|[
+name|offset
+operator|+
 name|tailStart
 index|]
 operator|&

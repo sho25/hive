@@ -381,6 +381,33 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
+comment|/**    * Set a field by actually copying in to a local buffer.    * If you must actually copy data in to the array, use this method.    * DO NOT USE this method unless it's not practical to set data by reference with setRef().    * Setting data by reference tends to run a lot faster than copying data in.    *    * @param elementNum index within column vector to set    * @param sourceBuf container of source data    */
+specifier|public
+name|void
+name|setVal
+parameter_list|(
+name|int
+name|elementNum
+parameter_list|,
+name|byte
+index|[]
+name|sourceBuf
+parameter_list|)
+block|{
+name|setVal
+argument_list|(
+name|elementNum
+argument_list|,
+name|sourceBuf
+argument_list|,
+literal|0
+argument_list|,
+name|sourceBuf
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Set a field to the concatenation of two string values. Result data is copied    * into the internal buffer.    *    * @param elementNum index within column vector to set    * @param leftSourceBuf container of left argument    * @param leftStart start of left argument    * @param leftLen length of left argument    * @param rightSourceBuf container of right argument    * @param rightStart start of right argument    * @param rightLen length of right arugment    */
 specifier|public
 name|void

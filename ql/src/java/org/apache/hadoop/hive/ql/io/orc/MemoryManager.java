@@ -557,16 +557,22 @@ return|return
 name|currentScale
 return|;
 block|}
-comment|/**    * Give the memory manager an opportunity for doing a memory check.    * @throws IOException    */
+comment|/**    * Give the memory manager an opportunity for doing a memory check.    * @param rows number of rows added    * @throws IOException    */
 name|void
 name|addedRow
-parameter_list|()
+parameter_list|(
+name|int
+name|rows
+parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|rowsAddedSinceCheck
+operator|+=
+name|rows
+expr_stmt|;
 if|if
 condition|(
-operator|++
 name|rowsAddedSinceCheck
 operator|>=
 name|ROWS_BETWEEN_CHECKS

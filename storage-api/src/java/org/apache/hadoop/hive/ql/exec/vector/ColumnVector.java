@@ -134,7 +134,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      * Resets the column to default state      *  - fills the isNull array with false      *  - sets noNulls to true      *  - sets isRepeating to false      */
+comment|/**    * Resets the column to default state    *  - fills the isNull array with false    *  - sets noNulls to true    *  - sets isRepeating to false    */
 specifier|public
 name|void
 name|reset
@@ -171,6 +171,22 @@ expr_stmt|;
 name|preFlattenIsRepeating
 operator|=
 literal|false
+expr_stmt|;
+block|}
+comment|/**    * Sets the isRepeating flag. Recurses over structs and unions so that the    * flags are set correctly.    * @param isRepeating    */
+specifier|public
+name|void
+name|setRepeating
+parameter_list|(
+name|boolean
+name|isRepeating
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isRepeating
+operator|=
+name|isRepeating
 expr_stmt|;
 block|}
 specifier|abstract
