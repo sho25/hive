@@ -1300,7 +1300,6 @@ argument_list|)
 annotation|@
 name|Override
 specifier|protected
-specifier|final
 name|void
 name|completeInitializationOp
 parameter_list|(

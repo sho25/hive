@@ -3452,35 +3452,24 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|Pair
-argument_list|<
-name|MapJoinTableContainer
-index|[]
-argument_list|,
-name|MapJoinTableContainerSerDe
-index|[]
-argument_list|>
-name|loadHashTable
+name|void
+name|completeInitializationOp
 parameter_list|(
-name|ExecMapperContext
-name|mapContext
-parameter_list|,
-name|MapredContext
-name|mrContext
+name|Object
+index|[]
+name|os
 parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|Pair
-argument_list|<
-name|MapJoinTableContainer
-index|[]
-argument_list|,
-name|MapJoinTableContainerSerDe
-index|[]
-argument_list|>
-name|pair
-decl_stmt|;
+comment|// setup mapJoinTables and serdes
+name|super
+operator|.
+name|completeInitializationOp
+argument_list|(
+name|os
+argument_list|)
+expr_stmt|;
 name|VectorMapJoinDesc
 name|vectorDesc
 init|=
@@ -3509,30 +3498,8 @@ case|case
 name|OPTIMIZED
 case|:
 block|{
-comment|// Using Tez's HashTableLoader, create either a MapJoinBytesTableContainer or
-comment|// HybridHashTableContainer.
-name|pair
-operator|=
-name|super
-operator|.
-name|loadHashTable
-argument_list|(
-name|mapContext
-argument_list|,
-name|mrContext
-argument_list|)
-expr_stmt|;
 comment|// Create our vector map join optimized hash table variation *above* the
 comment|// map join table container.
-name|MapJoinTableContainer
-index|[]
-name|mapJoinTableContainers
-init|=
-name|pair
-operator|.
-name|getLeft
-argument_list|()
-decl_stmt|;
 name|vectorMapJoinHashTable
 operator|=
 name|VectorMapJoinOptimizedCreateHashTable
@@ -3541,7 +3508,7 @@ name|createHashTable
 argument_list|(
 name|conf
 argument_list|,
-name|mapJoinTableContainers
+name|mapJoinTables
 index|[
 name|posSingleVectorMapJoinSmallTable
 index|]
@@ -3553,36 +3520,15 @@ case|case
 name|FAST
 case|:
 block|{
-comment|// Use our VectorMapJoinFastHashTableLoader to create a VectorMapJoinTableContainer.
-name|pair
-operator|=
-name|super
-operator|.
-name|loadHashTable
-argument_list|(
-name|mapContext
-argument_list|,
-name|mrContext
-argument_list|)
-expr_stmt|;
 comment|// Get our vector map join fast hash table variation from the
 comment|// vector map join table container.
-name|MapJoinTableContainer
-index|[]
-name|mapJoinTableContainers
-init|=
-name|pair
-operator|.
-name|getLeft
-argument_list|()
-decl_stmt|;
 name|VectorMapJoinTableContainer
 name|vectorMapJoinTableContainer
 init|=
 operator|(
 name|VectorMapJoinTableContainer
 operator|)
-name|mapJoinTableContainers
+name|mapJoinTables
 index|[
 name|posSingleVectorMapJoinSmallTable
 index|]
@@ -3610,9 +3556,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-return|return
-name|pair
-return|;
 block|}
 comment|/*    * Setup our 2nd batch with the same "column schema" as the big table batch that can be used to    * build join output results in.    */
 specifier|protected
