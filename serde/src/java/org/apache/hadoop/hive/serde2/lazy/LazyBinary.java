@@ -129,6 +129,7 @@ operator|.
 name|isDebugEnabled
 argument_list|()
 decl_stmt|;
+specifier|public
 name|LazyBinary
 parameter_list|(
 name|LazyBinaryObjectInspector
