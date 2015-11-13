@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|BitSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collection
 import|;
 end_import
@@ -752,6 +762,13 @@ name|boolean
 name|doSplitsGrouping
 init|=
 literal|true
+decl_stmt|;
+comment|// bitsets can't be correctly serialized by Kryo's default serializer
+comment|// BitSet::wordsInUse is transient, so force dumping into a lower form
+specifier|private
+name|byte
+index|[]
+name|includedBuckets
 decl_stmt|;
 comment|/** Whether LLAP IO will be used for inputs. */
 specifier|private
@@ -3032,6 +3049,45 @@ operator|.
 name|mapAliases
 operator|=
 name|mapAliases
+expr_stmt|;
+block|}
+specifier|public
+name|BitSet
+name|getIncludedBuckets
+parameter_list|()
+block|{
+return|return
+name|includedBuckets
+operator|!=
+literal|null
+condition|?
+name|BitSet
+operator|.
+name|valueOf
+argument_list|(
+name|includedBuckets
+argument_list|)
+else|:
+literal|null
+return|;
+block|}
+specifier|public
+name|void
+name|setIncludedBuckets
+parameter_list|(
+name|BitSet
+name|includedBuckets
+parameter_list|)
+block|{
+comment|// see comment next to the field
+name|this
+operator|.
+name|includedBuckets
+operator|=
+name|includedBuckets
+operator|.
+name|toByteArray
+argument_list|()
 expr_stmt|;
 block|}
 block|}

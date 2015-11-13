@@ -9129,6 +9129,19 @@ operator|+
 literal|"of reducers that tez specifies."
 argument_list|)
 block|,
+name|TEZ_OPTIMIZE_BUCKET_PRUNING
+argument_list|(
+literal|"hive.tez.bucket.pruning"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When pruning is enabled, filters on bucket columns will be processed by \n"
+operator|+
+literal|"filtering the splits against a bitset of included buckets. This needs predicates \n"
+operator|+
+literal|"produced by hive.optimize.ppd and hive.optimize.index.filters."
+argument_list|)
+block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING
 argument_list|(
 literal|"hive.tez.dynamic.partition.pruning"
