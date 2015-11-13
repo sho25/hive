@@ -2761,6 +2761,21 @@ range|:
 name|files
 control|)
 block|{
+comment|// 0 length files cannot be ORC files
+if|if
+condition|(
+name|file
+operator|.
+name|getLen
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 try|try
 block|{
 name|OrcFile
