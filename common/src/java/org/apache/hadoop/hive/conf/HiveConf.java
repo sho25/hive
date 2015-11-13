@@ -2844,7 +2844,7 @@ name|METASTORE_AUTO_CREATE_SCHEMA
 argument_list|(
 literal|"datanucleus.autoCreateSchema"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"creates necessary schema on a startup if one doesn't exist. set this to false, after creating it once"
 argument_list|)
@@ -2853,9 +2853,9 @@ name|METASTORE_FIXED_DATASTORE
 argument_list|(
 literal|"datanucleus.fixedDatastore"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
-literal|""
+literal|"Dictates whether to allow updates to schema or not."
 argument_list|)
 block|,
 name|METASTORE_SCHEMA_VERIFICATION
