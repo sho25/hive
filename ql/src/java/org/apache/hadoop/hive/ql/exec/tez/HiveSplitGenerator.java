@@ -1685,7 +1685,6 @@ expr_stmt|;
 block|}
 block|}
 comment|// Descending sort based on split size| Followed by file name. Followed by startPosition.
-specifier|private
 specifier|static
 class|class
 name|InputSplitComparator
@@ -1836,7 +1835,7 @@ if|if
 condition|(
 name|startPos1
 operator|>
-name|startPos1
+name|startPos2
 condition|)
 block|{
 return|return
