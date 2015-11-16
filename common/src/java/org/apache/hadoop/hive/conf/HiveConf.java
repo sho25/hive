@@ -5583,6 +5583,44 @@ argument_list|,
 literal|"exploit intra-query correlations."
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE
+argument_list|(
+literal|"hive.optimize.limitjointranspose"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to push a limit through left/right outer join. If the value is true and the size of the outer\n"
+operator|+
+literal|"input is reduced enough (as specified in hive.optimize.limitjointranspose.reduction), the limit is pushed\n"
+operator|+
+literal|"to the outer input; to remain semantically correct, the limit is kept on top of the join too."
+argument_list|)
+block|,
+name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE_REDUCTION_PERCENTAGE
+argument_list|(
+literal|"hive.optimize.limitjointranspose.reductionpercentage"
+argument_list|,
+literal|1.0f
+argument_list|,
+literal|"When hive.optimize.limitjointranspose is true, this variable specifies the minimal reduction of the\n"
+operator|+
+literal|"size of the outer input of the join that we should get in order to apply the rule."
+argument_list|)
+block|,
+name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE_REDUCTION_TUPLES
+argument_list|(
+literal|"hive.optimize.limitjointranspose.reductiontuples"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|0
+argument_list|,
+literal|"When hive.optimize.limitjointranspose is true, this variable specifies the minimal reduction in the\n"
+operator|+
+literal|"number of tuples of the outer input of the join that you should get in order to apply the rule."
+argument_list|)
+block|,
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|(
 literal|"hive.optimize.skewjoin.compiletime"
