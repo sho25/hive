@@ -123,16 +123,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Set
 import|;
 end_import
@@ -1429,16 +1419,6 @@ parameter_list|,
 name|URI
 name|uri
 parameter_list|)
-function_decl|;
-specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|getHadoopConfNames
-parameter_list|()
 function_decl|;
 comment|/**    * Create a shim for DFS storage policy.    */
 specifier|public
