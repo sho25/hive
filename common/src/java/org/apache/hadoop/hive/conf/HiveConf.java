@@ -4966,6 +4966,19 @@ operator|+
 literal|"data is read remotely (from the client or HS2 machine) and sent to all the tasks."
 argument_list|)
 block|,
+name|HIVE_ORC_SPLIT_DIRECTORY_BATCH_MS
+argument_list|(
+literal|"hive.orc.splits.directory.batch.ms"
+argument_list|,
+literal|0
+argument_list|,
+literal|"How long, in ms, to wait to batch input directories for processing during ORC split\n"
+operator|+
+literal|"generation. 0 means process directories individually. This can increase the number of\n"
+operator|+
+literal|"metastore calls if metastore metadata cache is used."
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_ID_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.fileid"
