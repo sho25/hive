@@ -548,7 +548,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 literal|"method1"
 argument_list|)
@@ -558,7 +558,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 literal|"method1"
 argument_list|)
@@ -738,7 +738,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 literal|"method2"
 argument_list|)
@@ -748,7 +748,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 literal|"method2"
 argument_list|)

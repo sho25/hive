@@ -183,7 +183,7 @@ name|common
 operator|.
 name|metrics
 operator|.
-name|LegacyMetrics
+name|common
 operator|.
 name|MetricsScope
 import|;
@@ -709,18 +709,25 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
 expr_stmt|;
 specifier|final
-name|MetricsScope
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
 name|fooScope
 init|=
+operator|(
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
+operator|)
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -830,7 +837,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -849,7 +856,7 @@ comment|// 1st close:
 comment|// closing of open scope should be ok:
 name|metrics
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -874,7 +881,7 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -927,7 +934,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -936,7 +943,7 @@ expr_stmt|;
 comment|// opening allowed after closing:
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -962,7 +969,7 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1008,7 +1015,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1139,17 +1146,24 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
 expr_stmt|;
-name|MetricsScope
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
 name|fooScope
 init|=
+operator|(
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
+operator|)
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1249,9 +1263,14 @@ argument_list|)
 expr_stmt|;
 name|fooScope
 operator|=
+operator|(
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
+operator|)
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1315,7 +1334,7 @@ argument_list|)
 expr_stmt|;
 name|metrics
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1332,18 +1351,25 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
 expr_stmt|;
 specifier|final
-name|MetricsScope
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
 name|fooScope
 init|=
+operator|(
+name|LegacyMetrics
+operator|.
+name|LegacyMetricsScope
+operator|)
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1385,7 +1411,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1403,7 +1429,7 @@ expr_stmt|;
 comment|// 1st close:
 name|metrics
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1461,7 +1487,7 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1480,7 +1506,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1489,7 +1515,7 @@ expr_stmt|;
 comment|// opening allowed after closing:
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1541,7 +1567,7 @@ name|Exception
 block|{
 name|metrics
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|scopeName
 argument_list|)
@@ -1559,7 +1585,7 @@ name|fooScope
 argument_list|,
 name|metrics
 operator|.
-name|getScope
+name|getStoredScope
 argument_list|(
 name|scopeName
 argument_list|)

@@ -4338,7 +4338,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|startScope
+name|startStoredScope
 argument_list|(
 name|function
 argument_list|)
@@ -4642,7 +4642,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|endScope
+name|endStoredScope
 argument_list|(
 name|function
 argument_list|)

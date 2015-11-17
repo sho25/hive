@@ -66,7 +66,6 @@ specifier|public
 interface|interface
 name|Metrics
 block|{
-comment|//Must declare CTOR taking in HiveConf.
 comment|/**    * Deinitializes the Metrics system.    */
 specifier|public
 name|void
@@ -75,10 +74,10 @@ parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
-comment|/**    * @param name    * @throws IOException    */
+comment|/**    *    * @param name starts a scope of a given name.  Scopes is stored as thread-local variable.    * @throws IOException    */
 specifier|public
 name|void
-name|startScope
+name|startStoredScope
 parameter_list|(
 name|String
 name|name
@@ -86,12 +85,35 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Closes the stored scope of a given name.    * Note that this must be called on the same thread as where the scope was started.    * @param name    * @throws IOException    */
+specifier|public
+name|void
+name|endStoredScope
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Create scope with given name and returns it.    * @param name    * @return    * @throws IOException    */
+specifier|public
+name|MetricsScope
+name|createScope
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Close the given scope.    * @param scope    * @throws IOException    */
 specifier|public
 name|void
 name|endScope
 parameter_list|(
-name|String
-name|name
+name|MetricsScope
+name|scope
 parameter_list|)
 throws|throws
 name|IOException
