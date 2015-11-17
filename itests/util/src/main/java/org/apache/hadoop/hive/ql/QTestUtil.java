@@ -1249,6 +1249,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -1258,16 +1268,6 @@ operator|.
 name|collect
 operator|.
 name|ImmutableList
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
 import|;
 end_import
 
@@ -1540,13 +1540,6 @@ name|HdfsEncryptionShim
 name|hes
 init|=
 literal|null
-decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|miniMr
-init|=
-literal|false
 decl_stmt|;
 specifier|private
 name|String
@@ -5589,7 +5582,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// System.out.println(conf.toString());
 name|testWarehouse
 operator|=
 name|conf
@@ -5603,8 +5595,6 @@ operator|.
 name|METASTOREWAREHOUSE
 argument_list|)
 expr_stmt|;
-comment|// conf.logVars(System.out);
-comment|// System.out.flush();
 name|String
 name|execEngine
 init|=

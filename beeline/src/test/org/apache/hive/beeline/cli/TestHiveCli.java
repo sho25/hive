@@ -1375,6 +1375,15 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"hive.metastore.schema.verification"
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
 name|cli
 operator|=
 operator|new

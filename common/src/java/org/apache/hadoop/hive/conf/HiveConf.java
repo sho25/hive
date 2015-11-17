@@ -2659,7 +2659,7 @@ name|METASTORE_SCHEMA_VERIFICATION
 argument_list|(
 literal|"hive.metastore.schema.verification"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Enforce metastore schema version consistency.\n"
 operator|+
