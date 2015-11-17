@@ -89,6 +89,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|tools
+operator|.
+name|ant
+operator|.
+name|taskdefs
+operator|.
+name|Java
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -314,7 +330,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  */
 end_comment
 
 begin_class
@@ -702,8 +718,14 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
+comment|/**          * This method can run at READ_COMMITTED as long as long as          * {@link #openTxns(org.apache.hadoop.hive.metastore.api.OpenTxnRequest)} is atomic.          * More specifically, as long as advancing TransactionID in NEXT_TXN_ID is atomic with          * adding corresponding entries into TXNS.  The reason is that any txnid below HWM          * is either in TXNS and thus considered open (Open/Aborted) or it's considered Committed.          */
 name|dbConn
 operator|=
 name|getDbConn
@@ -736,16 +758,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -793,6 +814,11 @@ literal|"initialized, null record found in next_txn_id"
 argument_list|)
 throw|;
 block|}
+name|close
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|TxnInfo
@@ -1001,13 +1027,12 @@ throw|;
 block|}
 finally|finally
 block|{
-name|closeStmt
+name|close
 argument_list|(
+name|rs
+argument_list|,
 name|stmt
-argument_list|)
-expr_stmt|;
-name|closeDbConn
-argument_list|(
+argument_list|,
 name|dbConn
 argument_list|)
 expr_stmt|;
@@ -1048,8 +1073,14 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
+comment|/**          * This runs at READ_COMMITTED for exactly the same reason as {@link #getOpenTxnsInfo()} \         */
 name|dbConn
 operator|=
 name|getDbConn
@@ -1082,16 +1113,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -1139,6 +1169,11 @@ literal|"initialized, null record found in next_txn_id"
 argument_list|)
 throw|;
 block|}
+name|close
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 name|Set
 argument_list|<
 name|Long
@@ -1266,13 +1301,12 @@ throw|;
 block|}
 finally|finally
 block|{
-name|closeStmt
+name|close
 argument_list|(
+name|rs
+argument_list|,
 name|stmt
-argument_list|)
-expr_stmt|;
-name|closeDbConn
-argument_list|(
+argument_list|,
 name|dbConn
 argument_list|)
 expr_stmt|;
@@ -1418,15 +1452,20 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
+comment|/**          * To make {@link #getOpenTxns()}/{@link #getOpenTxnsInfo()} work correctly, this operation must ensure          * that advancing the counter in NEXT_TXN_ID and adding appropriate entries to TXNS is atomic.          * Also, advancing the counter must work when multiple metastores are running, thus either          * SELECT ... FOR UPDATE is used or SERIALIZABLE isolation.  The former is preferred since it prevents          * concurrent DB transactions being rolled back due to Write-Write conflict on NEXT_TXN_ID.          *          * In the current design, there can be several metastore instances running in a given Warehouse.          * This makes ideas like reserving a range of IDs to save trips to DB impossible.  For example,          * a client may go to MS1 and start a transaction with ID 500 to update a particular row.          * Now the same client will start another transaction, except it ends up on MS2 and may get          * transaction ID 400 and update the same row.  Now the merge that happens to materialize the snapshot          * on read will thing the version of the row from transaction ID 500 is the latest one.          *          * Longer term we can consider running Active-Passive MS (at least wrt to ACID operations).  This          * set could support a write-through cache for added performance.          */
 name|dbConn
 operator|=
 name|getDbConn
 argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_SERIALIZABLE
+name|getRequiredIsolationLevel
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Make sure the user has not requested an insane amount of txns.
@@ -1466,7 +1505,12 @@ expr_stmt|;
 name|String
 name|s
 init|=
+name|addForUpdateClause
+argument_list|(
+name|dbConn
+argument_list|,
 literal|"select ntxn_next from NEXT_TXN_ID"
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -1479,16 +1523,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -1644,6 +1687,8 @@ argument_list|,
 name|i
 argument_list|)
 expr_stmt|;
+comment|//todo: this would be more efficient with a single insert with multiple rows in values()
+comment|//need add a safeguard to not exceed the DB capabilities.
 name|ps
 operator|.
 name|executeUpdate
@@ -1725,13 +1770,12 @@ throw|;
 block|}
 finally|finally
 block|{
-name|closeStmt
+name|close
 argument_list|(
+name|rs
+argument_list|,
 name|stmt
-argument_list|)
-expr_stmt|;
-name|closeDbConn
-argument_list|(
+argument_list|,
 name|dbConn
 argument_list|)
 expr_stmt|;
@@ -1950,6 +1994,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|/**          * This has to run at SERIALIZABLE to make no concurrent attempt to acquire locks (insert into HIVE_LOCKS)          * can happen.  Otherwise we may end up with orphaned locks.  While lock() and commitTxn() should not          * normally run concurrently (for same txn) but could due to bugs in the client which could then          * (w/o SERIALIZABLE) corrupt internal transaction manager state.  Also competes with abortTxn()          *          * Sketch of an improvement:          * Introduce a new transaction state in TXNS, state 'c'.  This is a transient Committed state.          * commitTxn() would mark the txn 'c' in TXNS in an independent txn.  Other operation like          * lock(), heartbeat(), etc would raise errors for txn in 'c' state and getOpenTxns(), etc would          * treat 'c' txn as 'open'.  Then this method could run in READ COMMITTED since the          * entry for this txn in TXNS in 'c' acts like a monitor.          * Since the move to 'c' state is in one txn (to make it visible) and the rest of the          * operations in another (could even be made separate txns), there is a possibility of failure          * between the 2.  Thus the AcidHouseKeeper logic to timeout txns should apply 'c' state txns.          *          * Or perhaps Select * TXNS where txn_id = " + txnid; for update          */
 name|dbConn
 operator|=
 name|getDbConn
@@ -2228,8 +2273,6 @@ argument_list|(
 name|dbConn
 argument_list|,
 name|rqst
-argument_list|,
-literal|true
 argument_list|)
 return|;
 block|}
@@ -2302,118 +2345,7 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|public
-name|LockResponse
-name|lockNoWait
-parameter_list|(
-name|LockRequest
-name|rqst
-parameter_list|)
-throws|throws
-name|NoSuchTxnException
-throws|,
-name|TxnAbortedException
-throws|,
-name|MetaException
-block|{
-try|try
-block|{
-name|Connection
-name|dbConn
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|dbConn
-operator|=
-name|getDbConn
-argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_SERIALIZABLE
-argument_list|)
-expr_stmt|;
-return|return
-name|lock
-argument_list|(
-name|dbConn
-argument_list|,
-name|rqst
-argument_list|,
-literal|false
-argument_list|)
-return|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|rollbackDBConn
-argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
-name|checkRetryable
-argument_list|(
-name|dbConn
-argument_list|,
-name|e
-argument_list|,
-literal|"lockNoWait("
-operator|+
-name|rqst
-operator|+
-literal|")"
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Unable to update transaction database "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-finally|finally
-block|{
-name|closeDbConn
-argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|RetryException
-name|e
-parameter_list|)
-block|{
-return|return
-name|lockNoWait
-argument_list|(
-name|rqst
-argument_list|)
-return|;
-block|}
-block|}
+comment|/**    * Why doesn't this get a txnid as parameter?  The caller should either know the txnid or know there isn't one.    * Either way getTxnIdFromLockId() will not be needed.  This would be a Thrift change.    *    * Also, when lock acquisition returns WAITING, it's retried every 15 seconds (best case, see DbLockManager.backoff(),    * in practice more often)    * which means this is heartbeating way more often than hive.txn.timeout and creating extra load on DB.    *    * The clients that operate in blocking mode, can't heartbeat a lock until the lock is acquired.    * We should make CheckLockRequest include timestamp or last request to skip unnecessary heartbeats. Thrift change.    *    * {@link #checkLock(java.sql.Connection, long)}  must run at SERIALIZABLE (make sure some lock we are checking    * against doesn't move from W to A in another txn) but this method can heartbeat in    * separate txn at READ_COMMITTED.    */
 specifier|public
 name|LockResponse
 name|checkLock
@@ -2437,17 +2369,6 @@ name|dbConn
 init|=
 literal|null
 decl_stmt|;
-try|try
-block|{
-name|dbConn
-operator|=
-name|getDbConn
-argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_SERIALIZABLE
-argument_list|)
-expr_stmt|;
 name|long
 name|extLockId
 init|=
@@ -2456,17 +2377,21 @@ operator|.
 name|getLockid
 argument_list|()
 decl_stmt|;
+try|try
+block|{
+name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
+expr_stmt|;
 comment|// Heartbeat on the lockid first, to assure that our lock is still valid.
 comment|// Then look up the lock info (hopefully in the cache).  If these locks
 comment|// are associated with a transaction then heartbeat on that as well.
-name|heartbeatLock
-argument_list|(
-name|dbConn
-argument_list|,
-name|extLockId
-argument_list|)
-expr_stmt|;
-name|long
+name|Long
 name|txnid
 init|=
 name|getTxnIdFromLockId
@@ -2479,14 +2404,57 @@ decl_stmt|;
 if|if
 condition|(
 name|txnid
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NoSuchLockException
+argument_list|(
+literal|"No such lock "
+operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|txnid
 operator|>
 literal|0
 condition|)
+block|{
 name|heartbeatTxn
 argument_list|(
 name|dbConn
 argument_list|,
 name|txnid
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|heartbeatLock
+argument_list|(
+name|dbConn
+argument_list|,
+name|extLockId
+argument_list|)
+expr_stmt|;
+block|}
+name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
 argument_list|)
 expr_stmt|;
 return|return
@@ -2495,8 +2463,6 @@ argument_list|(
 name|dbConn
 argument_list|,
 name|extLockId
-argument_list|,
-literal|true
 argument_list|)
 return|;
 block|}
@@ -2537,6 +2503,15 @@ name|MetaException
 argument_list|(
 literal|"Unable to update transaction database "
 operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+operator|+
+literal|" "
+operator|+
 name|StringUtils
 operator|.
 name|stringifyException
@@ -2569,6 +2544,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * This would have been made simpler if all locks were associated with a txn.  Then only txn needs to    * be heartbeated, committed, etc.  no need for client to track individual locks.    */
 specifier|public
 name|void
 name|unlock
@@ -2595,20 +2571,6 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
-try|try
-block|{
-name|dbConn
-operator|=
-name|getDbConn
-argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_SERIALIZABLE
-argument_list|)
-expr_stmt|;
-comment|// Odd as it seems, we need to heartbeat first because this touches the
-comment|// lock table and assures that our locks our still valid.  If they are
-comment|// not, this will throw an exception and the heartbeat will fail.
 name|long
 name|extLockId
 init|=
@@ -2617,85 +2579,18 @@ operator|.
 name|getLockid
 argument_list|()
 decl_stmt|;
-name|heartbeatLock
-argument_list|(
-name|dbConn
-argument_list|,
-name|extLockId
-argument_list|)
-expr_stmt|;
-name|long
-name|txnid
-init|=
-name|getTxnIdFromLockId
-argument_list|(
-name|dbConn
-argument_list|,
-name|extLockId
-argument_list|)
-decl_stmt|;
-comment|// If there is a valid txnid, throw an exception,
-comment|// as locks associated with transactions should be unlocked only when the
-comment|// transaction is committed or aborted.
-if|if
-condition|(
-name|txnid
-operator|>
-literal|0
-condition|)
+try|try
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
+comment|/**          * This method is logically like commit for read-only auto commit queries.          * READ_COMMITTED since this only has 1 delete statement and no new entries with the          * same hl_lock_ext_id can be added, i.e. all rows with a given hl_lock_ext_id are          * created in a single atomic operation.          * Theoretically, this competes with {@link #lock(org.apache.hadoop.hive.metastore.api.LockRequest)}          * but hl_lock_ext_id is not known until that method returns.          * Also competes with {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}          * but using SERIALIZABLE doesn't materially change the interaction.          * If "delete" stmt misses, additional logic is best effort to produce meaningful error msg.          */
 name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-name|String
-name|msg
-init|=
-literal|"Unlocking locks associated with transaction"
-operator|+
-literal|" not permitted.  Lockid "
-operator|+
-name|JavaUtils
-operator|.
-name|lockIdToString
+operator|=
+name|getDbConn
 argument_list|(
-name|extLockId
-argument_list|)
-operator|+
-literal|" is associated with "
-operator|+
-literal|"transaction "
-operator|+
-name|JavaUtils
+name|Connection
 operator|.
-name|txnIdToString
-argument_list|(
-name|txnid
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|error
-argument_list|(
-name|msg
+name|TRANSACTION_READ_COMMITTED
 argument_list|)
 expr_stmt|;
-throw|throw
-operator|new
-name|TxnOpenException
-argument_list|(
-name|msg
-argument_list|)
-throw|;
-block|}
 name|stmt
 operator|=
 name|dbConn
@@ -2703,12 +2598,15 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
+comment|//hl_txnid<> 0 means it's associated with a transaction
 name|String
 name|s
 init|=
 literal|"delete from HIVE_LOCKS where hl_lock_ext_id = "
 operator|+
 name|extLockId
+operator|+
+literal|" AND hl_txnid = 0"
 decl_stmt|;
 name|LOG
 operator|.
@@ -2750,6 +2648,34 @@ operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+name|Long
+name|txnid
+init|=
+name|getTxnIdFromLockId
+argument_list|(
+name|dbConn
+argument_list|,
+name|extLockId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|txnid
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"No lock found for unlock("
+operator|+
+name|rqst
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|NoSuchLockException
@@ -2764,6 +2690,99 @@ name|extLockId
 argument_list|)
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|txnid
+operator|!=
+literal|0
+condition|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Unlocking locks associated with transaction"
+operator|+
+literal|" not permitted.  Lockid "
+operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+operator|+
+literal|" is associated with "
+operator|+
+literal|"transaction "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|TxnOpenException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|txnid
+operator|==
+literal|0
+condition|)
+block|{
+comment|//we didn't see this lock when running DELETE stmt above but now it showed up
+comment|//so should "should never happen" happened...
+name|String
+name|msg
+init|=
+literal|"Found lock "
+operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+operator|+
+literal|" with "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
 block|}
 name|LOG
 operator|.
@@ -2814,6 +2833,15 @@ operator|new
 name|MetaException
 argument_list|(
 literal|"Unable to update transaction database "
+operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+operator|+
+literal|" "
 operator|+
 name|StringUtils
 operator|.
@@ -3421,6 +3449,7 @@ argument_list|)
 return|;
 block|}
 block|}
+comment|/**    * {@code ids} should only have txnid or lockid but not both, ideally.    * Currently DBTxnManager.heartbeat() enforces this.    */
 specifier|public
 name|void
 name|heartbeat
@@ -3610,13 +3639,14 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|/**          * READ_COMMITTED is sufficient since {@link #heartbeatTxn(java.sql.Connection, long)}          * only has 1 update statement in it and          * we only update existing txns, i.e. nothing can add additional txns that this operation          * would care about (which would have required SERIALIZABLE)          */
 name|dbConn
 operator|=
 name|getDbConn
 argument_list|(
 name|Connection
 operator|.
-name|TRANSACTION_SERIALIZABLE
+name|TRANSACTION_READ_COMMITTED
 argument_list|)
 expr_stmt|;
 for|for
@@ -3642,6 +3672,8 @@ control|)
 block|{
 try|try
 block|{
+comment|//todo: this is expensive call: at least 2 update queries per txn
+comment|//is this really worth it?
 name|heartbeatTxn
 argument_list|(
 name|dbConn
@@ -3781,9 +3813,8 @@ name|dbConn
 operator|=
 name|getDbConn
 argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_SERIALIZABLE
+name|getRequiredIsolationLevel
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -3797,7 +3828,12 @@ comment|// Get the id for the next entry in the queue
 name|String
 name|s
 init|=
+name|addForUpdateClause
+argument_list|(
+name|dbConn
+argument_list|,
 literal|"select ncq_next from NEXT_COMPACTION_QUEUE_ID"
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -7049,7 +7085,6 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Abort a group of txns    * @param dbConn An active connection    * @param txnids list of transactions to abort    * @return Number of aborted transactions    * @throws SQLException    */
 specifier|private
 name|int
 name|abortTxns
@@ -7062,6 +7097,38 @@ argument_list|<
 name|Long
 argument_list|>
 name|txnids
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+return|return
+name|abortTxns
+argument_list|(
+name|dbConn
+argument_list|,
+name|txnids
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+return|;
+block|}
+comment|/**    * TODO: expose this as an operation to client.  Useful for streaming API to abort all remaining    * trasnactions in a batch on IOExceptions.    * @param dbConn An active connection    * @param txnids list of transactions to abort    * @param max_heartbeat value used by {@link #performTimeOuts()} to ensure this doesn't Abort txn which were    *                      hearbetated after #performTimeOuts() select and this operation.    * @return Number of aborted transactions    * @throws SQLException    */
+specifier|private
+name|int
+name|abortTxns
+parameter_list|(
+name|Connection
+name|dbConn
+parameter_list|,
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|txnids
+parameter_list|,
+name|long
+name|max_heartbeat
 parameter_list|)
 throws|throws
 name|SQLException
@@ -7087,6 +7154,32 @@ block|{
 return|return
 literal|0
 return|;
+block|}
+if|if
+condition|(
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+operator|!=
+name|dbConn
+operator|.
+name|getTransactionIsolation
+argument_list|()
+condition|)
+block|{
+comment|/** Running this at SERIALIZABLE prevents new locks being added for this txnid(s) concurrently         * which would cause them to become orphaned.         */
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Expected SERIALIZABLE isolation. Found "
+operator|+
+name|dbConn
+operator|.
+name|getTransactionIsolation
+argument_list|()
+argument_list|)
+throw|;
 block|}
 try|try
 block|{
@@ -7175,6 +7268,8 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//todo: seems like we should do this first and if it misses, don't bother with
+comment|//delete from HIVE_LOCKS since it will be rolled back
 name|buf
 operator|=
 operator|new
@@ -7234,6 +7329,26 @@ argument_list|(
 literal|')'
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|max_heartbeat
+operator|>
+literal|0
+condition|)
+block|{
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|" and txn_last_heartbeat< "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|max_heartbeat
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|debug
@@ -7273,7 +7388,7 @@ return|return
 name|updateCnt
 return|;
 block|}
-comment|/**    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @param wait whether to wait for this lock.  The function will return immediately one way or    *             another.  If true and the lock could not be acquired the response will have a    *             state of  WAITING.  The caller will then need to poll using    *             {@link #checkLock(org.apache.hadoop.hive.metastore.api.CheckLockRequest)}. If    *             false and the  lock could not be acquired, then the response will have a state    *             of NOT_ACQUIRED.  The caller will need to call    *             {@link #lockNoWait(org.apache.hadoop.hive.metastore.api.LockRequest)} again to    *             attempt another lock.    * @return information on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
+comment|/**    * Isolation Level Notes:    * Run at SERIALIZABLE to make sure no one is adding new locks while we are checking conflicts here.    *     * Ramblings:    * We could perhaps get away with writing to TXN_COMPONENTS + HIVE_LOCKS in 1 txn@RC    * since this is just in Wait state.    * (Then we'd need to ensure that in !wait case we don't rely on rollback and again in case of    * failure, the W locks will timeout if failure does not propagate to client in some way, or it    * will and client will Abort).    * Actually, whether we can do this depends on what happens when you try to get a lock and notice    * a conflicting locks in W mode do we wait in this case?  if so it's a problem because while you    * are checking new locks someone may insert new  W locks that you don't see...    * On the other hand, this attempts to be 'fair', i.e. process locks in order so could we assume    * that additional W locks will have higher IDs????    *    * We can use Select for Update to generate the next LockID.  In fact we can easily do this in a separate txn.    * This avoids contention on NEXT_LOCK_ID.  The rest of the logic will be still need to be done at Serializable, I think,    * but it will not be updating the same row from 2 DB.    *    * Request a lock    * @param dbConn database connection    * @param rqst lock information    * @return information on whether the lock was acquired.    * @throws NoSuchTxnException    * @throws TxnAbortedException    */
 specifier|private
 name|LockResponse
 name|lock
@@ -7283,9 +7398,6 @@ name|dbConn
 parameter_list|,
 name|LockRequest
 name|rqst
-parameter_list|,
-name|boolean
-name|wait
 parameter_list|)
 throws|throws
 name|NoSuchTxnException
@@ -7315,8 +7427,38 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
+name|long
+name|txnid
+init|=
+name|rqst
+operator|.
+name|getTxnid
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|txnid
+operator|>
+literal|0
+condition|)
+block|{
+comment|// Heartbeat the transaction so we know it is valid and we avoid it timing out while we
+comment|// are locking.
+name|heartbeatTxn
+argument_list|(
+name|dbConn
+argument_list|,
+name|txnid
+argument_list|)
+expr_stmt|;
+block|}
 name|stmt
 operator|=
 name|dbConn
@@ -7324,11 +7466,16 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-comment|// Get the next lock id.
+comment|/** Get the next lock id.         * This has to be atomic with adding entries to HIVE_LOCK entries (1st add in W state) to prevent a race.         * Suppose ID gen is a separate txn and 2 concurrent lock() methods are running.  1st one generates nl_next=7,         * 2nd nl_next=8.  Then 8 goes first to insert into HIVE_LOCKS and aquires the locks.  Then 7 unblocks,         * and add it's W locks but it won't see locks from 8 since to be 'fair' {@link #checkLock(java.sql.Connection, long)}         * doesn't block on locks acquired later than one it's checking*/
 name|String
 name|s
 init|=
+name|addForUpdateClause
+argument_list|(
+name|dbConn
+argument_list|,
 literal|"select nl_next from NEXT_LOCK_ID"
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -7341,16 +7488,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -7420,26 +7566,6 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to commit."
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|commit
-argument_list|()
-expr_stmt|;
-name|long
-name|txnid
-init|=
-name|rqst
-operator|.
-name|getTxnid
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|txnid
@@ -7447,18 +7573,16 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|// Heartbeat the transaction so we know it is valid and we avoid it timing out while we
-comment|// are locking.
-name|heartbeatTxn
-argument_list|(
-name|dbConn
-argument_list|,
-name|txnid
-argument_list|)
-expr_stmt|;
 comment|// For each component in this lock request,
 comment|// add an entry to the txn_components table
 comment|// This must be done before HIVE_LOCKS is accessed
+comment|//Isolation note:
+comment|//the !wait option is not actually used anywhere.  W/o that,
+comment|// if we make CompactionTxnHandler.markCleaned() not delete anything above certain txn_id
+comment|//then there is not reason why this insert into TXN_COMPONENTS needs to run at Serializable.
+comment|//
+comment|// Again, w/o the !wait option, insert into HIVE_LOCKS should be OK at READ_COMMITTED as long
+comment|//as check lock is at serializable (or any other way to make sure it's exclusive)
 for|for
 control|(
 name|LockComponent
@@ -7675,15 +7799,7 @@ name|intLockId
 operator|+
 literal|","
 operator|+
-operator|(
 name|txnid
-operator|>=
-literal|0
-condition|?
-name|txnid
-else|:
-literal|"null"
-operator|)
 operator|+
 literal|", '"
 operator|+
@@ -7733,7 +7849,17 @@ name|lockChar
 operator|+
 literal|"', "
 operator|+
+comment|//for locks associated with a txn, we always heartbeat txn and timeout based on that
+operator|(
+name|isValidTxn
+argument_list|(
+name|txnid
+argument_list|)
+condition|?
+literal|0
+else|:
 name|now
+operator|)
 operator|+
 literal|", '"
 operator|+
@@ -7770,63 +7896,14 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-name|LockResponse
-name|rsp
-init|=
+comment|/**to make txns shorter we could commit here and start a new txn for checkLock.  This would          * require moving checkRetryable() down into here.  Could we then run the part before this          * commit are READ_COMMITTED?*/
+return|return
 name|checkLock
 argument_list|(
 name|dbConn
 argument_list|,
 name|extLockId
-argument_list|,
-name|wait
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|wait
-operator|&&
-name|rsp
-operator|.
-name|getState
-argument_list|()
-operator|!=
-name|LockState
-operator|.
-name|ACQUIRED
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Lock not acquired, going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-name|rsp
-operator|=
-operator|new
-name|LockResponse
-argument_list|()
-expr_stmt|;
-name|rsp
-operator|.
-name|setState
-argument_list|(
-name|LockState
-operator|.
-name|NOT_ACQUIRED
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|rsp
 return|;
 block|}
 catch|catch
@@ -7846,6 +7923,11 @@ throw|;
 block|}
 finally|finally
 block|{
+name|close
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 name|closeStmt
 argument_list|(
 name|stmt
@@ -7855,6 +7937,22 @@ block|}
 block|}
 block|}
 specifier|private
+specifier|static
+name|boolean
+name|isValidTxn
+parameter_list|(
+name|long
+name|txnId
+parameter_list|)
+block|{
+return|return
+name|txnId
+operator|!=
+literal|0
+return|;
+block|}
+comment|/**    * Note: this calls acquire() for (extLockId,intLockId) but extLockId is the same and we either take    * all locks for given extLockId or none.  Would be more efficient to update state on all locks    * at once.  Semantics are the same since this is all part of the same txn@serializable.    *    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    * hl_lock_ext_id by only checking earlier locks.    */
+specifier|private
 name|LockResponse
 name|checkLock
 parameter_list|(
@@ -7863,9 +7961,6 @@ name|dbConn
 parameter_list|,
 name|long
 name|extLockId
-parameter_list|,
-name|boolean
-name|alwaysCommit
 parameter_list|)
 throws|throws
 name|NoSuchLockException
@@ -8737,13 +8832,6 @@ argument_list|,
 name|save
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|alwaysCommit
-condition|)
-block|{
-comment|// In the case where lockNoWait has been called we don't want to commit because
-comment|// it's going to roll everything back. In every other case we want to commit here.
 name|LOG
 operator|.
 name|debug
@@ -8756,7 +8844,6 @@ operator|.
 name|commit
 argument_list|()
 expr_stmt|;
-block|}
 name|response
 operator|.
 name|setState
@@ -8801,8 +8888,6 @@ argument_list|,
 name|extLockId
 argument_list|,
 name|info
-operator|.
-name|intLockId
 argument_list|)
 expr_stmt|;
 name|acquired
@@ -8839,8 +8924,6 @@ argument_list|,
 name|extLockId
 argument_list|,
 name|info
-operator|.
-name|intLockId
 argument_list|)
 expr_stmt|;
 block|}
@@ -9033,8 +9116,8 @@ parameter_list|,
 name|long
 name|extLockId
 parameter_list|,
-name|long
-name|intLockId
+name|LockInfo
+name|lockInfo
 parameter_list|)
 throws|throws
 name|SQLException
@@ -9060,9 +9143,21 @@ name|LOCK_ACQUIRED
 operator|+
 literal|"', "
 operator|+
+comment|//if lock is part of txn, heartbeat info is in txn record
 literal|"hl_last_heartbeat = "
 operator|+
+operator|(
+name|isValidTxn
+argument_list|(
+name|lockInfo
+operator|.
+name|txnId
+argument_list|)
+condition|?
+literal|0
+else|:
 name|now
+operator|)
 operator|+
 literal|", hl_acquired_at = "
 operator|+
@@ -9074,6 +9169,8 @@ name|extLockId
 operator|+
 literal|" and hl_lock_int_id = "
 operator|+
+name|lockInfo
+operator|.
 name|intLockId
 decl_stmt|;
 name|LOG
@@ -9132,9 +9229,20 @@ operator|+
 literal|","
 operator|+
 operator|+
+name|lockInfo
+operator|.
 name|intLockId
 operator|+
-literal|")"
+literal|") "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|lockInfo
+operator|.
+name|txnId
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -9142,7 +9250,7 @@ comment|// We update the database, but we don't commit because there may be othe
 comment|// locks together with this, and we only want to acquire one if we can
 comment|// acquire all.
 block|}
-comment|// Heartbeats on the lock table.  This commits, so do not enter it with any state
+comment|/**    * Heartbeats on the lock table.  This commits, so do not enter it with any state.    * Should not be called on a lock that belongs to transaction.    */
 specifier|private
 name|void
 name|heartbeatLock
@@ -9328,15 +9436,6 @@ argument_list|(
 name|dbConn
 argument_list|)
 decl_stmt|;
-name|ensureValidTxn
-argument_list|(
-name|dbConn
-argument_list|,
-name|txnid
-argument_list|,
-name|stmt
-argument_list|)
-expr_stmt|;
 name|String
 name|s
 init|=
@@ -9414,35 +9513,6 @@ name|txnid
 argument_list|)
 throw|;
 block|}
-comment|//update locks for this txn to the same heartbeat
-name|s
-operator|=
-literal|"update HIVE_LOCKS set hl_last_heartbeat = "
-operator|+
-name|now
-operator|+
-literal|" where hl_txnid = "
-operator|+
-name|txnid
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute update<"
-operator|+
-name|s
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|stmt
-operator|.
-name|executeUpdate
-argument_list|(
-name|s
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -9524,6 +9594,7 @@ name|next
 argument_list|()
 condition|)
 block|{
+comment|//todo: add LIMIT 1 instead of count - should be more efficient
 name|s
 operator|=
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
@@ -9652,12 +9723,11 @@ operator|+
 literal|" already aborted"
 argument_list|)
 throw|;
-comment|//todo: add time of abort, which is not currently tracked
+comment|//todo: add time of abort, which is not currently tracked.  Requires schema change
 block|}
 block|}
-comment|// NEVER call this function without first calling heartbeat(long, long)
 specifier|private
-name|long
+name|Long
 name|getTxnIdFromLockId
 parameter_list|(
 name|Connection
@@ -9675,6 +9745,11 @@ name|SQLException
 block|{
 name|Statement
 name|stmt
+init|=
+literal|null
+decl_stmt|;
+name|ResultSet
+name|rs
 init|=
 literal|null
 decl_stmt|;
@@ -9705,16 +9780,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -9724,15 +9798,9 @@ name|next
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"This should never happen!  We already "
-operator|+
-literal|"checked the lock existed but now we can't find it!"
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 name|long
 name|txnid
@@ -9748,40 +9816,31 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Return "
+literal|"getTxnIdFromLockId("
+operator|+
+name|extLockId
+operator|+
+literal|") Return "
 operator|+
 name|JavaUtils
 operator|.
 name|txnIdToString
 argument_list|(
-name|rs
-operator|.
-name|wasNull
-argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
 name|txnid
 argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-operator|(
-name|rs
-operator|.
-name|wasNull
-argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
 name|txnid
-operator|)
 return|;
 block|}
 finally|finally
 block|{
+name|close
+argument_list|(
+name|rs
+argument_list|)
+expr_stmt|;
 name|closeStmt
 argument_list|(
 name|stmt
@@ -9937,6 +9996,9 @@ name|timeOutLocks
 parameter_list|(
 name|Connection
 name|dbConn
+parameter_list|,
+name|long
+name|now
 parameter_list|)
 block|{
 name|Statement
@@ -9946,14 +10008,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-name|long
-name|now
-init|=
-name|getDbTime
-argument_list|(
-name|dbConn
-argument_list|)
-decl_stmt|;
 name|stmt
 operator|=
 name|dbConn
@@ -9973,7 +10027,7 @@ operator|-
 name|timeout
 operator|)
 operator|+
-literal|" and (hl_txnid = 0 or hl_txnid is NULL)"
+literal|" and hl_txnid = 0"
 decl_stmt|;
 comment|//when txnid is> 0, the lock is
 comment|//associated with a txn and is handled by performTimeOuts()
@@ -10197,7 +10251,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * This will find transactions that have timed out and abort them.    * Will also delete locks which are not associated with a transaction and have timed out    * Tries to keep transactions (against metastore db) small to reduce lock contention.    */
+comment|/**    * Isolation Level Notes    * Plain: RC is OK    * This will find transactions that have timed out and abort them.    * Will also delete locks which are not associated with a transaction and have timed out    * Tries to keep transactions (against metastore db) small to reduce lock contention.    */
 specifier|public
 name|void
 name|performTimeOuts
@@ -10226,9 +10280,19 @@ name|getDbConn
 argument_list|(
 name|Connection
 operator|.
-name|TRANSACTION_SERIALIZABLE
+name|TRANSACTION_READ_COMMITTED
 argument_list|)
 expr_stmt|;
+comment|//We currently commit after selecting the TXNS to abort.  So whether SERIALIZABLE
+comment|//READ_COMMITTED, the effect is the same.  We could use FOR UPDATE on Select from TXNS
+comment|//and do the whole performTimeOuts() in a single huge transaction, but the only benefit
+comment|//would be to make sure someone cannot heartbeat one of these txns at the same time.
+comment|//The attempt to heartbeat would block and fail immediately after it's unblocked.
+comment|//With current (RC + multiple txns) implementation it is possible for someone to send
+comment|//heartbeat at the very end of the expire interval, and just after the Select from TXNS
+comment|//is made, in which case heartbeat will succeed but txn will still be Aborted.
+comment|//Solving this corner case is not worth the perf penalty.  The client should heartbeat in a
+comment|//timely way.
 name|long
 name|now
 init|=
@@ -10240,6 +10304,8 @@ decl_stmt|;
 name|timeOutLocks
 argument_list|(
 name|dbConn
+argument_list|,
+name|now
 argument_list|)
 expr_stmt|;
 while|while
@@ -10396,20 +10462,34 @@ name|next
 argument_list|()
 condition|)
 do|;
+name|dbConn
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
 name|close
 argument_list|(
 name|rs
 argument_list|,
 name|stmt
 argument_list|,
-literal|null
+name|dbConn
 argument_list|)
 expr_stmt|;
 name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|Connection
 operator|.
-name|commit
-argument_list|()
+name|TRANSACTION_SERIALIZABLE
+argument_list|)
 expr_stmt|;
+name|int
+name|numTxnsAborted
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|List
@@ -10421,16 +10501,35 @@ range|:
 name|timedOutTxns
 control|)
 block|{
+if|if
+condition|(
 name|abortTxns
 argument_list|(
 name|dbConn
 argument_list|,
 name|batchToAbort
+argument_list|,
+name|now
+operator|-
+name|timeout
 argument_list|)
-expr_stmt|;
+operator|==
+name|batchToAbort
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
 name|dbConn
 operator|.
 name|commit
+argument_list|()
+expr_stmt|;
+name|numTxnsAborted
+operator|+=
+name|batchToAbort
+operator|.
+name|size
 argument_list|()
 expr_stmt|;
 comment|//todo: add TXNS.COMMENT filed and set it to 'aborted by system due to timeout'
@@ -10447,35 +10546,20 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|int
-name|numTxnsAborted
-init|=
-operator|(
-name|timedOutTxns
+else|else
+block|{
+comment|//could not abort all txns in this batch - this may happen because in parallel with this
+comment|//operation there was activity on one of the txns in this batch (commit/abort/heartbeat)
+comment|//This is not likely but may happen if client experiences long pause between heartbeats or
+comment|//unusually long/extreme pauses between heartbeat() calls and other logic in checkLock(),
+comment|//lock(), etc.
+name|dbConn
 operator|.
-name|size
+name|rollback
 argument_list|()
-operator|-
-literal|1
-operator|)
-operator|*
-name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
-operator|+
-name|timedOutTxns
-operator|.
-name|get
-argument_list|(
-name|timedOutTxns
-operator|.
-name|size
-argument_list|()
-operator|-
-literal|1
-argument_list|)
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
+block|}
 name|LOG
 operator|.
 name|info
@@ -11505,6 +11589,359 @@ argument_list|()
 operator|+
 literal|")"
 return|;
+block|}
+comment|/**    * Returns one of {@link java.sql.Connection#TRANSACTION_SERIALIZABLE} TRANSACTION_READ_COMMITTED, etc.    * Different DBs support different concurrency management options.  This class relies on SELECT ... FOR UPDATE    * functionality.  Where that is not available, SERIALIZABLE isolation is used.    * This method must always agree with {@link #addForUpdateClause(java.sql.Connection, String)}, in that    * if FOR UPDATE is not available, must run operation at SERIALIZABLE.    */
+specifier|private
+name|int
+name|getRequiredIsolationLevel
+parameter_list|()
+throws|throws
+name|MetaException
+throws|,
+name|SQLException
+block|{
+if|if
+condition|(
+name|dbProduct
+operator|==
+literal|null
+condition|)
+block|{
+name|Connection
+name|tmp
+init|=
+name|getDbConn
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
+decl_stmt|;
+name|determineDatabaseProduct
+argument_list|(
+name|tmp
+argument_list|)
+expr_stmt|;
+name|closeDbConn
+argument_list|(
+name|tmp
+argument_list|)
+expr_stmt|;
+block|}
+switch|switch
+condition|(
+name|dbProduct
+condition|)
+block|{
+case|case
+name|DERBY
+case|:
+return|return
+name|Connection
+operator|.
+name|TRANSACTION_SERIALIZABLE
+return|;
+case|case
+name|MYSQL
+case|:
+case|case
+name|ORACLE
+case|:
+case|case
+name|POSTGRES
+case|:
+case|case
+name|SQLSERVER
+case|:
+return|return
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+return|;
+default|default:
+name|String
+name|msg
+init|=
+literal|"Unrecognized database product name<"
+operator|+
+name|dbProduct
+operator|+
+literal|">"
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Given a {@code selectStatement}, decorated it with FOR UPDATE or semantically equivalent    * construct.  If the DB doesn't support, return original select.  This method must always    * agree with {@link #getRequiredIsolationLevel()}    */
+specifier|private
+name|String
+name|addForUpdateClause
+parameter_list|(
+name|Connection
+name|dbConn
+parameter_list|,
+name|String
+name|selectStatement
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|DatabaseProduct
+name|prod
+init|=
+name|determineDatabaseProduct
+argument_list|(
+name|dbConn
+argument_list|)
+decl_stmt|;
+switch|switch
+condition|(
+name|prod
+condition|)
+block|{
+case|case
+name|DERBY
+case|:
+comment|//https://db.apache.org/derby/docs/10.1/ref/rrefsqlj31783.html
+comment|//sadly in Derby, FOR UPDATE doesn't meant what it should
+return|return
+name|selectStatement
+return|;
+case|case
+name|MYSQL
+case|:
+comment|//http://dev.mysql.com/doc/refman/5.7/en/select.html
+case|case
+name|ORACLE
+case|:
+comment|//https://docs.oracle.com/cd/E17952_01/refman-5.6-en/select.html
+case|case
+name|POSTGRES
+case|:
+comment|//http://www.postgresql.org/docs/9.0/static/sql-select.html
+return|return
+name|selectStatement
+operator|+
+literal|" for update"
+return|;
+case|case
+name|SQLSERVER
+case|:
+comment|//https://msdn.microsoft.com/en-us/library/ms189499.aspx
+comment|//https://msdn.microsoft.com/en-us/library/ms187373.aspx
+return|return
+name|selectStatement
+operator|+
+literal|" with(updlock)"
+return|;
+default|default:
+name|String
+name|msg
+init|=
+literal|"Unrecognized database product name<"
+operator|+
+name|prod
+operator|+
+literal|">"
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * the caller is expected to retry if this fails    *    * @return    * @throws SQLException    * @throws MetaException    */
+specifier|private
+name|long
+name|generateNewExtLockId
+parameter_list|()
+throws|throws
+name|SQLException
+throws|,
+name|MetaException
+block|{
+name|Connection
+name|dbConn
+init|=
+literal|null
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+literal|null
+decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|getRequiredIsolationLevel
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|=
+name|dbConn
+operator|.
+name|createStatement
+argument_list|()
+expr_stmt|;
+comment|// Get the next lock id.
+name|String
+name|s
+init|=
+name|addForUpdateClause
+argument_list|(
+name|dbConn
+argument_list|,
+literal|"select nl_next from NEXT_LOCK_ID"
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to rollback"
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Transaction tables not properly "
+operator|+
+literal|"initialized, no record found in next_lock_id"
+argument_list|)
+throw|;
+block|}
+name|long
+name|extLockId
+init|=
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+name|s
+operator|=
+literal|"update NEXT_LOCK_ID set nl_next = "
+operator|+
+operator|(
+name|extLockId
+operator|+
+literal|1
+operator|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute update<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to commit."
+argument_list|)
+expr_stmt|;
+name|dbConn
+operator|.
+name|commit
+argument_list|()
+expr_stmt|;
+return|return
+name|extLockId
+return|;
+block|}
+finally|finally
+block|{
+name|close
+argument_list|(
+name|rs
+argument_list|,
+name|stmt
+argument_list|,
+name|dbConn
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class

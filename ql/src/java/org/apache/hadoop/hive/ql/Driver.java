@@ -6664,6 +6664,7 @@ comment|//for each statement.
 name|recordValidTxns
 argument_list|()
 expr_stmt|;
+comment|//todo: we should only need to do this for RO query if it has ACID resources in it.
 block|}
 return|return
 literal|0

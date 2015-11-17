@@ -4113,7 +4113,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testHearbeat
+name|testHeartbeat
 parameter_list|()
 throws|throws
 name|Exception
@@ -4231,7 +4231,7 @@ name|heartbeatAt
 init|=
 name|lock
 operator|.
-name|getAcquiredat
+name|getLastheartbeat
 argument_list|()
 decl_stmt|;
 name|txnBatch
@@ -4302,7 +4302,7 @@ operator|.
 name|getLastheartbeat
 argument_list|()
 operator|+
-literal|")> old heartbeat("
+literal|") == old heartbeat("
 operator|+
 name|heartbeatAt
 operator|+
@@ -4312,7 +4312,7 @@ name|lock
 operator|.
 name|getLastheartbeat
 argument_list|()
-operator|>
+operator|==
 name|heartbeatAt
 argument_list|)
 expr_stmt|;
