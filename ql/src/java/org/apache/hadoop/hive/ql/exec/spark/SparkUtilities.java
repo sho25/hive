@@ -73,26 +73,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|UUID
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -607,7 +587,6 @@ name|getPath
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// give the uploaded file a UUID
 name|Path
 name|remoteFile
 init|=
@@ -621,13 +600,6 @@ argument_list|(
 name|conf
 argument_list|)
 argument_list|,
-name|UUID
-operator|.
-name|randomUUID
-argument_list|()
-operator|+
-literal|"-"
-operator|+
 name|getFileName
 argument_list|(
 name|source
@@ -644,10 +616,16 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Overwrite if the remote file already exists. Whether the file can be added
+comment|// on executor is up to spark, i.e. spark.files.overwrite
 name|fileSystem
 operator|.
 name|copyFromLocalFile
 argument_list|(
+literal|false
+argument_list|,
+literal|true
+argument_list|,
 name|localFile
 argument_list|,
 name|remoteFile

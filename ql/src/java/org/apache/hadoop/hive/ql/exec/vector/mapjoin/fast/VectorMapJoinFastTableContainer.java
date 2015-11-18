@@ -969,13 +969,7 @@ name|void
 name|clear
 parameter_list|()
 block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Not applicable"
-argument_list|)
-throw|;
+comment|// Do nothing
 block|}
 annotation|@
 name|Override

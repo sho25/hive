@@ -3940,9 +3940,14 @@ operator|.
 name|getAddedJars
 argument_list|()
 operator|.
-name|add
+name|put
 argument_list|(
 name|path
+argument_list|,
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

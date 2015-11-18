@@ -3939,9 +3939,9 @@ literal|"hive.mapjoin.optimized.hashtable"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether Hive should use memory-optimized hash table for MapJoin. Only works on Tez,\n"
+literal|"Whether Hive should use memory-optimized hash table for MapJoin.\n"
 operator|+
-literal|"because memory-optimized hashtable cannot be serialized."
+literal|"Only works on Tez and Spark, because memory-optimized hashtable cannot be serialized."
 argument_list|)
 block|,
 name|HIVEMAPJOINOPTIMIZEDTABLEPROBEPERCENT

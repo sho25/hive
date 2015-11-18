@@ -183,10 +183,12 @@ argument_list|>
 name|getMonitoredJobs
 parameter_list|()
 function_decl|;
-comment|/**    * Return all added jar path which added through AddJarJob.    */
-name|Set
+comment|/**    * Return all added jar path and timestamp which added through AddJarJob.    */
+name|Map
 argument_list|<
 name|String
+argument_list|,
+name|Long
 argument_list|>
 name|getAddedJars
 parameter_list|()

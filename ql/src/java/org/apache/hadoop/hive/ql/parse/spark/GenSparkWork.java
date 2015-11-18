@@ -670,24 +670,6 @@ operator|+
 name|operator
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|context
-operator|.
-name|clonedReduceSinks
-operator|.
-name|contains
-argument_list|(
-name|operator
-argument_list|)
-condition|)
-block|{
-comment|// if we're visiting a terminal we've created ourselves,
-comment|// just skip and keep going
-return|return
-literal|null
-return|;
-block|}
 name|SparkWork
 name|sparkWork
 init|=
@@ -1209,15 +1191,6 @@ name|r
 operator|.
 name|getParentOperators
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|context
-operator|.
-name|clonedReduceSinks
-operator|.
-name|add
-argument_list|(
-name|r
 argument_list|)
 expr_stmt|;
 block|}

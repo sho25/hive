@@ -1983,9 +1983,11 @@ argument_list|)
 decl_stmt|;
 comment|// Add jar to current thread class loader dynamically, and add jar paths to JobConf as Spark
 comment|// may need to load classes from this jar in other threads.
-name|Set
+name|Map
 argument_list|<
 name|String
+argument_list|,
+name|Long
 argument_list|>
 name|addedJars
 init|=
@@ -2047,6 +2049,9 @@ operator|.
 name|join
 argument_list|(
 name|addedJars
+operator|.
+name|keySet
+argument_list|()
 argument_list|,
 literal|";"
 argument_list|)
