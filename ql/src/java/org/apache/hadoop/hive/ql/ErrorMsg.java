@@ -2220,6 +2220,21 @@ literal|"The file that you are trying to load does not match the"
 operator|+
 literal|" file format of the destination table."
 argument_list|)
+block|,
+name|SCHEMA_REQUIRED_TO_READ_ACID_TABLES
+argument_list|(
+literal|30020
+argument_list|,
+literal|"Neither the configuration variables "
+operator|+
+literal|"schema.evolution.columns / schema.evolution.columns.types "
+operator|+
+literal|"nor the "
+operator|+
+literal|"columns / columns.types "
+operator|+
+literal|"are set.  Table schema information is required to read ACID tables"
+argument_list|)
 block|;
 specifier|private
 name|int

@@ -1317,7 +1317,7 @@ condition|)
 block|{
 name|schema
 operator|=
-name|OrcOutputFormat
+name|OrcUtils
 operator|.
 name|convertTypeInfo
 argument_list|(

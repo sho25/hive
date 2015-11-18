@@ -1787,7 +1787,7 @@ name|tag
 argument_list|,
 name|redWork
 operator|.
-name|getVectorScratchColumnTypeMap
+name|getVectorizedRowBatchCtx
 argument_list|()
 argument_list|)
 expr_stmt|;

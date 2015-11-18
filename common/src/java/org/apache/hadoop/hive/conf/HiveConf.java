@@ -4453,6 +4453,15 @@ operator|+
 literal|"than this threshold, it will try to convert the common join into map join"
 argument_list|)
 block|,
+name|HIVE_SCHEMA_EVOLUTION
+argument_list|(
+literal|"hive.exec.schema.evolution"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Use schema evolution to convert self-describing file format's data to the schema desired by the reader."
+argument_list|)
+block|,
 name|HIVESAMPLERANDOMNUM
 argument_list|(
 literal|"hive.sample.seednumber"

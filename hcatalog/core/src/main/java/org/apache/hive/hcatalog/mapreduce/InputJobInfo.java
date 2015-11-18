@@ -512,6 +512,13 @@ operator|.
 name|readObject
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|partitions
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|PartInfo
@@ -539,6 +546,7 @@ operator|.
 name|tableInfo
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

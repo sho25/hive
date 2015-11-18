@@ -2666,6 +2666,15 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+name|Utilities
+operator|.
+name|addSchemaEvolutionToTableScanOperator
+argument_list|(
+name|table
+argument_list|,
+name|scanOp
+argument_list|)
+expr_stmt|;
 name|TableDesc
 name|tableDesc
 init|=

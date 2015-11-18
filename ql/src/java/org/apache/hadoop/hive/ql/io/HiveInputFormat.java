@@ -3197,6 +3197,13 @@ operator|.
 name|FILTER_EXPR_CONF_STR
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|unsetSchemaEvolution
+argument_list|(
+name|jobConf
+argument_list|)
+expr_stmt|;
 name|TableScanDesc
 name|scanDesc
 init|=
@@ -3214,6 +3221,15 @@ condition|)
 block|{
 return|return;
 block|}
+name|Utilities
+operator|.
+name|addTableSchemaToConf
+argument_list|(
+name|jobConf
+argument_list|,
+name|tableScan
+argument_list|)
+expr_stmt|;
 comment|// construct column name list and types for reference by filter push down
 name|Utilities
 operator|.

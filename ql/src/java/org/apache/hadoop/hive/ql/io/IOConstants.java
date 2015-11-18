@@ -149,6 +149,23 @@ name|AVROFILE
 init|=
 literal|"AVROFILE"
 decl_stmt|;
+comment|/**    * The desired TABLE column names and types for input format schema evolution.    * This is different than COLUMNS and COLUMNS_TYPES, which are based on individual partition    * metadata.    *    * Virtual columns and partition columns are not included    *    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA_EVOLUTION_COLUMNS
+init|=
+literal|"schema.evolution.columns"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA_EVOLUTION_COLUMNS_TYPES
+init|=
+literal|"schema.evolution.columns.types"
+decl_stmt|;
 annotation|@
 name|VisibleForTesting
 specifier|public
