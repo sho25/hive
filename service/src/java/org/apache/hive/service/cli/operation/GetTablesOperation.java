@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -511,7 +521,11 @@ control|)
 block|{
 name|tableTypeList
 operator|.
-name|add
+name|addAll
+argument_list|(
+name|Arrays
+operator|.
+name|asList
 argument_list|(
 name|tableTypeMapping
 operator|.
@@ -521,6 +535,7 @@ name|tableType
 operator|.
 name|trim
 argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
