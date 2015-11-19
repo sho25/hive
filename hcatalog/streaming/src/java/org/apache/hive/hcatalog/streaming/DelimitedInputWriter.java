@@ -1299,6 +1299,7 @@ block|}
 block|}
 annotation|@
 name|Override
+specifier|public
 name|SerDe
 name|getSerde
 parameter_list|()
@@ -1340,7 +1341,9 @@ return|return
 name|bucketObjInspectors
 return|;
 block|}
-specifier|private
+annotation|@
+name|Override
+specifier|public
 name|Object
 name|encode
 parameter_list|(

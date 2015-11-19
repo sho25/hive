@@ -394,6 +394,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 specifier|abstract
 class|class
 name|AbstractRecordWriter
@@ -866,10 +867,25 @@ return|return
 name|result
 return|;
 block|}
+comment|/**    * Get the SerDe for the Objects created by {@link #encode}.  This is public so that test    * frameworks can use it.    * @return serde    * @throws SerializationError    */
+specifier|public
 specifier|abstract
 name|SerDe
 name|getSerde
 parameter_list|()
+throws|throws
+name|SerializationError
+function_decl|;
+comment|/**    * Encode a record as an Object that Hive can read with the ObjectInspector associated with the    * serde returned by {@link #getSerde}.  This is public so that test frameworks can use it.    * @param record record to be deserialized    * @return deserialized record as an Object    * @throws SerializationError    */
+specifier|public
+specifier|abstract
+name|Object
+name|encode
+parameter_list|(
+name|byte
+index|[]
+name|record
+parameter_list|)
 throws|throws
 name|SerializationError
 function_decl|;

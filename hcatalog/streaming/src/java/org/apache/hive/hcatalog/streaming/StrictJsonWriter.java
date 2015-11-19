@@ -421,6 +421,7 @@ block|}
 block|}
 annotation|@
 name|Override
+specifier|public
 name|SerDe
 name|getSerde
 parameter_list|()
@@ -609,8 +610,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Encode Utf8 encoded string bytes using JsonSerde    * @param utf8StrRecord    * @return  The encoded object    * @throws SerializationError    */
-specifier|private
+annotation|@
+name|Override
+specifier|public
 name|Object
 name|encode
 parameter_list|(
