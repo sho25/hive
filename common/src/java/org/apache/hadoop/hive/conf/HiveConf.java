@@ -7351,6 +7351,34 @@ operator|+
 literal|"enable parallel compilation between sessions on HiveServer2. The default is false."
 argument_list|)
 block|,
+comment|// HiveServer2 WebUI
+name|HIVE_SERVER2_WEBUI_BIND_HOST
+argument_list|(
+literal|"hive.server2.webui.host"
+argument_list|,
+literal|"0.0.0.0"
+argument_list|,
+literal|"The host address the HiveServer2 WebUI will listen on"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_PORT
+argument_list|(
+literal|"hive.server2.webui.port"
+argument_list|,
+literal|10002
+argument_list|,
+literal|"The port the HiveServer2 WebUI will listen on"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_MAX_THREADS
+argument_list|(
+literal|"hive.server2.webui.max.threads"
+argument_list|,
+literal|50
+argument_list|,
+literal|"The max HiveServer2 WebUI threads"
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
 argument_list|(

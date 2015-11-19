@@ -878,6 +878,11 @@ specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
+specifier|private
+specifier|final
+name|long
+name|creationTime
+decl_stmt|;
 comment|// TODO: some SessionState internals are not thread safe. The compile-time internals are synced
 comment|//       via session-scope or global compile lock. The run-time internals work by magic!
 comment|//       They probably work because races are relatively unlikely and few tools run parallel
@@ -991,6 +996,13 @@ operator|.
 name|password
 operator|=
 name|password
+expr_stmt|;
+name|creationTime
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -3613,6 +3625,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|long
+name|getCreationTime
+parameter_list|()
+block|{
+return|return
+name|creationTime
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|closeExpiredOperations
 parameter_list|()
@@ -3995,6 +4018,20 @@ parameter_list|()
 block|{
 return|return
 name|this
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getOpenOperationCount
+parameter_list|()
+block|{
+return|return
+name|opHandleSet
+operator|.
+name|size
+argument_list|()
 return|;
 block|}
 annotation|@

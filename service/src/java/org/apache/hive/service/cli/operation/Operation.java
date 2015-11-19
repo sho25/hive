@@ -613,6 +613,7 @@ name|long
 name|operationTimeout
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|long
 name|lastAccessTime
 decl_stmt|;

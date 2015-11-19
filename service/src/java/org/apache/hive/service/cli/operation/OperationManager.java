@@ -45,7 +45,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
 import|;
 end_import
 
@@ -71,21 +81,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|slf4j
+name|util
 operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|concurrent
 operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
+name|ConcurrentHashMap
 import|;
 end_import
 
@@ -485,6 +487,16 @@ name|org
 operator|.
 name|slf4j
 operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
 name|LoggerFactory
 import|;
 end_import
@@ -519,7 +531,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
-name|Map
+name|ConcurrentHashMap
 argument_list|<
 name|OperationHandle
 argument_list|,
@@ -528,7 +540,7 @@ argument_list|>
 name|handleToOperation
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<
 name|OperationHandle
 argument_list|,
@@ -1066,7 +1078,6 @@ name|operation
 return|;
 block|}
 specifier|private
-specifier|synchronized
 name|Operation
 name|getOperationInternal
 parameter_list|(
@@ -1084,7 +1095,6 @@ argument_list|)
 return|;
 block|}
 specifier|private
-specifier|synchronized
 name|Operation
 name|removeTimedOutOperation
 parameter_list|(
@@ -1124,6 +1134,8 @@ operator|.
 name|remove
 argument_list|(
 name|operationHandle
+argument_list|,
+name|operation
 argument_list|)
 expr_stmt|;
 return|return
@@ -1135,7 +1147,6 @@ literal|null
 return|;
 block|}
 specifier|private
-specifier|synchronized
 name|void
 name|addOperation
 parameter_list|(
@@ -1157,7 +1168,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-specifier|synchronized
 name|Operation
 name|removeOperation
 parameter_list|(
@@ -1687,6 +1697,26 @@ argument_list|)
 expr_stmt|;
 return|return
 name|schema
+return|;
+block|}
+specifier|public
+name|Collection
+argument_list|<
+name|Operation
+argument_list|>
+name|getOperations
+parameter_list|()
+block|{
+return|return
+name|Collections
+operator|.
+name|unmodifiableCollection
+argument_list|(
+name|handleToOperation
+operator|.
+name|values
+argument_list|()
+argument_list|)
 return|;
 block|}
 specifier|public

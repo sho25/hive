@@ -209,6 +209,14 @@ name|long
 name|getLastAccessTime
 parameter_list|()
 function_decl|;
+name|long
+name|getCreationTime
+parameter_list|()
+function_decl|;
+name|int
+name|getOpenOperationCount
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
