@@ -534,6 +534,11 @@ argument_list|(
 name|fieldName
 argument_list|,
 name|baseTypeInfo
+argument_list|,
+name|fs
+operator|.
+name|getComment
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -547,6 +552,9 @@ name|fieldName
 parameter_list|,
 name|TypeInfo
 name|fieldTypeInfo
+parameter_list|,
+name|String
+name|comment
 parameter_list|)
 throws|throws
 name|HCatException
@@ -583,7 +591,7 @@ name|PrimitiveTypeInfo
 operator|)
 name|fieldTypeInfo
 argument_list|,
-literal|null
+name|comment
 argument_list|)
 expr_stmt|;
 block|}
@@ -623,7 +631,7 @@ name|STRUCT
 argument_list|,
 name|subSchema
 argument_list|,
-literal|null
+name|comment
 argument_list|)
 expr_stmt|;
 block|}
@@ -668,7 +676,7 @@ name|ARRAY
 argument_list|,
 name|subSchema
 argument_list|,
-literal|null
+name|comment
 argument_list|)
 expr_stmt|;
 block|}
@@ -721,7 +729,7 @@ argument_list|()
 argument_list|,
 name|subSchema
 argument_list|,
-literal|null
+name|comment
 argument_list|)
 expr_stmt|;
 block|}
@@ -852,6 +860,8 @@ name|getStructFieldTypeInfo
 argument_list|(
 name|fieldName
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -999,6 +1009,8 @@ operator|)
 operator|.
 name|getListElementTypeInfo
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
