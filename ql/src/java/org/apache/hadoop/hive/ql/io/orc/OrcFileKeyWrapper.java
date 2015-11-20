@@ -112,7 +112,7 @@ name|CompressionKind
 name|compression
 decl_stmt|;
 specifier|private
-name|long
+name|int
 name|compressBufferSize
 decl_stmt|;
 specifier|private
@@ -215,7 +215,7 @@ name|rowIndexStride
 expr_stmt|;
 block|}
 specifier|public
-name|long
+name|int
 name|getCompressBufferSize
 parameter_list|()
 block|{
@@ -227,7 +227,7 @@ specifier|public
 name|void
 name|setCompressBufferSize
 parameter_list|(
-name|long
+name|int
 name|compressBufferSize
 parameter_list|)
 block|{
