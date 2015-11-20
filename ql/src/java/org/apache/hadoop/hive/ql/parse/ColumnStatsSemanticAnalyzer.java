@@ -1310,7 +1310,10 @@ name|returnVal
 operator|=
 literal|"'"
 operator|+
+name|escapeSQLString
+argument_list|(
 name|partVal
+argument_list|)
 operator|+
 literal|"'"
 expr_stmt|;
@@ -1441,7 +1444,10 @@ name|partColType
 operator|+
 literal|" '"
 operator|+
+name|escapeSQLString
+argument_list|(
 name|partVal
+argument_list|)
 operator|+
 literal|"'"
 expr_stmt|;
@@ -1453,7 +1459,10 @@ name|returnVal
 operator|=
 literal|"'"
 operator|+
+name|escapeSQLString
+argument_list|(
 name|partVal
+argument_list|)
 operator|+
 literal|"'"
 expr_stmt|;
