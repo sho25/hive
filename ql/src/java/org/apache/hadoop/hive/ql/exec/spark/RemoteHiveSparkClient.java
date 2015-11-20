@@ -2009,6 +2009,12 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|localAddedJars
+init|=
 name|SparkClientUtilities
 operator|.
 name|addToClassPath
@@ -2022,7 +2028,7 @@ operator|.
 name|getLocalTmpDir
 argument_list|()
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|localJobConf
 operator|.
 name|set
@@ -2035,10 +2041,7 @@ name|StringUtils
 operator|.
 name|join
 argument_list|(
-name|addedJars
-operator|.
-name|keySet
-argument_list|()
+name|localAddedJars
 argument_list|,
 literal|";"
 argument_list|)

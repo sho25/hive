@@ -31,6 +31,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|common
@@ -129,6 +143,16 @@ name|SparkWork
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
@@ -188,6 +212,13 @@ comment|/**    * Close session and release resources.    */
 name|void
 name|close
 parameter_list|()
+function_decl|;
+comment|/**    * Get an HDFS dir specific to the SparkSession    * */
+name|Path
+name|getHDFSSessionDir
+parameter_list|()
+throws|throws
+name|IOException
 function_decl|;
 block|}
 end_interface

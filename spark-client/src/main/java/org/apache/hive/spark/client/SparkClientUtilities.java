@@ -67,6 +67,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -206,10 +216,13 @@ name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|/**    * Add new elements to the classpath.    *    * @param newPaths Map of classpath elements and corresponding timestamp    */
+comment|/**    * Add new elements to the classpath.    *    * @param newPaths Map of classpath elements and corresponding timestamp    * @return locally accessible files corresponding to the newPaths    */
 specifier|public
 specifier|static
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addToClassPath
 parameter_list|(
 name|Map
@@ -259,6 +272,17 @@ name|getURLs
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|localNewPaths
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
 name|boolean
 name|newPathAdded
 init|=
@@ -302,6 +326,16 @@ argument_list|,
 name|localTmpDir
 argument_list|)
 decl_stmt|;
+name|localNewPaths
+operator|.
+name|add
+argument_list|(
+name|newUrl
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|newUrl
@@ -380,6 +414,9 @@ name|newLoader
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+name|localNewPaths
+return|;
 block|}
 comment|/**    * Create a URL from a string representing a path to a local file.    * The path string can be just a path, or can start with file:/, file:///    * @param path  path string    * @return    */
 specifier|private
