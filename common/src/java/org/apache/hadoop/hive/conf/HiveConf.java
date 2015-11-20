@@ -7368,6 +7368,33 @@ argument_list|,
 literal|"The max HiveServer2 WebUI threads"
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_USE_SSL
+argument_list|(
+literal|"hive.server2.webui.use.SSL"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true for using SSL encryption for HiveServer2 WebUI."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_SSL_KEYSTORE_PATH
+argument_list|(
+literal|"hive.server2.webui.keystore.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"SSL certificate keystore location for HiveServer2 WebUI."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_SSL_KEYSTORE_PASSWORD
+argument_list|(
+literal|"hive.server2.webui.keystore.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"SSL certificate keystore password for HiveServer2 WebUI."
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
 argument_list|(
