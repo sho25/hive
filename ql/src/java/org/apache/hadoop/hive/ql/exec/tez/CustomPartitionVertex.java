@@ -2096,17 +2096,23 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|bucketToTaskMap
+name|inputNameInputSpecMap
 operator|.
-name|isEmpty
-argument_list|()
+name|get
+argument_list|(
+name|mainWorkName
+argument_list|)
+operator|==
+literal|null
 condition|)
 block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"We don't have a routing table yet. Will need to wait for the main input"
+literal|"We don't have a routing table yet. Will need to wait for the main input "
+operator|+
+name|mainWorkName
 operator|+
 literal|" initialization"
 argument_list|)
@@ -2316,6 +2322,24 @@ name|getKey
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|(
+name|destTasks
+operator|==
+literal|null
+operator|)
+operator|||
+operator|(
+name|destTasks
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+continue|continue;
+block|}
 for|for
 control|(
 name|Integer
