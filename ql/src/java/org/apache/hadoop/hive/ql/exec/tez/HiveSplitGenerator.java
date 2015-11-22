@@ -1020,7 +1020,7 @@ name|HiveConf
 operator|.
 name|setLongVar
 argument_list|(
-name|conf
+name|jobConf
 argument_list|,
 name|HiveConf
 operator|.
