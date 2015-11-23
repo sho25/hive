@@ -2629,8 +2629,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|getConfOverlay
-argument_list|()
+name|confOverlay
 operator|.
 name|isEmpty
 argument_list|()
@@ -2661,8 +2660,7 @@ name|String
 argument_list|>
 name|confEntry
 range|:
-name|getConfOverlay
-argument_list|()
+name|confOverlay
 operator|.
 name|entrySet
 argument_list|()
