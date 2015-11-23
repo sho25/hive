@@ -1995,6 +1995,7 @@ return|;
 block|}
 comment|/**    * Initialize the transaction manager.  This is done lazily to avoid hard wiring one    * transaction manager at the beginning of the session.  In general users shouldn't change    * this, but it's useful for testing.    * @param conf Hive configuration to initialize transaction manager    * @return transaction manager    * @throws LockException    */
 specifier|public
+specifier|synchronized
 name|HiveTxnManager
 name|initTxnMgr
 parameter_list|(
