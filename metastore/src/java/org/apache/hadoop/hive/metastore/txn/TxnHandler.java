@@ -91,13 +91,33 @@ name|org
 operator|.
 name|apache
 operator|.
-name|tools
+name|hadoop
 operator|.
-name|ant
+name|hive
 operator|.
-name|taskdefs
+name|common
 operator|.
-name|Java
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceStability
 import|;
 end_import
 
@@ -334,6 +354,14 @@ comment|/**  * A handler to answer transaction related calls that come into the 
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Private
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
 specifier|public
 class|class
 name|TxnHandler
@@ -471,13 +499,13 @@ name|ALLOWED_REPEATED_DEADLOCKS
 init|=
 literal|10
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
-specifier|private
 name|int
 name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 init|=
-literal|100
+literal|1000
 decl_stmt|;
 specifier|static
 specifier|final
@@ -5944,6 +5972,7 @@ condition|)
 block|{
 try|try
 block|{
+comment|//todo: make this work when conn == null
 name|String
 name|s
 init|=
@@ -10341,7 +10370,9 @@ name|addLimitClause
 argument_list|(
 name|dbConn
 argument_list|,
-literal|2500
+literal|250
+operator|*
+name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 argument_list|,
 name|s
 argument_list|)
