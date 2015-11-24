@@ -5752,8 +5752,6 @@ argument_list|,
 operator|new
 name|PatternSet
 argument_list|(
-literal|"counter"
-argument_list|,
 literal|"custom"
 argument_list|,
 literal|"fs"
@@ -5763,7 +5761,7 @@ literal|"The storage that stores temporary Hive statistics. In filesystem based 
 operator|+
 literal|"each task writes statistics it has collected in a file on the filesystem, which will be aggregated \n"
 operator|+
-literal|"after the job has finished. Supported values are fs (filesystem), counter, and custom as defined in StatsSetupConst.java."
+literal|"after the job has finished. Supported values are fs (filesystem) and custom as defined in StatsSetupConst.java."
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
@@ -5908,19 +5906,6 @@ argument_list|,
 literal|"Determines if when the prefix of the key used for intermediate stats collection\n"
 operator|+
 literal|"exceeds a certain length, a hash of the key is used instead.  If the value< 0 then hashing"
-argument_list|)
-block|,
-name|HIVE_STATS_KEY_PREFIX_RESERVE_LENGTH
-argument_list|(
-literal|"hive.stats.key.prefix.reserve.length"
-argument_list|,
-literal|24
-argument_list|,
-literal|"Reserved length for postfix of stats key. Currently only meaningful for counter type which should\n"
-operator|+
-literal|"keep length of full stats key smaller than max length configured by hive.stats.key.prefix.max.length.\n"
-operator|+
-literal|"For counter type, it should be bigger than the length of LB spec if exists."
 argument_list|)
 block|,
 name|HIVE_STATS_KEY_PREFIX
