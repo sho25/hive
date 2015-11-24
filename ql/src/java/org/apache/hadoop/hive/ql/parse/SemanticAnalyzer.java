@@ -15325,6 +15325,11 @@ condition|(
 name|leftTree
 operator|!=
 literal|null
+operator|&&
+name|leftTree
+operator|.
+name|getNoOuterJoin
+argument_list|()
 condition|)
 block|{
 name|String
