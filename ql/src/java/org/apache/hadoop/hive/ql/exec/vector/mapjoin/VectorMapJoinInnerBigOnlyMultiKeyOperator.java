@@ -691,6 +691,11 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+name|JoinUtil
+operator|.
+name|JoinResult
+name|joinResult
+decl_stmt|;
 if|if
 condition|(
 name|keyVectorSerializeWrite
@@ -699,15 +704,17 @@ name|getHasAnyNulls
 argument_list|()
 condition|)
 block|{
-comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Null key not expected in MapJoin"
-argument_list|)
-throw|;
+name|joinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
 block|}
+else|else
+block|{
 name|byte
 index|[]
 name|keyBytes
@@ -725,11 +732,8 @@ operator|.
 name|getLength
 argument_list|()
 decl_stmt|;
-name|JoinUtil
-operator|.
-name|JoinResult
 name|joinResult
-init|=
+operator|=
 name|hashMultiSet
 operator|.
 name|contains
@@ -745,7 +749,8 @@ index|[
 literal|0
 index|]
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
 condition|(
@@ -913,26 +918,19 @@ argument_list|,
 name|batchIndex
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|boolean
+name|isAnyNulls
+init|=
 name|keyVectorSerializeWrite
 operator|.
 name|getHasAnyNulls
 argument_list|()
-condition|)
-block|{
-comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Null key not expected in MapJoin"
-argument_list|)
-throw|;
-block|}
+decl_stmt|;
 comment|/*            * Equal key series checking.            */
 if|if
 condition|(
+name|isAnyNulls
+operator|||
 operator|!
 name|haveSaveKey
 operator|||
@@ -979,13 +977,33 @@ case|:
 break|break;
 block|}
 block|}
+if|if
+condition|(
+name|isAnyNulls
+condition|)
+block|{
+name|saveJoinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+name|haveSaveKey
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|// Regardless of our matching result, we keep that information to make multiple use
 comment|// of it for a possible series of equal keys.
 name|haveSaveKey
 operator|=
 literal|true
 expr_stmt|;
-comment|/*              * Multi-Key specific save key.              */
+comment|/*                * Multi-Key specific save key.                */
 name|temp
 operator|=
 name|saveKeyOutput
@@ -998,7 +1016,7 @@ name|currentKeyOutput
 operator|=
 name|temp
 expr_stmt|;
-comment|/*              * Single-Column Long specific lookup key.              */
+comment|/*                * Single-Column Long specific lookup key.                */
 name|byte
 index|[]
 name|keyBytes
@@ -1034,6 +1052,7 @@ name|hashMultiSetResultCount
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 comment|/*              * Common inner big-only join result processing.              */
 switch|switch
 condition|(

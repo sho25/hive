@@ -455,24 +455,7 @@ name|readCheckNull
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
-name|isOuterJoin
-condition|)
-block|{
 return|return;
-block|}
-else|else
-block|{
-comment|// For inner join, we expect all NULL values to have been filtered out before now.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Unexpected NULL in map join small table"
-argument_list|)
-throw|;
-block|}
 block|}
 name|long
 name|key

@@ -602,6 +602,37 @@ comment|/*          * Repeating.          */
 comment|// All key input columns are repeating.  Generate key once.  Lookup once.
 comment|// Since the key is repeated, we must use entry 0 regardless of selectedInUse.
 comment|/*          * Single-Column Long specific repeated lookup.          */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|joinResult
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|joinColVector
+operator|.
+name|noNulls
+operator|&&
+name|joinColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+condition|)
+block|{
+name|joinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+block|}
+else|else
+block|{
 name|long
 name|key
 init|=
@@ -609,11 +640,6 @@ name|vector
 index|[
 literal|0
 index|]
-decl_stmt|;
-name|JoinUtil
-operator|.
-name|JoinResult
-name|joinResult
 decl_stmt|;
 if|if
 condition|(
@@ -656,6 +682,7 @@ literal|0
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
@@ -811,15 +838,53 @@ decl_stmt|;
 comment|/*            * Single-Column Long get key.            */
 name|long
 name|currentKey
-init|=
+decl_stmt|;
+name|boolean
+name|isNull
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|joinColVector
+operator|.
+name|noNulls
+operator|&&
+name|joinColVector
+operator|.
+name|isNull
+index|[
+name|batchIndex
+index|]
+condition|)
+block|{
+name|currentKey
+operator|=
+literal|0
+expr_stmt|;
+name|isNull
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|currentKey
+operator|=
 name|vector
 index|[
 name|batchIndex
 index|]
-decl_stmt|;
+expr_stmt|;
+name|isNull
+operator|=
+literal|false
+expr_stmt|;
+block|}
 comment|/*            * Equal key series checking.            */
 if|if
 condition|(
+name|isNull
+operator|||
 operator|!
 name|haveSaveKey
 operator|||
@@ -862,18 +927,38 @@ case|:
 break|break;
 block|}
 block|}
+if|if
+condition|(
+name|isNull
+condition|)
+block|{
+name|saveJoinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+name|haveSaveKey
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|// Regardless of our matching result, we keep that information to make multiple use
 comment|// of it for a possible series of equal keys.
 name|haveSaveKey
 operator|=
 literal|true
 expr_stmt|;
-comment|/*              * Single-Column Long specific save key.              */
+comment|/*                * Single-Column Long specific save key.                */
 name|saveKey
 operator|=
 name|currentKey
 expr_stmt|;
-comment|/*              * Single-Column Long specific lookup key.              */
+comment|/*                * Single-Column Long specific lookup key.                */
 if|if
 condition|(
 name|useMinMax
@@ -915,6 +1000,7 @@ name|hashMultiSetResultCount
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/*              * Common inner big-only join result processing.              */
 switch|switch

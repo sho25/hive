@@ -691,6 +691,11 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+name|JoinUtil
+operator|.
+name|JoinResult
+name|joinResult
+decl_stmt|;
 if|if
 condition|(
 name|keyVectorSerializeWrite
@@ -699,15 +704,17 @@ name|getHasAnyNulls
 argument_list|()
 condition|)
 block|{
-comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Null key not expected in MapJoin"
-argument_list|)
-throw|;
+name|joinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
 block|}
+else|else
+block|{
 name|byte
 index|[]
 name|keyBytes
@@ -726,11 +733,8 @@ name|getLength
 argument_list|()
 decl_stmt|;
 comment|// LOG.debug(CLASS_NAME + " processOp all " + displayBytes(keyBytes, 0, keyLength));
-name|JoinUtil
-operator|.
-name|JoinResult
 name|joinResult
-init|=
+operator|=
 name|hashSet
 operator|.
 name|contains
@@ -746,7 +750,8 @@ index|[
 literal|0
 index|]
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
 condition|(
@@ -909,28 +914,21 @@ argument_list|,
 name|batchIndex
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+name|boolean
+name|isAnyNull
+init|=
 name|keyVectorSerializeWrite
 operator|.
 name|getHasAnyNulls
 argument_list|()
-condition|)
-block|{
-comment|// Not expecting NULLs in MapJoin -- they should have been filtered out.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Null key not expected in MapJoin"
-argument_list|)
-throw|;
-block|}
+decl_stmt|;
 comment|// LOG.debug(CLASS_NAME + " currentKey " +
 comment|//      VectorizedBatchUtil.displayBytes(currentKeyOutput.getData(), 0, currentKeyOutput.getLength()));
 comment|/*            * Equal key series checking.            */
 if|if
 condition|(
+name|isAnyNull
+operator|||
 operator|!
 name|haveSaveKey
 operator|||
@@ -974,13 +972,33 @@ case|:
 break|break;
 block|}
 block|}
+if|if
+condition|(
+name|isAnyNull
+condition|)
+block|{
+name|saveJoinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+name|haveSaveKey
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|// Regardless of our matching result, we keep that information to make multiple use
 comment|// of it for a possible series of equal keys.
 name|haveSaveKey
 operator|=
 literal|true
 expr_stmt|;
-comment|/*              * Multi-Key specific save key and lookup.              */
+comment|/*                * Multi-Key specific save key and lookup.                */
 name|temp
 operator|=
 name|saveKeyOutput
@@ -993,7 +1011,7 @@ name|currentKeyOutput
 operator|=
 name|temp
 expr_stmt|;
-comment|/*              * Multi-key specific lookup key.              */
+comment|/*                * Multi-key specific lookup key.                */
 name|byte
 index|[]
 name|keyBytes
@@ -1029,6 +1047,7 @@ name|hashSetResultCount
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 comment|/*              * Common left-semi join result processing.              */
 switch|switch
 condition|(

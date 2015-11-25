@@ -604,6 +604,37 @@ comment|/*          * Repeating.          */
 comment|// All key input columns are repeating.  Generate key once.  Lookup once.
 comment|// Since the key is repeated, we must use entry 0 regardless of selectedInUse.
 comment|/*          * Single-Column String specific repeated lookup.          */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|joinResult
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|joinColVector
+operator|.
+name|noNulls
+operator|&&
+name|joinColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+condition|)
+block|{
+name|joinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+block|}
+else|else
+block|{
 name|byte
 index|[]
 name|keyBytes
@@ -629,11 +660,8 @@ index|[
 literal|0
 index|]
 decl_stmt|;
-name|JoinUtil
-operator|.
-name|JoinResult
 name|joinResult
-init|=
+operator|=
 name|hashMultiSet
 operator|.
 name|contains
@@ -649,7 +677,8 @@ index|[
 literal|0
 index|]
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
 condition|(
@@ -804,9 +833,26 @@ operator|)
 decl_stmt|;
 comment|/*            * Single-Column String get key.            */
 comment|// Implicit -- use batchIndex.
+name|boolean
+name|isNull
+init|=
+operator|!
+name|joinColVector
+operator|.
+name|noNulls
+operator|&&
+name|joinColVector
+operator|.
+name|isNull
+index|[
+name|batchIndex
+index|]
+decl_stmt|;
 comment|/*            * Equal key series checking.            */
 if|if
 condition|(
+name|isNull
+operator|||
 operator|!
 name|haveSaveKey
 operator|||
@@ -882,18 +928,38 @@ case|:
 break|break;
 block|}
 block|}
+if|if
+condition|(
+name|isNull
+condition|)
+block|{
+name|saveJoinResult
+operator|=
+name|JoinUtil
+operator|.
+name|JoinResult
+operator|.
+name|NOMATCH
+expr_stmt|;
+name|haveSaveKey
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|// Regardless of our matching result, we keep that information to make multiple use
 comment|// of it for a possible series of equal keys.
 name|haveSaveKey
 operator|=
 literal|true
 expr_stmt|;
-comment|/*              * Single-Column String specific save key.              */
+comment|/*                * Single-Column String specific save key.                */
 name|saveKeyBatchIndex
 operator|=
 name|batchIndex
 expr_stmt|;
-comment|/*              * Single-Column String specific lookup key.              */
+comment|/*                * Single-Column String specific lookup key.                */
 name|byte
 index|[]
 name|keyBytes
@@ -937,6 +1003,7 @@ name|hashMultiSetResultCount
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 comment|/*              * Common inner big-only join result processing.              */
 switch|switch
 condition|(
