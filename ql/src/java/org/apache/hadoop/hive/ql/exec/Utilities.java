@@ -13538,21 +13538,6 @@ operator|.
 name|size
 argument_list|()
 operator|)
-operator|&&
-operator|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|hconf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEENFORCEBUCKETING
-argument_list|)
-operator|)
 condition|)
 block|{
 comment|// get the missing buckets and generate empty buckets for non-dynamic partition

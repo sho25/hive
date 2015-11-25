@@ -5176,31 +5176,13 @@ operator|+
 literal|"Used only if hive.tez.java.opts is used to configure Java options."
 argument_list|)
 block|,
-name|HIVEENFORCEBUCKETING
-argument_list|(
-literal|"hive.enforce.bucketing"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether bucketing is enforced. If true, while inserting into the table, bucketing is enforced."
-argument_list|)
-block|,
-name|HIVEENFORCESORTING
-argument_list|(
-literal|"hive.enforce.sorting"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether sorting is enforced. If true, while inserting into the table, sorting is enforced."
-argument_list|)
-block|,
 name|HIVEOPTIMIZEBUCKETINGSORTING
 argument_list|(
 literal|"hive.optimize.bucketingsorting"
 argument_list|,
 literal|true
 argument_list|,
-literal|"If hive.enforce.bucketing or hive.enforce.sorting is true, don't create a reducer for enforcing \n"
+literal|"Don't create a reducer for enforcing \n"
 operator|+
 literal|"bucketing/sorting for queries of the form: \n"
 operator|+
@@ -13336,19 +13318,7 @@ name|varname
 block|,
 name|ConfVars
 operator|.
-name|HIVEENFORCEBUCKETING
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
 name|HIVEENFORCEBUCKETMAPJOIN
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVEENFORCESORTING
 operator|.
 name|varname
 block|,

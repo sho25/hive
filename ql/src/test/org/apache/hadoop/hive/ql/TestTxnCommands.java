@@ -336,7 +336,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can   * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *   * Can also test, calling commit in AC=true mode, etc, toggling AC...  */
+comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  */
 end_comment
 
 begin_class
@@ -568,19 +568,6 @@ operator|.
 name|setConfValues
 argument_list|(
 name|hiveConf
-argument_list|)
-expr_stmt|;
-name|hiveConf
-operator|.
-name|setBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEENFORCEBUCKETING
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|TxnDbUtil
@@ -3886,6 +3873,8 @@ name|int
 index|[]
 argument_list|>
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare

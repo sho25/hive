@@ -1970,6 +1970,15 @@ argument_list|,
 literal|"CREATE-TABLE-AS-SELECT creates a VOID type, please use CAST to specify the type, near field: "
 argument_list|)
 block|,
+name|TBL_SORTED_NOT_BUCKETED
+argument_list|(
+literal|10306
+argument_list|,
+literal|"Destination table {0} found to be sorted but not bucketed."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
