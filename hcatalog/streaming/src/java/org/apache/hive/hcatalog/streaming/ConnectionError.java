@@ -70,6 +70,21 @@ argument_list|(
 literal|"Error connecting to "
 operator|+
 name|endPoint
+operator|+
+operator|(
+name|innerEx
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+literal|": "
+operator|+
+name|innerEx
+operator|.
+name|getMessage
+argument_list|()
+operator|)
 argument_list|,
 name|innerEx
 argument_list|)

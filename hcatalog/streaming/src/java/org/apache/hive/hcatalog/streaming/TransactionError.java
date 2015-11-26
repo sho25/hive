@@ -37,6 +37,21 @@ block|{
 name|super
 argument_list|(
 name|msg
+operator|+
+operator|(
+name|e
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|)
 argument_list|,
 name|e
 argument_list|)

@@ -1303,8 +1303,6 @@ specifier|public
 name|SerDe
 name|getSerde
 parameter_list|()
-throws|throws
-name|SerializationError
 block|{
 return|return
 name|serde

@@ -476,6 +476,14 @@ index|[]
 name|bucketFieldData
 decl_stmt|;
 comment|// Pre-allocated in constructor. Updated on each write.
+specifier|private
+name|Long
+name|curBatchMinTxnId
+decl_stmt|;
+specifier|private
+name|Long
+name|curBatchMaxTxnId
+decl_stmt|;
 specifier|protected
 name|AbstractRecordWriter
 parameter_list|(
@@ -764,6 +772,25 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * used to tag error msgs to provied some breadcrumbs    */
+name|String
+name|getWatermark
+parameter_list|()
+block|{
+return|return
+name|partitionPath
+operator|+
+literal|" txnIds["
+operator|+
+name|curBatchMinTxnId
+operator|+
+literal|","
+operator|+
+name|curBatchMaxTxnId
+operator|+
+literal|"]"
+return|;
+block|}
 comment|// return the column numbers of the bucketed columns
 specifier|private
 name|List
@@ -1028,6 +1055,14 @@ argument_list|(
 literal|"Creating Record updater"
 argument_list|)
 expr_stmt|;
+name|curBatchMinTxnId
+operator|=
+name|minTxnId
+expr_stmt|;
+name|curBatchMaxTxnId
+operator|=
+name|maxTxnID
+expr_stmt|;
 name|updaters
 operator|=
 name|createRecordUpdaters
@@ -1046,11 +1081,19 @@ name|IOException
 name|e
 parameter_list|)
 block|{
+name|String
+name|errMsg
+init|=
+literal|"Failed creating RecordUpdaterS for "
+operator|+
+name|getWatermark
+argument_list|()
+decl_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed creating record updater"
+name|errMsg
 argument_list|,
 name|e
 argument_list|)
@@ -1059,7 +1102,7 @@ throw|throw
 operator|new
 name|StreamingIOFailure
 argument_list|(
-literal|"Unable to get new record Updater"
+name|errMsg
 argument_list|,
 name|e
 argument_list|)
@@ -1075,8 +1118,11 @@ parameter_list|()
 throws|throws
 name|StreamingIOFailure
 block|{
-try|try
-block|{
+name|boolean
+name|haveError
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|RecordUpdater
@@ -1085,6 +1131,9 @@ range|:
 name|updaters
 control|)
 block|{
+try|try
+block|{
+comment|//try not to leave any files open
 name|updater
 operator|.
 name|close
@@ -1093,25 +1142,54 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|haveError
+operator|=
+literal|true
+expr_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Unable to close "
+operator|+
+name|updater
+operator|+
+literal|" due to: "
+operator|+
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|updaters
 operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
+if|if
+condition|(
+name|haveError
+condition|)
 block|{
 throw|throw
 operator|new
 name|StreamingIOFailure
 argument_list|(
-literal|"Unable to close recordUpdater"
-argument_list|,
-name|e
+literal|"Encountered errors while closing (see logs) "
+operator|+
+name|getWatermark
+argument_list|()
 argument_list|)
 throw|;
 block|}

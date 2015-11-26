@@ -1668,6 +1668,25 @@ name|rowId
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|"["
+operator|+
+name|path
+operator|+
+literal|"]"
+return|;
+block|}
 comment|/**    * To handle multiple INSERT... statements in a single transaction, we want to make sure    * to generate unique {@code rowId} for all inserted rows of the transaction.    * @return largest rowId created by previous statements (maybe 0)    * @throws IOException    */
 specifier|private
 name|long

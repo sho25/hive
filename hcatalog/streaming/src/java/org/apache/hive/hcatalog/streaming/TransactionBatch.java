@@ -145,6 +145,11 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
+specifier|public
+name|boolean
+name|isClosed
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
