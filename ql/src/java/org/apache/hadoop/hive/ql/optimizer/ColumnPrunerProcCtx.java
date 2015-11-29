@@ -714,13 +714,6 @@ condition|(
 name|positions
 operator|!=
 literal|null
-operator|&&
-name|positions
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
 condition|)
 block|{
 name|prunList
