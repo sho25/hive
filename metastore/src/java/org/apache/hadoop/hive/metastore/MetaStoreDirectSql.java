@@ -1513,7 +1513,7 @@ literal|"select \"DB_ID\" from \"DBS\""
 decl_stmt|;
 try|try
 block|{
-name|doDbSpecificInitializationsBeforeQuery
+name|prepareTxn
 argument_list|()
 expr_stmt|;
 name|query
@@ -1604,61 +1604,6 @@ block|{
 return|return
 name|isCompatibleDatastore
 return|;
-block|}
-comment|/**    * This function is intended to be called by functions before they put together a query    * Thus, any query-specific instantiation to be done from within the transaction is done    * here - for eg., for MySQL, we signal that we want to use ANSI SQL quoting behaviour    */
-specifier|private
-name|void
-name|doDbSpecificInitializationsBeforeQuery
-parameter_list|()
-throws|throws
-name|MetaException
-block|{
-if|if
-condition|(
-name|dbType
-operator|!=
-name|DB
-operator|.
-name|MYSQL
-condition|)
-return|return;
-try|try
-block|{
-assert|assert
-name|pm
-operator|.
-name|currentTransaction
-argument_list|()
-operator|.
-name|isActive
-argument_list|()
-assert|;
-comment|// must be inside tx together with queries
-name|executeNoResult
-argument_list|(
-literal|"SET @@session.sql_mode=ANSI_QUOTES"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|sqlEx
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Error setting ansi quotes: "
-operator|+
-name|sqlEx
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-throw|;
-block|}
 block|}
 specifier|private
 name|void
@@ -1775,9 +1720,6 @@ operator|=
 name|dbName
 operator|.
 name|toLowerCase
-argument_list|()
-expr_stmt|;
-name|doDbSpecificInitializationsBeforeQuery
 argument_list|()
 expr_stmt|;
 name|String
@@ -2730,9 +2672,6 @@ literal|" order by \"PART_NAME\" asc"
 else|:
 literal|""
 decl_stmt|;
-name|doDbSpecificInitializationsBeforeQuery
-argument_list|()
-expr_stmt|;
 comment|// Get all simple fields for partitions and related objects, which we can map one-on-one.
 comment|// We will do this in 2 queries to use different existing indices for each one.
 comment|// We do not get table and DB name, assuming they are the same as we are using to filter.
@@ -6977,9 +6916,6 @@ return|return
 literal|null
 return|;
 block|}
-name|doDbSpecificInitializationsBeforeQuery
-argument_list|()
-expr_stmt|;
 name|boolean
 name|doTrace
 init|=
@@ -7854,9 +7790,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|doDbSpecificInitializationsBeforeQuery
-argument_list|()
-expr_stmt|;
 comment|// TODO: all the extrapolation logic should be moved out of this class,
 comment|// only mechanical data retrieval should remain here.
 name|String
@@ -10263,9 +10196,6 @@ operator|.
 name|isDebugEnabled
 argument_list|()
 decl_stmt|;
-name|doDbSpecificInitializationsBeforeQuery
-argument_list|()
-expr_stmt|;
 name|long
 name|start
 init|=
@@ -10934,6 +10864,61 @@ argument_list|(
 literal|"See previous errors; "
 operator|+
 name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * This run the necessary logic to prepare for queries. It should be called once, after the    * txn on DataNucleus connection is opened, and before any queries are issued. What it does    * currently is run db-specific logic, e.g. setting ansi quotes mode for MySQL. The reason it    * must be used inside of the txn is connection pooling; there's no way to guarantee that the    * effect will apply to the connection that is executing the queries otherwise.    */
+specifier|public
+name|void
+name|prepareTxn
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+if|if
+condition|(
+name|dbType
+operator|!=
+name|DB
+operator|.
+name|MYSQL
+condition|)
+return|return;
+try|try
+block|{
+assert|assert
+name|pm
+operator|.
+name|currentTransaction
+argument_list|()
+operator|.
+name|isActive
+argument_list|()
+assert|;
+comment|// must be inside tx together with queries
+name|executeNoResult
+argument_list|(
+literal|"SET @@session.sql_mode=ANSI_QUOTES"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|sqlEx
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Error setting ansi quotes: "
+operator|+
+name|sqlEx
 operator|.
 name|getMessage
 argument_list|()

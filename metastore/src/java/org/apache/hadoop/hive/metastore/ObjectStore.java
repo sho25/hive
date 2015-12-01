@@ -15302,6 +15302,11 @@ condition|)
 block|{
 try|try
 block|{
+name|directSql
+operator|.
+name|prepareTxn
+argument_list|()
+expr_stmt|;
 name|setResult
 argument_list|(
 name|getSqlResult
