@@ -139,10 +139,6 @@ block|,
 literal|"Parse Completed"
 block|,
 literal|"Starting Semantic Analysis"
-block|,
-literal|"Semantic Analysis Completed"
-block|,
-literal|"Starting command"
 block|}
 expr_stmt|;
 name|expectedLogsExecution
@@ -151,6 +147,10 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"Starting command"
+block|,
+literal|"Semantic Analysis Completed"
+block|,
 literal|"Executing on YARN cluster with App id"
 block|,
 literal|"Setting Tez DAG access"

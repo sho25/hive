@@ -241,11 +241,7 @@ block|,
 literal|"Parse Completed"
 block|,
 literal|"Starting Semantic Analysis"
-block|,
-literal|"Semantic Analysis Completed"
-block|,
-literal|"Starting command"
-block|}
+block|,     }
 expr_stmt|;
 name|expectedLogsExecution
 operator|=
@@ -253,6 +249,12 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"Total jobs"
+block|,
+literal|"Starting command"
+block|,
+literal|"Semantic Analysis Completed"
+block|,
 literal|"Number of reduce tasks determined at compile time"
 block|,
 literal|"number of splits"
