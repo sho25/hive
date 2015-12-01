@@ -224,6 +224,13 @@ literal|"_FUNC_() - Returns the current date at the start of query evaluation."
 operator|+
 literal|" All calls of current_date within the same query return the same value."
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|1
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFCurrentDate

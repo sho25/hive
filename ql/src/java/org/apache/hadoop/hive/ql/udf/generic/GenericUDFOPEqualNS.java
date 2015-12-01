@@ -71,6 +71,13 @@ literal|"a _FUNC_ b - Returns same result with EQUAL(=) operator "
 operator|+
 literal|"for non-null operands, but returns TRUE if both are NULL, FALSE if one of the them is NULL"
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|2
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFOPEqualNS

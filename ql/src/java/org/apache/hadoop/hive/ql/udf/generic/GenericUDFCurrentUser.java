@@ -204,6 +204,13 @@ name|extended
 operator|=
 literal|"SessionState UserFromAuthenticator"
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|1
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFCurrentUser

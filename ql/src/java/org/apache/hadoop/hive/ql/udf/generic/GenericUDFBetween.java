@@ -175,6 +175,13 @@ name|value
 operator|=
 literal|"_FUNC_ a [NOT] BETWEEN b AND c - evaluate if a is [not] in between b and c"
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|2
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFBetween

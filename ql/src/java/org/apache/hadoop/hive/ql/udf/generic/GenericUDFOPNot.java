@@ -258,6 +258,13 @@ operator|.
 name|class
 block|}
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|2
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFOPNot

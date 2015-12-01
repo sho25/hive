@@ -225,6 +225,13 @@ literal|"> SELECT _FUNC_(array(1, 2, 3), 2) FROM src LIMIT 1;\n"
 operator|+
 literal|"  true"
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|2
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFArrayContains

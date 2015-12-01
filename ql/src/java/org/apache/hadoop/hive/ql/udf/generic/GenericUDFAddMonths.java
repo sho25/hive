@@ -347,6 +347,14 @@ literal|"> SELECT _FUNC_('2009-08-31', 1) FROM src LIMIT 1;\n"
 operator|+
 literal|" '2009-09-30'"
 argument_list|)
+annotation|@
+name|NDV
+argument_list|(
+name|maxNdv
+operator|=
+literal|250
+argument_list|)
+comment|// 250 seems to be reasonable upper limit for this
 specifier|public
 class|class
 name|GenericUDFAddMonths
