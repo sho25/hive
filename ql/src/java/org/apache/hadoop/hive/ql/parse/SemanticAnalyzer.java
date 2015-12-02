@@ -70489,7 +70489,7 @@ decl_stmt|;
 if|if
 condition|(
 name|amt
-operator|<
+operator|<=
 literal|0
 condition|)
 block|{
@@ -70497,7 +70497,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Window Frame Boundary Amount must be a +ve integer, amount provide is: "
+literal|"Window Frame Boundary Amount must be a positive integer, provided amount is: "
 operator|+
 name|amt
 argument_list|)
