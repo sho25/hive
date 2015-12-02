@@ -7308,6 +7308,14 @@ name|SQLException
 name|sqle
 parameter_list|)
 block|{
+name|beeLine
+operator|.
+name|getDatabaseConnections
+argument_list|()
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
 return|return
 name|beeLine
 operator|.
