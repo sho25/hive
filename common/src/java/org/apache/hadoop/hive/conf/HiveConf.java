@@ -3554,7 +3554,7 @@ name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
 argument_list|,
-literal|"nonstrict"
+literal|"strict"
 argument_list|,
 literal|"The mode in which the Hive operations are being performed. \n"
 operator|+

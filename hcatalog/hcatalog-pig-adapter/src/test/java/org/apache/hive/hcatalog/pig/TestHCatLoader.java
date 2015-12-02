@@ -977,6 +977,7 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|storageFormat
 decl_stmt|;
@@ -1456,6 +1457,19 @@ operator|.
 name|varname
 argument_list|,
 name|TEST_WAREHOUSE_DIR
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPREDMODE
+argument_list|,
+literal|"nonstrict"
 argument_list|)
 expr_stmt|;
 if|if

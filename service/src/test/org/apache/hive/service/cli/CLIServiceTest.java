@@ -1547,13 +1547,6 @@ argument_list|>
 index|[]
 name|cs
 init|=
-operator|(
-name|Callable
-argument_list|<
-name|Void
-argument_list|>
-index|[]
-operator|)
 operator|new
 name|Callable
 index|[
@@ -1664,13 +1657,6 @@ argument_list|>
 index|[]
 name|tasks
 init|=
-operator|(
-name|FutureTask
-argument_list|<
-name|Void
-argument_list|>
-index|[]
-operator|)
 operator|new
 name|FutureTask
 index|[
@@ -1844,6 +1830,8 @@ name|Void
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Void
 name|call

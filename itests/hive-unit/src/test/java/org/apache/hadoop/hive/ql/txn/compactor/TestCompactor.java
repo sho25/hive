@@ -1136,6 +1136,19 @@ argument_list|,
 literal|"nonstrict"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPREDMODE
+argument_list|,
+literal|"nonstrict"
+argument_list|)
+expr_stmt|;
 comment|//"org.apache.hadoop.hive.ql.io.HiveInputFormat"
 name|TxnDbUtil
 operator|.
@@ -2864,7 +2877,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * After each major compaction, stats need to be updated on each column of the    * table/partition which previously had stats.    * 1. create a bucketed ORC backed table (Orc is currently required by ACID)    * 2. populate 2 partitions with data    * 3. compute stats    * 4. insert some data into the table using StreamingAPI    * 5. Trigger major compaction (which should update stats)    * 6. check that stats have been updated    * @throws Exception    * todo:     * 2. add non-partitioned test    * 4. add a test with sorted table?    */
+comment|/**    * After each major compaction, stats need to be updated on each column of the    * table/partition which previously had stats.    * 1. create a bucketed ORC backed table (Orc is currently required by ACID)    * 2. populate 2 partitions with data    * 3. compute stats    * 4. insert some data into the table using StreamingAPI    * 5. Trigger major compaction (which should update stats)    * 6. check that stats have been updated    * @throws Exception    * todo:    * 2. add non-partitioned test    * 4. add a test with sorted table?    */
 annotation|@
 name|Test
 specifier|public

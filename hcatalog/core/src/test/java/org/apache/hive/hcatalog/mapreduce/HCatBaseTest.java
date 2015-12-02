@@ -541,6 +541,19 @@ argument_list|,
 name|TEST_WAREHOUSE_DIR
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPREDMODE
+argument_list|,
+literal|"nonstrict"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|Shell
@@ -622,7 +635,7 @@ name|lineNumber
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * creates PigServer in LOCAL mode.      * http://pig.apache.org/docs/r0.12.0/perf.html#error-handling    * @param stopOnFailure equivalent of "-stop_on_failure" command line arg, setting to 'true' makes    *                      debugging easier    */
+comment|/**    * creates PigServer in LOCAL mode.    * http://pig.apache.org/docs/r0.12.0/perf.html#error-handling    * @param stopOnFailure equivalent of "-stop_on_failure" command line arg, setting to 'true' makes    *                      debugging easier    */
 specifier|public
 specifier|static
 name|PigServer
