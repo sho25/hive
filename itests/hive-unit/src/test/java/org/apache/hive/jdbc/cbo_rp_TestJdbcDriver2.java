@@ -6924,7 +6924,7 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|5
+literal|10
 argument_list|,
 name|resMeta
 operator|.
@@ -11939,6 +11939,10 @@ name|testValues
 index|[
 literal|0
 index|]
+argument_list|,
+operator|new
+name|Properties
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|assertEquals
