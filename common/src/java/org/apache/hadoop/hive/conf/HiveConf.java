@@ -5882,17 +5882,6 @@ argument_list|,
 literal|"Whether to use density function to estimate the NDV for the whole table based on the NDV of partitions"
 argument_list|)
 block|,
-name|HIVE_STATS_KEY_PREFIX_MAX_LENGTH
-argument_list|(
-literal|"hive.stats.key.prefix.max.length"
-argument_list|,
-literal|150
-argument_list|,
-literal|"Determines if when the prefix of the key used for intermediate stats collection\n"
-operator|+
-literal|"exceeds a certain length, a hash of the key is used instead.  If the value< 0 then hashing"
-argument_list|)
-block|,
 name|HIVE_STATS_KEY_PREFIX
 argument_list|(
 literal|"hive.stats.key.prefix"

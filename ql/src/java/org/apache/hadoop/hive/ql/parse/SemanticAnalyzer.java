@@ -58131,18 +58131,6 @@ name|HIVE_STATS_RELIABLE
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|tsDesc
-operator|.
-name|setMaxStatsKeyPrefixLength
-argument_list|(
-name|StatsFactory
-operator|.
-name|getMaxPrefixLength
-argument_list|(
-name|conf
-argument_list|)
-argument_list|)
-expr_stmt|;
 comment|// append additional virtual columns for storing statistics
 name|Iterator
 argument_list|<
@@ -58317,7 +58305,12 @@ comment|// Currently, partition spec can only be static partition.
 name|String
 name|k
 init|=
+name|MetaStoreUtils
+operator|.
+name|encodeTableName
+argument_list|(
 name|tblName
+argument_list|)
 operator|+
 name|Path
 operator|.
