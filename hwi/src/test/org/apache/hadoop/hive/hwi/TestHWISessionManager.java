@@ -115,11 +115,26 @@ name|HiveHistoryViewer
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestHWISessionManager.  *  */
 end_comment
 
 begin_class
+annotation|@
+name|Ignore
+argument_list|(
+literal|"These tests are hanging"
+argument_list|)
 specifier|public
 class|class
 name|TestHWISessionManager
