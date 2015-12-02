@@ -3684,7 +3684,7 @@ name|setProperty
 argument_list|(
 literal|"log4j.configurationFile"
 argument_list|,
-literal|"hive-log4j2.xml"
+literal|"hive-log4j2.properties"
 argument_list|)
 expr_stmt|;
 name|conf

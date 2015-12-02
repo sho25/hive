@@ -179,7 +179,7 @@ name|void
 name|setup
 parameter_list|()
 block|{
-comment|// programmatically set root logger level to INFO. By default if log4j2-test.xml is not
+comment|// programmatically set root logger level to INFO. By default if log4j2-test.properties is not
 comment|// available root logger will use ERROR log level
 name|LoggerContext
 name|ctx
@@ -238,7 +238,7 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// Get the RootLogger which, if you don't have log4j2-test.xml defined, will only log ERRORs
+comment|// Get the RootLogger which, if you don't have log4j2-test.properties defined, will only log ERRORs
 name|Logger
 name|logger
 init|=
@@ -438,12 +438,9 @@ argument_list|(
 literal|"Test"
 argument_list|)
 expr_stmt|;
-comment|// HiveEventCounter will be loaded from hive-log4j2-test.xml before tests are run. The 2 log
-comment|// info msgs from previous test case will also be counted along with 4 log info msgs in this
-comment|// test and hence we assert for 6 here
 name|assertEquals
 argument_list|(
-literal|6
+literal|4
 argument_list|,
 name|appender
 operator|.

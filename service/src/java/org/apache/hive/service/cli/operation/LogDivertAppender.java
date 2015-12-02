@@ -461,6 +461,8 @@ name|createLayout
 argument_list|(
 literal|"%d{yy/MM/dd HH:mm:ss} %p %c{2}: %m%n"
 argument_list|,
+literal|null
+argument_list|,
 name|configuration
 argument_list|,
 literal|null
@@ -492,6 +494,8 @@ operator|.
 name|createLayout
 argument_list|(
 literal|"%-5p : %m%n"
+argument_list|,
+literal|null
 argument_list|,
 name|configuration
 argument_list|,

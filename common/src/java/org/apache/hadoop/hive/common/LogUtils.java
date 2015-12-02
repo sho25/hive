@@ -124,7 +124,7 @@ specifier|final
 name|String
 name|HIVE_L4J
 init|=
-literal|"hive-log4j2.xml"
+literal|"hive-log4j2.properties"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -132,7 +132,7 @@ specifier|final
 name|String
 name|HIVE_EXEC_L4J
 init|=
-literal|"hive-exec-log4j2.xml"
+literal|"hive-exec-log4j2.properties"
 decl_stmt|;
 specifier|private
 specifier|static

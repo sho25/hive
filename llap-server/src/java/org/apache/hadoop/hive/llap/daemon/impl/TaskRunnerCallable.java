@@ -1386,15 +1386,7 @@ argument_list|)
 operator|.
 name|setNameFormat
 argument_list|(
-literal|"TezTaskRunner_"
-operator|+
-name|request
-operator|.
-name|getFragmentSpec
-argument_list|()
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
+literal|"TezTaskRunner"
 argument_list|)
 operator|.
 name|build

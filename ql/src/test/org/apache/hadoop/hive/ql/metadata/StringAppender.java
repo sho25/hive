@@ -465,6 +465,8 @@ name|createLayout
 argument_list|(
 name|nullablePatternString
 argument_list|,
+literal|null
+argument_list|,
 name|configuration
 argument_list|,
 literal|null

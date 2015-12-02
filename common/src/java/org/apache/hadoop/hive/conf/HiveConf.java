@@ -6986,7 +6986,7 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file.\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-log4j2.xml found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-log4j2.properties found on the classpath.\n"
 operator|+
 literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
@@ -7001,7 +7001,7 @@ literal|""
 argument_list|,
 literal|"Hive log4j configuration file for execution mode(sub command).\n"
 operator|+
-literal|"If the property is not set, then logging will be initialized using hive-exec-log4j2.xml found on the classpath.\n"
+literal|"If the property is not set, then logging will be initialized using hive-exec-log4j2.properties found on the classpath.\n"
 operator|+
 literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+

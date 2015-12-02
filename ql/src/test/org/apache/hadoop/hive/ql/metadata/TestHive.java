@@ -1608,7 +1608,7 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
-comment|// Get the RootLogger which, if you don't have log4j2-test.xml defined, will only log ERRORs
+comment|// Get the RootLogger which, if you don't have log4j2-test.properties defined, will only log ERRORs
 name|Logger
 name|logger
 init|=
