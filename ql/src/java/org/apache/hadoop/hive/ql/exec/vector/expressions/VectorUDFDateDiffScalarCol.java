@@ -400,6 +400,22 @@ name|batch
 operator|.
 name|selected
 decl_stmt|;
+specifier|final
+name|boolean
+name|selectedInUse
+init|=
+operator|(
+name|inputCol
+operator|.
+name|isRepeating
+operator|==
+literal|false
+operator|)
+operator|&&
+name|batch
+operator|.
+name|selectedInUse
+decl_stmt|;
 if|if
 condition|(
 name|batch
@@ -519,8 +535,6 @@ literal|false
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -631,8 +645,6 @@ literal|true
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -721,8 +733,6 @@ literal|false
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -870,8 +880,6 @@ literal|true
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -960,8 +968,6 @@ literal|false
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -1115,8 +1121,6 @@ literal|true
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
@@ -1195,8 +1199,6 @@ literal|false
 expr_stmt|;
 if|if
 condition|(
-name|batch
-operator|.
 name|selectedInUse
 condition|)
 block|{
