@@ -4544,7 +4544,6 @@ init|=
 name|determineUncompressedPartSize
 argument_list|()
 decl_stmt|,
-comment|//
 name|partCount
 init|=
 call|(
@@ -4587,7 +4586,6 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-comment|/* Starting pre-read for [12187411,17107411) at start: 12187411 end: 12449555 cache buffer: 0x5f64a8f6(2) Processing uncompressed file data at [12187411, 12449555)   */
 for|for
 control|(
 name|int
@@ -4633,6 +4631,16 @@ init|=
 name|partOffset
 decl_stmt|;
 comment|// We have 0 bytes of data for this part, for now.
+if|if
+condition|(
+name|current
+operator|==
+literal|null
+condition|)
+block|{
+break|break;
+comment|// We have no data from this point on (could be unneeded), skip.
+block|}
 assert|assert
 name|partOffset
 operator|<=
