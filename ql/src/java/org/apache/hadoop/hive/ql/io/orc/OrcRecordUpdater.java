@@ -894,6 +894,7 @@ argument_list|()
 return|;
 block|}
 block|}
+specifier|public
 specifier|static
 name|Path
 name|getSideFile
