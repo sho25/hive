@@ -7393,7 +7393,7 @@ argument_list|)
 block|,
 name|HIVE_SERVER2_WEBUI_USE_SSL
 argument_list|(
-literal|"hive.server2.webui.use.SSL"
+literal|"hive.server2.webui.use.ssl"
 argument_list|,
 literal|false
 argument_list|,
@@ -7416,6 +7416,37 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"SSL certificate keystore password for HiveServer2 WebUI."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_USE_SPNEGO
+argument_list|(
+literal|"hive.server2.webui.use.spnego"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the HiveServer2 WebUI will be secured with SPNEGO. Clients must authenticate with Kerberos."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_SPNEGO_KEYTAB
+argument_list|(
+literal|"hive.server2.webui.spnego.keytab"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the HiveServer2 WebUI SPNEGO service principal."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_SPNEGO_PRINCIPAL
+argument_list|(
+literal|"hive.server2.webui.spnego.principal"
+argument_list|,
+literal|"HTTP/_HOST@EXAMPLE.COM"
+argument_list|,
+literal|"The HiveServer2 WebUI SPNEGO service principal.\n"
+operator|+
+literal|"The special string _HOST will be replaced automatically with \n"
+operator|+
+literal|"the value of hive.server2.webui.host or the correct host name."
 argument_list|)
 block|,
 comment|// Tez session settings
