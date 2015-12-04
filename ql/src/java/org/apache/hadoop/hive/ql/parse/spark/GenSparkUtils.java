@@ -1204,6 +1204,9 @@ name|context
 argument_list|,
 name|partitions
 argument_list|,
+operator|(
+name|TableScanOperator
+operator|)
 name|root
 argument_list|,
 name|alias
@@ -1236,12 +1239,7 @@ parameter_list|,
 name|PrunedPartitionList
 name|partitions
 parameter_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 name|root
 parameter_list|,
 name|String

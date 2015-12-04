@@ -197,6 +197,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|TableScanOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Task
 import|;
 end_import
@@ -397,6 +415,8 @@ name|GenMRFileSink1
 parameter_list|()
 block|{   }
 comment|/**    * File Sink Operator encountered.    *    * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -862,12 +882,7 @@ operator|.
 name|getCurrTask
 argument_list|()
 decl_stmt|;
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 name|currTopOp
 init|=
 name|ctx
@@ -1072,12 +1087,7 @@ name|getDependencyTaskForMultiInsert
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 name|currTopOp
 init|=
 name|ctx

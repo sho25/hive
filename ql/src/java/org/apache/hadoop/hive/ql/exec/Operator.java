@@ -5174,12 +5174,7 @@ name|toString
 parameter_list|(
 name|Collection
 argument_list|<
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|top
 parameter_list|)
