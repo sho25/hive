@@ -2476,7 +2476,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|promoteNextGroupToCandidate
+name|fetchNextGroup
 argument_list|(
 name|pos
 argument_list|)
