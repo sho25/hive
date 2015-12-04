@@ -15869,6 +15869,16 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|boolean
+name|oldPathDeleted
+init|=
+literal|false
+decl_stmt|;
+name|boolean
+name|isOldPathUnderDestf
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 name|FileSystem
@@ -15894,8 +15904,8 @@ block|{
 comment|// Do not delete oldPath if:
 comment|//  - destf is subdir of oldPath
 comment|//if ( !(fs2.equals(destf.getFileSystem(conf))&& FileUtils.isSubDir(oldPath, destf, fs2)))
-if|if
-condition|(
+name|isOldPathUnderDestf
+operator|=
 name|FileUtils
 operator|.
 name|isSubDir
@@ -15906,8 +15916,18 @@ name|destf
 argument_list|,
 name|fs2
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|isOldPathUnderDestf
 condition|)
 block|{
+comment|// if oldPath is destf or its subdir, its should definitely be deleted, otherwise its
+comment|// existing content might result in incorrect (extra) data.
+comment|// But not sure why we changed not to delete the oldPath in HIVE-8750 if it is
+comment|// not the destf or its subdir?
+name|oldPathDeleted
+operator|=
 name|FileUtils
 operator|.
 name|trashFilesUnderDir
@@ -15924,11 +15944,36 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|IOException
 name|e
 parameter_list|)
 block|{
-comment|//swallow the exception
+if|if
+condition|(
+name|isOldPathUnderDestf
+condition|)
+block|{
+comment|// if oldPath is a subdir of destf but it could not be cleaned
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Directory "
+operator|+
+name|oldPath
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" could not be cleaned up."
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+else|else
+block|{
+comment|//swallow the exception since it won't affect the final result
 name|LOG
 operator|.
 name|warn
@@ -15940,13 +15985,34 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|" cannot be removed: "
+literal|" cannot be cleaned: "
 operator|+
 name|e
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|isOldPathUnderDestf
+operator|&&
+operator|!
+name|oldPathDeleted
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Destination directory "
+operator|+
+name|destf
+operator|+
+literal|" has not be cleaned up."
+argument_list|)
+throw|;
 block|}
 block|}
 comment|// first call FileUtils.mkdir to make sure that destf directory exists, if not, it creates
