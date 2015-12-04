@@ -2419,8 +2419,8 @@ expr_stmt|;
 comment|// Heartbeat on the lockid first, to assure that our lock is still valid.
 comment|// Then look up the lock info (hopefully in the cache).  If these locks
 comment|// are associated with a transaction then heartbeat on that as well.
-name|Long
-name|txnid
+name|LockInfo
+name|info
 init|=
 name|getTxnIdFromLockId
 argument_list|(
@@ -2431,7 +2431,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnid
+name|info
 operator|==
 literal|null
 condition|)
@@ -2453,7 +2453,9 @@ throw|;
 block|}
 if|if
 condition|(
-name|txnid
+name|info
+operator|.
+name|txnId
 operator|>
 literal|0
 condition|)
@@ -2462,7 +2464,9 @@ name|heartbeatTxn
 argument_list|(
 name|dbConn
 argument_list|,
-name|txnid
+name|info
+operator|.
+name|txnId
 argument_list|)
 expr_stmt|;
 block|}
@@ -2634,7 +2638,13 @@ literal|"delete from HIVE_LOCKS where hl_lock_ext_id = "
 operator|+
 name|extLockId
 operator|+
-literal|" AND hl_txnid = 0"
+literal|" AND (hl_txnid = 0 OR"
+operator|+
+literal|" (hl_txnid<> 0 AND hl_lock_state = '"
+operator|+
+name|LOCK_WAITING
+operator|+
+literal|"'))"
 decl_stmt|;
 name|LOG
 operator|.
@@ -2676,8 +2686,8 @@ operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
-name|Long
-name|txnid
+name|LockInfo
+name|info
 init|=
 name|getTxnIdFromLockId
 argument_list|(
@@ -2688,16 +2698,22 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnid
+name|info
 operator|==
 literal|null
 condition|)
 block|{
+comment|//didn't find any lock with extLockId but at ReadCommitted there is a possibility that
+comment|//it existed when above delete ran but it didn't have the expected state.
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"No lock found for unlock("
+literal|"No lock in "
+operator|+
+name|LOCK_WAITING
+operator|+
+literal|" mode found for unlock("
 operator|+
 name|rqst
 operator|+
@@ -2721,7 +2737,9 @@ throw|;
 block|}
 if|if
 condition|(
-name|txnid
+name|info
+operator|.
+name|txnId
 operator|!=
 literal|0
 condition|)
@@ -2729,27 +2747,9 @@ block|{
 name|String
 name|msg
 init|=
-literal|"Unlocking locks associated with transaction"
+literal|"Unlocking locks associated with transaction not permitted.  "
 operator|+
-literal|" not permitted.  Lockid "
-operator|+
-name|JavaUtils
-operator|.
-name|lockIdToString
-argument_list|(
-name|extLockId
-argument_list|)
-operator|+
-literal|" is associated with "
-operator|+
-literal|"transaction "
-operator|+
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-name|txnid
-argument_list|)
+name|info
 decl_stmt|;
 name|LOG
 operator|.
@@ -2768,7 +2768,9 @@ throw|;
 block|}
 if|if
 condition|(
-name|txnid
+name|info
+operator|.
+name|txnId
 operator|==
 literal|0
 condition|)
@@ -2778,23 +2780,9 @@ comment|//so should "should never happen" happened...
 name|String
 name|msg
 init|=
-literal|"Found lock "
+literal|"Found lock in unexpected state "
 operator|+
-name|JavaUtils
-operator|.
-name|lockIdToString
-argument_list|(
-name|extLockId
-argument_list|)
-operator|+
-literal|" with "
-operator|+
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-name|txnid
-argument_list|)
+name|info
 decl_stmt|;
 name|LOG
 operator|.
@@ -9756,7 +9744,7 @@ comment|//todo: add time of abort, which is not currently tracked.  Requires sch
 block|}
 block|}
 specifier|private
-name|Long
+name|LockInfo
 name|getTxnIdFromLockId
 parameter_list|(
 name|Connection
@@ -9794,7 +9782,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select hl_txnid from HIVE_LOCKS where hl_lock_ext_id = "
+literal|"select hl_lock_ext_id, hl_lock_int_id, hl_db, hl_table, "
+operator|+
+literal|"hl_partition, hl_lock_state, hl_lock_type, hl_txnid from HIVE_LOCKS where "
+operator|+
+literal|"hl_lock_ext_id = "
 operator|+
 name|extLockId
 decl_stmt|;
@@ -9831,14 +9823,13 @@ return|return
 literal|null
 return|;
 block|}
-name|long
-name|txnid
+name|LockInfo
+name|info
 init|=
-name|rs
-operator|.
-name|getLong
+operator|new
+name|LockInfo
 argument_list|(
-literal|1
+name|rs
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -9855,12 +9846,14 @@ name|JavaUtils
 operator|.
 name|txnIdToString
 argument_list|(
-name|txnid
+name|info
+operator|.
+name|txnId
 argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-name|txnid
+name|info
 return|;
 block|}
 finally|finally

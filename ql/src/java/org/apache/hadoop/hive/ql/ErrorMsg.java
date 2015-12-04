@@ -1979,6 +1979,16 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|//{2} should be lockid
+name|LOCK_ACQUIRE_TIMEDOUT
+argument_list|(
+literal|10307
+argument_list|,
+literal|"Lock acquisition for {0} timed out after {1}ms.  {2}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

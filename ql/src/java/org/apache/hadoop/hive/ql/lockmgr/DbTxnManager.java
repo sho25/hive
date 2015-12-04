@@ -566,6 +566,8 @@ operator|new
 name|DbLockManager
 argument_list|(
 name|client
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}

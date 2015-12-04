@@ -6083,9 +6083,19 @@ argument_list|(
 name|TimeUnit
 operator|.
 name|SECONDS
+argument_list|,
+literal|0L
+argument_list|,
+literal|false
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|false
 argument_list|)
 argument_list|,
-literal|"The sleep time between various retries"
+literal|"The maximum sleep time between various retries"
 argument_list|)
 block|,
 name|HIVE_LOCK_MAPRED_ONLY
@@ -6232,6 +6242,19 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"time after which transactions are declared aborted if the client has not sent a heartbeat."
+argument_list|)
+block|,
+name|TXN_MGR_DUMP_LOCK_STATE_ON_ACQUIRE_TIMEOUT
+argument_list|(
+literal|"hive.txn.manager.dump.lock.state.on.acquire.timeout"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true so that when attempt to acquire a lock on resource times out, the current state"
+operator|+
+literal|" of the lock manager is dumped to log file.  This is for debugging.  See also "
+operator|+
+literal|"hive.lock.numretries and hive.lock.sleep.between.retries."
 argument_list|)
 block|,
 name|HIVE_TXN_MAX_OPEN_BATCH
