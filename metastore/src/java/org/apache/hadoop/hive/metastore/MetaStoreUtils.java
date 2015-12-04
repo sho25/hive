@@ -941,6 +941,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DEFAULT_SERIALIZATION_FORMAT
+init|=
+literal|"1"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DATABASE_WAREHOUSE_SUFFIX
 init|=
 literal|".db"
@@ -1103,7 +1111,7 @@ name|serdeConstants
 operator|.
 name|SERIALIZATION_FORMAT
 argument_list|,
-literal|"1"
+name|DEFAULT_SERIALIZATION_FORMAT
 argument_list|)
 expr_stmt|;
 name|List
