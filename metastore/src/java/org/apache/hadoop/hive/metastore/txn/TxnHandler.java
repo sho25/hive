@@ -11583,7 +11583,24 @@ return|return
 literal|true
 return|;
 block|}
-comment|//see https://issues.apache.org/jira/browse/HIVE-9938
+if|if
+condition|(
+literal|"ORA-08176"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|sqlException
+operator|.
+name|getSQLState
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|//see also https://issues.apache.org/jira/browse/HIVE-9938
 block|}
 return|return
 literal|false
