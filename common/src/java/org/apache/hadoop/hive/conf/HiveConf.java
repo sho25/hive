@@ -7784,6 +7784,19 @@ literal|"HttpOnly attribute of the HS2 generated cookie."
 argument_list|)
 block|,
 comment|// binary transport settings
+name|HIVE_SERVER2_THRIFT_AUTH_MAX_RETRIES
+argument_list|(
+literal|"hive.server2.thrift.auth.max.retries"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of maximum retries to authenticate HS2 server or HMS server against Kerberos service.\n"
+operator|+
+literal|"This is to mitigate some false alarm auth issues, such that concurrent query executions\n"
+operator|+
+literal|"against single HS2 server may fail to authenticate due to 'Request is a replay'."
+argument_list|)
+block|,
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|(
 literal|"hive.server2.thrift.port"

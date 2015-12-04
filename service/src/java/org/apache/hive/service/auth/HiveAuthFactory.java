@@ -943,6 +943,18 @@ condition|)
 block|{
 try|try
 block|{
+name|int
+name|authMaxRetries
+init|=
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_THRIFT_AUTH_MAX_RETRIES
+argument_list|)
+decl_stmt|;
 name|transportFactory
 operator|=
 name|saslServer
@@ -951,6 +963,8 @@ name|createTransportFactory
 argument_list|(
 name|getSaslProperties
 argument_list|()
+argument_list|,
+name|authMaxRetries
 argument_list|)
 expr_stmt|;
 block|}
