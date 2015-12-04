@@ -4526,8 +4526,6 @@ parameter_list|,
 name|String
 name|prefix
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 for|for
 control|(
