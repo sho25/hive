@@ -59073,6 +59073,11 @@ name|size
 argument_list|()
 operator|==
 literal|1
+operator|&&
+name|joinTree
+operator|.
+name|getNoOuterJoin
+argument_list|()
 condition|)
 block|{
 name|String
