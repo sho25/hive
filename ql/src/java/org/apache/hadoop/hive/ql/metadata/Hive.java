@@ -4513,10 +4513,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|tbl
-operator|.
-name|getDeserializer
-argument_list|()
+name|deserializer
 argument_list|)
 decl_stmt|;
 for|for
