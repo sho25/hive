@@ -10333,6 +10333,21 @@ argument_list|,
 literal|"Name of the SASL mechanism to use for authentication."
 argument_list|)
 block|,
+name|SPARK_RPC_SERVER_ADDRESS
+argument_list|(
+literal|"hive.spark.client.rpc.server.address"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The server address of HiverServer2 host to be used for communication between Hive client and remote Spark driver. "
+operator|+
+literal|"Default is empty, which means the address will be determined in the same way as for hive.server2.thrift.bind.host."
+operator|+
+literal|"This is only necessary if the host has mutiple network addresses and if a different network address other than "
+operator|+
+literal|"hive.server2.thrift.bind.host is to be used."
+argument_list|)
+block|,
 name|SPARK_DYNAMIC_PARTITION_PRUNING
 argument_list|(
 literal|"hive.spark.dynamic.partition.pruning"
