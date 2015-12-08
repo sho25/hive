@@ -73,20 +73,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -136,6 +122,24 @@ operator|.
 name|exec
 operator|.
 name|ReduceSinkOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|SerializationUtilities
 import|;
 end_import
 
@@ -264,6 +268,20 @@ operator|.
 name|parse
 operator|.
 name|SemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
 import|;
 end_import
 
@@ -487,7 +505,7 @@ argument_list|>
 argument_list|>
 name|newRoots
 init|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|cloneOperatorTree
 argument_list|(

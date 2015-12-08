@@ -59,16 +59,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -277,7 +267,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|SerializationUtilities
 import|;
 end_import
 
@@ -496,6 +486,16 @@ operator|.
 name|collect
 operator|.
 name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -1446,7 +1446,7 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpressionToKryo
 argument_list|(

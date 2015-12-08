@@ -253,7 +253,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|EnumDelegate
 import|;

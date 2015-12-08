@@ -61,16 +61,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -256,6 +246,16 @@ operator|.
 name|mapred
 operator|.
 name|JobConf
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -563,7 +563,7 @@ operator|new
 name|ByteArrayOutputStream
 argument_list|()
 decl_stmt|;
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializePlan
 argument_list|(
@@ -660,7 +660,7 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializePlan
 argument_list|(
