@@ -877,19 +877,12 @@ argument_list|)
 return|;
 block|}
 block|}
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"cannot find field "
-operator|+
-name|field
-operator|+
-literal|" in "
-operator|+
-name|hiveFieldNames
-argument_list|)
-throw|;
+comment|//This means hive type doesn't refer this field that comes from file schema.
+comment|//i.e. the field is not required for hive table. It can occur due to schema
+comment|//evolution where some field is deleted.
+return|return
+literal|null
+return|;
 block|}
 specifier|private
 name|Converter
