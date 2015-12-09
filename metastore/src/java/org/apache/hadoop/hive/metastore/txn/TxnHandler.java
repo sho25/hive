@@ -23,6 +23,20 @@ begin_import
 import|import
 name|com
 operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
 name|jolbox
 operator|.
 name|bonecp
@@ -2480,6 +2494,11 @@ name|extLockId
 argument_list|)
 expr_stmt|;
 block|}
+name|closeDbConn
+argument_list|(
+name|dbConn
+argument_list|)
+expr_stmt|;
 name|dbConn
 operator|=
 name|getDbConn
@@ -4939,6 +4958,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * For testing only, do not use.    */
+annotation|@
+name|VisibleForTesting
 name|int
 name|numLocksInLockTable
 parameter_list|()
@@ -4950,20 +4971,29 @@ block|{
 name|Connection
 name|dbConn
 init|=
-name|getDbConn
-argument_list|(
-name|Connection
-operator|.
-name|TRANSACTION_READ_COMMITTED
-argument_list|)
+literal|null
 decl_stmt|;
 name|Statement
 name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
+name|dbConn
+operator|=
+name|getDbConn
+argument_list|(
+name|Connection
+operator|.
+name|TRANSACTION_READ_COMMITTED
+argument_list|)
+expr_stmt|;
 name|stmt
 operator|=
 name|dbConn
@@ -4987,16 +5017,15 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|rs
 operator|.
 name|next
@@ -5024,14 +5053,13 @@ return|;
 block|}
 finally|finally
 block|{
-name|closeDbConn
+name|close
 argument_list|(
-name|dbConn
-argument_list|)
-expr_stmt|;
-name|closeStmt
-argument_list|(
+name|rs
+argument_list|,
 name|stmt
+argument_list|,
+name|dbConn
 argument_list|)
 expr_stmt|;
 block|}
@@ -5137,7 +5165,16 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"There is a problem with a connection from the pool, retrying"
+literal|"There is a problem with a connection from the pool, retrying(rc="
+operator|+
+name|rc
+operator|+
+literal|"): "
+operator|+
+name|getMessage
+argument_list|(
+name|e
+argument_list|)
 argument_list|,
 name|e
 argument_list|)
@@ -9991,7 +10028,16 @@ name|MetaException
 argument_list|(
 literal|"This should never happen!  We already "
 operator|+
-literal|"checked the lock existed but now we can't find it!"
+literal|"checked the lock("
+operator|+
+name|JavaUtils
+operator|.
+name|lockIdToString
+argument_list|(
+name|extLockId
+argument_list|)
+operator|+
+literal|") existed but now we can't find it!"
 argument_list|)
 throw|;
 block|}
@@ -10786,6 +10832,15 @@ operator|.
 name|setJdbcUrl
 argument_list|(
 name|driverUrl
+argument_list|)
+expr_stmt|;
+comment|//if we are waiting for connection for 60s, something is really wrong
+comment|//better raise an error than hang forever
+name|config
+operator|.
+name|setConnectionTimeoutInMs
+argument_list|(
+literal|60000
 argument_list|)
 expr_stmt|;
 name|config
@@ -11651,23 +11706,33 @@ block|{
 name|Connection
 name|tmp
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|tmp
+operator|=
 name|getDbConn
 argument_list|(
 name|Connection
 operator|.
 name|TRANSACTION_READ_COMMITTED
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|determineDatabaseProduct
 argument_list|(
 name|tmp
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|closeDbConn
 argument_list|(
 name|tmp
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 switch|switch
 condition|(
