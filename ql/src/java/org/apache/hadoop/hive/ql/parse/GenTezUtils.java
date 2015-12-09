@@ -1000,6 +1000,12 @@ argument_list|)
 decl_stmt|;
 name|maxPartition
 operator|=
+name|Math
+operator|.
+name|max
+argument_list|(
+literal|1
+argument_list|,
 operator|(
 name|maxPartition
 operator|>
@@ -1009,6 +1015,7 @@ condition|?
 name|maxReducers
 else|:
 name|maxPartition
+argument_list|)
 expr_stmt|;
 name|reduceWork
 operator|.
