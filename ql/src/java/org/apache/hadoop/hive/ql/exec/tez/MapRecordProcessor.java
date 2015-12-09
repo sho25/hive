@@ -211,7 +211,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|LlapIoProxy
+name|LlapProxy
 import|;
 end_import
 
@@ -946,7 +946,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|isDaemon
 argument_list|()

@@ -299,7 +299,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|LlapIoProxy
+name|LlapProxy
 import|;
 end_import
 
@@ -1342,7 +1342,7 @@ name|VectorizedRowBatch
 argument_list|>
 name|llapIo
 init|=
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|getIo
 argument_list|()

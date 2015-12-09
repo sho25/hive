@@ -18446,7 +18446,6 @@ argument_list|,
 name|deserializer
 argument_list|)
 expr_stmt|;
-comment|// TODO#: here - desc
 if|if
 condition|(
 name|descTbl

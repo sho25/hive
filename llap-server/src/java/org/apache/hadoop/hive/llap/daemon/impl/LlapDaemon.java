@@ -383,7 +383,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|LlapIoProxy
+name|LlapProxy
 import|;
 end_import
 
@@ -730,7 +730,14 @@ name|AtomicReference
 argument_list|<
 name|InetSocketAddress
 argument_list|>
-name|address
+name|srvAddress
+init|=
+operator|new
+name|AtomicReference
+argument_list|<>
+argument_list|()
+decl_stmt|,
+name|mngAddress
 init|=
 operator|new
 name|AtomicReference
@@ -776,7 +783,10 @@ index|[]
 name|localDirs
 parameter_list|,
 name|int
-name|rpcPort
+name|srvPort
+parameter_list|,
+name|int
+name|mngPort
 parameter_list|,
 name|int
 name|shufflePort
@@ -803,21 +813,42 @@ name|Preconditions
 operator|.
 name|checkArgument
 argument_list|(
-name|rpcPort
+name|srvPort
 operator|==
 literal|0
 operator|||
 operator|(
-name|rpcPort
+name|srvPort
 operator|>
 literal|1024
 operator|&&
-name|rpcPort
+name|srvPort
 operator|<
 literal|65536
 operator|)
 argument_list|,
-literal|"RPC Port must be between 1025 and 65535, or 0 automatic selection"
+literal|"Server RPC Port must be between 1025 and 65535, or 0 automatic selection"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|mngPort
+operator|==
+literal|0
+operator|||
+operator|(
+name|mngPort
+operator|>
+literal|1024
+operator|&&
+name|mngPort
+operator|<
+literal|65536
+operator|)
+argument_list|,
+literal|"Management RPC Port must be between 1025 and 65535, or 0 automatic selection"
 argument_list|)
 expr_stmt|;
 name|Preconditions
@@ -935,7 +966,11 @@ name|numExecutors
 operator|+
 literal|", rpcListenerPort="
 operator|+
-name|rpcPort
+name|srvPort
+operator|+
+literal|", mngListenerPort="
+operator|+
+name|mngPort
 operator|+
 literal|", workDirs="
 operator|+
@@ -1202,7 +1237,7 @@ operator|=
 operator|new
 name|AMReporter
 argument_list|(
-name|address
+name|srvAddress
 argument_list|,
 operator|new
 name|QueryFailedHandlerProxy
@@ -1222,9 +1257,13 @@ name|numHandlers
 argument_list|,
 name|this
 argument_list|,
-name|address
+name|srvAddress
 argument_list|,
-name|rpcPort
+name|mngAddress
+argument_list|,
+name|srvPort
+argument_list|,
+name|mngPort
 argument_list|)
 expr_stmt|;
 name|this
@@ -1248,7 +1287,7 @@ name|this
 operator|.
 name|shufflePort
 argument_list|,
-name|address
+name|srvAddress
 argument_list|,
 name|executorMemoryBytes
 argument_list|,
@@ -1484,14 +1523,14 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|setDaemon
 argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|initializeLlapIo
 argument_list|(
@@ -1640,7 +1679,7 @@ name|shutdown
 argument_list|()
 expr_stmt|;
 block|}
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|close
 argument_list|()
@@ -1724,6 +1763,20 @@ argument_list|,
 name|ConfVars
 operator|.
 name|LLAP_DAEMON_RPC_PORT
+argument_list|)
+decl_stmt|;
+name|int
+name|mngPort
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_MANAGEMENT_RPC_PORT
 argument_list|)
 decl_stmt|;
 name|int
@@ -1828,6 +1881,8 @@ argument_list|,
 name|localDirs
 argument_list|,
 name|rpcPort
+argument_list|,
+name|mngPort
 argument_list|,
 name|shufflePort
 argument_list|)

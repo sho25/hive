@@ -1356,6 +1356,14 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_LLAP_DAEMON_SERVICE_PRINCIPAL_NAME
+init|=
+literal|"hive.llap.daemon.service.principal"
+decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
 specifier|public
 specifier|static
@@ -8427,41 +8435,6 @@ argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
 block|,
-name|HIVE_CONF_RESTRICTED_LIST
-argument_list|(
-literal|"hive.conf.restricted.list"
-argument_list|,
-literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role"
-argument_list|,
-literal|"Comma separated list of configuration options which are immutable at runtime"
-argument_list|)
-block|,
-name|HIVE_CONF_HIDDEN_LIST
-argument_list|(
-literal|"hive.conf.hidden.list"
-argument_list|,
-name|METASTOREPWD
-operator|.
-name|varname
-operator|+
-literal|","
-operator|+
-name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
-operator|.
-name|varname
-argument_list|,
-literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
-argument_list|)
-block|,
-name|HIVE_CONF_INTERNAL_VARIABLE_LIST
-argument_list|(
-literal|"hive.conf.internal.variable.list"
-argument_list|,
-literal|"hive.added.files.path,hive.added.jars.path,hive.added.archives.path"
-argument_list|,
-literal|"Comma separated list of variables which are used internally and should not be configurable."
-argument_list|)
-block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
 comment|// outputs are ready
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
@@ -9370,6 +9343,98 @@ argument_list|,
 literal|"Specify the number of threads to use for low-level IO thread pool."
 argument_list|)
 block|,
+name|LLAP_KERBEROS_PRINCIPAL
+argument_list|(
+name|HIVE_LLAP_DAEMON_SERVICE_PRINCIPAL_NAME
+argument_list|,
+literal|""
+argument_list|,
+literal|"The name of the LLAP daemon's service principal."
+argument_list|)
+block|,
+name|LLAP_KERBEROS_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.daemon.keytab.file"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the LLAP daemon's service principal."
+argument_list|)
+block|,
+name|LLAP_ZKSM_KERBEROS_PRINCIPAL
+argument_list|(
+literal|"hive.llap.zk.sm.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The name of the principal to use to talk to ZooKeeper for ZooKeeper SecretManager."
+argument_list|)
+block|,
+name|LLAP_ZKSM_KERBEROS_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.zk.sm.keytab.file"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the principal to use to talk to\n"
+operator|+
+literal|"ZooKeeper for ZooKeeper SecretManager."
+argument_list|)
+block|,
+name|LLAP_ZKSM_ZK_CONNECTION_STRING
+argument_list|(
+literal|"hive.llap.zk.sm.connectionString"
+argument_list|,
+literal|""
+argument_list|,
+literal|"ZooKeeper connection string for ZooKeeper SecretManager."
+argument_list|)
+block|,
+name|LLAP_SECURITY_ACL
+argument_list|(
+literal|"hive.llap.daemon.service.acl"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"The ACL for LLAP daemon."
+argument_list|)
+block|,
+name|LLAP_MANAGEMENT_ACL
+argument_list|(
+literal|"hive.llap.management.service.acl"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"The ACL for LLAP daemon management."
+argument_list|)
+block|,
+comment|// Hadoop DelegationTokenManager default is 1 week.
+name|LLAP_DELEGATION_TOKEN_LIFETIME
+argument_list|(
+literal|"hive.llap.daemon.delegation.token.lifetime"
+argument_list|,
+literal|"14d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"LLAP delegation token lifetime, in seconds if specified without a unit."
+argument_list|)
+block|,
+name|LLAP_MANAGEMENT_RPC_PORT
+argument_list|(
+literal|"hive.llap.management.rpc.port"
+argument_list|,
+literal|15004
+argument_list|,
+literal|"RPC port for LLAP daemon management service."
+argument_list|)
+block|,
 name|LLAP_DAEMON_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.daemon.rpc.num.handlers"
@@ -10020,6 +10085,41 @@ operator|+
 name|LOG_PREFIX_LENGTH
 operator|+
 literal|" characters. Defaults to use auto-generated session id."
+argument_list|)
+block|,
+name|HIVE_CONF_RESTRICTED_LIST
+argument_list|(
+literal|"hive.conf.restricted.list"
+argument_list|,
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role"
+argument_list|,
+literal|"Comma separated list of configuration options which are immutable at runtime"
+argument_list|)
+block|,
+name|HIVE_CONF_HIDDEN_LIST
+argument_list|(
+literal|"hive.conf.hidden.list"
+argument_list|,
+name|METASTOREPWD
+operator|.
+name|varname
+operator|+
+literal|","
+operator|+
+name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
+operator|.
+name|varname
+argument_list|,
+literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
+argument_list|)
+block|,
+name|HIVE_CONF_INTERNAL_VARIABLE_LIST
+argument_list|(
+literal|"hive.conf.internal.variable.list"
+argument_list|,
+literal|"hive.added.files.path,hive.added.jars.path,hive.added.archives.path"
+argument_list|,
+literal|"Comma separated list of variables which are used internally and should not be configurable."
 argument_list|)
 block|;
 specifier|public
