@@ -2607,6 +2607,7 @@ block|}
 else|else
 block|{
 comment|// This stream can be separated by RG using index. Let's do that.
+comment|// Offset to where this RG begins.
 name|long
 name|cOffset
 init|=
@@ -2623,6 +2624,7 @@ operator|.
 name|streamIndexOffset
 argument_list|)
 decl_stmt|;
+comment|// Offset relative to the beginning of the stream of where this RG ends.
 name|long
 name|nextCOffsetRel
 init|=
@@ -2641,6 +2643,7 @@ operator|.
 name|streamIndexOffset
 argument_list|)
 decl_stmt|;
+comment|// Offset before which this RG is guaranteed to end. Can only be estimated.
 comment|// We estimate the same way for compressed and uncompressed for now.
 name|long
 name|endCOffset
@@ -2666,6 +2669,8 @@ argument_list|,
 name|bufferSize
 argument_list|)
 decl_stmt|;
+comment|// As we read, we can unlock initial refcounts for the buffers that end before
+comment|// the data that we need for this RG.
 name|long
 name|unlockUntilCOffset
 init|=
@@ -3377,6 +3382,39 @@ name|originalData
 operator|=
 literal|null
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|super
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|", original is set "
+operator|+
+operator|(
+name|this
+operator|.
+name|originalData
+operator|!=
+literal|null
+operator|)
+operator|+
+literal|", buffer was replaced "
+operator|+
+operator|(
+name|originalCbIndex
+operator|==
+operator|-
+literal|1
+operator|)
+return|;
 block|}
 annotation|@
 name|Override
@@ -6015,6 +6053,7 @@ name|CacheChunk
 name|cc
 parameter_list|)
 block|{
+comment|// Don't release if the buffer contains any data beyond the acceptable boundary.
 if|if
 condition|(
 name|cc
@@ -6033,6 +6072,8 @@ argument_list|()
 operator|!=
 literal|null
 assert|;
+try|try
+block|{
 name|releaseInitialRefcount
 argument_list|(
 name|cc
@@ -6040,7 +6081,45 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// Release all the previous buffers that we may not have been able to release due to reuse.
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"BUG: releasing initial refcount; stream start "
+operator|+
+name|streamStartOffset
+operator|+
+literal|", "
+operator|+
+literal|"unlocking until "
+operator|+
+name|unlockUntilCOffset
+operator|+
+literal|" from ["
+operator|+
+name|cc
+operator|+
+literal|"]: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
+comment|// Release all the previous buffers that we may not have been able to release due to reuse,
+comment|// as long as they are still in the same stream and are not already released.
 name|DiskRangeList
 name|prev
 init|=
@@ -6095,6 +6174,8 @@ operator|==
 literal|null
 condition|)
 break|break;
+try|try
+block|{
 name|releaseInitialRefcount
 argument_list|(
 name|prevCc
@@ -6102,6 +6183,47 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"BUG: releasing initial refcount; stream start "
+operator|+
+name|streamStartOffset
+operator|+
+literal|", "
+operator|+
+literal|"unlocking until "
+operator|+
+name|unlockUntilCOffset
+operator|+
+literal|" from ["
+operator|+
+name|cc
+operator|+
+literal|"] and backtracked to ["
+operator|+
+name|prevCc
+operator|+
+literal|"]: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
 name|prev
 operator|=
 name|prev
