@@ -417,6 +417,15 @@ name|fetch
 return|;
 block|}
 specifier|public
+name|RexNode
+name|getOffsetExpr
+parameter_list|()
+block|{
+return|return
+name|offset
+return|;
+block|}
+specifier|public
 name|void
 name|setInputRefToCallMap
 parameter_list|(

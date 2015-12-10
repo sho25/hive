@@ -3839,6 +3839,15 @@ argument_list|)
 decl_stmt|;
 name|sizeNeeded
 operator|=
+operator|(
+name|parseCtx
+operator|.
+name|getGlobalLimitCtx
+argument_list|()
+operator|.
+name|getGlobalOffset
+argument_list|()
+operator|+
 name|parseCtx
 operator|.
 name|getGlobalLimitCtx
@@ -3846,6 +3855,7 @@ argument_list|()
 operator|.
 name|getGlobalLimit
 argument_list|()
+operator|)
 operator|*
 name|sizePerRow
 expr_stmt|;
