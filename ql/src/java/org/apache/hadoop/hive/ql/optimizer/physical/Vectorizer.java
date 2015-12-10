@@ -8180,6 +8180,7 @@ name|MapWork
 name|mWork
 decl_stmt|;
 specifier|private
+specifier|final
 name|VectorTaskColumnInfo
 name|vectorTaskColumnInfo
 decl_stmt|;
@@ -8472,10 +8473,12 @@ extends|extends
 name|VectorizationNodeProcessor
 block|{
 specifier|private
+specifier|final
 name|VectorTaskColumnInfo
 name|vectorTaskColumnInfo
 decl_stmt|;
 specifier|private
+specifier|final
 name|boolean
 name|isTez
 decl_stmt|;

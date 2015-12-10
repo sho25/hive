@@ -5847,13 +5847,11 @@ throws|throws
 name|HiveException
 block|{
 return|return
-operator|(
 operator|new
 name|PartitionDesc
 argument_list|(
 name|part
 argument_list|)
-operator|)
 return|;
 block|}
 specifier|public
