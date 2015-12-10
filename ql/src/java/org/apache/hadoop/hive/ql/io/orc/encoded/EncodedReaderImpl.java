@@ -738,7 +738,7 @@ block|}
 decl_stmt|;
 specifier|private
 specifier|final
-name|long
+name|Long
 name|fileId
 decl_stmt|;
 specifier|private
@@ -1829,6 +1829,26 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
+name|boolean
+name|hasFileId
+init|=
+name|this
+operator|.
+name|fileId
+operator|!=
+literal|null
+decl_stmt|;
+name|long
+name|fileId
+init|=
+name|hasFileId
+condition|?
+name|this
+operator|.
+name|fileId
+else|:
+literal|0
+decl_stmt|;
 if|if
 condition|(
 name|listToRead
@@ -1958,6 +1978,11 @@ operator|new
 name|BooleanRef
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|hasFileId
+condition|)
+block|{
 name|cache
 operator|.
 name|getFileData
@@ -2009,6 +2034,7 @@ name|next
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -3853,6 +3879,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// 6. Finally, put uncompressed data to cache.
+if|if
+condition|(
+name|fileId
+operator|!=
+literal|null
+condition|)
+block|{
 name|long
 index|[]
 name|collisionMask
@@ -3884,6 +3917,7 @@ name|getCacheBuffers
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// 7. It may happen that we know we won't use some compression buffers anymore.
 comment|//    Release initial refcounts.
 for|for
@@ -5241,6 +5275,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// 6. Finally, put uncompressed data to cache.
+if|if
+condition|(
+name|fileId
+operator|!=
+literal|null
+condition|)
+block|{
 name|long
 index|[]
 name|collisionMask
@@ -5269,6 +5310,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|lastUncompressed
 return|;

@@ -507,8 +507,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -781,8 +779,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -1044,8 +1040,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -1140,8 +1134,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test2"
 argument_list|,
 operator|new
@@ -1445,8 +1437,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 name|inBuf
@@ -1575,8 +1565,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -1668,8 +1656,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -2028,8 +2014,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 name|inBuf
@@ -2156,8 +2140,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -2249,8 +2231,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new

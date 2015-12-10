@@ -203,11 +203,6 @@ decl_stmt|;
 comment|// 1GB
 specifier|protected
 specifier|final
-name|Long
-name|fileId
-decl_stmt|;
-specifier|protected
-specifier|final
 name|String
 name|name
 decl_stmt|;
@@ -218,9 +213,6 @@ decl_stmt|;
 specifier|public
 name|InStream
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -228,12 +220,6 @@ name|long
 name|length
 parameter_list|)
 block|{
-name|this
-operator|.
-name|fileId
-operator|=
-name|fileId
-expr_stmt|;
 name|this
 operator|.
 name|name
@@ -297,9 +283,6 @@ decl_stmt|;
 specifier|public
 name|UncompressedStream
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -315,8 +298,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|length
@@ -992,9 +973,6 @@ decl_stmt|;
 specifier|public
 name|CompressedStream
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -1016,8 +994,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|length
@@ -2333,9 +2309,6 @@ specifier|static
 name|InStream
 name|create
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|streamName
 parameter_list|,
@@ -2416,8 +2389,6 @@ block|}
 return|return
 name|create
 argument_list|(
-name|fileId
-argument_list|,
 name|streamName
 argument_list|,
 name|input
@@ -2436,9 +2407,6 @@ specifier|static
 name|InStream
 name|create
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -2471,8 +2439,6 @@ return|return
 operator|new
 name|UncompressedStream
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|input
@@ -2487,8 +2453,6 @@ return|return
 operator|new
 name|CompressedStream
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|input
@@ -2508,9 +2472,6 @@ specifier|static
 name|CodedInputStream
 name|createCodedInputStream
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -2537,8 +2498,6 @@ name|inStream
 init|=
 name|create
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|input

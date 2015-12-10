@@ -312,8 +312,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new
@@ -677,8 +675,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"test"
 argument_list|,
 operator|new

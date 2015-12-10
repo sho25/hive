@@ -586,8 +586,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"index"
 argument_list|,
 name|Lists
@@ -650,8 +648,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 literal|"bloom_filter"
 argument_list|,
 name|Lists
@@ -792,8 +788,6 @@ name|InStream
 operator|.
 name|createCodedInputStream
 argument_list|(
-literal|null
-argument_list|,
 literal|"footer"
 argument_list|,
 name|Lists

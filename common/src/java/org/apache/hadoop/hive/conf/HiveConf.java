@@ -9216,6 +9216,38 @@ operator|+
 literal|"behave like LFU, 1 makes it behave like LRU, values in between balance accordingly."
 argument_list|)
 block|,
+name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
+argument_list|(
+literal|"hive.llap.cache.allow.synthetic.fileid"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether LLAP cache should use synthetic file ID if real one is not available. Systems\n"
+operator|+
+literal|"like HDFS, Isilon, etc. provide a unique file/inode ID. On other FSes (e.g. local\n"
+operator|+
+literal|"FS), the cache would not work by default because LLAP is unable to uniquely track the\n"
+operator|+
+literal|"files; enabling this setting allows LLAP to generate file ID from the path, size and\n"
+operator|+
+literal|"modification time, which is almost certain to identify file uniquely. However, if you\n"
+operator|+
+literal|"use a FS without file IDs and rewrite files a lot (or are paranoid), you might want\n"
+operator|+
+literal|"to avoid this setting."
+argument_list|)
+block|,
+name|LLAP_IO_USE_FILEID_PATH
+argument_list|(
+literal|"hive.llap.io.use.fileid.path"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should use fileId (inode)-based path to ensure better consistency for the\n"
+operator|+
+literal|"cases of file overwrites. This is supported on HDFS."
+argument_list|)
+block|,
 name|LLAP_ORC_ENABLE_TIME_COUNTERS
 argument_list|(
 literal|"hive.llap.io.orc.time.counters"

@@ -2338,8 +2338,6 @@ name|InStream
 operator|.
 name|createCodedInputStream
 argument_list|(
-literal|null
-argument_list|,
 literal|"footer"
 argument_list|,
 name|Lists
@@ -2419,8 +2417,6 @@ name|InStream
 operator|.
 name|createCodedInputStream
 argument_list|(
-literal|null
-argument_list|,
 literal|"metadata"
 argument_list|,
 name|Lists

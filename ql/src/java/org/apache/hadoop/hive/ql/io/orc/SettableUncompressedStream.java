@@ -81,9 +81,6 @@ block|{
 specifier|public
 name|SettableUncompressedStream
 parameter_list|(
-name|Long
-name|fileId
-parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -99,8 +96,6 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|fileId
-argument_list|,
 name|name
 argument_list|,
 name|input

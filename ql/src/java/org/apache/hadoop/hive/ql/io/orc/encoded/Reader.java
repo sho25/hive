@@ -333,7 +333,7 @@ comment|/**    * Creates the encoded reader.    * @param fileId File ID to read,
 name|EncodedReader
 name|encodedReader
 parameter_list|(
-name|long
+name|Long
 name|fileId
 parameter_list|,
 name|DataCache

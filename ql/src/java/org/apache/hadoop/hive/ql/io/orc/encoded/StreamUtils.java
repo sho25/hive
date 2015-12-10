@@ -181,9 +181,6 @@ parameter_list|(
 name|String
 name|streamName
 parameter_list|,
-name|Long
-name|fileId
-parameter_list|,
 name|ColumnStreamData
 name|streamBuffer
 parameter_list|)
@@ -213,8 +210,6 @@ return|return
 operator|new
 name|SettableUncompressedStream
 argument_list|(
-name|fileId
-argument_list|,
 name|streamName
 argument_list|,
 name|diskRangeInfo

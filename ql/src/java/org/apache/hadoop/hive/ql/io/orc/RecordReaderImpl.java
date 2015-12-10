@@ -6083,8 +6083,6 @@ name|InStream
 operator|.
 name|create
 argument_list|(
-literal|null
-argument_list|,
 name|name
 operator|.
 name|toString

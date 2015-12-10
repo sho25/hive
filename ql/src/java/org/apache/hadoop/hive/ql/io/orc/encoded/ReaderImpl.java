@@ -177,7 +177,7 @@ specifier|public
 name|EncodedReader
 name|encodedReader
 parameter_list|(
-name|long
+name|Long
 name|fileId
 parameter_list|,
 name|DataCache
