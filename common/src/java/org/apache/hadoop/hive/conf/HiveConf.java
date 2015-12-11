@@ -9456,6 +9456,15 @@ argument_list|,
 literal|"RPC port for LLAP daemon management service."
 argument_list|)
 block|,
+name|LLAP_WEB_AUTO_AUTH
+argument_list|(
+literal|"hive.llap.auto.auth"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether or not to set Hadoop configs to enable auth in LLAP web app."
+argument_list|)
+block|,
 name|LLAP_DAEMON_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.daemon.rpc.num.handlers"
