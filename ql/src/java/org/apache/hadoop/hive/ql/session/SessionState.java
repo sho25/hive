@@ -1850,12 +1850,45 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Using system classloader as the parent. Using thread context
+comment|// classloader as parent can pollute the session. See HIVE-11878
 name|parentLoader
 operator|=
-name|JavaUtils
+name|SessionState
+operator|.
+name|class
 operator|.
 name|getClassLoader
 argument_list|()
+expr_stmt|;
+comment|// Make sure that each session has its own UDFClassloader. For details see {@link UDFClassLoader}
+specifier|final
+name|ClassLoader
+name|currentLoader
+init|=
+name|Utilities
+operator|.
+name|createUDFClassLoader
+argument_list|(
+operator|(
+name|URLClassLoader
+operator|)
+name|parentLoader
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{}
+argument_list|)
+decl_stmt|;
+name|this
+operator|.
+name|conf
+operator|.
+name|setClassLoader
+argument_list|(
+name|currentLoader
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -6311,6 +6344,7 @@ return|return
 name|scheme
 return|;
 block|}
+specifier|protected
 name|List
 argument_list|<
 name|URI
