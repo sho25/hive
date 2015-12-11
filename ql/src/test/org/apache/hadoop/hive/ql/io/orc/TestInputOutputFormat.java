@@ -11814,8 +11814,6 @@ argument_list|(
 name|mapWork
 argument_list|,
 name|planStream
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|planStream

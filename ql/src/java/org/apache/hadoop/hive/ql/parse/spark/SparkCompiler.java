@@ -2059,8 +2059,6 @@ argument_list|()
 operator|.
 name|removeUnionOperators
 argument_list|(
-name|conf
-argument_list|,
 name|procCtx
 argument_list|,
 name|w

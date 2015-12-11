@@ -4963,8 +4963,6 @@ argument_list|,
 name|MapredLocalWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|MapredLocalTask
@@ -5006,8 +5004,6 @@ argument_list|,
 name|MapredWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|ExecDriver

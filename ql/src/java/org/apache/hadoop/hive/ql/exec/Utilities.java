@@ -3758,8 +3758,6 @@ argument_list|,
 name|MapWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3797,8 +3795,6 @@ argument_list|,
 name|MergeFileWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3836,8 +3832,6 @@ argument_list|,
 name|ColumnTruncateWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3875,8 +3869,6 @@ argument_list|,
 name|PartialScanWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3946,8 +3938,6 @@ argument_list|,
 name|ReduceWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4007,8 +3997,6 @@ argument_list|,
 name|MapWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4036,8 +4024,6 @@ argument_list|,
 name|ReduceWork
 operator|.
 name|class
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4667,8 +4653,6 @@ argument_list|,
 name|w
 argument_list|,
 name|out
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|out
@@ -4763,8 +4747,6 @@ argument_list|,
 name|w
 argument_list|,
 name|out
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|out

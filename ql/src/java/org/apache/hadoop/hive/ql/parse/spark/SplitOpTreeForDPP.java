@@ -509,13 +509,6 @@ name|SerializationUtilities
 operator|.
 name|cloneOperatorTree
 argument_list|(
-name|context
-operator|.
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
-argument_list|,
 name|roots
 argument_list|)
 decl_stmt|;

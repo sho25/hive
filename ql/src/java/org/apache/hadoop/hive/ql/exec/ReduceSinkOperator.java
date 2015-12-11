@@ -617,22 +617,6 @@ name|TopNHash
 operator|.
 name|BinaryCollector
 block|{
-static|static
-block|{
-name|PTFUtils
-operator|.
-name|makeTransient
-argument_list|(
-name|ReduceSinkOperator
-operator|.
-name|class
-argument_list|,
-literal|"inputAliases"
-argument_list|,
-literal|"valueIndex"
-argument_list|)
-expr_stmt|;
-block|}
 comment|/**    * Counters.    */
 specifier|public
 specifier|static

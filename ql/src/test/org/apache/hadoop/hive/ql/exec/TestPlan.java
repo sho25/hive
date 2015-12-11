@@ -570,8 +570,6 @@ argument_list|(
 name|mrwork
 argument_list|,
 name|baos
-argument_list|,
-name|job
 argument_list|)
 expr_stmt|;
 name|baos
@@ -667,8 +665,6 @@ argument_list|(
 name|mrwork2
 argument_list|,
 name|baos
-argument_list|,
-name|job
 argument_list|)
 expr_stmt|;
 name|baos

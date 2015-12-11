@@ -2331,11 +2331,6 @@ name|SerializationUtilities
 operator|.
 name|cloneOperatorTree
 argument_list|(
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
-argument_list|,
 name|reducerList
 argument_list|)
 operator|.
