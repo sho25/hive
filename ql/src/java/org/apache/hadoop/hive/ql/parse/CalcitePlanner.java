@@ -625,23 +625,7 @@ name|rel
 operator|.
 name|rules
 operator|.
-name|FilterAggregateTransposeRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
-name|FilterProjectTransposeRule
+name|FilterMergeRule
 import|;
 end_import
 
@@ -706,22 +690,6 @@ operator|.
 name|rules
 operator|.
 name|ProjectRemoveRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
-name|ReduceExpressionsRule
 import|;
 end_import
 
@@ -1939,7 +1907,51 @@ name|calcite
 operator|.
 name|rules
 operator|.
+name|HiveFilterAggregateTransposeRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
 name|HiveFilterJoinRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
+name|HiveFilterProjectTSTransposeRule
 import|;
 end_import
 
@@ -6763,18 +6775,6 @@ name|HepMatchOrder
 operator|.
 name|BOTTOM_UP
 argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|JOIN_INSTANCE
-argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|FILTER_INSTANCE
-argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|PROJECT_INSTANCE
-argument_list|,
 name|ProjectRemoveRule
 operator|.
 name|INSTANCE
@@ -6794,6 +6794,10 @@ name|DEFAULT_PROJECT_FACTORY
 argument_list|)
 argument_list|,
 name|HiveAggregateProjectMergeRule
+operator|.
+name|INSTANCE
+argument_list|,
+name|HiveJoinCommuteRule
 operator|.
 name|INSTANCE
 argument_list|)
@@ -6965,29 +6969,6 @@ throw|;
 block|}
 block|}
 block|}
-comment|// 6. Run rule to try to remove projects on top of join operators
-name|calciteOptimizedPlan
-operator|=
-name|hepPlan
-argument_list|(
-name|calciteOptimizedPlan
-argument_list|,
-literal|false
-argument_list|,
-name|mdProvider
-operator|.
-name|getMetadataProvider
-argument_list|()
-argument_list|,
-name|HepMatchOrder
-operator|.
-name|BOTTOM_UP
-argument_list|,
-name|HiveJoinCommuteRule
-operator|.
-name|INSTANCE
-argument_list|)
-expr_stmt|;
 comment|// 7. Run rule to fix windowing issue when it is done over
 comment|// aggregation columns (HIVE-10627)
 if|if
@@ -7280,7 +7261,7 @@ block|{
 comment|// TODO: Decorelation of subquery should be done before attempting
 comment|// Partition Pruning; otherwise Expression evaluation may try to execute
 comment|// corelated sub query.
-comment|//0. Distinct aggregate rewrite
+comment|//1. Distinct aggregate rewrite
 comment|// Run this optimization early, since it is expanding the operator pipeline.
 if|if
 condition|(
@@ -7332,7 +7313,139 @@ name|INSTANCE
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 1. Push down limit through outer join
+comment|// 2. Try factoring out common filter elements& separating deterministic
+comment|// vs non-deterministic UDF. This needs to run before PPD so that PPD can
+comment|// add on-clauses for old style Join Syntax
+comment|// Ex: select * from R1 join R2 where ((R1.x=R2.x) and R1.y<10) or
+comment|// ((R1.x=R2.x) and R1.z=10)) and rand(1)< 0.1
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|false
+argument_list|,
+name|mdProvider
+argument_list|,
+name|HepMatchOrder
+operator|.
+name|ARBITRARY
+argument_list|,
+name|HivePreFilteringRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+comment|// 3. PPD for old Join Syntax
+comment|// NOTE: PPD needs to run before adding not null filters in order to
+comment|// support old style join syntax (so that on-clauses will get filled up).
+comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
+comment|// HIVE-11927 is fixed.
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+operator|new
+name|HiveFilterProjectTransposeRule
+argument_list|(
+name|Filter
+operator|.
+name|class
+argument_list|,
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|,
+name|HiveProject
+operator|.
+name|class
+argument_list|,
+name|HiveProject
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|)
+argument_list|,
+operator|new
+name|HiveFilterSetOpTransposeRule
+argument_list|(
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
+argument_list|,
+name|HiveFilterJoinRule
+operator|.
+name|JOIN
+argument_list|,
+name|HiveFilterJoinRule
+operator|.
+name|FILTER_ON_JOIN
+argument_list|,
+operator|new
+name|HiveFilterAggregateTransposeRule
+argument_list|(
+name|Filter
+operator|.
+name|class
+argument_list|,
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|,
+name|Aggregate
+operator|.
+name|class
+argument_list|)
+argument_list|,
+operator|new
+name|FilterMergeRule
+argument_list|(
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// TODO: Transitive inference, constant prop& Predicate push down has to
+comment|// do multiple passes till no more inference is left
+comment|// Currently doing so would result in a spin. Just checking for if inferred
+comment|// pred is present below may not be sufficient as inferred& pushed pred
+comment|// could have been mutated by constant folding/prop
+comment|// 4. Transitive inference for join on clauses
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+operator|new
+name|HiveJoinPushTransitivePredicatesRule
+argument_list|(
+name|Join
+operator|.
+name|class
+argument_list|,
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// 5. Push down limit through outer join
+comment|// NOTE: We run this after PPD to support old style join syntax.
+comment|// Ex: select * from R1 left outer join R2 where ((R1.x=R2.x) and R1.y<10) or
+comment|// ((R1.x=R2.x) and R1.z=10)) and rand(1)< 0.1 order by R1.x limit 10
 if|if
 condition|(
 name|conf
@@ -7434,45 +7547,7 @@ name|INSTANCE
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 2. Push Down Semi Joins
-name|basePlan
-operator|=
-name|hepPlan
-argument_list|(
-name|basePlan
-argument_list|,
-literal|true
-argument_list|,
-name|mdProvider
-argument_list|,
-name|SemiJoinJoinTransposeRule
-operator|.
-name|INSTANCE
-argument_list|,
-name|SemiJoinFilterTransposeRule
-operator|.
-name|INSTANCE
-argument_list|,
-name|SemiJoinProjectTransposeRule
-operator|.
-name|INSTANCE
-argument_list|)
-expr_stmt|;
-comment|// 3. Add not null filters
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_CBO_RETPATH_HIVEOP
-argument_list|)
-condition|)
-block|{
+comment|// 6. Add not null filters
 name|basePlan
 operator|=
 name|hepPlan
@@ -7488,8 +7563,9 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-block|}
-comment|// 4. Constant propagation, common filter extraction, and PPD
+comment|// 7. Rerun Constant propagation and PPD now that we have added Not NULL filters& did transitive inference
+comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
+comment|// HIVE-11927 is fixed.
 name|basePlan
 operator|=
 name|hepPlan
@@ -7499,22 +7575,6 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
-argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|PROJECT_INSTANCE
-argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|FILTER_INSTANCE
-argument_list|,
-name|ReduceExpressionsRule
-operator|.
-name|JOIN_INSTANCE
-argument_list|,
-name|HivePreFilteringRule
-operator|.
-name|INSTANCE
 argument_list|,
 operator|new
 name|HiveFilterProjectTransposeRule
@@ -7553,7 +7613,7 @@ operator|.
 name|FILTER_ON_JOIN
 argument_list|,
 operator|new
-name|FilterAggregateTransposeRule
+name|HiveFilterAggregateTransposeRule
 argument_list|(
 name|Filter
 operator|.
@@ -7567,9 +7627,41 @@ name|Aggregate
 operator|.
 name|class
 argument_list|)
+argument_list|,
+operator|new
+name|FilterMergeRule
+argument_list|(
+name|HiveFilter
+operator|.
+name|DEFAULT_FILTER_FACTORY
+argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 5. Transitive inference& Partition Pruning
+comment|// 8. Push Down Semi Joins
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+name|SemiJoinJoinTransposeRule
+operator|.
+name|INSTANCE
+argument_list|,
+name|SemiJoinFilterTransposeRule
+operator|.
+name|INSTANCE
+argument_list|,
+name|SemiJoinProjectTransposeRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+comment|// 9. Apply Partition Pruning
 name|basePlan
 operator|=
 name|hepPlan
@@ -7581,25 +7673,13 @@ argument_list|,
 name|mdProvider
 argument_list|,
 operator|new
-name|HiveJoinPushTransitivePredicatesRule
-argument_list|(
-name|Join
-operator|.
-name|class
-argument_list|,
-name|HiveFilter
-operator|.
-name|DEFAULT_FILTER_FACTORY
-argument_list|)
-argument_list|,
-operator|new
 name|HivePartitionPruneRule
 argument_list|(
 name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 6. Projection Pruning
+comment|// 10. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
 name|HiveRelFieldTrimmer
 name|fieldTrimmer
 init|=
@@ -7648,8 +7728,32 @@ argument_list|(
 name|basePlan
 argument_list|)
 expr_stmt|;
-comment|// 7. Rerun PPD through Project as column pruning would have introduced DT
-comment|// above scans
+comment|// 11. Merge Project-Project if possible
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|false
+argument_list|,
+name|mdProvider
+argument_list|,
+operator|new
+name|ProjectMergeRule
+argument_list|(
+literal|true
+argument_list|,
+name|HiveProject
+operator|.
+name|DEFAULT_PROJECT_FACTORY
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// 12. Rerun PPD through Project as column pruning would have introduced
+comment|// DT above scans; By pushing filter just above TS, Hive can push it into
+comment|// storage (incase there are filters on non partition cols). This only
+comment|// matches FIL-PROJ-TS
 name|basePlan
 operator|=
 name|hepPlan
@@ -7661,7 +7765,7 @@ argument_list|,
 name|mdProvider
 argument_list|,
 operator|new
-name|FilterProjectTransposeRule
+name|HiveFilterProjectTSTransposeRule
 argument_list|(
 name|Filter
 operator|.
@@ -7678,6 +7782,10 @@ argument_list|,
 name|HiveProject
 operator|.
 name|DEFAULT_PROJECT_FACTORY
+argument_list|,
+name|HiveTableScan
+operator|.
+name|class
 argument_list|)
 argument_list|)
 expr_stmt|;

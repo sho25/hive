@@ -328,6 +328,11 @@ argument_list|(
 name|conf
 argument_list|,
 name|partColExpr
+argument_list|,
+name|tScan
+operator|.
+name|getPartOrVirtualCols
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
