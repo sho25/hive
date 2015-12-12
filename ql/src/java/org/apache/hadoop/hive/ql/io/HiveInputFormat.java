@@ -1358,7 +1358,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Not using LLAP because IO is not initialized"
+literal|"Not using LLAP IO because it is not initialized"
 argument_list|)
 expr_stmt|;
 return|return

@@ -219,9 +219,28 @@ condition|(
 operator|!
 name|allowSynthetic
 condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Cannot get unique file ID from "
+operator|+
+name|fileSystem
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|"; returning null"
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
+block|}
 comment|// If we are not on DFS, we just hash the file name + size and hope for the best.
 comment|// TODO: we assume it only happens in tests. Fix?
 name|int
@@ -337,7 +356,7 @@ literal|"; using "
 operator|+
 name|id
 operator|+
-literal|"("
+literal|" ("
 operator|+
 name|pathStr
 operator|+

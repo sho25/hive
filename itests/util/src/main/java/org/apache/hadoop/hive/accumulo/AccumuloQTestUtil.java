@@ -78,9 +78,15 @@ name|miniMr
 argument_list|,
 literal|null
 argument_list|,
+literal|"0.20"
+argument_list|,
 name|initScript
 argument_list|,
 name|cleanupScript
+argument_list|,
+literal|false
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|setup
