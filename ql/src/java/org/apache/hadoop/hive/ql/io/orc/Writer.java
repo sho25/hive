@@ -48,7 +48,7 @@ name|orc
 operator|.
 name|Writer
 block|{
-comment|/**    * Add a row to the ORC file.    * @param row the row to add    * @throws IOException    */
+comment|/**    * Add a row to the end of the ORC file.    * @param row the row to add    * @throws IOException    */
 name|void
 name|addRow
 parameter_list|(

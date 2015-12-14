@@ -9315,7 +9315,7 @@ name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
-literal|"9999-01-01 00:00:00"
+literal|"2099-01-01 00:00:00"
 argument_list|)
 argument_list|)
 expr_stmt|;

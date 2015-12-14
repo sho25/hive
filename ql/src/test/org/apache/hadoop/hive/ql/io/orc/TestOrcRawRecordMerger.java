@@ -7300,6 +7300,11 @@ argument_list|(
 name|mgr
 argument_list|)
 operator|.
+name|batchSize
+argument_list|(
+literal|2
+argument_list|)
+operator|.
 name|version
 argument_list|(
 name|OrcFile
@@ -8209,6 +8214,11 @@ name|memory
 argument_list|(
 name|mgr
 argument_list|)
+operator|.
+name|batchSize
+argument_list|(
+literal|2
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|options
@@ -8709,6 +8719,13 @@ argument_list|(
 literal|"starting split "
 operator|+
 name|i
+operator|+
+literal|" = "
+operator|+
+name|splits
+index|[
+name|i
+index|]
 argument_list|)
 expr_stmt|;
 name|rr
