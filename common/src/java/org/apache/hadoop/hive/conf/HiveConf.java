@@ -3275,6 +3275,15 @@ argument_list|,
 literal|"Enable metrics on the metastore."
 argument_list|)
 block|,
+name|METASTORE_INIT_METADATA_COUNT_ENABLED
+argument_list|(
+literal|"hive.metastore.initial.metadata.count.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable a metadata count at metastore startup for metrics."
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
