@@ -2900,6 +2900,15 @@ condition|(
 name|metrics
 operator|!=
 literal|null
+operator|&&
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_INIT_METADATA_COUNT_ENABLED
+argument_list|)
 condition|)
 block|{
 name|LOG
