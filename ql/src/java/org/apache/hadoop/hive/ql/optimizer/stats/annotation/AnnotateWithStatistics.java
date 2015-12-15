@@ -399,7 +399,7 @@ begin_class
 specifier|public
 class|class
 name|AnnotateWithStatistics
-implements|implements
+extends|extends
 name|Transform
 block|{
 annotation|@

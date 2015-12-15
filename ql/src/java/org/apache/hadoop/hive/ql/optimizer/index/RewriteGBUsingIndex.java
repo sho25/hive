@@ -387,7 +387,7 @@ begin_class
 specifier|public
 class|class
 name|RewriteGBUsingIndex
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

@@ -361,7 +361,7 @@ begin_class
 specifier|public
 class|class
 name|UnionProcessor
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|/**    * empty constructor.    */

@@ -999,7 +999,7 @@ begin_class
 specifier|public
 class|class
 name|MapJoinProcessor
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|// mapjoin table descriptor contains a key descriptor which needs the field schema

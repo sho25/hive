@@ -273,7 +273,7 @@ begin_class
 specifier|public
 class|class
 name|ListBucketingPruner
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|static

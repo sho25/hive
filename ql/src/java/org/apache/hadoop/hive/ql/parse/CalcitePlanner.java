@@ -1353,6 +1353,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|log
+operator|.
+name|PerfLogger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|Table
@@ -2854,6 +2872,24 @@ operator|.
 name|plan
 operator|.
 name|SelectDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
 import|;
 end_import
 
@@ -6410,7 +6446,32 @@ name|relOptSchema
 operator|=
 name|relOptSchema
 expr_stmt|;
+name|PerfLogger
+name|perfLogger
+init|=
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|()
+decl_stmt|;
 comment|// 1. Gen Calcite Plan
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|calciteGenPlan
@@ -6469,6 +6530,25 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Plan generation"
+argument_list|)
+expr_stmt|;
 comment|// Create MD provider
 name|HiveDefaultRelMetadataProvider
 name|mdProvider
@@ -6507,6 +6587,23 @@ name|JOIN_REORDERING
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|List
@@ -6745,6 +6842,25 @@ name|e
 throw|;
 block|}
 block|}
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Join Reordering"
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -6758,6 +6874,23 @@ literal|false
 expr_stmt|;
 block|}
 comment|// 4. Run other optimizations that do not need stats
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|calciteOptimizedPlan
 operator|=
 name|hepPlan
@@ -6802,6 +6935,25 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Optimizations without stats"
+argument_list|)
+expr_stmt|;
 comment|// 5. Run aggregate-join transpose (cost based)
 comment|//    If it failed because of missing stats, we continue with
 comment|//    the rest of optimizations
@@ -6817,6 +6969,23 @@ name|AGGR_JOIN_TRANSPOSE
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|HepProgramBuilder
@@ -6968,6 +7137,25 @@ name|e
 throw|;
 block|}
 block|}
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Aggregate join transpose"
+argument_list|)
+expr_stmt|;
 block|}
 comment|// 7. Run rule to fix windowing issue when it is done over
 comment|// aggregation columns (HIVE-10627)
@@ -6983,6 +7171,23 @@ name|WINDOWING_POSTPROCESSING
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|calciteOptimizedPlan
 operator|=
 name|hepPlan
@@ -7005,6 +7210,25 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Window fixing rule"
+argument_list|)
+expr_stmt|;
 block|}
 comment|// 8. Run rules to aid in translation from Calcite tree to Hive tree
 if|if
@@ -7021,6 +7245,23 @@ name|HIVE_CBO_RETPATH_HIVEOP
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 comment|// 8.1. Merge join into multijoin operators (if possible)
 name|calciteOptimizedPlan
 operator|=
@@ -7169,6 +7410,25 @@ operator|.
 name|EXCHANGE_BELOW_MULTIJOIN
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Translation from Calcite tree to Hive tree"
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -7261,6 +7521,14 @@ block|{
 comment|// TODO: Decorelation of subquery should be done before attempting
 comment|// Partition Pruning; otherwise Expression evaluation may try to execute
 comment|// corelated sub query.
+name|PerfLogger
+name|perfLogger
+init|=
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|()
+decl_stmt|;
 comment|//1. Distinct aggregate rewrite
 comment|// Run this optimization early, since it is expanding the operator pipeline.
 if|if
@@ -7294,6 +7562,23 @@ name|HIVEOPTIMIZEDISTINCTREWRITE
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 comment|// Its not clear, if this rewrite is always performant on MR, since extra map phase
 comment|// introduced for 2nd MR job may offset gains of this multi-stage aggregation.
 comment|// We need a cost model for MR to enable this on MR.
@@ -7312,12 +7597,48 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Distinct aggregate rewrite"
+argument_list|)
+expr_stmt|;
 block|}
 comment|// 2. Try factoring out common filter elements& separating deterministic
 comment|// vs non-deterministic UDF. This needs to run before PPD so that PPD can
 comment|// add on-clauses for old style Join Syntax
 comment|// Ex: select * from R1 join R2 where ((R1.x=R2.x) and R1.y<10) or
 comment|// ((R1.x=R2.x) and R1.z=10)) and rand(1)< 0.1
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7337,11 +7658,47 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, factor out common filter elements and separating deterministic vs non-deterministic UDF"
+argument_list|)
+expr_stmt|;
 comment|// 3. PPD for old Join Syntax
 comment|// NOTE: PPD needs to run before adding not null filters in order to
 comment|// support old style join syntax (so that on-clauses will get filled up).
 comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
 comment|// HIVE-11927 is fixed.
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7413,12 +7770,48 @@ name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, PPD for old join syntax"
+argument_list|)
+expr_stmt|;
 comment|// TODO: Transitive inference, constant prop& Predicate push down has to
 comment|// do multiple passes till no more inference is left
 comment|// Currently doing so would result in a spin. Just checking for if inferred
 comment|// pred is present below may not be sufficient as inferred& pushed pred
 comment|// could have been mutated by constant folding/prop
 comment|// 4. Transitive inference for join on clauses
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7442,6 +7835,25 @@ name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Transitive inference for join on clauses"
+argument_list|)
+expr_stmt|;
 comment|// 5. Push down limit through outer join
 comment|// NOTE: We run this after PPD to support old style join syntax.
 comment|// Ex: select * from R1 left outer join R2 where ((R1.x=R2.x) and R1.y<10) or
@@ -7460,6 +7872,23 @@ name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE
 argument_list|)
 condition|)
 block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 comment|// This should be a cost based decision, but till we enable the extended cost
 comment|// model, we will use the given value for the variable
 specifier|final
@@ -7546,8 +7975,44 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Push down limit through outer join"
+argument_list|)
+expr_stmt|;
 block|}
 comment|// 6. Add not null filters
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7563,9 +8028,45 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Add not null filters"
+argument_list|)
+expr_stmt|;
 comment|// 7. Rerun Constant propagation and PPD now that we have added Not NULL filters& did transitive inference
 comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
 comment|// HIVE-11927 is fixed.
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7637,7 +8138,43 @@ name|DEFAULT_FILTER_FACTORY
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Constant propagation and PPD"
+argument_list|)
+expr_stmt|;
 comment|// 8. Push Down Semi Joins
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7661,7 +8198,43 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Push Down Semi Joins"
+argument_list|)
+expr_stmt|;
 comment|// 9. Apply Partition Pruning
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7679,7 +8252,43 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Partition Pruning"
+argument_list|)
+expr_stmt|;
 comment|// 10. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|HiveRelFieldTrimmer
 name|fieldTrimmer
 init|=
@@ -7728,7 +8337,43 @@ argument_list|(
 name|basePlan
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Projection Pruning"
+argument_list|)
+expr_stmt|;
 comment|// 11. Merge Project-Project if possible
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7750,10 +8395,46 @@ name|DEFAULT_PROJECT_FACTORY
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Merge Project-Project"
+argument_list|)
+expr_stmt|;
 comment|// 12. Rerun PPD through Project as column pruning would have introduced
 comment|// DT above scans; By pushing filter just above TS, Hive can push it into
 comment|// storage (incase there are filters on non partition cols). This only
 comment|// matches FIL-PROJ-TS
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 name|basePlan
 operator|=
 name|hepPlan
@@ -7787,6 +8468,25 @@ name|HiveTableScan
 operator|.
 name|class
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Rerun PPD"
 argument_list|)
 expr_stmt|;
 return|return

@@ -871,7 +871,7 @@ begin_class
 specifier|public
 class|class
 name|SkewJoinOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

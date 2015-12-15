@@ -313,7 +313,7 @@ begin_class
 specifier|public
 class|class
 name|BucketMapJoinOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private
@@ -338,8 +338,6 @@ specifier|public
 name|BucketMapJoinOptimizer
 parameter_list|()
 block|{   }
-annotation|@
-name|Override
 specifier|public
 name|ParseContext
 name|transform

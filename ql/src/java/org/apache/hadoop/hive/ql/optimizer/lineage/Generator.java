@@ -513,7 +513,7 @@ begin_class
 specifier|public
 class|class
 name|Generator
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop.hive.ql.parse.ParseContext)    */

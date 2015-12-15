@@ -595,7 +595,7 @@ begin_class
 specifier|public
 class|class
 name|PartitionColumnsSeparator
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

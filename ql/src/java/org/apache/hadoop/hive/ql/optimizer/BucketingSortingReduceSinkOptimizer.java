@@ -673,7 +673,7 @@ begin_class
 specifier|public
 class|class
 name|BucketingSortingReduceSinkOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|public

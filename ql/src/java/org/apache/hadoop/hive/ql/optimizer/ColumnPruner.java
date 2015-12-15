@@ -489,7 +489,7 @@ begin_class
 specifier|public
 class|class
 name|ColumnPruner
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|protected

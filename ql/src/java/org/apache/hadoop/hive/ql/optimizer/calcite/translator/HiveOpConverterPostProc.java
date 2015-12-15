@@ -419,7 +419,7 @@ begin_class
 specifier|public
 class|class
 name|HiveOpConverterPostProc
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

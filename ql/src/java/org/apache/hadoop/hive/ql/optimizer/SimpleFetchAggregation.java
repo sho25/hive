@@ -523,7 +523,7 @@ begin_class
 specifier|public
 class|class
 name|SimpleFetchAggregation
-implements|implements
+extends|extends
 name|Transform
 block|{
 annotation|@

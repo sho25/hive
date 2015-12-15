@@ -829,7 +829,7 @@ begin_class
 specifier|public
 class|class
 name|SortedDynPartitionOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

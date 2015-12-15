@@ -511,7 +511,7 @@ begin_class
 specifier|public
 class|class
 name|NonBlockingOpDeDupProc
-implements|implements
+extends|extends
 name|Transform
 block|{
 annotation|@
