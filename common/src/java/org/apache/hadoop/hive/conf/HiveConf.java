@@ -7369,6 +7369,25 @@ operator|+
 literal|"enable parallel compilation between sessions on HiveServer2. The default is false."
 argument_list|)
 block|,
+name|HIVE_SERVER2_COMPILE_LOCK_TIMEOUT
+argument_list|(
+literal|"hive.server2.compile.lock.timeout"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Number of seconds a request will wait to acquire the compile lock before giving up. "
+operator|+
+literal|"Setting it to 0s disables the timeout."
+argument_list|)
+block|,
 comment|// HiveServer2 WebUI
 name|HIVE_SERVER2_WEBUI_BIND_HOST
 argument_list|(
