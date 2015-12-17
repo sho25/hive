@@ -704,6 +704,14 @@ name|String
 name|method
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|long
 name|startTime
 init|=
@@ -714,7 +722,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"<PERFLOG method="
 operator|+
@@ -745,6 +753,7 @@ argument_list|(
 name|method
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Call this function in correspondence of PerfLogBegin to mark the end of the measurement.    * @param callerName    * @param method    * @return long duration  the difference between now and startTime, or -1 if startTime is null    */
 specifier|public
@@ -783,6 +792,14 @@ parameter_list|,
 name|String
 name|additionalInfo
 parameter_list|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 block|{
 name|Long
 name|startTime
@@ -937,7 +954,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|sb
 operator|.
@@ -952,6 +969,11 @@ argument_list|)
 expr_stmt|;
 return|return
 name|duration
+return|;
+block|}
+return|return
+operator|-
+literal|1
 return|;
 block|}
 specifier|public
