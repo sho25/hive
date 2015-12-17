@@ -5379,9 +5379,6 @@ name|expressionTree
 operator|.
 name|toStringTree
 argument_list|()
-operator|.
-name|toLowerCase
-argument_list|()
 argument_list|,
 name|expressionTree
 argument_list|)
@@ -23227,6 +23224,9 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|colRef
@@ -23286,6 +23286,9 @@ literal|0
 argument_list|)
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -23410,6 +23413,9 @@ name|col
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -23447,7 +23453,7 @@ name|expr_flattened
 operator|.
 name|replaceAll
 argument_list|(
-literal|"TOK_\\S+"
+literal|"tok_\\S+"
 argument_list|,
 literal|""
 argument_list|)
@@ -24283,6 +24289,9 @@ argument_list|(
 name|selExprChild
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 argument_list|)
@@ -57035,6 +57044,9 @@ argument_list|,
 name|vc
 operator|.
 name|getName
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|,
 operator|new

@@ -41,16 +41,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -80,6 +70,16 @@ operator|.
 name|session
 operator|.
 name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
 import|;
 end_import
 
@@ -288,12 +288,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|1
+argument_list|,
 name|sqs
 operator|.
 name|size
 argument_list|()
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 name|ASTNode
@@ -310,12 +310,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"(tok_subquery_expr (tok_subquery_op in) (tok_query (tok_from (tok_tabref (tok_tabname src) s1)) (tok_insert (tok_destination (tok_dir tok_tmp_file)) (tok_select (tok_selexpr (tok_table_or_col key))) (tok_where (and (> (. (tok_table_or_col s1) key) '9') (> (. (tok_table_or_col s1) value) '9'))))) (. (tok_table_or_col src) key))"
+argument_list|,
 name|sq
 operator|.
 name|toStringTree
 argument_list|()
-argument_list|,
-literal|"(TOK_SUBQUERY_EXPR (TOK_SUBQUERY_OP in) (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TABNAME src) s1)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL key))) (TOK_WHERE (and (> (. (TOK_TABLE_OR_COL s1) key) '9') (> (. (TOK_TABLE_OR_COL s1) value) '9'))))) (. (TOK_TABLE_OR_COL src) key))"
 argument_list|)
 expr_stmt|;
 block|}
@@ -425,18 +425,20 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|2
+argument_list|,
 name|conjuncts
 operator|.
 name|size
 argument_list|()
-argument_list|,
-literal|2
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"(> (. (tok_table_or_col s1) key) '9')"
+argument_list|,
 name|conjuncts
 operator|.
 name|get
@@ -446,14 +448,14 @@ argument_list|)
 operator|.
 name|toStringTree
 argument_list|()
-argument_list|,
-literal|"(> (. (TOK_TABLE_OR_COL s1) key) '9')"
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"(> (. (tok_table_or_col s1) value) '9')"
+argument_list|,
 name|conjuncts
 operator|.
 name|get
@@ -463,8 +465,6 @@ argument_list|)
 operator|.
 name|toStringTree
 argument_list|()
-argument_list|,
-literal|"(> (. (TOK_TABLE_OR_COL s1) value) '9')"
 argument_list|)
 expr_stmt|;
 block|}
@@ -548,12 +548,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"(= 1 1)"
+argument_list|,
 name|newWhere
 operator|.
 name|toStringTree
 argument_list|()
-argument_list|,
-literal|"(= 1 1)"
 argument_list|)
 expr_stmt|;
 block|}
@@ -637,12 +637,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"(> (tok_table_or_col value) '9')"
+argument_list|,
 name|newWhere
 operator|.
 name|toStringTree
 argument_list|()
-argument_list|,
-literal|"(> (TOK_TABLE_OR_COL value) '9')"
 argument_list|)
 expr_stmt|;
 block|}
@@ -675,6 +675,8 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|0
+argument_list|,
 name|SubQueryUtils
 operator|.
 name|checkAggOrWindowing
@@ -689,14 +691,14 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|)
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|1
+argument_list|,
 name|SubQueryUtils
 operator|.
 name|checkAggOrWindowing
@@ -711,14 +713,14 @@ argument_list|(
 literal|1
 argument_list|)
 argument_list|)
-argument_list|,
-literal|1
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|2
+argument_list|,
 name|SubQueryUtils
 operator|.
 name|checkAggOrWindowing
@@ -733,8 +735,6 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|)
-argument_list|,
-literal|2
 argument_list|)
 expr_stmt|;
 block|}

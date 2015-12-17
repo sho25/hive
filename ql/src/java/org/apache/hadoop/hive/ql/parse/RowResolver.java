@@ -501,13 +501,6 @@ name|toLowerCase
 argument_list|()
 expr_stmt|;
 block|}
-name|col_alias
-operator|=
-name|col_alias
-operator|.
-name|toLowerCase
-argument_list|()
-expr_stmt|;
 comment|/*      * allow multiple mappings to the same ColumnInfo.      * When a ColumnInfo is mapped multiple times, only the      * first inverse mapping is captured.      */
 name|boolean
 name|colPresent
@@ -704,13 +697,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|col_alias
-operator|=
-name|col_alias
-operator|.
-name|toLowerCase
-argument_list|()
-expr_stmt|;
 name|ColumnInfo
 name|ret
 init|=

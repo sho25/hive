@@ -11301,6 +11301,9 @@ name|vc
 operator|.
 name|getName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|colInfo
 argument_list|)

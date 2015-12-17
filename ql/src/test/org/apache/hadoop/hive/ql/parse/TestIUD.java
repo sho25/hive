@@ -260,9 +260,9 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_DELETE_FROM "
+literal|"(tok_delete_from "
 operator|+
-literal|"(TOK_TABNAME src))"
+literal|"(tok_tabname src))"
 argument_list|,
 name|ast
 operator|.
@@ -294,17 +294,17 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_DELETE_FROM "
+literal|"(tok_delete_from "
 operator|+
-literal|"(TOK_TABNAME src) "
+literal|"(tok_tabname src) "
 operator|+
-literal|"(TOK_WHERE "
+literal|"(tok_where "
 operator|+
-literal|"(AND "
+literal|"(and "
 operator|+
-literal|"(TOK_FUNCTION TOK_ISNOTNULL (TOK_TABLE_OR_COL key)) "
+literal|"(tok_function tok_isnotnull (tok_table_or_col key)) "
 operator|+
-literal|"(< (. (TOK_TABLE_OR_COL src) value) 0))))"
+literal|"(< (. (tok_table_or_col src) value) 0))))"
 argument_list|,
 name|ast
 operator|.
@@ -336,15 +336,15 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_UPDATE_TABLE "
+literal|"(tok_update_table "
 operator|+
-literal|"(TOK_TABNAME src) "
+literal|"(tok_tabname src) "
 operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
+literal|"(tok_set_columns_clause "
 operator|+
 literal|"(= "
 operator|+
-literal|"(TOK_TABLE_OR_COL key) 3)))"
+literal|"(tok_table_or_col key) 3)))"
 argument_list|,
 name|ast
 operator|.
@@ -376,19 +376,19 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_UPDATE_TABLE "
+literal|"(tok_update_table "
 operator|+
-literal|"(TOK_TABNAME src) "
+literal|"(tok_tabname src) "
 operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
-operator|+
-literal|"(= "
-operator|+
-literal|"(TOK_TABLE_OR_COL key) 3) "
+literal|"(tok_set_columns_clause "
 operator|+
 literal|"(= "
 operator|+
-literal|"(TOK_TABLE_OR_COL value) 8)))"
+literal|"(tok_table_or_col key) 3) "
+operator|+
+literal|"(= "
+operator|+
+literal|"(tok_table_or_col value) 8)))"
 argument_list|,
 name|ast
 operator|.
@@ -420,17 +420,17 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_UPDATE_TABLE "
+literal|"(tok_update_table "
 operator|+
-literal|"(TOK_TABNAME src) "
+literal|"(tok_tabname src) "
 operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
+literal|"(tok_set_columns_clause "
 operator|+
 literal|"(= "
 operator|+
-literal|"(TOK_TABLE_OR_COL key) 3)) "
+literal|"(tok_table_or_col key) 3)) "
 operator|+
-literal|"(TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL value))))"
+literal|"(tok_where (tok_function tok_isnull (tok_table_or_col value))))"
 argument_list|,
 name|ast
 operator|.
@@ -462,17 +462,17 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_UPDATE_TABLE (TOK_TABNAME src) "
+literal|"(tok_update_table (tok_tabname src) "
 operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
+literal|"(tok_set_columns_clause "
 operator|+
-literal|"(= (TOK_TABLE_OR_COL key) (+ (- 3) (% (* 5 9) 8))) "
+literal|"(= (tok_table_or_col key) (+ (- 3) (% (* 5 9) 8))) "
 operator|+
-literal|"(= (TOK_TABLE_OR_COL val) (TOK_FUNCTION TOK_INT (+ 6.1 (TOK_TABLE_OR_COL c)))) "
+literal|"(= (tok_table_or_col val) (tok_function tok_int (+ 6.1 (tok_table_or_col c)))) "
 operator|+
-literal|"(= (TOK_TABLE_OR_COL d) (- (TOK_TABLE_OR_COL d) 1))) "
+literal|"(= (tok_table_or_col d) (- (tok_table_or_col d) 1))) "
 operator|+
-literal|"(TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL value))))"
+literal|"(tok_where (tok_function tok_isnull (tok_table_or_col value))))"
 argument_list|,
 name|ast
 operator|.
@@ -504,21 +504,21 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_UPDATE_TABLE "
+literal|"(tok_update_table "
 operator|+
-literal|"(TOK_TABNAME src) "
+literal|"(tok_tabname src) "
 operator|+
-literal|"(TOK_SET_COLUMNS_CLAUSE "
-operator|+
-literal|"(= "
-operator|+
-literal|"(TOK_TABLE_OR_COL key) 3) "
+literal|"(tok_set_columns_clause "
 operator|+
 literal|"(= "
 operator|+
-literal|"(TOK_TABLE_OR_COL value) 8)) "
+literal|"(tok_table_or_col key) 3) "
 operator|+
-literal|"(TOK_WHERE (= (TOK_TABLE_OR_COL VALUE) 1230997)))"
+literal|"(= "
+operator|+
+literal|"(tok_table_or_col value) 8)) "
+operator|+
+literal|"(tok_where (= (tok_table_or_col value) 1230997)))"
 argument_list|,
 name|ast
 operator|.
@@ -550,21 +550,21 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_TABREF (TOK_TABNAME page_view_stg) pvs)) "
+literal|"(tok_tabref (tok_tabname page_view_stg) pvs)) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view))) "
 operator|+
-literal|"(TOK_SELECT "
+literal|"(tok_select "
 operator|+
-literal|"(TOK_SELEXPR (. (TOK_TABLE_OR_COL pvs) viewTime)) "
+literal|"(tok_selexpr (. (tok_table_or_col pvs) viewtime)) "
 operator|+
-literal|"(TOK_SELEXPR (. (TOK_TABLE_OR_COL pvs) userid))) "
+literal|"(tok_selexpr (. (tok_table_or_col pvs) userid))) "
 operator|+
-literal|"(TOK_WHERE (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL pvs) userid)))))"
+literal|"(tok_where (tok_function tok_isnull (. (tok_table_or_col pvs) userid)))))"
 argument_list|,
 name|ast
 operator|.
@@ -635,7 +635,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"select * from (values (3,4)) as VC(a,b)"
+literal|"select * from (values (3,4)) as vc(a,b)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -644,17 +644,17 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+literal|"(tok_virtual_tabref (tok_tabname vc) (tok_col_name a b)) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 3 4)))) "
+literal|"(tok_values_table (tok_value_row 3 4)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+literal|"(tok_insert (tok_destination (tok_dir tok_tmp_file)) (tok_select (tok_selexpr tok_allcolref))))"
 argument_list|,
 name|ast
 operator|.
@@ -677,7 +677,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"select * from (values (1,2),(3,4)) as VC(a,b)"
+literal|"select * from (values (1,2),(3,4)) as vc(a,b)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -686,17 +686,17 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+literal|"(tok_virtual_tabref (tok_tabname vc) (tok_col_name a b)) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
+literal|"(tok_values_table (tok_value_row 1 2) (tok_value_row 3 4)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+literal|"(tok_insert (tok_destination (tok_dir tok_tmp_file)) (tok_select (tok_selexpr tok_allcolref))))"
 argument_list|,
 name|ast
 operator|.
@@ -719,7 +719,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"select a as c, b as d from (values (1,2),(3,4)) as VC(a,b)"
+literal|"select a as c, b as d from (values (1,2),(3,4)) as vc(a,b)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -728,19 +728,19 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+literal|"(tok_virtual_tabref (tok_tabname vc) (tok_col_name a b)) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
+literal|"(tok_values_table (tok_value_row 1 2) (tok_value_row 3 4)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) "
+literal|"(tok_insert (tok_destination (tok_dir tok_tmp_file)) "
 operator|+
-literal|"(TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL a) c) (TOK_SELEXPR (TOK_TABLE_OR_COL b) d))))"
+literal|"(tok_select (tok_selexpr (tok_table_or_col a) c) (tok_selexpr (tok_table_or_col b) d))))"
 argument_list|,
 name|ast
 operator|.
@@ -763,7 +763,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"insert into page_view select a,b as c from (values (1,2),(3,4)) as VC(a,b) where b = 9"
+literal|"insert into page_view select a,b as c from (values (1,2),(3,4)) as vc(a,b) where b = 9"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -772,25 +772,25 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+literal|"(tok_virtual_tabref (tok_tabname vc) (tok_col_name a b)) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
+literal|"(tok_values_table (tok_value_row 1 2) (tok_value_row 3 4)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view))) "
 operator|+
-literal|"(TOK_SELECT "
+literal|"(tok_select "
 operator|+
-literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL a)) "
+literal|"(tok_selexpr (tok_table_or_col a)) "
 operator|+
-literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL b) c)) "
+literal|"(tok_selexpr (tok_table_or_col b) c)) "
 operator|+
-literal|"(TOK_WHERE (= (TOK_TABLE_OR_COL b) 9))))"
+literal|"(tok_where (= (tok_table_or_col b) 9))))"
 argument_list|,
 name|ast
 operator|.
@@ -814,7 +814,7 @@ name|ast
 init|=
 name|parse
 argument_list|(
-literal|"insert into page_view(c1,c2) select a,b as c from (values (1,2),(3,4)) as VC(a,b) where b = 9"
+literal|"insert into page_view(c1,c2) select a,b as c from (values (1,2),(3,4)) as vc(a,b) where b = 9"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -823,25 +823,25 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF (TOK_TABNAME VC) (TOK_COL_NAME a b)) "
+literal|"(tok_virtual_tabref (tok_tabname vc) (tok_col_name a b)) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2) (TOK_VALUE_ROW 3 4)))) "
+literal|"(tok_values_table (tok_value_row 1 2) (tok_value_row 3 4)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view)) (TOK_TABCOLNAME c1 c2)) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view)) (tok_tabcolname c1 c2)) "
 operator|+
-literal|"(TOK_SELECT "
+literal|"(tok_select "
 operator|+
-literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL a)) "
+literal|"(tok_selexpr (tok_table_or_col a)) "
 operator|+
-literal|"(TOK_SELEXPR (TOK_TABLE_OR_COL b) c)) "
+literal|"(tok_selexpr (tok_table_or_col b) c)) "
 operator|+
-literal|"(TOK_WHERE (= (TOK_TABLE_OR_COL b) 9))))"
+literal|"(tok_where (= (tok_table_or_col b) 9))))"
 argument_list|,
 name|ast
 operator|.
@@ -873,19 +873,19 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+literal|"(tok_virtual_tabref tok_anonymous) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2)))) "
+literal|"(tok_values_table (tok_value_row 1 2)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view))) "
 operator|+
-literal|"(TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+literal|"(tok_select (tok_selexpr tok_allcolref))))"
 argument_list|,
 name|ast
 operator|.
@@ -918,34 +918,34 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+literal|"(tok_virtual_tabref tok_anonymous) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW 1 2))"
+literal|"(tok_values_table (tok_value_row 1 2))"
 operator|+
 literal|")"
 operator|+
 literal|") "
 operator|+
-literal|"(TOK_INSERT "
+literal|"(tok_insert "
 operator|+
-literal|"(TOK_INSERT_INTO "
+literal|"(tok_insert_into "
 operator|+
-literal|"(TOK_TAB (TOK_TABNAME page_view)) "
+literal|"(tok_tab (tok_tabname page_view)) "
 operator|+
-literal|"(TOK_TABCOLNAME a b)"
+literal|"(tok_tabcolname a b)"
 operator|+
 comment|//this is "extra" piece we get vs previous query
 literal|") "
 operator|+
-literal|"(TOK_SELECT "
+literal|"(tok_select "
 operator|+
-literal|"(TOK_SELEXPR TOK_ALLCOLREF)"
+literal|"(tok_selexpr tok_allcolref)"
 operator|+
 literal|")"
 operator|+
@@ -983,19 +983,19 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+literal|"(tok_virtual_tabref tok_anonymous) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW (- 1) 2) (TOK_VALUE_ROW 3 (+ 4))))) "
+literal|"(tok_values_table (tok_value_row (- 1) 2) (tok_value_row 3 (+ 4))))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view))) "
 operator|+
-literal|"(TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+literal|"(tok_select (tok_selexpr tok_allcolref))))"
 argument_list|,
 name|ast
 operator|.
@@ -1003,7 +1003,7 @@ name|toStringTree
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//same query as above less the "table" keyword KW_TABLE
+comment|//same query as above less the "table" keyword KW_table
 name|ast
 operator|=
 name|parse
@@ -1017,19 +1017,19 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY "
+literal|"(tok_query "
 operator|+
-literal|"(TOK_FROM "
+literal|"(tok_from "
 operator|+
-literal|"(TOK_VIRTUAL_TABLE "
+literal|"(tok_virtual_table "
 operator|+
-literal|"(TOK_VIRTUAL_TABREF TOK_ANONYMOUS) "
+literal|"(tok_virtual_tabref tok_anonymous) "
 operator|+
-literal|"(TOK_VALUES_TABLE (TOK_VALUE_ROW (- 1) 2) (TOK_VALUE_ROW 3 (+ 4))))) "
+literal|"(tok_values_table (tok_value_row (- 1) 2) (tok_value_row 3 (+ 4))))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME page_view))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname page_view))) "
 operator|+
-literal|"(TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))"
+literal|"(tok_select (tok_selexpr tok_allcolref))))"
 argument_list|,
 name|ast
 operator|.
@@ -1061,11 +1061,11 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TABNAME S))) "
+literal|"(tok_query (tok_from (tok_tabref (tok_tabname s))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME T1))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL a)) (TOK_SELEXPR (TOK_TABLE_OR_COL b)))) "
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname t1))) (tok_select (tok_selexpr (tok_table_or_col a)) (tok_selexpr (tok_table_or_col b)))) "
 operator|+
-literal|"(TOK_INSERT (TOK_INSERT_INTO (TOK_TAB (TOK_TABNAME T2))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL c)) (TOK_SELEXPR (TOK_TABLE_OR_COL d)))))"
+literal|"(tok_insert (tok_insert_into (tok_tab (tok_tabname t2))) (tok_select (tok_selexpr (tok_table_or_col c)) (tok_selexpr (tok_table_or_col d)))))"
 argument_list|,
 name|ast
 operator|.

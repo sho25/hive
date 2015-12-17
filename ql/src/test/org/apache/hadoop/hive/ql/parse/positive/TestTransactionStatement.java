@@ -201,16 +201,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|IOException
 import|;
 end_import
@@ -356,7 +346,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"TOK_START_TRANSACTION"
+literal|"tok_start_transaction"
 argument_list|,
 name|ast
 operator|.
@@ -377,7 +367,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_START_TRANSACTION (TOK_ISOLATION_LEVEL TOK_ISOLATION_SNAPSHOT))"
+literal|"(tok_start_transaction (tok_isolation_level tok_isolation_snapshot))"
 argument_list|,
 name|ast
 operator|.
@@ -398,7 +388,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_START_TRANSACTION (TOK_TXN_ACCESS_MODE TOK_TXN_READ_ONLY))"
+literal|"(tok_start_transaction (tok_txn_access_mode tok_txn_read_only))"
 argument_list|,
 name|ast
 operator|.
@@ -419,7 +409,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_START_TRANSACTION (TOK_TXN_ACCESS_MODE TOK_TXN_READ_WRITE) (TOK_ISOLATION_LEVEL TOK_ISOLATION_SNAPSHOT))"
+literal|"(tok_start_transaction (tok_txn_access_mode tok_txn_read_write) (tok_isolation_level tok_isolation_snapshot))"
 argument_list|,
 name|ast
 operator|.
@@ -451,7 +441,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"TOK_COMMIT"
+literal|"tok_commit"
 argument_list|,
 name|ast
 operator|.
@@ -472,7 +462,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"TOK_COMMIT"
+literal|"tok_commit"
 argument_list|,
 name|ast
 operator|.
@@ -493,7 +483,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"TOK_ROLLBACK"
+literal|"tok_rollback"
 argument_list|,
 name|ast
 operator|.
@@ -514,7 +504,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"TOK_ROLLBACK"
+literal|"tok_rollback"
 argument_list|,
 name|ast
 operator|.
@@ -546,7 +536,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_SET_AUTOCOMMIT TOK_TRUE)"
+literal|"(tok_set_autocommit tok_true)"
 argument_list|,
 name|ast
 operator|.
@@ -567,7 +557,7 @@ name|assertEquals
 argument_list|(
 literal|"AST doesn't match"
 argument_list|,
-literal|"(TOK_SET_AUTOCOMMIT TOK_FALSE)"
+literal|"(tok_set_autocommit tok_false)"
 argument_list|,
 name|ast
 operator|.
