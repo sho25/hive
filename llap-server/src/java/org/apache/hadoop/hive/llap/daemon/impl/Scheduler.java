@@ -31,18 +31,6 @@ name|Set
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|RejectedExecutionException
-import|;
-end_import
-
 begin_comment
 comment|/**  * Task scheduler interface  */
 end_comment
@@ -55,15 +43,26 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
-comment|/**    * Schedule the task or throw RejectedExecutionException if queues are full    * @param t - task to schedule    * @throws RejectedExecutionException    */
-name|void
+enum|enum
+name|SubmissionState
+block|{
+name|ACCEPTED
+block|,
+comment|// request accepted
+name|REJECTED
+block|,
+comment|// request rejected as wait queue is full
+name|EVICTED_OTHER
+block|;
+comment|// request accepted but evicted other low priority task
+block|}
+comment|/**    * Schedule the task or throw RejectedExecutionException if queues are full    * @param t - task to schedule    * @return SubmissionState    */
+name|SubmissionState
 name|schedule
 parameter_list|(
 name|T
 name|t
 parameter_list|)
-throws|throws
-name|RejectedExecutionException
 function_decl|;
 comment|/**    * Attempt to kill the fragment with the specified fragmentId    * @param fragmentId    */
 name|void

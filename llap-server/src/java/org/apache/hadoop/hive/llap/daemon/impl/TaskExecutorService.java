@@ -508,7 +508,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Task executor service provides method for scheduling tasks. Tasks submitted to executor service  * are submitted to wait queue for scheduling. Wait queue tasks are ordered based on the priority  * of the task. The internal wait queue scheduler moves tasks from wait queue when executor slots  * are available or when a higher priority task arrives and will schedule it for execution.  * When pre-emption is enabled, the tasks from wait queue can replace(pre-empt) a running task.  * The pre-empted task is reported back to the Application Master(AM) for it to be rescheduled.  *<p/>  * Because of the concurrent nature of task submission, the position of the task in wait queue is  * held as long the scheduling of the task from wait queue (with or without pre-emption) is complete.  * The order of pre-emption is based on the ordering in the pre-emption queue. All tasks that cannot  * run to completion immediately (canFinish = false) are added to pre-emption queue.  *<p/>  * When all the executor threads are occupied and wait queue is full, the task scheduler will  * throw RejectedExecutionException.  *<p/>  * Task executor service can be shut down which will terminated all running tasks and reject all  * new tasks. Shutting down of the task executor service can be done gracefully or immediately.  */
+comment|/**  * Task executor service provides method for scheduling tasks. Tasks submitted to executor service  * are submitted to wait queue for scheduling. Wait queue tasks are ordered based on the priority  * of the task. The internal wait queue scheduler moves tasks from wait queue when executor slots  * are available or when a higher priority task arrives and will schedule it for execution.  * When pre-emption is enabled, the tasks from wait queue can replace(pre-empt) a running task.  * The pre-empted task is reported back to the Application Master(AM) for it to be rescheduled.  *<p/>  * Because of the concurrent nature of task submission, the position of the task in wait queue is  * held as long the scheduling of the task from wait queue (with or without pre-emption) is complete.  * The order of pre-emption is based on the ordering in the pre-emption queue. All tasks that cannot  * run to completion immediately (canFinish = false) are added to pre-emption queue.  *<p/>  * When all the executor threads are occupied and wait queue is full, the task scheduler will  * return SubmissionState.REJECTED response  *<p/>  * Task executor service can be shut down which will terminated all running tasks and reject all  * new tasks. Shutting down of the task executor service can be done gracefully or immediately.  */
 end_comment
 
 begin_class
@@ -1787,14 +1787,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|SubmissionState
 name|schedule
 parameter_list|(
 name|TaskRunnerCallable
 name|task
 parameter_list|)
-throws|throws
-name|RejectedExecutionException
 block|{
 name|TaskWrapper
 name|taskWrapper
@@ -1806,6 +1804,9 @@ name|task
 argument_list|,
 name|this
 argument_list|)
+decl_stmt|;
+name|SubmissionState
+name|result
 decl_stmt|;
 name|TaskWrapper
 name|evictedTask
@@ -1829,8 +1830,15 @@ argument_list|(
 name|taskWrapper
 argument_list|)
 expr_stmt|;
+comment|// null evicted task means offer accepted
+comment|// evictedTask is not equal taskWrapper means current task is accepted and it evicted
+comment|// some other task
 if|if
 condition|(
+name|evictedTask
+operator|==
+literal|null
+operator|||
 name|evictedTask
 operator|!=
 name|taskWrapper
@@ -1878,6 +1886,43 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|result
+operator|=
+name|evictedTask
+operator|==
+literal|null
+condition|?
+name|SubmissionState
+operator|.
+name|ACCEPTED
+else|:
+name|SubmissionState
+operator|.
+name|EVICTED_OTHER
+expr_stmt|;
+if|if
+condition|(
+name|isDebugEnabled
+operator|&&
+name|evictedTask
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Eviction: {} {} {}"
+argument_list|,
+name|taskWrapper
+argument_list|,
+name|result
+argument_list|,
+name|evictedTask
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1912,13 +1957,35 @@ operator|.
 name|killTask
 argument_list|()
 expr_stmt|;
-throw|throw
-operator|new
-name|RejectedExecutionException
+name|result
+operator|=
+name|SubmissionState
+operator|.
+name|REJECTED
+expr_stmt|;
+if|if
+condition|(
+name|isDebugEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"Wait queue full"
+literal|"{} is {} as wait queue is full"
+argument_list|,
+name|taskWrapper
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|,
+name|result
 argument_list|)
-throw|;
+expr_stmt|;
+block|}
+return|return
+name|result
+return|;
 block|}
 block|}
 comment|// At this point, the task has been added into the queue. It may have caused an eviction for
@@ -2033,6 +2100,9 @@ name|notify
 argument_list|()
 expr_stmt|;
 block|}
+return|return
+name|result
+return|;
 block|}
 annotation|@
 name|Override
