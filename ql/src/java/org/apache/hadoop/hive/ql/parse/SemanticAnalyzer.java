@@ -46133,6 +46133,13 @@ operator|.
 name|getLeftAliases
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|isCBOExecuted
+argument_list|()
+condition|)
+block|{
 name|srcOps
 index|[
 name|i
@@ -46155,6 +46162,7 @@ name|i
 index|]
 argument_list|)
 expr_stmt|;
+block|}
 name|srcOps
 index|[
 name|i
@@ -51907,6 +51915,14 @@ name|res
 argument_list|,
 name|tgtToNodeExprMap
 argument_list|)
+return|;
+block|}
+name|boolean
+name|isCBOExecuted
+parameter_list|()
+block|{
+return|return
+literal|false
 return|;
 block|}
 name|boolean

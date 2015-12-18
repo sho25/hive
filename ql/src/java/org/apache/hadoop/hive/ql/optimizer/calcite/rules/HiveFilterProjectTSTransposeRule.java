@@ -398,7 +398,7 @@ condition|(
 operator|!
 name|projRel
 operator|.
-name|isSysnthetic
+name|isSynthetic
 argument_list|()
 condition|)
 block|{

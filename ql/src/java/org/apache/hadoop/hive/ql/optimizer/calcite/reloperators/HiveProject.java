@@ -969,7 +969,7 @@ if|if
 condition|(
 name|this
 operator|.
-name|isSysnthetic
+name|isSynthetic
 argument_list|()
 condition|)
 block|{
@@ -1040,7 +1040,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|boolean
-name|isSysnthetic
+name|isSynthetic
 parameter_list|()
 block|{
 return|return
