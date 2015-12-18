@@ -3323,6 +3323,9 @@ argument_list|<
 name|ByteBuffer
 argument_list|>
 name|metadata
+parameter_list|,
+name|FileMetadataExprType
+name|type
 parameter_list|)
 block|{   }
 annotation|@
@@ -3405,6 +3408,20 @@ name|MetaException
 block|{
 return|return
 literal|0
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|FileMetadataHandler
+name|getFileMetadataHandler
+parameter_list|(
+name|FileMetadataExprType
+name|type
+parameter_list|)
+block|{
+return|return
+literal|null
 return|;
 block|}
 block|}

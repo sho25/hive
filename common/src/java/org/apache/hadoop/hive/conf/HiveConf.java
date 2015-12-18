@@ -1301,6 +1301,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_HBASE_AGGR_STATS_HBASE_TTL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_HBASE_FILE_METADATA_THREADS
 block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
@@ -2253,6 +2259,15 @@ argument_list|,
 literal|"Number of seconds stats entries live in HBase cache after they are created.  They may be"
 operator|+
 literal|" invalided by updates or partition drops before this.  Default is one week."
+argument_list|)
+block|,
+name|METASTORE_HBASE_FILE_METADATA_THREADS
+argument_list|(
+literal|"hive.metastore.hbase.file.metadata.threads"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of threads to use to read file metadata in background to cache it."
 argument_list|)
 block|,
 name|METASTORETHRIFTCONNECTIONRETRIES

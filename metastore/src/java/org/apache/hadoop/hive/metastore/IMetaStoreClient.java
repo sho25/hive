@@ -3674,6 +3674,24 @@ name|HiveConf
 name|c
 parameter_list|)
 function_decl|;
+name|boolean
+name|cacheFileMetadata
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|partName
+parameter_list|,
+name|boolean
+name|allParts
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 block|}
 end_interface
 

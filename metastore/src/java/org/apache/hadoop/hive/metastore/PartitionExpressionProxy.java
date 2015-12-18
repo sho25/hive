@@ -21,29 +21,27 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|FileMetadataExprType
 import|;
 end_import
 
@@ -104,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The proxy interface that metastore uses to manipulate and apply  * serialized filter expressions coming from client.  */
+comment|/**  * The proxy interface that metastore uses for variety of QL operations (metastore can't depend  * on QL because QL depends on metastore; creating metastore-client module would be a proper way  * to solve this problem).  */
 end_comment
 
 begin_interface
@@ -125,7 +123,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * Filters the partition names via serialized Hive expression.    * @param partColumnNames Partition column names in the underlying table.    * @param partColumnTypeInfos Partition column types in the underlying table    * @param expr Serialized expression.    * @param defaultPartitionName Default partition name from job or server configuration.    * @param partitionNames Partition names; the list is modified in place.    * @return Whether there were any unknown partitions preserved in the name list.    */
-specifier|public
 name|boolean
 name|filterPartitionsByExpr
 parameter_list|(
@@ -157,8 +154,23 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Determines the file metadata type from input format of the source table or partition.    * @param inputFormat Input format name.    * @return The file metadata type.    */
+name|FileMetadataExprType
+name|getMetadataType
+parameter_list|(
+name|String
+name|inputFormat
+parameter_list|)
+function_decl|;
+comment|/**    * Gets a separate proxy that can be used to call file-format-specific methods.    * @param type The file metadata type.    * @return The proxy.    */
+name|FileFormatProxy
+name|getFileFormatProxy
+parameter_list|(
+name|FileMetadataExprType
+name|type
+parameter_list|)
+function_decl|;
 comment|/**    * Creates SARG from serialized representation.    * @param expr SARG, serialized as Kryo.    * @return SARG.    */
-specifier|public
 name|SearchArgument
 name|createSarg
 parameter_list|(
@@ -166,20 +178,6 @@ name|byte
 index|[]
 name|expr
 parameter_list|)
-function_decl|;
-comment|/**    * Applies SARG to file metadata, and produces some result for this file.    * @param sarg SARG    * @param byteBuffer File metadata from metastore cache.    * @return The result to return to client for this file, or null if file is eliminated.    * @throws IOException    */
-specifier|public
-name|ByteBuffer
-name|applySargToFileMetadata
-parameter_list|(
-name|SearchArgument
-name|sarg
-parameter_list|,
-name|ByteBuffer
-name|byteBuffer
-parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
 block|}
 end_interface

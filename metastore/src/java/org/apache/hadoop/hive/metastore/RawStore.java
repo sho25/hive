@@ -2708,7 +2708,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param fileIds List of file IDs from the filesystem.    * @param metadata Metadata buffers corresponding to fileIds in the list.    */
+comment|/**    * @param fileIds List of file IDs from the filesystem.    * @param metadata Metadata buffers corresponding to fileIds in the list.    * @param type The type; determines the class that can do additiona processing for metadata.    */
 name|void
 name|putFileMetadata
 parameter_list|(
@@ -2723,6 +2723,9 @@ argument_list|<
 name|ByteBuffer
 argument_list|>
 name|metadata
+parameter_list|,
+name|FileMetadataExprType
+name|type
 parameter_list|)
 throws|throws
 name|MetaException
@@ -2763,6 +2766,14 @@ name|eliminated
 parameter_list|)
 throws|throws
 name|MetaException
+function_decl|;
+comment|/** Gets file metadata handler for the corresponding type. */
+name|FileMetadataHandler
+name|getFileMetadataHandler
+parameter_list|(
+name|FileMetadataExprType
+name|type
+parameter_list|)
 function_decl|;
 comment|/**    * Gets total number of tables.    */
 annotation|@
