@@ -635,7 +635,7 @@ begin_class
 specifier|public
 class|class
 name|FixedBucketPruningOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

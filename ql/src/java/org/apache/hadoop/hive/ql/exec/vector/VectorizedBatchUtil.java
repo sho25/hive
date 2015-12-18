@@ -4223,22 +4223,67 @@ expr_stmt|;
 for|for
 control|(
 name|int
-name|column
+name|p
 init|=
 literal|0
 init|;
-name|column
+name|p
 operator|<
 name|batch
 operator|.
-name|cols
-operator|.
-name|length
+name|projectionSize
 condition|;
-name|column
+name|p
 operator|++
 control|)
 block|{
+name|int
+name|column
+init|=
+name|batch
+operator|.
+name|projectedColumns
+index|[
+name|p
+index|]
+decl_stmt|;
+if|if
+condition|(
+name|p
+operator|==
+name|column
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"(col "
+operator|+
+name|p
+operator|+
+literal|") "
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"(proj col "
+operator|+
+name|p
+operator|+
+literal|" col "
+operator|+
+name|column
+operator|+
+literal|") "
+argument_list|)
+expr_stmt|;
+block|}
 name|ColumnVector
 name|colVector
 init|=
@@ -4260,11 +4305,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"(null colVector "
-operator|+
-name|column
-operator|+
-literal|")"
+literal|"(null ColumnVector)"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4277,6 +4318,19 @@ name|colVector
 operator|.
 name|isRepeating
 decl_stmt|;
+if|if
+condition|(
+name|isRepeating
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"(repeating)"
+argument_list|)
+expr_stmt|;
+block|}
 name|index
 operator|=
 operator|(

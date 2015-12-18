@@ -640,16 +640,6 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-name|currTopOp
-init|=
-name|op
-decl_stmt|;
 name|ctx
 operator|.
 name|setCurrTask
@@ -661,7 +651,7 @@ name|ctx
 operator|.
 name|setCurrTopOp
 argument_list|(
-name|currTopOp
+name|op
 argument_list|)
 expr_stmt|;
 for|for
@@ -1230,7 +1220,7 @@ name|setTaskPlan
 argument_list|(
 name|currAliasId
 argument_list|,
-name|currTopOp
+name|op
 argument_list|,
 name|currTask
 argument_list|,
@@ -1251,7 +1241,7 @@ name|setTaskPlan
 argument_list|(
 name|currAliasId
 argument_list|,
-name|currTopOp
+name|op
 argument_list|,
 name|currTask
 argument_list|,

@@ -248,7 +248,7 @@ block|{
 return|return
 literal|false
 return|;
-comment|// The default, unless SerDe overrides it. TODO#
+comment|// The default, unless SerDe overrides it.
 block|}
 block|}
 end_class

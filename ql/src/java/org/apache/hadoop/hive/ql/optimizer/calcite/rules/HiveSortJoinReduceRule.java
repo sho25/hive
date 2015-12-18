@@ -311,7 +311,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-comment|// If sort does not contain a limit operation, we bail out
+comment|// If sort does not contain a limit operation or limit is 0, we bail out
 if|if
 condition|(
 operator|!
@@ -321,6 +321,17 @@ name|limitRelNode
 argument_list|(
 name|sortLimit
 argument_list|)
+operator|||
+name|RexLiteral
+operator|.
+name|intValue
+argument_list|(
+name|sortLimit
+operator|.
+name|fetch
+argument_list|)
+operator|==
+literal|0
 condition|)
 block|{
 return|return

@@ -279,14 +279,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
 name|CompressionCodec
@@ -298,14 +290,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
 operator|.
 name|orc
 operator|.
@@ -319,14 +303,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
 name|OrcConf
@@ -339,35 +315,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
-name|OrcProto
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
+name|impl
 operator|.
 name|OutStream
 import|;
@@ -399,15 +349,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
+operator|.
+name|impl
 operator|.
 name|StreamName
 import|;
@@ -418,14 +362,6 @@ import|import
 name|org
 operator|.
 name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
 operator|.
 name|orc
 operator|.
@@ -439,105 +375,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
-name|OrcProto
-operator|.
-name|ColumnEncoding
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcProto
-operator|.
-name|RowIndex
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcProto
-operator|.
-name|RowIndexEntry
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|OrcProto
-operator|.
-name|Stream
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|RecordReaderImpl
+name|impl
 operator|.
 name|BufferChunk
 import|;
@@ -610,6 +450,18 @@ operator|.
 name|Reader
 operator|.
 name|PoolFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|OrcProto
 import|;
 end_import
 
@@ -738,7 +590,7 @@ block|}
 decl_stmt|;
 specifier|private
 specifier|final
-name|long
+name|Long
 name|fileId
 decl_stmt|;
 specifier|private
@@ -927,9 +779,13 @@ parameter_list|(
 name|int
 name|colIx
 parameter_list|,
+name|OrcProto
+operator|.
 name|ColumnEncoding
 name|encoding
 parameter_list|,
+name|OrcProto
+operator|.
 name|RowIndex
 name|rowIndex
 parameter_list|)
@@ -989,6 +845,8 @@ name|MAX_STREAMS
 index|]
 decl_stmt|;
 comment|/** Column encoding. */
+name|OrcProto
+operator|.
 name|ColumnEncoding
 name|encoding
 decl_stmt|;
@@ -1304,18 +1162,24 @@ parameter_list|,
 name|StripeInformation
 name|stripe
 parameter_list|,
+name|OrcProto
+operator|.
 name|RowIndex
 index|[]
 name|indexes
 parameter_list|,
 name|List
 argument_list|<
+name|OrcProto
+operator|.
 name|ColumnEncoding
 argument_list|>
 name|encodings
 parameter_list|,
 name|List
 argument_list|<
+name|OrcProto
+operator|.
 name|Stream
 argument_list|>
 name|streamList
@@ -1829,6 +1693,26 @@ operator|+=
 name|length
 expr_stmt|;
 block|}
+name|boolean
+name|hasFileId
+init|=
+name|this
+operator|.
+name|fileId
+operator|!=
+literal|null
+decl_stmt|;
+name|long
+name|fileId
+init|=
+name|hasFileId
+condition|?
+name|this
+operator|.
+name|fileId
+else|:
+literal|0
+decl_stmt|;
 if|if
 condition|(
 name|listToRead
@@ -1958,6 +1842,11 @@ operator|new
 name|BooleanRef
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|hasFileId
+condition|)
+block|{
 name|cache
 operator|.
 name|getFileData
@@ -2009,6 +1898,7 @@ name|next
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -2328,6 +2218,8 @@ index|[
 name|colIxMod
 index|]
 decl_stmt|;
+name|OrcProto
+operator|.
 name|RowIndexEntry
 name|index
 init|=
@@ -2581,6 +2473,7 @@ block|}
 else|else
 block|{
 comment|// This stream can be separated by RG using index. Let's do that.
+comment|// Offset to where this RG begins.
 name|long
 name|cOffset
 init|=
@@ -2597,6 +2490,7 @@ operator|.
 name|streamIndexOffset
 argument_list|)
 decl_stmt|;
+comment|// Offset relative to the beginning of the stream of where this RG ends.
 name|long
 name|nextCOffsetRel
 init|=
@@ -2615,6 +2509,7 @@ operator|.
 name|streamIndexOffset
 argument_list|)
 decl_stmt|;
+comment|// Offset before which this RG is guaranteed to end. Can only be estimated.
 comment|// We estimate the same way for compressed and uncompressed for now.
 name|long
 name|endCOffset
@@ -2640,6 +2535,8 @@ argument_list|,
 name|bufferSize
 argument_list|)
 decl_stmt|;
+comment|// As we read, we can unlock initial refcounts for the buffers that end before
+comment|// the data that we need for this RG.
 name|long
 name|unlockUntilCOffset
 init|=
@@ -3355,6 +3252,39 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|super
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|", original is set "
+operator|+
+operator|(
+name|this
+operator|.
+name|originalData
+operator|!=
+literal|null
+operator|)
+operator|+
+literal|", buffer was replaced "
+operator|+
+operator|(
+name|originalCbIndex
+operator|==
+operator|-
+literal|1
+operator|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|handleCacheCollision
 parameter_list|(
@@ -3853,6 +3783,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// 6. Finally, put uncompressed data to cache.
+if|if
+condition|(
+name|fileId
+operator|!=
+literal|null
+condition|)
+block|{
 name|long
 index|[]
 name|collisionMask
@@ -3884,6 +3821,7 @@ name|getCacheBuffers
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// 7. It may happen that we know we won't use some compression buffers anymore.
 comment|//    Release initial refcounts.
 for|for
@@ -5241,6 +5179,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// 6. Finally, put uncompressed data to cache.
+if|if
+condition|(
+name|fileId
+operator|!=
+literal|null
+condition|)
+block|{
 name|long
 index|[]
 name|collisionMask
@@ -5269,6 +5214,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|lastUncompressed
 return|;
@@ -5973,6 +5919,7 @@ name|CacheChunk
 name|cc
 parameter_list|)
 block|{
+comment|// Don't release if the buffer contains any data beyond the acceptable boundary.
 if|if
 condition|(
 name|cc
@@ -5991,6 +5938,8 @@ argument_list|()
 operator|!=
 literal|null
 assert|;
+try|try
+block|{
 name|releaseInitialRefcount
 argument_list|(
 name|cc
@@ -5998,7 +5947,45 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// Release all the previous buffers that we may not have been able to release due to reuse.
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"BUG: releasing initial refcount; stream start "
+operator|+
+name|streamStartOffset
+operator|+
+literal|", "
+operator|+
+literal|"unlocking until "
+operator|+
+name|unlockUntilCOffset
+operator|+
+literal|" from ["
+operator|+
+name|cc
+operator|+
+literal|"]: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
+comment|// Release all the previous buffers that we may not have been able to release due to reuse,
+comment|// as long as they are still in the same stream and are not already released.
 name|DiskRangeList
 name|prev
 init|=
@@ -6053,6 +6040,8 @@ operator|==
 literal|null
 condition|)
 break|break;
+try|try
+block|{
 name|releaseInitialRefcount
 argument_list|(
 name|prevCc
@@ -6060,6 +6049,47 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"BUG: releasing initial refcount; stream start "
+operator|+
+name|streamStartOffset
+operator|+
+literal|", "
+operator|+
+literal|"unlocking until "
+operator|+
+name|unlockUntilCOffset
+operator|+
+literal|" from ["
+operator|+
+name|cc
+operator|+
+literal|"] and backtracked to ["
+operator|+
+name|prevCc
+operator|+
+literal|"]: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
 name|prev
 operator|=
 name|prev

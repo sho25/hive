@@ -55,9 +55,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|reloperators
-operator|.
-name|HiveProject
+name|HiveRelFactories
 import|;
 end_import
 
@@ -86,9 +84,9 @@ name|super
 argument_list|(
 literal|true
 argument_list|,
-name|HiveProject
+name|HiveRelFactories
 operator|.
-name|DEFAULT_PROJECT_FACTORY
+name|HIVE_BUILDER
 argument_list|)
 expr_stmt|;
 block|}

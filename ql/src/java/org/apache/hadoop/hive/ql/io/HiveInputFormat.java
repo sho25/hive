@@ -137,6 +137,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|SerializationUtilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -281,7 +299,7 @@ name|io
 operator|.
 name|api
 operator|.
-name|LlapIoProxy
+name|LlapProxy
 import|;
 end_import
 
@@ -1324,7 +1342,7 @@ name|VectorizedRowBatch
 argument_list|>
 name|llapIo
 init|=
-name|LlapIoProxy
+name|LlapProxy
 operator|.
 name|getIo
 argument_list|()
@@ -1340,7 +1358,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Not using LLAP because IO is not initialized"
+literal|"Not using LLAP IO because it is not initialized"
 argument_list|)
 expr_stmt|;
 return|return
@@ -3299,7 +3317,7 @@ condition|)
 block|{
 name|serializedFilterObj
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeObject
 argument_list|(
@@ -3335,7 +3353,7 @@ condition|)
 block|{
 name|serializedFilterExpr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(

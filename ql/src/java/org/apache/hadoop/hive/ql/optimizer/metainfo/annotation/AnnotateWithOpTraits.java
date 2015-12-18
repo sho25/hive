@@ -461,7 +461,7 @@ begin_class
 specifier|public
 class|class
 name|AnnotateWithOpTraits
-implements|implements
+extends|extends
 name|Transform
 block|{
 annotation|@

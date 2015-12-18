@@ -1017,7 +1017,7 @@ begin_class
 specifier|public
 class|class
 name|StatsOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|// TODO: [HIVE-6289] while getting stats from metastore, we currently only get one col at

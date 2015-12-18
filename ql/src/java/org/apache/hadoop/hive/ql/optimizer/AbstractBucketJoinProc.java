@@ -1278,12 +1278,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|topOps
 init|=
@@ -1505,12 +1500,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|topOpEntry
 range|:

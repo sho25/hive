@@ -871,7 +871,7 @@ begin_class
 specifier|public
 class|class
 name|SkewJoinOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private
@@ -1357,12 +1357,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|origTopOps
 init|=
@@ -1820,7 +1815,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**      * Returns the skewed values in all the tables which are going to be scanned.      * If the join is on columns c1, c2 and c3 on tables T1 and T2,      * T1 is skewed on c1 and c4 with the skew values ((1,2),(3,4)),      * whereas T2 is skewed on c1, c2 with skew values ((5,6),(7,8)), the resulting      * map would be:<(c1) -> ((1), (3)), (c1,c2) -> ((5,6),(7,8))>      * @param op The join operator being optimized      * @param tableScanOpsForJoin table scan operators which are parents of the join operator      * @return map<join keys intersection skewedkeys, list of skewed values>.      * @throws SemanticException       */
+comment|/**      * Returns the skewed values in all the tables which are going to be scanned.      * If the join is on columns c1, c2 and c3 on tables T1 and T2,      * T1 is skewed on c1 and c4 with the skew values ((1,2),(3,4)),      * whereas T2 is skewed on c1, c2 with skew values ((5,6),(7,8)), the resulting      * map would be:<(c1) -> ((1), (3)), (c1,c2) -> ((5,6),(7,8))>      * @param op The join operator being optimized      * @param tableScanOpsForJoin table scan operators which are parents of the join operator      * @return map<join keys intersection skewedkeys, list of skewed values>.      * @throws SemanticException      */
 specifier|private
 name|Map
 argument_list|<

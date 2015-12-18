@@ -133,14 +133,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
 name|DataReader
@@ -153,19 +145,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 operator|.
 name|OrcProto
-operator|.
-name|Stream
 import|;
 end_import
 
@@ -262,6 +244,8 @@ specifier|final
 name|int
 name|MAX_DATA_STREAMS
 init|=
+name|OrcProto
+operator|.
 name|Stream
 operator|.
 name|Kind
@@ -333,7 +317,7 @@ comment|/**    * Creates the encoded reader.    * @param fileId File ID to read,
 name|EncodedReader
 name|encodedReader
 parameter_list|(
-name|long
+name|Long
 name|fileId
 parameter_list|,
 name|DataCache

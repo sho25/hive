@@ -697,7 +697,6 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-comment|// TODO Fix security
 name|RPC
 operator|.
 name|setProtocolEngine

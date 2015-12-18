@@ -1464,12 +1464,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|topOps
 decl_stmt|;
@@ -1498,12 +1493,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 argument_list|>
 name|topOps
 parameter_list|,
@@ -4966,9 +4956,6 @@ index|]
 operator|=
 name|convertToExprNode
 argument_list|(
-operator|(
-name|RexNode
-operator|)
 name|exchangeRel
 operator|.
 name|getJoinKeys
@@ -7872,7 +7859,7 @@ return|return
 name|joinOp
 return|;
 block|}
-comment|/*    * This method updates the input expr, changing all the    * ExprNodeColumnDesc in it to refer to columns given by the    * colExprMap.    *     * For instance, "col_0 = 1" would become "VALUE.col_0 = 1";    * the execution engine expects filters in the Join operators    * to be expressed that way.    */
+comment|/*    * This method updates the input expr, changing all the    * ExprNodeColumnDesc in it to refer to columns given by the    * colExprMap.    *    * For instance, "col_0 = 1" would become "VALUE.col_0 = 1";    * the execution engine expects filters in the Join operators    * to be expressed that way.    */
 specifier|private
 specifier|static
 name|int

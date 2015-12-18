@@ -360,6 +360,7 @@ specifier|private
 name|long
 name|MAX_SLEEP
 decl_stmt|;
+comment|//longer term we should always have a txn id and then we won't need to track locks here at all
 specifier|private
 name|Set
 argument_list|<
@@ -685,8 +686,110 @@ name|res
 operator|.
 name|getLockid
 argument_list|()
+argument_list|,
+name|queryId
+argument_list|,
+name|lock
+operator|.
+name|getTxnid
+argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|locks
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|boolean
+name|logMsg
+init|=
+literal|false
+decl_stmt|;
+for|for
+control|(
+name|DbHiveLock
+name|l
+range|:
+name|locks
+control|)
+block|{
+if|if
+condition|(
+name|l
+operator|.
+name|txnId
+operator|!=
+name|hl
+operator|.
+name|txnId
+condition|)
+block|{
+comment|//locks from different transactions detected (or from transaction and read-only query in autocommit)
+name|logMsg
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+block|}
+elseif|else
+if|if
+condition|(
+name|l
+operator|.
+name|txnId
+operator|==
+literal|0
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|l
+operator|.
+name|queryId
+operator|.
+name|equals
+argument_list|(
+name|hl
+operator|.
+name|queryId
+argument_list|)
+condition|)
+block|{
+comment|//here means no open transaction, but different queries
+name|logMsg
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+if|if
+condition|(
+name|logMsg
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"adding new DbHiveLock("
+operator|+
+name|hl
+operator|+
+literal|") while we are already tracking locks: "
+operator|+
+name|locks
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|locks
 operator|.
 name|add
@@ -1131,6 +1234,11 @@ operator|)
 operator|.
 name|lockId
 decl_stmt|;
+name|boolean
+name|removed
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 name|LOG
@@ -1149,16 +1257,16 @@ argument_list|(
 name|lockId
 argument_list|)
 expr_stmt|;
-name|boolean
+comment|//important to remove after unlock() in case it fails
 name|removed
-init|=
+operator|=
 name|locks
 operator|.
 name|remove
 argument_list|(
 name|hiveLock
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|Metrics
 name|metrics
 init|=
@@ -1219,6 +1327,17 @@ name|NoSuchLockException
 name|e
 parameter_list|)
 block|{
+comment|//if metastore has no record of this lock, it most likely timed out; either way
+comment|//there is no point tracking it here any longer
+name|removed
+operator|=
+name|locks
+operator|.
+name|remove
+argument_list|(
+name|hiveLock
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|error
@@ -1303,6 +1422,24 @@ name|e
 argument_list|)
 throw|;
 block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|removed
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Removed a lock "
+operator|+
+name|hiveLock
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 annotation|@
 name|Override
@@ -1317,6 +1454,15 @@ argument_list|>
 name|hiveLocks
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"releaseLocks: "
+operator|+
+name|hiveLocks
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|HiveLock
@@ -1342,6 +1488,8 @@ block|{
 comment|// Not sure why this method doesn't throw any exceptions,
 comment|// but since the interface doesn't allow it we'll just swallow them and
 comment|// move on.
+comment|//This OK-ish since releaseLocks() is only called for RO/AC queries; it
+comment|//would be really bad to eat exceptions here for write operations
 block|}
 block|}
 block|}
@@ -1497,6 +1645,12 @@ block|{
 name|long
 name|lockId
 decl_stmt|;
+name|String
+name|queryId
+decl_stmt|;
+name|long
+name|txnId
+decl_stmt|;
 name|DbHiveLock
 parameter_list|(
 name|long
@@ -1506,6 +1660,35 @@ block|{
 name|lockId
 operator|=
 name|id
+expr_stmt|;
+block|}
+name|DbHiveLock
+parameter_list|(
+name|long
+name|id
+parameter_list|,
+name|String
+name|queryId
+parameter_list|,
+name|long
+name|txnId
+parameter_list|)
+block|{
+name|lockId
+operator|=
+name|id
+expr_stmt|;
+name|this
+operator|.
+name|queryId
+operator|=
+name|queryId
+expr_stmt|;
+name|this
+operator|.
+name|txnId
+operator|=
+name|txnId
 expr_stmt|;
 block|}
 annotation|@
@@ -1604,6 +1787,19 @@ operator|.
 name|lockIdToString
 argument_list|(
 name|lockId
+argument_list|)
+operator|+
+literal|" queryId="
+operator|+
+name|queryId
+operator|+
+literal|" "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
 argument_list|)
 return|;
 block|}

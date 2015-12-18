@@ -447,7 +447,7 @@ begin_class
 specifier|public
 class|class
 name|IdentityProjectRemover
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

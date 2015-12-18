@@ -145,6 +145,18 @@ name|FileSplit
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|FileMetaInfo
+import|;
+end_import
+
 begin_comment
 comment|/**  * OrcFileSplit. Holds file meta info  *  */
 end_comment

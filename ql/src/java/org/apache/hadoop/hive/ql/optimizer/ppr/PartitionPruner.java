@@ -751,7 +751,7 @@ begin_class
 specifier|public
 class|class
 name|PartitionPruner
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|// The log

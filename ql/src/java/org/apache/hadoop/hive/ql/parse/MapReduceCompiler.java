@@ -1619,10 +1619,17 @@ argument_list|)
 decl_stmt|;
 name|estimatedInput
 operator|=
+operator|(
+name|globalLimitCtx
+operator|.
+name|getGlobalOffset
+argument_list|()
+operator|+
 name|globalLimitCtx
 operator|.
 name|getGlobalLimit
 argument_list|()
+operator|)
 operator|*
 name|sizePerRow
 expr_stmt|;

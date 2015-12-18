@@ -2868,6 +2868,13 @@ argument_list|()
 operator|-
 name|numRowsRemaining
 decl_stmt|;
+if|if
+condition|(
+name|rowToProcess
+operator|>=
+literal|0
+condition|)
+block|{
 name|Range
 name|rng
 init|=
@@ -2928,6 +2935,7 @@ argument_list|(
 name|out
 argument_list|)
 expr_stmt|;
+block|}
 name|numRowsRemaining
 operator|--
 expr_stmt|;

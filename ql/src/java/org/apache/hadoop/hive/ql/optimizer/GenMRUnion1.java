@@ -573,14 +573,6 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-operator|(
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
-operator|)
 name|union
 argument_list|,
 operator|new
@@ -949,12 +941,7 @@ argument_list|(
 name|uTask
 argument_list|)
 expr_stmt|;
-name|Operator
-argument_list|<
-name|?
-extends|extends
-name|OperatorDesc
-argument_list|>
+name|TableScanOperator
 name|topOp
 init|=
 name|ctx
@@ -1003,6 +990,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Union Operator encountered . Currently, the algorithm is pretty simple: If    * all the sub-queries are map-only, don't do anything. Otherwise, insert a    * FileSink on top of all the sub-queries.    *    * This can be optimized later on.    *    * @param nd    *          the file sink operator encountered    * @param opProcCtx    *          context    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process

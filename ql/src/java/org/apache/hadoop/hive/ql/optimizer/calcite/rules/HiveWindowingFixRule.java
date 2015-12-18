@@ -259,9 +259,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|reloperators
-operator|.
-name|HiveProject
+name|HiveRelFactories
 import|;
 end_import
 
@@ -319,9 +317,9 @@ name|this
 operator|.
 name|projectFactory
 operator|=
-name|HiveProject
+name|HiveRelFactories
 operator|.
-name|DEFAULT_PROJECT_FACTORY
+name|HIVE_PROJECT_FACTORY
 expr_stmt|;
 block|}
 annotation|@

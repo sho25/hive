@@ -786,9 +786,27 @@ operator|.
 name|getSparkSession
 argument_list|()
 decl_stmt|;
+name|HiveConf
+name|sessionConf
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getConf
+argument_list|()
+decl_stmt|;
 comment|// Spark configurations are updated close the existing session
+comment|// In case of async queries or confOverlay is not empty,
+comment|// sessionConf and conf are different objects
 if|if
 condition|(
+name|sessionConf
+operator|.
+name|getSparkConfigUpdated
+argument_list|()
+operator|||
 name|conf
 operator|.
 name|getSparkConfigUpdated
@@ -807,6 +825,13 @@ operator|=
 literal|null
 expr_stmt|;
 name|conf
+operator|.
+name|setSparkConfigUpdated
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|sessionConf
 operator|.
 name|setSparkConfigUpdated
 argument_list|(

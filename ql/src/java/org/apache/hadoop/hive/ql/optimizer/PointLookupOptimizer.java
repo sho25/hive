@@ -625,7 +625,7 @@ begin_class
 specifier|public
 class|class
 name|PointLookupOptimizer
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

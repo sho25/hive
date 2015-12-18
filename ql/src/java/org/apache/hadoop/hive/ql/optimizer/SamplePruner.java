@@ -477,7 +477,7 @@ begin_class
 specifier|public
 class|class
 name|SamplePruner
-implements|implements
+extends|extends
 name|Transform
 block|{
 comment|/**    * SamplePrunerCtx.    *    */

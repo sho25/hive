@@ -1989,6 +1989,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|COMPILE_LOCK_TIMED_OUT
+argument_list|(
+literal|10308
+argument_list|,
+literal|"Attempt to acquire compile lock timed out."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

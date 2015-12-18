@@ -527,6 +527,14 @@ name|HTTP_HEADER_PREFIX
 init|=
 literal|"http.header."
 decl_stmt|;
+comment|// Set the fetchSize
+specifier|static
+specifier|final
+name|String
+name|FETCH_SIZE
+init|=
+literal|"fetchSize"
+decl_stmt|;
 comment|// --------------- Begin 2 way ssl options -------------------------
 comment|// Use two way ssl. This param will take effect only when ssl=true
 specifier|static

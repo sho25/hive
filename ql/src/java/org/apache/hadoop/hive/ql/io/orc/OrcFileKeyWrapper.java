@@ -89,6 +89,30 @@ name|WritableComparable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|CompressionKind
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|OrcProto
+import|;
+end_import
+
 begin_comment
 comment|/**  * Key for OrcFileMergeMapper task. Contains orc file related information that  * should match before merging two orc files.  */
 end_comment

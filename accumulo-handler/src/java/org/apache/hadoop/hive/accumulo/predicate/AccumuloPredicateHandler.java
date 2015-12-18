@@ -479,7 +479,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|SerializationUtilities
 import|;
 end_import
 
@@ -2371,7 +2371,7 @@ return|return
 literal|null
 return|;
 return|return
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|deserializeExpression
 argument_list|(

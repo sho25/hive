@@ -70,6 +70,12 @@ name|int
 name|getRpcPort
 parameter_list|()
 function_decl|;
+comment|/**    * Management endpoint for service instance    *    * @return    */
+specifier|public
+name|int
+name|getManagementPort
+parameter_list|()
+function_decl|;
 comment|/**    * Shuffle Endpoint for service instance    *     * @return    */
 specifier|public
 name|int

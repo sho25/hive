@@ -459,7 +459,7 @@ begin_class
 specifier|public
 class|class
 name|ConstantPropagate
-implements|implements
+extends|extends
 name|Transform
 block|{
 specifier|private

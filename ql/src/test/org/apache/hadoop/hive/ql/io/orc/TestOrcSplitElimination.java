@@ -149,7 +149,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|Utilities
+name|SerializationUtilities
 import|;
 end_import
 
@@ -914,7 +914,7 @@ decl_stmt|;
 name|String
 name|sargStr
 init|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -983,7 +983,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1050,7 +1050,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1117,7 +1117,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1184,7 +1184,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1251,7 +1251,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1318,7 +1318,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1556,7 +1556,7 @@ decl_stmt|;
 name|String
 name|sargStr
 init|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1625,7 +1625,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1693,7 +1693,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1761,7 +1761,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1830,7 +1830,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1899,7 +1899,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -1968,7 +1968,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -2325,7 +2325,7 @@ decl_stmt|;
 name|String
 name|sargStr
 init|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -2453,7 +2453,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -2580,7 +2580,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -2713,7 +2713,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
@@ -2852,7 +2852,7 @@ argument_list|)
 expr_stmt|;
 name|sargStr
 operator|=
-name|Utilities
+name|SerializationUtilities
 operator|.
 name|serializeExpression
 argument_list|(
