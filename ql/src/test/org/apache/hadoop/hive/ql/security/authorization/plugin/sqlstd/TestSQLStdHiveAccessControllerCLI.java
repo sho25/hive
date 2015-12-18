@@ -411,15 +411,13 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**    * Verify that no exception is thrown if authorization is enabled from hive cli,    * when sql std auth is used    */
+comment|/**    * Verify that exceptiion is thrown if authorization is enabled from hive cli,    * when sql std auth is used    */
 annotation|@
 name|Test
 specifier|public
 name|void
-name|testAuthEnable
+name|testAuthEnableError
 parameter_list|()
-throws|throws
-name|Exception
 block|{
 name|HiveConf
 name|processedConf
@@ -439,6 +437,8 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|HiveAuthorizerFactory
 name|authorizerFactory
 init|=
@@ -465,6 +465,32 @@ name|getCLISessionCtx
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|fail
+argument_list|(
+literal|"Exception expected"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveAuthzPluginException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"SQL standards based authorization should not be enabled from hive cli"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
