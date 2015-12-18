@@ -3007,9 +3007,21 @@ name|HiveConf
 name|conf
 parameter_list|)
 block|{
+comment|// Make a copy of currentMetaVars, there is a race condition that
+comment|// currentMetaVars might be changed during the execution of the method
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|currentMetaVarsCopy
+init|=
+name|currentMetaVars
+decl_stmt|;
 if|if
 condition|(
-name|currentMetaVars
+name|currentMetaVarsCopy
 operator|==
 literal|null
 condition|)
@@ -3038,7 +3050,7 @@ comment|// Since metaVars are all of different types, use string for comparison
 name|String
 name|oldVar
 init|=
-name|currentMetaVars
+name|currentMetaVarsCopy
 operator|.
 name|get
 argument_list|(
