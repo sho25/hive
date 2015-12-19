@@ -372,7 +372,7 @@ name|checkHadoopConf
 argument_list|(
 name|ConfVars
 operator|.
-name|METASTORE_CONNECTION_DRIVER
+name|HIVETESTMODEDUMMYSTATAGGR
 operator|.
 name|varname
 argument_list|,
@@ -383,20 +383,20 @@ name|checkConfVar
 argument_list|(
 name|ConfVars
 operator|.
-name|METASTORE_CONNECTION_DRIVER
+name|HIVETESTMODEDUMMYSTATAGGR
 argument_list|,
-literal|"org.apache.derby.jdbc.EmbeddedDriver"
+literal|""
 argument_list|)
 expr_stmt|;
 name|checkHiveConf
 argument_list|(
 name|ConfVars
 operator|.
-name|METASTORE_CONNECTION_DRIVER
+name|HIVETESTMODEDUMMYSTATAGGR
 operator|.
 name|varname
 argument_list|,
-literal|"hive-site.xml"
+literal|"value2"
 argument_list|)
 expr_stmt|;
 comment|// Property defined in hive-site.xml only
@@ -411,7 +411,7 @@ name|checkHiveConf
 argument_list|(
 literal|"test.property1"
 argument_list|,
-literal|"hive-site.xml"
+literal|"value1"
 argument_list|)
 expr_stmt|;
 comment|// Test HiveConf property variable substitution in hive-site.xml
