@@ -5589,42 +5589,42 @@ argument_list|,
 literal|"exploit intra-query correlations."
 argument_list|)
 block|,
-name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE
+name|HIVE_OPTIMIZE_LIMIT_TRANSPOSE
 argument_list|(
-literal|"hive.optimize.limitjointranspose"
+literal|"hive.optimize.limittranspose"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to push a limit through left/right outer join. If the value is true and the size of the outer\n"
+literal|"Whether to push a limit through left/right outer join or union. If the value is true and the size of the outer\n"
 operator|+
-literal|"input is reduced enough (as specified in hive.optimize.limitjointranspose.reduction), the limit is pushed\n"
+literal|"input is reduced enough (as specified in hive.optimize.limittranspose.reduction), the limit is pushed\n"
 operator|+
-literal|"to the outer input; to remain semantically correct, the limit is kept on top of the join too."
+literal|"to the outer input or union; to remain semantically correct, the limit is kept on top of the join or the union too."
 argument_list|)
 block|,
-name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE_REDUCTION_PERCENTAGE
+name|HIVE_OPTIMIZE_LIMIT_TRANSPOSE_REDUCTION_PERCENTAGE
 argument_list|(
-literal|"hive.optimize.limitjointranspose.reductionpercentage"
+literal|"hive.optimize.limittranspose.reductionpercentage"
 argument_list|,
 literal|1.0f
 argument_list|,
-literal|"When hive.optimize.limitjointranspose is true, this variable specifies the minimal reduction of the\n"
+literal|"When hive.optimize.limittranspose is true, this variable specifies the minimal reduction of the\n"
 operator|+
-literal|"size of the outer input of the join that we should get in order to apply the rule."
+literal|"size of the outer input of the join or input of the union that we should get in order to apply the rule."
 argument_list|)
 block|,
-name|HIVE_OPTIMIZE_LIMIT_JOIN_TRANSPOSE_REDUCTION_TUPLES
+name|HIVE_OPTIMIZE_LIMIT_TRANSPOSE_REDUCTION_TUPLES
 argument_list|(
-literal|"hive.optimize.limitjointranspose.reductiontuples"
+literal|"hive.optimize.limittranspose.reductiontuples"
 argument_list|,
 operator|(
 name|long
 operator|)
 literal|0
 argument_list|,
-literal|"When hive.optimize.limitjointranspose is true, this variable specifies the minimal reduction in the\n"
+literal|"When hive.optimize.limittranspose is true, this variable specifies the minimal reduction in the\n"
 operator|+
-literal|"number of tuples of the outer input of the join that you should get in order to apply the rule."
+literal|"number of tuples of the outer input of the join or the input of the union that you should get in order to apply the rule."
 argument_list|)
 block|,
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
