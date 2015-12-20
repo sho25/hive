@@ -4807,14 +4807,60 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// TODO Auto-generated method stub
+if|if
+condition|(
+name|timeout
+operator|<
+literal|0
+condition|)
+block|{
 throw|throw
 operator|new
 name|SQLException
 argument_list|(
-literal|"Method not supported"
+literal|"timeout value was negative"
 argument_list|)
 throw|;
+block|}
+name|boolean
+name|rc
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|String
+name|productName
+init|=
+operator|new
+name|HiveDatabaseMetaData
+argument_list|(
+name|this
+argument_list|,
+name|client
+argument_list|,
+name|sessHandle
+argument_list|)
+operator|.
+name|getDatabaseProductName
+argument_list|()
+decl_stmt|;
+name|rc
+operator|=
+literal|true
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+comment|// IGNORE
+block|}
+return|return
+name|rc
+return|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Connection#nativeSQL(java.lang.String)    */
 annotation|@
