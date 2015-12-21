@@ -123,7 +123,7 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|InputSplit
+name|FileSplit
 import|;
 end_import
 
@@ -145,7 +145,7 @@ name|ColumnVectorBatch
 argument_list|>
 name|consumer
 parameter_list|,
-name|InputSplit
+name|FileSplit
 name|split
 parameter_list|,
 name|List

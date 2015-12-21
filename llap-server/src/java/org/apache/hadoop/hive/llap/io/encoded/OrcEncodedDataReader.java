@@ -1462,7 +1462,7 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|InputSplit
+name|FileSplit
 name|split
 parameter_list|,
 name|List
@@ -1513,9 +1513,6 @@ name|this
 operator|.
 name|split
 operator|=
-operator|(
-name|FileSplit
-operator|)
 name|split
 expr_stmt|;
 name|this
