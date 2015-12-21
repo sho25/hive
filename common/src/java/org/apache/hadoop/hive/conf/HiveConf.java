@@ -9821,6 +9821,38 @@ argument_list|,
 literal|"llap.task.scheduler.num.schedulable.tasks.per.node"
 argument_list|)
 block|,
+name|LLAP_TASK_SCHEDULER_LOCALITY_DELAY
+argument_list|(
+literal|"hive.llap.task.scheduler.locality.delay"
+argument_list|,
+literal|"0ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+operator|-
+literal|1l
+argument_list|,
+literal|true
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Amount of time to wait before allocating a request which contains location information,"
+operator|+
+literal|" to a location other than the ones requested. Set to -1 for an infinite delay, 0"
+operator|+
+literal|"for a no delay. Currently these are the only two supported values"
+argument_list|)
+block|,
 name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
 argument_list|(
 literal|"hive.llap.daemon.task.scheduler.wait.queue.size"
