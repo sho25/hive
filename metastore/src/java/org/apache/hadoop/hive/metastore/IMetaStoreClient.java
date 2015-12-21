@@ -1892,27 +1892,6 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get number of partitions matching specified filter    * @param dbName the database name    * @param tableName the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
-specifier|public
-name|int
-name|getNumPartitionsByFilter
-parameter_list|(
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|tableName
-parameter_list|,
-name|String
-name|filter
-parameter_list|)
-throws|throws
-name|MetaException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|TException
-function_decl|;
 comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
 name|List
 argument_list|<
