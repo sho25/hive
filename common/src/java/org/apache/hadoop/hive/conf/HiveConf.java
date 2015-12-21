@@ -7419,7 +7419,9 @@ literal|"hive.server2.webui.port"
 argument_list|,
 literal|10002
 argument_list|,
-literal|"The port the HiveServer2 WebUI will listen on"
+literal|"The port the HiveServer2 WebUI will listen on. This can be"
+operator|+
+literal|"set to 0 or a negative integer to disable the web UI"
 argument_list|)
 block|,
 name|HIVE_SERVER2_WEBUI_MAX_THREADS
