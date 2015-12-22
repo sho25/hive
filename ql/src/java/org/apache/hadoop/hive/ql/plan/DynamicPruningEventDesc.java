@@ -121,6 +121,11 @@ specifier|private
 name|String
 name|targetColumnName
 decl_stmt|;
+comment|// type of target column
+specifier|private
+name|String
+name|targetColumnType
+decl_stmt|;
 comment|// tableScan is only available during compile
 specifier|private
 specifier|transient
@@ -165,6 +170,21 @@ literal|"Target column"
 argument_list|)
 specifier|public
 name|String
+name|displayTargetColumn
+parameter_list|()
+block|{
+return|return
+name|targetColumnName
+operator|+
+literal|" ("
+operator|+
+name|targetColumnType
+operator|+
+literal|")"
+return|;
+block|}
+specifier|public
+name|String
 name|getTargetColumnName
 parameter_list|()
 block|{
@@ -185,6 +205,30 @@ operator|.
 name|targetColumnName
 operator|=
 name|columnName
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getTargetColumnType
+parameter_list|()
+block|{
+return|return
+name|targetColumnType
+return|;
+block|}
+specifier|public
+name|void
+name|setTargetColumnType
+parameter_list|(
+name|String
+name|columnType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|targetColumnType
+operator|=
+name|columnType
 expr_stmt|;
 block|}
 annotation|@

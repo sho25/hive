@@ -1480,6 +1480,19 @@ argument_list|)
 condition|)
 block|{
 name|String
+name|columnType
+init|=
+name|table
+operator|.
+name|getPartColByName
+argument_list|(
+name|column
+argument_list|)
+operator|.
+name|getType
+argument_list|()
+decl_stmt|;
+name|String
 name|alias
 init|=
 name|ts
@@ -1599,6 +1612,8 @@ argument_list|,
 name|ts
 argument_list|,
 name|column
+argument_list|,
+name|columnType
 argument_list|)
 expr_stmt|;
 block|}
@@ -1895,6 +1910,9 @@ name|ts
 parameter_list|,
 name|String
 name|column
+parameter_list|,
+name|String
+name|columnType
 parameter_list|)
 block|{
 comment|// we will put a fork in the plan at the source of the reduce sink
@@ -2292,6 +2310,13 @@ operator|.
 name|setTargetColumnName
 argument_list|(
 name|column
+argument_list|)
+expr_stmt|;
+name|eventDesc
+operator|.
+name|setTargetColumnType
+argument_list|(
+name|columnType
 argument_list|)
 expr_stmt|;
 name|eventDesc
