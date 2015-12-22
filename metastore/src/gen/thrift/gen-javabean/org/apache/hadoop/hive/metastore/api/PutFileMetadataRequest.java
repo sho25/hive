@@ -636,7 +636,7 @@ argument_list|,
 literal|"metadata"
 argument_list|)
 block|,
-comment|/**      *      * @see FileMetadataExprType      */
+comment|/**      *       * @see FileMetadataExprType      */
 name|TYPE
 argument_list|(
 operator|(
@@ -1684,7 +1684,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**    *    * @see FileMetadataExprType    */
+comment|/**    *     * @see FileMetadataExprType    */
 specifier|public
 name|FileMetadataExprType
 name|getType
@@ -1696,7 +1696,7 @@ operator|.
 name|type
 return|;
 block|}
-comment|/**    *    * @see FileMetadataExprType    */
+comment|/**    *     * @see FileMetadataExprType    */
 specifier|public
 name|void
 name|setType
