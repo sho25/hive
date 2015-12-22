@@ -14105,15 +14105,17 @@ index|[]
 name|expectedLogs
 init|=
 block|{
-literal|"Parsing command"
+literal|"Compiling command"
 block|,
-literal|"Parse Completed"
+literal|"Completed compiling command"
 block|,
 literal|"Starting Semantic Analysis"
 block|,
 literal|"Semantic Analysis Completed"
 block|,
-literal|"Starting command"
+literal|"Executing command"
+block|,
+literal|"Completed executing command"
 block|}
 decl_stmt|;
 name|String

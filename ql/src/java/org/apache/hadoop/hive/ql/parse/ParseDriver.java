@@ -625,15 +625,24 @@ parameter_list|)
 throws|throws
 name|ParseException
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Parsing command: "
 operator|+
 name|command
 argument_list|)
 expr_stmt|;
+block|}
 name|HiveLexerX
 name|lexer
 init|=
@@ -783,7 +792,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Parse Completed"
 argument_list|)
@@ -860,15 +869,24 @@ parameter_list|)
 throws|throws
 name|ParseException
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Parsing command: "
 operator|+
 name|command
 argument_list|)
 expr_stmt|;
+block|}
 name|HiveLexerX
 name|lexer
 init|=
@@ -984,7 +1002,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Parse Completed"
 argument_list|)

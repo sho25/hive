@@ -3089,7 +3089,7 @@ specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"Parsing command"
+literal|"Executing command"
 decl_stmt|;
 name|testScriptFile
 argument_list|(

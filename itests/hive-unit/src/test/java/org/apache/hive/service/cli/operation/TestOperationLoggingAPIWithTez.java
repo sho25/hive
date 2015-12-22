@@ -138,10 +138,6 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"Parsing command"
-block|,
-literal|"Parse Completed"
-block|,
 literal|"Starting Semantic Analysis"
 block|}
 expr_stmt|;
@@ -151,7 +147,13 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"Starting command"
+literal|"Compiling command"
+block|,
+literal|"Completed compiling command"
+block|,
+literal|"Executing command"
+block|,
+literal|"Completed executing command"
 block|,
 literal|"Semantic Analysis Completed"
 block|,

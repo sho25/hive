@@ -236,12 +236,8 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"Parsing command"
-block|,
-literal|"Parse Completed"
-block|,
 literal|"Starting Semantic Analysis"
-block|,     }
+block|}
 expr_stmt|;
 name|expectedLogsExecution
 operator|=
@@ -249,9 +245,15 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"Compiling command"
+block|,
+literal|"Completed compiling command"
+block|,
 literal|"Total jobs"
 block|,
-literal|"Starting command"
+literal|"Executing command"
+block|,
+literal|"Completed executing command"
 block|,
 literal|"Semantic Analysis Completed"
 block|,
