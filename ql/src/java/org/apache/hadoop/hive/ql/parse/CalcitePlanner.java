@@ -277,6 +277,22 @@ name|calcite
 operator|.
 name|plan
 operator|.
+name|RelOptPlanner
+operator|.
+name|Executor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|plan
+operator|.
 name|RelOptQuery
 import|;
 end_import
@@ -1533,6 +1549,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|HiveRexExecutorImpl
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveTypeSystemImpl
 import|;
 end_import
@@ -2276,6 +2312,28 @@ operator|.
 name|rules
 operator|.
 name|HiveProjectSortTransposeRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
+name|HiveReduceExpressionsRule
 import|;
 end_import
 
@@ -6633,6 +6691,16 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Create executor
+name|Executor
+name|executorProvider
+init|=
+operator|new
+name|HiveRexExecutorImpl
+argument_list|(
+name|cluster
+argument_list|)
+decl_stmt|;
 comment|// 2. Apply pre-join order optimizations
 name|calcitePreCboPlan
 operator|=
@@ -6644,6 +6712,8 @@ name|mdProvider
 operator|.
 name|getMetadataProvider
 argument_list|()
+argument_list|,
+name|executorProvider
 argument_list|)
 expr_stmt|;
 comment|// 3. Apply join order optimizations: reordering MST algorithm
@@ -6978,6 +7048,8 @@ operator|.
 name|getMetadataProvider
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
 name|HepMatchOrder
 operator|.
 name|BOTTOM_UP
@@ -7275,6 +7347,8 @@ operator|.
 name|getMetadataProvider
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
 name|HepMatchOrder
 operator|.
 name|BOTTOM_UP
@@ -7350,6 +7424,8 @@ operator|.
 name|getMetadataProvider
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
 name|HepMatchOrder
 operator|.
 name|BOTTOM_UP
@@ -7419,6 +7495,8 @@ operator|.
 name|getMetadataProvider
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
 name|HepMatchOrder
 operator|.
 name|BOTTOM_UP
@@ -7450,6 +7528,8 @@ name|mdProvider
 operator|.
 name|getMetadataProvider
 argument_list|()
+argument_list|,
+literal|null
 argument_list|,
 operator|new
 name|HiveFilterProjectTSTransposeRule
@@ -7489,6 +7569,8 @@ name|mdProvider
 operator|.
 name|getMetadataProvider
 argument_list|()
+argument_list|,
+literal|null
 argument_list|,
 name|HepMatchOrder
 operator|.
@@ -7599,7 +7681,7 @@ return|return
 name|calciteOptimizedPlan
 return|;
 block|}
-comment|/**      * Perform all optimizations before Join Ordering.      *      * @param basePlan      *          original plan      * @param mdProvider      *          meta data provider      * @return      */
+comment|/**      * Perform all optimizations before Join Ordering.      *      * @param basePlan      *          original plan      * @param mdProvider      *          meta data provider      * @param executorProvider      *          executor      * @return      */
 specifier|private
 name|RelNode
 name|applyPreJoinOrderingTransforms
@@ -7609,6 +7691,9 @@ name|basePlan
 parameter_list|,
 name|RelMetadataProvider
 name|mdProvider
+parameter_list|,
+name|Executor
+name|executorProvider
 parameter_list|)
 block|{
 comment|// TODO: Decorelation of subquery should be done before attempting
@@ -7685,6 +7770,8 @@ literal|true
 argument_list|,
 name|mdProvider
 argument_list|,
+literal|null
+argument_list|,
 name|HiveExpandDistinctAggregatesRule
 operator|.
 name|INSTANCE
@@ -7741,6 +7828,8 @@ argument_list|,
 literal|false
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 name|HepMatchOrder
 operator|.
@@ -7801,6 +7890,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 name|HiveFilterProjectTransposeRule
 operator|.
@@ -7898,6 +7989,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 operator|new
 name|HiveJoinPushTransitivePredicatesRule
@@ -8012,6 +8105,8 @@ literal|true
 argument_list|,
 name|mdProvider
 argument_list|,
+literal|null
+argument_list|,
 name|HiveSortMergeRule
 operator|.
 name|INSTANCE
@@ -8038,6 +8133,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 name|HepMatchOrder
 operator|.
@@ -8104,6 +8201,8 @@ literal|true
 argument_list|,
 name|mdProvider
 argument_list|,
+literal|null
+argument_list|,
 name|HiveJoinAddNotNullRule
 operator|.
 name|INSTANCE
@@ -8157,6 +8256,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 name|HiveFilterProjectTransposeRule
 operator|.
@@ -8250,6 +8351,8 @@ literal|true
 argument_list|,
 name|mdProvider
 argument_list|,
+literal|null
+argument_list|,
 name|SemiJoinJoinTransposeRule
 operator|.
 name|INSTANCE
@@ -8282,7 +8385,69 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Push Down Semi Joins"
 argument_list|)
 expr_stmt|;
-comment|// 9. Apply Partition Pruning
+comment|// 9. Constant folding
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
+name|basePlan
+operator|=
+name|hepPlan
+argument_list|(
+name|basePlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+argument_list|,
+name|executorProvider
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|PROJECT_INSTANCE
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|FILTER_INSTANCE
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|JOIN_INSTANCE
+argument_list|)
+expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Prejoin ordering transformation, Constant folding"
+argument_list|)
+expr_stmt|;
+comment|// 10. Apply Partition Pruning
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8310,6 +8475,8 @@ literal|false
 argument_list|,
 name|mdProvider
 argument_list|,
+literal|null
+argument_list|,
 operator|new
 name|HivePartitionPruneRule
 argument_list|(
@@ -8336,7 +8503,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Partition Pruning"
 argument_list|)
 expr_stmt|;
-comment|// 10. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
+comment|// 11. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8402,7 +8569,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Projection Pruning"
 argument_list|)
 expr_stmt|;
-comment|// 11. Merge Project-Project if possible
+comment|// 12. Merge Project-Project if possible
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8429,6 +8596,8 @@ argument_list|,
 literal|false
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 operator|new
 name|ProjectMergeRule
@@ -8460,7 +8629,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Merge Project-Project"
 argument_list|)
 expr_stmt|;
-comment|// 12. Rerun PPD through Project as column pruning would have introduced
+comment|// 13. Rerun PPD through Project as column pruning would have introduced
 comment|// DT above scans; By pushing filter just above TS, Hive can push it into
 comment|// storage (incase there are filters on non partition cols). This only
 comment|// matches FIL-PROJ-TS
@@ -8490,6 +8659,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|mdProvider
+argument_list|,
+literal|null
 argument_list|,
 operator|new
 name|HiveFilterProjectTSTransposeRule
@@ -8539,7 +8710,7 @@ return|return
 name|basePlan
 return|;
 block|}
-comment|/**      * Run the HEP Planner with the given rule set.      *      * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param rules      * @return optimized RelNode      */
+comment|/**      * Run the HEP Planner with the given rule set.      *      * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param executorProvider      * @param rules      * @return optimized RelNode      */
 specifier|private
 name|RelNode
 name|hepPlan
@@ -8552,6 +8723,9 @@ name|followPlanChanges
 parameter_list|,
 name|RelMetadataProvider
 name|mdProvider
+parameter_list|,
+name|Executor
+name|executorProvider
 parameter_list|,
 name|RelOptRule
 modifier|...
@@ -8567,6 +8741,8 @@ name|followPlanChanges
 argument_list|,
 name|mdProvider
 argument_list|,
+name|executorProvider
+argument_list|,
 name|HepMatchOrder
 operator|.
 name|TOP_DOWN
@@ -8575,7 +8751,7 @@ name|rules
 argument_list|)
 return|;
 block|}
-comment|/**      * Run the HEP Planner with the given rule set.      *      * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param order      * @param rules      * @return optimized RelNode      */
+comment|/**      * Run the HEP Planner with the given rule set.      *      * @param basePlan      * @param followPlanChanges      * @param mdProvider      * @param executorProvider      * @param order      * @param rules      * @return optimized RelNode      */
 specifier|private
 name|RelNode
 name|hepPlan
@@ -8588,6 +8764,9 @@ name|followPlanChanges
 parameter_list|,
 name|RelMetadataProvider
 name|mdProvider
+parameter_list|,
+name|Executor
+name|executorProvider
 parameter_list|,
 name|HepMatchOrder
 name|order
@@ -8735,22 +8914,13 @@ name|planner
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Executor is required for constant-reduction rules; see [CALCITE-566]
-specifier|final
-name|RexExecutorImpl
-name|executor
-init|=
-operator|new
-name|RexExecutorImpl
-argument_list|(
-name|Schemas
-operator|.
-name|createDataContext
-argument_list|(
+if|if
+condition|(
+name|executorProvider
+operator|!=
 literal|null
-argument_list|)
-argument_list|)
-decl_stmt|;
+condition|)
+block|{
 name|basePlan
 operator|.
 name|getCluster
@@ -8761,9 +8931,10 @@ argument_list|()
 operator|.
 name|setExecutor
 argument_list|(
-name|executor
+name|executorProvider
 argument_list|)
 expr_stmt|;
+block|}
 name|planner
 operator|.
 name|setRoot

@@ -387,26 +387,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -454,24 +434,6 @@ operator|.
 name|type
 operator|.
 name|HiveDecimal
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|HiveIntervalDayTime
 import|;
 end_import
 
@@ -809,7 +771,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFBaseNumeric
+name|GenericUDFBridge
 import|;
 end_import
 
@@ -829,7 +791,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFBridge
+name|GenericUDFTimestamp
 import|;
 end_import
 
@@ -1156,21 +1118,6 @@ name|RexNodeConverter
 block|{
 specifier|private
 specifier|static
-specifier|final
-name|Logger
-name|LOG
-init|=
-name|LoggerFactory
-operator|.
-name|getLogger
-argument_list|(
-name|RexNodeConverter
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
 class|class
 name|InputCtx
 block|{
@@ -1265,6 +1212,29 @@ specifier|final
 name|boolean
 name|flattenExpr
 decl_stmt|;
+comment|//Constructor used by HiveRexExecutorImpl
+specifier|public
+name|RexNodeConverter
+parameter_list|(
+name|RelOptCluster
+name|cluster
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|cluster
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<
+name|InputCtx
+argument_list|>
+argument_list|()
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|RexNodeConverter
 parameter_list|(
@@ -2255,6 +2225,14 @@ name|udf
 operator|instanceof
 name|GenericUDFToDate
 operator|)
+comment|// Calcite can not specify the scale for timestamp. As a result, all
+comment|// the millisecond part will be lost
+operator|||
+operator|(
+name|udf
+operator|instanceof
+name|GenericUDFTimestamp
+operator|)
 operator|||
 operator|(
 name|udf
@@ -2630,6 +2608,21 @@ name|calciteLiteral
 init|=
 literal|null
 decl_stmt|;
+comment|// If value is null, the type should also be VOID.
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+name|hiveTypeCategory
+operator|=
+name|PrimitiveCategory
+operator|.
+name|VOID
+expr_stmt|;
+block|}
 comment|// TODO: Verify if we need to use ConstantObjectInspector to unwrap data
 switch|switch
 condition|(
@@ -2942,6 +2935,32 @@ break|break;
 case|case
 name|DOUBLE
 case|:
+comment|// TODO: The best solution is to support NaN in expression reduction.
+if|if
+condition|(
+name|Double
+operator|.
+name|isNaN
+argument_list|(
+operator|(
+name|Double
+operator|)
+name|value
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|CalciteSemanticException
+argument_list|(
+literal|"NaN"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Invalid_decimal
+argument_list|)
+throw|;
+block|}
 name|calciteLiteral
 operator|=
 name|rexBuilder
@@ -3205,84 +3224,31 @@ break|break;
 case|case
 name|INTERVAL_DAY_TIME
 case|:
+comment|// Calcite RexBuilder L525 divides value by the multiplier.
+comment|// Need to get CAlCITE-1020 in.
+throw|throw
+operator|new
+name|CalciteSemanticException
+argument_list|(
+literal|"INTERVAL_DAY_TIME is not well supported"
+argument_list|,
+name|UnsupportedFeature
+operator|.
+name|Invalid_interval
+argument_list|)
+throw|;
 comment|// Calcite day-time interval is millis value as BigDecimal
 comment|// Seconds converted to millis
-name|BigDecimal
-name|secsValueBd
-init|=
-name|BigDecimal
-operator|.
-name|valueOf
-argument_list|(
-operator|(
-operator|(
-name|HiveIntervalDayTime
-operator|)
-name|value
-operator|)
-operator|.
-name|getTotalSeconds
-argument_list|()
-operator|*
-literal|1000
-argument_list|)
-decl_stmt|;
-comment|// Nanos converted to millis
-name|BigDecimal
-name|nanosValueBd
-init|=
-name|BigDecimal
-operator|.
-name|valueOf
-argument_list|(
-operator|(
-operator|(
-name|HiveIntervalDayTime
-operator|)
-name|value
-operator|)
-operator|.
-name|getNanos
-argument_list|()
-argument_list|,
-literal|6
-argument_list|)
-decl_stmt|;
-name|calciteLiteral
-operator|=
-name|rexBuilder
-operator|.
-name|makeIntervalLiteral
-argument_list|(
-name|secsValueBd
-operator|.
-name|add
-argument_list|(
-name|nanosValueBd
-argument_list|)
-argument_list|,
-operator|new
-name|SqlIntervalQualifier
-argument_list|(
-name|TimeUnit
-operator|.
-name|DAY
-argument_list|,
-name|TimeUnit
-operator|.
-name|SECOND
-argument_list|,
-operator|new
-name|SqlParserPos
-argument_list|(
-literal|1
-argument_list|,
-literal|1
-argument_list|)
-argument_list|)
-argument_list|)
-expr_stmt|;
-break|break;
+comment|// BigDecimal secsValueBd = BigDecimal
+comment|// .valueOf(((HiveIntervalDayTime) value).getTotalSeconds() * 1000);
+comment|// // Nanos converted to millis
+comment|// BigDecimal nanosValueBd = BigDecimal.valueOf(((HiveIntervalDayTime)
+comment|// value).getNanos(), 6);
+comment|// calciteLiteral =
+comment|// rexBuilder.makeIntervalLiteral(secsValueBd.add(nanosValueBd),
+comment|// new SqlIntervalQualifier(TimeUnit.MILLISECOND, null, new
+comment|// SqlParserPos(1, 1)));
+comment|// break;
 case|case
 name|VOID
 case|:
@@ -3330,44 +3296,6 @@ throw|;
 block|}
 return|return
 name|calciteLiteral
-return|;
-block|}
-specifier|private
-name|RexNode
-name|createNullLiteral
-parameter_list|(
-name|ExprNodeDesc
-name|expr
-parameter_list|)
-throws|throws
-name|CalciteSemanticException
-block|{
-return|return
-name|cluster
-operator|.
-name|getRexBuilder
-argument_list|()
-operator|.
-name|makeNullLiteral
-argument_list|(
-name|TypeConverter
-operator|.
-name|convert
-argument_list|(
-name|expr
-operator|.
-name|getTypeInfo
-argument_list|()
-argument_list|,
-name|cluster
-operator|.
-name|getTypeFactory
-argument_list|()
-argument_list|)
-operator|.
-name|getSqlTypeName
-argument_list|()
-argument_list|)
 return|;
 block|}
 specifier|public
