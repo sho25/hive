@@ -4344,6 +4344,26 @@ block|}
 else|else
 block|{
 comment|// Setup client side split generation.
+comment|// we need to set this, because with HS2 and client side split
+comment|// generation we end up not finding the map work. This is
+comment|// because of thread local madness (tez split generation is
+comment|// multi-threaded - HS2 plan cache uses thread locals). Setting
+comment|// VECTOR_MODE causes the split gen code to use the conf instead
+comment|// of the map work.
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|Utilities
+operator|.
+name|VECTOR_MODE
+argument_list|,
+name|mapWork
+operator|.
+name|getVectorMode
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|dataSource
 operator|=
 name|MRInputHelpers

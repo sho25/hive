@@ -2689,6 +2689,14 @@ literal|"hive.added.jars"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
+name|String
+name|VECTOR_MODE
+init|=
+literal|"VECTOR_MODE"
+decl_stmt|;
+specifier|public
+specifier|static
 name|String
 name|MAPNAME
 init|=
@@ -17931,6 +17939,35 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|conf
+operator|.
+name|get
+argument_list|(
+name|VECTOR_MODE
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// this code path is necessary, because with HS2 and client
+comment|// side split generation we end up not finding the map work.
+comment|// This is because of thread local madness (tez split
+comment|// generation is multi-threaded - HS2 plan cache uses thread
+comment|// locals).
+return|return
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|VECTOR_MODE
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -17962,15 +17999,8 @@ argument_list|)
 operator|.
 name|getVectorMode
 argument_list|()
-condition|)
-block|{
-return|return
-literal|true
 return|;
 block|}
-return|return
-literal|false
-return|;
 block|}
 comment|/**    * @param conf    * @return the configured VectorizedRowBatchCtx for a MapWork task.    */
 specifier|public
