@@ -2860,6 +2860,14 @@ name|conf
 argument_list|)
 decl_stmt|;
 comment|// In case when user Ctrl-C twice to kill Hive CLI JVM, we want to release locks
+comment|// if compile is being called multiple times, clear the old shutdownhook
+name|ShutdownHookManager
+operator|.
+name|removeShutdownHook
+argument_list|(
+name|shutdownRunner
+argument_list|)
+expr_stmt|;
 name|shutdownRunner
 operator|=
 operator|new
@@ -11187,13 +11195,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|shutdownRunner
-operator|!=
-literal|null
-condition|)
-block|{
+block|}
 name|ShutdownHookManager
 operator|.
 name|removeShutdownHook
@@ -11201,8 +11203,6 @@ argument_list|(
 name|shutdownRunner
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 block|}
 specifier|public
 name|org

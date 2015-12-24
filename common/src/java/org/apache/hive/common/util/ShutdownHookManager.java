@@ -628,7 +628,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Removes a shutdownHook.    *    * @param shutdownHook shutdownHook to remove.    * @return TRUE if the shutdownHook was registered and removed,    * FALSE otherwise.    */
+comment|/**    * Removes a shutdownHook.    *    * @param shutdownHook shutdownHook to remove.    * @return TRUE if the shutdownHook was registered and removed,    * FALSE otherwise (including when shutdownHook == null)    */
 specifier|public
 specifier|static
 name|boolean
@@ -638,6 +638,17 @@ name|Runnable
 name|shutdownHook
 parameter_list|)
 block|{
+if|if
+condition|(
+name|shutdownHook
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 return|return
 name|MGR
 operator|.
