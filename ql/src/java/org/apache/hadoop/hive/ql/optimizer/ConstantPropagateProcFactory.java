@@ -3914,8 +3914,27 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-return|return
+comment|// after constant folding of child expression the return type of UDFWhen might have changed,
+comment|// so recreate the expression
+name|ExprNodeGenericFuncDesc
+name|newCaseOrWhenExpr
+init|=
+name|ExprNodeGenericFuncDesc
+operator|.
+name|newInstance
+argument_list|(
+name|childUDF
+argument_list|,
 name|caseOrWhenexpr
+operator|.
+name|getFuncText
+argument_list|()
+argument_list|,
+name|children
+argument_list|)
+decl_stmt|;
+return|return
+name|newCaseOrWhenExpr
 return|;
 block|}
 elseif|else
@@ -4045,8 +4064,27 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-return|return
+comment|// after constant folding of child expression the return type of UDFCase might have changed,
+comment|// so recreate the expression
+name|ExprNodeGenericFuncDesc
+name|newCaseOrWhenExpr
+init|=
+name|ExprNodeGenericFuncDesc
+operator|.
+name|newInstance
+argument_list|(
+name|childUDF
+argument_list|,
 name|caseOrWhenexpr
+operator|.
+name|getFuncText
+argument_list|()
+argument_list|,
+name|children
+argument_list|)
+decl_stmt|;
+return|return
+name|newCaseOrWhenExpr
 return|;
 block|}
 else|else
