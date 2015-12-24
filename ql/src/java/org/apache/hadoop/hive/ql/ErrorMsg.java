@@ -1998,6 +1998,60 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|CANNOT_CHANGE_SERDE
+argument_list|(
+literal|10309
+argument_list|,
+literal|"Changing SerDe (from {0}) is not supported for table {1}. File format may be incompatible"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|CANNOT_CHANGE_FILEFORMAT
+argument_list|(
+literal|10310
+argument_list|,
+literal|"Changing file format (from {0}) is not supported for table {1}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|CANNOT_REORDER_COLUMNS
+argument_list|(
+literal|10311
+argument_list|,
+literal|"Reordering columns is not supported for table {0}. SerDe may be incompatible"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|CANNOT_CHANGE_COLUMN_TYPE
+argument_list|(
+literal|10312
+argument_list|,
+literal|"Changing from type {0} to {1} is not supported for column {2}. SerDe may be incompatible"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|REPLACE_CANNOT_DROP_COLUMNS
+argument_list|(
+literal|10313
+argument_list|,
+literal|"Replacing columns cannot drop columns for table {0}. SerDe may be incompatible"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|REPLACE_UNSUPPORTED_TYPE_CONVERSION
+argument_list|(
+literal|10314
+argument_list|,
+literal|"Replacing columns with unsupported type conversion (from {0} to {1}) for column {2}. SerDe may be incompatible"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
