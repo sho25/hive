@@ -7531,6 +7531,42 @@ operator|+
 literal|"over Tez without the pool of sessions."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_SESSION_LIFETIME
+argument_list|(
+literal|"hive.server2.tez.session.lifetime"
+argument_list|,
+literal|"162h"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|HOURS
+argument_list|)
+argument_list|,
+literal|"The lifetime of the Tez sessions launched by HS2 when default sessions are enabled.\n"
+operator|+
+literal|"Set to 0 to disable session expiration."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_SESSION_LIFETIME_JITTER
+argument_list|(
+literal|"hive.server2.tez.session.lifetime.jitter"
+argument_list|,
+literal|"3h"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|HOURS
+argument_list|)
+argument_list|,
+literal|"The jitter for Tez session lifetime; prevents all the sessions from restarting at once."
+argument_list|)
+block|,
 comment|// Operation log configuration
 name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
 argument_list|(

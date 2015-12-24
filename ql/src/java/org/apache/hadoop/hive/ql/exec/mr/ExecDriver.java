@@ -3115,7 +3115,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|close
+name|closeIfNotDefault
 argument_list|(
 name|session
 argument_list|,

@@ -7663,7 +7663,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|close
+name|closeIfNotDefault
 argument_list|(
 name|tezSessionState
 argument_list|,
