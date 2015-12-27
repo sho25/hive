@@ -365,7 +365,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"if "
+literal|"NVL("
 argument_list|)
 expr_stmt|;
 name|sb
@@ -382,14 +382,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" is null "
-argument_list|)
-expr_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"returns"
+literal|','
 argument_list|)
 expr_stmt|;
 name|sb
@@ -400,6 +393,13 @@ name|children
 index|[
 literal|1
 index|]
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|')'
 argument_list|)
 expr_stmt|;
 return|return
