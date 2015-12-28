@@ -405,8 +405,8 @@ begin_class
 specifier|public
 class|class
 name|HiveV1Authorizer
-implements|implements
-name|HiveAuthorizer
+extends|extends
+name|AbstractHiveAuthorizer
 block|{
 specifier|private
 specifier|final
@@ -2567,20 +2567,6 @@ block|{
 comment|// do no filtering in old authorizer
 return|return
 name|listObjs
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|HiveAuthorizationTranslator
-name|getHiveAuthorizationTranslator
-parameter_list|()
-throws|throws
-name|HiveAuthzPluginException
-block|{
-comment|// custom translator is not needed, so return null
-return|return
-literal|null
 return|;
 block|}
 block|}

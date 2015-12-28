@@ -89,24 +89,6 @@ name|HiveConf
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
-
 begin_comment
 comment|/**  * Convenience implementation of HiveAuthorizer.  * You can customize the behavior by passing different implementations of  * {@link HiveAccessController} and {@link HiveAuthorizationValidator} to constructor.  *  */
 end_comment
@@ -126,8 +108,8 @@ name|Evolving
 specifier|public
 class|class
 name|HiveAuthorizerImpl
-implements|implements
-name|HiveAuthorizer
+extends|extends
+name|AbstractHiveAuthorizer
 block|{
 name|HiveAccessController
 name|accessController
@@ -643,20 +625,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-block|}
-comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.security.authorization.plugin.HiveAuthorizer#getHiveAuthorizationTranslator()    *    * No customization of this API is done for most Authorization implementations. It is meant     * to be used for special cases in Apache Sentry (incubating)    *    */
-annotation|@
-name|Override
-specifier|public
-name|HiveAuthorizationTranslator
-name|getHiveAuthorizationTranslator
-parameter_list|()
-throws|throws
-name|HiveAuthzPluginException
-block|{
-return|return
-literal|null
-return|;
 block|}
 block|}
 end_class

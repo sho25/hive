@@ -128,7 +128,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for hive authorization plugins.  * Used by the DDLTasks for access control statement,  * and for checking authorization from Driver.doAuthorization()  *  * This a more generic version of  *  {@link HiveAuthorizationProvider} that lets you define the behavior of access control  *  statements and does not make assumptions about the privileges needed for a hive operation.  * This is referred to as V2 authorizer in other parts of the code.  */
+comment|/**  * Interface for hive authorization plugins. Plugins will be better shielded from changes  * to this interface by extending AbstractHiveAuthorizer instead of extending this  * interface directly.  *  * Note that this interface is for limited use by specific apache projects, including  * Apache Ranger (formerly known as Argus), and Apache Sentry, and is subject to  * change across releases.  *  * Used by the DDLTasks for access control statement,  * and for checking authorization from Driver.doAuthorization()  *  * This a more generic version of  *  {@link HiveAuthorizationProvider} that lets you define the behavior of access control  *  statements and does not make assumptions about the privileges needed for a hive operation.  * This is referred to as V2 authorizer in other parts of the code.  */
 end_comment
 
 begin_interface
