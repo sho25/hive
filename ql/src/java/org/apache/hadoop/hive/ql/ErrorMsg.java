@@ -2052,6 +2052,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_GROUPING_SETS_AGGR_NOMAPAGGR_MULTIGBY
+argument_list|(
+literal|10315
+argument_list|,
+literal|"Grouping sets aggregations (with rollups or cubes) are not allowed when "
+operator|+
+literal|"HIVEMULTIGROUPBYSINGLEREDUCER is turned on. Set hive.multigroupby.singlereducer=false if you want to use grouping sets"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
