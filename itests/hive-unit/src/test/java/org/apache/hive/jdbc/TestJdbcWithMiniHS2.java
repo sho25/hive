@@ -487,6 +487,16 @@ begin_import
 import|import
 name|org
 operator|.
+name|datanucleus
+operator|.
+name|AbstractNucleusContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|After
@@ -4208,7 +4218,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Tests that DataNucleus' NucleusContext.classLoaderResolverMap clears cached class objects (& hence    * doesn't leak classloaders) on closing any session    *    * @throws Exception    */
+comment|/**    * Tests that DataNucleus' NucleusContext.classLoaderResolverMap clears cached class objects    * (& hence doesn't leak classloaders) on closing any session    *    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -4539,7 +4549,7 @@ try|try
 block|{
 name|classLoaderResolverMap
 operator|=
-name|NucleusContext
+name|AbstractNucleusContext
 operator|.
 name|class
 operator|.

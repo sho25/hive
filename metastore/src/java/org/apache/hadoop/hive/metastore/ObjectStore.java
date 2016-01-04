@@ -2045,6 +2045,16 @@ name|org
 operator|.
 name|datanucleus
 operator|.
+name|AbstractNucleusContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|datanucleus
+operator|.
 name|api
 operator|.
 name|jdo
@@ -44947,7 +44957,7 @@ block|{
 name|Field
 name|classLoaderResolverMap
 init|=
-name|NucleusContext
+name|AbstractNucleusContext
 operator|.
 name|class
 operator|.

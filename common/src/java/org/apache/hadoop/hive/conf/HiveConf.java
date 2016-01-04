@@ -964,7 +964,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_AUTO_CREATE_SCHEMA
+name|METASTORE_AUTO_CREATE_ALL
 block|,
 name|HiveConf
 operator|.
@@ -2615,7 +2615,7 @@ argument_list|)
 block|,
 name|METASTORE_VALIDATE_TABLES
 argument_list|(
-literal|"datanucleus.validateTables"
+literal|"datanucleus.schema.validateTables"
 argument_list|,
 literal|false
 argument_list|,
@@ -2624,7 +2624,7 @@ argument_list|)
 block|,
 name|METASTORE_VALIDATE_COLUMNS
 argument_list|(
-literal|"datanucleus.validateColumns"
+literal|"datanucleus.schema.validateColumns"
 argument_list|,
 literal|false
 argument_list|,
@@ -2633,7 +2633,7 @@ argument_list|)
 block|,
 name|METASTORE_VALIDATE_CONSTRAINTS
 argument_list|(
-literal|"datanucleus.validateConstraints"
+literal|"datanucleus.schema.validateConstraints"
 argument_list|,
 literal|false
 argument_list|,
@@ -2649,29 +2649,20 @@ argument_list|,
 literal|"metadata store type"
 argument_list|)
 block|,
-name|METASTORE_AUTO_CREATE_SCHEMA
+name|METASTORE_AUTO_CREATE_ALL
 argument_list|(
-literal|"datanucleus.autoCreateSchema"
+literal|"datanucleus.schema.autoCreateAll"
 argument_list|,
 literal|false
 argument_list|,
 literal|"creates necessary schema on a startup if one doesn't exist. set this to false, after creating it once"
 argument_list|)
 block|,
-name|METASTORE_FIXED_DATASTORE
-argument_list|(
-literal|"datanucleus.fixedDatastore"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Dictates whether to allow updates to schema or not."
-argument_list|)
-block|,
 name|METASTORE_SCHEMA_VERIFICATION
 argument_list|(
 literal|"hive.metastore.schema.verification"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Enforce metastore schema version consistency.\n"
 operator|+
@@ -14105,18 +14096,9 @@ name|setBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|METASTORE_AUTO_CREATE_SCHEMA
+name|METASTORE_AUTO_CREATE_ALL
 argument_list|,
 literal|false
-argument_list|)
-expr_stmt|;
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_FIXED_DATASTORE
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
