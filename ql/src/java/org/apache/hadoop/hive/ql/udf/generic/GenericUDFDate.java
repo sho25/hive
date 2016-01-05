@@ -586,6 +586,10 @@ name|inputType
 condition|)
 block|{
 case|case
+name|VOID
+case|:
+break|break;
+case|case
 name|CHAR
 case|:
 case|case
@@ -697,6 +701,16 @@ condition|(
 name|inputType
 condition|)
 block|{
+case|case
+name|VOID
+case|:
+throw|throw
+operator|new
+name|UDFArgumentException
+argument_list|(
+literal|"TO_DATE() received non-null object of VOID type"
+argument_list|)
+throw|;
 case|case
 name|STRING
 case|:
