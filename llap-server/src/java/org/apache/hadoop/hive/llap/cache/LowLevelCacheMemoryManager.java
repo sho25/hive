@@ -176,7 +176,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
 expr_stmt|;
 name|this
@@ -224,9 +224,25 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cache memory manager initialized with max size "
+literal|"Memory manager initialized with max size "
 operator|+
 name|maxSize
+operator|+
+literal|" and "
+operator|+
+operator|(
+operator|(
+name|evictor
+operator|==
+literal|null
+operator|)
+condition|?
+literal|"no "
+else|:
+literal|""
+operator|)
+operator|+
+literal|"ability to evict blocks"
 argument_list|)
 expr_stmt|;
 block|}
@@ -322,6 +338,15 @@ break|break;
 block|}
 continue|continue;
 block|}
+if|if
+condition|(
+name|evictor
+operator|==
+literal|null
+condition|)
+return|return
+literal|false
+return|;
 comment|// TODO: for one-block case, we could move notification for the last block out of the loop.
 name|long
 name|evicted
@@ -512,6 +537,13 @@ name|int
 name|memoryToEvict
 parameter_list|)
 block|{
+if|if
+condition|(
+name|evictor
+operator|==
+literal|null
+condition|)
+return|return;
 while|while
 condition|(
 name|memoryToEvict
@@ -602,6 +634,15 @@ name|String
 name|debugDumpForOom
 parameter_list|()
 block|{
+if|if
+condition|(
+name|evictor
+operator|==
+literal|null
+condition|)
+return|return
+literal|null
+return|;
 return|return
 literal|"cache state\n"
 operator|+

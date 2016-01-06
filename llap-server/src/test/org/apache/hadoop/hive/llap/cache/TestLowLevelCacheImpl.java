@@ -3271,7 +3271,7 @@ argument_list|)
 expr_stmt|;
 name|cache
 operator|.
-name|releaseBuffer
+name|decRefBuffer
 argument_list|(
 name|result
 argument_list|)
@@ -3533,7 +3533,7 @@ literal|1
 expr_stmt|;
 name|cache
 operator|.
-name|releaseBuffer
+name|decRefBuffer
 argument_list|(
 name|buf
 argument_list|)
@@ -3772,7 +3772,7 @@ argument_list|()
 decl_stmt|;
 name|cache
 operator|.
-name|releaseBuffer
+name|decRefBuffer
 argument_list|(
 name|result
 argument_list|)

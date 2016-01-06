@@ -334,7 +334,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
 decl_stmt|;
 name|int
@@ -348,7 +348,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MIN_ALLOC
+name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|)
 decl_stmt|;
 name|lambda

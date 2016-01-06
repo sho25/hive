@@ -9183,33 +9183,47 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
-name|LLAP_LOW_LEVEL_CACHE
+name|LLAP_IO_MEMORY_MODE
 argument_list|(
-literal|"hive.llap.io.use.lowlevel.cache"
+literal|"hive.llap.io.memory.mode"
 argument_list|,
-literal|true
+literal|"cache"
 argument_list|,
-literal|"Must always be true for now"
+operator|new
+name|StringSet
+argument_list|(
+literal|"cache"
+argument_list|,
+literal|"allocator"
+argument_list|,
+literal|"none"
+argument_list|)
+argument_list|,
+literal|"LLAP IO memory usage; 'cache' (the default) uses data and metadata cache with a\n"
+operator|+
+literal|"custom off-heap allocator, 'allocator' uses the custom allocator without the caches,\n"
+operator|+
+literal|"'none' doesn't use either (this mode may result in significant performance degradation)"
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_MIN_ALLOC
+name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
-literal|"hive.llap.io.cache.orc.alloc.min"
+literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
 literal|128
 operator|*
 literal|1024
 argument_list|,
-literal|"Minimum allocation possible from LLAP low-level cache for ORC. Allocations below that\n"
+literal|"Minimum allocation possible from LLAP buddy allocator. Allocations below that are\n"
 operator|+
-literal|"will be padded to minimum allocation. Should generally be the same as expected ORC\n"
+literal|"padded to minimum allocation. For ORC, should generally be the same as the expected\n"
 operator|+
-literal|"compression buffer size, or next lowest power of 2. Must be power of 2."
+literal|"compression buffer size, or next lowest power of 2. Must be a power of 2."
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_MAX_ALLOC
+name|LLAP_ALLOCATOR_MAX_ALLOC
 argument_list|(
-literal|"hive.llap.io.cache.orc.alloc.max"
+literal|"hive.llap.io.allocator.alloc.max"
 argument_list|,
 literal|16
 operator|*
@@ -9217,14 +9231,14 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|"Maximum allocation possible from LLAP low-level cache for ORC. Should be as large as\n"
+literal|"Maximum allocation possible from LLAP buddy allocator. For ORC, should be as large as\n"
 operator|+
-literal|"the largest expected ORC compression buffer size. Must be power of 2."
+literal|"the largest expected ORC compression buffer size. Must be a power of 2."
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_ARENA_COUNT
+name|LLAP_ALLOCATOR_ARENA_COUNT
 argument_list|(
-literal|"hive.llap.io.cache.orc.arena.count"
+literal|"hive.llap.io.allocator.arena.count"
 argument_list|,
 literal|8
 argument_list|,
@@ -9235,9 +9249,9 @@ operator|+
 literal|"not the case, an adjusted size will be used. Using powers of 2 is recommended."
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|(
-literal|"hive.llap.io.cache.orc.size"
+literal|"hive.llap.io.memory.size"
 argument_list|,
 literal|1024L
 operator|*
@@ -9245,12 +9259,14 @@ literal|1024
 operator|*
 literal|1024
 argument_list|,
-literal|"Maximum size for ORC low-level cache; must be a multiple of arena size."
+literal|"Maximum size for IO allocator or ORC low-level cache."
+argument_list|,
+literal|"hive.llap.io.cache.orc.size"
 argument_list|)
 block|,
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 argument_list|(
-literal|"hive.llap.io.cache.direct"
+literal|"hive.llap.io.allocator.direct"
 argument_list|,
 literal|true
 argument_list|,

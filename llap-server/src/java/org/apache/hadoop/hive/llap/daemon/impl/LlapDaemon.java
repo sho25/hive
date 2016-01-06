@@ -1929,7 +1929,7 @@ operator|*
 literal|1024l
 decl_stmt|;
 name|long
-name|cacheMemoryBytes
+name|ioMemoryBytes
 init|=
 name|HiveConf
 operator|.
@@ -1937,11 +1937,9 @@ name|getLongVar
 argument_list|(
 name|daemonConf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -1953,11 +1951,9 @@ name|getBoolVar
 argument_list|(
 name|daemonConf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -1991,7 +1987,7 @@ name|llapIoEnabled
 argument_list|,
 name|isDirectCache
 argument_list|,
-name|cacheMemoryBytes
+name|ioMemoryBytes
 argument_list|,
 name|localDirs
 argument_list|,

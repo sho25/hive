@@ -270,7 +270,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
 expr_stmt|;
 name|minAllocation
@@ -283,7 +283,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MIN_ALLOC
+name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|)
 expr_stmt|;
 name|maxAllocation
@@ -296,7 +296,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_ALLOC
+name|LLAP_ALLOCATOR_MAX_ALLOC
 argument_list|)
 expr_stmt|;
 name|int
@@ -310,7 +310,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ARENA_COUNT
+name|LLAP_ALLOCATOR_ARENA_COUNT
 argument_list|)
 decl_stmt|;
 name|long
@@ -324,7 +324,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
 decl_stmt|;
 name|int

@@ -865,7 +865,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
 condition|)
 block|{
@@ -1012,7 +1012,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 operator|.
 name|varname
 argument_list|,
@@ -1776,7 +1776,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 operator|.
 name|varname
 argument_list|,
@@ -1790,7 +1790,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1802,7 +1802,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 operator|.
 name|varname
 argument_list|,
@@ -1816,7 +1816,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_ALLOCATE_DIRECT
+name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
 argument_list|)
 expr_stmt|;

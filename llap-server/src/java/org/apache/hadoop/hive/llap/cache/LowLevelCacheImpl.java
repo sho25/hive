@@ -308,6 +308,8 @@ name|LowLevelCacheImpl
 implements|implements
 name|LowLevelCache
 implements|,
+name|BufferUsageManager
+implements|,
 name|LlapOomDebugDump
 block|{
 specifier|private
@@ -1981,7 +1983,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|releaseBuffer
+name|decRefBuffer
 parameter_list|(
 name|MemoryBuffer
 name|buffer
@@ -2002,7 +2004,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|releaseBuffers
+name|decRefBuffers
 parameter_list|(
 name|List
 argument_list|<
@@ -2846,7 +2848,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|reuseBuffer
+name|incRefBuffer
 parameter_list|(
 name|MemoryBuffer
 name|buffer

@@ -906,7 +906,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MIN_ALLOC
+name|LLAP_ALLOCATOR_MIN_ALLOC
 operator|.
 name|varname
 argument_list|,
@@ -921,7 +921,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|LLAP_ORC_CACHE_MAX_SIZE
+name|LLAP_IO_MEMORY_MAX_SIZE
 operator|.
 name|varname
 argument_list|,
