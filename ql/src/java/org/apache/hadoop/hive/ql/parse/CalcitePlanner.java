@@ -3868,12 +3868,12 @@ operator|instanceof
 name|SemanticException
 condition|)
 block|{
-throw|throw
-operator|(
-name|SemanticException
-operator|)
-name|e
-throw|;
+comment|// although, its likely to be a valid exception, we will retry
+comment|// with cbo off anyway.
+name|reAnalyzeAST
+operator|=
+literal|true
+expr_stmt|;
 block|}
 elseif|else
 if|if
