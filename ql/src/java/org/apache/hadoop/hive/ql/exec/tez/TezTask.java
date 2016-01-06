@@ -1699,6 +1699,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"Failed to clean up after tez job"
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
@@ -3097,9 +3099,47 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|closeDagClientWithoutEx
+argument_list|()
+expr_stmt|;
 return|return
 name|rc
 return|;
+block|}
+comment|/**    * Close DagClient, log warning if it throws any exception.    * We don't want to fail query if that function fails.    */
+specifier|private
+name|void
+name|closeDagClientWithoutEx
+parameter_list|()
+block|{
+try|try
+block|{
+name|dagClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|dagClient
+operator|=
+literal|null
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to close DagClient"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -3386,7 +3426,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|warn
 argument_list|(
 literal|"Failed to shut down TezTask"
 operator|+
@@ -3396,6 +3436,9 @@ name|ex
 argument_list|)
 expr_stmt|;
 block|}
+name|closeDagClientWithoutEx
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 comment|/** DAG client that does dumb global sync on all the method calls;    * Tez DAG client is not thread safe and getting the 2nd one is not recommended. */
