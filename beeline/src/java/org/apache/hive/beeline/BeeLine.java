@@ -5443,6 +5443,14 @@ name|getOutputStream
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|consoleReader
+operator|.
+name|setCopyPasteDetection
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+comment|// jline will detect if<tab> is regular character
 block|}
 else|else
 block|{
