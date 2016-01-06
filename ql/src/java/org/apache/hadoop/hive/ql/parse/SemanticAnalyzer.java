@@ -29534,6 +29534,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|(
+name|grpByExprNode
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|)
+operator|&&
 name|ExprNodeDescUtils
 operator|.
 name|indexOf
@@ -29546,7 +29552,7 @@ operator|>=
 literal|0
 condition|)
 block|{
-comment|// Skip duplicated grouping keys
+comment|// Skip duplicated grouping keys, it happens when define column alias.
 name|grpByExprs
 operator|.
 name|remove
