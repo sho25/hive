@@ -31,6 +31,22 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|Service
+operator|.
+name|STATE
+import|;
+end_import
+
 begin_comment
 comment|/**  * This is a service that can be configured to break on any of the lifecycle  * events, so test the failure handling of other parts of the service  * infrastructure.  *  * It retains a counter to the number of times each entry point is called -  * these counters are incremented before the exceptions are raised and  * before the superclass state methods are invoked.  *  */
 end_comment

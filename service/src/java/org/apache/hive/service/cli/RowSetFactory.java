@@ -27,7 +27,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -45,7 +45,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -63,7 +63,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.

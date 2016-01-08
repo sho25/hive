@@ -229,9 +229,7 @@ name|ql
 operator|.
 name|session
 operator|.
-name|OperationLog
-operator|.
-name|LoggingLevel
+name|SessionState
 import|;
 end_import
 
@@ -249,7 +247,9 @@ name|ql
 operator|.
 name|session
 operator|.
-name|SessionState
+name|OperationLog
+operator|.
+name|LoggingLevel
 import|;
 end_import
 

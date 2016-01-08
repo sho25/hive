@@ -139,7 +139,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -157,27 +157,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
-operator|.
-name|thrift
-operator|.
-name|TCLIService
-operator|.
-name|Iface
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -195,7 +175,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -213,7 +193,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -231,7 +211,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -249,7 +229,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -267,7 +247,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -285,7 +265,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -303,7 +283,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -321,7 +301,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -339,7 +319,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -357,7 +337,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -375,7 +355,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -393,7 +373,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -411,7 +391,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -429,7 +409,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -447,7 +427,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -465,7 +445,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -483,7 +463,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.

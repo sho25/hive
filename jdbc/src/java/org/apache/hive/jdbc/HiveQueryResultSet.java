@@ -25,7 +25,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -71,7 +71,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|SQLException
+name|Statement
 import|;
 end_import
 
@@ -81,7 +81,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|Statement
+name|SQLException
 import|;
 end_import
 
@@ -126,6 +126,26 @@ operator|.
 name|locks
 operator|.
 name|ReentrantLock
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -205,7 +225,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -223,7 +243,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -241,7 +261,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -259,7 +279,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -277,7 +297,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -295,7 +315,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -313,7 +333,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -331,7 +351,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -349,7 +369,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -367,7 +387,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -385,7 +405,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -403,7 +423,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -421,7 +441,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -439,7 +459,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -457,7 +477,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -475,7 +495,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -493,7 +513,7 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
@@ -511,31 +531,11 @@ name|hive
 operator|.
 name|service
 operator|.
-name|rpc
+name|cli
 operator|.
 name|thrift
 operator|.
 name|TTypeQualifiers
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
 import|;
 end_import
 
