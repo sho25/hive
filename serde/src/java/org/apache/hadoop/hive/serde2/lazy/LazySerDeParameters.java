@@ -599,28 +599,6 @@ literal|true
 expr_stmt|;
 comment|// Converts the negative byte into positive index
 block|}
-comment|// '\r' and '\n' are reserved and can't be used for escape chars and separators
-if|if
-condition|(
-name|needsEscape
-index|[
-literal|'\r'
-index|]
-operator|||
-name|needsEscape
-index|[
-literal|'\n'
-index|]
-condition|)
-block|{
-throw|throw
-operator|new
-name|SerDeException
-argument_list|(
-literal|"\\r and \\n cannot be used as escaping characters or separators"
-argument_list|)
-throw|;
-block|}
 name|boolean
 name|isEscapeCRLF
 init|=
