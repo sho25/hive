@@ -1905,6 +1905,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|addServlet
+argument_list|(
+literal|"stacks"
+argument_list|,
+literal|"/stacks"
+argument_list|,
+name|StackServlet
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 name|ServletContextHandler
 name|staticCtx
 init|=
