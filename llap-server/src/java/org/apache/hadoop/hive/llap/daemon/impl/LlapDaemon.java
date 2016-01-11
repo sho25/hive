@@ -1733,6 +1733,8 @@ operator|!=
 literal|null
 condition|)
 block|{
+try|try
+block|{
 name|MBeans
 operator|.
 name|unregister
@@ -1740,6 +1742,23 @@ argument_list|(
 name|llapDaemonInfoBean
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Error unregistering the bean; ignoring"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

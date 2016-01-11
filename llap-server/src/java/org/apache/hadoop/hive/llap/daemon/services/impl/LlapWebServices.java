@@ -297,12 +297,6 @@ name|bindAddress
 init|=
 literal|"0.0.0.0"
 decl_stmt|;
-name|Configuration
-name|conf
-init|=
-name|getConfig
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|UserGroupInformation

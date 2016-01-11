@@ -9499,9 +9499,11 @@ argument_list|,
 literal|"ZooKeeper connection string for ZooKeeper SecretManager."
 argument_list|)
 block|,
+comment|// Note: do not rename to ..service.acl; Hadoop generates .hosts setting name from this,
+comment|// resulting in a collision with existing hive.llap.daemon.service.hosts and bizarre errors.
 name|LLAP_SECURITY_ACL
 argument_list|(
-literal|"hive.llap.daemon.service.acl"
+literal|"hive.llap.daemon.acl"
 argument_list|,
 literal|"*"
 argument_list|,
@@ -9510,7 +9512,7 @@ argument_list|)
 block|,
 name|LLAP_MANAGEMENT_ACL
 argument_list|(
-literal|"hive.llap.management.service.acl"
+literal|"hive.llap.management.acl"
 argument_list|,
 literal|"*"
 argument_list|,
