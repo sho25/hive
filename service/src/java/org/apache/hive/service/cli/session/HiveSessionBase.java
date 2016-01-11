@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -97,21 +107,11 @@ name|hive
 operator|.
 name|service
 operator|.
-name|cli
+name|rpc
 operator|.
 name|thrift
 operator|.
 name|TProtocolVersion
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|File
 import|;
 end_import
 

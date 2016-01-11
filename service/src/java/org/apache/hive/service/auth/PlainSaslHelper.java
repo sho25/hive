@@ -217,9 +217,7 @@ name|cli
 operator|.
 name|thrift
 operator|.
-name|TCLIService
-operator|.
-name|Iface
+name|ThriftCLIService
 import|;
 end_import
 
@@ -233,11 +231,13 @@ name|hive
 operator|.
 name|service
 operator|.
-name|cli
+name|rpc
 operator|.
 name|thrift
 operator|.
-name|ThriftCLIService
+name|TCLIService
+operator|.
+name|Iface
 import|;
 end_import
 
