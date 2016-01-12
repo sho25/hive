@@ -9587,7 +9587,9 @@ literal|""
 argument_list|,
 literal|"Working directories for the daemon. Needs to be set for a secure cluster, since LLAP may\n"
 operator|+
-literal|"not have access to the default YARN working directories."
+literal|"not have access to the default YARN working directories. yarn.nodemanager.local-dirs is\n"
+operator|+
+literal|"used if this is not set"
 argument_list|,
 literal|"llap.daemon.work.dirs"
 argument_list|)
