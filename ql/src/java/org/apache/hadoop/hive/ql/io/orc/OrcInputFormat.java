@@ -259,6 +259,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ErrorMsg
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|io
 operator|.
 name|IOConstants
@@ -1854,13 +1870,16 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|/**      * Do we have schema on read in the configuration variables?      */
+comment|/**      * Do we have schema on read in the configuration variables?      *      * NOTE: This code path is NOT used by ACID.  OrcInputFormat.getRecordReader intercepts for      * ACID tables creates raw record merger, etc.      */
 name|TypeDescription
 name|schema
 init|=
 name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
+argument_list|,
+comment|/* isAcid */
+literal|false
 argument_list|)
 decl_stmt|;
 name|Reader
@@ -9136,8 +9155,31 @@ init|=
 name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
+argument_list|,
+comment|/* isAcid */
+literal|true
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|schema
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|SCHEMA_REQUIRED_TO_READ_ACID_TABLES
+operator|.
+name|getErrorCodedMsg
+argument_list|()
+argument_list|)
+throw|;
+block|}
 specifier|final
 name|Reader
 name|reader
@@ -12242,6 +12284,9 @@ name|getDesiredRowTypeDescr
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|boolean
+name|isAcid
 parameter_list|)
 block|{
 name|String
@@ -12277,6 +12322,8 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
+name|isAcid
+operator|||
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -12389,9 +12436,36 @@ block|}
 block|}
 if|if
 condition|(
-operator|!
 name|haveSchemaEvolutionProperties
 condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using schema evolution configuration variables schema.evolution.columns "
+operator|+
+name|schemaEvolutionColumnNames
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" / schema.evolution.columns.types "
+operator|+
+name|schemaEvolutionTypeDescrs
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" (isAcid "
+operator|+
+name|isAcid
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 comment|// Try regular properties;
 name|columnNameProperty
@@ -12483,6 +12557,31 @@ return|return
 literal|null
 return|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using column configuration variables columns "
+operator|+
+name|schemaEvolutionColumnNames
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" / columns.types "
+operator|+
+name|schemaEvolutionTypeDescrs
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" (isAcid "
+operator|+
+name|isAcid
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Desired schema does not include virtual columns or partition columns.
 name|TypeDescription

@@ -453,6 +453,21 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|// if HiveCombineInputFormat gives us FileSplits instead of OrcSplits,
+comment|// we know it is not ACID. (see a check in CombineHiveInputFormat.getSplits() that assures this).
+comment|//
+comment|// Why would an ACID table reach here instead of VectorizedOrcAcidRowReader?
+comment|// OrcInputFormat.getRecordReader will use this reader for original files that have no deltas.
+comment|//
+name|boolean
+name|isAcid
+init|=
+operator|(
+name|fileSplit
+operator|instanceof
+name|OrcSplit
+operator|)
+decl_stmt|;
 comment|/**        * Do we have schema on read in the configuration variables?        */
 name|TypeDescription
 name|schema
@@ -462,6 +477,8 @@ operator|.
 name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
+argument_list|,
+name|isAcid
 argument_list|)
 decl_stmt|;
 name|List

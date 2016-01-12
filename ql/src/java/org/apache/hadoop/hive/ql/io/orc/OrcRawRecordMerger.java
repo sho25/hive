@@ -2229,6 +2229,9 @@ operator|.
 name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
+argument_list|,
+comment|/* isAcid */
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
