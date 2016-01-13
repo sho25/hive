@@ -118,9 +118,9 @@ name|startOffset
 decl_stmt|;
 specifier|private
 specifier|final
-name|Type
+name|TypeDescriptor
 index|[]
-name|types
+name|descriptors
 decl_stmt|;
 comment|// non-null only for writing (server-side)
 specifier|private
@@ -138,11 +138,11 @@ name|TableSchema
 name|schema
 parameter_list|)
 block|{
-name|types
+name|descriptors
 operator|=
 name|schema
 operator|.
-name|toTypes
+name|toTypeDescriptors
 argument_list|()
 expr_stmt|;
 name|rows
@@ -162,7 +162,7 @@ name|TRowSet
 name|tRowSet
 parameter_list|)
 block|{
-name|types
+name|descriptors
 operator|=
 literal|null
 expr_stmt|;
@@ -191,9 +191,9 @@ block|}
 specifier|private
 name|RowBasedSet
 parameter_list|(
-name|Type
+name|TypeDescriptor
 index|[]
-name|types
+name|descriptors
 parameter_list|,
 name|List
 argument_list|<
@@ -207,9 +207,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|types
+name|descriptors
 operator|=
-name|types
+name|descriptors
 expr_stmt|;
 name|this
 operator|.
@@ -274,7 +274,7 @@ name|ColumnValue
 operator|.
 name|toTColumnValue
 argument_list|(
-name|types
+name|descriptors
 index|[
 name|i
 index|]
@@ -368,7 +368,7 @@ init|=
 operator|new
 name|RowBasedSet
 argument_list|(
-name|types
+name|descriptors
 argument_list|,
 name|rows
 operator|.

@@ -5417,7 +5417,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"123456789.0123456"
+literal|"123456789.1234560"
 argument_list|,
 name|res
 operator|.
