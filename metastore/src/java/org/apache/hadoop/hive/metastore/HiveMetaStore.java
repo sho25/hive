@@ -34631,18 +34631,6 @@ operator|.
 name|METASTORE
 argument_list|)
 expr_stmt|;
-name|int
-name|authMaxRetries
-init|=
-name|conf
-operator|.
-name|getIntVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_AUTH_MAX_RETRIES
-argument_list|)
-decl_stmt|;
 name|transFactory
 operator|=
 name|saslServer
@@ -34655,8 +34643,6 @@ name|getMetaStoreSaslProperties
 argument_list|(
 name|conf
 argument_list|)
-argument_list|,
-name|authMaxRetries
 argument_list|)
 expr_stmt|;
 name|processor
