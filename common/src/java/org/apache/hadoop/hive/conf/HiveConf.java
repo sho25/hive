@@ -11953,9 +11953,16 @@ argument_list|)
 condition|)
 block|{
 comment|// Spark property.
+comment|// for now we don't support changing spark app name on the fly
 name|result
 operator|=
-literal|true
+operator|!
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"spark.app.name"
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else
