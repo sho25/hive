@@ -8977,6 +8977,15 @@ condition|(
 name|numRows
 operator|<=
 literal|0
+operator|||
+name|colStats
+operator|==
+literal|null
+operator|||
+name|colStats
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return
