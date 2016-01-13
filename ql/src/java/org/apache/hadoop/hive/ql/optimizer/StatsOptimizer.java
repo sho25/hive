@@ -1253,6 +1253,13 @@ name|pctx
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|NodeProcessorCtx
+name|soProcCtx
+init|=
+operator|new
+name|StatsOptimizerProcContext
+argument_list|()
+decl_stmt|;
 name|Dispatcher
 name|disp
 init|=
@@ -1263,7 +1270,7 @@ literal|null
 argument_list|,
 name|opRules
 argument_list|,
-literal|null
+name|soProcCtx
 argument_list|)
 decl_stmt|;
 name|GraphWalker
@@ -1313,6 +1320,19 @@ expr_stmt|;
 return|return
 name|pctx
 return|;
+block|}
+specifier|private
+specifier|static
+class|class
+name|StatsOptimizerProcContext
+implements|implements
+name|NodeProcessorCtx
+block|{
+name|boolean
+name|stopProcess
+init|=
+literal|false
+decl_stmt|;
 block|}
 specifier|private
 specifier|static
@@ -1793,6 +1813,38 @@ comment|//    If it is
 comment|// 3. Connect to metastore and get the stats
 comment|// 4. Compose rows and add it in FetchWork
 comment|// 5. Delete GBY - RS - GBY - SEL from the pipeline.
+name|StatsOptimizerProcContext
+name|soProcCtx
+init|=
+operator|(
+name|StatsOptimizerProcContext
+operator|)
+name|procCtx
+decl_stmt|;
+comment|// If the optimization has been stopped for the reasons like being not qualified,
+comment|// or lack of the stats data. we do not continue this process. For an example,
+comment|// for a query select max(value) from src1 union all select max(value) from src2
+comment|// if it has been union remove optimized, the AST tree will become
+comment|// TS[0]->SEL[1]->GBY[2]-RS[3]->GBY[4]->FS[17]
+comment|// TS[6]->SEL[7]->GBY[8]-RS[9]->GBY[10]->FS[18]
+comment|// if TS[0] branch for src1 is not optimized because src1 does not have column stats
+comment|// there is no need to continue processing TS[6] branch
+if|if
+condition|(
+name|soProcCtx
+operator|.
+name|stopProcess
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+name|boolean
+name|isOptimized
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 name|TableScanOperator
@@ -4682,6 +4734,46 @@ name|oneRowWithConstant
 argument_list|)
 expr_stmt|;
 block|}
+name|FetchWork
+name|fWork
+init|=
+literal|null
+decl_stmt|;
+name|FetchTask
+name|fTask
+init|=
+name|pctx
+operator|.
+name|getFetchTask
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|fTask
+operator|!=
+literal|null
+condition|)
+block|{
+name|fWork
+operator|=
+name|fTask
+operator|.
+name|getWork
+argument_list|()
+expr_stmt|;
+name|fWork
+operator|.
+name|getRowsComputedUsingStats
+argument_list|()
+operator|.
+name|addAll
+argument_list|(
+name|allRows
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|StandardStructObjectInspector
 name|sOI
 init|=
@@ -4694,9 +4786,8 @@ argument_list|,
 name|ois
 argument_list|)
 decl_stmt|;
-name|FetchWork
 name|fWork
-init|=
+operator|=
 operator|new
 name|FetchWork
 argument_list|(
@@ -4704,10 +4795,9 @@ name|allRows
 argument_list|,
 name|sOI
 argument_list|)
-decl_stmt|;
-name|FetchTask
+expr_stmt|;
 name|fTask
-init|=
+operator|=
 operator|(
 name|FetchTask
 operator|)
@@ -4722,16 +4812,6 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|)
-decl_stmt|;
-name|fWork
-operator|.
-name|setLimit
-argument_list|(
-name|allRows
-operator|.
-name|size
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|pctx
 operator|.
@@ -4739,6 +4819,24 @@ name|setFetchTask
 argument_list|(
 name|fTask
 argument_list|)
+expr_stmt|;
+block|}
+name|fWork
+operator|.
+name|setLimit
+argument_list|(
+name|fWork
+operator|.
+name|getRowsComputedUsingStats
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isOptimized
+operator|=
+literal|true
 expr_stmt|;
 return|return
 literal|null
@@ -4764,6 +4862,30 @@ expr_stmt|;
 return|return
 literal|null
 return|;
+block|}
+finally|finally
+block|{
+comment|// If StatOptimization is not applied for any reason, the FetchTask should still not have been set
+if|if
+condition|(
+operator|!
+name|isOptimized
+condition|)
+block|{
+name|soProcCtx
+operator|.
+name|stopProcess
+operator|=
+literal|true
+expr_stmt|;
+name|pctx
+operator|.
+name|setFetchTask
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
