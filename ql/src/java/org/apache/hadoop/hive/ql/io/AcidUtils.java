@@ -454,6 +454,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|LEGACY_FILE_BUCKET_DIGITS
+init|=
+literal|"%06d"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DELTA_DIGITS
 init|=
 literal|"%07d"
@@ -499,7 +507,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"^[0-9]{5}"
+literal|"^[0-9]{6}"
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -793,7 +801,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-name|BUCKET_DIGITS
+name|LEGACY_FILE_BUCKET_DIGITS
 argument_list|,
 name|options
 operator|.
@@ -2427,6 +2435,25 @@ operator|!=
 literal|null
 condition|)
 block|{
+for|for
+control|(
+name|HdfsFileStatusWithId
+name|fswid
+range|:
+name|original
+control|)
+block|{
+name|obsolete
+operator|.
+name|add
+argument_list|(
+name|fswid
+operator|.
+name|getFileStatus
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// remove the entries so we don't get confused later and think we should
 comment|// use them.
 name|original

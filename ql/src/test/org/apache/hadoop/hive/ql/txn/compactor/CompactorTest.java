@@ -2296,7 +2296,7 @@ name|format
 argument_list|(
 name|AcidUtils
 operator|.
-name|BUCKET_DIGITS
+name|LEGACY_FILE_BUCKET_DIGITS
 argument_list|,
 name|bucket
 argument_list|)
@@ -2595,7 +2595,7 @@ name|Path
 argument_list|(
 name|baseDirectory
 argument_list|,
-literal|"00000_0"
+literal|"000000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;

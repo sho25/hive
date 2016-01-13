@@ -310,7 +310,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"/tmp/00001_0"
+literal|"/tmp/000001_0"
 argument_list|,
 name|AcidUtils
 operator|.
@@ -334,7 +334,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"/tmp/00123_0"
+literal|"/tmp/000123_0"
 argument_list|,
 name|AcidUtils
 operator|.
@@ -2228,8 +2228,7 @@ literal|"150:"
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// The two original buckets won't be in the obsolete list because we don't look at those
-comment|// until we have determined there is no base.
+comment|// Obsolete list should include the two original bucket files, and the old base dir
 name|List
 argument_list|<
 name|FileStatus
@@ -2243,7 +2242,7 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|1
+literal|3
 argument_list|,
 name|obsolete
 operator|.
