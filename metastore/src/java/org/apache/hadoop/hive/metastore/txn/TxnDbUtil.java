@@ -422,7 +422,9 @@ literal|" CQ_WORKER_ID varchar(128),"
 operator|+
 literal|" CQ_START bigint,"
 operator|+
-literal|" CQ_RUN_AS varchar(128))"
+literal|" CQ_RUN_AS varchar(128),"
+operator|+
+literal|" CQ_HIGHEST_TXN_ID bigint)"
 argument_list|)
 expr_stmt|;
 name|stmt

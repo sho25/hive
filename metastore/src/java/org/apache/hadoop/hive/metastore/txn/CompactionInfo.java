@@ -81,6 +81,11 @@ name|tooManyAborts
 init|=
 literal|false
 decl_stmt|;
+comment|/**    * {@code null} means it wasn't set (e.g. in case of upgrades)     */
+specifier|public
+name|Long
+name|highestTxnId
+decl_stmt|;
 specifier|private
 name|String
 name|fullPartitionName
@@ -334,6 +339,12 @@ operator|+
 literal|"tooManyAborts:"
 operator|+
 name|tooManyAborts
+operator|+
+literal|","
+operator|+
+literal|"highestTxnId:"
+operator|+
+name|highestTxnId
 return|;
 block|}
 block|}

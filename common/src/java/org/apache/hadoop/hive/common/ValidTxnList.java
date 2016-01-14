@@ -83,7 +83,7 @@ name|String
 name|src
 parameter_list|)
 function_decl|;
-comment|/**    * Get the largest committed transaction id.    * @return largest committed transaction id    */
+comment|/**    * Get the largest transaction id used.    * @return largest transaction id used    */
 specifier|public
 name|long
 name|getHighWatermark

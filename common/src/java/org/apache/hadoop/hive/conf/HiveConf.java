@@ -4368,6 +4368,17 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVETESTMODEROLLBACKTXN
+argument_list|(
+literal|"hive.test.rollbacktxn"
+argument_list|,
+literal|false
+argument_list|,
+literal|"For testing only.  Will mark every ACID transaction aborted"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"

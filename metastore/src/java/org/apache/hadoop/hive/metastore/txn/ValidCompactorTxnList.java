@@ -70,6 +70,8 @@ name|ValidCompactorTxnList
 extends|extends
 name|ValidReadTxnList
 block|{
+comment|//TODO: refactor this - minOpenTxn is not needed if we set
+comment|// highWatermark = Math.min(highWaterMark, minOpenTxn) (assuming there are open txns)
 comment|// The minimum open transaction id
 specifier|private
 name|long
