@@ -2435,6 +2435,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Add original files to obsolete list if any
 for|for
 control|(
 name|HdfsFileStatusWithId
@@ -2454,9 +2455,22 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Add original direcotries to obsolete list if any
+name|obsolete
+operator|.
+name|addAll
+argument_list|(
+name|originalDirectories
+argument_list|)
+expr_stmt|;
 comment|// remove the entries so we don't get confused later and think we should
 comment|// use them.
 name|original
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|originalDirectories
 operator|.
 name|clear
 argument_list|()
