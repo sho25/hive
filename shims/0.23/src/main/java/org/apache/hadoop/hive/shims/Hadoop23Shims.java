@@ -3270,6 +3270,18 @@ argument_list|,
 literal|"org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler"
 argument_list|)
 expr_stmt|;
+comment|// disable resource monitoring, although it should be off by default
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|YarnConfiguration
+operator|.
+name|YARN_MINICLUSTER_CONTROL_RESOURCE_MONITORING
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|configureImpersonation
 argument_list|(
 name|conf
