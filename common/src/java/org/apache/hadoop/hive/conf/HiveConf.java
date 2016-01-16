@@ -1138,6 +1138,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVE_TXN_HEARTBEAT_THREADPOOL_SIZE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVE_TXN_MAX_OPEN_BATCH
 block|,
 name|HiveConf
@@ -6265,6 +6271,17 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"time after which transactions are declared aborted if the client has not sent a heartbeat."
+argument_list|)
+block|,
+name|HIVE_TXN_HEARTBEAT_THREADPOOL_SIZE
+argument_list|(
+literal|"hive.txn.heartbeat.threadpool.size"
+argument_list|,
+literal|5
+argument_list|,
+literal|"The number of "
+operator|+
+literal|"threads to use for heartbeating. For Hive CLI, 1 is enough. For HiveServer2, we need a few"
 argument_list|)
 block|,
 name|TXN_MGR_DUMP_LOCK_STATE_ON_ACQUIRE_TIMEOUT

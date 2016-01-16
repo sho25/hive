@@ -1423,11 +1423,6 @@ name|monitorExecution
 argument_list|(
 name|dagClient
 argument_list|,
-name|ctx
-operator|.
-name|getHiveTxnManager
-argument_list|()
-argument_list|,
 name|conf
 argument_list|,
 name|dag

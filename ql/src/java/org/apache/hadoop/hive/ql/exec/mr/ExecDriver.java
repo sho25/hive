@@ -3142,11 +3142,6 @@ argument_list|(
 name|rj
 argument_list|,
 name|jc
-argument_list|,
-name|ctx
-operator|.
-name|getHiveTxnManager
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|success

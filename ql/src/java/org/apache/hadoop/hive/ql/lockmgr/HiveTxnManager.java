@@ -175,6 +175,16 @@ name|UnlockTableDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
 begin_comment
 comment|/**  * An interface that allows Hive to manage transactions.  All classes  * implementing this should extend {@link HiveTxnManagerImpl} rather than  * implementing this directly.  */
 end_comment
@@ -213,6 +223,19 @@ name|ctx
 parameter_list|,
 name|String
 name|username
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * Release specified locks.    * Transaction aware TxnManagers, which has {@code supportsAcid() == true},    * will track locks internally and ignore this parameter    * @param hiveLocks The list of locks to be released.    */
+name|void
+name|releaseLocks
+parameter_list|(
+name|List
+argument_list|<
+name|HiveLock
+argument_list|>
+name|hiveLocks
 parameter_list|)
 throws|throws
 name|LockException
