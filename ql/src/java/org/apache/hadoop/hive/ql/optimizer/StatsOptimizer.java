@@ -2689,7 +2689,7 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areBasicStatsUptoDate
 argument_list|(
 name|tbl
 operator|.
@@ -2709,7 +2709,7 @@ operator|.
 name|getTableName
 argument_list|()
 operator|+
-literal|" are not upto date."
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -2735,20 +2735,58 @@ expr_stmt|;
 if|if
 condition|(
 name|rowCnt
-operator|<
-literal|1
+operator|==
+literal|null
 condition|)
 block|{
 name|Logger
 operator|.
 name|debug
 argument_list|(
-literal|"Table doesn't have upto date stats "
+literal|"Table doesn't have up to date stats "
 operator|+
 name|tbl
 operator|.
 name|getTableName
 argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
+operator|!
+name|StatsSetupConst
+operator|.
+name|areColumnStatsUptoDate
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|,
+name|colName
+argument_list|)
+condition|)
+block|{
+name|Logger
+operator|.
+name|debug
+argument_list|(
+literal|"Stats for table : "
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" column "
+operator|+
+name|colName
+operator|+
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -2908,7 +2946,7 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areBasicStatsUptoDate
 argument_list|(
 name|part
 operator|.
@@ -2928,7 +2966,7 @@ operator|.
 name|getSpec
 argument_list|()
 operator|+
-literal|" are not upto date."
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -2958,15 +2996,15 @@ decl_stmt|;
 if|if
 condition|(
 name|partRowCnt
-operator|<
-literal|1
+operator|==
+literal|null
 condition|)
 block|{
 name|Logger
 operator|.
 name|debug
 argument_list|(
-literal|"Partition doesn't have upto date stats "
+literal|"Partition doesn't have up to date stats "
 operator|+
 name|part
 operator|.
@@ -2992,7 +3030,7 @@ argument_list|>
 argument_list|>
 name|result
 init|=
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 argument_list|(
 name|hive
 argument_list|,
@@ -3170,12 +3208,14 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areColumnStatsUptoDate
 argument_list|(
 name|tbl
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+name|colName
 argument_list|)
 condition|)
 block|{
@@ -3190,7 +3230,11 @@ operator|.
 name|getTableName
 argument_list|()
 operator|+
-literal|" are not upto date."
+literal|" column "
+operator|+
+name|colName
+operator|+
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -3496,7 +3540,7 @@ argument_list|>
 argument_list|>
 name|result
 init|=
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 argument_list|(
 name|hive
 argument_list|,
@@ -3652,7 +3696,7 @@ argument_list|>
 argument_list|>
 name|result
 init|=
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 argument_list|(
 name|hive
 argument_list|,
@@ -3878,12 +3922,14 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areColumnStatsUptoDate
 argument_list|(
 name|tbl
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+name|colName
 argument_list|)
 condition|)
 block|{
@@ -3898,7 +3944,11 @@ operator|.
 name|getTableName
 argument_list|()
 operator|+
-literal|" are not upto date."
+literal|" column "
+operator|+
+name|colName
+operator|+
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4168,7 +4218,7 @@ argument_list|>
 argument_list|>
 name|result
 init|=
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 argument_list|(
 name|hive
 argument_list|,
@@ -4324,7 +4374,7 @@ argument_list|>
 argument_list|>
 name|result
 init|=
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 argument_list|(
 name|hive
 argument_list|,
@@ -4960,7 +5010,7 @@ argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
 argument_list|>
-name|verifyAndGetPartStats
+name|verifyAndGetPartColumnStats
 parameter_list|(
 name|Hive
 name|hive
@@ -5011,12 +5061,14 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areColumnStatsUptoDate
 argument_list|(
 name|part
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+name|colName
 argument_list|)
 condition|)
 block|{
@@ -5031,7 +5083,11 @@ operator|.
 name|getSpec
 argument_list|()
 operator|+
-literal|" are not upto date."
+literal|" column "
+operator|+
+name|colName
+operator|+
+literal|" are not up to date."
 argument_list|)
 expr_stmt|;
 return|return
@@ -5190,7 +5246,7 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areBasicStatsUptoDate
 argument_list|(
 name|part
 operator|.
@@ -5203,7 +5259,7 @@ return|return
 literal|null
 return|;
 block|}
-name|long
+name|Long
 name|partRowCnt
 init|=
 name|Long
@@ -5226,15 +5282,15 @@ decl_stmt|;
 if|if
 condition|(
 name|partRowCnt
-operator|<
-literal|1
+operator|==
+literal|null
 condition|)
 block|{
 name|Logger
 operator|.
 name|debug
 argument_list|(
-literal|"Partition doesn't have upto date stats "
+literal|"Partition doesn't have up to date stats "
 operator|+
 name|part
 operator|.
@@ -5260,7 +5316,7 @@ condition|(
 operator|!
 name|StatsSetupConst
 operator|.
-name|areStatsUptoDate
+name|areBasicStatsUptoDate
 argument_list|(
 name|tbl
 operator|.
@@ -5292,8 +5348,8 @@ expr_stmt|;
 if|if
 condition|(
 name|rowCnt
-operator|<
-literal|1
+operator|==
+literal|null
 condition|)
 block|{
 comment|// if rowCnt< 1 than its either empty table or table on which stats are not
@@ -5302,7 +5358,7 @@ name|Logger
 operator|.
 name|debug
 argument_list|(
-literal|"Table doesn't have upto date stats "
+literal|"Table doesn't have up to date stats "
 operator|+
 name|tbl
 operator|.

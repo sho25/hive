@@ -3215,7 +3215,7 @@ condition|)
 block|{
 name|tbl
 operator|.
-name|setParamters
+name|setParameters
 argument_list|(
 name|parameters
 argument_list|)
@@ -7123,7 +7123,7 @@ name|isAcid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    * @throws JSONException     */
 specifier|public
 name|Partition
 name|loadPartition
@@ -7422,6 +7422,17 @@ argument_list|,
 name|newFiles
 argument_list|)
 expr_stmt|;
+comment|//column stats will be inaccurate
+name|StatsSetupConst
+operator|.
+name|clearColumnStatsState
+argument_list|(
+name|newTPart
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// recreate the partition if it existed before
 if|if
 condition|(
@@ -7514,18 +7525,18 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
+name|StatsSetupConst
+operator|.
+name|setBasicStatsState
+argument_list|(
 name|newTPart
 operator|.
 name|getParameters
 argument_list|()
-operator|.
-name|put
-argument_list|(
+argument_list|,
 name|StatsSetupConst
 operator|.
-name|COLUMN_STATS_ACCURATE
-argument_list|,
-literal|"false"
+name|FALSE
 argument_list|)
 expr_stmt|;
 block|}
@@ -7598,20 +7609,21 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
+name|StatsSetupConst
+operator|.
+name|setBasicStatsState
+argument_list|(
 name|newTPart
 operator|.
 name|getParameters
 argument_list|()
-operator|.
-name|put
-argument_list|(
+argument_list|,
 name|StatsSetupConst
 operator|.
-name|COLUMN_STATS_ACCURATE
-argument_list|,
-literal|"false"
+name|FALSE
 argument_list|)
 expr_stmt|;
+block|}
 name|alterPartition
 argument_list|(
 name|tbl
@@ -7636,7 +7648,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -8129,7 +8140,7 @@ return|return
 name|skewedColValueLocationMaps
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    * @throws JSONException     */
 specifier|public
 name|Map
 argument_list|<
@@ -8855,18 +8866,18 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
+name|StatsSetupConst
+operator|.
+name|setBasicStatsState
+argument_list|(
 name|tbl
 operator|.
 name|getParameters
 argument_list|()
-operator|.
-name|put
-argument_list|(
+argument_list|,
 name|StatsSetupConst
 operator|.
-name|COLUMN_STATS_ACCURATE
-argument_list|,
-literal|"false"
+name|FALSE
 argument_list|)
 expr_stmt|;
 block|}
@@ -8887,6 +8898,17 @@ literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
+comment|//column stats will be inaccurate
+name|StatsSetupConst
+operator|.
+name|clearColumnStatsState
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 if|if
@@ -10542,20 +10564,6 @@ operator|.
 name|setLocation
 argument_list|(
 name|partPath
-argument_list|)
-expr_stmt|;
-name|tpart
-operator|.
-name|getParameters
-argument_list|()
-operator|.
-name|put
-argument_list|(
-name|StatsSetupConst
-operator|.
-name|STATS_GENERATED_VIA_STATS_TASK
-argument_list|,
-literal|"true"
 argument_list|)
 expr_stmt|;
 name|String

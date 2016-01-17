@@ -2322,7 +2322,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|setParamters
+name|setParameters
 parameter_list|(
 name|Map
 argument_list|<

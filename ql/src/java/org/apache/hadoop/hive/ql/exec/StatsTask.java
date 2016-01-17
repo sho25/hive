@@ -1088,6 +1088,16 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// write table stats to metastore
+if|if
+condition|(
+operator|!
+name|getWork
+argument_list|()
+operator|.
+name|getNoStatsAggregator
+argument_list|()
+condition|)
+block|{
 name|parameters
 operator|.
 name|put
@@ -1101,6 +1111,7 @@ operator|.
 name|TRUE
 argument_list|)
 expr_stmt|;
+block|}
 name|db
 operator|.
 name|alterTable
@@ -1296,6 +1307,16 @@ name|getSd
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|getWork
+argument_list|()
+operator|.
+name|getNoStatsAggregator
+argument_list|()
+condition|)
+block|{
 name|parameters
 operator|.
 name|put
@@ -1309,6 +1330,7 @@ operator|.
 name|TRUE
 argument_list|)
 expr_stmt|;
+block|}
 name|updates
 operator|.
 name|add
@@ -1919,14 +1941,6 @@ condition|(
 name|originalValue
 operator|!=
 literal|null
-operator|&&
-operator|!
-name|originalValue
-operator|.
-name|equals
-argument_list|(
-literal|"-1"
-argument_list|)
 condition|)
 block|{
 name|longValue
@@ -2056,11 +2070,9 @@ condition|)
 block|{
 name|parameters
 operator|.
-name|put
+name|remove
 argument_list|(
 name|statType
-argument_list|,
-literal|"0"
 argument_list|)
 expr_stmt|;
 block|}

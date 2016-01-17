@@ -27057,6 +27057,7 @@ name|statsPresent
 operator|=
 literal|true
 expr_stmt|;
+comment|//In the case of truncate table, we set the stats to be 0.
 name|props
 operator|.
 name|put
@@ -27066,19 +27067,41 @@ argument_list|,
 literal|"0"
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+comment|//first set basic stats to true
+name|StatsSetupConst
+operator|.
+name|setBasicStatsState
+argument_list|(
+name|props
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|TRUE
+argument_list|)
+expr_stmt|;
 name|props
 operator|.
 name|put
 argument_list|(
 name|StatsSetupConst
 operator|.
-name|COLUMN_STATS_ACCURATE
+name|STATS_GENERATED_VIA_STATS_TASK
 argument_list|,
-literal|"false"
+name|StatsSetupConst
+operator|.
+name|TRUE
 argument_list|)
 expr_stmt|;
-block|}
-block|}
+comment|//then invalidate column stats
+name|StatsSetupConst
+operator|.
+name|clearColumnStatsState
+argument_list|(
+name|props
+argument_list|)
+expr_stmt|;
 return|return
 name|statsPresent
 return|;

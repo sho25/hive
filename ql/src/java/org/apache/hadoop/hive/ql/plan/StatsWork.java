@@ -159,6 +159,9 @@ comment|// For eg. if a merge is being performed, stats already collected by agg
 comment|// are still valid. However, if a load file is being performed, the old stats collected by
 comment|// aggregator are not valid. It might be a good idea to clear them instead of leaving wrong
 comment|// and old stats.
+comment|// Since HIVE-12661, we maintain the old stats (although may be wrong) for CBO
+comment|// purpose. We use a flag COLUMN_STATS_ACCURATE to
+comment|// show the accuracy of the stats.
 specifier|private
 name|boolean
 name|clearAggregatorStats
