@@ -343,6 +343,10 @@ extends|extends
 name|SqlAggFunction
 block|{
 specifier|final
+name|boolean
+name|isDistinct
+decl_stmt|;
+specifier|final
 name|SqlReturnTypeInference
 name|returnTypeInference
 decl_stmt|;
@@ -358,6 +362,9 @@ comment|//~ Constructors -------------------------------------------------------
 specifier|public
 name|HiveSqlSumAggFunction
 parameter_list|(
+name|boolean
+name|isDistinct
+parameter_list|,
 name|SqlReturnTypeInference
 name|returnTypeInference
 parameter_list|,
@@ -404,6 +411,12 @@ operator|.
 name|operandTypeInference
 operator|=
 name|operandTypeInference
+expr_stmt|;
+name|this
+operator|.
+name|isDistinct
+operator|=
+name|isDistinct
 expr_stmt|;
 block|}
 comment|//~ Methods ----------------------------------------------------------------
@@ -497,6 +510,8 @@ argument_list|(
 operator|new
 name|HiveSqlCountAggFunction
 argument_list|(
+name|isDistinct
+argument_list|,
 name|ReturnTypes
 operator|.
 name|explicit
@@ -735,6 +750,8 @@ argument_list|(
 operator|new
 name|HiveSqlSumAggFunction
 argument_list|(
+name|isDistinct
+argument_list|,
 name|returnTypeInference
 argument_list|,
 name|operandTypeInference

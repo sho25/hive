@@ -2303,6 +2303,8 @@ name|getCalciteAggFn
 argument_list|(
 literal|"count"
 argument_list|,
+literal|false
+argument_list|,
 name|ImmutableList
 operator|.
 name|of

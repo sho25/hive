@@ -69821,27 +69821,6 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
-if|if
-condition|(
-name|wfSpec
-operator|.
-name|isDistinct
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|generateErrorMessage
-argument_list|(
-name|node
-argument_list|,
-literal|"Count/Sum distinct not supported with Windowing"
-argument_list|)
-argument_list|)
-throw|;
-block|}
 name|wfSpec
 operator|.
 name|setExpression

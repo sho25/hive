@@ -13281,6 +13281,10 @@ name|agg
 operator|.
 name|m_udfName
 argument_list|,
+name|agg
+operator|.
+name|m_distinct
+argument_list|,
 name|aggArgRelDTBldr
 operator|.
 name|build
@@ -17716,6 +17720,10 @@ argument_list|(
 name|hiveAggInfo
 operator|.
 name|m_udfName
+argument_list|,
+name|hiveAggInfo
+operator|.
+name|m_distinct
 argument_list|,
 name|calciteAggFnArgsType
 argument_list|,
