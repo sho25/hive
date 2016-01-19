@@ -6328,6 +6328,17 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|inputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ReadEntity
+argument_list|(
+name|sourceTable
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|outputs
 operator|.
 name|add
