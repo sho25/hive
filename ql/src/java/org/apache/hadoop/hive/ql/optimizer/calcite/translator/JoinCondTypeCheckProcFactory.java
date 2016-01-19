@@ -1796,10 +1796,7 @@ if|if
 condition|(
 name|inputRR
 operator|.
-name|getInvRslvMap
-argument_list|()
-operator|.
-name|containsKey
+name|doesInvRslvMapContain
 argument_list|(
 name|colDesc
 operator|.
@@ -1824,10 +1821,7 @@ if|if
 condition|(
 name|inputRR
 operator|.
-name|getInvRslvMap
-argument_list|()
-operator|.
-name|containsKey
+name|doesInvRslvMapContain
 argument_list|(
 name|colDesc
 operator|.

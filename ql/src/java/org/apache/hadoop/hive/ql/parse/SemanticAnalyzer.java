@@ -72828,7 +72828,7 @@ name|RowResolver
 name|rr
 parameter_list|)
 block|{
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -72863,6 +72863,9 @@ literal|"TOK_SELECTDI"
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Note: this will determine the order of columns in the result. For now, the columns for each
+comment|//       table will be together; the order of the tables, as well as the columns within each
+comment|//       table, is deterministic, but undefined - RR stores them in the order of addition.
 for|for
 control|(
 name|String

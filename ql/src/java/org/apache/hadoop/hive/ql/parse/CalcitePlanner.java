@@ -19689,6 +19689,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// TODO: this can overwrite the mapping. Should this be allowed?
 name|out_rwsch
 operator|.
 name|put
