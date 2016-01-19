@@ -75,6 +75,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|exec
 operator|.
 name|JoinUtil
@@ -349,7 +365,8 @@ decl_stmt|;
 comment|//---------------------------------------------------------------------------
 comment|// Pass-thru constructors.
 comment|//
-specifier|public
+comment|/** Kryo ctor. */
+specifier|protected
 name|VectorMapJoinLeftSemiStringOperator
 parameter_list|()
 block|{
@@ -360,6 +377,22 @@ block|}
 specifier|public
 name|VectorMapJoinLeftSemiStringOperator
 parameter_list|(
+name|CompilationOpContext
+name|ctx
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|ctx
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|VectorMapJoinLeftSemiStringOperator
+parameter_list|(
+name|CompilationOpContext
+name|ctx
+parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|,
@@ -371,6 +404,8 @@ name|HiveException
 block|{
 name|super
 argument_list|(
+name|ctx
+argument_list|,
 name|vContext
 argument_list|,
 name|conf

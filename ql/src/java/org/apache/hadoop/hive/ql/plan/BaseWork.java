@@ -523,6 +523,17 @@ name|getAllRootOperators
 parameter_list|()
 function_decl|;
 specifier|public
+specifier|abstract
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|getAnyRootOperator
+parameter_list|()
+function_decl|;
+specifier|public
 name|Set
 argument_list|<
 name|Operator

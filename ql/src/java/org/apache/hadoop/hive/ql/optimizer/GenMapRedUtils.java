@@ -299,6 +299,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|Context
 import|;
 end_import
@@ -6334,6 +6350,9 @@ specifier|static
 name|TableScanOperator
 name|createTemporaryTableScanOperator
 parameter_list|(
+name|CompilationOpContext
+name|ctx
+parameter_list|,
 name|RowSchema
 name|rowSchema
 parameter_list|)
@@ -6348,6 +6367,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|TableScanDesc
 argument_list|(
@@ -6580,6 +6601,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|parent
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|desc
 argument_list|,
 name|parent
@@ -6616,6 +6642,11 @@ name|tableScanOp
 init|=
 name|createTemporaryTableScanOperator
 argument_list|(
+name|parent
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|parent
 operator|.
 name|getSchema
@@ -7694,6 +7725,11 @@ name|GenMapRedUtils
 operator|.
 name|createTemporaryTableScanOperator
 argument_list|(
+name|fsInput
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|inputRS
 argument_list|)
 decl_stmt|;
@@ -8024,6 +8060,11 @@ name|getNumDPCols
 argument_list|()
 operator|>
 literal|0
+argument_list|,
+name|fsInput
+operator|.
+name|getCompilationOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -9114,7 +9155,7 @@ return|return
 name|cplan
 return|;
 block|}
-comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param inputFormatClass    * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
+comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param ctx    * @param inputFormatClass    * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
 specifier|public
 specifier|static
 name|MapWork
@@ -9128,6 +9169,9 @@ name|finalName
 parameter_list|,
 name|boolean
 name|hasDynamicPartitions
+parameter_list|,
+name|CompilationOpContext
+name|ctx
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -9536,6 +9580,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|fmd
 argument_list|)
 expr_stmt|;

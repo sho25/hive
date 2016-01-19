@@ -1786,6 +1786,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|r
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 operator|(
 name|ReduceSinkDesc
 operator|)

@@ -470,7 +470,12 @@ name|getWork
 argument_list|()
 operator|.
 name|initializeForFetch
+argument_list|(
+name|ctx
+operator|.
+name|getOpContext
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 name|ParseContext

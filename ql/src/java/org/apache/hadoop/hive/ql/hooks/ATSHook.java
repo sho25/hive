@@ -857,6 +857,8 @@ argument_list|,
 name|plan
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|String

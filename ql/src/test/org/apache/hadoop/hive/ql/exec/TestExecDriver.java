@@ -185,6 +185,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|DriverContext
 import|;
 end_import
@@ -735,6 +751,13 @@ specifier|static
 name|FileSystem
 name|fs
 decl_stmt|;
+specifier|private
+specifier|static
+name|CompilationOpContext
+name|ctx
+init|=
+literal|null
+decl_stmt|;
 static|static
 block|{
 try|try
@@ -1223,6 +1246,12 @@ operator|.
 name|getMapRedWork
 argument_list|()
 expr_stmt|;
+name|ctx
+operator|=
+operator|new
+name|CompilationOpContext
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
@@ -1670,6 +1699,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -1748,6 +1779,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -1935,6 +1968,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -2056,6 +2091,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -2236,6 +2273,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -2362,6 +2401,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -2557,6 +2598,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -2629,6 +2672,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -2782,6 +2827,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -2949,6 +2996,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -3179,6 +3228,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -3377,6 +3428,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -3537,6 +3590,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -3710,6 +3765,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|PlanUtils
 operator|.
 name|getReduceSinkDesc
@@ -3940,6 +3997,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 operator|new
 name|FileSinkDesc
 argument_list|(
@@ -4120,6 +4179,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|dctx
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|int

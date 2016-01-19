@@ -155,6 +155,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|Driver
 import|;
 end_import
@@ -1082,7 +1098,11 @@ name|scriptOperator
 init|=
 operator|new
 name|ScriptOperator
+argument_list|(
+operator|new
+name|CompilationOpContext
 argument_list|()
+argument_list|)
 decl_stmt|;
 comment|//Environment Variables name
 name|assertEquals
@@ -1391,7 +1411,11 @@ name|scriptOperator
 init|=
 operator|new
 name|ScriptOperator
+argument_list|(
+operator|new
+name|CompilationOpContext
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|Configuration
 name|hconf
@@ -1643,6 +1667,10 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+operator|new
+name|CompilationOpContext
+argument_list|()
+argument_list|,
 name|SelectDesc
 operator|.
 name|class
@@ -2217,6 +2245,13 @@ name|pd
 argument_list|)
 expr_stmt|;
 comment|// initialize aliasToWork
+name|CompilationOpContext
+name|ctx
+init|=
+operator|new
+name|CompilationOpContext
+argument_list|()
+decl_stmt|;
 name|CollectDesc
 name|cd
 init|=
@@ -2241,6 +2276,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|CollectDesc
 operator|.
 name|class
@@ -2263,6 +2300,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|ctx
+argument_list|,
 name|CollectDesc
 operator|.
 name|class
@@ -2364,7 +2403,11 @@ name|mo
 init|=
 operator|new
 name|MapOperator
+argument_list|(
+operator|new
+name|CompilationOpContext
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|mo
 operator|.

@@ -1999,6 +1999,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|parentRS
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 operator|(
 name|ReduceSinkDesc
 operator|)
@@ -2229,6 +2234,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|parentRS
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|desc
 argument_list|)
 decl_stmt|;

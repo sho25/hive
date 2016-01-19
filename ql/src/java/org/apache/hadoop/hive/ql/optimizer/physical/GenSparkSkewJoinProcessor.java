@@ -2155,6 +2155,11 @@ name|GenMapRedUtils
 operator|.
 name|createTemporaryTableScanOperator
 argument_list|(
+name|joinOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|rowSchemaList
 operator|.
 name|get
@@ -2281,6 +2286,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|joinOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|mapJoinDescriptor
 argument_list|,
 literal|null
@@ -3095,6 +3105,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|tableScan
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|desc
 argument_list|)
 decl_stmt|;
@@ -3213,6 +3228,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|tableScan
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|hashTableSinkDesc
 argument_list|)
 decl_stmt|;

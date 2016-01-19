@@ -982,6 +982,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|mapJoinOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|hashTableSinkDesc
 argument_list|)
 decl_stmt|;
@@ -1415,6 +1420,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|parent
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|desc
 argument_list|)
 decl_stmt|;

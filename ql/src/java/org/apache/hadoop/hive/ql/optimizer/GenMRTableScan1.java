@@ -1429,6 +1429,11 @@ argument_list|,
 literal|null
 argument_list|,
 name|driverCxt
+argument_list|,
+name|op
+operator|.
+name|getCompilationOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|psTask

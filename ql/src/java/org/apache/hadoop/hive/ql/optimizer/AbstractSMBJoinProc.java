@@ -1200,7 +1200,12 @@ name|dummyStoreOp
 init|=
 operator|new
 name|DummyStoreOperator
+argument_list|(
+name|par
+operator|.
+name|getCompilationOpContext
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|par
 operator|.

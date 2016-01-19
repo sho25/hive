@@ -1221,6 +1221,11 @@ argument_list|,
 literal|null
 argument_list|,
 name|driverCxt
+argument_list|,
+name|tableScan
+operator|.
+name|getCompilationOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|partialScanTask

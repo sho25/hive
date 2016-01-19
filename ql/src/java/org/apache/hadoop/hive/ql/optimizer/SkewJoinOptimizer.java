@@ -1558,6 +1558,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|currOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 operator|new
 name|UnionDesc
 argument_list|()
@@ -1620,6 +1625,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|currOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 operator|new
 name|SelectDesc
 argument_list|(

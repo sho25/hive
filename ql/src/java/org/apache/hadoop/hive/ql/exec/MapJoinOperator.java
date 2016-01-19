@@ -203,6 +203,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|HashTableLoaderFactory
 import|;
 end_import
@@ -963,10 +979,28 @@ name|firstSmallTable
 decl_stmt|;
 comment|// The first small table;
 comment|// Only this table has spilled big table rows
-specifier|public
+comment|/** Kryo ctor. */
+specifier|protected
 name|MapJoinOperator
 parameter_list|()
-block|{   }
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|MapJoinOperator
+parameter_list|(
+name|CompilationOpContext
+name|ctx
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|ctx
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|MapJoinOperator
 parameter_list|(

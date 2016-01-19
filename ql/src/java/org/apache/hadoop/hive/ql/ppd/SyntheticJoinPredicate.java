@@ -927,6 +927,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|parent
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|filterDesc
 argument_list|,
 operator|new

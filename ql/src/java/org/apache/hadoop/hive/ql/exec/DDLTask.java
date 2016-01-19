@@ -775,6 +775,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|CompilationOpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|Context
 import|;
 end_import
@@ -3648,6 +3664,9 @@ name|queryPlan
 parameter_list|,
 name|DriverContext
 name|ctx
+parameter_list|,
+name|CompilationOpContext
+name|opContext
 parameter_list|)
 block|{
 name|super
@@ -3659,6 +3678,8 @@ argument_list|,
 name|queryPlan
 argument_list|,
 name|ctx
+argument_list|,
+name|opContext
 argument_list|)
 expr_stmt|;
 comment|// Pick the formatter to use to display the results.  Either the
@@ -4871,6 +4892,8 @@ argument_list|(
 name|db
 argument_list|,
 name|mergeFilesDesc
+argument_list|,
+name|driverContext
 argument_list|)
 return|;
 block|}
@@ -5355,6 +5378,9 @@ name|db
 parameter_list|,
 name|AlterTablePartMergeFilesDesc
 name|mergeFilesDesc
+parameter_list|,
+name|DriverContext
+name|driverContext
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5613,6 +5639,17 @@ name|getOutputDir
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|CompilationOpContext
+name|opContext
+init|=
+name|driverContext
+operator|.
+name|getCtx
+argument_list|()
+operator|.
+name|getOpContext
+argument_list|()
+decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -5625,6 +5662,8 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|opContext
+argument_list|,
 name|fmd
 argument_list|)
 decl_stmt|;
@@ -5780,6 +5819,8 @@ name|getQueryPlan
 argument_list|()
 argument_list|,
 name|driverCxt
+argument_list|,
+name|opContext
 argument_list|)
 expr_stmt|;
 name|int
@@ -26437,6 +26478,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|driverCxt
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|taskExec

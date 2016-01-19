@@ -3404,6 +3404,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|fileSink
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|desc
 argument_list|)
 decl_stmt|;

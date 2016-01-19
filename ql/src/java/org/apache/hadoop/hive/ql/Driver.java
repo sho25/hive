@@ -1866,11 +1866,7 @@ name|void
 name|init
 parameter_list|()
 block|{
-name|Operator
-operator|.
-name|resetId
-argument_list|()
-expr_stmt|;
+comment|// Nothing for now.
 block|}
 comment|/**    * Return the status information about the Map-Reduce cluster    */
 specifier|public
@@ -3328,6 +3324,11 @@ argument_list|,
 name|plan
 argument_list|,
 literal|null
+argument_list|,
+name|ctx
+operator|.
+name|getOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3743,6 +3744,11 @@ argument_list|,
 name|plan
 argument_list|,
 literal|null
+argument_list|,
+name|ctx
+operator|.
+name|getOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|ByteArrayOutputStream
@@ -10629,6 +10635,11 @@ argument_list|,
 name|plan
 argument_list|,
 name|cxt
+argument_list|,
+name|ctx
+operator|.
+name|getOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|TaskResult
@@ -11067,6 +11078,11 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+name|ctx
+operator|.
+name|getOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

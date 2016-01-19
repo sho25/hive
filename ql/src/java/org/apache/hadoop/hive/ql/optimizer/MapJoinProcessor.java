@@ -991,6 +991,20 @@ name|TypeInfoFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|clearspring
+operator|.
+name|analytics
+operator|.
+name|util
+operator|.
+name|Lists
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of one of the rule-based map join optimization. User passes hints to specify  * map-joins and during this optimization, all user specified map joins are converted to MapJoins -  * the reduce sink operator above the join are converted to map sink operators. In future, once  * statistics are implemented, this transformation can also be done based on costs.  */
 end_comment
@@ -2533,6 +2547,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|op
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|mapJoinDescriptor
 argument_list|,
 operator|new
@@ -2867,6 +2886,11 @@ name|OperatorFactory
 operator|.
 name|getAndMakeChild
 argument_list|(
+name|smbJoinOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 name|mapJoinDesc
 argument_list|,
 name|joinRS

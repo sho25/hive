@@ -1674,6 +1674,11 @@ name|OperatorFactory
 operator|.
 name|get
 argument_list|(
+name|joinOp
+operator|.
+name|getCompilationOpContext
+argument_list|()
+argument_list|,
 operator|new
 name|CommonMergeJoinDesc
 argument_list|(
@@ -2094,7 +2099,12 @@ name|dummyStoreOp
 init|=
 operator|new
 name|TezDummyStoreOperator
+argument_list|(
+name|mergeJoinOp
+operator|.
+name|getCompilationOpContext
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|dummyStoreOp
 operator|.
