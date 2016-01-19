@@ -110,6 +110,10 @@ specifier|public
 interface|interface
 name|SparkJobStatus
 block|{
+name|String
+name|getAppID
+parameter_list|()
+function_decl|;
 name|int
 name|getJobId
 parameter_list|()
