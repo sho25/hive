@@ -5376,12 +5376,7 @@ name|Utilities
 operator|.
 name|replaceTaskIdFromFilename
 argument_list|(
-name|Utilities
-operator|.
-name|getTaskId
-argument_list|(
-name|hconf
-argument_list|)
+name|taskId
 argument_list|,
 name|buckNum
 argument_list|)
@@ -6574,21 +6569,6 @@ block|}
 return|return;
 block|}
 name|String
-name|taskID
-init|=
-name|Utilities
-operator|.
-name|getTaskIdFromFilename
-argument_list|(
-name|Utilities
-operator|.
-name|getTaskId
-argument_list|(
-name|hconf
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|String
 name|spSpec
 init|=
 name|conf
@@ -6648,15 +6628,16 @@ name|PARTITION_BUCKET_SORTED
 argument_list|)
 condition|)
 block|{
+name|String
 name|taskID
-operator|=
+init|=
 name|Utilities
 operator|.
 name|getTaskIdFromFilename
 argument_list|(
 name|fspKey
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|// if length of (prefix/ds=__HIVE_DEFAULT_PARTITION__/000000_0) is greater than max key prefix
 comment|// and if (prefix/ds=10/000000_0) is less than max key prefix, then former will get hashed
 comment|// to a smaller prefix (MD5hash/000000_0) and later will stored as such in staging stats table.
