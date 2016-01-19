@@ -12210,6 +12210,17 @@ operator|.
 name|getNullSafes
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|nullSafes
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 for|for
 control|(
 name|boolean
