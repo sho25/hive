@@ -6741,7 +6741,7 @@ name|HIVE_AUTHORIZATION_MANAGER
 argument_list|(
 literal|"hive.security.authorization.manager"
 argument_list|,
-literal|"org.apache.hadoop.hive.ql.security.authorization.DefaultHiveAuthorizationProvider"
+literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
 argument_list|,
 literal|"The Hive client authorization manager class name. The user defined authorization class should implement \n"
 operator|+

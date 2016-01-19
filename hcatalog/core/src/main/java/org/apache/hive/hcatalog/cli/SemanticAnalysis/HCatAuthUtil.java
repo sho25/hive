@@ -61,9 +61,49 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|DefaultHiveAuthorizationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -72,6 +112,21 @@ specifier|final
 class|class
 name|HCatAuthUtil
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|HCatAuthUtil
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 name|boolean
@@ -81,13 +136,9 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-comment|// the session state getAuthorizer can return null even if authorization is
-comment|// enabled if the V2 api of authorizer in use.
-comment|// The additional authorization checks happening in hcatalog are designed to
-comment|// work with  storage based authorization (on client side). It should not try doing
-comment|// additional checks if a V2 authorizer is in use. The reccomended configuration is to
-comment|// use storage based authorization in metastore server
-return|return
+if|if
+condition|(
+operator|!
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -100,7 +151,21 @@ name|ConfVars
 operator|.
 name|HIVE_AUTHORIZATION_ENABLED
 argument_list|)
-operator|&&
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|// If the V2 api of authorizer in use, the session state getAuthorizer return null.
+comment|// Here we disable authorization if we use V2 api or the DefaultHiveAuthorizationProvider
+comment|// The additional authorization checks happening in hcatalog are designed to
+comment|// work with  storage based authorization (on client side). It should not try doing
+comment|// additional checks if a V2 authorizer or DefaultHiveAuthorizationProvider is in use.
+comment|// The recommended configuration is to use storage based authorization in metastore server.
+comment|// However, if user define a custom V1 authorization, it will be honored.
+if|if
+condition|(
 name|SessionState
 operator|.
 name|get
@@ -108,8 +173,45 @@ argument_list|()
 operator|.
 name|getAuthorizer
 argument_list|()
-operator|!=
+operator|==
 literal|null
+operator|||
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
+argument_list|)
+operator|==
+name|DefaultHiveAuthorizationProvider
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Metastore authorizer is skipped for V2 authorizer or"
+operator|+
+literal|" DefaultHiveAuthorizationProvider"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+return|return
+literal|true
 return|;
 block|}
 block|}

@@ -4629,6 +4629,18 @@ condition|)
 block|{
 return|return;
 block|}
+name|db
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|set
+argument_list|(
+literal|"hive.metastore.filter.hook"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
+argument_list|)
+expr_stmt|;
 comment|// Delete any tables other than the source tables
 comment|// and any databases other than the default database.
 for|for
