@@ -9826,6 +9826,15 @@ argument_list|,
 literal|"llap.daemon.communicator.num.threads"
 argument_list|)
 block|,
+name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+argument_list|(
+literal|"hive.llap.daemon.allow.permanent.fns"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_NODE_REENABLE_MIN_TIMEOUT_MS
 argument_list|(
 literal|"hive.llap.task.scheduler.node.reenable.min.timeout.ms"

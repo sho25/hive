@@ -524,8 +524,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query
 argument_list|,
 literal|false
@@ -764,8 +762,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query
 argument_list|,
 literal|false
@@ -1062,8 +1058,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query1
 argument_list|,
 literal|false
@@ -1083,8 +1077,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query2
 argument_list|,
 literal|false
@@ -1435,8 +1427,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query1
 argument_list|,
 literal|false
@@ -1456,8 +1446,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query2
 argument_list|,
 literal|false
@@ -1909,8 +1897,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query1
 argument_list|,
 literal|false
@@ -1930,8 +1916,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query2
 argument_list|,
 literal|false
@@ -1951,8 +1935,6 @@ name|ss
 operator|.
 name|resolveAndDownload
 argument_list|(
-name|t
-argument_list|,
 name|query3
 argument_list|,
 literal|false

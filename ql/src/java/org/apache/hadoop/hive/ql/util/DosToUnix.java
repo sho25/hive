@@ -85,6 +85,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|InputStreamReader
 import|;
 end_import
@@ -103,7 +113,7 @@ name|File
 name|windowsScriptFile
 parameter_list|)
 throws|throws
-name|Exception
+name|IOException
 block|{
 name|String
 name|windowsScriptFilename

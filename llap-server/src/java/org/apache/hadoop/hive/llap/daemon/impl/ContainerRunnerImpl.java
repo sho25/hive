@@ -990,6 +990,9 @@ name|metrics
 parameter_list|,
 name|AMReporter
 name|amReporter
+parameter_list|,
+name|ClassLoader
+name|classLoader
 parameter_list|)
 block|{
 name|super
@@ -1081,6 +1084,8 @@ argument_list|,
 name|waitQueueSchedulerClassName
 argument_list|,
 name|enablePreemption
+argument_list|,
+name|classLoader
 argument_list|)
 expr_stmt|;
 name|addIfService

@@ -445,6 +445,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|util
+operator|.
+name|ResourceDownloader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|util
 operator|.
 name|StringUtils
@@ -1500,10 +1518,9 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|SessionState
+name|ResourceDownloader
 operator|.
-name|canDownloadResource
+name|isFileUri
 argument_list|(
 name|resUri
 argument_list|)
@@ -1663,7 +1680,7 @@ return|return
 name|converted
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|SessionState
 operator|.
@@ -1673,8 +1690,6 @@ parameter_list|(
 name|ResourceType
 name|rt
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 switch|switch
 condition|(
@@ -1714,7 +1729,7 @@ return|;
 default|default:
 throw|throw
 operator|new
-name|HiveException
+name|AssertionError
 argument_list|(
 literal|"Unexpected resource type "
 operator|+

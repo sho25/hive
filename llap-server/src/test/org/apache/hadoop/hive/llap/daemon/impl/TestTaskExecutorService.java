@@ -1306,6 +1306,14 @@ argument_list|,
 name|waitQueueComparatorClassName
 argument_list|,
 name|enablePreemption
+argument_list|,
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getContextClassLoader
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

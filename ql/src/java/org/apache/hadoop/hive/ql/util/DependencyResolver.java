@@ -15,7 +15,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|session
+name|util
 package|;
 end_package
 
