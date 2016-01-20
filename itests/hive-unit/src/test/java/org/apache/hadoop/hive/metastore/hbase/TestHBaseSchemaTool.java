@@ -3504,7 +3504,7 @@ literal|"\"createTime\":0,\"lastAccessTime\":0,\"retention\":0,"
 operator|+
 literal|"\"partitionKeys\":[{\"name\":\"pcol1\",\"type\":\"string\",\"comment\":\"\"},"
 operator|+
-literal|"{\"name\":\"pcol2\",\"type\":\"string\",\"comment\":\"\"}],\"parameters\":{},"
+literal|"{\"name\":\"pcol2\",\"type\":\"string\",\"comment\":\"\"}],\"parameters\":{\"COLUMN_STATS_ACCURATE\":\"{\\\"COLUMN_STATS\\\":{\\\"col1\\\":\\\"true\\\",\\\"col2\\\":\\\"true\\\"}}\"},"
 operator|+
 literal|"\"tableType\":\"\"} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats: column "
 operator|+
@@ -3922,7 +3922,7 @@ name|assertEquals
 argument_list|(
 literal|"{\"values\":[\"c\",\"d\"],\"dbName\":\"db0\",\"tableName\":\"tab1\","
 operator|+
-literal|"\"createTime\":0,\"lastAccessTime\":0,\"parameters\":{}} sdHash: qQTgZAi5VzgpozzFGmIVTQ "
+literal|"\"createTime\":0,\"lastAccessTime\":0,\"parameters\":{\"COLUMN_STATS_ACCURATE\":\"{\\\"COLUMN_STATS\\\":{\\\"col1\\\":\\\"true\\\",\\\"col2\\\":\\\"true\\\"}}\"}} sdHash: qQTgZAi5VzgpozzFGmIVTQ "
 operator|+
 literal|"stats: column col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
@@ -3991,7 +3991,7 @@ name|lsep
 operator|+
 literal|"{\"values\":[\"c\",\"d\"],\"dbName\":\"db0\",\"tableName\":\"tab1\",\"createTime\":0,"
 operator|+
-literal|"\"lastAccessTime\":0,\"parameters\":{}} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats: column "
+literal|"\"lastAccessTime\":0,\"parameters\":{\"COLUMN_STATS_ACCURATE\":\"{\\\"COLUMN_STATS\\\":{\\\"col1\\\":\\\"true\\\",\\\"col2\\\":\\\"true\\\"}}\"}} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats: column "
 operator|+
 literal|"col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
