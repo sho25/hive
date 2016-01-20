@@ -11108,7 +11108,7 @@ block|{
 specifier|private
 specifier|final
 name|int
-name|fileColumnCount
+name|readColumnCount
 decl_stmt|;
 specifier|private
 specifier|final
@@ -11166,13 +11166,6 @@ argument_list|(
 name|columnId
 argument_list|)
 decl_stmt|;
-name|fileColumnCount
-operator|=
-name|fileStructType
-operator|.
-name|getFieldNamesCount
-argument_list|()
-expr_stmt|;
 name|OrcProto
 operator|.
 name|Type
@@ -11188,6 +11181,23 @@ argument_list|(
 name|columnId
 argument_list|)
 decl_stmt|;
+name|readColumnCount
+operator|=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|fileStructType
+operator|.
+name|getFieldNamesCount
+argument_list|()
+argument_list|,
+name|schemaStructType
+operator|.
+name|getFieldNamesCount
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|columnId
@@ -11212,7 +11222,7 @@ else|else
 block|{
 name|resultColumnCount
 operator|=
-name|fileColumnCount
+name|readColumnCount
 expr_stmt|;
 block|}
 name|this
@@ -11222,7 +11232,7 @@ operator|=
 operator|new
 name|TreeReader
 index|[
-name|fileColumnCount
+name|readColumnCount
 index|]
 expr_stmt|;
 name|this
@@ -11232,7 +11242,7 @@ operator|=
 operator|new
 name|String
 index|[
-name|fileColumnCount
+name|readColumnCount
 index|]
 expr_stmt|;
 if|if
@@ -11251,7 +11261,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|fileColumnCount
+name|readColumnCount
 condition|;
 operator|++
 name|i
@@ -11313,7 +11323,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|fileColumnCount
+name|readColumnCount
 condition|;
 operator|++
 name|i
@@ -11554,7 +11564,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|fileColumnCount
+name|readColumnCount
 condition|;
 operator|++
 name|i
@@ -11598,7 +11608,7 @@ if|if
 condition|(
 name|resultColumnCount
 operator|>
-name|fileColumnCount
+name|readColumnCount
 condition|)
 block|{
 for|for
@@ -11606,7 +11616,7 @@ control|(
 name|int
 name|i
 init|=
-name|fileColumnCount
+name|readColumnCount
 init|;
 name|i
 operator|<
@@ -11665,7 +11675,7 @@ operator|=
 operator|new
 name|ColumnVector
 index|[
-name|fileColumnCount
+name|readColumnCount
 index|]
 expr_stmt|;
 block|}
@@ -11690,7 +11700,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|fileColumnCount
+name|readColumnCount
 condition|;
 name|i
 operator|++
@@ -11767,7 +11777,7 @@ literal|1
 operator|&&
 name|vectorColumnCount
 operator|>
-name|fileColumnCount
+name|readColumnCount
 condition|)
 block|{
 for|for
@@ -11775,7 +11785,7 @@ control|(
 name|int
 name|i
 init|=
-name|fileColumnCount
+name|readColumnCount
 init|;
 name|i
 operator|<
