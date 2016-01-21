@@ -1086,7 +1086,7 @@ condition|)
 block|{
 name|conf
 operator|.
-name|setLong
+name|set
 argument_list|(
 name|HiveConf
 operator|.
@@ -1096,10 +1096,15 @@ name|LLAP_IO_MEMORY_MAX_SIZE
 operator|.
 name|varname
 argument_list|,
+name|Long
+operator|.
+name|toString
+argument_list|(
 name|options
 operator|.
 name|getCache
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

@@ -2101,7 +2101,7 @@ name|ioMemoryBytes
 init|=
 name|HiveConf
 operator|.
-name|getLongVar
+name|getSizeVar
 argument_list|(
 name|daemonConf
 argument_list|,
