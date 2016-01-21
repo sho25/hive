@@ -2640,12 +2640,11 @@ name|partitionValidationRegex
 operator|!=
 literal|null
 operator|&&
+operator|!
 name|partitionValidationRegex
 operator|.
-name|equals
-argument_list|(
-literal|""
-argument_list|)
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|partitionValidationPattern
@@ -6606,6 +6605,8 @@ return|return
 name|tbls
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getDatabaseCount
@@ -6627,6 +6628,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getPartitionCount
@@ -6648,6 +6651,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getTableCount

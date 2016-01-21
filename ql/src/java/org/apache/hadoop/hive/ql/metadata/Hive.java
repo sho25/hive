@@ -7159,7 +7159,7 @@ name|isAcid
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    * @throws JSONException     */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    * @throws JSONException    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -8176,7 +8176,7 @@ return|return
 name|skewedColValueLocationMaps
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    * @throws JSONException     */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    * @throws JSONException    */
 specifier|public
 name|Map
 argument_list|<
@@ -8286,8 +8286,6 @@ argument_list|(
 name|loadPath
 argument_list|,
 name|numDP
-operator|+
-literal|1
 argument_list|,
 name|fs
 argument_list|)
@@ -8301,42 +8299,6 @@ range|:
 name|leafStatus
 control|)
 block|{
-try|try
-block|{
-name|validatePartitionNameCharacters
-argument_list|(
-name|Warehouse
-operator|.
-name|getPartValuesFromPartName
-argument_list|(
-name|s
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getParent
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|MetaException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 name|validPartitions
 operator|.
 name|add
@@ -8344,9 +8306,6 @@ argument_list|(
 name|s
 operator|.
 name|getPath
-argument_list|()
-operator|.
-name|getParent
 argument_list|()
 argument_list|)
 expr_stmt|;

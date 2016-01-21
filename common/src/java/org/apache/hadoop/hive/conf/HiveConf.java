@@ -1361,6 +1361,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_CLIENT_SOCKET_TIMEOUT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
 block|}
 decl_stmt|;
 static|static

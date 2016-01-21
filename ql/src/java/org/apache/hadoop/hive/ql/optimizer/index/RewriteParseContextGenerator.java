@@ -643,12 +643,7 @@ decl_stmt|;
 name|ParseContext
 name|subPCtx
 init|=
-operator|(
-operator|(
-name|SemanticAnalyzer
-operator|)
 name|sem
-operator|)
 operator|.
 name|getParseContext
 argument_list|()
@@ -660,12 +655,7 @@ argument_list|(
 name|ctx
 argument_list|)
 expr_stmt|;
-operator|(
-operator|(
-name|SemanticAnalyzer
-operator|)
 name|sem
-operator|)
 operator|.
 name|initParseCtx
 argument_list|(
