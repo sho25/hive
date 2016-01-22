@@ -7680,6 +7680,15 @@ operator|+
 literal|"the value of hive.server2.webui.host or the correct host name."
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_MAX_HISTORIC_QUERIES
+argument_list|(
+literal|"hive.server2.webui.max.historic.queries"
+argument_list|,
+literal|25
+argument_list|,
+literal|"The maximum number of past queries to show in HiverSever2 WebUI."
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
 argument_list|(

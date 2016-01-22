@@ -1819,6 +1819,11 @@ specifier|private
 name|String
 name|operationId
 decl_stmt|;
+comment|// For WebUI.  Kept alive after queryPlan is freed.
+specifier|private
+name|String
+name|savedQueryString
+decl_stmt|;
 specifier|private
 name|boolean
 name|checkConcurrency
@@ -2747,6 +2752,12 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|savedQueryString
+operator|=
+name|queryStr
+expr_stmt|;
 comment|//holder for parent command type/string when executing reentrant queries
 name|QueryState
 name|queryState
@@ -11414,6 +11425,21 @@ parameter_list|()
 block|{
 return|return
 name|errorMessage
+return|;
+block|}
+specifier|public
+name|String
+name|getQueryString
+parameter_list|()
+block|{
+return|return
+name|savedQueryString
+operator|==
+literal|null
+condition|?
+literal|"Unknown"
+else|:
+name|savedQueryString
 return|;
 block|}
 comment|/**    * Set the HS2 operation handle's guid string    * @param opId base64 encoded guid string    */
