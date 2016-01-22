@@ -113,6 +113,12 @@ name|String
 name|getServiceDescription
 parameter_list|()
 function_decl|;
+comment|/**    * This is incremented each time the service is performed.  Can be useful to    * check if serivce is still alive.    */
+specifier|public
+name|int
+name|getIsAliveCounter
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

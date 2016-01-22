@@ -1210,6 +1210,13 @@ operator|+
 literal|", assuming it was dropped"
 argument_list|)
 expr_stmt|;
+name|txnHandler
+operator|.
+name|markCleaned
+argument_list|(
+name|ci
+argument_list|)
+expr_stmt|;
 return|return;
 block|}
 name|Partition
@@ -1253,6 +1260,13 @@ name|getFullPartitionName
 argument_list|()
 operator|+
 literal|", assuming it was dropped"
+argument_list|)
+expr_stmt|;
+name|txnHandler
+operator|.
+name|markCleaned
+argument_list|(
+name|ci
 argument_list|)
 expr_stmt|;
 return|return;
@@ -1378,6 +1392,13 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+name|txnHandler
+operator|.
+name|markCleaned
+argument_list|(
+name|ci
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1389,7 +1410,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Caught exception when cleaning, unable to complete cleaning "
+literal|"Caught exception when cleaning, unable to complete cleaning of "
+operator|+
+name|ci
+operator|+
+literal|" "
 operator|+
 name|StringUtils
 operator|.
@@ -1399,13 +1424,9 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-finally|finally
-block|{
-comment|// We need to clean this out one way or another.
 name|txnHandler
 operator|.
-name|markCleaned
+name|markFailed
 argument_list|(
 name|ci
 argument_list|)

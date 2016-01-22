@@ -585,6 +585,7 @@ comment|// Wrap the inner parts of the loop in a catch throwable so that any err
 comment|// don't doom the entire thread.
 try|try
 block|{
+comment|//todo: add method to only get current i.e. skip history - more efficient
 name|ShowCompactResponse
 name|currentCompactions
 init|=
@@ -801,6 +802,33 @@ argument_list|)
 expr_stmt|;
 continue|continue;
 block|}
+if|if
+condition|(
+name|txnHandler
+operator|.
+name|checkFailedCompactions
+argument_list|(
+name|ci
+argument_list|)
+condition|)
+block|{
+comment|//todo: make 'a' state entry in completed_compactions
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Will not initiate compaction for "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
+operator|+
+literal|" since last 3 attempts to compact it failed."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 comment|// Figure out who we should run the file operations as
 name|Partition
 name|p
@@ -905,9 +933,6 @@ argument_list|(
 literal|"Caught exception while trying to determine if we should compact "
 operator|+
 name|ci
-operator|.
-name|getFullPartitionName
-argument_list|()
 operator|+
 literal|".  Marking clean to avoid repeated failures, "
 operator|+
@@ -923,7 +948,7 @@ argument_list|)
 expr_stmt|;
 name|txnHandler
 operator|.
-name|markCleaned
+name|markFailed
 argument_list|(
 name|ci
 argument_list|)
@@ -1979,6 +2004,10 @@ operator|+
 name|rqst
 argument_list|)
 expr_stmt|;
+name|ci
+operator|.
+name|id
+operator|=
 name|txnHandler
 operator|.
 name|compact

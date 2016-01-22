@@ -4403,6 +4403,17 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVETESTMODEFAILCOMPACTION
+argument_list|(
+literal|"hive.test.fail.compaction"
+argument_list|,
+literal|false
+argument_list|,
+literal|"For testing only.  Will cause CompactorMR to fail."
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"
@@ -6470,6 +6481,27 @@ operator|+
 literal|"a major compaction."
 argument_list|)
 block|,
+name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
+argument_list|(
+literal|"hive.compactor.initiator.failed.compacts.threshold"
+argument_list|,
+literal|2
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|1
+argument_list|,
+literal|20
+argument_list|)
+argument_list|,
+literal|"Number of consecutive compaction failures (per table/partition) "
+operator|+
+literal|"after which automatic compactions will not be scheduled any more.  Note that this must be less "
+operator|+
+literal|"than hive.compactor.history.retention.failed."
+argument_list|)
+block|,
 name|HIVE_COMPACTOR_CLEANER_RUN_INTERVAL
 argument_list|(
 literal|"hive.compactor.cleaner.run.interval"
@@ -6496,6 +6528,80 @@ argument_list|,
 literal|"Used to specify name of Hadoop queue to which\n"
 operator|+
 literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
+argument_list|)
+block|,
+name|COMPACTOR_HISTORY_RETENTION_SUCCEEDED
+argument_list|(
+literal|"hive.compactor.history.retention.succeeded"
+argument_list|,
+literal|3
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0
+argument_list|,
+literal|100
+argument_list|)
+argument_list|,
+literal|"Determines how many successful compaction records will be "
+operator|+
+literal|"retained in compaction history for a given table/partition."
+argument_list|)
+block|,
+name|COMPACTOR_HISTORY_RETENTION_FAILED
+argument_list|(
+literal|"hive.compactor.history.retention.failed"
+argument_list|,
+literal|3
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0
+argument_list|,
+literal|100
+argument_list|)
+argument_list|,
+literal|"Determines how many failed compaction records will be "
+operator|+
+literal|"retained in compaction history for a given table/partition."
+argument_list|)
+block|,
+name|COMPACTOR_HISTORY_RETENTION_ATTEMPTED
+argument_list|(
+literal|"hive.compactor.history.retention.attempted"
+argument_list|,
+literal|2
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0
+argument_list|,
+literal|100
+argument_list|)
+argument_list|,
+literal|"Determines how many attempted compaction records will be "
+operator|+
+literal|"retained in compaction history for a given table/partition."
+argument_list|)
+block|,
+name|COMPACTOR_HISTORY_REAPER_INTERVAL
+argument_list|(
+literal|"hive.compactor.history.reaper.interval"
+argument_list|,
+literal|"2m"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Determines how often compaction history reaper runs"
 argument_list|)
 block|,
 name|HIVE_TIMEDOUT_TXN_REAPER_START

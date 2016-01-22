@@ -424,7 +424,11 @@ literal|" CQ_START bigint,"
 operator|+
 literal|" CQ_RUN_AS varchar(128),"
 operator|+
-literal|" CQ_HIGHEST_TXN_ID bigint)"
+literal|" CQ_HIGHEST_TXN_ID bigint,"
+operator|+
+literal|" CQ_META_INFO varchar(2048) for bit data,"
+operator|+
+literal|" CQ_HADOOP_JOB_ID varchar(32))"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -439,6 +443,39 @@ operator|.
 name|execute
 argument_list|(
 literal|"INSERT INTO NEXT_COMPACTION_QUEUE_ID VALUES(1)"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE COMPLETED_COMPACTIONS ("
+operator|+
+literal|" CC_ID bigint PRIMARY KEY,"
+operator|+
+literal|" CC_DATABASE varchar(128) NOT NULL,"
+operator|+
+literal|" CC_TABLE varchar(128) NOT NULL,"
+operator|+
+literal|" CC_PARTITION varchar(767),"
+operator|+
+literal|" CC_STATE char(1) NOT NULL,"
+operator|+
+literal|" CC_TYPE char(1) NOT NULL,"
+operator|+
+literal|" CC_WORKER_ID varchar(128),"
+operator|+
+literal|" CC_START bigint,"
+operator|+
+literal|" CC_END bigint,"
+operator|+
+literal|" CC_RUN_AS varchar(128),"
+operator|+
+literal|" CC_HIGHEST_TXN_ID bigint,"
+operator|+
+literal|" CC_META_INFO varchar(2048) for bit data,"
+operator|+
+literal|" CC_HADOOP_JOB_ID varchar(32))"
 argument_list|)
 expr_stmt|;
 name|conn
@@ -624,6 +661,13 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"NEXT_COMPACTION_QUEUE_ID"
+argument_list|)
+expr_stmt|;
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"COMPLETED_COMPACTIONS"
 argument_list|)
 expr_stmt|;
 name|conn

@@ -25,24 +25,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|txn
-operator|.
-name|ValidCompactorTxnList
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -498,6 +480,8 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|//todo: this doesn;t check if compaction is already running (even though Initiator does but we
+comment|// don't go  through Initiator for user initiated compactions)
 annotation|@
 name|Override
 specifier|public
@@ -1065,9 +1049,6 @@ argument_list|(
 literal|"Caught exception while trying to compact "
 operator|+
 name|ci
-operator|.
-name|getFullPartitionName
-argument_list|()
 operator|+
 literal|".  Marking clean to avoid repeated failures, "
 operator|+
@@ -1081,7 +1062,7 @@ argument_list|)
 expr_stmt|;
 name|txnHandler
 operator|.
-name|markCleaned
+name|markFailed
 argument_list|(
 name|ci
 argument_list|)
