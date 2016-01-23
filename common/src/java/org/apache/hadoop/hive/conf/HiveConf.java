@@ -7710,6 +7710,17 @@ argument_list|,
 literal|"The jitter for Tez session lifetime; prevents all the sessions from restarting at once."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_SESSION_MAX_INIT_THREADS
+argument_list|(
+literal|"hive.server2.tez.sessions.init.threads"
+argument_list|,
+literal|16
+argument_list|,
+literal|"If hive.server2.tez.initialize.default.sessions is enabled, the maximum number of\n"
+operator|+
+literal|"threads to use to initialize the default sessions."
+argument_list|)
+block|,
 comment|// Operation log configuration
 name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
 argument_list|(
