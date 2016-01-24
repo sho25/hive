@@ -1966,6 +1966,8 @@ operator|.
 name|getProgress
 argument_list|()
 expr_stmt|;
+comment|// TODO HIVE-12449. Make use of progress notifications once Hive starts sending them out.
+comment|// progressNotified = task.getAndClearProgressNotification();
 if|if
 condition|(
 name|sendCounters
@@ -1997,6 +1999,8 @@ argument_list|,
 name|progress
 argument_list|,
 name|stats
+argument_list|,
+literal|true
 argument_list|)
 return|;
 block|}
