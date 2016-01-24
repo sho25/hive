@@ -458,12 +458,11 @@ specifier|final
 name|ScheduledExecutorService
 name|executorService
 decl_stmt|;
-comment|// TODO Make use if the query id for cachin when this is available.
 specifier|private
 specifier|final
 name|ConcurrentHashMap
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|,
 name|QueryInfo
 argument_list|>
@@ -496,12 +495,12 @@ comment|// is processed after a dagCompletes.
 comment|// May need to keep track of completed dags for a certain time duration to avoid this.
 comment|// Alternately - send in an explicit dag start message before any other message is processed.
 comment|// Multiple threads communicating from a single AM gets in the way of this.
-comment|// Keeps track of completed dags. Assumes dag names are unique across AMs.
+comment|// Keeps track of completed DAGS. QueryIdentifiers need to be unique across applications.
 specifier|private
 specifier|final
 name|Set
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|>
 name|completedDagMap
 init|=
@@ -512,7 +511,7 @@ argument_list|(
 operator|new
 name|ConcurrentHashMap
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|,
 name|Boolean
 argument_list|>
@@ -532,7 +531,7 @@ specifier|private
 specifier|final
 name|ConcurrentMap
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|,
 name|ReadWriteLock
 argument_list|>
@@ -549,7 +548,7 @@ specifier|private
 specifier|final
 name|ConcurrentMap
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|,
 name|ConcurrentMap
 argument_list|<
@@ -565,17 +564,19 @@ name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|// Tracks queryId by dagName. This can only be set when config is parsed in TezProcessor,
+comment|// Tracks HiveQueryId by QueryIdentifier. This can only be set when config is parsed in TezProcessor.
 comment|// all the other existing code passes queryId equal to 0 everywhere.
+comment|// If we switch the runtime and move to parsing the payload in the AM - the actual hive queryId could
+comment|// be sent over the wire from the AM, and will take the place of AppId+dagId in QueryIdentifier.
 specifier|private
 specifier|final
 name|ConcurrentHashMap
 argument_list|<
-name|String
+name|QueryIdentifier
 argument_list|,
 name|String
 argument_list|>
-name|dagNameToQueryId
+name|queryIdentifierToHiveQueryId
 init|=
 operator|new
 name|ConcurrentHashMap
@@ -694,12 +695,12 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Register a new fragment for a specific query    * @param queryId    * @param appIdString    * @param dagName    * @param dagIdentifier    * @param vertexName    * @param fragmentNumber    * @param attemptNumber    * @param user    * @throws IOException    */
+comment|/**    * Register a new fragment for a specific query    * @param queryIdentifier    * @param appIdString    * @param dagName    * @param dagIdentifier    * @param vertexName    * @param fragmentNumber    * @param attemptNumber    * @param user    * @throws IOException    */
 name|QueryFragmentInfo
 name|registerFragment
 parameter_list|(
-name|String
-name|queryId
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|,
 name|String
 name|appIdString
@@ -733,7 +734,7 @@ name|dagLock
 init|=
 name|getDagLock
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 name|dagLock
@@ -753,7 +754,7 @@ name|completedDagMap
 operator|.
 name|contains
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 condition|)
 block|{
@@ -764,7 +765,7 @@ name|queryInfoMap
 operator|.
 name|get
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 if|if
@@ -779,7 +780,7 @@ operator|=
 operator|new
 name|QueryInfo
 argument_list|(
-name|queryId
+name|queryIdentifier
 argument_list|,
 name|appIdString
 argument_list|,
@@ -791,7 +792,7 @@ name|user
 argument_list|,
 name|getSourceCompletionMap
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 argument_list|,
 name|localDirsBase
@@ -803,7 +804,7 @@ name|queryInfoMap
 operator|.
 name|putIfAbsent
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|,
 name|queryInfo
 argument_list|)
@@ -831,7 +832,7 @@ name|dagSpecificLocks
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -879,15 +880,15 @@ name|QueryFragmentInfo
 name|fragmentInfo
 parameter_list|)
 block|{
-name|String
-name|dagName
+name|QueryIdentifier
+name|qId
 init|=
 name|fragmentInfo
 operator|.
 name|getQueryInfo
 argument_list|()
 operator|.
-name|getDagName
+name|getQueryIdentifier
 argument_list|()
 decl_stmt|;
 name|QueryInfo
@@ -897,7 +898,7 @@ name|queryInfoMap
 operator|.
 name|get
 argument_list|(
-name|dagName
+name|qId
 argument_list|)
 decl_stmt|;
 if|if
@@ -913,7 +914,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Ignoring fragmentComplete message for unknown query"
+literal|"Ignoring fragmentComplete message for unknown query: {}"
+argument_list|,
+name|qId
 argument_list|)
 expr_stmt|;
 block|}
@@ -928,18 +931,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Register completion for a query    * @param queryId    * @param dagName    * @param deleteDelay    */
+comment|/**    * Register completion for a query    * @param queryIdentifier    * @param deleteDelay    */
 name|List
 argument_list|<
 name|QueryFragmentInfo
 argument_list|>
 name|queryComplete
 parameter_list|(
-name|String
-name|queryId
-parameter_list|,
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|,
 name|long
 name|deleteDelay
@@ -963,7 +963,7 @@ name|dagLock
 init|=
 name|getDagLock
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 name|dagLock
@@ -978,16 +978,16 @@ try|try
 block|{
 name|rememberCompletedDag
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing queryComplete for dagName={} with deleteDelay={} seconds"
+literal|"Processing queryComplete for queryIdentifier={} with deleteDelay={} seconds"
 argument_list|,
-name|dagName
+name|queryIdentifier
 argument_list|,
 name|deleteDelay
 argument_list|)
@@ -999,7 +999,7 @@ name|queryInfoMap
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 if|if
@@ -1015,7 +1015,7 @@ name|warn
 argument_list|(
 literal|"Ignoring query complete for unknown dag: {}"
 argument_list|,
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 return|return
@@ -1065,7 +1065,10 @@ name|unregisterDag
 argument_list|(
 name|localDir
 argument_list|,
-name|dagName
+name|queryInfo
+operator|.
+name|getAppIdString
+argument_list|()
 argument_list|,
 name|queryInfo
 operator|.
@@ -1083,39 +1086,29 @@ name|sourceCompletionMap
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 name|String
 name|savedQueryId
 init|=
-name|dagNameToQueryId
+name|queryIdentifierToHiveQueryId
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
-name|queryId
-operator|=
-name|queryId
-operator|==
-literal|null
-condition|?
-name|savedQueryId
-else|:
-name|queryId
-expr_stmt|;
 name|dagSpecificLocks
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|queryId
+name|savedQueryId
 operator|!=
 literal|null
 condition|)
@@ -1124,7 +1117,7 @@ name|ObjectCacheFactory
 operator|.
 name|removeLlapQueryCache
 argument_list|(
-name|queryId
+name|savedQueryId
 argument_list|)
 expr_stmt|;
 block|}
@@ -1151,8 +1144,8 @@ specifier|public
 name|void
 name|rememberCompletedDag
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|)
 block|{
 if|if
@@ -1161,7 +1154,7 @@ name|completedDagMap
 operator|.
 name|add
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 condition|)
 block|{
@@ -1173,7 +1166,7 @@ argument_list|(
 operator|new
 name|DagMapCleanerCallable
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 argument_list|,
 literal|1
@@ -1192,17 +1185,17 @@ name|warn
 argument_list|(
 literal|"Couldn't add {} to completed dag set"
 argument_list|,
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Register an update to a source within an executing dag    * @param dagName    * @param sourceName    * @param sourceState    */
+comment|/**    * Register an update to a source within an executing dag    * @param queryIdentifier    * @param sourceName    * @param sourceState    */
 name|void
 name|registerSourceStateChange
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|,
 name|String
 name|sourceName
@@ -1213,7 +1206,7 @@ parameter_list|)
 block|{
 name|getSourceCompletionMap
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 operator|.
 name|put
@@ -1230,7 +1223,7 @@ name|queryInfoMap
 operator|.
 name|get
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 if|if
@@ -1258,8 +1251,8 @@ specifier|private
 name|ReadWriteLock
 name|getDagLock
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|)
 block|{
 name|lock
@@ -1276,7 +1269,7 @@ name|dagSpecificLocks
 operator|.
 name|get
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 if|if
@@ -1296,7 +1289,7 @@ name|dagSpecificLocks
 operator|.
 name|put
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|,
 name|dagLock
 argument_list|)
@@ -1324,8 +1317,8 @@ name|SourceStateProto
 argument_list|>
 name|getSourceCompletionMap
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|)
 block|{
 name|ConcurrentMap
@@ -1340,7 +1333,7 @@ name|sourceCompletionMap
 operator|.
 name|get
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 decl_stmt|;
 if|if
@@ -1369,7 +1362,7 @@ name|sourceCompletionMap
 operator|.
 name|putIfAbsent
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|,
 name|dagMap
 argument_list|)
@@ -1395,27 +1388,27 @@ specifier|public
 name|void
 name|registerDagQueryId
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|,
 name|String
-name|queryId
+name|hiveQueryIdString
 parameter_list|)
 block|{
 if|if
 condition|(
-name|queryId
+name|hiveQueryIdString
 operator|==
 literal|null
 condition|)
 return|return;
-name|dagNameToQueryId
+name|queryIdentifierToHiveQueryId
 operator|.
 name|putIfAbsent
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|,
-name|queryId
+name|hiveQueryIdString
 argument_list|)
 expr_stmt|;
 block|}
@@ -1612,21 +1605,21 @@ argument_list|>
 block|{
 specifier|private
 specifier|final
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 decl_stmt|;
 specifier|private
 name|DagMapCleanerCallable
 parameter_list|(
-name|String
-name|dagName
+name|QueryIdentifier
+name|queryIdentifier
 parameter_list|)
 block|{
 name|this
 operator|.
-name|dagName
+name|queryIdentifier
 operator|=
-name|dagName
+name|queryIdentifier
 expr_stmt|;
 block|}
 annotation|@
@@ -1640,7 +1633,7 @@ name|completedDagMap
 operator|.
 name|remove
 argument_list|(
-name|dagName
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 return|return
