@@ -307,6 +307,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapred
+operator|.
+name|split
+operator|.
+name|SplitLocationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapreduce
 operator|.
 name|split
@@ -685,6 +701,11 @@ operator|new
 name|SplitGrouper
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|final
+name|SplitLocationProvider
+name|splitLocationProvider
+decl_stmt|;
 specifier|public
 name|HiveSplitGenerator
 parameter_list|(
@@ -742,6 +763,28 @@ operator|new
 name|JobConf
 argument_list|(
 name|conf
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|splitLocationProvider
+operator|=
+name|Utils
+operator|.
+name|getSplitLocationProvider
+argument_list|(
+name|conf
+argument_list|,
+name|LOG
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"SplitLocationProvider: "
+operator|+
+name|splitLocationProvider
 argument_list|)
 expr_stmt|;
 comment|// Read all credentials into the credentials instance stored in JobConf.
@@ -1058,6 +1101,7 @@ operator|.
 name|TEZ_GROUPING_SPLIT_WAVES_DEFAULT
 argument_list|)
 decl_stmt|;
+comment|// Raw splits
 name|InputSplit
 index|[]
 name|splits
@@ -1154,6 +1198,8 @@ argument_list|,
 name|waves
 argument_list|,
 name|availableSlots
+argument_list|,
+name|splitLocationProvider
 argument_list|)
 decl_stmt|;
 comment|// And finally return them in a flat array
@@ -1179,7 +1225,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Number of grouped splits: "
+literal|"Number of split groups: "
 operator|+
 name|flatSplits
 operator|.

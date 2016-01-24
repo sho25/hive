@@ -77,16 +77,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashSet
 import|;
 end_import
@@ -325,6 +315,22 @@ name|mapred
 operator|.
 name|split
 operator|.
+name|SplitLocationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|split
+operator|.
 name|TezGroupedSplit
 import|;
 end_import
@@ -490,6 +496,9 @@ name|availableSlots
 parameter_list|,
 name|float
 name|waves
+parameter_list|,
+name|SplitLocationProvider
+name|splitLocationProvider
 parameter_list|)
 throws|throws
 name|IOException
@@ -603,19 +612,21 @@ argument_list|,
 operator|new
 name|ColumnarSplitSizeEstimator
 argument_list|()
+argument_list|,
+name|splitLocationProvider
 argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Original split size is "
+literal|"Original split count is "
 operator|+
 name|rawSplits
 operator|.
 name|length
 operator|+
-literal|" grouped split size is "
+literal|" grouped split count is "
 operator|+
 name|groupedSplits
 operator|.
@@ -983,6 +994,9 @@ name|waves
 parameter_list|,
 name|int
 name|availableSlots
+parameter_list|,
+name|SplitLocationProvider
+name|locationProvider
 parameter_list|)
 throws|throws
 name|Exception
@@ -1003,6 +1017,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|true
+argument_list|,
+name|locationProvider
 argument_list|)
 return|;
 block|}
@@ -1037,6 +1053,9 @@ name|inputName
 parameter_list|,
 name|boolean
 name|groupAcrossFiles
+parameter_list|,
+name|SplitLocationProvider
+name|locationProvider
 parameter_list|)
 throws|throws
 name|Exception
@@ -1051,6 +1070,7 @@ argument_list|,
 name|inputName
 argument_list|)
 decl_stmt|;
+comment|// ArrayListMultimap is important here to retain the ordering for the splits.
 name|Multimap
 argument_list|<
 name|Integer
@@ -1154,6 +1174,8 @@ argument_list|,
 name|availableSlots
 argument_list|,
 name|waves
+argument_list|,
+name|locationProvider
 argument_list|)
 decl_stmt|;
 return|return
@@ -1224,6 +1246,8 @@ name|Integer
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// TODO HIVE-12255. Make use of SplitSizeEstimator.
+comment|// The actual task computation needs to be looked at as well.
 comment|// compute the total size per bucket
 name|long
 name|totalSize

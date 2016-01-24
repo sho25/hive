@@ -171,6 +171,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|split
+operator|.
+name|SplitLocationProvider
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1799,6 +1815,18 @@ literal|0
 operator|)
 condition|)
 block|{
+name|SplitLocationProvider
+name|splitLocationProvider
+init|=
+name|Utils
+operator|.
+name|getSplitLocationProvider
+argument_list|(
+name|conf
+argument_list|,
+name|LOG
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|Integer
@@ -1860,6 +1888,8 @@ name|mainWorkName
 operator|.
 name|isEmpty
 argument_list|()
+argument_list|,
+name|splitLocationProvider
 argument_list|)
 decl_stmt|;
 if|if
@@ -1926,6 +1956,8 @@ name|ConfVars
 operator|.
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|secondLevelGroupingDone
@@ -1958,6 +1990,18 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|SplitLocationProvider
+name|splitLocationProvider
+init|=
+name|Utils
+operator|.
+name|getSplitLocationProvider
+argument_list|(
+name|conf
+argument_list|,
+name|LOG
+argument_list|)
+decl_stmt|;
 comment|// do not group across files in case of side work because there is only 1 KV reader per
 comment|// grouped split. This would affect SMB joins where we want to find the smallest key in
 comment|// all the bucket files.
@@ -2019,6 +2063,8 @@ argument_list|,
 name|inputName
 argument_list|,
 literal|false
+argument_list|,
+name|splitLocationProvider
 argument_list|)
 decl_stmt|;
 name|bucketToGroupedSplitMap

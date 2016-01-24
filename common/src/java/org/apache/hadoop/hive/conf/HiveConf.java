@@ -9935,7 +9935,7 @@ name|LLAP_DAEMON_SERVICE_HOSTS
 argument_list|(
 literal|"hive.llap.daemon.service.hosts"
 argument_list|,
-literal|""
+literal|null
 argument_list|,
 literal|"Explicitly specified hosts to use for LLAP scheduling. Useful for testing. By default,\n"
 operator|+
@@ -10184,6 +10184,17 @@ argument_list|,
 literal|"Whether LLAP daemon web UI should use SSL."
 argument_list|,
 literal|"llap.daemon.service.ssl"
+argument_list|)
+block|,
+name|LLAP_CLIENT_CONSISTENT_SPLITS
+argument_list|(
+literal|"hive.llap.client.consistent.splits"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to setup split locations to match nodes on which llap daemons are running,"
+operator|+
+literal|" instead of using the locations provided by the split itself"
 argument_list|)
 block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT

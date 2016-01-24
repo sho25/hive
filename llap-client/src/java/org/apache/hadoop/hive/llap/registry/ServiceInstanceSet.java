@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -63,6 +73,15 @@ argument_list|,
 name|ServiceInstance
 argument_list|>
 name|getAll
+parameter_list|()
+function_decl|;
+comment|/**    * Gets a list containing all the instances. This list has the same iteration order across    * different processes, assuming the list of registry entries is the same.    * @return    */
+specifier|public
+name|List
+argument_list|<
+name|ServiceInstance
+argument_list|>
+name|getAllInstancesOrdered
 parameter_list|()
 function_decl|;
 comment|/**    * Get an instance by worker identity.    *     * @param name    * @return    */
