@@ -131,9 +131,11 @@ name|llap
 operator|.
 name|daemon
 operator|.
-name|impl
+name|rpc
 operator|.
-name|QueryIdentifier
+name|LlapDaemonProtocolProtos
+operator|.
+name|QueryIdentifierProto
 import|;
 end_import
 
@@ -143,19 +145,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|tez
 operator|.
-name|hive
+name|serviceplugins
 operator|.
-name|llap
+name|api
 operator|.
-name|daemon
-operator|.
-name|rpc
-operator|.
-name|LlapDaemonProtocolProtos
-operator|.
-name|QueryIdentifierProto
+name|TaskCommunicatorContext
 import|;
 end_import
 
@@ -272,22 +268,6 @@ operator|.
 name|tezplugins
 operator|.
 name|LlapTaskCommunicator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|tez
-operator|.
-name|dag
-operator|.
-name|api
-operator|.
-name|TaskCommunicatorContext
 import|;
 end_import
 
