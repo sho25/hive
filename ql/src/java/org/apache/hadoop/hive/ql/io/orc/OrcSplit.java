@@ -954,6 +954,23 @@ return|return
 name|deltas
 return|;
 block|}
+comment|/**    * If this method returns true, then for sure it is ACID.    * However, if it returns false.. it could be ACID or non-ACID.    * @return    */
+specifier|public
+name|boolean
+name|isAcid
+parameter_list|()
+block|{
+return|return
+name|hasBase
+operator|||
+name|deltas
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+return|;
+block|}
 specifier|public
 name|long
 name|getProjectedColumnsUncompressedSize

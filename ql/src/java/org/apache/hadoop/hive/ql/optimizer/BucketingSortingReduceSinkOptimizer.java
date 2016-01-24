@@ -2258,7 +2258,7 @@ operator|)
 decl_stmt|;
 if|if
 condition|(
-name|SemanticAnalyzer
+name|AcidUtils
 operator|.
 name|isAcidTable
 argument_list|(

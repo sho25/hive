@@ -2326,6 +2326,22 @@ literal|"columns / columns.types "
 operator|+
 literal|"are set.  Table schema information is required to read ACID tables"
 argument_list|)
+block|,
+name|ACID_TABLES_MUST_BE_READ_WITH_ACID_READER
+argument_list|(
+literal|30021
+argument_list|,
+literal|"An ORC ACID reader required to read ACID tables"
+argument_list|)
+block|,
+name|ACID_TABLES_MUST_BE_READ_WITH_HIVEINPUTFORMAT
+argument_list|(
+literal|30022
+argument_list|,
+literal|"Must use HiveInputFormat to read ACID tables "
+operator|+
+literal|"(set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat)"
+argument_list|)
 block|;
 specifier|private
 name|int

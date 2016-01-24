@@ -2230,30 +2230,10 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-comment|/* isAcid */
+comment|/* isAcidRead */
 literal|true
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|typeDescr
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|SCHEMA_REQUIRED_TO_READ_ACID_TABLES
-operator|.
-name|getErrorCodedMsg
-argument_list|()
-argument_list|)
-throw|;
-block|}
 name|objectInspector
 operator|=
 name|OrcRecordUpdater
