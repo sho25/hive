@@ -1810,7 +1810,7 @@ name|varname
 argument_list|,
 name|HiveConf
 operator|.
-name|getLongVar
+name|getSizeVar
 argument_list|(
 name|conf
 argument_list|,
