@@ -2156,7 +2156,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|CLASSPATH_ERROR
 operator|.
 name|getMsg
 argument_list|()

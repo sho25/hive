@@ -2061,6 +2061,69 @@ operator|+
 literal|"HIVEMULTIGROUPBYSINGLEREDUCER is turned on. Set hive.multigroupby.singlereducer=false if you want to use grouping sets"
 argument_list|)
 block|,
+name|CANNOT_RETRIEVE_TABLE_METADATA
+argument_list|(
+literal|10316
+argument_list|,
+literal|"Error while retrieving table metadata"
+argument_list|)
+block|,
+name|CANNOT_DROP_INDEX
+argument_list|(
+literal|10317
+argument_list|,
+literal|"Error while dropping index"
+argument_list|)
+block|,
+name|INVALID_AST_TREE
+argument_list|(
+literal|10318
+argument_list|,
+literal|"Internal error : Invalid AST"
+argument_list|)
+block|,
+name|ERROR_SERIALIZE_METASTORE
+argument_list|(
+literal|10319
+argument_list|,
+literal|"Error while serializing the metastore objects"
+argument_list|)
+block|,
+name|IO_ERROR
+argument_list|(
+literal|10320
+argument_list|,
+literal|"Error while peforming IO operation "
+argument_list|)
+block|,
+name|ERROR_SERIALIZE_METADATA
+argument_list|(
+literal|10321
+argument_list|,
+literal|"Error while serializing the metadata"
+argument_list|)
+block|,
+name|INVALID_LOAD_TABLE_FILE_WORK
+argument_list|(
+literal|10322
+argument_list|,
+literal|"Invalid Load Table Work or Load File Work"
+argument_list|)
+block|,
+name|CLASSPATH_ERROR
+argument_list|(
+literal|10323
+argument_list|,
+literal|"Classpath error"
+argument_list|)
+block|,
+name|IMPORT_SEMANTIC_ERROR
+argument_list|(
+literal|10324
+argument_list|,
+literal|"Import Semantic Analyzer Error"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

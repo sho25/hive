@@ -947,7 +947,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|INVALID_LOAD_TABLE_FILE_WORK
 operator|.
 name|getMsg
 argument_list|()

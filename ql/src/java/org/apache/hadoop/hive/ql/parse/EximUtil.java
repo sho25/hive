@@ -811,7 +811,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|IO_ERROR
 operator|.
 name|getMsg
 argument_list|()
@@ -1601,12 +1601,10 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|ERROR_SERIALIZE_METASTORE
 operator|.
 name|getMsg
-argument_list|(
-literal|"Exception while serializing the metastore objects"
-argument_list|)
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2068,12 +2066,10 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|ERROR_SERIALIZE_METADATA
 operator|.
 name|getMsg
-argument_list|(
-literal|"Error in serializing metadata"
-argument_list|)
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -2091,12 +2087,10 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|ERROR_SERIALIZE_METADATA
 operator|.
 name|getMsg
-argument_list|(
-literal|"Error in serializing metadata"
-argument_list|)
+argument_list|()
 argument_list|,
 name|e
 argument_list|)

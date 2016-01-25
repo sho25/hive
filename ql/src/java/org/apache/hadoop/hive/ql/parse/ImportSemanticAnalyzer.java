@@ -1594,7 +1594,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|IMPORT_SEMANTIC_ERROR
 operator|.
 name|getMsg
 argument_list|()

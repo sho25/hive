@@ -972,7 +972,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|IO_ERROR
 operator|.
 name|getMsg
 argument_list|(

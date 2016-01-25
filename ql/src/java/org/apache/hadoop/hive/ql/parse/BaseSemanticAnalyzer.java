@@ -4902,7 +4902,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|GENERIC_ERROR
+name|CANNOT_RETRIEVE_TABLE_METADATA
 operator|.
 name|getMsg
 argument_list|(
