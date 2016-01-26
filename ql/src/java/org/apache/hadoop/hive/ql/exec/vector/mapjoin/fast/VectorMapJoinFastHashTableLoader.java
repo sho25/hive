@@ -639,6 +639,16 @@ argument_list|,
 name|keyCount
 argument_list|)
 decl_stmt|;
+name|vectorMapJoinFastTableContainer
+operator|.
+name|setSerde
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+comment|// No SerDes here.
 while|while
 condition|(
 name|kvReader
@@ -651,8 +661,6 @@ name|vectorMapJoinFastTableContainer
 operator|.
 name|putRow
 argument_list|(
-literal|null
-argument_list|,
 operator|(
 name|BytesWritable
 operator|)
@@ -660,8 +668,6 @@ name|kvReader
 operator|.
 name|getCurrentKey
 argument_list|()
-argument_list|,
-literal|null
 argument_list|,
 operator|(
 name|BytesWritable

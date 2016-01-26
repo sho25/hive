@@ -1409,6 +1409,15 @@ name|getSimpleName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|tableContainer
+operator|.
+name|setSerde
+argument_list|(
+name|keyCtx
+argument_list|,
+name|valCtx
+argument_list|)
+expr_stmt|;
 while|while
 condition|(
 name|kvReader
@@ -1421,8 +1430,6 @@ name|tableContainer
 operator|.
 name|putRow
 argument_list|(
-name|keyCtx
-argument_list|,
 operator|(
 name|Writable
 operator|)
@@ -1430,8 +1437,6 @@ name|kvReader
 operator|.
 name|getCurrentKey
 argument_list|()
-argument_list|,
-name|valCtx
 argument_list|,
 operator|(
 name|Writable
