@@ -1856,6 +1856,9 @@ decl_stmt|;
 name|TaskWrapper
 name|evictedTask
 decl_stmt|;
+name|boolean
+name|canFinish
+decl_stmt|;
 synchronized|synchronized
 init|(
 name|lock
@@ -1866,6 +1869,16 @@ comment|// return the task with the lowest priority, which could be the task whi
 comment|// TODO HIVE-11687 It's possible for a bunch of tasks to come in around the same time, without the
 comment|// actual executor threads picking up any work. This will lead to unnecessary rejection of tasks.
 comment|// The wait queue should be able to fit at least (waitQueue + currentFreeExecutor slots)
+name|canFinish
+operator|=
+name|taskWrapper
+operator|.
+name|getTaskRunnerCallable
+argument_list|()
+operator|.
+name|canFinish
+argument_list|()
+expr_stmt|;
 name|evictedTask
 operator|=
 name|waitQueue
@@ -2039,25 +2052,50 @@ comment|// This registration has to be done after knownTasks has been populated.
 comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
 comment|// if the fragment moves in or out of the finishable state.
 name|boolean
-name|canFinish
+name|stateChanged
 init|=
-name|taskWrapper
-operator|.
-name|getTaskRunnerCallable
-argument_list|()
-operator|.
-name|canFinish
-argument_list|()
-decl_stmt|;
-comment|// It's safe to register outside of the lock since the stateChangeTracker ensures that updates
-comment|// and registrations are mutually exclusive.
 name|taskWrapper
 operator|.
 name|maybeRegisterForFinishedStateNotifications
 argument_list|(
 name|canFinish
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|stateChanged
+condition|)
+block|{
+if|if
+condition|(
+name|isDebugEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Finishable state of {} updated to {} during registration for state updates"
+argument_list|,
+name|taskWrapper
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|,
+operator|!
+name|canFinish
+argument_list|)
 expr_stmt|;
+block|}
+name|finishableStateUpdated
+argument_list|(
+name|taskWrapper
+argument_list|,
+operator|!
+name|canFinish
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|isDebugEnabled
@@ -2186,7 +2224,8 @@ if|if
 condition|(
 name|taskWrapper
 operator|.
-name|inWaitQueue
+name|isInWaitQueue
+argument_list|()
 condition|)
 block|{
 if|if
@@ -2223,7 +2262,8 @@ if|if
 condition|(
 name|taskWrapper
 operator|.
-name|inPreemptionQueue
+name|isInPreemptionQueue
+argument_list|()
 condition|)
 block|{
 if|if
@@ -3340,22 +3380,37 @@ name|TaskRunnerCallable
 name|taskRunnerCallable
 decl_stmt|;
 specifier|private
-name|boolean
+specifier|final
+name|AtomicBoolean
 name|inWaitQueue
 init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
 literal|false
+argument_list|)
 decl_stmt|;
 specifier|private
-name|boolean
+specifier|final
+name|AtomicBoolean
 name|inPreemptionQueue
 init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
 literal|false
+argument_list|)
 decl_stmt|;
 specifier|private
-name|boolean
+specifier|final
+name|AtomicBoolean
 name|registeredForNotifications
 init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
 literal|false
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
@@ -3385,12 +3440,9 @@ operator|=
 name|taskExecutorService
 expr_stmt|;
 block|}
-comment|// Methods are synchronized primarily for visibility.
-comment|/**      *      * @param currentFinishableState      * @return true if the current state is the same as the currentFinishableState. false if the state has already changed.      */
-comment|// Synchronized to avoid register / unregister clobbering each other.
 comment|// Don't invoke from within a scheduler lock
+comment|/**      *      * @param currentFinishableState      * @return true if the state has not changed from currentFinishableState, false otherwise      */
 specifier|public
-specifier|synchronized
 name|boolean
 name|maybeRegisterForFinishedStateNotifications
 parameter_list|(
@@ -3402,12 +3454,13 @@ if|if
 condition|(
 operator|!
 name|registeredForNotifications
+operator|.
+name|getAndSet
+argument_list|(
+literal|true
+argument_list|)
 condition|)
 block|{
-name|registeredForNotifications
-operator|=
-literal|true
-expr_stmt|;
 return|return
 name|taskRunnerCallable
 operator|.
@@ -3429,10 +3482,8 @@ literal|true
 return|;
 block|}
 block|}
-comment|// Synchronized to avoid register / unregister clobbering each other.
 comment|// Don't invoke from within a scheduler lock
 specifier|public
-specifier|synchronized
 name|void
 name|maybeUnregisterForFinishedStateNotifications
 parameter_list|()
@@ -3440,12 +3491,13 @@ block|{
 if|if
 condition|(
 name|registeredForNotifications
+operator|.
+name|getAndSet
+argument_list|(
+literal|false
+argument_list|)
 condition|)
 block|{
-name|registeredForNotifications
-operator|=
-literal|false
-expr_stmt|;
 name|taskRunnerCallable
 operator|.
 name|getFragmentInfo
@@ -3468,27 +3520,30 @@ name|taskRunnerCallable
 return|;
 block|}
 specifier|public
-specifier|synchronized
 name|boolean
 name|isInWaitQueue
 parameter_list|()
 block|{
 return|return
 name|inWaitQueue
+operator|.
+name|get
+argument_list|()
 return|;
 block|}
 specifier|public
-specifier|synchronized
 name|boolean
 name|isInPreemptionQueue
 parameter_list|()
 block|{
 return|return
 name|inPreemptionQueue
+operator|.
+name|get
+argument_list|()
 return|;
 block|}
 specifier|public
-specifier|synchronized
 name|void
 name|setIsInWaitQueue
 parameter_list|(
@@ -3499,12 +3554,14 @@ block|{
 name|this
 operator|.
 name|inWaitQueue
-operator|=
+operator|.
+name|set
+argument_list|(
 name|value
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|synchronized
 name|void
 name|setIsInPreemptableQueue
 parameter_list|(
@@ -3515,8 +3572,11 @@ block|{
 name|this
 operator|.
 name|inPreemptionQueue
-operator|=
+operator|.
+name|set
+argument_list|(
 name|value
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -3551,14 +3611,23 @@ operator|+
 literal|", inWaitQueue="
 operator|+
 name|inWaitQueue
+operator|.
+name|get
+argument_list|()
 operator|+
 literal|", inPreemptionQueue="
 operator|+
 name|inPreemptionQueue
+operator|.
+name|get
+argument_list|()
 operator|+
 literal|", registeredForNotifications="
 operator|+
 name|registeredForNotifications
+operator|.
+name|get
+argument_list|()
 operator|+
 literal|", canFinish="
 operator|+
