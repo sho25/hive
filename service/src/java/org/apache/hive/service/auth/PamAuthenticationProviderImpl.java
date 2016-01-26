@@ -132,6 +132,11 @@ argument_list|)
 throw|;
 block|}
 name|String
+name|errorMsg
+init|=
+literal|"Error authenticating with the PAM service: "
+decl_stmt|;
+name|String
 index|[]
 name|pamServices
 init|=
@@ -149,6 +154,8 @@ name|pamService
 range|:
 name|pamServices
 control|)
+block|{
+try|try
 block|{
 name|Pam
 name|pam
@@ -181,9 +188,31 @@ throw|throw
 operator|new
 name|AuthenticationException
 argument_list|(
-literal|"Error authenticating with the PAM service: "
+name|errorMsg
 operator|+
 name|pamService
+argument_list|)
+throw|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|e
+parameter_list|)
+block|{
+comment|// Catch the exception caused by missing jpam.so which otherwise would
+comment|// crashes the thread and causes the client hanging rather than notifying
+comment|// the client nicely
+throw|throw
+operator|new
+name|AuthenticationException
+argument_list|(
+name|errorMsg
+operator|+
+name|pamService
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
