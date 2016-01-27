@@ -420,6 +420,15 @@ name|isDistinct
 expr_stmt|;
 block|}
 comment|//~ Methods ----------------------------------------------------------------
+specifier|public
+name|boolean
+name|isDistinct
+parameter_list|()
+block|{
+return|return
+name|isDistinct
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
