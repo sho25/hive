@@ -1327,31 +1327,10 @@ name|create
 argument_list|(
 literal|"HIVE"
 argument_list|,
-name|conf
+name|queryPlan
 operator|.
-name|getLogIdVar
-argument_list|(
-name|SessionState
-operator|.
-name|get
+name|getQueryId
 argument_list|()
-operator|.
-name|getSessionId
-argument_list|()
-argument_list|)
-operator|+
-literal|" "
-operator|+
-name|conf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYID
-argument_list|)
 argument_list|,
 literal|"HIVE_QUERY_ID"
 argument_list|,
@@ -2057,6 +2036,27 @@ name|conf
 argument_list|)
 decl_stmt|;
 comment|// the name of the dag is what is displayed in the AM/Job UI
+name|String
+name|dagName
+init|=
+name|utils
+operator|.
+name|createDagName
+argument_list|(
+name|conf
+argument_list|,
+name|queryPlan
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dag name: "
+operator|+
+name|dagName
+argument_list|)
+expr_stmt|;
 name|DAG
 name|dag
 init|=
@@ -2064,10 +2064,7 @@ name|DAG
 operator|.
 name|create
 argument_list|(
-name|work
-operator|.
-name|getName
-argument_list|()
+name|dagName
 argument_list|)
 decl_stmt|;
 comment|// set some info for the query

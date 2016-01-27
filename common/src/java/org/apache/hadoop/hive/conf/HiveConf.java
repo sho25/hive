@@ -5254,6 +5254,17 @@ operator|+
 literal|"Used only if hive.tez.java.opts is used to configure Java options."
 argument_list|)
 block|,
+name|HIVEQUERYNAME
+argument_list|(
+literal|"hive.query.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"This named is used by Tez to set the dag name. This name in turn will appear on \n"
+operator|+
+literal|"the Tez UI representing the work that was done."
+argument_list|)
+block|,
 name|HIVEOPTIMIZEBUCKETINGSORTING
 argument_list|(
 literal|"hive.optimize.bucketingsorting"
