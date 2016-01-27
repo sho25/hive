@@ -561,22 +561,6 @@ name|rel
 operator|.
 name|core
 operator|.
-name|Join
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|core
-operator|.
 name|JoinRelType
 import|;
 end_import
@@ -1481,7 +1465,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|HiveHepPlannerContext
+name|HivePlannerContext
 import|;
 end_import
 
@@ -1542,26 +1526,6 @@ operator|.
 name|calcite
 operator|.
 name|HiveTypeSystemImpl
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|calcite
-operator|.
-name|HiveVolcanoPlannerContext
 import|;
 end_import
 
@@ -6486,13 +6450,22 @@ argument_list|,
 name|maxMemory
 argument_list|)
 decl_stmt|;
-name|HiveVolcanoPlannerContext
+name|HiveRulesRegistry
+name|registry
+init|=
+operator|new
+name|HiveRulesRegistry
+argument_list|()
+decl_stmt|;
+name|HivePlannerContext
 name|confContext
 init|=
 operator|new
-name|HiveVolcanoPlannerContext
+name|HivePlannerContext
 argument_list|(
 name|algorithmsConf
+argument_list|,
+name|registry
 argument_list|)
 decl_stmt|;
 name|RelOptPlanner
@@ -7831,11 +7804,8 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, factor out common filter elements and separating deterministic vs non-deterministic UDF"
 argument_list|)
 expr_stmt|;
-comment|// 3. PPD for old Join Syntax
-comment|// NOTE: PPD needs to run before adding not null filters in order to
-comment|// support old style join syntax (so that on-clauses will get filled up).
-comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
-comment|// HIVE-11927 is fixed.
+comment|// 3. Run exhaustive PPD, add not null filters, transitive inference,
+comment|// constant propagation, constant folding
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -7863,7 +7833,11 @@ literal|true
 argument_list|,
 name|mdProvider
 argument_list|,
-literal|null
+name|executorProvider
+argument_list|,
+name|HepMatchOrder
+operator|.
+name|BOTTOM_UP
 argument_list|,
 name|HiveFilterProjectTransposeRule
 operator|.
@@ -7908,73 +7882,34 @@ name|HiveRelFactories
 operator|.
 name|HIVE_FILTER_FACTORY
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
 argument_list|,
-name|PerfLogger
+name|HiveJoinAddNotNullRule
 operator|.
-name|OPTIMIZER
+name|INSTANCE_JOIN
 argument_list|,
-literal|"Calcite: Prejoin ordering transformation, PPD for old join syntax"
-argument_list|)
-expr_stmt|;
-comment|// TODO: Transitive inference, constant prop& Predicate push down has to
-comment|// do multiple passes till no more inference is left
-comment|// Currently doing so would result in a spin. Just checking for if inferred
-comment|// pred is present below may not be sufficient as inferred& pushed pred
-comment|// could have been mutated by constant folding/prop
-comment|// 4. Transitive inference for join on clauses
-name|perfLogger
+name|HiveJoinAddNotNullRule
 operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
+name|INSTANCE_SEMIJOIN
 argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|basePlan
-operator|=
-name|hepPlan
-argument_list|(
-name|basePlan
-argument_list|,
-literal|true
-argument_list|,
-name|mdProvider
-argument_list|,
-literal|null
-argument_list|,
-operator|new
 name|HiveJoinPushTransitivePredicatesRule
-argument_list|(
-name|Join
 operator|.
-name|class
+name|INSTANCE_JOIN
 argument_list|,
-name|HiveRelFactories
+name|HiveJoinPushTransitivePredicatesRule
 operator|.
-name|HIVE_FILTER_FACTORY
-argument_list|)
+name|INSTANCE_SEMIJOIN
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|PROJECT_INSTANCE
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|FILTER_INSTANCE
+argument_list|,
+name|HiveReduceExpressionsRule
+operator|.
+name|JOIN_INSTANCE
 argument_list|)
 expr_stmt|;
 name|perfLogger
@@ -7993,10 +7928,10 @@ name|PerfLogger
 operator|.
 name|OPTIMIZER
 argument_list|,
-literal|"Calcite: Prejoin ordering transformation, Transitive inference for join on clauses"
+literal|"Calcite: Prejoin ordering transformation, PPD, not null predicates, transitive inference, constant folding"
 argument_list|)
 expr_stmt|;
-comment|// 5. Push down limit through outer join
+comment|// 4. Push down limit through outer join
 comment|// NOTE: We run this after PPD to support old style join syntax.
 comment|// Ex: select * from R1 left outer join R2 where ((R1.x=R2.x) and R1.y<10) or
 comment|// ((R1.x=R2.x) and R1.z=10)) and rand(1)< 0.1 order by R1.x limit 10
@@ -8145,157 +8080,7 @@ literal|"Calcite: Prejoin ordering transformation, Push down limit through outer
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 6. Add not null filters
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|basePlan
-operator|=
-name|hepPlan
-argument_list|(
-name|basePlan
-argument_list|,
-literal|true
-argument_list|,
-name|mdProvider
-argument_list|,
-literal|null
-argument_list|,
-name|HiveJoinAddNotNullRule
-operator|.
-name|INSTANCE
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|,
-literal|"Calcite: Prejoin ordering transformation, Add not null filters"
-argument_list|)
-expr_stmt|;
-comment|// 7. Rerun Constant propagation and PPD now that we have added Not NULL filters& did transitive inference
-comment|// TODO: Add in ReduceExpressionrules (Constant folding) to below once
-comment|// HIVE-11927 is fixed.
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|basePlan
-operator|=
-name|hepPlan
-argument_list|(
-name|basePlan
-argument_list|,
-literal|true
-argument_list|,
-name|mdProvider
-argument_list|,
-literal|null
-argument_list|,
-name|HiveFilterProjectTransposeRule
-operator|.
-name|INSTANCE_DETERMINISTIC
-argument_list|,
-name|HiveFilterSetOpTransposeRule
-operator|.
-name|INSTANCE
-argument_list|,
-name|HiveFilterSortTransposeRule
-operator|.
-name|INSTANCE
-argument_list|,
-name|HiveFilterJoinRule
-operator|.
-name|JOIN
-argument_list|,
-name|HiveFilterJoinRule
-operator|.
-name|FILTER_ON_JOIN
-argument_list|,
-operator|new
-name|HiveFilterAggregateTransposeRule
-argument_list|(
-name|Filter
-operator|.
-name|class
-argument_list|,
-name|HiveRelFactories
-operator|.
-name|HIVE_FILTER_FACTORY
-argument_list|,
-name|Aggregate
-operator|.
-name|class
-argument_list|)
-argument_list|,
-operator|new
-name|FilterMergeRule
-argument_list|(
-name|HiveRelFactories
-operator|.
-name|HIVE_FILTER_FACTORY
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|,
-literal|"Calcite: Prejoin ordering transformation, Constant propagation and PPD"
-argument_list|)
-expr_stmt|;
-comment|// 8. Push Down Semi Joins
+comment|// 5. Push Down Semi Joins
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8357,69 +8142,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Push Down Semi Joins"
 argument_list|)
 expr_stmt|;
-comment|// 9. Constant folding
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|basePlan
-operator|=
-name|hepPlan
-argument_list|(
-name|basePlan
-argument_list|,
-literal|true
-argument_list|,
-name|mdProvider
-argument_list|,
-name|executorProvider
-argument_list|,
-name|HiveReduceExpressionsRule
-operator|.
-name|PROJECT_INSTANCE
-argument_list|,
-name|HiveReduceExpressionsRule
-operator|.
-name|FILTER_INSTANCE
-argument_list|,
-name|HiveReduceExpressionsRule
-operator|.
-name|JOIN_INSTANCE
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|,
-literal|"Calcite: Prejoin ordering transformation, Constant folding"
-argument_list|)
-expr_stmt|;
-comment|// 10. Apply Partition Pruning
+comment|// 6. Apply Partition Pruning
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8475,7 +8198,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Partition Pruning"
 argument_list|)
 expr_stmt|;
-comment|// 11. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
+comment|// 7. Projection Pruning (this introduces select above TS& hence needs to be run last due to PP)
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8541,7 +8264,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Projection Pruning"
 argument_list|)
 expr_stmt|;
-comment|// 12. Merge Project-Project if possible
+comment|// 8. Merge Project-Project if possible
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -8601,7 +8324,7 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, Merge Project-Project"
 argument_list|)
 expr_stmt|;
-comment|// 13. Rerun PPD through Project as column pruning would have introduced
+comment|// 9. Rerun PPD through Project as column pruning would have introduced
 comment|// DT above scans; By pushing filter just above TS, Hive can push it into
 comment|// storage (incase there are filters on non partition cols). This only
 comment|// matches FIL-PROJ-TS
@@ -8805,22 +8528,7 @@ name|r
 argument_list|)
 expr_stmt|;
 block|}
-name|HiveRulesRegistry
-name|registry
-init|=
-operator|new
-name|HiveRulesRegistry
-argument_list|()
-decl_stmt|;
-name|HiveHepPlannerContext
-name|context
-init|=
-operator|new
-name|HiveHepPlannerContext
-argument_list|(
-name|registry
-argument_list|)
-decl_stmt|;
+comment|// Create planner and copy context
 name|HepPlanner
 name|planner
 init|=
@@ -8832,7 +8540,16 @@ operator|.
 name|build
 argument_list|()
 argument_list|,
-name|context
+name|basePlan
+operator|.
+name|getCluster
+argument_list|()
+operator|.
+name|getPlanner
+argument_list|()
+operator|.
+name|getContext
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|List

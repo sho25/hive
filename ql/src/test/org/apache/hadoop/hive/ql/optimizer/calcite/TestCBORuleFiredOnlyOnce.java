@@ -438,12 +438,14 @@ operator|new
 name|HiveRulesRegistry
 argument_list|()
 decl_stmt|;
-name|HiveHepPlannerContext
+name|HivePlannerContext
 name|context
 init|=
 operator|new
-name|HiveHepPlannerContext
+name|HivePlannerContext
 argument_list|(
+literal|null
+argument_list|,
 name|registry
 argument_list|)
 decl_stmt|;
