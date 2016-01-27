@@ -8099,6 +8099,8 @@ name|ConfVars
 operator|.
 name|HIVEQUERYID
 argument_list|)
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|cplan
@@ -8229,6 +8231,8 @@ name|ConfVars
 operator|.
 name|HIVEQUERYID
 argument_list|)
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|cplan
