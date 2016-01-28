@@ -5443,7 +5443,13 @@ literal|"hive.ppd.remove.duplicatefilters"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether to push predicates down into storage handlers.  Ignored when hive.optimize.ppd is false."
+literal|"During query optimization, filters may be pushed down in the operator tree. \n"
+operator|+
+literal|"If this config is true only pushed down filters remain in the operator tree, \n"
+operator|+
+literal|"and the original filter is removed. If this config is false, the original filter \n"
+operator|+
+literal|"is also left in the operator tree at the original place."
 argument_list|)
 block|,
 name|HIVEPOINTLOOKUPOPTIMIZER
