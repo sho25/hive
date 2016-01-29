@@ -4989,6 +4989,17 @@ decl_stmt|;
 if|if
 condition|(
 name|jsonOutput
+operator|&&
+name|jsonOut
+operator|!=
+literal|null
+operator|&&
+name|jsonOut
+operator|.
+name|length
+argument_list|()
+operator|!=
+literal|0
 condition|)
 block|{
 if|if

@@ -179,7 +179,7 @@ specifier|final
 name|Logger
 name|LOG
 decl_stmt|;
-comment|// the object that has been printed.
+comment|// the objects that have been printed.
 specifier|public
 specifier|final
 name|Set
@@ -418,10 +418,7 @@ specifier|static
 name|String
 name|prefixString
 parameter_list|(
-name|List
-argument_list|<
-name|Boolean
-argument_list|>
+name|int
 name|indentFlag
 parameter_list|)
 block|{
@@ -442,36 +439,16 @@ init|;
 name|index
 operator|<
 name|indentFlag
-operator|.
-name|size
-argument_list|()
 condition|;
 name|index
 operator|++
 control|)
 block|{
-if|if
-condition|(
-name|indentFlag
-operator|.
-name|get
-argument_list|(
-name|index
-argument_list|)
-condition|)
 name|sb
 operator|.
 name|append
 argument_list|(
-literal|"|  "
-argument_list|)
-expr_stmt|;
-else|else
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"   "
+literal|"  "
 argument_list|)
 expr_stmt|;
 block|}
@@ -488,10 +465,7 @@ specifier|static
 name|String
 name|prefixString
 parameter_list|(
-name|List
-argument_list|<
-name|Boolean
-argument_list|>
+name|int
 name|indentFlag
 parameter_list|,
 name|String
@@ -515,36 +489,16 @@ init|;
 name|index
 operator|<
 name|indentFlag
-operator|.
-name|size
-argument_list|()
 condition|;
 name|index
 operator|++
 control|)
 block|{
-if|if
-condition|(
-name|indentFlag
-operator|.
-name|get
-argument_list|(
-name|index
-argument_list|)
-condition|)
 name|sb
 operator|.
 name|append
 argument_list|(
-literal|"|  "
-argument_list|)
-expr_stmt|;
-else|else
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"   "
+literal|"  "
 argument_list|)
 expr_stmt|;
 block|}
@@ -807,17 +761,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-name|List
-argument_list|<
-name|Boolean
-argument_list|>
-name|indentFlag
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-decl_stmt|;
 comment|// print out all the stages that have no childStages.
 for|for
 control|(
@@ -848,7 +791,7 @@ name|print
 argument_list|(
 name|printer
 argument_list|,
-name|indentFlag
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
