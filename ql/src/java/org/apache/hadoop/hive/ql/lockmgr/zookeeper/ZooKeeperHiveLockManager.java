@@ -1103,10 +1103,10 @@ try|try
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|" about to release lock for "
-operator|+
+literal|"About to release lock for {}"
+argument_list|,
 name|hiveLock
 operator|.
 name|getHiveLockObject
@@ -1255,17 +1255,15 @@ name|LockException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Acquiring lock for "
-operator|+
+literal|"Acquiring lock for {} with mode {}"
+argument_list|,
 name|key
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" with mode "
-operator|+
+argument_list|,
 name|key
 operator|.
 name|getData
