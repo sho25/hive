@@ -193,7 +193,7 @@ name|metastore
 operator|.
 name|txn
 operator|.
-name|CompactionTxnHandler
+name|TxnUtils
 import|;
 end_import
 
@@ -290,6 +290,26 @@ operator|.
 name|util
 operator|.
 name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -753,7 +773,7 @@ specifier|final
 name|ValidTxnList
 name|txns
 init|=
-name|CompactionTxnHandler
+name|TxnUtils
 operator|.
 name|createValidCompactTxnList
 argument_list|(

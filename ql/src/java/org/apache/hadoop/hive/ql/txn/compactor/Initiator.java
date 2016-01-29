@@ -25,26 +25,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -343,7 +323,7 @@ name|metastore
 operator|.
 name|txn
 operator|.
-name|CompactionTxnHandler
+name|TxnStore
 import|;
 end_import
 
@@ -361,7 +341,7 @@ name|metastore
 operator|.
 name|txn
 operator|.
-name|TxnHandler
+name|TxnUtils
 import|;
 end_import
 
@@ -426,6 +406,26 @@ operator|.
 name|util
 operator|.
 name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -601,7 +601,7 @@ decl_stmt|;
 name|ValidTxnList
 name|txns
 init|=
-name|CompactionTxnHandler
+name|TxnUtils
 operator|.
 name|createValidCompactTxnList
 argument_list|(
@@ -1187,7 +1187,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|TxnHandler
+name|TxnStore
 operator|.
 name|WORKING_RESPONSE
 argument_list|)
@@ -1199,7 +1199,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|TxnHandler
+name|TxnStore
 operator|.
 name|INITIATED_RESPONSE
 argument_list|)

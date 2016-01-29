@@ -133,11 +133,12 @@ argument_list|,
 literal|"blah"
 argument_list|)
 expr_stmt|;
-name|TxnHandler
+name|TxnStore
 name|txnHandler1
 init|=
-operator|new
-name|TxnHandler
+name|TxnUtils
+operator|.
+name|getTxnStore
 argument_list|(
 name|conf
 argument_list|)

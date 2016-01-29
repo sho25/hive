@@ -376,59 +376,12 @@ annotation|@
 name|InterfaceStability
 operator|.
 name|Evolving
-specifier|public
+specifier|abstract
 class|class
 name|TxnHandler
+implements|implements
+name|TxnStore
 block|{
-comment|// Compactor states (Should really be enum)
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|INITIATED_RESPONSE
-init|=
-literal|"initiated"
-decl_stmt|;
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|WORKING_RESPONSE
-init|=
-literal|"working"
-decl_stmt|;
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|CLEANING_RESPONSE
-init|=
-literal|"ready for cleaning"
-decl_stmt|;
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|FAILED_RESPONSE
-init|=
-literal|"failed"
-decl_stmt|;
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|SUCCEEDED_RESPONSE
-init|=
-literal|"succeeded"
-decl_stmt|;
-specifier|static
-specifier|final
-specifier|public
-name|String
-name|ATTEMPTED_RESPONSE
-init|=
-literal|"attempted"
-decl_stmt|;
 specifier|static
 specifier|final
 specifier|protected
@@ -558,14 +511,6 @@ name|ALLOWED_REPEATED_DEADLOCKS
 init|=
 literal|10
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
-init|=
-literal|1000
-decl_stmt|;
 specifier|static
 specifier|final
 specifier|private
@@ -614,7 +559,6 @@ name|int
 name|deadlockCnt
 decl_stmt|;
 specifier|private
-specifier|final
 name|long
 name|deadlockRetryInterval
 decl_stmt|;
@@ -637,12 +581,10 @@ name|identifierQuoteString
 decl_stmt|;
 comment|// quotes to use for quoting tables, where necessary
 specifier|private
-specifier|final
 name|long
 name|retryInterval
 decl_stmt|;
 specifier|private
-specifier|final
 name|int
 name|retryLimit
 decl_stmt|;
@@ -665,6 +607,11 @@ comment|// in mind.  To do this they should call checkRetryable() AFTER rolling 
 comment|// and then they should catch RetryException and call themselves recursively. See commitTxn for an example.
 specifier|public
 name|TxnHandler
+parameter_list|()
+block|{   }
+specifier|public
+name|void
+name|setConf
 parameter_list|(
 name|HiveConf
 name|conf
@@ -5057,6 +5004,7 @@ block|}
 comment|/**    * For testing only, do not use.    */
 annotation|@
 name|VisibleForTesting
+specifier|public
 name|int
 name|numLocksInLockTable
 parameter_list|()
@@ -5162,6 +5110,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * For testing only, do not use.    */
+specifier|public
 name|long
 name|setTimeout
 parameter_list|(
