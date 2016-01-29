@@ -1600,7 +1600,7 @@ name|BAD_LOCATION_VALUE
 argument_list|(
 literal|10244
 argument_list|,
-literal|"{0}  is not absolute or has no scheme information.  Please specify a complete absolute uri with scheme information."
+literal|"{0}  is not absolute.  Please specify a complete absolute uri."
 argument_list|)
 block|,
 name|UNSUPPORTED_ALTER_TBL_OP
