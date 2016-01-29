@@ -331,9 +331,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|conf
 operator|.
-name|ErrorMsg
+name|HiveConf
+operator|.
+name|StrictChecks
 import|;
 end_import
 
@@ -1469,11 +1471,6 @@ argument_list|>
 name|topOps
 decl_stmt|;
 specifier|private
-specifier|final
-name|boolean
-name|strictMode
-decl_stmt|;
-specifier|private
 name|int
 name|uniqueCounter
 decl_stmt|;
@@ -1496,9 +1493,6 @@ argument_list|,
 name|TableScanOperator
 argument_list|>
 name|topOps
-parameter_list|,
-name|boolean
-name|strictMode
 parameter_list|)
 block|{
 name|this
@@ -1524,12 +1518,6 @@ operator|.
 name|topOps
 operator|=
 name|topOps
-expr_stmt|;
-name|this
-operator|.
-name|strictMode
-operator|=
-name|strictMode
 expr_stmt|;
 name|this
 operator|.
@@ -3684,12 +3672,9 @@ operator|.
 name|EMPTY
 condition|)
 block|{
-comment|// In strict mode, in the presence of order by, limit must be
-comment|// specified
+comment|// In strict mode, in the presence of order by, limit must be specified.
 if|if
 condition|(
-name|strictMode
-operator|&&
 name|sortRel
 operator|.
 name|fetch
@@ -3697,16 +3682,27 @@ operator|==
 literal|null
 condition|)
 block|{
+name|String
+name|error
+init|=
+name|StrictChecks
+operator|.
+name|checkNoLimit
+argument_list|(
+name|hiveConf
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|error
+operator|!=
+literal|null
+condition|)
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-name|ErrorMsg
-operator|.
-name|NO_LIMIT_WITH_ORDERBY
-operator|.
-name|getMsg
-argument_list|()
+name|error
 argument_list|)
 throw|;
 block|}
@@ -4082,7 +4078,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|,
 name|keepColumns
 argument_list|)
@@ -5024,7 +5020,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|)
 decl_stmt|;
 return|return
@@ -5384,7 +5380,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|)
 decl_stmt|;
 comment|// 2. Finally create PTF
@@ -5530,8 +5526,8 @@ parameter_list|,
 name|Operation
 name|acidOperation
 parameter_list|,
-name|boolean
-name|strictMode
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -5553,7 +5549,7 @@ name|numReducers
 argument_list|,
 name|acidOperation
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|,
 name|input
 operator|.
@@ -5598,8 +5594,8 @@ parameter_list|,
 name|Operation
 name|acidOperation
 parameter_list|,
-name|boolean
-name|strictMode
+name|HiveConf
+name|hiveConf
 parameter_list|,
 name|List
 argument_list|<
@@ -5753,7 +5749,7 @@ name|numReducers
 argument_list|,
 name|acidOperation
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|)
 decl_stmt|;
 comment|// 2. Generate backtrack Select operator
@@ -5923,8 +5919,8 @@ parameter_list|,
 name|Operation
 name|acidOperation
 parameter_list|,
-name|boolean
-name|strictMode
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -5953,7 +5949,7 @@ name|numReducers
 argument_list|,
 name|acidOperation
 argument_list|,
-name|strictMode
+name|hiveConf
 argument_list|)
 return|;
 block|}
@@ -6002,8 +5998,8 @@ parameter_list|,
 name|Operation
 name|acidOperation
 parameter_list|,
-name|boolean
-name|strictMode
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -6466,24 +6462,29 @@ operator|=
 literal|1
 expr_stmt|;
 comment|// Cartesian product is not supported in strict mode
+name|String
+name|error
+init|=
+name|StrictChecks
+operator|.
+name|checkCartesian
+argument_list|(
+name|hiveConf
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-name|strictMode
+name|error
+operator|!=
+literal|null
 condition|)
-block|{
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-name|ErrorMsg
-operator|.
-name|NO_CARTESIAN_PRODUCT
-operator|.
-name|getMsg
-argument_list|()
+name|error
 argument_list|)
 throw|;
-block|}
 block|}
 name|ReduceSinkDesc
 name|rsDesc
