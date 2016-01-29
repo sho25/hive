@@ -61,7 +61,7 @@ begin_class
 specifier|public
 class|class
 name|BinaryColumnStatsAggregator
-implements|implements
+extends|extends
 name|ColumnStatsAggregator
 block|{
 annotation|@

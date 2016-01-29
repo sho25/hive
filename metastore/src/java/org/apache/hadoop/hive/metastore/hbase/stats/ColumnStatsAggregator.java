@@ -33,18 +33,41 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|NumDistinctValueEstimator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|ColumnStatisticsObj
 import|;
 end_import
 
-begin_interface
+begin_class
 specifier|public
-interface|interface
+specifier|abstract
+class|class
 name|ColumnStatsAggregator
 block|{
+name|NumDistinctValueEstimator
+name|ndvEstimator
+init|=
+literal|null
+decl_stmt|;
 specifier|public
+specifier|abstract
 name|void
 name|aggregate
 parameter_list|(
@@ -56,7 +79,7 @@ name|newColStats
 parameter_list|)
 function_decl|;
 block|}
-end_interface
+end_class
 
 end_unit
 

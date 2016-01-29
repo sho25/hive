@@ -20903,6 +20903,32 @@ name|ByteString
 name|getColumnNameBytes
 parameter_list|()
 function_decl|;
+comment|// optional string bit_vectors = 12;
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+name|boolean
+name|hasBitVectors
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|getBitVectors
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|getBitVectorsBytes
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.ColumnStats}    */
 specifier|public
@@ -21863,6 +21889,23 @@ operator||=
 literal|0x00000400
 expr_stmt|;
 name|columnName_
+operator|=
+name|input
+operator|.
+name|readBytes
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|98
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000800
+expr_stmt|;
+name|bitVectors_
 operator|=
 name|input
 operator|.
@@ -41175,6 +41218,219 @@ name|ref
 return|;
 block|}
 block|}
+comment|// optional string bit_vectors = 12;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|BIT_VECTORS_FIELD_NUMBER
+init|=
+literal|12
+decl_stmt|;
+specifier|private
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|bitVectors_
+decl_stmt|;
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+specifier|public
+name|boolean
+name|hasBitVectors
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000800
+operator|)
+operator|==
+literal|0x00000800
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+specifier|public
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|getBitVectors
+parameter_list|()
+block|{
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|ref
+init|=
+name|bitVectors_
+decl_stmt|;
+if|if
+condition|(
+name|ref
+operator|instanceof
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+condition|)
+block|{
+return|return
+operator|(
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+operator|)
+name|ref
+return|;
+block|}
+else|else
+block|{
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|bs
+init|=
+operator|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|)
+name|ref
+decl_stmt|;
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|s
+init|=
+name|bs
+operator|.
+name|toStringUtf8
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|bs
+operator|.
+name|isValidUtf8
+argument_list|()
+condition|)
+block|{
+name|bitVectors_
+operator|=
+name|s
+expr_stmt|;
+block|}
+return|return
+name|s
+return|;
+block|}
+block|}
+comment|/**      *<code>optional string bit_vectors = 12;</code>      */
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|getBitVectorsBytes
+parameter_list|()
+block|{
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|ref
+init|=
+name|bitVectors_
+decl_stmt|;
+if|if
+condition|(
+name|ref
+operator|instanceof
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+condition|)
+block|{
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|b
+init|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|.
+name|copyFromUtf8
+argument_list|(
+operator|(
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+operator|)
+name|ref
+argument_list|)
+decl_stmt|;
+name|bitVectors_
+operator|=
+name|b
+expr_stmt|;
+return|return
+name|b
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|)
+name|ref
+return|;
+block|}
+block|}
 specifier|private
 name|void
 name|initFields
@@ -41335,6 +41591,10 @@ name|getDefaultInstance
 argument_list|()
 expr_stmt|;
 name|columnName_
+operator|=
+literal|""
+expr_stmt|;
+name|bitVectors_
 operator|=
 literal|""
 expr_stmt|;
@@ -41691,6 +41951,30 @@ argument_list|(
 literal|11
 argument_list|,
 name|getColumnNameBytes
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000800
+operator|)
+operator|==
+literal|0x00000800
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeBytes
+argument_list|(
+literal|12
+argument_list|,
+name|getBitVectorsBytes
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -42074,6 +42358,38 @@ argument_list|(
 literal|11
 argument_list|,
 name|getColumnNameBytes
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000800
+operator|)
+operator|==
+literal|0x00000800
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeBytesSize
+argument_list|(
+literal|12
+argument_list|,
+name|getBitVectorsBytes
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -43305,6 +43621,19 @@ operator|~
 literal|0x00000400
 operator|)
 expr_stmt|;
+name|bitVectors_
+operator|=
+literal|""
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000800
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -43905,6 +44234,30 @@ name|columnName_
 operator|=
 name|columnName_
 expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000800
+operator|)
+operator|==
+literal|0x00000800
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000800
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|bitVectors_
+operator|=
+name|bitVectors_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -44231,6 +44584,28 @@ operator|=
 name|other
 operator|.
 name|columnName_
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasBitVectors
+argument_list|()
+condition|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000800
+expr_stmt|;
+name|bitVectors_
+operator|=
+name|other
+operator|.
+name|bitVectors_
 expr_stmt|;
 name|onChanged
 argument_list|()
@@ -49719,6 +50094,308 @@ operator||=
 literal|0x00000400
 expr_stmt|;
 name|columnName_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional string bit_vectors = 12;
+specifier|private
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|bitVectors_
+init|=
+literal|""
+decl_stmt|;
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|boolean
+name|hasBitVectors
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000800
+operator|)
+operator|==
+literal|0x00000800
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|getBitVectors
+parameter_list|()
+block|{
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|ref
+init|=
+name|bitVectors_
+decl_stmt|;
+if|if
+condition|(
+operator|!
+operator|(
+name|ref
+operator|instanceof
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+operator|)
+condition|)
+block|{
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|s
+init|=
+operator|(
+operator|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|)
+name|ref
+operator|)
+operator|.
+name|toStringUtf8
+argument_list|()
+decl_stmt|;
+name|bitVectors_
+operator|=
+name|s
+expr_stmt|;
+return|return
+name|s
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|(
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+operator|)
+name|ref
+return|;
+block|}
+block|}
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|getBitVectorsBytes
+parameter_list|()
+block|{
+name|java
+operator|.
+name|lang
+operator|.
+name|Object
+name|ref
+init|=
+name|bitVectors_
+decl_stmt|;
+if|if
+condition|(
+name|ref
+operator|instanceof
+name|String
+condition|)
+block|{
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|b
+init|=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|.
+name|copyFromUtf8
+argument_list|(
+operator|(
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+operator|)
+name|ref
+argument_list|)
+decl_stmt|;
+name|bitVectors_
+operator|=
+name|b
+expr_stmt|;
+return|return
+name|b
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+operator|)
+name|ref
+return|;
+block|}
+block|}
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|Builder
+name|setBitVectors
+parameter_list|(
+name|java
+operator|.
+name|lang
+operator|.
+name|String
+name|value
+parameter_list|)
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NullPointerException
+argument_list|()
+throw|;
+block|}
+name|bitField0_
+operator||=
+literal|0x00000800
+expr_stmt|;
+name|bitVectors_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|Builder
+name|clearBitVectors
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000800
+operator|)
+expr_stmt|;
+name|bitVectors_
+operator|=
+name|getDefaultInstance
+argument_list|()
+operator|.
+name|getBitVectors
+argument_list|()
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional string bit_vectors = 12;</code>        */
+specifier|public
+name|Builder
+name|setBitVectorsBytes
+parameter_list|(
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|ByteString
+name|value
+parameter_list|)
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|NullPointerException
+argument_list|()
+throw|;
+block|}
+name|bitField0_
+operator||=
+literal|0x00000800
+expr_stmt|;
+name|bitVectors_
 operator|=
 name|value
 expr_stmt|;
@@ -188245,7 +188922,7 @@ literal|"ery\030\002 \002(\003\022\034\n\024max_cache_entry_life\030\003 \002(\0
 operator|+
 literal|"?\n\005Entry\022\017\n\007db_name\030\001 \002(\014\022\022\n\ntable_name\030"
 operator|+
-literal|"\002 \002(\014\022\021\n\tpart_name\030\003 \002(\014\"\335\010\n\013ColumnStats"
+literal|"\002 \002(\014\022\021\n\tpart_name\030\003 \002(\014\"\362\010\n\013ColumnStats"
 operator|+
 literal|"\022\025\n\rlast_analyzed\030\001 \001(\003\022\023\n\013column_type\030\002"
 operator|+
@@ -188277,257 +188954,259 @@ literal|"ts\022W\n\rdecimal_stats\030\n \001(\0132@.org.apache.h"
 operator|+
 literal|"adoop.hive.metastore.hbase.ColumnStats.D"
 operator|+
-literal|"ecimalStats\022\023\n\013column_name\030\013 \001(\t\0325\n\014Bool"
+literal|"ecimalStats\022\023\n\013column_name\030\013 \001(\t\022\023\n\013bit_"
 operator|+
-literal|"eanStats\022\021\n\tnum_trues\030\001 \001(\003\022\022\n\nnum_false"
+literal|"vectors\030\014 \001(\t\0325\n\014BooleanStats\022\021\n\tnum_tru"
 operator|+
-literal|"s\030\002 \001(\003\0322\n\tLongStats\022\021\n\tlow_value\030\001 \001(\022\022"
+literal|"es\030\001 \001(\003\022\022\n\nnum_falses\030\002 \001(\003\0322\n\tLongStat"
 operator|+
-literal|"\022\n\nhigh_value\030\002 \001(\022\0324\n\013DoubleStats\022\021\n\tlo"
+literal|"s\022\021\n\tlow_value\030\001 \001(\022\022\022\n\nhigh_value\030\002 \001(\022"
 operator|+
-literal|"w_value\030\001 \001(\001\022\022\n\nhigh_value\030\002 \001(\001\032=\n\013Str"
+literal|"\0324\n\013DoubleStats\022\021\n\tlow_value\030\001 \001(\001\022\022\n\nhi"
 operator|+
-literal|"ingStats\022\026\n\016max_col_length\030\001 \001(\003\022\026\n\016avg_"
+literal|"gh_value\030\002 \001(\001\032=\n\013StringStats\022\026\n\016max_col"
 operator|+
-literal|"col_length\030\002 \001(\001\032\365\001\n\014DecimalStats\022[\n\tlow"
+literal|"_length\030\001 \001(\003\022\026\n\016avg_col_length\030\002 \001(\001\032\365\001"
 operator|+
-literal|"_value\030\001 \001(\0132H.org.apache.hadoop.hive.me"
+literal|"\n\014DecimalStats\022[\n\tlow_value\030\001 \001(\0132H.org."
 block|,
-literal|"tastore.hbase.ColumnStats.DecimalStats.D"
+literal|"apache.hadoop.hive.metastore.hbase.Colum"
 operator|+
-literal|"ecimal\022\\\n\nhigh_value\030\002 \001(\0132H.org.apache."
+literal|"nStats.DecimalStats.Decimal\022\\\n\nhigh_valu"
 operator|+
-literal|"hadoop.hive.metastore.hbase.ColumnStats."
+literal|"e\030\002 \001(\0132H.org.apache.hadoop.hive.metasto"
 operator|+
-literal|"DecimalStats.Decimal\032*\n\007Decimal\022\020\n\010unsca"
+literal|"re.hbase.ColumnStats.DecimalStats.Decima"
 operator|+
-literal|"led\030\001 \002(\014\022\r\n\005scale\030\002 \002(\005\"\246\002\n\010Database\022\023\n"
+literal|"l\032*\n\007Decimal\022\020\n\010unscaled\030\001 \002(\014\022\r\n\005scale\030"
 operator|+
-literal|"\013description\030\001 \001(\t\022\013\n\003uri\030\002 \001(\t\022F\n\nparam"
+literal|"\002 \002(\005\"\246\002\n\010Database\022\023\n\013description\030\001 \001(\t\022"
 operator|+
-literal|"eters\030\003 \001(\01322.org.apache.hadoop.hive.met"
+literal|"\013\n\003uri\030\002 \001(\t\022F\n\nparameters\030\003 \001(\01322.org.a"
 operator|+
-literal|"astore.hbase.Parameters\022Q\n\nprivileges\030\004 "
+literal|"pache.hadoop.hive.metastore.hbase.Parame"
 operator|+
-literal|"\001(\0132=.org.apache.hadoop.hive.metastore.h"
+literal|"ters\022Q\n\nprivileges\030\004 \001(\0132=.org.apache.ha"
 operator|+
-literal|"base.PrincipalPrivilegeSet\022\022\n\nowner_name"
+literal|"doop.hive.metastore.hbase.PrincipalPrivi"
 block|,
-literal|"\030\005 \001(\t\022I\n\nowner_type\030\006 \001(\01625.org.apache."
+literal|"legeSet\022\022\n\nowner_name\030\005 \001(\t\022I\n\nowner_typ"
 operator|+
-literal|"hadoop.hive.metastore.hbase.PrincipalTyp"
+literal|"e\030\006 \001(\01625.org.apache.hadoop.hive.metasto"
 operator|+
-literal|"e\"$\n\017DelegationToken\022\021\n\ttoken_str\030\001 \002(\t\""
+literal|"re.hbase.PrincipalType\"$\n\017DelegationToke"
 operator|+
-literal|":\n\013FieldSchema\022\014\n\004name\030\001 \002(\t\022\014\n\004type\030\002 \002"
+literal|"n\022\021\n\ttoken_str\030\001 \002(\t\":\n\013FieldSchema\022\014\n\004n"
 operator|+
-literal|"(\t\022\017\n\007comment\030\003 \001(\t\"\206\004\n\010Function\022\022\n\nclas"
+literal|"ame\030\001 \002(\t\022\014\n\004type\030\002 \002(\t\022\017\n\007comment\030\003 \001(\t"
 operator|+
-literal|"s_name\030\001 \001(\t\022\022\n\nowner_name\030\002 \001(\t\022I\n\nowne"
+literal|"\"\206\004\n\010Function\022\022\n\nclass_name\030\001 \001(\t\022\022\n\nown"
 operator|+
-literal|"r_type\030\003 \001(\01625.org.apache.hadoop.hive.me"
+literal|"er_name\030\002 \001(\t\022I\n\nowner_type\030\003 \001(\01625.org."
 operator|+
-literal|"tastore.hbase.PrincipalType\022\023\n\013create_ti"
+literal|"apache.hadoop.hive.metastore.hbase.Princ"
 operator|+
-literal|"me\030\004 \001(\022\022T\n\rfunction_type\030\005 \001(\0162=.org.ap"
+literal|"ipalType\022\023\n\013create_time\030\004 \001(\022\022T\n\rfunctio"
 operator|+
-literal|"ache.hadoop.hive.metastore.hbase.Functio"
+literal|"n_type\030\005 \001(\0162=.org.apache.hadoop.hive.me"
 block|,
-literal|"n.FunctionType\022S\n\rresource_uris\030\006 \003(\0132<."
+literal|"tastore.hbase.Function.FunctionType\022S\n\rr"
 operator|+
-literal|"org.apache.hadoop.hive.metastore.hbase.F"
-operator|+
-literal|"unction.ResourceUri\032\254\001\n\013ResourceUri\022`\n\rr"
-operator|+
-literal|"esource_type\030\001 \002(\0162I.org.apache.hadoop.h"
+literal|"esource_uris\030\006 \003(\0132<.org.apache.hadoop.h"
 operator|+
 literal|"ive.metastore.hbase.Function.ResourceUri"
 operator|+
-literal|".ResourceType\022\013\n\003uri\030\002 \002(\t\".\n\014ResourceTy"
+literal|"\032\254\001\n\013ResourceUri\022`\n\rresource_type\030\001 \002(\0162"
 operator|+
-literal|"pe\022\007\n\003JAR\020\001\022\010\n\004FILE\020\002\022\013\n\007ARCHIVE\020\003\"\030\n\014Fu"
+literal|"I.org.apache.hadoop.hive.metastore.hbase"
 operator|+
-literal|"nctionType\022\010\n\004JAVA\020\001\"\037\n\tMasterKey\022\022\n\nmas"
+literal|".Function.ResourceUri.ResourceType\022\013\n\003ur"
 operator|+
-literal|"ter_key\030\001 \002(\t\",\n\016ParameterEntry\022\013\n\003key\030\001"
+literal|"i\030\002 \002(\t\".\n\014ResourceType\022\007\n\003JAR\020\001\022\010\n\004FILE"
 operator|+
-literal|" \002(\t\022\r\n\005value\030\002 \002(\t\"W\n\nParameters\022I\n\tpar"
+literal|"\020\002\022\013\n\007ARCHIVE\020\003\"\030\n\014FunctionType\022\010\n\004JAVA\020"
+operator|+
+literal|"\001\"\037\n\tMasterKey\022\022\n\nmaster_key\030\001 \002(\t\",\n\016Pa"
+operator|+
+literal|"rameterEntry\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t"
 block|,
-literal|"ameter\030\001 \003(\01326.org.apache.hadoop.hive.me"
+literal|"\"W\n\nParameters\022I\n\tparameter\030\001 \003(\01326.org."
 operator|+
-literal|"tastore.hbase.ParameterEntry\"\360\001\n\tPartiti"
+literal|"apache.hadoop.hive.metastore.hbase.Param"
 operator|+
-literal|"on\022\023\n\013create_time\030\001 \001(\003\022\030\n\020last_access_t"
+literal|"eterEntry\"\360\001\n\tPartition\022\023\n\013create_time\030\001"
 operator|+
-literal|"ime\030\002 \001(\003\022\020\n\010location\030\003 \001(\t\022I\n\rsd_parame"
+literal|" \001(\003\022\030\n\020last_access_time\030\002 \001(\003\022\020\n\010locati"
 operator|+
-literal|"ters\030\004 \001(\01322.org.apache.hadoop.hive.meta"
+literal|"on\030\003 \001(\t\022I\n\rsd_parameters\030\004 \001(\01322.org.ap"
 operator|+
-literal|"store.hbase.Parameters\022\017\n\007sd_hash\030\005 \002(\014\022"
+literal|"ache.hadoop.hive.metastore.hbase.Paramet"
 operator|+
-literal|"F\n\nparameters\030\006 \001(\01322.org.apache.hadoop."
+literal|"ers\022\017\n\007sd_hash\030\005 \002(\014\022F\n\nparameters\030\006 \001(\013"
 operator|+
-literal|"hive.metastore.hbase.Parameters\"\204\001\n\032Prin"
+literal|"22.org.apache.hadoop.hive.metastore.hbas"
 operator|+
-literal|"cipalPrivilegeSetEntry\022\026\n\016principal_name"
+literal|"e.Parameters\"\204\001\n\032PrincipalPrivilegeSetEn"
 operator|+
-literal|"\030\001 \002(\t\022N\n\nprivileges\030\002 \003(\0132:.org.apache."
+literal|"try\022\026\n\016principal_name\030\001 \002(\t\022N\n\nprivilege"
 block|,
-literal|"hadoop.hive.metastore.hbase.PrivilegeGra"
+literal|"s\030\002 \003(\0132:.org.apache.hadoop.hive.metasto"
 operator|+
-literal|"ntInfo\"\275\001\n\025PrincipalPrivilegeSet\022Q\n\005user"
+literal|"re.hbase.PrivilegeGrantInfo\"\275\001\n\025Principa"
 operator|+
-literal|"s\030\001 \003(\0132B.org.apache.hadoop.hive.metasto"
+literal|"lPrivilegeSet\022Q\n\005users\030\001 \003(\0132B.org.apach"
 operator|+
-literal|"re.hbase.PrincipalPrivilegeSetEntry\022Q\n\005r"
+literal|"e.hadoop.hive.metastore.hbase.PrincipalP"
 operator|+
-literal|"oles\030\002 \003(\0132B.org.apache.hadoop.hive.meta"
+literal|"rivilegeSetEntry\022Q\n\005roles\030\002 \003(\0132B.org.ap"
 operator|+
-literal|"store.hbase.PrincipalPrivilegeSetEntry\"\260"
+literal|"ache.hadoop.hive.metastore.hbase.Princip"
 operator|+
-literal|"\001\n\022PrivilegeGrantInfo\022\021\n\tprivilege\030\001 \001(\t"
+literal|"alPrivilegeSetEntry\"\260\001\n\022PrivilegeGrantIn"
 operator|+
-literal|"\022\023\n\013create_time\030\002 \001(\003\022\017\n\007grantor\030\003 \001(\t\022K"
+literal|"fo\022\021\n\tprivilege\030\001 \001(\t\022\023\n\013create_time\030\002 \001"
 operator|+
-literal|"\n\014grantor_type\030\004 \001(\01625.org.apache.hadoop"
+literal|"(\003\022\017\n\007grantor\030\003 \001(\t\022K\n\014grantor_type\030\004 \001("
 operator|+
-literal|".hive.metastore.hbase.PrincipalType\022\024\n\014g"
+literal|"\01625.org.apache.hadoop.hive.metastore.hba"
 block|,
-literal|"rant_option\030\005 \001(\010\"\374\001\n\rRoleGrantInfo\022\026\n\016p"
+literal|"se.PrincipalType\022\024\n\014grant_option\030\005 \001(\010\"\374"
 operator|+
-literal|"rincipal_name\030\001 \002(\t\022M\n\016principal_type\030\002 "
+literal|"\001\n\rRoleGrantInfo\022\026\n\016principal_name\030\001 \002(\t"
 operator|+
-literal|"\002(\01625.org.apache.hadoop.hive.metastore.h"
+literal|"\022M\n\016principal_type\030\002 \002(\01625.org.apache.ha"
 operator|+
-literal|"base.PrincipalType\022\020\n\010add_time\030\003 \001(\003\022\017\n\007"
+literal|"doop.hive.metastore.hbase.PrincipalType\022"
 operator|+
-literal|"grantor\030\004 \001(\t\022K\n\014grantor_type\030\005 \001(\01625.or"
+literal|"\020\n\010add_time\030\003 \001(\003\022\017\n\007grantor\030\004 \001(\t\022K\n\014gr"
 operator|+
-literal|"g.apache.hadoop.hive.metastore.hbase.Pri"
+literal|"antor_type\030\005 \001(\01625.org.apache.hadoop.hiv"
 operator|+
-literal|"ncipalType\022\024\n\014grant_option\030\006 \001(\010\"^\n\021Role"
+literal|"e.metastore.hbase.PrincipalType\022\024\n\014grant"
 operator|+
-literal|"GrantInfoList\022I\n\ngrant_info\030\001 \003(\01325.org."
+literal|"_option\030\006 \001(\010\"^\n\021RoleGrantInfoList\022I\n\ngr"
 operator|+
-literal|"apache.hadoop.hive.metastore.hbase.RoleG"
+literal|"ant_info\030\001 \003(\01325.org.apache.hadoop.hive."
 operator|+
-literal|"rantInfo\"\030\n\010RoleList\022\014\n\004role\030\001 \003(\t\"/\n\004Ro"
+literal|"metastore.hbase.RoleGrantInfo\"\030\n\010RoleLis"
 block|,
-literal|"le\022\023\n\013create_time\030\001 \001(\003\022\022\n\nowner_name\030\002 "
+literal|"t\022\014\n\004role\030\001 \003(\t\"/\n\004Role\022\023\n\013create_time\030\001"
 operator|+
-literal|"\001(\t\"\254\010\n\021StorageDescriptor\022A\n\004cols\030\001 \003(\0132"
+literal|" \001(\003\022\022\n\nowner_name\030\002 \001(\t\"\254\010\n\021StorageDesc"
 operator|+
-literal|"3.org.apache.hadoop.hive.metastore.hbase"
+literal|"riptor\022A\n\004cols\030\001 \003(\01323.org.apache.hadoop"
 operator|+
-literal|".FieldSchema\022\024\n\014input_format\030\002 \001(\t\022\025\n\rou"
+literal|".hive.metastore.hbase.FieldSchema\022\024\n\014inp"
 operator|+
-literal|"tput_format\030\003 \001(\t\022\025\n\ris_compressed\030\004 \001(\010"
+literal|"ut_format\030\002 \001(\t\022\025\n\routput_format\030\003 \001(\t\022\025"
 operator|+
-literal|"\022\023\n\013num_buckets\030\005 \001(\021\022W\n\nserde_info\030\006 \001("
+literal|"\n\ris_compressed\030\004 \001(\010\022\023\n\013num_buckets\030\005 \001"
 operator|+
-literal|"\0132C.org.apache.hadoop.hive.metastore.hba"
+literal|"(\021\022W\n\nserde_info\030\006 \001(\0132C.org.apache.hado"
 operator|+
-literal|"se.StorageDescriptor.SerDeInfo\022\023\n\013bucket"
+literal|"op.hive.metastore.hbase.StorageDescripto"
 operator|+
-literal|"_cols\030\007 \003(\t\022R\n\tsort_cols\030\010 \003(\0132?.org.apa"
+literal|"r.SerDeInfo\022\023\n\013bucket_cols\030\007 \003(\t\022R\n\tsort"
 operator|+
-literal|"che.hadoop.hive.metastore.hbase.StorageD"
+literal|"_cols\030\010 \003(\0132?.org.apache.hadoop.hive.met"
 block|,
-literal|"escriptor.Order\022Y\n\013skewed_info\030\t \001(\0132D.o"
+literal|"astore.hbase.StorageDescriptor.Order\022Y\n\013"
 operator|+
-literal|"rg.apache.hadoop.hive.metastore.hbase.St"
+literal|"skewed_info\030\t \001(\0132D.org.apache.hadoop.hi"
 operator|+
-literal|"orageDescriptor.SkewedInfo\022!\n\031stored_as_"
+literal|"ve.metastore.hbase.StorageDescriptor.Ske"
 operator|+
-literal|"sub_directories\030\n \001(\010\032.\n\005Order\022\023\n\013column"
+literal|"wedInfo\022!\n\031stored_as_sub_directories\030\n \001"
 operator|+
-literal|"_name\030\001 \002(\t\022\020\n\005order\030\002 \001(\021:\0011\032|\n\tSerDeIn"
+literal|"(\010\032.\n\005Order\022\023\n\013column_name\030\001 \002(\t\022\020\n\005orde"
 operator|+
-literal|"fo\022\014\n\004name\030\001 \001(\t\022\031\n\021serialization_lib\030\002 "
+literal|"r\030\002 \001(\021:\0011\032|\n\tSerDeInfo\022\014\n\004name\030\001 \001(\t\022\031\n"
 operator|+
-literal|"\001(\t\022F\n\nparameters\030\003 \001(\01322.org.apache.had"
+literal|"\021serialization_lib\030\002 \001(\t\022F\n\nparameters\030\003"
 operator|+
-literal|"oop.hive.metastore.hbase.Parameters\032\214\003\n\n"
+literal|" \001(\01322.org.apache.hadoop.hive.metastore."
 operator|+
-literal|"SkewedInfo\022\030\n\020skewed_col_names\030\001 \003(\t\022r\n\021"
+literal|"hbase.Parameters\032\214\003\n\nSkewedInfo\022\030\n\020skewe"
 operator|+
-literal|"skewed_col_values\030\002 \003(\0132W.org.apache.had"
+literal|"d_col_names\030\001 \003(\t\022r\n\021skewed_col_values\030\002"
 block|,
-literal|"oop.hive.metastore.hbase.StorageDescript"
+literal|" \003(\0132W.org.apache.hadoop.hive.metastore."
 operator|+
-literal|"or.SkewedInfo.SkewedColValueList\022\206\001\n\036ske"
+literal|"hbase.StorageDescriptor.SkewedInfo.Skewe"
 operator|+
-literal|"wed_col_value_location_maps\030\003 \003(\0132^.org."
+literal|"dColValueList\022\206\001\n\036skewed_col_value_locat"
 operator|+
-literal|"apache.hadoop.hive.metastore.hbase.Stora"
+literal|"ion_maps\030\003 \003(\0132^.org.apache.hadoop.hive."
 operator|+
-literal|"geDescriptor.SkewedInfo.SkewedColValueLo"
+literal|"metastore.hbase.StorageDescriptor.Skewed"
 operator|+
-literal|"cationMap\032.\n\022SkewedColValueList\022\030\n\020skewe"
+literal|"Info.SkewedColValueLocationMap\032.\n\022Skewed"
 operator|+
-literal|"d_col_value\030\001 \003(\t\0327\n\031SkewedColValueLocat"
+literal|"ColValueList\022\030\n\020skewed_col_value\030\001 \003(\t\0327"
 operator|+
-literal|"ionMap\022\013\n\003key\030\001 \003(\t\022\r\n\005value\030\002 \002(\t\"\220\004\n\005T"
+literal|"\n\031SkewedColValueLocationMap\022\013\n\003key\030\001 \003(\t"
 operator|+
-literal|"able\022\r\n\005owner\030\001 \001(\t\022\023\n\013create_time\030\002 \001(\003"
+literal|"\022\r\n\005value\030\002 \002(\t\"\220\004\n\005Table\022\r\n\005owner\030\001 \001(\t"
 operator|+
-literal|"\022\030\n\020last_access_time\030\003 \001(\003\022\021\n\tretention\030"
+literal|"\022\023\n\013create_time\030\002 \001(\003\022\030\n\020last_access_tim"
 block|,
-literal|"\004 \001(\003\022\020\n\010location\030\005 \001(\t\022I\n\rsd_parameters"
+literal|"e\030\003 \001(\003\022\021\n\tretention\030\004 \001(\003\022\020\n\010location\030\005"
 operator|+
-literal|"\030\006 \001(\01322.org.apache.hadoop.hive.metastor"
+literal|" \001(\t\022I\n\rsd_parameters\030\006 \001(\01322.org.apache"
 operator|+
-literal|"e.hbase.Parameters\022\017\n\007sd_hash\030\007 \002(\014\022K\n\016p"
+literal|".hadoop.hive.metastore.hbase.Parameters\022"
 operator|+
-literal|"artition_keys\030\010 \003(\01323.org.apache.hadoop."
+literal|"\017\n\007sd_hash\030\007 \002(\014\022K\n\016partition_keys\030\010 \003(\013"
 operator|+
-literal|"hive.metastore.hbase.FieldSchema\022F\n\npara"
+literal|"23.org.apache.hadoop.hive.metastore.hbas"
 operator|+
-literal|"meters\030\t \001(\01322.org.apache.hadoop.hive.me"
+literal|"e.FieldSchema\022F\n\nparameters\030\t \001(\01322.org."
 operator|+
-literal|"tastore.hbase.Parameters\022\032\n\022view_origina"
+literal|"apache.hadoop.hive.metastore.hbase.Param"
 operator|+
-literal|"l_text\030\n \001(\t\022\032\n\022view_expanded_text\030\013 \001(\t"
+literal|"eters\022\032\n\022view_original_text\030\n \001(\t\022\032\n\022vie"
 operator|+
-literal|"\022\022\n\ntable_type\030\014 \001(\t\022Q\n\nprivileges\030\r \001(\013"
+literal|"w_expanded_text\030\013 \001(\t\022\022\n\ntable_type\030\014 \001("
 operator|+
-literal|"2=.org.apache.hadoop.hive.metastore.hbas"
+literal|"\t\022Q\n\nprivileges\030\r \001(\0132=.org.apache.hadoo"
 block|,
-literal|"e.PrincipalPrivilegeSet\022\024\n\014is_temporary\030"
+literal|"p.hive.metastore.hbase.PrincipalPrivileg"
 operator|+
-literal|"\016 \001(\010\"\353\004\n\026PartitionKeyComparator\022\r\n\005name"
+literal|"eSet\022\024\n\014is_temporary\030\016 \001(\010\"\353\004\n\026Partition"
 operator|+
-literal|"s\030\001 \002(\t\022\r\n\005types\030\002 \002(\t\022S\n\002op\030\003 \003(\0132G.org"
+literal|"KeyComparator\022\r\n\005names\030\001 \002(\t\022\r\n\005types\030\002 "
 operator|+
-literal|".apache.hadoop.hive.metastore.hbase.Part"
+literal|"\002(\t\022S\n\002op\030\003 \003(\0132G.org.apache.hadoop.hive"
 operator|+
-literal|"itionKeyComparator.Operator\022S\n\005range\030\004 \003"
+literal|".metastore.hbase.PartitionKeyComparator."
 operator|+
-literal|"(\0132D.org.apache.hadoop.hive.metastore.hb"
+literal|"Operator\022S\n\005range\030\004 \003(\0132D.org.apache.had"
 operator|+
-literal|"ase.PartitionKeyComparator.Range\032(\n\004Mark"
+literal|"oop.hive.metastore.hbase.PartitionKeyCom"
 operator|+
-literal|"\022\r\n\005value\030\001 \002(\t\022\021\n\tinclusive\030\002 \002(\010\032\272\001\n\005R"
+literal|"parator.Range\032(\n\004Mark\022\r\n\005value\030\001 \002(\t\022\021\n\t"
 operator|+
-literal|"ange\022\013\n\003key\030\001 \002(\t\022R\n\005start\030\002 \001(\0132C.org.a"
+literal|"inclusive\030\002 \002(\010\032\272\001\n\005Range\022\013\n\003key\030\001 \002(\t\022R"
 operator|+
-literal|"pache.hadoop.hive.metastore.hbase.Partit"
+literal|"\n\005start\030\002 \001(\0132C.org.apache.hadoop.hive.m"
 block|,
-literal|"ionKeyComparator.Mark\022P\n\003end\030\003 \001(\0132C.org"
+literal|"etastore.hbase.PartitionKeyComparator.Ma"
 operator|+
-literal|".apache.hadoop.hive.metastore.hbase.Part"
+literal|"rk\022P\n\003end\030\003 \001(\0132C.org.apache.hadoop.hive"
 operator|+
-literal|"itionKeyComparator.Mark\032\241\001\n\010Operator\022Z\n\004"
+literal|".metastore.hbase.PartitionKeyComparator."
 operator|+
-literal|"type\030\001 \002(\0162L.org.apache.hadoop.hive.meta"
+literal|"Mark\032\241\001\n\010Operator\022Z\n\004type\030\001 \002(\0162L.org.ap"
 operator|+
-literal|"store.hbase.PartitionKeyComparator.Opera"
+literal|"ache.hadoop.hive.metastore.hbase.Partiti"
 operator|+
-literal|"tor.Type\022\013\n\003key\030\002 \002(\t\022\013\n\003val\030\003 \002(\t\"\037\n\004Ty"
+literal|"onKeyComparator.Operator.Type\022\013\n\003key\030\002 \002"
 operator|+
-literal|"pe\022\010\n\004LIKE\020\000\022\r\n\tNOTEQUALS\020\001*#\n\rPrincipal"
+literal|"(\t\022\013\n\003val\030\003 \002(\t\"\037\n\004Type\022\010\n\004LIKE\020\000\022\r\n\tNOT"
 operator|+
-literal|"Type\022\010\n\004USER\020\000\022\010\n\004ROLE\020\001"
+literal|"EQUALS\020\001*#\n\rPrincipalType\022\010\n\004USER\020\000\022\010\n\004R"
+operator|+
+literal|"OLE\020\001"
 block|}
 decl_stmt|;
 name|com
@@ -188858,6 +189537,8 @@ block|,
 literal|"DecimalStats"
 block|,
 literal|"ColumnName"
+block|,
+literal|"BitVectors"
 block|, }
 argument_list|)
 expr_stmt|;

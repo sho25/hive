@@ -3512,11 +3512,11 @@ literal|"col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
 literal|"\"statsData\":{\"longStats\":{\"lowValue\":-95,\"highValue\":95,\"numNulls\":1,"
 operator|+
-literal|"\"numDVs\":2}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
+literal|"\"numDVs\":2,\"bitVectors\":\"\"}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
 operator|+
 literal|"\"statsData\":{\"stringStats\":{\"maxColLen\":97,\"avgColLen\":18.78,"
 operator|+
-literal|"\"numNulls\":29,\"numDVs\":397}}}"
+literal|"\"numNulls\":29,\"numDVs\":397,\"bitVectors\":\"\"}}}"
 operator|+
 name|lsep
 operator|+
@@ -3928,11 +3928,11 @@ literal|"stats: column col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
 literal|"\"statsData\":{\"longStats\":{\"lowValue\":-95,\"highValue\":95,\"numNulls\":1,"
 operator|+
-literal|"\"numDVs\":2}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
+literal|"\"numDVs\":2,\"bitVectors\":\"\"}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
 operator|+
 literal|"\"statsData\":{\"stringStats\":{\"maxColLen\":97,\"avgColLen\":18.78,\"numNulls\":29,"
 operator|+
-literal|"\"numDVs\":397}}}"
+literal|"\"numDVs\":397,\"bitVectors\":\"\"}}}"
 operator|+
 name|lsep
 argument_list|,
@@ -3997,11 +3997,11 @@ literal|"col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
 literal|"\"statsData\":{\"longStats\":{\"lowValue\":-95,\"highValue\":95,\"numNulls\":1,"
 operator|+
-literal|"\"numDVs\":2}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
+literal|"\"numDVs\":2,\"bitVectors\":\"\"}}} column col2: {\"colName\":\"col2\",\"colType\":\"varchar(32)\","
 operator|+
 literal|"\"statsData\":{\"stringStats\":{\"maxColLen\":97,\"avgColLen\":18.78,\"numNulls\":29,"
 operator|+
-literal|"\"numDVs\":397}}}"
+literal|"\"numDVs\":397,\"bitVectors\":\"\"}}}"
 operator|+
 name|lsep
 argument_list|,
