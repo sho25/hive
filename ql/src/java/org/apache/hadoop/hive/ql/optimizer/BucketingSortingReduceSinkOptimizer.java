@@ -665,6 +665,26 @@ name|ShimLoader
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * This transformation does optimization for enforcing bucketing and sorting.  * For a query of the form:  * insert overwrite table T1 select * from T2;  * where T1 and T2 are bucketized/sorted on the same keys, we don't need a reducer to  * enforce bucketing and sorting.  *  * It also optimizes queries of the form:  * insert overwrite table T1  * select * from T1 join T2 on T1.key = T2.key  * where T1, T2 and T3 are bucketized/sorted on the same key 'key', we don't need a reducer  * to enforce bucketing and sorting  */
 end_comment
@@ -876,6 +896,20 @@ name|BucketSortReduceSinkProcessor
 implements|implements
 name|NodeProcessor
 block|{
+specifier|private
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|BucketSortReduceSinkProcessor
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|protected
 name|ParseContext
 name|pGraphContext
@@ -2125,6 +2159,29 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+comment|// We should not use this optimization if sorted dynamic partition optimizer is used,
+comment|// as RS will be required.
+if|if
+condition|(
+name|pGraphContext
+operator|.
+name|isReduceSinkAddedBySortedDynPartition
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Reduce Sink is added by Sorted Dynamic Partition Optimizer. Bailing out of"
+operator|+
+literal|" Bucketing Sorting Reduce Sink Optimizer"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 comment|// If the reduce sink has not been introduced due to bucketing/sorting, ignore it
 name|FileSinkOperator
 name|fsOp
