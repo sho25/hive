@@ -187,9 +187,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|protocol
 operator|.
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 import|;
 end_import
 
@@ -256,6 +256,24 @@ operator|.
 name|LlapDaemonProtocolProtos
 operator|.
 name|SubmissionStateProto
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|impl
+operator|.
+name|LlapProtocolClientImpl
 import|;
 end_import
 
@@ -335,11 +353,11 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-name|LlapDaemonProtocolServerImpl
+name|LlapProtocolServerImpl
 name|server
 init|=
 operator|new
-name|LlapDaemonProtocolServerImpl
+name|LlapProtocolServerImpl
 argument_list|(
 name|numHandlers
 argument_list|,
@@ -423,11 +441,11 @@ operator|.
 name|getBindAddress
 argument_list|()
 decl_stmt|;
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 name|client
 init|=
 operator|new
-name|LlapDaemonProtocolClientImpl
+name|LlapProtocolClientImpl
 argument_list|(
 operator|new
 name|Configuration

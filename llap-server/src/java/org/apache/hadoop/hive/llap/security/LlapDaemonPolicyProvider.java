@@ -47,9 +47,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|protocol
 operator|.
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 import|;
 end_import
 
@@ -65,9 +65,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|protocol
 operator|.
-name|LlapManagementProtocolBlockingPB
+name|LlapManagementProtocolPB
 import|;
 end_import
 
@@ -132,7 +132,7 @@ name|LLAP_SECURITY_ACL
 operator|.
 name|varname
 argument_list|,
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 operator|.
 name|class
 argument_list|)
@@ -148,7 +148,7 @@ name|LLAP_MANAGEMENT_ACL
 operator|.
 name|varname
 argument_list|,
-name|LlapManagementProtocolBlockingPB
+name|LlapManagementProtocolPB
 operator|.
 name|class
 argument_list|)

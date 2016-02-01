@@ -107,8 +107,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
-operator|.
 name|impl
 operator|.
 name|LlapManagementProtocolClientImpl

@@ -341,7 +341,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|tezplugins
+name|tez
 operator|.
 name|Converters
 import|;

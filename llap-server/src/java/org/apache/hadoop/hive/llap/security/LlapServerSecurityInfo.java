@@ -101,9 +101,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|protocol
 operator|.
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 import|;
 end_import
 
@@ -119,9 +119,9 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|daemon
+name|protocol
 operator|.
-name|LlapManagementProtocolBlockingPB
+name|LlapManagementProtocolPB
 import|;
 end_import
 
@@ -260,7 +260,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 operator|.
 name|class
 operator|.
@@ -270,7 +270,7 @@ name|protocol
 argument_list|)
 operator|&&
 operator|!
-name|LlapManagementProtocolBlockingPB
+name|LlapManagementProtocolPB
 operator|.
 name|class
 operator|.
@@ -372,7 +372,7 @@ comment|// Tokens cannot be used for the management protocol (for now).
 if|if
 condition|(
 operator|!
-name|LlapDaemonProtocolBlockingPB
+name|LlapProtocolBlockingPB
 operator|.
 name|class
 operator|.
