@@ -2172,7 +2172,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// TODO#: assumes throw
 specifier|private
 name|void
 name|localizeJarForClass
