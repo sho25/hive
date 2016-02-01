@@ -9363,6 +9363,17 @@ operator|+
 literal|"produced by hive.optimize.ppd and hive.optimize.index.filters."
 argument_list|)
 block|,
+name|TEZ_OPTIMIZE_BUCKET_PRUNING_COMPAT
+argument_list|(
+literal|"hive.tez.bucket.pruning.compat"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When pruning is enabled, handle possibly broken inserts due to negative hashcodes.\n"
+operator|+
+literal|"This occasionally doubles the data scan cost, but is default enabled for safety"
+argument_list|)
+block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING
 argument_list|(
 literal|"hive.tez.dynamic.partition.pruning"
