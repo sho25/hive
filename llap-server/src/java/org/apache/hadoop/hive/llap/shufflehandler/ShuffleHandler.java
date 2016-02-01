@@ -1638,17 +1638,13 @@ name|ConcurrentMap
 argument_list|<
 name|String
 argument_list|,
-name|Boolean
+name|Integer
 argument_list|>
 name|registeredApps
 init|=
 operator|new
 name|ConcurrentHashMap
-argument_list|<
-name|String
-argument_list|,
-name|Boolean
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|/* Maps application identifiers (jobIds) to the associated user for the app */
@@ -2761,7 +2757,7 @@ return|return
 name|port
 return|;
 block|}
-comment|/**    * Register an application and it's associated credentials and user information.    * @param applicationIdString    * @param dagIdentifier    * @param appToken    * @param user    */
+comment|/**    * Register an application and it's associated credentials and user information.    *    * This method and unregisterDag must be synchronized externally to prevent races in shuffle token registration/unregistration    *    * @param applicationIdString    * @param dagIdentifier    * @param appToken    * @param user    */
 specifier|public
 name|void
 name|registerDag
@@ -2786,9 +2782,8 @@ index|[]
 name|appDirs
 parameter_list|)
 block|{
-comment|// TODO Fix this. There's a race here, where an app may think everything is registered, finish really fast, send events and the consumer will not find the registration.
-name|Boolean
-name|registered
+name|Integer
+name|registeredDagIdentifier
 init|=
 name|registeredApps
 operator|.
@@ -2796,30 +2791,17 @@ name|putIfAbsent
 argument_list|(
 name|applicationIdString
 argument_list|,
-name|Boolean
-operator|.
-name|valueOf
-argument_list|(
-literal|true
-argument_list|)
+name|dagIdentifier
 argument_list|)
 decl_stmt|;
+comment|// App never seen, or previous dag has been unregistered.
 if|if
 condition|(
-name|registered
+name|registeredDagIdentifier
 operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Registering watches for AppDirs: appId="
-operator|+
-name|applicationIdString
-argument_list|)
-expr_stmt|;
 name|recordJobShuffleInfo
 argument_list|(
 name|applicationIdString
@@ -2829,6 +2811,52 @@ argument_list|,
 name|appToken
 argument_list|)
 expr_stmt|;
+block|}
+comment|// Register the new dag identifier, if that's not the one currently registered.
+comment|// Register comes in before the unregister for the previous dag
+if|if
+condition|(
+name|registeredDagIdentifier
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|registeredDagIdentifier
+operator|.
+name|equals
+argument_list|(
+name|dagIdentifier
+argument_list|)
+condition|)
+block|{
+name|registeredApps
+operator|.
+name|put
+argument_list|(
+name|applicationIdString
+argument_list|,
+name|dagIdentifier
+argument_list|)
+expr_stmt|;
+comment|// Don't need to recordShuffleInfo since the out of sync unregister will not remove the
+comment|// credentials
+block|}
+comment|// First time registration, or new register comes in before the previous unregister.
+if|if
+condition|(
+name|registeredDagIdentifier
+operator|==
+literal|null
+operator|||
+operator|!
+name|registeredDagIdentifier
+operator|.
+name|equals
+argument_list|(
+name|dagIdentifier
+argument_list|)
+condition|)
+block|{
 if|if
 condition|(
 name|dirWatcher
@@ -2836,6 +2864,26 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Registering watches for AppDirs: appId={}, dagId={}"
+argument_list|,
+name|applicationIdString
+argument_list|,
+name|dagIdentifier
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|String
@@ -2888,6 +2936,7 @@ block|}
 block|}
 block|}
 block|}
+comment|/**    * Unregister a specific dag    *    * This method and registerDag must be synchronized externally to prevent races in shuffle token registration/unregistration    *    * @param dir    * @param applicationIdString    * @param dagIdentifier    */
 specifier|public
 name|void
 name|unregisterDag
@@ -2902,6 +2951,46 @@ name|int
 name|dagIdentifier
 parameter_list|)
 block|{
+name|Integer
+name|currentDagIdentifier
+init|=
+name|registeredApps
+operator|.
+name|get
+argument_list|(
+name|applicationIdString
+argument_list|)
+decl_stmt|;
+comment|// Unregister may come in after the new dag has started running. The methods are expected to
+comment|// be synchronized, hence the following check is sufficient.
+if|if
+condition|(
+name|currentDagIdentifier
+operator|!=
+literal|null
+operator|&&
+name|currentDagIdentifier
+operator|.
+name|equals
+argument_list|(
+name|dagIdentifier
+argument_list|)
+condition|)
+block|{
+name|registeredApps
+operator|.
+name|remove
+argument_list|(
+name|applicationIdString
+argument_list|)
+expr_stmt|;
+name|removeJobShuffleInfo
+argument_list|(
+name|applicationIdString
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Unregister for the dirWatcher for the specific dagIdentifier in either case.
 if|if
 condition|(
 name|dirWatcher
@@ -2921,21 +3010,6 @@ name|dagIdentifier
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO Cleanup registered tokens and dag info
-block|}
-specifier|public
-name|void
-name|unregisterApplication
-parameter_list|(
-name|String
-name|applicationIdString
-parameter_list|)
-block|{
-name|removeJobShuffleInfo
-argument_list|(
-name|applicationIdString
-argument_list|)
-expr_stmt|;
 block|}
 specifier|protected
 name|void
@@ -3052,7 +3126,7 @@ argument_list|)
 decl_stmt|;
 name|userRsrc
 operator|.
-name|put
+name|putIfAbsent
 argument_list|(
 name|jobIdString
 argument_list|,
