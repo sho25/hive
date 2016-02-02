@@ -1609,6 +1609,15 @@ operator|.
 name|OPEN_CONNECTIONS
 argument_list|)
 expr_stmt|;
+name|metrics
+operator|.
+name|incrementCounter
+argument_list|(
+name|MetricsConstant
+operator|.
+name|CUMULATIVE_CONNECTION_COUNT
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

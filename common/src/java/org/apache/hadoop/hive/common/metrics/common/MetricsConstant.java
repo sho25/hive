@@ -74,6 +74,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|CUMULATIVE_CONNECTION_COUNT
+init|=
+literal|"cumulative_connection_count"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|METASTORE_HIVE_LOCKS
 init|=
 literal|"metastore_hive_locks"
