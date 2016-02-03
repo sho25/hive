@@ -268,6 +268,11 @@ parameter_list|()
 throws|throws
 name|LockException
 function_decl|;
+comment|/**    * Get the name for currently installed transaction manager.    * @return transaction manager name    */
+name|String
+name|getTxnManagerName
+parameter_list|()
+function_decl|;
 comment|/**    * This call closes down the transaction manager.  All open transactions    * are aborted.  If no transactions are open but locks are held those locks    * are released.  This method should be called if processing of a session    * is being halted in an abnormal way.  It avoids locks and transactions    * timing out.    */
 name|void
 name|closeTxnManager

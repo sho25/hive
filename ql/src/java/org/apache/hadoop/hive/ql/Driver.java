@@ -3588,6 +3588,22 @@ name|getMessage
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|error
+operator|==
+name|ErrorMsg
+operator|.
+name|TXNMGR_NOT_ACID
+condition|)
+block|{
+name|errorMessage
+operator|+=
+literal|". Failed command: "
+operator|+
+name|queryStr
+expr_stmt|;
+block|}
 name|SQLState
 operator|=
 name|error

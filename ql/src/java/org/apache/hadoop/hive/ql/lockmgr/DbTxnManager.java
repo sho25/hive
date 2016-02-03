@@ -2329,6 +2329,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|getTxnManagerName
+parameter_list|()
+block|{
+return|return
+name|CLASS_NAME
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|boolean
 name|supportsExplicitLock
 parameter_list|()

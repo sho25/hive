@@ -1766,6 +1766,15 @@ argument_list|,
 literal|"To use DbTxnManager you must set hive.support.concurrency=true"
 argument_list|)
 block|,
+name|TXNMGR_NOT_ACID
+argument_list|(
+literal|10265
+argument_list|,
+literal|"This command is not allowed on an ACID table {0}.{1} with a non-ACID transaction manager"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
