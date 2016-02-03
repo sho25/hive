@@ -1735,6 +1735,22 @@ comment|// Extract user/password from JDBC connection properties if its not supp
 comment|// in the connection URL
 if|if
 condition|(
+operator|!
+name|connParams
+operator|.
+name|getSessionVars
+argument_list|()
+operator|.
+name|containsKey
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|AUTH_USER
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
 name|info
 operator|.
 name|containsKey
@@ -1766,6 +1782,7 @@ name|AUTH_USER
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|info
