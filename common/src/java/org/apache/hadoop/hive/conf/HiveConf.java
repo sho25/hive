@@ -9617,6 +9617,29 @@ argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
 argument_list|)
 block|,
+name|HIVE_MOVE_FILES_THREAD_COUNT
+argument_list|(
+literal|"hive.mv.files.thread"
+argument_list|,
+literal|25
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|1L
+argument_list|,
+literal|true
+argument_list|,
+literal|1024L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Number of threads"
+operator|+
+literal|" used to move files in move task"
+argument_list|)
+block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
 comment|// outputs are ready
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
