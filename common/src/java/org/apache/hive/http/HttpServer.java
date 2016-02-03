@@ -2250,6 +2250,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Add a servlet in the server.    * @param name The name of the servlet (can be passed as null)    * @param pathSpec The path spec for the servlet    * @param clazz The servlet class    */
+specifier|public
 name|void
 name|addServlet
 parameter_list|(

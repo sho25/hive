@@ -1002,6 +1002,11 @@ argument_list|(
 name|state
 argument_list|)
 expr_stmt|;
+name|onNewState
+argument_list|(
+name|state
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|lastAccessTime
@@ -2027,6 +2032,14 @@ return|return
 name|state
 return|;
 block|}
+specifier|protected
+name|void
+name|onNewState
+parameter_list|(
+name|OperationState
+name|state
+parameter_list|)
+block|{   }
 block|}
 end_class
 
