@@ -211,6 +211,8 @@ class|class
 name|HiveSqlCountAggFunction
 extends|extends
 name|SqlAggFunction
+implements|implements
+name|CanAggregateDistinct
 block|{
 specifier|final
 name|boolean
@@ -288,6 +290,8 @@ operator|=
 name|operandTypeInference
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isDistinct

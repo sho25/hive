@@ -341,6 +341,8 @@ class|class
 name|HiveSqlSumAggFunction
 extends|extends
 name|SqlAggFunction
+implements|implements
+name|CanAggregateDistinct
 block|{
 specifier|final
 name|boolean
@@ -420,6 +422,8 @@ name|isDistinct
 expr_stmt|;
 block|}
 comment|//~ Methods ----------------------------------------------------------------
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isDistinct
