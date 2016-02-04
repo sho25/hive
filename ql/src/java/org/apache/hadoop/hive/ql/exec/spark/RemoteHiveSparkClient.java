@@ -698,9 +698,9 @@ specifier|final
 name|long
 name|MAX_PREWARM_TIME
 init|=
-literal|30000
+literal|5000
 decl_stmt|;
-comment|// 30s
+comment|// 5s
 specifier|private
 specifier|static
 specifier|final
@@ -948,10 +948,10 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|1000
+literal|500
 argument_list|)
 expr_stmt|;
-comment|// sleep 1 second
+comment|// sleep half a second
 block|}
 do|while
 condition|(
@@ -969,7 +969,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Timeout (60s) occurred while prewarming executors. The current number of executors is "
+literal|"Timeout ("
+operator|+
+name|MAX_PREWARM_TIME
+operator|+
+literal|"s) occurred while prewarming executors. The current number of executors is "
 operator|+
 name|curExecutors
 argument_list|)
