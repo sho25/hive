@@ -203,6 +203,10 @@ specifier|private
 name|boolean
 name|temporary
 decl_stmt|;
+specifier|private
+name|boolean
+name|materialization
+decl_stmt|;
 comment|// Whether the files output by this FileSink can be merged, e.g. if they are to be put into a
 comment|// bucketed or sorted table/partition they cannot be merged.
 specifier|private
@@ -954,6 +958,30 @@ operator|.
 name|temporary
 operator|=
 name|temporary
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isMaterialization
+parameter_list|()
+block|{
+return|return
+name|materialization
+return|;
+block|}
+specifier|public
+name|void
+name|setMaterialization
+parameter_list|(
+name|boolean
+name|materialization
+parameter_list|)
+block|{
+name|this
+operator|.
+name|materialization
+operator|=
+name|materialization
 expr_stmt|;
 block|}
 specifier|public

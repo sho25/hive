@@ -430,7 +430,7 @@ name|tasks
 init|=
 name|sem
 operator|.
-name|getRootTasks
+name|getAllRootTasks
 argument_list|()
 decl_stmt|;
 if|if

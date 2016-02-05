@@ -5787,6 +5787,19 @@ operator|+
 literal|"would change the query plan to take care of it, and hive.optimize.skewjoin will be a no-op."
 argument_list|)
 block|,
+comment|// CTE
+name|HIVE_CTE_MATERIALIZE_THRESHOLD
+argument_list|(
+literal|"hive.optimize.cte.materialize.threshold"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"If the number of references to a CTE clause exceeds this threshold, Hive will materialize it\n"
+operator|+
+literal|"before executing the main query block. -1 will disable this feature."
+argument_list|)
+block|,
 comment|// Indexes
 name|HIVEOPTINDEXFILTER_COMPACT_MINSIZE
 argument_list|(

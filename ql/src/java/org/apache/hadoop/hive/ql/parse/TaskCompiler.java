@@ -1617,6 +1617,15 @@ argument_list|()
 operator|.
 name|isCTAS
 argument_list|()
+operator|&&
+operator|!
+name|pCtx
+operator|.
+name|getCreateTable
+argument_list|()
+operator|.
+name|isMaterialization
+argument_list|()
 condition|)
 block|{
 comment|// generate a DDL task and make it a dependent task of the leaf

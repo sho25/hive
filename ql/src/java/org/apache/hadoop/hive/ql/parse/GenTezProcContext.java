@@ -101,6 +101,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -652,10 +666,8 @@ name|parentOfRoot
 decl_stmt|;
 comment|// sequence number is used to name vertices (e.g.: Map 1, Reduce 14, ...)
 specifier|private
-name|int
+name|AtomicInteger
 name|sequenceNumber
-init|=
-literal|0
 decl_stmt|;
 comment|// tez task we're currently processing
 specifier|public
@@ -1459,6 +1471,18 @@ argument_list|>
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
+name|sequenceNumber
+operator|=
+name|parseContext
+operator|.
+name|getContext
+argument_list|()
+operator|.
+name|getSequencer
+argument_list|()
+expr_stmt|;
 name|rootTasks
 operator|.
 name|add
@@ -1467,15 +1491,16 @@ name|currentTask
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Not thread-safe. */
 specifier|public
 name|int
 name|nextSequenceNumber
 parameter_list|()
 block|{
 return|return
-operator|++
 name|sequenceNumber
+operator|.
+name|incrementAndGet
+argument_list|()
 return|;
 block|}
 block|}

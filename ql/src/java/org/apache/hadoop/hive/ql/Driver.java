@@ -3206,7 +3206,7 @@ name|hookCtx
 argument_list|,
 name|sem
 operator|.
-name|getRootTasks
+name|getAllRootTasks
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3897,7 +3897,7 @@ name|rootTasks
 init|=
 name|sem
 operator|.
-name|getRootTasks
+name|getAllRootTasks
 argument_list|()
 decl_stmt|;
 name|task
