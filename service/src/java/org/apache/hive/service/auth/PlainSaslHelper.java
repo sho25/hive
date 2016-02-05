@@ -490,7 +490,7 @@ literal|"Can't initialize class"
 argument_list|)
 throw|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 class|class
