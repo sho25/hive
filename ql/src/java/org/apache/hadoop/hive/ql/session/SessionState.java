@@ -7292,6 +7292,8 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+try|try
+block|{
 name|closeSparkSession
 argument_list|()
 expr_stmt|;
@@ -7308,6 +7310,16 @@ expr_stmt|;
 name|unCacheDataNucleusClassLoaders
 argument_list|()
 expr_stmt|;
+block|}
+finally|finally
+block|{
+comment|// removes the threadlocal variables, closes underlying HMS connection
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
