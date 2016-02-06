@@ -645,7 +645,7 @@ decl_stmt|;
 specifier|public
 name|EncodedReaderImpl
 parameter_list|(
-name|long
+name|Long
 name|fileId
 parameter_list|,
 name|List
