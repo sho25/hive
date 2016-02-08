@@ -566,6 +566,13 @@ literal|", "
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|cv
+operator|!=
+literal|null
+condition|)
+block|{
 name|cv
 operator|.
 name|stringifyValue
@@ -575,6 +582,7 @@ argument_list|,
 name|i
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|b
 operator|.

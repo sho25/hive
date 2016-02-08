@@ -3419,8 +3419,6 @@ name|operator
 operator|.
 name|setInputContext
 argument_list|(
-name|nominalPath
-argument_list|,
 name|context
 operator|.
 name|tableName

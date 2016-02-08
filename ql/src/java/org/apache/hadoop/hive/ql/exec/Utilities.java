@@ -16318,8 +16318,6 @@ operator|.
 name|TEZ_TMP_DIR_KEY
 argument_list|)
 decl_stmt|;
-comment|// we usually don't want to create dummy files for tez, however the metadata only
-comment|// optimization relies on it.
 name|List
 argument_list|<
 name|Path
@@ -16340,11 +16338,7 @@ argument_list|)
 argument_list|,
 literal|null
 argument_list|,
-operator|!
-name|work
-operator|.
-name|isUseOneNullRowInputFormat
-argument_list|()
+literal|true
 argument_list|)
 decl_stmt|;
 return|return

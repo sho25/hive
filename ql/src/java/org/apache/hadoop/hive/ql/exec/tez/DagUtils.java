@@ -2227,24 +2227,6 @@ if|if
 condition|(
 name|mapWork
 operator|.
-name|isUseOneNullRowInputFormat
-argument_list|()
-condition|)
-block|{
-name|inpFormat
-operator|=
-name|CombineHiveInputFormat
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|mapWork
-operator|.
 name|getDummyTableScan
 argument_list|()
 condition|)
@@ -4268,12 +4250,6 @@ name|ConfVars
 operator|.
 name|HIVE_AM_SPLIT_GENERATION
 argument_list|)
-operator|&&
-operator|!
-name|mapWork
-operator|.
-name|isUseOneNullRowInputFormat
-argument_list|()
 condition|)
 block|{
 comment|// set up the operator plan. (before setting up splits on the AM)

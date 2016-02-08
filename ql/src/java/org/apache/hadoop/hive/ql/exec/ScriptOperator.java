@@ -1723,9 +1723,6 @@ name|void
 name|setInputContext
 parameter_list|(
 name|String
-name|inputPath
-parameter_list|,
-name|String
 name|tableName
 parameter_list|,
 name|String
@@ -1748,8 +1745,6 @@ name|super
 operator|.
 name|setInputContext
 argument_list|(
-name|inputPath
-argument_list|,
 name|tableName
 argument_list|,
 name|partitionName

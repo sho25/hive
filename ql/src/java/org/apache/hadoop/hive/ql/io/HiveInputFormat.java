@@ -956,13 +956,15 @@ name|getPath
 argument_list|()
 return|;
 block|}
-return|return
+throw|throw
 operator|new
-name|Path
+name|RuntimeException
 argument_list|(
-literal|""
+name|inputSplit
+operator|+
+literal|" is not a FileSplit"
 argument_list|)
-return|;
+throw|;
 block|}
 comment|/** The position of the first byte in the file to process. */
 annotation|@
@@ -1726,6 +1728,10 @@ condition|(
 name|this
 operator|.
 name|mrwork
+operator|==
+literal|null
+operator|||
+name|pathToPartitionInfo
 operator|==
 literal|null
 condition|)

@@ -1132,28 +1132,7 @@ return|;
 block|}
 comment|// first we check if we *can* run in llap. If we need to use
 comment|// user code to do so (script/udf) we don't.
-if|if
-condition|(
-name|work
-operator|instanceof
-name|MapWork
-operator|&&
-operator|(
-operator|(
-name|MapWork
-operator|)
-name|work
-operator|)
-operator|.
-name|isUseOneNullRowInputFormat
-argument_list|()
-condition|)
-block|{
-comment|// LLAP doesn't support file-based splits that this forces.
-return|return
-literal|false
-return|;
-block|}
+comment|/*if (work instanceof MapWork&& ((MapWork)work).isUseOneNullRowInputFormat()) {         // LLAP doesn't support file-based splits that this forces.         return false;       }*/
 if|if
 condition|(
 operator|!

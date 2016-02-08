@@ -236,9 +236,9 @@ name|BaseWork
 extends|extends
 name|AbstractOperatorDesc
 block|{
+specifier|protected
 specifier|static
 specifier|final
-specifier|private
 name|Logger
 name|LOG
 init|=
