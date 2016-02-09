@@ -17537,6 +17537,23 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// common case: 1 table scan per map-work
+comment|// rare case: smb joins
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+name|aliases
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|Operator
@@ -17582,6 +17599,23 @@ range|:
 name|ls
 control|)
 block|{
+name|aliases
+operator|.
+name|add
+argument_list|(
+name|a
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+for|for
+control|(
+name|String
+name|a
+range|:
+name|aliases
+control|)
+block|{
 name|ops
 operator|.
 name|add
@@ -17597,7 +17631,6 @@ name|a
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|createTmpDirs
 argument_list|(
