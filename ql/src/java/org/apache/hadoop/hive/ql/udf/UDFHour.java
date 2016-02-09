@@ -133,7 +133,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorUDFHourLong
+name|VectorUDFHourDate
 import|;
 end_import
 
@@ -156,6 +156,28 @@ operator|.
 name|expressions
 operator|.
 name|VectorUDFHourString
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFHourTimestamp
 import|;
 end_import
 
@@ -283,11 +305,15 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|VectorUDFHourLong
+name|VectorUDFHourDate
 operator|.
 name|class
 block|,
 name|VectorUDFHourString
+operator|.
+name|class
+block|,
+name|VectorUDFHourTimestamp
 operator|.
 name|class
 block|}

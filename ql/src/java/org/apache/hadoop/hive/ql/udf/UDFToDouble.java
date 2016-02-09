@@ -121,9 +121,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|gen
-operator|.
-name|CastTimestampToDoubleViaLongToDouble
+name|CastTimestampToDouble
 import|;
 end_import
 
@@ -310,7 +308,7 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|CastTimestampToDoubleViaLongToDouble
+name|CastTimestampToDouble
 operator|.
 name|class
 block|,

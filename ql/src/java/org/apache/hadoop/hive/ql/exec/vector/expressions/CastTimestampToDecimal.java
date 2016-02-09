@@ -77,7 +77,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|TimestampColumnVector
 import|;
 end_import
 
@@ -90,7 +90,7 @@ specifier|public
 class|class
 name|CastTimestampToDecimal
 extends|extends
-name|FuncLongToDecimal
+name|FuncTimestampToDecimal
 block|{
 specifier|private
 specifier|static
@@ -135,15 +135,25 @@ parameter_list|(
 name|DecimalColumnVector
 name|outV
 parameter_list|,
-name|LongColumnVector
+name|TimestampColumnVector
 name|inV
 parameter_list|,
 name|int
 name|i
 parameter_list|)
 block|{
-comment|// The resulting decimal value is 10e-9 * the input long value (i.e. seconds).
-comment|//
+comment|// The BigDecimal class recommends not converting directly from double to BigDecimal,
+comment|// so we convert like the non-vectorized case and got through a string...
+name|Double
+name|timestampDouble
+init|=
+name|inV
+operator|.
+name|getTimestampSecondsWithFractionalNanos
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
 name|HiveDecimal
 name|result
 init|=
@@ -151,24 +161,12 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-name|inV
+name|timestampDouble
 operator|.
-name|vector
-index|[
-name|i
-index|]
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
-name|result
-operator|=
-name|result
-operator|.
-name|scaleByPowerOfTen
-argument_list|(
-operator|-
-literal|9
-argument_list|)
-expr_stmt|;
 name|outV
 operator|.
 name|set

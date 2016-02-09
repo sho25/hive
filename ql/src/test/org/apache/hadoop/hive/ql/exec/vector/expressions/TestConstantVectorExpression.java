@@ -283,6 +283,8 @@ argument_list|(
 literal|3
 argument_list|,
 name|decVal
+argument_list|,
+literal|"decimal"
 argument_list|)
 decl_stmt|;
 name|ConstantVectorExpression

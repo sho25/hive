@@ -133,7 +133,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorUDFWeekOfYearLong
+name|VectorUDFWeekOfYearDate
 import|;
 end_import
 
@@ -156,6 +156,28 @@ operator|.
 name|expressions
 operator|.
 name|VectorUDFWeekOfYearString
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFWeekOfYearTimestamp
 import|;
 end_import
 
@@ -277,11 +299,15 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|VectorUDFWeekOfYearLong
+name|VectorUDFWeekOfYearDate
 operator|.
 name|class
 block|,
 name|VectorUDFWeekOfYearString
+operator|.
+name|class
+block|,
+name|VectorUDFWeekOfYearTimestamp
 operator|.
 name|class
 block|}

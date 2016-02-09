@@ -187,9 +187,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|gen
-operator|.
-name|CastTimestampToBooleanViaLongToLong
+name|CastTimestampToBoolean
 import|;
 end_import
 
@@ -402,7 +400,7 @@ name|CastDateToBooleanViaLongToLong
 operator|.
 name|class
 block|,
-name|CastTimestampToBooleanViaLongToLong
+name|CastTimestampToBoolean
 operator|.
 name|class
 block|,

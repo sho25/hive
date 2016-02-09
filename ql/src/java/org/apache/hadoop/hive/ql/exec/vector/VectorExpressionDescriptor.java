@@ -154,7 +154,7 @@ comment|//
 comment|// LongColumnVector -->
 comment|//    INT_FAMILY
 comment|//    DATE
-comment|//    TIMESTAMP
+comment|//    INTERVAL_FAMILY
 comment|//
 comment|// DoubleColumnVector -->
 comment|//    FLOAT_FAMILY
@@ -166,6 +166,9 @@ comment|// BytesColumnVector -->
 comment|//    STRING
 comment|//    CHAR
 comment|//    VARCHAR
+comment|//
+comment|// TimestampColumnVector -->
+comment|//    TIMESTAMP
 comment|//
 specifier|public
 enum|enum
@@ -263,39 +266,39 @@ operator|.
 name|value
 argument_list|)
 block|,
-name|INT_TIMESTAMP_FAMILY
+name|INT_INTERVAL_YEAR_MONTH
 argument_list|(
 name|INT_FAMILY
 operator|.
 name|value
 operator||
+name|INTERVAL_YEAR_MONTH
+operator|.
+name|value
+argument_list|)
+block|,
+name|INT_DATE_INTERVAL_YEAR_MONTH
+argument_list|(
+name|INT_FAMILY
+operator|.
+name|value
+operator||
+name|DATE
+operator|.
+name|value
+operator||
+name|INTERVAL_YEAR_MONTH
+operator|.
+name|value
+argument_list|)
+block|,
+name|TIMESTAMP_INTERVAL_DAY_TIME
+argument_list|(
 name|TIMESTAMP
 operator|.
 name|value
-argument_list|)
-block|,
-name|INT_INTERVAL_FAMILY
-argument_list|(
-name|INT_FAMILY
-operator|.
-name|value
 operator||
-name|INTERVAL_FAMILY
-operator|.
-name|value
-argument_list|)
-block|,
-name|INT_DATETIME_INTERVAL_FAMILY
-argument_list|(
-name|INT_FAMILY
-operator|.
-name|value
-operator||
-name|DATETIME_FAMILY
-operator|.
-name|value
-operator||
-name|INTERVAL_FAMILY
+name|INTERVAL_DAY_TIME
 operator|.
 name|value
 argument_list|)
@@ -746,11 +749,19 @@ name|DATE
 operator|||
 name|argType
 operator|==
-name|TIMESTAMP
-operator|||
+name|INTERVAL_YEAR_MONTH
+condition|)
+block|{
+return|return
+literal|"Long"
+return|;
+block|}
+elseif|else
+if|if
+condition|(
 name|argType
 operator|==
-name|INTERVAL_YEAR_MONTH
+name|TIMESTAMP
 operator|||
 name|argType
 operator|==
@@ -758,7 +769,7 @@ name|INTERVAL_DAY_TIME
 condition|)
 block|{
 return|return
-literal|"Long"
+literal|"Timestamp"
 return|;
 block|}
 elseif|else

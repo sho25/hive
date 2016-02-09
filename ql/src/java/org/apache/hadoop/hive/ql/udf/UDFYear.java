@@ -133,7 +133,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorUDFYearLong
+name|VectorUDFYearDate
 import|;
 end_import
 
@@ -156,6 +156,28 @@ operator|.
 name|expressions
 operator|.
 name|VectorUDFYearString
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFYearTimestamp
 import|;
 end_import
 
@@ -299,11 +321,15 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|VectorUDFYearLong
+name|VectorUDFYearDate
 operator|.
 name|class
 block|,
 name|VectorUDFYearString
+operator|.
+name|class
+block|,
+name|VectorUDFYearTimestamp
 operator|.
 name|class
 block|}

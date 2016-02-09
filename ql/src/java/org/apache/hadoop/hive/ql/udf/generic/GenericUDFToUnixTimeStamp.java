@@ -157,7 +157,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorUDFUnixTimeStampLong
+name|VectorUDFUnixTimeStampDate
 import|;
 end_import
 
@@ -180,6 +180,28 @@ operator|.
 name|expressions
 operator|.
 name|VectorUDFUnixTimeStampString
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFUnixTimeStampTimestamp
 import|;
 end_import
 
@@ -469,11 +491,15 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|VectorUDFUnixTimeStampLong
+name|VectorUDFUnixTimeStampDate
 operator|.
 name|class
 block|,
 name|VectorUDFUnixTimeStampString
+operator|.
+name|class
+block|,
+name|VectorUDFUnixTimeStampTimestamp
 operator|.
 name|class
 block|}

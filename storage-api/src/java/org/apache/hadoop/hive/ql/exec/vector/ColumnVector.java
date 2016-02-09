@@ -68,6 +68,8 @@ name|BYTES
 block|,
 name|DECIMAL
 block|,
+name|TIMESTAMP
+block|,
 name|STRUCT
 block|,
 name|LIST

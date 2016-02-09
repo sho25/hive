@@ -911,7 +911,7 @@ decl_stmt|;
 name|udf
 operator|=
 operator|new
-name|VectorUDFYearLong
+name|VectorUDFYearDate
 argument_list|(
 literal|0
 argument_list|,
@@ -1435,7 +1435,7 @@ decl_stmt|;
 name|udf
 operator|=
 operator|new
-name|VectorUDFDayOfMonthLong
+name|VectorUDFDayOfMonthDate
 argument_list|(
 literal|0
 argument_list|,
@@ -1957,7 +1957,7 @@ decl_stmt|;
 name|udf
 operator|=
 operator|new
-name|VectorUDFMonthLong
+name|VectorUDFMonthDate
 argument_list|(
 literal|0
 argument_list|,
@@ -2552,7 +2552,7 @@ decl_stmt|;
 name|udf
 operator|=
 operator|new
-name|VectorUDFUnixTimeStampLong
+name|VectorUDFUnixTimeStampDate
 argument_list|(
 literal|0
 argument_list|,
@@ -3071,7 +3071,7 @@ decl_stmt|;
 name|udf
 operator|=
 operator|new
-name|VectorUDFWeekOfYearLong
+name|VectorUDFWeekOfYearDate
 argument_list|(
 literal|0
 argument_list|,

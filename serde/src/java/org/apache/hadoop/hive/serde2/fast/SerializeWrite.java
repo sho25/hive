@@ -398,16 +398,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|// We provide a faster way to write a hive interval day time without a HiveIntervalDayTime object.
-name|void
-name|writeHiveIntervalDayTime
-parameter_list|(
-name|long
-name|totalNanos
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
 comment|/*    * DECIMAL.    */
 name|void
 name|writeHiveDecimal

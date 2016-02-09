@@ -784,7 +784,7 @@ name|ArgumentType
 operator|.
 name|getType
 argument_list|(
-literal|"int_datetime_interval_family"
+literal|"int_date_interval_year_month"
 argument_list|)
 argument_list|,
 name|VectorExpressionDescriptor
@@ -793,7 +793,7 @@ name|ArgumentType
 operator|.
 name|getType
 argument_list|(
-literal|"int_datetime_interval_family"
+literal|"int_date_interval_year_month"
 argument_list|)
 argument_list|)
 operator|.

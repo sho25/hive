@@ -151,7 +151,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|VectorUDFSecondLong
+name|VectorUDFSecondDate
 import|;
 end_import
 
@@ -174,6 +174,28 @@ operator|.
 name|expressions
 operator|.
 name|VectorUDFSecondString
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFSecondTimestamp
 import|;
 end_import
 
@@ -335,11 +357,15 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|VectorUDFSecondLong
+name|VectorUDFSecondDate
 operator|.
 name|class
 block|,
 name|VectorUDFSecondString
+operator|.
+name|class
+block|,
+name|VectorUDFSecondTimestamp
 operator|.
 name|class
 block|}

@@ -173,9 +173,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|gen
-operator|.
-name|CastDoubleToTimestampViaDoubleToLong
+name|CastDoubleToTimestamp
 import|;
 end_import
 
@@ -197,9 +195,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|gen
-operator|.
-name|CastLongToTimestampViaLongToLong
+name|CastLongToTimestamp
 import|;
 end_import
 
@@ -357,11 +353,11 @@ annotation|@
 name|VectorizedExpressions
 argument_list|(
 block|{
-name|CastLongToTimestampViaLongToLong
+name|CastLongToTimestamp
 operator|.
 name|class
 block|,
-name|CastDoubleToTimestampViaDoubleToLong
+name|CastDoubleToTimestamp
 operator|.
 name|class
 block|,
