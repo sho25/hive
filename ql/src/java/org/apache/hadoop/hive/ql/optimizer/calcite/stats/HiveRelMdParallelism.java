@@ -271,6 +271,9 @@ name|isPhaseTransition
 parameter_list|(
 name|HiveJoin
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -286,6 +289,9 @@ name|isPhaseTransition
 parameter_list|(
 name|HiveSortLimit
 name|sort
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 comment|// As Exchange operator is introduced later on, we make a
@@ -300,6 +306,9 @@ name|splitCount
 parameter_list|(
 name|HiveJoin
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -315,6 +324,9 @@ name|splitCount
 parameter_list|(
 name|HiveTableScan
 name|scan
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|Integer
@@ -376,6 +388,8 @@ operator|=
 name|splitCountRepartition
 argument_list|(
 name|scan
+argument_list|,
+name|mq
 argument_list|)
 expr_stmt|;
 if|if
@@ -412,12 +426,15 @@ name|splitCount
 parameter_list|(
 name|RelNode
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|Boolean
 name|newPhase
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|isPhaseTransition
 argument_list|(
@@ -445,6 +462,8 @@ return|return
 name|splitCountRepartition
 argument_list|(
 name|rel
+argument_list|,
+name|mq
 argument_list|)
 return|;
 block|}
@@ -467,7 +486,7 @@ control|)
 block|{
 name|splitCount
 operator|+=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -485,6 +504,9 @@ name|splitCountRepartition
 parameter_list|(
 name|RelNode
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 comment|// We repartition: new number of splits
@@ -492,7 +514,7 @@ specifier|final
 name|Double
 name|averageRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -503,7 +525,7 @@ specifier|final
 name|Double
 name|rowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(

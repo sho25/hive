@@ -782,6 +782,9 @@ name|getPredicates
 parameter_list|(
 name|Project
 name|project
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|RelNode
@@ -807,7 +810,7 @@ decl_stmt|;
 name|RelOptPredicateList
 name|childInfo
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getPulledUpPredicates
 argument_list|(
@@ -1195,6 +1198,9 @@ name|getPredicates
 parameter_list|(
 name|Join
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|RexBuilder
@@ -1231,7 +1237,7 @@ decl_stmt|;
 name|RelOptPredicateList
 name|leftInfo
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getPulledUpPredicates
 argument_list|(
@@ -1241,7 +1247,7 @@ decl_stmt|;
 name|RelOptPredicateList
 name|rightInfo
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getPulledUpPredicates
 argument_list|(

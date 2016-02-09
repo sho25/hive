@@ -137,6 +137,22 @@ name|apache
 operator|.
 name|calcite
 operator|.
+name|rel
+operator|.
+name|metadata
+operator|.
+name|RelMetadataQuery
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
 name|util
 operator|.
 name|BuiltInMethod
@@ -276,6 +292,9 @@ name|collations
 parameter_list|(
 name|HiveAggregate
 name|aggregate
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 comment|// Compute collations
@@ -361,6 +380,9 @@ name|collations
 parameter_list|(
 name|HiveJoin
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return

@@ -406,6 +406,9 @@ parameter_list|(
 name|RelNode
 name|rel
 parameter_list|,
+name|RelMetadataQuery
+name|mq
+parameter_list|,
 name|ImmutableBitSet
 name|groupKey
 parameter_list|,
@@ -428,6 +431,8 @@ name|HiveTableScan
 operator|)
 name|rel
 argument_list|,
+name|mq
+argument_list|,
 name|groupKey
 argument_list|,
 name|predicate
@@ -442,6 +447,8 @@ name|getDistinctRowCount
 argument_list|(
 name|rel
 argument_list|,
+name|mq
+argument_list|,
 name|groupKey
 argument_list|,
 name|predicate
@@ -454,6 +461,9 @@ name|getDistinctRowCount
 parameter_list|(
 name|HiveTableScan
 name|htRel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|,
 name|ImmutableBitSet
 name|groupKey
@@ -531,6 +541,9 @@ parameter_list|(
 name|RelNode
 name|r
 parameter_list|,
+name|RelMetadataQuery
+name|mq
+parameter_list|,
 name|int
 name|indx
 parameter_list|)
@@ -546,7 +559,7 @@ name|indx
 argument_list|)
 decl_stmt|;
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -577,6 +590,9 @@ name|getDistinctRowCount
 parameter_list|(
 name|Join
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|,
 name|ImmutableBitSet
 name|groupKey
@@ -610,7 +626,7 @@ argument_list|()
 condition|)
 block|{
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -643,6 +659,8 @@ name|RelMdUtil
 operator|.
 name|getJoinDistinctRowCount
 argument_list|(
+name|mq
+argument_list|,
 name|rel
 argument_list|,
 name|rel
@@ -660,7 +678,7 @@ return|;
 block|}
 block|}
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -679,12 +697,15 @@ name|getCumulativeCost
 parameter_list|(
 name|HiveJoin
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|RelOptCost
 name|cost
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getNonCumulativeCost
 argument_list|(
@@ -720,7 +741,7 @@ block|{
 name|RelOptCost
 name|iCost
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getCumulativeCost
 argument_list|(

@@ -514,6 +514,9 @@ argument_list|()
 argument_list|,
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|getAverageRowSize
 argument_list|(
 name|ts
@@ -550,12 +553,20 @@ return|;
 block|}
 else|else
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// 1. Sum of input cardinalities
 specifier|final
 name|Double
 name|rCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -595,7 +606,7 @@ specifier|final
 name|Double
 name|rAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -716,12 +727,20 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// 1. Sum of input cardinalities
 specifier|final
 name|Double
 name|leftRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -735,7 +754,7 @@ specifier|final
 name|Double
 name|rightRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -844,7 +863,7 @@ specifier|final
 name|Double
 name|leftRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -858,7 +877,7 @@ specifier|final
 name|Double
 name|rightRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -1077,6 +1096,9 @@ name|memoryWithinPhase
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|cumulativeMemoryWithinPhase
 argument_list|(
 name|join
@@ -1087,6 +1109,9 @@ name|Integer
 name|splitCount
 init|=
 name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
 operator|.
 name|splitCount
 argument_list|(
@@ -1270,12 +1295,20 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// 1. Sum of input cardinalities
 specifier|final
 name|Double
 name|leftRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1289,7 +1322,7 @@ specifier|final
 name|Double
 name|rightRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1357,10 +1390,9 @@ operator|.
 name|Builder
 name|streamingBuilder
 init|=
-operator|new
 name|ImmutableBitSet
 operator|.
-name|Builder
+name|builder
 argument_list|()
 decl_stmt|;
 switch|switch
@@ -1425,7 +1457,7 @@ specifier|final
 name|Double
 name|leftRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -1439,7 +1471,7 @@ specifier|final
 name|Double
 name|rightRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -1545,7 +1577,7 @@ specifier|final
 name|int
 name|parallelism
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -1556,7 +1588,7 @@ literal|null
 condition|?
 literal|1
 else|:
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -1792,6 +1824,9 @@ comment|// If simple map join, the whole relation goes in memory
 return|return
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|cumulativeMemoryWithinPhase
 argument_list|(
 name|inMemoryInput
@@ -2002,6 +2037,9 @@ name|buckets
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|splitCount
 argument_list|(
 name|smallInput
@@ -2084,6 +2122,9 @@ name|distribution
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|distribution
 argument_list|(
 name|input
@@ -2143,12 +2184,20 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// 1. Sum of input cardinalities
 specifier|final
 name|Double
 name|leftRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2162,7 +2211,7 @@ specifier|final
 name|Double
 name|rightRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2230,10 +2279,9 @@ operator|.
 name|Builder
 name|streamingBuilder
 init|=
-operator|new
 name|ImmutableBitSet
 operator|.
-name|Builder
+name|builder
 argument_list|()
 decl_stmt|;
 switch|switch
@@ -2298,7 +2346,7 @@ specifier|final
 name|Double
 name|leftRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -2312,7 +2360,7 @@ specifier|final
 name|Double
 name|rightRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -2419,7 +2467,7 @@ specifier|final
 name|int
 name|parallelism
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -2430,7 +2478,7 @@ literal|null
 condition|?
 literal|1
 else|:
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -2639,6 +2687,9 @@ name|memoryInput
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|cumulativeMemoryWithinPhase
 argument_list|(
 name|inMemoryInput
@@ -2649,6 +2700,9 @@ name|Integer
 name|splitCount
 init|=
 name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
 operator|.
 name|splitCount
 argument_list|(
@@ -2898,6 +2952,9 @@ name|distribution
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|distribution
 argument_list|(
 name|input
@@ -2957,12 +3014,20 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// 1. Sum of input cardinalities
 specifier|final
 name|Double
 name|leftRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2976,7 +3041,7 @@ specifier|final
 name|Double
 name|rightRCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -3044,10 +3109,9 @@ operator|.
 name|Builder
 name|streamingBuilder
 init|=
-operator|new
 name|ImmutableBitSet
 operator|.
-name|Builder
+name|builder
 argument_list|()
 decl_stmt|;
 switch|switch
@@ -3110,7 +3174,7 @@ specifier|final
 name|Double
 name|leftRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -3124,7 +3188,7 @@ specifier|final
 name|Double
 name|rightRAverageSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -3231,7 +3295,7 @@ specifier|final
 name|int
 name|parallelism
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -3242,7 +3306,7 @@ literal|null
 condition|?
 literal|1
 else|:
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(
@@ -3362,6 +3426,14 @@ name|HiveJoin
 name|join
 parameter_list|)
 block|{
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 comment|// TODO: Split count is not same as no of buckets
 name|JoinAlgorithm
 name|oldAlgo
@@ -3384,7 +3456,7 @@ specifier|final
 name|Double
 name|memoryWithinPhase
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|cumulativeMemoryWithinPhase
 argument_list|(
@@ -3395,7 +3467,7 @@ specifier|final
 name|Integer
 name|splitCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|splitCount
 argument_list|(

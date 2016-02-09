@@ -324,6 +324,9 @@ name|averageColumnSizes
 parameter_list|(
 name|HiveTableScan
 name|scan
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|List
@@ -511,6 +514,9 @@ name|averageColumnSizes
 parameter_list|(
 name|HiveJoin
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 specifier|final
@@ -538,7 +544,7 @@ name|Double
 argument_list|>
 name|lefts
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageColumnSizes
 argument_list|(
@@ -564,7 +570,7 @@ condition|)
 block|{
 name|rights
 operator|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageColumnSizes
 argument_list|(

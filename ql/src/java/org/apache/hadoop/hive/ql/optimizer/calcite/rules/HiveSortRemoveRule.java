@@ -252,6 +252,9 @@ name|rowCount
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|getRowCount
 argument_list|(
 name|sortLimit

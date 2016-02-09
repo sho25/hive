@@ -329,6 +329,9 @@ name|memory
 parameter_list|(
 name|HiveTableScan
 name|tableScan
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -341,13 +344,16 @@ name|memory
 parameter_list|(
 name|HiveAggregate
 name|aggregate
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 specifier|final
 name|Double
 name|avgRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -361,7 +367,7 @@ specifier|final
 name|Double
 name|rowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -398,6 +404,9 @@ name|memory
 parameter_list|(
 name|HiveFilter
 name|filter
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -410,6 +419,9 @@ name|memory
 parameter_list|(
 name|HiveJoin
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -440,6 +452,9 @@ name|memory
 parameter_list|(
 name|HiveProject
 name|project
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
@@ -452,6 +467,9 @@ name|memory
 parameter_list|(
 name|HiveSortLimit
 name|sort
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 if|if
@@ -471,7 +489,7 @@ specifier|final
 name|Double
 name|avgRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -485,7 +503,7 @@ specifier|final
 name|Double
 name|rowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -527,6 +545,9 @@ name|memory
 parameter_list|(
 name|HiveUnion
 name|union
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return

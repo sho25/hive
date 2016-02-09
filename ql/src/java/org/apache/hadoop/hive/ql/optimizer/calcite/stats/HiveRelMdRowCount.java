@@ -531,6 +531,9 @@ name|getRowCount
 parameter_list|(
 name|Join
 name|join
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|PKFKRelationInfo
@@ -539,6 +542,8 @@ init|=
 name|analyzeJoinForPKFK
 argument_list|(
 name|join
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 if|if
@@ -624,6 +629,9 @@ name|getRowCount
 parameter_list|(
 name|SemiJoin
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|PKFKRelationInfo
@@ -632,6 +640,8 @@ init|=
 name|analyzeJoinForPKFK
 argument_list|(
 name|rel
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 if|if
@@ -708,6 +718,8 @@ operator|.
 name|getRowCount
 argument_list|(
 name|rel
+argument_list|,
+name|mq
 argument_list|)
 return|;
 block|}
@@ -719,13 +731,16 @@ name|getRowCount
 parameter_list|(
 name|Sort
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 specifier|final
 name|Double
 name|rowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1046,6 +1061,9 @@ name|analyzeJoinForPKFK
 parameter_list|(
 name|Join
 name|joinRel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|RelNode
@@ -1338,6 +1356,8 @@ argument_list|(
 name|lBitSet
 argument_list|,
 name|left
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -1368,6 +1388,8 @@ argument_list|(
 name|rBitSet
 argument_list|,
 name|right
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 if|if
@@ -1386,7 +1408,7 @@ block|}
 name|double
 name|leftRowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1396,7 +1418,7 @@ decl_stmt|;
 name|double
 name|rightRowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1464,6 +1486,8 @@ condition|?
 name|leftColIdx
 else|:
 name|rightColIdx
+argument_list|,
+name|mq
 argument_list|)
 else|:
 literal|false
@@ -1473,7 +1497,7 @@ name|leftNDV
 init|=
 name|isPKSideSimpleTree
 condition|?
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -1492,7 +1516,7 @@ name|rightNDV
 init|=
 name|isPKSideSimpleTree
 condition|?
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -1556,6 +1580,8 @@ init|=
 name|pkSelectivity
 argument_list|(
 name|joinRel
+argument_list|,
+name|mq
 argument_list|,
 literal|true
 argument_list|,
@@ -1628,6 +1654,8 @@ name|pkSelectivity
 argument_list|(
 name|joinRel
 argument_list|,
+name|mq
+argument_list|,
 literal|false
 argument_list|,
 name|right
@@ -1685,6 +1713,9 @@ name|pkSelectivity
 parameter_list|(
 name|Join
 name|joinRel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|,
 name|boolean
 name|leftChild
@@ -1752,7 +1783,7 @@ block|{
 name|double
 name|tRowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -1783,6 +1814,9 @@ name|c
 parameter_list|,
 name|RelNode
 name|rel
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|boolean
@@ -1796,7 +1830,7 @@ name|ImmutableBitSet
 argument_list|>
 name|keys
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getUniqueKeys
 argument_list|(
@@ -2152,6 +2186,9 @@ decl_stmt|;
 name|boolean
 name|simpleTree
 decl_stmt|;
+name|RelMetadataQuery
+name|mq
+decl_stmt|;
 specifier|static
 name|boolean
 name|check
@@ -2161,6 +2198,9 @@ name|r
 parameter_list|,
 name|int
 name|joinKey
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|IsSimpleTreeOnJoinKey
@@ -2170,6 +2210,8 @@ operator|new
 name|IsSimpleTreeOnJoinKey
 argument_list|(
 name|joinKey
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 name|v
@@ -2189,6 +2231,9 @@ name|IsSimpleTreeOnJoinKey
 parameter_list|(
 name|int
 name|joinKey
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|super
@@ -2199,6 +2244,12 @@ operator|.
 name|joinKey
 operator|=
 name|joinKey
+expr_stmt|;
+name|this
+operator|.
+name|mq
+operator|=
+name|mq
 expr_stmt|;
 name|simpleTree
 operator|=
@@ -2288,6 +2339,8 @@ operator|(
 name|Filter
 operator|)
 name|node
+argument_list|,
+name|mq
 argument_list|)
 expr_stmt|;
 block|}
@@ -2370,6 +2423,9 @@ name|isSimple
 parameter_list|(
 name|Filter
 name|filter
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 name|ImmutableBitSet
@@ -2393,6 +2449,8 @@ argument_list|(
 name|condBits
 argument_list|,
 name|filter
+argument_list|,
+name|mq
 argument_list|)
 return|;
 block|}

@@ -3713,10 +3713,9 @@ operator|.
 name|Builder
 name|sortColsPosBuilder
 init|=
-operator|new
 name|ImmutableBitSet
 operator|.
-name|Builder
+name|builder
 argument_list|()
 decl_stmt|;
 name|ImmutableBitSet
@@ -3724,10 +3723,9 @@ operator|.
 name|Builder
 name|sortOutputColsPosBuilder
 init|=
-operator|new
 name|ImmutableBitSet
 operator|.
-name|Builder
+name|builder
 argument_list|()
 decl_stmt|;
 name|Map

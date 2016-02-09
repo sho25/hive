@@ -376,6 +376,9 @@ parameter_list|(
 name|HiveTableScan
 name|t
 parameter_list|,
+name|RelMetadataQuery
+name|mq
+parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
@@ -416,6 +419,9 @@ parameter_list|(
 name|HiveJoin
 name|j
 parameter_list|,
+name|RelMetadataQuery
+name|mq
+parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
@@ -441,6 +447,8 @@ return|return
 name|computeInnerJoinSelectivity
 argument_list|(
 name|j
+argument_list|,
+name|mq
 argument_list|,
 name|predicate
 argument_list|)
@@ -477,7 +485,7 @@ block|{
 name|double
 name|left
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -490,7 +498,7 @@ decl_stmt|;
 name|double
 name|right
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -513,6 +521,8 @@ init|=
 name|computeInnerJoinSelectivity
 argument_list|(
 name|j
+argument_list|,
+name|mq
 argument_list|,
 name|predicate
 argument_list|)
@@ -568,6 +578,9 @@ name|computeInnerJoinSelectivity
 parameter_list|(
 name|HiveJoin
 name|j
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|,
 name|RexNode
 name|predicate
@@ -705,6 +718,8 @@ operator|.
 name|getLeft
 argument_list|()
 argument_list|,
+name|mq
+argument_list|,
 name|ljk
 argument_list|)
 argument_list|)
@@ -739,6 +754,8 @@ name|j
 operator|.
 name|getRight
 argument_list|()
+argument_list|,
+name|mq
 argument_list|,
 name|rjk
 argument_list|)
@@ -802,7 +819,7 @@ name|Math
 operator|.
 name|min
 argument_list|(
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -822,7 +839,7 @@ name|Math
 operator|.
 name|min
 argument_list|(
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -832,7 +849,7 @@ name|getLeft
 argument_list|()
 argument_list|)
 operator|*
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(

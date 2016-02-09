@@ -579,6 +579,9 @@ name|preds
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|getPulledUpPredicates
 argument_list|(
 name|join

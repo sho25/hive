@@ -383,6 +383,9 @@ name|childCardinality
 operator|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|getRowCount
 argument_list|(
 name|childRel
@@ -1004,6 +1007,14 @@ decl_stmt|;
 name|InputReferencedVisitor
 name|irv
 decl_stmt|;
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|RexNode
@@ -1031,6 +1042,8 @@ argument_list|(
 name|this
 operator|.
 name|childRel
+argument_list|,
+name|mq
 argument_list|,
 operator|(
 operator|(
@@ -1088,6 +1101,8 @@ argument_list|(
 name|this
 operator|.
 name|childRel
+argument_list|,
+name|mq
 argument_list|,
 name|childProjIndx
 argument_list|)

@@ -642,6 +642,9 @@ name|colOrigs
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|getColumnOrigins
 argument_list|(
 name|aggregate

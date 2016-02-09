@@ -1306,6 +1306,9 @@ name|currentMemory
 init|=
 name|RelMetadataQuery
 operator|.
+name|instance
+argument_list|()
+operator|.
 name|cumulativeMemoryWithinPhase
 argument_list|(
 name|input
@@ -1950,6 +1953,14 @@ name|memory
 init|=
 literal|0.0
 decl_stmt|;
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|streamingSide
@@ -1970,7 +1981,7 @@ specifier|final
 name|Double
 name|leftAvgRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -1984,7 +1995,7 @@ specifier|final
 name|Double
 name|leftRowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2036,7 +2047,7 @@ specifier|final
 name|Double
 name|rightAvgRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -2050,7 +2061,7 @@ specifier|final
 name|Double
 name|rightRowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2121,11 +2132,19 @@ name|getMaxSplitSize
 argument_list|()
 decl_stmt|;
 comment|// We repartition: new number of splits
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 specifier|final
 name|Double
 name|averageRowSize
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getAverageRowSize
 argument_list|(
@@ -2136,7 +2155,7 @@ specifier|final
 name|Double
 name|rowCount
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getRowCount
 argument_list|(
@@ -2242,6 +2261,9 @@ return|;
 block|}
 return|return
 name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
 operator|.
 name|splitCount
 argument_list|(

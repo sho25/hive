@@ -469,10 +469,13 @@ name|computeSelfCost
 parameter_list|(
 name|RelOptPlanner
 name|planner
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getNonCumulativeCost
 argument_list|(
@@ -480,15 +483,19 @@ name|this
 argument_list|)
 return|;
 block|}
+comment|// getRows will call estimateRowCount
 annotation|@
 name|Override
 specifier|public
 name|double
-name|getRows
-parameter_list|()
+name|estimateRowCount
+parameter_list|(
+name|RelMetadataQuery
+name|mq
+parameter_list|)
 block|{
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getDistinctRowCount
 argument_list|(
@@ -516,6 +523,9 @@ parameter_list|()
 block|{
 return|return
 name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
 operator|.
 name|distribution
 argument_list|(

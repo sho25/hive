@@ -705,10 +705,13 @@ name|computeSelfCost
 parameter_list|(
 name|RelOptPlanner
 name|planner
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getNonCumulativeCost
 argument_list|(

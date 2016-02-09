@@ -810,6 +810,14 @@ block|{
 return|return;
 block|}
 comment|// Do the columns used by the join appear in the output of the aggregate?
+name|RelMetadataQuery
+name|mq
+init|=
+name|RelMetadataQuery
+operator|.
+name|instance
+argument_list|()
+decl_stmt|;
 specifier|final
 name|ImmutableBitSet
 name|aggregateColumns
@@ -827,7 +835,7 @@ name|keyColumns
 argument_list|(
 name|aggregateColumns
 argument_list|,
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getPulledUpPredicates
 argument_list|(
@@ -1140,7 +1148,7 @@ specifier|final
 name|Boolean
 name|unique0
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|areColumnsUnique
 argument_list|(
@@ -1988,7 +1996,7 @@ comment|// Make a cost based decision to pick cheaper plan
 name|RelOptCost
 name|afterCost
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getCumulativeCost
 argument_list|(
@@ -1998,7 +2006,7 @@ decl_stmt|;
 name|RelOptCost
 name|beforeCost
 init|=
-name|RelMetadataQuery
+name|mq
 operator|.
 name|getCumulativeCost
 argument_list|(
