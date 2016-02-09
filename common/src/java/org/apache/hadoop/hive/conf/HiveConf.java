@@ -4121,7 +4121,7 @@ name|HIVEQUERYRESULTFILEFORMAT
 argument_list|(
 literal|"hive.query.result.fileformat"
 argument_list|,
-literal|"TextFile"
+literal|"SequenceFile"
 argument_list|,
 operator|new
 name|StringSet
