@@ -4246,6 +4246,22 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getChangeVersion
+parameter_list|(
+name|String
+name|topic
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+literal|0
+return|;
+block|}
 block|}
 end_class
 

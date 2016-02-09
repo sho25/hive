@@ -2827,6 +2827,19 @@ parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
+annotation|@
+name|InterfaceStability
+operator|.
+name|Evolving
+name|long
+name|getChangeVersion
+parameter_list|(
+name|String
+name|topic
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 block|}
 end_interface
 
