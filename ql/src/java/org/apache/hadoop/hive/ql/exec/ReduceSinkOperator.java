@@ -849,14 +849,6 @@ specifier|transient
 name|Random
 name|random
 decl_stmt|;
-specifier|protected
-specifier|transient
-name|int
-name|bucketNumber
-init|=
-operator|-
-literal|1
-decl_stmt|;
 comment|/**    * This two dimensional array holds key data and a corresponding Union object    * which contains the tag identifying the aggregate expression for distinct columns.    *    * If there is no distict expression, cachedKeys is simply like this.    * cachedKeys[0] = [col0][col1]    *    * with two distict expression, union(tag:key) is attatched for each distinct expression    * cachedKeys[0] = [col0][col1][0:dist1]    * cachedKeys[1] = [col0][col1][1:dist2]    *    * in this case, child GBY evaluates distict values with expression like KEY.col2:0.dist1    * see {@link ExprNodeColumnEvaluator}    */
 comment|// TODO: we only ever use one row of these at a time. Why do we need to cache multiple?
 specifier|protected
@@ -2121,6 +2113,12 @@ literal|0
 argument_list|)
 expr_stmt|;
 comment|// replace bucketing columns with hashcode % numBuckets
+name|int
+name|bucketNumber
+init|=
+operator|-
+literal|1
+decl_stmt|;
 if|if
 condition|(
 name|bucketEval
@@ -3381,40 +3379,6 @@ name|valueEval
 operator|.
 name|length
 decl_stmt|;
-comment|// in case of bucketed table, insert the bucket number as the last column in value
-if|if
-condition|(
-name|bucketEval
-operator|!=
-literal|null
-condition|)
-block|{
-name|length
-operator|-=
-literal|1
-expr_stmt|;
-assert|assert
-name|bucketNumber
-operator|>=
-literal|0
-assert|;
-name|cachedValues
-index|[
-name|length
-index|]
-operator|=
-operator|new
-name|Text
-argument_list|(
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|bucketNumber
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Evaluate the value
 for|for
 control|(
