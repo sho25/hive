@@ -671,6 +671,8 @@ operator|new
 name|PathFilter
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|accept
@@ -2246,6 +2248,8 @@ argument_list|,
 name|txnList
 argument_list|,
 literal|false
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}
@@ -2281,6 +2285,9 @@ name|txnList
 parameter_list|,
 name|boolean
 name|useFileIds
+parameter_list|,
+name|boolean
+name|ignoreEmptyFiles
 parameter_list|)
 throws|throws
 name|IOException
@@ -2453,6 +2460,8 @@ argument_list|,
 name|obsolete
 argument_list|,
 name|bestBase
+argument_list|,
+name|ignoreEmptyFiles
 argument_list|)
 expr_stmt|;
 block|}
@@ -2501,6 +2510,8 @@ argument_list|,
 name|obsolete
 argument_list|,
 name|bestBase
+argument_list|,
+name|ignoreEmptyFiles
 argument_list|)
 expr_stmt|;
 block|}
@@ -2849,6 +2860,9 @@ name|obsolete
 parameter_list|,
 name|TxnBase
 name|bestBase
+parameter_list|,
+name|boolean
+name|ignoreEmptyFiles
 parameter_list|)
 block|{
 name|Path
@@ -3031,7 +3045,19 @@ name|child
 argument_list|)
 expr_stmt|;
 block|}
-else|else
+elseif|else
+if|if
+condition|(
+operator|!
+name|ignoreEmptyFiles
+operator|||
+name|child
+operator|.
+name|getLen
+argument_list|()
+operator|!=
+literal|0
+condition|)
 block|{
 name|original
 operator|.
@@ -3081,6 +3107,7 @@ implements|implements
 name|HdfsFileStatusWithId
 block|{
 specifier|private
+specifier|final
 name|FileStatus
 name|fs
 decl_stmt|;

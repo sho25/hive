@@ -5494,6 +5494,16 @@ operator|.
 name|getFileStatus
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|fileStatus
+operator|.
+name|getLen
+argument_list|()
+operator|!=
+literal|0
+condition|)
+block|{
 name|String
 index|[]
 name|hosts
@@ -5560,6 +5570,7 @@ argument_list|(
 name|orcSplit
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// add uncovered ACID delta splits
 name|splits
@@ -5969,6 +5980,8 @@ operator|.
 name|transactionList
 argument_list|,
 name|useFileIds
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|Path

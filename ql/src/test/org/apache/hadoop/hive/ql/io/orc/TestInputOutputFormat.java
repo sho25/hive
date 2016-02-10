@@ -3627,7 +3627,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3641,7 +3641,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3655,7 +3655,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3669,7 +3669,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3683,7 +3683,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|)
@@ -3950,7 +3950,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3964,7 +3964,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3978,7 +3978,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -3992,7 +3992,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -4006,7 +4006,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -4020,7 +4020,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -4034,7 +4034,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|,
@@ -4048,7 +4048,7 @@ argument_list|,
 operator|new
 name|byte
 index|[
-literal|0
+literal|1
 index|]
 argument_list|)
 argument_list|)
@@ -4103,11 +4103,6 @@ operator|.
 name|ETLSplitStrategy
 name|etlSs
 init|=
-operator|(
-name|OrcInputFormat
-operator|.
-name|ETLSplitStrategy
-operator|)
 name|combineCtx
 operator|.
 name|combined
@@ -4255,11 +4250,6 @@ argument_list|)
 expr_stmt|;
 name|etlSs
 operator|=
-operator|(
-name|OrcInputFormat
-operator|.
-name|ETLSplitStrategy
-operator|)
 name|combineCtx
 operator|.
 name|combined
@@ -10576,6 +10566,22 @@ operator|.
 name|NULL
 argument_list|)
 decl_stmt|;
+name|writer
+operator|.
+name|write
+argument_list|(
+operator|new
+name|OrcSerde
+argument_list|()
+operator|.
+name|serialize
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|writer
 operator|.
 name|close
