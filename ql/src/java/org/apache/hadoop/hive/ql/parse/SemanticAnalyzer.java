@@ -64290,6 +64290,10 @@ name|tbl
 argument_list|)
 condition|)
 block|{
+name|acidInQuery
+operator|=
+literal|true
+expr_stmt|;
 name|checkAcidTxnManager
 argument_list|(
 name|tbl
@@ -64592,6 +64596,10 @@ name|tbl
 argument_list|)
 condition|)
 block|{
+name|acidInQuery
+operator|=
+literal|true
+expr_stmt|;
 name|checkAcidTxnManager
 argument_list|(
 name|tbl

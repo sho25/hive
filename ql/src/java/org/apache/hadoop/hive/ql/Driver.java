@@ -1789,6 +1789,11 @@ name|FileSinkDesc
 argument_list|>
 name|acidSinks
 decl_stmt|;
+comment|// whether any ACID table is involved in a query
+specifier|private
+name|boolean
+name|acidInQuery
+decl_stmt|;
 comment|// A limit on the number of threads that can be launched
 specifier|private
 name|int
@@ -3239,6 +3244,13 @@ comment|// validate the plan
 name|sem
 operator|.
 name|validate
+argument_list|()
+expr_stmt|;
+name|acidInQuery
+operator|=
+name|sem
+operator|.
+name|hasAcidInQuery
 argument_list|()
 expr_stmt|;
 name|perfLogger
@@ -6336,7 +6348,11 @@ if|if
 condition|(
 name|initiatingTransaction
 operator|||
+operator|(
 name|readOnlyQueryInAutoCommit
+operator|&&
+name|acidInQuery
+operator|)
 condition|)
 block|{
 comment|//For multi-stmt txns we should record the snapshot when txn starts but
@@ -6346,7 +6362,6 @@ comment|//for each statement.
 name|recordValidTxns
 argument_list|()
 expr_stmt|;
-comment|//todo: we should only need to do this for RO query if it has ACID resources in it.
 block|}
 return|return
 literal|0

@@ -981,6 +981,11 @@ name|FileSinkDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// whether any ACID table is involved in a query
+specifier|protected
+name|boolean
+name|acidInQuery
+decl_stmt|;
 specifier|public
 specifier|static
 name|int
@@ -6170,6 +6175,15 @@ parameter_list|()
 block|{
 return|return
 name|acidFileSinks
+return|;
+block|}
+specifier|public
+name|boolean
+name|hasAcidInQuery
+parameter_list|()
+block|{
+return|return
+name|acidInQuery
 return|;
 block|}
 comment|/**    * Construct list bucketing context.    *    * @param skewedColNames    * @param skewedValues    * @param skewedColValueLocationMaps    * @param isStoredAsSubDirectories    * @return    */
