@@ -714,6 +714,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|RELOADFUNCTION
+argument_list|(
+literal|"RELOADFUNCTION"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|CREATEMACRO
 argument_list|(
 literal|"CREATEMACRO"

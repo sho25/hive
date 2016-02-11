@@ -183,6 +183,8 @@ name|CREATEFUNCTION
 block|,
 name|DROPFUNCTION
 block|,
+name|RELOADFUNCTION
+block|,
 name|CREATEMACRO
 block|,
 name|DROPMACRO
