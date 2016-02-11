@@ -5673,6 +5673,8 @@ name|row
 init|=
 literal|null
 decl_stmt|;
+try|try
+block|{
 name|List
 argument_list|<
 name|OrcProto
@@ -5751,6 +5753,15 @@ literal|"Error encountered when writing to stdout."
 argument_list|)
 throw|;
 block|}
+block|}
+block|}
+finally|finally
+block|{
+name|rows
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}
