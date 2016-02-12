@@ -444,8 +444,6 @@ operator|new
 name|HiveMetaStoreClient
 argument_list|(
 name|hiveConf
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}

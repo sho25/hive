@@ -2412,6 +2412,8 @@ argument_list|(
 name|conf
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -2423,6 +2425,9 @@ name|conf
 parameter_list|,
 name|HiveMetaHookLoader
 name|hookLoader
+parameter_list|,
+name|Boolean
+name|allowEmbedded
 parameter_list|)
 throws|throws
 name|MetaException
@@ -2484,8 +2489,6 @@ name|conf
 operator|.
 name|getVar
 argument_list|(
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|METASTOREURIS
@@ -2505,6 +2508,32 @@ condition|(
 name|localMetaStore
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|allowEmbedded
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Embedded metastore is not allowed here. Please configure "
+operator|+
+name|ConfVars
+operator|.
+name|METASTOREURIS
+operator|.
+name|varname
+operator|+
+literal|"; it is currently set to ["
+operator|+
+name|msUri
+operator|+
+literal|"]"
+argument_list|)
+throw|;
+block|}
 comment|// instantiate the metastore server handler directly instead of connecting
 comment|// through the network
 if|if

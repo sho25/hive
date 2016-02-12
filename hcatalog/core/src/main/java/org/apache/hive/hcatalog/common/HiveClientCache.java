@@ -546,6 +546,8 @@ operator|.
 name|getProxy
 argument_list|(
 name|hiveConf
+argument_list|,
+literal|true
 argument_list|)
 return|;
 block|}
@@ -1025,6 +1027,7 @@ parameter_list|()
 throws|throws
 name|MetaException
 block|{
+comment|// This is called from HCat, so always allow embedded metastore (as was the default).
 return|return
 operator|(
 name|ICacheableMetaStoreClient
@@ -1052,6 +1055,10 @@ operator|,
 name|Integer
 operator|.
 name|class
+operator|,
+name|Boolean
+operator|.
+name|class
 block|}
 operator|,
 operator|new
@@ -1064,6 +1071,8 @@ name|getHiveConf
 argument_list|()
 block|,
 name|timeout
+block|,
+literal|true
 block|}
 operator|,
 name|CacheableHiveMetaStoreClient
@@ -1502,6 +1511,9 @@ parameter_list|,
 specifier|final
 name|Integer
 name|timeout
+parameter_list|,
+name|Boolean
+name|allowEmbedded
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1509,6 +1521,10 @@ block|{
 name|super
 argument_list|(
 name|conf
+argument_list|,
+literal|null
+argument_list|,
+name|allowEmbedded
 argument_list|)
 expr_stmt|;
 comment|// Extend the expiry time with some extra time on top of guava expiry time to make sure

@@ -592,6 +592,9 @@ name|SessionHiveMetaStoreClient
 parameter_list|(
 name|HiveConf
 name|conf
+parameter_list|,
+name|Boolean
+name|allowEmbedded
 parameter_list|)
 throws|throws
 name|MetaException
@@ -599,6 +602,10 @@ block|{
 name|super
 argument_list|(
 name|conf
+argument_list|,
+literal|null
+argument_list|,
+name|allowEmbedded
 argument_list|)
 expr_stmt|;
 block|}
@@ -609,6 +616,9 @@ name|conf
 parameter_list|,
 name|HiveMetaHookLoader
 name|hookLoader
+parameter_list|,
+name|Boolean
+name|allowEmbedded
 parameter_list|)
 throws|throws
 name|MetaException
@@ -618,6 +628,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|hookLoader
+argument_list|,
+name|allowEmbedded
 argument_list|)
 expr_stmt|;
 block|}

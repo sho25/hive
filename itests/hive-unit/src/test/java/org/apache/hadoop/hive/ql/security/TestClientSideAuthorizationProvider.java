@@ -544,8 +544,6 @@ operator|new
 name|HiveMetaStoreClient
 argument_list|(
 name|clientHiveConf
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|driver
