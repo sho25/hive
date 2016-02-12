@@ -3047,7 +3047,22 @@ literal|"javax.jdo.option.ConnectionURL"
 argument_list|,
 literal|"jdbc:derby:;databaseName=metastore_db;create=true"
 argument_list|,
-literal|"JDBC connect string for a JDBC metastore"
+literal|"JDBC connect string for a JDBC metastore.\n"
+operator|+
+literal|"To use SSL to encrypt/authenticate the connection, provide database-specific SSL flag in the connection URL.\n"
+operator|+
+literal|"For example, jdbc:postgresql://myhost/db?ssl=true for postgres database."
+argument_list|)
+block|,
+name|METASTORE_DBACCESS_SSL_PROPS
+argument_list|(
+literal|"hive.metastore.dbaccess.ssl.properties"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma-separated SSL properties for metastore to access database when JDO connection URL\n"
+operator|+
+literal|"enables SSL access. e.g. javax.net.ssl.trustStore=/tmp/truststore,javax.net.ssl.trustStorePassword=pwd."
 argument_list|)
 block|,
 name|HMSHANDLERATTEMPTS
