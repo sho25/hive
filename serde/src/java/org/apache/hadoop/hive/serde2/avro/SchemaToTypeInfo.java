@@ -1231,18 +1231,18 @@ name|schema
 argument_list|)
 condition|)
 block|{
-return|return
-name|primitiveTypeToTypeInfo
-operator|.
-name|get
+throw|throw
+operator|new
+name|AvroSerdeException
 argument_list|(
-name|Schema
+literal|"Recursive schemas are not supported. Recursive schema was "
+operator|+
+name|schema
 operator|.
-name|Type
-operator|.
-name|NULL
+name|getFullName
+argument_list|()
 argument_list|)
-return|;
+throw|;
 block|}
 name|seenSchemas
 operator|.
