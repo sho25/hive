@@ -387,6 +387,16 @@ name|JSONException
 throws|,
 name|IOException
 block|{
+if|if
+condition|(
+name|files
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return;
+block|}
 name|JSONStringer
 name|writer
 init|=
