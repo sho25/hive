@@ -1702,6 +1702,16 @@ argument_list|,
 name|ss
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|ss
 operator|.
 name|write
@@ -1725,6 +1735,7 @@ argument_list|,
 name|ss
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 return|return
