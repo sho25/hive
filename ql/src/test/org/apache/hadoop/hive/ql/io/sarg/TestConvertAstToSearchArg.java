@@ -3945,10 +3945,10 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"lt(id, 45)"
+literal|"lteq(id, 45)"
 block|,
 comment|/* id between 23 and 45 */
-literal|"not(lteq(id, 23))"
+literal|"not(lt(id, 23))"
 block|,
 comment|/* id between 23 and 45 */
 literal|"eq(first_name, Binary{\"alan\"})"
@@ -5637,7 +5637,7 @@ decl_stmt|;
 name|String
 name|expected
 init|=
-literal|"and(lt(first_name, Binary{\"greg\"}), not(lteq(first_name, Binary{\"david\"})))"
+literal|"and(lteq(first_name, Binary{\"greg\"}), not(lt(first_name, Binary{\"david\"})))"
 decl_stmt|;
 name|assertEquals
 argument_list|(

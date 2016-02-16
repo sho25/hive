@@ -396,7 +396,7 @@ decl_stmt|;
 name|String
 name|expected
 init|=
-literal|"and(and(and(not(eq(x, null)), not(and(lt(y, 20), not(lteq(y, 10))))), not(or(or(eq(z, 1), "
+literal|"and(and(and(not(eq(x, null)), not(and(lteq(y, 20), not(lt(y, 10))))), not(or(or(eq(z, 1), "
 operator|+
 literal|"eq(z, 2)), eq(z, 3)))), not(eq(a, Binary{\"stinger\"})))"
 decl_stmt|;

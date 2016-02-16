@@ -278,7 +278,7 @@ name|PredicateLeaf
 operator|.
 name|Operator
 operator|.
-name|LESS_THAN_EQUALS
+name|LESS_THAN
 argument_list|,
 name|min
 argument_list|,
@@ -295,7 +295,7 @@ name|PredicateLeaf
 operator|.
 name|Operator
 operator|.
-name|LESS_THAN
+name|LESS_THAN_EQUALS
 argument_list|,
 name|max
 argument_list|,
