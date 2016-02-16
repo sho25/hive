@@ -3731,6 +3731,15 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Deleted HDFS directory: "
+operator|+
+name|hdfsSessionPath
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -3751,6 +3760,15 @@ argument_list|(
 name|localSessionPath
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Deleted local directory: "
+operator|+
+name|localSessionPath
 argument_list|)
 expr_stmt|;
 block|}

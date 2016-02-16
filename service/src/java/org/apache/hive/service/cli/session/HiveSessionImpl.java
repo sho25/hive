@@ -3636,6 +3636,18 @@ argument_list|(
 name|sessionLogDir
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Operation log session directory is deleted: "
+operator|+
+name|sessionLogDir
+operator|.
+name|getAbsolutePath
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
