@@ -1487,7 +1487,7 @@ specifier|final
 name|String
 name|SHUFFLE_MANAGE_OS_CACHE
 init|=
-literal|"mapreduce.shuffle.manage.os.cache"
+literal|"lla[.shuffle.manage.os.cache"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1503,7 +1503,7 @@ specifier|final
 name|String
 name|SHUFFLE_READAHEAD_BYTES
 init|=
-literal|"mapreduce.shuffle.readahead.bytes"
+literal|"llap.shuffle.readahead.bytes"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1678,14 +1678,13 @@ name|DEFAULT_SHUFFLE_PORT
 init|=
 literal|15551
 decl_stmt|;
-comment|// TODO Change configs to remove mapreduce references.
 specifier|public
 specifier|static
 specifier|final
 name|String
 name|SHUFFLE_CONNECTION_KEEP_ALIVE_ENABLED
 init|=
-literal|"mapreduce.shuffle.connection-keep-alive.enable"
+literal|"llap.shuffle.connection-keep-alive.enable"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1701,7 +1700,7 @@ specifier|final
 name|String
 name|SHUFFLE_CONNECTION_KEEP_ALIVE_TIME_OUT
 init|=
-literal|"mapreduce.shuffle.connection-keep-alive.timeout"
+literal|"llap.shuffle.connection-keep-alive.timeout"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1718,7 +1717,7 @@ specifier|final
 name|String
 name|SHUFFLE_MAPOUTPUT_META_INFO_CACHE_SIZE
 init|=
-literal|"mapreduce.shuffle.mapoutput-info.meta.cache.size"
+literal|"llap.shuffle.mapoutput-info.meta.cache.size"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1742,7 +1741,7 @@ specifier|final
 name|String
 name|SUFFLE_SSL_FILE_BUFFER_SIZE_KEY
 init|=
-literal|"mapreduce.shuffle.ssl.file.buffer.size"
+literal|"llap.shuffle.ssl.file.buffer.size"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1760,7 +1759,7 @@ specifier|final
 name|String
 name|MAX_SHUFFLE_CONNECTIONS
 init|=
-literal|"mapreduce.shuffle.max.connections"
+literal|"llap.shuffle.max.connections"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1777,7 +1776,7 @@ specifier|final
 name|String
 name|MAX_SHUFFLE_THREADS
 init|=
-literal|"mapreduce.shuffle.max.threads"
+literal|"llap.shuffle.max.threads"
 decl_stmt|;
 comment|// 0 implies Netty default of 2 * number of available processors
 specifier|public
@@ -1794,7 +1793,7 @@ specifier|final
 name|String
 name|SHUFFLE_BUFFER_SIZE
 init|=
-literal|"mapreduce.shuffle.transfer.buffer.size"
+literal|"llap.shuffle.transfer.buffer.size"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1812,7 +1811,7 @@ specifier|final
 name|String
 name|SHUFFLE_TRANSFERTO_ALLOWED
 init|=
-literal|"mapreduce.shuffle.transferTo.allowed"
+literal|"llap.shuffle.transferTo.allowed"
 decl_stmt|;
 specifier|public
 specifier|static

@@ -197,7 +197,7 @@ name|llap
 operator|.
 name|configuration
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -2012,11 +2012,11 @@ try|try
 block|{
 comment|// Cache settings will need to be setup in llap-daemon-site.xml - since the daemons don't read hive-site.xml
 comment|// Ideally, these properties should be part of LlapDameonConf rather than HiveConf
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 name|daemonConf
 init|=
 operator|new
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 argument_list|()
 decl_stmt|;
 name|int

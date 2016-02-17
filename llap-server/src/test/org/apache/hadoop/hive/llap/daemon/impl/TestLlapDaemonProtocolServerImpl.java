@@ -153,7 +153,7 @@ name|llap
 operator|.
 name|configuration
 operator|.
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 import|;
 end_import
 
@@ -308,11 +308,11 @@ name|ServiceException
 throws|,
 name|IOException
 block|{
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 name|daemonConf
 init|=
 operator|new
-name|LlapConfiguration
+name|LlapDaemonConfiguration
 argument_list|()
 decl_stmt|;
 name|int
