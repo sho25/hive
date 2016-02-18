@@ -4329,7 +4329,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"mk: 1"
+literal|"cv_PERMANENT_FUNCTION: 3\nmaster_key: 1"
 operator|+
 name|lsep
 argument_list|,
