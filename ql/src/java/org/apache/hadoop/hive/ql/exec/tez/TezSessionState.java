@@ -1740,15 +1740,7 @@ condition|(
 name|llapMode
 condition|)
 block|{
-comment|// add configs for llap-daemon-site.xml + localize llap jars
-comment|// they cannot be referred to directly as it would be a circular depedency
-name|conf
-operator|.
-name|addResource
-argument_list|(
-literal|"llap-daemon-site.xml"
-argument_list|)
-expr_stmt|;
+comment|// localize llap client jars
 name|addJarLRByClass
 argument_list|(
 name|LlapTaskSchedulerService
