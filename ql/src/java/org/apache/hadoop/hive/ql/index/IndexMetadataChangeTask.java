@@ -472,6 +472,8 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|part
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -551,6 +553,8 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|tbl
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}

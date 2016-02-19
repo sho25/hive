@@ -2234,6 +2234,8 @@ argument_list|,
 literal|"alterparttable"
 argument_list|,
 name|newPart
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|NotificationEventResponse

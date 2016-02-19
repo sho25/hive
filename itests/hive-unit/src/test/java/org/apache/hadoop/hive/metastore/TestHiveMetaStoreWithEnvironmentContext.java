@@ -1399,7 +1399,7 @@ argument_list|)
 expr_stmt|;
 name|msc
 operator|.
-name|alter_table
+name|alter_table_with_environmentContext
 argument_list|(
 name|dbName
 argument_list|,
@@ -1463,7 +1463,7 @@ argument_list|)
 expr_stmt|;
 name|msc
 operator|.
-name|alter_table
+name|alter_table_with_environmentContext
 argument_list|(
 name|dbName
 argument_list|,

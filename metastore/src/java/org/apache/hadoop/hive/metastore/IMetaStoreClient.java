@@ -281,6 +281,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|EnvironmentContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|FieldSchema
 import|;
 end_import
@@ -2218,9 +2236,9 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|//alter_table_with_cascade
+comment|//wrapper of alter_table_with_cascade
 name|void
-name|alter_table
+name|alter_table_with_environmentContext
 parameter_list|(
 name|String
 name|defaultDatabaseName
@@ -2231,8 +2249,8 @@ parameter_list|,
 name|Table
 name|table
 parameter_list|,
-name|boolean
-name|cascade
+name|EnvironmentContext
+name|environmentContext
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -2522,6 +2540,9 @@ name|tblName
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -2545,6 +2566,9 @@ argument_list|<
 name|Partition
 argument_list|>
 name|newParts
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
 parameter_list|)
 throws|throws
 name|InvalidOperationException

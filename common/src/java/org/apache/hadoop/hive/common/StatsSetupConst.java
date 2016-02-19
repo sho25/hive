@@ -368,15 +368,31 @@ block|,
 name|TOTAL_SIZE
 block|}
 decl_stmt|;
-comment|// This string constant is used by stats task to indicate to AlterHandler that
-comment|// alterPartition/alterTable is happening via statsTask.
+comment|// This string constant is used to indicate to AlterHandler that
+comment|// alterPartition/alterTable is happening via statsTask or via user.
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|STATS_GENERATED_VIA_STATS_TASK
+name|STATS_GENERATED
 init|=
-literal|"STATS_GENERATED_VIA_STATS_TASK"
+literal|"STATS_GENERATED"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TASK
+init|=
+literal|"TASK"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|USER
+init|=
+literal|"USER"
 decl_stmt|;
 comment|// This string constant is used by AlterHandler to figure out that it should not attempt to
 comment|// update stats. It is set by any client-side task which wishes to signal that no stats
@@ -414,6 +430,14 @@ name|String
 name|BASIC_STATS
 init|=
 literal|"BASIC_STATS"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|CASCADE
+init|=
+literal|"CASCADE"
 decl_stmt|;
 specifier|public
 specifier|static

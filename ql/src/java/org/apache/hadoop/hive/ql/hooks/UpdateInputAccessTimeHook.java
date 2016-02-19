@@ -343,6 +343,8 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|t
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 break|break;
@@ -408,6 +410,8 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|p
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|t
@@ -434,6 +438,8 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|t
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 break|break;

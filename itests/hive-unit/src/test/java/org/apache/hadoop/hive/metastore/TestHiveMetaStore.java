@@ -3961,6 +3961,8 @@ argument_list|(
 name|part4
 argument_list|,
 name|warehouse
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 return|return
@@ -5355,6 +5357,8 @@ argument_list|,
 name|viewName
 argument_list|,
 name|part2
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Partition
@@ -6010,6 +6014,8 @@ argument_list|,
 name|tblName
 argument_list|,
 name|part2
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Partition

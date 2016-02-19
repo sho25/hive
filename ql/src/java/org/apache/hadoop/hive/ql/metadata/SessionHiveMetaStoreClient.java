@@ -1964,9 +1964,6 @@ name|api
 operator|.
 name|Table
 name|new_tbl
-parameter_list|,
-name|boolean
-name|cascade
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -2004,7 +2001,8 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|//actually temp table does not support partitions, cascade is not applicable here
+comment|// actually temp table does not support partitions, cascade is not
+comment|// applicable here
 name|alterTempTable
 argument_list|(
 name|dbname
@@ -2029,8 +2027,6 @@ argument_list|,
 name|tbl_name
 argument_list|,
 name|new_tbl
-argument_list|,
-name|cascade
 argument_list|)
 expr_stmt|;
 block|}
@@ -2038,7 +2034,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|alter_table
+name|alter_table_with_environmentContext
 parameter_list|(
 name|String
 name|dbname
@@ -2119,7 +2115,7 @@ block|}
 comment|// Try underlying client
 name|super
 operator|.
-name|alter_table
+name|alter_table_with_environmentContext
 argument_list|(
 name|dbname
 argument_list|,
@@ -2943,6 +2939,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|true
+argument_list|,
+name|envContext
 argument_list|)
 expr_stmt|;
 name|Table
