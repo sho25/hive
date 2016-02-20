@@ -4987,7 +4987,7 @@ parameter_list|()
 block|{
 name|logInfo
 argument_list|(
-literal|"Shutting down the object store..."
+literal|"Metastore shutdown started..."
 argument_list|)
 expr_stmt|;
 name|RawStore
