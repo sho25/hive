@@ -8613,6 +8613,15 @@ operator|==
 name|JoinDesc
 operator|.
 name|UNIQUE_JOIN
+operator|||
+name|cond
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|JoinDesc
+operator|.
+name|LEFT_SEMI_JOIN
 condition|)
 block|{
 continue|continue;
