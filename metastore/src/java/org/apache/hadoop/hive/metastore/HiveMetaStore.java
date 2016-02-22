@@ -35649,6 +35649,20 @@ block|}
 decl_stmt|;
 name|t
 operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|t
+operator|.
+name|setName
+argument_list|(
+literal|"Metastore threads starter thread"
+argument_list|)
+expr_stmt|;
+name|t
+operator|.
 name|start
 argument_list|()
 expr_stmt|;
