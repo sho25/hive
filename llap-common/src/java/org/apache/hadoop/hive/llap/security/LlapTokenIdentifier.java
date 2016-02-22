@@ -233,9 +233,12 @@ name|int
 name|hashCode
 parameter_list|()
 block|{
+comment|// Nothing else right now.
 return|return
-operator|-
-literal|1
+name|super
+operator|.
+name|hashCode
+argument_list|()
 return|;
 block|}
 annotation|@
@@ -248,24 +251,13 @@ name|Object
 name|other
 parameter_list|)
 block|{
+comment|// Nothing else right now.
 return|return
-operator|(
-name|other
-operator|!=
-literal|null
-operator|)
-operator|&&
-name|other
+name|super
 operator|.
-name|getClass
-argument_list|()
-operator|.
-name|isAssignableFrom
+name|equals
 argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
+name|other
 argument_list|)
 return|;
 block|}
