@@ -3202,7 +3202,7 @@ condition|)
 block|{
 name|node
 operator|=
-name|RexUtil
+name|HiveRexUtil
 operator|.
 name|simplify
 argument_list|(
