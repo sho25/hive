@@ -1617,17 +1617,6 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
-operator|.
-name|exit
-argument_list|(
-operator|-
-literal|1
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 block|}

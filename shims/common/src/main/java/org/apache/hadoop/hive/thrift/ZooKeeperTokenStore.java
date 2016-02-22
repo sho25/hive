@@ -2121,6 +2121,18 @@ name|tokenIdentifier
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|tokenBytes
+operator|==
+literal|null
+condition|)
+block|{
+comment|// The token is already removed.
+return|return
+literal|null
+return|;
+block|}
 try|try
 block|{
 return|return

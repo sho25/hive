@@ -799,6 +799,16 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertNull
+argument_list|(
+name|ts
+operator|.
+name|getToken
+argument_list|(
+name|tokenId
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
