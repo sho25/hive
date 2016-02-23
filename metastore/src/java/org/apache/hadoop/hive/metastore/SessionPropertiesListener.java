@@ -150,6 +150,7 @@ name|varname
 argument_list|)
 condition|)
 block|{
+comment|// TODO: this only applies to current thread, so it's not useful at all.
 name|Deadline
 operator|.
 name|resetTimeout
