@@ -1690,6 +1690,24 @@ argument_list|,
 name|zkSecretManager
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Created LLAP token "
+operator|+
+name|token
+argument_list|)
+expr_stmt|;
+block|}
 name|ByteArrayDataOutput
 name|out
 init|=
