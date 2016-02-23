@@ -10319,6 +10319,19 @@ argument_list|,
 literal|"Check output size, before considering vertex (-1 disables check)"
 argument_list|)
 block|,
+name|LLAP_SKIP_COMPILE_UDF_CHECK
+argument_list|(
+literal|"hive.llap.skip.compile.udf.check"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to skip the compile-time check for non-built-in UDFs when deciding whether to\n"
+operator|+
+literal|"execute tasks in LLAP. Skipping the check allows executing UDFs from pre-localized\n"
+operator|+
+literal|"jars in LLAP; if the jars are not pre-localized, the UDFs will simply fail to load."
+argument_list|)
+block|,
 name|LLAP_EXECUTION_MODE
 argument_list|(
 literal|"hive.llap.execution.mode"

@@ -273,6 +273,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -835,10 +853,6 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-name|PhysicalContext
-name|physicalContext
-decl_stmt|;
-specifier|private
 name|HiveConf
 name|conf
 decl_stmt|;
@@ -869,13 +883,13 @@ name|Dispatcher
 block|{
 specifier|private
 specifier|final
-name|PhysicalContext
-name|pctx
+name|HiveConf
+name|conf
 decl_stmt|;
 specifier|private
 specifier|final
-name|HiveConf
-name|conf
+name|boolean
+name|doSkipUdfCheck
 decl_stmt|;
 specifier|public
 name|LlapDecisionDispatcher
@@ -884,20 +898,25 @@ name|PhysicalContext
 name|pctx
 parameter_list|)
 block|{
-name|this
-operator|.
-name|pctx
-operator|=
-name|pctx
-expr_stmt|;
-name|this
-operator|.
 name|conf
 operator|=
 name|pctx
 operator|.
 name|getConf
 argument_list|()
+expr_stmt|;
+name|doSkipUdfCheck
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_SKIP_COMPILE_UDF_CHECK
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -1520,19 +1539,13 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|!
+name|doSkipUdfCheck
+operator|&&
 name|cur
 operator|instanceof
 name|ExprNodeGenericFuncDesc
-condition|)
-block|{
-comment|// getRequiredJars is currently broken (requires init in some cases before you can call it)
-comment|// String[] jars = ((ExprNodeGenericFuncDesc)cur).getGenericUDF().getRequiredJars();
-comment|// if (jars != null&& !(jars.length == 0)) {
-comment|//   LOG.info(String.format("%s requires %s", cur.getExprString(), Joiner.on(", ").join(jars)));
-comment|//   return false;
-comment|// }
-if|if
-condition|(
+operator|&&
 operator|!
 name|FunctionRegistry
 operator|.
@@ -1560,7 +1573,6 @@ expr_stmt|;
 return|return
 literal|false
 return|;
-block|}
 block|}
 block|}
 return|return
@@ -2552,12 +2564,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|this
-operator|.
-name|physicalContext
-operator|=
-name|pctx
-expr_stmt|;
 name|this
 operator|.
 name|conf
