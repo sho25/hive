@@ -974,6 +974,7 @@ comment|// Even if no reduction, let's still test the original
 comment|// predicate to see if it was already a constant,
 comment|// in which case we don't need any runtime decision
 comment|// about filtering.
+comment|// TODO: support LogicalValues
 if|if
 condition|(
 name|newConditionExp
@@ -992,27 +993,6 @@ name|getInput
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-comment|// TODO: support LogicalValues
-elseif|else
-if|if
-condition|(
-name|newConditionExp
-operator|instanceof
-name|RexLiteral
-operator|||
-name|RexUtil
-operator|.
-name|isNullLiteral
-argument_list|(
-name|newConditionExp
-argument_list|,
-literal|true
-argument_list|)
-condition|)
-block|{
-comment|// call.transformTo(call.builder().values(filter.getRowType()).build());
-return|return;
 block|}
 elseif|else
 if|if
