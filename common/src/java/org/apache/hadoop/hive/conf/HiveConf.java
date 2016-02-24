@@ -10734,7 +10734,7 @@ name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
 argument_list|(
 literal|"hive.llap.daemon.allow.permanent.fns"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
 argument_list|)
