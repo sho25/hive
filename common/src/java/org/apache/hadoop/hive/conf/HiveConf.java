@@ -10940,6 +10940,15 @@ operator|+
 literal|" instead of using the locations provided by the split itself"
 argument_list|)
 block|,
+name|LLAP_DAEMON_OUTPUT_SERVICE_PORT
+argument_list|(
+literal|"hive.llap.daemon.output.service.port"
+argument_list|,
+literal|15003
+argument_list|,
+literal|"LLAP daemon output service port"
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"

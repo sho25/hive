@@ -4051,6 +4051,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"get_splits"
+argument_list|,
+name|GenericUDFGetSplits
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Aliases for Java Class Names
 comment|// These are used in getImplicitConvertUDFMethod
 name|system

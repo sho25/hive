@@ -3519,7 +3519,7 @@ name|newPlan
 return|;
 block|}
 comment|/**    * @param plan Usually of type MapredWork, MapredLocalWork etc.    * @param out stream in which serialized plan is written into    */
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|serializeObjectByKryo

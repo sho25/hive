@@ -2601,7 +2601,8 @@ return|return
 name|dag
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|setAccessControlsForCurrentUser
 parameter_list|(
