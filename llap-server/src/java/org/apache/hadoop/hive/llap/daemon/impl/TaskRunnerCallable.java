@@ -988,6 +988,11 @@ name|shouldRunTask
 init|=
 literal|true
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|withTezAm
+decl_stmt|;
 specifier|final
 name|Stopwatch
 name|runtimeWatch
@@ -1174,14 +1179,25 @@ name|amReporter
 operator|=
 name|amReporter
 expr_stmt|;
+name|this
+operator|.
+name|withTezAm
+operator|=
+name|request
+operator|.
+name|getUsingTezAm
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"ZZZ: DBG: usingTezAm="
+operator|+
+name|withTezAm
+argument_list|)
+expr_stmt|;
 comment|// Register with the AMReporter when the callable is setup. Unregister once it starts running.
-if|if
-condition|(
-name|jobToken
-operator|!=
-literal|null
-condition|)
-block|{
 name|this
 operator|.
 name|amReporter
@@ -1214,7 +1230,6 @@ name|getQueryIdentifier
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|metrics

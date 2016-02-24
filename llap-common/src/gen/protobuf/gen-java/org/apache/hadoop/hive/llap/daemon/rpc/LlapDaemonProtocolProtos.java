@@ -39719,6 +39719,17 @@ name|FragmentRuntimeInfoOrBuilder
 name|getFragmentRuntimeInfoOrBuilder
 parameter_list|()
 function_decl|;
+comment|// optional bool usingTezAm = 11 [default = true];
+comment|/**      *<code>optional bool usingTezAm = 11 [default = true];</code>      */
+name|boolean
+name|hasUsingTezAm
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional bool usingTezAm = 11 [default = true];</code>      */
+name|boolean
+name|getUsingTezAm
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code SubmitWorkRequestProto}    */
 specifier|public
@@ -40315,6 +40326,23 @@ block|}
 name|bitField0_
 operator||=
 literal|0x00000200
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|88
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00000400
+expr_stmt|;
+name|usingTezAm_
+operator|=
+name|input
+operator|.
+name|readBool
+argument_list|()
 expr_stmt|;
 break|break;
 block|}
@@ -41999,6 +42027,47 @@ return|return
 name|fragmentRuntimeInfo_
 return|;
 block|}
+comment|// optional bool usingTezAm = 11 [default = true];
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|USINGTEZAM_FIELD_NUMBER
+init|=
+literal|11
+decl_stmt|;
+specifier|private
+name|boolean
+name|usingTezAm_
+decl_stmt|;
+comment|/**      *<code>optional bool usingTezAm = 11 [default = true];</code>      */
+specifier|public
+name|boolean
+name|hasUsingTezAm
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000400
+operator|)
+operator|==
+literal|0x00000400
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional bool usingTezAm = 11 [default = true];</code>      */
+specifier|public
+name|boolean
+name|getUsingTezAm
+parameter_list|()
+block|{
+return|return
+name|usingTezAm_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -42089,6 +42158,10 @@ name|FragmentRuntimeInfo
 operator|.
 name|getDefaultInstance
 argument_list|()
+expr_stmt|;
+name|usingTezAm_
+operator|=
+literal|true
 expr_stmt|;
 block|}
 specifier|private
@@ -42384,6 +42457,29 @@ argument_list|(
 literal|10
 argument_list|,
 name|fragmentRuntimeInfo_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000400
+operator|)
+operator|==
+literal|0x00000400
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeBool
+argument_list|(
+literal|11
+argument_list|,
+name|usingTezAm_
 argument_list|)
 expr_stmt|;
 block|}
@@ -42739,6 +42835,37 @@ argument_list|(
 literal|10
 argument_list|,
 name|fragmentRuntimeInfo_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000400
+operator|)
+operator|==
+literal|0x00000400
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeBoolSize
+argument_list|(
+literal|11
+argument_list|,
+name|usingTezAm_
 argument_list|)
 expr_stmt|;
 block|}
@@ -43266,6 +43393,41 @@ name|result
 operator|=
 name|result
 operator|&&
+operator|(
+name|hasUsingTezAm
+argument_list|()
+operator|==
+name|other
+operator|.
+name|hasUsingTezAm
+argument_list|()
+operator|)
+expr_stmt|;
+if|if
+condition|(
+name|hasUsingTezAm
+argument_list|()
+condition|)
+block|{
+name|result
+operator|=
+name|result
+operator|&&
+operator|(
+name|getUsingTezAm
+argument_list|()
+operator|==
+name|other
+operator|.
+name|getUsingTezAm
+argument_list|()
+operator|)
+expr_stmt|;
+block|}
+name|result
+operator|=
+name|result
+operator|&&
 name|getUnknownFields
 argument_list|()
 operator|.
@@ -43630,6 +43792,37 @@ argument_list|()
 operator|.
 name|hashCode
 argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|hasUsingTezAm
+argument_list|()
+condition|)
+block|{
+name|hash
+operator|=
+operator|(
+literal|37
+operator|*
+name|hash
+operator|)
+operator|+
+name|USINGTEZAM_FIELD_NUMBER
+expr_stmt|;
+name|hash
+operator|=
+operator|(
+literal|53
+operator|*
+name|hash
+operator|)
+operator|+
+name|hashBoolean
+argument_list|(
+name|getUsingTezAm
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 name|hash
@@ -44704,6 +44897,19 @@ operator|~
 literal|0x00000200
 operator|)
 expr_stmt|;
+name|usingTezAm_
+operator|=
+literal|true
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000400
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -45216,6 +45422,30 @@ name|build
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00000400
+operator|)
+operator|==
+literal|0x00000400
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00000400
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|usingTezAm_
+operator|=
+name|usingTezAm_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -45549,6 +45779,23 @@ argument_list|(
 name|other
 operator|.
 name|getFragmentRuntimeInfo
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasUsingTezAm
+argument_list|()
+condition|)
+block|{
+name|setUsingTezAm
+argument_list|(
+name|other
+operator|.
+name|getUsingTezAm
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -48995,6 +49242,91 @@ expr_stmt|;
 block|}
 return|return
 name|fragmentRuntimeInfoBuilder_
+return|;
+block|}
+comment|// optional bool usingTezAm = 11 [default = true];
+specifier|private
+name|boolean
+name|usingTezAm_
+init|=
+literal|true
+decl_stmt|;
+comment|/**        *<code>optional bool usingTezAm = 11 [default = true];</code>        */
+specifier|public
+name|boolean
+name|hasUsingTezAm
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00000400
+operator|)
+operator|==
+literal|0x00000400
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional bool usingTezAm = 11 [default = true];</code>        */
+specifier|public
+name|boolean
+name|getUsingTezAm
+parameter_list|()
+block|{
+return|return
+name|usingTezAm_
+return|;
+block|}
+comment|/**        *<code>optional bool usingTezAm = 11 [default = true];</code>        */
+specifier|public
+name|Builder
+name|setUsingTezAm
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00000400
+expr_stmt|;
+name|usingTezAm_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional bool usingTezAm = 11 [default = true];</code>        */
+specifier|public
+name|Builder
+name|clearUsingTezAm
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00000400
+operator|)
+expr_stmt|;
+name|usingTezAm_
+operator|=
+literal|true
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
 return|;
 block|}
 comment|// @@protoc_insertion_point(builder_scope:SubmitWorkRequestProto)
@@ -83197,7 +83529,7 @@ literal|"\022\"\n\032current_attempt_start_time\030\006 \001(\003\"F\n\024"
 operator|+
 literal|"QueryIdentifierProto\022\026\n\016app_identifier\030\001"
 operator|+
-literal|" \001(\t\022\026\n\016dag_identifier\030\002 \001(\005\"\266\002\n\026SubmitW"
+literal|" \001(\t\022\026\n\016dag_identifier\030\002 \001(\005\"\320\002\n\026SubmitW"
 operator|+
 literal|"orkRequestProto\022\033\n\023container_id_string\030\001"
 operator|+
@@ -83213,69 +83545,71 @@ literal|"\010 \001(\005\022)\n\rfragment_spec\030\t \001(\0132\022.FragmentS"
 operator|+
 literal|"pecProto\0223\n\025fragment_runtime_info\030\n \001(\0132"
 operator|+
-literal|"\024.FragmentRuntimeInfo\"J\n\027SubmitWorkRespo"
+literal|"\024.FragmentRuntimeInfo\022\030\n\nusingTezAm\030\013 \001("
 operator|+
-literal|"nseProto\022/\n\020submission_state\030\001 \001(\0162\025.Sub"
+literal|"\010:\004true\"J\n\027SubmitWorkResponseProto\022/\n\020su"
 operator|+
-literal|"missionStateProto\"\205\001\n\036SourceStateUpdated"
+literal|"bmission_state\030\001 \001(\0162\025.SubmissionStatePr"
 operator|+
-literal|"RequestProto\022/\n\020query_identifier\030\001 \001(\0132\025"
+literal|"oto\"\205\001\n\036SourceStateUpdatedRequestProto\022/"
 operator|+
-literal|".QueryIdentifierProto\022\020\n\010src_name\030\002 \001(\t\022"
+literal|"\n\020query_identifier\030\001 \001(\0132\025.QueryIdentifi"
 block|,
-literal|" \n\005state\030\003 \001(\0162\021.SourceStateProto\"!\n\037Sou"
+literal|"erProto\022\020\n\010src_name\030\002 \001(\t\022 \n\005state\030\003 \001(\016"
 operator|+
-literal|"rceStateUpdatedResponseProto\"w\n\031QueryCom"
+literal|"2\021.SourceStateProto\"!\n\037SourceStateUpdate"
 operator|+
-literal|"pleteRequestProto\022\020\n\010query_id\030\001 \001(\t\022/\n\020q"
+literal|"dResponseProto\"w\n\031QueryCompleteRequestPr"
 operator|+
-literal|"uery_identifier\030\002 \001(\0132\025.QueryIdentifierP"
+literal|"oto\022\020\n\010query_id\030\001 \001(\t\022/\n\020query_identifie"
 operator|+
-literal|"roto\022\027\n\014delete_delay\030\004 \001(\003:\0010\"\034\n\032QueryCo"
+literal|"r\030\002 \001(\0132\025.QueryIdentifierProto\022\027\n\014delete"
 operator|+
-literal|"mpleteResponseProto\"t\n\035TerminateFragment"
+literal|"_delay\030\004 \001(\003:\0010\"\034\n\032QueryCompleteResponse"
 operator|+
-literal|"RequestProto\022/\n\020query_identifier\030\001 \001(\0132\025"
+literal|"Proto\"t\n\035TerminateFragmentRequestProto\022/"
 operator|+
-literal|".QueryIdentifierProto\022\"\n\032fragment_identi"
+literal|"\n\020query_identifier\030\001 \001(\0132\025.QueryIdentifi"
 operator|+
-literal|"fier_string\030\002 \001(\t\" \n\036TerminateFragmentRe"
+literal|"erProto\022\"\n\032fragment_identifier_string\030\002 "
 operator|+
-literal|"sponseProto\"\026\n\024GetTokenRequestProto\"&\n\025G"
+literal|"\001(\t\" \n\036TerminateFragmentResponseProto\"\026\n"
 block|,
-literal|"etTokenResponseProto\022\r\n\005token\030\001 \001(\014*2\n\020S"
+literal|"\024GetTokenRequestProto\"&\n\025GetTokenRespons"
 operator|+
-literal|"ourceStateProto\022\017\n\013S_SUCCEEDED\020\001\022\r\n\tS_RU"
+literal|"eProto\022\r\n\005token\030\001 \001(\014*2\n\020SourceStateProt"
 operator|+
-literal|"NNING\020\002*E\n\024SubmissionStateProto\022\014\n\010ACCEP"
+literal|"o\022\017\n\013S_SUCCEEDED\020\001\022\r\n\tS_RUNNING\020\002*E\n\024Sub"
 operator|+
-literal|"TED\020\001\022\014\n\010REJECTED\020\002\022\021\n\rEVICTED_OTHER\020\0032\316"
+literal|"missionStateProto\022\014\n\010ACCEPTED\020\001\022\014\n\010REJEC"
 operator|+
-literal|"\002\n\022LlapDaemonProtocol\022?\n\nsubmitWork\022\027.Su"
+literal|"TED\020\002\022\021\n\rEVICTED_OTHER\020\0032\316\002\n\022LlapDaemonP"
 operator|+
-literal|"bmitWorkRequestProto\032\030.SubmitWorkRespons"
+literal|"rotocol\022?\n\nsubmitWork\022\027.SubmitWorkReques"
 operator|+
-literal|"eProto\022W\n\022sourceStateUpdated\022\037.SourceSta"
+literal|"tProto\032\030.SubmitWorkResponseProto\022W\n\022sour"
 operator|+
-literal|"teUpdatedRequestProto\032 .SourceStateUpdat"
+literal|"ceStateUpdated\022\037.SourceStateUpdatedReque"
 operator|+
-literal|"edResponseProto\022H\n\rqueryComplete\022\032.Query"
+literal|"stProto\032 .SourceStateUpdatedResponseProt"
 operator|+
-literal|"CompleteRequestProto\032\033.QueryCompleteResp"
+literal|"o\022H\n\rqueryComplete\022\032.QueryCompleteReques"
 block|,
-literal|"onseProto\022T\n\021terminateFragment\022\036.Termina"
+literal|"tProto\032\033.QueryCompleteResponseProto\022T\n\021t"
 operator|+
-literal|"teFragmentRequestProto\032\037.TerminateFragme"
+literal|"erminateFragment\022\036.TerminateFragmentRequ"
 operator|+
-literal|"ntResponseProto2]\n\026LlapManagementProtoco"
+literal|"estProto\032\037.TerminateFragmentResponseProt"
 operator|+
-literal|"l\022C\n\022getDelegationToken\022\025.GetTokenReques"
+literal|"o2]\n\026LlapManagementProtocol\022C\n\022getDelega"
 operator|+
-literal|"tProto\032\026.GetTokenResponseProtoBH\n&org.ap"
+literal|"tionToken\022\025.GetTokenRequestProto\032\026.GetTo"
 operator|+
-literal|"ache.hadoop.hive.llap.daemon.rpcB\030LlapDa"
+literal|"kenResponseProtoBH\n&org.apache.hadoop.hi"
 operator|+
-literal|"emonProtocolProtos\210\001\001\240\001\001"
+literal|"ve.llap.daemon.rpcB\030LlapDaemonProtocolPr"
+operator|+
+literal|"otos\210\001\001\240\001\001"
 block|}
 decl_stmt|;
 name|com
@@ -83712,6 +84046,8 @@ block|,
 literal|"FragmentSpec"
 block|,
 literal|"FragmentRuntimeInfo"
+block|,
+literal|"UsingTezAm"
 block|, }
 argument_list|)
 expr_stmt|;

@@ -7790,6 +7790,15 @@ name|UDFArgumentTypeException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"UDFArgumentTypeException: "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|SemanticException
@@ -7826,6 +7835,15 @@ name|UDFArgumentLengthException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"UDFArgumentLengthException: "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|SemanticException
@@ -7852,6 +7870,15 @@ name|UDFArgumentException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"UDFArgumentException: "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|SemanticException
