@@ -3218,6 +3218,8 @@ name|IllegalArgumentException
 throws|,
 name|FileNotFoundException
 block|{
+comment|// TODO Reduce the number of lookups that happen here. This shouldn't go to HDFS for each call.
+comment|// The hiveJarDir can be determined once per client.
 name|FileStatus
 name|destDirStatus
 init|=
