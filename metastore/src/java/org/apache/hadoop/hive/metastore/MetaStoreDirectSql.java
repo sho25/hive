@@ -4410,7 +4410,9 @@ expr_stmt|;
 block|}
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\" from \"SORT_COLS\""
+literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\", \"SORT_COLS\".\"NULL_ORDER\""
+operator|+
+literal|" from \"SORT_COLS\""
 operator|+
 literal|" where \"SD_ID\" in ("
 operator|+
@@ -4459,6 +4461,14 @@ operator|==
 literal|null
 condition|)
 return|return;
+assert|assert
+name|fields
+index|[
+literal|3
+index|]
+operator|!=
+literal|null
+assert|;
 name|t
 operator|.
 name|addToSortCols
@@ -4479,6 +4489,14 @@ argument_list|(
 name|fields
 index|[
 literal|2
+index|]
+argument_list|)
+argument_list|,
+name|extractSqlInt
+argument_list|(
+name|fields
+index|[
+literal|3
 index|]
 argument_list|)
 argument_list|)

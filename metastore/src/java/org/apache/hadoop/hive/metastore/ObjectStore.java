@@ -8639,6 +8639,11 @@ name|part
 operator|.
 name|getOrder
 argument_list|()
+argument_list|,
+name|part
+operator|.
+name|getNullOrder
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8714,6 +8719,11 @@ argument_list|,
 name|part
 operator|.
 name|getOrder
+argument_list|()
+argument_list|,
+name|part
+operator|.
+name|getNullOrder
 argument_list|()
 argument_list|)
 argument_list|)

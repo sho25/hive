@@ -3589,6 +3589,16 @@ name|getOrder
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|oexpDef
+operator|.
+name|setNullOrder
+argument_list|(
+name|oExpr
+operator|.
+name|getNullOrder
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|PTFExpressionDef

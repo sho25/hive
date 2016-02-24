@@ -2045,7 +2045,11 @@ name|Direction
 operator|.
 name|ASCENDING
 argument_list|,
-literal|null
+name|RelFieldCollation
+operator|.
+name|NullDirection
+operator|.
+name|FIRST
 argument_list|,
 name|extraNodes
 argument_list|)

@@ -32,6 +32,10 @@ specifier|private
 name|int
 name|order
 decl_stmt|;
+specifier|private
+name|int
+name|nullOrder
+decl_stmt|;
 comment|/**    * @param col    * @param order    */
 specifier|public
 name|MOrder
@@ -41,6 +45,9 @@ name|col
 parameter_list|,
 name|int
 name|order
+parameter_list|,
+name|int
+name|nullOrder
 parameter_list|)
 block|{
 name|this
@@ -54,6 +61,12 @@ operator|.
 name|order
 operator|=
 name|order
+expr_stmt|;
+name|this
+operator|.
+name|nullOrder
+operator|=
+name|nullOrder
 expr_stmt|;
 block|}
 comment|/**    * @return the col    */
@@ -106,6 +119,32 @@ operator|.
 name|order
 operator|=
 name|order
+expr_stmt|;
+block|}
+comment|/**    * @return the null order    */
+specifier|public
+name|int
+name|getNullOrder
+parameter_list|()
+block|{
+return|return
+name|nullOrder
+return|;
+block|}
+comment|/**    * @param nullOrder the null order to set    */
+specifier|public
+name|void
+name|setNullOrder
+parameter_list|(
+name|int
+name|nullOrder
+parameter_list|)
+block|{
+name|this
+operator|.
+name|nullOrder
+operator|=
+name|nullOrder
 expr_stmt|;
 block|}
 block|}

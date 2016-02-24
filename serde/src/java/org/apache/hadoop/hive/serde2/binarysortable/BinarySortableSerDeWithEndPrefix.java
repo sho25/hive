@@ -164,6 +164,10 @@ name|i
 argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|ZERO
+argument_list|,
+name|ONE
 argument_list|)
 expr_stmt|;
 block|}

@@ -391,6 +391,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SERIALIZATION_NULL_SORT_ORDER
+init|=
+literal|"serialization.sort.order.null"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SERIALIZATION_USE_JSON_OBJECTS
 init|=
 literal|"serialization.use.json.object"

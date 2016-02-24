@@ -5171,6 +5171,11 @@ name|protoOrder
 operator|.
 name|getOrder
 argument_list|()
+argument_list|,
+name|protoOrder
+operator|.
+name|getNullOrder
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
