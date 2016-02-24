@@ -6103,6 +6103,15 @@ argument_list|,
 literal|"Whether to enable predicate pushdown"
 argument_list|)
 block|,
+name|HIVEOPTPPD_WINDOWING
+argument_list|(
+literal|"hive.optimize.ppd.windowing"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable predicate pushdown through windowing"
+argument_list|)
+block|,
 name|HIVEPPDRECOGNIZETRANSITIVITY
 argument_list|(
 literal|"hive.ppd.recognizetransivity"
