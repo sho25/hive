@@ -29,6 +29,26 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|InetSocketAddress
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
@@ -541,6 +561,15 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|communicator
+operator|.
+name|init
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -583,6 +612,11 @@ argument_list|,
 name|sessionToken
 argument_list|)
 expr_stmt|;
+name|communicator
+operator|.
+name|start
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -614,6 +648,18 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+specifier|public
+name|InetSocketAddress
+name|getAddress
+parameter_list|()
+block|{
+return|return
+name|llapTaskUmbilicalServer
+operator|.
+name|getAddress
+argument_list|()
+return|;
+block|}
 comment|/**    * Submit the work for actual execution. This should always have the usingTezAm flag disabled    * @param submitWorkRequestProto    */
 specifier|public
 name|void
@@ -628,6 +674,12 @@ name|llapHost
 parameter_list|,
 name|int
 name|llapPort
+parameter_list|,
+name|List
+argument_list|<
+name|TezEvent
+argument_list|>
+name|tezEvents
 parameter_list|)
 block|{
 name|Preconditions
@@ -642,14 +694,69 @@ operator|==
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// Store the actual event first. To be returned on the first heartbeat.
-name|Event
-name|mrInputEvent
-init|=
-literal|null
-decl_stmt|;
-comment|// Construct a TezEvent out of this, to send it out on the next heaertbeat
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"ZZZ: DBG: "
+operator|+
+literal|" Submitting fragment: "
+operator|+
+name|submitWorkRequestProto
+operator|.
+name|getFragmentSpec
+argument_list|()
+operator|.
+name|getFragmentIdentifierString
+argument_list|()
+operator|+
+literal|" on host: "
+operator|+
+name|llapHost
+operator|+
+literal|", port="
+operator|+
+name|llapPort
+argument_list|)
+expr_stmt|;
+comment|//    LOG.info("ZZZ: DBG: " + " Complete SubmitWorkRequest: " + submitWorkRequestProto);
 comment|//    submitWorkRequestProto.getFragmentSpec().getFragmentIdentifierString()
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"ZZZ: DBG: Received {} events for {}"
+argument_list|,
+name|tezEvents
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|submitWorkRequestProto
+operator|.
+name|getFragmentSpec
+argument_list|()
+operator|.
+name|getFragmentIdentifierString
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Register the pending events to be sent for this spec.
+name|pendingEvents
+operator|.
+name|putIfAbsent
+argument_list|(
+name|submitWorkRequestProto
+operator|.
+name|getFragmentSpec
+argument_list|()
+operator|.
+name|getFragmentIdentifierString
+argument_list|()
+argument_list|,
+name|tezEvents
+argument_list|)
+expr_stmt|;
 comment|// Send out the actual SubmitWorkRequest
 name|communicator
 operator|.
@@ -874,6 +981,21 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|tezEvents
+operator|==
+literal|null
+condition|)
+block|{
+name|tezEvents
+operator|=
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+expr_stmt|;
+block|}
 name|response
 operator|.
 name|setLastRequestId

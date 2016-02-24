@@ -101,9 +101,7 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|protocol
-operator|.
-name|TBinaryProtocol
+name|TDeserializer
 import|;
 end_import
 
@@ -115,37 +113,7 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|protocol
-operator|.
-name|TProtocol
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|AutoExpandingBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|AutoExpandingBufferWriteTransport
+name|TSerializer
 import|;
 end_import
 
@@ -156,6 +124,9 @@ name|LlapInputSplit
 implements|implements
 name|InputSplitWithLocationInfo
 block|{
+name|int
+name|splitNum
+decl_stmt|;
 name|byte
 index|[]
 name|planBytes
@@ -171,19 +142,6 @@ decl_stmt|;
 name|Schema
 name|schema
 decl_stmt|;
-comment|// // Static
-comment|// ContainerIdString
-comment|// DagName
-comment|// VertexName
-comment|// FragmentNumber
-comment|// AttemptNumber - always 0
-comment|// FragmentIdentifierString - taskAttemptId
-comment|// ProcessorDescsriptor
-comment|// InputSpec
-comment|// OutputSpec
-comment|// Tokens
-comment|// // Dynamic
-comment|//
 specifier|public
 name|LlapInputSplit
 parameter_list|()
@@ -191,6 +149,9 @@ block|{   }
 specifier|public
 name|LlapInputSplit
 parameter_list|(
+name|int
+name|splitNum
+parameter_list|,
 name|byte
 index|[]
 name|planBytes
@@ -230,6 +191,12 @@ operator|.
 name|schema
 operator|=
 name|schema
+expr_stmt|;
+name|this
+operator|.
+name|splitNum
+operator|=
+name|splitNum
 expr_stmt|;
 block|}
 specifier|public
@@ -311,6 +278,35 @@ return|return
 name|locs
 return|;
 block|}
+specifier|public
+name|int
+name|getSplitNum
+parameter_list|()
+block|{
+return|return
+name|splitNum
+return|;
+block|}
+specifier|public
+name|byte
+index|[]
+name|getPlanBytes
+parameter_list|()
+block|{
+return|return
+name|planBytes
+return|;
+block|}
+specifier|public
+name|byte
+index|[]
+name|getFragmentBytes
+parameter_list|()
+block|{
+return|return
+name|fragmentBytes
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -323,6 +319,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|out
+operator|.
+name|writeInt
+argument_list|(
+name|splitNum
+argument_list|)
+expr_stmt|;
 name|out
 operator|.
 name|writeInt
@@ -401,43 +404,44 @@ name|binarySchema
 decl_stmt|;
 try|try
 block|{
-name|AutoExpandingBufferWriteTransport
-name|transport
+name|TSerializer
+name|serializer
 init|=
 operator|new
-name|AutoExpandingBufferWriteTransport
-argument_list|(
-literal|1024
-argument_list|,
-literal|2d
-argument_list|)
+name|TSerializer
+argument_list|()
 decl_stmt|;
-name|TProtocol
-name|protocol
+name|byte
+index|[]
+name|serialzied
 init|=
-operator|new
-name|TBinaryProtocol
+name|serializer
+operator|.
+name|serialize
 argument_list|(
-name|transport
-argument_list|)
-decl_stmt|;
 name|schema
+argument_list|)
+decl_stmt|;
+name|out
+operator|.
+name|writeInt
+argument_list|(
+name|serialzied
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+name|out
 operator|.
 name|write
 argument_list|(
-name|protocol
+name|serialzied
 argument_list|)
 expr_stmt|;
-name|binarySchema
-operator|=
-name|transport
-operator|.
-name|getBuf
-argument_list|()
-operator|.
-name|array
-argument_list|()
-expr_stmt|;
+comment|//      AutoExpandingBufferWriteTransport transport = new AutoExpandingBufferWriteTransport(1024, 2d);
+comment|//      TProtocol protocol = new TBinaryProtocol(transport);
+comment|//      schema.write(protocol);
+comment|//      binarySchema = transport.getBuf().array();
 block|}
 catch|catch
 parameter_list|(
@@ -453,22 +457,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|out
-operator|.
-name|writeInt
-argument_list|(
-name|binarySchema
-operator|.
-name|length
-argument_list|)
-expr_stmt|;
-name|out
-operator|.
-name|write
-argument_list|(
-name|binarySchema
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -482,6 +470,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|splitNum
+operator|=
+name|in
+operator|.
+name|readInt
+argument_list|()
+expr_stmt|;
 name|int
 name|length
 init|=
@@ -583,47 +578,29 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
-name|AutoExpandingBufferWriteTransport
-name|transport
+name|byte
+index|[]
+name|schemaBytes
 init|=
 operator|new
-name|AutoExpandingBufferWriteTransport
-argument_list|(
+name|byte
+index|[
 name|length
-argument_list|,
-literal|2d
-argument_list|)
-decl_stmt|;
-name|AutoExpandingBuffer
-name|buf
-init|=
-name|transport
-operator|.
-name|getBuf
-argument_list|()
+index|]
 decl_stmt|;
 name|in
 operator|.
 name|readFully
 argument_list|(
-name|buf
-operator|.
-name|array
-argument_list|()
-argument_list|,
-literal|0
-argument_list|,
-name|length
+name|schemaBytes
 argument_list|)
 expr_stmt|;
-name|TProtocol
-name|protocol
+name|TDeserializer
+name|tDeserializer
 init|=
 operator|new
-name|TBinaryProtocol
-argument_list|(
-name|transport
-argument_list|)
+name|TDeserializer
+argument_list|()
 decl_stmt|;
 name|schema
 operator|=
@@ -631,13 +608,22 @@ operator|new
 name|Schema
 argument_list|()
 expr_stmt|;
-name|schema
+name|tDeserializer
 operator|.
-name|read
+name|deserialize
 argument_list|(
-name|protocol
+name|schema
+argument_list|,
+name|schemaBytes
 argument_list|)
 expr_stmt|;
+comment|//      AutoExpandingBufferReadTransport transport = new AutoExpandingBufferReadTransport(length, 2d);
+comment|//      AutoExpandingBuffer buf = transport.getBuf();
+comment|//      in.readFully(buf.array(), 0, length);
+comment|//
+comment|//      TProtocol protocol = new TBinaryProtocol(transport);
+comment|//      schema = new Schema();
+comment|//      schema.read(protocol);
 block|}
 catch|catch
 parameter_list|(
