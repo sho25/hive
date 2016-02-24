@@ -1178,6 +1178,16 @@ name|hashTblInitedOnce
 operator|=
 literal|false
 expr_stmt|;
+comment|// Reset grace hashjoin context so that there is no state maintained when operator/work is
+comment|// retrieved from object cache
+name|hybridMapJoinLeftover
+operator|=
+literal|false
+expr_stmt|;
+name|firstSmallTable
+operator|=
+literal|null
+expr_stmt|;
 name|generateMapMetaData
 argument_list|()
 expr_stmt|;
@@ -3843,6 +3853,22 @@ operator|.
 name|getMatchfileObjContainer
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Hybrid Grace Hash Join: Going to process spilled big table rows in partition "
+operator|+
+name|partitionId
+operator|+
+literal|". Number of rows: "
+operator|+
+name|bigTable
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 while|while
 condition|(
 name|bigTable
