@@ -1277,6 +1277,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Assume we have the expression a> 5.
+comment|// Then we can derive the negated term: NOT(a<= 5).
+comment|// But as the comparison is string based and thus operands order dependent,
+comment|// we should also add the inverted negated term: NOT(5>= a).
+comment|// Observe that for creating the inverted term we invert the list of operands.
 name|RexCall
 name|negatedTerm
 init|=
