@@ -3335,6 +3335,9 @@ operator|.
 name|valueOf
 argument_list|(
 name|codecStr
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this

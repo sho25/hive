@@ -903,6 +903,9 @@ name|tableProperties
 argument_list|,
 name|conf
 argument_list|)
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|String
