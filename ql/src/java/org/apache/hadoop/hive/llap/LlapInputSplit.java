@@ -438,10 +438,6 @@ argument_list|(
 name|serialzied
 argument_list|)
 expr_stmt|;
-comment|//      AutoExpandingBufferWriteTransport transport = new AutoExpandingBufferWriteTransport(1024, 2d);
-comment|//      TProtocol protocol = new TBinaryProtocol(transport);
-comment|//      schema.write(protocol);
-comment|//      binarySchema = transport.getBuf().array();
 block|}
 catch|catch
 parameter_list|(
@@ -617,13 +613,6 @@ argument_list|,
 name|schemaBytes
 argument_list|)
 expr_stmt|;
-comment|//      AutoExpandingBufferReadTransport transport = new AutoExpandingBufferReadTransport(length, 2d);
-comment|//      AutoExpandingBuffer buf = transport.getBuf();
-comment|//      in.readFully(buf.array(), 0, length);
-comment|//
-comment|//      TProtocol protocol = new TBinaryProtocol(transport);
-comment|//      schema = new Schema();
-comment|//      schema.read(protocol);
 block|}
 catch|catch
 parameter_list|(

@@ -4766,6 +4766,8 @@ argument_list|,
 literal|"SequenceFile"
 argument_list|,
 literal|"RCfile"
+argument_list|,
+literal|"Llap"
 argument_list|)
 argument_list|,
 literal|"Default file format for storing result of the query."

@@ -598,20 +598,17 @@ name|getPlanBytes
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// TODO HACK: Spark is built with Hive-1.2.1, does not have access to HiveConf.ConfVars.LLAP_DAEMON_RPC_PORT
 name|int
 name|llapSubmitPort
 init|=
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
 name|job
+operator|.
+name|getInt
+argument_list|(
+literal|"hive.llap.daemon.rpc.port"
 argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|LLAP_DAEMON_RPC_PORT
+literal|15001
 argument_list|)
 decl_stmt|;
 name|LOG
