@@ -2048,7 +2048,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Pending fragment count for completed query {} = {}"
+literal|"Pending fragment count for completed query {} = {}"
 argument_list|,
 name|queryIdentifier
 argument_list|,
@@ -2070,7 +2070,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Issuing killFragment for completed query {} {}"
+literal|"Issuing killFragment for completed query {} {}"
 argument_list|,
 name|queryIdentifier
 argument_list|,
@@ -2112,7 +2112,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Received terminateFragment request for {}"
+literal|"Received terminateFragment request for {}"
 argument_list|,
 name|request
 operator|.
@@ -2868,7 +2868,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Pending fragment count for failed query {} = {}"
+literal|"Pending fragment count for failed query {} = {}"
 argument_list|,
 name|queryIdentifier
 argument_list|,
@@ -2890,7 +2890,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Issuing killFragment for failed query {} {}"
+literal|"Issuing killFragment for failed query {} {}"
 argument_list|,
 name|queryIdentifier
 argument_list|,

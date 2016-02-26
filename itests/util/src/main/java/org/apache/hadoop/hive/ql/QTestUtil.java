@@ -8636,6 +8636,8 @@ block|,
 literal|".*total number of created files now is.*"
 block|,
 literal|".*.hive-staging.*"
+block|,
+literal|"table_.*"
 block|}
 argument_list|)
 decl_stmt|;

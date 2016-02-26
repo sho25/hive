@@ -5085,7 +5085,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: No tasks qualify as killable to schedule tasks at priority {}"
+literal|"No tasks qualify as killable to schedule tasks at priority {}"
 argument_list|,
 name|forPriority
 argument_list|)
@@ -5122,7 +5122,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Preempting task {}"
+literal|"Preempting task {}"
 argument_list|,
 name|taskInfo
 argument_list|)

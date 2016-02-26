@@ -77,6 +77,26 @@ name|WritableComparable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -96,6 +116,21 @@ parameter_list|>
 implements|implements
 name|RecordWriter
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|HivePassThroughRecordWriter
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|final
 name|org
@@ -183,6 +218,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closing the pass through writer."
+argument_list|)
+expr_stmt|;
 comment|//close with null reporter
 name|mWriter
 operator|.

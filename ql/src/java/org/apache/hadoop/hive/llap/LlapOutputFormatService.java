@@ -846,7 +846,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Waiting for writer for: "
 operator|+
@@ -860,6 +860,15 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Returning writer for: "
+operator|+
+name|id
+argument_list|)
+expr_stmt|;
 return|return
 name|writer
 return|;

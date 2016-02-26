@@ -225,6 +225,9 @@ name|numSplits
 parameter_list|,
 name|ApplicationId
 name|appId
+parameter_list|,
+name|int
+name|index
 parameter_list|)
 block|{
 name|Vertex
@@ -437,7 +440,7 @@ name|getInstance
 argument_list|(
 name|vertexId
 argument_list|,
-literal|0
+name|index
 argument_list|)
 decl_stmt|;
 name|TezTaskAttemptID

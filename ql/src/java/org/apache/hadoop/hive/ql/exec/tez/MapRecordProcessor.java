@@ -956,14 +956,9 @@ argument_list|()
 condition|)
 block|{
 comment|// do not cache plan
-name|jconf
-operator|.
-name|set
-argument_list|(
-name|LlapOutputFormat
-operator|.
-name|LLAP_OF_ID_KEY
-argument_list|,
+name|String
+name|id
+init|=
 name|queryId
 operator|+
 literal|"_"
@@ -972,6 +967,25 @@ name|context
 operator|.
 name|getTaskIndex
 argument_list|()
+decl_stmt|;
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"LLAP_OF_ID: "
+operator|+
+name|id
+argument_list|)
+expr_stmt|;
+name|jconf
+operator|.
+name|set
+argument_list|(
+name|LlapOutputFormat
+operator|.
+name|LLAP_OF_ID_KEY
+argument_list|,
+name|id
 argument_list|)
 expr_stmt|;
 name|cache

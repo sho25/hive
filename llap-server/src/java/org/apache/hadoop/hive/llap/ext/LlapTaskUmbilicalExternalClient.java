@@ -694,53 +694,6 @@ operator|==
 literal|false
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"ZZZ: DBG: "
-operator|+
-literal|" Submitting fragment: "
-operator|+
-name|submitWorkRequestProto
-operator|.
-name|getFragmentSpec
-argument_list|()
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
-operator|+
-literal|" on host: "
-operator|+
-name|llapHost
-operator|+
-literal|", port="
-operator|+
-name|llapPort
-argument_list|)
-expr_stmt|;
-comment|//    LOG.info("ZZZ: DBG: " + " Complete SubmitWorkRequest: " + submitWorkRequestProto);
-comment|//    submitWorkRequestProto.getFragmentSpec().getFragmentIdentifierString()
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ZZZ: DBG: Received {} events for {}"
-argument_list|,
-name|tezEvents
-operator|.
-name|size
-argument_list|()
-argument_list|,
-name|submitWorkRequestProto
-operator|.
-name|getFragmentSpec
-argument_list|()
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// Register the pending events to be sent for this spec.
 name|pendingEvents
 operator|.
@@ -836,21 +789,6 @@ expr_stmt|;
 return|return;
 block|}
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"DBG: Submitted "
-operator|+
-name|submitWorkRequestProto
-operator|.
-name|getFragmentSpec
-argument_list|()
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -953,18 +891,6 @@ operator|.
 name|getCurrentTaskAttemptID
 argument_list|()
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ZZZ: DBG: Received heartbeat from taskAttemptId: "
-operator|+
-name|taskAttemptId
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|TezEvent

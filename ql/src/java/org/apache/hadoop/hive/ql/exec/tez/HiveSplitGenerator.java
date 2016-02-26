@@ -812,6 +812,16 @@ name|work
 operator|=
 name|work
 expr_stmt|;
+name|this
+operator|.
+name|jobConf
+operator|=
+operator|new
+name|JobConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 comment|// TODO RSHACK - assuming grouping enabled always.
 name|userPayloadProto
 operator|=

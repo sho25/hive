@@ -611,13 +611,6 @@ argument_list|,
 literal|15001
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ZZZ: DBG: Starting LlapTaskUmbilicalExternalClient"
-argument_list|)
-expr_stmt|;
 name|LlapTaskUmbilicalExternalClient
 name|llapClient
 init|=
@@ -649,14 +642,6 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ZZZ: DBG: Crated LlapClient"
-argument_list|)
-expr_stmt|;
-comment|// TODO KKK Shutdown the llap client.
 name|SubmitWorkRequestProto
 name|submitWorkRequestProto
 init|=
@@ -680,21 +665,6 @@ name|getToken
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ZZZ: DBG: Created submitWorkRequest for: "
-operator|+
-name|submitWorkRequestProto
-operator|.
-name|getFragmentSpec
-argument_list|()
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|TezEvent
 name|tezEvent
 init|=
@@ -868,7 +838,7 @@ argument_list|()
 expr_stmt|;
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Registered id: "
 operator|+
@@ -972,7 +942,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Setting user in submitWorkRequest to: "
+literal|"Setting user in submitWorkRequest to: "
 operator|+
 name|System
 operator|.

@@ -2468,7 +2468,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DBG: Attempting to send terminateRequest for fragment {} due to internal preemption invoked by {}"
+literal|"Attempting to send terminateRequest for fragment {} due to internal preemption invoked by {}"
 argument_list|,
 name|taskAttemptId
 operator|.

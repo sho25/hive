@@ -462,6 +462,13 @@ name|PWD_KEY
 init|=
 literal|"llap.if.pwd"
 decl_stmt|;
+specifier|public
+specifier|final
+name|String
+name|SPLIT_QUERY
+init|=
+literal|"select get_splits(\"%s\",%d)"
+decl_stmt|;
 specifier|private
 name|Connection
 name|con
@@ -720,15 +727,16 @@ expr_stmt|;
 name|String
 name|sql
 init|=
-literal|"select r.if_class as ic, r.split_class as sc, r.split as s from (select explode(get_splits(\""
-operator|+
+name|String
+operator|.
+name|format
+argument_list|(
+name|SPLIT_QUERY
+argument_list|,
 name|query
-operator|+
-literal|"\","
-operator|+
+argument_list|,
 name|numSplits
-operator|+
-literal|")) as r) t"
+argument_list|)
 decl_stmt|;
 name|ResultSet
 name|res
