@@ -263,6 +263,24 @@ name|llap
 operator|.
 name|registry
 operator|.
+name|ServiceInstanceStateChangeListener
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|registry
+operator|.
 name|ServiceRegistry
 import|;
 end_import
@@ -600,7 +618,7 @@ name|void
 name|start
 parameter_list|()
 throws|throws
-name|InterruptedException
+name|IOException
 block|{
 comment|// nothing to start
 block|}
@@ -611,7 +629,7 @@ name|void
 name|stop
 parameter_list|()
 throws|throws
-name|InterruptedException
+name|IOException
 block|{
 comment|// nothing to stop
 block|}
@@ -768,8 +786,6 @@ operator|=
 name|host
 expr_stmt|;
 block|}
-annotation|@
-name|Override
 specifier|public
 name|String
 name|getWorkerIdentity
@@ -1152,17 +1168,6 @@ return|return
 name|byHost
 return|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|refresh
-parameter_list|()
-throws|throws
-name|IOException
-block|{
-comment|// I will do no such thing
-block|}
 block|}
 annotation|@
 name|Override
@@ -1181,6 +1186,26 @@ operator|new
 name|FixedServiceInstanceSet
 argument_list|()
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|registerStateChangeListener
+parameter_list|(
+specifier|final
+name|ServiceInstanceStateChangeListener
+name|listener
+parameter_list|)
+block|{
+comment|// nothing to set
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Callbacks for instance state changes are not supported in fixed registry."
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

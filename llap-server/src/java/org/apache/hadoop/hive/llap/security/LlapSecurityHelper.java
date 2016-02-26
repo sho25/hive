@@ -924,11 +924,6 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|activeInstances
-operator|.
-name|refresh
-argument_list|()
-expr_stmt|;
 name|daemons
 operator|=
 name|activeInstances

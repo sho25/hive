@@ -6927,7 +6927,9 @@ literal|"2. When HiveServer2 supports service discovery via Zookeeper.\n"
 operator|+
 literal|"3. For delegation token storage if zookeeper store is used, if\n"
 operator|+
-literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set"
+literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set\n"
+operator|+
+literal|"4. LLAP daemon registry service"
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT

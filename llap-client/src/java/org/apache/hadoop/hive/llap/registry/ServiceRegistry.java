@@ -38,23 +38,23 @@ specifier|public
 interface|interface
 name|ServiceRegistry
 block|{
-comment|/**    * Start the service registry    *     * @throws InterruptedException    */
+comment|/**    * Start the service registry    *    * @throws IOException    */
 specifier|public
 name|void
 name|start
 parameter_list|()
 throws|throws
-name|InterruptedException
+name|IOException
 function_decl|;
-comment|/**    * Stop the service registry    *     * @throws InterruptedException    */
+comment|/**    * Stop the service registry    *    * @throws IOException    */
 specifier|public
 name|void
 name|stop
 parameter_list|()
 throws|throws
-name|InterruptedException
+name|IOException
 function_decl|;
-comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *     * @throws IOException    */
+comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *    * @throws IOException    */
 specifier|public
 name|void
 name|register
@@ -62,7 +62,7 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Remove the current registration cleanly (implementation defined cleanup)    *     * @throws IOException    */
+comment|/**    * Remove the current registration cleanly (implementation defined cleanup)    *    * @throws IOException    */
 specifier|public
 name|void
 name|unregister
@@ -70,13 +70,24 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Client API to get the list of instances registered via the current registry key.    *     * @param component    * @return    * @throws IOException    */
+comment|/**    * Client API to get the list of instances registered via the current registry key.    *    * @param component    * @return    * @throws IOException    */
 specifier|public
 name|ServiceInstanceSet
 name|getInstances
 parameter_list|(
 name|String
 name|component
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Adds state change listeners for service instances.    *    * @param listener - state change listener    * @throws IOException    */
+specifier|public
+name|void
+name|registerStateChangeListener
+parameter_list|(
+name|ServiceInstanceStateChangeListener
+name|listener
 parameter_list|)
 throws|throws
 name|IOException
