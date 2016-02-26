@@ -582,9 +582,9 @@ name|String
 index|[]
 name|OPTIONAL_CONFIGS
 init|=
-block|{
-literal|"ssl-server.xml"
-block|}
+name|LlapDaemonConfiguration
+operator|.
+name|SSL_DAEMON_CONFIGS
 decl_stmt|;
 comment|/**    * This is a working configuration for the instance to merge various variables.    * It is not written out for llap server usage    */
 specifier|private
