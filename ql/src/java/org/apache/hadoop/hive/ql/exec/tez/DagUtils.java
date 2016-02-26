@@ -5113,6 +5113,10 @@ argument_list|(
 literal|"Resource modification time: "
 operator|+
 name|resourceModificationTime
+operator|+
+literal|" for "
+operator|+
+name|file
 argument_list|)
 expr_stmt|;
 name|LocalResource
@@ -5981,7 +5985,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Jar dir is null/directory doesn't exist. Choosing HIVE_INSTALL_DIR - "
+literal|"Jar dir is null / directory doesn't exist. Choosing HIVE_INSTALL_DIR - "
 operator|+
 name|destDir
 argument_list|)

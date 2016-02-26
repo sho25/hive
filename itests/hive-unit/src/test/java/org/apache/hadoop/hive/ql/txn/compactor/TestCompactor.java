@@ -3015,8 +3015,6 @@ name|getPath
 argument_list|()
 operator|+
 literal|"'"
-operator|+
-literal|" TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 name|driver
 argument_list|)

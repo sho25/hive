@@ -1882,15 +1882,24 @@ operator|.
 name|getDelegationToken
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Obtained a token: "
+literal|"Obtained a LLAP token: "
 operator|+
 name|token
 argument_list|)
 expr_stmt|;
+block|}
 name|llapCredentials
 operator|=
 operator|new
@@ -3209,6 +3218,8 @@ name|IllegalArgumentException
 throws|,
 name|FileNotFoundException
 block|{
+comment|// TODO Reduce the number of lookups that happen here. This shouldn't go to HDFS for each call.
+comment|// The hiveJarDir can be determined once per client.
 name|FileStatus
 name|destDirStatus
 init|=

@@ -2661,6 +2661,24 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Creating a client without a token for "
+operator|+
+name|nodeId
+argument_list|)
+expr_stmt|;
+block|}
 name|proxy
 operator|=
 operator|new
@@ -2758,6 +2776,28 @@ argument_list|(
 name|nodeToken
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Creating a client for "
+operator|+
+name|nodeId
+operator|+
+literal|"; the token is "
+operator|+
+name|nodeToken
+argument_list|)
+expr_stmt|;
+block|}
 name|proxy
 operator|=
 name|ugi

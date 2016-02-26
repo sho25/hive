@@ -1251,6 +1251,24 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Task communicator with a token "
+operator|+
+name|token
+argument_list|)
+expr_stmt|;
+block|}
 name|Preconditions
 operator|.
 name|checkState

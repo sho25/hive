@@ -105,14 +105,6 @@ name|String
 name|host
 parameter_list|)
 function_decl|;
-comment|/**    * Refresh the instance set from registry backing store.    *     * @throws IOException    */
-specifier|public
-name|void
-name|refresh
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
 block|}
 end_interface
 

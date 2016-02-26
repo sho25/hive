@@ -270,6 +270,13 @@ parameter_list|()
 block|{
 return|return
 name|KIND
+operator|+
+literal|"; "
+operator|+
+name|super
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 annotation|@

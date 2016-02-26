@@ -6105,6 +6105,15 @@ argument_list|,
 literal|"Whether to enable predicate pushdown"
 argument_list|)
 block|,
+name|HIVEOPTPPD_WINDOWING
+argument_list|(
+literal|"hive.optimize.ppd.windowing"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable predicate pushdown through windowing"
+argument_list|)
+block|,
 name|HIVEPPDRECOGNIZETRANSITIVITY
 argument_list|(
 literal|"hive.ppd.recognizetransivity"
@@ -6920,7 +6929,9 @@ literal|"2. When HiveServer2 supports service discovery via Zookeeper.\n"
 operator|+
 literal|"3. For delegation token storage if zookeeper store is used, if\n"
 operator|+
-literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set"
+literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set\n"
+operator|+
+literal|"4. LLAP daemon registry service"
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT
@@ -10321,6 +10332,19 @@ argument_list|,
 literal|"Check output size, before considering vertex (-1 disables check)"
 argument_list|)
 block|,
+name|LLAP_SKIP_COMPILE_UDF_CHECK
+argument_list|(
+literal|"hive.llap.skip.compile.udf.check"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to skip the compile-time check for non-built-in UDFs when deciding whether to\n"
+operator|+
+literal|"execute tasks in LLAP. Skipping the check allows executing UDFs from pre-localized\n"
+operator|+
+literal|"jars in LLAP; if the jars are not pre-localized, the UDFs will simply fail to load."
+argument_list|)
+block|,
 name|LLAP_EXECUTION_MODE
 argument_list|(
 literal|"hive.llap.execution.mode"
@@ -10723,7 +10747,7 @@ name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
 argument_list|(
 literal|"hive.llap.daemon.allow.permanent.fns"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
 argument_list|)
