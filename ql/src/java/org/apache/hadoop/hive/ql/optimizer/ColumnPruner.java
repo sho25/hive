@@ -459,6 +459,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|ColumnAccessInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|ParseContext
 import|;
 end_import
@@ -913,6 +931,15 @@ argument_list|(
 name|topNodes
 argument_list|,
 literal|null
+argument_list|)
+expr_stmt|;
+comment|// set it back so that column pruner in the optimizer will not do the
+comment|// view column authorization again even if it is triggered again.
+name|pGraphContext
+operator|.
+name|setNeedViewColumnAuthorization
+argument_list|(
+literal|false
 argument_list|)
 expr_stmt|;
 return|return
