@@ -4669,7 +4669,7 @@ throws|throws
 name|MetaException
 block|{
 comment|//todo: this should not throw
-comment|//todo: this shoudl take "comment" as parameter to set in CC_META_INFO to provide some context for the failure
+comment|//todo: this should take "comment" as parameter to set in CC_META_INFO to provide some context for the failure
 try|try
 block|{
 name|Connection
