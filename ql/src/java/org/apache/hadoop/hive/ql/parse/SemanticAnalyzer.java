@@ -53534,24 +53534,6 @@ operator|.
 name|getLeftAlias
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|leftAlias
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-operator|new
-name|ObjectPair
-argument_list|(
-operator|-
-literal|1
-argument_list|,
-literal|null
-argument_list|)
-return|;
-block|}
 name|ArrayList
 argument_list|<
 name|ASTNode
@@ -53578,6 +53560,10 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
+name|leftAlias
+operator|==
+literal|null
+operator|||
 name|leftAlias
 operator|.
 name|equals
@@ -61342,11 +61328,13 @@ condition|(
 operator|!
 name|disableJoinMerge
 condition|)
+block|{
 name|mergeJoinTree
 argument_list|(
 name|qb
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// if any filters are present in the join tree, push them on top of the
 comment|// table
