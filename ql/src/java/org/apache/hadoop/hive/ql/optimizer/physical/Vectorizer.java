@@ -10673,15 +10673,24 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Failed to vectorize"
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -10913,15 +10922,24 @@ name|e
 parameter_list|)
 block|{
 comment|// We should have already attempted to vectorize in validateAggregationDesc.
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Vectorization of aggreation should have succeeded "
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
