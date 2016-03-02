@@ -313,6 +313,14 @@ comment|// HiveServer2 config.
 comment|// For a jdbc url: jdbc:hive2://<host>:<port>/dbName;sess_var_list?hive_conf_list#hive_var_list,
 comment|// client side params are specified in sess_var_list
 comment|// Client param names:
+comment|// Retry setting
+specifier|static
+specifier|final
+name|String
+name|RETRIES
+init|=
+literal|"retries"
+decl_stmt|;
 specifier|static
 specifier|final
 name|String
