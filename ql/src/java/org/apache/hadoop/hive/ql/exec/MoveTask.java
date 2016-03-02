@@ -1734,6 +1734,12 @@ parameter_list|)
 block|{
 try|try
 block|{
+name|Hive
+name|db
+init|=
+name|getHive
+argument_list|()
+decl_stmt|;
 comment|// Do any hive related operations like moving tables and files
 comment|// to appropriate locations
 name|LoadFileDesc
@@ -3042,6 +3048,8 @@ condition|)
 block|{
 name|updatePartitionBucketSortColumns
 argument_list|(
+name|db
+argument_list|,
 name|table
 argument_list|,
 name|partn
@@ -3378,6 +3386,8 @@ condition|)
 block|{
 name|updatePartitionBucketSortColumns
 argument_list|(
+name|db
+argument_list|,
 name|table
 argument_list|,
 name|partn
@@ -3617,6 +3627,9 @@ specifier|private
 name|void
 name|updatePartitionBucketSortColumns
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|Table
 name|table
 parameter_list|,

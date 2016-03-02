@@ -394,6 +394,7 @@ specifier|private
 name|ParseContext
 name|parseContext
 decl_stmt|;
+comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|private
 name|Hive
 name|hiveDb

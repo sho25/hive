@@ -909,6 +909,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|protected
 specifier|final
 name|Hive

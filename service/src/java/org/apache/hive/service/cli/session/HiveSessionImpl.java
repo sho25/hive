@@ -952,6 +952,7 @@ specifier|private
 name|File
 name|sessionLogDir
 decl_stmt|;
+comment|// TODO: the control flow for this needs to be defined. Hive is supposed to be thread-local.
 specifier|private
 name|Hive
 name|sessionHive
