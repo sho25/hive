@@ -3461,6 +3461,10 @@ name|out
 operator|=
 literal|null
 expr_stmt|;
+name|random
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 name|isLogInfoEnabled
