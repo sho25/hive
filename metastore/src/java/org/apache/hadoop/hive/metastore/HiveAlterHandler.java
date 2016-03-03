@@ -1282,6 +1282,9 @@ name|newt
 operator|.
 name|getTableName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|destFs
