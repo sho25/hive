@@ -774,7 +774,7 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|partNames
+name|partColumnNames
 parameter_list|,
 name|List
 argument_list|<
@@ -808,7 +808,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|partNames
+name|partColumnNames
 operator|.
 name|size
 argument_list|()
@@ -842,7 +842,7 @@ name|ObjectInspectorFactory
 operator|.
 name|getStandardStructObjectInspector
 argument_list|(
-name|partNames
+name|partColumnNames
 argument_list|,
 name|partObjectInspectors
 argument_list|)
