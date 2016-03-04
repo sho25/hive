@@ -2106,6 +2106,41 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Check for delegation token, if present add it in the header
+name|String
+name|tokenStr
+init|=
+name|getClientDelegationToken
+argument_list|(
+name|sessConfMap
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|tokenStr
+operator|!=
+literal|null
+condition|)
+block|{
+name|requestInterceptor
+operator|=
+operator|new
+name|HttpTokenAuthInterceptor
+argument_list|(
+name|tokenStr
+argument_list|,
+name|cookieStore
+argument_list|,
+name|cookieName
+argument_list|,
+name|useSsl
+argument_list|,
+name|additionalHttpHeaders
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|/**        * Add an interceptor to pass username/password in the header.        * In https mode, the entire information is encrypted        */
 name|requestInterceptor
 operator|=
@@ -2127,6 +2162,7 @@ argument_list|,
 name|additionalHttpHeaders
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Configure http client for cookie based authentication
 if|if

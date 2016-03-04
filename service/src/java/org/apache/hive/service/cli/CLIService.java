@@ -2362,6 +2362,14 @@ argument_list|(
 name|sessionHandle
 operator|+
 literal|": getDelegationToken()"
+operator|+
+literal|" owner: "
+operator|+
+name|owner
+operator|+
+literal|", renewer: "
+operator|+
+name|renewer
 argument_list|)
 expr_stmt|;
 return|return

@@ -4202,6 +4202,9 @@ argument_list|(
 name|owner
 argument_list|,
 name|renewer
+argument_list|,
+name|getIpAddress
+argument_list|()
 argument_list|)
 return|;
 block|}
