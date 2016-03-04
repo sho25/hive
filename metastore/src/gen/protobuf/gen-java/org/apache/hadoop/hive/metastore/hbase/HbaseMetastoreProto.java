@@ -123143,17 +123143,6 @@ name|int
 name|getOrder
 parameter_list|()
 function_decl|;
-comment|// optional sint32 nullOrder = 3 [default = 0];
-comment|/**        *<code>optional sint32 nullOrder = 3 [default = 0];</code>        */
-name|boolean
-name|hasNullOrder
-parameter_list|()
-function_decl|;
-comment|/**        *<code>optional sint32 nullOrder = 3 [default = 0];</code>        */
-name|int
-name|getNullOrder
-parameter_list|()
-function_decl|;
 block|}
 comment|/**      * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.StorageDescriptor.Order}      */
 specifier|public
@@ -123433,23 +123422,6 @@ operator||=
 literal|0x00000002
 expr_stmt|;
 name|order_
-operator|=
-name|input
-operator|.
-name|readSInt32
-argument_list|()
-expr_stmt|;
-break|break;
-block|}
-case|case
-literal|24
-case|:
-block|{
-name|bitField0_
-operator||=
-literal|0x00000004
-expr_stmt|;
-name|nullOrder_
 operator|=
 name|input
 operator|.
@@ -123991,47 +123963,6 @@ return|return
 name|order_
 return|;
 block|}
-comment|// optional sint32 nullOrder = 3 [default = 0];
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|NULLORDER_FIELD_NUMBER
-init|=
-literal|3
-decl_stmt|;
-specifier|private
-name|int
-name|nullOrder_
-decl_stmt|;
-comment|/**        *<code>optional sint32 nullOrder = 3 [default = 0];</code>        */
-specifier|public
-name|boolean
-name|hasNullOrder
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-return|;
-block|}
-comment|/**        *<code>optional sint32 nullOrder = 3 [default = 0];</code>        */
-specifier|public
-name|int
-name|getNullOrder
-parameter_list|()
-block|{
-return|return
-name|nullOrder_
-return|;
-block|}
 specifier|private
 name|void
 name|initFields
@@ -124044,10 +123975,6 @@ expr_stmt|;
 name|order_
 operator|=
 literal|1
-expr_stmt|;
-name|nullOrder_
-operator|=
-literal|0
 expr_stmt|;
 block|}
 specifier|private
@@ -124173,29 +124100,6 @@ name|order_
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-condition|)
-block|{
-name|output
-operator|.
-name|writeSInt32
-argument_list|(
-literal|3
-argument_list|,
-name|nullOrder_
-argument_list|)
-expr_stmt|;
-block|}
 name|getUnknownFields
 argument_list|()
 operator|.
@@ -124296,37 +124200,6 @@ argument_list|(
 literal|2
 argument_list|,
 name|order_
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-condition|)
-block|{
-name|size
-operator|+=
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|CodedOutputStream
-operator|.
-name|computeSInt32Size
-argument_list|(
-literal|3
-argument_list|,
-name|nullOrder_
 argument_list|)
 expr_stmt|;
 block|}
@@ -125239,19 +125112,6 @@ operator|~
 literal|0x00000002
 operator|)
 expr_stmt|;
-name|nullOrder_
-operator|=
-literal|0
-expr_stmt|;
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000004
-operator|)
-expr_stmt|;
 return|return
 name|this
 return|;
@@ -125530,30 +125390,6 @@ name|order_
 operator|=
 name|order_
 expr_stmt|;
-if|if
-condition|(
-operator|(
-operator|(
-name|from_bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-condition|)
-block|{
-name|to_bitField0_
-operator||=
-literal|0x00000004
-expr_stmt|;
-block|}
-name|result
-operator|.
-name|nullOrder_
-operator|=
-name|nullOrder_
-expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -125731,23 +125567,6 @@ argument_list|(
 name|other
 operator|.
 name|getOrder
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|other
-operator|.
-name|hasNullOrder
-argument_list|()
-condition|)
-block|{
-name|setNullOrder
-argument_list|(
-name|other
-operator|.
-name|getNullOrder
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -126296,89 +126115,6 @@ expr_stmt|;
 name|order_
 operator|=
 literal|1
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|// optional sint32 nullOrder = 3 [default = 0];
-specifier|private
-name|int
-name|nullOrder_
-decl_stmt|;
-comment|/**          *<code>optional sint32 nullOrder = 3 [default = 0];</code>          */
-specifier|public
-name|boolean
-name|hasNullOrder
-parameter_list|()
-block|{
-return|return
-operator|(
-operator|(
-name|bitField0_
-operator|&
-literal|0x00000004
-operator|)
-operator|==
-literal|0x00000004
-operator|)
-return|;
-block|}
-comment|/**          *<code>optional sint32 nullOrder = 3 [default = 0];</code>          */
-specifier|public
-name|int
-name|getNullOrder
-parameter_list|()
-block|{
-return|return
-name|nullOrder_
-return|;
-block|}
-comment|/**          *<code>optional sint32 nullOrder = 3 [default = 0];</code>          */
-specifier|public
-name|Builder
-name|setNullOrder
-parameter_list|(
-name|int
-name|value
-parameter_list|)
-block|{
-name|bitField0_
-operator||=
-literal|0x00000004
-expr_stmt|;
-name|nullOrder_
-operator|=
-name|value
-expr_stmt|;
-name|onChanged
-argument_list|()
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-comment|/**          *<code>optional sint32 nullOrder = 3 [default = 0];</code>          */
-specifier|public
-name|Builder
-name|clearNullOrder
-parameter_list|()
-block|{
-name|bitField0_
-operator|=
-operator|(
-name|bitField0_
-operator|&
-operator|~
-literal|0x00000004
-operator|)
-expr_stmt|;
-name|nullOrder_
-operator|=
-literal|0
 expr_stmt|;
 name|onChanged
 argument_list|()
@@ -189356,7 +189092,7 @@ literal|"metastore.hbase.RoleGrantInfo\"\030\n\010RoleLis"
 block|,
 literal|"t\022\014\n\004role\030\001 \003(\t\"/\n\004Role\022\023\n\013create_time\030\001"
 operator|+
-literal|" \001(\003\022\022\n\nowner_name\030\002 \001(\t\"\302\010\n\021StorageDesc"
+literal|" \001(\003\022\022\n\nowner_name\030\002 \001(\t\"\254\010\n\021StorageDesc"
 operator|+
 literal|"riptor\022A\n\004cols\030\001 \003(\01323.org.apache.hadoop"
 operator|+
@@ -189382,95 +189118,95 @@ literal|"ve.metastore.hbase.StorageDescriptor.Ske"
 operator|+
 literal|"wedInfo\022!\n\031stored_as_sub_directories\030\n \001"
 operator|+
-literal|"(\010\032D\n\005Order\022\023\n\013column_name\030\001 \002(\t\022\020\n\005orde"
+literal|"(\010\032.\n\005Order\022\023\n\013column_name\030\001 \002(\t\022\020\n\005orde"
 operator|+
-literal|"r\030\002 \001(\021:\0011\022\024\n\tnullOrder\030\003 \001(\021:\0010\032|\n\tSerD"
+literal|"r\030\002 \001(\021:\0011\032|\n\tSerDeInfo\022\014\n\004name\030\001 \001(\t\022\031\n"
 operator|+
-literal|"eInfo\022\014\n\004name\030\001 \001(\t\022\031\n\021serialization_lib"
+literal|"\021serialization_lib\030\002 \001(\t\022F\n\nparameters\030\003"
 operator|+
-literal|"\030\002 \001(\t\022F\n\nparameters\030\003 \001(\01322.org.apache."
+literal|" \001(\01322.org.apache.hadoop.hive.metastore."
 operator|+
-literal|"hadoop.hive.metastore.hbase.Parameters\032\214"
+literal|"hbase.Parameters\032\214\003\n\nSkewedInfo\022\030\n\020skewe"
 operator|+
-literal|"\003\n\nSkewedInfo\022\030\n\020skewed_col_names\030\001 \003(\t\022"
+literal|"d_col_names\030\001 \003(\t\022r\n\021skewed_col_values\030\002"
 block|,
-literal|"r\n\021skewed_col_values\030\002 \003(\0132W.org.apache."
+literal|" \003(\0132W.org.apache.hadoop.hive.metastore."
 operator|+
-literal|"hadoop.hive.metastore.hbase.StorageDescr"
+literal|"hbase.StorageDescriptor.SkewedInfo.Skewe"
 operator|+
-literal|"iptor.SkewedInfo.SkewedColValueList\022\206\001\n\036"
+literal|"dColValueList\022\206\001\n\036skewed_col_value_locat"
 operator|+
-literal|"skewed_col_value_location_maps\030\003 \003(\0132^.o"
+literal|"ion_maps\030\003 \003(\0132^.org.apache.hadoop.hive."
 operator|+
-literal|"rg.apache.hadoop.hive.metastore.hbase.St"
+literal|"metastore.hbase.StorageDescriptor.Skewed"
 operator|+
-literal|"orageDescriptor.SkewedInfo.SkewedColValu"
+literal|"Info.SkewedColValueLocationMap\032.\n\022Skewed"
 operator|+
-literal|"eLocationMap\032.\n\022SkewedColValueList\022\030\n\020sk"
+literal|"ColValueList\022\030\n\020skewed_col_value\030\001 \003(\t\0327"
 operator|+
-literal|"ewed_col_value\030\001 \003(\t\0327\n\031SkewedColValueLo"
+literal|"\n\031SkewedColValueLocationMap\022\013\n\003key\030\001 \003(\t"
 operator|+
-literal|"cationMap\022\013\n\003key\030\001 \003(\t\022\r\n\005value\030\002 \002(\t\"\220\004"
+literal|"\022\r\n\005value\030\002 \002(\t\"\220\004\n\005Table\022\r\n\005owner\030\001 \001(\t"
 operator|+
-literal|"\n\005Table\022\r\n\005owner\030\001 \001(\t\022\023\n\013create_time\030\002 "
+literal|"\022\023\n\013create_time\030\002 \001(\003\022\030\n\020last_access_tim"
 block|,
-literal|"\001(\003\022\030\n\020last_access_time\030\003 \001(\003\022\021\n\tretenti"
+literal|"e\030\003 \001(\003\022\021\n\tretention\030\004 \001(\003\022\020\n\010location\030\005"
 operator|+
-literal|"on\030\004 \001(\003\022\020\n\010location\030\005 \001(\t\022I\n\rsd_paramet"
+literal|" \001(\t\022I\n\rsd_parameters\030\006 \001(\01322.org.apache"
 operator|+
-literal|"ers\030\006 \001(\01322.org.apache.hadoop.hive.metas"
+literal|".hadoop.hive.metastore.hbase.Parameters\022"
 operator|+
-literal|"tore.hbase.Parameters\022\017\n\007sd_hash\030\007 \002(\014\022K"
+literal|"\017\n\007sd_hash\030\007 \002(\014\022K\n\016partition_keys\030\010 \003(\013"
 operator|+
-literal|"\n\016partition_keys\030\010 \003(\01323.org.apache.hado"
+literal|"23.org.apache.hadoop.hive.metastore.hbas"
 operator|+
-literal|"op.hive.metastore.hbase.FieldSchema\022F\n\np"
+literal|"e.FieldSchema\022F\n\nparameters\030\t \001(\01322.org."
 operator|+
-literal|"arameters\030\t \001(\01322.org.apache.hadoop.hive"
+literal|"apache.hadoop.hive.metastore.hbase.Param"
 operator|+
-literal|".metastore.hbase.Parameters\022\032\n\022view_orig"
+literal|"eters\022\032\n\022view_original_text\030\n \001(\t\022\032\n\022vie"
 operator|+
-literal|"inal_text\030\n \001(\t\022\032\n\022view_expanded_text\030\013 "
+literal|"w_expanded_text\030\013 \001(\t\022\022\n\ntable_type\030\014 \001("
 operator|+
-literal|"\001(\t\022\022\n\ntable_type\030\014 \001(\t\022Q\n\nprivileges\030\r "
+literal|"\t\022Q\n\nprivileges\030\r \001(\0132=.org.apache.hadoo"
 block|,
-literal|"\001(\0132=.org.apache.hadoop.hive.metastore.h"
+literal|"p.hive.metastore.hbase.PrincipalPrivileg"
 operator|+
-literal|"base.PrincipalPrivilegeSet\022\024\n\014is_tempora"
+literal|"eSet\022\024\n\014is_temporary\030\016 \001(\010\"\353\004\n\026Partition"
 operator|+
-literal|"ry\030\016 \001(\010\"\353\004\n\026PartitionKeyComparator\022\r\n\005n"
+literal|"KeyComparator\022\r\n\005names\030\001 \002(\t\022\r\n\005types\030\002 "
 operator|+
-literal|"ames\030\001 \002(\t\022\r\n\005types\030\002 \002(\t\022S\n\002op\030\003 \003(\0132G."
+literal|"\002(\t\022S\n\002op\030\003 \003(\0132G.org.apache.hadoop.hive"
 operator|+
-literal|"org.apache.hadoop.hive.metastore.hbase.P"
+literal|".metastore.hbase.PartitionKeyComparator."
 operator|+
-literal|"artitionKeyComparator.Operator\022S\n\005range\030"
+literal|"Operator\022S\n\005range\030\004 \003(\0132D.org.apache.had"
 operator|+
-literal|"\004 \003(\0132D.org.apache.hadoop.hive.metastore"
+literal|"oop.hive.metastore.hbase.PartitionKeyCom"
 operator|+
-literal|".hbase.PartitionKeyComparator.Range\032(\n\004M"
+literal|"parator.Range\032(\n\004Mark\022\r\n\005value\030\001 \002(\t\022\021\n\t"
 operator|+
-literal|"ark\022\r\n\005value\030\001 \002(\t\022\021\n\tinclusive\030\002 \002(\010\032\272\001"
+literal|"inclusive\030\002 \002(\010\032\272\001\n\005Range\022\013\n\003key\030\001 \002(\t\022R"
 operator|+
-literal|"\n\005Range\022\013\n\003key\030\001 \002(\t\022R\n\005start\030\002 \001(\0132C.or"
+literal|"\n\005start\030\002 \001(\0132C.org.apache.hadoop.hive.m"
 block|,
-literal|"g.apache.hadoop.hive.metastore.hbase.Par"
+literal|"etastore.hbase.PartitionKeyComparator.Ma"
 operator|+
-literal|"titionKeyComparator.Mark\022P\n\003end\030\003 \001(\0132C."
+literal|"rk\022P\n\003end\030\003 \001(\0132C.org.apache.hadoop.hive"
 operator|+
-literal|"org.apache.hadoop.hive.metastore.hbase.P"
+literal|".metastore.hbase.PartitionKeyComparator."
 operator|+
-literal|"artitionKeyComparator.Mark\032\241\001\n\010Operator\022"
+literal|"Mark\032\241\001\n\010Operator\022Z\n\004type\030\001 \002(\0162L.org.ap"
 operator|+
-literal|"Z\n\004type\030\001 \002(\0162L.org.apache.hadoop.hive.m"
+literal|"ache.hadoop.hive.metastore.hbase.Partiti"
 operator|+
-literal|"etastore.hbase.PartitionKeyComparator.Op"
+literal|"onKeyComparator.Operator.Type\022\013\n\003key\030\002 \002"
 operator|+
-literal|"erator.Type\022\013\n\003key\030\002 \002(\t\022\013\n\003val\030\003 \002(\t\"\037\n"
+literal|"(\t\022\013\n\003val\030\003 \002(\t\"\037\n\004Type\022\010\n\004LIKE\020\000\022\r\n\tNOT"
 operator|+
-literal|"\004Type\022\010\n\004LIKE\020\000\022\r\n\tNOTEQUALS\020\001*#\n\rPrinci"
+literal|"EQUALS\020\001*#\n\rPrincipalType\022\010\n\004USER\020\000\022\010\n\004R"
 operator|+
-literal|"palType\022\010\n\004USER\020\000\022\010\n\004ROLE\020\001"
+literal|"OLE\020\001"
 block|}
 decl_stmt|;
 name|com
@@ -190849,8 +190585,6 @@ block|{
 literal|"ColumnName"
 block|,
 literal|"Order"
-block|,
-literal|"NullOrder"
 block|, }
 argument_list|)
 expr_stmt|;

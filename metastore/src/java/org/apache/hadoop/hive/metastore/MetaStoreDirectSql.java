@@ -51,20 +51,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|sql
@@ -812,6 +798,20 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
 import|;
 end_import
 
@@ -4410,7 +4410,7 @@ expr_stmt|;
 block|}
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\", \"SORT_COLS\".\"NULL_ORDER\""
+literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\""
 operator|+
 literal|" from \"SORT_COLS\""
 operator|+
@@ -4461,14 +4461,6 @@ operator|==
 literal|null
 condition|)
 return|return;
-assert|assert
-name|fields
-index|[
-literal|3
-index|]
-operator|!=
-literal|null
-assert|;
 name|t
 operator|.
 name|addToSortCols
@@ -4489,14 +4481,6 @@ argument_list|(
 name|fields
 index|[
 literal|2
-index|]
-argument_list|)
-argument_list|,
-name|extractSqlInt
-argument_list|(
-name|fields
-index|[
-literal|3
 index|]
 argument_list|)
 argument_list|)

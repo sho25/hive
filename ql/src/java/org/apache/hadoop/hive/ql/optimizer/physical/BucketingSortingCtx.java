@@ -763,10 +763,6 @@ specifier|private
 name|char
 name|sortOrder
 decl_stmt|;
-specifier|private
-name|char
-name|nullSortOrder
-decl_stmt|;
 specifier|public
 name|SortCol
 parameter_list|(
@@ -778,16 +774,11 @@ name|index
 parameter_list|,
 name|char
 name|sortOrder
-parameter_list|,
-name|char
-name|nullSortOrder
 parameter_list|)
 block|{
 name|this
 argument_list|(
 name|sortOrder
-argument_list|,
-name|nullSortOrder
 argument_list|)
 expr_stmt|;
 name|addAlias
@@ -803,9 +794,6 @@ name|SortCol
 parameter_list|(
 name|char
 name|sortOrder
-parameter_list|,
-name|char
-name|nullSortOrder
 parameter_list|)
 block|{
 name|this
@@ -813,12 +801,6 @@ operator|.
 name|sortOrder
 operator|=
 name|sortOrder
-expr_stmt|;
-name|this
-operator|.
-name|nullSortOrder
-operator|=
-name|nullSortOrder
 expr_stmt|;
 block|}
 annotation|@
@@ -886,15 +868,6 @@ return|return
 name|sortOrder
 return|;
 block|}
-specifier|public
-name|char
-name|getNullSortOrder
-parameter_list|()
-block|{
-return|return
-name|nullSortOrder
-return|;
-block|}
 annotation|@
 name|Override
 comment|// Chooses a representative alias, index, and order to use as the String, the first is used
@@ -926,10 +899,6 @@ operator|+
 literal|" order: "
 operator|+
 name|sortOrder
-operator|+
-literal|" nullOrder: "
-operator|+
-name|nullSortOrder
 return|;
 block|}
 block|}
