@@ -195,7 +195,9 @@ name|ldapImpl
 init|=
 operator|new
 name|LdapAuthenticationProviderImpl
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 decl_stmt|;
 try|try
 block|{
