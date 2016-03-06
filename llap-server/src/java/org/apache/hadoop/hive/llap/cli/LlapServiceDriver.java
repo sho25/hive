@@ -1889,6 +1889,17 @@ operator|.
 name|class
 operator|,
 comment|// log4j-slf4j
+comment|// log4j-1.2-API needed for NDC
+name|org
+operator|.
+name|apache
+operator|.
+name|log4j
+operator|.
+name|NDC
+operator|.
+name|class
+operator|,
 block|}
 empty_stmt|;
 for|for
