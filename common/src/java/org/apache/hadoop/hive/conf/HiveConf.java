@@ -10547,6 +10547,17 @@ argument_list|,
 literal|"llap.daemon.yarn.container.mb"
 argument_list|)
 block|,
+name|LLAP_DAEMON_QUEUE_NAME
+argument_list|(
+literal|"hive.llap.daemon.queue.name"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Queue name within which the llap slider application will run."
+operator|+
+literal|" Used in LlapServiceDriver and package.py"
+argument_list|)
+block|,
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
 argument_list|(
 literal|"hive.llap.daemon.shuffle.dir.watcher.enabled"
