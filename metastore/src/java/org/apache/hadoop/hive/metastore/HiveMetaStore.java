@@ -2411,49 +2411,9 @@ expr_stmt|;
 name|String
 name|address
 init|=
-literal|null
+name|getIPAddress
+argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|useSasl
-condition|)
-block|{
-if|if
-condition|(
-name|saslServer
-operator|!=
-literal|null
-operator|&&
-name|saslServer
-operator|.
-name|getRemoteAddress
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
-name|address
-operator|=
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|saslServer
-operator|.
-name|getRemoteAddress
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-name|address
-operator|=
-name|getIpAddress
-argument_list|()
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|address
@@ -2490,6 +2450,52 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+name|String
+name|getIPAddress
+parameter_list|()
+block|{
+if|if
+condition|(
+name|useSasl
+condition|)
+block|{
+if|if
+condition|(
+name|saslServer
+operator|!=
+literal|null
+operator|&&
+name|saslServer
+operator|.
+name|getRemoteAddress
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+name|saslServer
+operator|.
+name|getRemoteAddress
+argument_list|()
+operator|.
+name|getHostAddress
+argument_list|()
+return|;
+block|}
+block|}
+else|else
+block|{
+comment|// if kerberos is not enabled
+return|return
+name|getThreadLocalIpAddress
+argument_list|()
+return|;
+block|}
+return|return
+literal|null
+return|;
 block|}
 specifier|private
 specifier|static
@@ -2533,7 +2539,7 @@ block|}
 decl_stmt|;
 comment|// This will only be set if the metastore is being accessed from a metastore Thrift server,
 comment|// not if it is from the CLI. Also, only if the TTransport being used to connect is an
-comment|// instance of TSocket.
+comment|// instance of TSocket. This is also not set when kerberos is used.
 specifier|private
 specifier|static
 name|ThreadLocal
@@ -2565,7 +2571,7 @@ decl_stmt|;
 specifier|public
 specifier|static
 name|void
-name|setIpAddress
+name|setThreadLocalIpAddress
 parameter_list|(
 name|String
 name|ipAddress
@@ -2580,11 +2586,12 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// This will return null if the metastore is not being accessed from a metastore Thrift server,
-comment|// or if the TTransport being used to connect is not an instance of TSocket.
+comment|// or if the TTransport being used to connect is not an instance of TSocket, or if kereberos
+comment|// is used
 specifier|public
 specifier|static
 name|String
-name|getIpAddress
+name|getThreadLocalIpAddress
 parameter_list|()
 block|{
 return|return
@@ -4616,7 +4623,7 @@ expr_stmt|;
 name|logInfo
 argument_list|(
 operator|(
-name|getIpAddress
+name|getThreadLocalIpAddress
 argument_list|()
 operator|==
 literal|null
@@ -4625,7 +4632,7 @@ literal|""
 else|:
 literal|"source:"
 operator|+
-name|getIpAddress
+name|getThreadLocalIpAddress
 argument_list|()
 operator|+
 literal|" "
@@ -29838,7 +29845,7 @@ name|token_owner
 argument_list|,
 name|renewer_kerberos_principal_name
 argument_list|,
-name|getIpAddress
+name|getIPAddress
 argument_list|()
 argument_list|)
 expr_stmt|;

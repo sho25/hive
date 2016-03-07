@@ -287,7 +287,7 @@ parameter_list|)
 block|{
 name|HMSHandler
 operator|.
-name|setIpAddress
+name|setThreadLocalIpAddress
 argument_list|(
 name|inSocket
 operator|.
