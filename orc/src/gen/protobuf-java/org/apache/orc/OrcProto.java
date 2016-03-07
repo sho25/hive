@@ -87035,12 +87035,12 @@ name|getMetadataLength
 parameter_list|()
 function_decl|;
 comment|// optional uint32 writerVersion = 6;
-comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *</pre>      */
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *   3 = HIVE-12055 fixed      *   4 = HIVE-13083 fixed      *</pre>      */
 name|boolean
 name|hasWriterVersion
 parameter_list|()
 function_decl|;
-comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *</pre>      */
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *   3 = HIVE-12055 fixed      *   4 = HIVE-13083 fixed      *</pre>      */
 name|int
 name|getWriterVersion
 parameter_list|()
@@ -88178,7 +88178,7 @@ specifier|private
 name|int
 name|writerVersion_
 decl_stmt|;
-comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *</pre>      */
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *   3 = HIVE-12055 fixed      *   4 = HIVE-13083 fixed      *</pre>      */
 specifier|public
 name|boolean
 name|hasWriterVersion
@@ -88196,7 +88196,7 @@ literal|0x00000010
 operator|)
 return|;
 block|}
-comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *</pre>      */
+comment|/**      *<code>optional uint32 writerVersion = 6;</code>      *      *<pre>      * Version of the writer:      *   0 (or missing) = original      *   1 = HIVE-8732 fixed      *   2 = HIVE-4243 fixed      *   3 = HIVE-12055 fixed      *   4 = HIVE-13083 fixed      *</pre>      */
 specifier|public
 name|int
 name|getWriterVersion
@@ -91331,7 +91331,7 @@ specifier|private
 name|int
 name|writerVersion_
 decl_stmt|;
-comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *</pre>        */
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *   3 = HIVE-12055 fixed        *   4 = HIVE-13083 fixed        *</pre>        */
 specifier|public
 name|boolean
 name|hasWriterVersion
@@ -91349,7 +91349,7 @@ literal|0x00000020
 operator|)
 return|;
 block|}
-comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *</pre>        */
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *   3 = HIVE-12055 fixed        *   4 = HIVE-13083 fixed        *</pre>        */
 specifier|public
 name|int
 name|getWriterVersion
@@ -91359,7 +91359,7 @@ return|return
 name|writerVersion_
 return|;
 block|}
-comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *</pre>        */
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *   3 = HIVE-12055 fixed        *   4 = HIVE-13083 fixed        *</pre>        */
 specifier|public
 name|Builder
 name|setWriterVersion
@@ -91383,7 +91383,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *</pre>        */
+comment|/**        *<code>optional uint32 writerVersion = 6;</code>        *        *<pre>        * Version of the writer:        *   0 (or missing) = original        *   1 = HIVE-8732 fixed        *   2 = HIVE-4243 fixed        *   3 = HIVE-12055 fixed        *   4 = HIVE-13083 fixed        *</pre>        */
 specifier|public
 name|Builder
 name|clearWriterVersion
