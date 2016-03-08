@@ -1027,35 +1027,10 @@ argument_list|(
 name|cmd
 argument_list|)
 expr_stmt|;
-name|String
-name|callerInfo
-init|=
 name|ss
 operator|.
-name|getConf
+name|updateThreadName
 argument_list|()
-operator|.
-name|getLogIdVar
-argument_list|(
-name|ss
-operator|.
-name|getSessionId
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|Thread
-operator|.
-name|currentThread
-argument_list|()
-operator|.
-name|setName
-argument_list|(
-name|callerInfo
-operator|+
-literal|" "
-operator|+
-name|originalThreadName
-argument_list|)
 expr_stmt|;
 comment|// Flush the print stream, so it doesn't include output from the last command
 name|ss
@@ -4285,27 +4260,10 @@ name|ss
 argument_list|)
 expr_stmt|;
 block|}
-name|Thread
-operator|.
-name|currentThread
-argument_list|()
-operator|.
-name|setName
-argument_list|(
-name|conf
-operator|.
-name|getLogIdVar
-argument_list|(
 name|ss
 operator|.
-name|getSessionId
+name|updateThreadName
 argument_list|()
-argument_list|)
-operator|+
-literal|" "
-operator|+
-name|originalThreadName
-argument_list|)
 expr_stmt|;
 comment|// execute cli driver work
 try|try
