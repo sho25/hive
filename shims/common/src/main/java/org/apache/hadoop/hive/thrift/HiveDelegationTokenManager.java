@@ -429,6 +429,13 @@ argument_list|)
 decl_stmt|;
 name|dts
 operator|.
+name|setConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+name|dts
+operator|.
 name|init
 argument_list|(
 name|hms

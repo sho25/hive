@@ -219,25 +219,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStore
-operator|.
-name|HMSHandler
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -256,6 +238,24 @@ operator|.
 name|api
 operator|.
 name|MetaException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Hive
 import|;
 end_import
 
@@ -402,20 +402,6 @@ operator|.
 name|authorize
 operator|.
 name|ProxyUsers
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|ServiceException
 import|;
 end_import
 
@@ -756,7 +742,7 @@ operator|.
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|)
 expr_stmt|;
-comment|// ShimLoader.getHadoopShims().isSecurityEnabled() will only check that·
+comment|// ShimLoader.getHadoopShims().isSecurityEnabled() will only check that
 comment|// hadoopAuth is not simple, it does not guarantee it is kerberos
 name|hadoopAuth
 operator|=
@@ -870,8 +856,7 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
-comment|// baseHandler is only necessary for DBTokenStore
-name|HMSHandler
+name|Object
 name|baseHandler
 init|=
 literal|null
@@ -905,19 +890,19 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+comment|// IMetaStoreClient is needed to access token store if DBTokenStore is to be used. It
+comment|// will be got via Hive.get(conf).getMSC in a thread where the DelegationTokenStore
+comment|// is called. To avoid the cyclic reference, we pass the Hive class to DBTokenStore where
+comment|// it is used to get a threadLocal Hive object with a synchronized MetaStoreClient using
+comment|// Java reflection.
+comment|// Note: there will be two HS2 life-long opened MSCs, one is stored in HS2 thread local
+comment|// Hive object, the other is in a daemon thread spawned in DelegationTokenSecretManager
+comment|// to remove expired tokens.
 name|baseHandler
 operator|=
-operator|new
-name|HiveMetaStore
+name|Hive
 operator|.
-name|HMSHandler
-argument_list|(
-literal|"New db based metastore server"
-argument_list|,
-name|conf
-argument_list|,
-literal|true
-argument_list|)
+name|class
 expr_stmt|;
 block|}
 name|delegationTokenManager
@@ -946,15 +931,13 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|MetaException
-decl||
 name|IOException
 name|e
 parameter_list|)
 block|{
 throw|throw
 operator|new
-name|ServiceException
+name|TTransportException
 argument_list|(
 literal|"Failed to start token manager"
 argument_list|,
