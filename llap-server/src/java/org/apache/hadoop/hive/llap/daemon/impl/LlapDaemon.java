@@ -1234,7 +1234,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|warn
 argument_list|(
 literal|"Attempting to start LlapDaemonConf with the following configuration: "
 operator|+
@@ -1782,7 +1782,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|warn
 argument_list|(
 literal|"LLAP daemon logging initialized from {} in {} ms"
 argument_list|,
@@ -1940,7 +1940,7 @@ literal|"\n"
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|warn
 argument_list|(
 literal|"\n\n"
 operator|+
