@@ -290,15 +290,9 @@ name|query
 operator|=
 name|HiveConf
 operator|.
-name|getVar
+name|getQueryString
 argument_list|(
 name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
 argument_list|)
 expr_stmt|;
 name|heuristics

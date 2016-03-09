@@ -518,17 +518,11 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
-name|jobConf
-operator|.
-name|set
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-operator|.
-name|varname
+name|setQueryString
+argument_list|(
+name|jobConf
 argument_list|,
 literal|"select * from foo group by moo;"
 argument_list|)
@@ -863,17 +857,11 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
-name|jobConf
-operator|.
-name|set
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-operator|.
-name|varname
+name|setQueryString
+argument_list|(
+name|jobConf
 argument_list|,
 literal|"select * from foo group by moo;"
 argument_list|)
@@ -1029,17 +1017,11 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
-name|jobConf
-operator|.
-name|set
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-operator|.
-name|varname
+name|setQueryString
+argument_list|(
+name|jobConf
 argument_list|,
 literal|"select * from foo group by moo;"
 argument_list|)
@@ -1216,17 +1198,11 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
-name|jobConf
-operator|.
-name|set
-argument_list|(
 name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-operator|.
-name|varname
+name|setQueryString
+argument_list|(
+name|jobConf
 argument_list|,
 literal|"select * from foo group by moo;"
 argument_list|)

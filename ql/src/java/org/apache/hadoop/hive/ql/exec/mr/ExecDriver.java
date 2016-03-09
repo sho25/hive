@@ -4030,6 +4030,9 @@ name|ConfVars
 operator|.
 name|HIVE_CURRENT_DATABASE
 argument_list|,
+operator|(
+name|String
+operator|)
 literal|null
 argument_list|)
 operator|==
