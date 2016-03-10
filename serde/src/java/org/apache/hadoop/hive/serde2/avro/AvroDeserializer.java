@@ -1593,7 +1593,7 @@ operator|.
 name|AVRO_PROP_SCALE
 argument_list|)
 operator|.
-name|getIntValue
+name|asInt
 argument_list|()
 expr_stmt|;
 block|}
