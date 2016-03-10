@@ -3193,6 +3193,17 @@ name|hiveConf
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|listeners
+operator|.
+name|add
+argument_list|(
+operator|new
+name|AcidEventListener
+argument_list|(
+name|hiveConf
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|metrics
