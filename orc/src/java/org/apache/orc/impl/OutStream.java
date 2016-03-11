@@ -984,11 +984,11 @@ argument_list|(
 name|compressed
 argument_list|)
 expr_stmt|;
+block|}
 name|compressed
 operator|=
 literal|null
 expr_stmt|;
-block|}
 name|uncompressedBytes
 operator|=
 literal|0
