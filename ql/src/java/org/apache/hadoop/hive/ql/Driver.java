@@ -4797,6 +4797,7 @@ block|}
 block|}
 block|}
 block|}
+comment|// column authorization is checked through table scan operators.
 name|getTablePartitionUsedColumns
 argument_list|(
 name|op
@@ -4832,6 +4833,7 @@ range|:
 name|inputs
 control|)
 block|{
+comment|// if read is not direct, we do not need to check its autho.
 if|if
 condition|(
 name|read
@@ -4842,6 +4844,12 @@ operator|||
 name|read
 operator|.
 name|isPathType
+argument_list|()
+operator|||
+operator|!
+name|read
+operator|.
+name|isDirect
 argument_list|()
 condition|)
 block|{
@@ -5266,18 +5274,22 @@ argument_list|()
 control|)
 block|{
 name|TableScanOperator
-name|topOp
+name|tableScanOp
 init|=
 name|topOpMap
 operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|TableScanOperator
+if|if
+condition|(
+operator|!
 name|tableScanOp
-init|=
-name|topOp
-decl_stmt|;
+operator|.
+name|isInsideView
+argument_list|()
+condition|)
+block|{
 name|Table
 name|tbl
 init|=
@@ -5363,9 +5375,12 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//map may not contain all sources, since input list may have been optimized out
-comment|//or non-existent tho such sources may still be referenced by the TableScanOperator
-comment|//if it's null then the partition probably doesn't exist so let's use table permission
+comment|// map may not contain all sources, since input list may have been
+comment|// optimized out
+comment|// or non-existent tho such sources may still be referenced by the
+comment|// TableScanOperator
+comment|// if it's null then the partition probably doesn't exist so let's use
+comment|// table permission
 if|if
 condition|(
 name|tbl
@@ -5528,6 +5543,7 @@ argument_list|,
 name|existingCols
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

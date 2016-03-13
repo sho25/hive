@@ -11869,6 +11869,24 @@ name|ConfVars
 operator|.
 name|HIVE_CBO_RETPATH_HIVEOP
 argument_list|)
+argument_list|,
+name|qb
+operator|.
+name|isInsideView
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|getAliasInsideView
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|tableAlias
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// 6. Add Schema(RR) to RelNode-Schema map
