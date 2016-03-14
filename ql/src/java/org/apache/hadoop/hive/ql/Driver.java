@@ -3303,6 +3303,8 @@ name|getHiveOperation
 argument_list|()
 argument_list|,
 name|schema
+argument_list|,
+name|queryDisplay
 argument_list|)
 expr_stmt|;
 name|conf
@@ -9423,13 +9425,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|queryDisplay
-operator|.
-name|addTask
-argument_list|(
-name|task
-argument_list|)
-expr_stmt|;
 name|TaskRunner
 name|runner
 init|=
@@ -9487,7 +9482,7 @@ argument_list|)
 expr_stmt|;
 name|queryDisplay
 operator|.
-name|setTaskCompleted
+name|setTaskResult
 argument_list|(
 name|tskRun
 operator|.

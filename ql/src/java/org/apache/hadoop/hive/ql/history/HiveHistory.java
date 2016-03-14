@@ -268,7 +268,7 @@ argument_list|()
 decl_stmt|;
 block|}
 empty_stmt|;
-comment|/**    * TaskInfo.    *    */
+comment|/**    * TaskDisplay.    *    */
 specifier|public
 specifier|static
 class|class
