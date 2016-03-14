@@ -1309,7 +1309,7 @@ throws|throws
 name|IOException
 block|{
 name|int
-name|len
+name|magicLength
 init|=
 name|OrcFile
 operator|.
@@ -1318,13 +1318,25 @@ operator|.
 name|length
 argument_list|()
 decl_stmt|;
+name|int
+name|fullLength
+init|=
+name|magicLength
+operator|+
+literal|1
+decl_stmt|;
 if|if
 condition|(
 name|psLen
 operator|<
-name|len
-operator|+
-literal|1
+name|fullLength
+operator|||
+name|buffer
+operator|.
+name|remaining
+argument_list|()
+operator|<
+name|fullLength
 condition|)
 block|{
 throw|throw
@@ -1359,9 +1371,7 @@ operator|.
 name|limit
 argument_list|()
 operator|-
-literal|1
-operator|-
-name|len
+name|fullLength
 decl_stmt|;
 name|byte
 index|[]
@@ -1384,7 +1394,7 @@ name|array
 argument_list|,
 name|offset
 argument_list|,
-name|len
+name|magicLength
 argument_list|)
 operator|.
 name|equals
@@ -1404,7 +1414,7 @@ init|=
 operator|new
 name|byte
 index|[
-name|len
+name|magicLength
 index|]
 decl_stmt|;
 name|in
@@ -1417,7 +1427,7 @@ name|header
 argument_list|,
 literal|0
 argument_list|,
-name|len
+name|magicLength
 argument_list|)
 expr_stmt|;
 comment|// if it isn't there, this isn't an ORC file
@@ -1432,7 +1442,7 @@ name|header
 argument_list|,
 literal|0
 argument_list|,
-name|len
+name|magicLength
 argument_list|)
 operator|.
 name|equals
