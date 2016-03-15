@@ -1048,24 +1048,6 @@ operator|.
 name|updateThreadName
 argument_list|()
 expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYID
-operator|.
-name|varname
-argument_list|,
-name|QueryPlan
-operator|.
-name|makeQueryId
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// Flush the print stream, so it doesn't include output from the last command
 name|ss
 operator|.
@@ -2419,22 +2401,6 @@ operator|=
 name|processCmd
 argument_list|(
 name|command
-argument_list|)
-expr_stmt|;
-comment|//wipe cli query state
-name|SessionState
-name|ss
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-decl_stmt|;
-name|ss
-operator|.
-name|setCommandType
-argument_list|(
-literal|null
 argument_list|)
 expr_stmt|;
 name|command

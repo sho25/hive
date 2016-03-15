@@ -1423,7 +1423,7 @@ name|initialize
 argument_list|(
 name|parseCtx
 operator|.
-name|getConf
+name|getQueryState
 argument_list|()
 argument_list|,
 literal|null

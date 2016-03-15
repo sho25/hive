@@ -1621,7 +1621,7 @@ operator|.
 name|getParseContext
 argument_list|()
 operator|.
-name|getConf
+name|getQueryState
 argument_list|()
 argument_list|,
 name|selReplacementCommand

@@ -2060,10 +2060,7 @@ decl_stmt|;
 name|HiveOperation
 name|operation
 init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getHiveOperation
 argument_list|()
@@ -2347,6 +2344,11 @@ name|Driver
 operator|.
 name|doAuthorization
 argument_list|(
+name|queryState
+operator|.
+name|getHiveOperation
+argument_list|()
+argument_list|,
 name|analyzer
 argument_list|,
 literal|""
