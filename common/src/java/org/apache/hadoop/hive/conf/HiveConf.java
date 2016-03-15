@@ -5922,7 +5922,7 @@ literal|100000
 argument_list|,
 literal|"Initial capacity of "
 operator|+
-literal|"mapjoin hashtable if statistics are absent, or if hive.hashtable.stats.key.estimate.adjustment is set to 0"
+literal|"mapjoin hashtable if statistics are absent, or if hive.hashtable.key.count.adjustment is set to 0"
 argument_list|)
 block|,
 name|HIVEHASHTABLELOADFACTOR
