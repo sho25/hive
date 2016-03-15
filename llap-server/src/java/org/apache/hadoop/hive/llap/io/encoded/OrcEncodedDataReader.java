@@ -4942,7 +4942,7 @@ expr_stmt|;
 block|}
 name|counters
 operator|.
-name|setCounter
+name|incrCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
