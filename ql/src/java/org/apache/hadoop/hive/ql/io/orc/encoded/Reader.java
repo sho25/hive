@@ -259,8 +259,8 @@ specifier|public
 name|void
 name|init
 parameter_list|(
-name|long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|int
 name|stripeIx
@@ -284,7 +284,7 @@ operator|=
 operator|new
 name|OrcBatchKey
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|stripeIx
 argument_list|,
@@ -298,7 +298,7 @@ name|batchKey
 operator|.
 name|set
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|stripeIx
 argument_list|,
@@ -313,12 +313,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Creates the encoded reader.    * @param fileId File ID to read, to use for cache lookups and such.    * @param dataCache Data cache to use for cache lookups.    * @param dataReader Data reader to read data not found in cache (from disk, HDFS, and such).    * @param pf Pool factory to create object pools.    * @return The reader.    */
+comment|/**    * Creates the encoded reader.    * @param fileKey File ID to read, to use for cache lookups and such.    * @param dataCache Data cache to use for cache lookups.    * @param dataReader Data reader to read data not found in cache (from disk, HDFS, and such).    * @param pf Pool factory to create object pools.    * @return The reader.    */
 name|EncodedReader
 name|encodedReader
 parameter_list|(
-name|Long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|DataCache
 name|dataCache

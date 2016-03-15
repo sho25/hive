@@ -590,8 +590,8 @@ block|}
 decl_stmt|;
 specifier|private
 specifier|final
-name|Long
-name|fileId
+name|Object
+name|fileKey
 decl_stmt|;
 specifier|private
 specifier|final
@@ -645,8 +645,8 @@ decl_stmt|;
 specifier|public
 name|EncodedReaderImpl
 parameter_list|(
-name|Long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|List
 argument_list|<
@@ -679,9 +679,9 @@ name|IOException
 block|{
 name|this
 operator|.
-name|fileId
+name|fileKey
 operator|=
-name|fileId
+name|fileKey
 expr_stmt|;
 name|this
 operator|.
@@ -1698,20 +1698,9 @@ name|hasFileId
 init|=
 name|this
 operator|.
-name|fileId
+name|fileKey
 operator|!=
 literal|null
-decl_stmt|;
-name|long
-name|fileId
-init|=
-name|hasFileId
-condition|?
-name|this
-operator|.
-name|fileId
-else|:
-literal|0
 decl_stmt|;
 if|if
 condition|(
@@ -1750,7 +1739,7 @@ name|ecb
 operator|.
 name|init
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|stripeIx
 argument_list|,
@@ -1820,7 +1809,7 @@ name|info
 argument_list|(
 literal|"Resulting disk ranges to read (file "
 operator|+
-name|fileId
+name|fileKey
 operator|+
 literal|"): "
 operator|+
@@ -1851,7 +1840,7 @@ name|cache
 operator|.
 name|getFileData
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|toRead
 operator|.
@@ -1880,7 +1869,7 @@ name|info
 argument_list|(
 literal|"Disk ranges after cache (file "
 operator|+
-name|fileId
+name|fileKey
 operator|+
 literal|", base offset "
 operator|+
@@ -2061,7 +2050,7 @@ name|info
 argument_list|(
 literal|"Disk ranges after pre-read (file "
 operator|+
-name|fileId
+name|fileKey
 operator|+
 literal|", base offset "
 operator|+
@@ -2150,7 +2139,7 @@ name|ecb
 operator|.
 name|init
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|stripeIx
 argument_list|,
@@ -2183,6 +2172,7 @@ operator|++
 name|colIxMod
 control|)
 block|{
+comment|// TODO: simplify this now that high-level cache has been removed.
 if|if
 condition|(
 name|colRgs
@@ -2208,7 +2198,6 @@ operator|=
 literal|false
 expr_stmt|;
 continue|continue;
-comment|// TODO: this would be invalid with HL cache, where RG x col can be excluded.
 block|}
 name|ColumnReadContext
 name|ctx
@@ -3785,7 +3774,7 @@ block|}
 comment|// 6. Finally, put uncompressed data to cache.
 if|if
 condition|(
-name|fileId
+name|fileKey
 operator|!=
 literal|null
 condition|)
@@ -3798,7 +3787,7 @@ name|cache
 operator|.
 name|putFileData
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|cacheKeys
 argument_list|,
@@ -5181,7 +5170,7 @@ block|}
 comment|// 6. Finally, put uncompressed data to cache.
 if|if
 condition|(
-name|fileId
+name|fileKey
 operator|!=
 literal|null
 condition|)
@@ -5194,7 +5183,7 @@ name|cache
 operator|.
 name|putFileData
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|cacheKeys
 argument_list|,

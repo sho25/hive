@@ -138,7 +138,7 @@ specifier|public
 class|class
 name|StreamUtils
 block|{
-comment|/**    * Create SettableUncompressedStream from stream buffer.    *    * @param streamName - stream name    * @param fileId - file id    * @param streamBuffer - stream buffer    * @return - SettableUncompressedStream    * @throws IOException    */
+comment|/**    * Create SettableUncompressedStream from stream buffer.    *    * @param streamName - stream name    * @param streamBuffer - stream buffer    * @return - SettableUncompressedStream    * @throws IOException    */
 specifier|public
 specifier|static
 name|SettableUncompressedStream

@@ -509,6 +509,7 @@ argument_list|,
 name|queueMetrics
 argument_list|)
 expr_stmt|;
+comment|// TODO: get rid of this
 name|this
 operator|.
 name|skipCorrupt
@@ -553,7 +554,6 @@ name|size
 argument_list|()
 index|]
 expr_stmt|;
-comment|// TODO: get rid of this
 name|codec
 operator|=
 name|WriterImpl

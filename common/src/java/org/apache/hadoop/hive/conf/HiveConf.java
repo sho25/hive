@@ -5665,6 +5665,15 @@ argument_list|,
 literal|"Include file ID in splits on file systems thaty support it."
 argument_list|)
 block|,
+name|HIVE_ORC_ALLOW_SYNTHETIC_FILE_ID_IN_SPLITS
+argument_list|(
+literal|"hive.orc.splits.allow.synthetic.fileid"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Allow synthetic file ID in splits on file systems that don't have a native one."
+argument_list|)
+block|,
 name|HIVE_ORC_CACHE_STRIPE_DETAILS_SIZE
 argument_list|(
 literal|"hive.orc.cache.stripe.details.size"

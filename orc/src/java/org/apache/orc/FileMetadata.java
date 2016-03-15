@@ -99,8 +99,8 @@ name|int
 name|getFlattenedColumnCount
 parameter_list|()
 function_decl|;
-name|long
-name|getFileId
+name|Object
+name|getFileKey
 parameter_list|()
 function_decl|;
 name|List
