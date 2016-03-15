@@ -8864,7 +8864,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// tblPath will be null when tbl is a view. We skip the following if block in that case.
 name|checkTrashPurgeCombination
 argument_list|(
 name|tblPath
@@ -8876,6 +8875,11 @@ operator|+
 name|name
 argument_list|,
 name|ifPurge
+argument_list|,
+name|deleteData
+operator|&&
+operator|!
+name|isExternal
 argument_list|)
 expr_stmt|;
 comment|// Drop the partitions and get a list of locations which need to be deleted
@@ -9052,24 +9056,30 @@ name|objectName
 parameter_list|,
 name|boolean
 name|ifPurge
+parameter_list|,
+name|boolean
+name|deleteData
 parameter_list|)
 throws|throws
 name|MetaException
 block|{
+comment|// There is no need to check TrashPurgeCombination in following cases since Purge/Trash
+comment|// is not applicable:
+comment|// a) deleteData is false -- drop an external table
+comment|// b) pathToData is null -- a view
+comment|// c) ifPurge is true -- force delete without Trash
 if|if
 condition|(
 operator|!
-operator|(
+name|deleteData
+operator|||
 name|pathToData
-operator|!=
+operator|==
 literal|null
-operator|&&
-operator|!
+operator|||
 name|ifPurge
-operator|)
 condition|)
 block|{
-comment|//pathToData may be NULL for a view
 return|return;
 block|}
 name|boolean
@@ -15036,6 +15046,11 @@ name|mustPurge
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|isExternalTbl
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 name|ms
@@ -15063,6 +15078,13 @@ argument_list|(
 name|db_name
 argument_list|,
 name|tbl_name
+argument_list|)
+expr_stmt|;
+name|isExternalTbl
+operator|=
+name|isExternal
+argument_list|(
+name|tbl
 argument_list|)
 expr_stmt|;
 name|firePreEvent
@@ -15149,6 +15171,11 @@ operator|+
 name|part_vals
 argument_list|,
 name|mustPurge
+argument_list|,
+name|deleteData
+operator|&&
+operator|!
+name|isExternalTbl
 argument_list|)
 expr_stmt|;
 block|}
@@ -15240,6 +15267,11 @@ operator|+
 name|part_vals
 argument_list|,
 name|mustPurge
+argument_list|,
+name|deleteData
+operator|&&
+operator|!
+name|isExternalTbl
 argument_list|)
 expr_stmt|;
 block|}
@@ -15280,15 +15312,8 @@ condition|)
 block|{
 if|if
 condition|(
-name|tbl
-operator|!=
-literal|null
-operator|&&
 operator|!
-name|isExternal
-argument_list|(
-name|tbl
-argument_list|)
+name|isExternalTbl
 condition|)
 block|{
 if|if
@@ -15813,6 +15838,11 @@ name|mustPurge
 init|=
 literal|false
 decl_stmt|;
+name|boolean
+name|isExternalTbl
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 comment|// We need Partition-s for firing events and for result; DN needs MPartition-s to drop.
@@ -15824,6 +15854,13 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tblName
+argument_list|)
+expr_stmt|;
+name|isExternalTbl
+operator|=
+name|isExternal
+argument_list|(
+name|tbl
 argument_list|)
 expr_stmt|;
 name|mustPurge
@@ -16251,6 +16288,11 @@ name|getValues
 argument_list|()
 argument_list|,
 name|mustPurge
+argument_list|,
+name|deleteData
+operator|&&
+operator|!
+name|isExternalTbl
 argument_list|)
 expr_stmt|;
 name|archToDelete
@@ -16323,6 +16365,11 @@ name|getValues
 argument_list|()
 argument_list|,
 name|mustPurge
+argument_list|,
+name|deleteData
+operator|&&
+operator|!
+name|isExternalTbl
 argument_list|)
 expr_stmt|;
 name|dirsToDelete
