@@ -1240,16 +1240,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// close writer
-if|if
-condition|(
-name|outWriter
-operator|==
-literal|null
-condition|)
-block|{
-return|return;
-block|}
 try|try
 block|{
 if|if
@@ -1269,6 +1259,13 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|outWriter
+operator|!=
+literal|null
+condition|)
+block|{
 name|outWriter
 operator|.
 name|close
@@ -1278,6 +1275,7 @@ name|outWriter
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1295,6 +1293,8 @@ name|e
 argument_list|)
 throw|;
 block|}
+comment|// When there are no exceptions, this has to be called always to make sure incompatible files
+comment|// are moved properly to the destination path
 name|super
 operator|.
 name|closeOp

@@ -869,7 +869,20 @@ block|{
 if|if
 condition|(
 operator|!
-name|exception
+name|abort
+condition|)
+block|{
+comment|// if outPath does not exist, then it means all paths within combine split are skipped as
+comment|// they are incompatible for merge (for example: files without stripe stats).
+comment|// Those files will be added to incompatFileSet
+if|if
+condition|(
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|outPath
+argument_list|)
 condition|)
 block|{
 name|FileStatus
@@ -931,9 +944,14 @@ name|getLen
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// move any incompatible files to final path
 if|if
 condition|(
+name|incompatFileSet
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|incompatFileSet
 operator|.
