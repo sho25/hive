@@ -85,6 +85,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|Metastore
+operator|.
+name|SplitInfos
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|io
@@ -104,15 +122,15 @@ specifier|public
 interface|interface
 name|FileFormatProxy
 block|{
-comment|/**    * Applies SARG to file metadata, and produces some result for this file.    * @param sarg SARG    * @param byteBuffer File metadata from metastore cache.    * @return The result to return to client for this file, or null if file is eliminated.    * @throws IOException    */
-name|ByteBuffer
+comment|/**    * Applies SARG to file metadata, and produces some result for this file.    * @param sarg SARG    * @param fileMetadata File metadata from metastore cache.    * @return The result to return to client for this file, or null if file is eliminated.    */
+name|SplitInfos
 name|applySargToMetadata
 parameter_list|(
 name|SearchArgument
 name|sarg
 parameter_list|,
 name|ByteBuffer
-name|byteBuffer
+name|fileMetadata
 parameter_list|)
 throws|throws
 name|IOException

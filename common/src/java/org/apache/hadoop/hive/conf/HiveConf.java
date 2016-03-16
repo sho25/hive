@@ -5632,6 +5632,17 @@ argument_list|,
 literal|"Whether to enable using file metadata cache in metastore for ORC file footers."
 argument_list|)
 block|,
+name|HIVE_ORC_MS_FOOTER_CACHE_PPD
+argument_list|(
+literal|"hive.orc.splits.ms.footer.cache.ppd.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable file footer cache PPD (hive.orc.splits.ms.footer.cache.enabled\n"
+operator|+
+literal|"must also be set to true for this to work)."
+argument_list|)
+block|,
 name|HIVE_ORC_INCLUDE_FILE_FOOTER_IN_SPLITS
 argument_list|(
 literal|"hive.orc.splits.include.file.footer"
@@ -5662,7 +5673,7 @@ literal|"hive.orc.splits.include.fileid"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Include file ID in splits on file systems thaty support it."
+literal|"Include file ID in splits on file systems that support it."
 argument_list|)
 block|,
 name|HIVE_ORC_ALLOW_SYNTHETIC_FILE_ID_IN_SPLITS

@@ -2367,9 +2367,12 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to get files with ID; using regular API"
-argument_list|,
+literal|"Failed to get files with ID; using regular API: "
+operator|+
 name|t
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|useFileIds
@@ -3192,9 +3195,12 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to get files with ID; using regular API"
-argument_list|,
+literal|"Failed to get files with ID; using regular API: "
+operator|+
 name|t
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|useFileIds
