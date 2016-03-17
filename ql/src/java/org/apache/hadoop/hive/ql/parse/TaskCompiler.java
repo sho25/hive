@@ -715,6 +715,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|protected
 name|Hive
 name|db
@@ -2656,6 +2657,11 @@ argument_list|,
 name|pCtx
 operator|.
 name|getQueryProperties
+argument_list|()
+argument_list|,
+name|pCtx
+operator|.
+name|getViewProjectToTableSchema
 argument_list|()
 argument_list|)
 decl_stmt|;

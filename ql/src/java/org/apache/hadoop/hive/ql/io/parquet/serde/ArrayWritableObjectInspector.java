@@ -523,6 +523,9 @@ operator|.
 name|put
 argument_list|(
 name|name
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|field
 argument_list|)
@@ -1212,6 +1215,9 @@ operator|.
 name|get
 argument_list|(
 name|name
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 return|;
 block|}

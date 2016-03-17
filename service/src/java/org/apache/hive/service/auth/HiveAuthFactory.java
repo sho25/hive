@@ -49,6 +49,16 @@ name|java
 operator|.
 name|net
 operator|.
+name|InetAddress
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|net
+operator|.
 name|InetSocketAddress
 import|;
 end_import
@@ -171,20 +181,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|conf
@@ -223,25 +219,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStore
-operator|.
-name|HMSHandler
+name|IMetaStoreClient
 import|;
 end_import
 
@@ -260,6 +238,24 @@ operator|.
 name|api
 operator|.
 name|MetaException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Hive
 import|;
 end_import
 
@@ -310,6 +306,22 @@ operator|.
 name|thrift
 operator|.
 name|DBTokenStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|thrift
+operator|.
+name|HiveDelegationTokenManager
 import|;
 end_import
 
@@ -667,6 +679,12 @@ specifier|private
 name|String
 name|hadoopAuth
 decl_stmt|;
+specifier|private
+name|HiveDelegationTokenManager
+name|delegationTokenManager
+init|=
+literal|null
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -724,7 +742,7 @@ operator|.
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|)
 expr_stmt|;
-comment|// ShimLoader.getHadoopShims().isSecurityEnabled() will only check that·
+comment|// ShimLoader.getHadoopShims().isSecurityEnabled() will only check that
 comment|// hadoopAuth is not simple, it does not guarantee it is kerberos
 name|hadoopAuth
 operator|=
@@ -784,12 +802,7 @@ name|hadoopAuth
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|AuthTypes
-operator|.
-name|KERBEROS
-operator|.
-name|getAuthName
-argument_list|()
+literal|"kerberos"
 argument_list|)
 operator|&&
 operator|!
@@ -834,11 +847,16 @@ name|HIVE_SERVER2_KERBEROS_PRINCIPAL
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// start delegation token manager
+comment|// Start delegation token manager
+name|delegationTokenManager
+operator|=
+operator|new
+name|HiveDelegationTokenManager
+argument_list|()
+expr_stmt|;
 try|try
 block|{
-comment|// rawStore is only necessary for DBTokenStore
-name|HMSHandler
+name|Object
 name|baseHandler
 init|=
 literal|null
@@ -872,22 +890,22 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+comment|// IMetaStoreClient is needed to access token store if DBTokenStore is to be used. It
+comment|// will be got via Hive.get(conf).getMSC in a thread where the DelegationTokenStore
+comment|// is called. To avoid the cyclic reference, we pass the Hive class to DBTokenStore where
+comment|// it is used to get a threadLocal Hive object with a synchronized MetaStoreClient using
+comment|// Java reflection.
+comment|// Note: there will be two HS2 life-long opened MSCs, one is stored in HS2 thread local
+comment|// Hive object, the other is in a daemon thread spawned in DelegationTokenSecretManager
+comment|// to remove expired tokens.
 name|baseHandler
 operator|=
-operator|new
-name|HiveMetaStore
+name|Hive
 operator|.
-name|HMSHandler
-argument_list|(
-literal|"new db based metaserver"
-argument_list|,
-name|conf
-argument_list|,
-literal|true
-argument_list|)
+name|class
 expr_stmt|;
 block|}
-name|saslServer
+name|delegationTokenManager
 operator|.
 name|startDelegationTokenSecretManager
 argument_list|(
@@ -900,11 +918,19 @@ operator|.
 name|HIVESERVER2
 argument_list|)
 expr_stmt|;
+name|saslServer
+operator|.
+name|setSecretManager
+argument_list|(
+name|delegationTokenManager
+operator|.
+name|getSecretManager
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|MetaException
-decl||
 name|IOException
 name|e
 parameter_list|)
@@ -2009,13 +2035,16 @@ name|owner
 parameter_list|,
 name|String
 name|renewer
+parameter_list|,
+name|String
+name|remoteAddr
 parameter_list|)
 throws|throws
 name|HiveSQLException
 block|{
 if|if
 condition|(
-name|saslServer
+name|delegationTokenManager
 operator|==
 literal|null
 condition|)
@@ -2035,7 +2064,7 @@ block|{
 name|String
 name|tokenStr
 init|=
-name|saslServer
+name|delegationTokenManager
 operator|.
 name|getDelegationTokenWithService
 argument_list|(
@@ -2044,6 +2073,8 @@ argument_list|,
 name|renewer
 argument_list|,
 name|HS2_CLIENT_TOKEN
+argument_list|,
+name|remoteAddr
 argument_list|)
 decl_stmt|;
 if|if
@@ -2126,7 +2157,7 @@ name|HiveSQLException
 block|{
 if|if
 condition|(
-name|saslServer
+name|delegationTokenManager
 operator|==
 literal|null
 condition|)
@@ -2143,7 +2174,7 @@ throw|;
 block|}
 try|try
 block|{
-name|saslServer
+name|delegationTokenManager
 operator|.
 name|cancelDelegationToken
 argument_list|(
@@ -2184,7 +2215,7 @@ name|HiveSQLException
 block|{
 if|if
 condition|(
-name|saslServer
+name|delegationTokenManager
 operator|==
 literal|null
 condition|)
@@ -2201,7 +2232,7 @@ throw|;
 block|}
 try|try
 block|{
-name|saslServer
+name|delegationTokenManager
 operator|.
 name|renewDelegationToken
 argument_list|(
@@ -2232,7 +2263,7 @@ block|}
 block|}
 specifier|public
 name|String
-name|getUserFromToken
+name|verifyDelegationToken
 parameter_list|(
 name|String
 name|delegationToken
@@ -2242,7 +2273,7 @@ name|HiveSQLException
 block|{
 if|if
 condition|(
-name|saslServer
+name|delegationTokenManager
 operator|==
 literal|null
 condition|)
@@ -2260,7 +2291,80 @@ block|}
 try|try
 block|{
 return|return
-name|saslServer
+name|delegationTokenManager
+operator|.
+name|verifyDelegationToken
+argument_list|(
+name|delegationToken
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Error verifying delegation token "
+operator|+
+name|delegationToken
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveSQLException
+argument_list|(
+name|msg
+argument_list|,
+literal|"08S01"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+specifier|public
+name|String
+name|getUserFromToken
+parameter_list|(
+name|String
+name|delegationToken
+parameter_list|)
+throws|throws
+name|HiveSQLException
+block|{
+if|if
+condition|(
+name|delegationTokenManager
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveSQLException
+argument_list|(
+literal|"Delegation token only supported over kerberos authentication"
+argument_list|,
+literal|"08S01"
+argument_list|)
+throw|;
+block|}
+try|try
+block|{
+return|return
+name|delegationTokenManager
 operator|.
 name|getUserFromToken
 argument_list|(

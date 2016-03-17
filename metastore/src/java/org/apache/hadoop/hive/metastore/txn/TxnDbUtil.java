@@ -152,7 +152,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utility methods for creating and destroying txn database/schema.  * Placed here in a separate class so it can be shared across unit tests.  */
+comment|/**  * Utility methods for creating and destroying txn database/schema, plus methods for  * querying against metastore tables.  * Placed here in a separate class so it can be shared across unit tests.  */
 end_comment
 
 begin_class
@@ -490,12 +490,36 @@ name|SQLException
 name|e
 parameter_list|)
 block|{
-comment|// This might be a deadlock, if so, let's retry
+try|try
+block|{
 name|conn
 operator|.
 name|rollback
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|re
+parameter_list|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"Error rolling back: "
+operator|+
+name|re
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// This might be a deadlock, if so, let's retry
 if|if
 condition|(
 name|e
@@ -833,11 +857,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Utility method used to run COUNT queries like "select count(*) from ..." against metastore tables    * @param countQuery countQuery text    * @return count countQuery result    * @throws Exception    */
 specifier|public
 specifier|static
 name|int
-name|findNumCurrentLocks
-parameter_list|()
+name|countQueryAgent
+parameter_list|(
+name|String
+name|countQuery
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -876,7 +904,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select count(*) from hive_locks"
+name|countQuery
 argument_list|)
 expr_stmt|;
 if|if

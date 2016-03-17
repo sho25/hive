@@ -130,7 +130,7 @@ specifier|private
 specifier|final
 name|ConcurrentHashMap
 argument_list|<
-name|Long
+name|Object
 argument_list|,
 name|OrcFileMetadata
 argument_list|>
@@ -139,7 +139,7 @@ init|=
 operator|new
 name|ConcurrentHashMap
 argument_list|<
-name|Long
+name|Object
 argument_list|,
 name|OrcFileMetadata
 argument_list|>
@@ -231,7 +231,7 @@ name|putIfAbsent
 argument_list|(
 name|metaData
 operator|.
-name|getFileId
+name|getFileKey
 argument_list|()
 argument_list|,
 name|metaData
@@ -404,8 +404,8 @@ specifier|public
 name|OrcFileMetadata
 name|getFileMetadata
 parameter_list|(
-name|long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|)
 throws|throws
 name|IOException
@@ -415,7 +415,7 @@ name|metadata
 operator|.
 name|get
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|)
 return|;
 block|}
@@ -433,7 +433,7 @@ name|remove
 argument_list|(
 name|buffer
 operator|.
-name|getFileId
+name|getFileKey
 argument_list|()
 argument_list|)
 expr_stmt|;

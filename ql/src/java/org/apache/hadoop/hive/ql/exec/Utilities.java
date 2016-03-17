@@ -8936,6 +8936,23 @@ operator|&&
 name|taskIDToFile
 operator|!=
 literal|null
+operator|&&
+operator|!
+literal|"tez"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|hconf
+operator|.
+name|get
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+operator|.
+name|varname
+argument_list|)
+argument_list|)
 condition|)
 block|{
 comment|// refresh the file list
@@ -9117,6 +9134,23 @@ operator|.
 name|size
 argument_list|()
 operator|)
+operator|&&
+operator|!
+literal|"tez"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|hconf
+operator|.
+name|get
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+operator|.
+name|varname
+argument_list|)
+argument_list|)
 condition|)
 block|{
 comment|// get the missing buckets and generate empty buckets for non-dynamic partition

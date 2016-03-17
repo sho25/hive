@@ -5933,6 +5933,9 @@ name|ConfVars
 operator|.
 name|HIVE_JAR_DIRECTORY
 argument_list|,
+operator|(
+name|String
+operator|)
 literal|null
 argument_list|)
 decl_stmt|;

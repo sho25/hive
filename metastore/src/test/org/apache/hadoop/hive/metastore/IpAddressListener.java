@@ -319,7 +319,7 @@ name|localhostIp
 argument_list|,
 name|HMSHandler
 operator|.
-name|getIpAddress
+name|getThreadLocalIpAddress
 argument_list|()
 argument_list|)
 expr_stmt|;

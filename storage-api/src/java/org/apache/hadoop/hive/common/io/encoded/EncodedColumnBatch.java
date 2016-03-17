@@ -216,16 +216,6 @@ name|int
 index|[]
 name|columnIxs
 decl_stmt|;
-comment|// TODO: Maybe remove when solving the pooling issue.
-comment|/** Generation version necessary to sync pooling reuse with the fact that two separate threads    * operate on batches - the one that decodes them, and potential separate thread w/a "stop" call    * that cleans them up. We don't want the decode thread to use the ECB that was thrown out and    * reused, so it remembers the version and checks it after making sure no cleanup thread can ever    * get to this ECB anymore. All this sync is ONLY needed because of high level cache code. */
-specifier|public
-name|int
-name|version
-init|=
-name|Integer
-operator|.
-name|MIN_VALUE
-decl_stmt|;
 specifier|public
 name|void
 name|reset
@@ -414,6 +404,7 @@ block|{
 return|return
 name|batchKey
 return|;
+comment|// TODO#: who uses this? can we remove fileId?
 block|}
 specifier|public
 name|ColumnStreamData

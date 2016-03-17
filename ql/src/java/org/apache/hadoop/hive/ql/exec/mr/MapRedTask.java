@@ -2101,7 +2101,8 @@ decl_stmt|;
 return|return
 name|runningViaChild
 condition|?
-name|isdone
+name|done
+argument_list|()
 else|:
 name|b
 return|;
@@ -2124,7 +2125,8 @@ decl_stmt|;
 return|return
 name|runningViaChild
 condition|?
-name|isdone
+name|done
+argument_list|()
 else|:
 name|b
 return|;
@@ -2147,7 +2149,8 @@ decl_stmt|;
 return|return
 name|runningViaChild
 condition|?
-name|isdone
+name|done
+argument_list|()
 else|:
 name|b
 return|;
@@ -2170,7 +2173,8 @@ decl_stmt|;
 return|return
 name|runningViaChild
 condition|?
-name|isdone
+name|done
+argument_list|()
 else|:
 name|b
 return|;

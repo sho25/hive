@@ -329,6 +329,7 @@ specifier|private
 name|HiveConf
 name|conf
 decl_stmt|;
+comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|private
 name|Hive
 name|hive

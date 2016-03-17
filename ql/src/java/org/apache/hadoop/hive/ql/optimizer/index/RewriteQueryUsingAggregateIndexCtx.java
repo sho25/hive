@@ -740,6 +740,7 @@ name|canApplyCtx
 argument_list|)
 return|;
 block|}
+comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|private
 specifier|final
 name|Hive

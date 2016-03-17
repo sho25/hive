@@ -355,16 +355,20 @@ name|void
 name|checkOwner
 parameter_list|()
 block|{
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
+if|if
+condition|(
+operator|!
 name|ownerLock
 operator|.
 name|isHeldByCurrentThread
 argument_list|()
-argument_list|,
-literal|"Owner thread expected %s, got %s"
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Owner thread expected {}, got {}"
 argument_list|,
 name|ownerLock
 operator|.
@@ -377,6 +381,7 @@ name|currentThread
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Add a new writer's memory allocation to the pool. We use the path    * as a unique key to ensure that we don't get duplicates.    * @param path the file that is being written    * @param requestedAllocation the requested buffer size    */
 specifier|public

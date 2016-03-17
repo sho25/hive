@@ -2319,9 +2319,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 argument_list|,
@@ -2350,9 +2348,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
 argument_list|,
@@ -2382,17 +2378,13 @@ literal|"Zookeeper connect string has to be specifed through "
 operator|+
 literal|"either "
 operator|+
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 operator|+
 literal|" or "
 operator|+
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
 operator|+
@@ -2407,9 +2399,7 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_TIMEOUTMILLIS
 argument_list|,
@@ -2429,9 +2419,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -2464,15 +2452,11 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|,
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE_DEFAULT
 argument_list|)

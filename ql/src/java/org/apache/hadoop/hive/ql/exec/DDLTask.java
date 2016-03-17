@@ -1091,6 +1091,26 @@ name|ql
 operator|.
 name|hooks
 operator|.
+name|LineageInfo
+operator|.
+name|DataContainer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|hooks
+operator|.
 name|ReadEntity
 import|;
 end_import
@@ -3772,6 +3792,8 @@ block|{
 return|return
 name|lockDatabase
 argument_list|(
+name|db
+argument_list|,
 name|lockDatabaseDesc
 argument_list|)
 return|;
@@ -3794,6 +3816,8 @@ block|{
 return|return
 name|unlockDatabase
 argument_list|(
+name|db
+argument_list|,
 name|unlockDatabaseDesc
 argument_list|)
 return|;
@@ -3840,6 +3864,8 @@ block|{
 return|return
 name|descDatabase
 argument_list|(
+name|db
+argument_list|,
 name|descDatabaseDesc
 argument_list|)
 return|;
@@ -3862,6 +3888,8 @@ block|{
 return|return
 name|alterDatabase
 argument_list|(
+name|db
+argument_list|,
 name|alterDatabaseDesc
 argument_list|)
 return|;
@@ -4279,6 +4307,8 @@ block|{
 return|return
 name|describeFunction
 argument_list|(
+name|db
+argument_list|,
 name|descFunc
 argument_list|)
 return|;
@@ -4421,6 +4451,8 @@ block|{
 return|return
 name|showFunctions
 argument_list|(
+name|db
+argument_list|,
 name|showFuncs
 argument_list|)
 return|;
@@ -4443,6 +4475,8 @@ block|{
 return|return
 name|showLocks
 argument_list|(
+name|db
+argument_list|,
 name|showLocks
 argument_list|)
 return|;
@@ -4465,6 +4499,8 @@ block|{
 return|return
 name|showCompactions
 argument_list|(
+name|db
+argument_list|,
 name|compactionsDesc
 argument_list|)
 return|;
@@ -4487,6 +4523,8 @@ block|{
 return|return
 name|showTxns
 argument_list|(
+name|db
+argument_list|,
 name|txnsDesc
 argument_list|)
 return|;
@@ -4509,6 +4547,8 @@ block|{
 return|return
 name|lockTable
 argument_list|(
+name|db
+argument_list|,
 name|lockTbl
 argument_list|)
 return|;
@@ -4531,6 +4571,8 @@ block|{
 return|return
 name|unlockTable
 argument_list|(
+name|db
+argument_list|,
 name|unlockTbl
 argument_list|)
 return|;
@@ -4649,6 +4691,8 @@ block|{
 return|return
 name|roleDDL
 argument_list|(
+name|db
+argument_list|,
 name|roleDDLDesc
 argument_list|)
 return|;
@@ -4671,6 +4715,8 @@ block|{
 return|return
 name|grantOrRevokePrivileges
 argument_list|(
+name|db
+argument_list|,
 name|grantDesc
 operator|.
 name|getPrincipals
@@ -4723,6 +4769,8 @@ block|{
 return|return
 name|grantOrRevokePrivileges
 argument_list|(
+name|db
+argument_list|,
 name|revokeDesc
 operator|.
 name|getPrincipals
@@ -4769,6 +4817,8 @@ block|{
 return|return
 name|showGrants
 argument_list|(
+name|db
+argument_list|,
 name|showGrantDesc
 argument_list|)
 return|;
@@ -4791,6 +4841,8 @@ block|{
 return|return
 name|grantOrRevokeRole
 argument_list|(
+name|db
+argument_list|,
 name|grantOrRevokeRoleDDL
 argument_list|)
 return|;
@@ -5790,7 +5842,10 @@ block|}
 specifier|private
 name|HiveAuthorizer
 name|getSessionAuthorizer
-parameter_list|()
+parameter_list|(
+name|Hive
+name|db
+parameter_list|)
 block|{
 name|HiveAuthorizer
 name|authorizer
@@ -5829,6 +5884,9 @@ specifier|private
 name|int
 name|grantOrRevokeRole
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|GrantRevokeRoleDDL
 name|grantOrRevokeRoleDDL
 parameter_list|)
@@ -5839,7 +5897,9 @@ name|HiveAuthorizer
 name|authorizer
 init|=
 name|getSessionAuthorizer
-argument_list|()
+argument_list|(
+name|db
+argument_list|)
 decl_stmt|;
 comment|//convert to the types needed for plugin api
 name|HivePrincipal
@@ -6002,6 +6062,9 @@ specifier|private
 name|int
 name|showGrants
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|ShowGrantDesc
 name|showGrantDesc
 parameter_list|)
@@ -6012,7 +6075,9 @@ name|HiveAuthorizer
 name|authorizer
 init|=
 name|getSessionAuthorizer
-argument_list|()
+argument_list|(
+name|db
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -6107,6 +6172,9 @@ specifier|private
 name|int
 name|grantOrRevokePrivileges
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|List
 argument_list|<
 name|PrincipalDesc
@@ -6141,7 +6209,9 @@ name|HiveAuthorizer
 name|authorizer
 init|=
 name|getSessionAuthorizer
-argument_list|()
+argument_list|(
+name|db
+argument_list|)
 decl_stmt|;
 comment|//Convert to object types used by the authorization plugin interface
 name|List
@@ -6257,6 +6327,9 @@ specifier|private
 name|int
 name|roleDDL
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|RoleDDLDesc
 name|roleDDLDesc
 parameter_list|)
@@ -6267,7 +6340,9 @@ name|HiveAuthorizer
 name|authorizer
 init|=
 name|getSessionAuthorizer
-argument_list|()
+argument_list|(
+name|db
+argument_list|)
 decl_stmt|;
 name|RoleDDLDesc
 operator|.
@@ -6700,6 +6775,9 @@ specifier|private
 name|int
 name|alterDatabase
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|AlterDatabaseDesc
 name|alterDbDesc
 parameter_list|)
@@ -11592,6 +11670,37 @@ name|getTableName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|AcidUtils
+operator|.
+name|isAcidTable
+argument_list|(
+name|tbl
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|NONACID_COMPACTION_NOT_SUPPORTED
+argument_list|,
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|String
 name|partName
 init|=
@@ -15155,11 +15264,14 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the user defined functions to a file.    *    * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the user defined functions to a file.    * @param db     *    * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showFunctions
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|ShowFunctionsDesc
 name|showFuncs
 parameter_list|)
@@ -15413,11 +15525,14 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the current locks to a file.    *    * @param showLocks    *          the locks we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the current locks to a file.    * @param db     *    * @param showLocks    *          the locks we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showLocks
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|ShowLocksDesc
 name|showLocks
 parameter_list|)
@@ -16524,6 +16639,9 @@ specifier|private
 name|int
 name|showCompactions
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|ShowCompactionsDesc
 name|desc
 parameter_list|)
@@ -16865,6 +16983,9 @@ specifier|private
 name|int
 name|showTxns
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|ShowTxnsDesc
 name|desc
 parameter_list|)
@@ -17076,11 +17197,14 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Lock the table/partition specified    *    * @param lockTbl    *          the table/partition to be locked along with the mode    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Lock the table/partition specified    * @param db     *    * @param lockTbl    *          the table/partition to be locked along with the mode    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|lockTable
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|LockTableDesc
 name|lockTbl
 parameter_list|)
@@ -17119,6 +17243,9 @@ specifier|private
 name|int
 name|lockDatabase
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|LockDatabaseDesc
 name|lockDb
 parameter_list|)
@@ -17157,6 +17284,9 @@ specifier|private
 name|int
 name|unlockDatabase
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|UnlockDatabaseDesc
 name|unlockDb
 parameter_list|)
@@ -17190,11 +17320,14 @@ name|unlockDb
 argument_list|)
 return|;
 block|}
-comment|/**    * Unlock the table/partition specified    *    * @param unlockTbl    *          the table/partition to be unlocked    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Unlock the table/partition specified    * @param db     *    * @param unlockTbl    *          the table/partition to be unlocked    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|unlockTable
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|UnlockTableDesc
 name|unlockTbl
 parameter_list|)
@@ -17228,11 +17361,14 @@ name|unlockTbl
 argument_list|)
 return|;
 block|}
-comment|/**    * Shows a description of a function.    *    * @param descFunc    *          is the function we are describing    * @throws HiveException    */
+comment|/**    * Shows a description of a function.    * @param db     *    * @param descFunc    *          is the function we are describing    * @throws HiveException    */
 specifier|private
 name|int
 name|describeFunction
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|DescFunctionDesc
 name|descFunc
 parameter_list|)
@@ -17548,6 +17684,9 @@ specifier|private
 name|int
 name|descDatabase
 parameter_list|(
+name|Hive
+name|db
+parameter_list|,
 name|DescDatabaseDesc
 name|descDatabase
 parameter_list|)
@@ -24162,6 +24301,68 @@ name|getIfNotExists
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|crtTbl
+operator|.
+name|isCTAS
+argument_list|()
+condition|)
+block|{
+name|Table
+name|createdTable
+init|=
+name|db
+operator|.
+name|getTable
+argument_list|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|DataContainer
+name|dc
+init|=
+operator|new
+name|DataContainer
+argument_list|(
+name|createdTable
+operator|.
+name|getTTable
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getLineageState
+argument_list|()
+operator|.
+name|setLineage
+argument_list|(
+name|createdTable
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|dc
+argument_list|,
+name|createdTable
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|work
 operator|.

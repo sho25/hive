@@ -847,6 +847,12 @@ operator|.
 name|stop
 argument_list|()
 expr_stmt|;
+comment|// Release the HMS connection for this service thread
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * @deprecated  Use {@link #openSession(TProtocolVersion, String, String, String, Map)}    */
 annotation|@
@@ -2356,6 +2362,14 @@ argument_list|(
 name|sessionHandle
 operator|+
 literal|": getDelegationToken()"
+operator|+
+literal|" owner: "
+operator|+
+name|owner
+operator|+
+literal|", renewer: "
+operator|+
+name|renewer
 argument_list|)
 expr_stmt|;
 return|return

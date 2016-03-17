@@ -256,7 +256,7 @@ expr_stmt|;
 block|}
 specifier|public
 specifier|static
-name|CLIServiceClient
+name|CLIServiceClientWrapper
 name|newRetryingCLIServiceClient
 parameter_list|(
 name|HiveConf
@@ -273,6 +273,9 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|TTransport
+name|tTransport
+init|=
 name|handlerInst
 operator|.
 name|connectWithRetry
@@ -288,7 +291,7 @@ operator|.
 name|HIVE_SERVER2_THRIFT_CLIENT_RETRY_LIMIT
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|ICLIService
 name|cliService
 init|=
@@ -321,6 +324,8 @@ operator|new
 name|CLIServiceClientWrapper
 argument_list|(
 name|cliService
+argument_list|,
+name|tTransport
 argument_list|)
 return|;
 block|}
@@ -659,7 +664,9 @@ literal|15000
 argument_list|)
 expr_stmt|;
 comment|// Create client
-name|CLIServiceClient
+name|RetryingThriftCLIServiceClient
+operator|.
+name|CLIServiceClientWrapper
 name|cliServiceClient
 init|=
 name|RetryingThriftCLIServiceClientTest
@@ -782,6 +789,14 @@ name|handlerInst
 operator|.
 name|connectCount
 argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|cliServiceClient
+operator|.
+name|closeTransport
+argument_list|()
 expr_stmt|;
 block|}
 block|}

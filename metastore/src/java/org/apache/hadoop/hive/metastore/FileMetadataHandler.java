@@ -163,6 +163,7 @@ specifier|abstract
 class|class
 name|FileMetadataHandler
 block|{
+specifier|protected
 specifier|static
 specifier|final
 name|Log

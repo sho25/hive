@@ -147,8 +147,8 @@ specifier|public
 name|EncodedReader
 name|encodedReader
 parameter_list|(
-name|Long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|DataCache
 name|dataCache
@@ -166,7 +166,7 @@ return|return
 operator|new
 name|EncodedReaderImpl
 argument_list|(
-name|fileId
+name|fileKey
 argument_list|,
 name|types
 argument_list|,

@@ -21,21 +21,21 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|slf4j
+name|util
 operator|.
-name|Logger
+name|Iterator
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|slf4j
+name|util
 operator|.
-name|LoggerFactory
+name|List
 import|;
 end_import
 
@@ -151,31 +151,21 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|slf4j
 operator|.
-name|ArrayList
+name|Logger
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|slf4j
 operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
+name|LoggerFactory
 import|;
 end_import
 

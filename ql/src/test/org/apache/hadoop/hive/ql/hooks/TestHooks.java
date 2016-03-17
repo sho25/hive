@@ -391,18 +391,10 @@ name|assertEquals
 argument_list|(
 literal|"select 'AAA' from t1"
 argument_list|,
-name|HiveConf
-operator|.
-name|getVar
-argument_list|(
 name|conf
-argument_list|,
-name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-argument_list|)
+name|getQueryString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

@@ -843,6 +843,8 @@ argument_list|,
 name|serviceUGI
 argument_list|,
 name|httpUGI
+argument_list|,
+name|hiveAuthFactory
 argument_list|)
 decl_stmt|;
 comment|// Context handler

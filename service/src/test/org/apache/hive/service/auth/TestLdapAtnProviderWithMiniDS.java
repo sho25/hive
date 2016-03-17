@@ -764,7 +764,9 @@ name|ldapProvider
 operator|=
 operator|new
 name|LdapAuthenticationProviderImpl
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|ldapProvider
 operator|.

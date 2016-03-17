@@ -182,7 +182,7 @@ literal|"NUM_SUCCEEDED_TASKS"
 block|,
 literal|"TOTAL_LAUNCHED_TASKS"
 block|,
-literal|"CPU_TIME_MILLIS"
+literal|"CPU_MILLISECONDS"
 block|}
 expr_stmt|;
 name|hiveConf

@@ -360,21 +360,21 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|protected
 specifier|static
 name|MiniHS2
 name|miniHS2
 init|=
 literal|null
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 name|MiniHiveKdc
 name|miniHiveKdc
 init|=
 literal|null
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 name|Map
 argument_list|<
@@ -393,7 +393,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Connection
 name|hs2Conn
 decl_stmt|;
@@ -1130,7 +1130,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Verify the config property value    * @param propertyName    * @param expectedValue    * @throws Exception    */
-specifier|private
+specifier|protected
 name|void
 name|verifyProperty
 parameter_list|(
@@ -1212,7 +1212,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Store the given token in the UGI
-specifier|private
+specifier|protected
 name|void
 name|storeToken
 parameter_list|(

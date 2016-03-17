@@ -82,8 +82,8 @@ comment|/**    * Gets file data for particular offsets. The range list is modifi
 name|DiskRangeList
 name|getFileData
 parameter_list|(
-name|long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|DiskRangeList
 name|range
@@ -103,8 +103,8 @@ name|long
 index|[]
 name|putFileData
 parameter_list|(
-name|long
-name|fileId
+name|Object
+name|fileKey
 parameter_list|,
 name|DiskRange
 index|[]

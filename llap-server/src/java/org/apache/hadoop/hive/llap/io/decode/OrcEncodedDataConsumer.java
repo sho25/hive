@@ -87,6 +87,24 @@ name|llap
 operator|.
 name|counters
 operator|.
+name|LlapIOCounters
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|counters
+operator|.
 name|QueryFragmentCounters
 import|;
 end_import
@@ -491,6 +509,7 @@ argument_list|,
 name|queueMetrics
 argument_list|)
 expr_stmt|;
+comment|// TODO: get rid of this
 name|this
 operator|.
 name|skipCorrupt
@@ -535,7 +554,6 @@ name|size
 argument_list|()
 index|]
 expr_stmt|;
-comment|// TODO: get rid of this
 name|codec
 operator|=
 name|WriterImpl
@@ -927,9 +945,7 @@ name|counters
 operator|.
 name|incrCounter
 argument_list|(
-name|QueryFragmentCounters
-operator|.
-name|Counter
+name|LlapIOCounters
 operator|.
 name|ROWS_EMITTED
 argument_list|,
@@ -941,11 +957,9 @@ name|counters
 operator|.
 name|incrTimeCounter
 argument_list|(
-name|QueryFragmentCounters
+name|LlapIOCounters
 operator|.
-name|Counter
-operator|.
-name|DECODE_TIME_US
+name|DECODE_TIME_NS
 argument_list|,
 name|startTime
 argument_list|)
@@ -954,9 +968,7 @@ name|counters
 operator|.
 name|incrCounter
 argument_list|(
-name|QueryFragmentCounters
-operator|.
-name|Counter
+name|LlapIOCounters
 operator|.
 name|NUM_VECTOR_BATCHES
 argument_list|,
@@ -967,9 +979,7 @@ name|counters
 operator|.
 name|incrCounter
 argument_list|(
-name|QueryFragmentCounters
-operator|.
-name|Counter
+name|LlapIOCounters
 operator|.
 name|NUM_DECODED_BATCHES
 argument_list|)

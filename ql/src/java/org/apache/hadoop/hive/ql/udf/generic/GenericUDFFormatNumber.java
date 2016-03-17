@@ -169,6 +169,24 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ConstantObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|ObjectInspector
 import|;
 end_import
@@ -188,6 +206,26 @@ operator|.
 name|objectinspector
 operator|.
 name|PrimitiveObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
 import|;
 end_import
 
@@ -326,7 +364,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Generic UDF for format_number function  *<code>FORMAT_NUMBER(X, D)</code>.  * This is supposed to function like MySQL's FORMAT,  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#  * function_format  *  * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
+comment|/**  * Generic UDF for format_number function  *<code>FORMAT_NUMBER(X, D or F)</code>.  * This is supposed to function like MySQL's FORMAT,  * http://dev.mysql.com/doc/refman/5.1/en/string-functions.html#  * function_format  *  * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
 end_comment
 
 begin_class
@@ -339,9 +377,11 @@ literal|"format_number"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(X, D) - Formats the number X to "
+literal|"_FUNC_(X, D or F) - Formats the number X to "
 operator|+
-literal|"a format like '#,###,###.##', rounded to D decimal places,"
+literal|"a format like '#,###,###.##', rounded to D decimal places, Or"
+operator|+
+literal|" Uses the format specified F to format,"
 operator|+
 literal|" and returns the result as a string. If D is 0, the result"
 operator|+
@@ -355,7 +395,13 @@ literal|"Example:\n"
 operator|+
 literal|"> SELECT _FUNC_(12332.123456, 4) FROM src LIMIT 1;\n"
 operator|+
-literal|"  '12,332.1235'"
+literal|"  '12,332.1235'\n"
+operator|+
+literal|"> SELECT _FUNC_(12332.123456, '##################.###') FROM"
+operator|+
+literal|" src LIMIT 1;\n"
+operator|+
+literal|"  '12332.123'"
 argument_list|)
 specifier|public
 class|class
@@ -411,6 +457,11 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+specifier|private
+specifier|transient
+name|PrimitiveCategory
+name|dType
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -437,7 +488,7 @@ throw|throw
 operator|new
 name|UDFArgumentLengthException
 argument_list|(
-literal|"The function FORMAT_NUMBER(X, D) needs two arguments."
+literal|"The function FORMAT_NUMBER(X, D or F) needs two arguments."
 argument_list|)
 throw|;
 block|}
@@ -586,6 +637,14 @@ operator|+
 name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
+operator|+
+literal|"\""
+operator|+
+literal|" or \""
+operator|+
+name|serdeConstants
+operator|.
+name|STRING_TYPE_NAME
 operator|+
 literal|"\", but \""
 operator|+
@@ -733,12 +792,16 @@ literal|"\" was found."
 argument_list|)
 throw|;
 block|}
-switch|switch
-condition|(
+name|dType
+operator|=
 name|dObjectInspector
 operator|.
 name|getPrimitiveCategory
 argument_list|()
+expr_stmt|;
+switch|switch
+condition|(
+name|dType
 condition|)
 block|{
 case|case
@@ -756,6 +819,82 @@ case|:
 case|case
 name|LONG
 case|:
+break|break;
+case|case
+name|STRING
+case|:
+if|if
+condition|(
+operator|!
+operator|(
+name|arguments
+index|[
+literal|1
+index|]
+operator|instanceof
+name|ConstantObjectInspector
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|UDFArgumentTypeException
+argument_list|(
+literal|1
+argument_list|,
+literal|"Format string passed must be a constant STRING."
+operator|+
+name|arguments
+index|[
+literal|1
+index|]
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+throw|;
+block|}
+name|ConstantObjectInspector
+name|constantOI
+init|=
+operator|(
+name|ConstantObjectInspector
+operator|)
+name|arguments
+index|[
+literal|1
+index|]
+decl_stmt|;
+name|String
+name|fValue
+init|=
+name|constantOI
+operator|.
+name|getWritableConstantValue
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
+name|DecimalFormat
+name|dFormat
+init|=
+operator|new
+name|DecimalFormat
+argument_list|(
+name|fValue
+argument_list|)
+decl_stmt|;
+name|numberFormat
+operator|.
+name|applyPattern
+argument_list|(
+name|dFormat
+operator|.
+name|toPattern
+argument_list|()
+argument_list|)
+expr_stmt|;
 break|break;
 default|default:
 throw|throw
@@ -795,6 +934,14 @@ operator|+
 name|serdeConstants
 operator|.
 name|BIGINT_TYPE_NAME
+operator|+
+literal|"\""
+operator|+
+literal|" or \""
+operator|+
+name|serdeConstants
+operator|.
+name|STRING_TYPE_NAME
 operator|+
 literal|"\", but \""
 operator|+
@@ -874,6 +1021,19 @@ return|return
 literal|null
 return|;
 block|}
+if|if
+condition|(
+operator|!
+name|dType
+operator|.
+name|equals
+argument_list|(
+name|PrimitiveCategory
+operator|.
+name|STRING
+argument_list|)
+condition|)
+block|{
 name|int
 name|dValue
 init|=
@@ -1003,6 +1163,7 @@ name|toPattern
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|double
 name|xDoubleValue

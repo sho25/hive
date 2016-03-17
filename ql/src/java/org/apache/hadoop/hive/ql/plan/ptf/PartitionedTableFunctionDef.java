@@ -580,6 +580,13 @@ name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|builder
+operator|.
+name|append
+argument_list|(
+literal|" "
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|expression
@@ -591,14 +598,56 @@ name|PTFInvocationSpec
 operator|.
 name|Order
 operator|.
-name|DESC
+name|ASC
 condition|)
 block|{
 name|builder
 operator|.
 name|append
 argument_list|(
-literal|"(DESC)"
+literal|"ASC "
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|builder
+operator|.
+name|append
+argument_list|(
+literal|"DESC "
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|expression
+operator|.
+name|getNullOrder
+argument_list|()
+operator|==
+name|PTFInvocationSpec
+operator|.
+name|NullOrder
+operator|.
+name|NULLS_FIRST
+condition|)
+block|{
+name|builder
+operator|.
+name|append
+argument_list|(
+literal|"NULLS FIRST"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|builder
+operator|.
+name|append
+argument_list|(
+literal|"NULLS LAST"
 argument_list|)
 expr_stmt|;
 block|}

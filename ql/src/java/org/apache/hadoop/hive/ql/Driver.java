@@ -3303,18 +3303,14 @@ name|getHiveOperation
 argument_list|()
 argument_list|,
 name|schema
+argument_list|,
+name|queryDisplay
 argument_list|)
 expr_stmt|;
 name|conf
 operator|.
-name|setVar
+name|setQueryString
 argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-argument_list|,
 name|queryStr
 argument_list|)
 expr_stmt|;
@@ -4803,6 +4799,7 @@ block|}
 block|}
 block|}
 block|}
+comment|// column authorization is checked through table scan operators.
 name|getTablePartitionUsedColumns
 argument_list|(
 name|op
@@ -4838,6 +4835,7 @@ range|:
 name|inputs
 control|)
 block|{
+comment|// if read is not direct, we do not need to check its autho.
 if|if
 condition|(
 name|read
@@ -4848,6 +4846,12 @@ operator|||
 name|read
 operator|.
 name|isPathType
+argument_list|()
+operator|||
+operator|!
+name|read
+operator|.
+name|isDirect
 argument_list|()
 condition|)
 block|{
@@ -4894,6 +4898,42 @@ operator|.
 name|getTable
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|isView
+argument_list|()
+operator|&&
+name|sem
+operator|instanceof
+name|SemanticAnalyzer
+condition|)
+block|{
+name|tab2Cols
+operator|.
+name|put
+argument_list|(
+name|tbl
+argument_list|,
+name|sem
+operator|.
+name|getColumnAccessInfo
+argument_list|()
+operator|.
+name|getTableToColumnAccessMap
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|read
@@ -5236,18 +5276,22 @@ argument_list|()
 control|)
 block|{
 name|TableScanOperator
-name|topOp
+name|tableScanOp
 init|=
 name|topOpMap
 operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|TableScanOperator
+if|if
+condition|(
+operator|!
 name|tableScanOp
-init|=
-name|topOp
-decl_stmt|;
+operator|.
+name|isInsideView
+argument_list|()
+condition|)
+block|{
 name|Table
 name|tbl
 init|=
@@ -5333,9 +5377,12 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//map may not contain all sources, since input list may have been optimized out
-comment|//or non-existent tho such sources may still be referenced by the TableScanOperator
-comment|//if it's null then the partition probably doesn't exist so let's use table permission
+comment|// map may not contain all sources, since input list may have been
+comment|// optimized out
+comment|// or non-existent tho such sources may still be referenced by the
+comment|// TableScanOperator
+comment|// if it's null then the partition probably doesn't exist so let's use
+comment|// table permission
 if|if
 condition|(
 name|tbl
@@ -5498,6 +5545,7 @@ argument_list|,
 name|existingCols
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -8734,18 +8782,10 @@ comment|// hide sensitive information during query redaction.
 name|String
 name|queryStr
 init|=
-name|HiveConf
-operator|.
-name|getVar
-argument_list|(
 name|conf
-argument_list|,
-name|HiveConf
 operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYSTRING
-argument_list|)
+name|getQueryString
+argument_list|()
 decl_stmt|;
 name|maxthreads
 operator|=
@@ -9385,13 +9425,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|queryDisplay
-operator|.
-name|addTask
-argument_list|(
-name|task
-argument_list|)
-expr_stmt|;
 name|TaskRunner
 name|runner
 init|=
@@ -9449,7 +9482,7 @@ argument_list|)
 expr_stmt|;
 name|queryDisplay
 operator|.
-name|setTaskCompleted
+name|setTaskResult
 argument_list|(
 name|tskRun
 operator|.

@@ -428,9 +428,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 argument_list|,
@@ -445,9 +443,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|,
@@ -488,9 +484,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -834,9 +828,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -931,9 +923,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -1046,9 +1036,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
+name|HiveDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,

@@ -301,6 +301,12 @@ literal|3
 argument_list|)
 block|,
 comment|// vectorized writer
+name|HIVE_13083
+argument_list|(
+literal|4
+argument_list|)
+block|,
+comment|// decimal writer updating present stream wrongly
 comment|// Don't use any magic numbers here except for the below:
 name|FUTURE
 parameter_list|(
@@ -484,7 +490,7 @@ name|CURRENT_WRITER
 init|=
 name|WriterVersion
 operator|.
-name|HIVE_12055
+name|HIVE_13083
 decl_stmt|;
 specifier|public
 enum|enum
@@ -903,6 +909,9 @@ name|tableProperties
 argument_list|,
 name|conf
 argument_list|)
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|String

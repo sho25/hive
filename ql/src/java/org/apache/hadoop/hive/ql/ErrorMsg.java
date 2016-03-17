@@ -1845,6 +1845,15 @@ argument_list|,
 literal|"Distinct keyword is not support in current context"
 argument_list|)
 block|,
+name|NONACID_COMPACTION_NOT_SUPPORTED
+argument_list|(
+literal|10286
+argument_list|,
+literal|"Compaction is not allowed on non-ACID table {0}.{1}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|UPDATEDELETE_PARSE_ERROR
 argument_list|(
 literal|10290
