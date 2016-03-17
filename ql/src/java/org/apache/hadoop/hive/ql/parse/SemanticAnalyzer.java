@@ -24507,7 +24507,6 @@ operator|)
 return|;
 block|}
 comment|/**    * This function is a wrapper of parseInfo.getGroupByForClause which    * automatically translates SELECT DISTINCT a,b,c to SELECT a,b,c GROUP BY    * a,b,c.    */
-specifier|static
 name|List
 argument_list|<
 name|ASTNode
@@ -24520,6 +24519,8 @@ parameter_list|,
 name|String
 name|dest
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 if|if
 condition|(
@@ -24679,6 +24680,23 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|isCBOExecuted
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"SELECT DISTINCT not allowed in the presence of windowing"
+operator|+
+literal|" functions when CBO is off"
+argument_list|)
+throw|;
+block|}
 continue|continue;
 block|}
 name|result
@@ -36201,6 +36219,8 @@ parameter_list|,
 name|QB
 name|qb
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|List
 argument_list|<
