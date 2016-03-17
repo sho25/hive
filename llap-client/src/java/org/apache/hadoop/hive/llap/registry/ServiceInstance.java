@@ -82,6 +82,12 @@ name|int
 name|getShufflePort
 parameter_list|()
 function_decl|;
+comment|/**    * OutputFormat endpoint for service instance    *    * @return    */
+specifier|public
+name|int
+name|getOutputFormatPort
+parameter_list|()
+function_decl|;
 comment|/**    * Return the last known state (without refreshing)    *     * @return    */
 specifier|public
 name|boolean
