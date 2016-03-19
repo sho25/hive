@@ -99,8 +99,7 @@ name|String
 name|type
 decl_stmt|;
 name|PrintStream
-index|[]
-name|outputStreams
+name|os
 decl_stmt|;
 specifier|public
 name|StreamPrinter
@@ -112,8 +111,7 @@ name|String
 name|type
 parameter_list|,
 name|PrintStream
-modifier|...
-name|outputStreams
+name|os
 parameter_list|)
 block|{
 name|this
@@ -130,9 +128,9 @@ name|type
 expr_stmt|;
 name|this
 operator|.
-name|outputStreams
+name|os
 operator|=
-name|outputStreams
+name|os
 expr_stmt|;
 block|}
 annotation|@
@@ -192,14 +190,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-for|for
-control|(
-name|PrintStream
-name|os
-range|:
-name|outputStreams
-control|)
-block|{
 name|os
 operator|.
 name|println
@@ -211,7 +201,6 @@ operator|+
 name|line
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 else|else
@@ -230,14 +219,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-for|for
-control|(
-name|PrintStream
-name|os
-range|:
-name|outputStreams
-control|)
-block|{
 name|os
 operator|.
 name|println
@@ -245,7 +226,6 @@ argument_list|(
 name|line
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 name|br
