@@ -942,7 +942,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
 specifier|static
 name|Connection
 name|getConnection
@@ -1090,7 +1089,6 @@ return|return
 name|conn
 return|;
 block|}
-specifier|private
 specifier|static
 name|void
 name|closeResources

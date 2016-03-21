@@ -3750,6 +3750,37 @@ operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
 argument_list|)
 block|,
+name|METASTORE_DIRECT_SQL_MAX_QUERY_LENGTH
+argument_list|(
+literal|"hive.direct.sql.max.query.length"
+argument_list|,
+literal|100
+argument_list|,
+literal|"The maximum\n"
+operator|+
+literal|" size of a query string (in KB)."
+argument_list|)
+block|,
+name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_IN_CLAUSE
+argument_list|(
+literal|"hive.direct.sql.max.elements.in.clause"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"The maximum number of values in a IN clause. Once exceeded, it will be broken into\n"
+operator|+
+literal|" multiple OR separated IN clauses."
+argument_list|)
+block|,
+name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_VALUES_CLAUSE
+argument_list|(
+literal|"hive.direct.sql.max.elements.values.clause"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"The maximum number of values in a VALUES clause for INSERT statement."
+argument_list|)
+block|,
 name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
 argument_list|(
 literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
