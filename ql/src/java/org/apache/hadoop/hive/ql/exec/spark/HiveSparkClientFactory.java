@@ -1001,6 +1001,13 @@ name|startsWith
 argument_list|(
 literal|"hbase"
 argument_list|)
+operator|||
+name|propertyName
+operator|.
+name|startsWith
+argument_list|(
+literal|"zookeeper.znode"
+argument_list|)
 condition|)
 block|{
 comment|// Add HBase related configuration to Spark because in security mode, Spark needs it
