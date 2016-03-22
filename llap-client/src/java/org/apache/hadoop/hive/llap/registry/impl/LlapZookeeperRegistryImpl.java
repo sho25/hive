@@ -3453,6 +3453,14 @@ name|start
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Init closeable utils in case register is not called (see HIVE-13322)
+name|CloseableUtils
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override
