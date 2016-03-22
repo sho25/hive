@@ -2396,6 +2396,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 if|if
@@ -2518,6 +2520,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 if|if
@@ -6194,6 +6198,11 @@ name|String
 name|defaultPartName
 decl_stmt|;
 specifier|private
+specifier|final
+name|DB
+name|dbType
+decl_stmt|;
+specifier|private
 name|PartitionFilterGenerator
 parameter_list|(
 name|Table
@@ -6216,6 +6225,9 @@ name|dbHasJoinCastBug
 parameter_list|,
 name|String
 name|defaultPartName
+parameter_list|,
+name|DB
+name|dbType
 parameter_list|)
 block|{
 name|this
@@ -6258,6 +6270,12 @@ name|defaultPartName
 operator|=
 name|defaultPartName
 expr_stmt|;
+name|this
+operator|.
+name|dbType
+operator|=
+name|dbType
+expr_stmt|;
 block|}
 comment|/**      * Generate the ANSI SQL92 filter for the given expression tree      * @param table the table being queried      * @param params the ordered parameters for the resulting expression      * @param joins the joins necessary for the resulting expression      * @return the string representation of the expression tree      */
 specifier|private
@@ -6288,6 +6306,9 @@ name|dbHasJoinCastBug
 parameter_list|,
 name|String
 name|defaultPartName
+parameter_list|,
+name|DB
+name|dbType
 parameter_list|)
 throws|throws
 name|MetaException
@@ -6326,6 +6347,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 name|tree
@@ -7034,6 +7057,27 @@ operator|.
 name|Date
 condition|)
 block|{
+if|if
+condition|(
+name|dbType
+operator|==
+name|DB
+operator|.
+name|ORACLE
+condition|)
+block|{
+comment|// Oracle requires special treatment... as usual.
+name|tableValue
+operator|=
+literal|"TO_DATE("
+operator|+
+name|tableValue
+operator|+
+literal|", 'YYYY-MM-DD')"
+expr_stmt|;
+block|}
+else|else
+block|{
 name|tableValue
 operator|=
 literal|"cast("
@@ -7042,6 +7086,7 @@ name|tableValue
 operator|+
 literal|" as date)"
 expr_stmt|;
+block|}
 block|}
 comment|// Workaround for HIVE_DEFAULT_PARTITION - ignore it like JDO does, for now.
 name|String
