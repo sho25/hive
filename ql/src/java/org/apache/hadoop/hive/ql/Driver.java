@@ -2793,8 +2793,6 @@ argument_list|(
 name|queryState
 argument_list|)
 expr_stmt|;
-comment|// Generate new query id if it's not set for CLI case. If it's session based,
-comment|// query id is passed in from the client or initialized when the session starts.
 name|String
 name|queryId
 init|=
@@ -2809,39 +2807,6 @@ operator|.
 name|HIVEQUERYID
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|queryId
-operator|==
-literal|null
-operator|||
-name|queryId
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-name|queryId
-operator|=
-name|QueryPlan
-operator|.
-name|makeQueryId
-argument_list|()
-expr_stmt|;
-name|conf
-operator|.
-name|setVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYID
-argument_list|,
-name|queryId
-argument_list|)
-expr_stmt|;
-block|}
 comment|//save some info for webUI for use after plan is freed
 name|this
 operator|.
