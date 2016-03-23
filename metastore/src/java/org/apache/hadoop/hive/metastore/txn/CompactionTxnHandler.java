@@ -790,6 +790,12 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+comment|//need a separate stmt for executeUpdate() otherwise it will close the ResultSet(HIVE-12725)
+name|Statement
+name|updStmt
+init|=
+literal|null
+decl_stmt|;
 name|ResultSet
 name|rs
 init|=
@@ -869,6 +875,13 @@ return|return
 literal|null
 return|;
 block|}
+name|updStmt
+operator|=
+name|dbConn
+operator|.
+name|createStatement
+argument_list|()
+expr_stmt|;
 do|do
 block|{
 name|CompactionInfo
@@ -992,7 +1005,7 @@ expr_stmt|;
 name|int
 name|updCount
 init|=
-name|stmt
+name|updStmt
 operator|.
 name|executeUpdate
 argument_list|(
@@ -1138,6 +1151,11 @@ throw|;
 block|}
 finally|finally
 block|{
+name|closeStmt
+argument_list|(
+name|updStmt
+argument_list|)
+expr_stmt|;
 name|close
 argument_list|(
 name|rs
@@ -3494,7 +3512,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Record the highest txn id that the {@code ci} compaction job will pay attention to.    */
+comment|/**    * Record the highest txn id that the {@code ci} compaction job will pay attention to.    * This is the highest resolved txn id, i.e. such that there are no open txns with lower ids.    */
 specifier|public
 name|void
 name|setCompactionHighestTxnId

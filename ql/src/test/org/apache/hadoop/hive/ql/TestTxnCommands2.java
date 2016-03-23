@@ -1585,11 +1585,6 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-argument_list|(
-literal|"alter table"
-argument_list|)
-annotation|@
 name|Test
 specifier|public
 name|void
@@ -5109,6 +5104,16 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|int
+name|maxIter
+init|=
+literal|10
+decl_stmt|;
+name|int
+name|iterCount
+init|=
+literal|0
+decl_stmt|;
 while|while
 condition|(
 name|houseKeeperService
@@ -5119,6 +5124,27 @@ operator|<=
 name|lastCount
 condition|)
 block|{
+if|if
+condition|(
+name|iterCount
+operator|++
+operator|>=
+name|maxIter
+condition|)
+block|{
+comment|//prevent test hangs
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"HouseKeeper didn't run after "
+operator|+
+name|iterCount
+operator|+
+literal|" waits"
+argument_list|)
+throw|;
+block|}
 try|try
 block|{
 name|Thread

@@ -60,7 +60,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * And implmentation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  * For the purposes of {@link #isTxnRangeValid} this class will view a transaction as valid if it  * is committed or aborted.  Additionally it will return none if there are any open transactions  * below the max transaction given, since we don't want to compact above open transactions.  For  * {@link #isTxnValid} it will still view a transaction as valid only if it is committed.  These  * produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  */
+comment|/**  * And implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  * For the purposes of {@link #isTxnRangeValid} this class will view a transaction as valid if it  * is committed or aborted.  Additionally it will return none if there are any open transactions  * below the max transaction given, since we don't want to compact above open transactions.  For  * {@link #isTxnValid} it will still view a transaction as valid only if it is committed.  These  * produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  */
 end_comment
 
 begin_class

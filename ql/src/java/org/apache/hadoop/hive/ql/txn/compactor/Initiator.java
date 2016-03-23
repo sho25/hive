@@ -576,15 +576,48 @@ block|{
 name|long
 name|startedAt
 init|=
-name|System
+operator|-
+literal|1
+decl_stmt|;
+name|TxnStore
 operator|.
-name|currentTimeMillis
-argument_list|()
+name|MutexAPI
+operator|.
+name|LockHandle
+name|handle
+init|=
+literal|null
 decl_stmt|;
 comment|// Wrap the inner parts of the loop in a catch throwable so that any errors in the loop
 comment|// don't doom the entire thread.
 try|try
 block|{
+name|handle
+operator|=
+name|txnHandler
+operator|.
+name|getMutexAPI
+argument_list|()
+operator|.
+name|acquireLock
+argument_list|(
+name|TxnStore
+operator|.
+name|MUTEX_KEY
+operator|.
+name|Initiator
+operator|.
+name|name
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|startedAt
+operator|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+expr_stmt|;
 comment|//todo: add method to only get current i.e. skip history - more efficient
 name|ShowCompactResponse
 name|currentCompactions
@@ -776,6 +809,8 @@ block|}
 comment|// Check if we already have initiated or are working on a compaction for this partition
 comment|// or table.  If so, skip it.  If we are just waiting on cleaning we can still check,
 comment|// as it may be time to compact again even though we haven't cleaned.
+comment|//todo: this is not robust.  You can easily run Alter Table to start a compaction between
+comment|//the time currentCompactions is generated and now
 if|if
 condition|(
 name|lookForCurrentCompactions
@@ -890,6 +925,7 @@ argument_list|,
 name|t
 argument_list|)
 decl_stmt|;
+comment|/*Future thought: checkForCompaction will check a lot of file metadata and may be expensive.               * Long term we should consider having a thread pool here and running checkForCompactionS               * in parallel*/
 name|CompactionType
 name|compactionNeeded
 init|=
@@ -988,6 +1024,22 @@ name|t
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|handle
+operator|!=
+literal|null
+condition|)
+block|{
+name|handle
+operator|.
+name|releaseLocks
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 name|long
 name|elapsedTime

@@ -478,6 +478,23 @@ operator|+
 literal|" CC_HADOOP_JOB_ID varchar(32))"
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE AUX_TABLE ("
+operator|+
+literal|"  MT_KEY1 varchar(128) NOT NULL,"
+operator|+
+literal|"  MT_KEY2 bigint NOT NULL,"
+operator|+
+literal|"  MT_COMMENT varchar(255),"
+operator|+
+literal|"  PRIMARY KEY(MT_KEY1, MT_KEY2)"
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
 name|conn
 operator|.
 name|commit
@@ -692,6 +709,13 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"COMPLETED_COMPACTIONS"
+argument_list|)
+expr_stmt|;
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"AUX_TABLE"
 argument_list|)
 expr_stmt|;
 name|conn

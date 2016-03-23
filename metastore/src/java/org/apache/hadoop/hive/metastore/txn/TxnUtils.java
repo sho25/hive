@@ -449,7 +449,9 @@ operator|.
 name|getId
 argument_list|()
 expr_stmt|;
+comment|//todo: only add Aborted
 block|}
+comment|//remove all exceptions< minOpenTxn
 name|highWater
 operator|=
 name|minOpenTxn
