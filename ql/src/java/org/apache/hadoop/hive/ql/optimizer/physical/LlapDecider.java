@@ -941,7 +941,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+name|LLAP_ALLOW_PERMANENT_FNS
 argument_list|)
 expr_stmt|;
 comment|// Don't user uber in "all" mode - everything can go into LLAP, which is better than uber.

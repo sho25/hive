@@ -2083,7 +2083,18 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+name|LLAP_ALLOW_PERMANENT_FNS
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS
 operator|.
 name|varname
 argument_list|)
@@ -10503,6 +10514,15 @@ operator|+
 literal|"jars in LLAP; if the jars are not pre-localized, the UDFs will simply fail to load."
 argument_list|)
 block|,
+name|LLAP_ALLOW_PERMANENT_FNS
+argument_list|(
+literal|"hive.llap.allow.permanent.fns"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP decider should allow permanent UDFs."
+argument_list|)
+block|,
 name|LLAP_EXECUTION_MODE
 argument_list|(
 literal|"hive.llap.execution.mode"
@@ -10912,9 +10932,9 @@ argument_list|,
 literal|"llap.daemon.communicator.num.threads"
 argument_list|)
 block|,
-name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS
 argument_list|(
-literal|"hive.llap.daemon.allow.permanent.fns"
+literal|"hive.llap.daemon.download.permanent.fns"
 argument_list|,
 literal|false
 argument_list|,
