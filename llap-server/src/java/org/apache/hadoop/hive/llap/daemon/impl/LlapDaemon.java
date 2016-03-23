@@ -2422,7 +2422,7 @@ name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
 decl_stmt|;
 name|boolean
-name|llapIoEnabled
+name|isLlapIo
 init|=
 name|HiveConf
 operator|.
@@ -2435,6 +2435,8 @@ operator|.
 name|ConfVars
 operator|.
 name|LLAP_IO_ENABLED
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|llapDaemon
@@ -2448,7 +2450,7 @@ name|numExecutors
 argument_list|,
 name|executorMemoryBytes
 argument_list|,
-name|llapIoEnabled
+name|isLlapIo
 argument_list|,
 name|isDirectCache
 argument_list|,

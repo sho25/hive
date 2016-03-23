@@ -10277,7 +10277,7 @@ name|LLAP_IO_ENABLED
 argument_list|(
 literal|"hive.llap.io.enabled"
 argument_list|,
-literal|false
+literal|null
 argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)

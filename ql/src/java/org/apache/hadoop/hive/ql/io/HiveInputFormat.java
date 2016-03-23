@@ -1275,6 +1275,11 @@ argument_list|,
 name|ConfVars
 operator|.
 name|LLAP_IO_ENABLED
+argument_list|,
+name|LlapProxy
+operator|.
+name|isDaemon
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -1290,7 +1295,7 @@ name|inputFormat
 operator|instanceof
 name|LlapWrappableInputFormatInterface
 decl_stmt|,
-name|isVector
+name|isVectorized
 init|=
 name|Utilities
 operator|.
@@ -1305,7 +1310,7 @@ operator|!
 name|isSupported
 operator|||
 operator|!
-name|isVector
+name|isVectorized
 condition|)
 block|{
 name|LOG
@@ -1316,13 +1321,13 @@ literal|"Not using llap for "
 operator|+
 name|inputFormat
 operator|+
-literal|": "
+literal|": supported = "
 operator|+
 name|isSupported
 operator|+
-literal|", "
+literal|", vectorized = "
 operator|+
-name|isVector
+name|isVectorized
 argument_list|)
 expr_stmt|;
 return|return
@@ -1390,29 +1395,6 @@ name|getInputFormat
 argument_list|(
 name|inputFormat
 argument_list|)
-argument_list|)
-return|;
-block|}
-specifier|public
-specifier|static
-name|boolean
-name|isLlapEnabled
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
-block|{
-comment|// Don't check IO - it needn't be initialized on client.
-return|return
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|LLAP_IO_ENABLED
 argument_list|)
 return|;
 block|}

@@ -1388,6 +1388,8 @@ operator|.
 name|ConfVars
 operator|.
 name|LLAP_IO_ENABLED
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|boolean

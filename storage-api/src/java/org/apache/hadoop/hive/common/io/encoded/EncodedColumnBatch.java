@@ -404,7 +404,6 @@ block|{
 return|return
 name|batchKey
 return|;
-comment|// TODO#: who uses this? can we remove fileId?
 block|}
 specifier|public
 name|ColumnStreamData
