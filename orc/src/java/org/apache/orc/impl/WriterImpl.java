@@ -1342,6 +1342,25 @@ argument_list|,
 name|this
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"ORC writer created for path: {} with stripeSize: {} blockSize: {}"
+operator|+
+literal|" compression: {} estimatedBufferSize: {}"
+argument_list|,
+name|path
+argument_list|,
+name|defaultStripeSize
+argument_list|,
+name|blockSize
+argument_list|,
+name|compress
+argument_list|,
+name|bufferSize
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|VisibleForTesting
