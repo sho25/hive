@@ -9273,6 +9273,39 @@ operator|+
 literal|"For example: hiveuser,impalauser,hiveadmin,hadoopadmin"
 argument_list|)
 block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GUIDKEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.guidKey"
+argument_list|,
+literal|"uid"
+argument_list|,
+literal|"LDAP attribute name whose values are unique in this LDAP server.\n"
+operator|+
+literal|"For example: uid or CN."
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPMEMBERSHIP_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"member"
+argument_list|,
+literal|"LDAP attribute name on the user entry that references a group, the user belongs to.\n"
+operator|+
+literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPCLASS_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"groupOfNames"
+argument_list|,
+literal|"LDAP attribute name on the group entry that is to be used in LDAP group searches.\n"
+operator|+
+literal|"For example: group, groupOfNames or groupOfUniqueNames."
+argument_list|)
+block|,
 name|HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY
 argument_list|(
 literal|"hive.server2.authentication.ldap.customLDAPQuery"
