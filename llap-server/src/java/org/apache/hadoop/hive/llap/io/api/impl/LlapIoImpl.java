@@ -25,22 +25,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|LogLevels
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -603,21 +587,46 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|LlapIoImpl
-operator|.
-name|class
+literal|"LlapIoImpl"
 argument_list|)
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|LogLevels
-name|LOGL
+name|Logger
+name|ORC_LOGGER
 init|=
-operator|new
-name|LogLevels
+name|LoggerFactory
+operator|.
+name|getLogger
 argument_list|(
-name|LOG
+literal|"LlapIoOrc"
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Logger
+name|CACHE_LOGGER
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+literal|"LlapIoCache"
+argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Logger
+name|LOCKING_LOGGER
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+literal|"LlapIoLocking"
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -709,26 +718,15 @@ argument_list|(
 name|ioMode
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Initializing LLAP IO in "
-operator|+
+literal|"Initializing LLAP IO in {} mode"
+argument_list|,
 name|ioMode
-operator|+
-literal|" mode"
 argument_list|)
 expr_stmt|;
-block|}
 name|String
 name|displayName
 init|=
@@ -810,12 +808,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Started llap daemon metrics with displayName: "
-operator|+
+literal|"Started llap daemon metrics with displayName: {} sessionId: {}"
+argument_list|,
 name|displayName
-operator|+
-literal|" sessionId: "
-operator|+
+argument_list|,
 name|sessionId
 argument_list|)
 expr_stmt|;
@@ -1088,14 +1084,6 @@ argument_list|,
 name|queueMetrics
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
@@ -1103,7 +1091,6 @@ argument_list|(
 literal|"LLAP IO initialized"
 argument_list|)
 expr_stmt|;
-block|}
 name|registerMXBeans
 argument_list|()
 expr_stmt|;

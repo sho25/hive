@@ -371,16 +371,6 @@ name|LlapDaemonQueueMetrics
 name|queueMetrics
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -390,7 +380,6 @@ argument_list|(
 literal|"Initializing ORC column vector producer"
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|metadataCache

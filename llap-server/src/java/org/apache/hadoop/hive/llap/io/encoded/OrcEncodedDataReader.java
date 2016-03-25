@@ -1549,14 +1549,6 @@ name|void
 name|stop
 parameter_list|()
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -1564,7 +1556,6 @@ argument_list|(
 literal|"Encoded reader is being stopped"
 argument_list|)
 expr_stmt|;
-block|}
 name|isStopped
 operator|=
 literal|true
@@ -1652,31 +1643,20 @@ operator|.
 name|startTimeCounter
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing data for "
-operator|+
+literal|"Processing data for {}"
+argument_list|,
 name|split
 operator|.
 name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|processStop
@@ -2127,11 +2107,13 @@ argument_list|)
 expr_stmt|;
 name|stripeReader
 operator|.
-name|setDebugTracing
+name|setTracing
 argument_list|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2297,40 +2279,27 @@ argument_list|(
 name|stripeIx
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Reading stripe "
-operator|+
+literal|"Reading stripe {}: {}, {}"
+argument_list|,
 name|stripeIx
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|stripe
 operator|.
 name|getOffset
 argument_list|()
-operator|+
-literal|", "
-operator|+
+argument_list|,
 name|stripe
 operator|.
 name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|colRgs
 operator|=
 name|readState
@@ -2555,26 +2524,26 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Caching stripe "
-operator|+
+literal|"Caching stripe {} metadata with includes: {}"
+argument_list|,
 name|stripeKey
 operator|.
 name|stripeIx
-operator|+
-literal|" metadata with includes: "
-operator|+
+argument_list|,
 name|DebugUtils
 operator|.
 name|toString
@@ -2607,26 +2576,26 @@ condition|)
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Updating indexes in stripe "
-operator|+
+literal|"Updating indexes in stripe {} metadata for includes: {}"
+argument_list|,
 name|stripeKey
 operator|.
 name|stripeIx
-operator|+
-literal|" metadata for includes: "
-operator|+
+argument_list|,
 name|DebugUtils
 operator|.
 name|toString
@@ -2799,26 +2768,17 @@ operator|.
 name|setDone
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceMttEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"done processing "
-operator|+
+literal|"done processing {}"
+argument_list|,
 name|split
 argument_list|)
 expr_stmt|;
-block|}
 comment|// Close the stripe reader, we are done reading.
 name|cleanupReaders
 argument_list|()
@@ -3672,33 +3632,22 @@ name|fileKey
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Creating reader for "
-operator|+
+literal|"Creating reader for {} ({})"
+argument_list|,
 name|path
-operator|+
-literal|" ("
-operator|+
+argument_list|,
 name|split
 operator|.
 name|getPath
 argument_list|()
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
-block|}
 name|long
 name|startTime
 init|=
@@ -4078,26 +4027,26 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Caching stripe "
-operator|+
+literal|"Caching stripe {} metadata with includes: {}"
+argument_list|,
 name|stripeKey
 operator|.
 name|stripeIx
-operator|+
-literal|" metadata with includes: "
-operator|+
+argument_list|,
 name|DebugUtils
 operator|.
 name|toString
@@ -4123,26 +4072,26 @@ condition|)
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Updating indexes in stripe "
-operator|+
+literal|"Updating indexes in stripe {} metadata for includes: {}"
+argument_list|,
 name|stripeKey
 operator|.
 name|stripeIx
-operator|+
-literal|" metadata for includes: "
-operator|+
+argument_list|,
 name|DebugUtils
 operator|.
 name|toString
@@ -4293,9 +4242,11 @@ condition|)
 continue|continue;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
@@ -4312,15 +4263,13 @@ control|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Unlocking "
-operator|+
+literal|"Unlocking {} at the end of processing"
+argument_list|,
 name|buf
-operator|+
-literal|" at the end of processing"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4566,9 +4515,11 @@ name|isNone
 expr_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
@@ -4579,12 +4530,12 @@ condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"SARG eliminated all RGs for stripe "
-operator|+
+literal|"SARG eliminated all RGs for stripe {}"
+argument_list|,
 name|stripeIx
 argument_list|)
 expr_stmt|;
@@ -4598,16 +4549,14 @@ condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"SARG picked RGs for stripe "
-operator|+
+literal|"SARG picked RGs for stripe {}: {}"
+argument_list|,
 name|stripeIx
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|DebugUtils
 operator|.
 name|toString
@@ -4621,16 +4570,14 @@ else|else
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Will read all "
-operator|+
+literal|"Will read all {} RGs for stripe {}"
+argument_list|,
 name|rgCount
-operator|+
-literal|" RGs for stripe "
-operator|+
+argument_list|,
 name|stripeIx
 argument_list|)
 expr_stmt|;
@@ -4875,7 +4822,7 @@ if|if
 condition|(
 name|LlapIoImpl
 operator|.
-name|LOGL
+name|ORC_LOGGER
 operator|.
 name|isDebugEnabled
 argument_list|()
@@ -4929,7 +4876,7 @@ expr_stmt|;
 block|}
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
 name|debug
 argument_list|(
@@ -4979,36 +4926,21 @@ operator|-
 literal|1
 condition|)
 block|{
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Including stripes from "
-operator|+
+literal|"Including stripes from {} ({}>= {})"
+argument_list|,
 name|stripeIx
-operator|+
-literal|" ("
-operator|+
+argument_list|,
 name|stripeStart
-operator|+
-literal|">= "
-operator|+
+argument_list|,
 name|offset
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
-block|}
 name|stripeIxFrom
 operator|=
 name|stripeIx
@@ -5025,44 +4957,27 @@ name|stripeIxTo
 operator|=
 name|stripeIx
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Including stripes until "
-operator|+
+literal|"Including stripes until {} ({}>= {}); {} stripes"
+argument_list|,
 name|stripeIxTo
-operator|+
-literal|" ("
-operator|+
+argument_list|,
 name|stripeStart
-operator|+
-literal|">= "
-operator|+
+argument_list|,
 name|maxOffset
-operator|+
-literal|"); "
-operator|+
+argument_list|,
 operator|(
 name|stripeIxTo
 operator|-
 name|stripeIxFrom
 operator|)
-operator|+
-literal|" stripes"
 argument_list|)
 expr_stmt|;
-block|}
 break|break;
 block|}
 operator|++
@@ -5077,16 +4992,6 @@ operator|-
 literal|1
 condition|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -5096,7 +5001,6 @@ argument_list|(
 literal|"Not including any stripes - empty split"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
@@ -5115,36 +5019,23 @@ name|stripeIxTo
 operator|=
 name|stripeIx
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceOrcEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Including stripes until "
-operator|+
+literal|"Including stripes until {} (end of file); {} stripes"
+argument_list|,
 name|stripeIx
-operator|+
-literal|" (end of file); "
-operator|+
+argument_list|,
 operator|(
 name|stripeIxTo
 operator|-
 name|stripeIxFrom
 operator|)
-operator|+
-literal|" stripes"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|readState
 operator|=
@@ -5448,31 +5339,26 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceOrcEnabled
-argument_list|()
-operator|&&
-name|LOG
+name|ORC_LOGGER
 operator|.
-name|isInfoEnabled
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
-name|LOG
+name|LlapIoImpl
 operator|.
-name|info
+name|ORC_LOGGER
+operator|.
+name|trace
 argument_list|(
-literal|"Disk ranges after disk read (file "
-operator|+
+literal|"Disk ranges after disk read (file {}, base offset {}): {}"
+argument_list|,
 name|fileKey
-operator|+
-literal|", base offset "
-operator|+
+argument_list|,
 name|baseOffset
-operator|+
-literal|"): "
-operator|+
+argument_list|,
 name|RecordReaderUtils
 operator|.
 name|stringifyDiskRanges

@@ -1847,9 +1847,11 @@ comment|// We are waiting for next block. Either we will get it, or be told we a
 name|boolean
 name|doLogBlocking
 init|=
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceMttEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
 argument_list|()
 operator|&&
 name|isNothingToReport
@@ -1864,7 +1866,7 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"next will block"
 argument_list|)
@@ -1893,7 +1895,7 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"next is unblocked"
 argument_list|)
@@ -1912,9 +1914,11 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceMttEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
 argument_list|()
 operator|&&
 name|lastCvb
@@ -1926,10 +1930,10 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Processing will receive vector "
-operator|+
+literal|"Processing will receive vector {}"
+argument_list|,
 name|lastCvb
 argument_list|)
 expr_stmt|;
@@ -2013,9 +2017,11 @@ name|IOException
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceMttEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
@@ -2023,22 +2029,16 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"close called; closed "
-operator|+
+literal|"close called; closed {}, done {}, err {}, pending {}"
+argument_list|,
 name|isClosed
-operator|+
-literal|", done "
-operator|+
+argument_list|,
 name|isDone
-operator|+
-literal|", err "
-operator|+
+argument_list|,
 name|pendingError
-operator|+
-literal|", pending "
-operator|+
+argument_list|,
 name|pendingData
 operator|.
 name|size
@@ -2112,9 +2112,11 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceMttEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
@@ -2122,22 +2124,16 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"setDone called; closed "
-operator|+
+literal|"setDone called; closed {}, done {}, err {}, pending {}"
+argument_list|,
 name|isClosed
-operator|+
-literal|", done "
-operator|+
+argument_list|,
 name|isDone
-operator|+
-literal|", err "
-operator|+
+argument_list|,
 name|pendingError
-operator|+
-literal|", pending "
-operator|+
+argument_list|,
 name|pendingData
 operator|.
 name|size
@@ -2173,9 +2169,11 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceMttEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
@@ -2183,22 +2181,16 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"consume called; closed "
-operator|+
+literal|"consume called; closed {}, done {}, err {}, pending {}"
+argument_list|,
 name|isClosed
-operator|+
-literal|", done "
-operator|+
+argument_list|,
 name|isDone
-operator|+
-literal|", err "
-operator|+
+argument_list|,
 name|pendingError
-operator|+
-literal|", pending "
-operator|+
+argument_list|,
 name|pendingData
 operator|.
 name|size
@@ -2257,20 +2249,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"setError called; closed "
-operator|+
+literal|"setError called; closed {}, done {}, err {}, pending {}"
+argument_list|,
 name|isClosed
-operator|+
-literal|", done "
-operator|+
+argument_list|,
 name|isDone
-operator|+
-literal|", err "
-operator|+
+argument_list|,
 name|pendingError
-operator|+
-literal|", pending "
-operator|+
+argument_list|,
 name|pendingData
 operator|.
 name|size

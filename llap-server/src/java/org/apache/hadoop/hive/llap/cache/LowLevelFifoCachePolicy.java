@@ -162,16 +162,6 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -181,7 +171,6 @@ argument_list|(
 literal|"FIFO cache policy"
 argument_list|)
 expr_stmt|;
-block|}
 name|buffers
 operator|=
 operator|new
