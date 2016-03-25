@@ -1597,8 +1597,6 @@ argument_list|(
 literal|"Could not clean up file-system handles for UGI: "
 operator|+
 name|ugi
-argument_list|,
-name|exception
 operator|+
 literal|" for "
 operator|+
@@ -1606,6 +1604,8 @@ name|ci
 operator|.
 name|getFullPartitionName
 argument_list|()
+argument_list|,
+name|exception
 argument_list|)
 expr_stmt|;
 block|}
