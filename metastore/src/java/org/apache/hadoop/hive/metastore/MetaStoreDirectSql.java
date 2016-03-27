@@ -3484,14 +3484,10 @@ literal|3
 index|]
 argument_list|)
 decl_stmt|;
-comment|// A partition must have either everything set, or nothing set if it's a view.
+comment|// A partition must have at least sdId and serdeId set, or nothing set if it's a view.
 if|if
 condition|(
 name|sdId
-operator|==
-literal|null
-operator|||
-name|colId
 operator|==
 literal|null
 operator|||
@@ -3544,10 +3540,6 @@ argument_list|(
 literal|"Unexpected null for one of the IDs, SD "
 operator|+
 name|sdId
-operator|+
-literal|", column "
-operator|+
-name|colId
 operator|+
 literal|", serde "
 operator|+
@@ -3685,10 +3677,6 @@ condition|)
 continue|continue;
 comment|// Probably a view.
 assert|assert
-name|colId
-operator|!=
-literal|null
-operator|&&
 name|serdeId
 operator|!=
 literal|null
@@ -3932,6 +3920,13 @@ argument_list|(
 name|sd
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|colId
+operator|!=
+literal|null
+condition|)
+block|{
 name|List
 argument_list|<
 name|FieldSchema
@@ -3991,6 +3986,7 @@ argument_list|(
 name|cols
 argument_list|)
 expr_stmt|;
+block|}
 comment|// We assume each SD has an unique serde.
 name|SerDeInfo
 name|serde
@@ -4300,14 +4296,16 @@ name|trimCommaList
 argument_list|(
 name|sdSb
 argument_list|)
-decl_stmt|,
+decl_stmt|;
+name|String
 name|serdeIds
 init|=
 name|trimCommaList
 argument_list|(
 name|serdeSb
 argument_list|)
-decl_stmt|,
+decl_stmt|;
+name|String
 name|colIds
 init|=
 name|trimCommaList
