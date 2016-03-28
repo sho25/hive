@@ -199,7 +199,7 @@ return|return
 operator|(
 name|timestampColVector
 operator|.
-name|getEpochDay
+name|getTime
 argument_list|(
 name|index
 argument_list|)
@@ -208,7 +208,7 @@ literal|0
 operator|||
 name|timestampColVector
 operator|.
-name|getNanoOfDay
+name|getNanos
 argument_list|(
 name|index
 argument_list|)

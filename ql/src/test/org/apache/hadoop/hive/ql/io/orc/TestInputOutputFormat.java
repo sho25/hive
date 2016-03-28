@@ -14768,7 +14768,7 @@ name|millis
 argument_list|,
 name|timestampColumn
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)

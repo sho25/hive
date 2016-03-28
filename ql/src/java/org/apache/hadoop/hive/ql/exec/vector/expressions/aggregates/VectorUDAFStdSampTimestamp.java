@@ -165,26 +165,6 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|TimestampColumnVector
 import|;
 end_import
@@ -332,7 +312,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** * VectorUDAFStdSampDouble. Vectorized implementation for VARIANCE aggregates. */
+comment|/** * VectorUDAFStdSampTimestamp. Vectorized implementation for VARIANCE aggregates. */
 end_comment
 
 begin_class
@@ -787,7 +767,7 @@ name|aggregateIndex
 argument_list|,
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 literal|0
 argument_list|)
@@ -1091,7 +1071,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)
@@ -1228,7 +1208,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|selected
 index|[
@@ -1376,7 +1356,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)
@@ -1522,7 +1502,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)
@@ -1675,7 +1655,7 @@ name|myagg
 argument_list|,
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 literal|0
 argument_list|)
@@ -1994,7 +1974,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)
@@ -2113,7 +2093,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|selected
 index|[
@@ -2204,7 +2184,7 @@ name|value
 operator|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|selected
 index|[
@@ -2313,7 +2293,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)
@@ -2428,7 +2408,7 @@ name|value
 init|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 literal|0
 argument_list|)
@@ -2515,7 +2495,7 @@ name|value
 operator|=
 name|inputColVector
 operator|.
-name|getTimestampSecondsWithFractionalNanos
+name|getDouble
 argument_list|(
 name|i
 argument_list|)

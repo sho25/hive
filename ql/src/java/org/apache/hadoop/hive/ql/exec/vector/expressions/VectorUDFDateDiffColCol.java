@@ -1769,7 +1769,7 @@ name|setTime
 argument_list|(
 name|input
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 literal|0
 argument_list|)
@@ -1835,7 +1835,7 @@ name|setTime
 argument_list|(
 name|input
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)
@@ -1880,7 +1880,7 @@ name|setTime
 argument_list|(
 name|input
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)
@@ -2016,7 +2016,7 @@ name|setTime
 argument_list|(
 name|input
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)
@@ -2073,7 +2073,7 @@ name|setTime
 argument_list|(
 name|input
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)

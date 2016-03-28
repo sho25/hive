@@ -65,6 +65,24 @@ name|*
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritable
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -124,7 +142,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 parameter_list|(
 name|TimestampColumnVector
 name|timestampColVector
@@ -137,16 +155,26 @@ name|int
 name|elementNum
 parameter_list|)
 block|{
+name|TimestampWritable
+operator|.
+name|setTimestampFromDouble
+argument_list|(
 name|timestampColVector
 operator|.
-name|setTimestampSecondsWithFractionalNanoseconds
-argument_list|(
-name|elementNum
+name|getScratchTimestamp
+argument_list|()
 argument_list|,
 name|vector
 index|[
 name|elementNum
 index|]
+argument_list|)
+expr_stmt|;
+name|timestampColVector
+operator|.
+name|setFromScratchTimestamp
+argument_list|(
+name|elementNum
 argument_list|)
 expr_stmt|;
 block|}
@@ -267,7 +295,7 @@ condition|)
 block|{
 comment|//All must be selected otherwise size would be zero
 comment|//Repeating property will not change.
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 argument_list|(
 name|outputColVector
 argument_list|,
@@ -332,7 +360,7 @@ index|[
 name|j
 index|]
 decl_stmt|;
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 argument_list|(
 name|outputColVector
 argument_list|,
@@ -360,7 +388,7 @@ name|i
 operator|++
 control|)
 block|{
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 argument_list|(
 name|outputColVector
 argument_list|,
@@ -411,7 +439,7 @@ index|[
 name|j
 index|]
 decl_stmt|;
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 argument_list|(
 name|outputColVector
 argument_list|,
@@ -449,7 +477,7 @@ name|i
 operator|++
 control|)
 block|{
-name|setSecondsWithFractionalNanoseconds
+name|setDouble
 argument_list|(
 name|outputColVector
 argument_list|,
