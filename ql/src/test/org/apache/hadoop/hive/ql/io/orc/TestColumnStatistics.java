@@ -34,6 +34,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assume
+operator|.
+name|assumeTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -2617,6 +2629,24 @@ operator|.
 name|setOut
 argument_list|(
 name|origOut
+argument_list|)
+expr_stmt|;
+comment|// If called with an expression evaluating to false, the test will halt
+comment|// and be ignored.
+name|assumeTrue
+argument_list|(
+operator|!
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"os.name"
+argument_list|)
+operator|.
+name|startsWith
+argument_list|(
+literal|"Windows"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|TestFileDump
