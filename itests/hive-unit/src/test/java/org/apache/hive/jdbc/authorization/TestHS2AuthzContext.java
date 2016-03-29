@@ -716,7 +716,7 @@ name|String
 name|ctxCmd
 parameter_list|)
 throws|throws
-name|SQLException
+name|Exception
 throws|,
 name|HiveAuthzPluginException
 throws|,
@@ -868,7 +868,7 @@ name|String
 name|userName
 parameter_list|)
 throws|throws
-name|SQLException
+name|Exception
 block|{
 return|return
 name|DriverManager

@@ -8394,6 +8394,15 @@ argument_list|,
 literal|"The parent node in ZooKeeper used by HiveServer2 when supporting dynamic service discovery."
 argument_list|)
 block|,
+name|HIVE_SERVER2_ZOOKEEPER_PUBLISH_CONFIGS
+argument_list|(
+literal|"hive.server2.zookeeper.publish.configs"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether we should publish HiveServer2's configs to ZooKeeper."
+argument_list|)
+block|,
 comment|// HiveServer2 global init file location
 name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
 argument_list|(
