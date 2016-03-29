@@ -3382,6 +3382,8 @@ parameter_list|(
 name|String
 name|hiveTypeName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3660,6 +3662,8 @@ parameter_list|(
 name|String
 name|hiveTypeName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 return|return
 name|ocm
@@ -14396,6 +14400,8 @@ parameter_list|(
 name|String
 name|hiveTypeName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpressionDescriptor
 operator|.
@@ -14477,9 +14483,15 @@ return|return
 name|hiveTypeName
 return|;
 default|default:
-return|return
-literal|"None"
-return|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unexpected hive type name "
+operator|+
+name|hiveTypeName
+argument_list|)
+throw|;
 block|}
 block|}
 specifier|static
@@ -14489,6 +14501,8 @@ parameter_list|(
 name|String
 name|hiveTypeName
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpressionDescriptor
 operator|.
@@ -14567,9 +14581,15 @@ return|return
 name|hiveTypeName
 return|;
 default|default:
-return|return
-literal|"None"
-return|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unexpected hive type name "
+operator|+
+name|hiveTypeName
+argument_list|)
+throw|;
 block|}
 block|}
 specifier|public
@@ -16714,11 +16734,13 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-name|getScratchColumnTypeNames
-argument_list|()
+name|Arrays
 operator|.
 name|toString
+argument_list|(
+name|getScratchColumnTypeNames
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
