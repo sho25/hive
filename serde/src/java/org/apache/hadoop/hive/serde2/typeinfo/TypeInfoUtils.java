@@ -583,7 +583,7 @@ name|registerNumericType
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|FLOAT
+name|DECIMAL
 argument_list|,
 literal|5
 argument_list|)
@@ -592,7 +592,7 @@ name|registerNumericType
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|DOUBLE
+name|FLOAT
 argument_list|,
 literal|6
 argument_list|)
@@ -601,7 +601,7 @@ name|registerNumericType
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|DECIMAL
+name|DOUBLE
 argument_list|,
 literal|7
 argument_list|)
@@ -4604,26 +4604,6 @@ operator|==
 name|PrimitiveCategory
 operator|.
 name|DOUBLE
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
-comment|// Allow implicit String to Decimal conversion
-if|if
-condition|(
-name|fromPg
-operator|==
-name|PrimitiveGrouping
-operator|.
-name|STRING_GROUP
-operator|&&
-name|to
-operator|==
-name|PrimitiveCategory
-operator|.
-name|DECIMAL
 condition|)
 block|{
 return|return
