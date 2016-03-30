@@ -3900,7 +3900,7 @@ name|String
 argument_list|,
 name|Table
 argument_list|>
-name|tableNameToMetaDataTableObject
+name|tabNameToTabObject
 decl_stmt|;
 comment|// The tokens we should ignore when we are trying to do table masking.
 specifier|private
@@ -4172,6 +4172,17 @@ name|PrunedPartitionList
 argument_list|>
 argument_list|()
 expr_stmt|;
+name|tabNameToTabObject
+operator|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|Table
+argument_list|>
+argument_list|()
+expr_stmt|;
 name|unparseTranslator
 operator|=
 operator|new
@@ -4276,7 +4287,7 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|tableNameToMetaDataTableObject
+name|tabNameToTabObject
 operator|=
 operator|new
 name|HashMap
@@ -4312,6 +4323,11 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+name|tabNameToTabObject
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 name|loadTableWork
 operator|.
 name|clear
@@ -4565,6 +4581,13 @@ operator|.
 name|getPrunedPartitions
 argument_list|()
 expr_stmt|;
+name|tabNameToTabObject
+operator|=
+name|pctx
+operator|.
+name|getTabNameToTabObject
+argument_list|()
+expr_stmt|;
 name|fetchTask
 operator|=
 name|pctx
@@ -4643,6 +4666,8 @@ argument_list|,
 name|listMapJoinOpsNoReducer
 argument_list|,
 name|prunedPartitions
+argument_list|,
+name|tabNameToTabObject
 argument_list|,
 name|opToSamplePruner
 argument_list|,
@@ -11642,9 +11667,9 @@ try|try
 block|{
 name|table
 operator|=
-name|db
+name|this
 operator|.
-name|getTable
+name|getTableObjectByName
 argument_list|(
 name|tableName
 argument_list|)
@@ -63221,7 +63246,7 @@ block|{     }
 block|}
 specifier|private
 name|Table
-name|getMetaDataTableObjectByName
+name|getTableObjectByName
 parameter_list|(
 name|String
 name|tableName
@@ -63232,7 +63257,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|tableNameToMetaDataTableObject
+name|tabNameToTabObject
 operator|.
 name|containsKey
 argument_list|(
@@ -63250,7 +63275,7 @@ argument_list|(
 name|tableName
 argument_list|)
 decl_stmt|;
-name|tableNameToMetaDataTableObject
+name|tabNameToTabObject
 operator|.
 name|put
 argument_list|(
@@ -63266,7 +63291,7 @@ block|}
 else|else
 block|{
 return|return
-name|tableNameToMetaDataTableObject
+name|tabNameToTabObject
 operator|.
 name|get
 argument_list|(
@@ -63550,7 +63575,7 @@ try|try
 block|{
 name|table
 operator|=
-name|getMetaDataTableObjectByName
+name|getTableObjectByName
 argument_list|(
 name|tabIdName
 argument_list|)
@@ -64870,6 +64895,8 @@ argument_list|,
 name|listMapJoinOpsNoReducer
 argument_list|,
 name|prunedPartitions
+argument_list|,
+name|tabNameToTabObject
 argument_list|,
 name|opToSamplePruner
 argument_list|,
@@ -70515,9 +70542,9 @@ block|{
 name|Table
 name|table
 init|=
-name|db
+name|this
 operator|.
-name|getTable
+name|getTableObjectByName
 argument_list|(
 name|qb
 operator|.
@@ -71543,9 +71570,9 @@ try|try
 block|{
 name|tbl
 operator|=
-name|db
+name|this
 operator|.
-name|getTable
+name|getTableObjectByName
 argument_list|(
 name|tableName
 argument_list|)
@@ -71664,9 +71691,9 @@ try|try
 block|{
 name|tbl
 operator|=
-name|db
+name|this
 operator|.
-name|getTable
+name|getTableObjectByName
 argument_list|(
 name|tableName
 argument_list|)

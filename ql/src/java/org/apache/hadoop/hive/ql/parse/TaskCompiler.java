@@ -2609,6 +2609,11 @@ argument_list|()
 argument_list|,
 name|pCtx
 operator|.
+name|getTabNameToTabObject
+argument_list|()
+argument_list|,
+name|pCtx
+operator|.
 name|getOpToSamplePruner
 argument_list|()
 argument_list|,
