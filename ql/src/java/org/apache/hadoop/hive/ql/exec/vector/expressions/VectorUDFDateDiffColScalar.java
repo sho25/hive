@@ -1434,7 +1434,7 @@ name|setTime
 argument_list|(
 name|tcv
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|index
 argument_list|)

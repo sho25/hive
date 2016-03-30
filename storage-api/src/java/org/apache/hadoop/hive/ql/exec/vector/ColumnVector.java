@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Arrays
@@ -69,6 +59,8 @@ block|,
 name|DECIMAL
 block|,
 name|TIMESTAMP
+block|,
+name|INTERVAL_DAY_TIME
 block|,
 name|STRUCT
 block|,

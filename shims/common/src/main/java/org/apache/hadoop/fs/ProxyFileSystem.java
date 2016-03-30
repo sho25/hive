@@ -339,6 +339,8 @@ argument_list|)
 throw|;
 block|}
 comment|/**    *    * @param p    * @return    * @throws IOException    */
+annotation|@
+name|Override
 specifier|public
 name|Path
 name|resolvePath
@@ -779,7 +781,25 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Path
+name|dest
+init|=
+name|swizzleParamPath
+argument_list|(
+name|dst
+argument_list|)
+decl_stmt|;
+comment|// Make sure for existing destination we return false as per FileSystem api contract
 return|return
+name|super
+operator|.
+name|isFile
+argument_list|(
+name|dest
+argument_list|)
+condition|?
+literal|false
+else|:
 name|super
 operator|.
 name|rename
@@ -789,10 +809,7 @@ argument_list|(
 name|src
 argument_list|)
 argument_list|,
-name|swizzleParamPath
-argument_list|(
-name|dst
-argument_list|)
+name|dest
 argument_list|)
 return|;
 block|}

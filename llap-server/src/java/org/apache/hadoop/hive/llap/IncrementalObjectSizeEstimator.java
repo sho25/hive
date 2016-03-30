@@ -1365,26 +1365,17 @@ name|fieldCol
 operator|=
 literal|null
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Empty collection "
-operator|+
+literal|"Empty collection {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 if|if
@@ -1558,26 +1549,17 @@ name|fieldCol
 operator|=
 literal|null
 expr_stmt|;
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Empty map "
-operator|+
+literal|"Empty map {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 if|if
@@ -1837,51 +1819,33 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get the declaring object and infer argument... stupid Java.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Cannot determine map type: "
-operator|+
+literal|"Cannot determine map type: {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 else|else
 block|{
 comment|// TODO: we could try to get superclass or generic interfaces.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Non-parametrized map type: "
-operator|+
+literal|"Non-parametrized map type: {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 return|return
 literal|null
@@ -1954,51 +1918,33 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get the declaring object and infer argument... stupid Java.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Cannot determine collection type: "
-operator|+
+literal|"Cannot determine collection type: {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 else|else
 block|{
 comment|// TODO: we could try to get superclass or generic interfaces.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Non-parametrized collection type: "
-operator|+
+literal|"Non-parametrized collection type: {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 return|return
 literal|null
@@ -2050,34 +1996,17 @@ argument_list|(
 name|fieldObj
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|arrayLen
-operator|==
-literal|0
-condition|)
-block|{
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Empty array "
-operator|+
+literal|"Empty array {}"
+argument_list|,
 name|field
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 for|for
 control|(
 name|int
@@ -2850,22 +2779,18 @@ literal|null
 condition|)
 block|{
 comment|// We have no estimator for this type... assume low overhead and hope for the best.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Approximate estimation for collection "
-operator|+
+literal|"Approximate estimation for collection {} from {}"
+argument_list|,
+name|e
+operator|.
+name|field
+argument_list|,
 name|fieldObj
 operator|.
 name|getClass
@@ -2873,15 +2798,8 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" from "
-operator|+
-name|e
-operator|.
-name|field
 argument_list|)
 expr_stmt|;
-block|}
 name|referencedSize
 operator|+=
 name|memoryModel
@@ -2973,22 +2891,14 @@ block|}
 else|else
 block|{
 comment|// We decided to treat this collection as regular object.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Verbose estimation for collection "
-operator|+
+literal|"Verbose estimation for collection {} from {}"
+argument_list|,
 name|fieldObj
 operator|.
 name|getClass
@@ -2996,15 +2906,12 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" from "
-operator|+
+argument_list|,
 name|e
 operator|.
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 name|referencedSize
 operator|+=
 name|collEstimator
@@ -3064,22 +2971,14 @@ literal|null
 condition|)
 block|{
 comment|// We have no estimator for this type... assume low overhead and hope for the best.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Approximate estimation for map "
-operator|+
+literal|"Approximate estimation for map {} from {}"
+argument_list|,
 name|fieldObj
 operator|.
 name|getClass
@@ -3087,15 +2986,12 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" from "
-operator|+
+argument_list|,
 name|e
 operator|.
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 name|referencedSize
 operator|+=
 name|memoryModel
@@ -3196,22 +3092,14 @@ block|}
 else|else
 block|{
 comment|// We decided to treat this map as regular object.
-if|if
-condition|(
-name|DebugUtils
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Verbose estimation for map "
-operator|+
+literal|"Verbose estimation for map {} from {}"
+argument_list|,
 name|fieldObj
 operator|.
 name|getClass
@@ -3219,15 +3107,12 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" from "
-operator|+
+argument_list|,
 name|e
 operator|.
 name|field
 argument_list|)
 expr_stmt|;
-block|}
 name|referencedSize
 operator|+=
 name|collEstimator

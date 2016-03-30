@@ -155,7 +155,7 @@ name|IOException
 function_decl|;
 comment|/**    * Controls the low-level debug tracing. (Hopefully) allows for optimization where tracing    * checks are entirely eliminated because this method is called with constant value, similar    * to just checking the constant in the first place.    */
 name|void
-name|setDebugTracing
+name|setTracing
 parameter_list|(
 name|boolean
 name|isEnabled

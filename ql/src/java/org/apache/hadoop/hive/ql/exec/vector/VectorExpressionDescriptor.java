@@ -170,6 +170,9 @@ comment|//
 comment|// TimestampColumnVector -->
 comment|//    TIMESTAMP
 comment|//
+comment|// IntervalDayTimeColumnVector -->
+comment|//    INTERVAL_DAY_TIME
+comment|//
 specifier|public
 enum|enum
 name|ArgumentType
@@ -288,17 +291,6 @@ operator|.
 name|value
 operator||
 name|INTERVAL_YEAR_MONTH
-operator|.
-name|value
-argument_list|)
-block|,
-name|TIMESTAMP_INTERVAL_DAY_TIME
-argument_list|(
-name|TIMESTAMP
-operator|.
-name|value
-operator||
-name|INTERVAL_DAY_TIME
 operator|.
 name|value
 argument_list|)
@@ -1714,6 +1706,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
+literal|"Could not instantiate VectorExpression class "
+operator|+
+name|ve
+operator|.
+name|getSimpleName
+argument_list|()
+argument_list|,
 name|ex
 argument_list|)
 throw|;

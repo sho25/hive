@@ -1609,6 +1609,7 @@ condition|)
 block|{
 comment|// remove the tag from key coming out of reducer
 comment|// and store it in separate variable.
+comment|// make a copy for multi-insert with join case as Spark re-uses input key from same parent
 name|int
 name|size
 init|=
@@ -1628,6 +1629,19 @@ argument_list|()
 index|[
 name|size
 index|]
+expr_stmt|;
+name|keyWritable
+operator|=
+operator|new
+name|BytesWritable
+argument_list|(
+name|keyWritable
+operator|.
+name|getBytes
+argument_list|()
+argument_list|,
+name|size
+argument_list|)
 expr_stmt|;
 name|keyWritable
 operator|.

@@ -3233,10 +3233,10 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
-literal|"VectorGroupByOperator is vector output "
-operator|+
+literal|"VectorGroupByOperator is vector output {}"
+argument_list|,
 name|isVectorOutput
 argument_list|)
 expr_stmt|;

@@ -693,6 +693,16 @@ argument_list|)
 expr_stmt|;
 name|builder
 operator|.
+name|setDagId
+argument_list|(
+name|taskSpec
+operator|.
+name|getDagIdentifier
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
 name|setVertexName
 argument_list|(
 name|taskSpec

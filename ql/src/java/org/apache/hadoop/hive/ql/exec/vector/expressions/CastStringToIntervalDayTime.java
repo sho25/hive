@@ -97,7 +97,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|TimestampColumnVector
+name|IntervalDayTimeColumnVector
 import|;
 end_import
 
@@ -280,11 +280,11 @@ name|batch
 operator|.
 name|size
 decl_stmt|;
-name|TimestampColumnVector
+name|IntervalDayTimeColumnVector
 name|outV
 init|=
 operator|(
-name|TimestampColumnVector
+name|IntervalDayTimeColumnVector
 operator|)
 name|batch
 operator|.
@@ -626,7 +626,7 @@ specifier|private
 name|void
 name|evaluate
 parameter_list|(
-name|TimestampColumnVector
+name|IntervalDayTimeColumnVector
 name|outV
 parameter_list|,
 name|BytesColumnVector
@@ -675,19 +675,11 @@ argument_list|)
 decl_stmt|;
 name|outV
 operator|.
-name|setEpochSecondsAndSignedNanos
+name|set
 argument_list|(
 name|i
 argument_list|,
 name|interval
-operator|.
-name|getTotalSeconds
-argument_list|()
-argument_list|,
-name|interval
-operator|.
-name|getNanos
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

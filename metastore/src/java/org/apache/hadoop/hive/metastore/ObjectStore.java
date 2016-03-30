@@ -45101,7 +45101,7 @@ condition|)
 block|{
 name|pm
 operator|.
-name|deletePersistent
+name|deletePersistentAll
 argument_list|(
 name|toBeRemoved
 argument_list|)

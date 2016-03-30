@@ -65,7 +65,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|PisaTimestamp
+name|HiveIntervalDayTime
 import|;
 end_import
 
@@ -122,6 +122,24 @@ operator|.
 name|io
 operator|.
 name|HiveDecimalWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveIntervalDayTimeWritable
 import|;
 end_import
 
@@ -259,7 +277,16 @@ function_decl|;
 name|Object
 name|writeValue
 parameter_list|(
-name|PisaTimestamp
+name|HiveIntervalDayTimeWritable
+name|value
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
+name|Object
+name|writeValue
+parameter_list|(
+name|HiveIntervalDayTime
 name|value
 parameter_list|)
 throws|throws

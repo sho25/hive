@@ -308,7 +308,7 @@ index|]
 operator|=
 name|inputColVector
 operator|.
-name|getEpochSeconds
+name|getTimestampAsLong
 argument_list|(
 literal|0
 argument_list|)
@@ -376,7 +376,7 @@ index|]
 operator|=
 name|inputColVector
 operator|.
-name|getEpochSeconds
+name|getTimestampAsLong
 argument_list|(
 name|i
 argument_list|)
@@ -407,7 +407,7 @@ index|]
 operator|=
 name|inputColVector
 operator|.
-name|getEpochSeconds
+name|getTimestampAsLong
 argument_list|(
 name|i
 argument_list|)
@@ -461,7 +461,7 @@ index|]
 operator|=
 name|inputColVector
 operator|.
-name|getEpochSeconds
+name|getTimestampAsLong
 argument_list|(
 name|i
 argument_list|)
@@ -502,7 +502,7 @@ index|]
 operator|=
 name|inputColVector
 operator|.
-name|getEpochSeconds
+name|getTimestampAsLong
 argument_list|(
 name|i
 argument_list|)

@@ -359,20 +359,6 @@ name|ParquetOutputFormat
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|parquet
-operator|.
-name|hadoop
-operator|.
-name|ParquetWriter
-import|;
-end_import
-
 begin_comment
 comment|/**  *  * A ParquetHiveSerDe for Hive (with the deprecated package mapred)  *  */
 end_comment
@@ -451,19 +437,17 @@ argument_list|(
 literal|"bag"
 argument_list|)
 decl_stmt|;
-comment|// default compression type for parquet output format
-specifier|private
+specifier|public
 specifier|static
 specifier|final
-name|String
-name|DEFAULTCOMPRESSION
+name|Text
+name|LIST
 init|=
-name|ParquetWriter
-operator|.
-name|DEFAULT_COMPRESSION_CODEC_NAME
-operator|.
-name|name
-argument_list|()
+operator|new
+name|Text
+argument_list|(
+literal|"list"
+argument_list|)
 decl_stmt|;
 comment|// Map precision to the number bytes needed for binary conversion.
 specifier|public
@@ -574,10 +558,6 @@ name|long
 name|deserializedSize
 decl_stmt|;
 specifier|private
-name|String
-name|compressionType
-decl_stmt|;
-specifier|private
 name|ParquetHiveRecord
 name|parquetRow
 decl_stmt|;
@@ -661,20 +641,6 @@ operator|.
 name|LIST_COLUMN_TYPES
 argument_list|)
 decl_stmt|;
-comment|// Get compression properties
-name|compressionType
-operator|=
-name|tbl
-operator|.
-name|getProperty
-argument_list|(
-name|ParquetOutputFormat
-operator|.
-name|COMPRESSION
-argument_list|,
-name|DEFAULTCOMPRESSION
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|columnNameProperty

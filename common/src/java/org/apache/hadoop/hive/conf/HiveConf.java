@@ -8394,6 +8394,15 @@ argument_list|,
 literal|"The parent node in ZooKeeper used by HiveServer2 when supporting dynamic service discovery."
 argument_list|)
 block|,
+name|HIVE_SERVER2_ZOOKEEPER_PUBLISH_CONFIGS
+argument_list|(
+literal|"hive.server2.zookeeper.publish.configs"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether we should publish HiveServer2's configs to ZooKeeper."
+argument_list|)
+block|,
 comment|// HiveServer2 global init file location
 name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
 argument_list|(
@@ -9273,6 +9282,39 @@ operator|+
 literal|"For example: hiveuser,impalauser,hiveadmin,hadoopadmin"
 argument_list|)
 block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GUIDKEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.guidKey"
+argument_list|,
+literal|"uid"
+argument_list|,
+literal|"LDAP attribute name whose values are unique in this LDAP server.\n"
+operator|+
+literal|"For example: uid or CN."
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPMEMBERSHIP_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"member"
+argument_list|,
+literal|"LDAP attribute name on the user entry that references a group, the user belongs to.\n"
+operator|+
+literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPCLASS_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"groupOfNames"
+argument_list|,
+literal|"LDAP attribute name on the group entry that is to be used in LDAP group searches.\n"
+operator|+
+literal|"For example: group, groupOfNames or groupOfUniqueNames."
+argument_list|)
+block|,
 name|HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY
 argument_list|(
 literal|"hive.server2.authentication.ldap.customLDAPQuery"
@@ -9582,6 +9624,29 @@ argument_list|,
 literal|"set,reset,dfs,add,list,delete,reload,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
+argument_list|)
+block|,
+name|HIVE_MOVE_FILES_THREAD_COUNT
+argument_list|(
+literal|"hive.mv.files.thread"
+argument_list|,
+literal|25
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|1L
+argument_list|,
+literal|true
+argument_list|,
+literal|1024L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Number of threads"
+operator|+
+literal|" used to move files in move task"
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all

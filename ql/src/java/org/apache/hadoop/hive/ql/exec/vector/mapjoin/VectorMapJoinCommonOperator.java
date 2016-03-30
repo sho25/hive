@@ -1481,6 +1481,8 @@ parameter_list|(
 name|boolean
 name|isOuter
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|bigTableRetainedMapping
 operator|=

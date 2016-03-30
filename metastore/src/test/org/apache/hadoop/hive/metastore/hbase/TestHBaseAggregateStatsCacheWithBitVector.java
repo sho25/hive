@@ -1310,18 +1310,8 @@ name|getNumDVs
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"{0, 1, 4, 5, 7}{0, 1}{0, 1, 2, 4}{0, 1, 2, 4}{0, 1, 2}{0, 2}{0, 1, 3, 4}{0, 1, 2, 3, 4}{0, 1, 4}{0, 1, 3, 4, 6}{0, 2}{0, 1, 3, 8}{0, 2, 3}{0, 2}{0, 1, 9}{0, 1, 4}"
-argument_list|,
-name|dcsd
-operator|.
-name|getBitVectors
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// we do not store the bitvector for the aggrStats.
+comment|// we can store that if it is necessary in the future.
 block|}
 block|}
 decl_stmt|;

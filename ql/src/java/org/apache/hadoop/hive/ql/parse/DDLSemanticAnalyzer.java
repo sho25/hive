@@ -17403,8 +17403,41 @@ name|toUpperCase
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//inputs.add(new ReadEntity(dbName));
-comment|//outputs.add(new WriteEntity(dbName));
+name|inputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ReadEntity
+argument_list|(
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Lock database operation is to acquire the lock explicitly, the operation
+comment|// itself doesn't need to be locked. Set the WriteEntity as WriteType:
+comment|// DDL_NO_LOCK here, otherwise it will conflict with Hive's transaction.
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+argument_list|,
+name|WriteType
+operator|.
+name|DDL_NO_LOCK
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|LockDatabaseDesc
 name|lockDatabaseDesc
 init|=
@@ -17500,6 +17533,42 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|inputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ReadEntity
+argument_list|(
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Unlock database operation is to release the lock explicitly, the
+comment|// operation itself don't need to be locked. Set the WriteEntity as
+comment|// WriteType: DDL_NO_LOCK here, otherwise it will conflict with
+comment|// Hive's transaction.
+name|outputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|WriteEntity
+argument_list|(
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+argument_list|,
+name|WriteType
+operator|.
+name|DDL_NO_LOCK
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|UnlockDatabaseDesc
 name|unlockDatabaseDesc
 init|=

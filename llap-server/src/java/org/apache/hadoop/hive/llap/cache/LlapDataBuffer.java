@@ -361,24 +361,24 @@ break|break;
 block|}
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Locked "
-operator|+
+literal|"Locked {}; new ref count {}"
+argument_list|,
 name|this
-operator|+
-literal|"; new ref count "
-operator|+
+argument_list|,
 name|newRefCount
 argument_list|)
 expr_stmt|;
@@ -450,24 +450,24 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Unlocked "
-operator|+
+literal|"Unlocked {}; refcount {}"
+argument_list|,
 name|this
-operator|+
-literal|"; refcount "
-operator|+
+argument_list|,
 name|newRefCount
 argument_list|)
 expr_stmt|;
@@ -542,23 +542,23 @@ break|break;
 block|}
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Invalidated "
-operator|+
+literal|"Invalidated {} due to eviction"
+argument_list|,
 name|this
-operator|+
-literal|" due to eviction"
 argument_list|)
 expr_stmt|;
 block|}

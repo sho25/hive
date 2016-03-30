@@ -251,7 +251,7 @@ if|if
 condition|(
 name|LlapIoImpl
 operator|.
-name|LOGL
+name|LOG
 operator|.
 name|isInfoEnabled
 argument_list|()
@@ -263,12 +263,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Memory manager initialized with max size "
+literal|"Memory manager initialized with max size {} and"
 operator|+
+literal|" {} ability to evict blocks"
+argument_list|,
 name|maxSize
-operator|+
-literal|" and "
-operator|+
+argument_list|,
 operator|(
 operator|(
 name|evictor
@@ -280,8 +280,6 @@ literal|"no "
 else|:
 literal|""
 operator|)
-operator|+
-literal|"ability to evict blocks"
 argument_list|)
 expr_stmt|;
 block|}

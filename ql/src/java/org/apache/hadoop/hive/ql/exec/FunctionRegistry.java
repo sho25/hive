@@ -9639,6 +9639,27 @@ name|desc
 argument_list|)
 return|;
 block|}
+comment|/**    * Returns whether the exprNodeDesc is a node of "in".    */
+specifier|public
+specifier|static
+name|boolean
+name|isIn
+parameter_list|(
+name|ExprNodeDesc
+name|desc
+parameter_list|)
+block|{
+return|return
+name|GenericUDFIn
+operator|.
+name|class
+operator|==
+name|getGenericUDFClassFromExprDesc
+argument_list|(
+name|desc
+argument_list|)
+return|;
+block|}
 comment|/**    * Returns whether the exprNodeDesc is a node of "not".    */
 specifier|public
 specifier|static
