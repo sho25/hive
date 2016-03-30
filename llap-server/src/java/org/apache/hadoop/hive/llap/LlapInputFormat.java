@@ -831,6 +831,25 @@ name|LlapInputSplit
 operator|)
 name|split
 decl_stmt|;
+comment|// Set conf to use LLAP user rather than current user for LLAP Zk registry.
+name|HiveConf
+operator|.
+name|setVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_ZK_REGISTRY_USER
+argument_list|,
+name|llapSplit
+operator|.
+name|getLlapUser
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|SubmitWorkInfo
 name|submitWorkInfo
 init|=

@@ -10573,6 +10573,17 @@ argument_list|,
 literal|"ZooKeeper connection string for ZooKeeper SecretManager."
 argument_list|)
 block|,
+name|LLAP_ZK_REGISTRY_USER
+argument_list|(
+literal|"hive.llap.zk.registry.user"
+argument_list|,
+literal|""
+argument_list|,
+literal|"In the LLAP ZooKeeper-based registry, specifies the username in the Zookeeper path.\n"
+operator|+
+literal|"This should be the hive user or whichever user is running the LLAP daemon."
+argument_list|)
+block|,
 comment|// Note: do not rename to ..service.acl; Hadoop generates .hosts setting name from this,
 comment|// resulting in a collision with existing hive.llap.daemon.service.hosts and bizarre errors.
 name|LLAP_SECURITY_ACL
