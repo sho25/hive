@@ -141,6 +141,9 @@ operator|.
 name|put
 argument_list|(
 name|name
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|,
 name|column
 argument_list|)
@@ -162,6 +165,9 @@ operator|.
 name|get
 argument_list|(
 name|name
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if

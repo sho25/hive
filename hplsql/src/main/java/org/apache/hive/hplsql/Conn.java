@@ -592,6 +592,11 @@ name|getResultSet
 argument_list|()
 expr_stmt|;
 block|}
+name|timer
+operator|.
+name|stop
+argument_list|()
+expr_stmt|;
 name|query
 operator|.
 name|set
@@ -1090,6 +1095,9 @@ argument_list|(
 name|url
 operator|.
 name|toString
+argument_list|()
+operator|.
+name|trim
 argument_list|()
 argument_list|,
 name|usr
