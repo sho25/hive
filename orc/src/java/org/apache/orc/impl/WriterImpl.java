@@ -1225,6 +1225,26 @@ argument_list|()
 operator|+
 literal|1
 decl_stmt|;
+if|if
+condition|(
+name|opts
+operator|.
+name|isEnforceBufferSize
+argument_list|()
+condition|)
+block|{
+name|this
+operator|.
+name|bufferSize
+operator|=
+name|opts
+operator|.
+name|getBufferSize
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|this
 operator|.
 name|bufferSize
@@ -1241,6 +1261,7 @@ name|getBufferSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|version
@@ -1348,7 +1369,7 @@ name|info
 argument_list|(
 literal|"ORC writer created for path: {} with stripeSize: {} blockSize: {}"
 operator|+
-literal|" compression: {} estimatedBufferSize: {}"
+literal|" compression: {} bufferSize: {}"
 argument_list|,
 name|path
 argument_list|,
@@ -1406,35 +1427,13 @@ argument_list|(
 name|estBufferSize
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+return|return
 name|estBufferSize
 operator|>
 name|bs
-condition|)
-block|{
-name|estBufferSize
-operator|=
+condition|?
 name|bs
-expr_stmt|;
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"WIDE TABLE - Number of columns: "
-operator|+
-name|numColumns
-operator|+
-literal|" Chosen compression buffer size: "
-operator|+
-name|estBufferSize
-argument_list|)
-expr_stmt|;
-block|}
-return|return
+else|:
 name|estBufferSize
 return|;
 block|}

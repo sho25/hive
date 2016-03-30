@@ -690,12 +690,17 @@ operator|.
 name|NONE
 condition|)
 block|{
+comment|// enforce is required to retain the buffer sizes of old files instead of orc writer
+comment|// inferring the optimal buffer size
 name|options
 operator|.
 name|bufferSize
 argument_list|(
 name|compressBuffSize
 argument_list|)
+operator|.
+name|enforceBufferSize
+argument_list|()
 expr_stmt|;
 block|}
 name|outWriter

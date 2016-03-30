@@ -763,6 +763,12 @@ name|bufferSizeValue
 decl_stmt|;
 specifier|private
 name|boolean
+name|enforceBufferSize
+init|=
+literal|false
+decl_stmt|;
+specifier|private
+name|boolean
 name|blockPaddingValue
 decl_stmt|;
 specifier|private
@@ -1091,7 +1097,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * The size of the memory buffers used for compressing and storing the      * stripe in memory.      */
+comment|/**      * The size of the memory buffers used for compressing and storing the      * stripe in memory. NOTE: ORC writer may choose to use smaller buffer      * size based on stripe size and number of columns for efficient stripe      * writing and memory utilization. To enforce writer to use the requested      * buffer size use enforceBufferSize().      */
 specifier|public
 name|WriterOptions
 name|bufferSize
@@ -1103,6 +1109,20 @@ block|{
 name|bufferSizeValue
 operator|=
 name|value
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**      * Enforce writer to use requested buffer size instead of estimating      * buffer size based on stripe size and number of columns.      * See bufferSize() method for more info.      * Default: false      */
+specifier|public
+name|WriterOptions
+name|enforceBufferSize
+parameter_list|()
+block|{
+name|enforceBufferSize
+operator|=
+literal|true
 expr_stmt|;
 return|return
 name|this
@@ -1388,6 +1408,15 @@ parameter_list|()
 block|{
 return|return
 name|bufferSizeValue
+return|;
+block|}
+specifier|public
+name|boolean
+name|isEnforceBufferSize
+parameter_list|()
+block|{
+return|return
+name|enforceBufferSize
 return|;
 block|}
 specifier|public
