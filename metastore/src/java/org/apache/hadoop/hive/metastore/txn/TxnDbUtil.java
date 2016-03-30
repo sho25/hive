@@ -374,6 +374,14 @@ literal|" HL_USER varchar(128) NOT NULL,"
 operator|+
 literal|" HL_HOST varchar(128) NOT NULL,"
 operator|+
+literal|" HL_HEARTBEAT_COUNT integer,"
+operator|+
+literal|" HL_AGENT_INFO varchar(128),"
+operator|+
+literal|" HL_BLOCKEDBY_EXT_ID bigint,"
+operator|+
+literal|" HL_BLOCKEDBY_INT_ID bigint,"
+operator|+
 literal|" PRIMARY KEY(HL_LOCK_EXT_ID, HL_LOCK_INT_ID))"
 argument_list|)
 expr_stmt|;
