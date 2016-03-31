@@ -209,18 +209,6 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|ExecutorService
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
 name|Executors
 import|;
 end_import
@@ -772,30 +760,6 @@ operator|.
 name|conf
 operator|.
 name|YarnConfiguration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|zookeeper
-operator|.
-name|WatchedEvent
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|zookeeper
-operator|.
-name|Watcher
 import|;
 end_import
 
@@ -1968,9 +1932,20 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Created a znode on ZooKeeper for LLAP instance: {} znodePath: {}"
+literal|"Registered node. Created a znode on ZooKeeper for LLAP instance: rpc: {}, shuffle: {},"
+operator|+
+literal|" webui: {}, mgmt: {}, znodePath: {} "
 argument_list|,
 name|rpcEndpoint
+argument_list|,
+name|getShuffleEndpoint
+argument_list|()
+argument_list|,
+name|getServicesEndpoint
+argument_list|()
+argument_list|,
+name|getMngEndpoint
+argument_list|()
 argument_list|,
 name|znodePath
 argument_list|)
