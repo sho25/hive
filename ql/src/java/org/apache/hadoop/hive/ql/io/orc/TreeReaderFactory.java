@@ -1412,7 +1412,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -1823,7 +1824,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -2126,7 +2128,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -2568,7 +2571,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -3010,7 +3014,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -3457,7 +3462,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -3793,7 +3799,7 @@ name|Object
 name|previousVector
 parameter_list|,
 specifier|final
-name|long
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -4397,7 +4403,7 @@ name|Object
 name|previousVector
 parameter_list|,
 specifier|final
-name|long
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -5221,7 +5227,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -6200,7 +6207,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -6785,7 +6793,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -7342,7 +7351,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -7974,7 +7984,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -8037,7 +8048,8 @@ parameter_list|,
 name|BytesColumnVector
 name|result
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -8237,7 +8249,8 @@ parameter_list|,
 name|BytesColumnVector
 name|result
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -8882,7 +8895,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -9766,7 +9780,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -10326,7 +10341,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -10813,7 +10829,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -11678,7 +11695,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -12251,7 +12269,8 @@ parameter_list|(
 name|Object
 name|previousVector
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -12738,7 +12757,8 @@ parameter_list|(
 name|Object
 name|previous
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
@@ -13285,7 +13305,8 @@ parameter_list|(
 name|Object
 name|previous
 parameter_list|,
-name|long
+specifier|final
+name|int
 name|batchSize
 parameter_list|)
 throws|throws
