@@ -21,6 +21,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -72,6 +86,10 @@ comment|/**  * Configuration for LLAP daemon processes only. This should not be 
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Private
 specifier|public
 class|class
 name|LlapDaemonConfiguration
@@ -187,6 +205,24 @@ block|}
 name|addResource
 argument_list|(
 name|LLAP_DAEMON_SITE
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|LlapDaemonConfiguration
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|this
+argument_list|()
+expr_stmt|;
+name|addResource
+argument_list|(
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
