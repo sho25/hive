@@ -1009,6 +1009,9 @@ literal|2
 condition|)
 block|{
 comment|// Cancel job if the monitor found job submission timeout.
+comment|// TODO: If the timeout is because of lack of resources in the cluster, we should
+comment|// ideally also cancel the app request here. But w/o facilities from Spark or YARN,
+comment|// it's difficult to do it on hive side alone. See HIVE-12650.
 name|jobRef
 operator|.
 name|cancelJob
