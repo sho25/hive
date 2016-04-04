@@ -260,9 +260,9 @@ operator|>
 name|monitorTimeoutInteval
 condition|)
 block|{
-name|LOG
+name|console
 operator|.
-name|info
+name|printError
 argument_list|(
 literal|"Job hasn't been submitted after "
 operator|+

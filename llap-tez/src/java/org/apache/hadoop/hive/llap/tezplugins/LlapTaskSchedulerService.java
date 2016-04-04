@@ -3053,6 +3053,35 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|endReason
+operator|!=
+literal|null
+operator|&&
+name|endReason
+operator|==
+name|TaskAttemptEndReason
+operator|.
+name|NODE_FAILED
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Task {} ended on {} nodeInfo.toString() with a NODE_FAILED message."
+operator|+
+literal|" An message should come in from the registry to disable this node unless"
+operator|+
+literal|" this was a temporary communication failure"
+argument_list|,
+name|task
+argument_list|,
+name|assignedInstance
+argument_list|)
+expr_stmt|;
+block|}
 name|boolean
 name|commFailure
 init|=

@@ -316,15 +316,21 @@ name|monitorTimeoutInteval
 operator|)
 condition|)
 block|{
-name|LOG
+name|console
 operator|.
-name|info
+name|printError
 argument_list|(
 literal|"Job hasn't been submitted after "
 operator|+
 name|timeCount
 operator|+
-literal|"s. Aborting it."
+literal|"s."
+operator|+
+literal|" Aborting it.\nPossible reasons include network issues, "
+operator|+
+literal|"errors in remote driver or the cluster has no available resources, etc.\n"
+operator|+
+literal|"Please check YARN or Spark driver's logs for further information."
 argument_list|)
 expr_stmt|;
 name|console

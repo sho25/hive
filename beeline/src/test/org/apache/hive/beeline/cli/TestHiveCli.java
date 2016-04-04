@@ -211,6 +211,14 @@ init|=
 literal|1
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|int
+name|ERRNO_OTHER
+init|=
+literal|2
+decl_stmt|;
+specifier|private
 specifier|final
 specifier|static
 name|String
@@ -502,7 +510,7 @@ name|errS
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -810,7 +818,7 @@ block|,
 literal|"test"
 block|}
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -1037,7 +1045,7 @@ name|errS
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -1062,7 +1070,7 @@ name|os
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -1085,7 +1093,7 @@ name|os
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -1110,7 +1118,7 @@ name|os
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|true
 argument_list|)
@@ -1133,7 +1141,7 @@ name|os
 argument_list|,
 literal|null
 argument_list|,
-name|ERRNO_OK
+name|ERRNO_OTHER
 argument_list|,
 literal|false
 argument_list|)

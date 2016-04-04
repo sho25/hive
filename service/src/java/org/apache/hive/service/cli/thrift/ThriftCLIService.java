@@ -2755,10 +2755,15 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Kerberos
 if|if
 condition|(
-name|isKerberosAuthMode
+name|hiveAuthFactory
+operator|!=
+literal|null
+operator|&&
+name|hiveAuthFactory
+operator|.
+name|isSASLWithKerberizedHadoop
 argument_list|()
 condition|)
 block|{
@@ -2770,7 +2775,7 @@ name|getIpAddress
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Except kerberos, NOSASL
+comment|// NOSASL
 else|else
 block|{
 name|clientIpAddress
@@ -2813,10 +2818,15 @@ name|userName
 init|=
 literal|null
 decl_stmt|;
-comment|// Kerberos
 if|if
 condition|(
-name|isKerberosAuthMode
+name|hiveAuthFactory
+operator|!=
+literal|null
+operator|&&
+name|hiveAuthFactory
+operator|.
+name|isSASLWithKerberizedHadoop
 argument_list|()
 condition|)
 block|{
@@ -2828,7 +2838,7 @@ name|getRemoteUser
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Except kerberos, NOSASL
+comment|// NOSASL
 if|if
 condition|(
 name|userName
@@ -5015,37 +5025,6 @@ argument_list|)
 expr_stmt|;
 return|return
 name|proxyUser
-return|;
-block|}
-specifier|private
-name|boolean
-name|isKerberosAuthMode
-parameter_list|()
-block|{
-return|return
-name|cliService
-operator|.
-name|getHiveConf
-argument_list|()
-operator|.
-name|getVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_AUTHENTICATION
-argument_list|)
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|HiveAuthFactory
-operator|.
-name|AuthTypes
-operator|.
-name|KERBEROS
-operator|.
-name|toString
-argument_list|()
-argument_list|)
 return|;
 block|}
 block|}

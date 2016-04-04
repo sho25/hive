@@ -349,6 +349,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|TimeoutException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|atomic
 operator|.
 name|AtomicInteger
@@ -782,15 +794,42 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|TimeoutException
+condition|)
+block|{
 name|LOG
 operator|.
-name|warn
+name|error
+argument_list|(
+literal|"Timed out waiting for client to connect.\nPossible reasons include network "
+operator|+
+literal|"issues, errors in remote driver or the cluster has no available resources, etc."
+operator|+
+literal|"\nPlease check YARN or Spark driver's logs for further information."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|error
 argument_list|(
 literal|"Error while waiting for client to connect."
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
 name|driverThread
 operator|.
 name|interrupt

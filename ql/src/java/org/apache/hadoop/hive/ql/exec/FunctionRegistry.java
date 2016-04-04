@@ -6570,6 +6570,46 @@ name|STRING
 argument_list|)
 return|;
 block|}
+comment|// timestamp/date is higher precedence than String_GROUP
+if|if
+condition|(
+name|pgA
+operator|==
+name|PrimitiveGrouping
+operator|.
+name|STRING_GROUP
+operator|&&
+name|pgB
+operator|==
+name|PrimitiveGrouping
+operator|.
+name|DATE_GROUP
+condition|)
+block|{
+return|return
+name|b
+return|;
+block|}
+comment|// date/timestamp is higher precedence than String_GROUP
+if|if
+condition|(
+name|pgB
+operator|==
+name|PrimitiveGrouping
+operator|.
+name|STRING_GROUP
+operator|&&
+name|pgA
+operator|==
+name|PrimitiveGrouping
+operator|.
+name|DATE_GROUP
+condition|)
+block|{
+return|return
+name|a
+return|;
+block|}
 comment|// Another special case, because timestamp is not implicitly convertible to numeric types.
 if|if
 condition|(

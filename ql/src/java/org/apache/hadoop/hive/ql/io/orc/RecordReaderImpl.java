@@ -6514,7 +6514,8 @@ name|readStripe
 argument_list|()
 expr_stmt|;
 block|}
-name|long
+specifier|final
+name|int
 name|batchSize
 init|=
 name|computeBatchSize
@@ -6576,9 +6577,6 @@ else|else
 block|{
 name|result
 operator|=
-operator|(
-name|VectorizedRowBatch
-operator|)
 name|previous
 expr_stmt|;
 name|result
@@ -6605,9 +6603,6 @@ name|result
 operator|.
 name|cols
 argument_list|,
-operator|(
-name|int
-operator|)
 name|batchSize
 argument_list|)
 expr_stmt|;
@@ -6616,9 +6611,6 @@ name|result
 operator|.
 name|size
 operator|=
-operator|(
-name|int
-operator|)
 name|batchSize
 expr_stmt|;
 name|advanceToNextRow
@@ -6657,17 +6649,16 @@ throw|;
 block|}
 block|}
 specifier|private
-name|long
+name|int
 name|computeBatchSize
 parameter_list|(
 name|long
 name|targetBatchSize
 parameter_list|)
 block|{
-name|long
+specifier|final
+name|int
 name|batchSize
-init|=
-literal|0
 decl_stmt|;
 comment|// In case of PPD, batch size should be aware of row group boundaries. If only a subset of row
 comment|// groups are selected then marker position is set to the end of range (subset of row groups
@@ -6777,6 +6768,9 @@ name|rowCountInStripe
 decl_stmt|;
 name|batchSize
 operator|=
+operator|(
+name|int
+operator|)
 name|Math
 operator|.
 name|min
@@ -6818,6 +6812,9 @@ else|else
 block|{
 name|batchSize
 operator|=
+operator|(
+name|int
+operator|)
 name|Math
 operator|.
 name|min

@@ -2368,6 +2368,7 @@ name|VectorExpressionDescriptor
 name|vMap
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -5084,7 +5085,7 @@ case|:
 name|genericUdf
 operator|=
 operator|new
-name|GenericUDFToUnixTimeStamp
+name|GenericUDFTimestamp
 argument_list|()
 expr_stmt|;
 break|break;

@@ -1424,14 +1424,6 @@ operator|.
 name|sendStateUpdate
 argument_list|(
 name|nodeId
-operator|.
-name|getHostname
-argument_list|()
-argument_list|,
-name|nodeId
-operator|.
-name|getPort
-argument_list|()
 argument_list|,
 name|SourceStateUpdatedRequestProto
 operator|.
