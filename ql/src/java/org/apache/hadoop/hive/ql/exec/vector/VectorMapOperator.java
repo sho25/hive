@@ -107,6 +107,20 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -123,7 +137,9 @@ init|=
 literal|1L
 decl_stmt|;
 comment|/** Kryo ctor. */
-specifier|protected
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|VectorMapOperator
 parameter_list|()
 block|{

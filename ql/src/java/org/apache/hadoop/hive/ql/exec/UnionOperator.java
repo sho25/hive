@@ -908,6 +908,8 @@ name|getName
 parameter_list|()
 block|{
 return|return
+name|UnionOperator
+operator|.
 name|getOperatorName
 argument_list|()
 return|;

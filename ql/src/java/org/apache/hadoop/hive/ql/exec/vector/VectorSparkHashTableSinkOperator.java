@@ -143,23 +143,15 @@ end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|util
+name|google
 operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|common
 operator|.
-name|util
+name|annotations
 operator|.
-name|concurrent
-operator|.
-name|Future
+name|VisibleForTesting
 import|;
 end_import
 
@@ -206,7 +198,9 @@ index|[]
 name|singleRow
 decl_stmt|;
 comment|/** Kryo ctor. */
-specifier|protected
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|VectorSparkHashTableSinkOperator
 parameter_list|()
 block|{

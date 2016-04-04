@@ -23,28 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Future
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -199,6 +177,20 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
 comment|/**  * Vectorized version for SparkPartitionPruningSinkOperator.  * Forked from VectorAppMasterEventOperator.  **/
 end_comment
@@ -273,7 +265,9 @@ name|context
 expr_stmt|;
 block|}
 comment|/** Kryo ctor. */
-specifier|protected
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|VectorSparkPartitionPruningSinkOperator
 parameter_list|()
 block|{
