@@ -89,6 +89,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hbase
+operator|.
+name|zookeeper
+operator|.
+name|MiniZooKeeperCluster
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -200,6 +216,9 @@ name|startAndGetMiniLlapCluster
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|MiniZooKeeperCluster
+name|miniZkCluster
 parameter_list|,
 name|String
 name|confDir
@@ -350,7 +369,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"MiniLlap Configs - maxMemory: "
+literal|"MiniLlap Configs -  maxMemory: "
 operator|+
 name|maxMemory
 operator|+
@@ -386,6 +405,10 @@ operator|.
 name|create
 argument_list|(
 name|clusterName
+argument_list|,
+name|miniZkCluster
+argument_list|,
+literal|1
 argument_list|,
 name|numExecutors
 argument_list|,
