@@ -160,6 +160,19 @@ specifier|public
 interface|interface
 name|TxnStore
 block|{
+specifier|public
+specifier|static
+enum|enum
+name|MUTEX_KEY
+block|{
+name|Initiator
+block|,
+name|Cleaner
+block|,
+name|HouseKeeper
+block|,
+name|CompactionHistory
+block|}
 comment|// Compactor states (Should really be enum)
 specifier|static
 specifier|final
@@ -612,6 +625,55 @@ name|long
 name|milliseconds
 parameter_list|)
 function_decl|;
+specifier|public
+name|MutexAPI
+name|getMutexAPI
+parameter_list|()
+function_decl|;
+comment|/**    * This is primarily designed to provide coarse grained mutex support to operations running    * inside the Metastore (of which there could be several instances).  The initial goal is to     * ensure that various sub-processes of the Compactor don't step on each other.    *     * In RDMBS world each {@code LockHandle} uses a java.sql.Connection so use it sparingly.    */
+specifier|public
+specifier|static
+interface|interface
+name|MutexAPI
+block|{
+comment|/**      * The {@code key} is name of the lock. Will acquire and exclusive lock or block.  It retuns      * a handle which must be used to release the lock.  Each invocation returns a new handle.      */
+specifier|public
+name|LockHandle
+name|acquireLock
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**      * Same as {@link #acquireLock(String)} but takes an already existing handle as input.  This       * will associate the lock on {@code key} with the same handle.  All locks associated with      * the same handle will be released together.      * @param handle not NULL      */
+specifier|public
+name|void
+name|acquireLock
+parameter_list|(
+name|String
+name|key
+parameter_list|,
+name|LockHandle
+name|handle
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+specifier|public
+specifier|static
+interface|interface
+name|LockHandle
+block|{
+comment|/**        * Releases all locks associcated with this handle.        */
+specifier|public
+name|void
+name|releaseLocks
+parameter_list|()
+function_decl|;
+block|}
+block|}
 block|}
 end_interface
 

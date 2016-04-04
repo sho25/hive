@@ -1199,11 +1199,6 @@ operator|.
 name|getPrunedPartitions
 argument_list|(
 name|tsop
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|tsop
 argument_list|)
 decl_stmt|;
 name|Table

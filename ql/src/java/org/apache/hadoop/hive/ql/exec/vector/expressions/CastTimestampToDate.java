@@ -205,7 +205,7 @@ name|millisToDays
 argument_list|(
 name|inV
 operator|.
-name|getTimestampMilliseconds
+name|getTime
 argument_list|(
 name|i
 argument_list|)

@@ -583,7 +583,7 @@ name|void
 name|createDb
 parameter_list|()
 throws|throws
-name|SQLException
+name|Exception
 block|{
 name|Connection
 name|conn

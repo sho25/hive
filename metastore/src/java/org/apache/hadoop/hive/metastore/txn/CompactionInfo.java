@@ -39,6 +39,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|GetOpenTxnsInfoResponse
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|sql
@@ -120,7 +138,7 @@ name|tooManyAborts
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     */
+comment|/**    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     * See {@link TxnStore#setCompactionHighestTxnId(CompactionInfo, long)} for precise definition.    * See also {@link TxnUtils#createValidCompactTxnList(GetOpenTxnsInfoResponse)} and    * {@link ValidCompactorTxnList#highWatermark}    */
 specifier|public
 name|long
 name|highestTxnId

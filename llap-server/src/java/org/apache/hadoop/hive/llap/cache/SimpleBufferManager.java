@@ -150,16 +150,6 @@ name|LlapDaemonCacheMetrics
 name|metrics
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
@@ -169,7 +159,6 @@ argument_list|(
 literal|"Simple buffer manager"
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|allocator
@@ -237,23 +226,23 @@ condition|)
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceCachingEnabled
+name|CACHE_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|CACHE_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Deallocating "
-operator|+
+literal|"Deallocating {} that was not cached"
+argument_list|,
 name|buffer
-operator|+
-literal|" that was not cached"
 argument_list|)
 expr_stmt|;
 block|}

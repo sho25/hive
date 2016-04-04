@@ -1814,11 +1814,11 @@ operator|instanceof
 name|WritableTimestampObjectInspector
 condition|)
 block|{
-name|LongColumnVector
-name|lv
+name|TimestampColumnVector
+name|tv
 init|=
 operator|(
-name|LongColumnVector
+name|TimestampColumnVector
 operator|)
 name|colVec
 decl_stmt|;
@@ -1857,38 +1857,14 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* Calculate the number of nanoseconds since the epoch as a long integer. By convention        * that is how Timestamp values are operated on in a vector.        */
-name|long
-name|l
-init|=
-name|ts
+name|tv
 operator|.
-name|getTime
-argument_list|()
-operator|*
-literal|1000000
-comment|// Shift the milliseconds value over by 6 digits
-comment|// to scale for nanosecond precision.
-comment|// The milliseconds digits will by convention be all 0s.
-operator|+
-name|ts
-operator|.
-name|getNanos
-argument_list|()
-operator|%
-literal|1000000
-decl_stmt|;
-comment|// Add on the remaining nanos.
-comment|// The % 1000000 operation removes the ms values
-comment|// so that the milliseconds are not counted twice.
-name|lv
-operator|.
-name|vector
-index|[
+name|set
+argument_list|(
 name|i
-index|]
-operator|=
-name|l
+argument_list|,
+name|ts
+argument_list|)
 expr_stmt|;
 block|}
 elseif|else

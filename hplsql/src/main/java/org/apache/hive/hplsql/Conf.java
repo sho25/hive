@@ -250,7 +250,7 @@ decl_stmt|;
 name|String
 name|dualTable
 init|=
-literal|"default.dual"
+literal|null
 decl_stmt|;
 name|String
 name|tempTablesSchema

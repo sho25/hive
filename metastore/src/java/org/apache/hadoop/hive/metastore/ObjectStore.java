@@ -8424,15 +8424,13 @@ argument_list|(
 operator|new
 name|MFieldSchema
 argument_list|(
-name|HiveStringUtils
-operator|.
-name|normalizeIdentifier
-argument_list|(
 name|part
 operator|.
 name|getName
 argument_list|()
-argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|part
 operator|.
@@ -37881,9 +37879,6 @@ name|mStatsObj
 operator|.
 name|getColName
 argument_list|()
-operator|.
-name|trim
-argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -37900,9 +37895,9 @@ operator|!
 name|foundCol
 condition|)
 block|{
-throw|throw
-operator|new
-name|NoSuchObjectException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"Column "
 operator|+
@@ -37910,7 +37905,7 @@ name|colName
 operator|+
 literal|" for which stats gathering is requested doesn't exist."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|QueryWrapper
 name|queryWrapper
@@ -45106,7 +45101,7 @@ condition|)
 block|{
 name|pm
 operator|.
-name|deletePersistent
+name|deletePersistentAll
 argument_list|(
 name|toBeRemoved
 argument_list|)

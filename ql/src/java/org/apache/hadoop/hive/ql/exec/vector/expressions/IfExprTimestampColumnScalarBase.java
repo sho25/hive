@@ -25,19 +25,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|sql
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|PisaTimestamp
+name|Timestamp
 import|;
 end_import
 
@@ -192,7 +184,7 @@ decl_stmt|,
 name|arg2Column
 decl_stmt|;
 specifier|private
-name|PisaTimestamp
+name|Timestamp
 name|arg3Scalar
 decl_stmt|;
 specifier|private
@@ -208,7 +200,7 @@ parameter_list|,
 name|int
 name|arg2Column
 parameter_list|,
-name|PisaTimestamp
+name|Timestamp
 name|arg3Scalar
 parameter_list|,
 name|int
@@ -477,7 +469,7 @@ literal|1
 condition|?
 name|arg2ColVector
 operator|.
-name|asScratchPisaTimestamp
+name|asScratchTimestamp
 argument_list|(
 name|i
 argument_list|)
@@ -519,7 +511,7 @@ literal|1
 condition|?
 name|arg2ColVector
 operator|.
-name|asScratchPisaTimestamp
+name|asScratchTimestamp
 argument_list|(
 name|i
 argument_list|)
@@ -586,7 +578,7 @@ literal|1
 condition|?
 name|arg2ColVector
 operator|.
-name|asScratchPisaTimestamp
+name|asScratchTimestamp
 argument_list|(
 name|i
 argument_list|)
@@ -667,7 +659,7 @@ literal|1
 condition|?
 name|arg2ColVector
 operator|.
-name|asScratchPisaTimestamp
+name|asScratchTimestamp
 argument_list|(
 name|i
 argument_list|)

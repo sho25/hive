@@ -399,28 +399,6 @@ name|io
 operator|.
 name|orc
 operator|.
-name|RecordReaderUtils
-operator|.
-name|ByteBufferAllocatorPool
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
 name|encoded
 operator|.
 name|Reader
@@ -635,12 +613,8 @@ name|DataCache
 name|cache
 decl_stmt|;
 specifier|private
-name|ByteBufferAllocatorPool
-name|pool
-decl_stmt|;
-specifier|private
 name|boolean
-name|isDebugTracingEnabled
+name|isTracingEnabled
 decl_stmt|;
 specifier|public
 name|EncodedReaderImpl
@@ -1235,12 +1209,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"The following columns have PRESENT streams: "
 operator|+
@@ -1377,12 +1351,12 @@ index|]
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Skipping stream: "
 operator|+
@@ -1465,12 +1439,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Creating context "
 operator|+
@@ -1552,12 +1526,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Adding stream for column "
 operator|+
@@ -1617,12 +1591,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Will read whole stream "
 operator|+
@@ -1795,7 +1769,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 operator|&&
 name|LOG
 operator|.
@@ -1805,7 +1779,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Resulting disk ranges to read (file "
 operator|+
@@ -1855,7 +1829,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 operator|&&
 name|LOG
 operator|.
@@ -1865,7 +1839,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Disk ranges after cache (file "
 operator|+
@@ -2041,12 +2015,12 @@ block|}
 block|}
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Disk ranges after pre-read (file "
 operator|+
@@ -2304,12 +2278,12 @@ block|{
 comment|// This stream is for entire stripe and needed for every RG; uncompress once and reuse.
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Getting stripe-level stream ["
 operator|+
@@ -2646,12 +2620,12 @@ block|}
 block|}
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Disk ranges after preparing all the data "
 operator|+
@@ -2795,12 +2769,12 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Getting data for column "
 operator|+
@@ -2952,7 +2926,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|setDebugTracing
+name|setTracing
 parameter_list|(
 name|boolean
 name|isEnabled
@@ -2960,7 +2934,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|isDebugTracingEnabled
+name|isTracingEnabled
 operator|=
 name|isEnabled
 expr_stmt|;
@@ -2979,19 +2953,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|pool
-operator|!=
-literal|null
-condition|)
-block|{
-name|pool
-operator|.
-name|clear
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 comment|/**    * Fake cache chunk used for uncompressed data. Used in preRead for uncompressed files.    * Makes assumptions about preRead code; for example, we add chunks here when they are    * already in the linked list, without unlinking. So, we record the start position in the    * original list, and then, when someone adds the next element, we merely increase the number    * of elements one has to traverse from that position to get the whole list.    */
 specifier|private
@@ -3499,12 +3460,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Starting read for ["
 operator|+
@@ -3711,12 +3672,12 @@ literal|null
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Locking "
 operator|+
@@ -3933,12 +3894,12 @@ name|current
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Locking "
 operator|+
@@ -3983,12 +3944,12 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Adding an already-uncompressed buffer "
 operator|+
@@ -4030,12 +3991,12 @@ block|{
 comment|// 2b. This is a known incomplete CB caused by ORC CB end boundaries being estimates.
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Cannot read "
 operator|+
@@ -4217,12 +4178,12 @@ name|current
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Locking "
 operator|+
@@ -4294,12 +4255,12 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Adding an uncompressed buffer "
 operator|+
@@ -4353,7 +4314,7 @@ return|return
 name|lastUncompressed
 return|;
 block|}
-comment|/**    * To achieve some sort of consistent cache boundaries, we will cache streams deterministically;    * in segments starting w/stream start, and going for either stream size or some fixed size.    * If we are not reading the entire segment's worth of data, then we will not cache the partial    * RGs; the breakage of cache assumptions (no interleaving blocks, etc.) is way too much PITA    * to handle just for this case.    * We could avoid copy in non-zcr case and manage the buffer that was not allocated by our    * allocator. Uncompressed case is not mainline though so let's not complicate it.    * @param qfCounters    */
+comment|/**    * To achieve some sort of consistent cache boundaries, we will cache streams deterministically;    * in segments starting w/stream start, and going for either stream size or some fixed size.    * If we are not reading the entire segment's worth of data, then we will not cache the partial    * RGs; the breakage of cache assumptions (no interleaving blocks, etc.) is way too much PITA    * to handle just for this case.    * We could avoid copy in non-zcr case and manage the buffer that was not allocated by our    * allocator. Uncompressed case is not mainline though so let's not complicate it.    */
 specifier|private
 name|DiskRangeList
 name|preReadUncompressedStream
@@ -4413,12 +4374,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Starting pre-read for ["
 operator|+
@@ -4765,12 +4726,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Processing uncompressed file data at ["
 operator|+
@@ -6101,12 +6062,12 @@ block|{
 comment|// This is the last RG for which this buffer will be used. Remove the initial refcount
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Unlocking "
 operator|+
@@ -6271,12 +6232,12 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Discarding data due to cache collision: "
 operator|+
@@ -6497,7 +6458,7 @@ name|end
 return|;
 block|}
 block|}
-comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param ranges Iterator of all chunks, pointing at current.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the    *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The resulting cache chunk.    */
+comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the    *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The resulting cache chunk.    */
 specifier|private
 name|ProcCacheChunk
 name|addOneCompressionBuffer
@@ -6650,12 +6611,12 @@ operator|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Found CB at "
 operator|+
@@ -6829,12 +6790,12 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Removing partial CB "
 operator|+
@@ -7075,12 +7036,12 @@ condition|)
 block|{
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Removing partial CB "
 operator|+
@@ -7144,12 +7105,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Replacing "
 operator|+
@@ -7175,7 +7136,7 @@ name|icb
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastRange The buffer from which the last (or all) bytes of fCB come.    * @param lastChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param ranges The iterator of all compressed ranges for the stream, pointing at lastRange.    * @param lastChunk    * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
+comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastChunk    * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
 specifier|private
 name|ProcCacheChunk
 name|addOneCompressionBlockByteBuffer
@@ -7275,12 +7236,12 @@ expr_stmt|;
 comment|// Adjust the compression block position.
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Adjusting "
 operator|+
@@ -7329,12 +7290,12 @@ condition|)
 block|{
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Replacing "
 operator|+
@@ -7360,12 +7321,12 @@ else|else
 block|{
 if|if
 condition|(
-name|isDebugTracingEnabled
+name|isTracingEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Adding "
 operator|+

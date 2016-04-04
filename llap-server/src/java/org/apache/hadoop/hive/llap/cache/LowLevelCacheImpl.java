@@ -431,30 +431,17 @@ name|long
 name|cleanupInterval
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Low level cache; cleanup interval "
-operator|+
+literal|"Low level cache; cleanup interval {} sec"
+argument_list|,
 name|cleanupInterval
-operator|+
-literal|"sec"
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|cachePolicy
@@ -955,23 +942,23 @@ decl_stmt|;
 comment|// Lock the buffer, validate it and add to results.
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Locking "
-operator|+
+literal|"Locking {} during get"
+argument_list|,
 name|buffer
-operator|+
-literal|" during get"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1135,7 +1122,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Adds cached buffer to buffer list.    * @param currentNotCached Pointer to the list node where we are inserting.    * @param currentCached The cached buffer found for this node, to insert.    * @param resultObj    * @return The new currentNotCached pointer, following the cached buffer insertion.    */
+comment|/**    * Adds cached buffer to buffer list.    * @param currentNotCached Pointer to the list node where we are inserting.    * @param currentCached The cached buffer found for this node, to insert.    * @return The new currentNotCached pointer, following the cached buffer insertion.    */
 specifier|private
 name|DiskRangeList
 name|addCachedBufferToIter
@@ -1449,23 +1436,23 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Locking "
-operator|+
+literal|"Locking {} at put time"
+argument_list|,
 name|buffer
-operator|+
-literal|" at put time"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1581,59 +1568,55 @@ break|break;
 block|}
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceCachingEnabled
+name|CACHE_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|CACHE_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Trying to cache when the chunk is already cached for "
+literal|"Trying to cache when the chunk is already cached for"
 operator|+
+literal|" {}@{} (base {}); old {}, new {}"
+argument_list|,
 name|fileKey
-operator|+
-literal|"@"
-operator|+
+argument_list|,
 name|offset
-operator|+
-literal|" (base "
-operator|+
+argument_list|,
 name|baseOffset
-operator|+
-literal|"); old "
-operator|+
+argument_list|,
 name|oldVal
-operator|+
-literal|", new "
-operator|+
+argument_list|,
 name|buffer
 argument_list|)
 expr_stmt|;
 block|}
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Locking "
-operator|+
+literal|"Locking {} due to cache collision"
+argument_list|,
 name|oldVal
-operator|+
-literal|"  due to cache collision"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1691,24 +1674,24 @@ block|}
 comment|// We found an old, valid block for this key in the cache.
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceLockingEnabled
+name|LOCKING_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|LOCKING_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Unlocking "
-operator|+
+literal|"Unlocking {} due to cache collision with {}"
+argument_list|,
 name|buffer
-operator|+
-literal|" due to cache collision with "
-operator|+
+argument_list|,
 name|oldVal
 argument_list|)
 expr_stmt|;
@@ -2088,23 +2071,23 @@ else|else
 block|{
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceCachingEnabled
+name|CACHE_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|CACHE_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Deallocating "
-operator|+
+literal|"Deallocating {} that was not cached"
+argument_list|,
 name|buffer
-operator|+
-literal|" that was not cached"
 argument_list|)
 expr_stmt|;
 block|}

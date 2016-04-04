@@ -2083,7 +2083,18 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+name|LLAP_ALLOW_PERMANENT_FNS
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS
 operator|.
 name|varname
 argument_list|)
@@ -3748,6 +3759,37 @@ operator|+
 literal|"entire transaction will fail and fall-back to DataNucleus will not be possible. You\n"
 operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
+argument_list|)
+block|,
+name|METASTORE_DIRECT_SQL_MAX_QUERY_LENGTH
+argument_list|(
+literal|"hive.direct.sql.max.query.length"
+argument_list|,
+literal|100
+argument_list|,
+literal|"The maximum\n"
+operator|+
+literal|" size of a query string (in KB)."
+argument_list|)
+block|,
+name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_IN_CLAUSE
+argument_list|(
+literal|"hive.direct.sql.max.elements.in.clause"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"The maximum number of values in a IN clause. Once exceeded, it will be broken into\n"
+operator|+
+literal|" multiple OR separated IN clauses."
+argument_list|)
+block|,
+name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_VALUES_CLAUSE
+argument_list|(
+literal|"hive.direct.sql.max.elements.values.clause"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"The maximum number of values in a VALUES clause for INSERT statement."
 argument_list|)
 block|,
 name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
@@ -8354,6 +8396,15 @@ argument_list|,
 literal|"The parent node in ZooKeeper used by HiveServer2 when supporting dynamic service discovery."
 argument_list|)
 block|,
+name|HIVE_SERVER2_ZOOKEEPER_PUBLISH_CONFIGS
+argument_list|(
+literal|"hive.server2.zookeeper.publish.configs"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether we should publish HiveServer2's configs to ZooKeeper."
+argument_list|)
+block|,
 comment|// HiveServer2 global init file location
 name|HIVE_SERVER2_GLOBAL_INIT_FILE_LOCATION
 argument_list|(
@@ -9233,6 +9284,39 @@ operator|+
 literal|"For example: hiveuser,impalauser,hiveadmin,hadoopadmin"
 argument_list|)
 block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GUIDKEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.guidKey"
+argument_list|,
+literal|"uid"
+argument_list|,
+literal|"LDAP attribute name whose values are unique in this LDAP server.\n"
+operator|+
+literal|"For example: uid or CN."
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPMEMBERSHIP_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"member"
+argument_list|,
+literal|"LDAP attribute name on the user entry that references a group, the user belongs to.\n"
+operator|+
+literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_GROUPCLASS_KEY
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"groupOfNames"
+argument_list|,
+literal|"LDAP attribute name on the group entry that is to be used in LDAP group searches.\n"
+operator|+
+literal|"For example: group, groupOfNames or groupOfUniqueNames."
+argument_list|)
+block|,
 name|HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY
 argument_list|(
 literal|"hive.server2.authentication.ldap.customLDAPQuery"
@@ -9542,6 +9626,29 @@ argument_list|,
 literal|"set,reset,dfs,add,list,delete,reload,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
+argument_list|)
+block|,
+name|HIVE_MOVE_FILES_THREAD_COUNT
+argument_list|(
+literal|"hive.mv.files.thread"
+argument_list|,
+literal|25
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|1L
+argument_list|,
+literal|true
+argument_list|,
+literal|1024L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Number of threads"
+operator|+
+literal|" used to move files in move task"
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
@@ -10237,7 +10344,7 @@ name|LLAP_IO_ENABLED
 argument_list|(
 literal|"hive.llap.io.enabled"
 argument_list|,
-literal|false
+literal|null
 argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
@@ -10472,6 +10579,15 @@ operator|+
 literal|"execute tasks in LLAP. Skipping the check allows executing UDFs from pre-localized\n"
 operator|+
 literal|"jars in LLAP; if the jars are not pre-localized, the UDFs will simply fail to load."
+argument_list|)
+block|,
+name|LLAP_ALLOW_PERMANENT_FNS
+argument_list|(
+literal|"hive.llap.allow.permanent.fns"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP decider should allow permanent UDFs."
 argument_list|)
 block|,
 name|LLAP_EXECUTION_MODE
@@ -10894,9 +11010,9 @@ argument_list|,
 literal|"llap.daemon.communicator.num.threads"
 argument_list|)
 block|,
-name|LLAP_DAEMON_ALLOW_PERMANENT_FNS
+name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS
 argument_list|(
-literal|"hive.llap.daemon.allow.permanent.fns"
+literal|"hive.llap.daemon.download.permanent.fns"
 argument_list|,
 literal|false
 argument_list|,

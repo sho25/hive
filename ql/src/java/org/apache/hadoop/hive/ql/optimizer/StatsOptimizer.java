@@ -1120,6 +1120,17 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
+comment|// If getNameToSplitSample is not empty, at least one of the source
+comment|// tables is being sampled and we can not optimize.
+operator|||
+operator|!
+name|pctx
+operator|.
+name|getNameToSplitSample
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return
@@ -1871,6 +1882,26 @@ literal|0
 condition|)
 block|{
 comment|// looks like a subq plan.
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
+name|tsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getRowLimit
+argument_list|()
+operator|!=
+operator|-
+literal|1
+condition|)
+block|{
+comment|// table is sampled. In some situation, we really can leverage row
+comment|// limit. In order to be safe, we do not use it now.
 return|return
 literal|null
 return|;

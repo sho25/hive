@@ -129,7 +129,9 @@ name|vectorMapJoinRowBytesContainer
 init|=
 operator|new
 name|VectorMapJoinRowBytesContainer
-argument_list|()
+argument_list|(
+literal|null
+argument_list|)
 decl_stmt|;
 name|int
 name|count

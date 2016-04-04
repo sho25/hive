@@ -1701,7 +1701,7 @@ name|rootOp
 init|=
 name|OperatorUtils
 operator|.
-name|findSingleOperatorUpstream
+name|findSingleOperatorUpstreamJoinAccounted
 argument_list|(
 name|mapJoinOp
 operator|.
@@ -1757,7 +1757,7 @@ name|rootOp
 init|=
 name|OperatorUtils
 operator|.
-name|findSingleOperatorUpstream
+name|findSingleOperatorUpstreamJoinAccounted
 argument_list|(
 name|mapJoinOp
 operator|.

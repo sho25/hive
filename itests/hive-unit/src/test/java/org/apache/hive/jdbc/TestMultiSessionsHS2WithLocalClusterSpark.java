@@ -724,7 +724,7 @@ name|void
 name|createDb
 parameter_list|()
 throws|throws
-name|SQLException
+name|Exception
 block|{
 name|Connection
 name|conn
@@ -849,7 +849,7 @@ name|void
 name|createConnection
 parameter_list|()
 throws|throws
-name|SQLException
+name|Exception
 block|{
 name|Connection
 name|connection
@@ -1269,7 +1269,7 @@ name|String
 name|resultVal
 parameter_list|)
 throws|throws
-name|SQLException
+name|Exception
 block|{
 name|createConnection
 argument_list|()

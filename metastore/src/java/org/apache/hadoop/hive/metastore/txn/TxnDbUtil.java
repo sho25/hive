@@ -374,6 +374,14 @@ literal|" HL_USER varchar(128) NOT NULL,"
 operator|+
 literal|" HL_HOST varchar(128) NOT NULL,"
 operator|+
+literal|" HL_HEARTBEAT_COUNT integer,"
+operator|+
+literal|" HL_AGENT_INFO varchar(128),"
+operator|+
+literal|" HL_BLOCKEDBY_EXT_ID bigint,"
+operator|+
+literal|" HL_BLOCKEDBY_INT_ID bigint,"
+operator|+
 literal|" PRIMARY KEY(HL_LOCK_EXT_ID, HL_LOCK_INT_ID))"
 argument_list|)
 expr_stmt|;
@@ -476,6 +484,23 @@ operator|+
 literal|" CC_META_INFO varchar(2048) for bit data,"
 operator|+
 literal|" CC_HADOOP_JOB_ID varchar(32))"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE AUX_TABLE ("
+operator|+
+literal|"  MT_KEY1 varchar(128) NOT NULL,"
+operator|+
+literal|"  MT_KEY2 bigint NOT NULL,"
+operator|+
+literal|"  MT_COMMENT varchar(255),"
+operator|+
+literal|"  PRIMARY KEY(MT_KEY1, MT_KEY2)"
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|conn
@@ -692,6 +717,13 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"COMPLETED_COMPACTIONS"
+argument_list|)
+expr_stmt|;
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"AUX_TABLE"
 argument_list|)
 expr_stmt|;
 name|conn
@@ -942,7 +974,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
 specifier|static
 name|Connection
 name|getConnection
@@ -1090,7 +1121,6 @@ return|return
 name|conn
 return|;
 block|}
-specifier|private
 specifier|static
 name|void
 name|closeResources

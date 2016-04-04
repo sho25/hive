@@ -485,38 +485,21 @@ name|maxBuffers
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|LlapIoImpl
-operator|.
-name|LOGL
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"LRFU cache policy with min buffer size "
-operator|+
+literal|"LRFU cache policy with min buffer size {} and lambda {} (heap size {})"
+argument_list|,
 name|minBufferSize
-operator|+
-literal|" and lambda "
-operator|+
+argument_list|,
 name|lambda
-operator|+
-literal|" (heap size "
-operator|+
+argument_list|,
 name|maxHeapSize
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
-block|}
 name|heap
 operator|=
 operator|new
@@ -666,24 +649,24 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceCachingEnabled
+name|CACHE_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|CACHE_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
-literal|"Touching "
-operator|+
+literal|"Touching {} at {}"
+argument_list|,
 name|buffer
-operator|+
-literal|" at "
-operator|+
+argument_list|,
 name|time
 argument_list|)
 expr_stmt|;
@@ -1342,24 +1325,24 @@ index|]
 decl_stmt|;
 if|if
 condition|(
-name|DebugUtils
+name|LlapIoImpl
 operator|.
-name|isTraceCachingEnabled
+name|CACHE_LOGGER
+operator|.
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LlapIoImpl
 operator|.
-name|LOG
+name|CACHE_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Evicting "
-operator|+
+literal|"Evicting {} at {}"
+argument_list|,
 name|result
-operator|+
-literal|" at "
-operator|+
+argument_list|,
 name|time
 argument_list|)
 expr_stmt|;

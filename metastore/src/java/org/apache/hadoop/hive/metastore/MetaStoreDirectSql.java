@@ -2396,6 +2396,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 if|if
@@ -2518,6 +2520,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 if|if
@@ -3480,14 +3484,10 @@ literal|3
 index|]
 argument_list|)
 decl_stmt|;
-comment|// A partition must have either everything set, or nothing set if it's a view.
+comment|// A partition must have at least sdId and serdeId set, or nothing set if it's a view.
 if|if
 condition|(
 name|sdId
-operator|==
-literal|null
-operator|||
-name|colId
 operator|==
 literal|null
 operator|||
@@ -3540,10 +3540,6 @@ argument_list|(
 literal|"Unexpected null for one of the IDs, SD "
 operator|+
 name|sdId
-operator|+
-literal|", column "
-operator|+
-name|colId
 operator|+
 literal|", serde "
 operator|+
@@ -3681,10 +3677,6 @@ condition|)
 continue|continue;
 comment|// Probably a view.
 assert|assert
-name|colId
-operator|!=
-literal|null
-operator|&&
 name|serdeId
 operator|!=
 literal|null
@@ -3928,6 +3920,13 @@ argument_list|(
 name|sd
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|colId
+operator|!=
+literal|null
+condition|)
+block|{
 name|List
 argument_list|<
 name|FieldSchema
@@ -3987,6 +3986,7 @@ argument_list|(
 name|cols
 argument_list|)
 expr_stmt|;
+block|}
 comment|// We assume each SD has an unique serde.
 name|SerDeInfo
 name|serde
@@ -4296,14 +4296,16 @@ name|trimCommaList
 argument_list|(
 name|sdSb
 argument_list|)
-decl_stmt|,
+decl_stmt|;
+name|String
 name|serdeIds
 init|=
 name|trimCommaList
 argument_list|(
 name|serdeSb
 argument_list|)
-decl_stmt|,
+decl_stmt|;
+name|String
 name|colIds
 init|=
 name|trimCommaList
@@ -6194,6 +6196,11 @@ name|String
 name|defaultPartName
 decl_stmt|;
 specifier|private
+specifier|final
+name|DB
+name|dbType
+decl_stmt|;
+specifier|private
 name|PartitionFilterGenerator
 parameter_list|(
 name|Table
@@ -6216,6 +6223,9 @@ name|dbHasJoinCastBug
 parameter_list|,
 name|String
 name|defaultPartName
+parameter_list|,
+name|DB
+name|dbType
 parameter_list|)
 block|{
 name|this
@@ -6258,6 +6268,12 @@ name|defaultPartName
 operator|=
 name|defaultPartName
 expr_stmt|;
+name|this
+operator|.
+name|dbType
+operator|=
+name|dbType
+expr_stmt|;
 block|}
 comment|/**      * Generate the ANSI SQL92 filter for the given expression tree      * @param table the table being queried      * @param params the ordered parameters for the resulting expression      * @param joins the joins necessary for the resulting expression      * @return the string representation of the expression tree      */
 specifier|private
@@ -6288,6 +6304,9 @@ name|dbHasJoinCastBug
 parameter_list|,
 name|String
 name|defaultPartName
+parameter_list|,
+name|DB
+name|dbType
 parameter_list|)
 throws|throws
 name|MetaException
@@ -6326,6 +6345,8 @@ argument_list|,
 name|dbHasJoinCastBug
 argument_list|,
 name|defaultPartName
+argument_list|,
+name|dbType
 argument_list|)
 decl_stmt|;
 name|tree
@@ -7034,6 +7055,27 @@ operator|.
 name|Date
 condition|)
 block|{
+if|if
+condition|(
+name|dbType
+operator|==
+name|DB
+operator|.
+name|ORACLE
+condition|)
+block|{
+comment|// Oracle requires special treatment... as usual.
+name|tableValue
+operator|=
+literal|"TO_DATE("
+operator|+
+name|tableValue
+operator|+
+literal|", 'YYYY-MM-DD')"
+expr_stmt|;
+block|}
+else|else
+block|{
 name|tableValue
 operator|=
 literal|"cast("
@@ -7042,6 +7084,7 @@ name|tableValue
 operator|+
 literal|" as date)"
 expr_stmt|;
+block|}
 block|}
 comment|// Workaround for HIVE_DEFAULT_PARTITION - ignore it like JDO does, for now.
 name|String
