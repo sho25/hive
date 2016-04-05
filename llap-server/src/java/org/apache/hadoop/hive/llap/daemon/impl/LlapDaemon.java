@@ -873,6 +873,14 @@ name|LOG4j2_PROPERTIES_FILE
 init|=
 literal|"llap-daemon-log4j2.properties"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HADOOP_METRICS2_PROPERTIES_FILE
+init|=
+literal|"hadoop-metrics2.properties"
+decl_stmt|;
 specifier|private
 specifier|final
 name|Configuration
