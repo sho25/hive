@@ -309,7 +309,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|HiveAuthzContext
+name|QueryContext
 import|;
 end_import
 
@@ -610,7 +610,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
 parameter_list|,
-name|HiveAuthzContext
+name|QueryContext
 name|context
 parameter_list|)
 throws|throws

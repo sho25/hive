@@ -269,28 +269,6 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|HiveAuthzContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
 name|HiveAuthzPluginException
 import|;
 end_import
@@ -380,6 +358,28 @@ operator|.
 name|plugin
 operator|.
 name|HivePrivilegeObject
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|security
+operator|.
+name|authorization
+operator|.
+name|plugin
+operator|.
+name|QueryContext
 import|;
 end_import
 
@@ -479,6 +479,10 @@ specifier|static
 name|HiveAuthorizer
 name|mockedAuthorizer
 decl_stmt|;
+specifier|static
+name|HiveAuthenticationProvider
+name|authenticator
+decl_stmt|;
 comment|/**    * This factory creates a mocked HiveAuthorizer class.    * Use the mocked class to capture the argument passed to it in the test case.    */
 specifier|static
 class|class
@@ -517,6 +521,12 @@ name|HiveAuthorizer
 operator|.
 name|class
 argument_list|)
+expr_stmt|;
+name|TestHS2AuthzContext
+operator|.
+name|authenticator
+operator|=
+name|authenticator
 expr_stmt|;
 return|return
 name|TestHS2AuthzContext
@@ -757,7 +767,7 @@ argument_list|()
 expr_stmt|;
 name|ArgumentCaptor
 argument_list|<
-name|HiveAuthzContext
+name|QueryContext
 argument_list|>
 name|contextCapturer
 init|=
@@ -765,7 +775,7 @@ name|ArgumentCaptor
 operator|.
 name|forClass
 argument_list|(
-name|HiveAuthzContext
+name|QueryContext
 operator|.
 name|class
 argument_list|)
@@ -808,7 +818,7 @@ name|capture
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|HiveAuthzContext
+name|QueryContext
 name|context
 init|=
 name|contextCapturer
@@ -832,9 +842,9 @@ name|assertTrue
 argument_list|(
 literal|"ip address pattern check"
 argument_list|,
-name|context
+name|authenticator
 operator|.
-name|getIpAddress
+name|getUserIpAddress
 argument_list|()
 operator|.
 name|matches
@@ -848,9 +858,9 @@ name|assertTrue
 argument_list|(
 literal|"ip address size check"
 argument_list|,
-name|context
+name|authenticator
 operator|.
-name|getIpAddress
+name|getUserIpAddress
 argument_list|()
 operator|.
 name|length
