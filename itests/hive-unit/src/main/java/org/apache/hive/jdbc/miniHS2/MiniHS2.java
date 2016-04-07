@@ -658,6 +658,12 @@ name|authType
 init|=
 literal|"KERBEROS"
 decl_stmt|;
+specifier|private
+name|boolean
+name|isHA
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|Builder
 parameter_list|()
@@ -763,6 +769,21 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
+name|Builder
+name|withHA
+parameter_list|()
+block|{
+name|this
+operator|.
+name|isHA
+operator|=
+literal|true
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**      * Start HS2 with HTTP transport mode, default is binary mode      * @return this Builder      */
 specifier|public
 name|Builder
@@ -855,6 +876,8 @@ argument_list|,
 name|usePortsFromConf
 argument_list|,
 name|authType
+argument_list|,
+name|isHA
 argument_list|)
 return|;
 block|}
@@ -975,6 +998,9 @@ name|usePortsFromConf
 parameter_list|,
 name|String
 name|authType
+parameter_list|,
+name|boolean
+name|isHA
 parameter_list|)
 throws|throws
 name|Exception
@@ -1095,6 +1121,8 @@ argument_list|,
 literal|true
 argument_list|,
 literal|null
+argument_list|,
+name|isHA
 argument_list|)
 expr_stmt|;
 name|fs
@@ -1641,6 +1669,8 @@ argument_list|,
 name|usePortsFromConf
 argument_list|,
 literal|"KERBEROS"
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
