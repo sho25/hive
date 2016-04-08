@@ -1725,6 +1725,17 @@ argument_list|(
 name|containerRunner
 argument_list|)
 expr_stmt|;
+comment|// Not adding the registry as a service, since we need to control when it is initialized - conf used to pickup properties.
+name|this
+operator|.
+name|registry
+operator|=
+operator|new
+name|LlapRegistryService
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|HiveConf
@@ -1758,6 +1769,10 @@ operator|new
 name|LlapWebServices
 argument_list|(
 name|webPort
+argument_list|,
+name|this
+argument_list|,
+name|registry
 argument_list|)
 expr_stmt|;
 name|addIfService
@@ -1777,17 +1792,6 @@ comment|// requests before it is started.
 name|addIfService
 argument_list|(
 name|amReporter
-argument_list|)
-expr_stmt|;
-comment|// Not adding the registry as a service, since we need to control when it is initialized - conf used to pickup properties.
-name|this
-operator|.
-name|registry
-operator|=
-operator|new
-name|LlapRegistryService
-argument_list|(
-literal|true
 argument_list|)
 expr_stmt|;
 block|}

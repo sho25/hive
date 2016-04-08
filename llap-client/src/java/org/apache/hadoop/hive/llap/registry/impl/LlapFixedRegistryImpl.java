@@ -636,13 +636,25 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|String
 name|register
 parameter_list|()
 throws|throws
 name|IOException
 block|{
-comment|// nothing to register
+comment|// nothing to register (return host-<hostname>)
+return|return
+name|getWorkerIdentity
+argument_list|(
+name|InetAddress
+operator|.
+name|getLocalHost
+argument_list|()
+operator|.
+name|getCanonicalHostName
+argument_list|()
+argument_list|)
+return|;
 block|}
 annotation|@
 name|Override
