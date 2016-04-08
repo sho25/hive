@@ -564,9 +564,6 @@ operator|new
 name|HttpServer
 operator|.
 name|Builder
-argument_list|()
-operator|.
-name|setName
 argument_list|(
 literal|"llap"
 argument_list|)
