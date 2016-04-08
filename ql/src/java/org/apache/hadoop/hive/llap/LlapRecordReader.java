@@ -804,6 +804,7 @@ operator|.
 name|interrupt
 argument_list|()
 expr_stmt|;
+break|break;
 default|default:
 throw|throw
 operator|new

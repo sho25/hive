@@ -1828,6 +1828,14 @@ name|getServicesEndpoint
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|srv
+operator|.
+name|addInternalEndpoint
+argument_list|(
+name|getOutputFormatEndpoint
+argument_list|()
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Map
