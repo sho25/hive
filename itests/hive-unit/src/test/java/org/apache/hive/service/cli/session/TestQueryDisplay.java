@@ -959,6 +959,18 @@ name|currentTimeMillis
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|display
+operator|.
+name|getRuntime
+argument_list|()
+operator|>
+literal|0
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -972,6 +984,7 @@ name|getEndTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//For runtime, query may have finished.
 block|}
 name|QueryDisplay
 name|qDisplay1
