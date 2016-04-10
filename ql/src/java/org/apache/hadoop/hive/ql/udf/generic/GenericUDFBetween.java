@@ -508,7 +508,7 @@ if|if
 condition|(
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|children
 index|[

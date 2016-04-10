@@ -2422,7 +2422,7 @@ name|length
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|params
 index|[
@@ -2554,7 +2554,7 @@ name|precision
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|params
 index|[
@@ -2566,7 +2566,7 @@ name|scale
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|params
 index|[

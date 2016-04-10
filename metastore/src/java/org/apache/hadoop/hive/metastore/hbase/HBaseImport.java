@@ -1089,7 +1089,7 @@ name|batchSize
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cli
 operator|.
@@ -1172,7 +1172,7 @@ name|parallel
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cli
 operator|.

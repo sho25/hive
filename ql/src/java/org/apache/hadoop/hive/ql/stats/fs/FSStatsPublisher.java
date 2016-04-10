@@ -571,7 +571,7 @@ name|valueOf
 argument_list|(
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|e
 operator|.
@@ -581,7 +581,7 @@ argument_list|)
 operator|+
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|cpy
 operator|.

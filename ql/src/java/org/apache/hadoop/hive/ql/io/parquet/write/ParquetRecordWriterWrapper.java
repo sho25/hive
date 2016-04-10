@@ -566,7 +566,7 @@ name|BLOCK_SIZE
 argument_list|,
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|blockSize
 argument_list|)
@@ -615,7 +615,7 @@ name|ENABLE_DICTIONARY
 argument_list|,
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|enableDictionaryPage
 argument_list|)

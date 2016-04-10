@@ -10940,7 +10940,7 @@ name|refCnt
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 operator|new
 name|String
@@ -11187,7 +11187,7 @@ name|refCnt
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 operator|new
 name|String
@@ -14211,7 +14211,7 @@ name|seqNo
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 operator|new
 name|String
@@ -14342,7 +14342,7 @@ literal|0
 else|:
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 operator|new
 name|String
@@ -14397,7 +14397,7 @@ name|val
 operator|=
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 operator|new
 name|String

@@ -796,7 +796,7 @@ name|txnsPerBatch
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.
@@ -813,7 +813,7 @@ name|writers
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.
@@ -830,7 +830,7 @@ name|batches
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.
@@ -847,7 +847,7 @@ name|recordsPerTxn
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.
@@ -864,7 +864,7 @@ name|frequency
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.
@@ -881,7 +881,7 @@ name|ap
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|cmdline
 operator|.

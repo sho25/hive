@@ -6633,7 +6633,7 @@ name|SplitSample
 argument_list|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|value
 argument_list|)
@@ -6664,7 +6664,7 @@ name|length
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|value
 operator|.
@@ -68925,10 +68925,9 @@ condition|)
 block|{
 name|numBuckets
 operator|=
-operator|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|child
 operator|.
@@ -68940,10 +68939,6 @@ operator|.
 name|getText
 argument_list|()
 argument_list|)
-operator|)
-operator|.
-name|intValue
-argument_list|()
 expr_stmt|;
 block|}
 else|else
@@ -68965,10 +68960,9 @@ argument_list|)
 expr_stmt|;
 name|numBuckets
 operator|=
-operator|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|child
 operator|.
@@ -68980,10 +68974,6 @@ operator|.
 name|getText
 argument_list|()
 argument_list|)
-operator|)
-operator|.
-name|intValue
-argument_list|()
 expr_stmt|;
 block|}
 break|break;

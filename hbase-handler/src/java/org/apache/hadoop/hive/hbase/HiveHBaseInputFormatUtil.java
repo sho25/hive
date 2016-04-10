@@ -679,7 +679,7 @@ name|setCaching
 argument_list|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|scanCache
 argument_list|)
@@ -711,7 +711,7 @@ name|setCacheBlocks
 argument_list|(
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|scanCacheBlocks
 argument_list|)
@@ -743,7 +743,7 @@ name|setBatch
 argument_list|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|scanBatch
 argument_list|)

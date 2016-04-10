@@ -652,7 +652,7 @@ name|set
 argument_list|(
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|i
 operator|.

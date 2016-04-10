@@ -2159,7 +2159,7 @@ name|rpcPort
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|RegistryTypeUtils
 operator|.
@@ -2186,7 +2186,7 @@ name|mngPort
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|RegistryTypeUtils
 operator|.
@@ -2213,7 +2213,7 @@ name|shufflePort
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|RegistryTypeUtils
 operator|.
@@ -2381,7 +2381,7 @@ name|memory
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|srv
 operator|.
@@ -2400,7 +2400,7 @@ name|vCores
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|srv
 operator|.

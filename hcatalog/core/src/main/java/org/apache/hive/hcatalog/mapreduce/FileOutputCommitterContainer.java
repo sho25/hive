@@ -867,7 +867,7 @@ name|dynamicPartitioningUsed
 operator|&&
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 operator|(
 name|String
@@ -2065,7 +2065,7 @@ name|dynamicPartitioningUsed
 operator|&&
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 operator|(
 name|String

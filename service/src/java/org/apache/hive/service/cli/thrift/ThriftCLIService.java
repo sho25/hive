@@ -1952,7 +1952,7 @@ name|portNum
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|portString
 argument_list|)
@@ -2011,7 +2011,7 @@ name|portNum
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|portString
 argument_list|)

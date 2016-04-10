@@ -661,7 +661,7 @@ name|set
 argument_list|(
 name|Float
 operator|.
-name|valueOf
+name|parseFloat
 argument_list|(
 name|i
 operator|.

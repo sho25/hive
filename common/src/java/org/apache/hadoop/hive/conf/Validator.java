@@ -900,7 +900,7 @@ name|fvalue
 init|=
 name|Float
 operator|.
-name|valueOf
+name|parseFloat
 argument_list|(
 name|value
 argument_list|)

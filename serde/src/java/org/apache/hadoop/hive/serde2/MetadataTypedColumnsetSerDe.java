@@ -445,13 +445,10 @@ index|]
 operator|=
 name|Byte
 operator|.
-name|valueOf
+name|parseByte
 argument_list|(
 name|altValue
 argument_list|)
-operator|.
-name|byteValue
-argument_list|()
 expr_stmt|;
 return|return
 operator|new

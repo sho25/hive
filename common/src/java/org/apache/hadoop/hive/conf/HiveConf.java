@@ -13540,15 +13540,12 @@ name|convert
 argument_list|(
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|parsed
 index|[
 literal|0
 index|]
-operator|.
-name|trim
-argument_list|()
 operator|.
 name|trim
 argument_list|()
@@ -13593,7 +13590,7 @@ decl_stmt|;
 return|return
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|parsed
 index|[

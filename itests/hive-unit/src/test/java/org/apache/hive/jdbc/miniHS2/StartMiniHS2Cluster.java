@@ -258,7 +258,7 @@ name|usePortsFromConf
 init|=
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|System
 operator|.

@@ -7922,7 +7922,7 @@ name|fidInt
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|fidnum
 argument_list|)

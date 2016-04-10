@@ -530,7 +530,7 @@ name|isNoop
 operator|=
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|keyFetcher
 operator|.
@@ -546,9 +546,6 @@ name|toString
 argument_list|()
 argument_list|)
 argument_list|)
-operator|.
-name|booleanValue
-argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Tests if an ASTNode is a Replication Specification    */
