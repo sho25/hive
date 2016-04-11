@@ -8243,6 +8243,15 @@ argument_list|,
 literal|"To cleanup the Hive scratchdir when starting the Hive Server"
 argument_list|)
 block|,
+name|HIVE_SCRATCH_DIR_LOCK
+argument_list|(
+literal|"hive.scratchdir.lock"
+argument_list|,
+literal|false
+argument_list|,
+literal|"To hold a lock file in scratchdir to prevent to be removed by cleardanglingscratchdir"
+argument_list|)
+block|,
 name|HIVE_INSERT_INTO_MULTILEVEL_DIRS
 argument_list|(
 literal|"hive.insert.into.multilevel.dirs"
