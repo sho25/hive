@@ -391,6 +391,7 @@ init|=
 literal|"output"
 decl_stmt|;
 specifier|public
+specifier|static
 class|class
 name|LlapOptions
 block|{

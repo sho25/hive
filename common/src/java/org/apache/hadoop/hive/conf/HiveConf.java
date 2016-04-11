@@ -2154,6 +2154,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_CONTAINER_ID
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -10801,6 +10812,15 @@ argument_list|,
 literal|"Queue name within which the llap slider application will run."
 operator|+
 literal|" Used in LlapServiceDriver and package.py"
+argument_list|)
+block|,
+name|LLAP_DAEMON_CONTAINER_ID
+argument_list|(
+literal|"hive.llap.daemon.container.id"
+argument_list|,
+literal|null
+argument_list|,
+literal|"ContainerId of a running LlapDaemon. Used to publish to the registry"
 argument_list|)
 block|,
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
