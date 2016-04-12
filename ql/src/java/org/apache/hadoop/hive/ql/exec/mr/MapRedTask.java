@@ -1779,21 +1779,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Exception: "
-operator|+
+literal|"Got exception"
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -1831,11 +1823,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Exception: "
-operator|+
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
