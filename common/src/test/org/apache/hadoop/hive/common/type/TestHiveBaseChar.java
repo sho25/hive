@@ -374,6 +374,18 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|assertNull
+argument_list|(
+name|HiveBaseChar
+operator|.
+name|enforceMaxLength
+argument_list|(
+literal|null
+argument_list|,
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -503,6 +515,18 @@ argument_list|(
 literal|"abc "
 argument_list|,
 literal|10
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertNull
+argument_list|(
+name|HiveBaseChar
+operator|.
+name|getPaddedValue
+argument_list|(
+literal|null
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
