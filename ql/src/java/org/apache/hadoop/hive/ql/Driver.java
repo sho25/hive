@@ -8613,6 +8613,14 @@ name|int
 name|ret
 parameter_list|)
 block|{
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|()
+operator|.
+name|cleanupPerfLogMetrics
+argument_list|()
+expr_stmt|;
 name|queryDisplay
 operator|.
 name|setErrorMessage
