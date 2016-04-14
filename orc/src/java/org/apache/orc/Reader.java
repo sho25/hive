@@ -176,7 +176,12 @@ index|[]
 name|getStatistics
 parameter_list|()
 function_decl|;
-comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    */
+comment|/**    * Get the type of rows in this ORC file.    */
+name|TypeDescription
+name|getSchema
+parameter_list|()
+function_decl|;
+comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    * @deprecated use getSchema instead    */
 name|List
 argument_list|<
 name|OrcProto

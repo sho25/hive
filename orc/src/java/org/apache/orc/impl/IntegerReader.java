@@ -41,7 +41,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|LongColumnVector
+name|ColumnVector
 import|;
 end_import
 
@@ -88,16 +88,36 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Return the next available vector for values.    * @return    * @throws IOException    */
+comment|/**    * Return the next available vector for values.    * @param column the column being read    * @param data the vector to read into    * @param length the number of numbers to read    * @throws IOException    */
 name|void
 name|nextVector
 parameter_list|(
-name|LongColumnVector
-name|previous
+name|ColumnVector
+name|column
 parameter_list|,
-specifier|final
+name|long
+index|[]
+name|data
+parameter_list|,
 name|int
-name|previousLen
+name|length
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Return the next available vector for values. Does not change the    * value of column.isRepeating.    * @param column the column being read    * @param data the vector to read into    * @param length the number of numbers to read    * @throws IOException    */
+name|void
+name|nextVector
+parameter_list|(
+name|ColumnVector
+name|column
+parameter_list|,
+name|int
+index|[]
+name|data
+parameter_list|,
+name|int
+name|length
 parameter_list|)
 throws|throws
 name|IOException
