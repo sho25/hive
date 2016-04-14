@@ -1540,6 +1540,11 @@ argument_list|(
 name|indexMetaChangeTsk
 argument_list|)
 expr_stmt|;
+name|driver
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
 return|return
 name|rootTask
 return|;
