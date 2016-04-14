@@ -394,7 +394,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|LlapInputFormat
+name|LlapBaseInputFormat
 parameter_list|<
 name|V
 extends|extends
@@ -435,6 +435,7 @@ name|String
 name|query
 decl_stmt|;
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|URL_KEY
@@ -442,6 +443,7 @@ init|=
 literal|"llap.if.hs2.connection"
 decl_stmt|;
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|QUERY_KEY
@@ -449,6 +451,7 @@ init|=
 literal|"llap.if.query"
 decl_stmt|;
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|USER_KEY
@@ -456,6 +459,7 @@ init|=
 literal|"llap.if.user"
 decl_stmt|;
 specifier|public
+specifier|static
 specifier|final
 name|String
 name|PWD_KEY
@@ -478,7 +482,7 @@ name|Statement
 name|stmt
 decl_stmt|;
 specifier|public
-name|LlapInputFormat
+name|LlapBaseInputFormat
 parameter_list|(
 name|String
 name|url
@@ -519,7 +523,7 @@ name|query
 expr_stmt|;
 block|}
 specifier|public
-name|LlapInputFormat
+name|LlapBaseInputFormat
 parameter_list|()
 block|{}
 annotation|@

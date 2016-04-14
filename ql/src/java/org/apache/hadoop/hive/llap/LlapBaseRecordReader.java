@@ -93,13 +93,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|llap
 operator|.
-name|io
-operator|.
-name|RCFile
-operator|.
-name|Reader
+name|Schema
 import|;
 end_import
 
@@ -205,24 +201,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Schema
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -242,7 +220,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|LlapRecordReader
+name|LlapBaseRecordReader
 parameter_list|<
 name|V
 extends|extends
@@ -266,7 +244,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|LlapRecordReader
+name|LlapBaseRecordReader
 operator|.
 name|class
 argument_list|)
@@ -304,7 +282,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|public
-name|LlapRecordReader
+name|LlapBaseRecordReader
 parameter_list|(
 name|InputStream
 name|in

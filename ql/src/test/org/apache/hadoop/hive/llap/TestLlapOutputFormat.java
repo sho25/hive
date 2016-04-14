@@ -383,6 +383,24 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|LlapBaseRecordReader
+operator|.
+name|ReaderEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|io
 operator|.
 name|api
@@ -706,11 +724,11 @@ operator|.
 name|getInputStream
 argument_list|()
 decl_stmt|;
-name|RecordReader
+name|LlapBaseRecordReader
 name|reader
 init|=
 operator|new
-name|LlapRecordReader
+name|LlapBaseRecordReader
 argument_list|(
 name|in
 argument_list|,
@@ -726,6 +744,17 @@ operator|.
 name|debug
 argument_list|(
 literal|"Have record reader"
+argument_list|)
+expr_stmt|;
+comment|// Send done event, which LlapRecordReader is expecting upon end of input
+name|reader
+operator|.
+name|handleEvent
+argument_list|(
+name|ReaderEvent
+operator|.
+name|doneEvent
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|int

@@ -379,24 +379,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|Schema
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|llap
 operator|.
 name|io
@@ -419,7 +401,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|LlapRecordReader
+name|LlapBaseRecordReader
 import|;
 end_import
 
@@ -433,9 +415,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
+name|llap
 operator|.
 name|Schema
 import|;
@@ -692,11 +672,11 @@ operator|+
 name|query
 argument_list|)
 expr_stmt|;
-name|LlapInputFormat
+name|LlapBaseInputFormat
 name|format
 init|=
 operator|new
-name|LlapInputFormat
+name|LlapBaseInputFormat
 argument_list|(
 name|url
 argument_list|,
@@ -815,7 +795,7 @@ if|if
 condition|(
 name|reader
 operator|instanceof
-name|LlapRecordReader
+name|LlapBaseRecordReader
 operator|&&
 name|first
 condition|)
@@ -825,7 +805,7 @@ name|schema
 init|=
 operator|(
 operator|(
-name|LlapRecordReader
+name|LlapBaseRecordReader
 operator|)
 name|reader
 operator|)

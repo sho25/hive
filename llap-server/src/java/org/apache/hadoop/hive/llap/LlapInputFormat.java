@@ -167,7 +167,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|LlapRecordReader
+name|LlapBaseRecordReader
 operator|.
 name|ReaderEvent
 import|;
@@ -1134,11 +1134,11 @@ operator|+
 name|id
 argument_list|)
 expr_stmt|;
-name|LlapRecordReader
+name|LlapBaseRecordReader
 name|recordReader
 init|=
 operator|new
-name|LlapRecordReader
+name|LlapBaseRecordReader
 argument_list|(
 name|socket
 operator|.
@@ -1864,7 +1864,7 @@ implements|implements
 name|LlapTaskUmbilicalExternalResponder
 block|{
 specifier|protected
-name|LlapRecordReader
+name|LlapBaseRecordReader
 name|recordReader
 init|=
 literal|null
@@ -1904,8 +1904,6 @@ try|try
 block|{
 name|sendOrQueueEvent
 argument_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 operator|.
 name|errorEvent
@@ -1996,8 +1994,6 @@ name|TASK_ATTEMPT_COMPLETED_EVENT
 case|:
 name|sendOrQueueEvent
 argument_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 operator|.
 name|doneEvent
@@ -2021,8 +2017,6 @@ argument_list|()
 decl_stmt|;
 name|sendOrQueueEvent
 argument_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 operator|.
 name|errorEvent
@@ -2085,8 +2079,6 @@ try|try
 block|{
 name|sendOrQueueEvent
 argument_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 operator|.
 name|errorEvent
@@ -2129,8 +2121,6 @@ try|try
 block|{
 name|sendOrQueueEvent
 argument_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 operator|.
 name|errorEvent
@@ -2161,7 +2151,7 @@ block|}
 block|}
 specifier|public
 specifier|synchronized
-name|LlapRecordReader
+name|LlapBaseRecordReader
 name|getRecordReader
 parameter_list|()
 block|{
@@ -2174,7 +2164,7 @@ specifier|synchronized
 name|void
 name|setRecordReader
 parameter_list|(
-name|LlapRecordReader
+name|LlapBaseRecordReader
 name|recordReader
 parameter_list|)
 block|{
@@ -2203,8 +2193,6 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 name|readerEvent
 init|=
@@ -2240,13 +2228,11 @@ specifier|synchronized
 name|void
 name|sendOrQueueEvent
 parameter_list|(
-name|LlapRecordReader
-operator|.
 name|ReaderEvent
 name|readerEvent
 parameter_list|)
 block|{
-name|LlapRecordReader
+name|LlapBaseRecordReader
 name|recordReader
 init|=
 name|getRecordReader
