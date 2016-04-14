@@ -813,7 +813,9 @@ parameter_list|)
 block|{
 name|this
 argument_list|(
-literal|null
+name|HivePrivilegeObjectType
+operator|.
+name|TABLE_OR_VIEW
 argument_list|,
 name|dbname
 argument_list|,
