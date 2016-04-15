@@ -9523,6 +9523,15 @@ argument_list|,
 literal|"The check interval for session/operation timeout, which can be disabled by setting to zero or negative value."
 argument_list|)
 block|,
+name|HIVE_SERVER2_CLOSE_SESSION_ON_DISCONNECT
+argument_list|(
+literal|"hive.server2.close.session.on.disconnect"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Session will be closed when connection is closed. Set this to false to have session outlive its parent connection."
+argument_list|)
+block|,
 name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.session.timeout"
