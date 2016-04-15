@@ -3633,11 +3633,6 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|Hive
-operator|.
-name|closeCurrent
-argument_list|()
-expr_stmt|;
 block|}
 specifier|public
 name|String
@@ -4685,22 +4680,16 @@ condition|)
 block|{
 return|return;
 block|}
-name|conf
+name|db
+operator|.
+name|getConf
+argument_list|()
 operator|.
 name|set
 argument_list|(
 literal|"hive.metastore.filter.hook"
 argument_list|,
 literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
-argument_list|)
-expr_stmt|;
-name|db
-operator|=
-name|Hive
-operator|.
-name|get
-argument_list|(
-name|conf
 argument_list|)
 expr_stmt|;
 comment|// Delete any tables other than the source tables
@@ -5093,6 +5082,12 @@ condition|)
 block|{
 return|return;
 block|}
+name|clearTablesCreatedDuringTests
+argument_list|()
+expr_stmt|;
+name|clearKeysCreatedInTests
+argument_list|()
+expr_stmt|;
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf
@@ -5108,9 +5103,6 @@ expr_stmt|;
 name|initConf
 argument_list|()
 expr_stmt|;
-name|initConfFromSetup
-argument_list|()
-expr_stmt|;
 comment|// renew the metastore since the cluster type is unencrypted
 name|db
 operator|=
@@ -5122,20 +5114,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 comment|// propagate new conf to meta store
-name|clearTablesCreatedDuringTests
-argument_list|()
-expr_stmt|;
-name|clearKeysCreatedInTests
-argument_list|()
-expr_stmt|;
-block|}
-specifier|protected
-name|void
-name|initConfFromSetup
-parameter_list|()
-throws|throws
-name|Exception
-block|{
 name|setup
 operator|.
 name|preTest

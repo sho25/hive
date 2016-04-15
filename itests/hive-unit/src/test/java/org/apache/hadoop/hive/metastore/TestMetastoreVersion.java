@@ -41,6 +41,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Random
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -178,24 +188,6 @@ operator|.
 name|ql
 operator|.
 name|Driver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|Hive
 import|;
 end_import
 
@@ -626,25 +618,15 @@ name|hiveConf
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Hive
-operator|.
-name|get
-argument_list|(
-name|hiveConf
-argument_list|)
-operator|.
-name|getMSC
-argument_list|()
-expr_stmt|;
 name|fail
 argument_list|(
-literal|"An exception is expected since schema is not created."
+literal|"Expected exception"
 argument_list|)
 expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|RuntimeException
 name|re
 parameter_list|)
 block|{
