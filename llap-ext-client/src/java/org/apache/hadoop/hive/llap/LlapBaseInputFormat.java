@@ -9,9 +9,11 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
 package|;
 end_package
 
@@ -374,6 +376,22 @@ operator|.
 name|util
 operator|.
 name|Progressable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|ext
+operator|.
+name|LlapInputSplit
 import|;
 end_import
 

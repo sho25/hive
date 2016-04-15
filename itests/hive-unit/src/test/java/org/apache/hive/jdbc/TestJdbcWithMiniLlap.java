@@ -597,9 +597,11 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
 operator|.
 name|LlapBaseInputFormat
 import|;
@@ -611,9 +613,11 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
 operator|.
 name|LlapRowInputFormat
 import|;

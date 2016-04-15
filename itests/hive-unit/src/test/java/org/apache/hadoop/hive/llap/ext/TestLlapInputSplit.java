@@ -5,9 +5,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 package|;
 end_package
 
@@ -496,7 +500,9 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 operator|.
 name|LlapInputSplit
 argument_list|<
@@ -511,7 +517,9 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 operator|.
 name|LlapInputSplit
 argument_list|<
@@ -560,7 +568,9 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 operator|.
 name|LlapInputSplit
 argument_list|<
@@ -575,7 +585,9 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 operator|.
 name|LlapInputSplit
 argument_list|<

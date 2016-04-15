@@ -7,7 +7,9 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|jdbc
+name|llap
+operator|.
+name|ext
 package|;
 end_package
 
