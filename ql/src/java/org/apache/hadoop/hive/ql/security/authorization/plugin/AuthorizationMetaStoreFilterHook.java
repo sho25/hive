@@ -436,6 +436,16 @@ operator|.
 name|Builder
 argument_list|()
 decl_stmt|;
+name|authzContextBuilder
+operator|.
+name|setForwardedAddresses
+argument_list|(
+name|ss
+operator|.
+name|getForwardedAddresses
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 return|return

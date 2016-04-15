@@ -349,7 +349,6 @@ name|stopHiveServer2
 argument_list|()
 expr_stmt|;
 block|}
-specifier|protected
 specifier|static
 name|void
 name|startHiveServer2WithConf
@@ -434,7 +433,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|protected
 specifier|static
 name|ThriftCLIServiceClient
 name|getServiceClientInternal

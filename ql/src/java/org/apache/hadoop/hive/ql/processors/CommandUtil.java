@@ -426,6 +426,16 @@ name|command
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|ctxBuilder
+operator|.
+name|setForwardedAddresses
+argument_list|(
+name|ss
+operator|.
+name|getForwardedAddresses
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|ss
 operator|.
 name|getAuthorizerV2
