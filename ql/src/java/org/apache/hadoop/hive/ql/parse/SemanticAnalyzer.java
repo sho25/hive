@@ -5514,11 +5514,36 @@ operator|.
 name|TOK_WINDOWSPEC
 condition|)
 block|{
+comment|// If it is a windowing spec, we include it in the list
+comment|// Further, we will examine its children AST nodes to check whether
+comment|// there are aggregation functions within
 name|wdwFns
 operator|.
 name|add
 argument_list|(
 name|expressionTree
+argument_list|)
+expr_stmt|;
+name|doPhase1GetAllAggregations
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|expressionTree
+operator|.
+name|getChild
+argument_list|(
+name|expressionTree
+operator|.
+name|getChildCount
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+argument_list|,
+name|aggregations
+argument_list|,
+name|wdwFns
 argument_list|)
 expr_stmt|;
 return|return;
