@@ -3434,11 +3434,6 @@ name|ConfVars
 operator|.
 name|HIVE_LOG_EXPLAIN_OUTPUT
 argument_list|)
-operator|||
-name|conf
-operator|.
-name|isWebUiQueryInfoCacheEnabled
-argument_list|()
 condition|)
 block|{
 name|String
