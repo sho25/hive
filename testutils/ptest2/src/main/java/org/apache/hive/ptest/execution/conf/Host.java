@@ -179,6 +179,15 @@ return|return
 name|localDirectories
 return|;
 block|}
+specifier|public
+name|String
+name|toShortString
+parameter_list|()
+block|{
+return|return
+name|name
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

@@ -595,6 +595,23 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|logger
+operator|.
+name|info
+argument_list|(
+literal|"ParallelWorkQueueSize={}, IsolatedWorkQueueSize={}"
+argument_list|,
+name|parallelWorkQueue
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|isolatedWorkQueue
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|int

@@ -289,6 +289,15 @@ argument_list|,
 literal|"source-prep.sh"
 argument_list|)
 decl_stmt|;
+name|logger
+operator|.
+name|info
+argument_list|(
+literal|"Writing {} from template"
+argument_list|,
+name|sourcePrepScript
+argument_list|)
+expr_stmt|;
 name|Templates
 operator|.
 name|writeTemplateResult
