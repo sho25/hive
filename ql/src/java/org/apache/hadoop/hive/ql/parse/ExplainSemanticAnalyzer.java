@@ -97,7 +97,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FetchTask
+name|ExplainTask
 import|;
 end_import
 
@@ -115,7 +115,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|ExplainTask
+name|FetchTask
 import|;
 end_import
 
@@ -573,8 +573,6 @@ argument_list|,
 name|tasks
 argument_list|,
 name|fetchTask
-argument_list|,
-name|input
 argument_list|,
 name|sem
 argument_list|,

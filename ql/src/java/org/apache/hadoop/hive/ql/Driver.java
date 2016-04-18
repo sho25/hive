@@ -3880,8 +3880,6 @@ name|getJSONPlan
 argument_list|(
 name|ps
 argument_list|,
-name|astTree
-argument_list|,
 name|rootTasks
 argument_list|,
 name|sem
