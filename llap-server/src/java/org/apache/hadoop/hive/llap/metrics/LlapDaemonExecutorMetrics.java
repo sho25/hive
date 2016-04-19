@@ -513,9 +513,7 @@ literal|"LlapDaemon Executor Metrics"
 argument_list|,
 name|context
 operator|=
-name|MetricsUtils
-operator|.
-name|METRICS_CONTEXT
+literal|"executors"
 argument_list|)
 specifier|public
 class|class
@@ -930,9 +928,7 @@ argument_list|)
 operator|.
 name|setContext
 argument_list|(
-name|MetricsUtils
-operator|.
-name|METRICS_CONTEXT
+literal|"executors"
 argument_list|)
 operator|.
 name|tag

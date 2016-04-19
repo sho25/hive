@@ -31,28 +31,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Future
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -220,6 +198,8 @@ name|getName
 parameter_list|()
 block|{
 return|return
+name|ForwardOperator
+operator|.
 name|getOperatorName
 argument_list|()
 return|;

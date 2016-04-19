@@ -3460,7 +3460,7 @@ name|bucketNum
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|matcher
 operator|.
@@ -4169,7 +4169,7 @@ name|numElements
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|parts
 index|[
@@ -4215,7 +4215,7 @@ name|len
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|parts
 index|[
@@ -4271,7 +4271,7 @@ name|len
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|parts
 index|[
@@ -4577,7 +4577,7 @@ name|numElements
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|parts
 index|[
@@ -4623,7 +4623,7 @@ name|len
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|parts
 index|[

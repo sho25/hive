@@ -414,7 +414,7 @@ name|doColumnRegexMatching
 operator|=
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|tbl
 operator|.
@@ -432,7 +432,7 @@ name|doColumnPrefixCut
 operator|=
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|tbl
 operator|.
@@ -607,7 +607,7 @@ name|putTimestamp
 operator|=
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|tbl
 operator|.

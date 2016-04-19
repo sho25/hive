@@ -2475,16 +2475,14 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Read the next server coordinates (host:port combo) from ZooKeeper. Ignore the znodes already    * explored. Also update the host, port, jdbcUriString and other configs published by the server.    *    * @param connParams    * @throws ZooKeeperHiveClientException    */
+comment|/**    * Read the next server coordinates (host:port combo) from ZooKeeper. Ignore the znodes already    * explored. Also update the host, port, jdbcUriString and other configs published by the server.    *    * @param connParams    * @return true if new server info is retrieved successfully    */
 specifier|static
-name|void
+name|boolean
 name|updateConnParamsFromZooKeeper
 parameter_list|(
 name|JdbcConnectionParams
 name|connParams
 parameter_list|)
-throws|throws
-name|ZooKeeperHiveClientException
 block|{
 comment|// Add current host to the rejected list
 name|connParams
@@ -2517,6 +2515,8 @@ name|getPort
 argument_list|()
 decl_stmt|;
 comment|// Update connection params (including host, port) from ZooKeeper
+try|try
+block|{
 name|ZooKeeperHiveClientHelper
 operator|.
 name|configureConnParams
@@ -2567,6 +2567,30 @@ name|getJdbcUriString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ZooKeeperHiveClientException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+return|return
+literal|true
+return|;
 block|}
 specifier|private
 specifier|static

@@ -653,7 +653,7 @@ name|counter
 operator|+=
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|statVal
 argument_list|)

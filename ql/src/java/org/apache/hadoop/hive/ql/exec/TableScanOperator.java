@@ -1503,6 +1503,8 @@ name|getName
 parameter_list|()
 block|{
 return|return
+name|TableScanOperator
+operator|.
 name|getOperatorName
 argument_list|()
 return|;

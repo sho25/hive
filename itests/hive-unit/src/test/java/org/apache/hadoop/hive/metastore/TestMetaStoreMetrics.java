@@ -303,6 +303,29 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|MetricsFactory
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|MetricsFactory
+operator|.
+name|init
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|metrics
+operator|=
+operator|(
+name|CodahaleMetrics
+operator|)
+name|MetricsFactory
+operator|.
+name|getInstance
+argument_list|()
+expr_stmt|;
+comment|//Increments one HMS connection
 name|MetaStoreUtils
 operator|.
 name|startMetaStore
@@ -317,6 +340,7 @@ argument_list|,
 name|hiveConf
 argument_list|)
 expr_stmt|;
+comment|//Increments one HMS connection (Hive.get())
 name|SessionState
 operator|.
 name|start
@@ -335,16 +359,6 @@ name|Driver
 argument_list|(
 name|hiveConf
 argument_list|)
-expr_stmt|;
-name|metrics
-operator|=
-operator|(
-name|CodahaleMetrics
-operator|)
-name|MetricsFactory
-operator|.
-name|getInstance
-argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -371,6 +385,7 @@ operator|.
 name|dumpJson
 argument_list|()
 decl_stmt|;
+comment|//one call by init, one called here.
 name|MetricsTestUtils
 operator|.
 name|verifyMetricsJson
@@ -383,7 +398,7 @@ name|TIMER
 argument_list|,
 literal|"api_get_all_databases"
 argument_list|,
-literal|1
+literal|2
 argument_list|)
 expr_stmt|;
 block|}

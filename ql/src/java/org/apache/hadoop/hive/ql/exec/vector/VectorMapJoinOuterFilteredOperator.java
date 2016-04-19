@@ -23,28 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Future
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -127,6 +105,20 @@ name|StructObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
 comment|/**  * This is the *NON-NATIVE* vector map join operator for just LEFT OUTER JOIN and filtered.  *  * It is a row pass-thru so that super MapJoinOperator can do the outer join filtering properly.  *  */
 end_comment
@@ -170,7 +162,9 @@ index|[]
 name|singleRow
 decl_stmt|;
 comment|/** Kryo ctor. */
-specifier|protected
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|VectorMapJoinOuterFilteredOperator
 parameter_list|()
 block|{

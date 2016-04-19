@@ -2821,7 +2821,7 @@ literal|null
 operator|&&
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|bucketCount
 argument_list|)

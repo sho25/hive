@@ -1659,7 +1659,7 @@ literal|"float"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"double"
+literal|"float"
 argument_list|)
 expr_stmt|;
 name|verifyReturnType
@@ -1838,7 +1838,7 @@ literal|"float"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"double"
+literal|"float"
 argument_list|)
 expr_stmt|;
 name|verifyReturnType

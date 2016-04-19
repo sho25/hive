@@ -1186,14 +1186,11 @@ operator|new
 name|HttpServer
 operator|.
 name|Builder
-argument_list|()
-decl_stmt|;
-name|builder
-operator|.
-name|setName
 argument_list|(
 literal|"hiveserver2"
 argument_list|)
+decl_stmt|;
+name|builder
 operator|.
 name|setPort
 argument_list|(

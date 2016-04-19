@@ -70,14 +70,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|METRICS_CONTEXT
-init|=
-literal|"llap"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|METRICS_PROCESS_NAME
 init|=
 literal|"LlapDaemon"

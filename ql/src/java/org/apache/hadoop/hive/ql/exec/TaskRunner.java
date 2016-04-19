@@ -414,10 +414,14 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
-name|t
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|error
+argument_list|(
+literal|"Error in executeTask"
+argument_list|,
+name|t
+argument_list|)
 expr_stmt|;
 block|}
 name|result

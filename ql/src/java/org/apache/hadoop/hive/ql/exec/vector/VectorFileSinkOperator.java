@@ -23,28 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Future
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -163,6 +141,20 @@ name|StructObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
 comment|/**  * File Sink operator implementation.  **/
 end_comment
@@ -240,7 +232,9 @@ name|vContext
 expr_stmt|;
 block|}
 comment|/** Kryo ctor. */
-specifier|protected
+annotation|@
+name|VisibleForTesting
+specifier|public
 name|VectorFileSinkOperator
 parameter_list|()
 block|{

@@ -2230,8 +2230,11 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-comment|/* isAcidRead */
 literal|true
+argument_list|,
+name|Integer
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|objectInspector
@@ -2764,7 +2767,7 @@ operator|.
 name|MAX_VALUE
 decl_stmt|;
 try|try
-block|{
+init|(
 name|FSDataInputStream
 name|stream
 init|=
@@ -2774,7 +2777,8 @@ name|open
 argument_list|(
 name|lengths
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 name|result
 operator|=
 operator|-
@@ -2798,11 +2802,6 @@ name|readLong
 argument_list|()
 expr_stmt|;
 block|}
-name|stream
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 return|return
 name|result
 return|;

@@ -54,9 +54,9 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *    * @throws IOException    */
+comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *    * @return self identifying name    *     * @throws IOException    */
 specifier|public
-name|void
+name|String
 name|register
 parameter_list|()
 throws|throws

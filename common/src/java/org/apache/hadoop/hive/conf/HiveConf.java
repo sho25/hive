@@ -2154,6 +2154,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_CONTAINER_ID
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -8234,6 +8245,15 @@ argument_list|,
 literal|"To cleanup the Hive scratchdir when starting the Hive Server"
 argument_list|)
 block|,
+name|HIVE_SCRATCH_DIR_LOCK
+argument_list|(
+literal|"hive.scratchdir.lock"
+argument_list|,
+literal|false
+argument_list|,
+literal|"To hold a lock file in scratchdir to prevent to be removed by cleardanglingscratchdir"
+argument_list|)
+block|,
 name|HIVE_INSERT_INTO_MULTILEVEL_DIRS
 argument_list|(
 literal|"hive.insert.into.multilevel.dirs"
@@ -9503,6 +9523,15 @@ literal|false
 argument_list|)
 argument_list|,
 literal|"The check interval for session/operation timeout, which can be disabled by setting to zero or negative value."
+argument_list|)
+block|,
+name|HIVE_SERVER2_CLOSE_SESSION_ON_DISCONNECT
+argument_list|(
+literal|"hive.server2.close.session.on.disconnect"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Session will be closed when connection is closed. Set this to false to have session outlive its parent connection."
 argument_list|)
 block|,
 name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
@@ -10814,6 +10843,15 @@ argument_list|,
 literal|"Queue name within which the llap slider application will run."
 operator|+
 literal|" Used in LlapServiceDriver and package.py"
+argument_list|)
+block|,
+name|LLAP_DAEMON_CONTAINER_ID
+argument_list|(
+literal|"hive.llap.daemon.container.id"
+argument_list|,
+literal|null
+argument_list|,
+literal|"ContainerId of a running LlapDaemon. Used to publish to the registry"
 argument_list|)
 block|,
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
@@ -13551,15 +13589,12 @@ name|convert
 argument_list|(
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|parsed
 index|[
 literal|0
 index|]
-operator|.
-name|trim
-argument_list|()
 operator|.
 name|trim
 argument_list|()
@@ -13604,7 +13639,7 @@ decl_stmt|;
 return|return
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 name|parsed
 index|[

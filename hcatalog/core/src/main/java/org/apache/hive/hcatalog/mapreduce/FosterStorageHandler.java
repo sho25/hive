@@ -987,7 +987,7 @@ if|if
 condition|(
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 operator|(
 name|String
@@ -1089,7 +1089,7 @@ operator|)
 operator|&&
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 operator|(
 name|String
@@ -1150,7 +1150,7 @@ operator|)
 operator|&&
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 operator|(
 name|String

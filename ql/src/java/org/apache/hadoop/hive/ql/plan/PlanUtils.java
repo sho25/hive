@@ -3492,15 +3492,12 @@ name|name
 operator|.
 name|equals
 argument_list|(
-name|Integer
+name|String
 operator|.
 name|valueOf
 argument_list|(
 name|i
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 condition|)
 block|{

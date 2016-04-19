@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Iterator
 import|;
 end_import
@@ -66,18 +56,6 @@ operator|.
 name|util
 operator|.
 name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|Future
 import|;
 end_import
 
@@ -992,6 +970,8 @@ name|getName
 parameter_list|()
 block|{
 return|return
+name|PTFOperator
+operator|.
 name|getOperatorName
 argument_list|()
 return|;

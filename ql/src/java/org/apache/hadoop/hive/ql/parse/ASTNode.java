@@ -346,8 +346,7 @@ name|getName
 parameter_list|()
 block|{
 return|return
-operator|(
-name|Integer
+name|String
 operator|.
 name|valueOf
 argument_list|(
@@ -359,10 +358,6 @@ operator|.
 name|getType
 argument_list|()
 argument_list|)
-operator|)
-operator|.
-name|toString
-argument_list|()
 return|;
 block|}
 comment|/**    * For every node in this subtree, make sure it's start/stop token's    * are set.  Walk depth first, visit bottom up.  Only updates nodes    * with at least one token index< 0.    *    * In contrast to the method in the parent class, this method is    * iterative.    */

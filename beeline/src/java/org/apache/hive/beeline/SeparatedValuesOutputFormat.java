@@ -511,7 +511,7 @@ block|{
 return|return
 name|Boolean
 operator|.
-name|valueOf
+name|parseBoolean
 argument_list|(
 name|parsedOptionStr
 argument_list|)

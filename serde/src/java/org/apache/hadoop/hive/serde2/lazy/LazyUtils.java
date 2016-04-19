@@ -2539,13 +2539,10 @@ block|{
 return|return
 name|Byte
 operator|.
-name|valueOf
+name|parseByte
 argument_list|(
 name|altValue
 argument_list|)
-operator|.
-name|byteValue
-argument_list|()
 return|;
 block|}
 catch|catch

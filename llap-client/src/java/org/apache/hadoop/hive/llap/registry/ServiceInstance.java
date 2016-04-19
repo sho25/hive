@@ -82,6 +82,12 @@ name|int
 name|getShufflePort
 parameter_list|()
 function_decl|;
+comment|/**    * Address for services hosted on http    * @return    */
+specifier|public
+name|String
+name|getServicesAddress
+parameter_list|()
+function_decl|;
 comment|/**    * OutputFormat endpoint for service instance    *    * @return    */
 specifier|public
 name|int

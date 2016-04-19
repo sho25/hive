@@ -3576,6 +3576,11 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 return|return
 operator|(
 literal|1

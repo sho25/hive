@@ -1591,7 +1591,7 @@ block|{
 return|return
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 operator|(
 name|String
@@ -1754,7 +1754,7 @@ block|{
 return|return
 name|Float
 operator|.
-name|valueOf
+name|parseFloat
 argument_list|(
 operator|(
 name|String
@@ -1904,7 +1904,7 @@ block|{
 return|return
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 operator|(
 name|String
@@ -2039,7 +2039,7 @@ block|{
 return|return
 name|Long
 operator|.
-name|valueOf
+name|parseLong
 argument_list|(
 operator|(
 name|String
@@ -2787,7 +2787,7 @@ block|{
 return|return
 name|Short
 operator|.
-name|valueOf
+name|parseShort
 argument_list|(
 operator|(
 name|String

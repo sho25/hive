@@ -3372,7 +3372,7 @@ name|currReducer
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|Utilities
 operator|.
@@ -3873,7 +3873,7 @@ name|acidBucketNum
 init|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|Utilities
 operator|.

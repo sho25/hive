@@ -400,7 +400,7 @@ name|cpuCost
 operator|=
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.
@@ -422,7 +422,7 @@ name|cpuCost
 operator|*
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.
@@ -444,7 +444,7 @@ name|netCost
 operator|*
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.
@@ -466,7 +466,7 @@ name|netCost
 operator|*
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.
@@ -488,7 +488,7 @@ name|localFSWrite
 operator|*
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.
@@ -510,7 +510,7 @@ name|localFSRead
 operator|*
 name|Double
 operator|.
-name|valueOf
+name|parseDouble
 argument_list|(
 name|HiveConf
 operator|.

@@ -386,7 +386,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
 parameter_list|,
-name|HiveAuthzContext
+name|QueryContext
 name|context
 parameter_list|)
 throws|throws
@@ -407,7 +407,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|listObjs
 parameter_list|,
-name|HiveAuthzContext
+name|QueryContext
 name|context
 parameter_list|)
 throws|throws
@@ -485,54 +485,31 @@ throws|throws
 name|HiveAuthzPluginException
 function_decl|;
 comment|/**    * TableMaskingPolicy defines how users can access base tables. It defines a    * policy on what columns and rows are hidden, masked or redacted based on    * user, role or location.    */
-comment|/**    * getRowFilterExpression is called once for each table in a query. It expects    * a valid filter condition to be returned. Null indicates no filtering is    * required.    *    * Example: table foo(c int) -> "c> 0&& c % 2 = 0"    *    * @param database    *          the name of the database in which the table lives    * @param table    *          the name of the table in question    * @return    * @throws SemanticException    */
+comment|/**    * applyRowFilterAndColumnMasking is called once for each table in a query.     * (part 1) It expects a valid filter condition to be returned. Null indicates no filtering is    * required.    *    * Example: table foo(c int) -> "c> 0&& c % 2 = 0"    *    * (part 2) It expects a valid expression as used in a select clause. Null    * is NOT a valid option. If no transformation is needed simply return the    * column name.    *    * Example: column a -> "a" (no transform)    *    * Example: column a -> "reverse(a)" (call the reverse function on a)    *    * Example: column a -> "5" (replace column a with the constant 5)    *    * @return List<HivePrivilegeObject>    * please return the list of HivePrivilegeObjects that need to be rewritten.    *    * @throws SemanticException    */
 specifier|public
-name|String
-name|getRowFilterExpression
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|applyRowFilterAndColumnMasking
 parameter_list|(
-name|String
-name|database
+name|QueryContext
+name|context
 parameter_list|,
-name|String
-name|table
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+name|privObjs
 parameter_list|)
 throws|throws
 name|SemanticException
 function_decl|;
-comment|/**    * needTransform() is called once per user in a query. If the function returns    * true a call to needTransform(String database, String table) will happen.    * Returning false short-circuits the generation of row/column transforms.    *    * @return    * @throws SemanticException    */
+comment|/**    * needTransform() is called once per user in a query.     * Returning false short-circuits the generation of row/column transforms.    *    * @return    * @throws SemanticException    */
 specifier|public
 name|boolean
 name|needTransform
 parameter_list|()
-function_decl|;
-comment|/**    * needTransform(String database, String table) is called once per table in a    * query. If the function returns true a call to getRowFilterExpression and    * getCellValueTransformer will happen. Returning false short-circuits the    * generation of row/column transforms.    *    * @param database    *          the name of the database in which the table lives    * @param table    *          the name of the table in question    * @return    * @throws SemanticException    */
-specifier|public
-name|boolean
-name|needTransform
-parameter_list|(
-name|String
-name|database
-parameter_list|,
-name|String
-name|table
-parameter_list|)
-function_decl|;
-comment|/**    * getCellValueTransformer is called once per column in each table accessed by    * the query. It expects a valid expression as used in a select clause. Null    * is not a valid option. If no transformation is needed simply return the    * column name.    *    * Example: column a -> "a" (no transform)    *    * Example: column a -> "reverse(a)" (call the reverse function on a)    *    * Example: column a -> "5" (replace column a with the constant 5)    *    * @param database    * @param table    * @param columnName    * @return    * @throws SemanticException    */
-specifier|public
-name|String
-name|getCellValueTransformer
-parameter_list|(
-name|String
-name|database
-parameter_list|,
-name|String
-name|table
-parameter_list|,
-name|String
-name|columnName
-parameter_list|)
-throws|throws
-name|SemanticException
 function_decl|;
 block|}
 end_interface

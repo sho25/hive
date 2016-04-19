@@ -163,7 +163,7 @@ specifier|public
 name|boolean
 name|equals
 parameter_list|(
-name|HiveVarchar
+name|Object
 name|rhs
 parameter_list|)
 block|{
@@ -186,7 +186,12 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
+operator|(
+operator|(
+name|HiveVarchar
+operator|)
 name|rhs
+operator|)
 operator|.
 name|getValue
 argument_list|()

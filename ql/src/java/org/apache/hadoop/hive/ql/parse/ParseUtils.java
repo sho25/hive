@@ -686,7 +686,7 @@ name|getVarcharTypeInfo
 argument_list|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|lengthStr
 argument_list|)
@@ -742,7 +742,7 @@ name|getCharTypeInfo
 argument_list|(
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|lengthStr
 argument_list|)
@@ -1103,7 +1103,7 @@ name|precision
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|precStr
 argument_list|)
@@ -1136,7 +1136,7 @@ name|scale
 operator|=
 name|Integer
 operator|.
-name|valueOf
+name|parseInt
 argument_list|(
 name|scaleStr
 argument_list|)

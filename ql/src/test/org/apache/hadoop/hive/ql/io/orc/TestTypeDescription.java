@@ -259,7 +259,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"struct<f1:union<tinyint,decimal(20,10)>,f2:struct<f3:date,f4:double,f5:boolean>,f6:char(100)>"
+literal|"struct<f1:uniontype<tinyint,decimal(20,10)>,f2:struct<f3:date,f4:double,f5:boolean>,f6:char(100)>"
 argument_list|,
 name|struct
 operator|.
@@ -271,7 +271,7 @@ name|assertEquals
 argument_list|(
 literal|"{\"category\": \"struct\", \"id\": 0, \"max\": 8, \"fields\": [\n"
 operator|+
-literal|"  \"f1\": {\"category\": \"union\", \"id\": 1, \"max\": 3, \"children\": [\n"
+literal|"  \"f1\": {\"category\": \"uniontype\", \"id\": 1, \"max\": 3, \"children\": [\n"
 operator|+
 literal|"    {\"category\": \"tinyint\", \"id\": 2, \"max\": 2},\n"
 operator|+

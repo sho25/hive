@@ -14722,10 +14722,6 @@ decl_stmt|;
 name|boolean
 name|isInTest
 init|=
-name|Boolean
-operator|.
-name|valueOf
-argument_list|(
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -14738,7 +14734,6 @@ argument_list|,
 name|ConfVars
 operator|.
 name|HIVE_IN_TEST
-argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// In the automation, the data warehouse is the local file system based.
