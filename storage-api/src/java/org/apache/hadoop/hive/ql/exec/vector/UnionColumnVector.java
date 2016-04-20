@@ -21,6 +21,16 @@ name|vector
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
 begin_comment
 comment|/**  * The representation of a vectorized column of struct objects.  *  * Each field is represented by a separate inner ColumnVector. Since this  * ColumnVector doesn't own any per row data other that the isNull flag, the  * isRepeating only covers the isNull array.  */
 end_comment

@@ -19,6 +19,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|Closeable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -59,17 +69,12 @@ begin_interface
 specifier|public
 interface|interface
 name|DataReader
+extends|extends
+name|Closeable
 block|{
 comment|/** Opens the DataReader, making it ready to use. */
 name|void
 name|open
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
-comment|/** Closes the DataReader. */
-name|void
-name|close
 parameter_list|()
 throws|throws
 name|IOException
