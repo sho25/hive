@@ -9719,6 +9719,11 @@ argument_list|(
 name|perfLogger
 argument_list|,
 name|hookContext
+argument_list|,
+name|result
+operator|.
+name|getTaskError
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|SQLState
@@ -9897,6 +9902,8 @@ argument_list|(
 name|perfLogger
 argument_list|,
 name|hookContext
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|console
@@ -10290,6 +10297,8 @@ argument_list|(
 name|perfLogger
 argument_list|,
 name|hookContext
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
@@ -10796,6 +10805,9 @@ name|perfLogger
 parameter_list|,
 name|HookContext
 name|hookContext
+parameter_list|,
+name|Throwable
+name|exception
 parameter_list|)
 throws|throws
 name|Exception
@@ -10816,6 +10828,13 @@ operator|.
 name|setErrorMessage
 argument_list|(
 name|errorMessage
+argument_list|)
+expr_stmt|;
+name|hookContext
+operator|.
+name|setException
+argument_list|(
+name|exception
 argument_list|)
 expr_stmt|;
 comment|// Get all the failure execution hooks and execute them.
