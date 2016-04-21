@@ -1389,7 +1389,7 @@ name|ConfVars
 operator|.
 name|LLAP_IO_ENABLED
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -2053,7 +2053,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"\n"
+literal|""
 argument_list|)
 expr_stmt|;
 name|console
@@ -2107,6 +2107,11 @@ argument_list|(
 name|SEPARATOR
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|llapIoEnabled
+condition|)
+block|{
 name|console
 operator|.
 name|printInfo
@@ -2114,11 +2119,6 @@ argument_list|(
 literal|""
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|llapIoEnabled
-condition|)
-block|{
 name|console
 operator|.
 name|printInfo
@@ -2147,7 +2147,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"\n"
+literal|""
 argument_list|)
 expr_stmt|;
 block|}
@@ -2502,7 +2502,7 @@ name|format
 argument_list|(
 name|OPERATION_SUMMARY
 argument_list|,
-literal|"Start"
+literal|"Start DAG"
 argument_list|,
 name|secondsFormat
 operator|.
@@ -2518,9 +2518,33 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// time to actually run the dag (actual dag runtime)
+specifier|final
 name|long
 name|startToEnd
-init|=
+decl_stmt|;
+if|if
+condition|(
+name|acceptToStart
+operator|==
+literal|0
+condition|)
+block|{
+name|startToEnd
+operator|=
+name|perfLogger
+operator|.
+name|getDuration
+argument_list|(
+name|PerfLogger
+operator|.
+name|TEZ_RUN_DAG
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|startToEnd
+operator|=
 name|perfLogger
 operator|.
 name|getEndTime
@@ -2538,7 +2562,8 @@ name|PerfLogger
 operator|.
 name|TEZ_SUBMIT_TO_RUNNING
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|console
 operator|.
 name|printInfo
@@ -2549,7 +2574,7 @@ name|format
 argument_list|(
 name|OPERATION_SUMMARY
 argument_list|,
-literal|"Finish"
+literal|"Run DAG"
 argument_list|,
 name|secondsFormat
 operator|.
