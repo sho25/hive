@@ -1496,8 +1496,6 @@ name|prunList
 operator|=
 name|genColLists
 argument_list|(
-name|curOp
-argument_list|,
 name|child
 argument_list|)
 expr_stmt|;
