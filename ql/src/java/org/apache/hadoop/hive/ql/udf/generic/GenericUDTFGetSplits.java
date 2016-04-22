@@ -2561,15 +2561,6 @@ name|dag
 argument_list|)
 expr_stmt|;
 comment|// we have the dag now proceed to get the splits:
-name|HiveSplitGenerator
-name|splitGenerator
-init|=
-operator|new
-name|HiveSplitGenerator
-argument_list|(
-literal|null
-argument_list|)
-decl_stmt|;
 name|Preconditions
 operator|.
 name|checkState
@@ -2606,15 +2597,17 @@ name|LLAP_CLIENT_CONSISTENT_SPLITS
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|HiveSplitGenerator
 name|splitGenerator
-operator|.
-name|initializeSplitGenerator
+init|=
+operator|new
+name|HiveSplitGenerator
 argument_list|(
 name|wxConf
 argument_list|,
 name|mapWork
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|List
 argument_list|<
 name|Event
@@ -2626,7 +2619,6 @@ operator|.
 name|initialize
 argument_list|()
 decl_stmt|;
-comment|// hack - just serializing with kryo for now. This needs to be done properly
 name|InputSplit
 index|[]
 name|result
@@ -3490,7 +3482,7 @@ name|TypeDesc
 operator|.
 name|Type
 operator|.
-name|CHAR
+name|VARCHAR
 argument_list|,
 name|varcharTypeInfo
 operator|.

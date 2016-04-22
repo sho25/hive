@@ -834,7 +834,12 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Interrupted while getting readerEvents, not expected"
+literal|"Interrupted while getting readerEvents, not expected: "
+operator|+
+name|ie
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|ie
 argument_list|)

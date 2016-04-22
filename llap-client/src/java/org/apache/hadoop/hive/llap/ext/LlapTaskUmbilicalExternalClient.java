@@ -879,21 +879,11 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+comment|// If we use a single server for multiple external clients, then consider using more than one handler.
 name|int
 name|numHandlers
 init|=
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|LLAP_TMP_EXT_CLIENT_NUM_SERVER_HANDLERS
-argument_list|)
+literal|1
 decl_stmt|;
 name|llapTaskUmbilicalServer
 operator|=

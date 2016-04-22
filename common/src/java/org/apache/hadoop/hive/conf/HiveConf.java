@@ -11280,24 +11280,6 @@ argument_list|,
 literal|"LLAP daemon output service port"
 argument_list|)
 block|,
-name|LLAP_TMP_SUBMITWORK_USING_TEZ_AM
-argument_list|(
-literal|"hive.llap.tmp.submit.work.using.tez.am"
-argument_list|,
-literal|true
-argument_list|,
-literal|""
-argument_list|)
-block|,
-name|LLAP_TMP_EXT_CLIENT_NUM_SERVER_HANDLERS
-argument_list|(
-literal|"hive.llap.tmp.ext.client.num.server.handlers"
-argument_list|,
-literal|1
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
