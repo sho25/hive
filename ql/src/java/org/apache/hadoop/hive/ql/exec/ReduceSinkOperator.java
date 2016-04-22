@@ -803,10 +803,6 @@ specifier|protected
 specifier|transient
 name|TopNHash
 name|reducerHash
-init|=
-operator|new
-name|TopNHash
-argument_list|()
 decl_stmt|;
 specifier|protected
 specifier|transient
@@ -1463,7 +1459,9 @@ operator|new
 name|PTFTopNHash
 argument_list|()
 else|:
-name|reducerHash
+operator|new
+name|TopNHash
+argument_list|()
 expr_stmt|;
 name|reducerHash
 operator|.
@@ -2308,10 +2306,19 @@ argument_list|(
 name|row
 argument_list|)
 decl_stmt|;
-comment|// Try to store the first key. If it's not excluded, we will proceed.
+comment|// Try to store the first key.
+comment|// if TopNHashes aren't active, always forward
+comment|// if TopNHashes are active, proceed if not already excluded (i.e order by limit)
+specifier|final
 name|int
 name|firstIndex
 init|=
+operator|(
+name|reducerHash
+operator|!=
+literal|null
+operator|)
+condition|?
 name|reducerHash
 operator|.
 name|tryStoreKey
@@ -2320,6 +2327,10 @@ name|firstKey
 argument_list|,
 name|partKeyNull
 argument_list|)
+else|:
+name|TopNHash
+operator|.
+name|FORWARD
 decl_stmt|;
 if|if
 condition|(
@@ -2359,6 +2370,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// invariant: reducerHash != null
 assert|assert
 name|firstIndex
 operator|>=
@@ -3442,6 +3454,10 @@ if|if
 condition|(
 operator|!
 name|abort
+operator|&&
+name|reducerHash
+operator|!=
+literal|null
 condition|)
 block|{
 name|reducerHash
@@ -3462,6 +3478,10 @@ operator|=
 literal|null
 expr_stmt|;
 name|random
+operator|=
+literal|null
+expr_stmt|;
+name|reducerHash
 operator|=
 literal|null
 expr_stmt|;
