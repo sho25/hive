@@ -8190,7 +8190,9 @@ literal|"hive.service.metrics.reporter"
 argument_list|,
 literal|"JSON_FILE, JMX"
 argument_list|,
-literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, comma separated list of JMX, CONSOLE, JSON_FILE"
+literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, "
+operator|+
+literal|"comma separated list of JMX, CONSOLE, JSON_FILE, HADOOP2"
 argument_list|)
 block|,
 name|HIVE_METRICS_JSON_FILE_LOCATION
@@ -8221,6 +8223,36 @@ argument_list|,
 literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, "
 operator|+
 literal|"the frequency of updating JSON metrics file."
+argument_list|)
+block|,
+name|HIVE_METRICS_HADOOP2_INTERVAL
+argument_list|(
+literal|"hive.service.metrics.hadoop2.frequency"
+argument_list|,
+literal|"30s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics HADOOP2 reporter, "
+operator|+
+literal|"the frequency of updating the HADOOP2 metrics system."
+argument_list|)
+block|,
+name|HIVE_METRICS_HADOOP2_COMPONENT_NAME
+argument_list|(
+literal|"hive.service.metrics.hadoop2.component"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"Component name to provide to Hadoop2 Metrics system. Ideally 'hivemetastore' for the MetaStore "
+operator|+
+literal|" and and 'hiveserver2' for HiveServer2."
 argument_list|)
 block|,
 name|HIVE_PERF_LOGGER
