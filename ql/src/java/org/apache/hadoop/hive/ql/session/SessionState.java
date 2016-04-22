@@ -2710,25 +2710,6 @@ comment|// Get the following out of the way when you start the session these tak
 comment|// while and should be done when we start up.
 try|try
 block|{
-comment|// Hive object instance should be created with a copy of the conf object. If the conf is
-comment|// shared with SessionState, other parts of the code might update the config, but
-comment|// Hive.get(HiveConf) would not recognize the case when it needs refreshing
-name|Hive
-operator|.
-name|get
-argument_list|(
-operator|new
-name|HiveConf
-argument_list|(
-name|startSs
-operator|.
-name|sessionConf
-argument_list|)
-argument_list|)
-operator|.
-name|getMSC
-argument_list|()
-expr_stmt|;
 name|UserGroupInformation
 name|sessionUGI
 init|=
@@ -2850,41 +2831,6 @@ parameter_list|)
 block|{
 throw|throw
 name|e
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|Hive
-operator|.
-name|SchemaException
-name|e
-parameter_list|)
-block|{
-name|RuntimeException
-name|ex
-init|=
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|ex
-operator|.
-name|setStackTrace
-argument_list|(
-operator|new
-name|StackTraceElement
-index|[
-literal|0
-index|]
-argument_list|)
-expr_stmt|;
-throw|throw
-name|ex
 throw|;
 block|}
 catch|catch

@@ -2524,6 +2524,7 @@ specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
+comment|// Keep a copy of HiveConf so if Session conf changes, we may need to get a new HMS client.
 specifier|protected
 name|boolean
 name|fastpath
@@ -2653,13 +2654,26 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-block|}
 name|this
 operator|.
 name|conf
 operator|=
 name|conf
 expr_stmt|;
+block|}
+else|else
+block|{
+name|this
+operator|.
+name|conf
+operator|=
+operator|new
+name|HiveConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
 name|filterHook
 operator|=
 name|loadFilterHooks
@@ -2755,6 +2769,8 @@ name|HMSHandler
 argument_list|(
 literal|"hive client"
 argument_list|,
+name|this
+operator|.
 name|conf
 argument_list|,
 literal|true
@@ -2775,6 +2791,8 @@ name|newRetryingHMSHandler
 argument_list|(
 literal|"hive client"
 argument_list|,
+name|this
+operator|.
 name|conf
 argument_list|,
 literal|true

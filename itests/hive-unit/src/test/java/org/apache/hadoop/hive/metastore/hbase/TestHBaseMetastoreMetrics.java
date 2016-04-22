@@ -276,10 +276,6 @@ name|TestHBaseMetastoreMetrics
 extends|extends
 name|HBaseIntegrationTests
 block|{
-specifier|private
-name|CodahaleMetrics
-name|metrics
-decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -431,16 +427,6 @@ name|Driver
 argument_list|(
 name|conf
 argument_list|)
-expr_stmt|;
-name|metrics
-operator|=
-operator|(
-name|CodahaleMetrics
-operator|)
-name|MetricsFactory
-operator|.
-name|getInstance
-argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -624,6 +610,17 @@ argument_list|(
 literal|"drop database tempdb cascade"
 argument_list|)
 expr_stmt|;
+name|CodahaleMetrics
+name|metrics
+init|=
+operator|(
+name|CodahaleMetrics
+operator|)
+name|MetricsFactory
+operator|.
+name|getInstance
+argument_list|()
+decl_stmt|;
 name|String
 name|json
 init|=

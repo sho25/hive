@@ -698,17 +698,14 @@ name|confOverlay
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Before
-specifier|public
-name|void
-name|setUp
+specifier|private
+name|Connection
+name|getConnection
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|hs2Conn
-operator|=
+return|return
 name|getConnection
 argument_list|(
 name|miniHS2
@@ -725,7 +722,7 @@ argument_list|)
 argument_list|,
 literal|"bar"
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 specifier|private
 name|Connection
@@ -780,11 +777,19 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+if|if
+condition|(
+name|hs2Conn
+operator|!=
+literal|null
+condition|)
+block|{
 name|hs2Conn
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|AfterClass
@@ -825,6 +830,11 @@ name|tableName
 init|=
 literal|"testTab1"
 decl_stmt|;
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -928,6 +938,11 @@ name|tableName
 init|=
 literal|"testConcurrentStatements"
 decl_stmt|;
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -1935,6 +1950,11 @@ name|close
 argument_list|()
 expr_stmt|;
 name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|hs2Conn
 operator|=
 name|getConnection
 argument_list|(
@@ -2118,6 +2138,11 @@ init|=
 literal|"DB1"
 decl_stmt|;
 comment|/**      * get/set Schema are new in JDK7 and not available in java.sql.Connection in JDK6.      * Hence the test uses HiveConnection object to call these methods so that test will run with older JDKs      */
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|HiveConnection
 name|hiveConn
 init|=
@@ -2293,6 +2318,11 @@ name|verifyTab
 init|=
 literal|"miniHS2DbVerificationTable"
 decl_stmt|;
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -3487,6 +3517,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 comment|// 2. Test with doAs=true
 comment|// Restart HiveServer2 with doAs=true
 if|if
@@ -3657,6 +3692,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 comment|// Test for user "trinity"
 name|userName
 operator|=
@@ -3820,6 +3860,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// verify that udf in default whitelist can be executed
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -4018,6 +4063,11 @@ name|isEmpty
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|hs2Conn
+operator|=
+name|getConnection
+argument_list|()
+expr_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -4033,6 +4083,11 @@ name|executeQuery
 argument_list|(
 literal|"SELECT substr('foobar', 4) "
 argument_list|)
+expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 name|miniHS2
 operator|.
@@ -4132,6 +4187,20 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+if|if
+condition|(
+name|miniHS2
+operator|.
+name|isStarted
+argument_list|()
+condition|)
+block|{
+name|miniHS2
+operator|.
+name|stop
+argument_list|()
+expr_stmt|;
+block|}
 comment|// setup whitelist
 name|HiveConf
 name|testConf
@@ -4438,6 +4507,11 @@ name|userName
 argument_list|,
 literal|false
 argument_list|)
+expr_stmt|;
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 comment|// Test with multi-level scratch dir path
 comment|// Stop HiveServer2
@@ -4750,6 +4824,22 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|hs2Conn
+operator|!=
+literal|null
+condition|)
+block|{
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 comment|// This should fail with given HTTP response code 413 in error message, since header is more
 comment|// than the configured the header size
 name|userName
@@ -4808,6 +4898,22 @@ literal|"HTTP Response code: 413"
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|hs2Conn
+operator|!=
+literal|null
+condition|)
+block|{
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|// Stop HiveServer2 to increase header size
 if|if
@@ -4888,6 +4994,22 @@ operator|+
 name|e
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|hs2Conn
+operator|!=
+literal|null
+condition|)
+block|{
+name|hs2Conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Tests that DataNucleus' NucleusContext.classLoaderResolverMap clears cached class objects    * (& hence doesn't leak classloaders) on closing any session    *    * @throws Exception    */
