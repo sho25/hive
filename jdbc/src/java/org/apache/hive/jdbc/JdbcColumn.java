@@ -123,11 +123,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|service
+name|serde2
 operator|.
-name|cli
+name|thrift
 operator|.
 name|Type
 import|;

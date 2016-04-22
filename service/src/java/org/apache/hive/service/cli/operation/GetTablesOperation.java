@@ -560,6 +560,8 @@ name|RESULT_SET_SCHEMA
 argument_list|,
 name|getProtocolVersion
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

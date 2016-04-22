@@ -1050,6 +1050,8 @@ name|resultSchema
 argument_list|,
 name|getProtocolVersion
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 for|for

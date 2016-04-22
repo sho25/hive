@@ -9646,6 +9646,28 @@ operator|+
 literal|"thrift client"
 argument_list|)
 block|,
+comment|// ResultSet serialization settings
+name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
+argument_list|(
+literal|"hive.server2.thrift.resultset.serialize.in.tasks"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether we should serialize the Thrift structures used in JDBC ResultSet RPC in task nodes.\n "
+operator|+
+literal|"We use SequenceFile and ThriftJDBCBinarySerDe to read and write the final results if this is true."
+argument_list|)
+block|,
+comment|// TODO: Make use of this config to configure fetch size
+name|HIVE_SERVER2_THRIFT_RESULTSET_MAX_FETCH_SIZE
+argument_list|(
+literal|"hive.server2.thrift.resultset.max.fetch.size"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
@@ -16550,6 +16572,12 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
 operator|.
 name|varname
 block|,

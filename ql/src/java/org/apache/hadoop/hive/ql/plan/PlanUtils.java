@@ -1794,6 +1794,14 @@ name|colTypes
 parameter_list|,
 name|String
 name|fileFormat
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+extends|extends
+name|Deserializer
+argument_list|>
+name|serdeClass
 parameter_list|)
 block|{
 name|TableDesc
@@ -1801,9 +1809,7 @@ name|tblDesc
 init|=
 name|getTableDesc
 argument_list|(
-name|LazySimpleSerDe
-operator|.
-name|class
+name|serdeClass
 argument_list|,
 literal|""
 operator|+
@@ -1822,7 +1828,7 @@ argument_list|,
 name|fileFormat
 argument_list|)
 decl_stmt|;
-comment|//enable escaping
+comment|// enable escaping
 name|tblDesc
 operator|.
 name|getProperties
@@ -1851,7 +1857,7 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
-comment|//enable extended nesting levels
+comment|// enable extended nesting levels
 name|tblDesc
 operator|.
 name|getProperties
