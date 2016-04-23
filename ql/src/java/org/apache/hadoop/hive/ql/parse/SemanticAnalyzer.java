@@ -6190,6 +6190,9 @@ name|getUnescapedName
 argument_list|(
 name|tableTree
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 name|String
 name|alias
@@ -11410,6 +11413,9 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 name|qb
 operator|.
