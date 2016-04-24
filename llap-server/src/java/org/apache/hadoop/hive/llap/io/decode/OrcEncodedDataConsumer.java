@@ -185,7 +185,7 @@ name|llap
 operator|.
 name|metrics
 operator|.
-name|LlapDaemonQueueMetrics
+name|LlapDaemonIOMetrics
 import|;
 end_import
 
@@ -496,8 +496,8 @@ parameter_list|,
 name|QueryFragmentCounters
 name|counters
 parameter_list|,
-name|LlapDaemonQueueMetrics
-name|queueMetrics
+name|LlapDaemonIOMetrics
+name|ioMetrics
 parameter_list|)
 block|{
 name|super
@@ -506,7 +506,7 @@ name|consumer
 argument_list|,
 name|colCount
 argument_list|,
-name|queueMetrics
+name|ioMetrics
 argument_list|)
 expr_stmt|;
 comment|// TODO: get rid of this

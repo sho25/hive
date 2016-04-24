@@ -107,6 +107,21 @@ name|CacheNumLockedBuffers
 argument_list|(
 literal|"Number of locked buffers in cache"
 argument_list|)
+block|,
+name|CacheArenaSize
+argument_list|(
+literal|"Size of arena used by allocator"
+argument_list|)
+block|,
+name|CacheMinAllocationSize
+argument_list|(
+literal|"Minimum allocation size used by allocator"
+argument_list|)
+block|,
+name|CacheMaxAllocationSize
+argument_list|(
+literal|"Maximum allocation size used by allocator"
+argument_list|)
 block|;
 specifier|private
 specifier|final

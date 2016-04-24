@@ -62,6 +62,10 @@ name|T
 name|t
 parameter_list|)
 function_decl|;
+name|int
+name|size
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

@@ -1775,6 +1775,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_IO_DECODING_METRICS_PERCENTILE_INTERVALS
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_ORC_ENABLE_TIME_COUNTERS
 operator|.
 name|varname
@@ -10701,17 +10712,17 @@ argument_list|,
 literal|"Cache objects (plans, hashtables, etc) in llap"
 argument_list|)
 block|,
-name|LLAP_QUEUE_METRICS_PERCENTILE_INTERVALS
+name|LLAP_IO_DECODING_METRICS_PERCENTILE_INTERVALS
 argument_list|(
-literal|"hive.llap.queue.metrics.percentiles.intervals"
+literal|"hive.llap.io.decoding.metrics.percentiles.intervals"
 argument_list|,
-literal|""
+literal|"30"
 argument_list|,
 literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds)\n"
 operator|+
-literal|"for percentile latency metrics on the LLAP daemon producer-consumer queue.\n"
+literal|"for percentile latency metrics on the LLAP daemon IO decoding time.\n"
 operator|+
-literal|"By default, percentile latency metrics are disabled."
+literal|"hive.llap.queue.metrics.percentiles.intervals"
 argument_list|)
 block|,
 name|LLAP_IO_THREADPOOL_SIZE

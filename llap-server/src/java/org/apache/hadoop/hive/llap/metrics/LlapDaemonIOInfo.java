@@ -48,34 +48,49 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Llap daemon producer / consumer queue related metrics.  */
+comment|/**  * Llap daemon I/O elevator metrics  */
 end_comment
 
 begin_enum
 specifier|public
 enum|enum
-name|LlapDaemonQueueInfo
+name|LlapDaemonIOInfo
 implements|implements
 name|MetricsInfo
 block|{
-name|QueueMetrics
+name|IOMetrics
 argument_list|(
-literal|"Llap daemon producer/consumer queue related metrics"
+literal|"Llap daemon I/O elevator metrics"
 argument_list|)
 block|,
-name|QueueSize
+name|IoThreadPoolSize
 argument_list|(
-literal|"Size of the queue used by producer and consumer"
+literal|"Size of the thread pool used by IO elevator"
 argument_list|)
 block|,
-name|PercentileProcessingTime
+name|EncodedColumnBatchPoolSize
 argument_list|(
-literal|"Percentiles processing time for an element from queue"
+literal|"Size of the object pool that stores encoded column batches"
 argument_list|)
 block|,
-name|MaxProcessingTime
+name|ColumnStreamDataPoolSize
 argument_list|(
-literal|"Max processing time for an element from queue so far"
+literal|"Size of the object pool that stores column stream data"
+argument_list|)
+block|,
+name|ColumnVectorBatchPoolSize
+argument_list|(
+literal|"Size of the object pool that stores column vector batches"
+argument_list|)
+block|,
+name|PercentileDecodingTime
+argument_list|(
+literal|"Percentile decoding time for encoded column batch"
+argument_list|)
+block|,
+name|MaxDecodingTime
+argument_list|(
+literal|"Max time for decoding an encoded column batch"
 argument_list|)
 block|;
 specifier|private
@@ -83,7 +98,7 @@ specifier|final
 name|String
 name|desc
 decl_stmt|;
-name|LlapDaemonQueueInfo
+name|LlapDaemonIOInfo
 parameter_list|(
 name|String
 name|desc

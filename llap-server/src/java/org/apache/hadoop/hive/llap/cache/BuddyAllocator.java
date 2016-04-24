@@ -796,6 +796,27 @@ operator|.
 name|incrAllocatedArena
 argument_list|()
 expr_stmt|;
+name|metrics
+operator|.
+name|setArenaSize
+argument_list|(
+name|arenaSize
+argument_list|)
+expr_stmt|;
+name|metrics
+operator|.
+name|setMinAllocationSize
+argument_list|(
+name|minAllocation
+argument_list|)
+expr_stmt|;
+name|metrics
+operator|.
+name|setMaxAllocationSize
+argument_list|(
+name|maxAllocation
+argument_list|)
+expr_stmt|;
 block|}
 comment|// TODO: would it make sense to return buffers asynchronously?
 annotation|@

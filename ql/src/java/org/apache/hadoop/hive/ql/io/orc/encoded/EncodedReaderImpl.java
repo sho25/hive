@@ -7538,6 +7538,7 @@ name|T
 argument_list|>
 name|createPool
 parameter_list|(
+specifier|final
 name|int
 name|size
 parameter_list|,
@@ -7565,6 +7566,17 @@ name|T
 name|t
 parameter_list|)
 block|{         }
+annotation|@
+name|Override
+specifier|public
+name|int
+name|size
+parameter_list|()
+block|{
+return|return
+name|size
+return|;
+block|}
 specifier|public
 name|T
 name|take
