@@ -1364,6 +1364,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVE_TXN_RETRYABLE_SQLEX_REGEX
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
 block|,
 name|HiveConf
@@ -7283,6 +7289,25 @@ operator|+
 literal|"transactions that Hive has to track at any given time, which may negatively affect\n"
 operator|+
 literal|"read performance."
+argument_list|)
+block|,
+name|HIVE_TXN_RETRYABLE_SQLEX_REGEX
+argument_list|(
+literal|"hive.txn.retryable.sqlex.regex"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list\n"
+operator|+
+literal|"of regular expression patterns for SQL state, error code, and error message of\n"
+operator|+
+literal|"retryable SQLExceptions, that's suitable for the metastore DB.\n"
+operator|+
+literal|"For example: Can't serialize.*,40001$,^Deadlock,.*ORA-08176.*\n"
+operator|+
+literal|"The string that the regex will be matched against is of the following form, where ex is a SQLException:\n"
+operator|+
+literal|"ex.getMessage() + \" (SQLState=\" + ex.getSQLState() + \", ErrorCode=\" + ex.getErrorCode() + \")\""
 argument_list|)
 block|,
 name|HIVE_COMPACTOR_INITIATOR_ON
