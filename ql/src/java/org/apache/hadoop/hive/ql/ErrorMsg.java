@@ -2142,6 +2142,20 @@ argument_list|,
 literal|"Import Semantic Analyzer Error"
 argument_list|)
 block|,
+name|INVALID_FK_SYNTAX
+argument_list|(
+literal|10325
+argument_list|,
+literal|"Invalid Foreign Key syntax"
+argument_list|)
+block|,
+name|INVALID_PK_SYNTAX
+argument_list|(
+literal|10326
+argument_list|,
+literal|"Invalid Primary Key syntax"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
