@@ -3654,6 +3654,11 @@ operator|.
 name|get
 argument_list|(
 name|key
+argument_list|,
+name|confVar
+operator|.
+name|getDefaultValue
+argument_list|()
 argument_list|)
 return|;
 block|}
