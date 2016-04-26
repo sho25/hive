@@ -193,6 +193,18 @@ name|apache
 operator|.
 name|orc
 operator|.
+name|DataReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
 name|OrcProto
 import|;
 end_import
@@ -206,20 +218,6 @@ operator|.
 name|orc
 operator|.
 name|StripeInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|MetadataReader
 import|;
 end_import
 
@@ -363,7 +361,7 @@ parameter_list|(
 name|OrcBatchKey
 name|stripeKey
 parameter_list|,
-name|MetadataReader
+name|DataReader
 name|mr
 parameter_list|,
 name|StripeInformation
@@ -691,7 +689,7 @@ specifier|public
 name|void
 name|loadMissingIndexes
 parameter_list|(
-name|MetadataReader
+name|DataReader
 name|mr
 parameter_list|,
 name|StripeInformation

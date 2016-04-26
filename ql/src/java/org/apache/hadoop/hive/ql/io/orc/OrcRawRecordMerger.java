@@ -2230,8 +2230,11 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-comment|/* isAcidRead */
 literal|true
+argument_list|,
+name|Integer
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|objectInspector

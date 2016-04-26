@@ -891,14 +891,6 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-specifier|private
-specifier|static
-specifier|final
-name|long
-name|NANOS_PER_MILLI
-init|=
-literal|1000000
-decl_stmt|;
 comment|/**    * Set the value for a given column value within a batch.    * @param rowId the row to set    * @param column the column to set    * @param inspector the object inspector to interpret the obj    * @param obj the value to use    */
 specifier|static
 name|void
