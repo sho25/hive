@@ -3482,25 +3482,6 @@ name|getPort
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Credentials
-name|taskCredentials
-init|=
-operator|new
-name|Credentials
-argument_list|()
-decl_stmt|;
-comment|// Credentials can change across DAGs. Ideally construct only once per DAG.
-name|taskCredentials
-operator|.
-name|addAll
-argument_list|(
-name|getContext
-argument_list|()
-operator|.
-name|getCredentials
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Preconditions
 operator|.
 name|checkState
@@ -3550,6 +3531,9 @@ operator|=
 name|serializeCredentials
 argument_list|(
 name|getContext
+argument_list|()
+operator|.
+name|getCurrentDagInfo
 argument_list|()
 operator|.
 name|getCredentials
