@@ -230,6 +230,14 @@ name|DELETE_TOTAL_PARTITIONS
 init|=
 literal|"delete_total_count_partitions"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DIRECTSQL_ERRORS
+init|=
+literal|"directsql_errors"
+decl_stmt|;
 block|}
 end_class
 
