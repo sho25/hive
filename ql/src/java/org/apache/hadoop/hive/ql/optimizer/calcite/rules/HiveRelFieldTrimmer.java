@@ -2709,7 +2709,7 @@ name|add
 argument_list|(
 name|tab
 operator|.
-name|getTableName
+name|getCompleteName
 argument_list|()
 argument_list|,
 name|tab

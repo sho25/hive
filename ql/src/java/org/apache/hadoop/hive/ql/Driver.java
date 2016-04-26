@@ -4747,7 +4747,7 @@ name|get
 argument_list|(
 name|tbl
 operator|.
-name|getTableName
+name|getCompleteName
 argument_list|()
 argument_list|)
 argument_list|)
