@@ -963,6 +963,8 @@ name|operationStart
 argument_list|,
 name|operationComplete
 argument_list|,
+name|hasResultSet
+argument_list|,
 name|operationException
 argument_list|)
 return|;

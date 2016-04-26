@@ -8722,7 +8722,7 @@ literal|false
 argument_list|,
 literal|"Whether to\n"
 operator|+
-literal|"enable parallel compilation between sessions on HiveServer2. The default is false."
+literal|"enable parallel compilation of the queries between sessions and within the same session on HiveServer2. The default is false."
 argument_list|)
 block|,
 name|HIVE_SERVER2_COMPILE_LOCK_TIMEOUT

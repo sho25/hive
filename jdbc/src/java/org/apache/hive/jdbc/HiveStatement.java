@@ -1074,14 +1074,17 @@ argument_list|(
 name|sql
 argument_list|)
 expr_stmt|;
+name|TGetOperationStatusResp
+name|status
+init|=
 name|waitForOperationToComplete
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 comment|// The query should be completed by now
 if|if
 condition|(
 operator|!
-name|stmtHandle
+name|status
 operator|.
 name|isHasResultSet
 argument_list|()
@@ -1246,7 +1249,7 @@ argument_list|,
 name|sql
 argument_list|)
 decl_stmt|;
-comment|/**      * Run asynchronously whenever possible      * Currently only a SQLOperation can be run asynchronously,      * in a background operation thread      * Compilation is synchronous and execution is asynchronous      */
+comment|/**      * Run asynchronously whenever possible      * Currently only a SQLOperation can be run asynchronously,      * in a background operation thread      * Compilation can run asynchronously or synchronously and execution run asynchronously      */
 name|execReq
 operator|.
 name|setRunAsync
@@ -1342,7 +1345,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|void
+name|TGetOperationStatusResp
 name|waitForOperationToComplete
 parameter_list|()
 throws|throws
@@ -1359,6 +1362,8 @@ argument_list|)
 decl_stmt|;
 name|TGetOperationStatusResp
 name|statusResp
+init|=
+literal|null
 decl_stmt|;
 comment|// Poll on the operation status, till the operation is complete
 while|while
@@ -1536,6 +1541,9 @@ argument_list|)
 throw|;
 block|}
 block|}
+return|return
+name|statusResp
+return|;
 block|}
 specifier|private
 name|void

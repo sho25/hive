@@ -4113,6 +4113,16 @@ name|getOperationCompleted
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|resp
+operator|.
+name|setHasResultSet
+argument_list|(
+name|operationStatus
+operator|.
+name|getHasResultSet
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|opException

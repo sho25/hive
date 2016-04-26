@@ -2645,6 +2645,11 @@ operator|.
 name|getOperationCompleted
 argument_list|()
 argument_list|,
+name|resp
+operator|.
+name|isHasResultSet
+argument_list|()
+argument_list|,
 name|opException
 argument_list|)
 return|;
