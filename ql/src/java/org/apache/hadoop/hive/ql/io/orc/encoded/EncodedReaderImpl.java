@@ -610,7 +610,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|DataCache
-name|cache
+name|cacheWrapper
 decl_stmt|;
 specifier|private
 name|boolean
@@ -640,7 +640,7 @@ name|long
 name|strideRate
 parameter_list|,
 name|DataCache
-name|cache
+name|cacheWrapper
 parameter_list|,
 name|DataReader
 name|dataReader
@@ -683,9 +683,9 @@ name|strideRate
 expr_stmt|;
 name|this
 operator|.
-name|cache
+name|cacheWrapper
 operator|=
-name|cache
+name|cacheWrapper
 expr_stmt|;
 name|this
 operator|.
@@ -1810,7 +1810,7 @@ condition|(
 name|hasFileId
 condition|)
 block|{
-name|cache
+name|cacheWrapper
 operator|.
 name|getFileData
 argument_list|(
@@ -1899,7 +1899,7 @@ name|next
 argument_list|,
 name|stripeOffset
 argument_list|,
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -2906,7 +2906,7 @@ operator|.
 name|getBuffer
 argument_list|()
 decl_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|releaseBuffer
 argument_list|(
@@ -3061,7 +3061,7 @@ name|void
 name|handleCacheCollision
 parameter_list|(
 name|DataCache
-name|cache
+name|cacheWrapper
 parameter_list|,
 name|MemoryBuffer
 name|replacementBuffer
@@ -3079,7 +3079,7 @@ operator|==
 literal|null
 assert|;
 comment|// This is done at pre-read stage where there's nothing special w/refcounts. Just release.
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -3239,7 +3239,7 @@ name|void
 name|handleCacheCollision
 parameter_list|(
 name|DataCache
-name|cache
+name|cacheWrapper
 parameter_list|,
 name|MemoryBuffer
 name|replacementBuffer
@@ -3259,7 +3259,7 @@ assert|;
 comment|// Had the put succeeded for our new buffer, it would have refcount of 2 - 1 from put,
 comment|// and 1 from notifyReused call above. "Old" buffer now has the 1 from put; new buffer
 comment|// is not in cache.
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -3270,7 +3270,7 @@ name|getBuffer
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -3413,6 +3413,14 @@ name|toRelease
 init|=
 literal|null
 decl_stmt|;
+name|List
+argument_list|<
+name|IncompleteCb
+argument_list|>
+name|badEstimates
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|isCompressed
@@ -3439,9 +3447,14 @@ name|toDecompress
 operator|=
 operator|new
 name|ArrayList
-argument_list|<
-name|ProcCacheChunk
-argument_list|>
+argument_list|<>
+argument_list|()
+expr_stmt|;
+name|badEstimates
+operator|=
+operator|new
+name|ArrayList
+argument_list|<>
 argument_list|()
 expr_stmt|;
 block|}
@@ -3508,6 +3521,8 @@ argument_list|,
 name|toRelease
 argument_list|,
 name|toDecompress
+argument_list|,
+name|badEstimates
 argument_list|)
 else|:
 name|prepareRangesForUncompressedRead
@@ -3525,21 +3540,83 @@ argument_list|,
 name|csd
 argument_list|)
 expr_stmt|;
-comment|// 3. Allocate the buffers, prepare cache keys.
-comment|// At this point, we have read all the CBs we need to read. cacheBuffers contains some cache
-comment|// data and some unallocated membufs for decompression. toDecompress contains all the work we
-comment|// need to do, and each item points to one of the membufs in cacheBuffers as target. The iter
-comment|// has also been adjusted to point to these buffers instead of compressed data for the ranges.
+comment|// 2.5. Remember the bad estimates for future reference.
+if|if
+condition|(
+name|badEstimates
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|badEstimates
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Relies on the fact that cache does not actually store these.
+name|DiskRange
+index|[]
+name|cacheKeys
+init|=
+name|badEstimates
+operator|.
+name|toArray
+argument_list|(
+operator|new
+name|DiskRange
+index|[
+name|badEstimates
+operator|.
+name|size
+argument_list|()
+index|]
+argument_list|)
+decl_stmt|;
+name|long
+index|[]
+name|result
+init|=
+name|cacheWrapper
+operator|.
+name|putFileData
+argument_list|(
+name|fileKey
+argument_list|,
+name|cacheKeys
+argument_list|,
+literal|null
+argument_list|,
+name|baseOffset
+argument_list|)
+decl_stmt|;
+assert|assert
+name|result
+operator|==
+literal|null
+assert|;
+comment|// We don't expect conflicts from bad estimates.
+block|}
 if|if
 condition|(
 name|toDecompress
 operator|==
 literal|null
+operator|||
+name|toDecompress
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 return|return
 name|lastUncompressed
 return|;
-comment|// Nothing to decompress.
+comment|// Nothing to do.
+comment|// 3. Allocate the buffers, prepare cache keys.
+comment|// At this point, we have read all the CBs we need to read. cacheBuffers contains some cache
+comment|// data and some unallocated membufs for decompression. toDecompress contains all the work we
+comment|// need to do, and each item points to one of the membufs in cacheBuffers as target. The iter
+comment|// has also been adjusted to point to these buffers instead of compressed data for the ranges.
 name|MemoryBuffer
 index|[]
 name|targetBuffers
@@ -3601,7 +3678,7 @@ operator|++
 name|ix
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -3690,7 +3767,7 @@ literal|" due to reuse (after decompression)"
 argument_list|)
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -3744,7 +3821,7 @@ name|long
 index|[]
 name|collisionMask
 init|=
-name|cache
+name|cacheWrapper
 operator|.
 name|putFileData
 argument_list|(
@@ -3829,6 +3906,12 @@ argument_list|<
 name|ProcCacheChunk
 argument_list|>
 name|toDecompress
+parameter_list|,
+name|List
+argument_list|<
+name|IncompleteCb
+argument_list|>
+name|badEstimates
 parameter_list|)
 throws|throws
 name|IOException
@@ -3912,7 +3995,7 @@ literal|" due to reuse"
 argument_list|)
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -4041,6 +4124,8 @@ argument_list|,
 name|toDecompress
 argument_list|,
 name|toRelease
+argument_list|,
+name|badEstimates
 argument_list|)
 decl_stmt|;
 name|lastUncompressed
@@ -4196,7 +4281,7 @@ literal|" due to reuse"
 argument_list|)
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -4674,7 +4759,7 @@ name|partOffset
 argument_list|,
 name|hasEntirePartTo
 argument_list|,
-name|cache
+name|cacheWrapper
 argument_list|,
 name|singleAlloc
 argument_list|)
@@ -4839,7 +4924,7 @@ name|partOffset
 argument_list|,
 name|hadEntirePartTo
 argument_list|,
-name|cache
+name|cacheWrapper
 argument_list|,
 name|singleAlloc
 argument_list|)
@@ -4855,7 +4940,7 @@ name|copyAndReplaceUncompressedToNonCached
 argument_list|(
 name|curBc
 argument_list|,
-name|cache
+name|cacheWrapper
 argument_list|,
 name|singleAlloc
 argument_list|)
@@ -5018,7 +5103,7 @@ operator|++
 name|ix
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -5140,7 +5225,7 @@ name|long
 index|[]
 name|collisionMask
 init|=
-name|cache
+name|cacheWrapper
 operator|.
 name|putFileData
 argument_list|(
@@ -5198,7 +5283,7 @@ decl_stmt|;
 name|int
 name|maxAllocSize
 init|=
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -5328,7 +5413,7 @@ name|long
 name|candidateEnd
 parameter_list|,
 name|DataCache
-name|cache
+name|cacheWrapper
 parameter_list|,
 name|MemoryBuffer
 index|[]
@@ -5344,7 +5429,7 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -5371,7 +5456,7 @@ index|[
 literal|0
 index|]
 decl_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -5429,7 +5514,7 @@ name|BufferChunk
 name|bc
 parameter_list|,
 name|DataCache
-name|cache
+name|cacheWrapper
 parameter_list|,
 name|MemoryBuffer
 index|[]
@@ -5443,7 +5528,7 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()
@@ -5466,7 +5551,7 @@ index|[
 literal|0
 index|]
 decl_stmt|;
-name|cache
+name|cacheWrapper
 operator|.
 name|reuseBuffer
 argument_list|(
@@ -6088,7 +6173,7 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-name|cache
+name|cacheWrapper
 operator|.
 name|releaseBuffer
 argument_list|(
@@ -6279,7 +6364,7 @@ name|replacedChunk
 operator|.
 name|handleCacheCollision
 argument_list|(
-name|cache
+name|cacheWrapper
 argument_list|,
 name|replacementBuffer
 argument_list|,
@@ -6458,7 +6543,7 @@ name|end
 return|;
 block|}
 block|}
-comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the    *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @return The resulting cache chunk.    */
+comment|/**    * Reads one compression block from the source; handles compression blocks read from    * multiple ranges (usually, that would only happen with zcr).    * Adds stuff to cachedBuffers, toDecompress and toRelease (see below what each does).    * @param current BufferChunk where compression block starts.    * @param cacheBuffers The result buffer array to add pre-allocated target cache buffer.    * @param toDecompress The list of work to decompress - pairs of compressed buffers and the    *                     target buffers (same as the ones added to cacheBuffers).    * @param toRelease The list of buffers to release to zcr because they are no longer in use.    * @param badEstimates The list of bad estimates that cannot be decompressed.    * @return The resulting cache chunk.    */
 specifier|private
 name|ProcCacheChunk
 name|addOneCompressionBuffer
@@ -6483,6 +6568,12 @@ argument_list|<
 name|ByteBuffer
 argument_list|>
 name|toRelease
+parameter_list|,
+name|List
+argument_list|<
+name|IncompleteCb
+argument_list|>
+name|badEstimates
 parameter_list|)
 throws|throws
 name|IOException
@@ -6734,6 +6825,10 @@ name|hasContiguousNext
 argument_list|()
 condition|)
 block|{
+name|badEstimates
+operator|.
+name|add
+argument_list|(
 name|addIncompleteCompressionBuffer
 argument_list|(
 name|cbStartOffset
@@ -6741,6 +6836,7 @@ argument_list|,
 name|current
 argument_list|,
 literal|0
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -7059,6 +7155,10 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|badEstimates
+operator|.
+name|add
+argument_list|(
 name|addIncompleteCompressionBuffer
 argument_list|(
 name|cbStartOffset
@@ -7066,6 +7166,7 @@ argument_list|,
 name|tmp
 argument_list|,
 name|extraChunkCount
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -7076,7 +7177,7 @@ block|}
 block|}
 block|}
 specifier|private
-name|void
+name|IncompleteCb
 name|addIncompleteCompressionBuffer
 parameter_list|(
 name|long
@@ -7135,6 +7236,9 @@ argument_list|(
 name|icb
 argument_list|)
 expr_stmt|;
+return|return
+name|icb
+return|;
 block|}
 comment|/**    * Add one buffer with compressed data the results for addOneCompressionBuffer (see javadoc).    * @param fullCompressionBlock (fCB) Entire compression block, sliced or copied from disk data.    * @param isUncompressed Whether the data in the block is uncompressed.    * @param cbStartOffset Compressed start offset of the fCB.    * @param cbEndOffset Compressed end offset of the fCB.    * @param lastChunkLength The number of compressed bytes consumed from last *chunk* into fullCompressionBlock.    * @param lastChunk    * @param toDecompress See addOneCompressionBuffer.    * @param cacheBuffers See addOneCompressionBuffer.    * @return New cache buffer.    */
 specifier|private
@@ -7176,7 +7280,7 @@ comment|// Prepare future cache buffer.
 name|MemoryBuffer
 name|futureAlloc
 init|=
-name|cache
+name|cacheWrapper
 operator|.
 name|getAllocator
 argument_list|()

@@ -10599,6 +10599,19 @@ operator|+
 literal|"to avoid this setting."
 argument_list|)
 block|,
+name|LLAP_CACHE_ENABLE_ORC_GAP_CACHE
+argument_list|(
+literal|"hive.llap.orc.gap.cache"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP cache for ORC should remember gaps in ORC RG read estimates, to avoid\n"
+operator|+
+literal|"re-reading the data that was read once and discarded because it is unneeded. This is\n"
+operator|+
+literal|"only necessary for ORC files written before HIVE-9660 (Hive 2.1?)."
+argument_list|)
+block|,
 name|LLAP_IO_USE_FILEID_PATH
 argument_list|(
 literal|"hive.llap.io.use.fileid.path"
