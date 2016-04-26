@@ -69,26 +69,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -125,11 +105,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
-operator|.
-name|ConfVars
+name|QueryPlan
 import|;
 end_import
 
@@ -145,7 +123,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QueryPlan
+name|QueryState
 import|;
 end_import
 
@@ -334,6 +312,26 @@ operator|.
 name|json
 operator|.
 name|JSONObject
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -633,6 +631,15 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|final
+name|QueryState
+name|queryState
+init|=
+name|hookContext
+operator|.
+name|getQueryState
+argument_list|()
+decl_stmt|;
 name|executor
 operator|.
 name|submit
@@ -812,9 +819,6 @@ argument_list|,
 comment|// FetchTask
 literal|null
 argument_list|,
-comment|// astStringTree
-literal|null
-argument_list|,
 comment|// analyzer
 literal|false
 argument_list|,
@@ -862,7 +866,7 @@ name|explain
 operator|.
 name|initialize
 argument_list|(
-name|conf
+name|queryState
 argument_list|,
 name|plan
 argument_list|,

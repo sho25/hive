@@ -35,6 +35,8 @@ block|,
 name|CONSOLE
 block|,
 name|JSON_FILE
+block|,
+name|HADOOP2
 block|}
 end_enum
 

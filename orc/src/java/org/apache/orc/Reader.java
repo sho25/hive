@@ -63,20 +63,6 @@ name|SearchArgument
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|MetadataReader
-import|;
-end_import
-
 begin_comment
 comment|/**  * The interface for reading ORC files.  *  * One Reader can support multiple concurrent RecordReader.  */
 end_comment
@@ -176,7 +162,12 @@ index|[]
 name|getStatistics
 parameter_list|()
 function_decl|;
-comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    */
+comment|/**    * Get the type of rows in this ORC file.    */
+name|TypeDescription
+name|getSchema
+parameter_list|()
+function_decl|;
+comment|/**    * Get the list of types contained in the file. The root type is the first    * type in the list.    * @return the list of flattened types    * @deprecated use getSchema instead    */
 name|List
 argument_list|<
 name|OrcProto
@@ -253,6 +244,12 @@ decl_stmt|;
 specifier|private
 name|TypeDescription
 name|schema
+init|=
+literal|null
+decl_stmt|;
+specifier|private
+name|DataReader
+name|dataReader
 init|=
 literal|null
 decl_stmt|;
@@ -364,6 +361,24 @@ block|{
 name|this
 operator|.
 name|useZeroCopy
+operator|=
+name|value
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
+name|Options
+name|dataReader
+parameter_list|(
+name|DataReader
+name|value
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dataReader
 operator|=
 name|value
 expr_stmt|;
@@ -495,6 +510,15 @@ name|skipCorruptRecords
 return|;
 block|}
 specifier|public
+name|DataReader
+name|getDataReader
+parameter_list|()
+block|{
+return|return
+name|dataReader
+return|;
+block|}
+specifier|public
 name|Options
 name|clone
 parameter_list|()
@@ -553,6 +577,21 @@ operator|.
 name|skipCorruptRecords
 operator|=
 name|skipCorruptRecords
+expr_stmt|;
+name|result
+operator|.
+name|dataReader
+operator|=
+name|dataReader
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|dataReader
+operator|.
+name|clone
+argument_list|()
 expr_stmt|;
 return|return
 name|result
@@ -832,13 +871,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * @return Metadata reader used to read file metadata.    */
-name|MetadataReader
-name|metadata
-parameter_list|()
-throws|throws
-name|IOException
-function_decl|;
 comment|/**    * @return List of integers representing version of the file, in order from major to minor.    */
 name|List
 argument_list|<
@@ -879,14 +911,6 @@ name|ColumnStatistics
 argument_list|>
 name|getOrcProtoFileStatistics
 parameter_list|()
-function_decl|;
-comment|/**    * @param useZeroCopy Whether zero-copy read should be used.    * @return The default data reader that ORC is using to read bytes from disk.    */
-name|DataReader
-name|createDefaultDataReader
-parameter_list|(
-name|boolean
-name|useZeroCopy
-parameter_list|)
 function_decl|;
 comment|/**    * @return Serialized file metadata read from disk for the purposes of caching, etc.    */
 name|ByteBuffer

@@ -2083,8 +2083,11 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-comment|/* isAcidRead */
 literal|false
+argument_list|,
+name|Integer
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|Reader
@@ -10370,8 +10373,11 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-comment|/* isAcidRead */
 literal|true
+argument_list|,
+name|Integer
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -11893,7 +11899,7 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Convert a Hive type property string that contains separated type names into a list of    * TypeDescription objects.    * @return the list of TypeDescription objects.    */
+comment|/**    * Convert a Hive type property string that contains separated type names into a list of    * TypeDescription objects.    * @param hiveTypeProperty the desired types from hive    * @param maxColumns the maximum number of desired columns    * @return the list of TypeDescription objects.    */
 specifier|public
 specifier|static
 name|ArrayList
@@ -11904,6 +11910,9 @@ name|typeDescriptionsFromHiveTypeProperty
 parameter_list|(
 name|String
 name|hiveTypeProperty
+parameter_list|,
+name|int
+name|maxColumns
 parameter_list|)
 block|{
 comment|// CONSDIER: We need a type name parser for TypeDescription.
@@ -11956,6 +11965,18 @@ name|typeInfo
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|typeDescrList
+operator|.
+name|size
+argument_list|()
+operator|>=
+name|maxColumns
+condition|)
+block|{
+break|break;
+block|}
 block|}
 return|return
 name|typeDescrList
@@ -12379,6 +12400,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Generate the desired schema for reading the file.    * @param conf the configuration    * @param isAcidRead is this an acid format?    * @param dataColumns the desired number of data columns for vectorized read    * @return the desired schema or null if schema evolution isn't enabled    * @throws IOException    */
 specifier|public
 specifier|static
 name|TypeDescription
@@ -12389,6 +12411,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|isAcidRead
+parameter_list|,
+name|int
+name|dataColumns
 parameter_list|)
 throws|throws
 name|IOException
@@ -12515,6 +12540,8 @@ operator|=
 name|typeDescriptionsFromHiveTypeProperty
 argument_list|(
 name|columnTypeProperty
+argument_list|,
+name|dataColumns
 argument_list|)
 expr_stmt|;
 if|if
@@ -12524,10 +12551,17 @@ operator|.
 name|size
 argument_list|()
 operator|!=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|dataColumns
+argument_list|,
 name|schemaEvolutionColumnNames
 operator|.
 name|size
 argument_list|()
+argument_list|)
 condition|)
 block|{
 name|haveSchemaEvolutionProperties
@@ -12670,6 +12704,8 @@ operator|=
 name|typeDescriptionsFromHiveTypeProperty
 argument_list|(
 name|columnTypeProperty
+argument_list|,
+name|dataColumns
 argument_list|)
 expr_stmt|;
 if|if
@@ -12679,10 +12715,17 @@ operator|.
 name|size
 argument_list|()
 operator|!=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|dataColumns
+argument_list|,
 name|schemaEvolutionColumnNames
 operator|.
 name|size
 argument_list|()
+argument_list|)
 condition|)
 block|{
 return|return
@@ -12737,6 +12780,10 @@ name|virtualColumnClipNum
 operator|!=
 operator|-
 literal|1
+operator|&&
+name|virtualColumnClipNum
+operator|<
+name|dataColumns
 condition|)
 block|{
 name|schemaEvolutionColumnNames
@@ -12825,7 +12872,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|schemaEvolutionColumnNames
+name|schemaEvolutionTypeDescrs
 operator|.
 name|size
 argument_list|()

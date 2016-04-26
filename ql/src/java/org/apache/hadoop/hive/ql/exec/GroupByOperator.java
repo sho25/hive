@@ -6011,6 +6011,10 @@ argument_list|)
 throw|;
 block|}
 block|}
+name|hashAggregations
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|// Group by contains the columns needed - no need to aggregate from children
 specifier|public

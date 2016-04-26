@@ -668,6 +668,10 @@ control|)
 block|{
 if|if
 condition|(
+name|previous
+operator|.
+name|noNulls
+operator|||
 operator|!
 name|previous
 operator|.
@@ -721,9 +725,7 @@ name|previous
 operator|.
 name|vector
 index|[
-name|i
-operator|-
-literal|1
+literal|0
 index|]
 operator|!=
 name|previous
@@ -739,9 +741,7 @@ name|previous
 operator|.
 name|isNull
 index|[
-name|i
-operator|-
-literal|1
+literal|0
 index|]
 operator|!=
 name|previous

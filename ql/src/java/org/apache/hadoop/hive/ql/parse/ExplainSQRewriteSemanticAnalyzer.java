@@ -39,9 +39,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|metastore
 operator|.
-name|HiveConf
+name|api
+operator|.
+name|FieldSchema
 import|;
 end_import
 
@@ -55,11 +57,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|api
-operator|.
-name|FieldSchema
+name|QueryState
 import|;
 end_import
 
@@ -133,15 +133,15 @@ decl_stmt|;
 specifier|public
 name|ExplainSQRewriteSemanticAnalyzer
 parameter_list|(
-name|HiveConf
-name|conf
+name|QueryState
+name|queryState
 parameter_list|)
 throws|throws
 name|SemanticException
 block|{
 name|super
 argument_list|(
-name|conf
+name|queryState
 argument_list|)
 expr_stmt|;
 block|}
@@ -193,7 +193,7 @@ name|SemanticAnalyzerFactory
 operator|.
 name|get
 argument_list|(
-name|conf
+name|queryState
 argument_list|,
 name|input
 argument_list|)

@@ -2193,9 +2193,9 @@ name|getPrimaryKeys
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+literal|"testdb"
 argument_list|,
-literal|null
+name|tableName
 argument_list|)
 expr_stmt|;
 name|assertNull
@@ -13945,7 +13945,6 @@ argument_list|(
 name|dbmd
 argument_list|)
 expr_stmt|;
-comment|// currently getPrimaryKeys always returns an empty resultset for Hive
 name|ResultSet
 name|res
 init|=
@@ -13955,9 +13954,9 @@ name|getPrimaryKeys
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+literal|"testdb"
 argument_list|,
-literal|null
+name|tableName
 argument_list|)
 decl_stmt|;
 name|ResultSetMetaData

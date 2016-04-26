@@ -61,9 +61,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
+name|ql
 operator|.
-name|HiveConf
+name|Context
 import|;
 end_import
 
@@ -79,7 +79,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Context
+name|QueryState
 import|;
 end_import
 
@@ -245,8 +245,8 @@ parameter_list|(
 name|ASTNode
 name|ast
 parameter_list|,
-name|HiveConf
-name|conf
+name|QueryState
+name|queryState
 parameter_list|,
 name|Hive
 name|db
@@ -260,7 +260,7 @@ init|=
 operator|new
 name|DDLSemanticAnalyzer
 argument_list|(
-name|conf
+name|queryState
 argument_list|,
 name|db
 argument_list|)
@@ -269,7 +269,10 @@ name|SessionState
 operator|.
 name|start
 argument_list|(
-name|conf
+name|queryState
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|analyzer
@@ -281,7 +284,10 @@ argument_list|,
 operator|new
 name|Context
 argument_list|(
-name|conf
+name|queryState
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -333,8 +339,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|,
-name|HiveConf
-name|conf
+name|QueryState
+name|queryState
 parameter_list|,
 name|Hive
 name|db
@@ -350,7 +356,7 @@ argument_list|(
 name|command
 argument_list|)
 argument_list|,
-name|conf
+name|queryState
 argument_list|,
 name|db
 argument_list|)

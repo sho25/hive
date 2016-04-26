@@ -630,6 +630,42 @@ literal|"sn: group1"
 block|,
 literal|"member: uid=user2,ou=People,dc=example,dc=com"
 block|,
+literal|"dn: cn=group3,ou=Groups,dc=example,dc=com"
+block|,
+literal|"distinguishedName: cn=group3,ou=Groups,dc=example,dc=com"
+block|,
+literal|"objectClass: top"
+block|,
+literal|"objectClass: groupOfNames"
+block|,
+literal|"objectClass: ExtensibleObject"
+block|,
+literal|"cn: group3"
+block|,
+literal|"ou: Groups"
+block|,
+literal|"sn: group3"
+block|,
+literal|"member: cn=user3,ou=People,dc=example,dc=com"
+block|,
+literal|"dn: cn=group4,ou=Groups,dc=example,dc=com"
+block|,
+literal|"distinguishedName: cn=group4,ou=Groups,dc=example,dc=com"
+block|,
+literal|"objectClass: top"
+block|,
+literal|"objectClass: groupOfUniqueNames"
+block|,
+literal|"objectClass: ExtensibleObject"
+block|,
+literal|"ou: Groups"
+block|,
+literal|"cn: group4"
+block|,
+literal|"sn: group4"
+block|,
+literal|"uniqueMember: cn=user4,ou=People,dc=example,dc=com"
+block|,
 literal|"dn: uid=user1,ou=People,dc=example,dc=com"
 block|,
 literal|"distinguishedName: uid=user1,ou=People,dc=example,dc=com"
@@ -673,6 +709,50 @@ block|,
 literal|"uid: user2"
 block|,
 literal|"userPassword: user2"
+block|,
+literal|"dn: cn=user3,ou=People,dc=example,dc=com"
+block|,
+literal|"distinguishedName: cn=user3,ou=People,dc=example,dc=com"
+block|,
+literal|"objectClass: inetOrgPerson"
+block|,
+literal|"objectClass: person"
+block|,
+literal|"objectClass: top"
+block|,
+literal|"objectClass: ExtensibleObject"
+block|,
+literal|"givenName: Test1"
+block|,
+literal|"cn: Test User3"
+block|,
+literal|"sn: user3"
+block|,
+literal|"uid: user3"
+block|,
+literal|"userPassword: user3"
+block|,
+literal|"dn: cn=user4,ou=People,dc=example,dc=com"
+block|,
+literal|"distinguishedName: cn=user4,ou=People,dc=example,dc=com"
+block|,
+literal|"objectClass: inetOrgPerson"
+block|,
+literal|"objectClass: person"
+block|,
+literal|"objectClass: top"
+block|,
+literal|"objectClass: ExtensibleObject"
+block|,
+literal|"givenName: Test4"
+block|,
+literal|"cn: Test User4"
+block|,
+literal|"sn: user4"
+block|,
+literal|"uid: user4"
+block|,
+literal|"userPassword: user4"
 block|}
 argument_list|)
 specifier|public
@@ -711,6 +791,66 @@ specifier|private
 specifier|static
 name|LdapAuthenticationProviderImpl
 name|ldapProvider
+decl_stmt|;
+specifier|static
+specifier|final
+name|User
+name|USER1
+init|=
+operator|new
+name|User
+argument_list|(
+literal|"user1"
+argument_list|,
+literal|"user1"
+argument_list|,
+literal|"uid=user1,ou=People,dc=example,dc=com"
+argument_list|)
+decl_stmt|;
+specifier|static
+specifier|final
+name|User
+name|USER2
+init|=
+operator|new
+name|User
+argument_list|(
+literal|"user2"
+argument_list|,
+literal|"user2"
+argument_list|,
+literal|"uid=user2,ou=People,dc=example,dc=com"
+argument_list|)
+decl_stmt|;
+specifier|static
+specifier|final
+name|User
+name|USER3
+init|=
+operator|new
+name|User
+argument_list|(
+literal|"user3"
+argument_list|,
+literal|"user3"
+argument_list|,
+literal|"cn=user3,ou=People,dc=example,dc=com"
+argument_list|)
+decl_stmt|;
+specifier|static
+specifier|final
+name|User
+name|USER4
+init|=
+operator|new
+name|User
+argument_list|(
+literal|"user4"
+argument_list|,
+literal|"user4"
+argument_list|,
+literal|"cn=user4,ou=People,dc=example,dc=com"
+argument_list|)
 decl_stmt|;
 annotation|@
 name|Before
@@ -1030,7 +1170,10 @@ name|user
 decl_stmt|;
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1040,12 +1183,19 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"testUserBindPositive: Authentication succeeded for user1 as expected"
+literal|"testUserBindPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1065,13 +1215,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1081,12 +1241,22 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"testUserBindPositive: Authentication succeeded for user2 as expected"
+literal|"testUserBindPositive: Authentication succeeded for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1106,7 +1276,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1156,7 +1333,10 @@ name|user
 decl_stmt|;
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1166,12 +1346,19 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"testUserBindPositive: Authentication succeeded for user1 as expected"
+literal|"testUserBindPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1191,13 +1378,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1207,12 +1404,22 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"testUserBindPositive: Authentication succeeded for user2 as expected"
+literal|"testUserBindPositive: Authentication succeeded for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1232,7 +1439,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1292,16 +1506,36 @@ name|ldapProvider
 operator|.
 name|Authenticate
 argument_list|(
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"testUserBindNegative: Authentication succeeded for user1 with password user2, expected to fail"
+literal|"testUserBindNegative: Authentication succeeded for "
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1313,7 +1547,14 @@ parameter_list|)
 block|{
 name|assertTrue
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user1 as expected"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1325,7 +1566,10 @@ name|ldapProvider
 operator|.
 name|Authenticate
 argument_list|(
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 argument_list|,
 literal|"user"
 argument_list|)
@@ -1334,7 +1578,14 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user2 with password user, expected to fail"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" with password user, expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1346,7 +1597,14 @@ parameter_list|)
 block|{
 name|assertTrue
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user2 as expected"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1399,16 +1657,36 @@ name|ldapProvider
 operator|.
 name|Authenticate
 argument_list|(
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"testUserBindNegative: Authentication succeeded for user1 with password user2, expected to fail"
+literal|"testUserBindNegative: Authentication succeeded for "
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1420,7 +1698,14 @@ parameter_list|)
 block|{
 name|assertTrue
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user1 as expected"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1432,7 +1717,10 @@ name|ldapProvider
 operator|.
 name|Authenticate
 argument_list|(
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 argument_list|,
 literal|"user"
 argument_list|)
@@ -1441,7 +1729,14 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user2 with password user, expected to fail"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" with password user, expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1453,7 +1748,14 @@ parameter_list|)
 block|{
 name|assertTrue
 argument_list|(
-literal|"testUserBindNegative: Authentication failed for user2 as expected"
+literal|"testUserBindNegative: Authentication failed for "
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|" as expected"
 argument_list|,
 literal|true
 argument_list|)
@@ -1524,7 +1826,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1534,7 +1839,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1563,7 +1871,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed:"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed:"
 operator|+
 name|e
 operator|.
@@ -1574,7 +1889,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1584,7 +1902,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1613,7 +1934,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed:"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed:"
 operator|+
 name|e
 operator|.
@@ -1678,7 +2006,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1688,7 +2019,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1717,13 +2051,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1733,7 +2077,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1762,7 +2109,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1822,7 +2176,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1832,7 +2189,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1861,13 +2221,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1877,7 +2247,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1906,7 +2279,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1975,7 +2355,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1985,7 +2368,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2014,13 +2400,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2030,7 +2426,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2059,7 +2458,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2128,7 +2534,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2138,7 +2547,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2167,13 +2579,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2183,7 +2605,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2212,7 +2637,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2272,7 +2704,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2282,7 +2717,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2311,13 +2749,23 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user1, expected to succeed"
+literal|" with password "
+operator|+
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2327,7 +2775,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2356,7 +2807,14 @@ literal|"testUserBindPositive: Authentication failed for user:"
 operator|+
 name|user
 operator|+
-literal|" with password user2, expected to succeed"
+literal|" with password "
+operator|+
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to succeed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2425,7 +2883,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2435,7 +2896,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -2448,7 +2912,12 @@ name|user
 operator|+
 literal|" with password "
 operator|+
-literal|"user2, expected to fail"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2472,7 +2941,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2573,7 +3045,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2583,7 +3058,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -2596,7 +3074,12 @@ name|user
 operator|+
 literal|" with password "
 operator|+
-literal|"user2, expected to fail"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+operator|+
+literal|", expected to fail"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2620,7 +3103,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2710,7 +3196,10 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -2720,7 +3209,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -2730,7 +3222,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2746,7 +3241,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -2754,7 +3252,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2813,7 +3314,10 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -2825,7 +3329,10 @@ try|try
 block|{
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -2833,7 +3340,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2849,7 +3359,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -2857,7 +3370,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2916,7 +3432,17 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user2,user1"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|","
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -2928,7 +3454,10 @@ try|try
 block|{
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -2936,7 +3465,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -2952,7 +3484,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -2960,7 +3495,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -3034,7 +3572,10 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -3044,7 +3585,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3054,7 +3598,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3089,7 +3636,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3099,7 +3649,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3158,7 +3711,10 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -3168,7 +3724,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3178,7 +3737,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3213,7 +3775,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"user2"
+name|USER2
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3223,7 +3788,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3282,7 +3850,10 @@ name|put
 argument_list|(
 literal|"hive.server2.authentication.ldap.userFilter"
 argument_list|,
-literal|"user3"
+name|USER3
+operator|.
+name|getUID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
@@ -3292,7 +3863,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3302,7 +3876,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3337,7 +3914,10 @@ expr_stmt|;
 block|}
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3347,7 +3927,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3444,7 +4027,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3454,7 +4040,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -3470,7 +4059,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"user1"
+name|USER1
+operator|.
+name|getUID
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -3478,7 +4070,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -3494,7 +4089,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 name|ldapProvider
 operator|.
@@ -3502,7 +4100,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -3580,7 +4181,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3590,7 +4194,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -3687,7 +4294,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user2,ou=People,dc=example,dc=com"
+name|USER2
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3697,7 +4307,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user2"
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3775,7 +4388,10 @@ argument_list|)
 expr_stmt|;
 name|user
 operator|=
-literal|"uid=user1,ou=People,dc=example,dc=com"
+name|USER1
+operator|.
+name|getDN
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3785,7 +4401,10 @@ name|Authenticate
 argument_list|(
 name|user
 argument_list|,
-literal|"user1"
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3818,6 +4437,1166 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUserAndGroupFilterPositive
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"uid=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"uid=%s,ou=Groups,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userFilter"
+argument_list|,
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|","
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupFilter"
+argument_list|,
+literal|"group1,group2"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER1
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testUserAndGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testUserAndGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testUserAndGroupFilterPositive: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|",user expected to pass groupfilter"
+argument_list|)
+expr_stmt|;
+block|}
+name|user
+operator|=
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testUserAndGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testUserAndGroupFilterPositive: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|",user expected to pass groupfilter"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testUserAndGroupFilterNegative
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"uid=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"uid=%s,ou=Groups,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userFilter"
+argument_list|,
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|","
+operator|+
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupFilter"
+argument_list|,
+literal|"group1"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER2
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testUserAndGroupFilterNegative: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|",user expected to fail groupfilter"
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testUserAndGroupFilterNegative: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|",user expected to fail groupfilter"
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER3
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER3
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testUserAndGroupFilterNegative: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|",user expected to fail groupfilter"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"testUserAndGroupFilterNegative: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCustomQueryPositive
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.baseDN"
+argument_list|,
+literal|"ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"cn=%s,ou=People,dc=example,dc=com:uid=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"cn=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.customLDAPQuery"
+argument_list|,
+literal|"(&(objectClass=person)(|(uid="
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|")(uid="
+operator|+
+name|USER4
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|")))"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER1
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testCustomQueryPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER1
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testCustomQueryPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER4
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER4
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testCustomQueryPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testCustomQueryPositive: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|",user expected to pass custom LDAP Query"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCustomQueryNegative
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.baseDN"
+argument_list|,
+literal|"ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+comment|// ldap query will only return user1
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.customLDAPQuery"
+argument_list|,
+literal|"(&(objectClass=person)(uid="
+operator|+
+name|USER1
+operator|.
+name|getUID
+argument_list|()
+operator|+
+literal|"))"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER2
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testCustomQueryNegative: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|",user expected to fail custom LDAP Query"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"testCustomQueryNegative: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+try|try
+block|{
+name|user
+operator|=
+name|USER2
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER2
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testCustomQueryNegative: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|",user expected to fail custom LDAP Query"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"testCustomQueryNegative: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testGroupFilterPositiveWithCustomGUID
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"cn=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"cn=%s,ou=Groups,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.guidKey"
+argument_list|,
+literal|"cn"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupFilter"
+argument_list|,
+literal|"group3"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER3
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER3
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER3
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER3
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testGroupFilterPositive: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|",user expected to pass groupfilter"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testGroupFilterPositiveWithCustomAttributes
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|user
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"cn=%s,ou=People,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"cn=%s,ou=Groups,dc=example,dc=com"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupFilter"
+argument_list|,
+literal|"group4"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.guidKey"
+argument_list|,
+literal|"cn"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"uniqueMember"
+argument_list|)
+expr_stmt|;
+name|ldapProperties
+operator|.
+name|put
+argument_list|(
+literal|"hive.server2.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"groupOfUniqueNames"
+argument_list|)
+expr_stmt|;
+name|initLdapAtn
+argument_list|(
+name|ldapProperties
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER4
+operator|.
+name|getDN
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER4
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|user
+operator|=
+name|USER4
+operator|.
+name|getUID
+argument_list|()
+expr_stmt|;
+name|ldapProvider
+operator|.
+name|Authenticate
+argument_list|(
+name|user
+argument_list|,
+name|USER4
+operator|.
+name|getPassword
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"testGroupFilterPositive: Authentication succeeded for "
+operator|+
+name|user
+operator|+
+literal|" as expected"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AuthenticationException
+name|e
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"testGroupFilterPositive: Authentication failed for "
+operator|+
+name|user
+operator|+
+literal|",user expected to pass groupfilter"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+end_class
+
+begin_class
+class|class
+name|User
+block|{
+name|String
+name|uid
+decl_stmt|;
+name|String
+name|pwd
+decl_stmt|;
+name|String
+name|ldapDN
+decl_stmt|;
+name|User
+parameter_list|(
+name|String
+name|uid
+parameter_list|,
+name|String
+name|password
+parameter_list|,
+name|String
+name|ldapDN
+parameter_list|)
+block|{
+name|this
+operator|.
+name|uid
+operator|=
+name|uid
+expr_stmt|;
+name|this
+operator|.
+name|pwd
+operator|=
+name|password
+expr_stmt|;
+name|this
+operator|.
+name|ldapDN
+operator|=
+name|ldapDN
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getUID
+parameter_list|()
+block|{
+return|return
+name|uid
+return|;
+block|}
+specifier|public
+name|String
+name|getPassword
+parameter_list|()
+block|{
+return|return
+name|pwd
+return|;
+block|}
+specifier|public
+name|String
+name|getDN
+parameter_list|()
+block|{
+return|return
+name|ldapDN
+return|;
 block|}
 block|}
 end_class

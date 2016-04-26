@@ -603,7 +603,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"missing ) at ',' near ',' in column specification"
+literal|"missing ) at ',' near ',' in column name or primary key or foreign key"
 argument_list|)
 argument_list|)
 expr_stmt|;

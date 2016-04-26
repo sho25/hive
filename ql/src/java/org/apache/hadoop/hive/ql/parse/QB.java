@@ -1124,6 +1124,7 @@ operator|=
 name|isQuery
 expr_stmt|;
 block|}
+comment|/**    * Set to true in SemanticAnalyzer.getMetadataForDestFile,    * if destination is a file and query is not CTAS    * @return    */
 specifier|public
 name|boolean
 name|getIsQuery

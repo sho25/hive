@@ -54,6 +54,18 @@ import|;
 end_import
 
 begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|TException
+import|;
+end_import
+
+begin_import
 import|import static
 name|org
 operator|.
@@ -78,6 +90,7 @@ specifier|public
 class|class
 name|RowSetFactory
 block|{
+comment|// This call is accessed from server side
 specifier|public
 specifier|static
 name|RowSet
@@ -88,6 +101,9 @@ name|schema
 parameter_list|,
 name|TProtocolVersion
 name|version
+parameter_list|,
+name|boolean
+name|isBlobBased
 parameter_list|)
 block|{
 if|if
@@ -108,6 +124,8 @@ operator|new
 name|ColumnBasedSet
 argument_list|(
 name|schema
+argument_list|,
+name|isBlobBased
 argument_list|)
 return|;
 block|}
@@ -119,6 +137,7 @@ name|schema
 argument_list|)
 return|;
 block|}
+comment|// This call is accessed from client (jdbc) side
 specifier|public
 specifier|static
 name|RowSet
@@ -130,6 +149,8 @@ parameter_list|,
 name|TProtocolVersion
 name|version
 parameter_list|)
+throws|throws
+name|TException
 block|{
 if|if
 condition|(

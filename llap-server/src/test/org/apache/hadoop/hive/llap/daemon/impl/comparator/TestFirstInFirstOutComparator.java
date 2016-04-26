@@ -638,6 +638,8 @@ name|KILL_REQUESTED
 argument_list|,
 literal|null
 argument_list|,
+literal|null
+argument_list|,
 literal|false
 argument_list|)
 return|;
@@ -649,6 +651,8 @@ argument_list|(
 name|EndReason
 operator|.
 name|SUCCESS
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|,

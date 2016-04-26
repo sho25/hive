@@ -89,6 +89,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|QueryState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|hooks
 operator|.
 name|HookContext
@@ -210,6 +226,14 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+name|QueryState
+name|queryState
+init|=
+name|hookContext
+operator|.
+name|getQueryState
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|ss
@@ -226,7 +250,7 @@ block|{
 name|boolean
 name|foundQuery
 init|=
-name|ss
+name|queryState
 operator|.
 name|getHiveOperation
 argument_list|()
@@ -293,7 +317,7 @@ name|this
 operator|.
 name|run
 argument_list|(
-name|ss
+name|queryState
 argument_list|,
 name|inputs
 argument_list|,
@@ -307,8 +331,8 @@ specifier|public
 name|void
 name|run
 parameter_list|(
-name|SessionState
-name|sess
+name|QueryState
+name|queryState
 parameter_list|,
 name|Set
 argument_list|<
@@ -347,7 +371,7 @@ return|return;
 block|}
 if|if
 condition|(
-name|sess
+name|queryState
 operator|!=
 literal|null
 condition|)
@@ -358,9 +382,9 @@ name|printError
 argument_list|(
 literal|"PREHOOK: query: "
 operator|+
-name|sess
+name|queryState
 operator|.
-name|getCmd
+name|getQueryString
 argument_list|()
 operator|.
 name|trim
@@ -373,7 +397,7 @@ name|printError
 argument_list|(
 literal|"PREHOOK: type: "
 operator|+
-name|sess
+name|queryState
 operator|.
 name|getCommandType
 argument_list|()

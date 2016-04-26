@@ -6224,6 +6224,8 @@ argument_list|<
 name|String
 argument_list|>
 name|logs
+init|=
+literal|null
 decl_stmt|;
 do|do
 block|{

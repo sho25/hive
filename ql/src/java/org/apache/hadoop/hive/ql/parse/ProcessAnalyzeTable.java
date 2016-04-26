@@ -1215,7 +1215,7 @@ name|initialize
 argument_list|(
 name|parseContext
 operator|.
-name|getConf
+name|getQueryState
 argument_list|()
 argument_list|,
 literal|null

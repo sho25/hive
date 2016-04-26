@@ -121,7 +121,7 @@ name|llap
 operator|.
 name|metrics
 operator|.
-name|LlapDaemonQueueMetrics
+name|LlapDaemonIOMetrics
 import|;
 end_import
 
@@ -217,8 +217,8 @@ name|readCallable
 decl_stmt|;
 specifier|private
 specifier|final
-name|LlapDaemonQueueMetrics
-name|queueMetrics
+name|LlapDaemonIOMetrics
+name|ioMetrics
 decl_stmt|;
 comment|// Note that the pool is per EDC - within EDC, CVBs are expected to have the same schema.
 specifier|private
@@ -250,8 +250,8 @@ specifier|final
 name|int
 name|colCount
 parameter_list|,
-name|LlapDaemonQueueMetrics
-name|queueMetrics
+name|LlapDaemonIOMetrics
+name|ioMetrics
 parameter_list|)
 block|{
 name|this
@@ -262,9 +262,9 @@ name|consumer
 expr_stmt|;
 name|this
 operator|.
-name|queueMetrics
+name|ioMetrics
 operator|=
-name|queueMetrics
+name|ioMetrics
 expr_stmt|;
 name|cvbPool
 operator|=
@@ -315,6 +315,18 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|ioMetrics
+operator|.
+name|setColumnVectorBatchPoolSize
+argument_list|(
+name|cvbPool
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -345,6 +357,15 @@ name|readCallable
 operator|=
 name|readCallable
 expr_stmt|;
+block|}
+specifier|public
+name|LlapDaemonIOMetrics
+name|getIOMetrics
+parameter_list|()
+block|{
+return|return
+name|ioMetrics
+return|;
 block|}
 annotation|@
 name|Override
@@ -405,9 +426,9 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
-name|queueMetrics
+name|ioMetrics
 operator|.
-name|addProcessingTime
+name|addDecodeBatchTime
 argument_list|(
 name|end
 operator|-

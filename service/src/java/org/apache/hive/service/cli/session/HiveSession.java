@@ -387,6 +387,47 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
+comment|/**    * getPrimaryKeys operation handler    * @param catalog    * @param schema    * @param table    * @return    * @throws HiveSQLException    */
+name|OperationHandle
+name|getPrimaryKeys
+parameter_list|(
+name|String
+name|catalog
+parameter_list|,
+name|String
+name|schema
+parameter_list|,
+name|String
+name|table
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
+comment|/**    * getCrossReference operation handler    * @param primaryCatalog    * @param primarySchema    * @param primaryTable    * @param foreignCatalog    * @param foreignSchema    * @param foreignTable    * @return    * @throws HiveSQLException    */
+name|OperationHandle
+name|getCrossReference
+parameter_list|(
+name|String
+name|primaryCatalog
+parameter_list|,
+name|String
+name|primarySchema
+parameter_list|,
+name|String
+name|primaryTable
+parameter_list|,
+name|String
+name|foreignCatalog
+parameter_list|,
+name|String
+name|foreignSchema
+parameter_list|,
+name|String
+name|foreignTable
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
 comment|/**    * close the session    * @throws HiveSQLException    */
 name|void
 name|close

@@ -95,9 +95,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|FetchTask
+name|QueryState
 import|;
 end_import
 
@@ -116,6 +114,24 @@ operator|.
 name|exec
 operator|.
 name|ExplainTask
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|FetchTask
 import|;
 end_import
 
@@ -193,15 +209,15 @@ decl_stmt|;
 specifier|public
 name|ExplainSemanticAnalyzer
 parameter_list|(
-name|HiveConf
-name|conf
+name|QueryState
+name|queryState
 parameter_list|)
 throws|throws
 name|SemanticException
 block|{
 name|super
 argument_list|(
-name|conf
+name|queryState
 argument_list|)
 expr_stmt|;
 block|}
@@ -388,7 +404,7 @@ name|SemanticAnalyzerFactory
 operator|.
 name|get
 argument_list|(
-name|conf
+name|queryState
 argument_list|,
 name|input
 argument_list|)
@@ -573,8 +589,6 @@ argument_list|,
 name|tasks
 argument_list|,
 name|fetchTask
-argument_list|,
-name|input
 argument_list|,
 name|sem
 argument_list|,

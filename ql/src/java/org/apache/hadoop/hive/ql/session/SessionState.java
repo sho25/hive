@@ -1270,7 +1270,7 @@ comment|/**    * current configuration.    */
 specifier|private
 specifier|final
 name|HiveConf
-name|conf
+name|sessionConf
 decl_stmt|;
 comment|/**    * silent mode.    */
 specifier|protected
@@ -1282,7 +1282,7 @@ specifier|protected
 name|boolean
 name|isVerbose
 decl_stmt|;
-comment|/**    * Is the query served from HiveServer2    */
+comment|/**    * The flag to indicate if the session serves the queries from HiveServer2 or not.    */
 specifier|private
 name|boolean
 name|isHiveServerQuery
@@ -1330,11 +1330,6 @@ comment|/**    * Temporary file name used to store error output of executing non
 specifier|protected
 name|File
 name|tmpErrOutputFile
-decl_stmt|;
-comment|/**    * type of the command.    */
-specifier|private
-name|HiveOperation
-name|commandType
 decl_stmt|;
 specifier|private
 name|String
@@ -1565,7 +1560,7 @@ name|getConf
 parameter_list|()
 block|{
 return|return
-name|conf
+name|sessionConf
 return|;
 block|}
 specifier|public
@@ -1647,13 +1642,13 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|conf
+name|sessionConf
 operator|!=
 literal|null
 condition|)
 block|{
 return|return
-name|conf
+name|sessionConf
 operator|.
 name|getBoolVar
 argument_list|(
@@ -1693,12 +1688,12 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|conf
+name|sessionConf
 operator|!=
 literal|null
 condition|)
 block|{
-name|conf
+name|sessionConf
 operator|.
 name|setBoolVar
 argument_list|(
@@ -1794,7 +1789,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|conf
+name|sessionConf
 operator|=
 name|conf
 expr_stmt|;
@@ -1937,7 +1932,7 @@ argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|conf
+name|sessionConf
 operator|.
 name|setClassLoader
 argument_list|(
@@ -1963,56 +1958,6 @@ name|DOWNLOADED_RESOURCES_DIR
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-specifier|public
-name|void
-name|setCmd
-parameter_list|(
-name|String
-name|cmdString
-parameter_list|)
-block|{
-name|conf
-operator|.
-name|setQueryString
-argument_list|(
-name|cmdString
-argument_list|)
-expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getCmd
-parameter_list|()
-block|{
-return|return
-operator|(
-name|conf
-operator|.
-name|getQueryString
-argument_list|()
-operator|)
-return|;
-block|}
-specifier|public
-name|String
-name|getQueryId
-parameter_list|()
-block|{
-return|return
-operator|(
-name|conf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEQUERYID
-argument_list|)
-operator|)
-return|;
 block|}
 specifier|public
 name|Map
@@ -2074,7 +2019,7 @@ parameter_list|()
 block|{
 return|return
 operator|(
-name|conf
+name|sessionConf
 operator|.
 name|getVar
 argument_list|(
@@ -2369,7 +2314,7 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 decl_stmt|;
 if|if
@@ -2399,7 +2344,7 @@ name|createHdfsEncryptionShim
 argument_list|(
 name|fs
 argument_list|,
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2764,7 +2709,7 @@ name|HiveConf
 argument_list|(
 name|startSs
 operator|.
-name|conf
+name|sessionConf
 argument_list|)
 argument_list|)
 operator|.
@@ -2785,7 +2730,7 @@ name|get
 argument_list|(
 name|startSs
 operator|.
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 comment|// Create scratch dirs for this session
@@ -3057,7 +3002,7 @@ name|open
 argument_list|(
 name|startSs
 operator|.
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 comment|// should use conf on session start-up
@@ -3072,7 +3017,7 @@ name|beginOpen
 argument_list|(
 name|startSs
 operator|.
-name|conf
+name|sessionConf
 argument_list|,
 literal|null
 argument_list|,
@@ -3655,6 +3600,7 @@ return|;
 block|}
 comment|/**    * Create a given path if it doesn't exist.    *    * @param conf    * @param path    * @param permission    * @param isLocal    * @param isCleanUp    * @return    * @throws IOException    */
 specifier|private
+specifier|static
 name|void
 name|createPath
 parameter_list|(
@@ -4142,7 +4088,7 @@ name|HiveUtils
 operator|.
 name|getAuthenticator
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -4165,7 +4111,7 @@ name|HiveConf
 operator|.
 name|getVar
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -4180,7 +4126,7 @@ name|HiveUtils
 operator|.
 name|getAuthorizeProviderManager
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|,
 name|clsStr
 argument_list|,
@@ -4205,7 +4151,7 @@ name|HiveUtils
 operator|.
 name|getAuthorizerFactory
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|,
 name|HiveConf
 operator|.
@@ -4259,7 +4205,7 @@ operator|new
 name|HiveMetastoreClientFactoryImpl
 argument_list|()
 argument_list|,
-name|conf
+name|sessionConf
 argument_list|,
 name|authenticator
 argument_list|,
@@ -4280,7 +4226,7 @@ name|CreateTableAutomaticGrant
 operator|.
 name|create
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4351,7 +4297,7 @@ block|{
 comment|// avoid processing the same config multiple times, check marker
 if|if
 condition|(
-name|conf
+name|sessionConf
 operator|.
 name|get
 argument_list|(
@@ -4376,7 +4322,7 @@ block|}
 name|String
 name|metastoreHook
 init|=
-name|conf
+name|sessionConf
 operator|.
 name|get
 argument_list|(
@@ -4434,7 +4380,7 @@ literal|" is set to instance of HiveAuthorizerFactory."
 argument_list|)
 expr_stmt|;
 block|}
-name|conf
+name|sessionConf
 operator|.
 name|setVar
 argument_list|(
@@ -4454,7 +4400,7 @@ name|authorizerV2
 operator|.
 name|applyAuthorizationConfigPolicy
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 comment|// update config in Hive thread local as well and init the metastore client
@@ -4464,7 +4410,7 @@ name|Hive
 operator|.
 name|get
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 operator|.
 name|getMSC
@@ -4493,7 +4439,7 @@ argument_list|)
 throw|;
 block|}
 comment|// set a marker that this conf has been processed.
-name|conf
+name|sessionConf
 operator|.
 name|set
 argument_list|(
@@ -5543,7 +5489,7 @@ specifier|final
 name|String
 name|renewableJarPath
 init|=
-name|conf
+name|sessionConf
 operator|.
 name|getVar
 argument_list|(
@@ -5710,7 +5656,7 @@ index|]
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|conf
+name|sessionConf
 operator|.
 name|setClassLoader
 argument_list|(
@@ -7134,53 +7080,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-name|String
-name|getCommandType
-parameter_list|()
-block|{
-if|if
-condition|(
-name|commandType
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-return|return
-name|commandType
-operator|.
-name|getOperationName
-argument_list|()
-return|;
-block|}
-specifier|public
-name|HiveOperation
-name|getHiveOperation
-parameter_list|()
-block|{
-return|return
-name|commandType
-return|;
-block|}
-specifier|public
-name|void
-name|setCommandType
-parameter_list|(
-name|HiveOperation
-name|commandType
-parameter_list|)
-block|{
-name|this
-operator|.
-name|commandType
-operator|=
-name|commandType
-expr_stmt|;
-block|}
-specifier|public
 name|HiveAuthorizationProvider
 name|getAuthorizer
 parameter_list|()
@@ -7569,7 +7468,7 @@ name|JavaUtils
 operator|.
 name|closeClassLoadersTo
 argument_list|(
-name|conf
+name|sessionConf
 operator|.
 name|getClassLoader
 argument_list|()
@@ -7706,7 +7605,7 @@ argument_list|()
 expr_stmt|;
 name|dropSessionPaths
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 expr_stmt|;
 name|unCacheDataNucleusClassLoaders
@@ -7737,7 +7636,7 @@ name|Hive
 operator|.
 name|get
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|)
 decl_stmt|;
 if|if
@@ -7770,7 +7669,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|conf
+name|sessionConf
 operator|.
 name|getVar
 argument_list|(
@@ -8157,7 +8056,7 @@ expr_stmt|;
 comment|// Provide a facility to set current timestamp during tests
 if|if
 condition|(
-name|conf
+name|sessionConf
 operator|.
 name|getBoolVar
 argument_list|(
@@ -8174,7 +8073,7 @@ name|HiveConf
 operator|.
 name|getVar
 argument_list|(
-name|conf
+name|sessionConf
 argument_list|,
 name|HiveConf
 operator|.

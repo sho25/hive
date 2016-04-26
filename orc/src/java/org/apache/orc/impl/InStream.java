@@ -235,6 +235,14 @@ return|return
 name|length
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+specifier|abstract
+name|void
+name|close
+parameter_list|()
+function_decl|;
 specifier|public
 specifier|static
 class|class
@@ -2284,7 +2292,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Create an input stream from a list of buffers.    * @param fileName name of the file    * @param streamName the name of the stream    * @param buffers the list of ranges of bytes for the stream    * @param offsets a list of offsets (the same length as input) that must    *                contain the first offset of the each set of bytes in input    * @param length the length in bytes of the stream    * @param codec the compression codec    * @param bufferSize the compression buffer size    * @return an input stream    * @throws IOException    */
+comment|/**    * Create an input stream from a list of buffers.    * @param streamName the name of the stream    * @param buffers the list of ranges of bytes for the stream    * @param offsets a list of offsets (the same length as input) that must    *                contain the first offset of the each set of bytes in input    * @param length the length in bytes of the stream    * @param codec the compression codec    * @param bufferSize the compression buffer size    * @return an input stream    * @throws IOException    */
 annotation|@
 name|VisibleForTesting
 annotation|@

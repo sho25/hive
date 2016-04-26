@@ -402,6 +402,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TEZ_COMPILER
+init|=
+literal|"TezCompiler"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|TEZ_SUBMIT_TO_RUNNING
 init|=
 literal|"TezSubmitToRunningDag"

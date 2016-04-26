@@ -1364,6 +1364,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVE_TXN_RETRYABLE_SQLEX_REGEX
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
 block|,
 name|HiveConf
@@ -1765,6 +1771,17 @@ argument_list|(
 name|ConfVars
 operator|.
 name|LLAP_IO_USE_FILEID_PATH
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_IO_DECODING_METRICS_PERCENTILE_INTERVALS
 operator|.
 name|varname
 argument_list|)
@@ -7276,6 +7293,25 @@ operator|+
 literal|"read performance."
 argument_list|)
 block|,
+name|HIVE_TXN_RETRYABLE_SQLEX_REGEX
+argument_list|(
+literal|"hive.txn.retryable.sqlex.regex"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list\n"
+operator|+
+literal|"of regular expression patterns for SQL state, error code, and error message of\n"
+operator|+
+literal|"retryable SQLExceptions, that's suitable for the metastore DB.\n"
+operator|+
+literal|"For example: Can't serialize.*,40001$,^Deadlock,.*ORA-08176.*\n"
+operator|+
+literal|"The string that the regex will be matched against is of the following form, where ex is a SQLException:\n"
+operator|+
+literal|"ex.getMessage() + \" (SQLState=\" + ex.getSQLState() + \", ErrorCode=\" + ex.getErrorCode() + \")\""
+argument_list|)
+block|,
 name|HIVE_COMPACTOR_INITIATOR_ON
 argument_list|(
 literal|"hive.compactor.initiator.on"
@@ -8192,7 +8228,9 @@ literal|"hive.service.metrics.reporter"
 argument_list|,
 literal|"JSON_FILE, JMX"
 argument_list|,
-literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, comma separated list of JMX, CONSOLE, JSON_FILE"
+literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, "
+operator|+
+literal|"comma separated list of JMX, CONSOLE, JSON_FILE, HADOOP2"
 argument_list|)
 block|,
 name|HIVE_METRICS_JSON_FILE_LOCATION
@@ -8223,6 +8261,36 @@ argument_list|,
 literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, "
 operator|+
 literal|"the frequency of updating JSON metrics file."
+argument_list|)
+block|,
+name|HIVE_METRICS_HADOOP2_INTERVAL
+argument_list|(
+literal|"hive.service.metrics.hadoop2.frequency"
+argument_list|,
+literal|"30s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics HADOOP2 reporter, "
+operator|+
+literal|"the frequency of updating the HADOOP2 metrics system."
+argument_list|)
+block|,
+name|HIVE_METRICS_HADOOP2_COMPONENT_NAME
+argument_list|(
+literal|"hive.service.metrics.hadoop2.component"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"Component name to provide to Hadoop2 Metrics system. Ideally 'hivemetastore' for the MetaStore "
+operator|+
+literal|" and and 'hiveserver2' for HiveServer2."
 argument_list|)
 block|,
 name|HIVE_PERF_LOGGER
@@ -9648,6 +9716,28 @@ operator|+
 literal|"thrift client"
 argument_list|)
 block|,
+comment|// ResultSet serialization settings
+name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
+argument_list|(
+literal|"hive.server2.thrift.resultset.serialize.in.tasks"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether we should serialize the Thrift structures used in JDBC ResultSet RPC in task nodes.\n "
+operator|+
+literal|"We use SequenceFile and ThriftJDBCBinarySerDe to read and write the final results if this is true."
+argument_list|)
+block|,
+comment|// TODO: Make use of this config to configure fetch size
+name|HIVE_SERVER2_THRIFT_RESULTSET_MAX_FETCH_SIZE
+argument_list|(
+literal|"hive.server2.thrift.resultset.max.fetch.size"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
@@ -10511,6 +10601,19 @@ operator|+
 literal|"to avoid this setting."
 argument_list|)
 block|,
+name|LLAP_CACHE_ENABLE_ORC_GAP_CACHE
+argument_list|(
+literal|"hive.llap.orc.gap.cache"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP cache for ORC should remember gaps in ORC RG read estimates, to avoid\n"
+operator|+
+literal|"re-reading the data that was read once and discarded because it is unneeded. This is\n"
+operator|+
+literal|"only necessary for ORC files written before HIVE-9660 (Hive 2.1?)."
+argument_list|)
+block|,
 name|LLAP_IO_USE_FILEID_PATH
 argument_list|(
 literal|"hive.llap.io.use.fileid.path"
@@ -10649,17 +10752,17 @@ argument_list|,
 literal|"Cache objects (plans, hashtables, etc) in llap"
 argument_list|)
 block|,
-name|LLAP_QUEUE_METRICS_PERCENTILE_INTERVALS
+name|LLAP_IO_DECODING_METRICS_PERCENTILE_INTERVALS
 argument_list|(
-literal|"hive.llap.queue.metrics.percentiles.intervals"
+literal|"hive.llap.io.decoding.metrics.percentiles.intervals"
 argument_list|,
-literal|""
+literal|"30"
 argument_list|,
 literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds)\n"
 operator|+
-literal|"for percentile latency metrics on the LLAP daemon producer-consumer queue.\n"
+literal|"for percentile latency metrics on the LLAP daemon IO decoding time.\n"
 operator|+
-literal|"By default, percentile latency metrics are disabled."
+literal|"hive.llap.queue.metrics.percentiles.intervals"
 argument_list|)
 block|,
 name|LLAP_IO_THREADPOOL_SIZE
@@ -16572,6 +16675,12 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
 operator|.
 name|varname
 block|,

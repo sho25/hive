@@ -307,13 +307,15 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|service
+name|serde2
 operator|.
-name|cli
+name|thrift
 operator|.
-name|TableSchema
+name|Type
 import|;
 end_import
 
@@ -329,7 +331,7 @@ name|service
 operator|.
 name|cli
 operator|.
-name|Type
+name|TableSchema
 import|;
 end_import
 

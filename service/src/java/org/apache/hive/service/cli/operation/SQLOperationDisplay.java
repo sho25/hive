@@ -165,7 +165,10 @@ name|executionEngine
 operator|=
 name|sqlOperation
 operator|.
-name|getConfigForOperation
+name|getQueryState
+argument_list|()
+operator|.
+name|getConf
 argument_list|()
 operator|.
 name|getVar

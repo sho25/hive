@@ -249,7 +249,7 @@ name|llap
 operator|.
 name|metrics
 operator|.
-name|LlapDaemonQueueMetrics
+name|LlapDaemonIOMetrics
 import|;
 end_import
 
@@ -346,8 +346,8 @@ name|LlapDaemonCacheMetrics
 name|cacheMetrics
 decl_stmt|;
 specifier|private
-name|LlapDaemonQueueMetrics
-name|queueMetrics
+name|LlapDaemonIOMetrics
+name|ioMetrics
 decl_stmt|;
 specifier|public
 name|OrcColumnVectorProducer
@@ -365,10 +365,10 @@ name|Configuration
 name|conf
 parameter_list|,
 name|LlapDaemonCacheMetrics
-name|metrics
+name|cacheMetrics
 parameter_list|,
-name|LlapDaemonQueueMetrics
-name|queueMetrics
+name|LlapDaemonIOMetrics
+name|ioMetrics
 parameter_list|)
 block|{
 name|LlapIoImpl
@@ -425,13 +425,13 @@ name|this
 operator|.
 name|cacheMetrics
 operator|=
-name|metrics
+name|cacheMetrics
 expr_stmt|;
 name|this
 operator|.
-name|queueMetrics
+name|ioMetrics
 operator|=
-name|queueMetrics
+name|ioMetrics
 expr_stmt|;
 block|}
 annotation|@
@@ -488,7 +488,7 @@ name|_skipCorrupt
 argument_list|,
 name|counters
 argument_list|,
-name|queueMetrics
+name|ioMetrics
 argument_list|)
 decl_stmt|;
 name|OrcEncodedDataReader

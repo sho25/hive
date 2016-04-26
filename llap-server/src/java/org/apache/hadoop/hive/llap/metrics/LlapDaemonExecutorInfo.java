@@ -63,6 +63,36 @@ argument_list|(
 literal|"Llap daemon cache related metrics"
 argument_list|)
 block|,
+name|ExecutorThreadCountPerInstance
+argument_list|(
+literal|"Total number of executor threads per node"
+argument_list|)
+block|,
+name|ExecutorMemoryPerInstance
+argument_list|(
+literal|"Total memory for executors per node in bytes"
+argument_list|)
+block|,
+name|ExecutorCacheMemoryPerInstance
+argument_list|(
+literal|"Total Cache memory per node in bytes"
+argument_list|)
+block|,
+name|ExecutorJvmMaxMemory
+argument_list|(
+literal|"Max memory available for JVM in bytes"
+argument_list|)
+block|,
+name|ExecutorWaitQueueSize
+argument_list|(
+literal|"Size of wait queue per node"
+argument_list|)
+block|,
+name|ExecutorRpcNumHandlers
+argument_list|(
+literal|"Number of RPC handlers per node"
+argument_list|)
+block|,
 name|ExecutorThreadCPUTime
 argument_list|(
 literal|"Cpu time in nanoseconds"
