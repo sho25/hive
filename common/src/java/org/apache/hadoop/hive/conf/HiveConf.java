@@ -10493,7 +10493,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"128Kb"
+literal|"16Kb"
 argument_list|,
 operator|new
 name|SizeValidator
@@ -10562,7 +10562,7 @@ name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.io.use.lrfu"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether ORC low-level cache should use LRFU cache policy instead of default (FIFO)."
 argument_list|)
