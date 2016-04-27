@@ -11983,6 +11983,17 @@ name|expectedEx
 operator|=
 name|ex
 expr_stmt|;
+name|txnBatch
+operator|.
+name|getCurrentTransactionState
+argument_list|()
+expr_stmt|;
+name|txnBatch
+operator|.
+name|getCurrentTxnId
+argument_list|()
+expr_stmt|;
+comment|//test it doesn't throw ArrayIndexOutOfBounds...
 block|}
 name|Assert
 operator|.

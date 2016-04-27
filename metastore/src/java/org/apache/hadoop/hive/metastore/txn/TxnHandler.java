@@ -12210,6 +12210,14 @@ operator|>
 literal|0
 condition|)
 block|{
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|extLockIDs
+argument_list|)
+expr_stmt|;
+comment|////easier to read logs
 name|LOG
 operator|.
 name|info
@@ -12681,6 +12689,14 @@ name|size
 argument_list|()
 expr_stmt|;
 comment|//todo: add TXNS.COMMENT filed and set it to 'aborted by system due to timeout'
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|batchToAbort
+argument_list|)
+expr_stmt|;
+comment|//easier to read logs
 name|LOG
 operator|.
 name|info

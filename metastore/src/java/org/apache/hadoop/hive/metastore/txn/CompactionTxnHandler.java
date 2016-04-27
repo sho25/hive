@@ -171,6 +171,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashSet
 import|;
 end_import
@@ -2528,6 +2538,14 @@ condition|)
 block|{
 return|return;
 block|}
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|txnids
+argument_list|)
+expr_stmt|;
+comment|//easier to read logs
 name|List
 argument_list|<
 name|String
