@@ -98,6 +98,7 @@ literal|"0.23"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|volatile
 name|HadoopShims
 name|hadoopShims
 decl_stmt|;
@@ -266,10 +267,23 @@ decl_stmt|;
 comment|/**    * Factory method to get an instance of HadoopShims based on the    * version of Hadoop on the classpath.    */
 specifier|public
 specifier|static
-specifier|synchronized
 name|HadoopShims
 name|getHadoopShims
 parameter_list|()
+block|{
+if|if
+condition|(
+name|hadoopShims
+operator|==
+literal|null
+condition|)
+block|{
+synchronized|synchronized
+init|(
+name|ShimLoader
+operator|.
+name|class
+init|)
 block|{
 if|if
 condition|(
@@ -289,6 +303,8 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+block|}
+block|}
 block|}
 return|return
 name|hadoopShims
