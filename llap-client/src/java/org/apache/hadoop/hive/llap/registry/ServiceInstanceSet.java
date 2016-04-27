@@ -105,6 +105,12 @@ name|String
 name|host
 parameter_list|)
 function_decl|;
+comment|/**    * Get number of instances in the currently availabe.    *    * @return - number of instances    */
+specifier|public
+name|int
+name|size
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

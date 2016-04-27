@@ -11019,6 +11019,27 @@ argument_list|,
 literal|"llap.am.liveness.connection.sleep-between-retries-millis"
 argument_list|)
 block|,
+name|LLAP_DAEMON_TASK_SCHEDULER_TIMEOUT_SECONDS
+argument_list|(
+literal|"hive.llap.task.scheduler.timeout.seconds"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Amount of time to wait before failing the query when there are no llap daemons running\n"
+operator|+
+literal|"(alive) in the cluster."
+argument_list|,
+literal|"llap.daemon.scheduler.timeout.seconds"
+argument_list|)
+block|,
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|(
 literal|"hive.llap.daemon.num.executors"
