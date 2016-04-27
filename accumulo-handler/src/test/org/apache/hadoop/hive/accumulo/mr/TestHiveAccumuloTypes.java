@@ -2447,7 +2447,11 @@ name|timestampWritable
 operator|.
 name|write
 argument_list|(
+operator|new
+name|DataOutputStream
+argument_list|(
 name|output
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|output
