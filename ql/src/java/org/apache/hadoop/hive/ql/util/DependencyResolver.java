@@ -1019,15 +1019,6 @@ argument_list|,
 name|ivysettingsPath
 argument_list|)
 expr_stmt|;
-name|System
-operator|.
-name|setProperty
-argument_list|(
-literal|"groovy.grape.report.downloads"
-argument_list|,
-literal|"true"
-argument_list|)
-expr_stmt|;
 name|localUrls
 operator|=
 name|Grape
