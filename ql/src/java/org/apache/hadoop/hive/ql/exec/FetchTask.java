@@ -890,6 +890,12 @@ name|CommandNeedRetryException
 argument_list|()
 throw|;
 block|}
+comment|// Closing the operator can sometimes yield more rows (HIVE-11892)
+name|fetch
+operator|.
+name|closeOperator
+argument_list|()
+expr_stmt|;
 return|return
 name|fetched
 return|;

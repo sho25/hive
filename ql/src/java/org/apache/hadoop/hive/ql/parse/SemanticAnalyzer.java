@@ -15995,8 +15995,10 @@ expr_stmt|;
 comment|// if skip authorization, skip checking;
 comment|// if it is inside a view, skip checking;
 comment|// if authorization flag is not enabled, skip checking.
+comment|// if HIVE_STATS_COLLECT_SCANCOLS is enabled, check.
 if|if
 condition|(
+operator|(
 operator|!
 name|this
 operator|.
@@ -16020,6 +16022,20 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_AUTHORIZATION_ENABLED
+argument_list|)
+operator|)
+operator|||
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_COLLECT_SCANCOLS
 argument_list|)
 condition|)
 block|{
@@ -65672,12 +65688,18 @@ argument_list|(
 name|pCtx
 argument_list|)
 decl_stmt|;
+comment|// view column access info is carried by this.getColumnAccessInfo().
 name|setColumnAccessInfo
 argument_list|(
 name|columnAccessAnalyzer
 operator|.
 name|analyzeColumnAccess
+argument_list|(
+name|this
+operator|.
+name|getColumnAccessInfo
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

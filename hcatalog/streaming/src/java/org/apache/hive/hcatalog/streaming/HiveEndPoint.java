@@ -3079,6 +3079,8 @@ comment|//clear state from previous txn
 if|if
 condition|(
 name|currentTxnIndex
+operator|+
+literal|1
 operator|>=
 name|txnIds
 operator|.
@@ -3973,6 +3975,10 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|currentTxnIndex
+operator|--
+expr_stmt|;
+comment|//since the loop left it == txnId.size()
 block|}
 else|else
 block|{

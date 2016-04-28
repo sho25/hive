@@ -63,26 +63,6 @@ argument_list|(
 literal|"Llap daemon I/O elevator metrics"
 argument_list|)
 block|,
-name|IoThreadPoolSize
-argument_list|(
-literal|"Size of the thread pool used by IO elevator"
-argument_list|)
-block|,
-name|EncodedColumnBatchPoolSize
-argument_list|(
-literal|"Size of the object pool that stores encoded column batches"
-argument_list|)
-block|,
-name|ColumnStreamDataPoolSize
-argument_list|(
-literal|"Size of the object pool that stores column stream data"
-argument_list|)
-block|,
-name|ColumnVectorBatchPoolSize
-argument_list|(
-literal|"Size of the object pool that stores column vector batches"
-argument_list|)
-block|,
 name|PercentileDecodingTime
 argument_list|(
 literal|"Percentile decoding time for encoded column batch"

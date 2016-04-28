@@ -2314,10 +2314,6 @@ operator|||
 name|operator
 operator|instanceof
 name|ScriptOperator
-operator|||
-name|operator
-operator|instanceof
-name|UDTFOperator
 condition|)
 block|{
 return|return

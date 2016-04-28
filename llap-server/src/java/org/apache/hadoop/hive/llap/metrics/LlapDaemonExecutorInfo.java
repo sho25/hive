@@ -63,9 +63,34 @@ argument_list|(
 literal|"Llap daemon cache related metrics"
 argument_list|)
 block|,
-name|ExecutorThreadCountPerInstance
+name|ExecutorMaxFreeSlots
+argument_list|(
+literal|"Sum of wait queue size and number of executors"
+argument_list|)
+block|,
+name|ExecutorNumExecutorsPerInstance
 argument_list|(
 literal|"Total number of executor threads per node"
+argument_list|)
+block|,
+name|ExecutorNumExecutorsAvailable
+argument_list|(
+literal|"Total number of executor threads per node that are free"
+argument_list|)
+block|,
+name|ExecutorAvailableFreeSlots
+argument_list|(
+literal|"Number of free slots available"
+argument_list|)
+block|,
+name|ExecutorAvailableFreeSlotsPercent
+argument_list|(
+literal|"Percent of free slots available"
+argument_list|)
+block|,
+name|ExecutorThreadCPUTime
+argument_list|(
+literal|"Cpu time in nanoseconds"
 argument_list|)
 block|,
 name|ExecutorMemoryPerInstance
@@ -88,16 +113,6 @@ argument_list|(
 literal|"Size of wait queue per node"
 argument_list|)
 block|,
-name|ExecutorRpcNumHandlers
-argument_list|(
-literal|"Number of RPC handlers per node"
-argument_list|)
-block|,
-name|ExecutorThreadCPUTime
-argument_list|(
-literal|"Cpu time in nanoseconds"
-argument_list|)
-block|,
 name|ExecutorThreadUserTime
 argument_list|(
 literal|"User time in nanoseconds"
@@ -113,17 +128,27 @@ argument_list|(
 literal|"Number of requests queued by the container for processing"
 argument_list|)
 block|,
+name|ExecutorNumPreemptableRequests
+argument_list|(
+literal|"Number of queued requests that are pre-emptable"
+argument_list|)
+block|,
+name|ExecutorTotalRejectedRequests
+argument_list|(
+literal|"Total number of requests rejected as wait queue being full"
+argument_list|)
+block|,
 name|ExecutorTotalSuccess
 argument_list|(
 literal|"Total number of requests handled by the container that succeeded"
 argument_list|)
 block|,
-name|ExecutorTotalExecutionFailure
+name|ExecutorTotalFailed
 argument_list|(
 literal|"Total number of requests handled by the container that failed execution"
 argument_list|)
 block|,
-name|ExecutorTotalInterrupted
+name|ExecutorTotalKilled
 argument_list|(
 literal|"Total number of requests handled by the container that got interrupted"
 argument_list|)
@@ -133,9 +158,39 @@ argument_list|(
 literal|"Total number of requests handled by the container that were asked to die"
 argument_list|)
 block|,
-name|PreemptionTimeLost
+name|ExecutorTotalPreemptionTimeToKill
 argument_list|(
-literal|"Total time lost due to task preemptions"
+literal|"Total amount of time taken for killing tasks due to pre-emption"
+argument_list|)
+block|,
+name|ExecutorTotalPreemptionTimeLost
+argument_list|(
+literal|"Total useful cluster time lost because of pre-emption"
+argument_list|)
+block|,
+name|ExecutorPercentileTimeToKill
+argument_list|(
+literal|"Percentile time to kill for pre-empted tasks"
+argument_list|)
+block|,
+name|ExecutorPercentileTimeLost
+argument_list|(
+literal|"Percentile cluster time wasted due to pre-emption"
+argument_list|)
+block|,
+name|ExecutorMaxPreemptionTimeToKill
+argument_list|(
+literal|"Max time for killing pre-empted task"
+argument_list|)
+block|,
+name|ExecutorMaxPreemptionTimeLost
+argument_list|(
+literal|"Max cluster time lost due to pre-emption"
+argument_list|)
+block|,
+name|ExecutorTotalEvictedFromWaitQueue
+argument_list|(
+literal|"Total number of tasks evicted from wait queue because of low priority"
 argument_list|)
 block|;
 specifier|private

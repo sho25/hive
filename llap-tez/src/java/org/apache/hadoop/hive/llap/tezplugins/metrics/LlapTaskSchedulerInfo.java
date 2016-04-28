@@ -15,6 +15,8 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|tezplugins
+operator|.
 name|metrics
 package|;
 end_package
@@ -48,69 +50,79 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Metrics information for llap cache.  */
+comment|/**  * Metrics information for llap task scheduler.  */
 end_comment
 
 begin_enum
 specifier|public
 enum|enum
-name|LlapDaemonCacheInfo
+name|LlapTaskSchedulerInfo
 implements|implements
 name|MetricsInfo
 block|{
-name|CacheMetrics
+name|SchedulerMetrics
 argument_list|(
-literal|"Llap daemon cache related metrics"
+literal|"Llap task scheduler related metrics"
 argument_list|)
 block|,
-name|CacheCapacityRemainingPercentage
+name|SchedulerClusterNodeCount
 argument_list|(
-literal|"Percentage of memory available in cache"
+literal|"Number of nodes in the cluster"
 argument_list|)
 block|,
-name|CacheCapacityRemaining
+name|SchedulerExecutorsPerInstance
 argument_list|(
-literal|"Amount of memory available in cache in bytes"
+literal|"Total number of executor threads per node"
 argument_list|)
 block|,
-name|CacheCapacityTotal
+name|SchedulerMemoryPerInstance
 argument_list|(
-literal|"Total amount of memory allocated for cache in bytes"
+literal|"Total memory for executors per node in bytes"
 argument_list|)
 block|,
-name|CacheCapacityUsed
+name|SchedulerCpuCoresPerInstance
 argument_list|(
-literal|"Amount of memory used in cache in bytes"
+literal|"Total CPU vCores per node"
 argument_list|)
 block|,
-name|CacheRequestedBytes
+name|SchedulerDisabledNodeCount
 argument_list|(
-literal|"Disk ranges that are requested in bytes"
+literal|"Number of nodes disabled temporarily"
 argument_list|)
 block|,
-name|CacheHitBytes
+name|SchedulerPendingTaskCount
 argument_list|(
-literal|"Disk ranges that are cached in bytes"
+literal|"Number of pending tasks"
 argument_list|)
 block|,
-name|CacheHitRatio
+name|SchedulerSchedulableTaskCount
 argument_list|(
-literal|"Ratio of disk ranges cached vs requested"
+literal|"Current slots available for scheduling tasks"
 argument_list|)
 block|,
-name|CacheReadRequests
+name|SchedulerSuccessfulTaskCount
 argument_list|(
-literal|"Number of disk range requests to cache"
+literal|"Total number of successful tasks"
 argument_list|)
 block|,
-name|CacheAllocatedArena
+name|SchedulerRunningTaskCount
 argument_list|(
-literal|"Number of arenas allocated"
+literal|"Total number of running tasks"
 argument_list|)
 block|,
-name|CacheNumLockedBuffers
+name|SchedulerPendingPreemptionTaskCount
 argument_list|(
-literal|"Number of locked buffers in cache"
+literal|"Total number of tasks pending for pre-emption"
+argument_list|)
+block|,
+name|SchedulerPreemptedTaskCount
+argument_list|(
+literal|"Total number of tasks pre-empted"
+argument_list|)
+block|,
+name|SchedulerCompletedDagCount
+argument_list|(
+literal|"Number of DAGs completed"
 argument_list|)
 block|;
 specifier|private
@@ -118,7 +130,7 @@ specifier|final
 name|String
 name|desc
 decl_stmt|;
-name|LlapDaemonCacheInfo
+name|LlapTaskSchedulerInfo
 parameter_list|(
 name|String
 name|desc

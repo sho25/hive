@@ -898,6 +898,7 @@ operator|.
 name|getColumnAccessInfo
 argument_list|()
 decl_stmt|;
+comment|// t1 is inside v1, we should not care about its access info.
 name|List
 argument_list|<
 name|String
@@ -911,7 +912,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|"default@v1"
+literal|"default@t1"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -921,6 +922,7 @@ argument_list|(
 name|cols
 argument_list|)
 expr_stmt|;
+comment|// v1 is top level view, we should care about its access info.
 name|cols
 operator|=
 name|columnAccessInfo
@@ -930,7 +932,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|"default@t1"
+literal|"default@v1"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1069,7 +1071,7 @@ name|tableColsMap
 operator|.
 name|get
 argument_list|(
-literal|"default@v1"
+literal|"default@t1"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1085,7 +1087,7 @@ name|tableColsMap
 operator|.
 name|get
 argument_list|(
-literal|"default@t1"
+literal|"default@v1"
 argument_list|)
 expr_stmt|;
 name|Assert

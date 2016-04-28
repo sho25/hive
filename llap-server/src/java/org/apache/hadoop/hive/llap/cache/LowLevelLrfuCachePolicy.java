@@ -569,13 +569,16 @@ operator|.
 name|HIGH
 condition|)
 block|{
+comment|// This is arbitrary. Note that metadata may come from a big scan and nuke all the data
+comment|// from some small frequently accessed tables, because it gets such a large priority boost
+comment|// to start with. Think of the multiplier as the number of accesses after which the data
+comment|// becomes more important than some random read-once metadata, in a pure-LFU scheme.
 name|buffer
 operator|.
 name|priority
 operator|*=
-literal|8
+literal|3
 expr_stmt|;
-comment|// this is arbitrary
 block|}
 else|else
 block|{
@@ -1292,7 +1295,7 @@ operator|=
 name|buffer
 expr_stmt|;
 block|}
-comment|// Note: almost never called (unless buffers are very large or we evict a lot).
+comment|// Note: almost never called (unless buffers are very large or we evict a lot, or LFU).
 specifier|private
 name|LlapCacheableBuffer
 name|evictFromHeapUnderLock
@@ -1454,7 +1457,6 @@ comment|// decrease; we only have one block that could have broken heap rule and
 comment|// down; therefore, we can update priorities of other blocks as we go for part of the heap -
 comment|// we correct any discrepancy w/the parent after expiring priority, and any block we expire
 comment|// the priority for already has lower priority than that of its children.
-comment|// TODO: avoid expiring priorities if times are close? might be needlessly expensive.
 name|int
 name|ix
 init|=

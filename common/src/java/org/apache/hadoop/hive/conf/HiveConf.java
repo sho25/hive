@@ -2155,6 +2155,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_DAEMON_TASK_PREEMPTION_METRICS_INTERVALS
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_DAEMON_WEB_PORT
 operator|.
 name|varname
@@ -10495,7 +10506,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"128Kb"
+literal|"16Kb"
 argument_list|,
 operator|new
 name|SizeValidator
@@ -10564,7 +10575,7 @@ name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.io.use.lrfu"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether ORC low-level cache should use LRFU cache policy instead of default (FIFO)."
 argument_list|)
@@ -10607,11 +10618,11 @@ literal|"hive.llap.orc.gap.cache"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether LLAP cache for ORC should remember gaps in ORC RG read estimates, to avoid\n"
+literal|"Whether LLAP cache for ORC should remember gaps in ORC compression buffer read\n"
 operator|+
-literal|"re-reading the data that was read once and discarded because it is unneeded. This is\n"
+literal|"estimates, to avoid re-reading the data that was read once and discarded because it\n"
 operator|+
-literal|"only necessary for ORC files written before HIVE-9660 (Hive 2.1?)."
+literal|"is unneeded. This is only necessary for ORC files written before HIVE-9660."
 argument_list|)
 block|,
 name|LLAP_IO_USE_FILEID_PATH
@@ -11032,6 +11043,27 @@ argument_list|,
 literal|"llap.am.liveness.connection.sleep-between-retries-millis"
 argument_list|)
 block|,
+name|LLAP_DAEMON_TASK_SCHEDULER_TIMEOUT_SECONDS
+argument_list|(
+literal|"hive.llap.task.scheduler.timeout.seconds"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Amount of time to wait before failing the query when there are no llap daemons running\n"
+operator|+
+literal|"(alive) in the cluster."
+argument_list|,
+literal|"llap.daemon.scheduler.timeout.seconds"
+argument_list|)
+block|,
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|(
 literal|"hive.llap.daemon.num.executors"
@@ -11260,6 +11292,21 @@ operator|+
 literal|" to a location other than the ones requested. Set to -1 for an infinite delay, 0"
 operator|+
 literal|"for a no delay. Currently these are the only two supported values"
+argument_list|)
+block|,
+name|LLAP_DAEMON_TASK_PREEMPTION_METRICS_INTERVALS
+argument_list|(
+literal|"hive.llap.daemon.task.preemption.metrics.intervals"
+argument_list|,
+literal|"30,60,300"
+argument_list|,
+literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds)\n"
+operator|+
+literal|" for percentile latency metrics. Used by LLAP daemon task scheduler metrics for\n"
+operator|+
+literal|" time taken to kill task (due to pre-emption) and useful time wasted by the task that\n"
+operator|+
+literal|" is about to be preempted."
 argument_list|)
 block|,
 name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
