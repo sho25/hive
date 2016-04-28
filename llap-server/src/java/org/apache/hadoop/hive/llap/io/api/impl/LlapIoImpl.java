@@ -1209,13 +1209,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|ioMetrics
-operator|.
-name|setIoThreadPoolSize
-argument_list|(
-name|numThreads
-argument_list|)
-expr_stmt|;
 comment|// TODO: this should depends on input format and be in a map, or something.
 name|this
 operator|.

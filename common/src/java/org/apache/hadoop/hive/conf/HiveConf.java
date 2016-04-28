@@ -2155,6 +2155,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_DAEMON_TASK_PREEMPTION_METRICS_INTERVALS
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_DAEMON_WEB_PORT
 operator|.
 name|varname
@@ -11268,6 +11279,21 @@ operator|+
 literal|" to a location other than the ones requested. Set to -1 for an infinite delay, 0"
 operator|+
 literal|"for a no delay. Currently these are the only two supported values"
+argument_list|)
+block|,
+name|LLAP_DAEMON_TASK_PREEMPTION_METRICS_INTERVALS
+argument_list|(
+literal|"hive.llap.daemon.task.preemption.metrics.intervals"
+argument_list|,
+literal|"30,60,300"
+argument_list|,
+literal|"Comma-delimited set of integers denoting the desired rollover intervals (in seconds)\n"
+operator|+
+literal|" for percentile latency metrics. Used by LLAP daemon task scheduler metrics for\n"
+operator|+
+literal|" time taken to kill task (due to pre-emption) and useful time wasted by the task that\n"
+operator|+
+literal|" is about to be preempted."
 argument_list|)
 block|,
 name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
