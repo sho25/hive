@@ -730,6 +730,22 @@ name|HCAT_INPUT_BAD_RECORD_MIN_DEFAULT
 init|=
 literal|2
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_INPUT_IGNORE_INVALID_PATH_KEY
+init|=
+literal|"hcat.input.ignore.invalid.path"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|boolean
+name|HCAT_INPUT_IGNORE_INVALID_PATH_DEFAULT
+init|=
+literal|false
+decl_stmt|;
 block|}
 end_class
 
