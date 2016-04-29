@@ -11408,6 +11408,17 @@ operator|+
 literal|" instead of using the locations provided by the split itself"
 argument_list|)
 block|,
+name|LLAP_VALIDATE_ACLS
+argument_list|(
+literal|"hive.llap.validate.acls"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should reject permissive ACLs in some cases (e.g. its own management\n"
+operator|+
+literal|"protocol or ZK paths), similar to how ssh refuses a key with bad access permissions."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
