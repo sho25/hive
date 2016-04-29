@@ -1517,10 +1517,6 @@ specifier|private
 specifier|final
 name|Registry
 name|registry
-init|=
-operator|new
-name|Registry
-argument_list|()
 decl_stmt|;
 comment|/**    * CURRENT_TIMESTAMP value for query    */
 specifier|private
@@ -1798,6 +1794,16 @@ operator|.
 name|userName
 operator|=
 name|userName
+expr_stmt|;
+name|this
+operator|.
+name|registry
+operator|=
+operator|new
+name|Registry
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

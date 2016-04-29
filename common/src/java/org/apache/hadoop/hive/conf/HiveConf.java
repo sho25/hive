@@ -9577,6 +9577,17 @@ operator|+
 literal|" The udf black list takes precedence over udf white list"
 argument_list|)
 block|,
+name|HIVE_ALLOW_UDF_LOAD_ON_DEMAND
+argument_list|(
+literal|"hive.allow.udf.load.on.demand"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether enable loading UDFs from metastore on demand; this is mostly relevant for\n"
+operator|+
+literal|"HS2 and was the default behavior before Hive 1.2. Off by default."
+argument_list|)
+block|,
 name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
