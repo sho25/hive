@@ -4863,6 +4863,17 @@ operator|+
 literal|"assumption that the original group by will reduce the data size."
 argument_list|)
 block|,
+name|HIVE_GROUPBY_LIMIT_EXTRASTEP
+argument_list|(
+literal|"hive.groupby.limit.extrastep"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This parameter decides if Hive should \n"
+operator|+
+literal|"create new MR job for sorting final output"
+argument_list|)
+block|,
 comment|// Max filesize used to do a single copy (after that, distcp is used)
 name|HIVE_EXEC_COPYFILE_MAXSIZE
 argument_list|(
