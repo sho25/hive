@@ -766,6 +766,10 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|ret
+operator|=
+literal|true
+expr_stmt|;
 for|for
 control|(
 name|Task

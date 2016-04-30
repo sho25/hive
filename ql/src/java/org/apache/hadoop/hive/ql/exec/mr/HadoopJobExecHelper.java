@@ -2140,6 +2140,13 @@ argument_list|(
 name|output
 argument_list|)
 expr_stmt|;
+name|task
+operator|.
+name|setStatusMessage
+argument_list|(
+name|output
+argument_list|)
+expr_stmt|;
 name|reportTime
 operator|=
 name|System
@@ -2155,10 +2162,9 @@ operator|>
 literal|0
 condition|)
 block|{
-name|console
-operator|.
-name|printInfo
-argument_list|(
+name|String
+name|status
+init|=
 literal|"MapReduce Total cumulative CPU time: "
 operator|+
 name|Utilities
@@ -2167,6 +2173,19 @@ name|formatMsecToStr
 argument_list|(
 name|cpuMsec
 argument_list|)
+decl_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|status
+argument_list|)
+expr_stmt|;
+name|task
+operator|.
+name|setStatusMessage
+argument_list|(
+name|status
 argument_list|)
 expr_stmt|;
 block|}

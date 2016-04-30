@@ -3631,7 +3631,9 @@ comment|// nonblocking execute
 name|String
 name|select
 init|=
-literal|"SELECT ID + ' ' FROM TEST_EXEC_ASYNC"
+literal|"select a.id, b.id from (SELECT ID + ' ' `ID` FROM TEST_EXEC_ASYNC) a full outer join "
+operator|+
+literal|"(SELECT ID + ' ' `ID` FROM TEST_EXEC_ASYNC) b on a.ID=b.ID"
 decl_stmt|;
 name|OperationHandle
 name|ophandle
@@ -4018,6 +4020,14 @@ argument_list|(
 name|taskDisplay
 operator|.
 name|getExternalHandle
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertNotNull
+argument_list|(
+name|taskDisplay
+operator|.
+name|getStatusMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
