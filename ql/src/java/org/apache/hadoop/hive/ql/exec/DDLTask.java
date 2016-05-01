@@ -525,6 +525,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|io
+operator|.
+name|HdfsUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|MetaStoreUtils
@@ -3352,56 +3368,6 @@ operator|.
 name|typeinfo
 operator|.
 name|TypeInfoUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-operator|.
-name|HdfsFileStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
 import|;
 end_import
 
@@ -15342,7 +15308,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the user defined functions to a file.    * @param db     *    * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the user defined functions to a file.    * @param db    *    * @param showFuncs    *          are the functions we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showFunctions
@@ -15603,7 +15569,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Write a list of the current locks to a file.    * @param db     *    * @param showLocks    *          the locks we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Write a list of the current locks to a file.    * @param db    *    * @param showLocks    *          the locks we're interested in.    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|showLocks
@@ -17383,7 +17349,7 @@ return|return
 literal|0
 return|;
 block|}
-comment|/**    * Lock the table/partition specified    * @param db     *    * @param lockTbl    *          the table/partition to be locked along with the mode    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Lock the table/partition specified    * @param db    *    * @param lockTbl    *          the table/partition to be locked along with the mode    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|lockTable
@@ -17506,7 +17472,7 @@ name|unlockDb
 argument_list|)
 return|;
 block|}
-comment|/**    * Unlock the table/partition specified    * @param db     *    * @param unlockTbl    *          the table/partition to be unlocked    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
+comment|/**    * Unlock the table/partition specified    * @param db    *    * @param unlockTbl    *          the table/partition to be unlocked    * @return Returns 0 when execution succeeds and above 0 if it fails.    * @throws HiveException    *           Throws this exception if an unexpected error occurs.    */
 specifier|private
 name|int
 name|unlockTable
@@ -17547,7 +17513,7 @@ name|unlockTbl
 argument_list|)
 return|;
 block|}
-comment|/**    * Shows a description of a function.    * @param db     *    * @param descFunc    *          is the function we are describing    * @throws HiveException    */
+comment|/**    * Shows a description of a function.    * @param db    *    * @param descFunc    *          is the function we are describing    * @throws HiveException    */
 specifier|private
 name|int
 name|describeFunction
@@ -26043,14 +26009,6 @@ decl_stmt|;
 try|try
 block|{
 comment|// this is not transactional
-name|HadoopShims
-name|shim
-init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-decl_stmt|;
 for|for
 control|(
 name|Path
@@ -26076,12 +26034,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|HdfsFileStatus
-name|fullFileStatus
-init|=
-name|shim
+name|HdfsUtils
 operator|.
-name|getFullFileStatus
+name|HadoopFileStatus
+name|status
+init|=
+operator|new
+name|HdfsUtils
+operator|.
+name|HadoopFileStatus
 argument_list|(
 name|conf
 argument_list|,
@@ -26108,13 +26069,13 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|shim
+name|HdfsUtils
 operator|.
 name|setFullFileStatus
 argument_list|(
 name|conf
 argument_list|,
-name|fullFileStatus
+name|status
 argument_list|,
 name|fs
 argument_list|,

@@ -2358,7 +2358,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Could not get hdfsEncryptionShim, it is only applicable to hdfs filesystem."
 argument_list|)
