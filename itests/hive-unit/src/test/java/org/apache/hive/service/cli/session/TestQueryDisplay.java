@@ -1171,7 +1171,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|2
+literal|1
 argument_list|)
 expr_stmt|;
 name|QueryDisplay
@@ -1186,7 +1186,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 decl_stmt|;
 name|Assert

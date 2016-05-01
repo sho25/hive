@@ -3185,6 +3185,9 @@ operator|.
 name|getJobID
 argument_list|()
 expr_stmt|;
+name|updateStatusInQueryDisplay
+argument_list|()
+expr_stmt|;
 name|returnVal
 operator|=
 name|jobExecHelper

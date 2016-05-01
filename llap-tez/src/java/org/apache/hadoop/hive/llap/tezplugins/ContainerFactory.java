@@ -240,6 +240,9 @@ name|hostname
 parameter_list|,
 name|int
 name|port
+parameter_list|,
+name|String
+name|nodeHttpAddress
 parameter_list|)
 block|{
 name|ContainerId
@@ -269,12 +272,6 @@ argument_list|,
 name|port
 argument_list|)
 decl_stmt|;
-name|String
-name|nodeHttpAddress
-init|=
-literal|"hostname:0"
-decl_stmt|;
-comment|// TODO: include UI ports
 name|Container
 name|container
 init|=

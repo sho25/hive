@@ -4863,6 +4863,17 @@ operator|+
 literal|"assumption that the original group by will reduce the data size."
 argument_list|)
 block|,
+name|HIVE_GROUPBY_LIMIT_EXTRASTEP
+argument_list|(
+literal|"hive.groupby.limit.extrastep"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This parameter decides if Hive should \n"
+operator|+
+literal|"create new MR job for sorting final output"
+argument_list|)
+block|,
 comment|// Max filesize used to do a single copy (after that, distcp is used)
 name|HIVE_EXEC_COPYFILE_MAXSIZE
 argument_list|(
@@ -9579,6 +9590,17 @@ operator|+
 literal|" The udf black list takes precedence over udf white list"
 argument_list|)
 block|,
+name|HIVE_ALLOW_UDF_LOAD_ON_DEMAND
+argument_list|(
+literal|"hive.allow.udf.load.on.demand"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether enable loading UDFs from metastore on demand; this is mostly relevant for\n"
+operator|+
+literal|"HS2 and was the default behavior before Hive 1.2. Off by default."
+argument_list|)
+block|,
 name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
@@ -11291,7 +11313,7 @@ literal|"Amount of time to wait before allocating a request which contains locat
 operator|+
 literal|" to a location other than the ones requested. Set to -1 for an infinite delay, 0"
 operator|+
-literal|"for a no delay. Currently these are the only two supported values"
+literal|"for no delay."
 argument_list|)
 block|,
 name|LLAP_DAEMON_TASK_PREEMPTION_METRICS_INTERVALS
@@ -11419,6 +11441,17 @@ argument_list|,
 literal|"Whether to setup split locations to match nodes on which llap daemons are running,"
 operator|+
 literal|" instead of using the locations provided by the split itself"
+argument_list|)
+block|,
+name|LLAP_VALIDATE_ACLS
+argument_list|(
+literal|"hive.llap.validate.acls"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should reject permissive ACLs in some cases (e.g. its own management\n"
+operator|+
+literal|"protocol or ZK paths), similar to how ssh refuses a key with bad access permissions."
 argument_list|)
 block|,
 name|LLAP_DAEMON_OUTPUT_SERVICE_PORT
