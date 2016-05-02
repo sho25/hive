@@ -462,7 +462,7 @@ name|Map
 argument_list|<
 name|ObjectInspector
 argument_list|,
-name|VectorAssignRowSameBatch
+name|VectorAssignRow
 argument_list|>
 name|outputVectorAssignRowMap
 decl_stmt|;
@@ -920,7 +920,7 @@ name|HashMap
 argument_list|<
 name|ObjectInspector
 argument_list|,
-name|VectorAssignRowSameBatch
+name|VectorAssignRow
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1549,7 +1549,7 @@ index|[]
 operator|)
 name|row
 decl_stmt|;
-name|VectorAssignRowSameBatch
+name|VectorAssignRow
 name|va
 init|=
 name|outputVectorAssignRowMap
@@ -1569,7 +1569,7 @@ block|{
 name|va
 operator|=
 operator|new
-name|VectorAssignRowSameBatch
+name|VectorAssignRow
 argument_list|()
 expr_stmt|;
 name|va
@@ -1587,13 +1587,6 @@ name|getProjectedColumns
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|va
-operator|.
-name|setOneBatch
-argument_list|(
-name|outputBatch
-argument_list|)
-expr_stmt|;
 name|outputVectorAssignRowMap
 operator|.
 name|put
@@ -1608,6 +1601,8 @@ name|va
 operator|.
 name|assignRow
 argument_list|(
+name|outputBatch
+argument_list|,
 name|outputBatch
 operator|.
 name|size

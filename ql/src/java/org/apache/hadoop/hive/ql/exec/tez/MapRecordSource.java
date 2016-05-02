@@ -65,7 +65,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapOperator
+name|AbstractMapOperator
 import|;
 end_import
 
@@ -216,7 +216,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|MapOperator
+name|AbstractMapOperator
 name|mapOp
 init|=
 literal|null
@@ -240,7 +240,7 @@ parameter_list|(
 name|JobConf
 name|jconf
 parameter_list|,
-name|MapOperator
+name|AbstractMapOperator
 name|mapOp
 parameter_list|,
 name|KeyValueReader

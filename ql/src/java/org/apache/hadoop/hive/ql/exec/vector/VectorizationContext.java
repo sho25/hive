@@ -935,32 +935,6 @@ name|aggregates
 operator|.
 name|gen
 operator|.
-name|VectorUDAFMaxIntervalDayTime
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|aggregates
-operator|.
-name|gen
-operator|.
 name|VectorUDAFMinDecimal
 import|;
 end_import
@@ -1066,32 +1040,6 @@ operator|.
 name|gen
 operator|.
 name|VectorUDAFMinTimestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|aggregates
-operator|.
-name|gen
-operator|.
-name|VectorUDAFMinIntervalDayTime
 import|;
 end_import
 
@@ -2447,32 +2395,6 @@ name|level
 operator|=
 literal|0
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"VectorizationContext consructor contextName "
-operator|+
-name|contextName
-operator|+
-literal|" level "
-operator|+
-name|level
-operator|+
-literal|" initialColumnNames "
-operator|+
-name|initialColumnNames
-argument_list|)
-expr_stmt|;
-block|}
 name|this
 operator|.
 name|initialColumnNames
@@ -2597,28 +2519,6 @@ name|level
 operator|=
 literal|0
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"VectorizationContext consructor contextName "
-operator|+
-name|contextName
-operator|+
-literal|" level "
-operator|+
-name|level
-argument_list|)
-expr_stmt|;
-block|}
 name|initialColumnNames
 operator|=
 operator|new
@@ -2706,19 +2606,6 @@ operator|.
 name|level
 operator|+
 literal|1
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"VectorizationContext consructor reference contextName "
-operator|+
-name|contextName
-operator|+
-literal|" level "
-operator|+
-name|level
-argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -4093,7 +3980,7 @@ literal|"Input Expression = "
 operator|+
 name|exprDesc
 operator|.
-name|getTypeInfo
+name|toString
 argument_list|()
 operator|+
 literal|", Vectorized Expression = "

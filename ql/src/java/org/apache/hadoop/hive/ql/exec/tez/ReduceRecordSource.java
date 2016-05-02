@@ -2326,7 +2326,7 @@ argument_list|)
 expr_stmt|;
 name|keyBinarySortableDeserializeToRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|batch
 argument_list|,
@@ -2421,7 +2421,7 @@ argument_list|)
 expr_stmt|;
 name|valueLazyBinaryDeserializeToRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|batch
 argument_list|,

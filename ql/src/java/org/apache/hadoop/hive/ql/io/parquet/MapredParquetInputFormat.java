@@ -346,7 +346,7 @@ if|if
 condition|(
 name|Utilities
 operator|.
-name|isVectorMode
+name|getUseVectorizedInputFileFormat
 argument_list|(
 name|job
 argument_list|)

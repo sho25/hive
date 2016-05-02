@@ -10167,6 +10167,39 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_USE_VECTORIZED_INPUT_FILE_FORMAT
+argument_list|(
+literal|"hive.vectorized.use.vectorized.input.format"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorizing with vectorized input file format capable SerDe.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_USE_VECTOR_DESERIALIZE
+argument_list|(
+literal|"hive.vectorized.use.vector.serde.deserialize"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorizing rows using vector deserialize.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
+argument_list|(
+literal|"hive.vectorized.use.row.serde.deserialize"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorizing using row deserialize.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"

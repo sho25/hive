@@ -1019,6 +1019,13 @@ operator|=
 name|vectorNodeEvaluators
 expr_stmt|;
 comment|// Filtering is handled in the input batch processing
+if|if
+condition|(
+name|filterMaps
+operator|!=
+literal|null
+condition|)
+block|{
 name|filterMaps
 index|[
 name|posBigTable
@@ -1026,6 +1033,7 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
