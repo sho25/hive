@@ -451,7 +451,23 @@ name|conn
 operator|.
 name|ssl
 operator|.
-name|SSLSocketFactory
+name|DefaultHostnameVerifier
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
+name|conn
+operator|.
+name|ssl
+operator|.
+name|SSLConnectionSocketFactory
 import|;
 end_import
 
@@ -546,6 +562,20 @@ operator|.
 name|protocol
 operator|.
 name|HttpContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|http
+operator|.
+name|ssl
+operator|.
+name|SSLContexts
 import|;
 end_import
 
@@ -2283,7 +2313,8 @@ name|executionCount
 operator|<=
 literal|1
 decl_stmt|;
-comment|// Set the context attribute to true which will be interpreted by the request interceptor
+comment|// Set the context attribute to true which will be interpreted by the request
+comment|// interceptor
 if|if
 condition|(
 name|ret
@@ -2386,10 +2417,13 @@ decl_stmt|;
 name|KeyStore
 name|sslTrustStore
 decl_stmt|;
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 name|socketFactory
 decl_stmt|;
-comment|/**        * The code within the try block throws:        * 1. SSLInitializationException        * 2. KeyStoreException        * 3. IOException        * 4. NoSuchAlgorithmException        * 5. CertificateException        * 6. KeyManagementException        * 7. UnrecoverableKeyException        * We don't want the client to retry on any of these, hence we catch all        * and throw a SQLException.        */
+name|SSLContext
+name|sslContext
+decl_stmt|;
+comment|/**        * The code within the try block throws: SSLInitializationException, KeyStoreException,        * IOException, NoSuchAlgorithmException, CertificateException, KeyManagementException&        * UnrecoverableKeyException. We don't want the client to retry on any of these,        * hence we catch all and throw a SQLException.        */
 try|try
 block|{
 if|if
@@ -2430,7 +2464,7 @@ block|{
 comment|// Create a default socket factory based on standard JSSE trust material
 name|socketFactory
 operator|=
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 operator|.
 name|getSocketFactory
 argument_list|()
@@ -2475,24 +2509,38 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|sslContext
+operator|=
+name|SSLContexts
+operator|.
+name|custom
+argument_list|()
+operator|.
+name|loadTrustMaterial
+argument_list|(
+name|sslTrustStore
+argument_list|,
+literal|null
+argument_list|)
+operator|.
+name|build
+argument_list|()
+expr_stmt|;
 name|socketFactory
 operator|=
 operator|new
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 argument_list|(
-name|sslTrustStore
+name|sslContext
+argument_list|,
+operator|new
+name|DefaultHostnameVerifier
+argument_list|(
+literal|null
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|socketFactory
-operator|.
-name|setHostnameVerifier
-argument_list|(
-name|SSLSocketFactory
-operator|.
-name|ALLOW_ALL_HOSTNAME_VERIFIER
-argument_list|)
-expr_stmt|;
 specifier|final
 name|Registry
 argument_list|<
@@ -2995,13 +3043,13 @@ return|return
 name|transport
 return|;
 block|}
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 name|getTwoWaySSLSocketFactory
 parameter_list|()
 throws|throws
 name|SQLException
 block|{
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 name|socketFactory
 init|=
 literal|null
@@ -3257,7 +3305,7 @@ expr_stmt|;
 name|socketFactory
 operator|=
 operator|new
-name|SSLSocketFactory
+name|SSLConnectionSocketFactory
 argument_list|(
 name|context
 argument_list|)
