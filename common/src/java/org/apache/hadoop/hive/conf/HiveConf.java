@@ -1891,6 +1891,28 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_SECURITY_ACL_DENY
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_MANAGEMENT_ACL_DENY
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_DELEGATION_TOKEN_LIFETIME
 operator|.
 name|varname
@@ -2189,6 +2211,17 @@ argument_list|(
 name|ConfVars
 operator|.
 name|LLAP_DAEMON_CONTAINER_ID
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_VALIDATE_ACLS
 operator|.
 name|varname
 argument_list|)
@@ -10854,6 +10887,9 @@ argument_list|)
 block|,
 comment|// Note: do not rename to ..service.acl; Hadoop generates .hosts setting name from this,
 comment|// resulting in a collision with existing hive.llap.daemon.service.hosts and bizarre errors.
+comment|// These are read by Hadoop IPC, so you should check the usage and naming conventions (e.g.
+comment|// ".blocked" is a string hardcoded by Hadoop, and defaults are enforced elsewhere in Hive)
+comment|// before making changes or copy-pasting these.
 name|LLAP_SECURITY_ACL
 argument_list|(
 literal|"hive.llap.daemon.acl"
@@ -10863,6 +10899,15 @@ argument_list|,
 literal|"The ACL for LLAP daemon."
 argument_list|)
 block|,
+name|LLAP_SECURITY_ACL_DENY
+argument_list|(
+literal|"hive.llap.daemon.acl.blocked"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The deny ACL for LLAP daemon."
+argument_list|)
+block|,
 name|LLAP_MANAGEMENT_ACL
 argument_list|(
 literal|"hive.llap.management.acl"
@@ -10870,6 +10915,15 @@ argument_list|,
 literal|"*"
 argument_list|,
 literal|"The ACL for LLAP daemon management."
+argument_list|)
+block|,
+name|LLAP_MANAGEMENT_ACL_DENY
+argument_list|(
+literal|"hive.llap.management.acl.blocked"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The deny ACL for LLAP daemon management."
 argument_list|)
 block|,
 comment|// Hadoop DelegationTokenManager default is 1 week.
