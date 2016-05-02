@@ -1025,13 +1025,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|registry
+name|security
 operator|.
-name|client
-operator|.
-name|binding
-operator|.
-name|RegistryUtils
+name|UserGroupInformation
 import|;
 end_import
 
@@ -2742,9 +2738,12 @@ decl_stmt|;
 name|String
 name|llapUser
 init|=
-name|RegistryUtils
+name|UserGroupInformation
 operator|.
-name|currentUser
+name|getLoginUser
+argument_list|()
+operator|.
+name|getShortUserName
 argument_list|()
 decl_stmt|;
 name|LOG
