@@ -2410,6 +2410,13 @@ argument_list|)
 expr_stmt|;
 name|builder
 operator|.
+name|setUsingTezAm
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
 name|setFragmentRuntimeInfo
 argument_list|(
 name|runtimeInfo

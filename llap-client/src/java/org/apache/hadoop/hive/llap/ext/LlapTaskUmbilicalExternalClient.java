@@ -954,7 +954,7 @@ name|getAddress
 argument_list|()
 return|;
 block|}
-comment|/**    * Submit the work for actual execution.    * @param submitWorkRequestProto    */
+comment|/**    * Submit the work for actual execution. This should always have the usingTezAm flag disabled    * @param submitWorkRequestProto    */
 specifier|public
 name|void
 name|submitWork
@@ -976,6 +976,18 @@ argument_list|>
 name|tezEvents
 parameter_list|)
 block|{
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|submitWorkRequestProto
+operator|.
+name|getUsingTezAm
+argument_list|()
+operator|==
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// Register the pending events to be sent for this spec.
 name|String
 name|fragmentId
