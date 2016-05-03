@@ -3189,6 +3189,16 @@ name|JOB_DEBUG_TIMEOUT
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|task
+operator|.
+name|setDiagnosticMessage
+argument_list|(
+name|jd
+operator|.
+name|getDiagnosticMesg
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|int
 name|ec
 init|=
