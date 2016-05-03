@@ -1809,6 +1809,13 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+name|plan
+operator|!=
+literal|null
+condition|)
+block|{
 name|Map
 argument_list|<
 name|String
@@ -1843,6 +1850,7 @@ argument_list|,
 name|ctrmap
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

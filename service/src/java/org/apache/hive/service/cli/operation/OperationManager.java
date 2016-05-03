@@ -709,7 +709,6 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
-comment|// TODO
 block|}
 annotation|@
 name|Override
@@ -719,7 +718,6 @@ name|void
 name|stop
 parameter_list|()
 block|{
-comment|// TODO
 name|super
 operator|.
 name|stop
@@ -834,6 +832,9 @@ name|confOverlay
 parameter_list|,
 name|boolean
 name|runAsync
+parameter_list|,
+name|long
+name|queryTimeout
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -852,6 +853,8 @@ argument_list|,
 name|confOverlay
 argument_list|,
 name|runAsync
+argument_list|,
+name|queryTimeout
 argument_list|)
 decl_stmt|;
 name|addOperation
@@ -1520,6 +1523,7 @@ name|getStatus
 argument_list|()
 return|;
 block|}
+comment|/**    * Cancel the running operation unless it is already in a terminal state    * @param opHandle    * @throws HiveSQLException    */
 specifier|public
 name|void
 name|cancelOperation
@@ -1552,34 +1556,9 @@ decl_stmt|;
 if|if
 condition|(
 name|opState
-operator|==
-name|OperationState
 operator|.
-name|CANCELED
-operator|||
-name|opState
-operator|==
-name|OperationState
-operator|.
-name|CLOSED
-operator|||
-name|opState
-operator|==
-name|OperationState
-operator|.
-name|FINISHED
-operator|||
-name|opState
-operator|==
-name|OperationState
-operator|.
-name|ERROR
-operator|||
-name|opState
-operator|==
-name|OperationState
-operator|.
-name|UNKNOWN
+name|isTerminal
+argument_list|()
 condition|)
 block|{
 comment|// Cancel should be a no-op in either cases
@@ -1611,7 +1590,11 @@ expr_stmt|;
 name|operation
 operator|.
 name|cancel
-argument_list|()
+argument_list|(
+name|OperationState
+operator|.
+name|CANCELED
+argument_list|)
 expr_stmt|;
 block|}
 block|}

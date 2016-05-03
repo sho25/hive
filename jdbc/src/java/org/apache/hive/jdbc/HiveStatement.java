@@ -393,6 +393,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|SQLTimeoutException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLWarning
 import|;
 end_import
@@ -590,6 +600,12 @@ name|boolean
 name|isExecuteStatementFailed
 init|=
 literal|false
+decl_stmt|;
+specifier|private
+name|int
+name|queryTimeout
+init|=
+literal|0
 decl_stmt|;
 specifier|public
 name|HiveStatement
@@ -1245,6 +1261,13 @@ argument_list|(
 name|sessConf
 argument_list|)
 expr_stmt|;
+name|execReq
+operator|.
+name|setQueryTimeout
+argument_list|(
+name|queryTimeout
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|TExecuteStatementResp
@@ -1346,7 +1369,7 @@ condition|)
 block|{
 try|try
 block|{
-comment|/**          * For an async SQLOperation, GetOperationStatus will use the long polling approach          * It will essentially return after the HIVE_SERVER2_LONG_POLLING_TIMEOUT (a server config) expires          */
+comment|/**          * For an async SQLOperation, GetOperationStatus will use the long polling approach It will          * essentially return after the HIVE_SERVER2_LONG_POLLING_TIMEOUT (a server config) expires          */
 name|statusResp
 operator|=
 name|client
@@ -1408,6 +1431,20 @@ argument_list|(
 literal|"Query was cancelled"
 argument_list|,
 literal|"01000"
+argument_list|)
+throw|;
+case|case
+name|TIMEDOUT_STATE
+case|:
+throw|throw
+operator|new
+name|SQLTimeoutException
+argument_list|(
+literal|"Query timed out after "
+operator|+
+name|queryTimeout
+operator|+
+literal|" seconds"
 argument_list|)
 throw|;
 case|case
@@ -2342,22 +2379,12 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// 0 is supported which means "no limit"
-if|if
-condition|(
+name|this
+operator|.
+name|queryTimeout
+operator|=
 name|seconds
-operator|!=
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SQLException
-argument_list|(
-literal|"Query timeout seconds must be 0"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)    */
 annotation|@

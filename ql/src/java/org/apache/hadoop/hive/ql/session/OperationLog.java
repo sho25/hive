@@ -634,6 +634,7 @@ name|maxRows
 argument_list|)
 return|;
 block|}
+specifier|synchronized
 name|void
 name|remove
 parameter_list|()
@@ -666,6 +667,12 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|isRemoved
+condition|)
+block|{
 name|FileUtils
 operator|.
 name|forceDelete
@@ -677,6 +684,7 @@ name|isRemoved
 operator|=
 literal|true
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

@@ -1647,6 +1647,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|protected
+specifier|synchronized
 name|void
 name|cleanupOperationLog
 parameter_list|()
@@ -1658,6 +1659,22 @@ condition|)
 block|{
 if|if
 condition|(
+name|opHandle
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Operation seems to be in invalid state, opHandle is null"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 name|operationLog
 operator|==
 literal|null
@@ -1665,7 +1682,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|warn
 argument_list|(
 literal|"Operation [ "
 operator|+
@@ -1676,7 +1693,11 @@ argument_list|()
 operator|+
 literal|" ] "
 operator|+
-literal|"logging is enabled, but its OperationLog object cannot be found."
+literal|"logging is enabled, "
+operator|+
+literal|"but its OperationLog object cannot be found. "
+operator|+
+literal|"Perhaps the operation has already terminated."
 argument_list|)
 expr_stmt|;
 block|}
@@ -1690,29 +1711,17 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// TODO: make this abstract and implement in subclasses.
 specifier|public
+specifier|abstract
 name|void
 name|cancel
-parameter_list|()
+parameter_list|(
+name|OperationState
+name|stateAfterCancel
+parameter_list|)
 throws|throws
 name|HiveSQLException
-block|{
-name|setState
-argument_list|(
-name|OperationState
-operator|.
-name|CANCELED
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"SQLOperation.cancel()"
-argument_list|)
-throw|;
-block|}
+function_decl|;
 specifier|public
 specifier|abstract
 name|void

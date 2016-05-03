@@ -210,6 +210,9 @@ name|confOverlay
 parameter_list|,
 name|boolean
 name|runAsync
+parameter_list|,
+name|long
+name|queryTimeout
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -281,6 +284,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// runAsync, queryTimeout makes sense only for a SQLOperation
 return|return
 operator|new
 name|SQLOperation
@@ -292,6 +296,8 @@ argument_list|,
 name|confOverlay
 argument_list|,
 name|runAsync
+argument_list|,
+name|queryTimeout
 argument_list|)
 return|;
 block|}

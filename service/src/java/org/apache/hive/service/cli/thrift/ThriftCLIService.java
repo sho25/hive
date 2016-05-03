@@ -3251,6 +3251,14 @@ operator|.
 name|isRunAsync
 argument_list|()
 decl_stmt|;
+name|long
+name|queryTimeout
+init|=
+name|req
+operator|.
+name|getQueryTimeout
+argument_list|()
+decl_stmt|;
 name|OperationHandle
 name|operationHandle
 init|=
@@ -3265,6 +3273,8 @@ argument_list|,
 name|statement
 argument_list|,
 name|confOverlay
+argument_list|,
+name|queryTimeout
 argument_list|)
 else|:
 name|cliService
@@ -3276,6 +3286,8 @@ argument_list|,
 name|statement
 argument_list|,
 name|confOverlay
+argument_list|,
+name|queryTimeout
 argument_list|)
 decl_stmt|;
 name|resp
@@ -3303,8 +3315,8 @@ name|e
 parameter_list|)
 block|{
 comment|// Note: it's rather important that this (and other methods) catch Exception, not Throwable;
-comment|//       in combination with HiveSessionProxy.invoke code, perhaps unintentionally, it used
-comment|//       to also catch all errors; and now it allows OOMs only to propagate.
+comment|// in combination with HiveSessionProxy.invoke code, perhaps unintentionally, it used
+comment|// to also catch all errors; and now it allows OOMs only to propagate.
 name|LOG
 operator|.
 name|warn

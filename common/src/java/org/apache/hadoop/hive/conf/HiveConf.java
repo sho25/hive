@@ -5219,7 +5219,7 @@ name|HIVE_SCHEMA_EVOLUTION
 argument_list|(
 literal|"hive.exec.schema.evolution"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Use schema evolution to convert self-describing file format's data to the schema desired by the reader."
 argument_list|)

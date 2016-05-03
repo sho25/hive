@@ -386,6 +386,11 @@ name|eq
 argument_list|(
 literal|true
 argument_list|)
+argument_list|,
+name|eq
+argument_list|(
+literal|0
+argument_list|)
 argument_list|)
 argument_list|)
 operator|.

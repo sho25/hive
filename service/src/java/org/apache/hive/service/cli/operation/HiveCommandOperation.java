@@ -1306,6 +1306,26 @@ literal|null
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|cancel
+parameter_list|(
+name|OperationState
+name|stateAfterCancel
+parameter_list|)
+throws|throws
+name|HiveSQLException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"HiveCommandOperation.cancel()"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

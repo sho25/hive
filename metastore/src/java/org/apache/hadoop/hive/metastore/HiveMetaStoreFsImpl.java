@@ -97,11 +97,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|fs
 operator|.
-name|conf
-operator|.
-name|HiveConf
+name|Trash
 import|;
 end_import
 
@@ -120,38 +118,6 @@ operator|.
 name|api
 operator|.
 name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
 import|;
 end_import
 
@@ -201,21 +167,13 @@ name|MetaException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"deleting  "
 operator|+
 name|f
 argument_list|)
 expr_stmt|;
-name|HadoopShims
-name|hadoopShim
-init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-decl_stmt|;
 try|try
 block|{
 if|if
@@ -238,7 +196,7 @@ block|}
 elseif|else
 if|if
 condition|(
-name|hadoopShim
+name|Trash
 operator|.
 name|moveToAppropriateTrash
 argument_list|(
@@ -277,7 +235,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Deleted the diretory "
 operator|+
