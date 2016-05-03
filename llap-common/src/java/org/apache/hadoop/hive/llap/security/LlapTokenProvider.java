@@ -55,7 +55,10 @@ argument_list|<
 name|LlapTokenIdentifier
 argument_list|>
 name|getDelegationToken
-parameter_list|()
+parameter_list|(
+name|String
+name|appId
+parameter_list|)
 throws|throws
 name|IOException
 function_decl|;

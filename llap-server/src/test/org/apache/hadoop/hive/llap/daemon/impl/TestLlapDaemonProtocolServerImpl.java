@@ -382,6 +382,8 @@ argument_list|,
 name|rpcPort
 operator|+
 literal|1
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|when

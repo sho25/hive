@@ -1871,6 +1871,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// For Tez, we don't use appId to distinguish the tokens; security scope is the user.
 name|Token
 argument_list|<
 name|LlapTokenIdentifier
@@ -1880,7 +1881,9 @@ init|=
 name|tp
 operator|.
 name|getDelegationToken
-argument_list|()
+argument_list|(
+literal|null
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
