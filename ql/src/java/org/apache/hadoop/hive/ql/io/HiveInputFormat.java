@@ -1294,12 +1294,13 @@ init|=
 name|inputFormat
 operator|instanceof
 name|LlapWrappableInputFormatInterface
-decl_stmt|,
+decl_stmt|;
+name|boolean
 name|isVectorized
 init|=
 name|Utilities
 operator|.
-name|isVectorMode
+name|getUseVectorizedInputFileFormat
 argument_list|(
 name|conf
 argument_list|)
@@ -1413,7 +1414,7 @@ block|{
 return|return
 name|Utilities
 operator|.
-name|isVectorMode
+name|getUseVectorizedInputFileFormat
 argument_list|(
 name|conf
 argument_list|,

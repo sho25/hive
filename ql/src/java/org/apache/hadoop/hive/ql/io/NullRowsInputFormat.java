@@ -457,7 +457,7 @@ name|isVectorMode
 init|=
 name|Utilities
 operator|.
-name|isVectorMode
+name|getUseVectorizedInputFileFormat
 argument_list|(
 name|conf
 argument_list|)

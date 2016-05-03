@@ -112,8 +112,7 @@ operator|=
 operator|(
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readBoolean
-argument_list|()
+name|currentBoolean
 condition|?
 literal|1
 else|:
@@ -131,8 +130,7 @@ name|long
 operator|)
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readByte
-argument_list|()
+name|currentByte
 expr_stmt|;
 break|break;
 case|case
@@ -145,8 +143,7 @@ name|long
 operator|)
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readShort
-argument_list|()
+name|currentShort
 expr_stmt|;
 break|break;
 case|case
@@ -159,8 +156,7 @@ name|long
 operator|)
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readInt
-argument_list|()
+name|currentInt
 expr_stmt|;
 break|break;
 case|case
@@ -170,8 +166,7 @@ name|key
 operator|=
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readLong
-argument_list|()
+name|currentLong
 expr_stmt|;
 break|break;
 default|default:

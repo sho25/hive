@@ -992,6 +992,8 @@ name|e
 argument_list|)
 throw|;
 block|}
+finally|finally
+block|{
 comment|//flush
 name|errorGobbler
 operator|.
@@ -1007,6 +1009,7 @@ operator|.
 name|flush
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

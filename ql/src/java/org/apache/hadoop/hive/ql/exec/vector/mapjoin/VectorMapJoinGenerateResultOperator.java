@@ -960,7 +960,7 @@ argument_list|)
 expr_stmt|;
 name|smallTableVectorDeserializeRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|batch
 argument_list|,
@@ -1161,7 +1161,7 @@ argument_list|)
 expr_stmt|;
 name|smallTableVectorDeserializeRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|overflowBatch
 argument_list|,
@@ -1311,7 +1311,7 @@ argument_list|)
 expr_stmt|;
 name|smallTableVectorDeserializeRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|overflowBatch
 argument_list|,
@@ -2297,7 +2297,7 @@ argument_list|)
 expr_stmt|;
 name|bigTableVectorDeserializeRow
 operator|.
-name|deserializeByValue
+name|deserialize
 argument_list|(
 name|spillReplayBatch
 argument_list|,

@@ -119,6 +119,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -314,6 +330,10 @@ comment|// Vectorization.
 specifier|protected
 name|VectorizedRowBatchCtx
 name|vectorizedRowBatchCtx
+decl_stmt|;
+specifier|protected
+name|boolean
+name|useVectorizedInputFileFormat
 decl_stmt|;
 specifier|protected
 name|boolean
@@ -792,6 +812,7 @@ name|returnSet
 return|;
 block|}
 comment|// -----------------------------------------------------------------------------------------------
+comment|/*    * The vectorization context for creating the VectorizedRowBatch for the node.    */
 specifier|public
 name|VectorizedRowBatchCtx
 name|getVectorizedRowBatchCtx
@@ -815,6 +836,31 @@ name|vectorizedRowBatchCtx
 operator|=
 name|vectorizedRowBatchCtx
 expr_stmt|;
+block|}
+comment|/*    * Whether the HiveConf.ConfVars.HIVE_VECTORIZATION_USE_VECTORIZED_INPUT_FILE_FORMAT variable    * (hive.vectorized.use.vectorized.input.format) was true when the Vectorizer class evaluated    * vectorizing this node.    *    * When Vectorized Input File Format looks at this flag, it can determine whether it should    * operate vectorized or not.  In some modes, the node can be vectorized but use row    * serialization.    */
+specifier|public
+name|void
+name|setUseVectorizedInputFileFormat
+parameter_list|(
+name|boolean
+name|useVectorizedInputFileFormat
+parameter_list|)
+block|{
+name|this
+operator|.
+name|useVectorizedInputFileFormat
+operator|=
+name|useVectorizedInputFileFormat
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getUseVectorizedInputFileFormat
+parameter_list|()
+block|{
+return|return
+name|useVectorizedInputFileFormat
+return|;
 block|}
 comment|// -----------------------------------------------------------------------------------------------
 comment|/**    * @return the mapredLocalWork    */

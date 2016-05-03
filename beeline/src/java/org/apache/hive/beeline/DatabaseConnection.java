@@ -582,6 +582,13 @@ operator|.
 name|getHiveVariables
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|hiveVars
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Map
@@ -618,6 +625,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 name|Map
 argument_list|<
 name|String
@@ -634,6 +642,13 @@ operator|.
 name|getHiveConfVariables
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|hiveConfVars
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Map
@@ -669,6 +684,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
