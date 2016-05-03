@@ -278,6 +278,27 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
+comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @param queryTimeout    * @return    * @throws HiveSQLException    */
+name|OperationHandle
+name|executeStatement
+parameter_list|(
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|,
+name|long
+name|queryTimeout
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
 comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @return    * @throws HiveSQLException    */
 name|OperationHandle
 name|executeStatementAsync
@@ -292,6 +313,27 @@ argument_list|,
 name|String
 argument_list|>
 name|confOverlay
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
+comment|/**    * execute operation handler    * @param statement    * @param confOverlay    * @param queryTimeout    * @return    * @throws HiveSQLException    */
+name|OperationHandle
+name|executeStatementAsync
+parameter_list|(
+name|String
+name|statement
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+parameter_list|,
+name|long
+name|queryTimeout
 parameter_list|)
 throws|throws
 name|HiveSQLException

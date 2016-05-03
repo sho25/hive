@@ -115,6 +115,15 @@ name|PENDING_STATE
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|TIMEDOUT
+argument_list|(
+name|TOperationState
+operator|.
+name|TIMEDOUT_STATE
+argument_list|,
+literal|true
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -210,6 +219,9 @@ case|:
 case|case
 name|CLOSED
 case|:
+case|case
+name|TIMEDOUT
+case|:
 return|return;
 block|}
 break|break;
@@ -236,6 +248,9 @@ case|:
 case|case
 name|CLOSED
 case|:
+case|case
+name|TIMEDOUT
+case|:
 return|return;
 block|}
 break|break;
@@ -259,6 +274,9 @@ case|:
 case|case
 name|CLOSED
 case|:
+case|case
+name|TIMEDOUT
+case|:
 return|return;
 block|}
 break|break;
@@ -267,6 +285,9 @@ name|FINISHED
 case|:
 case|case
 name|CANCELED
+case|:
+case|case
+name|TIMEDOUT
 case|:
 case|case
 name|ERROR

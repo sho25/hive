@@ -103,6 +103,11 @@ name|PENDING_STATE
 argument_list|(
 literal|7
 argument_list|)
+block|,
+name|TIMEDOUT_STATE
+argument_list|(
+literal|8
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -195,6 +200,12 @@ literal|7
 case|:
 return|return
 name|PENDING_STATE
+return|;
+case|case
+literal|8
+case|:
+return|return
+name|TIMEDOUT_STATE
 return|;
 default|default:
 return|return
