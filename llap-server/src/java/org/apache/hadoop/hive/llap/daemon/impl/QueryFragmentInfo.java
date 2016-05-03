@@ -121,7 +121,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|FragmentSpecProto
+name|IOSpecProto
 import|;
 end_import
 
@@ -143,7 +143,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|IOSpecProto
+name|SignableVertexSpec
 import|;
 end_import
 
@@ -227,8 +227,13 @@ name|attemptNumber
 decl_stmt|;
 specifier|private
 specifier|final
-name|FragmentSpecProto
-name|fragmentSpec
+name|SignableVertexSpec
+name|vertexSpec
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|fragmentIdString
 decl_stmt|;
 specifier|public
 name|QueryFragmentInfo
@@ -245,8 +250,11 @@ parameter_list|,
 name|int
 name|attemptNumber
 parameter_list|,
-name|FragmentSpecProto
-name|fragmentSpec
+name|SignableVertexSpec
+name|vertexSpec
+parameter_list|,
+name|String
+name|fragmentIdString
 parameter_list|)
 block|{
 name|Preconditions
@@ -267,7 +275,7 @@ name|Preconditions
 operator|.
 name|checkNotNull
 argument_list|(
-name|fragmentSpec
+name|vertexSpec
 argument_list|)
 expr_stmt|;
 name|this
@@ -296,9 +304,15 @@ name|attemptNumber
 expr_stmt|;
 name|this
 operator|.
-name|fragmentSpec
+name|vertexSpec
 operator|=
-name|fragmentSpec
+name|vertexSpec
+expr_stmt|;
+name|this
+operator|.
+name|fragmentIdString
+operator|=
+name|fragmentIdString
 expr_stmt|;
 block|}
 comment|// Only meant for use by the QueryTracker
@@ -313,12 +327,12 @@ name|queryInfo
 return|;
 block|}
 specifier|public
-name|FragmentSpecProto
-name|getFragmentSpec
+name|SignableVertexSpec
+name|getVertexSpec
 parameter_list|()
 block|{
 return|return
-name|fragmentSpec
+name|vertexSpec
 return|;
 block|}
 specifier|public
@@ -354,10 +368,7 @@ name|getFragmentIdentifierString
 parameter_list|()
 block|{
 return|return
-name|fragmentSpec
-operator|.
-name|getFragmentIdentifierString
-argument_list|()
+name|fragmentIdString
 return|;
 block|}
 comment|/**    * Check whether a task can run to completion or may end up blocking on it's sources.    * This currently happens via looking up source state.    * TODO: Eventually, this should lookup the Hive Processor to figure out whether    * it's reached a state where it can finish - especially in cases of failures    * after data has been fetched.    *    * @return true if the task can finish, false otherwise    */
@@ -372,7 +383,7 @@ name|IOSpecProto
 argument_list|>
 name|inputSpecList
 init|=
-name|fragmentSpec
+name|vertexSpec
 operator|.
 name|getInputSpecsList
 argument_list|()
@@ -536,7 +547,7 @@ name|IOSpecProto
 argument_list|>
 name|inputSpecList
 init|=
-name|fragmentSpec
+name|vertexSpec
 operator|.
 name|getInputSpecsList
 argument_list|()

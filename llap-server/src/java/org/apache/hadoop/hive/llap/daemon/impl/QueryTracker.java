@@ -227,7 +227,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|FragmentSpecProto
+name|SignableVertexSpec
 import|;
 end_import
 
@@ -727,7 +727,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Register a new fragment for a specific query    * @param queryIdentifier    * @param appIdString    * @param dagName    * @param dagIdentifier    * @param vertexName    * @param fragmentNumber    * @param attemptNumber    * @param user    * @throws IOException    */
+comment|/**    * Register a new fragment for a specific query    */
 name|QueryFragmentInfo
 name|registerFragment
 parameter_list|(
@@ -755,14 +755,17 @@ parameter_list|,
 name|String
 name|user
 parameter_list|,
-name|FragmentSpecProto
-name|fragmentSpec
+name|SignableVertexSpec
+name|vertex
 parameter_list|,
 name|Token
 argument_list|<
 name|JobTokenIdentifier
 argument_list|>
 name|appToken
+parameter_list|,
+name|String
+name|fragmentIdString
 parameter_list|)
 throws|throws
 name|IOException
@@ -1012,7 +1015,9 @@ name|fragmentNumber
 argument_list|,
 name|attemptNumber
 argument_list|,
-name|fragmentSpec
+name|vertex
+argument_list|,
+name|fragmentIdString
 argument_list|)
 return|;
 block|}

@@ -279,7 +279,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|FragmentSpecProto
+name|SignableVertexSpec
 import|;
 end_import
 
@@ -564,8 +564,11 @@ parameter_list|,
 name|int
 name|attemptNumber
 parameter_list|,
-name|FragmentSpecProto
-name|fragmentSpec
+name|SignableVertexSpec
+name|vertexSpec
+parameter_list|,
+name|String
+name|fragmentIdString
 parameter_list|)
 block|{
 name|QueryFragmentInfo
@@ -582,7 +585,9 @@ name|fragmentNumber
 argument_list|,
 name|attemptNumber
 argument_list|,
-name|fragmentSpec
+name|vertexSpec
+argument_list|,
+name|fragmentIdString
 argument_list|)
 decl_stmt|;
 name|knownFragments
