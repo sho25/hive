@@ -1590,16 +1590,12 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
+name|nullBytesReadError
 argument_list|(
-literal|"null string entry: batchIndex "
-operator|+
+name|primitiveCategory
+argument_list|,
 name|batchIndex
-operator|+
-literal|" projection column num "
-operator|+
+argument_list|,
 name|projectionColumnNum
 argument_list|)
 expr_stmt|;
@@ -1682,16 +1678,12 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
+name|nullBytesReadError
 argument_list|(
-literal|"null varchar entry: batchIndex "
-operator|+
+name|primitiveCategory
+argument_list|,
 name|batchIndex
-operator|+
-literal|" projection column num "
-operator|+
+argument_list|,
 name|projectionColumnNum
 argument_list|)
 expr_stmt|;
@@ -1806,16 +1798,12 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
+name|nullBytesReadError
 argument_list|(
-literal|"null char entry: batchIndex "
-operator|+
+name|primitiveCategory
+argument_list|,
 name|batchIndex
-operator|+
-literal|" projection column num "
-operator|+
+argument_list|,
 name|projectionColumnNum
 argument_list|)
 expr_stmt|;
@@ -2060,6 +2048,41 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|void
+name|nullBytesReadError
+parameter_list|(
+name|PrimitiveCategory
+name|primitiveCategory
+parameter_list|,
+name|int
+name|batchIndex
+parameter_list|,
+name|int
+name|projectionColumnNum
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"null "
+operator|+
+name|primitiveCategory
+operator|.
+name|name
+argument_list|()
+operator|+
+literal|" entry: batchIndex "
+operator|+
+name|batchIndex
+operator|+
+literal|" projection column num "
+operator|+
+name|projectionColumnNum
+argument_list|)
+throw|;
 block|}
 block|}
 end_class
