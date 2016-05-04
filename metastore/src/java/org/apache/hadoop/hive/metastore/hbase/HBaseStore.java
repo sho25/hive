@@ -15198,6 +15198,26 @@ name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|dropConstraint
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|constraintName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+block|{
+comment|// TODO Auto-generated method stub
+block|}
 block|}
 end_class
 

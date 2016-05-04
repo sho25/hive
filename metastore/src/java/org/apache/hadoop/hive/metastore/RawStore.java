@@ -2939,6 +2939,21 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+name|void
+name|dropConstraint
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|constraintName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+function_decl|;
 block|}
 end_interface
 

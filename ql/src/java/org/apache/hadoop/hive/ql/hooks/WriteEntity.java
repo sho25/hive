@@ -604,6 +604,9 @@ case|:
 case|case
 name|MERGEFILES
 case|:
+case|case
+name|DROPCONSTRAINT
+case|:
 return|return
 name|WriteType
 operator|.
