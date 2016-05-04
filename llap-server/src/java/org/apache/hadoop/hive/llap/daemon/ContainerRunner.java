@@ -225,6 +225,8 @@ parameter_list|(
 name|SourceStateUpdatedRequestProto
 name|request
 parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 name|QueryCompleteResponseProto
 name|queryComplete
@@ -232,6 +234,8 @@ parameter_list|(
 name|QueryCompleteRequestProto
 name|request
 parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 name|TerminateFragmentResponseProto
 name|terminateFragment
@@ -239,6 +243,8 @@ parameter_list|(
 name|TerminateFragmentRequestProto
 name|request
 parameter_list|)
+throws|throws
+name|IOException
 function_decl|;
 block|}
 end_interface

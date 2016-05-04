@@ -1276,6 +1276,8 @@ argument_list|,
 name|shufflePort
 argument_list|,
 name|webPort
+argument_list|,
+name|clusterNameTrimmed
 argument_list|)
 expr_stmt|;
 name|llapDaemons
