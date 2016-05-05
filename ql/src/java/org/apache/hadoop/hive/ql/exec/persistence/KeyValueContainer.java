@@ -1111,6 +1111,15 @@ return|;
 block|}
 specifier|public
 name|int
+name|numRowsInReadBuffer
+parameter_list|()
+block|{
+return|return
+name|rowsInReadBuffer
+return|;
+block|}
+specifier|public
+name|int
 name|size
 parameter_list|()
 block|{

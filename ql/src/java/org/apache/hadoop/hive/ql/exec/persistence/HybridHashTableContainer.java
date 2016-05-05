@@ -756,6 +756,11 @@ name|HybridHashTableConf
 name|nwayConf
 decl_stmt|;
 comment|// configuration for n-way join
+specifier|private
+name|int
+name|writeBufferSize
+decl_stmt|;
+comment|// write buffer size for BytesBytesMultiHashMap
 comment|/** The OI used to deserialize values. We never deserialize keys. */
 specifier|private
 name|LazyBinaryStructObjectInspector
@@ -1620,9 +1625,6 @@ operator|=
 name|nwayConf
 expr_stmt|;
 name|int
-name|writeBufferSize
-decl_stmt|;
-name|int
 name|numPartitions
 decl_stmt|;
 if|if
@@ -1795,6 +1797,8 @@ name|writeBufferSize
 argument_list|)
 expr_stmt|;
 comment|// Cap WriteBufferSize to avoid large preallocations
+comment|// We also want to limit the size of writeBuffer, because we normally have 16 partitions, that
+comment|// makes spilling prediction (isMemoryFull) to be too defensive which results in unnecessary spilling
 name|writeBufferSize
 operator|=
 name|writeBufferSize
@@ -1808,6 +1812,8 @@ operator|.
 name|min
 argument_list|(
 name|maxWbSize
+operator|/
+name|numPartitions
 argument_list|,
 name|writeBufferSize
 argument_list|)
@@ -2290,6 +2296,31 @@ name|memorySize
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
+comment|// also include the still-in-memory sidefile, before it has been truely spilled
+if|if
+condition|(
+name|hp
+operator|.
+name|sidefileKVContainer
+operator|!=
+literal|null
+condition|)
+block|{
+name|memUsed
+operator|+=
+name|hp
+operator|.
+name|sidefileKVContainer
+operator|.
+name|numRowsInReadBuffer
+argument_list|()
+operator|*
+name|tableRowSize
+expr_stmt|;
+block|}
+block|}
 block|}
 return|return
 name|memoryUsed
@@ -2399,6 +2430,12 @@ name|SerDeException
 throws|,
 name|IOException
 block|{
+name|boolean
+name|putToSidefile
+init|=
+literal|false
+decl_stmt|;
+comment|// by default we put row into partition in memory
 comment|// Next, put row into corresponding hash partition
 name|int
 name|keyHash
@@ -2449,49 +2486,31 @@ name|partitionId
 argument_list|)
 condition|)
 block|{
-name|KeyValueContainer
-name|kvContainer
-init|=
-name|hashPartition
-operator|.
-name|getSidefileKVContainer
-argument_list|()
-decl_stmt|;
-name|kvContainer
-operator|.
-name|add
-argument_list|(
-operator|(
-name|HiveKey
-operator|)
-name|currentKey
-argument_list|,
-operator|(
-name|BytesWritable
-operator|)
-name|currentValue
-argument_list|)
+comment|// destination on disk
+name|putToSidefile
+operator|=
+literal|true
 expr_stmt|;
 block|}
 else|else
 block|{
-name|hashPartition
-operator|.
-name|hashMap
-operator|.
-name|put
-argument_list|(
-name|keyValueHelper
-argument_list|,
-name|keyHash
-argument_list|)
-expr_stmt|;
-comment|// Pass along hashcode to avoid recalculation
-name|totalInMemRowCount
-operator|++
-expr_stmt|;
+comment|// destination in memory
 if|if
 condition|(
+operator|!
+name|lastPartitionInMem
+operator|&&
+comment|// If this is the only partition in memory, proceed without check
+operator|(
+name|hashPartition
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|||
+comment|// Destination partition being empty indicates a write buffer
+comment|// will be allocated, thus need to check if memory is full
 operator|(
 name|totalInMemRowCount
 operator|&
@@ -2505,13 +2524,10 @@ operator|)
 operator|)
 operator|==
 literal|0
-operator|&&
-comment|// check periodically
-operator|!
-name|lastPartitionInMem
+operator|)
 condition|)
 block|{
-comment|// If this is the only partition in memory, proceed without check
+comment|// check periodically
 if|if
 condition|(
 name|isMemoryFull
@@ -2571,6 +2587,19 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|partitionId
+operator|==
+name|biggest
+condition|)
+block|{
+comment|// destination hash partition has just be spilled
+name|putToSidefile
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -2582,6 +2611,14 @@ argument_list|(
 literal|"N-way spilling: spill tail partition from previously loaded small tables"
 argument_list|)
 expr_stmt|;
+name|int
+name|biggest
+init|=
+name|nwayConf
+operator|.
+name|getNextSpillPartition
+argument_list|()
+decl_stmt|;
 name|memoryThreshold
 operator|+=
 name|nwayConf
@@ -2589,6 +2626,23 @@ operator|.
 name|spill
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|biggest
+operator|!=
+literal|0
+operator|&&
+name|partitionId
+operator|==
+name|biggest
+condition|)
+block|{
+comment|// destination hash partition has just be spilled
+name|putToSidefile
+operator|=
+literal|true
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -2605,6 +2659,54 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
+comment|// Now we know where to put row
+if|if
+condition|(
+name|putToSidefile
+condition|)
+block|{
+name|KeyValueContainer
+name|kvContainer
+init|=
+name|hashPartition
+operator|.
+name|getSidefileKVContainer
+argument_list|()
+decl_stmt|;
+name|kvContainer
+operator|.
+name|add
+argument_list|(
+operator|(
+name|HiveKey
+operator|)
+name|currentKey
+argument_list|,
+operator|(
+name|BytesWritable
+operator|)
+name|currentValue
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|hashPartition
+operator|.
+name|hashMap
+operator|.
+name|put
+argument_list|(
+name|keyValueHelper
+argument_list|,
+name|keyHash
+argument_list|)
+expr_stmt|;
+comment|// Pass along hashcode to avoid recalculation
+name|totalInMemRowCount
+operator|++
+expr_stmt|;
 block|}
 return|return
 literal|null
@@ -2647,15 +2749,46 @@ operator|.
 name|hashMapSpilledOnCreation
 return|;
 block|}
-comment|/**    * Check if the memory threshold is reached    * @return true if memory is full, false if not    */
+comment|/**    * Check if the memory threshold is about to be reached.    * Since all the write buffer will be lazily allocated in BytesBytesMultiHashMap, we need to    * consider those as well.    * @return true if memory is full, false if not    */
 specifier|private
 name|boolean
 name|isMemoryFull
 parameter_list|()
 block|{
+name|int
+name|numPartitionsInMem
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|HashPartition
+name|hp
+range|:
+name|hashPartitions
+control|)
+block|{
+if|if
+condition|(
+operator|!
+name|hp
+operator|.
+name|isHashMapOnDisk
+argument_list|()
+condition|)
+block|{
+name|numPartitionsInMem
+operator|++
+expr_stmt|;
+block|}
+block|}
 return|return
 name|refreshMemoryUsed
 argument_list|()
+operator|+
+name|writeBufferSize
+operator|*
+name|numPartitionsInMem
 operator|>=
 name|memoryThreshold
 return|;
@@ -2838,6 +2971,17 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Trying to spill hash partition "
+operator|+
+name|partitionId
+operator|+
+literal|" ..."
+argument_list|)
+expr_stmt|;
 name|kryo
 operator|.
 name|writeObject
