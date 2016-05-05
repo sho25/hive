@@ -632,7 +632,7 @@ name|found
 operator|.
 name|size
 argument_list|()
-operator|==
+operator|>=
 literal|1
 condition|?
 name|found
