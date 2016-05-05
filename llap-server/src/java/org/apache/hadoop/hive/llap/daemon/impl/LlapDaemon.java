@@ -1342,6 +1342,43 @@ argument_list|,
 literal|"Shuffle Port must be betwee 1024 and 65535, or 0 for automatic selection"
 argument_list|)
 expr_stmt|;
+name|int
+name|outputFormatServicePort
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_OUTPUT_SERVICE_PORT
+argument_list|)
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|outputFormatServicePort
+operator|==
+literal|0
+operator|||
+operator|(
+name|outputFormatServicePort
+operator|>
+literal|1024
+operator|&&
+name|outputFormatServicePort
+operator|<
+literal|65536
+operator|)
+argument_list|,
+literal|"OutputFormatService Port must be between 1024 and 65535, or 0 for automatic selection"
+argument_list|)
+expr_stmt|;
 name|String
 name|hosts
 init|=
@@ -1551,6 +1588,10 @@ operator|+
 literal|", webPort="
 operator|+
 name|webPort
+operator|+
+literal|", outputFormatSvcPort="
+operator|+
+name|outputFormatServicePort
 operator|+
 literal|", workDirs="
 operator|+
@@ -2513,6 +2554,14 @@ name|get
 argument_list|()
 operator|.
 name|getPort
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LlapOutputFormatService
+operator|.
+name|initializeAndStart
+argument_list|(
+name|getConfig
 argument_list|()
 argument_list|)
 expr_stmt|;
