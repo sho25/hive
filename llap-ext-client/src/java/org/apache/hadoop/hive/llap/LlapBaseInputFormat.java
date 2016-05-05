@@ -1067,6 +1067,10 @@ name|ByteString
 import|;
 end_import
 
+begin_comment
+comment|/**  * Base LLAP input format to handle requesting of splits and communication with LLAP daemon.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -1570,6 +1574,8 @@ argument_list|,
 name|Text
 operator|.
 name|class
+argument_list|,
+name|job
 argument_list|)
 decl_stmt|;
 name|umbilicalResponder
@@ -2279,19 +2285,6 @@ name|Credentials
 argument_list|()
 decl_stmt|;
 comment|// Credentials can change across DAGs. Ideally construct only once per DAG.
-comment|// TODO Figure out where credentials will come from. Normally Hive sets up
-comment|// URLs on the tez dag, for which Tez acquires credentials.
-comment|//    taskCredentials.addAll(getContext().getCredentials());
-comment|//    Preconditions.checkState(currentQueryIdentifierProto.getDagIdentifier() ==
-comment|//        taskSpec.getTaskAttemptID().getTaskID().getVertexID().getDAGId().getId());
-comment|//    ByteBuffer credentialsBinary = credentialMap.get(currentQueryIdentifierProto);
-comment|//    if (credentialsBinary == null) {
-comment|//      credentialsBinary = serializeCredentials(getContext().getCredentials());
-comment|//      credentialMap.putIfAbsent(currentQueryIdentifierProto, credentialsBinary.duplicate());
-comment|//    } else {
-comment|//      credentialsBinary = credentialsBinary.duplicate();
-comment|//    }
-comment|//    builder.setCredentialsBinary(ByteString.copyFrom(credentialsBinary));
 name|Credentials
 name|credentials
 init|=

@@ -2402,7 +2402,6 @@ name|getCredentials
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: set access control? TezTask.setAccessControlsForCurrentUser(dag);
 name|DagUtils
 name|utils
 init|=

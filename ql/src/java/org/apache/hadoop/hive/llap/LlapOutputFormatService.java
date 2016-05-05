@@ -59,6 +59,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|net
+operator|.
+name|InetSocketAddress
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -524,7 +534,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  */
+comment|/**  * Responsible for sending back result set data to the connections made by external clients via the LLAP input format.  */
 end_comment
 
 begin_class
@@ -596,6 +606,10 @@ name|ChannelFuture
 name|listeningChannelFuture
 decl_stmt|;
 specifier|private
+name|int
+name|port
+decl_stmt|;
+specifier|private
 name|LlapOutputFormatService
 parameter_list|()
 throws|throws
@@ -665,7 +679,7 @@ literal|"Starting LlapOutputFormatService"
 argument_list|)
 expr_stmt|;
 name|int
-name|port
+name|portFromConf
 init|=
 name|conf
 operator|.
@@ -719,26 +733,48 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"LlapOutputFormatService: Binding to port "
-operator|+
-name|port
-argument_list|)
-expr_stmt|;
 name|listeningChannelFuture
 operator|=
 name|serverBootstrap
 operator|.
 name|bind
 argument_list|(
-name|port
+name|portFromConf
 argument_list|)
 operator|.
 name|sync
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|port
+operator|=
+operator|(
+operator|(
+name|InetSocketAddress
+operator|)
+name|listeningChannelFuture
+operator|.
+name|channel
+argument_list|()
+operator|.
+name|localAddress
+argument_list|()
+operator|)
+operator|.
+name|getPort
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"LlapOutputFormatService: Binding to port "
+operator|+
+name|this
+operator|.
+name|port
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -753,7 +789,7 @@ name|IOException
 argument_list|(
 literal|"LlapOutputFormatService: Error binding to port "
 operator|+
-name|port
+name|portFromConf
 argument_list|,
 name|err
 argument_list|)
@@ -906,6 +942,15 @@ argument_list|)
 expr_stmt|;
 return|return
 name|writer
+return|;
+block|}
+specifier|public
+name|int
+name|getPort
+parameter_list|()
+block|{
+return|return
+name|port
 return|;
 block|}
 specifier|protected

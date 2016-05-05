@@ -1,4 +1,8 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
+begin_comment
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one or more  * contributor license agreements.  See the NOTICE file distributed with  * this work for additional information regarding copyright ownership.  * The ASF licenses this file to You under the Apache License, Version 2.0  * (the "License"); you may not use this file except in compliance with  * the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+end_comment
+
 begin_package
 package|package
 name|org
@@ -811,10 +815,6 @@ name|tezEvents
 expr_stmt|;
 block|}
 block|}
-comment|// TODO KKK Work out the details of the tokenIdentifier, and the session token.
-comment|// It may just be possible to create one here - since Shuffle is not involved, and this is only used
-comment|// for communication from LLAP-Daemons to the server. It will need to be sent in as part
-comment|// of the job submission request.
 specifier|public
 name|LlapTaskUmbilicalExternalClient
 parameter_list|(
@@ -890,6 +890,8 @@ name|this
 operator|.
 name|connectionTimeout
 operator|=
+literal|3
+operator|*
 name|HiveConf
 operator|.
 name|getTimeVar
@@ -907,7 +909,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
-comment|// TODO. No support for the LLAP token yet. Add support for configurable threads, however 1 should always be enough.
+comment|// No support for the LLAP token yet. Add support for configurable threads, however 1 should always be enough.
 name|this
 operator|.
 name|communicator
@@ -1288,17 +1290,6 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
-comment|//    // TODO Also send out information saying that the fragment is finishable - if that is not already included in the main fragment.
-comment|//    // This entire call is only required if we're doing more than scans. MRInput has no dependencies and is always finishable
-comment|//    QueryIdentifierProto queryIdentifier = QueryIdentifierProto
-comment|//        .newBuilder()
-comment|//        .setAppIdentifier(submitWorkRequestProto.getApplicationIdString()).setDagIdentifier(submitWorkRequestProto.getFragmentSpec().getDagId())
-comment|//        .build();
-comment|//    LlapDaemonProtocolProtos.SourceStateUpdatedRequestProto sourceStateUpdatedRequest =
-comment|//        LlapDaemonProtocolProtos.SourceStateUpdatedRequestProto.newBuilder().setQueryIdentifier(queryIdentifier).setState(
-comment|//            LlapDaemonProtocolProtos.SourceStateProto.S_SUCCEEDED).
-comment|//            setSrcName(TODO)
-comment|//    communicator.sendSourceStateUpdate(LlapDaemonProtocolProtos.SourceStateUpdatedRequestProto.newBuilder().setQueryIdentifier(submitWorkRequestProto.getFragmentSpec().getFragmentIdentifierString()).set);
 block|}
 specifier|private
 name|void
@@ -1691,7 +1682,6 @@ argument_list|(
 name|timedOutTask
 argument_list|)
 expr_stmt|;
-comment|// TODO: Do we need to tell the LLAP daemon we are no longer interested in this task?
 block|}
 name|timedOutTasks
 operator|.
@@ -1783,7 +1773,6 @@ argument_list|(
 name|timedOutTask
 argument_list|)
 expr_stmt|;
-comment|// TODO: Do we need to tell the LLAP daemon we are no longer interested in this task?
 block|}
 block|}
 block|}
@@ -1823,7 +1812,7 @@ name|fragmentId
 parameter_list|)
 function_decl|;
 block|}
-comment|// TODO Ideally, the server should be shared across all client sessions running on the same node.
+comment|// Ideally, the server should be shared across all client sessions running on the same node.
 specifier|private
 class|class
 name|LlapTaskUmbilicalExternalImpl

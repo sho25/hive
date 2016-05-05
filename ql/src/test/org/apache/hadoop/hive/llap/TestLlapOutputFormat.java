@@ -737,6 +737,8 @@ argument_list|,
 name|Text
 operator|.
 name|class
+argument_list|,
+name|job
 argument_list|)
 decl_stmt|;
 name|LOG

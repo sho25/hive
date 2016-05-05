@@ -1103,7 +1103,12 @@ argument_list|()
 argument_list|,
 literal|0
 argument_list|,
-literal|null
+name|mock
+argument_list|(
+name|AMReporter
+operator|.
+name|class
+argument_list|)
 argument_list|,
 literal|null
 argument_list|,

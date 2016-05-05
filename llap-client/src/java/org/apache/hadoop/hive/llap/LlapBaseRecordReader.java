@@ -71,6 +71,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -80,6 +92,22 @@ operator|.
 name|conf
 operator|.
 name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -217,6 +245,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * Base LLAP RecordReader to handle receiving of the data from the LLAP daemon.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -249,12 +281,18 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|protected
+specifier|final
 name|DataInputStream
 name|din
 decl_stmt|;
+specifier|protected
+specifier|final
 name|Schema
 name|schema
 decl_stmt|;
+specifier|protected
+specifier|final
 name|Class
 argument_list|<
 name|V
@@ -268,6 +306,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|protected
+specifier|final
 name|LinkedBlockingQueue
 argument_list|<
 name|ReaderEvent
@@ -280,6 +319,11 @@ argument_list|<
 name|ReaderEvent
 argument_list|>
 argument_list|()
+decl_stmt|;
+specifier|protected
+specifier|final
+name|long
+name|timeout
 decl_stmt|;
 specifier|public
 name|LlapBaseRecordReader
@@ -295,6 +339,9 @@ argument_list|<
 name|V
 argument_list|>
 name|clazz
+parameter_list|,
+name|JobConf
+name|job
 parameter_list|)
 block|{
 name|din
@@ -325,6 +372,29 @@ name|Thread
 operator|.
 name|currentThread
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|timeout
+operator|=
+literal|3
+operator|*
+name|HiveConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|job
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_AM_LIVENESS_CONNECTION_TIMEOUT_MS
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -358,6 +428,7 @@ name|long
 name|getPos
 parameter_list|()
 block|{
+comment|// dummy impl
 return|return
 literal|0
 return|;
@@ -369,6 +440,7 @@ name|float
 name|getProgress
 parameter_list|()
 block|{
+comment|// dummy impl
 return|return
 literal|0f
 return|;
@@ -516,7 +588,7 @@ argument_list|()
 condition|)
 block|{
 comment|// Either we were interrupted by one of:
-comment|// 1. handleEvent(), in which case there is a reader event waiting for us in the queue
+comment|// 1. handleEvent(), in which case there is a reader (error) event waiting for us in the queue
 comment|// 2. Some other unrelated cause which interrupted us, in which case there may not be a reader event coming.
 comment|// Either way we should not try to block trying to read the reader events queue.
 if|if
@@ -809,6 +881,8 @@ specifier|protected
 name|ReaderEvent
 name|getReaderEvent
 parameter_list|()
+throws|throws
+name|IOException
 block|{
 try|try
 block|{
@@ -817,9 +891,30 @@ name|event
 init|=
 name|readerEvents
 operator|.
-name|take
-argument_list|()
+name|poll
+argument_list|(
+name|timeout
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|event
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Timed out getting readerEvents"
+argument_list|)
+throw|;
+block|}
 return|return
 name|event
 return|;

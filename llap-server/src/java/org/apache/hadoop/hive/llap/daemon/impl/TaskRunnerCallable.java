@@ -1283,6 +1283,17 @@ operator|=
 name|amReporter
 expr_stmt|;
 comment|// Register with the AMReporter when the callable is setup. Unregister once it starts running.
+if|if
+condition|(
+name|amReporter
+operator|!=
+literal|null
+operator|&&
+name|jobToken
+operator|!=
+literal|null
+condition|)
+block|{
 name|this
 operator|.
 name|amReporter
@@ -1315,6 +1326,7 @@ name|getQueryIdentifier
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|metrics

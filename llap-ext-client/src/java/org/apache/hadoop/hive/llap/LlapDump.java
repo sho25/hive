@@ -481,6 +481,10 @@ name|Schema
 import|;
 end_import
 
+begin_comment
+comment|/**  * Utility to test query and data retrieval via the LLAP input format.  * llapdump --hiveconf hive.zookeeper.quorum=localhost --hiveconf hive.zookeeper.client.port=2181 --hiveconf hive.llap.daemon.service.hosts=@llap_MiniLlapCluster 'select * from employee where employee_id< 10'  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -527,7 +531,7 @@ specifier|static
 name|String
 name|query
 init|=
-literal|"select * from test"
+literal|null
 decl_stmt|;
 specifier|private
 specifier|static
@@ -708,6 +712,21 @@ index|[
 literal|0
 index|]
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|query
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"No query string specified"
+argument_list|)
+throw|;
 block|}
 name|System
 operator|.

@@ -819,7 +819,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// TODO RSHACK - assuming grouping enabled always.
+comment|// Assuming grouping enabled always.
 name|userPayloadProto
 operator|=
 name|MRInputUserPayloadProto
@@ -872,7 +872,7 @@ comment|// Events can start coming in the moment the InputInitializer is created
 comment|// must be setup and initialized here so that it sets up it's structures to start accepting events.
 comment|// Setting it up in initialize leads to a window where events may come in before the pruner is
 comment|// initialized, which may cause it to drop events.
-comment|// TODO RSHACK - No dynamic partition pruning
+comment|// No dynamic partition pruning
 name|pruner
 operator|=
 literal|null
