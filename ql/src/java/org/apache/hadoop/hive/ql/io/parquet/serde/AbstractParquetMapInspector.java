@@ -274,12 +274,6 @@ condition|(
 name|mapArray
 operator|==
 literal|null
-operator|||
-name|mapArray
-operator|.
-name|length
-operator|==
-literal|0
 condition|)
 block|{
 return|return
@@ -432,12 +426,6 @@ condition|(
 name|mapArray
 operator|==
 literal|null
-operator|||
-name|mapArray
-operator|.
-name|length
-operator|==
-literal|0
 condition|)
 block|{
 return|return

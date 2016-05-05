@@ -4024,6 +4024,25 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+name|void
+name|dropConstraint
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|constraintName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
 block|}
 end_interface
 

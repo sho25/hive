@@ -2482,6 +2482,12 @@ name|startLocalizeAllFunctions
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isIoEnabled
+argument_list|()
+condition|)
+block|{
 name|LlapProxy
 operator|.
 name|initializeLlapIo
@@ -2489,6 +2495,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

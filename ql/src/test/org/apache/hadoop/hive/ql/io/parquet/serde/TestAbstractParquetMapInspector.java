@@ -334,8 +334,7 @@ name|assertEquals
 argument_list|(
 literal|"Wrong size"
 argument_list|,
-operator|-
-literal|1
+literal|0
 argument_list|,
 name|inspector
 operator|.
@@ -345,9 +344,9 @@ name|map
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertNull
+name|assertNotNull
 argument_list|(
-literal|"Should be null"
+literal|"Should not be null"
 argument_list|,
 name|inspector
 operator|.

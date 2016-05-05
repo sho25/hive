@@ -404,6 +404,11 @@ name|MERGEFILES
 argument_list|(
 literal|"merge files"
 argument_list|)
+block|,
+name|DROPCONSTRAINT
+argument_list|(
+literal|"drop constraint"
+argument_list|)
 block|;     ;
 specifier|private
 specifier|final
@@ -701,6 +706,9 @@ literal|false
 decl_stmt|;
 name|EnvironmentContext
 name|environmentContext
+decl_stmt|;
+name|String
+name|dropConstraintName
 decl_stmt|;
 specifier|public
 name|AlterTableDesc
@@ -1348,6 +1356,35 @@ operator|=
 name|numBuckets
 expr_stmt|;
 block|}
+specifier|public
+name|AlterTableDesc
+parameter_list|(
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|dropConstraintName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|oldName
+operator|=
+name|tableName
+expr_stmt|;
+name|this
+operator|.
+name|dropConstraintName
+operator|=
+name|dropConstraintName
+expr_stmt|;
+name|op
+operator|=
+name|AlterTableTypes
+operator|.
+name|DROPCONSTRAINT
+expr_stmt|;
+block|}
 annotation|@
 name|Explain
 argument_list|(
@@ -1786,6 +1823,55 @@ block|{
 return|return
 name|storageHandler
 return|;
+block|}
+comment|/**    * @return the drop constraint name of the table    */
+annotation|@
+name|Explain
+argument_list|(
+name|displayName
+operator|=
+literal|"drop constraint name"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
+argument_list|)
+specifier|public
+name|String
+name|getConstraintName
+parameter_list|()
+block|{
+return|return
+name|dropConstraintName
+return|;
+block|}
+comment|/**    * @param constraintName    *          the dropConstraintName to set    */
+specifier|public
+name|void
+name|setDropConstraintName
+parameter_list|(
+name|String
+name|constraintName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dropConstraintName
+operator|=
+name|constraintName
+expr_stmt|;
 block|}
 comment|/**    * @param storageHandler    *          the storage handler to set    */
 specifier|public

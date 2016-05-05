@@ -2197,6 +2197,100 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testEmptyArrays
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|columnNames
+init|=
+literal|"arrayCol"
+decl_stmt|;
+name|String
+name|columnTypes
+init|=
+literal|"array<int>"
+decl_stmt|;
+name|String
+name|fileSchema
+init|=
+literal|"message hive_schema {\n"
+operator|+
+literal|"  optional group arrayCol (LIST) {\n"
+operator|+
+literal|"    repeated group array {\n"
+operator|+
+literal|"      optional int32 array_element;\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  }\n"
+operator|+
+literal|"}\n"
+decl_stmt|;
+name|ArrayWritable
+name|hiveRecord
+init|=
+name|createGroup
+argument_list|(
+operator|new
+name|ArrayWritable
+argument_list|(
+name|Writable
+operator|.
+name|class
+argument_list|)
+comment|// Empty array
+argument_list|)
+decl_stmt|;
+comment|// Write record to Parquet format
+name|writeParquetRecord
+argument_list|(
+name|fileSchema
+argument_list|,
+name|getParquetWritable
+argument_list|(
+name|columnNames
+argument_list|,
+name|columnTypes
+argument_list|,
+name|hiveRecord
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Verify record was written correctly to Parquet
+name|startMessage
+argument_list|()
+expr_stmt|;
+name|startField
+argument_list|(
+literal|"arrayCol"
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|startGroup
+argument_list|()
+expr_stmt|;
+name|endGroup
+argument_list|()
+expr_stmt|;
+name|endField
+argument_list|(
+literal|"arrayCol"
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|endMessage
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testArrayOfArrays
 parameter_list|()
 throws|throws

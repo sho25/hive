@@ -32,6 +32,8 @@ name|LEAVE_LOOP
 block|,
 name|LEAVE_ROUTINE
 block|,
+name|LEAVE_PROGRAM
+block|,
 name|SQLEXCEPTION
 block|,
 name|NOTFOUND

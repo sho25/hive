@@ -9702,6 +9702,34 @@ name|expr
 init|=
 literal|null
 decl_stmt|;
+comment|// Validate the IN items are only constants.
+for|for
+control|(
+name|ExprNodeDesc
+name|inListChild
+range|:
+name|childrenForInList
+control|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|inListChild
+operator|instanceof
+name|ExprNodeConstantDesc
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Vectorizing IN expression only supported for constant values"
+argument_list|)
+throw|;
+block|}
+block|}
 comment|// determine class
 name|Class
 argument_list|<
