@@ -369,6 +369,8 @@ name|GetOpenTxnsInfoResponse
 name|txns
 parameter_list|)
 block|{
+comment|//todo: this could be more efficient: using select min(txn_id) from TXNS where txn_state=" +
+comment|// quoteChar(TXN_OPEN)  to compute compute HWM...
 name|long
 name|highWater
 init|=

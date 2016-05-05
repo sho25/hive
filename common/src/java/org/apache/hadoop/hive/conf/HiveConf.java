@@ -7656,6 +7656,23 @@ argument_list|,
 literal|"Time interval describing how often the reaper runs"
 argument_list|)
 block|,
+name|WRITE_SET_REAPER_INTERVAL
+argument_list|(
+literal|"hive.writeset.reaper.interval"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Frequency of WriteSet reaper runs"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(

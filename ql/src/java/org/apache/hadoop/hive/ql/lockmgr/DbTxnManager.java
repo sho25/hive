@@ -701,6 +701,8 @@ parameter_list|)
 throws|throws
 name|LockException
 block|{
+comment|//todo: why don't we lock the snapshot here???  Instead of having client make an explicit call
+comment|//whenever it chooses
 name|init
 argument_list|()
 expr_stmt|;
@@ -829,6 +831,8 @@ parameter_list|)
 throws|throws
 name|LockException
 block|{
+try|try
+block|{
 name|acquireLocks
 argument_list|(
 name|plan
@@ -843,6 +847,37 @@ expr_stmt|;
 name|startHeartbeat
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|LockException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|TxnAbortedException
+condition|)
+block|{
+name|txnId
+operator|=
+literal|0
+expr_stmt|;
+name|statementId
+operator|=
+operator|-
+literal|1
+expr_stmt|;
+block|}
+throw|throw
+name|e
+throw|;
+block|}
 block|}
 comment|/**    * This is for testing only.  Normally client should call {@link #acquireLocks(org.apache.hadoop.hive.ql.QueryPlan, org.apache.hadoop.hive.ql.Context, String)}    * @param isBlocking if false, the method will return immediately; thus the locks may be in LockState.WAITING    * @return null if no locks were needed    */
 name|LockState
@@ -942,7 +977,7 @@ name|isUpdateOrDelete
 argument_list|()
 condition|)
 block|{
-comment|// We don't want to acquire readlocks during update or delete as we'll be acquiring write
+comment|// We don't want to acquire read locks during update or delete as we'll be acquiring write
 comment|// locks instead.
 continue|continue;
 block|}
@@ -1686,23 +1721,9 @@ name|TxnAbortedException
 name|e
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Transaction "
-operator|+
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-name|txnId
-argument_list|)
-operator|+
-literal|" aborted"
-argument_list|)
-expr_stmt|;
-throw|throw
+name|LockException
+name|le
+init|=
 operator|new
 name|LockException
 argument_list|(
@@ -1718,7 +1739,25 @@ name|txnIdToString
 argument_list|(
 name|txnId
 argument_list|)
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|le
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|le
 throw|;
 block|}
 catch|catch
@@ -2151,21 +2190,9 @@ name|TxnAbortedException
 name|e
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Transaction aborted "
-operator|+
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-name|txnId
-argument_list|)
-argument_list|)
-expr_stmt|;
-throw|throw
+name|LockException
+name|le
+init|=
 operator|new
 name|LockException
 argument_list|(
@@ -2181,7 +2208,25 @@ name|txnIdToString
 argument_list|(
 name|txnId
 argument_list|)
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|le
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+name|le
 throw|;
 block|}
 catch|catch
