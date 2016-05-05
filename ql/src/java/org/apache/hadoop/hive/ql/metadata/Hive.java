@@ -391,6 +391,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ConcurrentHashMap
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -1955,7 +1967,7 @@ decl_stmt|;
 comment|// metastore calls timing information
 specifier|private
 specifier|final
-name|Map
+name|ConcurrentHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1964,12 +1976,8 @@ argument_list|>
 name|metaCallTimeMap
 init|=
 operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|Long
-argument_list|>
+name|ConcurrentHashMap
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
