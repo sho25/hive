@@ -261,6 +261,19 @@ literal|1024
 operator|*
 literal|1024
 decl_stmt|;
+comment|// Don't try to operate with less than MIN_SIZE allocator space, it will just give you grief.
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|MIN_TOTAL_MEMORY_SIZE
+init|=
+literal|64
+operator|*
+literal|1024
+operator|*
+literal|1024
+decl_stmt|;
 specifier|public
 name|BuddyAllocator
 parameter_list|(
@@ -326,6 +339,29 @@ operator|.
 name|LLAP_ALLOCATOR_ARENA_COUNT
 argument_list|)
 argument_list|,
+name|getMaxTotalMemorySize
+argument_list|(
+name|conf
+argument_list|)
+argument_list|,
+name|mm
+argument_list|,
+name|metrics
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+name|long
+name|getMaxTotalMemorySize
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|long
+name|maxSize
+init|=
 name|HiveConf
 operator|.
 name|getSizeVar
@@ -336,12 +372,70 @@ name|ConfVars
 operator|.
 name|LLAP_IO_MEMORY_MAX_SIZE
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|maxSize
+operator|>
+name|MIN_TOTAL_MEMORY_SIZE
+operator|||
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
 argument_list|,
-name|mm
-argument_list|,
-name|metrics
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+return|return
+name|maxSize
+return|;
+block|}
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Allocator space is too small for reasonable operation; "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_IO_MEMORY_MAX_SIZE
+operator|.
+name|varname
+operator|+
+literal|"="
+operator|+
+name|maxSize
+operator|+
+literal|", but at least "
+operator|+
+name|MIN_TOTAL_MEMORY_SIZE
+operator|+
+literal|" is required. If you cannot spare any memory, you can "
+operator|+
+literal|"disable LLAP IO entirely via "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_IO_ENABLED
+operator|.
+name|varname
+operator|+
+literal|"; or set "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_IO_MEMORY_MODE
+operator|.
+name|varname
+operator|+
+literal|" to 'none'"
+argument_list|)
+throw|;
 block|}
 annotation|@
 name|VisibleForTesting
@@ -464,6 +558,23 @@ name|maxSizeVal
 argument_list|)
 expr_stmt|;
 block|}
+name|String
+name|minName
+init|=
+name|ConfVars
+operator|.
+name|LLAP_ALLOCATOR_MIN_ALLOC
+operator|.
+name|varname
+decl_stmt|,
+name|maxName
+init|=
+name|ConfVars
+operator|.
+name|LLAP_ALLOCATOR_MAX_ALLOC
+operator|.
+name|varname
+decl_stmt|;
 if|if
 condition|(
 name|minAllocation
@@ -473,9 +584,11 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|AssertionError
+name|RuntimeException
 argument_list|(
-literal|"Min allocation must be at least 8 bytes: "
+name|minName
+operator|+
+literal|" must be at least 8 bytes: "
 operator|+
 name|minAllocation
 argument_list|)
@@ -485,7 +598,7 @@ if|if
 condition|(
 name|maxSizeVal
 operator|<
-name|arenaSizeVal
+name|maxAllocation
 operator|||
 name|maxAllocation
 operator|<
@@ -494,21 +607,33 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|AssertionError
+name|RuntimeException
 argument_list|(
-literal|"Inconsistent sizes of cache, arena and allocations: "
+literal|"Inconsistent sizes; expecting "
+operator|+
+name|minName
+operator|+
+literal|"<= "
+operator|+
+name|maxName
+operator|+
+literal|"<= "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_IO_MEMORY_MAX_SIZE
+operator|.
+name|varname
+operator|+
+literal|"; configured with min="
 operator|+
 name|minAllocation
 operator|+
-literal|", "
+literal|", max="
 operator|+
 name|maxAllocation
 operator|+
-literal|", "
-operator|+
-name|arenaSizeVal
-operator|+
-literal|", "
+literal|" and total="
 operator|+
 name|maxSizeVal
 argument_list|)
@@ -541,13 +666,21 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|AssertionError
+name|RuntimeException
 argument_list|(
-literal|"Allocation sizes must be powers of two: "
+literal|"Allocation sizes must be powers of two; configured with "
+operator|+
+name|minName
+operator|+
+literal|"="
 operator|+
 name|minAllocation
 operator|+
 literal|", "
+operator|+
+name|maxName
+operator|+
+literal|"="
 operator|+
 name|maxAllocation
 argument_list|)
@@ -664,13 +797,13 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|AssertionError
+name|RuntimeException
 argument_list|(
 literal|"Too many arenas needed to allocate the cache: "
 operator|+
 name|arenaSize
 operator|+
-literal|","
+literal|", "
 operator|+
 name|maxSizeVal
 argument_list|)
@@ -1551,6 +1684,8 @@ name|void
 name|init
 parameter_list|()
 block|{
+try|try
+block|{
 name|data
 operator|=
 name|isDirect
@@ -1569,6 +1704,32 @@ argument_list|(
 name|arenaSize
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|OutOfMemoryError
+name|oom
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|OutOfMemoryError
+argument_list|(
+literal|"Cannot allocate "
+operator|+
+name|arenaSize
+operator|+
+literal|" bytes: "
+operator|+
+name|oom
+operator|.
+name|getMessage
+argument_list|()
+operator|+
+literal|"; make sure your xmx and process size are set correctly."
+argument_list|)
+throw|;
+block|}
 name|int
 name|maxMinAllocs
 init|=
