@@ -8230,6 +8230,23 @@ operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
 argument_list|)
 block|,
+name|HIVE_ASYNC_LOG_ENABLED
+argument_list|(
+literal|"hive.async.log.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable Log4j2's asynchronous logging. Asynchronous logging can give\n"
+operator|+
+literal|" significant performance improvement as logging will be handled in separate thread\n"
+operator|+
+literal|" that uses LMAX disruptor queue for buffering log messages.\n"
+operator|+
+literal|" Refer https://logging.apache.org/log4j/2.x/manual/async.html for benefits and\n"
+operator|+
+literal|" drawbacks."
+argument_list|)
+block|,
 name|HIVE_LOG_EXPLAIN_OUTPUT
 argument_list|(
 literal|"hive.log.explain.output"
