@@ -85,6 +85,11 @@ name|boolean
 name|isDistinct
 parameter_list|()
 function_decl|;
+comment|/**    * The flag to indicate if the UDAF invocation was from the windowing function    * call or not.    * @return<tt>true</tt> if the UDAF invocation was from the windowing function    * call.    */
+name|boolean
+name|isWindowing
+parameter_list|()
+function_decl|;
 comment|/**    * Returns<tt>true</tt> if the UDAF invocation was done via the wildcard    * syntax<tt>FUNCTION(*)</tt>. Note that this is provided for informational    * purposes only and the function implementation is not expected to ensure    * the wildcard handling of the target relation. That is handled by the    * framework.    * @return<tt>true</tt> if the UDAF invocation was done with a wildcard    * instead of explicit parameter list.    */
 name|boolean
 name|isAllColumns

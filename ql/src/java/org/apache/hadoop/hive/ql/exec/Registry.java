@@ -2262,6 +2262,9 @@ argument_list|>
 name|argumentOIs
 parameter_list|,
 name|boolean
+name|isWindowing
+parameter_list|,
+name|boolean
 name|isDistinct
 parameter_list|,
 name|boolean
@@ -2345,6 +2348,8 @@ operator|new
 name|SimpleGenericUDAFParameterInfo
 argument_list|(
 name|args
+argument_list|,
+name|isWindowing
 argument_list|,
 name|isDistinct
 argument_list|,
@@ -2470,6 +2475,8 @@ name|functionName
 argument_list|,
 name|argumentOIs
 argument_list|,
+literal|true
+argument_list|,
 name|isDistinct
 argument_list|,
 name|isAllColumns
@@ -2510,6 +2517,8 @@ name|toArray
 argument_list|(
 name|args
 argument_list|)
+argument_list|,
+literal|true
 argument_list|,
 name|isDistinct
 argument_list|,

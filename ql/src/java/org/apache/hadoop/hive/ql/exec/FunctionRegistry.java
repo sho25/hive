@@ -7446,6 +7446,8 @@ name|SimpleGenericUDAFParameterInfo
 argument_list|(
 name|args
 argument_list|,
+literal|false
+argument_list|,
 name|isDistinct
 argument_list|,
 name|isAllColumns
