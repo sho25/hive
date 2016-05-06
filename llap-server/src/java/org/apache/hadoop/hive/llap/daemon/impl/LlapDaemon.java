@@ -217,6 +217,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|LogUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -1248,7 +1264,9 @@ literal|"LlapDaemon"
 argument_list|)
 expr_stmt|;
 name|initializeLogging
-argument_list|()
+argument_list|(
+name|daemonConf
+argument_list|)
 expr_stmt|;
 name|printAsciiArt
 argument_list|()
@@ -2218,7 +2236,11 @@ block|}
 specifier|private
 name|void
 name|initializeLogging
-parameter_list|()
+parameter_list|(
+specifier|final
+name|Configuration
+name|conf
+parameter_list|)
 block|{
 name|long
 name|start
@@ -2250,6 +2272,17 @@ operator|!=
 literal|null
 condition|)
 block|{
+specifier|final
+name|boolean
+name|async
+init|=
+name|LogUtils
+operator|.
+name|checkAndSetAsyncLogging
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|Configurator
 operator|.
 name|initialize
@@ -2274,7 +2307,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"LLAP daemon logging initialized from {} in {} ms"
+literal|"LLAP daemon logging initialized from {} in {} ms. Async: {}"
 argument_list|,
 name|llap_l4j2
 argument_list|,
@@ -2283,6 +2316,8 @@ name|end
 operator|-
 name|start
 operator|)
+argument_list|,
+name|async
 argument_list|)
 expr_stmt|;
 block|}

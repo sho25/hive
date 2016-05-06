@@ -93,6 +93,11 @@ specifier|final
 name|boolean
 name|useCaching
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|foldExpr
+decl_stmt|;
 comment|/**    * Receives translations which will need to be applied during unparse.    */
 specifier|private
 name|UnparseTranslator
@@ -161,6 +166,8 @@ argument_list|(
 name|inputRR
 argument_list|,
 literal|true
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -172,6 +179,9 @@ name|inputRR
 parameter_list|,
 name|boolean
 name|useCaching
+parameter_list|,
+name|boolean
+name|foldExpr
 parameter_list|)
 block|{
 name|this
@@ -179,6 +189,8 @@ argument_list|(
 name|inputRR
 argument_list|,
 name|useCaching
+argument_list|,
+name|foldExpr
 argument_list|,
 literal|false
 argument_list|,
@@ -206,6 +218,9 @@ name|inputRR
 parameter_list|,
 name|boolean
 name|useCaching
+parameter_list|,
+name|boolean
+name|foldExpr
 parameter_list|,
 name|boolean
 name|allowStatefulFunctions
@@ -246,6 +261,12 @@ operator|.
 name|useCaching
 operator|=
 name|useCaching
+expr_stmt|;
+name|this
+operator|.
+name|foldExpr
+operator|=
+name|foldExpr
 expr_stmt|;
 name|this
 operator|.
@@ -543,6 +564,15 @@ parameter_list|()
 block|{
 return|return
 name|useCaching
+return|;
+block|}
+specifier|public
+name|boolean
+name|isFoldExpr
+parameter_list|()
+block|{
+return|return
+name|foldExpr
 return|;
 block|}
 block|}

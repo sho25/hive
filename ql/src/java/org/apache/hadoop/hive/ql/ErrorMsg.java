@@ -1754,7 +1754,7 @@ name|TXN_ABORTED
 argument_list|(
 literal|10263
 argument_list|,
-literal|"Transaction manager has aborted the transaction {0}."
+literal|"Transaction manager has aborted the transaction {0}.  Reason: {1}"
 argument_list|,
 literal|true
 argument_list|)

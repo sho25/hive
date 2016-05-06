@@ -1297,7 +1297,7 @@ argument_list|(
 literal|"mypartition"
 argument_list|)
 operator|.
-name|setExclusive
+name|setSemiShared
 argument_list|()
 operator|.
 name|build

@@ -1975,7 +1975,7 @@ name|LlapMetricsSystem
 operator|.
 name|initialize
 argument_list|(
-literal|"LlapDaemon"
+literal|"LlapTaskScheduler"
 argument_list|)
 expr_stmt|;
 name|this

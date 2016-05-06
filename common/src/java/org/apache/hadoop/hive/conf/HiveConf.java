@@ -7658,6 +7658,23 @@ argument_list|,
 literal|"Time interval describing how often the reaper runs"
 argument_list|)
 block|,
+name|WRITE_SET_REAPER_INTERVAL
+argument_list|(
+literal|"hive.writeset.reaper.interval"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Frequency of WriteSet reaper runs"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
@@ -8213,6 +8230,23 @@ operator|+
 literal|"If the property is set, the value must be a valid URI (java.net.URI, e.g. \"file:///tmp/my-logging.xml\"), \n"
 operator|+
 literal|"which you can then extract a URL from and pass to PropertyConfigurator.configure(URL)."
+argument_list|)
+block|,
+name|HIVE_ASYNC_LOG_ENABLED
+argument_list|(
+literal|"hive.async.log.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable Log4j2's asynchronous logging. Asynchronous logging can give\n"
+operator|+
+literal|" significant performance improvement as logging will be handled in separate thread\n"
+operator|+
+literal|" that uses LMAX disruptor queue for buffering log messages.\n"
+operator|+
+literal|" Refer https://logging.apache.org/log4j/2.x/manual/async.html for benefits and\n"
+operator|+
+literal|" drawbacks."
 argument_list|)
 block|,
 name|HIVE_LOG_EXPLAIN_OUTPUT

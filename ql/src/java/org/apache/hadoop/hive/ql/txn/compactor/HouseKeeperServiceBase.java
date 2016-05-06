@@ -452,7 +452,7 @@ name|long
 name|getStartDelayMs
 parameter_list|()
 function_decl|;
-comment|/**    * Determines how fequently the service is running its task.    */
+comment|/**    * Determines how frequently the service is running its task.    */
 specifier|protected
 specifier|abstract
 name|long

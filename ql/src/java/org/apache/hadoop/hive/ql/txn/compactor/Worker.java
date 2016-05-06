@@ -1099,7 +1099,7 @@ literal|"Caught exception while trying to compact "
 operator|+
 name|ci
 operator|+
-literal|".  Marking clean to avoid repeated failures, "
+literal|".  Marking failed to avoid repeated failures, "
 operator|+
 name|StringUtils
 operator|.

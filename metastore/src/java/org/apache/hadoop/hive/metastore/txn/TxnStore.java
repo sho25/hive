@@ -172,6 +172,10 @@ block|,
 name|HouseKeeper
 block|,
 name|CompactionHistory
+block|,
+name|CheckLock
+block|,
+name|WriteSetCleaner
 block|}
 comment|// Compactor states (Should really be enum)
 specifier|static
@@ -593,6 +597,12 @@ name|purgeCompactionHistory
 parameter_list|()
 throws|throws
 name|MetaException
+function_decl|;
+comment|/**    * WriteSet tracking is used to ensure proper transaction isolation.  This method deletes the     * transaction metadata once it becomes unnecessary.      */
+specifier|public
+name|void
+name|performWriteSetGC
+parameter_list|()
 function_decl|;
 comment|/**    * Determine if there are enough consecutive failures compacting a table or partition that no    * new automatic compactions should be scheduled.  User initiated compactions do not do this    * check.    * @param ci  Table or partition to check.    * @return true if it is ok to compact, false if there have been too many failures.    * @throws MetaException    */
 specifier|public
