@@ -2223,11 +2223,6 @@ name|acls
 init|=
 name|zooKeeperClient
 operator|.
-name|usingNamespace
-argument_list|(
-literal|null
-argument_list|)
-operator|.
 name|getACL
 argument_list|()
 operator|.
