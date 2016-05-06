@@ -548,7 +548,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Metrics about the llap daemon task scheduler.  */
+comment|/**  * Metrics about the llap task scheduler.  */
 end_comment
 
 begin_class
@@ -557,7 +557,7 @@ name|Metrics
 argument_list|(
 name|about
 operator|=
-literal|"LlapDaemon Task Scheduler Metrics"
+literal|"Llap Task Scheduler Metrics"
 argument_list|,
 name|context
 operator|=
@@ -800,9 +800,7 @@ name|tag
 argument_list|(
 name|ProcessName
 argument_list|,
-name|MetricsUtils
-operator|.
-name|METRICS_PROCESS_NAME
+literal|"DAGAppMaster"
 argument_list|)
 operator|.
 name|tag
