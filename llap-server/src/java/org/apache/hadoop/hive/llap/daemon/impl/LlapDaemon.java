@@ -1017,6 +1017,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
+init|=
+literal|"hadoop-metrics2-llapdaemon.properties"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|HADOOP_METRICS2_PROPERTIES_FILE
 init|=
 literal|"hadoop-metrics2.properties"
