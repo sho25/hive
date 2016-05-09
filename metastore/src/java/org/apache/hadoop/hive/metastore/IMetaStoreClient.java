@@ -1246,14 +1246,6 @@ specifier|public
 interface|interface
 name|IMetaStoreClient
 block|{
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|PERMANENT_FUNCTION_CV
-init|=
-literal|"PERMANENT_FUNCTION"
-decl_stmt|;
 comment|/**    * Returns whether current client is compatible with conf argument or not    * @return    */
 name|boolean
 name|isCompatibleWith
@@ -3938,15 +3930,6 @@ name|partName
 parameter_list|,
 name|boolean
 name|allParts
-parameter_list|)
-throws|throws
-name|TException
-function_decl|;
-name|long
-name|getChangeVersion
-parameter_list|(
-name|String
-name|topic
 parameter_list|)
 throws|throws
 name|TException

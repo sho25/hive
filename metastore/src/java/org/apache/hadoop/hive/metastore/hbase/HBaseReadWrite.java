@@ -1295,13 +1295,6 @@ comment|// caller complete control over the sequence name as they might inadvert
 comment|// our sequence keys, so add a prefix to their topic name.
 specifier|final
 specifier|static
-name|String
-name|CHANGE_VERSION_SEQUENCE_PREFIX
-init|=
-literal|"cv_"
-decl_stmt|;
-specifier|final
-specifier|static
 name|byte
 index|[]
 name|AGGR_STATS_BLOOM_COL
@@ -1419,6 +1412,22 @@ index|[]
 name|GLOBAL_PRIVS_KEY
 init|=
 literal|"gp"
+operator|.
+name|getBytes
+argument_list|(
+name|HBaseUtils
+operator|.
+name|ENCODING
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|final
+specifier|static
+name|byte
+index|[]
+name|SEQUENCES_KEY
+init|=
+literal|"seq"
 operator|.
 name|getBytes
 argument_list|(
@@ -12946,69 +12955,6 @@ expr_stmt|;
 return|return
 name|colStats
 return|;
-block|}
-comment|/**********************************************************************************************    * Change version related methods    *********************************************************************************************/
-specifier|public
-name|long
-name|getChangeVersion
-parameter_list|(
-name|String
-name|topic
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-name|byte
-index|[]
-name|key
-init|=
-name|HBaseUtils
-operator|.
-name|buildKey
-argument_list|(
-name|CHANGE_VERSION_SEQUENCE_PREFIX
-operator|+
-name|topic
-argument_list|)
-decl_stmt|;
-return|return
-name|peekAtSequence
-argument_list|(
-name|key
-argument_list|)
-return|;
-block|}
-comment|// TODO: The way this is called now is not ideal. It's all encapsulated and stuff, but,
-comment|//       before the txns (consistent HBase writes) are properly implemented, we should at least
-comment|//       put this in the same RPC with real updates. But there are no guarantees anyway, so...
-specifier|public
-name|void
-name|incrementChangeVersion
-parameter_list|(
-name|String
-name|topic
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-name|byte
-index|[]
-name|key
-init|=
-name|HBaseUtils
-operator|.
-name|buildKey
-argument_list|(
-name|CHANGE_VERSION_SEQUENCE_PREFIX
-operator|+
-name|topic
-argument_list|)
-decl_stmt|;
-name|getNextSequence
-argument_list|(
-name|key
-argument_list|)
-expr_stmt|;
 block|}
 comment|/**********************************************************************************************    * File metadata related methods    *********************************************************************************************/
 comment|/**    * @param fileIds file ID list.    * @return Serialized file metadata.    */
