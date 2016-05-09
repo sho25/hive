@@ -2047,7 +2047,9 @@ name|StatsSetupConst
 operator|.
 name|DO_NOT_UPDATE_STATS
 argument_list|,
-literal|"true"
+name|StatsSetupConst
+operator|.
+name|TRUE
 argument_list|)
 expr_stmt|;
 block|}
