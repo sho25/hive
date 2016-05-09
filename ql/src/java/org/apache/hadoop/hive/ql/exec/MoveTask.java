@@ -1471,6 +1471,8 @@ argument_list|,
 name|fs
 argument_list|,
 name|mkDirPath
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

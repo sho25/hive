@@ -2357,6 +2357,8 @@ argument_list|,
 name|fs
 argument_list|,
 name|firstNonExistentParent
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -2604,6 +2606,8 @@ argument_list|,
 name|dstFS
 argument_list|,
 name|dst
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3049,6 +3053,8 @@ argument_list|,
 name|fs
 argument_list|,
 name|destPath
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
