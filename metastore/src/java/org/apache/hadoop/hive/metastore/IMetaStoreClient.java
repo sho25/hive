@@ -3517,6 +3517,19 @@ name|TxnAbortedException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Abort a list of transactions. This is for use by "ABORT TRANSACTIONS" in the grammar.    * @throws TException    */
+name|void
+name|abortTxns
+parameter_list|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|txnids
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 comment|/**    * Show the list of currently open transactions.  This is for use by "show transactions" in the    * grammar, not for applications that want to find a list of current transactions to work with.    * Those wishing the latter should call {@link #getValidTxns()}.    * @return List of currently opened transactions, included aborted ones.    * @throws TException    */
 name|GetOpenTxnsInfoResponse
 name|showTxns

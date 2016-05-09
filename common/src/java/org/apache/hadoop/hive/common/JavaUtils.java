@@ -103,6 +103,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -662,6 +672,27 @@ return|return
 literal|"txnid:"
 operator|+
 name|txnId
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|txnIdsToString
+parameter_list|(
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|txnIds
+parameter_list|)
+block|{
+return|return
+literal|"Transactions requested to be aborted: "
+operator|+
+name|txnIds
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 specifier|private

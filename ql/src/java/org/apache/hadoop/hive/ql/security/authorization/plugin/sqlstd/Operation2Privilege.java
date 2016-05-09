@@ -2907,6 +2907,24 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|op2Priv
+operator|.
+name|put
+argument_list|(
+name|HiveOperationType
+operator|.
+name|ABORT_TRANSACTIONS
+argument_list|,
+name|PrivRequirement
+operator|.
+name|newIOPrivRequirement
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Convenience method so that creation of this array in PrivRequirement constructor    * is not too verbose    *    * @param grantList    * @return grantList    */
 specifier|private

@@ -282,6 +282,19 @@ name|NoSuchTxnException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Abort (rollback) a list of transactions in one request.    * @param rqst info on transactions to abort    * @throws NoSuchTxnException    * @throws MetaException    */
+specifier|public
+name|void
+name|abortTxns
+parameter_list|(
+name|AbortTxnsRequest
+name|rqst
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|MetaException
+function_decl|;
 comment|/**    * Commit a transaction    * @param rqst info on transaction to commit    * @throws NoSuchTxnException    * @throws TxnAbortedException    * @throws MetaException    */
 specifier|public
 name|void

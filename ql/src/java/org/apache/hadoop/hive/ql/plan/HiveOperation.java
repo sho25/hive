@@ -1383,7 +1383,20 @@ literal|true
 argument_list|,
 literal|false
 argument_list|)
-block|;   ;
+block|,
+name|ABORT_TRANSACTIONS
+argument_list|(
+literal|"ABORT TRANSACTIONS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
+block|;
 specifier|private
 name|String
 name|operationName

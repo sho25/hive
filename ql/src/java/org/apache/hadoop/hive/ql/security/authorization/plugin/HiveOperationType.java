@@ -273,6 +273,8 @@ name|SHOW_COMPACTIONS
 block|,
 name|SHOW_TRANSACTIONS
 block|,
+name|ABORT_TRANSACTIONS
+block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,
