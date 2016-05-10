@@ -1121,6 +1121,42 @@ name|work
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+if|if
+condition|(
+name|mode
+operator|==
+name|all
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Llap mode is set to all but cannot run work in llap mode."
+operator|+
+literal|"Set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_EXECUTION_MODE
+operator|+
+literal|" = auto or set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_MODE
+operator|+
+literal|" = container"
+argument_list|)
+throw|;
+block|}
+block|}
 block|}
 specifier|private
 name|void
@@ -1510,6 +1546,20 @@ literal|false
 return|;
 block|}
 comment|// couldn't convince you otherwise? well then let's llap.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Can run work "
+operator|+
+name|work
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" in llap mode."
+argument_list|)
+expr_stmt|;
 return|return
 literal|true
 return|;
@@ -1966,6 +2016,17 @@ modifier|...
 name|os
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Cannot run operator ["
+operator|+
+name|n
+operator|+
+literal|"] in llap mode."
+argument_list|)
+expr_stmt|;
 return|return
 operator|new
 name|Boolean
@@ -2037,7 +2098,9 @@ operator|.
 name|getPredicate
 argument_list|()
 decl_stmt|;
-return|return
+name|Boolean
+name|retval
+init|=
 operator|new
 name|Boolean
 argument_list|(
@@ -2045,6 +2108,31 @@ name|checkExpression
 argument_list|(
 name|expr
 argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|retval
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot run filter operator ["
+operator|+
+name|n
+operator|+
+literal|"] in llap mode"
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+operator|new
+name|Boolean
+argument_list|(
+name|retval
 argument_list|)
 return|;
 block|}
@@ -2122,7 +2210,9 @@ operator|.
 name|getAggregators
 argument_list|()
 decl_stmt|;
-return|return
+name|Boolean
+name|retval
+init|=
 operator|new
 name|Boolean
 argument_list|(
@@ -2130,6 +2220,31 @@ name|checkAggregators
 argument_list|(
 name|aggs
 argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|retval
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot run group by operator ["
+operator|+
+name|n
+operator|+
+literal|"] in llap mode"
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+operator|new
+name|Boolean
+argument_list|(
+name|retval
 argument_list|)
 return|;
 block|}
@@ -2209,7 +2324,9 @@ operator|.
 name|getColList
 argument_list|()
 decl_stmt|;
-return|return
+name|Boolean
+name|retval
+init|=
 operator|new
 name|Boolean
 argument_list|(
@@ -2217,6 +2334,31 @@ name|checkExpressions
 argument_list|(
 name|exprs
 argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|retval
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot run select operator ["
+operator|+
+name|n
+operator|+
+literal|"] in llap mode"
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+operator|new
+name|Boolean
+argument_list|(
+name|retval
 argument_list|)
 return|;
 block|}
@@ -2350,6 +2492,13 @@ argument_list|)
 operator|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot run in LLAP mode."
+argument_list|)
+expr_stmt|;
 return|return
 literal|false
 return|;
