@@ -8702,6 +8702,10 @@ block|,
 literal|".*total number of created files now is.*"
 block|,
 literal|".*.hive-staging.*"
+block|,
+literal|"pk_-?[0-9]*_[0-9]*_[0-9]*"
+block|,
+literal|"fk_-?[0-9]*_[0-9]*_[0-9]*"
 block|}
 argument_list|)
 decl_stmt|;

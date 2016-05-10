@@ -12110,7 +12110,7 @@ literal|"\"DBS\".\"NAME\", \"TBLS\".\"TBL_NAME\", \"COLUMNS_V2\".\"COLUMN_NAME\"
 operator|+
 literal|"\"KEY_CONSTRAINTS\".\"POSITION\", \"KEY_CONSTRAINTS\".\"UPDATE_RULE\", \"KEY_CONSTRAINTS\".\"DELETE_RULE\", "
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\" , \"KEY_CONSTRAINTS2\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\""
+literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\" , \"KEY_CONSTRAINTS2\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\" "
 operator|+
 literal|" FROM \"TBLS\" "
 operator|+
@@ -12118,15 +12118,23 @@ literal|" INNER JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRAI
 operator|+
 literal|" INNER JOIN \"KEY_CONSTRAINTS\" \"KEY_CONSTRAINTS2\" ON \"KEY_CONSTRAINTS2\".\"PARENT_TBL_ID\"  = \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" "
 operator|+
+literal|" AND \"KEY_CONSTRAINTS2\".\"PARENT_CD_ID\"  = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" \"KEY_CONSTRAINTS2\".\"PARENT_INTEGER_IDX\"  = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+operator|+
 literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
 operator|+
 literal|" INNER JOIN \"TBLS\" \"T2\" ON  \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" = \"T2\".\"TBL_ID\" "
 operator|+
 literal|" INNER JOIN \"DBS\" \"D2\" ON \"T2\".\"DB_ID\" = \"D2\".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\"  ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"CHILD_CD_ID\" "
+literal|" INNER JOIN \"COLUMNS_V2\"  ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"CHILD_CD_ID\" AND "
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" \"C2\" ON \"C2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" "
+literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"CHILD_INTEGER_IDX\" "
+operator|+
+literal|" INNER JOIN \"COLUMNS_V2\" \"C2\" ON \"C2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" \"C2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
 operator|+
 literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
 operator|+
@@ -12140,6 +12148,8 @@ name|MConstraint
 operator|.
 name|PRIMARY_KEY_CONSTRAINT
 operator|+
+literal|" AND"
+operator|+
 operator|(
 name|foreign_db_name
 operator|==
@@ -12147,7 +12157,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"\"DBS\".\"NAME\" = ? AND"
+literal|" \"DBS\".\"NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -12157,7 +12167,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"TBLS\".\"TBL_NAME\" = ? AND "
+literal|" \"TBLS\".\"TBL_NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -12167,7 +12177,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"T2\".\"TBL_NAME\" = ? AND "
+literal|" \"T2\".\"TBL_NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -12177,7 +12187,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"\"D2\".\"NAME\" = ?"
+literal|" \"D2\".\"NAME\" = ?"
 operator|)
 decl_stmt|;
 name|queryText
@@ -12568,9 +12578,9 @@ literal|" INNER  JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRA
 operator|+
 literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN \"TBLS\" ON \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" = \"TBLS\".\"TBL_ID\" "
+literal|" INNER JOIN \"COLUMNS_V2\" ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" "
+literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
 operator|+
 literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
 operator|+
