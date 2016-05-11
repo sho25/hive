@@ -8919,6 +8919,9 @@ block|}
 comment|/** {@inheritDoc} */
 annotation|@
 name|Override
+annotation|@
+name|Deprecated
+comment|//use setPartitionColumnStatistics instead
 specifier|public
 name|boolean
 name|updateTableColumnStatistics
@@ -8949,6 +8952,9 @@ block|}
 comment|/** {@inheritDoc} */
 annotation|@
 name|Override
+annotation|@
+name|Deprecated
+comment|//use setPartitionColumnStatistics instead
 specifier|public
 name|boolean
 name|updatePartitionColumnStatistics
