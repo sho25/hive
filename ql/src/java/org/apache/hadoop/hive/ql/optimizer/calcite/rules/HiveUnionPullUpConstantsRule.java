@@ -584,6 +584,11 @@ name|map
 expr_stmt|;
 block|}
 comment|// Create expressions for Project operators before and after the Union
+name|boolean
+name|atLeastOneConstant
+init|=
+literal|false
+decl_stmt|;
 name|List
 argument_list|<
 name|RelDataTypeField
@@ -683,6 +688,10 @@ name|expr
 argument_list|)
 condition|)
 block|{
+name|atLeastOneConstant
+operator|=
+literal|true
+expr_stmt|;
 name|topChildExprs
 operator|.
 name|add
@@ -748,6 +757,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// No constants were found
+if|if
+condition|(
+operator|!
+name|atLeastOneConstant
+condition|)
+block|{
+return|return;
 block|}
 comment|// Update top Project positions
 specifier|final
