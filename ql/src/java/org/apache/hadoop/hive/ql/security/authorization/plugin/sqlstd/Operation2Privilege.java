@@ -1421,6 +1421,24 @@ name|OWNER_PRIV_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|op2Priv
+operator|.
+name|put
+argument_list|(
+name|HiveOperationType
+operator|.
+name|ALTERTABLE_ADDCONSTRAINT
+argument_list|,
+name|PrivRequirement
+operator|.
+name|newIOPrivRequirement
+argument_list|(
+name|OWNER_PRIV_AR
+argument_list|,
+name|OWNER_PRIV_AR
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|//table ownership for create/drop/alter index
 name|op2Priv
 operator|.
