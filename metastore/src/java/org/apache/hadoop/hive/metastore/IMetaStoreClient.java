@@ -1019,6 +1019,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|ShowLocksRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|ShowLocksResponse
 import|;
 end_import
@@ -3582,9 +3600,21 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Show all currently held and waiting locks.    * @return List of currently held and waiting locks.    * @throws TException    */
+annotation|@
+name|Deprecated
 name|ShowLocksResponse
 name|showLocks
 parameter_list|()
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Show all currently held and waiting locks.    * @param showLocksRequest SHOW LOCK request    * @return List of currently held and waiting locks.    * @throws TException    */
+name|ShowLocksResponse
+name|showLocks
+parameter_list|(
+name|ShowLocksRequest
+name|showLocksRequest
+parameter_list|)
 throws|throws
 name|TException
 function_decl|;
