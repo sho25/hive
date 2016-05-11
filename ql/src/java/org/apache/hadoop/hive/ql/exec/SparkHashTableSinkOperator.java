@@ -414,6 +414,7 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
+specifier|transient
 name|PerfLogger
 name|perfLogger
 init|=
