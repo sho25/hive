@@ -5369,6 +5369,17 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVETESTMODEFAILHEARTBEATER
+argument_list|(
+literal|"hive.test.fail.heartbeater"
+argument_list|,
+literal|false
+argument_list|,
+literal|"For testing only.  Will cause Heartbeater to fail."
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"

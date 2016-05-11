@@ -3197,6 +3197,8 @@ argument_list|(
 name|rj
 argument_list|,
 name|jc
+argument_list|,
+name|ctx
 argument_list|)
 expr_stmt|;
 name|success
@@ -3218,6 +3220,11 @@ name|e
 operator|.
 name|printStackTrace
 argument_list|()
+expr_stmt|;
+name|setException
+argument_list|(
+name|e
+argument_list|)
 expr_stmt|;
 name|String
 name|mesg
