@@ -3654,9 +3654,13 @@ condition|)
 block|{
 name|hiveConf
 operator|.
-name|set
+name|setVar
 argument_list|(
-literal|"hive.metastore.token.signature"
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_TOKEN_SIGNATURE
 argument_list|,
 name|conf
 operator|.

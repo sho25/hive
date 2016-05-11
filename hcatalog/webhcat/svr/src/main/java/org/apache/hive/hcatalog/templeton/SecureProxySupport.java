@@ -644,7 +644,13 @@ name|args
 operator|.
 name|add
 argument_list|(
-literal|"hive.metastore.token.signature="
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_TOKEN_SIGNATURE
+operator|+
+literal|"="
 operator|+
 name|getHcatServiceStr
 argument_list|()

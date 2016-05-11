@@ -3736,9 +3736,11 @@ name|tokenSig
 init|=
 name|conf
 operator|.
-name|get
+name|getVar
 argument_list|(
-literal|"hive.metastore.token.signature"
+name|ConfVars
+operator|.
+name|METASTORE_TOKEN_SIGNATURE
 argument_list|)
 decl_stmt|;
 comment|// tokenSig could be null

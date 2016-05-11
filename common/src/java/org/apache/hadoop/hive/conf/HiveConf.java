@@ -1142,6 +1142,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_TOKEN_SIGNATURE
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_CACHE_PINOBJTYPES
 block|,
 name|HiveConf
@@ -3414,6 +3420,15 @@ argument_list|,
 literal|"If true, the metastore Thrift interface will use TCompactProtocol. When false (default) TBinaryProtocol will be used.\n"
 operator|+
 literal|"Setting it to true will break compatibility with older clients running TBinaryProtocol."
+argument_list|)
+block|,
+name|METASTORE_TOKEN_SIGNATURE
+argument_list|(
+literal|"hive.metastore.token.signature"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The delegation token service name to match when selecting a token from the current user's tokens."
 argument_list|)
 block|,
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
