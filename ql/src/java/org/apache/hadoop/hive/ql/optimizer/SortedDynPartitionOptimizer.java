@@ -2914,7 +2914,6 @@ comment|// Order of KEY columns
 comment|// 1) Partition columns
 comment|// 2) Bucket number column
 comment|// 3) Sort columns
-comment|// 4) Null sort columns
 name|Set
 argument_list|<
 name|Integer
