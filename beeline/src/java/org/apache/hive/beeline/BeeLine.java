@@ -2208,6 +2208,29 @@ literal|'u'
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// -r
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|withLongOpt
+argument_list|(
+literal|"reconnect"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"Reconnect to last saved connect url (in conjunction with !save)"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'r'
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// -n<username>
 name|options
 operator|.
@@ -4251,6 +4274,32 @@ argument_list|(
 literal|"u"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|(
+name|url
+operator|==
+literal|null
+operator|)
+operator|&&
+name|cl
+operator|.
+name|hasOption
+argument_list|(
+literal|"reconnect"
+argument_list|)
+condition|)
+block|{
+comment|// If url was not specified with -u, but -r was present, use that.
+name|url
+operator|=
+name|getOpts
+argument_list|()
+operator|.
+name|getLastConnectedUrl
+argument_list|()
+expr_stmt|;
+block|}
 name|getOpts
 argument_list|()
 operator|.
