@@ -1972,7 +1972,7 @@ name|os
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This metod can be used to retrieve the results from async operations    * started at init time - before the operator pipeline is started.    *    * @param os    * @throws HiveException    */
+comment|/**    * This method can be used to retrieve the results from async operations    * started at init time - before the operator pipeline is started.    *    * @param os    * @throws HiveException    */
 specifier|protected
 name|void
 name|completeInitializationOp

@@ -9695,6 +9695,16 @@ name|i
 expr_stmt|;
 block|}
 block|}
+name|denom
+operator|=
+name|denom
+operator|==
+literal|0
+condition|?
+literal|1
+else|:
+name|denom
+expr_stmt|;
 name|factor
 operator|=
 operator|(
