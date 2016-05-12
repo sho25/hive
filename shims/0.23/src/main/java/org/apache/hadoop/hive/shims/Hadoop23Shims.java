@@ -6158,6 +6158,8 @@ return|return
 literal|false
 return|;
 block|}
+try|try
+block|{
 return|return
 operator|(
 name|hdfsAdmin
@@ -6170,6 +6172,28 @@ operator|!=
 literal|null
 operator|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|fnfe
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Failed to get EZ for non-existent path: "
+operator|+
+name|fullPath
+argument_list|,
+name|fnfe
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 block|}
 annotation|@
 name|Override
