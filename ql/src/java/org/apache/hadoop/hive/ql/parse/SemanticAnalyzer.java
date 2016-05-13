@@ -4813,6 +4813,8 @@ argument_list|,
 name|queryProperties
 argument_list|,
 name|viewProjectToTableSchema
+argument_list|,
+name|acidFileSinks
 argument_list|)
 return|;
 block|}
@@ -42086,35 +42088,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Modifying config values for ACID write"
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVEOPTREDUCEDEDUPLICATION
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|setIntVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVEOPTREDUCEDEDUPLICATIONMINREDUCER
-argument_list|,
-literal|1
-argument_list|)
-expr_stmt|;
+comment|/*     LOG.info("Modifying config values for ACID write");     conf.setBoolVar(ConfVars.HIVEOPTREDUCEDEDUPLICATION, true);     conf.setIntVar(ConfVars.HIVEOPTREDUCEDEDUPLICATIONMINREDUCER, 1);     These props are now enabled elsewhere (see commit diffs).  It would be better instead to throw     if they are not set.  For exmaple, if user has set hive.optimize.reducededuplication=false for     some reason, we'll run a query contrary to what they wanted...  But throwing now would be     backwards incompatible.     */
 name|conf
 operator|.
 name|set
@@ -65361,6 +65335,8 @@ argument_list|,
 name|queryProperties
 argument_list|,
 name|viewProjectToTableSchema
+argument_list|,
+name|acidFileSinks
 argument_list|)
 decl_stmt|;
 comment|// 5. Take care of view creation

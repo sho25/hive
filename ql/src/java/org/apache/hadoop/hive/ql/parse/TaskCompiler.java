@@ -3140,6 +3140,11 @@ name|pCtx
 operator|.
 name|getViewProjectToTableSchema
 argument_list|()
+argument_list|,
+name|pCtx
+operator|.
+name|getAcidSinks
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|clone
