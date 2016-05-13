@@ -5948,7 +5948,7 @@ name|assertEquals
 argument_list|(
 literal|"Unexpected lock count"
 argument_list|,
-literal|7
+literal|5
 argument_list|,
 name|locks
 operator|.
@@ -5956,7 +5956,6 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// locks.get(0) is a lock on tmp table in default database used for insert
 name|checkLock
 argument_list|(
 name|LockType
@@ -5977,11 +5976,10 @@ name|locks
 operator|.
 name|get
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// locks.get(2) is a lock on tmp table in default database used for insert
 name|checkLock
 argument_list|(
 name|LockType
@@ -6002,7 +6000,7 @@ name|locks
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6026,7 +6024,7 @@ name|locks
 operator|.
 name|get
 argument_list|(
-literal|4
+literal|2
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6050,7 +6048,7 @@ name|locks
 operator|.
 name|get
 argument_list|(
-literal|5
+literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6074,7 +6072,7 @@ name|locks
 operator|.
 name|get
 argument_list|(
-literal|6
+literal|4
 argument_list|)
 argument_list|)
 expr_stmt|;
