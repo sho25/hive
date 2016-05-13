@@ -1813,14 +1813,19 @@ comment|// Xmx is not the max heap value in JDK8. You need to subtract 50% of th
 comment|// from this, to get actual usable  memory before it goes into GC
 name|xmx
 operator|=
-call|(
-name|long
-call|)
-argument_list|(
 name|options
 operator|.
 name|getXmx
 argument_list|()
+expr_stmt|;
+name|long
+name|xmxMb
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+name|xmx
 operator|/
 operator|(
 literal|1024
@@ -1828,7 +1833,7 @@ operator|*
 literal|1024
 operator|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|conf
 operator|.
 name|setLong
@@ -1839,7 +1844,7 @@ name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 operator|.
 name|varname
 argument_list|,
-name|xmx
+name|xmxMb
 argument_list|)
 expr_stmt|;
 name|propsDirectOptions
@@ -1856,7 +1861,7 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|xmx
+name|xmxMb
 argument_list|)
 argument_list|)
 expr_stmt|;
