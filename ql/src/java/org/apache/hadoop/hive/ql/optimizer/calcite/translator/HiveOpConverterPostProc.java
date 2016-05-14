@@ -983,7 +983,6 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-empty_stmt|;
 name|aliasToOpInfo
 operator|.
 name|put
