@@ -142,7 +142,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * An single byte array value hash multi-set optimized for vector map join.  */
+comment|/*  * An bytes key hash set optimized for vector map join.  *  * This is the abstract base for the multi-key and string bytes key hash set implementations.  */
 end_comment
 
 begin_class
@@ -262,9 +262,6 @@ operator|=
 literal|1
 expr_stmt|;
 comment|// Existence
-name|keysAssigned
-operator|++
-expr_stmt|;
 block|}
 block|}
 annotation|@

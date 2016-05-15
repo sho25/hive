@@ -121,9 +121,19 @@ name|Position
 import|;
 end_import
 
-begin_empty_stmt
-empty_stmt|;
-end_empty_stmt
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
 
 begin_comment
 comment|// Supports random access.
@@ -270,7 +280,6 @@ name|long
 name|valueRefWord
 parameter_list|)
 block|{
-comment|// LOG.debug("VectorMapJoinFastValueStore set valueRefWord " + Long.toHexString(valueRefWord));
 name|this
 operator|.
 name|valueStore
@@ -473,6 +482,7 @@ operator|==
 literal|0
 condition|)
 block|{
+comment|/*          * Positioned to first.          */
 comment|/*          * Extract information from reference word from slot table.          */
 name|absoluteValueOffset
 operator|=
@@ -501,6 +511,7 @@ condition|(
 name|isSingleRow
 condition|)
 block|{
+comment|/*            * One element.            */
 name|isNextEof
 operator|=
 literal|true
@@ -541,7 +552,7 @@ operator|!
 name|isValueLengthSmall
 condition|)
 block|{
-comment|// And, if current value is big we must read it.
+comment|// {Big Value Len} {Big Value Bytes}
 name|valueLength
 operator|=
 name|valueStore
@@ -554,14 +565,20 @@ name|readPos
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+comment|// {Small Value Bytes}
+comment|// (use small length from valueWordRef)
+block|}
 block|}
 else|else
 block|{
+comment|/*            * First of Multiple elements.            */
 name|isNextEof
 operator|=
 literal|false
 expr_stmt|;
-comment|// 2nd and beyond records have a relative offset word at the beginning.
+comment|/*            * Read the relative offset word at the beginning 2nd and beyond records.            */
 name|long
 name|relativeOffsetWord
 init|=
@@ -595,35 +612,6 @@ name|absoluteValueOffset
 operator|-
 name|relativeOffset
 expr_stmt|;
-name|isNextLast
-operator|=
-operator|(
-operator|(
-name|relativeOffsetWord
-operator|&
-name|IsNextValueLastFlag
-operator|.
-name|flagOnMask
-operator|)
-operator|!=
-literal|0
-operator|)
-expr_stmt|;
-name|isNextValueLengthSmall
-operator|=
-operator|(
-operator|(
-name|relativeOffsetWord
-operator|&
-name|IsNextValueLengthSmallFlag
-operator|.
-name|flagOnMask
-operator|)
-operator|!=
-literal|0
-operator|)
-expr_stmt|;
-block|}
 name|valueLength
 operator|=
 call|(
@@ -654,13 +642,13 @@ operator|.
 name|allBitsOn
 operator|)
 decl_stmt|;
+comment|/*            * Optionally, read current value's big length.  {Big Value Len} {Big Value Bytes}            * Since this is the first record, the valueRefWord directs us.            */
 if|if
 condition|(
 operator|!
 name|isValueLengthSmall
 condition|)
 block|{
-comment|// And, if current value is big we must read it.
 name|valueLength
 operator|=
 name|valueStore
@@ -673,7 +661,35 @@ name|readPos
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 2nd and beyond have the next value's small length in the current record.
+name|isNextLast
+operator|=
+operator|(
+operator|(
+name|relativeOffsetWord
+operator|&
+name|IsNextValueLastFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+operator|)
+expr_stmt|;
+name|isNextValueLengthSmall
+operator|=
+operator|(
+operator|(
+name|relativeOffsetWord
+operator|&
+name|IsNextValueLengthSmallFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+operator|)
+expr_stmt|;
+comment|/*            * Optionally, the next value's small length could be a 2nd integer...            */
 if|if
 condition|(
 name|isNextValueLengthSmall
@@ -698,6 +714,7 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -732,6 +749,7 @@ condition|(
 name|isNextLast
 condition|)
 block|{
+comment|/*            * No realativeOffsetWord in last value.  (This was the first value written.)            */
 name|isNextEof
 operator|=
 literal|true
@@ -741,6 +759,7 @@ condition|(
 name|isNextValueLengthSmall
 condition|)
 block|{
+comment|// {Small Value Bytes}
 name|valueLength
 operator|=
 name|nextSmallValueLength
@@ -748,16 +767,14 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// {Big Value Len} {Big Value Bytes}
 name|valueLength
 operator|=
-operator|(
-name|int
-operator|)
 name|valueStore
 operator|.
 name|writeBuffers
 operator|.
-name|readVLong
+name|readVInt
 argument_list|(
 name|readPos
 argument_list|)
@@ -766,11 +783,11 @@ block|}
 block|}
 else|else
 block|{
+comment|/*            * {Rel Offset Word} [Big Value Len] [Next Value Small Len] {Value Bytes}            *            * 2nd and beyond records have a relative offset word at the beginning.            */
 name|isNextEof
 operator|=
 literal|false
 expr_stmt|;
-comment|// 2nd and beyond records have a relative offset word at the beginning.
 name|long
 name|relativeOffsetWord
 init|=
@@ -783,7 +800,7 @@ argument_list|(
 name|readPos
 argument_list|)
 decl_stmt|;
-comment|// Read current value's big length now, if necessary.
+comment|/*            * Optionally, read current value's big length.  {Big Value Len} {Big Value Bytes}            */
 if|if
 condition|(
 name|isNextValueLengthSmall
@@ -798,14 +815,11 @@ else|else
 block|{
 name|valueLength
 operator|=
-operator|(
-name|int
-operator|)
 name|valueStore
 operator|.
 name|writeBuffers
 operator|.
-name|readVLong
+name|readVInt
 argument_list|(
 name|readPos
 argument_list|)
@@ -860,22 +874,19 @@ operator|!=
 literal|0
 operator|)
 expr_stmt|;
+comment|/*            * Optionally, the next value's small length could be a 2nd integer in the value's            * information.            */
 if|if
 condition|(
 name|isNextValueLengthSmall
 condition|)
 block|{
-comment|// TODO: Write readVInt
 name|nextSmallValueLength
 operator|=
-operator|(
-name|int
-operator|)
 name|valueStore
 operator|.
 name|writeBuffers
 operator|.
-name|readVLong
+name|readVInt
 argument_list|(
 name|readPos
 argument_list|)
@@ -1239,6 +1250,259 @@ operator|<<
 name|bitShift
 decl_stmt|;
 block|}
+specifier|private
+specifier|static
+name|String
+name|valueRefWordToString
+parameter_list|(
+name|long
+name|valueRef
+parameter_list|)
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|Long
+operator|.
+name|toHexString
+argument_list|(
+name|valueRef
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", "
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|(
+name|valueRef
+operator|&
+name|IsInvalidFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"(Invalid optimized hash table reference), "
+argument_list|)
+expr_stmt|;
+block|}
+comment|/*      * Extract information.      */
+name|long
+name|absoluteValueOffset
+init|=
+operator|(
+name|valueRef
+operator|&
+name|AbsoluteValueOffset
+operator|.
+name|bitMask
+operator|)
+decl_stmt|;
+name|int
+name|smallValueLength
+init|=
+call|(
+name|int
+call|)
+argument_list|(
+operator|(
+name|valueRef
+operator|&
+name|SmallValueLength
+operator|.
+name|bitMask
+operator|)
+operator|>>
+name|SmallValueLength
+operator|.
+name|bitShift
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isValueLengthSmall
+init|=
+operator|(
+name|smallValueLength
+operator|!=
+name|SmallValueLength
+operator|.
+name|allBitsOn
+operator|)
+decl_stmt|;
+name|int
+name|cappedCount
+init|=
+call|(
+name|int
+call|)
+argument_list|(
+operator|(
+name|valueRef
+operator|&
+name|CappedCount
+operator|.
+name|bitMask
+operator|)
+operator|>>
+name|CappedCount
+operator|.
+name|bitShift
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isValueLast
+init|=
+operator|(
+operator|(
+name|valueRef
+operator|&
+name|IsLastFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+operator|)
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"absoluteValueOffset "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|absoluteValueOffset
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|" ("
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|Long
+operator|.
+name|toHexString
+argument_list|(
+name|absoluteValueOffset
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"), "
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|isValueLengthSmall
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"smallValueLength "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|smallValueLength
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", "
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"isValueLengthSmall = false, "
+argument_list|)
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"cappedCount "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|cappedCount
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"isValueLast "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|isValueLast
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
 comment|/**    * Relative Offset Word stored at the beginning of all but the last value that has a    * relative offset and 2 flags.    *    * We put the flags at the low end of the word so the variable length integer will    * encode smaller.    *    * First bit is a flag indicating if the next value (not the current value) has a small length.    * When the first value is added and it has a small length, that length is stored in the    * value reference and not with the value.  So, when we have multiple values, we need a way to    * know to keep the next value's small length with the current value.    *    * Second bit is a flag indicating if the next value (not the current value) is the last value.    *    * The relative offset *backwards* to the next value.    */
 specifier|private
 specifier|final
@@ -1347,6 +1611,168 @@ name|allBitsOn
 operator|<<
 name|bitShift
 decl_stmt|;
+block|}
+specifier|private
+specifier|static
+name|String
+name|relativeOffsetWordToString
+parameter_list|(
+name|long
+name|relativeOffsetWord
+parameter_list|)
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|Long
+operator|.
+name|toHexString
+argument_list|(
+name|relativeOffsetWord
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", "
+argument_list|)
+expr_stmt|;
+name|long
+name|nextRelativeOffset
+init|=
+operator|(
+name|relativeOffsetWord
+operator|&
+name|NextRelativeValueOffset
+operator|.
+name|bitMask
+operator|)
+operator|>>
+name|NextRelativeValueOffset
+operator|.
+name|bitShift
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"nextRelativeOffset "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|nextRelativeOffset
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|" ("
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|Long
+operator|.
+name|toHexString
+argument_list|(
+name|nextRelativeOffset
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"), "
+argument_list|)
+expr_stmt|;
+name|boolean
+name|isNextLast
+init|=
+operator|(
+operator|(
+name|relativeOffsetWord
+operator|&
+name|IsNextValueLastFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+operator|)
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"isNextLast "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|isNextLast
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", "
+argument_list|)
+expr_stmt|;
+name|boolean
+name|isNextValueLengthSmall
+init|=
+operator|(
+operator|(
+name|relativeOffsetWord
+operator|&
+name|IsNextValueLengthSmallFlag
+operator|.
+name|flagOnMask
+operator|)
+operator|!=
+literal|0
+operator|)
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"isNextValueLengthSmall "
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+name|isNextValueLengthSmall
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
 block|}
 specifier|public
 name|long
@@ -1488,7 +1914,6 @@ operator|.
 name|allBitsOnBitShifted
 expr_stmt|;
 block|}
-comment|// LOG.debug("VectorMapJoinFastValueStore addFirst valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " valueRefWord " + Long.toHexString(valueRefWord));
 comment|// The lower bits are the absolute value offset.
 name|valueRefWord
 operator||=
@@ -1615,7 +2040,6 @@ operator|!=
 literal|0
 operator|)
 decl_stmt|;
-comment|// LOG.debug("VectorMapJoinFastValueStore addMore isOldValueLast " + isOldValueLast + " oldSmallValueLength " + oldSmallValueLength + " oldAbsoluteValueOffset " + oldAbsoluteValueOffset + " oldValueRef " + Long.toHexString(oldValueRef));
 comment|/*      * Write information about the old value (which becomes our next) at the beginning      * of our new value.      */
 name|long
 name|newAbsoluteOffset
@@ -1696,21 +2120,6 @@ argument_list|(
 name|relativeOffsetWord
 argument_list|)
 expr_stmt|;
-comment|// When the next value is small it was not recorded with the old (i.e. next) value and we
-comment|// have to remember it.
-if|if
-condition|(
-name|isOldValueLengthSmall
-condition|)
-block|{
-name|writeBuffers
-operator|.
-name|writeVInt
-argument_list|(
-name|oldSmallValueLength
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Now, we have written all information about the next value, work on the *new* value.
 name|long
 name|newValueRef
@@ -1759,6 +2168,32 @@ operator|.
 name|bitShift
 operator|)
 expr_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+call|(
+name|int
+call|)
+argument_list|(
+operator|(
+name|newValueRef
+operator|&
+name|SmallValueLength
+operator|.
+name|bitMask
+operator|)
+operator|>>
+name|SmallValueLength
+operator|.
+name|bitShift
+argument_list|)
+operator|==
+name|SmallValueLength
+operator|.
+name|allBitsOn
+argument_list|)
+expr_stmt|;
 name|writeBuffers
 operator|.
 name|writeVInt
@@ -1784,6 +2219,21 @@ operator|.
 name|bitShift
 expr_stmt|;
 block|}
+comment|// When the next value is small it was not recorded with the old (i.e. next) value and we
+comment|// have to remember it.
+if|if
+condition|(
+name|isOldValueLengthSmall
+condition|)
+block|{
+name|writeBuffers
+operator|.
+name|writeVInt
+argument_list|(
+name|oldSmallValueLength
+argument_list|)
+expr_stmt|;
+block|}
 name|writeBuffers
 operator|.
 name|write
@@ -1800,7 +2250,6 @@ name|newValueRef
 operator||=
 name|newAbsoluteOffset
 expr_stmt|;
-comment|// LOG.debug("VectorMapJoinFastValueStore addMore valueLength " + valueLength + " newAbsoluteOffset " + newAbsoluteOffset + " newValueRef " + Long.toHexString(newValueRef));
 return|return
 name|newValueRef
 return|;

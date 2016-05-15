@@ -27,6 +27,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -143,6 +153,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|VectorMapJoinDesc
@@ -181,8 +209,22 @@ name|HashCodeUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
-comment|/*  * An single long value multi-set optimized for vector map join.  */
+comment|/*  * An single LONG key hash set optimized for vector map join.  */
 end_comment
 
 begin_class
@@ -223,6 +265,29 @@ operator|.
 name|HashSetResult
 argument_list|()
 return|;
+block|}
+comment|/*    * A Unit Test convenience method for putting the key into the hash table using the    * actual type.    */
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|void
+name|testPutRow
+parameter_list|(
+name|long
+name|currentKey
+parameter_list|)
+throws|throws
+name|HiveException
+throws|,
+name|IOException
+block|{
+name|add
+argument_list|(
+name|currentKey
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

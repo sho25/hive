@@ -27,6 +27,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -119,6 +129,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -141,8 +169,22 @@ name|HashCodeUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_comment
-comment|/*  * An single byte array value hash multi-set optimized for vector map join.  */
+comment|/*  * An bytes key hash multi-set optimized for vector map join.  *  * This is the abstract base for the multi-key and string bytes key hash multi-set implementations.  */
 end_comment
 
 begin_class
@@ -263,9 +305,6 @@ literal|1
 expr_stmt|;
 comment|// Count.
 comment|// LOG.debug("VectorMapJoinFastBytesHashMap add first keyRefWord " + Long.toHexString(slotTriples[tripleIndex]) + " hashCode " + Long.toHexString(slotTriples[tripleIndex + 1]) + " valueRefWord " + Long.toHexString(slotTriples[tripleIndex + 2]));
-name|keysAssigned
-operator|++
-expr_stmt|;
 block|}
 else|else
 block|{

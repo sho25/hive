@@ -68,7 +68,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * An single byte array value hash map optimized for vector map join.  */
+comment|/*  * An single STRING key hash multi-set optimized for vector map join.  *  * The key will be deserialized and just the bytes will be stored.  */
 end_comment
 
 begin_class

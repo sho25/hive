@@ -228,7 +228,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readCheckNull).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.   *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
+comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readCheckNull).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
 end_comment
 
 begin_class
