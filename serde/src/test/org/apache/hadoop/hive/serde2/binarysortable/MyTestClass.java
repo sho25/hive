@@ -619,18 +619,6 @@ name|VarcharTypeInfo
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|sun
-operator|.
-name|jdi
-operator|.
-name|PrimitiveType
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
