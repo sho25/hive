@@ -369,7 +369,9 @@ argument_list|>
 name|locks
 decl_stmt|;
 specifier|private
-name|IMetaStoreClient
+name|DbTxnManager
+operator|.
+name|SynchronizedMetaStoreClient
 name|client
 decl_stmt|;
 specifier|private
@@ -385,7 +387,9 @@ name|conf
 decl_stmt|;
 name|DbLockManager
 parameter_list|(
-name|IMetaStoreClient
+name|DbTxnManager
+operator|.
+name|SynchronizedMetaStoreClient
 name|client
 parameter_list|,
 name|HiveConf
