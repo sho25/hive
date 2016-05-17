@@ -1664,6 +1664,8 @@ operator|new
 name|SortByShuffler
 argument_list|(
 literal|false
+argument_list|,
+name|sparkPlan
 argument_list|)
 expr_stmt|;
 block|}
@@ -1682,6 +1684,8 @@ operator|new
 name|SortByShuffler
 argument_list|(
 literal|true
+argument_list|,
+name|sparkPlan
 argument_list|)
 expr_stmt|;
 block|}
