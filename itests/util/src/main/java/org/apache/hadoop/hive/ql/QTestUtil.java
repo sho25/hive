@@ -8706,6 +8706,12 @@ block|,
 literal|"pk_-?[0-9]*_[0-9]*_[0-9]*"
 block|,
 literal|"fk_-?[0-9]*_[0-9]*_[0-9]*"
+block|,
+literal|".*at com\\.sun\\.proxy.*"
+block|,
+literal|".*at com\\.jolbox.*"
+block|,
+literal|"org\\.apache\\.hadoop\\.hive\\.metastore\\.model\\.MConstraint@([0-9]|[a-z])*"
 block|}
 argument_list|)
 decl_stmt|;
