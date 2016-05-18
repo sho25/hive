@@ -9290,6 +9290,15 @@ operator|+
 literal|"to arrive before terminating"
 argument_list|)
 block|,
+name|HIVE_SERVER2_ASYNC_EXEC_ASYNC_COMPILE
+argument_list|(
+literal|"hive.server2.async.exec.async.compile"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable compiling async query asynchronously. If enabled, it is unknown if the query will have any resultset before compilation completed."
+argument_list|)
+block|,
 name|HIVE_SERVER2_LONG_POLLING_TIMEOUT
 argument_list|(
 literal|"hive.server2.long.polling.timeout"
