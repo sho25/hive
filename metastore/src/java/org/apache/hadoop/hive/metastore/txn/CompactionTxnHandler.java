@@ -3838,7 +3838,7 @@ default|default:
 comment|//do nothing to hanlde future RU/D where we may want to add new state types
 block|}
 block|}
-comment|/**    * For any given compactable entity (partition, table if not partitioned) the history of compactions    * may look like "sssfffaaasffss", for example.  The idea is to retain the tail (most recent) of the    * history such that a configurable number of each type of state is present.  Any other entries    * can be purged.  This scheme has advantage of always retaining the last failure/success even if    * it's not recent.    * @throws MetaException    */
+comment|/**    * For any given compactable entity (partition; table if not partitioned) the history of compactions    * may look like "sssfffaaasffss", for example.  The idea is to retain the tail (most recent) of the    * history such that a configurable number of each type of state is present.  Any other entries    * can be purged.  This scheme has advantage of always retaining the last failure/success even if    * it's not recent.    * @throws MetaException    */
 specifier|public
 name|void
 name|purgeCompactionHistory
@@ -4394,6 +4394,13 @@ else|:
 literal|""
 operator|)
 operator|+
+literal|" and CC_STATE != "
+operator|+
+name|quoteChar
+argument_list|(
+name|ATTEMPTED_STATE
+argument_list|)
+operator|+
 literal|" order by CC_ID desc"
 argument_list|)
 expr_stmt|;
@@ -4557,7 +4564,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * If there is an entry in compaction_queue with ci.id, remove it    * Make entry in completed_compactions with status 'f'.    *    * but what abount markCleaned() which is called when table is had been deleted...    */
+comment|/**    * If there is an entry in compaction_queue with ci.id, remove it    * Make entry in completed_compactions with status 'f'.    * If there is no entry in compaction_queue, it means Initiator failed to even schedule a compaction,    * which we record as ATTEMPTED_STATE entry in history.    */
 specifier|public
 name|void
 name|markFailed
@@ -4673,6 +4680,16 @@ decl_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|ci
+operator|.
+name|id
+operator|>
+literal|0
+condition|)
+block|{
+comment|//the record with valid CQ_ID has disappeared - this is a sign of something wrong
 throw|throw
 operator|new
 name|IllegalStateException
@@ -4686,6 +4703,54 @@ operator|+
 literal|" found in COMPACTION_QUEUE"
 argument_list|)
 throw|;
+block|}
+block|}
+if|if
+condition|(
+name|ci
+operator|.
+name|id
+operator|==
+literal|0
+condition|)
+block|{
+comment|//The failure occurred before we even made an entry in COMPACTION_QUEUE
+comment|//generate ID so that we can make an entry in COMPLETED_COMPACTIONS
+name|ci
+operator|.
+name|id
+operator|=
+name|generateCompactionQueueId
+argument_list|(
+name|stmt
+argument_list|)
+expr_stmt|;
+comment|//mostly this indicates that the Initiator is paying attention to some table even though
+comment|//compactions are not happening.
+name|ci
+operator|.
+name|state
+operator|=
+name|ATTEMPTED_STATE
+expr_stmt|;
+comment|//this is not strictly accurate, but 'type' cannot be null.
+name|ci
+operator|.
+name|type
+operator|=
+name|CompactionType
+operator|.
+name|MINOR
+expr_stmt|;
+block|}
+else|else
+block|{
+name|ci
+operator|.
+name|state
+operator|=
+name|FAILED_STATE
+expr_stmt|;
 block|}
 name|close
 argument_list|(
@@ -4704,12 +4769,6 @@ name|prepareStatement
 argument_list|(
 literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?)"
 argument_list|)
-expr_stmt|;
-name|ci
-operator|.
-name|state
-operator|=
-name|FAILED_STATE
 expr_stmt|;
 name|CompactionInfo
 operator|.

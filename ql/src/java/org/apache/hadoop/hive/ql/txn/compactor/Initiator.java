@@ -847,7 +847,6 @@ name|ci
 argument_list|)
 condition|)
 block|{
-comment|//todo: make 'a' state entry in completed_compactions
 name|LOG
 operator|.
 name|warn
@@ -859,7 +858,22 @@ operator|.
 name|getFullPartitionName
 argument_list|()
 operator|+
-literal|" since last 3 attempts to compact it failed."
+literal|" since last "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
+operator|+
+literal|" attempts to compact it failed."
+argument_list|)
+expr_stmt|;
+name|txnHandler
+operator|.
+name|markFailed
+argument_list|(
+name|ci
 argument_list|)
 expr_stmt|;
 continue|continue;
