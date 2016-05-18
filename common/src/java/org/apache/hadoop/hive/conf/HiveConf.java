@@ -11068,6 +11068,29 @@ argument_list|,
 literal|"Whether or not to set Hadoop configs to enable auth in LLAP web app."
 argument_list|)
 block|,
+name|LLAP_CREATE_TOKEN_LOCALLY
+argument_list|(
+literal|"hive.llap.create.token.locally"
+argument_list|,
+literal|"hs2"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"true"
+argument_list|,
+literal|"hs2"
+argument_list|,
+literal|"false"
+argument_list|)
+argument_list|,
+literal|"Whether to create LLAP tokens locally, saving directly to ZooKeeper SecretManager.\n"
+operator|+
+literal|"Requires one to have access to ZK paths; in other words, this should only be used in\n"
+operator|+
+literal|"HiveServer2. By default, the value is 'hs2', which means exactly that."
+argument_list|)
+block|,
 name|LLAP_DAEMON_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.daemon.rpc.num.handlers"

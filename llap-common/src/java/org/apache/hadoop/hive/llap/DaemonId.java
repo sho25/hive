@@ -104,15 +104,35 @@ name|getClusterString
 parameter_list|()
 block|{
 return|return
+name|createClusterString
+argument_list|(
+name|userName
+argument_list|,
+name|clusterName
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|createClusterString
+parameter_list|(
+name|String
+name|userName
+parameter_list|,
+name|String
+name|clusterName
+parameter_list|)
+block|{
+comment|// Note that this doesn't include appId. We assume that all the subsequent instances
+comment|// of the same user+cluster are logically the same, i.e. all the ZK paths will be reused,
+comment|// all the security tokens/etc. should transition between them, etc.
+return|return
 name|userName
 operator|+
 literal|"_"
 operator|+
 name|clusterName
-operator|+
-literal|"_"
-operator|+
-name|appId
 return|;
 block|}
 specifier|public

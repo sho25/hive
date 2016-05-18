@@ -423,12 +423,7 @@ argument_list|()
 argument_list|,
 name|conf
 argument_list|,
-name|NetUtils
-operator|.
-name|getDefaultSocketFactory
-argument_list|(
-name|conf
-argument_list|)
+name|socketFactory
 argument_list|,
 literal|0
 argument_list|,
