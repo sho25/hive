@@ -11633,6 +11633,15 @@ argument_list|,
 literal|"LLAP daemon output service port"
 argument_list|)
 block|,
+name|LLAP_ENABLE_GRACE_JOIN_IN_LLAP
+argument_list|(
+literal|"hive.llap.enable.grace.join.in.llap"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Override if grace join should be allowed to run in llap."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
