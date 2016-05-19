@@ -389,7 +389,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-literal|0
+literal|0L
 argument_list|)
 argument_list|)
 argument_list|)
