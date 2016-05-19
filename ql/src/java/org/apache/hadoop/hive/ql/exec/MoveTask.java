@@ -2944,6 +2944,14 @@ argument_list|()
 argument_list|,
 name|hasFollowingStatsTask
 argument_list|()
+argument_list|,
+name|work
+operator|.
+name|getLoadTableWork
+argument_list|()
+operator|.
+name|getWriteType
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|console

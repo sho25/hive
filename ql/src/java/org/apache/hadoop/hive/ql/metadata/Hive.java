@@ -8785,6 +8785,11 @@ name|txnId
 parameter_list|,
 name|boolean
 name|hasFollowingStatsTask
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|operation
 parameter_list|)
 throws|throws
 name|HiveException
@@ -9234,6 +9239,11 @@ name|getTableName
 argument_list|()
 argument_list|,
 name|partNames
+argument_list|,
+name|operation
+operator|.
+name|toDataOperationType
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

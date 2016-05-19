@@ -23,6 +23,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|DataOperationType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1218,14 +1236,66 @@ enum|enum
 name|Operation
 block|{
 name|NOT_ACID
-block|,
-name|INSERT
-block|,
+parameter_list|(
+name|DataOperationType
+operator|.
+name|UNSET
+parameter_list|)
+operator|,
+constructor|INSERT(DataOperationType.INSERT
+block|)
+enum|,
 name|UPDATE
-block|,
-name|DELETE
+parameter_list|(
+name|DataOperationType
+operator|.
+name|UPDATE
+parameter_list|)
+operator|,
+constructor|DELETE(DataOperationType.DELETE
+block|)
+class|;
+end_class
+
+begin_decl_stmt
+specifier|private
+specifier|final
+name|DataOperationType
+name|dop
+decl_stmt|;
+end_decl_stmt
+
+begin_constructor
+specifier|private
+name|Operation
+parameter_list|(
+name|DataOperationType
+name|dop
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dop
+operator|=
+name|dop
+expr_stmt|;
 block|}
+end_constructor
+
+begin_function
 specifier|public
+name|DataOperationType
+name|toDataOperationType
+parameter_list|()
+block|{
+return|return
+name|dop
+return|;
+block|}
+end_function
+
+begin_interface
+unit|}    public
 specifier|static
 interface|interface
 name|Directory
@@ -1260,6 +1330,9 @@ name|getObsolete
 parameter_list|()
 function_decl|;
 block|}
+end_interface
+
+begin_class
 specifier|public
 specifier|static
 class|class
@@ -1523,7 +1596,13 @@ return|;
 block|}
 block|}
 block|}
+end_class
+
+begin_comment
 comment|/**    * Convert a list of deltas to a list of delta directories.    * @param deltas the list of deltas out of a Directory object.    * @return a list of delta directory paths that need to be read    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|Path
@@ -1587,7 +1666,13 @@ return|return
 name|result
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * Convert the list of deltas into an equivalent list of begin/end    * transaction id pairs.  Assumes {@code deltas} is sorted.    * @param deltas    * @return the list of transaction ids to serialize    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|List
@@ -1740,7 +1825,13 @@ return|return
 name|result
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * Convert the list of begin/end transaction id pairs to a list of delta    * directories.  Note that there may be multiple delta files for the exact same txn range starting    * with 1.3.x;    * see {@link org.apache.hadoop.hive.ql.io.AcidUtils#deltaSubdir(long, long, int)}    * @param root the root directory    * @param deltas list of begin/end transaction id pairs    * @return the list of delta paths    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|Path
@@ -1882,6 +1973,9 @@ index|]
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|private
 specifier|static
 name|ParsedDelta
@@ -1924,6 +2018,9 @@ name|statementId
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|ParsedDelta
@@ -2107,7 +2204,13 @@ name|DELTA_PREFIX
 argument_list|)
 throw|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * Is the given directory in ACID format?    * @param directory the partition directory to check    * @param conf the query configuration    * @return true, if it is an ACID directory    * @throws IOException    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -2191,6 +2294,9 @@ return|return
 literal|false
 return|;
 block|}
+end_function
+
+begin_function
 annotation|@
 name|VisibleForTesting
 specifier|public
@@ -2225,7 +2331,13 @@ literal|false
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/** State class for getChildState; cannot modify 2 things in a method. */
+end_comment
+
+begin_class
 specifier|private
 specifier|static
 class|class
@@ -2240,7 +2352,13 @@ name|long
 name|txn
 decl_stmt|;
 block|}
+end_class
+
+begin_comment
 comment|/**    * Get the ACID state of the given directory. It finds the minimal set of    * base and diff directories. Note that because major compactions don't    * preserve the history, we can't use a base directory that includes a    * transaction id that we must exclude.    * @param directory the partition directory to analyze    * @param conf the configuration    * @param txnList the list of transactions that we are reading    * @return the state of the directory    * @throws IOException    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|Directory
@@ -2795,6 +2913,9 @@ block|}
 block|}
 return|;
 block|}
+end_function
+
+begin_function
 specifier|private
 specifier|static
 name|void
@@ -3048,6 +3169,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|HdfsFileStatusWithId
@@ -3074,6 +3198,9 @@ name|child
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_class
 specifier|private
 specifier|static
 class|class
@@ -3123,7 +3250,13 @@ literal|null
 return|;
 block|}
 block|}
+end_class
+
+begin_comment
 comment|/**    * Find the original files (non-ACID layout) recursively under the partition directory.    * @param fs the file system    * @param stat the directory to add    * @param original the list of original files    * @throws IOException    */
+end_comment
+
+begin_function
 specifier|private
 specifier|static
 name|void
@@ -3330,6 +3463,9 @@ block|}
 block|}
 block|}
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -3386,6 +3522,9 @@ literal|"true"
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -3447,6 +3586,9 @@ literal|"true"
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -3503,6 +3645,9 @@ literal|"true"
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|void
@@ -3539,6 +3684,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|void
@@ -3565,7 +3713,13 @@ name|isAcidTable
 argument_list|)
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/** Checks if a table is a valid ACID table.    * Note, users are responsible for using the correct TxnManager. We do not look at    * SessionState.get().getTxnMgr().supportsAcid() here    * @param table table    * @return true if table is a legit ACID table, false otherwise    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -3633,8 +3787,8 @@ literal|"true"
 argument_list|)
 return|;
 block|}
-block|}
-end_class
+end_function
 
+unit|}
 end_unit
 

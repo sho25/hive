@@ -132,9 +132,23 @@ specifier|private
 name|boolean
 name|userSet
 decl_stmt|;
+comment|/**    * @deprecated     */
 specifier|public
 name|LockRequestBuilder
 parameter_list|()
+block|{
+name|this
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|LockRequestBuilder
+parameter_list|(
+name|String
+name|agentInfo
+parameter_list|)
 block|{
 name|req
 operator|=
@@ -152,6 +166,21 @@ name|userSet
 operator|=
 literal|false
 expr_stmt|;
+if|if
+condition|(
+name|agentInfo
+operator|!=
+literal|null
+condition|)
+block|{
+name|req
+operator|.
+name|setAgentInfo
+argument_list|(
+name|agentInfo
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Get the constructed LockRequest.    * @return lock request    */
 specifier|public

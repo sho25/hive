@@ -629,6 +629,11 @@ specifier|private
 enum|enum
 name|OpertaionType
 block|{
+name|SELECT
+argument_list|(
+literal|'s'
+argument_list|)
+block|,
 name|INSERT
 argument_list|(
 literal|'i'
@@ -691,6 +696,12 @@ name|sqlConst
 condition|)
 block|{
 case|case
+literal|'s'
+case|:
+return|return
+name|SELECT
+return|;
+case|case
 literal|'i'
 case|:
 return|return
@@ -721,43 +732,60 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|//we should instead just pass in OpertaionType from client (HIVE-13622)
-annotation|@
-name|Deprecated
 specifier|public
 specifier|static
 name|OpertaionType
-name|fromLockType
+name|fromDataOperationType
 parameter_list|(
-name|LockType
-name|lockType
+name|DataOperationType
+name|dop
 parameter_list|)
 block|{
 switch|switch
 condition|(
-name|lockType
+name|dop
 condition|)
 block|{
 case|case
-name|SHARED_READ
+name|SELECT
 case|:
 return|return
+name|OpertaionType
+operator|.
+name|SELECT
+return|;
+case|case
+name|INSERT
+case|:
+return|return
+name|OpertaionType
+operator|.
 name|INSERT
 return|;
 case|case
-name|SHARED_WRITE
+name|UPDATE
 case|:
 return|return
+name|OpertaionType
+operator|.
 name|UPDATE
+return|;
+case|case
+name|DELETE
+case|:
+return|return
+name|OpertaionType
+operator|.
+name|DELETE
 return|;
 default|default:
 throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Unexpected lock type: "
+literal|"Unexpected value: "
 operator|+
-name|lockType
+name|dop
 argument_list|)
 throw|;
 block|}
@@ -3053,14 +3081,23 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|int
+name|modCount
+init|=
+literal|0
+decl_stmt|;
 if|if
 condition|(
+operator|(
+name|modCount
+operator|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
+operator|)
 operator|<
 literal|1
 condition|)
@@ -3100,6 +3137,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|modCount
+operator|=
 name|stmt
 operator|.
 name|executeUpdate
@@ -3124,6 +3163,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|modCount
+operator|=
 name|stmt
 operator|.
 name|executeUpdate
@@ -3148,6 +3189,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|modCount
+operator|=
 name|stmt
 operator|.
 name|executeUpdate
@@ -3760,7 +3803,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/** Get the next lock id.          * This has to be atomic with adding entries to HIVE_LOCK entries (1st add in W state) to prevent a race.          * Suppose ID gen is a separate txn and 2 concurrent lock() methods are running.  1st one generates nl_next=7,          * 2nd nl_next=8.  Then 8 goes first to insert into HIVE_LOCKS and aquires the locks.  Then 7 unblocks,          * and add it's W locks but it won't see locks from 8 since to be 'fair' {@link #checkLock(java.sql.Connection, long)}          * doesn't block on locks acquired later than one it's checking*/
+comment|/** Get the next lock id.          * This has to be atomic with adding entries to HIVE_LOCK entries (1st add in W state) to prevent a race.          * Suppose ID gen is a separate txn and 2 concurrent lock() methods are running.  1st one generates nl_next=7,          * 2nd nl_next=8.  Then 8 goes first to insert into HIVE_LOCKS and acquires the locks.  Then 7 unblocks,          * and add it's W locks but it won't see locks from 8 since to be 'fair' {@link #checkLock(java.sql.Connection, long)}          * doesn't block on locks acquired later than one it's checking*/
 name|String
 name|s
 init|=
@@ -3865,10 +3908,9 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|/**DBTxnManager#acquireLocks() knows if it's I/U/D (that's how it decides what lock to get)            * So if we add that to LockRequest we'll know that here             * Should probably add it to LockComponent so that if in the future we decide wo allow 1 LockRequest            * to contain LockComponent for multiple operations.            * Deriving it from lock info doesn't distinguish between Update and Delete            *             * QueryPlan has BaseSemanticAnalyzer which has acidFileSinks list of FileSinkDesc            * FileSinkDesc.table is ql.metadata.Table            * Table.tableSpec which is TableSpec, which has specType which is SpecType            * So maybe this can work to know that this is part of dynamic partition insert in which case            * we'll get addDynamicPartitions() call and should not write TXN_COMPONENTS here.            * In any case, that's an optimization for now;  will be required when adding multi-stmt txns            */
+comment|/**            * todo QueryPlan has BaseSemanticAnalyzer which has acidFileSinks list of FileSinkDesc            * FileSinkDesc.table is ql.metadata.Table            * Table.tableSpec which is TableSpec, which has specType which is SpecType            * So maybe this can work to know that this is part of dynamic partition insert in which case            * we'll get addDynamicPartitions() call and should not write TXN_COMPONENTS here.            * In any case, that's an optimization for now;  will be required when adding multi-stmt txns            */
 comment|// For each component in this lock request,
 comment|// add an entry to the txn_components table
-comment|// This must be done before HIVE_LOCKS is accessed
 for|for
 control|(
 name|LockComponent
@@ -3880,6 +3922,114 @@ name|getComponent
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|lc
+operator|.
+name|isSetIsAcid
+argument_list|()
+operator|&&
+operator|!
+name|lc
+operator|.
+name|isIsAcid
+argument_list|()
+condition|)
+block|{
+comment|//we don't prevent using non-acid resources in a txn but we do lock them
+continue|continue;
+block|}
+name|boolean
+name|updateTxnComponents
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|lc
+operator|.
+name|isSetOperationType
+argument_list|()
+condition|)
+block|{
+comment|//request came from old version of the client
+name|updateTxnComponents
+operator|=
+literal|true
+expr_stmt|;
+comment|//this matches old behavior
+block|}
+else|else
+block|{
+switch|switch
+condition|(
+name|lc
+operator|.
+name|getOperationType
+argument_list|()
+condition|)
+block|{
+case|case
+name|INSERT
+case|:
+case|case
+name|UPDATE
+case|:
+case|case
+name|DELETE
+case|:
+name|updateTxnComponents
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+case|case
+name|SELECT
+case|:
+name|updateTxnComponents
+operator|=
+literal|false
+expr_stmt|;
+break|break;
+default|default:
+comment|//since we have an open transaction, only 4 values above are expected
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Unexpected DataOperationType: "
+operator|+
+name|lc
+operator|.
+name|getOperationType
+argument_list|()
+operator|+
+literal|" agentInfo="
+operator|+
+name|rqst
+operator|.
+name|getAgentInfo
+argument_list|()
+operator|+
+literal|" "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+argument_list|)
+throw|;
+block|}
+block|}
+if|if
+condition|(
+operator|!
+name|updateTxnComponents
+condition|)
+block|{
+continue|continue;
+block|}
 name|String
 name|dbName
 init|=
@@ -3956,11 +4106,11 @@ name|quoteString
 argument_list|(
 name|OpertaionType
 operator|.
-name|fromLockType
+name|fromDataOperationType
 argument_list|(
 name|lc
 operator|.
-name|getType
+name|getOperationType
 argument_list|()
 argument_list|)
 operator|.
@@ -3981,13 +4131,16 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|int
+name|modCount
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|s
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 block|}
 block|}
 name|long
@@ -4006,6 +4159,48 @@ name|getComponent
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|lc
+operator|.
+name|isSetOperationType
+argument_list|()
+operator|&&
+name|lc
+operator|.
+name|getOperationType
+argument_list|()
+operator|==
+name|DataOperationType
+operator|.
+name|UNSET
+condition|)
+block|{
+comment|//old version of thrift client should have (lc.isSetOperationType() == false)
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Bug: operationType="
+operator|+
+name|lc
+operator|.
+name|getOperationType
+argument_list|()
+operator|+
+literal|" for component "
+operator|+
+name|lc
+operator|+
+literal|" agentInfo="
+operator|+
+name|rqst
+operator|.
+name|getAgentInfo
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|intLockId
 operator|++
 expr_stmt|;
@@ -7248,104 +7443,36 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//we should be able to get this from AddDynamicPartitions object longer term; in fact we'd have to
-comment|//for multi stmt txns if same table is written more than once per tx
-comment|// MoveTask knows if it's I/U/D
-comment|// MoveTask calls Hive.loadDynamicPartitions() which calls HiveMetaStoreClient.addDynamicPartitions()
-comment|// which ends up here so we'd need to add a field to AddDynamicPartitions.
-name|String
-name|findOperationType
-init|=
-literal|" tc_operation_type from TXN_COMPONENTS where tc_txnid="
-operator|+
-name|rqst
-operator|.
-name|getTxnid
-argument_list|()
-operator|+
-literal|" and tc_database="
-operator|+
-name|quoteString
-argument_list|(
-name|rqst
-operator|.
-name|getDbname
-argument_list|()
-argument_list|)
-operator|+
-literal|" and tc_table="
-operator|+
-name|quoteString
-argument_list|(
-name|rqst
-operator|.
-name|getTablename
-argument_list|()
-argument_list|)
-decl_stmt|;
-comment|//do limit 1 on this; currently they will all have the same operations
-name|rs
-operator|=
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
-name|addLimitClause
-argument_list|(
-literal|1
-argument_list|,
-name|findOperationType
-argument_list|)
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-operator|!
-name|rs
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Unable to determine tc_operation_type for "
-operator|+
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-name|rqst
-operator|.
-name|getTxnid
-argument_list|()
-argument_list|)
-argument_list|)
-throw|;
-block|}
+comment|//for RU this may be null so we should default it to 'u' which is most restrictive
 name|OpertaionType
 name|ot
 init|=
 name|OpertaionType
 operator|.
-name|fromString
-argument_list|(
-name|rs
-operator|.
-name|getString
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|charAt
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
+name|UPDATE
 decl_stmt|;
-comment|//what if a txn writes the same table> 1 time... let's go with this for now, but really
+if|if
+condition|(
+name|rqst
+operator|.
+name|isSetOperationType
+argument_list|()
+condition|)
+block|{
+name|ot
+operator|=
+name|OpertaionType
+operator|.
+name|fromDataOperationType
+argument_list|(
+name|rqst
+operator|.
+name|getOperationType
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|//what if a txn writes the same table> 1 time...(HIVE-9675) let's go with this for now, but really
 comment|//need to not write this in the first place, i.e. make this delete not needed
 comment|//see enqueueLockWithRetry() - that's where we write to TXN_COMPONENTS
 name|String
@@ -7382,13 +7509,16 @@ comment|//we delete the entries made by enqueueLockWithRetry() since those are b
 comment|//much "wider" than necessary in a lot of cases.  Here on the other hand, we know exactly which
 comment|//partitions have been written to.  w/o this WRITE_SET would contain entries for partitions not actually
 comment|//written to
+name|int
+name|modCount
+init|=
 name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
 name|deleteSql
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -7459,6 +7589,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|modCount
+operator|=
 name|stmt
 operator|.
 name|executeUpdate
@@ -7555,7 +7687,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Clean up corresponding records in metastore tables, specifically:    * TXN_COMPONENTS, COMPLETED_TXN_COMPONENTS, COMPACTION_QUEUE, COMPLETED_COMPACTIONS    */
+comment|/**    * Clean up corresponding records in metastore tables when corresponding object is dropped,    * specifically: TXN_COMPONENTS, COMPLETED_TXN_COMPONENTS, COMPACTION_QUEUE, COMPLETED_COMPACTIONS    */
 specifier|public
 name|void
 name|cleanupRecords
