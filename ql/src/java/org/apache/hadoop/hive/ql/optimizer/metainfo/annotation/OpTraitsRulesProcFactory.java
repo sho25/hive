@@ -769,6 +769,26 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+specifier|final
+name|int
+name|numBuckets
+init|=
+name|tbl
+operator|.
+name|getNumBuckets
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|numBuckets
+operator|<=
+literal|0
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 if|if
 condition|(
 name|tbl
@@ -826,14 +846,6 @@ argument_list|)
 decl_stmt|;
 comment|// The number of files for the table should be same as number of
 comment|// buckets.
-name|int
-name|bucketCount
-init|=
-name|p
-operator|.
-name|getBucketCount
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|fileNames
@@ -848,7 +860,7 @@ operator|.
 name|size
 argument_list|()
 operator|!=
-name|bucketCount
+name|numBuckets
 condition|)
 block|{
 return|return
@@ -878,18 +890,6 @@ argument_list|,
 name|pGraphContext
 argument_list|)
 decl_stmt|;
-name|Integer
-name|num
-init|=
-operator|new
-name|Integer
-argument_list|(
-name|tbl
-operator|.
-name|getNumBuckets
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// The number of files for the table should be same as number of buckets.
 if|if
 condition|(
@@ -905,7 +905,7 @@ operator|.
 name|size
 argument_list|()
 operator|!=
-name|num
+name|numBuckets
 condition|)
 block|{
 return|return
