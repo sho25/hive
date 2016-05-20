@@ -258,6 +258,14 @@ parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get the count for open transactions.    * @throws MetaException    */
+specifier|public
+name|void
+name|countOpenTxns
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Open a set of transactions    * @param rqst request to open transactions    * @return information on opened transactions    * @throws MetaException    */
 specifier|public
 name|OpenTxnsResponse

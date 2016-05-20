@@ -7353,6 +7353,36 @@ operator|+
 literal|"hive.lock.numretries and hive.lock.sleep.between.retries."
 argument_list|)
 block|,
+name|HIVE_MAX_OPEN_TXNS
+argument_list|(
+literal|"hive.max.open.txns"
+argument_list|,
+literal|100000
+argument_list|,
+literal|"Maximum number of open transactions. If \n"
+operator|+
+literal|"current open transactions reach this limit, future open transaction requests will be \n"
+operator|+
+literal|"rejected, until this number goes below the limit."
+argument_list|)
+block|,
+name|HIVE_COUNT_OPEN_TXNS_INTERVAL
+argument_list|(
+literal|"hive.count.open.txns.interval"
+argument_list|,
+literal|"1s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Time in seconds between checks to count open transactions."
+argument_list|)
+block|,
 name|HIVE_TXN_MAX_OPEN_BATCH
 argument_list|(
 literal|"hive.txn.max.open.batch"
