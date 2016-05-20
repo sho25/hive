@@ -14387,6 +14387,20 @@ operator|+
 literal|"'"
 decl_stmt|;
 comment|// Table properties
+name|duplicateProps
+operator|.
+name|addAll
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|StatsSetupConst
+operator|.
+name|TABLE_PARAMS_STATS_KEYS
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|String
 name|tbl_properties
 init|=
