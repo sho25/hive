@@ -505,7 +505,11 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"Command failed with exit code = "
+literal|"Command "
+operator|+
+name|command
+operator|+
+literal|" failed with exit code = "
 operator|+
 name|ret
 argument_list|)
