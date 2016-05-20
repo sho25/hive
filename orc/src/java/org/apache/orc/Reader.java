@@ -863,7 +863,7 @@ name|IOException
 function_decl|;
 comment|/**    * Create a RecordReader that uses the options given.    * This method can't be named rows, because many callers used rows(null)    * before the rows() method was introduced.    * @param options the options to read with    * @return a new RecordReader    * @throws IOException    */
 name|RecordReader
-name|rowsOptions
+name|rows
 parameter_list|(
 name|Options
 name|options

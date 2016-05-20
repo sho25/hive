@@ -155,22 +155,19 @@ name|int
 name|elementNum
 parameter_list|)
 block|{
-name|TimestampWritable
-operator|.
-name|setTimestampFromLong
-argument_list|(
 name|timestampColVector
 operator|.
 name|getScratchTimestamp
 argument_list|()
-argument_list|,
+operator|.
+name|setTime
+argument_list|(
 name|vector
 index|[
 name|elementNum
 index|]
-argument_list|,
-comment|/* intToTimestampInSeconds */
-literal|true
+operator|*
+literal|1000
 argument_list|)
 expr_stmt|;
 name|timestampColVector

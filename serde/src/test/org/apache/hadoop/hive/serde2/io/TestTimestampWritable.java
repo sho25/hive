@@ -197,6 +197,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|util
+operator|.
+name|TimestampUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|*
@@ -400,7 +418,7 @@ name|assertEquals
 argument_list|(
 name|seconds
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2054,7 +2072,7 @@ name|assertEquals
 argument_list|(
 name|ts
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|doubleToTimestamp
 argument_list|(
@@ -2068,7 +2086,7 @@ name|assertEquals
 argument_list|(
 name|ts
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|decimalToTimestamp
 argument_list|(
@@ -2215,7 +2233,7 @@ name|assertEquals
 argument_list|(
 name|ts
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|decimalToTimestamp
 argument_list|(
@@ -2311,7 +2329,7 @@ name|assertEquals
 argument_list|(
 name|ts
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|decimalToTimestamp
 argument_list|(
@@ -2323,7 +2341,7 @@ name|assertEquals
 argument_list|(
 name|ts
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|doubleToTimestamp
 argument_list|(
@@ -2737,7 +2755,7 @@ name|assertEquals
 argument_list|(
 literal|0
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2750,7 +2768,7 @@ argument_list|(
 operator|-
 literal|1
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2764,7 +2782,7 @@ argument_list|(
 operator|-
 literal|1
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2778,7 +2796,7 @@ argument_list|(
 operator|-
 literal|1
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2792,7 +2810,7 @@ argument_list|(
 operator|-
 literal|2
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2806,7 +2824,7 @@ argument_list|(
 operator|-
 literal|2
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2820,7 +2838,7 @@ argument_list|(
 operator|-
 literal|2
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2834,7 +2852,7 @@ argument_list|(
 operator|-
 literal|3
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2848,7 +2866,7 @@ argument_list|(
 operator|-
 literal|99
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2862,7 +2880,7 @@ argument_list|(
 operator|-
 literal|100
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2876,7 +2894,7 @@ argument_list|(
 operator|-
 literal|100
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2889,7 +2907,7 @@ name|assertEquals
 argument_list|(
 literal|1
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2901,7 +2919,7 @@ name|assertEquals
 argument_list|(
 literal|19
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(
@@ -2913,7 +2931,7 @@ name|assertEquals
 argument_list|(
 literal|20
 argument_list|,
-name|TimestampWritable
+name|TimestampUtils
 operator|.
 name|millisToSeconds
 argument_list|(

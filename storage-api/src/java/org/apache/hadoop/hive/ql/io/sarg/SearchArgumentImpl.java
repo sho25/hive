@@ -142,16 +142,18 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The implementation of SearchArguments.  */
+comment|/**  * The implementation of SearchArguments. Visible for testing only.  */
 end_comment
 
 begin_class
+specifier|public
 specifier|final
 class|class
 name|SearchArgumentImpl
 implements|implements
 name|SearchArgument
 block|{
+specifier|public
 specifier|static
 specifier|final
 class|class
@@ -216,6 +218,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+specifier|public
 name|PredicateLeafImpl
 parameter_list|(
 name|Operator

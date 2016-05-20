@@ -1599,7 +1599,9 @@ case|:
 return|return
 operator|new
 name|LongColumnVector
-argument_list|()
+argument_list|(
+name|maxSize
+argument_list|)
 return|;
 case|case
 name|TIMESTAMP
@@ -1607,7 +1609,9 @@ case|:
 return|return
 operator|new
 name|TimestampColumnVector
-argument_list|()
+argument_list|(
+name|maxSize
+argument_list|)
 return|;
 case|case
 name|FLOAT
@@ -1618,7 +1622,9 @@ case|:
 return|return
 operator|new
 name|DoubleColumnVector
-argument_list|()
+argument_list|(
+name|maxSize
+argument_list|)
 return|;
 case|case
 name|DECIMAL
@@ -1627,6 +1633,8 @@ return|return
 operator|new
 name|DecimalColumnVector
 argument_list|(
+name|maxSize
+argument_list|,
 name|precision
 argument_list|,
 name|scale
@@ -1647,7 +1655,9 @@ case|:
 return|return
 operator|new
 name|BytesColumnVector
-argument_list|()
+argument_list|(
+name|maxSize
+argument_list|)
 return|;
 case|case
 name|STRUCT
@@ -1705,9 +1715,7 @@ return|return
 operator|new
 name|StructColumnVector
 argument_list|(
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
+name|maxSize
 argument_list|,
 name|fieldVector
 argument_list|)
@@ -1769,9 +1777,7 @@ return|return
 operator|new
 name|UnionColumnVector
 argument_list|(
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
+name|maxSize
 argument_list|,
 name|fieldVector
 argument_list|)
@@ -1784,9 +1790,7 @@ return|return
 operator|new
 name|ListColumnVector
 argument_list|(
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
+name|maxSize
 argument_list|,
 name|children
 operator|.
@@ -1808,9 +1812,7 @@ return|return
 operator|new
 name|MapColumnVector
 argument_list|(
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
+name|maxSize
 argument_list|,
 name|children
 operator|.

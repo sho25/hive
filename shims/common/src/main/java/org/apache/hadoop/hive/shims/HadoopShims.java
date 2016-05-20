@@ -1446,73 +1446,6 @@ name|FileSystem
 name|fs
 parameter_list|)
 function_decl|;
-comment|/**    * a hadoop.io ByteBufferPool shim.    */
-specifier|public
-interface|interface
-name|ByteBufferPoolShim
-block|{
-comment|/**      * Get a new ByteBuffer from the pool.  The pool can provide this from      * removing a buffer from its internal cache, or by allocating a      * new buffer.      *      * @param direct     Whether the buffer should be direct.      * @param length     The minimum length the buffer will have.      * @return           A new ByteBuffer. Its capacity can be less      *                   than what was requested, but must be at      *                   least 1 byte.      */
-name|ByteBuffer
-name|getBuffer
-parameter_list|(
-name|boolean
-name|direct
-parameter_list|,
-name|int
-name|length
-parameter_list|)
-function_decl|;
-comment|/**      * Release a buffer back to the pool.      * The pool may choose to put this buffer into its cache/free it.      *      * @param buffer    a direct bytebuffer      */
-name|void
-name|putBuffer
-parameter_list|(
-name|ByteBuffer
-name|buffer
-parameter_list|)
-function_decl|;
-block|}
-comment|/**    * Provides an HDFS ZeroCopyReader shim.    * @param in FSDataInputStream to read from (where the cached/mmap buffers are tied to)    * @param in ByteBufferPoolShim to allocate fallback buffers with    *    * @return returns null if not supported    */
-specifier|public
-name|ZeroCopyReaderShim
-name|getZeroCopyReader
-parameter_list|(
-name|FSDataInputStream
-name|in
-parameter_list|,
-name|ByteBufferPoolShim
-name|pool
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-specifier|public
-interface|interface
-name|ZeroCopyReaderShim
-block|{
-comment|/**      * Get a ByteBuffer from the FSDataInputStream - this can be either a HeapByteBuffer or an MappedByteBuffer.      * Also move the in stream by that amount. The data read can be small than maxLength.      *      * @return ByteBuffer read from the stream,      */
-specifier|public
-name|ByteBuffer
-name|readBuffer
-parameter_list|(
-name|int
-name|maxLength
-parameter_list|,
-name|boolean
-name|verifyChecksums
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**      * Release a ByteBuffer obtained from a read on the      * Also move the in stream by that amount. The data read can be small than maxLength.      *      */
-specifier|public
-name|void
-name|releaseBuffer
-parameter_list|(
-name|ByteBuffer
-name|buffer
-parameter_list|)
-function_decl|;
-block|}
 comment|/**    * Get configuration from JobContext    */
 specifier|public
 name|Configuration
@@ -1999,36 +1932,6 @@ name|fs
 parameter_list|,
 name|String
 name|path
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-comment|/**    * Read data into a Text object in the fastest way possible    */
-specifier|public
-interface|interface
-name|TextReaderShim
-block|{
-comment|/**      * @param txt      * @param len      * @return bytes read      * @throws IOException      */
-name|void
-name|read
-parameter_list|(
-name|Text
-name|txt
-parameter_list|,
-name|int
-name|size
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
-block|}
-comment|/**    * Wrap a TextReaderShim around an input stream. The reader shim will not    * buffer any reads from the underlying stream and will only consume bytes    * which are required for TextReaderShim.read() input.    */
-specifier|public
-name|TextReaderShim
-name|getTextReaderShim
-parameter_list|(
-name|InputStream
-name|input
 parameter_list|)
 throws|throws
 name|IOException

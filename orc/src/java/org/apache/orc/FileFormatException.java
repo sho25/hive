@@ -9,13 +9,7 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
+name|orc
 package|;
 end_package
 

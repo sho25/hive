@@ -9,15 +9,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
+operator|.
+name|impl
 package|;
 end_package
 
@@ -135,13 +129,7 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
+name|orc
 operator|.
 name|FileFormatException
 import|;
@@ -158,6 +146,18 @@ operator|.
 name|io
 operator|.
 name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|OrcFile
 import|;
 end_import
 

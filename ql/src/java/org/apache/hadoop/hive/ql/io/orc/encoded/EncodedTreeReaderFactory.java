@@ -131,15 +131,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
+operator|.
+name|impl
 operator|.
 name|TreeReaderFactory
 import|;

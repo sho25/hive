@@ -9,14 +9,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
 package|;
 end_package
@@ -32,6 +24,16 @@ operator|.
 name|collect
 operator|.
 name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|Assert
 import|;
 end_import
 
@@ -425,118 +427,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|util
-operator|.
-name|HiveTestUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|BinaryColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|BooleanColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|ColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|CompressionKind
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|DataReader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|DecimalColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|DoubleColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|IntegerColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|orc
 operator|.
 name|impl
@@ -581,7 +471,9 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|OrcProto
+name|impl
+operator|.
+name|RecordReaderImpl
 import|;
 end_import
 
@@ -593,7 +485,9 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|OrcUtils
+name|impl
+operator|.
+name|RecordReaderUtils
 import|;
 end_import
 
@@ -605,55 +499,9 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|StringColumnStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|tools
 operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|StripeInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|StripeStatistics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|TypeDescription
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|Writer
+name|TestJsonFileDump
 import|;
 end_import
 
@@ -835,6 +683,18 @@ name|junit
 operator|.
 name|framework
 operator|.
+name|TestCase
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
 name|Assert
 operator|.
 name|assertEquals
@@ -843,21 +703,9 @@ end_import
 
 begin_import
 import|import static
+name|org
+operator|.
 name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|assertNotNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|junit
-operator|.
-name|framework
 operator|.
 name|Assert
 operator|.
@@ -867,9 +715,9 @@ end_import
 
 begin_import
 import|import static
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 operator|.
@@ -1421,7 +1269,7 @@ init|=
 operator|new
 name|Path
 argument_list|(
-name|HiveTestUtils
+name|TestJsonFileDump
 operator|.
 name|getFileFromClasspath
 argument_list|(
@@ -1550,6 +1398,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|reader
@@ -1812,6 +1662,8 @@ operator|)
 operator|.
 name|getMinimum
 argument_list|()
+argument_list|,
+literal|0.0001
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1831,6 +1683,8 @@ operator|)
 operator|.
 name|getMaximum
 argument_list|()
+argument_list|,
+literal|0.0001
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1939,6 +1793,8 @@ operator|.
 name|rows
 argument_list|()
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -2509,6 +2365,8 @@ argument_list|(
 literal|7499
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -2974,6 +2832,8 @@ index|]
 argument_list|)
 expr_stmt|;
 comment|// handle the close up
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -3415,6 +3275,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|tslist
@@ -4092,6 +3954,8 @@ operator|.
 name|rows
 argument_list|()
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -4243,14 +4107,18 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// handle the close up
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
 argument_list|,
 name|rows
 operator|.
-name|hasNext
-argument_list|()
+name|nextBatch
+argument_list|(
+name|batch
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|rows
@@ -9307,6 +9175,8 @@ operator|)
 operator|.
 name|getMinimum
 argument_list|()
+argument_list|,
+literal|0.0001
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -9326,6 +9196,8 @@ operator|)
 operator|.
 name|getMaximum
 argument_list|()
+argument_list|,
+literal|0.0001
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -9853,6 +9725,8 @@ operator|.
 name|createRowBatch
 argument_list|()
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -9874,14 +9748,18 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
 argument_list|,
 name|rows
 operator|.
-name|hasNext
-argument_list|()
+name|nextBatch
+argument_list|(
+name|batch
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// check the contents of the first row
@@ -10622,6 +10500,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// handle the close up
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11180,6 +11060,14 @@ operator|.
 name|rows
 argument_list|(
 operator|new
+name|Reader
+operator|.
+name|Options
+argument_list|()
+operator|.
+name|include
+argument_list|(
+operator|new
 name|boolean
 index|[]
 block|{
@@ -11190,6 +11078,7 @@ block|,
 literal|false
 block|}
 argument_list|)
+argument_list|)
 decl_stmt|;
 name|RecordReader
 name|rows2
@@ -11197,6 +11086,14 @@ init|=
 name|reader
 operator|.
 name|rows
+argument_list|(
+operator|new
+name|Reader
+operator|.
+name|Options
+argument_list|()
+operator|.
+name|include
 argument_list|(
 operator|new
 name|boolean
@@ -11208,6 +11105,7 @@ literal|false
 block|,
 literal|true
 block|}
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|r1
@@ -11268,6 +11166,8 @@ operator|+=
 literal|1000
 control|)
 block|{
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -11280,6 +11180,8 @@ name|batch1
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -11382,6 +11284,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11394,6 +11298,8 @@ name|batch1
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11498,6 +11404,19 @@ name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|VectorizedRowBatch
+name|batch
+init|=
+name|reader
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|createRowBatch
+argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11507,10 +11426,14 @@ operator|.
 name|rows
 argument_list|()
 operator|.
-name|hasNext
-argument_list|()
+name|nextBatch
+argument_list|(
+name|batch
+argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|CompressionKind
@@ -11523,6 +11446,8 @@ name|getCompressionKind
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -11533,6 +11458,8 @@ name|getNumberOfRows
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -11543,6 +11470,8 @@ name|getCompressionSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11559,6 +11488,8 @@ name|hasNext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3
@@ -11569,6 +11500,8 @@ name|getContentLength
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -11871,6 +11804,8 @@ name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|byteBuf
@@ -11896,6 +11831,8 @@ literal|"clobber"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|byteBuf
@@ -11934,6 +11871,8 @@ literal|"my.meta"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|bigBuf
@@ -13682,6 +13621,8 @@ name|included
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -13698,6 +13639,8 @@ name|hasNext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|5077
@@ -13838,6 +13781,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|reader
@@ -13855,6 +13800,8 @@ argument_list|,
 name|stripeCount
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|reader
@@ -13873,6 +13820,8 @@ operator|.
 name|rows
 argument_list|()
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -13883,6 +13832,8 @@ name|getRowNumber
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0.0
@@ -13911,6 +13862,8 @@ argument_list|(
 literal|74
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -13937,6 +13890,8 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|74
@@ -14878,6 +14833,8 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|1.0
@@ -14890,6 +14847,8 @@ argument_list|,
 literal|0.00001
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|reader
@@ -15190,6 +15149,8 @@ name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|CompressionKind
@@ -15580,6 +15541,8 @@ name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|50000
@@ -15590,6 +15553,8 @@ name|getNumberOfRows
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -16225,6 +16190,8 @@ name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|COUNT
@@ -16446,6 +16413,8 @@ argument_list|(
 name|base
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|"row "
@@ -16640,7 +16609,7 @@ name|rows
 operator|=
 name|reader
 operator|.
-name|rowsOptions
+name|rows
 argument_list|(
 operator|new
 name|Reader
@@ -16683,6 +16652,8 @@ argument_list|(
 literal|2
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -16743,6 +16714,8 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -18133,7 +18106,7 @@ name|rows
 init|=
 name|reader
 operator|.
-name|rowsOptions
+name|rows
 argument_list|(
 operator|new
 name|Reader
@@ -18219,6 +18192,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|1000L
@@ -18229,6 +18204,8 @@ name|getRowNumber
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -18303,6 +18280,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -18315,6 +18294,8 @@ name|batch
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3500
@@ -18359,7 +18340,7 @@ name|rows
 operator|=
 name|reader
 operator|.
-name|rowsOptions
+name|rows
 argument_list|(
 operator|new
 name|Reader
@@ -18407,6 +18388,8 @@ block|}
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3500L
@@ -18422,8 +18405,10 @@ argument_list|(
 operator|!
 name|rows
 operator|.
-name|hasNext
-argument_list|()
+name|nextBatch
+argument_list|(
+name|batch
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// select first 100 and last 100 rows
@@ -18483,7 +18468,7 @@ name|rows
 operator|=
 name|reader
 operator|.
-name|rowsOptions
+name|rows
 argument_list|(
 operator|new
 name|Reader
@@ -18531,6 +18516,8 @@ block|}
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -18541,6 +18528,8 @@ name|getRowNumber
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -18562,6 +18551,8 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3000
@@ -18621,6 +18612,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -18642,6 +18635,8 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3500
@@ -18705,6 +18700,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -18717,6 +18714,8 @@ name|batch
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|3500
@@ -21196,6 +21195,8 @@ name|maps
 operator|.
 name|values
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -21296,6 +21297,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// read the 1024 repeat values
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -21810,6 +21813,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// read the second set of 1024 nulls
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -21908,6 +21913,8 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -22594,6 +22601,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// should have no more rows
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -22919,6 +22928,8 @@ operator|.
 name|createRowBatch
 argument_list|()
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -23305,6 +23316,8 @@ operator|.
 name|createRowBatch
 argument_list|()
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -23369,6 +23382,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -23426,6 +23441,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -24158,6 +24175,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|true
@@ -24494,6 +24513,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false
@@ -25086,6 +25107,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|false

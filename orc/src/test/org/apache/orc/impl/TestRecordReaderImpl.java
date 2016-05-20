@@ -9,15 +9,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|orc
+operator|.
+name|impl
 package|;
 end_package
 
@@ -193,6 +187,16 @@ end_import
 
 begin_import
 import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -331,13 +335,17 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|common
+name|ql
 operator|.
-name|util
+name|io
 operator|.
-name|HiveTestUtils
+name|sarg
+operator|.
+name|SearchArgumentImpl
 import|;
 end_import
 
@@ -359,15 +367,57 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|orc
 operator|.
-name|hive
+name|DataReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|ql
-operator|.
-name|io
+name|apache
 operator|.
 name|orc
+operator|.
+name|RecordReader
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|Writer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
 operator|.
 name|RecordReaderImpl
 operator|.
@@ -414,26 +464,6 @@ operator|.
 name|SearchArgument
 operator|.
 name|TruthValue
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|sarg
-operator|.
-name|TestSearchArgumentImpl
 import|;
 end_import
 
@@ -507,7 +537,7 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|DataReader
+name|OrcFile
 import|;
 end_import
 
@@ -519,33 +549,7 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|StripeInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|TypeDescription
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|ColumnStatisticsImpl
+name|Reader
 import|;
 end_import
 
@@ -596,6 +600,53 @@ specifier|public
 class|class
 name|TestRecordReaderImpl
 block|{
+comment|/**    * Create a predicate leaf. This is used by another test.    */
+specifier|public
+specifier|static
+name|PredicateLeaf
+name|createPredicateLeaf
+parameter_list|(
+name|PredicateLeaf
+operator|.
+name|Operator
+name|operator
+parameter_list|,
+name|PredicateLeaf
+operator|.
+name|Type
+name|type
+parameter_list|,
+name|String
+name|columnName
+parameter_list|,
+name|Object
+name|literal
+parameter_list|,
+name|List
+argument_list|<
+name|Object
+argument_list|>
+name|literalList
+parameter_list|)
+block|{
+return|return
+operator|new
+name|SearchArgumentImpl
+operator|.
+name|PredicateLeafImpl
+argument_list|(
+name|operator
+argument_list|,
+name|type
+argument_list|,
+name|columnName
+argument_list|,
+name|literal
+argument_list|,
+name|literalList
+argument_list|)
+return|;
+block|}
 comment|// can add .verboseLogging() to cause Mockito to log invocations
 specifier|private
 specifier|final
@@ -2816,8 +2867,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -2887,8 +2936,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -2958,8 +3005,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3040,8 +3085,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3088,8 +3131,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3137,8 +3178,6 @@ expr_stmt|;
 comment|// Stats gets converted to column type. "15" is outside of "10" and "100"
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3186,8 +3225,6 @@ expr_stmt|;
 comment|// Integer stats will not be converted date because of days/seconds/millis ambiguity
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3241,8 +3278,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3293,8 +3328,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3356,8 +3389,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3404,8 +3435,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3453,8 +3482,6 @@ expr_stmt|;
 comment|// Stats gets converted to column type. "15.0" is outside of "10.0" and "100.0"
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3502,8 +3529,6 @@ expr_stmt|;
 comment|// Double is not converted to date type because of days/seconds/millis ambiguity
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3557,8 +3582,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3609,8 +3632,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3663,8 +3684,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3728,8 +3747,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3776,8 +3793,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3824,8 +3839,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3873,8 +3886,6 @@ expr_stmt|;
 comment|// IllegalArgumentException is thrown when converting String to Date, hence YES_NO
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3928,8 +3939,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -3980,8 +3989,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4043,8 +4050,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4093,8 +4098,6 @@ expr_stmt|;
 comment|// Date to Float conversion is also not possible.
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4141,8 +4144,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4189,8 +4190,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4237,8 +4236,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4285,8 +4282,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4333,8 +4328,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4381,8 +4374,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4429,8 +4420,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4484,8 +4473,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4540,8 +4527,6 @@ expr_stmt|;
 comment|// Date to Decimal conversion is also not possible.
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4592,8 +4577,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4644,8 +4627,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4715,8 +4696,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4763,8 +4742,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4812,8 +4789,6 @@ expr_stmt|;
 comment|// "15" out of range of "10.0" and "100.0"
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4861,8 +4836,6 @@ expr_stmt|;
 comment|// Decimal to Date not possible.
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4916,8 +4889,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -4968,8 +4939,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5022,8 +4991,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5087,8 +5054,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5135,8 +5100,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5206,8 +5169,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5254,8 +5215,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5309,8 +5268,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5403,8 +5360,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5478,8 +5433,6 @@ argument_list|)
 expr_stmt|;
 name|pred
 operator|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5564,8 +5517,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5738,8 +5689,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -5912,8 +5861,6 @@ block|{
 name|PredicateLeaf
 name|lessThan
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6063,8 +6010,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6241,8 +6186,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6396,8 +6339,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6593,8 +6534,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6652,8 +6591,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -6844,8 +6781,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -7036,8 +6971,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -7228,8 +7161,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -7447,8 +7378,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -7666,8 +7595,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -8014,8 +7941,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -11875,8 +11800,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12001,8 +11924,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12154,8 +12075,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12305,8 +12224,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12431,8 +12348,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12584,8 +12499,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12735,8 +12648,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -12863,8 +12774,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13018,8 +12927,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13171,8 +13078,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13322,8 +13227,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13514,8 +13417,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13692,8 +13593,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -13840,8 +13739,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -14023,8 +13920,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -14201,8 +14096,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -14347,8 +14240,6 @@ block|{
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -14528,8 +14419,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -14745,8 +14634,6 @@ expr_stmt|;
 name|PredicateLeaf
 name|pred
 init|=
-name|TestSearchArgumentImpl
-operator|.
 name|createPredicateLeaf
 argument_list|(
 name|PredicateLeaf
@@ -15169,7 +15056,7 @@ name|recordReader
 init|=
 name|reader
 operator|.
-name|rowsOptions
+name|rows
 argument_list|(
 operator|new
 name|Reader
