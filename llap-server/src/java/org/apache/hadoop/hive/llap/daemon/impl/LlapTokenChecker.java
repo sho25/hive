@@ -37,6 +37,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -692,6 +706,13 @@ name|isSecurityEnabled
 argument_list|()
 condition|)
 return|return;
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|userName
+argument_list|)
+expr_stmt|;
 name|UserGroupInformation
 name|current
 init|=
@@ -775,7 +796,7 @@ literal|null
 operator|&&
 name|StringUtils
 operator|.
-name|isEmpty
+name|isBlank
 argument_list|(
 name|appId
 argument_list|)
@@ -976,7 +997,7 @@ operator|&&
 operator|(
 name|StringUtils
 operator|.
-name|isEmpty
+name|isBlank
 argument_list|(
 name|appId
 argument_list|)

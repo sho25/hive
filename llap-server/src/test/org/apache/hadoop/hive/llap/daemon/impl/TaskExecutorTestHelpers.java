@@ -697,7 +697,7 @@ index|]
 argument_list|,
 literal|null
 argument_list|,
-literal|null
+literal|"fakeUser"
 argument_list|,
 literal|null
 argument_list|)

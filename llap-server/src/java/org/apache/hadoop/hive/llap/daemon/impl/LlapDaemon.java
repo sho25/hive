@@ -1431,7 +1431,7 @@ operator|.
 name|getCurrentUser
 argument_list|()
 operator|.
-name|getUserName
+name|getShortUserName
 argument_list|()
 argument_list|,
 name|LlapUtil
