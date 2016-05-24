@@ -6808,7 +6808,16 @@ literal|"hive.stats.autogather"
 argument_list|,
 literal|true
 argument_list|,
-literal|"A flag to gather statistics automatically during the INSERT OVERWRITE command."
+literal|"A flag to gather statistics (only basic) automatically during the INSERT OVERWRITE command."
+argument_list|)
+block|,
+name|HIVESTATSCOLAUTOGATHER
+argument_list|(
+literal|"hive.stats.column.autogather"
+argument_list|,
+literal|false
+argument_list|,
+literal|"A flag to gather column statistics automatically."
 argument_list|)
 block|,
 name|HIVESTATSDBCLASS
