@@ -5556,9 +5556,18 @@ operator|.
 name|getErrorCodedMsg
 argument_list|()
 operator|+
-literal|"Maximum was set to: "
+literal|"Maximum was set to "
 operator|+
 name|maxPartitions
+operator|+
+literal|" partitions per node"
+operator|+
+literal|", number of dynamic partitions on this node: "
+operator|+
+name|valToPaths
+operator|.
+name|size
+argument_list|()
 argument_list|)
 throw|;
 block|}
