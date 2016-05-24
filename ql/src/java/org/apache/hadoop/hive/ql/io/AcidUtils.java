@@ -2567,7 +2567,7 @@ name|FileStatus
 argument_list|>
 name|children
 init|=
-name|SHIMS
+name|HdfsUtils
 operator|.
 name|listLocatedStatus
 argument_list|(
@@ -3403,7 +3403,7 @@ name|FileStatus
 argument_list|>
 name|children
 init|=
-name|SHIMS
+name|HdfsUtils
 operator|.
 name|listLocatedStatus
 argument_list|(

@@ -621,7 +621,7 @@ argument_list|(
 literal|" map = (\\d+%),\\s+reduce = (\\d+%).*$"
 argument_list|)
 decl_stmt|;
-comment|/**    * Hive on Tez produces progress report that looks like this    * Map 1: -/-	Reducer 2: 0/1	    * Map 1: -/-	Reducer 2: 0(+1)/1	    * Map 1: -/-	Reducer 2: 1/1    *     * -/- means there are no tasks (yet)    * 0/1 means 1 total tasks, 0 completed    * 1(+2)/3 means 3 total, 1 completed and 2 running    *     * HIVE-8495, in particular https://issues.apache.org/jira/secure/attachment/12675504/Screen%20Shot%202014-10-16%20at%209.35.26%20PM.png    * has more examples.    * To report progress, we'll assume all tasks are equal size and compute "completed" as percent of "total"    * "(Map|Reducer) (\\d+:) ((-/-)|(\\d+(\\(\\+\\d+\\))?/\\d+))" is the complete pattern but we'll drop "-/-" to exclude    * groups that don't add information such as "Map 1: -/-"    */
+comment|/**    * Hive on Tez produces progress report that looks like this    * Map 1: -/-	Reducer 2: 0/1    * Map 1: -/-	Reducer 2: 0(+1)/1    * Map 1: -/-	Reducer 2: 1/1    *    * -/- means there are no tasks (yet)    * 0/1 means 1 total tasks, 0 completed    * 1(+2)/3 means 3 total, 1 completed and 2 running    *    * HIVE-8495, in particular https://issues.apache.org/jira/secure/attachment/12675504/Screen%20Shot%202014-10-16%20at%209.35.26%20PM.png    * has more examples.    * To report progress, we'll assume all tasks are equal size and compute "completed" as percent of "total"    * "(Map|Reducer) (\\d+:) ((-/-)|(\\d+(\\(\\+\\d+\\))?/\\d+))" is the complete pattern but we'll drop "-/-" to exclude    * groups that don't add information such as "Map 1: -/-"    */
 specifier|public
 specifier|static
 specifier|final
@@ -1491,24 +1491,15 @@ name|emptyList
 argument_list|()
 return|;
 block|}
-name|List
-argument_list|<
 name|FileStatus
-argument_list|>
+index|[]
 name|children
 init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|listLocatedStatus
-argument_list|(
 name|fs
-argument_list|,
+operator|.
+name|listStatus
+argument_list|(
 name|p
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 if|if
@@ -1811,6 +1802,8 @@ name|FileSystem
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|FileSystem
 name|run

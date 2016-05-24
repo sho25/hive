@@ -960,25 +960,6 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Get the block locations for the given directory.    * @param fs the file system    * @param path the directory name to get the status and block locations    * @param filter a filter that needs to accept the file (or null)    * @return an list for the located file status objects    * @throws IOException    */
-name|List
-argument_list|<
-name|FileStatus
-argument_list|>
-name|listLocatedStatus
-parameter_list|(
-name|FileSystem
-name|fs
-parameter_list|,
-name|Path
-name|path
-parameter_list|,
-name|PathFilter
-name|filter
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
 name|List
 argument_list|<
 name|HdfsFileStatusWithId

@@ -181,9 +181,15 @@ name|org
 operator|.
 name|apache
 operator|.
-name|orc
+name|hadoop
 operator|.
-name|FileFormatException
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|HdfsUtils
 import|;
 end_import
 
@@ -198,6 +204,18 @@ operator|.
 name|tools
 operator|.
 name|FileDump
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|FileFormatException
 import|;
 end_import
 
@@ -259,22 +277,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -326,6 +328,8 @@ operator|new
 name|PathFilter
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|accept
@@ -564,10 +568,7 @@ name|FileStatus
 argument_list|>
 name|fileList
 init|=
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
+name|HdfsUtils
 operator|.
 name|listLocatedStatus
 argument_list|(
