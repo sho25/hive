@@ -292,7 +292,6 @@ name|getCheckerFactories
 parameter_list|()
 function_decl|;
 comment|/**    * Selects an optimized checker for a given string.    * @param pattern    * @return    */
-specifier|private
 name|Checker
 name|createChecker
 parameter_list|(
