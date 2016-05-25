@@ -11153,7 +11153,7 @@ name|LLAP_WEB_AUTO_AUTH
 argument_list|(
 literal|"hive.llap.auto.auth"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether or not to set Hadoop configs to enable auth in LLAP web app."
 argument_list|)
