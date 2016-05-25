@@ -646,7 +646,7 @@ operator|.
 name|toString
 argument_list|()
 block|,
-literal|"--rowindex=1"
+literal|"--rowindex=*"
 block|}
 argument_list|)
 expr_stmt|;
