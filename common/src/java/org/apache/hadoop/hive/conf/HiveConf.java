@@ -215,6 +215,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|Validator
+operator|.
+name|WritableDirectoryValidator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|Utils
@@ -10765,6 +10783,30 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether ORC low-level cache should use direct allocation."
+argument_list|)
+block|,
+name|LLAP_ALLOCATOR_MAPPED
+argument_list|(
+literal|"hive.llap.io.allocator.mmap"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether ORC low-level cache should use memory mapped allocation (direct I/O). \n"
+operator|+
+literal|"This is recommended to be used along-side NVDIMM (DAX) or NVMe flash storage."
+argument_list|)
+block|,
+name|LLAP_ALLOCATOR_MAPPED_PATH
+argument_list|(
+literal|"hive.llap.io.allocator.mmap.path"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+operator|new
+name|WritableDirectoryValidator
+argument_list|()
+argument_list|,
+literal|"The directory location for mapping NVDIMM/NVMe flash storage into the ORC low-level cache."
 argument_list|)
 block|,
 name|LLAP_USE_LRFU

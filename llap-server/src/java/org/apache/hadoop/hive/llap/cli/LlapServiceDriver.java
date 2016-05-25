@@ -1447,6 +1447,25 @@ operator|-
 literal|1
 condition|)
 block|{
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_ALLOCATOR_MAPPED
+argument_list|)
+operator|==
+literal|false
+condition|)
+block|{
+comment|// direct heap allocations need to be safer
 name|Preconditions
 operator|.
 name|checkArgument
@@ -1464,6 +1483,29 @@ argument_list|,
 literal|"Cache has to be smaller than the container sizing"
 argument_list|)
 expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|options
+operator|.
+name|getCache
+argument_list|()
+operator|<
+name|options
+operator|.
+name|getSize
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Note that this might need YARN physical memory monitoring to be turned off (yarn.nodemanager.pmem-check-enabled=false)"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -1508,8 +1550,24 @@ name|ConfVars
 operator|.
 name|LLAP_ALLOCATOR_DIRECT
 argument_list|)
+operator|&&
+literal|false
+operator|==
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_ALLOCATOR_MAPPED
+argument_list|)
 condition|)
 block|{
+comment|// direct and not memory mapped
 name|Preconditions
 operator|.
 name|checkArgument
@@ -1529,7 +1587,7 @@ operator|.
 name|getSize
 argument_list|()
 argument_list|,
-literal|"Working memory + cache has to be smaller than the containing sizing "
+literal|"Working memory + cache has to be smaller than the container sizing "
 argument_list|)
 expr_stmt|;
 block|}
