@@ -1925,6 +1925,22 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+comment|// Tez/LLAP requires RPC query plan
+name|HiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_RPC_QUERY_PLAN
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|jc

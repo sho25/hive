@@ -870,21 +870,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// Necessary for GetSplits()/LlapInputFormat,
-comment|// the config generated for the query fragment needs to include the MapWork
-name|conf
-operator|.
-name|setBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_RPC_QUERY_PLAN
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
 name|conf
 operator|.
 name|addResource
