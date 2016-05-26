@@ -208,9 +208,6 @@ name|colProjSize
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|colProjSize
-return|;
 block|}
 elseif|else
 if|if
@@ -271,10 +268,21 @@ name|colProjSize
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|colProjSize
-return|;
 block|}
+block|}
+if|if
+condition|(
+name|colProjSize
+operator|<=
+literal|0
+condition|)
+block|{
+comment|/* columnar splits of unknown size - estimate worst-case */
+return|return
+name|Integer
+operator|.
+name|MAX_VALUE
+return|;
 block|}
 return|return
 name|colProjSize
