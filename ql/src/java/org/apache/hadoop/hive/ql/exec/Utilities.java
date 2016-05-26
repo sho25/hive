@@ -3573,11 +3573,18 @@ operator|+
 name|path
 argument_list|)
 expr_stmt|;
-assert|assert
+if|if
+condition|(
 name|path
-operator|!=
+operator|==
 literal|null
-assert|;
+condition|)
+block|{
+comment|// Map/reduce plan may not be generated
+return|return
+literal|null
+return|;
+block|}
 name|BaseWork
 name|gWork
 init|=
@@ -4105,21 +4112,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"File not found: "
-operator|+
-name|fnf
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
 literal|"No plan file found: "
 operator|+
 name|path
+argument_list|,
+name|fnf
 argument_list|)
 expr_stmt|;
 return|return
@@ -4138,16 +4135,14 @@ init|=
 literal|"Failed to load plan: "
 operator|+
 name|path
-operator|+
-literal|": "
-operator|+
-name|e
 decl_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-name|msg
+literal|"Failed to load plan: "
+operator|+
+name|path
 argument_list|,
 name|e
 argument_list|)
