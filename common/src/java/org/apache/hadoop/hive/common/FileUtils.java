@@ -1806,6 +1806,8 @@ name|getLoginUser
 argument_list|()
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|proxyUser
 operator|.
 name|doAs
@@ -1865,6 +1867,17 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|FileSystem
+operator|.
+name|closeAllForUGI
+argument_list|(
+name|proxyUser
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Check if user userName has permissions to perform the given FsAction action    * on all files under the file whose FileStatus fileStatus is provided    *    * @param fs    * @param fileStatus    * @param userName    * @param action    * @return    * @throws IOException    */
 specifier|public
