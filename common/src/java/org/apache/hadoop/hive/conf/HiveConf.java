@@ -6694,6 +6694,17 @@ operator|+
 literal|"number of tuples of the outer input of the join or the input of the union that you should get in order to apply the rule."
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_REDUCE_WITH_STATS
+argument_list|(
+literal|"hive.optimize.filter.stats.reduction"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to simplify comparison\n"
+operator|+
+literal|"expressions in filter operators using column stats"
+argument_list|)
+block|,
 name|HIVE_OPTIMIZE_SKEWJOIN_COMPILETIME
 argument_list|(
 literal|"hive.optimize.skewjoin.compiletime"
