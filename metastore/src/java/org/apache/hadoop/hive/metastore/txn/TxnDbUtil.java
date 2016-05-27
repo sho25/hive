@@ -452,6 +452,8 @@ literal|" CQ_STATE char(1) NOT NULL,"
 operator|+
 literal|" CQ_TYPE char(1) NOT NULL,"
 operator|+
+literal|" CQ_TBLPROPERTIES varchar(2048),"
+operator|+
 literal|" CQ_WORKER_ID varchar(128),"
 operator|+
 literal|" CQ_START bigint,"
@@ -496,6 +498,8 @@ operator|+
 literal|" CC_STATE char(1) NOT NULL,"
 operator|+
 literal|" CC_TYPE char(1) NOT NULL,"
+operator|+
+literal|" CC_TBLPROPERTIES varchar(2048),"
 operator|+
 literal|" CC_WORKER_ID varchar(128),"
 operator|+

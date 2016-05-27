@@ -18794,7 +18794,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Enqueue a compaction request.    * @param dbname name of the database, if null default will be used.    * @param tableName name of the table, cannot be null    * @param partName name of the partition, if null table will be compacted (valid only for    *                 non-partitioned tables).    * @param compactType major or minor    * @throws HiveException    */
+comment|/**    * Enqueue a compaction request.    * @param dbname name of the database, if null default will be used.    * @param tableName name of the table, cannot be null    * @param partName name of the partition, if null table will be compacted (valid only for    *                 non-partitioned tables).    * @param compactType major or minor    * @param tblproperties the list of tblproperties to overwrite for this compaction    * @throws HiveException    */
 specifier|public
 name|void
 name|compact
@@ -18810,6 +18810,14 @@ name|partName
 parameter_list|,
 name|String
 name|compactType
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|tblproperties
 parameter_list|)
 throws|throws
 name|HiveException
@@ -18874,6 +18882,8 @@ argument_list|,
 name|partName
 argument_list|,
 name|cr
+argument_list|,
+name|tblproperties
 argument_list|)
 expr_stmt|;
 block|}

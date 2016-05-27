@@ -834,7 +834,7 @@ name|s
 init|=
 literal|"select cq_id, cq_database, cq_table, cq_partition, "
 operator|+
-literal|"cq_type from COMPACTION_QUEUE where cq_state = '"
+literal|"cq_type, cq_tblproperties from COMPACTION_QUEUE where cq_state = '"
 operator|+
 name|INITIATED_STATE
 operator|+
@@ -962,6 +962,17 @@ name|charAt
 argument_list|(
 literal|0
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|info
+operator|.
+name|properties
+operator|=
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|6
 argument_list|)
 expr_stmt|;
 comment|// Now, update this record as being worked on by this worker.
@@ -1789,7 +1800,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = "
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = "
 operator|+
 name|info
 operator|.
@@ -1904,7 +1915,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|info
@@ -4623,7 +4634,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = "
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = "
 operator|+
 name|ci
 operator|.
@@ -4767,7 +4778,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|CompactionInfo

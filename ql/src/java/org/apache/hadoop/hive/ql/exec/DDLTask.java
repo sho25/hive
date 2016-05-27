@@ -12044,6 +12044,11 @@ name|desc
 operator|.
 name|getCompactionType
 argument_list|()
+argument_list|,
+name|desc
+operator|.
+name|getProps
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|console
