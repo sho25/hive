@@ -523,11 +523,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
+operator|.
+name|common
 operator|.
 name|util
 operator|.
-name|ReflectionUtils
+name|ReflectionUtil
 import|;
 end_import
 
@@ -951,7 +953,7 @@ argument_list|,
 operator|(
 name|GenericUDAFResolver
 operator|)
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -1142,7 +1144,7 @@ name|isNative
 argument_list|,
 name|functionName
 argument_list|,
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -1256,7 +1258,7 @@ name|isNative
 argument_list|,
 name|functionName
 argument_list|,
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
@@ -1371,7 +1373,7 @@ argument_list|,
 operator|new
 name|GenericUDAFBridge
 argument_list|(
-name|ReflectionUtils
+name|ReflectionUtil
 operator|.
 name|newInstance
 argument_list|(
