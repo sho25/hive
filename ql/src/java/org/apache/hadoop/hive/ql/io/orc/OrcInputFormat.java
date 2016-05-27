@@ -1531,6 +1531,14 @@ literal|1024
 operator|*
 literal|1024
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|DEFAULT_ETL_FILE_THRESHOLD
+init|=
+literal|100
+decl_stmt|;
 comment|/**    * When picking the hosts for a split that crosses block boundaries,    * drop any host that has fewer than MIN_INCLUDED_LOCATION of the    * number of bytes available on the host with the most.    * If host1 has 10MB of the split, host2 has 20MB, and host3 has 18MB the    * split will contain host2 (100% of host2) and host3 (90% of host2). Host1    * with 50% will be dropped.    */
 specifier|private
 specifier|static
@@ -3200,7 +3208,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|int
-name|minSplits
+name|etlFileThreshold
 decl_stmt|;
 specifier|private
 specifier|final
@@ -3522,16 +3530,15 @@ operator|)
 expr_stmt|;
 name|this
 operator|.
-name|minSplits
+name|etlFileThreshold
 operator|=
-name|Math
-operator|.
-name|min
-argument_list|(
-name|cacheStripeDetailsSize
-argument_list|,
 name|minSplits
-argument_list|)
+operator|<=
+literal|0
+condition|?
+name|DEFAULT_ETL_FILE_THRESHOLD
+else|:
+name|minSplits
 expr_stmt|;
 synchronized|synchronized
 init|(
@@ -11608,7 +11615,7 @@ name|totalFiles
 operator|<=
 name|context
 operator|.
-name|minSplits
+name|etlFileThreshold
 condition|)
 block|{
 return|return
