@@ -86,11 +86,6 @@ name|name
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
-name|moduleName
-decl_stmt|;
-specifier|private
-specifier|final
 name|Set
 argument_list|<
 name|String
@@ -122,9 +117,6 @@ name|tests
 parameter_list|,
 name|boolean
 name|isParallel
-parameter_list|,
-name|String
-name|moduleName
 parameter_list|)
 block|{
 name|this
@@ -247,12 +239,6 @@ name|isParallel
 operator|=
 name|isParallel
 expr_stmt|;
-name|this
-operator|.
-name|moduleName
-operator|=
-name|moduleName
-expr_stmt|;
 block|}
 specifier|public
 name|String
@@ -347,10 +333,6 @@ literal|", isParallel="
 operator|+
 name|isParallel
 operator|+
-literal|", moduleName="
-operator|+
-name|moduleName
-operator|+
 literal|"]"
 return|;
 block|}
@@ -363,17 +345,6 @@ parameter_list|()
 block|{
 return|return
 name|isParallel
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getTestModule
-parameter_list|()
-block|{
-return|return
-name|moduleName
 return|;
 block|}
 annotation|@

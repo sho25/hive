@@ -1447,18 +1447,6 @@ operator|+
 name|mConfiguration
 argument_list|)
 expr_stmt|;
-name|mLogger
-operator|.
-name|info
-argument_list|(
-literal|"Running tests with configuration context=[{}]"
-argument_list|,
-name|mConfiguration
-operator|.
-name|getContext
-argument_list|()
-argument_list|)
-expr_stmt|;
 for|for
 control|(
 name|Phase

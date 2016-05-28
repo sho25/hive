@@ -44,11 +44,6 @@ name|boolean
 name|isParallel
 parameter_list|()
 function_decl|;
-specifier|public
-name|String
-name|getTestModule
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 
