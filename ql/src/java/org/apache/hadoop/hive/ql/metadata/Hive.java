@@ -14674,6 +14674,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|String
+name|srcGroup
+init|=
+name|srcFile
+operator|.
+name|getGroup
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -14760,6 +14768,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|fullDestStatus
+argument_list|,
+name|srcGroup
 argument_list|,
 name|destFs
 argument_list|,
@@ -15826,6 +15836,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|String
+name|group
+init|=
+name|status
+operator|.
+name|getGroup
+argument_list|()
+decl_stmt|;
 try|try
 block|{
 if|if
@@ -15855,6 +15873,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|desiredStatus
+argument_list|,
+name|group
 argument_list|,
 name|destFs
 argument_list|,
