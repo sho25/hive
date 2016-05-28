@@ -475,6 +475,13 @@ block|}
 if|if
 condition|(
 name|maskedDayValue
+operator|!=
+name|UNMASKED_VAL
+condition|)
+block|{
+if|if
+condition|(
+name|maskedDayValue
 argument_list|<
 literal|1
 operator|||
@@ -488,6 +495,14 @@ operator|=
 name|MASKED_DAY_COMPONENT_VAL
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|maskedMonthValue
+operator|!=
+name|UNMASKED_VAL
+condition|)
+block|{
 if|if
 condition|(
 name|maskedMonthValue
@@ -503,6 +518,7 @@ name|maskedMonthValue
 operator|=
 name|MASKED_MONTH_COMPONENT_VAL
 expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
