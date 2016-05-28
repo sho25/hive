@@ -99,7 +99,7 @@ name|expressions
 operator|.
 name|gen
 operator|.
-name|CastLongToDouble
+name|CastLongToFloatViaLongToDouble
 import|;
 end_import
 
@@ -330,7 +330,7 @@ name|CastTimestampToDouble
 operator|.
 name|class
 block|,
-name|CastLongToDouble
+name|CastLongToFloatViaLongToDouble
 operator|.
 name|class
 block|,
