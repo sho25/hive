@@ -468,6 +468,8 @@ name|QFILENAME
 argument_list|)
 argument_list|,
 name|isParallel
+argument_list|,
+literal|"testModule"
 argument_list|)
 expr_stmt|;
 name|testBatches
