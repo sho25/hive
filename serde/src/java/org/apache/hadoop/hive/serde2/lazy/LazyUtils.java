@@ -734,6 +734,30 @@ return|return
 literal|true
 return|;
 block|}
+comment|/**    * returns false, when the bytes definitely cannot be parsed into a date/timestamp.    *     * Y2k requirements and dash requirements say the string has to be at least    * yyyy-m-m = 8 bytes or more minimum; Timestamp needs to be at least 1 byte longer,    * but the Date check is necessary, but not sufficient.    */
+specifier|public
+specifier|static
+name|boolean
+name|isDateMaybe
+parameter_list|(
+name|byte
+index|[]
+name|buf
+parameter_list|,
+name|int
+name|offset
+parameter_list|,
+name|int
+name|len
+parameter_list|)
+block|{
+comment|// maybe valid - too expensive to check without a parse
+return|return
+name|len
+operator|>=
+literal|8
+return|;
+block|}
 comment|/**    * Returns -1 if the first byte sequence is lexicographically less than the    * second; returns +1 if the second byte sequence is lexicographically less    * than the first; otherwise return 0.    */
 specifier|public
 specifier|static
