@@ -1094,6 +1094,7 @@ argument_list|,
 name|sortFields
 argument_list|)
 expr_stmt|;
+comment|// Create top Project fixing nullability of fields
 name|relBuilder
 operator|.
 name|project
@@ -1101,6 +1102,18 @@ argument_list|(
 name|topChildExprs
 argument_list|,
 name|topChildExprsFields
+argument_list|)
+expr_stmt|;
+name|relBuilder
+operator|.
+name|convert
+argument_list|(
+name|sort
+operator|.
+name|getRowType
+argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|call
