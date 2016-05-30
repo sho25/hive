@@ -1191,9 +1191,10 @@ index|[]
 name|primitiveTypeInfos
 init|=
 block|{
-name|TypeInfoFactory
+name|hashTableKeyType
 operator|.
-name|longTypeInfo
+name|getPrimitiveTypeInfo
+argument_list|()
 block|}
 decl_stmt|;
 name|keyBinarySortableDeserializeRead
