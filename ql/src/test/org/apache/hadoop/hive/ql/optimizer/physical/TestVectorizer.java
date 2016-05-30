@@ -263,6 +263,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|VectorGroupByDesc
+operator|.
+name|ProcessingMode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|udf
 operator|.
 name|generic
@@ -712,6 +732,17 @@ argument_list|(
 name|desc
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setMode
+argument_list|(
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|HASH
+argument_list|)
+expr_stmt|;
 name|Vectorizer
 name|v
 init|=
@@ -1047,7 +1078,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**   * prepareAbstractMapJoin prepares a join operator descriptor, used as helper by SMB and Map join tests.    */
+comment|/**   * prepareAbstractMapJoin prepares a join operator descriptor, used as helper by SMB and Map join tests.   */
 specifier|private
 name|void
 name|prepareAbstractMapJoin
