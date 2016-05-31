@@ -1062,6 +1062,7 @@ argument_list|)
 decl_stmt|;
 comment|// Set the big table position. Both the reduce work and merge join operator
 comment|// should be set with the same value.
+comment|//      int pos = context.currentMergeJoinOperator.getTagForOperator(parentOp);
 name|int
 name|pos
 init|=
@@ -1069,10 +1070,11 @@ name|context
 operator|.
 name|currentMergeJoinOperator
 operator|.
-name|getTagForOperator
-argument_list|(
-name|parentOp
-argument_list|)
+name|getConf
+argument_list|()
+operator|.
+name|getBigTablePosition
+argument_list|()
 decl_stmt|;
 name|work
 operator|.
