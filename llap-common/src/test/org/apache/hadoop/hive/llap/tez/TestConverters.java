@@ -397,7 +397,7 @@ name|Test
 argument_list|(
 name|timeout
 operator|=
-literal|5000
+literal|10000
 argument_list|)
 specifier|public
 name|void
@@ -886,7 +886,7 @@ name|Test
 argument_list|(
 name|timeout
 operator|=
-literal|5000
+literal|10000
 argument_list|)
 specifier|public
 name|void
@@ -1306,7 +1306,7 @@ literal|0
 argument_list|,
 literal|0
 argument_list|,
-literal|null
+name|tezTaskAttemptId
 argument_list|)
 decl_stmt|;
 name|assertEquals
