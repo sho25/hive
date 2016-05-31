@@ -2367,13 +2367,6 @@ operator|)
 condition|)
 block|{
 comment|// Do the join. It does fetching of next row groups itself.
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Calling joinOneGroup once again"
-argument_list|)
-expr_stmt|;
 name|ret
 operator|=
 name|joinOneGroup
