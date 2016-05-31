@@ -1350,7 +1350,7 @@ literal|"Column type mismatch in WHERE clause "
 operator|+
 name|sc
 operator|.
-name|getComparisonExpr
+name|getIndexExpr
 argument_list|()
 operator|.
 name|getExprString
@@ -1506,7 +1506,7 @@ literal|"Column type mismatch in WHERE clause "
 operator|+
 name|sc
 operator|.
-name|getComparisonExpr
+name|getIndexExpr
 argument_list|()
 operator|.
 name|getExprString

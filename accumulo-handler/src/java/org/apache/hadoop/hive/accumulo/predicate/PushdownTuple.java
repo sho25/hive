@@ -438,7 +438,7 @@ literal|" Column type mismatch in where clause "
 operator|+
 name|sc
 operator|.
-name|getComparisonExpr
+name|getIndexExpr
 argument_list|()
 operator|.
 name|getExprString
