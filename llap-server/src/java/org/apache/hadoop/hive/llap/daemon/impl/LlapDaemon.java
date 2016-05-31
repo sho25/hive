@@ -2099,9 +2099,6 @@ argument_list|,
 name|executorClassLoader
 argument_list|,
 name|daemonId
-operator|.
-name|getClusterString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|addIfService

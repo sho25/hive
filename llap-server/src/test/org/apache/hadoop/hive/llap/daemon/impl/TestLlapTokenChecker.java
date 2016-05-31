@@ -499,6 +499,8 @@ name|i
 operator|+
 literal|1
 index|]
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -603,12 +605,9 @@ specifier|private
 name|void
 name|check
 parameter_list|(
-name|Pair
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+name|LlapTokenChecker
+operator|.
+name|LlapTokenInfo
 name|p
 parameter_list|,
 name|String
@@ -624,8 +623,7 @@ name|user
 argument_list|,
 name|p
 operator|.
-name|getLeft
-argument_list|()
+name|userName
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -634,8 +632,7 @@ name|appId
 argument_list|,
 name|p
 operator|.
-name|getRight
-argument_list|()
+name|appId
 argument_list|)
 expr_stmt|;
 block|}

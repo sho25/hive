@@ -1171,6 +1171,9 @@ name|tezHadoopShim
 parameter_list|,
 name|TezTaskAttemptID
 name|attemptId
+parameter_list|,
+name|SignableVertexSpec
+name|vertex
 parameter_list|)
 block|{
 name|this
@@ -1240,18 +1243,11 @@ argument_list|(
 name|credentials
 argument_list|)
 expr_stmt|;
-comment|// TODO: support binary spec here or above
 name|this
 operator|.
 name|vertex
 operator|=
-name|request
-operator|.
-name|getWorkSpec
-argument_list|()
-operator|.
-name|getVertex
-argument_list|()
+name|vertex
 expr_stmt|;
 name|this
 operator|.
@@ -2574,6 +2570,8 @@ name|TaskRunnerCallback
 argument_list|(
 name|request
 argument_list|,
+name|vertex
+argument_list|,
 name|this
 argument_list|)
 return|;
@@ -2603,6 +2601,11 @@ name|request
 decl_stmt|;
 specifier|private
 specifier|final
+name|SignableVertexSpec
+name|vertex
+decl_stmt|;
+specifier|private
+specifier|final
 name|TaskRunnerCallable
 name|taskRunnerCallable
 decl_stmt|;
@@ -2610,6 +2613,9 @@ name|TaskRunnerCallback
 parameter_list|(
 name|SubmitWorkRequestProto
 name|request
+parameter_list|,
+name|SignableVertexSpec
+name|vertex
 parameter_list|,
 name|TaskRunnerCallable
 name|taskRunnerCallable
@@ -2620,6 +2626,12 @@ operator|.
 name|request
 operator|=
 name|request
+expr_stmt|;
+name|this
+operator|.
+name|vertex
+operator|=
+name|vertex
 expr_stmt|;
 name|this
 operator|.
@@ -2880,6 +2892,8 @@ operator|+
 name|getTaskIdentifierString
 argument_list|(
 name|request
+argument_list|,
+name|vertex
 argument_list|)
 argument_list|,
 name|t
@@ -3039,6 +3053,9 @@ name|getTaskIdentifierString
 parameter_list|(
 name|SubmitWorkRequestProto
 name|request
+parameter_list|,
+name|SignableVertexSpec
+name|vertex
 parameter_list|)
 block|{
 name|StringBuilder
@@ -3046,18 +3063,6 @@ name|sb
 init|=
 operator|new
 name|StringBuilder
-argument_list|()
-decl_stmt|;
-comment|// TODO: also support the binary version
-name|SignableVertexSpec
-name|vertex
-init|=
-name|request
-operator|.
-name|getWorkSpec
-argument_list|()
-operator|.
-name|getVertex
 argument_list|()
 decl_stmt|;
 name|sb

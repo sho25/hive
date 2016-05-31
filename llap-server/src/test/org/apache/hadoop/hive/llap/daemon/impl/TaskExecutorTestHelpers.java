@@ -1138,6 +1138,14 @@ name|DefaultHadoopShim
 argument_list|()
 argument_list|,
 literal|null
+argument_list|,
+name|requestProto
+operator|.
+name|getWorkSpec
+argument_list|()
+operator|.
+name|getVertex
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this
