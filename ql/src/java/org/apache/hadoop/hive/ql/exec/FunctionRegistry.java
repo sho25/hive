@@ -1495,6 +1495,24 @@ name|ql
 operator|.
 name|udf
 operator|.
+name|UDFVersion
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
 name|UDFWeekOfYear
 import|;
 end_import
@@ -4142,6 +4160,20 @@ argument_list|,
 name|GenericUDFEWAHBitmapEmpty
 operator|.
 name|class
+argument_list|)
+expr_stmt|;
+comment|// Utility UDFs
+name|system
+operator|.
+name|registerUDF
+argument_list|(
+literal|"version"
+argument_list|,
+name|UDFVersion
+operator|.
+name|class
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Aliases for Java Class Names
