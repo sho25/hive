@@ -1789,6 +1789,13 @@ operator|.
 name|footerMetaAndPsBuffer
 expr_stmt|;
 block|}
+name|options
+operator|.
+name|fileMetaInfo
+argument_list|(
+name|footerMetaData
+argument_list|)
+expr_stmt|;
 name|MetaInfoObjExtractor
 name|rInfo
 init|=

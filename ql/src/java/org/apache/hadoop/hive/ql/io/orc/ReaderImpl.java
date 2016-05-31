@@ -366,14 +366,12 @@ comment|//serialized footer - Keeping this around for use by getFileMetaInfo()
 comment|// will help avoid cpu cycles spend in deserializing at cost of increased
 comment|// memory footprint.
 specifier|private
-specifier|final
 name|ByteBuffer
 name|footerByteBuffer
 decl_stmt|;
 comment|// Same for metastore cache - maintains the same background buffer, but includes postscript.
 comment|// This will only be set if the file footer/metadata was read from disk.
 specifier|private
-specifier|final
 name|ByteBuffer
 name|footerMetaAndPsBuffer
 decl_stmt|;
@@ -512,19 +510,6 @@ name|getTypes
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|footerByteBuffer
-operator|=
-literal|null
-expr_stmt|;
-comment|// not cached and not needed here
-name|this
-operator|.
-name|footerMetaAndPsBuffer
-operator|=
-literal|null
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -548,12 +533,6 @@ operator|.
 name|getFileMetaInfo
 argument_list|()
 expr_stmt|;
-name|this
-operator|.
-name|footerMetaAndPsBuffer
-operator|=
-literal|null
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -571,6 +550,7 @@ name|getMaxLength
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|footerMetaAndPsBuffer
@@ -579,7 +559,6 @@ name|footerMetaData
 operator|.
 name|footerMetaAndPsBuffer
 expr_stmt|;
-block|}
 name|MetaInfoObjExtractor
 name|rInfo
 init|=
