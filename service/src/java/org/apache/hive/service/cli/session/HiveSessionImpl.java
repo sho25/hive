@@ -3462,6 +3462,11 @@ try|try
 block|{
 name|sessionState
 operator|.
+name|resetThreadName
+argument_list|()
+expr_stmt|;
+name|sessionState
+operator|.
 name|close
 argument_list|()
 expr_stmt|;
@@ -3501,6 +3506,11 @@ condition|)
 block|{
 try|try
 block|{
+name|sessionState
+operator|.
+name|resetThreadName
+argument_list|()
+expr_stmt|;
 name|sessionState
 operator|.
 name|close
