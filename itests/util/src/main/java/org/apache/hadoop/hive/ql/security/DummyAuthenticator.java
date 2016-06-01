@@ -225,17 +225,6 @@ parameter_list|)
 block|{
 comment|//no op
 block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getUserIpAddress
-parameter_list|()
-block|{
-return|return
-literal|null
-return|;
-block|}
 block|}
 end_class
 

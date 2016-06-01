@@ -514,7 +514,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|listObjs
 parameter_list|,
-name|QueryContext
+name|HiveAuthzContext
 name|context
 parameter_list|)
 throws|throws
@@ -612,7 +612,7 @@ name|any
 argument_list|()
 argument_list|,
 operator|(
-name|QueryContext
+name|HiveAuthzContext
 operator|)
 name|any
 argument_list|()

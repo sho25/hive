@@ -379,7 +379,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|QueryContext
+name|HiveAuthzContext
 import|;
 end_import
 
@@ -767,7 +767,7 @@ argument_list|()
 expr_stmt|;
 name|ArgumentCaptor
 argument_list|<
-name|QueryContext
+name|HiveAuthzContext
 argument_list|>
 name|contextCapturer
 init|=
@@ -775,7 +775,7 @@ name|ArgumentCaptor
 operator|.
 name|forClass
 argument_list|(
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|class
 argument_list|)
@@ -818,7 +818,7 @@ name|capture
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|QueryContext
+name|HiveAuthzContext
 name|context
 init|=
 name|contextCapturer
@@ -842,9 +842,9 @@ name|assertTrue
 argument_list|(
 literal|"ip address pattern check"
 argument_list|,
-name|authenticator
+name|context
 operator|.
-name|getUserIpAddress
+name|getIpAddress
 argument_list|()
 operator|.
 name|matches
@@ -858,9 +858,9 @@ name|assertTrue
 argument_list|(
 literal|"ip address size check"
 argument_list|,
-name|authenticator
+name|context
 operator|.
-name|getUserIpAddress
+name|getIpAddress
 argument_list|()
 operator|.
 name|length

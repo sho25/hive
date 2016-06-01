@@ -235,22 +235,6 @@ operator|=
 name|sessionState
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getUserIpAddress
-parameter_list|()
-block|{
-return|return
-name|this
-operator|.
-name|sessionState
-operator|.
-name|getUserIpAddress
-argument_list|()
-return|;
-block|}
 block|}
 end_class
 

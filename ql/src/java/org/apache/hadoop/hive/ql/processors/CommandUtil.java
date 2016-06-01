@@ -115,7 +115,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|QueryContext
+name|HiveAuthzContext
 import|;
 end_import
 
@@ -398,13 +398,13 @@ argument_list|(
 name|command
 argument_list|)
 decl_stmt|;
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|Builder
 name|ctxBuilder
 init|=
 operator|new
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|Builder
 argument_list|()
@@ -424,6 +424,16 @@ name|join
 argument_list|(
 name|command
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|ctxBuilder
+operator|.
+name|setUserIpAddress
+argument_list|(
+name|ss
+operator|.
+name|getUserIpAddress
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|ctxBuilder

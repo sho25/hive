@@ -2968,7 +2968,7 @@ argument_list|()
 argument_list|,
 name|any
 argument_list|(
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|class
 argument_list|)

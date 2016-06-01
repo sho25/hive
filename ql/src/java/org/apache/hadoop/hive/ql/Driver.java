@@ -1415,7 +1415,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|QueryContext
+name|HiveAuthzContext
 import|;
 end_import
 
@@ -5433,17 +5433,27 @@ throws|throws
 name|HiveException
 block|{
 comment|/* comment for reviewers -> updateTab2Cols needed to be separate from tab2cols because if I     pass tab2cols to getHivePrivObjects for the output case it will trip up insert/selects,     since the insert will get passed the columns from the select.      */
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|Builder
 name|authzContextBuilder
 init|=
 operator|new
-name|QueryContext
+name|HiveAuthzContext
 operator|.
 name|Builder
 argument_list|()
 decl_stmt|;
+name|authzContextBuilder
+operator|.
+name|setUserIpAddress
+argument_list|(
+name|ss
+operator|.
+name|getUserIpAddress
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|authzContextBuilder
 operator|.
 name|setForwardedAddresses

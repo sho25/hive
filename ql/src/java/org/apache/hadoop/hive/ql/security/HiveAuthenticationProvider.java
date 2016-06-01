@@ -96,11 +96,6 @@ name|getUserName
 parameter_list|()
 function_decl|;
 specifier|public
-name|String
-name|getUserIpAddress
-parameter_list|()
-function_decl|;
-specifier|public
 name|List
 argument_list|<
 name|String

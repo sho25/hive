@@ -237,7 +237,7 @@ name|authorization
 operator|.
 name|plugin
 operator|.
-name|QueryContext
+name|HiveAuthzContext
 import|;
 end_import
 
@@ -574,7 +574,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|outputHObjs
 parameter_list|,
-name|QueryContext
+name|HiveAuthzContext
 name|context
 parameter_list|)
 throws|throws
@@ -934,7 +934,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|listObjs
 parameter_list|,
-name|QueryContext
+name|HiveAuthzContext
 name|context
 parameter_list|)
 block|{
@@ -996,7 +996,7 @@ name|HivePrivilegeObject
 argument_list|>
 name|applyRowFilterAndColumnMasking
 parameter_list|(
-name|QueryContext
+name|HiveAuthzContext
 name|context
 parameter_list|,
 name|List
