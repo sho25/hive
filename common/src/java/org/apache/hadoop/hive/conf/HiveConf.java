@@ -3253,6 +3253,15 @@ operator|+
 literal|"undefined and most likely undesired behavior will result"
 argument_list|)
 block|,
+name|METASTORE_FS_HANDLER_THREADS_COUNT
+argument_list|(
+literal|"hive.metastore.fshandler.threads"
+argument_list|,
+literal|20
+argument_list|,
+literal|"Number of threads to be allocated for metastore handler for fs operations."
+argument_list|)
+block|,
 name|METASTORE_HBASE_CATALOG_CACHE_SIZE
 argument_list|(
 literal|"hive.metastore.hbase.catalog.cache.size"
