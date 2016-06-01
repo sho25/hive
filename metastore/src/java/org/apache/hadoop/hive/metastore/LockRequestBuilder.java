@@ -97,7 +97,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -324,7 +324,7 @@ comment|// request that multiple locks are coalesced and promoted to the higher
 comment|// level of locking.  To do this we put all locks components in trie based
 comment|// on dbname, tablename, partition name and handle the promotion as new
 comment|// requests come in.  This structure depends on the fact that null is a
-comment|// valid key in a HashMap.  So a database lock will map to (dbname, null,
+comment|// valid key in a LinkedHashMap.  So a database lock will map to (dbname, null,
 comment|// null).
 specifier|private
 specifier|static
@@ -345,7 +345,7 @@ block|{
 name|trie
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -621,7 +621,7 @@ specifier|static
 class|class
 name|TableTrie
 extends|extends
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -633,7 +633,7 @@ specifier|static
 class|class
 name|PartTrie
 extends|extends
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
