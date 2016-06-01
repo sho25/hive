@@ -961,6 +961,22 @@ init|=
 literal|"user-"
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|String
+name|DISABLE_MESSAGE
+init|=
+literal|"Set "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_VALIDATE_ACLS
+operator|.
+name|varname
+operator|+
+literal|" to false to disable ACL validation"
+decl_stmt|;
+specifier|private
 specifier|final
 name|Configuration
 name|conf
@@ -2251,6 +2267,10 @@ argument_list|(
 literal|"No ACLs on "
 operator|+
 name|pathToCheck
+operator|+
+literal|". "
+operator|+
+name|DISABLE_MESSAGE
 argument_list|)
 throw|;
 block|}
@@ -2322,6 +2342,10 @@ operator|+
 literal|" is unnacceptable for "
 operator|+
 name|pathToCheck
+operator|+
+literal|". "
+operator|+
+name|DISABLE_MESSAGE
 argument_list|)
 throw|;
 block|}
