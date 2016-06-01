@@ -1505,6 +1505,16 @@ operator|.
 name|newConnection
 argument_list|(
 literal|true
+argument_list|,
+literal|"UT_"
+operator|+
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|RecordWriter

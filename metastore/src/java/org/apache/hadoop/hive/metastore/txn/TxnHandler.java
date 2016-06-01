@@ -4551,16 +4551,27 @@ name|s
 operator|=
 literal|"insert into HIVE_LOCKS "
 operator|+
-literal|" (hl_lock_ext_id, hl_lock_int_id, hl_txnid, hl_db, hl_table, "
+literal|"(hl_lock_ext_id, hl_lock_int_id, hl_txnid, "
 operator|+
-literal|"hl_partition, hl_lock_state, hl_lock_type, hl_last_heartbeat, hl_user, hl_host)"
+literal|"hl_db, "
 operator|+
-literal|" values ("
+literal|"hl_table, "
+operator|+
+literal|"hl_partition, "
+operator|+
+literal|"hl_lock_state, hl_lock_type, "
+operator|+
+literal|"hl_last_heartbeat, "
+operator|+
+literal|"hl_user, "
+operator|+
+literal|"hl_host, "
+operator|+
+literal|"hl_agent_info) values("
 operator|+
 name|extLockId
 operator|+
 literal|", "
-operator|+
 operator|+
 name|intLockId
 operator|+
@@ -4568,53 +4579,42 @@ literal|","
 operator|+
 name|txnid
 operator|+
-literal|", '"
+literal|", "
 operator|+
+name|quoteString
+argument_list|(
 name|dbName
-operator|+
-literal|"', "
-operator|+
-operator|(
-name|tblName
-operator|==
-literal|null
-condition|?
-literal|"null"
-else|:
-literal|"'"
-operator|+
-name|tblName
-operator|+
-literal|"'"
-operator|)
+argument_list|)
 operator|+
 literal|", "
 operator|+
-operator|(
+name|valueOrNullLiteral
+argument_list|(
+name|tblName
+argument_list|)
+operator|+
+literal|", "
+operator|+
+name|valueOrNullLiteral
+argument_list|(
 name|partName
-operator|==
-literal|null
-condition|?
-literal|"null"
-else|:
-literal|"'"
+argument_list|)
 operator|+
-name|partName
+literal|", "
 operator|+
-literal|"'"
-operator|)
-operator|+
-literal|", '"
-operator|+
+name|quoteChar
+argument_list|(
 name|LOCK_WAITING
+argument_list|)
 operator|+
-literal|"', "
+literal|", "
 operator|+
-literal|"'"
-operator|+
+name|quoteChar
+argument_list|(
 name|lockChar
+argument_list|)
 operator|+
-literal|"', "
+literal|", "
 operator|+
 comment|//for locks associated with a txn, we always heartbeat txn and timeout based on that
 operator|(
@@ -4628,21 +4628,37 @@ else|:
 name|now
 operator|)
 operator|+
-literal|", '"
+literal|", "
 operator|+
+name|valueOrNullLiteral
+argument_list|(
 name|rqst
 operator|.
 name|getUser
 argument_list|()
+argument_list|)
 operator|+
-literal|"', '"
+literal|", "
 operator|+
+name|valueOrNullLiteral
+argument_list|(
 name|rqst
 operator|.
 name|getHostname
 argument_list|()
+argument_list|)
 operator|+
-literal|"')"
+literal|", "
+operator|+
+name|valueOrNullLiteral
+argument_list|(
+name|rqst
+operator|.
+name|getAgentInfo
+argument_list|()
+argument_list|)
+operator|+
+literal|")"
 expr_stmt|;
 name|LOG
 operator|.
@@ -5549,7 +5565,7 @@ literal|"select hl_lock_ext_id, hl_txnid, hl_db, hl_table, hl_partition, hl_lock
 operator|+
 literal|"hl_lock_type, hl_last_heartbeat, hl_acquired_at, hl_user, hl_host, hl_lock_int_id,"
 operator|+
-literal|"hl_blockedby_ext_id, hl_blockedby_int_id from HIVE_LOCKS"
+literal|"hl_blockedby_ext_id, hl_blockedby_int_id, hl_agent_info from HIVE_LOCKS"
 decl_stmt|;
 comment|// Some filters may have been specified in the SHOW LOCKS statement. Add them to the query.
 name|String
@@ -6115,6 +6131,18 @@ name|id
 argument_list|)
 expr_stmt|;
 block|}
+name|e
+operator|.
+name|setAgentInfo
+argument_list|(
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|15
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|sortedList
 operator|.
 name|add
@@ -16383,6 +16411,29 @@ name|msg
 argument_list|)
 throw|;
 block|}
+block|}
+comment|/**    * Useful for building SQL strings    * @param value may be {@code null}    */
+specifier|private
+specifier|static
+name|String
+name|valueOrNullLiteral
+parameter_list|(
+name|String
+name|value
+parameter_list|)
+block|{
+return|return
+name|value
+operator|==
+literal|null
+condition|?
+literal|"null"
+else|:
+name|quoteString
+argument_list|(
+name|value
+argument_list|)
+return|;
 block|}
 specifier|static
 name|String

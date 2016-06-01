@@ -185,9 +185,9 @@ name|newFormatSchema
 init|=
 literal|"lockid,database,table,partition,lock_state,"
 operator|+
-literal|"blocked_by,lock_type,transaction_id,last_heartbeat,acquired_at,user,hostname#"
+literal|"blocked_by,lock_type,transaction_id,last_heartbeat,acquired_at,user,hostname,agent_info#"
 operator|+
-literal|"string:string:string:string:string:string:string:string:string:string:string:string"
+literal|"string:string:string:string:string:string:string:string:string:string:string:string:string"
 decl_stmt|;
 specifier|public
 name|String
