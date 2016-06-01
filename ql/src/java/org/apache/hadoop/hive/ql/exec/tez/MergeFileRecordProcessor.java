@@ -526,12 +526,6 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|boolean
-name|abort
-init|=
-literal|false
-decl_stmt|;
-specifier|private
 specifier|final
 name|Object
 index|[]
@@ -1082,9 +1076,10 @@ name|void
 name|abort
 parameter_list|()
 block|{
+name|super
+operator|.
 name|abort
-operator|=
-literal|true
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@

@@ -902,10 +902,6 @@ name|ExecMapperContext
 name|execContext
 decl_stmt|;
 specifier|private
-name|boolean
-name|abort
-decl_stmt|;
-specifier|private
 name|MapWork
 name|mapWork
 decl_stmt|;
@@ -2579,24 +2575,9 @@ operator|==
 name|CHECK_INTERRUPTION_AFTER_ROWS
 condition|)
 block|{
-if|if
-condition|(
-name|abort
-operator|&&
-name|Thread
-operator|.
-name|interrupted
+name|checkAbortCondition
 argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Processing thread interrupted"
-argument_list|)
-throw|;
-block|}
+expr_stmt|;
 name|nRows
 operator|=
 literal|0
@@ -2612,9 +2593,10 @@ name|abort
 parameter_list|()
 block|{
 comment|// this will stop run() from pushing records
+name|super
+operator|.
 name|abort
-operator|=
-literal|true
+argument_list|()
 expr_stmt|;
 comment|// this will abort initializeOp()
 if|if
