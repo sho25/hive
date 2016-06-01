@@ -23,6 +23,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -42,20 +52,6 @@ operator|.
 name|io
 operator|.
 name|DiskRange
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
 import|;
 end_import
 
@@ -89,9 +85,9 @@ name|this
 operator|.
 name|diskRanges
 operator|=
-name|Lists
-operator|.
-name|newArrayList
+operator|new
+name|ArrayList
+argument_list|<>
 argument_list|()
 expr_stmt|;
 comment|// Some data is missing from the stream for PPD uncompressed read (because index offset is

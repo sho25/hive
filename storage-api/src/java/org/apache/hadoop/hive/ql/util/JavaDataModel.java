@@ -21,20 +21,6 @@ end_package
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|slf4j
@@ -817,8 +803,7 @@ name|getModelForSystem
 argument_list|()
 decl_stmt|;
 block|}
-annotation|@
-name|VisibleForTesting
+comment|//@VisibleForTesting
 specifier|static
 name|JavaDataModel
 name|getModelForSystem

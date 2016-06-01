@@ -37,22 +37,6 @@ name|List
 import|;
 end_import
 
-begin_import
-import|import static
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-operator|.
-name|checkArgument
-import|;
-end_import
-
 begin_comment
 comment|/**  * BloomFilter is a probabilistic data structure for set membership check. BloomFilters are  * highly space efficient when compared to using a HashSet. Because of the probabilistic nature of  * bloom filter false positive (element not present in bloom filter but test() says true) are  * possible but false negatives are not possible (if element is present then test() will never  * say false). The false positive probability is configurable (default: 5%) depending on which  * storage requirement may increase or decrease. Lower the false positive probability greater  * is the space requirement.  * Bloom filters are sensitive to number of elements that will be inserted in the bloom filter.  * During the creation of bloom filter expected number of entries must be specified. If the number  * of insertions exceed the specified initial number of entries then false positive probability will  * increase accordingly.  *  * Internally, this implementation of bloom filter uses Murmur3 fast non-cryptographic hash  * algorithm. Although Murmur2 is slightly faster than Murmur3 in Java, it suffers from hash  * collisions for specific sequence of repeating bytes. Check the following link for more info  * https://code.google.com/p/smhasher/wiki/MurmurHash2Flaw  */
 end_comment
@@ -100,6 +84,32 @@ argument_list|,
 name|DEFAULT_FPP
 argument_list|)
 expr_stmt|;
+block|}
+specifier|static
+name|void
+name|checkArgument
+parameter_list|(
+name|boolean
+name|expression
+parameter_list|,
+name|String
+name|message
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|!
+name|expression
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+name|message
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|public
 name|BloomFilter
