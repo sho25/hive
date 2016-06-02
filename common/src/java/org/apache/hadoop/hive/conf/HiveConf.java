@@ -10898,7 +10898,7 @@ name|LLAP_AUTO_ALLOW_UBER
 argument_list|(
 literal|"hive.llap.auto.allow.uber"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether or not to allow the planner to run vertices in the AM."
 argument_list|)
