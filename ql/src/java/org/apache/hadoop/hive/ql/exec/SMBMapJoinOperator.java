@@ -1990,6 +1990,15 @@ name|candidateStorage
 index|[
 name|pos
 index|]
+operator|!=
+literal|null
+operator|&&
+name|this
+operator|.
+name|candidateStorage
+index|[
+name|pos
+index|]
 operator|.
 name|hasRows
 argument_list|()
