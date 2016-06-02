@@ -406,9 +406,9 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|SPARK_YARN_REPORT_INTERVAL
+name|SPARK_WAIT_APP_COMPLETE
 init|=
-literal|"spark.yarn.report.interval"
+literal|"spark.yarn.submit.waitAppCompletion"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1324,40 +1324,33 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|//The application reports tend to spam the hive logs.  This is controlled by spark, and the default seems to be 1s.
-comment|//If it is not specified, set it to a much higher number.  It can always be overriden by user.
-name|String
-name|sparkYarnReportInterval
-init|=
-name|sparkConf
-operator|.
-name|get
-argument_list|(
-name|SPARK_YARN_REPORT_INTERVAL
-argument_list|)
-decl_stmt|;
+comment|// Disable it to avoid verbose app state report in yarn-cluster mode
 if|if
 condition|(
 name|sparkMaster
 operator|.
-name|startsWith
+name|equals
 argument_list|(
-literal|"yarn"
+literal|"yarn-cluster"
 argument_list|)
 operator|&&
-name|sparkYarnReportInterval
+name|sparkConf
+operator|.
+name|get
+argument_list|(
+name|SPARK_WAIT_APP_COMPLETE
+argument_list|)
 operator|==
 literal|null
 condition|)
 block|{
-comment|//the new version of spark also takes time-units, but old versions do not.
 name|sparkConf
 operator|.
 name|put
 argument_list|(
-name|SPARK_YARN_REPORT_INTERVAL
+name|SPARK_WAIT_APP_COMPLETE
 argument_list|,
-literal|"60000"
+literal|"false"
 argument_list|)
 expr_stmt|;
 block|}
