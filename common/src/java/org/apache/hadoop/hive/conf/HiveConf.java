@@ -9961,7 +9961,7 @@ argument_list|,
 operator|new
 name|SizeValidator
 argument_list|(
-literal|1L
+literal|0L
 argument_list|,
 literal|true
 argument_list|,
@@ -9972,7 +9972,7 @@ argument_list|)
 argument_list|,
 literal|"Number of threads"
 operator|+
-literal|" used to move files in move task"
+literal|" used to move files in move task. Set it to 0 to disable multi-threaded file moves."
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
