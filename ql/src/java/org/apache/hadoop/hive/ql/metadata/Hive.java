@@ -14643,10 +14643,33 @@ literal|""
 expr_stmt|;
 block|}
 specifier|final
+name|boolean
+name|renameNonLocal
+init|=
+operator|!
+name|needToCopy
+operator|&&
+operator|!
+name|isSrcLocal
+decl_stmt|;
+comment|// If we do a rename for a non-local file, we will be transfering the original
+comment|// file permissions from source to the destination. Else, in case of mvFile() where we
+comment|// copy from source to destination, we will inherit the destination's parent group ownership.
+specifier|final
 name|String
 name|srcGroup
 init|=
+name|renameNonLocal
+condition|?
 name|srcFile
+operator|.
+name|getGroup
+argument_list|()
+else|:
+name|fullDestStatus
+operator|.
+name|getFileStatus
+argument_list|()
 operator|.
 name|getGroup
 argument_list|()
@@ -14676,11 +14699,7 @@ try|try
 block|{
 if|if
 condition|(
-operator|!
-name|needToCopy
-operator|&&
-operator|!
-name|isSrcLocal
+name|renameNonLocal
 condition|)
 block|{
 for|for
@@ -14853,11 +14872,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|needToCopy
-operator|&&
-operator|!
-name|isSrcLocal
+name|renameNonLocal
 condition|)
 block|{
 for|for
