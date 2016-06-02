@@ -193,7 +193,7 @@ operator|.
 name|info
 argument_list|(
 literal|"Starting LocalCommandId={}: {}"
-operator|+
+argument_list|,
 name|commandId
 argument_list|,
 name|command
