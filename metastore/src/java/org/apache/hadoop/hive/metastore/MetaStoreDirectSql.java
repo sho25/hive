@@ -5497,6 +5497,13 @@ argument_list|,
 name|queryText
 argument_list|)
 decl_stmt|;
+name|query
+operator|.
+name|setUnique
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|int
 name|sqlResult
 init|=
