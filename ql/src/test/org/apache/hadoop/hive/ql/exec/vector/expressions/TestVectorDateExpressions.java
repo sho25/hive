@@ -3574,11 +3574,11 @@ argument_list|(
 name|batchSize
 argument_list|)
 decl_stmt|;
-name|BytesColumnVector
+name|LongColumnVector
 name|out
 init|=
 operator|new
-name|BytesColumnVector
+name|LongColumnVector
 argument_list|(
 name|batchSize
 argument_list|)

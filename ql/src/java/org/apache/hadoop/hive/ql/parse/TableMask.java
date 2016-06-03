@@ -682,9 +682,11 @@ argument_list|(
 name|index
 argument_list|)
 operator|+
-literal|") AS "
+literal|") AS `"
 operator|+
 name|colName
+operator|+
+literal|"`"
 argument_list|)
 expr_stmt|;
 block|}
@@ -770,12 +772,21 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|" FROM "
+literal|" FROM `"
+operator|+
+name|privObject
+operator|.
+name|getDbname
+argument_list|()
+operator|+
+literal|"`.`"
 operator|+
 name|privObject
 operator|.
 name|getObjectName
 argument_list|()
+operator|+
+literal|"`"
 argument_list|)
 expr_stmt|;
 name|sb
