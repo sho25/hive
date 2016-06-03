@@ -751,7 +751,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Execute rocedure    */
+comment|/**    * Execute procedure    */
 specifier|public
 name|boolean
 name|execProc

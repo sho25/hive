@@ -1324,6 +1324,21 @@ decl_stmt|;
 if|if
 condition|(
 name|bytes
+operator|==
+literal|1
+condition|)
+block|{
+name|out
+operator|=
+name|bytes
+operator|+
+literal|" byte"
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|bytes
 operator|<
 literal|1024
 condition|)

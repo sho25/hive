@@ -797,11 +797,7 @@ name|closeQuery
 argument_list|(
 name|query
 argument_list|,
-name|exec
-operator|.
-name|conf
-operator|.
-name|defaultConnection
+name|conn
 argument_list|)
 expr_stmt|;
 return|return
@@ -814,11 +810,7 @@ name|closeQuery
 argument_list|(
 name|query
 argument_list|,
-name|exec
-operator|.
-name|conf
-operator|.
-name|defaultConnection
+name|conn
 argument_list|)
 expr_stmt|;
 return|return
