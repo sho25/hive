@@ -7604,6 +7604,17 @@ throw|;
 block|}
 finally|finally
 block|{
+if|if
+condition|(
+name|childrenMode
+operator|!=
+name|VectorExpressionDescriptor
+operator|.
+name|Mode
+operator|.
+name|PROJECTION
+condition|)
+block|{
 for|for
 control|(
 name|VectorExpression
@@ -7622,6 +7633,7 @@ name|getOutputColumn
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
