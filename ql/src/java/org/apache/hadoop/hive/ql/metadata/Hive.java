@@ -9240,10 +9240,12 @@ argument_list|()
 argument_list|,
 name|partNames
 argument_list|,
-name|operation
+name|AcidUtils
 operator|.
 name|toDataOperationType
-argument_list|()
+argument_list|(
+name|operation
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
