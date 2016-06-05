@@ -1149,11 +1149,6 @@ decl_stmt|;
 specifier|protected
 specifier|transient
 name|boolean
-name|statsCollectRawDataSize
-decl_stmt|;
-specifier|protected
-specifier|transient
-name|boolean
 index|[]
 name|statsFromRecordWriter
 decl_stmt|;
@@ -2327,13 +2322,6 @@ operator|.
 name|getDirName
 argument_list|()
 argument_list|)
-expr_stmt|;
-name|statsCollectRawDataSize
-operator|=
-name|conf
-operator|.
-name|isStatsCollectRawDataSize
-argument_list|()
 expr_stmt|;
 name|statsFromRecordWriter
 operator|=
@@ -4375,11 +4363,6 @@ operator|!
 name|isCollectRWStats
 condition|)
 block|{
-if|if
-condition|(
-name|statsCollectRawDataSize
-condition|)
-block|{
 name|SerDeStats
 name|stats
 init|=
@@ -4411,7 +4394,6 @@ name|getRawDataSize
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|fpaths
 operator|.

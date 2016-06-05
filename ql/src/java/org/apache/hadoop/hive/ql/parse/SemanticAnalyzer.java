@@ -41759,25 +41759,6 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
-comment|// set it in plan instead of runtime in FileSinkOperator
-name|fileSinkDesc
-operator|.
-name|setStatsCollectRawDataSize
-argument_list|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_STATS_COLLECT_RAWDATASIZE
-argument_list|)
-argument_list|)
-expr_stmt|;
 comment|// set the stats publishing/aggregating key prefix
 comment|// the same as directory name. The directory name
 comment|// can be changed in the optimizer but the key should not be changed

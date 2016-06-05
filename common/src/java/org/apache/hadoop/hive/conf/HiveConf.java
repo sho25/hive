@@ -6898,15 +6898,6 @@ argument_list|,
 literal|"whether to update metastore stats only if all stats are available"
 argument_list|)
 block|,
-name|HIVE_STATS_COLLECT_RAWDATASIZE
-argument_list|(
-literal|"hive.stats.collect.rawdatasize"
-argument_list|,
-literal|true
-argument_list|,
-literal|"should the raw data size be collected when analyzing tables"
-argument_list|)
-block|,
 name|CLIENT_STATS_COUNTERS
 argument_list|(
 literal|"hive.client.stats.counters"
