@@ -752,6 +752,14 @@ name|HIVE_EXTRA_FILES
 init|=
 literal|"templeton.hive.extra.files"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|XSRF_FILTER_ENABLED
+init|=
+literal|"templeton.xsrf.filter.enabled"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final

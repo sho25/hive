@@ -123,6 +123,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|shims
+operator|.
+name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -312,6 +328,20 @@ operator|.
 name|ssl
 operator|.
 name|SslSelectChannelConnector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|servlet
+operator|.
+name|FilterMapping
 import|;
 end_import
 
@@ -867,6 +897,43 @@ argument_list|(
 literal|"/"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|hiveConf
+operator|.
+name|getBoolean
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_XSRF_FILTER_ENABLED
+operator|.
+name|varname
+argument_list|,
+literal|false
+argument_list|)
+condition|)
+block|{
+comment|// context.addFilter(Utils.getXSRFFilterHolder(null, null), "/" ,
+comment|//    FilterMapping.REQUEST);
+comment|// Filtering does not work here currently, doing filter in ThriftHttpServlet
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"XSRF filter enabled"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"XSRF filter disabled"
+argument_list|)
+expr_stmt|;
+block|}
 name|String
 name|httpPath
 init|=

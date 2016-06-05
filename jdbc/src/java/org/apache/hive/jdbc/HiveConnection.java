@@ -2372,6 +2372,16 @@ argument_list|(
 name|requestInterceptor
 argument_list|)
 expr_stmt|;
+comment|// Add an interceptor to add in an XSRF header
+name|httpClientBuilder
+operator|.
+name|addInterceptorLast
+argument_list|(
+operator|new
+name|XsrfHttpRequestInterceptor
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Configure http client for SSL
 if|if
 condition|(

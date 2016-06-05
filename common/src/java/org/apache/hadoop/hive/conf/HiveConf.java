@@ -9941,6 +9941,17 @@ argument_list|,
 literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
 argument_list|)
 block|,
+name|HIVE_SERVER2_XSRF_FILTER_ENABLED
+argument_list|(
+literal|"hive.server2.xsrf.filter.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If enabled, HiveServer2 will block any requests made to it over http "
+operator|+
+literal|"if an X-XSRF-HEADER header is not present"
+argument_list|)
+block|,
 name|HIVE_SECURITY_COMMAND_WHITELIST
 argument_list|(
 literal|"hive.security.command.whitelist"
@@ -12015,7 +12026,9 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role"
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role,"
+operator|+
+literal|"hive.server2.xsrf.filter.enabled"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
