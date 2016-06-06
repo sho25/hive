@@ -935,11 +935,6 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|boolean
-name|constainsNullableCase
-init|=
-literal|false
-decl_stmt|;
 for|for
 control|(
 name|int
@@ -1003,22 +998,6 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|operand
-operator|.
-name|getType
-argument_list|()
-operator|.
-name|isNullable
-argument_list|()
-condition|)
-block|{
-name|constainsNullableCase
-operator|=
-literal|true
-expr_stmt|;
-block|}
 break|break;
 block|}
 elseif|else
@@ -1042,22 +1021,6 @@ operator|++
 name|i
 expr_stmt|;
 continue|continue;
-block|}
-if|if
-condition|(
-name|operand
-operator|.
-name|getType
-argument_list|()
-operator|.
-name|isNullable
-argument_list|()
-condition|)
-block|{
-name|constainsNullableCase
-operator|=
-literal|true
-expr_stmt|;
 block|}
 block|}
 else|else
@@ -1178,23 +1141,10 @@ operator|==
 name|SqlTypeName
 operator|.
 name|BOOLEAN
-operator|&&
-operator|(
-operator|!
-name|constainsNullableCase
-operator|||
-name|unknownAsFalse
-operator|)
 condition|)
 block|{
 comment|// Optimize CASE where every branch returns constant true or constant
-comment|// false:
-comment|//   CASE
-comment|//   WHEN p1 THEN TRUE
-comment|//   WHEN p2 THEN FALSE
-comment|//   WHEN p3 THEN TRUE
-comment|//   ELSE FALSE
-comment|//   END
+comment|// false.
 specifier|final
 name|List
 argument_list|<
@@ -1214,6 +1164,178 @@ argument_list|,
 name|newOperands
 argument_list|)
 decl_stmt|;
+comment|// 1) Possible simplification if unknown is treated as false:
+comment|//   CASE
+comment|//   WHEN p1 THEN TRUE
+comment|//   WHEN p2 THEN TRUE
+comment|//   ELSE FALSE
+comment|//   END
+comment|// can be rewritten to: (p1 or p2)
+if|if
+condition|(
+name|unknownAsFalse
+condition|)
+block|{
+specifier|final
+name|List
+argument_list|<
+name|RexNode
+argument_list|>
+name|terms
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|int
+name|pos
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+init|;
+name|pos
+operator|<
+name|pairs
+operator|.
+name|size
+argument_list|()
+condition|;
+name|pos
+operator|++
+control|)
+block|{
+comment|// True block
+name|Pair
+argument_list|<
+name|RexNode
+argument_list|,
+name|RexNode
+argument_list|>
+name|pair
+init|=
+name|pairs
+operator|.
+name|get
+argument_list|(
+name|pos
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|pair
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|isAlwaysTrue
+argument_list|()
+condition|)
+block|{
+break|break;
+block|}
+name|terms
+operator|.
+name|add
+argument_list|(
+name|pair
+operator|.
+name|getKey
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+for|for
+control|(
+init|;
+name|pos
+operator|<
+name|pairs
+operator|.
+name|size
+argument_list|()
+condition|;
+name|pos
+operator|++
+control|)
+block|{
+comment|// False block
+name|Pair
+argument_list|<
+name|RexNode
+argument_list|,
+name|RexNode
+argument_list|>
+name|pair
+init|=
+name|pairs
+operator|.
+name|get
+argument_list|(
+name|pos
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|pair
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|isAlwaysFalse
+argument_list|()
+operator|&&
+operator|!
+name|RexUtil
+operator|.
+name|isNull
+argument_list|(
+name|pair
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+condition|)
+block|{
+break|break;
+block|}
+block|}
+if|if
+condition|(
+name|pos
+operator|==
+name|pairs
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+return|return
+name|RexUtil
+operator|.
+name|composeDisjunction
+argument_list|(
+name|rexBuilder
+argument_list|,
+name|terms
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+block|}
+comment|// 2) Another simplification
+comment|//   CASE
+comment|//   WHEN p1 THEN TRUE
+comment|//   WHEN p2 THEN FALSE
+comment|//   WHEN p3 THEN TRUE
+comment|//   ELSE FALSE
+comment|//   END
+comment|// if p1...pn cannot be nullable
 for|for
 control|(
 name|Ord
@@ -1235,6 +1357,26 @@ name|pairs
 argument_list|)
 control|)
 block|{
+if|if
+condition|(
+name|pair
+operator|.
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|isNullable
+argument_list|()
+condition|)
+block|{
+break|break
+name|trueFalse
+break|;
+block|}
 if|if
 condition|(
 operator|!
