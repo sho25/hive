@@ -2947,7 +2947,7 @@ literal|1
 argument_list|,
 literal|"committed.ws_txnid, committed.ws_commit_id, committed.ws_database,"
 operator|+
-literal|"committed.ws_table, committed.ws_partition, cur.ws_commit_id "
+literal|"committed.ws_table, committed.ws_partition, cur.ws_commit_id cur_ws_commit_id "
 operator|+
 literal|"from WRITE_SET committed INNER JOIN WRITE_SET cur "
 operator|+
@@ -17521,7 +17521,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Suppose you have a query "select a,b from T" and you want to limit the result set      * to the first 5 rows.  The mechanism to do that differs in different DB.      * Make {@code noSelectsqlQuery} to be "a,b from T" and this method will return the      * appropriately modified row limiting query.      */
+comment|/**      * Suppose you have a query "select a,b from T" and you want to limit the result set      * to the first 5 rows.  The mechanism to do that differs in different DB.      * Make {@code noSelectsqlQuery} to be "a,b from T" and this method will return the      * appropriately modified row limiting query.      *      * Note that if {@code noSelectsqlQuery} contains a join, you must make sure that      * all columns are unique for Oracle.      */
 specifier|private
 name|String
 name|addLimitClause
