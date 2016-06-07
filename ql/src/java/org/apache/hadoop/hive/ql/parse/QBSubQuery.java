@@ -1361,6 +1361,9 @@ operator|.
 name|stringTypeInfo
 argument_list|,
 name|str
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ExprNodeColumnDesc
