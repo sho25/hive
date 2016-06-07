@@ -12049,6 +12049,25 @@ literal|"hive.added.files.path,hive.added.jars.path,hive.added.archives.path"
 argument_list|,
 literal|"Comma separated list of variables which are used internally and should not be configurable."
 argument_list|)
+block|,
+name|HIVE_QUERY_TIMEOUT_SECONDS
+argument_list|(
+literal|"hive.query.timeout.seconds"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Timeout for Running Query in seconds. A nonpositive value means infinite. "
+operator|+
+literal|"If the query timeout is also set by thrift API call, the smaller one will be taken."
+argument_list|)
 block|;
 specifier|public
 specifier|final
