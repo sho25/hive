@@ -657,7 +657,8 @@ specifier|final
 name|ListeningExecutorService
 name|executionCompletionExecutorService
 decl_stmt|;
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|final
 name|BlockingQueue
 argument_list|<
@@ -1180,6 +1181,7 @@ argument_list|>
 name|getExecutorsStatus
 parameter_list|()
 block|{
+comment|// TODO Change this method to make the output easier to parse (parse programmatically)
 name|Set
 argument_list|<
 name|String
@@ -2455,38 +2457,11 @@ name|fragmentId
 argument_list|)
 expr_stmt|;
 block|}
-name|taskWrapper
-operator|.
-name|setIsInPreemptableQueue
-argument_list|(
-literal|false
-argument_list|)
-expr_stmt|;
-name|preemptionQueue
-operator|.
-name|remove
+name|removeFromPreemptionQueue
 argument_list|(
 name|taskWrapper
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|metrics
-operator|!=
-literal|null
-condition|)
-block|{
-name|metrics
-operator|.
-name|setExecutorNumPreemptableRequests
-argument_list|(
-name|preemptionQueue
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 name|taskWrapper
 operator|.
@@ -2516,7 +2491,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|void
 name|trySchedule
 parameter_list|(
@@ -2727,7 +2703,7 @@ block|}
 name|TaskWrapper
 name|pRequest
 init|=
-name|removeAndGetFromPreemptionQueue
+name|removeAndGetNextFromPreemptionQueue
 argument_list|()
 decl_stmt|;
 comment|// Avoid preempting tasks which are finishable - callback still to be processed.
@@ -2905,34 +2881,11 @@ argument_list|,
 name|newFinishableState
 argument_list|)
 expr_stmt|;
-name|preemptionQueue
-operator|.
-name|remove
+name|removeFromPreemptionQueue
 argument_list|(
 name|taskWrapper
-operator|.
-name|getTaskRunnerCallable
-argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|metrics
-operator|!=
-literal|null
-condition|)
-block|{
-name|metrics
-operator|.
-name|setExecutorNumPreemptableRequests
-argument_list|(
-name|preemptionQueue
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 elseif|else
 if|if
@@ -2968,31 +2921,11 @@ argument_list|,
 name|newFinishableState
 argument_list|)
 expr_stmt|;
-name|preemptionQueue
-operator|.
-name|offer
+name|addToPreemptionQueue
 argument_list|(
 name|taskWrapper
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|metrics
-operator|!=
-literal|null
-condition|)
-block|{
-name|metrics
-operator|.
-name|setExecutorNumPreemptableRequests
-argument_list|(
-name|preemptionQueue
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 name|lock
 operator|.
@@ -3014,13 +2947,51 @@ init|(
 name|lock
 init|)
 block|{
+name|boolean
+name|added
+init|=
 name|preemptionQueue
 operator|.
-name|add
+name|offer
 argument_list|(
 name|taskWrapper
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|added
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to add element {} to preemption queue. Terminating"
+argument_list|,
+name|taskWrapper
+argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|getDefaultUncaughtExceptionHandler
+argument_list|()
+operator|.
+name|uncaughtException
+argument_list|(
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+argument_list|,
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Preemption queue full. Cannot proceed"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|taskWrapper
 operator|.
 name|setIsInPreemptableQueue
@@ -3048,9 +3019,78 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/**    * Remove the specified taskWrapper from the preemption queue    * @param taskWrapper the taskWrapper to be removed    * @return true if the element existed in the queue and wasa removed, false otherwise    */
+specifier|private
+name|boolean
+name|removeFromPreemptionQueue
+parameter_list|(
+name|TaskWrapper
+name|taskWrapper
+parameter_list|)
+block|{
+synchronized|synchronized
+init|(
+name|lock
+init|)
+block|{
+return|return
+name|removeFromPreemptionQueueUnlocked
+argument_list|(
+name|taskWrapper
+argument_list|)
+return|;
+block|}
+block|}
+specifier|private
+name|boolean
+name|removeFromPreemptionQueueUnlocked
+parameter_list|(
+name|TaskWrapper
+name|taskWrapper
+parameter_list|)
+block|{
+name|boolean
+name|removed
+init|=
+name|preemptionQueue
+operator|.
+name|remove
+argument_list|(
+name|taskWrapper
+argument_list|)
+decl_stmt|;
+name|taskWrapper
+operator|.
+name|setIsInPreemptableQueue
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|metrics
+operator|!=
+literal|null
+condition|)
+block|{
+name|metrics
+operator|.
+name|setExecutorNumPreemptableRequests
+argument_list|(
+name|preemptionQueue
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|removed
+return|;
+block|}
 specifier|private
 name|TaskWrapper
-name|removeAndGetFromPreemptionQueue
+name|removeAndGetNextFromPreemptionQueue
 parameter_list|()
 block|{
 name|TaskWrapper
@@ -3065,7 +3105,7 @@ name|taskWrapper
 operator|=
 name|preemptionQueue
 operator|.
-name|remove
+name|poll
 argument_list|()
 expr_stmt|;
 if|if
@@ -3152,6 +3192,22 @@ operator|=
 name|taskWrapper
 expr_stmt|;
 block|}
+comment|// By the time either success / failed are called, the task itself knows that it has terminated,
+comment|// and will ignore subsequent kill requests if they go out.
+comment|// There's a race between removing the current task from the preemption queue and the actual scheduler
+comment|// attempting to take an element from the preemption queue to make space for another task.
+comment|// If the current element is removed to make space - that is OK, since the current task is completing and
+comment|// will end up making space for execution. Any kill message sent out by the scheduler to the task will
+comment|// be ignored, since the task knows it has completed (otherwise it would not be in this callback).
+comment|//
+comment|// If the task is removed from the queue as a result of this callback, and the scheduler happens to
+comment|// be in the section where it's looking for a preemptible task - the scheuler may end up pulling the
+comment|// next pre-emptible task and killing it (an extra preemption).
+comment|// TODO: This potential extra preemption can be avoided by synchronizing the entire tryScheduling block.\
+comment|// This would essentially synchronize all operations - it would be better to see if there's an
+comment|// approach where multiple locks could be used to avoid single threaded operation.
+comment|// - It checks available and preempts (which could be this task)
+comment|// - Or this task completes making space, and removing the need for preemption
 annotation|@
 name|Override
 specifier|public
@@ -3302,9 +3358,7 @@ decl_stmt|;
 name|boolean
 name|removed
 init|=
-name|preemptionQueue
-operator|.
-name|remove
+name|removeFromPreemptionQueueUnlocked
 argument_list|(
 name|taskWrapper
 argument_list|)
@@ -3348,24 +3402,6 @@ operator|+
 name|state
 operator|+
 literal|"! Removed from preemption list."
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|metrics
-operator|!=
-literal|null
-condition|)
-block|{
-name|metrics
-operator|.
-name|setExecutorNumPreemptableRequests
-argument_list|(
-name|preemptionQueue
-operator|.
-name|size
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
