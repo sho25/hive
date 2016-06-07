@@ -479,9 +479,12 @@ argument_list|(
 name|d
 operator|.
 name|get
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// Time doesn't matter.
 name|result
 operator|.
 name|set

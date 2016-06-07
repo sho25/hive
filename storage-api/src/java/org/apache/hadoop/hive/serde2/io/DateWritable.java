@@ -75,6 +75,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|GregorianCalendar
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|TimeZone
 import|;
 end_import
@@ -148,7 +158,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-comment|// Local time zone.
+comment|// Local time zone. Store separately because Calendar would clone it.
 comment|// Java TimeZone has no mention of thread safety. Use thread local instance to be safe.
 specifier|private
 specifier|static
@@ -180,6 +190,76 @@ name|getInstance
 argument_list|()
 operator|.
 name|getTimeZone
+argument_list|()
+return|;
+block|}
+block|}
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|ThreadLocal
+argument_list|<
+name|Calendar
+argument_list|>
+name|UTC_CALENDAR
+init|=
+operator|new
+name|ThreadLocal
+argument_list|<
+name|Calendar
+argument_list|>
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|protected
+name|Calendar
+name|initialValue
+parameter_list|()
+block|{
+return|return
+operator|new
+name|GregorianCalendar
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
+return|;
+block|}
+block|}
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|ThreadLocal
+argument_list|<
+name|Calendar
+argument_list|>
+name|LOCAL_CALENDAR
+init|=
+operator|new
+name|ThreadLocal
+argument_list|<
+name|Calendar
+argument_list|>
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|protected
+name|Calendar
+name|initialValue
+parameter_list|()
+block|{
+return|return
+name|Calendar
+operator|.
+name|getInstance
 argument_list|()
 return|;
 block|}
@@ -297,11 +377,28 @@ name|daysSinceEpoch
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    *    * @return Date value corresponding to the date in the local time zone    */
+comment|/**    * @return Date value corresponding to the date in the local time zone    */
 specifier|public
 name|Date
 name|get
 parameter_list|()
+block|{
+return|return
+name|get
+argument_list|(
+literal|true
+argument_list|)
+return|;
+block|}
+comment|// TODO: we should call this more often. In theory, for DATE type, time should never matter, but
+comment|//       it's hard to tell w/some code paths like UDFs/OIs etc. that are used in many places.
+specifier|public
+name|Date
+name|get
+parameter_list|(
+name|boolean
+name|doesTimeMatter
+parameter_list|)
 block|{
 return|return
 operator|new
@@ -310,6 +407,8 @@ argument_list|(
 name|daysToMillis
 argument_list|(
 name|daysSinceEpoch
+argument_list|,
+name|doesTimeMatter
 argument_list|)
 argument_list|)
 return|;
@@ -367,19 +466,42 @@ name|int
 name|d
 parameter_list|)
 block|{
-comment|// Convert from day offset to ms in UTC, then apply local timezone offset.
+return|return
+name|daysToMillis
+argument_list|(
+name|d
+argument_list|,
+literal|true
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
 name|long
-name|millisUtc
+name|daysToMillis
+parameter_list|(
+name|int
+name|d
+parameter_list|,
+name|boolean
+name|doesTimeMatter
+parameter_list|)
+block|{
+comment|// What we are trying to get is the equivalent of new Date(ymd).getTime() in the local tz,
+comment|// where ymd is whatever d represents. How it "works" is this.
+comment|// First we get the UTC midnight for that day (which always exists, a small island of sanity).
+name|long
+name|utcMidnight
 init|=
 name|d
 operator|*
 name|MILLIS_PER_DAY
 decl_stmt|;
+comment|// Now we take a local TZ offset at midnight UTC. Say we are in -4; that means (surprise
+comment|// surprise) that at midnight UTC it was 20:00 in local. So far we are on firm ground.
 name|long
-name|tmp
+name|utcMidnightOffset
 init|=
-name|millisUtc
-operator|-
 name|LOCAL_TIMEZONE
 operator|.
 name|get
@@ -387,14 +509,23 @@ argument_list|()
 operator|.
 name|getOffset
 argument_list|(
-name|millisUtc
+name|utcMidnight
 argument_list|)
 decl_stmt|;
-comment|// Between millisUtc and tmp, the time zone offset may have changed due to DST.
-comment|// Look up the offset again.
-return|return
-name|millisUtc
+comment|// And now we wander straight into the swamp, when instead of adding, we subtract it from UTC
+comment|// midnight to supposedly get local midnight (in the above case, 4:00 UTC). Of course, given
+comment|// all the insane DST variations, where we actually end up is anyone's guess.
+name|long
+name|hopefullyMidnight
+init|=
+name|utcMidnight
 operator|-
+name|utcMidnightOffset
+decl_stmt|;
+comment|// Then we determine the local TZ offset at that magical time.
+name|long
+name|offsetAtHM
+init|=
 name|LOCAL_TIMEZONE
 operator|.
 name|get
@@ -402,8 +533,103 @@ argument_list|()
 operator|.
 name|getOffset
 argument_list|(
-name|tmp
+name|hopefullyMidnight
 argument_list|)
+decl_stmt|;
+comment|// If the offsets are the same, we assume our initial jump did not cross any DST boundaries,
+comment|// and is thus valid. Both times flowed at the same pace. We congratulate ourselves and bail.
+if|if
+condition|(
+name|utcMidnightOffset
+operator|==
+name|offsetAtHM
+condition|)
+return|return
+name|hopefullyMidnight
+return|;
+comment|// Alas, we crossed some DST boundary. If the time of day doesn't matter to the caller, we'll
+comment|// simply get the next day and go back half a day. This is not ideal but seems to work.
+if|if
+condition|(
+operator|!
+name|doesTimeMatter
+condition|)
+return|return
+name|daysToMillis
+argument_list|(
+name|d
+operator|+
+literal|1
+argument_list|)
+operator|-
+operator|(
+name|MILLIS_PER_DAY
+operator|>>
+literal|1
+operator|)
+return|;
+comment|// Now, we could get previous and next day, figure our how many hours were inserted or removed,
+comment|// and from which of the days, etc. But at this point our gun is pointing straight at our foot,
+comment|// so let's just go the safe, expensive way.
+name|Calendar
+name|utc
+init|=
+name|UTC_CALENDAR
+operator|.
+name|get
+argument_list|()
+decl_stmt|,
+name|local
+init|=
+name|LOCAL_CALENDAR
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
+name|utc
+operator|.
+name|setTimeInMillis
+argument_list|(
+name|utcMidnight
+argument_list|)
+expr_stmt|;
+name|local
+operator|.
+name|set
+argument_list|(
+name|utc
+operator|.
+name|get
+argument_list|(
+name|Calendar
+operator|.
+name|YEAR
+argument_list|)
+argument_list|,
+name|utc
+operator|.
+name|get
+argument_list|(
+name|Calendar
+operator|.
+name|MONTH
+argument_list|)
+argument_list|,
+name|utc
+operator|.
+name|get
+argument_list|(
+name|Calendar
+operator|.
+name|DAY_OF_MONTH
+argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|local
+operator|.
+name|getTimeInMillis
+argument_list|()
 return|;
 block|}
 specifier|public
@@ -415,6 +641,8 @@ name|long
 name|millisLocal
 parameter_list|)
 block|{
+comment|// We assume millisLocal is midnight of some date. What we are basically trying to do
+comment|// here is go from local-midnight to UTC-midnight (or whatever time that happens to be).
 name|long
 name|millisUtc
 init|=
@@ -464,6 +692,7 @@ operator|(
 name|millisUtc
 operator|-
 literal|86399999
+comment|/*(MILLIS_PER_DAY - 1)*/
 operator|)
 operator|/
 name|MILLIS_PER_DAY
@@ -604,9 +833,12 @@ name|String
 name|toString
 parameter_list|()
 block|{
+comment|// For toString, the time does not matter
 return|return
 name|get
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 operator|.
 name|toString
 argument_list|()
