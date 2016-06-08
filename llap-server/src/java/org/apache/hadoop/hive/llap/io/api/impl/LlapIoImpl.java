@@ -714,10 +714,12 @@ name|ListeningExecutorService
 name|executor
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonCacheMetrics
 name|cacheMetrics
 decl_stmt|;
 specifier|private
+specifier|final
 name|LlapDaemonIOMetrics
 name|ioMetrics
 decl_stmt|;
@@ -726,6 +728,7 @@ name|ObjectName
 name|buddyAllocatorMXBean
 decl_stmt|;
 specifier|private
+specifier|final
 name|Allocator
 name|allocator
 decl_stmt|;

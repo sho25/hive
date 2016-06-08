@@ -3098,6 +3098,7 @@ name|LinkedHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+comment|// TODO: we could refresh instanceCache here on previous failure
 for|for
 control|(
 name|ChildData

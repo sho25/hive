@@ -11074,6 +11074,28 @@ operator|+
 literal|"ZooKeeper for ZooKeeper SecretManager."
 argument_list|)
 block|,
+name|LLAP_FS_KERBEROS_PRINCIPAL
+argument_list|(
+literal|"hive.llap.task.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The name of the principal to use to run tasks. By default, the clients are required\n"
+operator|+
+literal|"to provide tokens to access HDFS/etc."
+argument_list|)
+block|,
+name|LLAP_FS_KERBEROS_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.task.keytab.file"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the principal to use to run tasks.\n"
+operator|+
+literal|"By default, the clients are required to provide tokens to access HDFS/etc."
+argument_list|)
+block|,
 name|LLAP_ZKSM_ZK_CONNECTION_STRING
 argument_list|(
 literal|"hive.llap.zk.sm.connectionString"

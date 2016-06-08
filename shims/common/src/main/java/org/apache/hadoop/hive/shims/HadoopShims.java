@@ -1917,6 +1917,16 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/** Clones the UGI and the Subject. */
+name|UserGroupInformation
+name|cloneUgi
+parameter_list|(
+name|UserGroupInformation
+name|baseUgi
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 block|}
 end_interface
 
