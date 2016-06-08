@@ -4209,7 +4209,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Value Boundary expression must be of primitve type. Found: %s"
+literal|"Value Boundary expression must be of primitive type. Found: %s"
 argument_list|,
 name|OI
 operator|.
@@ -4241,6 +4241,9 @@ name|pC
 condition|)
 block|{
 case|case
+name|BOOLEAN
+case|:
+case|case
 name|BYTE
 case|:
 case|case
@@ -4270,6 +4273,12 @@ case|:
 case|case
 name|STRING
 case|:
+case|case
+name|VARCHAR
+case|:
+case|case
+name|CHAR
+case|:
 break|break;
 default|default:
 throw|throw
@@ -4280,7 +4289,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Primitve type %s not supported in Value Boundary expression"
+literal|"Primitive type %s not supported in Value Boundary expression"
 argument_list|,
 name|pC
 argument_list|)
