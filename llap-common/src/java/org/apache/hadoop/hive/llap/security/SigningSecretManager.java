@@ -72,6 +72,10 @@ parameter_list|)
 throws|throws
 name|SecurityException
 function_decl|;
+name|void
+name|close
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

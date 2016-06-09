@@ -1250,6 +1250,9 @@ argument_list|(
 name|conf
 argument_list|,
 name|daemonId
+operator|.
+name|getClusterString
+argument_list|()
 argument_list|)
 else|:
 literal|null

@@ -714,10 +714,11 @@ literal|0
 argument_list|,
 literal|""
 argument_list|,
-literal|null
-argument_list|,
 literal|""
 argument_list|)
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(

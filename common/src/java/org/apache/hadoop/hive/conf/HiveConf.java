@@ -11791,6 +11791,19 @@ argument_list|,
 literal|"Override if grace join should be allowed to run in llap."
 argument_list|)
 block|,
+name|LLAP_HS2_ENABLE_COORDINATOR
+argument_list|(
+literal|"hive.llap.hs2.coordinator.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to create the LLAP coordinator; since execution engine and container vs llap\n"
+operator|+
+literal|"settings are both coming from job configs, we don't know at start whether this should\n"
+operator|+
+literal|"be created. Default true."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"

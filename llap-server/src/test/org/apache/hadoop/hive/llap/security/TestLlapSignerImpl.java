@@ -782,9 +782,6 @@ name|setSignInfo
 parameter_list|(
 name|int
 name|masterKeyId
-parameter_list|,
-name|String
-name|user
 parameter_list|)
 block|{
 name|this
@@ -1118,6 +1115,17 @@ operator|new
 name|UnsupportedOperationException
 argument_list|()
 throw|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|close
+parameter_list|()
+block|{
+name|stopThreads
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}

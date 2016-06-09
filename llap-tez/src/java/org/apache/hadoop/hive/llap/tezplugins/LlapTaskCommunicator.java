@@ -3851,8 +3851,6 @@ argument_list|,
 name|getTokenIdentifier
 argument_list|()
 argument_list|,
-literal|null
-argument_list|,
 name|user
 argument_list|)
 argument_list|)
