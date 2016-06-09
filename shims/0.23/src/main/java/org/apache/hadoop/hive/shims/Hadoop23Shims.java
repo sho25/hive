@@ -6732,7 +6732,7 @@ name|method
 operator|=
 name|clazz
 operator|.
-name|getMethod
+name|getDeclaredMethod
 argument_list|(
 literal|"getSubject"
 argument_list|)
