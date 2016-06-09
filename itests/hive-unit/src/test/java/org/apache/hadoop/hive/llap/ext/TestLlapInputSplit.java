@@ -390,6 +390,8 @@ name|planBytes
 argument_list|,
 name|fragmentBytes
 argument_list|,
+literal|null
+argument_list|,
 name|locations
 argument_list|,
 name|schema
