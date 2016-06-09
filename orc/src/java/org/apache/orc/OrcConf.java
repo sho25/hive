@@ -113,6 +113,17 @@ argument_list|,
 literal|"Define the default ORC buffer size, in bytes."
 argument_list|)
 block|,
+name|BASE_DELTA_RATIO
+argument_list|(
+literal|"orc.base.delta.ratio"
+argument_list|,
+literal|"hive.exec.orc.base.delta.ratio"
+argument_list|,
+literal|8
+argument_list|,
+literal|"The ratio of base writer and delta writer in terms of STRIPE_SIZE and BUFFER_SIZE."
+argument_list|)
+block|,
 name|BLOCK_PADDING
 argument_list|(
 literal|"orc.block.padding"
