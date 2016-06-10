@@ -6748,7 +6748,7 @@ name|ctor
 operator|=
 name|clazz
 operator|.
-name|getConstructor
+name|getDeclaredConstructor
 argument_list|(
 name|Subject
 operator|.
