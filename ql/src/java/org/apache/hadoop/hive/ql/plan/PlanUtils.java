@@ -4900,6 +4900,32 @@ parameter_list|()
 block|{
 comment|// prevent instantiation
 block|}
+specifier|public
+specifier|static
+name|ReadEntity
+name|addInput
+parameter_list|(
+name|Set
+argument_list|<
+name|ReadEntity
+argument_list|>
+name|inputs
+parameter_list|,
+name|ReadEntity
+name|newInput
+parameter_list|)
+block|{
+return|return
+name|addInput
+argument_list|(
+name|inputs
+argument_list|,
+name|newInput
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
 comment|// Add the input 'newInput' to the set of inputs for the query.
 comment|// The input may or may not be already present.
 comment|// The ReadEntity also contains the parents from it is derived (only populated
@@ -4917,6 +4943,7 @@ comment|// The inputs will contain: (V2, no parent), (V3, no parent), (V1, paren
 comment|//
 comment|// If the ReadEntity is already present and another ReadEntity with same name is
 comment|// added, then the isDirect flag is updated to be the OR of values of both.
+comment|// mergeIsDirectFlag, need to merge isDirect flag even newInput does not have parent
 specifier|public
 specifier|static
 name|ReadEntity
@@ -4930,6 +4957,9 @@ name|inputs
 parameter_list|,
 name|ReadEntity
 name|newInput
+parameter_list|,
+name|boolean
+name|mergeIsDirectFlag
 parameter_list|)
 block|{
 comment|// If the input is already present, make sure the new parent is added to the input.
@@ -4997,6 +5027,28 @@ name|getParents
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|input
+operator|.
+name|setDirect
+argument_list|(
+name|input
+operator|.
+name|isDirect
+argument_list|()
+operator|||
+name|newInput
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|mergeIsDirectFlag
+condition|)
+block|{
 name|input
 operator|.
 name|setDirect
