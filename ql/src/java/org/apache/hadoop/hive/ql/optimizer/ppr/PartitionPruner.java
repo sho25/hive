@@ -1471,6 +1471,12 @@ name|PrunedPartitionList
 name|ppList
 init|=
 name|partsCache
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|partsCache
 operator|.
 name|get
 argument_list|(
@@ -1532,6 +1538,13 @@ argument_list|,
 name|unknownPartitions
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|partsCache
+operator|!=
+literal|null
+condition|)
+block|{
 name|partsCache
 operator|.
 name|put
@@ -1541,6 +1554,7 @@ argument_list|,
 name|ppList
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|ppList
 return|;
