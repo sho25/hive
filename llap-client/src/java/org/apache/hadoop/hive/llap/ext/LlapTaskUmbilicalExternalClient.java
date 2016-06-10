@@ -339,6 +339,24 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|security
+operator|.
+name|LlapTokenIdentifier
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|tez
 operator|.
 name|Converters
@@ -816,6 +834,12 @@ name|sessionToken
 parameter_list|,
 name|LlapTaskUmbilicalExternalResponder
 name|responder
+parameter_list|,
+name|Token
+argument_list|<
+name|LlapTokenIdentifier
+argument_list|>
+name|llapToken
 parameter_list|)
 block|{
 name|super
@@ -893,7 +917,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
-comment|// No support for the LLAP token yet. Add support for configurable threads, however 1 should always be enough.
+comment|// Add support for configurable threads, however 1 should always be enough.
 name|this
 operator|.
 name|communicator
@@ -905,7 +929,7 @@ literal|1
 argument_list|,
 name|conf
 argument_list|,
-literal|null
+name|llapToken
 argument_list|)
 expr_stmt|;
 name|this
