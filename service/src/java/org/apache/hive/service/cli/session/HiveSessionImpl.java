@@ -1019,6 +1019,13 @@ specifier|volatile
 name|long
 name|lastIdleTime
 decl_stmt|;
+specifier|private
+specifier|volatile
+name|int
+name|pendingCount
+init|=
+literal|0
+decl_stmt|;
 specifier|public
 name|HiveSessionImpl
 parameter_list|(
@@ -2123,6 +2130,13 @@ argument_list|(
 name|sessionHive
 argument_list|)
 expr_stmt|;
+name|pendingCount
+operator|++
+expr_stmt|;
+name|lastIdleTime
+operator|=
+literal|0
+expr_stmt|;
 block|}
 comment|/**    * 1. We'll remove the ThreadLocal SessionState as this thread might now serve    * other requests.    * 2. We'll cache the ThreadLocal RawStore object for this background thread for an orderly cleanup    * when this thread is garbage collected later.    * @see org.apache.hive.service.server.ThreadWithGarbageCleanup#finalize()    */
 specifier|protected
@@ -2194,8 +2208,17 @@ name|currentTimeMillis
 argument_list|()
 expr_stmt|;
 block|}
+name|pendingCount
+operator|--
+expr_stmt|;
+comment|// lastIdleTime is only set by the last one
+comment|// who calls release with empty opHandleSet.
 if|if
 condition|(
+name|pendingCount
+operator|==
+literal|0
+operator|&&
 name|opHandleSet
 operator|.
 name|isEmpty
@@ -2208,13 +2231,6 @@ name|System
 operator|.
 name|currentTimeMillis
 argument_list|()
-expr_stmt|;
-block|}
-else|else
-block|{
-name|lastIdleTime
-operator|=
-literal|0
 expr_stmt|;
 block|}
 block|}
