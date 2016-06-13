@@ -71,9 +71,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|txn
+name|common
 operator|.
 name|ValidCompactorTxnList
 import|;

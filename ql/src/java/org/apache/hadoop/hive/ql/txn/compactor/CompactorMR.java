@@ -25,6 +25,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|ValidCompactorTxnList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -156,22 +172,6 @@ operator|.
 name|common
 operator|.
 name|ValidTxnList
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ValidReadTxnList
 import|;
 end_import
 
@@ -1245,6 +1245,18 @@ name|sd
 operator|.
 name|getCols
 argument_list|()
+argument_list|)
+expr_stmt|;
+comment|//with feature on, multiple tasks may get into conflict creating/using TMP_LOCATION and if we were
+comment|//to generate the target dir in the Map task, there is no easy way to pass it to OutputCommitter
+comment|//to do the final move
+name|job
+operator|.
+name|setBoolean
+argument_list|(
+literal|"mapreduce.map.speculative"
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 return|return
@@ -4052,7 +4064,7 @@ name|ValidTxnList
 name|txnList
 init|=
 operator|new
-name|ValidReadTxnList
+name|ValidCompactorTxnList
 argument_list|(
 name|jobConf
 operator|.

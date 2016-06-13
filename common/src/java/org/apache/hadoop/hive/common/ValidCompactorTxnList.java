@@ -13,9 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|txn
+name|common
 package|;
 end_package
 
@@ -407,6 +405,7 @@ block|}
 block|}
 annotation|@
 name|VisibleForTesting
+specifier|public
 name|long
 name|getMinOpenTxn
 parameter_list|()
