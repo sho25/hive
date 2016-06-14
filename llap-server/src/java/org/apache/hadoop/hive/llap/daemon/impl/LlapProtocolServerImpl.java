@@ -791,8 +791,9 @@ decl_stmt|,
 name|mngAddress
 decl_stmt|;
 specifier|private
+specifier|final
 name|SecretManager
-name|zkSecretManager
+name|secretManager
 decl_stmt|;
 specifier|private
 name|String
@@ -822,6 +823,9 @@ decl_stmt|;
 specifier|public
 name|LlapProtocolServerImpl
 parameter_list|(
+name|SecretManager
+name|secretManager
+parameter_list|,
 name|int
 name|numHandlers
 parameter_list|,
@@ -866,6 +870,12 @@ operator|.
 name|containerRunner
 operator|=
 name|containerRunner
+expr_stmt|;
+name|this
+operator|.
+name|secretManager
+operator|=
+name|secretManager
 expr_stmt|;
 name|this
 operator|.
@@ -1223,24 +1233,6 @@ operator|.
 name|LLAP_KERBEROS_KEYTAB_FILE
 argument_list|)
 decl_stmt|;
-name|zkSecretManager
-operator|=
-name|SecretManager
-operator|.
-name|createSecretManager
-argument_list|(
-name|conf
-argument_list|,
-name|llapPrincipal
-argument_list|,
-name|llapKeytab
-argument_list|,
-name|daemonId
-operator|.
-name|getClusterString
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// Start the protocol server after properly authenticating with daemon keytab.
 name|UserGroupInformation
 name|daemonUgi
@@ -1904,7 +1896,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|zkSecretManager
+name|secretManager
 operator|!=
 literal|null
 condition|)
@@ -1915,7 +1907,7 @@ name|builder
 operator|.
 name|setSecretManager
 argument_list|(
-name|zkSecretManager
+name|secretManager
 argument_list|)
 expr_stmt|;
 block|}
@@ -1967,7 +1959,7 @@ name|ServiceException
 block|{
 if|if
 condition|(
-name|zkSecretManager
+name|secretManager
 operator|==
 literal|null
 condition|)
@@ -2013,7 +2005,7 @@ argument_list|)
 decl_stmt|;
 name|token
 operator|=
-name|zkSecretManager
+name|secretManager
 operator|.
 name|createLlapToken
 argument_list|(

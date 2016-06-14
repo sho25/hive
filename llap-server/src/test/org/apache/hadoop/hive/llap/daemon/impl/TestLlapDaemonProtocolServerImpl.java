@@ -359,6 +359,8 @@ init|=
 operator|new
 name|LlapProtocolServerImpl
 argument_list|(
+literal|null
+argument_list|,
 name|numHandlers
 argument_list|,
 name|containerRunnerMock

@@ -11771,6 +11771,25 @@ argument_list|,
 literal|"LLAP daemon output service port"
 argument_list|)
 block|,
+name|LLAP_DAEMON_OUTPUT_STREAM_TIMEOUT
+argument_list|(
+literal|"hive.llap.daemon.output.stream.timeout"
+argument_list|,
+literal|"120s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"The timeout for the client to connect to LLAP output service and start the fragment\n"
+operator|+
+literal|"output after sending the fragment. The fragment will fail if its output is not claimed."
+argument_list|)
+block|,
 name|LLAP_DAEMON_OUTPUT_SERVICE_SEND_BUFFER_SIZE
 argument_list|(
 literal|"hive.llap.daemon.output.service.send.buffer.size"

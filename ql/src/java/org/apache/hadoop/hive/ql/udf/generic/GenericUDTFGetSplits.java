@@ -287,7 +287,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|LlapInputSplit
+name|FieldDesc
 import|;
 end_import
 
@@ -303,7 +303,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|LlapOutputFormat
+name|LlapInputSplit
 import|;
 end_import
 
@@ -335,40 +335,6 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|SubmitWorkInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|FieldSchema
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
 name|Schema
 import|;
 end_import
@@ -385,7 +351,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|FieldDesc
+name|SubmitWorkInfo
 import|;
 end_import
 
@@ -554,6 +520,24 @@ operator|.
 name|tez
 operator|.
 name|Converters
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|FieldSchema
 import|;
 end_import
 
@@ -821,6 +805,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|PlanUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|TezWork
 import|;
 end_import
@@ -1007,24 +1009,6 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|PrimitiveTypeInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
 name|CharTypeInfo
 import|;
 end_import
@@ -1061,7 +1045,7 @@ name|serde2
 operator|.
 name|typeinfo
 operator|.
-name|VarcharTypeInfo
+name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -1109,9 +1093,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|io
+name|hive
 operator|.
-name|DataOutputBuffer
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|VarcharTypeInfo
 import|;
 end_import
 
@@ -1474,7 +1462,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDTFGetSplits.  *  */
+comment|/**  * GenericUDTFGetSplits.  *   */
 end_comment
 
 begin_class
@@ -2049,13 +2037,13 @@ name|setVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVEQUERYRESULTFILEFORMAT
 argument_list|,
-literal|"Llap"
+name|PlanUtils
+operator|.
+name|LLAP_OUTPUT_FORMAT_KEY
 argument_list|)
 expr_stmt|;
 name|String
@@ -2067,8 +2055,6 @@ name|getVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_EXECUTION_MODE
@@ -2080,8 +2066,6 @@ name|setVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_EXECUTION_MODE
@@ -2095,8 +2079,6 @@ name|setBoolVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_TEZ_GENERATE_CONSISTENT_SPLITS
@@ -2110,8 +2092,6 @@ name|setBoolVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|LLAP_CLIENT_CONSISTENT_SPLITS
@@ -2137,8 +2117,6 @@ name|setBoolVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_RPC_QUERY_PLAN
@@ -2186,32 +2164,14 @@ argument_list|)
 decl_stmt|;
 name|CommandProcessorResponse
 name|cpr
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"setting fetch.task.conversion to none and query file format to \""
-operator|+
-name|LlapOutputFormat
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|"\""
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
+init|=
 name|driver
 operator|.
 name|compileAndRespond
 argument_list|(
 name|query
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|cpr
@@ -2368,7 +2328,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"CTAS: "
+literal|"Materializing the query for LLAPIF; CTAS: "
 operator|+
 name|ctas
 argument_list|)
@@ -2381,8 +2341,6 @@ name|setVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_EXECUTION_MODE
@@ -2445,8 +2403,6 @@ name|setVar
 argument_list|(
 name|conf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_EXECUTION_MODE
@@ -2788,8 +2744,6 @@ name|getBoolVar
 argument_list|(
 name|wxConf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|HIVE_TEZ_GENERATE_CONSISTENT_SPLITS
@@ -2806,8 +2760,6 @@ name|getBoolVar
 argument_list|(
 name|wxConf
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
 name|LLAP_CLIENT_CONSISTENT_SPLITS
@@ -3683,7 +3635,7 @@ name|toByteArray
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns a local resource representing a jar. This resource will be used to execute the plan on    * the cluster.    *    * @param localJarPath    *          Local path to the jar to be localized.    * @return LocalResource corresponding to the localized hive exec resource.    * @throws IOException    *           when any file system related call fails.    * @throws LoginException    *           when we are unable to determine the user.    * @throws URISyntaxException    *           when current jar location cannot be determined.    */
+comment|/**    * Returns a local resource representing a jar. This resource will be used to    * execute the plan on the cluster.    *     * @param localJarPath    *          Local path to the jar to be localized.    * @return LocalResource corresponding to the localized hive exec resource.    * @throws IOException    *           when any file system related call fails.    * @throws LoginException    *           when we are unable to determine the user.    * @throws URISyntaxException    *           when current jar location cannot be determined.    */
 specifier|private
 name|LocalResource
 name|createJarLocalResource
@@ -3756,8 +3708,10 @@ operator|.
 name|getName
 argument_list|()
 decl_stmt|;
-comment|// Now, try to find the file based on SHA and name. Currently we require exact name match.
-comment|// We could also allow cutting off versions and other stuff provided that SHA matches...
+comment|// Now, try to find the file based on SHA and name. Currently we require
+comment|// exact name match.
+comment|// We could also allow cutting off versions and other stuff provided that
+comment|// SHA matches...
 name|destFileName
 operator|=
 name|FilenameUtils
@@ -3782,7 +3736,8 @@ argument_list|(
 name|destFileName
 argument_list|)
 expr_stmt|;
-comment|// TODO: if this method is ever called on more than one jar, getting the dir and the
+comment|// TODO: if this method is ever called on more than one jar, getting the dir
+comment|// and the
 comment|// list need to be refactored out to be done only once.
 name|Path
 name|destFile
