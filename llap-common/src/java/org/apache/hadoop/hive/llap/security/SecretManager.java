@@ -455,9 +455,6 @@ name|clusterId
 operator|=
 name|clusterId
 expr_stmt|;
-name|checkForZKDTSMBug
-argument_list|()
-expr_stmt|;
 name|this
 operator|.
 name|conf
