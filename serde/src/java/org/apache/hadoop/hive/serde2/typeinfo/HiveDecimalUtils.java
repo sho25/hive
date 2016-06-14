@@ -301,7 +301,7 @@ default|default:
 return|return
 name|HiveDecimal
 operator|.
-name|MAX_PRECISION
+name|SYSTEM_DEFAULT_PRECISION
 return|;
 block|}
 block|}
@@ -371,7 +371,7 @@ default|default:
 return|return
 name|HiveDecimal
 operator|.
-name|MAX_SCALE
+name|SYSTEM_DEFAULT_SCALE
 return|;
 block|}
 block|}

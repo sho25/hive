@@ -4228,6 +4228,8 @@ parameter_list|,
 name|TypeInfo
 name|returnType
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|TypeInfo
 name|commonType
@@ -4298,8 +4300,9 @@ operator|instanceof
 name|GenericUDFIn
 condition|)
 block|{
-comment|// Cast to the type of the first child
-return|return
+name|TypeInfo
+name|colTi
+init|=
 name|children
 operator|.
 name|get
@@ -4309,6 +4312,101 @@ argument_list|)
 operator|.
 name|getTypeInfo
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|colTi
+operator|.
+name|getCategory
+argument_list|()
+operator|!=
+name|Category
+operator|.
+name|PRIMITIVE
+condition|)
+block|{
+return|return
+name|colTi
+return|;
+comment|// Handled later, only struct will be supported.
+block|}
+name|TypeInfo
+name|opTi
+init|=
+name|GenericUDFUtils
+operator|.
+name|deriveInType
+argument_list|(
+name|children
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|opTi
+operator|==
+literal|null
+operator|||
+name|opTi
+operator|.
+name|getCategory
+argument_list|()
+operator|!=
+name|Category
+operator|.
+name|PRIMITIVE
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Cannot vectorize IN() - common type is "
+operator|+
+name|opTi
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|colTi
+operator|)
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+operator|!=
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|opTi
+operator|)
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Cannot vectorize IN() - casting a column is not supported. "
+operator|+
+literal|"Column type is "
+operator|+
+name|colTi
+operator|+
+literal|" but the common type is "
+operator|+
+name|opTi
+argument_list|)
+throw|;
+block|}
+return|return
+name|colTi
 return|;
 block|}
 else|else
@@ -4706,6 +4804,7 @@ argument_list|(
 name|ptinfo
 argument_list|)
 decl_stmt|;
+comment|// TODO: precision and scale would be practically invalid for string conversion (38,38)
 name|int
 name|scale
 init|=
@@ -9938,6 +10037,8 @@ name|cl
 init|=
 literal|null
 decl_stmt|;
+comment|// TODO: the below assumes that all the arguments to IN are of the same type;
+comment|//       non-vectorized validates that explicitly during UDF init.
 if|if
 condition|(
 name|isIntFamily
