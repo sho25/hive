@@ -71,24 +71,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|SemanticAnalyzer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|common
@@ -599,6 +581,7 @@ name|shutdownRunner
 init|=
 literal|null
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
 name|int
@@ -930,16 +913,20 @@ name|atLeastOneLock
 init|=
 literal|false
 decl_stmt|;
+name|queryId
+operator|=
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
+expr_stmt|;
 name|LockRequestBuilder
 name|rqstBuilder
 init|=
 operator|new
 name|LockRequestBuilder
 argument_list|(
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
+name|queryId
 argument_list|)
 decl_stmt|;
 comment|//link queryId to txnId
@@ -958,10 +945,7 @@ argument_list|)
 operator|+
 literal|" for queryId="
 operator|+
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
+name|queryId
 argument_list|)
 expr_stmt|;
 name|rqstBuilder
@@ -1663,10 +1647,7 @@ name|debug
 argument_list|(
 literal|"No locks needed for queryId"
 operator|+
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
+name|queryId
 argument_list|)
 expr_stmt|;
 return|return
@@ -1710,10 +1691,7 @@ operator|.
 name|build
 argument_list|()
 argument_list|,
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
+name|queryId
 argument_list|,
 name|isBlocking
 argument_list|,
@@ -1769,7 +1747,7 @@ return|return
 name|t
 return|;
 block|}
-comment|/**    * This is for testing only.    * @param delay time to delay for first heartbeat    * @return null if no locks were needed    */
+comment|/**    * This is for testing only. Normally client should call {@link #acquireLocks(QueryPlan, Context, String, boolean)}    * @param delay time to delay for first heartbeat    */
 annotation|@
 name|VisibleForTesting
 name|void
@@ -1810,13 +1788,6 @@ argument_list|(
 name|delay
 argument_list|)
 argument_list|)
-expr_stmt|;
-name|queryId
-operator|=
-name|plan
-operator|.
-name|getQueryId
-argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -2503,26 +2474,13 @@ throw|;
 block|}
 block|}
 block|}
+comment|/**    * Start the heartbeater threadpool and return the task.    * @param initialDelay time to delay before first execution, in milliseconds    * @return heartbeater    */
 specifier|private
-name|Heartbeater
-name|startHeartbeat
-parameter_list|()
-throws|throws
-name|LockException
-block|{
-return|return
-name|startHeartbeat
-argument_list|(
-literal|0
-argument_list|)
-return|;
-block|}
-comment|/**    *  This is for testing only.  Normally client should call {@link #startHeartbeat()}    *  Make the heartbeater start before an initial delay period.    *  @param delay time to delay before first execution, in milliseconds    *  @return heartbeater    */
 name|Heartbeater
 name|startHeartbeat
 parameter_list|(
 name|long
-name|delay
+name|initialDelay
 parameter_list|)
 throws|throws
 name|LockException
@@ -2551,6 +2509,50 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// For negative testing purpose..
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVETESTMODEFAILHEARTBEATER
+argument_list|)
+condition|)
+block|{
+name|initialDelay
+operator|=
+literal|0
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|initialDelay
+operator|==
+literal|0
+condition|)
+block|{
+name|initialDelay
+operator|=
+name|heartbeatInterval
+expr_stmt|;
+block|}
 name|heartbeatTask
 operator|=
 name|heartbeatExecutorService
@@ -2559,7 +2561,7 @@ name|scheduleAtFixedRate
 argument_list|(
 name|heartbeater
 argument_list|,
-name|delay
+name|initialDelay
 argument_list|,
 name|heartbeatInterval
 argument_list|,
@@ -2574,7 +2576,7 @@ name|info
 argument_list|(
 literal|"Started heartbeat with delay/interval = "
 operator|+
-literal|0
+name|initialDelay
 operator|+
 literal|"/"
 operator|+
@@ -3137,7 +3139,7 @@ return|return
 name|statementId
 return|;
 block|}
-specifier|public
+specifier|private
 specifier|static
 name|long
 name|getHeartbeatInterval
@@ -3231,7 +3233,6 @@ name|lockException
 return|;
 block|}
 comment|/**      *      * @param txnMgr transaction manager for this operation      */
-specifier|public
 name|Heartbeater
 parameter_list|(
 name|HiveTxnManager
