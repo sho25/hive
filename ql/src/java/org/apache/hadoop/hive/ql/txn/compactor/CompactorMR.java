@@ -1879,14 +1879,21 @@ name|size
 argument_list|()
 operator|==
 literal|0
+operator|&&
+name|dir
+operator|.
+name|getOriginalFiles
+argument_list|()
+operator|==
+literal|null
 condition|)
 block|{
-comment|// Seriously, no deltas?  Can't compact that.
+comment|// Skip compaction if there's no delta files AND there's no original files
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"No delta files found to compact in "
+literal|"No delta files or original files found to compact in "
 operator|+
 name|sd
 operator|.
@@ -1894,7 +1901,6 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//couldn't someone want to run a Major compaction to convert old table to ACID?
 return|return;
 block|}
 name|launchCompactionJob
