@@ -773,6 +773,20 @@ name|CliOptionsProcessor
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|transport
+operator|.
+name|TTransportException
+import|;
+end_import
+
 begin_comment
 comment|/**  * A console SQL shell with command completion.  *<p>  * TODO:  *<ul>  *<li>User-friendly connection prompts</li>  *<li>Page results</li>  *<li>Handle binary data (blob fields)</li>  *<li>Implement command aliases</li>  *<li>Stored procedure execution</li>  *<li>Binding parameters to prepared statements</li>  *<li>Scripting language</li>  *<li>XA transactions</li>  *</ul>  *  */
 end_comment
@@ -8518,6 +8532,25 @@ operator|)
 condition|)
 block|{
 return|return;
+block|}
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|TTransportException
+condition|)
+block|{
+name|error
+argument_list|(
+name|loc
+argument_list|(
+literal|"hs2-unavailable"
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 name|error
 argument_list|(
