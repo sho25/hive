@@ -165,6 +165,11 @@ init|=
 literal|false
 decl_stmt|;
 specifier|private
+specifier|final
+name|Object
+name|channelWritabilityMonitor
+decl_stmt|;
+specifier|private
 name|ChannelFutureListener
 name|listener
 init|=
@@ -239,6 +244,10 @@ name|id
 parameter_list|,
 name|int
 name|bufSize
+parameter_list|,
+specifier|final
+name|Object
+name|monitor
 parameter_list|)
 block|{
 name|this
@@ -272,6 +281,12 @@ name|buffer
 argument_list|(
 name|bufSize
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|channelWritabilityMonitor
+operator|=
+name|monitor
 expr_stmt|;
 block|}
 annotation|@
@@ -566,7 +581,7 @@ throw|;
 block|}
 name|chc
 operator|.
-name|write
+name|writeAndFlush
 argument_list|(
 name|buf
 operator|.
@@ -584,6 +599,52 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+comment|// if underlying channel is not writable (perhaps because of slow consumer) wait for
+comment|// notification about writable state change
+synchronized|synchronized
+init|(
+name|channelWritabilityMonitor
+init|)
+block|{
+comment|// to prevent spurious wake up
+while|while
+condition|(
+operator|!
+name|chc
+operator|.
+name|channel
+argument_list|()
+operator|.
+name|isWritable
+argument_list|()
+condition|)
+block|{
+try|try
+block|{
+name|channelWritabilityMonitor
+operator|.
+name|wait
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Interrupted when waiting for channel writability state change"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
 block|}
 specifier|private
 name|void
