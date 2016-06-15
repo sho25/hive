@@ -231,6 +231,7 @@ argument_list|,
 name|Row
 argument_list|>
 block|{
+specifier|private
 name|LlapBaseInputFormat
 argument_list|<
 name|Text

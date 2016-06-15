@@ -622,6 +622,8 @@ operator|.
 name|class
 argument_list|,
 name|job
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|LOG

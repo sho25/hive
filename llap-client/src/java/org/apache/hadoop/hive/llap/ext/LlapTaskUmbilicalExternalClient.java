@@ -25,6 +25,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|Closeable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -605,6 +615,8 @@ class|class
 name|LlapTaskUmbilicalExternalClient
 extends|extends
 name|AbstractService
+implements|implements
+name|Closeable
 block|{
 specifier|private
 specifier|static
