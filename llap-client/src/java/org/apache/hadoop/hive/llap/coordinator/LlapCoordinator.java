@@ -77,6 +77,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -522,6 +536,21 @@ specifier|private
 name|String
 name|clusterUser
 decl_stmt|;
+specifier|private
+name|long
+name|startTime
+decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicInteger
+name|appIdCounter
+init|=
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
 name|LlapCoordinator
 parameter_list|()
 block|{   }
@@ -554,6 +583,51 @@ argument_list|()
 operator|.
 name|getShortUserName
 argument_list|()
+expr_stmt|;
+comment|// TODO: if two HS2s start at exactly the same time, which could happen during a coordinated
+comment|//       restart, they could start generating the same IDs. Should we store the startTime
+comment|//       somewhere like ZK? Try to randomize it a bit for now...
+name|long
+name|randomBits
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+operator|new
+name|Random
+argument_list|()
+operator|.
+name|nextInt
+argument_list|()
+argument_list|)
+operator|<<
+literal|32
+decl_stmt|;
+name|this
+operator|.
+name|startTime
+operator|=
+name|Math
+operator|.
+name|abs
+argument_list|(
+operator|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|&
+operator|(
+name|long
+operator|)
+name|Integer
+operator|.
+name|MAX_VALUE
+operator|)
+operator||
+name|randomBits
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -648,33 +722,23 @@ name|ApplicationId
 name|createExtClientAppId
 parameter_list|()
 block|{
-comment|// TODO: moved from UDTF; need JIRA to generate this properly (no dups, etc.)...
+comment|// Note that we cannot allow users to provide app ID, since providing somebody else's appId
+comment|// would give one LLAP token (and splits) for that app ID. If we could verify it somehow
+comment|// (YARN token? nothing we can do in an UDF), we could get it from client already running on
+comment|// YARN. As such, the clients running on YARN will have two app IDs to be aware of.
 return|return
 name|ApplicationId
 operator|.
 name|newInstance
 argument_list|(
-name|Math
-operator|.
-name|abs
-argument_list|(
-operator|new
-name|Random
-argument_list|()
-operator|.
-name|nextInt
-argument_list|()
-argument_list|)
+name|startTime
 argument_list|,
-literal|0
+name|appIdCounter
+operator|.
+name|incrementAndGet
+argument_list|()
 argument_list|)
 return|;
-comment|// Note that we cannot allow users to provide app ID, since providing somebody else's appId
-comment|// would give one LLAP token (and splits) for that app ID. If we could verify it somehow
-comment|// (YARN token? nothing we can do in an UDF), we could get it from client already running on
-comment|// YARN. As such, the clients running on YARN will have two app IDs to be aware of.
-comment|// TODO: Perhaps they can give us their app id as an argument to the UDF, and we'd just append
-comment|// a unique string here, for easier tracking?
 block|}
 specifier|public
 name|LlapTokenLocalClient

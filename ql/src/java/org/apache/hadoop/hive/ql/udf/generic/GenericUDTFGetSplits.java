@@ -2907,7 +2907,7 @@ throw|;
 block|}
 comment|// See the discussion in the implementation as to why we generate app ID.
 name|ApplicationId
-name|fakeApplicationId
+name|applicationId
 init|=
 name|coordinator
 operator|.
@@ -3019,7 +3019,7 @@ name|tokenClient
 operator|.
 name|createToken
 argument_list|(
-name|fakeApplicationId
+name|applicationId
 operator|.
 name|toString
 argument_list|()
@@ -3123,7 +3123,7 @@ argument_list|()
 operator|-
 literal|1
 argument_list|,
-name|fakeApplicationId
+name|applicationId
 argument_list|,
 name|i
 argument_list|)
@@ -3145,7 +3145,7 @@ name|signer
 argument_list|,
 name|taskSpec
 argument_list|,
-name|fakeApplicationId
+name|applicationId
 argument_list|,
 name|queryUser
 argument_list|)
@@ -3157,7 +3157,7 @@ init|=
 operator|new
 name|SubmitWorkInfo
 argument_list|(
-name|fakeApplicationId
+name|applicationId
 argument_list|,
 name|System
 operator|.
@@ -3492,7 +3492,7 @@ name|TaskSpec
 name|taskSpec
 parameter_list|,
 name|ApplicationId
-name|fakeApplicationId
+name|applicationId
 parameter_list|,
 name|String
 name|queryUser
@@ -3514,7 +3514,7 @@ name|taskSpec
 argument_list|,
 literal|0
 argument_list|,
-name|fakeApplicationId
+name|applicationId
 operator|.
 name|toString
 argument_list|()
