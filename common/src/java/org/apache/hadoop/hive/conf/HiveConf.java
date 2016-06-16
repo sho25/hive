@@ -9983,7 +9983,9 @@ argument_list|)
 argument_list|,
 literal|"Number of threads"
 operator|+
-literal|" used to move files in move task. Set it to 0 to disable multi-threaded file moves."
+literal|" used to move files in move task. Set it to 0 to disable multi-threaded file moves. This parameter is also used by"
+operator|+
+literal|" MSCK to check tables."
 argument_list|)
 block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
