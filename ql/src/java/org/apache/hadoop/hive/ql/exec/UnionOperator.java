@@ -817,6 +817,13 @@ name|needsTransform
 index|[
 name|tag
 index|]
+operator|&&
+name|outputRow
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
 condition|)
 block|{
 for|for
