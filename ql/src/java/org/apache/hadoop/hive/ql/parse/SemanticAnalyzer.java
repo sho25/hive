@@ -16583,6 +16583,27 @@ name|tableOrCol
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|joinTree
+operator|.
+name|getNoSemiJoin
+argument_list|()
+operator|==
+literal|false
+condition|)
+block|{
+comment|// if this is a semijoin, we need to add the condition
+name|joinTree
+operator|.
+name|addRHSSemijoinColumns
+argument_list|(
+name|tableOrCol
+argument_list|,
+name|condn
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 break|break;
