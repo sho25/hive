@@ -7155,6 +7155,24 @@ operator|+
 literal|"This factor is multiplied with the file size to account for serialization and compression."
 argument_list|)
 block|,
+name|HIVE_STATS_IN_CLAUSE_FACTOR
+argument_list|(
+literal|"hive.stats.filter.in.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|1.0
+argument_list|,
+literal|"Currently column distribution is assumed to be uniform. This can lead to overestimation/underestimation\n"
+operator|+
+literal|"in the number of rows filtered by a certain operator, which in turn might lead to overprovision or\n"
+operator|+
+literal|"underprovision of resources. This factor is applied to the cardinality estimation of IN clauses in\n"
+operator|+
+literal|"filter operators."
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
