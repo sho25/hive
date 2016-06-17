@@ -421,25 +421,12 @@ case|:
 case|case
 name|VARCHAR
 case|:
-comment|// HIVE-13648: Look at ORC data type conversion edge cases (CHAR, VARCHAR, DECIMAL)
-name|isOk
-operator|=
-name|fileType
-operator|.
-name|getMaxLength
-argument_list|()
-operator|==
-name|readerType
-operator|.
-name|getMaxLength
-argument_list|()
-expr_stmt|;
+comment|// We do conversion when same CHAR/VARCHAR type but different maxLength.
 break|break;
 case|case
 name|DECIMAL
 case|:
-comment|// HIVE-13648: Look at ORC data type conversion edge cases (CHAR, VARCHAR, DECIMAL)
-comment|// TODO we don't enforce scale and precision checks, but probably should
+comment|// We do conversion when same DECIMAL type but different precision/scale.
 break|break;
 case|case
 name|UNION

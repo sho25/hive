@@ -11615,12 +11615,9 @@ condition|(
 operator|!
 name|fileType
 operator|.
-name|getCategory
-argument_list|()
-operator|.
 name|equals
 argument_list|(
-name|readerTypeCategory
+name|readerType
 argument_list|)
 operator|&&
 operator|(
