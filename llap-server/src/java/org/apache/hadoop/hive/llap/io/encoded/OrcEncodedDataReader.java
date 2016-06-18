@@ -3537,6 +3537,30 @@ block|{
 comment|// Ignore.
 block|}
 block|}
+if|if
+condition|(
+name|metadataReader
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|metadataReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+comment|// Ignore.
+block|}
+block|}
 block|}
 comment|/**    * Ensures orcReader is initialized for the split.    */
 specifier|private
@@ -5376,6 +5400,19 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|metadataReader
+operator|!=
+literal|null
+condition|)
+block|{
+name|metadataReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
