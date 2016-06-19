@@ -937,6 +937,10 @@ argument_list|(
 name|inputs
 argument_list|)
 decl_stmt|;
+comment|// TODO HIVE-14042. Move to using a loop and a timed wait once TEZ-3302 is fixed.
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|shuffleInputs
@@ -1018,6 +1022,10 @@ operator|.
 name|getReducer
 argument_list|()
 expr_stmt|;
+comment|// Check immediately after reducer is assigned, in cae the abort came in during
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|DummyStoreOperator
 name|dummyStoreOp
 init|=
@@ -1067,6 +1075,9 @@ name|connectOps
 argument_list|)
 expr_stmt|;
 block|}
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|bigTablePosition
 operator|=
 operator|(
@@ -1129,6 +1140,10 @@ operator|=
 name|reduceWork
 operator|.
 name|getReducer
+argument_list|()
+expr_stmt|;
+comment|// Check immediately after reducer is assigned, in cae the abort came in during
+name|checkAbortCondition
 argument_list|()
 expr_stmt|;
 if|if
@@ -1245,6 +1260,10 @@ operator|.
 name|getReducer
 argument_list|()
 expr_stmt|;
+comment|// Check immediately after reducer is assigned, in cae the abort came in during
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|initializeSourceForTag
 argument_list|(
 name|redWork
@@ -1289,6 +1308,10 @@ operator|=
 name|reduceWork
 operator|.
 name|getReducer
+argument_list|()
+expr_stmt|;
+comment|// Check immediately after reducer is assigned, in cae the abort came in during
+name|checkAbortCondition
 argument_list|()
 expr_stmt|;
 operator|(
@@ -1359,6 +1382,10 @@ operator|.
 name|getReducer
 argument_list|()
 expr_stmt|;
+comment|// Check immediately after reducer is assigned, in cae the abort came in during
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|reducer
 operator|.
 name|initialize
@@ -1378,6 +1405,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|reducer
 operator|=
 name|reduceWork
@@ -1429,6 +1459,7 @@ range|:
 name|dummyOps
 control|)
 block|{
+comment|// TODO HIVE-14042. Propagating abort to dummyOps.
 name|dummyOp
 operator|.
 name|initialize
@@ -1437,6 +1468,9 @@ name|jconf
 argument_list|,
 literal|null
 argument_list|)
+expr_stmt|;
+name|checkAbortCondition
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -1494,6 +1528,9 @@ argument_list|,
 name|outMap
 argument_list|)
 expr_stmt|;
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|reducer
 operator|.
 name|setReporter
@@ -1533,6 +1570,33 @@ comment|// Don't create a new object if we are already out of memory
 throw|throw
 operator|(
 name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Hit an interrupt while initializing ReduceRecordProcessor. Message={}"
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|(
+name|InterruptedException
 operator|)
 name|e
 throw|;
@@ -1621,6 +1685,9 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|initializeSourceForTag
 argument_list|(
 name|redWork
@@ -1908,13 +1975,13 @@ name|void
 name|abort
 parameter_list|()
 block|{
-comment|// this will stop run() from pushing records
+comment|// this will stop run() from pushing records, along with potentially
+comment|// blocking initialization.
 name|super
 operator|.
 name|abort
 argument_list|()
 expr_stmt|;
-comment|// this will abort initializeOp()
 if|if
 condition|(
 name|reducer
@@ -1922,10 +1989,32 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Forwarding abort to reducer: {} "
+operator|+
+name|reducer
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|reducer
 operator|.
 name|abort
 argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"reducer not setup yet. abort not being forwarded"
+argument_list|)
 expr_stmt|;
 block|}
 block|}

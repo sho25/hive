@@ -855,6 +855,21 @@ init|(
 name|this
 init|)
 block|{
+comment|// This check isn't absolutely mandatory, given the aborted check outside of the
+comment|// Processor creation.
+if|if
+condition|(
+name|aborted
+operator|.
+name|get
+argument_list|()
+condition|)
+block|{
+return|return;
+block|}
+comment|// There should be no blocking operation in RecordProcessor creation,
+comment|// otherwise the abort operation will not register since they are synchronized on the same
+comment|// lock.
 if|if
 condition|(
 name|isMap
@@ -904,6 +919,7 @@ name|outputs
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO HIVE-14042. In case of an abort request, throw an InterruptedException
 block|}
 specifier|protected
 name|void
@@ -945,6 +961,10 @@ name|getContext
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Init and run are both potentially long, and blocking operations. Synchronization
+comment|// with the 'abort' operation will not work since if they end up blocking on a monitor
+comment|// which does not belong to the lock, the abort will end up getting blocked.
+comment|// Both of these method invocations need to handle the abort call on their own.
 name|rproc
 operator|.
 name|init
@@ -1106,13 +1126,6 @@ name|void
 name|abort
 parameter_list|()
 block|{
-name|aborted
-operator|.
-name|set
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 name|RecordProcessor
 name|rProcLocal
 decl_stmt|;
@@ -1121,6 +1134,20 @@ init|(
 name|this
 init|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received abort"
+argument_list|)
+expr_stmt|;
+name|aborted
+operator|.
+name|set
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|rProcLocal
 operator|=
 name|rproc
@@ -1133,10 +1160,27 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Forwarding abort to RecordProcessor"
+argument_list|)
+expr_stmt|;
 name|rProcLocal
 operator|.
 name|abort
 argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"RecordProcessor not yet setup. Abort will be ignored"
+argument_list|)
 expr_stmt|;
 block|}
 block|}

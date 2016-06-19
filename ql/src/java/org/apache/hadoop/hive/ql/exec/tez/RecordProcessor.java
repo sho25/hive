@@ -560,6 +560,9 @@ operator|.
 name|isTraceEnabled
 argument_list|()
 expr_stmt|;
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 comment|//log classpaths
 try|try
 block|{

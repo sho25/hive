@@ -1159,6 +1159,9 @@ argument_list|,
 name|outputs
 argument_list|)
 expr_stmt|;
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|String
 name|key
 init|=
@@ -1214,6 +1217,7 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+comment|// TODO HIVE-14042. Cleanup may be required if exiting early.
 name|Utilities
 operator|.
 name|setMapWork
@@ -1294,6 +1298,9 @@ name|add
 argument_list|(
 name|key
 argument_list|)
+expr_stmt|;
+name|checkAbortCondition
+argument_list|()
 expr_stmt|;
 name|mergeWorkList
 operator|.
@@ -1383,6 +1390,9 @@ name|processorContext
 argument_list|)
 expr_stmt|;
 comment|// Update JobConf using MRInput, info like filename comes via this
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|legacyMRInput
 operator|=
 name|getMRInput
@@ -1443,6 +1453,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|createOutputMap
 argument_list|()
 expr_stmt|;
@@ -1502,6 +1515,9 @@ name|initialize
 argument_list|()
 expr_stmt|;
 block|}
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 name|CompilationOpContext
@@ -1539,6 +1555,15 @@ name|runtimeCtx
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Not synchronizing creation of mapOp with an invocation. Check immediately
+comment|// after creation in case abort has been set.
+comment|// Relying on the regular flow to clean up the actual operator. i.e. If an exception is
+comment|// thrown, an attempt will be made to cleanup the op.
+comment|// If we are here - exit out via an exception. If we're in the middle of the opeartor.initialize
+comment|// call further down, we rely upon op.abort().
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|mapOp
 operator|.
 name|clearConnectedOperators
@@ -1576,6 +1601,9 @@ range|:
 name|mergeWorkList
 control|)
 block|{
+comment|// TODO HIVE-14042. What is mergeWork, and why is it not part of the regular operator chain.
+comment|// The mergeMapOp.initialize call further down can block, and will not receive information
+comment|// about an abort request.
 name|MapWork
 name|mergeMapWork
 init|=
@@ -1974,6 +2002,9 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+name|checkAbortCondition
+argument_list|()
+expr_stmt|;
 name|mapOp
 operator|.
 name|setChildren
@@ -2006,6 +2037,9 @@ name|initializeLocalWork
 argument_list|(
 name|jconf
 argument_list|)
+expr_stmt|;
+name|checkAbortCondition
+argument_list|()
 expr_stmt|;
 name|initializeMapRecordSources
 argument_list|()
@@ -2058,6 +2092,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO HIVE-14042. abort handling: Handling of mergeMapOp
 name|mergeMapOp
 operator|.
 name|initializeMapOperator
@@ -2122,6 +2157,7 @@ argument_list|(
 name|execContext
 argument_list|)
 expr_stmt|;
+comment|// TODO HIVE-14042. Handling of dummyOps, and propagating abort information to them
 name|dummyOp
 operator|.
 name|initialize
@@ -2185,6 +2221,33 @@ comment|// Don't create a new object if we are already out of memory
 throw|throw
 operator|(
 name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Hit an interrupt while initializing MapRecordProcessor. Message={}"
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|(
+name|InterruptedException
 operator|)
 name|e
 throw|;
@@ -2636,7 +2699,8 @@ name|void
 name|abort
 parameter_list|()
 block|{
-comment|// this will stop run() from pushing records
+comment|// this will stop run() from pushing records, along with potentially
+comment|// blocking initialization.
 name|super
 operator|.
 name|abort
@@ -2650,10 +2714,32 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Forwarding abort to mapOp: {} "
+operator|+
+name|mapOp
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|mapOp
 operator|.
 name|abort
 argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"mapOp not setup yet. abort not being forwarded"
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -2940,6 +3026,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// TODO: HIVE-14042. Potential blocking call. MRInput handles this correctly even if an interrupt is swallowed.
+comment|// MultiMRInput may not. Fix once TEZ-3302 is resolved.
 name|processorContext
 operator|.
 name|waitForAllInputsReady

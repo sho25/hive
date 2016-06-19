@@ -338,6 +338,14 @@ argument_list|(
 name|context
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|logger
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|logger
 operator|.
 name|debug
@@ -345,6 +353,7 @@ argument_list|(
 literal|"MapredContext initialized."
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|context
 return|;

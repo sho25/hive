@@ -2336,6 +2336,16 @@ name|void
 name|abort
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received abort in operator: {}"
+argument_list|,
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|abortOp
 operator|.
 name|set

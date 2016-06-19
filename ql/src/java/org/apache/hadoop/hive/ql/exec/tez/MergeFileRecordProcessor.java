@@ -587,6 +587,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// TODO HIVE-14042. Abort handling.
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -988,6 +989,33 @@ comment|// Don't create a new object if we are already out of memory
 throw|throw
 operator|(
 name|OutOfMemoryError
+operator|)
+name|e
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Hit an interrupt while initializing MergeFileRecordProcessor. Message={}"
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|(
+name|InterruptedException
 operator|)
 name|e
 throw|;
