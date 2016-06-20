@@ -1666,6 +1666,7 @@ name|basePath
 argument_list|)
 expr_stmt|;
 comment|// we only use the keySet of ConcurrentHashMap
+comment|// Neither the key nor the value can be null.
 name|Map
 argument_list|<
 name|Path
@@ -1924,13 +1925,14 @@ operator|!
 name|directoryFound
 condition|)
 block|{
+comment|// true is just a boolean object place holder because neither the key nor the value can be null.
 name|allDirs
 operator|.
 name|put
 argument_list|(
 name|path
 argument_list|,
-literal|null
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -2071,7 +2073,7 @@ name|put
 argument_list|(
 name|path
 argument_list|,
-literal|null
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
