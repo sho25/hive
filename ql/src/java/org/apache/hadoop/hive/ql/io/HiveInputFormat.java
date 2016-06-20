@@ -3125,18 +3125,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|boolean
-name|readAllColumns
-init|=
-name|readColIds
-operator|.
-name|isEmpty
-argument_list|()
-condition|?
-literal|true
-else|:
-literal|false
-decl_stmt|;
 name|newjob
 operator|.
 name|setBoolean
@@ -3145,7 +3133,7 @@ name|ColumnProjectionUtils
 operator|.
 name|READ_ALL_COLUMNS
 argument_list|,
-name|readAllColumns
+literal|false
 argument_list|)
 expr_stmt|;
 name|newjob
@@ -3178,19 +3166,6 @@ name|isInfoEnabled
 argument_list|()
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"{} = {}"
-argument_list|,
-name|ColumnProjectionUtils
-operator|.
-name|READ_ALL_COLUMNS
-argument_list|,
-name|readAllColumns
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|info
