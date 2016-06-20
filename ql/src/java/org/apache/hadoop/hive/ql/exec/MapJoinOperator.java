@@ -922,10 +922,6 @@ specifier|protected
 name|HashTableLoader
 name|loader
 decl_stmt|;
-specifier|private
-name|boolean
-name|loadCalled
-decl_stmt|;
 specifier|protected
 specifier|transient
 name|MapJoinTableContainer
@@ -1416,9 +1412,6 @@ block|}
 block|}
 if|if
 condition|(
-operator|!
-name|loadCalled
-operator|&&
 name|spilled
 condition|)
 block|{
@@ -1950,10 +1943,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|loadCalled
-operator|=
-literal|true
-expr_stmt|;
 if|if
 condition|(
 name|canSkipReload
@@ -3527,6 +3516,15 @@ name|getPosBigTable
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Going to reload hash partition "
+operator|+
+name|partitionId
+argument_list|)
+expr_stmt|;
 name|reloadHashTable
 argument_list|(
 name|pos
@@ -3586,6 +3584,13 @@ index|]
 decl_stmt|;
 comment|// Merge the sidefile into the newly created hash table
 comment|// This is where the spilling may happen again
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Going to restore sidefile..."
+argument_list|)
+expr_stmt|;
 name|KeyValueContainer
 name|kvContainer
 init|=
@@ -3633,6 +3638,13 @@ comment|// Since rowCount is used later to instantiate a BytesBytesMultiHashMap
 comment|// as the initialCapacity which cannot be 0, we provide a reasonable
 comment|// positive number here
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Going to restore hashmap..."
+argument_list|)
+expr_stmt|;
 name|BytesBytesMultiHashMap
 name|restoredHashMap
 init|=

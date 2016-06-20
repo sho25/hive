@@ -899,6 +899,23 @@ operator|new
 name|HybridHashTableConf
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"N-way join: "
+operator|+
+operator|(
+name|mapJoinTables
+operator|.
+name|length
+operator|-
+literal|1
+operator|)
+operator|+
+literal|" small tables."
+argument_list|)
+expr_stmt|;
 comment|// Find the biggest small table; also calculate total data size of all small tables
 name|long
 name|maxSize
@@ -1452,6 +1469,22 @@ name|tableContainer
 operator|.
 name|seal
 argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Finished loading hashtable using "
+operator|+
+name|tableContainer
+operator|.
+name|getClass
+argument_list|()
+operator|+
+literal|". Small table position: "
+operator|+
+name|pos
+argument_list|)
 expr_stmt|;
 name|mapJoinTables
 index|[

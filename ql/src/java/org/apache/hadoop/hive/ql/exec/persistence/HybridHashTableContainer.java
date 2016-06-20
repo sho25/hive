@@ -1751,15 +1751,6 @@ name|memoryThreshold
 operator|+=
 name|memFreed
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Total available memory is: "
-operator|+
-name|memoryThreshold
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 name|writeBufferSize
@@ -1775,6 +1766,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Total available memory is: "
+operator|+
+name|memoryThreshold
+argument_list|)
+expr_stmt|;
 comment|// Round to power of 2 here, as is required by WriteBuffers
 name|writeBufferSize
 operator|=
@@ -1880,7 +1880,10 @@ literal|0
 decl_stmt|;
 name|memoryUsed
 operator|=
-literal|0
+name|bloom1
+operator|.
+name|sizeInBytes
+argument_list|()
 expr_stmt|;
 name|int
 name|initialCapacity
@@ -2002,6 +2005,23 @@ argument_list|,
 literal|true
 argument_list|,
 name|spillLocalDirs
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Each new partition will require memory: "
+operator|+
+name|hashPartitions
+index|[
+literal|0
+index|]
+operator|.
+name|hashMap
+operator|.
+name|memorySize
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2160,6 +2180,17 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Hash partition "
+operator|+
+name|i
+operator|+
+literal|" is spilled on creation."
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -2174,6 +2205,19 @@ name|hashMap
 operator|.
 name|memorySize
 argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Hash partition "
+operator|+
+name|i
+operator|+
+literal|" is created in memory. Total memory usage so far: "
+operator|+
+name|memoryUsed
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -2288,7 +2332,7 @@ name|memoryThreshold
 return|;
 block|}
 comment|/**    * Get the current memory usage by recalculating it.    * @return current memory usage    */
-specifier|public
+specifier|private
 name|long
 name|refreshMemoryUsed
 parameter_list|()
@@ -2296,7 +2340,10 @@ block|{
 name|long
 name|memUsed
 init|=
-literal|0
+name|bloom1
+operator|.
+name|sizeInBytes
+argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -2778,7 +2825,7 @@ operator|.
 name|hashMapSpilledOnCreation
 return|;
 block|}
-comment|/**    * Check if the memory threshold is about to be reached.    * Since all the write buffer will be lazily allocated in BytesBytesMultiHashMap, we need to    * consider those as well.    * @return true if memory is full, false if not    */
+comment|/**    * Check if the memory threshold is about to be reached.    * Since all the write buffer will be lazily allocated in BytesBytesMultiHashMap, we need to    * consider those as well.    * We also need to count in the next 1024 rows to be loaded.    * @return true if memory is full, false if not    */
 specifier|private
 name|boolean
 name|isMemoryFull
@@ -2813,6 +2860,13 @@ block|}
 block|}
 return|return
 name|refreshMemoryUsed
+argument_list|()
+operator|+
+name|this
+operator|.
+name|memoryCheckFrequency
+operator|*
+name|getTableRowSize
 argument_list|()
 operator|+
 name|writeBufferSize
@@ -3194,6 +3248,12 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+name|partition
+operator|.
+name|hashMap
+operator|=
+literal|null
+expr_stmt|;
 return|return
 name|memFreed
 return|;
@@ -3244,10 +3304,13 @@ block|}
 if|if
 condition|(
 name|memoryThreshold
+operator|/
+literal|2
 operator|<
 name|dataSize
 condition|)
 block|{
+comment|// The divided-by-2 logic is consistent to MapJoinOperator.reloadHashTable
 while|while
 condition|(
 name|dataSize
@@ -3255,6 +3318,8 @@ operator|/
 name|numPartitions
 operator|>
 name|memoryThreshold
+operator|/
+literal|2
 condition|)
 block|{
 name|numPartitions
@@ -3387,12 +3452,29 @@ parameter_list|()
 block|{
 for|for
 control|(
-name|HashPartition
-name|hp
-range|:
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
 name|hashPartitions
+operator|.
+name|length
+condition|;
+name|i
+operator|++
 control|)
 block|{
+name|HashPartition
+name|hp
+init|=
+name|hashPartitions
+index|[
+name|i
+index|]
+decl_stmt|;
 if|if
 condition|(
 name|hp
@@ -3400,6 +3482,15 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Going to clear hash partition "
+operator|+
+name|i
+argument_list|)
+expr_stmt|;
 name|hp
 operator|.
 name|clear
