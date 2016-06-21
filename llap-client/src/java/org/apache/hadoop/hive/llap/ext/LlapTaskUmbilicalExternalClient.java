@@ -228,6 +228,8 @@ operator|.
 name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
+operator|.
+name|QueryIdentifierProto
 import|;
 end_import
 
@@ -271,6 +273,28 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
+name|SubmissionStateProto
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|daemon
+operator|.
+name|rpc
+operator|.
+name|LlapDaemonProtocolProtos
+operator|.
 name|SubmitWorkRequestProto
 import|;
 end_import
@@ -293,7 +317,7 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
-name|VertexIdentifier
+name|SubmitWorkResponseProto
 import|;
 end_import
 
@@ -1117,12 +1141,12 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|VertexIdentifier
-name|vId
+name|QueryIdentifierProto
+name|queryIdentifierProto
 init|=
 name|vertex
 operator|.
-name|getVertexIdentifier
+name|getQueryIdentifier
 argument_list|()
 decl_stmt|;
 name|TezTaskAttemptID
@@ -1132,7 +1156,12 @@ name|Converters
 operator|.
 name|createTaskAttemptId
 argument_list|(
-name|vId
+name|queryIdentifierProto
+argument_list|,
+name|vertex
+operator|.
+name|getVertexIndex
+argument_list|()
 argument_list|,
 name|request
 operator|.
@@ -1217,8 +1246,6 @@ name|LlapProtocolClientProxy
 operator|.
 name|ExecuteRequestCallback
 argument_list|<
-name|LlapDaemonProtocolProtos
-operator|.
 name|SubmitWorkResponseProto
 argument_list|>
 argument_list|()
@@ -1229,8 +1256,6 @@ specifier|public
 name|void
 name|setResponse
 parameter_list|(
-name|LlapDaemonProtocolProtos
-operator|.
 name|SubmitWorkResponseProto
 name|response
 parameter_list|)
@@ -1252,8 +1277,6 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|LlapDaemonProtocolProtos
-operator|.
 name|SubmissionStateProto
 operator|.
 name|REJECTED

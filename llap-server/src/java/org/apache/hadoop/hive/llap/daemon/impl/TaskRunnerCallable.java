@@ -1894,7 +1894,7 @@ name|taskSpec
 argument_list|,
 name|vertex
 operator|.
-name|getVertexIdentifier
+name|getQueryIdentifier
 argument_list|()
 operator|.
 name|getAppAttemptNumber
@@ -2993,7 +2993,7 @@ name|logFragmentEnd
 argument_list|(
 name|vertex
 operator|.
-name|getVertexIdentifier
+name|getQueryIdentifier
 argument_list|()
 operator|.
 name|getApplicationIdString
@@ -3130,7 +3130,7 @@ name|append
 argument_list|(
 name|vertex
 operator|.
-name|getVertexIdentifier
+name|getQueryIdentifier
 argument_list|()
 operator|.
 name|getApplicationIdString

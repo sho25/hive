@@ -355,11 +355,6 @@ specifier|final
 name|LlapTaskCommunicator
 name|taskCommunicator
 decl_stmt|;
-specifier|private
-specifier|final
-name|QueryIdentifierProto
-name|BASE_QUERY_IDENTIFIER
-decl_stmt|;
 comment|// Tracks vertices for which notifications have been registered
 specifier|private
 specifier|final
@@ -431,24 +426,6 @@ name|taskCommunicator
 operator|=
 name|taskCommunicator
 expr_stmt|;
-name|BASE_QUERY_IDENTIFIER
-operator|=
-name|QueryIdentifierProto
-operator|.
-name|newBuilder
-argument_list|()
-operator|.
-name|setAppIdentifier
-argument_list|(
-name|taskCommunicatorContext
-operator|.
-name|getCurrentAppIdentifier
-argument_list|()
-argument_list|)
-operator|.
-name|build
-argument_list|()
-expr_stmt|;
 block|}
 comment|/**    * To be invoked after each DAG completes.    */
 specifier|public
@@ -456,8 +433,8 @@ specifier|synchronized
 name|void
 name|resetState
 parameter_list|(
-name|int
-name|newDagId
+name|QueryIdentifierProto
+name|currentQueryIdentifierProto
 parameter_list|)
 block|{
 name|sourceInfoMap
@@ -479,20 +456,7 @@ name|this
 operator|.
 name|currentQueryIdentifier
 operator|=
-name|QueryIdentifierProto
-operator|.
-name|newBuilder
-argument_list|(
-name|BASE_QUERY_IDENTIFIER
-argument_list|)
-operator|.
-name|setDagIdentifier
-argument_list|(
-name|newDagId
-argument_list|)
-operator|.
-name|build
-argument_list|()
+name|currentQueryIdentifierProto
 expr_stmt|;
 block|}
 comment|/**    * Used to register a task for state updates. Effectively registers for state updates to go to the specific node.    * @param host    * @param port    * @param inputSpecList    */

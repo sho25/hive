@@ -407,6 +407,28 @@ name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
 operator|.
+name|QueryIdentifierProto
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|daemon
+operator|.
+name|rpc
+operator|.
+name|LlapDaemonProtocolProtos
+operator|.
 name|SignableVertexSpec
 import|;
 end_import
@@ -3136,6 +3158,11 @@ operator|==
 literal|0
 condition|)
 block|{
+comment|// The queryId could either be picked up from the current request being processed, or
+comment|// generated. The current request isn't exactly correct since the query is 'done' once we
+comment|// return the results. Generating a new one has the added benefit of working once this
+comment|// is moved out of a UDTF into a proper API.
+comment|// Setting this to the generated AppId which is unique.
 comment|// Despite the differences in TaskSpec, the vertex spec should be the same.
 name|signedSvs
 operator|=
@@ -3148,6 +3175,11 @@ argument_list|,
 name|applicationId
 argument_list|,
 name|queryUser
+argument_list|,
+name|applicationId
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3496,10 +3528,45 @@ name|applicationId
 parameter_list|,
 name|String
 name|queryUser
+parameter_list|,
+name|String
+name|queryIdString
 parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|QueryIdentifierProto
+name|queryIdentifierProto
+init|=
+name|QueryIdentifierProto
+operator|.
+name|newBuilder
+argument_list|()
+operator|.
+name|setApplicationIdString
+argument_list|(
+name|applicationId
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+operator|.
+name|setDagIndex
+argument_list|(
+name|taskSpec
+operator|.
+name|getDagIdentifier
+argument_list|()
+argument_list|)
+operator|.
+name|setAppAttemptNumber
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
 specifier|final
 name|SignableVertexSpec
 operator|.
@@ -3508,11 +3575,11 @@ name|svsb
 init|=
 name|Converters
 operator|.
-name|convertTaskSpecToProto
+name|constructSignableVertexSpec
 argument_list|(
 name|taskSpec
 argument_list|,
-literal|0
+name|queryIdentifierProto
 argument_list|,
 name|applicationId
 operator|.
@@ -3520,6 +3587,8 @@ name|toString
 argument_list|()
 argument_list|,
 name|queryUser
+argument_list|,
+name|queryIdString
 argument_list|)
 decl_stmt|;
 if|if

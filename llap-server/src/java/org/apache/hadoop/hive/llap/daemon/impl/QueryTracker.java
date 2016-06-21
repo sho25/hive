@@ -774,6 +774,9 @@ parameter_list|,
 name|String
 name|dagName
 parameter_list|,
+name|String
+name|hiveQueryIdString
+parameter_list|,
 name|int
 name|dagIdentifier
 parameter_list|,
@@ -807,6 +810,9 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|// QueryIdentifier is enough to uniquely identify a fragment. At the moment, it works off of appId and dag index.
+comment|// At a later point this could be changed to the Hive query identifier.
+comment|// Sending both over RPC is unnecessary overhead.
 name|ReadWriteLock
 name|dagLock
 init|=
@@ -1020,6 +1026,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|queryIdentifierToHiveQueryId
+operator|.
+name|putIfAbsent
+argument_list|(
+name|queryIdentifier
+argument_list|,
+name|hiveQueryIdString
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|LOG
@@ -1618,34 +1633,6 @@ block|}
 return|return
 name|dagMap
 return|;
-block|}
-specifier|public
-name|void
-name|registerDagQueryId
-parameter_list|(
-name|QueryIdentifier
-name|queryIdentifier
-parameter_list|,
-name|String
-name|hiveQueryIdString
-parameter_list|)
-block|{
-if|if
-condition|(
-name|hiveQueryIdString
-operator|==
-literal|null
-condition|)
-return|return;
-name|queryIdentifierToHiveQueryId
-operator|.
-name|putIfAbsent
-argument_list|(
-name|queryIdentifier
-argument_list|,
-name|hiveQueryIdString
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Override

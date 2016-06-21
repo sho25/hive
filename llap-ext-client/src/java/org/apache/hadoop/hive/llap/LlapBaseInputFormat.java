@@ -1327,7 +1327,12 @@ name|createTaskAttemptId
 argument_list|(
 name|vertex
 operator|.
-name|getVertexIdentifier
+name|getQueryIdentifier
+argument_list|()
+argument_list|,
+name|vertex
+operator|.
+name|getVertexIndex
 argument_list|()
 argument_list|,
 name|request
