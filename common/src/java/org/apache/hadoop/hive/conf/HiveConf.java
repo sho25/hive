@@ -5885,6 +5885,21 @@ argument_list|,
 literal|"How many threads orc should use to create splits in parallel."
 argument_list|)
 block|,
+name|HIVE_ORC_CACHE_USE_SOFT_REFERENCES
+argument_list|(
+literal|"hive.orc.cache.use.soft.references"
+argument_list|,
+literal|false
+argument_list|,
+literal|"By default, the cache that ORC input format uses to store orc file footer use hard\n"
+operator|+
+literal|"references for the cached object. Setting this to true can help avoid out of memory\n"
+operator|+
+literal|"issues under memory pressure (in some cases) at the cost of slight unpredictability in\n"
+operator|+
+literal|"overall query performance."
+argument_list|)
+block|,
 name|HIVE_ORC_SKIP_CORRUPT_DATA
 argument_list|(
 literal|"hive.exec.orc.skip.corrupt.data"

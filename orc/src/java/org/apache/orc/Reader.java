@@ -191,6 +191,13 @@ name|WriterVersion
 name|getWriterVersion
 parameter_list|()
 function_decl|;
+comment|/**    * Get the file tail (footer + postscript)    *    * @return - file tail    */
+name|OrcProto
+operator|.
+name|FileTail
+name|getFileTail
+parameter_list|()
+function_decl|;
 comment|/**    * Options for creating a RecordReader.    */
 specifier|public
 specifier|static
@@ -901,6 +908,8 @@ name|StripeStatistics
 argument_list|>
 name|getStripeStatistics
 parameter_list|()
+throws|throws
+name|IOException
 function_decl|;
 comment|/**    * @return File statistics, in original protobuf form.    */
 name|List

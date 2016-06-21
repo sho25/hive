@@ -177,6 +177,20 @@ name|TypeDescription
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|OrcTail
+import|;
+end_import
+
 begin_comment
 comment|/**  * Contains factory methods to read or write ORC files.  */
 end_comment
@@ -322,6 +336,25 @@ operator|.
 name|fileMetadata
 argument_list|(
 name|metadata
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
+name|ReaderOptions
+name|orcTail
+parameter_list|(
+name|OrcTail
+name|orcTail
+parameter_list|)
+block|{
+name|super
+operator|.
+name|orcTail
+argument_list|(
+name|orcTail
 argument_list|)
 expr_stmt|;
 return|return
