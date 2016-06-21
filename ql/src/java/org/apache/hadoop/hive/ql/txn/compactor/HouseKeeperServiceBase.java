@@ -322,6 +322,8 @@ name|Thread
 argument_list|(
 name|r
 argument_list|,
+name|HouseKeeperServiceBase
+operator|.
 name|this
 operator|.
 name|getClass

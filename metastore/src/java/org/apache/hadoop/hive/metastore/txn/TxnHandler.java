@@ -335,6 +335,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConfUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -943,6 +959,14 @@ operator|.
 name|hostname
 argument_list|()
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|volatile
+name|boolean
+name|dumpConfig
+init|=
+literal|true
+decl_stmt|;
 comment|// Private methods should never catch SQLException and then throw MetaException.  The public
 comment|// methods depend on SQLException coming back so they can detect and handle deadlocks.  Private
 comment|// methods should only throw MetaException when they explicitly know there's a logic error and
@@ -1128,6 +1152,32 @@ operator|.
 name|HIVE_MAX_OPEN_TXNS
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|dumpConfig
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|HiveConfUtil
+operator|.
+name|dumpConfig
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|//only do this once per JVM; useful for support
+name|dumpConfig
+operator|=
+literal|false
+expr_stmt|;
+block|}
 block|}
 specifier|public
 name|GetOpenTxnsInfoResponse
