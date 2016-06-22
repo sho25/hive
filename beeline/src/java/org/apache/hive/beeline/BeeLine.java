@@ -4419,6 +4419,36 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|commands
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|getOpts
+argument_list|()
+operator|.
+name|getScriptFile
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"The '-e' and '-f' options cannot be specified simultaneously"
+argument_list|)
+expr_stmt|;
+return|return
+literal|1
+return|;
+block|}
 comment|// TODO: temporary disable this for easier debugging
 comment|/*     if (url == null) {       url = BEELINE_DEFAULT_JDBC_URL;     }     if (driver == null) {       driver = BEELINE_DEFAULT_JDBC_DRIVER;     }     */
 if|if
