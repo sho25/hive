@@ -5033,6 +5033,17 @@ argument_list|,
 literal|"push aggregates through join"
 argument_list|)
 block|,
+name|HIVE_COLUMN_ALIGNMENT
+argument_list|(
+literal|"hive.order.columnalignment"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Flag to control whether we want to try to align"
+operator|+
+literal|"columns in operators such as Aggregate or Join so that we try to reduce the number of shuffling stages"
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
