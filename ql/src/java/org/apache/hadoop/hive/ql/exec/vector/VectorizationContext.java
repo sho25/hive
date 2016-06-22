@@ -14977,6 +14977,12 @@ return|return
 name|hiveTypeName
 return|;
 case|case
+name|BINARY
+case|:
+return|return
+literal|"Binary"
+return|;
+case|case
 name|DATE
 case|:
 return|return
@@ -15073,6 +15079,12 @@ name|VARCHAR
 case|:
 return|return
 literal|"VarChar"
+return|;
+case|case
+name|BINARY
+case|:
+return|return
+literal|"Binary"
 return|;
 case|case
 name|DATE
