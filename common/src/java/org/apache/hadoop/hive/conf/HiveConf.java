@@ -4926,6 +4926,20 @@ argument_list|,
 literal|"Flag to control enabling Cost Based Optimizations using Calcite framework."
 argument_list|)
 block|,
+name|HIVE_CBO_CNF_NODES_LIMIT
+argument_list|(
+literal|"hive.cbo.cnf.maxnodes"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"When converting to conjunctive normal form (CNF), fail if"
+operator|+
+literal|"the expression exceeds this threshold; the threshold is expressed in terms of number of nodes (leaves and"
+operator|+
+literal|"interior nodes). -1 to not set up a threshold."
+argument_list|)
+block|,
 name|HIVE_CBO_RETPATH_HIVEOP
 argument_list|(
 literal|"hive.cbo.returnpath.hiveop"

@@ -321,6 +321,26 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|HiveRexUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -418,21 +438,6 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|HivePreFilteringRule
-name|INSTANCE
-init|=
-operator|new
-name|HivePreFilteringRule
-argument_list|()
-decl_stmt|;
-specifier|private
-specifier|final
-name|FilterFactory
-name|filterFactory
-decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -472,8 +477,22 @@ name|NOT_EQUALS
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
+name|FilterFactory
+name|filterFactory
+decl_stmt|;
+comment|// Max number of nodes when converting to CNF
+specifier|private
+specifier|final
+name|int
+name|maxCNFNodeCount
+decl_stmt|;
+specifier|public
 name|HivePreFilteringRule
-parameter_list|()
+parameter_list|(
+name|int
+name|maxCNFNodeCount
+parameter_list|)
 block|{
 name|super
 argument_list|(
@@ -502,6 +521,12 @@ operator|=
 name|HiveRelFactories
 operator|.
 name|HIVE_FILTER_FACTORY
+expr_stmt|;
+name|this
+operator|.
+name|maxCNFNodeCount
+operator|=
+name|maxCNFNodeCount
 expr_stmt|;
 block|}
 annotation|@
@@ -796,6 +821,8 @@ argument_list|(
 name|rexBuilder
 argument_list|,
 name|operand
+argument_list|,
+name|maxCNFNodeCount
 argument_list|)
 expr_stmt|;
 for|for
@@ -946,6 +973,8 @@ argument_list|(
 name|rexBuilder
 argument_list|,
 name|topFilterCondition
+argument_list|,
+name|maxCNFNodeCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -1097,6 +1126,9 @@ name|rexBuilder
 parameter_list|,
 name|RexNode
 name|condition
+parameter_list|,
+name|int
+name|maxCNFNodeCount
 parameter_list|)
 block|{
 assert|assert
@@ -1133,8 +1165,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|// 1. We extract the information necessary to create the predicate for the
-comment|// new
-comment|// filter; currently we support comparison functions, in and between
+comment|// new filter; currently we support comparison functions, in and between
 name|ImmutableList
 argument_list|<
 name|RexNode
@@ -1189,11 +1220,13 @@ specifier|final
 name|RexNode
 name|operandCNF
 init|=
-name|RexUtil
+name|HiveRexUtil
 operator|.
 name|toCnf
 argument_list|(
 name|rexBuilder
+argument_list|,
+name|maxCNFNodeCount
 argument_list|,
 name|operand
 argument_list|)
