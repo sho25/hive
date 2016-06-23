@@ -15005,7 +15005,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 return|return
 literal|null
 return|;
@@ -15034,7 +15034,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 return|return
 literal|null
 return|;
@@ -15065,7 +15065,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 block|}
 annotation|@
 name|Override
@@ -15085,7 +15085,7 @@ parameter_list|)
 throws|throws
 name|NoSuchObjectException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 block|}
 annotation|@
 name|Override
@@ -15104,7 +15104,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 block|}
 annotation|@
 name|Override
@@ -15123,7 +15123,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
-comment|// TODO Auto-generated method stub
+comment|// TODO: WTF?
 block|}
 block|}
 end_class
