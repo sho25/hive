@@ -1039,8 +1039,8 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// In rare cases, the planner will not include columns for reading but other parts of
-comment|// execution will ask for but not use them..
+comment|// The planner will not include unneeded columns for reading but other parts of execution
+comment|// may ask for them..
 return|return
 literal|null
 return|;
