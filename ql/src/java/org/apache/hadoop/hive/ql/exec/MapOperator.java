@@ -3108,6 +3108,12 @@ comment|// TODO: policy on deserialization errors
 name|String
 name|message
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|message
+operator|=
 name|toErrorMessage
 argument_list|(
 name|value
@@ -3118,7 +3124,32 @@ name|current
 operator|.
 name|rowObjectInspector
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{
+name|message
+operator|=
+literal|"["
+operator|+
+name|row
+operator|+
+literal|", "
+operator|+
+name|value
+operator|+
+literal|"]: cannot get error message "
+operator|+
+name|t
+operator|.
+name|getMessage
+argument_list|()
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|row

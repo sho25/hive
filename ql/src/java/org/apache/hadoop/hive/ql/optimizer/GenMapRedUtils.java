@@ -5844,6 +5844,8 @@ operator|.
 name|deriveLlap
 argument_list|(
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -5903,6 +5905,8 @@ operator|.
 name|deriveLlap
 argument_list|(
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -5955,6 +5959,8 @@ operator|.
 name|deriveLlap
 argument_list|(
 name|conf
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

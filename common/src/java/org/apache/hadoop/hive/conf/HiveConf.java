@@ -10743,6 +10743,7 @@ argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
 argument_list|)
 block|,
+comment|// The default is different on the client and server, so it's null here.
 name|LLAP_IO_ENABLED
 argument_list|(
 literal|"hive.llap.io.enabled"
@@ -10750,6 +10751,17 @@ argument_list|,
 literal|null
 argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
+argument_list|)
+block|,
+name|LLAP_IO_NONVECTOR_WRAPPER_ENABLED
+argument_list|(
+literal|"hive.llap.io.nonvector.wrapper.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether the LLAP IO layer is enabled for non-vectorized queries that read inputs\n"
+operator|+
+literal|"that can be vectorized"
 argument_list|)
 block|,
 name|LLAP_IO_MEMORY_MODE
