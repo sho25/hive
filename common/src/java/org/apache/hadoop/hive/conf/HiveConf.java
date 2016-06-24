@@ -4711,7 +4711,9 @@ literal|"hive.reloadable.aux.jars.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Jars can be renewed by executing reload command. And these jars can be "
+literal|"The locations of the plugin jars, which can be a comma-separated folders or jars. Jars can be renewed\n"
+operator|+
+literal|"by executing reload command. And these jars can be "
 operator|+
 literal|"used as the auxiliary classes like creating a UDF or SerDe."
 argument_list|)

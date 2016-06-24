@@ -5484,6 +5484,8 @@ operator|.
 name|getJarFilesByPath
 argument_list|(
 name|renewableJarPath
+argument_list|,
+name|sessionConf
 argument_list|)
 decl_stmt|;
 comment|// load jars under the hive.reloadable.aux.jars.path
@@ -8120,6 +8122,23 @@ parameter_list|()
 block|{
 return|return
 name|forwardedAddresses
+return|;
+block|}
+comment|/**    * Gets the comma-separated reloadable aux jars    * @return the list of reloadable aux jars    */
+specifier|public
+name|String
+name|getReloadableAuxJars
+parameter_list|()
+block|{
+return|return
+name|StringUtils
+operator|.
+name|join
+argument_list|(
+name|preReloadableAuxJars
+argument_list|,
+literal|','
+argument_list|)
 return|;
 block|}
 block|}
