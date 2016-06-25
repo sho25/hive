@@ -6912,11 +6912,17 @@ name|String
 name|sf
 init|=
 name|parameters
+operator|!=
+literal|null
+condition|?
+name|parameters
 operator|.
 name|get
 argument_list|(
 name|SERIALIZATION_FORMAT
 argument_list|)
+else|:
+literal|null
 decl_stmt|;
 if|if
 condition|(
