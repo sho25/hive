@@ -2481,7 +2481,7 @@ name|getStartTime
 argument_list|(
 name|PerfLogger
 operator|.
-name|DRIVER_RUN
+name|COMPILE
 argument_list|)
 decl_stmt|;
 name|console

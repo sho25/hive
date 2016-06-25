@@ -515,6 +515,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|log
+operator|.
+name|PerfLogger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|Hive
@@ -1929,6 +1947,15 @@ operator|.
 name|getSessionHive
 argument_list|()
 decl_stmt|;
+specifier|final
+name|PerfLogger
+name|parentPerfLogger
+init|=
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|()
+decl_stmt|;
 comment|// Current UGI will get used by metastore when metsatore is in embedded mode
 comment|// So this needs to get passed to the new background thread
 specifier|final
@@ -1988,6 +2015,13 @@ operator|.
 name|setCurrentSessionState
 argument_list|(
 name|parentSessionState
+argument_list|)
+expr_stmt|;
+name|PerfLogger
+operator|.
+name|setPerfLogger
+argument_list|(
+name|parentPerfLogger
 argument_list|)
 expr_stmt|;
 comment|// Set current OperationLog in this async thread for keeping on saving query log.
