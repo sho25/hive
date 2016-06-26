@@ -874,8 +874,6 @@ operator|=
 operator|new
 name|HadoopJobExecHelper
 argument_list|(
-name|queryState
-argument_list|,
 name|job
 argument_list|,
 name|this
