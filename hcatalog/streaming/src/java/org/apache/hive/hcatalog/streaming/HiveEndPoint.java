@@ -1334,6 +1334,11 @@ name|msClient
 decl_stmt|;
 specifier|private
 specifier|final
+name|IMetaStoreClient
+name|heartbeaterMSClient
+decl_stmt|;
+specifier|private
+specifier|final
 name|HiveEndPoint
 name|endPt
 decl_stmt|;
@@ -1473,6 +1478,21 @@ expr_stmt|;
 name|this
 operator|.
 name|msClient
+operator|=
+name|getMetaStoreClient
+argument_list|(
+name|endPoint
+argument_list|,
+name|conf
+argument_list|,
+name|secureMode
+argument_list|)
+expr_stmt|;
+comment|// We use a separate metastore client for heartbeat calls to ensure heartbeat RPC calls are
+comment|// isolated from the other transaction related RPC calls.
+name|this
+operator|.
+name|heartbeaterMSClient
 operator|=
 name|getMetaStoreClient
 argument_list|(
@@ -1786,6 +1806,11 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|heartbeaterMSClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 return|return;
 block|}
 try|try
@@ -1811,6 +1836,11 @@ throws|throws
 name|Exception
 block|{
 name|msClient
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|heartbeaterMSClient
 operator|.
 name|close
 argument_list|()
@@ -2020,6 +2050,8 @@ argument_list|,
 name|numTransactions
 argument_list|,
 name|msClient
+argument_list|,
+name|heartbeaterMSClient
 argument_list|,
 name|recordWriter
 argument_list|,
@@ -2736,6 +2768,11 @@ name|msClient
 decl_stmt|;
 specifier|private
 specifier|final
+name|IMetaStoreClient
+name|heartbeaterMSClient
+decl_stmt|;
+specifier|private
+specifier|final
 name|RecordWriter
 name|recordWriter
 decl_stmt|;
@@ -2803,6 +2840,10 @@ parameter_list|,
 specifier|final
 name|IMetaStoreClient
 name|msClient
+parameter_list|,
+specifier|final
+name|IMetaStoreClient
+name|heartbeaterMSClient
 parameter_list|,
 name|RecordWriter
 name|recordWriter
@@ -2912,6 +2953,12 @@ operator|.
 name|msClient
 operator|=
 name|msClient
+expr_stmt|;
+name|this
+operator|.
+name|heartbeaterMSClient
+operator|=
+name|heartbeaterMSClient
 expr_stmt|;
 name|this
 operator|.
@@ -4288,7 +4335,7 @@ block|{
 name|HeartbeatTxnRangeResponse
 name|resp
 init|=
-name|msClient
+name|heartbeaterMSClient
 operator|.
 name|heartbeatTxnRange
 argument_list|(
