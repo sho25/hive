@@ -2203,12 +2203,18 @@ name|debug
 argument_list|(
 literal|"Setting env: "
 operator|+
-name|env
-index|[
-name|pos
-operator|-
-literal|1
-index|]
+name|name
+operator|+
+literal|"="
+operator|+
+name|Utilities
+operator|.
+name|maskIfPassword
+argument_list|(
+name|name
+argument_list|,
+name|value
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
