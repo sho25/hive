@@ -489,6 +489,10 @@ argument_list|,
 literal|"hive.exec.dynamic.partition"
 argument_list|,
 literal|"hive.exec.dynamic.partition.mode"
+argument_list|,
+literal|"oozie.HadoopAccessorService.created"
+argument_list|,
+literal|"tez.queue.name"
 argument_list|)
 decl_stmt|;
 comment|// combine two lists
