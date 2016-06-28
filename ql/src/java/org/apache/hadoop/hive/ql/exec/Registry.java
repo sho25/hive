@@ -1649,6 +1649,8 @@ name|function
 return|;
 block|}
 block|}
+else|else
+block|{
 name|addFunction
 argument_list|(
 name|functionName
@@ -1656,6 +1658,7 @@ argument_list|,
 name|function
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
