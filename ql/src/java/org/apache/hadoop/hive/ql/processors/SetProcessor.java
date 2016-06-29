@@ -97,6 +97,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -108,6 +118,16 @@ operator|.
 name|util
 operator|.
 name|Properties
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -299,6 +319,20 @@ name|Lists
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Sets
+import|;
+end_import
+
 begin_comment
 comment|/**  * SetProcessor.  *  */
 end_comment
@@ -332,6 +366,26 @@ name|String
 name|prefix
 init|=
 literal|"set: "
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|removedConfigs
+init|=
+name|Sets
+operator|.
+name|newHashSet
+argument_list|(
+literal|"hive.mapred.supports.subdirectories"
+argument_list|,
+literal|"hive.enforce.sorting"
+argument_list|,
+literal|"hive.enforce.bucketing"
+argument_list|)
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1568,6 +1622,14 @@ block|}
 elseif|else
 if|if
 condition|(
+operator|!
+name|removedConfigs
+operator|.
+name|contains
+argument_list|(
+name|key
+argument_list|)
+operator|&&
 name|key
 operator|.
 name|startsWith
