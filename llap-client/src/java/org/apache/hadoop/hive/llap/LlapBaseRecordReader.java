@@ -340,6 +340,11 @@ specifier|final
 name|Closeable
 name|client
 decl_stmt|;
+specifier|private
+specifier|final
+name|Closeable
+name|socket
+decl_stmt|;
 specifier|public
 name|LlapBaseRecordReader
 parameter_list|(
@@ -360,6 +365,9 @@ name|job
 parameter_list|,
 name|Closeable
 name|client
+parameter_list|,
+name|Closeable
+name|socket
 parameter_list|)
 block|{
 name|din
@@ -420,6 +428,12 @@ name|client
 operator|=
 name|client
 expr_stmt|;
+name|this
+operator|.
+name|socket
+operator|=
+name|socket
+expr_stmt|;
 block|}
 specifier|public
 name|Schema
@@ -477,6 +491,7 @@ operator|=
 name|err
 expr_stmt|;
 block|}
+comment|// Don't close the socket - the stream already does that if needed.
 if|if
 condition|(
 name|client
@@ -762,6 +777,8 @@ name|event
 operator|.
 name|getMessage
 argument_list|()
+argument_list|,
+name|io
 argument_list|)
 throw|;
 default|default:
@@ -777,6 +794,8 @@ name|getEventType
 argument_list|()
 operator|+
 literal|", expected error event"
+argument_list|,
+name|io
 argument_list|)
 throw|;
 block|}
@@ -976,12 +995,36 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|getReaderThread
-argument_list|()
+name|readerThread
 operator|.
 name|interrupt
 argument_list|()
 expr_stmt|;
+try|try
+block|{
+name|socket
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+comment|// Leave the client to time out.
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Cannot close the socket on error"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 break|break;
 default|default:
 throw|throw

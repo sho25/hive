@@ -1450,6 +1450,15 @@ argument_list|,
 name|job
 argument_list|,
 name|llapClient
+argument_list|,
+operator|(
+name|java
+operator|.
+name|io
+operator|.
+name|Closeable
+operator|)
+name|socket
 argument_list|)
 decl_stmt|;
 name|umbilicalResponder
