@@ -12190,6 +12190,17 @@ argument_list|,
 literal|"Send buffer size to be used by LLAP daemon output service"
 argument_list|)
 block|,
+name|LLAP_DAEMON_OUTPUT_SERVICE_MAX_PENDING_WRITES
+argument_list|(
+literal|"hive.llap.daemon.output.service.max.pending.writes"
+argument_list|,
+literal|8
+argument_list|,
+literal|"Maximum number of queued writes allowed per connection when sending data\n"
+operator|+
+literal|" via the LLAP output service to external clients."
+argument_list|)
+block|,
 name|LLAP_ENABLE_GRACE_JOIN_IN_LLAP
 argument_list|(
 literal|"hive.llap.enable.grace.join.in.llap"
