@@ -12004,6 +12004,14 @@ operator|.
 name|getText
 argument_list|()
 decl_stmt|;
+comment|// Convert to lowercase for the comparison
+name|partitionName
+operator|=
+name|partitionName
+operator|.
+name|toLowerCase
+argument_list|()
+expr_stmt|;
 name|Tree
 name|pvalue
 init|=
