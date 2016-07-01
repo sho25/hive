@@ -3639,7 +3639,7 @@ name|f_list
 operator|.
 name|addAll
 argument_list|(
-name|getPartCols
+name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3647,7 +3647,7 @@ name|f_list
 operator|.
 name|addAll
 argument_list|(
-name|getCols
+name|getPartCols
 argument_list|()
 argument_list|)
 expr_stmt|;
