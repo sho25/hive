@@ -1512,6 +1512,17 @@ name|HIVEAUXJARS
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|addJars
+argument_list|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getReloadableAuxJars
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// add added jars
 name|String
 name|addedJars
