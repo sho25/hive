@@ -3601,29 +3601,18 @@ block|}
 catch|catch
 parameter_list|(
 name|InvalidObjectException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|InvalidOperationException
-argument_list|(
-literal|"alter is not possible"
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
+decl||
 name|NoSuchObjectException
 name|e
 parameter_list|)
 block|{
-comment|//old partition does not exist
 throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"alter is not possible"
+literal|"Alter partition operation fails: "
+operator|+
+name|e
 argument_list|)
 throw|;
 block|}
