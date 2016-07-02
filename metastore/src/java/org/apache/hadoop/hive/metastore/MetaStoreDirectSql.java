@@ -5330,6 +5330,16 @@ operator|.
 name|filter
 operator|==
 literal|null
+operator|||
+name|filter
+operator|.
+name|filter
+operator|.
+name|trim
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|?
 literal|""
 else|:

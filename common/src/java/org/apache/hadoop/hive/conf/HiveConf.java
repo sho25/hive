@@ -4258,6 +4258,18 @@ operator|+
 literal|"See HIVE-4409 for more details."
 argument_list|)
 block|,
+name|METASTORE_LIMIT_PARTITION_REQUEST
+argument_list|(
+literal|"hive.metastore.limit.partition.request"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"This limits the number of partitions that can be requested from the metastore for a given table.\n"
+operator|+
+literal|"The default value \"-1\" means no limit."
+argument_list|)
+block|,
 name|NEWTABLEDEFAULTPARA
 argument_list|(
 literal|"hive.table.parameters.default"
@@ -6448,6 +6460,8 @@ argument_list|,
 literal|"The fraction of available memory to be used for buffering rows in Reducesink operator for limit pushdown optimization."
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVELIMITTABLESCANPARTITION
 argument_list|(
 literal|"hive.limit.query.max.table.partition"
@@ -6457,7 +6471,13 @@ literal|1
 argument_list|,
 literal|"This controls how many partitions can be scanned for each partitioned table.\n"
 operator|+
-literal|"The default value \"-1\" means no limit."
+literal|"The default value \"-1\" means no limit. (DEPRECATED: Please use "
+operator|+
+name|ConfVars
+operator|.
+name|METASTORE_LIMIT_PARTITION_REQUEST
+operator|+
+literal|" in the metastore instead.)"
 argument_list|)
 block|,
 name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
