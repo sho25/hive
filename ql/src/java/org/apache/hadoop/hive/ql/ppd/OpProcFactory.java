@@ -2898,6 +2898,18 @@ argument_list|(
 name|tsOp
 argument_list|)
 decl_stmt|;
+comment|// nonFinalCandidates predicates should be empty
+assert|assert
+name|pushDownPreds
+operator|==
+literal|null
+operator|||
+operator|!
+name|pushDownPreds
+operator|.
+name|hasNonFinalCandidates
+argument_list|()
+assert|;
 return|return
 name|createFilter
 argument_list|(
