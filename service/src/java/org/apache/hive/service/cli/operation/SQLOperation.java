@@ -3851,6 +3851,27 @@ block|}
 block|}
 block|}
 block|}
+specifier|public
+name|String
+name|getExecutionEngine
+parameter_list|()
+block|{
+return|return
+name|queryState
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

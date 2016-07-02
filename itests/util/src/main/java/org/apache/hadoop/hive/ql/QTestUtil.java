@@ -9721,6 +9721,14 @@ operator|new
 name|ParseDriver
 argument_list|()
 expr_stmt|;
+name|queryState
+operator|=
+operator|new
+name|QueryState
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|sem
 operator|=
 operator|new

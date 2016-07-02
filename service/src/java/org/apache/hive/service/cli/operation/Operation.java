@@ -823,15 +823,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|QueryState
-name|getQueryState
-parameter_list|()
-block|{
-return|return
-name|queryState
-return|;
-block|}
-specifier|public
 name|Future
 argument_list|<
 name|?

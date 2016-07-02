@@ -2435,7 +2435,6 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * for backwards compatibility with current tests    */
 specifier|public
 name|Driver
 parameter_list|(
@@ -11895,6 +11894,32 @@ operator|.
 name|operationId
 operator|=
 name|opId
+expr_stmt|;
+block|}
+comment|/**     * Resets QueryState to get new queryId on Driver reuse.    */
+specifier|public
+name|void
+name|resetQueryState
+parameter_list|()
+block|{
+comment|// Note: Driver cleanup for reuse at this point is not very clear. The assumption here is that
+comment|// repeated compile/execute calls create new contexts, plan, etc., so we don't need to worry
+comment|// propagating queryState into those existing fields, or resetting them.
+name|releaseResources
+argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|queryState
+operator|=
+operator|new
+name|QueryState
+argument_list|(
+name|queryState
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 block|}

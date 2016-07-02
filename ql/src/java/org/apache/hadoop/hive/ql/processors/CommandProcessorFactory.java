@@ -665,6 +665,14 @@ name|drv
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|drv
+operator|.
+name|resetQueryState
+argument_list|()
+expr_stmt|;
+block|}
 name|drv
 operator|.
 name|init
