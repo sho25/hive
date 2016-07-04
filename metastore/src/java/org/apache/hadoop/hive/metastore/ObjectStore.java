@@ -45076,14 +45076,23 @@ argument_list|)
 decl_stmt|;
 comment|// read the schema version stored in metastore db
 name|String
-name|schemaVer
+name|dbSchemaVer
 init|=
 name|getMetaStoreSchemaVersion
 argument_list|()
 decl_stmt|;
+comment|// version of schema for this version of hive
+name|String
+name|hiveSchemaVer
+init|=
+name|MetaStoreSchemaInfo
+operator|.
+name|getHiveSchemaVersion
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
-name|schemaVer
+name|dbSchemaVer
 operator|==
 literal|null
 condition|)
@@ -45120,18 +45129,12 @@ argument_list|()
 operator|+
 literal|" is not enabled so recording the schema version "
 operator|+
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|hiveSchemaVer
 argument_list|)
 expr_stmt|;
 name|setMetaStoreSchemaVersion
 argument_list|(
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|hiveSchemaVer
 argument_list|,
 literal|"Set by MetaStore "
 operator|+
@@ -45149,14 +45152,13 @@ block|{
 comment|// metastore schema version is different than Hive distribution needs
 if|if
 condition|(
-name|schemaVer
-operator|.
-name|equalsIgnoreCase
-argument_list|(
 name|MetaStoreSchemaInfo
 operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|isVersionCompatible
+argument_list|(
+name|hiveSchemaVer
+argument_list|,
+name|dbSchemaVer
 argument_list|)
 condition|)
 block|{
@@ -45166,7 +45168,7 @@ name|debug
 argument_list|(
 literal|"Found expected HMS version of "
 operator|+
-name|schemaVer
+name|dbSchemaVer
 argument_list|)
 expr_stmt|;
 block|}
@@ -45183,14 +45185,11 @@ name|MetaException
 argument_list|(
 literal|"Hive Schema version "
 operator|+
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|hiveSchemaVer
 operator|+
 literal|" does not match metastore's schema version "
 operator|+
-name|schemaVer
+name|dbSchemaVer
 operator|+
 literal|" Metastore is not upgraded or corrupt"
 argument_list|)
@@ -45204,14 +45203,11 @@ name|error
 argument_list|(
 literal|"Version information found in metastore differs "
 operator|+
-name|schemaVer
+name|dbSchemaVer
 operator|+
 literal|" from expected schema version "
 operator|+
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|hiveSchemaVer
 operator|+
 literal|". Schema verififcation is disabled "
 operator|+
@@ -45226,10 +45222,7 @@ argument_list|)
 expr_stmt|;
 name|setMetaStoreSchemaVersion
 argument_list|(
-name|MetaStoreSchemaInfo
-operator|.
-name|getHiveSchemaVersion
-argument_list|()
+name|hiveSchemaVer
 argument_list|,
 literal|"Set by MetaStore "
 operator|+
