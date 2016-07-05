@@ -1040,6 +1040,17 @@ argument_list|,
 name|types
 argument_list|)
 expr_stmt|;
+name|props
+operator|.
+name|put
+argument_list|(
+name|serdeConstants
+operator|.
+name|ESCAPE_CHAR
+argument_list|,
+literal|"\\"
+argument_list|)
+expr_stmt|;
 name|SerDe
 name|serde
 init|=
