@@ -11536,6 +11536,17 @@ operator|+
 literal|"This should be the hive user or whichever user is running the LLAP daemon."
 argument_list|)
 block|,
+name|LLAP_ZK_REGISTRY_NAMESPACE
+argument_list|(
+literal|"hive.llap.zk.registry.namespace"
+argument_list|,
+literal|null
+argument_list|,
+literal|"In the LLAP ZooKeeper-based registry, overrides the ZK path namespace. Note that\n"
+operator|+
+literal|"using this makes the path management (e.g. setting correct ACLs) your responsibility."
+argument_list|)
+block|,
 comment|// Note: do not rename to ..service.acl; Hadoop generates .hosts setting name from this,
 comment|// resulting in a collision with existing hive.llap.daemon.service.hosts and bizarre errors.
 comment|// These are read by Hadoop IPC, so you should check the usage and naming conventions (e.g.
