@@ -7583,15 +7583,9 @@ name|UnionMergeRule
 operator|.
 name|INSTANCE
 argument_list|,
-operator|new
-name|ProjectMergeRule
-argument_list|(
-literal|false
-argument_list|,
-name|HiveRelFactories
+name|HiveProjectMergeRule
 operator|.
-name|HIVE_PROJECT_FACTORY
-argument_list|)
+name|INSTANCE_NO_FORCE
 argument_list|,
 name|HiveAggregateProjectMergeRule
 operator|.
@@ -8219,20 +8213,6 @@ block|{
 comment|// TODO: Decorelation of subquery should be done before attempting
 comment|// Partition Pruning; otherwise Expression evaluation may try to execute
 comment|// corelated sub query.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Jesus - Plan0: "
-operator|+
-name|RelOptUtil
-operator|.
-name|toString
-argument_list|(
-name|basePlan
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|PerfLogger
 name|perfLogger
 init|=
@@ -8423,20 +8403,6 @@ operator|.
 name|OPTIMIZER
 argument_list|,
 literal|"Calcite: Prejoin ordering transformation, factor out common filter elements and separating deterministic vs non-deterministic UDF"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Jesus - Plan2: "
-operator|+
-name|RelOptUtil
-operator|.
-name|toString
-argument_list|(
-name|basePlan
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// 3. Run exhaustive PPD, add not null filters, transitive inference,
@@ -8781,20 +8747,6 @@ operator|.
 name|OPTIMIZER
 argument_list|,
 literal|"Calcite: Prejoin ordering transformation, PPD, not null predicates, transitive inference, constant folding"
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Jesus - Plan3: "
-operator|+
-name|RelOptUtil
-operator|.
-name|toString
-argument_list|(
-name|basePlan
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// 4. Push down limit through outer join
