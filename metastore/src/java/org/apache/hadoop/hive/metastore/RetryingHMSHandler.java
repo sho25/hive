@@ -1314,19 +1314,27 @@ name|caughtException
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Since returning exceptions with a nested "cause" can be a problem in
-comment|// Thrift, we are stuffing the stack trace into the message itself.
-throw|throw
+name|MetaException
+name|me
+init|=
 operator|new
 name|MetaException
 argument_list|(
-name|ExceptionUtils
+name|caughtException
 operator|.
-name|getStackTrace
+name|getMessage
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|me
+operator|.
+name|initCause
 argument_list|(
 name|caughtException
 argument_list|)
-argument_list|)
+expr_stmt|;
+throw|throw
+name|me
 throw|;
 block|}
 assert|assert
