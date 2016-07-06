@@ -4201,13 +4201,22 @@ operator|.
 name|isCTAS
 argument_list|()
 decl_stmt|;
+comment|// Queries without a source table currently are not supported by CBO
 name|boolean
 name|isSupportedType
 init|=
+operator|(
 name|qb
 operator|.
 name|getIsQuery
 argument_list|()
+operator|&&
+operator|!
+name|qb
+operator|.
+name|containsQueryWithoutSourceTable
+argument_list|()
+operator|)
 operator|||
 name|qb
 operator|.
@@ -4283,7 +4292,9 @@ condition|)
 block|{
 name|msg
 operator|+=
-literal|"is not a query, CTAS, or insert; "
+literal|"is not a query with at least one source table "
+operator|+
+literal|" or there is a subquery without a source table, or CTAS, or insert; "
 expr_stmt|;
 block|}
 if|if
