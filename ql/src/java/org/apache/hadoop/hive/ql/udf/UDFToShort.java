@@ -818,6 +818,7 @@ name|shortValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: lossy conversion!
 return|return
 name|shortWritable
 return|;

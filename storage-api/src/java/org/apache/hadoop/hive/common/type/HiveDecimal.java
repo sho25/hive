@@ -644,6 +644,7 @@ return|return
 name|bdPrecision
 return|;
 block|}
+comment|/** Note - this method will corrupt the value if it doesn't fit. */
 specifier|public
 name|int
 name|intValue
@@ -668,6 +669,7 @@ name|doubleValue
 argument_list|()
 return|;
 block|}
+comment|/** Note - this method will corrupt the value if it doesn't fit. */
 specifier|public
 name|long
 name|longValue
@@ -680,6 +682,7 @@ name|longValue
 argument_list|()
 return|;
 block|}
+comment|/** Note - this method will corrupt the value if it doesn't fit. */
 specifier|public
 name|short
 name|shortValue
@@ -1389,6 +1392,18 @@ name|create
 argument_list|(
 name|bd
 argument_list|)
+return|;
+block|}
+specifier|public
+name|long
+name|longValueExact
+parameter_list|()
+block|{
+return|return
+name|bd
+operator|.
+name|longValueExact
+argument_list|()
 return|;
 block|}
 block|}

@@ -4163,6 +4163,7 @@ operator|.
 name|longValue
 argument_list|()
 return|;
+comment|// TODO: lossy conversion!
 block|}
 elseif|else
 if|if

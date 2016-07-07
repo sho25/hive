@@ -1626,13 +1626,6 @@ name|add
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|DECIMAL
-argument_list|)
-operator|.
-name|add
-argument_list|(
-name|PrimitiveCategory
-operator|.
 name|VARCHAR
 argument_list|)
 operator|.
@@ -1816,19 +1809,39 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-comment|// FIXME: support template types. It currently has conflict with
-comment|// ExprNodeConstantDesc
+comment|// FIXME: support template types. It currently has conflict with ExprNodeConstantDesc
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Unsupported types "
+operator|+
+name|priti
+operator|+
+literal|"; "
+operator|+
+name|descti
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 literal|null
 return|;
 block|}
-comment|// We shouldn't cast strings to other types because that can broke original data in cases of
+comment|// We shouldn't cast strings to other types because that can break original data in cases of
 comment|// leading zeros or zeros trailing after decimal point.
 comment|// Example: "000126" => 126 => "126"
 name|boolean
-name|brokingDataTypesCombination
+name|brokenDataTypesCombination
 init|=
-operator|(
 name|unsafeConversionTypes
 operator|.
 name|contains
@@ -1849,15 +1862,36 @@ operator|.
 name|getPrimitiveCategory
 argument_list|()
 argument_list|)
-operator|)
 decl_stmt|;
 if|if
 condition|(
 name|performSafeTypeCast
 operator|&&
-name|brokingDataTypesCombination
+name|brokenDataTypesCombination
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Unsupported cast "
+operator|+
+name|priti
+operator|+
+literal|"; "
+operator|+
+name|descti
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 literal|null
 return|;

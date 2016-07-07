@@ -1219,7 +1219,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|TinyintLiteral
+name|IntegralLiteral
 expr_stmt|;
 break|break;
 case|case
@@ -1254,7 +1254,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|SmallintLiteral
+name|IntegralLiteral
 expr_stmt|;
 break|break;
 case|case
@@ -1271,7 +1271,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|BigintLiteral
+name|IntegralLiteral
 expr_stmt|;
 break|break;
 case|case
@@ -1306,7 +1306,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|BigintLiteral
+name|IntegralLiteral
 expr_stmt|;
 break|break;
 case|case
@@ -1325,7 +1325,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|Number
+name|NumberLiteral
 expr_stmt|;
 break|break;
 case|case
@@ -1344,7 +1344,7 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|DecimalLiteral
+name|NumberLiteral
 expr_stmt|;
 break|break;
 case|case

@@ -291,6 +291,26 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|PrimitiveObjectInspector
+operator|.
+name|PrimitiveCategory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|StandardListObjectInspector
 import|;
 end_import
@@ -424,6 +444,63 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+name|void
+name|verifyFractionType
+parameter_list|(
+name|ObjectInspector
+name|oi
+parameter_list|)
+throws|throws
+name|UDFArgumentTypeException
+block|{
+name|PrimitiveCategory
+name|pc
+init|=
+operator|(
+operator|(
+name|PrimitiveObjectInspector
+operator|)
+name|oi
+operator|)
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+decl_stmt|;
+switch|switch
+condition|(
+name|pc
+condition|)
+block|{
+case|case
+name|FLOAT
+case|:
+case|case
+name|DOUBLE
+case|:
+case|case
+name|DECIMAL
+case|:
+break|break;
+default|default:
+throw|throw
+operator|new
+name|UDFArgumentTypeException
+argument_list|(
+literal|1
+argument_list|,
+literal|"Only a floating point or decimal, or "
+operator|+
+literal|"floating point or decimal array argument is accepted as parameter 2, but "
+operator|+
+name|pc
+operator|+
+literal|" was passed instead."
+argument_list|)
+throw|;
+block|}
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -554,9 +631,6 @@ case|case
 name|DECIMAL
 case|:
 break|break;
-case|case
-name|DATE
-case|:
 default|default:
 throw|throw
 operator|new
@@ -599,50 +673,14 @@ case|case
 name|PRIMITIVE
 case|:
 comment|// Only a single double was passed as parameter 2, a single quantile is being requested
-switch|switch
-condition|(
-operator|(
-operator|(
-name|PrimitiveObjectInspector
-operator|)
-name|parameters
-index|[
-literal|1
-index|]
-operator|)
-operator|.
-name|getPrimitiveCategory
-argument_list|()
-condition|)
-block|{
-case|case
-name|FLOAT
-case|:
-case|case
-name|DOUBLE
-case|:
-break|break;
-default|default:
-throw|throw
-operator|new
-name|UDFArgumentTypeException
+name|verifyFractionType
 argument_list|(
-literal|1
-argument_list|,
-literal|"Only a float/double or float/double array argument is accepted as parameter 2, but "
-operator|+
 name|parameters
 index|[
 literal|1
 index|]
-operator|.
-name|getTypeName
-argument_list|()
-operator|+
-literal|" was passed instead."
 argument_list|)
-throw|;
-block|}
+expr_stmt|;
 break|break;
 case|case
 name|LIST
@@ -679,7 +717,7 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"A float/double array argument may be passed as parameter 2, but "
+literal|"A floating point or decimal array argument may be passed as parameter 2, but "
 operator|+
 name|parameters
 index|[
@@ -695,13 +733,9 @@ throw|;
 block|}
 comment|// Now make sure it's an array of doubles or floats. We don't allow integer types here
 comment|// because percentile (really, quantile) values should generally be strictly between 0 and 1.
-switch|switch
-condition|(
-operator|(
-call|(
-name|PrimitiveObjectInspector
-call|)
+name|verifyFractionType
 argument_list|(
+operator|(
 operator|(
 name|ListObjectInspector
 operator|)
@@ -709,44 +743,12 @@ name|parameters
 index|[
 literal|1
 index|]
-argument_list|)
+operator|)
 operator|.
 name|getListElementObjectInspector
 argument_list|()
-operator|)
-operator|.
-name|getPrimitiveCategory
-argument_list|()
-condition|)
-block|{
-case|case
-name|FLOAT
-case|:
-case|case
-name|DOUBLE
-case|:
-break|break;
-default|default:
-throw|throw
-operator|new
-name|UDFArgumentTypeException
-argument_list|(
-literal|1
-argument_list|,
-literal|"A float/double array argument may be passed as parameter 2, but "
-operator|+
-name|parameters
-index|[
-literal|1
-index|]
-operator|.
-name|getTypeName
-argument_list|()
-operator|+
-literal|" was passed instead."
 argument_list|)
-throw|;
-block|}
+expr_stmt|;
 name|wantManyQuantiles
 operator|=
 literal|true
@@ -759,7 +761,9 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"Only a float/double or float/double array argument is accepted as parameter 2, but "
+literal|"Only a floating point or decimal, or floating point or decimal array argument is accepted"
+operator|+
+literal|" as parameter 2, but "
 operator|+
 name|parameters
 index|[

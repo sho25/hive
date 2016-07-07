@@ -144,6 +144,7 @@ operator|.
 name|longValue
 argument_list|()
 expr_stmt|;
+comment|// TODO: lossy conversion!
 block|}
 block|}
 end_class

@@ -11164,7 +11164,7 @@ decl_stmt|;
 return|return
 name|decimalVal
 operator|.
-name|longValue
+name|longValueExact
 argument_list|()
 return|;
 default|default:

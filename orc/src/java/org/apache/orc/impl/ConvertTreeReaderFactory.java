@@ -2884,6 +2884,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// TODO: lossy conversion!
 name|downCastAnyInteger
 argument_list|(
 name|longColVector

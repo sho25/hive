@@ -802,6 +802,7 @@ name|longValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: lossy conversion!
 return|return
 name|longWritable
 return|;

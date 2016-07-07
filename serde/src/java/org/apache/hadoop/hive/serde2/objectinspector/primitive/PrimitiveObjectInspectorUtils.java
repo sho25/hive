@@ -3020,6 +3020,7 @@ return|;
 case|case
 name|DECIMAL
 case|:
+comment|// TODO: lossy conversion!
 return|return
 operator|(
 operator|(
@@ -3839,6 +3840,7 @@ operator|.
 name|intValue
 argument_list|()
 expr_stmt|;
+comment|// TODO: lossy conversion!
 break|break;
 case|case
 name|DATE
@@ -4172,6 +4174,7 @@ operator|.
 name|longValue
 argument_list|()
 expr_stmt|;
+comment|// TODO: lossy conversion!
 break|break;
 case|case
 name|DATE

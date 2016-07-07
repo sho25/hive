@@ -1308,7 +1308,6 @@ name|RecordWriter
 index|[]
 name|outWriters
 decl_stmt|;
-comment|// TODO# this
 name|RecordUpdater
 index|[]
 name|updaters
