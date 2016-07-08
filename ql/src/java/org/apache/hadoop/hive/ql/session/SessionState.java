@@ -5480,7 +5480,7 @@ name|String
 argument_list|>
 name|jarPaths
 init|=
-name|Utilities
+name|FileUtils
 operator|.
 name|getJarFilesByPath
 argument_list|(

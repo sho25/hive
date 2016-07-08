@@ -71,6 +71,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|classification
 operator|.
 name|InterfaceAudience
@@ -16952,6 +16968,14 @@ condition|)
 block|{
 name|auxJars
 operator|=
+name|StringUtils
+operator|.
+name|join
+argument_list|(
+name|FileUtils
+operator|.
+name|getJarFilesByPath
+argument_list|(
 name|this
 operator|.
 name|get
@@ -16961,6 +16985,12 @@ operator|.
 name|HIVEAUXJARS
 operator|.
 name|varname
+argument_list|)
+argument_list|,
+name|this
+argument_list|)
+argument_list|,
+literal|','
 argument_list|)
 expr_stmt|;
 block|}
@@ -18188,7 +18218,7 @@ return|return
 name|auxJars
 return|;
 block|}
-comment|/**    * @param auxJars the auxJars to set    */
+comment|/**    * Set the auxiliary jars. Used for unit tests only.    * @param auxJars the auxJars to set.    */
 specifier|public
 name|void
 name|setAuxJars
