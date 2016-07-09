@@ -650,7 +650,7 @@ name|partitionVals
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @deprecated Use {@link #newConnection(boolean, String)}    */
+comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, String)}    */
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -685,7 +685,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * @deprecated Use {@link #newConnection(boolean, HiveConf, String)}    */
+comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, HiveConf, String)}    */
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -723,7 +723,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    * @deprecated Use {@link #newConnection(boolean, HiveConf, UserGroupInformation, String)}    */
+comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, HiveConf, UserGroupInformation, String)}    */
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -1917,6 +1917,17 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|UserGroupInformation
+name|getUserGroupInformation
+parameter_list|()
+block|{
+return|return
+name|ugi
+return|;
 block|}
 comment|/**      * Acquires a new batch of transactions from Hive.      *      * @param numTransactions is a hint from client indicating how many transactions client needs.      * @param recordWriter  Used to write record. The same writer instance can      *                      be shared with another TransactionBatch (to the same endpoint)      *                      only after the first TransactionBatch has been closed.      *                      Writer will be closed when the TransactionBatch is closed.      * @return      * @throws StreamingIOFailure if failed to create new RecordUpdater for batch      * @throws TransactionBatchUnAvailable if failed to acquire a new Transaction batch      * @throws ImpersonationFailed failed to run command as proxyUser      * @throws InterruptedException      */
 specifier|public

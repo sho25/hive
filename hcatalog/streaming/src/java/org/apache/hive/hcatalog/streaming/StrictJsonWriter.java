@@ -259,7 +259,7 @@ name|StructField
 index|[]
 name|bucketStructFields
 decl_stmt|;
-comment|/**    *    * @param endPoint the end point to write to    * @throws ConnectionError    * @throws SerializationError    * @throws StreamingException    */
+comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #StrictJsonWriter(HiveEndPoint, HiveConf, StreamingConnection)}    */
 specifier|public
 name|StrictJsonWriter
 parameter_list|(
@@ -278,10 +278,12 @@ argument_list|(
 name|endPoint
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    *    * @param endPoint the end point to write to    * @param conf a Hive conf object. Should be null if not using advanced Hive settings.    * @throws ConnectionError    * @throws SerializationError    * @throws StreamingException    */
+comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #StrictJsonWriter(HiveEndPoint, HiveConf, StreamingConnection)}    */
 specifier|public
 name|StrictJsonWriter
 parameter_list|(
@@ -290,6 +292,59 @@ name|endPoint
 parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|)
+throws|throws
+name|StreamingException
+block|{
+name|this
+argument_list|(
+name|endPoint
+argument_list|,
+name|conf
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @param endPoint the end point to write to    * @throws ConnectionError    * @throws SerializationError    * @throws StreamingException    */
+specifier|public
+name|StrictJsonWriter
+parameter_list|(
+name|HiveEndPoint
+name|endPoint
+parameter_list|,
+name|StreamingConnection
+name|conn
+parameter_list|)
+throws|throws
+name|ConnectionError
+throws|,
+name|SerializationError
+throws|,
+name|StreamingException
+block|{
+name|this
+argument_list|(
+name|endPoint
+argument_list|,
+literal|null
+argument_list|,
+name|conn
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @param endPoint the end point to write to    * @param conf a Hive conf object. Should be null if not using advanced Hive settings.    * @param conn connection this Writer is to be used with    * @throws ConnectionError    * @throws SerializationError    * @throws StreamingException    */
+specifier|public
+name|StrictJsonWriter
+parameter_list|(
+name|HiveEndPoint
+name|endPoint
+parameter_list|,
+name|HiveConf
+name|conf
+parameter_list|,
+name|StreamingConnection
+name|conn
 parameter_list|)
 throws|throws
 name|ConnectionError
@@ -303,6 +358,8 @@ argument_list|(
 name|endPoint
 argument_list|,
 name|conf
+argument_list|,
+name|conn
 argument_list|)
 expr_stmt|;
 name|this
