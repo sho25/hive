@@ -13804,7 +13804,18 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Incorrect number of partition values"
+literal|"Incorrect number of partition values."
+operator|+
+literal|" numPartKeys="
+operator|+
+name|numPartKeys
+operator|+
+literal|", part_val="
+operator|+
+name|part_vals
+operator|.
+name|size
+argument_list|()
 argument_list|)
 throw|;
 block|}

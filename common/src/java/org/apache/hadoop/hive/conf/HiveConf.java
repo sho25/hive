@@ -10445,6 +10445,27 @@ operator|+
 literal|" MSCK to check tables."
 argument_list|)
 block|,
+name|HIVE_LOAD_DYNAMIC_PARTITIONS_THREAD_COUNT
+argument_list|(
+literal|"hive.load.dynamic.partitions.thread"
+argument_list|,
+literal|15
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|1L
+argument_list|,
+literal|true
+argument_list|,
+literal|1024L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Number of threads used to load dynamic partitions."
+argument_list|)
+block|,
 comment|// If this is set all move tasks at the end of a multi-insert query will only begin once all
 comment|// outputs are ready
 name|HIVE_MULTI_INSERT_MOVE_TASKS_SHARE_DEPENDENCIES
