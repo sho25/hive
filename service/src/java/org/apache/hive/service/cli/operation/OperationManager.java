@@ -1277,6 +1277,18 @@ name|Operation
 name|operation
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding operation: "
+operator|+
+name|operation
+operator|.
+name|getHandle
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|handleToOperation
 operator|.
 name|put
@@ -1608,6 +1620,15 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closing operation: "
+operator|+
+name|opHandle
+argument_list|)
+expr_stmt|;
 name|Operation
 name|operation
 init|=
@@ -1627,7 +1648,9 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Operation does not exist!"
+literal|"Operation does not exist: "
+operator|+
+name|opHandle
 argument_list|)
 throw|;
 block|}

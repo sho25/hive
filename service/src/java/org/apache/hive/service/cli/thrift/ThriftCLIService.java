@@ -2461,7 +2461,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Opened a session, current sessions: "
+literal|"Opened a session "
+operator|+
+name|sessionHandle
+operator|+
+literal|", current sessions: "
 operator|+
 name|sessionCount
 operator|.
@@ -3130,7 +3134,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Closed a session, current sessions: "
+literal|"Closed a session "
+operator|+
+name|sessionHandle
+operator|+
+literal|", current sessions: "
 operator|+
 name|sessionCount
 operator|.

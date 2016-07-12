@@ -2104,7 +2104,9 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Session does not exist!"
+literal|"Session does not exist: "
+operator|+
+name|sessionHandle
 argument_list|)
 throw|;
 block|}
