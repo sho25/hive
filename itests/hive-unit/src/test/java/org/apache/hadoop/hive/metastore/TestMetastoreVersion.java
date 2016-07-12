@@ -685,7 +685,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/***    * Test that with no verification, hive populates the schema and version correctly    * @throws Exception    */
+comment|/***    * Test that with no verification, and record verification enabled, hive populates the schema    * and version correctly    * @throws Exception    */
 specifier|public
 name|void
 name|testMetastoreVersion
@@ -708,6 +708,22 @@ name|toString
 argument_list|()
 argument_list|,
 literal|"false"
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 name|hiveConf

@@ -1523,12 +1523,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_AUTO_START_MECHANISM_MODE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTORE_TRANSACTION_ISOLATION
 block|,
 name|HiveConf
@@ -3881,18 +3875,22 @@ literal|"datanucleus.schema.autoCreateAll"
 argument_list|,
 literal|false
 argument_list|,
-literal|"creates necessary schema on a startup if one doesn't exist. set this to false, after creating it once"
+literal|"Auto creates necessary schema on a startup if one doesn't exist. Set this to false, after creating it once."
+operator|+
+literal|"To enable auto create also set hive.metastore.schema.verification=false. Auto creation is not "
+operator|+
+literal|"recommended for production use cases, run schematool command instead."
 argument_list|)
 block|,
 name|METASTORE_SCHEMA_VERIFICATION
 argument_list|(
 literal|"hive.metastore.schema.verification"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Enforce metastore schema version consistency.\n"
 operator|+
-literal|"True: Verify that version information stored in metastore matches with one from Hive jars.  Also disable automatic\n"
+literal|"True: Verify that version information stored in is compatible with one from Hive jars.  Also disable automatic\n"
 operator|+
 literal|"      schema migration attempt. Users are required to manually migrate schema after Hive upgrade which ensures\n"
 operator|+
@@ -3905,20 +3903,11 @@ name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
 argument_list|(
 literal|"hive.metastore.schema.verification.record.version"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"When true the current MS version is recorded in the VERSION table. If this is disabled and verification is\n"
 operator|+
 literal|" enabled the MS will be unusable."
-argument_list|)
-block|,
-name|METASTORE_AUTO_START_MECHANISM_MODE
-argument_list|(
-literal|"datanucleus.autoStartMechanismMode"
-argument_list|,
-literal|"checked"
-argument_list|,
-literal|"throw exception if metadata tables are incorrect"
 argument_list|)
 block|,
 name|METASTORE_TRANSACTION_ISOLATION

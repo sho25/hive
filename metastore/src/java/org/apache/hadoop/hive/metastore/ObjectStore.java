@@ -3224,6 +3224,11 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
+name|correctAutoStartMechanism
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|Iterator
 argument_list|<
 name|Map
@@ -3504,6 +3509,84 @@ block|}
 return|return
 name|prop
 return|;
+block|}
+comment|/**    * Update conf to set datanucleus.autoStartMechanismMode=ignored.    * This is necessary to able to use older version of hive against    * an upgraded but compatible metastore schema in db from new version    * of hive    * @param conf    */
+specifier|private
+specifier|static
+name|void
+name|correctAutoStartMechanism
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+specifier|final
+name|String
+name|autoStartKey
+init|=
+literal|"datanucleus.autoStartMechanismMode"
+decl_stmt|;
+specifier|final
+name|String
+name|autoStartIgnore
+init|=
+literal|"ignored"
+decl_stmt|;
+name|String
+name|currentAutoStartVal
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|autoStartKey
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|currentAutoStartVal
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|currentAutoStartVal
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|autoStartIgnore
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|autoStartKey
+operator|+
+literal|" is set to unsupported value "
+operator|+
+name|conf
+operator|.
+name|get
+argument_list|(
+name|autoStartKey
+argument_list|)
+operator|+
+literal|" . Setting it to value "
+operator|+
+name|autoStartIgnore
+argument_list|)
+expr_stmt|;
+block|}
+name|conf
+operator|.
+name|set
+argument_list|(
+name|autoStartKey
+argument_list|,
+name|autoStartIgnore
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static
@@ -45170,7 +45253,6 @@ block|}
 block|}
 else|else
 block|{
-comment|// metastore schema version is different than Hive distribution needs
 if|if
 condition|(
 name|MetaStoreSchemaInfo
@@ -45195,6 +45277,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// metastore schema version is different than Hive distribution needs
 if|if
 condition|(
 name|strictValidation
@@ -45237,8 +45320,6 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_SCHEMA_VERIFICATION
-operator|+
-literal|" so setting version."
 argument_list|)
 expr_stmt|;
 name|setMetaStoreSchemaVersion
@@ -45598,6 +45679,15 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Setting metastore schema version in db to "
+operator|+
+name|schemaVersion
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|mSchemaVer
