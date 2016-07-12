@@ -546,7 +546,7 @@ name|newUserName
 init|=
 name|llapId
 operator|.
-name|getRealUser
+name|getOwner
 argument_list|()
 operator|.
 name|toString
@@ -847,7 +847,7 @@ name|tokenUser
 init|=
 name|llapId
 operator|.
-name|getRealUser
+name|getOwner
 argument_list|()
 operator|.
 name|toString
