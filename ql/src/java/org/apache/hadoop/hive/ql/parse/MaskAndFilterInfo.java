@@ -49,6 +49,9 @@ decl_stmt|;
 name|ASTNode
 name|astNode
 decl_stmt|;
+name|boolean
+name|isView
+decl_stmt|;
 specifier|public
 name|MaskAndFilterInfo
 parameter_list|(
@@ -66,6 +69,9 @@ name|alias
 parameter_list|,
 name|ASTNode
 name|astNode
+parameter_list|,
+name|boolean
+name|isView
 parameter_list|)
 block|{
 name|super
@@ -94,6 +100,12 @@ operator|.
 name|astNode
 operator|=
 name|astNode
+expr_stmt|;
+name|this
+operator|.
+name|isView
+operator|=
+name|isView
 expr_stmt|;
 block|}
 block|}
