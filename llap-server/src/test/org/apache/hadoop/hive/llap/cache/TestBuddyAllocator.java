@@ -433,7 +433,10 @@ name|void
 name|forceReservedMemory
 parameter_list|(
 name|int
-name|memoryToEvict
+name|allocationSize
+parameter_list|,
+name|int
+name|count
 parameter_list|)
 block|{     }
 block|}

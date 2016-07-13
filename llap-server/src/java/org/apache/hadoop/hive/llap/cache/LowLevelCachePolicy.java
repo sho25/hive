@@ -91,6 +91,17 @@ name|LlapOomDebugDump
 name|dumper
 parameter_list|)
 function_decl|;
+comment|/** TODO: temporary method until we have a better allocator */
+name|int
+name|tryEvictContiguousData
+parameter_list|(
+name|int
+name|allocationSize
+parameter_list|,
+name|int
+name|count
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

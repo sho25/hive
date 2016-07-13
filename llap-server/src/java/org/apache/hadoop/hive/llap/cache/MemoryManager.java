@@ -50,11 +50,15 @@ name|long
 name|maxSize
 parameter_list|)
 function_decl|;
+comment|/** TODO: temporary method until we get a better allocator. */
 name|void
 name|forceReservedMemory
 parameter_list|(
 name|int
-name|memoryToEvict
+name|allocationSize
+parameter_list|,
+name|int
+name|count
 parameter_list|)
 function_decl|;
 block|}

@@ -1759,14 +1759,12 @@ operator|.
 name|forceReservedMemory
 argument_list|(
 name|allocationSize
-operator|*
-operator|(
+argument_list|,
 name|dest
 operator|.
 name|length
 operator|-
 name|destAllocIx
-operator|)
 argument_list|)
 expr_stmt|;
 name|LlapIoImpl

@@ -261,6 +261,23 @@ name|unlockCount
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|tryEvictContiguousData
+parameter_list|(
+name|int
+name|allocationSize
+parameter_list|,
+name|int
+name|count
+parameter_list|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 block|}
 specifier|private
 specifier|static
@@ -336,7 +353,10 @@ name|void
 name|forceReservedMemory
 parameter_list|(
 name|int
-name|memoryToEvict
+name|allocationSize
+parameter_list|,
+name|int
+name|count
 parameter_list|)
 block|{     }
 block|}
