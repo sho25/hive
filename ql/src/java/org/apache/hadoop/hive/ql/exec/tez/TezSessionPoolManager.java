@@ -289,6 +289,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|dag
+operator|.
+name|api
+operator|.
+name|TezConfiguration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -530,6 +546,8 @@ name|initConf
 init|=
 literal|null
 decl_stmt|;
+comment|// Config settings.
+specifier|private
 name|int
 name|numConcurrentLlapQueries
 init|=
@@ -643,6 +661,8 @@ argument_list|(
 name|initConf
 argument_list|)
 decl_stmt|;
+comment|// TODO Why is this configuration management not happening inside TezSessionPool.
+comment|// Makes no senses for it to be mixed up like this.
 name|boolean
 name|isUsable
 init|=
@@ -669,7 +689,9 @@ name|newConf
 operator|.
 name|set
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|,
 name|sessionState
 operator|.
@@ -785,6 +807,7 @@ block|}
 block|}
 else|else
 block|{
+comment|// TODO What is this doing now ?
 specifier|final
 name|SessionState
 name|parentSessionState
@@ -892,6 +915,7 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+comment|// TODO Why even continue after this. We're already in a state where things are messed up ?
 block|}
 block|}
 block|}
@@ -1388,6 +1412,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|// TODO Create and init session sets up queue, isDefault - but does not initialize the configuration
 specifier|private
 name|TezSessionPoolSession
 name|createAndInitSession
@@ -1410,6 +1435,8 @@ name|makeSessionId
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// TODO When will the queue ever be null.
+comment|// Pass queue and default in as constructor parameters, and make them final.
 if|if
 condition|(
 name|queue
@@ -1482,6 +1509,7 @@ argument_list|(
 literal|"tez.queue.name"
 argument_list|)
 decl_stmt|;
+comment|// TODO Session re-use completely disabled for doAs=true. Always launches a new session.
 name|boolean
 name|nonDefaultUser
 init|=
@@ -1800,12 +1828,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Closing tez session default? "
+literal|"Closing tez session if not default: "
 operator|+
 name|tezSessionState
-operator|.
-name|isDefault
-argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -2066,6 +2091,10 @@ operator|.
 name|getShortUserName
 argument_list|()
 decl_stmt|;
+comment|// TODO Will these checks work if some other user logs in. Isn't a doAs check required somewhere here as well.
+comment|// Should a doAs check happen here instead of after the user test.
+comment|// With HiveServer2 - who is the incoming user in terms of UGI (the hive user itself, or the user who actually submitted the query)
+comment|// Working in the assumption that the user here will be the hive user if doAs = false, we'll make it past this false check.
 name|LOG
 operator|.
 name|info
@@ -2151,7 +2180,10 @@ if|if
 condition|(
 name|doAsEnabled
 operator|!=
-name|conf
+name|session
+operator|.
+name|getConf
+argument_list|()
 operator|.
 name|getBoolVar
 argument_list|(
@@ -2184,6 +2216,18 @@ operator|.
 name|getQueueName
 argument_list|()
 decl_stmt|;
+name|String
+name|confQueueName
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+argument_list|)
+decl_stmt|;
 name|LOG
 operator|.
 name|info
@@ -2194,66 +2238,27 @@ name|queueName
 operator|+
 literal|" incoming queue name is "
 operator|+
-name|conf
-operator|.
-name|get
-argument_list|(
-literal|"tez.queue.name"
-argument_list|)
+name|confQueueName
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
+return|return
+operator|(
 name|queueName
 operator|==
 literal|null
-condition|)
-block|{
-if|if
-condition|(
-name|conf
-operator|.
-name|get
-argument_list|(
-literal|"tez.queue.name"
-argument_list|)
-operator|!=
+operator|)
+condition|?
+name|confQueueName
+operator|==
 literal|null
-condition|)
-block|{
-comment|// queue names are different
-return|return
-literal|false
-return|;
-block|}
-else|else
-block|{
-return|return
-literal|true
-return|;
-block|}
-block|}
-if|if
-condition|(
-operator|!
+else|:
 name|queueName
 operator|.
 name|equals
 argument_list|(
-name|conf
-operator|.
-name|get
-argument_list|(
-literal|"tez.queue.name"
+name|confQueueName
 argument_list|)
-argument_list|)
-condition|)
-block|{
-comment|// the String.equals method handles the case of conf not having the queue name as well.
-return|return
-literal|false
 return|;
-block|}
 block|}
 else|else
 block|{
@@ -2262,15 +2267,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Default queue should always be returned."
+literal|"The pool session "
 operator|+
-literal|"Hence we should not be here."
+name|session
+operator|+
+literal|" should have been returned to the pool"
 argument_list|)
 throw|;
 block|}
-return|return
-literal|true
-return|;
 block|}
 specifier|public
 name|TezSessionState
@@ -2354,9 +2358,10 @@ name|forceCreate
 argument_list|)
 return|;
 block|}
+comment|/** Reopens the session that was found to not be running. */
 specifier|public
 name|void
-name|closeAndOpen
+name|reopenSession
 parameter_list|(
 name|TezSessionState
 name|sessionState
@@ -2392,7 +2397,9 @@ name|sessionConf
 operator|.
 name|get
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|)
 operator|!=
 literal|null
@@ -2402,24 +2409,31 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|,
 name|sessionConf
 operator|.
 name|get
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|closeIfNotDefault
-argument_list|(
+comment|// TODO: close basically resets the object to a bunch of nulls.
+comment|//       We should ideally not reuse the object because it's pointless and error-prone.
 name|sessionState
-argument_list|,
+operator|.
+name|close
+argument_list|(
 name|keepTmpDir
 argument_list|)
 expr_stmt|;
+comment|// Clean up stuff.
 name|sessionState
 operator|.
 name|open
@@ -2491,9 +2505,10 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/** Closes a running (expired) pool session and reopens it. */
 specifier|private
 name|void
-name|closeAndReopen
+name|closeAndReopenPoolSession
 parameter_list|(
 name|TezSessionPoolSession
 name|oldSession
@@ -2628,7 +2643,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|closeAndReopen
+name|closeAndReopenPoolSession
 argument_list|(
 name|next
 argument_list|)
@@ -2939,7 +2954,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * TezSession that keeps track of expiration and use.    * It has 3 states - not in use, in use, and expired. When in the pool, it is not in use;    * use and expiration may compete to take the session out of the pool and change it to the    * corresponding states. When someone tries to get a session, they check for expiration time;    * if it's time, the expiration is triggered; in that case, or if it was already triggered, the    * caller gets a different session. When the session is in use when it expires, the expiration    * thread ignores it and lets the return to the pool take care of the expiration.    * */
+comment|/**    * TezSession that keeps track of expiration and use.    * It has 3 states - not in use, in use, and expired. When in the pool, it is not in use;    * use and expiration may compete to take the session out of the pool and change it to the    * corresponding states. When someone tries to get a session, they check for expiration time;    * if it's time, the expiration is triggered; in that case, or if it was already triggered, the    * caller gets a different session. When the session is in use when it expires, the expiration    * thread ignores it and lets the return to the pool take care of the expiration.    */
 annotation|@
 name|VisibleForTesting
 specifier|static
@@ -3443,6 +3458,7 @@ condition|)
 return|return
 literal|false
 return|;
+comment|// Try to expire the session if it's not in use; if in use, bail.
 while|while
 condition|(
 literal|true
@@ -3513,7 +3529,7 @@ else|else
 block|{
 name|parent
 operator|.
-name|closeAndReopen
+name|closeAndReopenPoolSession
 argument_list|(
 name|this
 argument_list|)

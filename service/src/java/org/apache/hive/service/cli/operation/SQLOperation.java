@@ -2010,6 +2010,7 @@ argument_list|(
 name|parentHive
 argument_list|)
 expr_stmt|;
+comment|// TODO: can this result in cross-thread reuse of session state?
 name|SessionState
 operator|.
 name|setCurrentSessionState

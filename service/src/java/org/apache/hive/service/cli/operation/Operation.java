@@ -689,9 +689,6 @@ name|parentSession
 parameter_list|,
 name|OperationType
 name|opType
-parameter_list|,
-name|boolean
-name|runInBackground
 parameter_list|)
 block|{
 name|this
@@ -702,7 +699,7 @@ literal|null
 argument_list|,
 name|opType
 argument_list|,
-name|runInBackground
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

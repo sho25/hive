@@ -237,6 +237,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicReference
+import|;
+end_import
+
+begin_import
+import|import
 name|javax
 operator|.
 name|security
@@ -418,26 +432,6 @@ operator|.
 name|impl
 operator|.
 name|LlapProtocolClientImpl
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|LlapProxy
 import|;
 end_import
 
@@ -1043,6 +1037,20 @@ name|String
 name|user
 decl_stmt|;
 specifier|private
+name|AtomicReference
+argument_list|<
+name|String
+argument_list|>
+name|ownerThread
+init|=
+operator|new
+name|AtomicReference
+argument_list|<>
+argument_list|(
+literal|null
+argument_list|)
+decl_stmt|;
+specifier|private
 specifier|final
 name|Set
 argument_list|<
@@ -1117,6 +1125,10 @@ literal|", isOpen="
 operator|+
 name|isOpen
 argument_list|()
+operator|+
+literal|", isDefault="
+operator|+
+name|defaultQueue
 return|;
 block|}
 comment|/**    * Constructor. We do not automatically connect, because we only want to    * load tez classes when the user has tez installed.    */
@@ -1584,6 +1596,7 @@ name|conf
 operator|=
 name|conf
 expr_stmt|;
+comment|// TODO Why is the queue name set again. It has already been setup via setQueueName. Do only one of the two.
 name|this
 operator|.
 name|queueName
@@ -1592,7 +1605,9 @@ name|conf
 operator|.
 name|get
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|)
 expr_stmt|;
 name|this
@@ -1616,7 +1631,7 @@ name|llapMode
 init|=
 literal|"llap"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|HiveConf
 operator|.
@@ -1632,6 +1647,7 @@ name|HIVE_EXECUTION_MODE
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO This - at least for the session pool - will always be the hive user. How does doAs above this affect things ?
 name|UserGroupInformation
 name|ugi
 init|=
@@ -1916,6 +1932,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO Change this to not serialize the entire Configuration - minor.
 name|UserPayload
 name|servicePluginPayload
 init|=
@@ -3784,6 +3801,94 @@ block|{
 return|return
 name|doAsEnabled
 return|;
+block|}
+comment|/** Mark session as free for use from TezTask, for safety/debugging purposes. */
+specifier|public
+name|void
+name|markFree
+parameter_list|()
+block|{
+if|if
+condition|(
+name|ownerThread
+operator|.
+name|getAndSet
+argument_list|(
+literal|null
+argument_list|)
+operator|==
+literal|null
+condition|)
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Not in use"
+argument_list|)
+throw|;
+block|}
+comment|/** Mark session as being in use from TezTask, for safety/debugging purposes. */
+specifier|public
+name|void
+name|markInUse
+parameter_list|()
+block|{
+name|String
+name|newName
+init|=
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+do|do
+block|{
+name|String
+name|oldName
+init|=
+name|ownerThread
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|oldName
+operator|!=
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Tez session is already in use from "
+operator|+
+name|oldName
+operator|+
+literal|"; cannot use from "
+operator|+
+name|newName
+argument_list|)
+throw|;
+block|}
+block|}
+do|while
+condition|(
+operator|!
+name|ownerThread
+operator|.
+name|compareAndSet
+argument_list|(
+literal|null
+argument_list|,
+name|newName
+argument_list|)
+condition|)
+do|;
 block|}
 block|}
 end_class

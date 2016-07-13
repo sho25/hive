@@ -1130,6 +1130,8 @@ argument_list|(
 name|session
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// jobConf will hold all the configuration for hadoop, tez, and hive
 name|JobConf
 name|jobConf
@@ -1217,62 +1219,11 @@ operator|.
 name|getLocalizedResources
 argument_list|()
 decl_stmt|;
-comment|// log which resources we're adding (apart from the hive exec)
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-if|if
-condition|(
-name|additionalLr
-operator|==
-literal|null
-operator|||
-name|additionalLr
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
+name|logResources
 argument_list|(
-literal|"No local resources to process (other than hive-exec)"
+name|additionalLr
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-for|for
-control|(
-name|LocalResource
-name|lr
-range|:
-name|additionalLr
-control|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Adding local resource: "
-operator|+
-name|lr
-operator|.
-name|getResource
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-block|}
 comment|// unless already installed on all the cluster nodes, we'll have to
 comment|// localize hive-exec.jar as well.
 name|LocalResource
@@ -1469,6 +1420,10 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+block|}
+finally|finally
+block|{
+comment|// We return this to the pool even if it's unusable; reopen is supposed to handle this.
 name|TezSessionPoolManager
 operator|.
 name|getInstance
@@ -1485,6 +1440,7 @@ name|getLlapMode
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|LOG
@@ -1497,7 +1453,7 @@ operator|!=
 literal|null
 operator|&&
 operator|(
-name|conf
+name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
@@ -1689,6 +1645,74 @@ return|return
 name|rc
 return|;
 block|}
+specifier|private
+name|void
+name|logResources
+parameter_list|(
+name|List
+argument_list|<
+name|LocalResource
+argument_list|>
+name|additionalLr
+parameter_list|)
+block|{
+comment|// log which resources we're adding (apart from the hive exec)
+if|if
+condition|(
+operator|!
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+return|return;
+if|if
+condition|(
+name|additionalLr
+operator|==
+literal|null
+operator|||
+name|additionalLr
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No local resources to process (other than hive-exec)"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+for|for
+control|(
+name|LocalResource
+name|lr
+range|:
+name|additionalLr
+control|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Adding local resource: "
+operator|+
+name|lr
+operator|.
+name|getResource
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 comment|/**    * Converted the list of jars into local resources    */
 name|Map
 argument_list|<
@@ -1833,6 +1857,7 @@ operator|.
 name|getSession
 argument_list|()
 decl_stmt|;
+comment|// TODO null can also mean that this operation was interrupted. Should we really try to re-create the session in that case ?
 if|if
 condition|(
 name|client
@@ -2802,12 +2827,14 @@ literal|"Tez session was closed. Reopening..."
 argument_list|)
 expr_stmt|;
 comment|// close the old one, but keep the tmp files around
+comment|// TODO Why is the session being create using a conf instance belonging to TezTask
+comment|//      - instead of the session conf instance.
 name|TezSessionPoolManager
 operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|closeAndOpen
+name|reopenSession
 argument_list|(
 name|sessionState
 argument_list|,
@@ -2881,7 +2908,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|closeAndOpen
+name|reopenSession
 argument_list|(
 name|sessionState
 argument_list|,

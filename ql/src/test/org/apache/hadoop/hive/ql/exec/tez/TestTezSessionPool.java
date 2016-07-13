@@ -1313,7 +1313,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|closeAndOpen
+name|reopenSession
 argument_list|(
 name|session
 argument_list|,
@@ -1462,7 +1462,7 @@ block|}
 decl_stmt|;
 name|poolManager
 operator|.
-name|closeAndOpen
+name|reopenSession
 argument_list|(
 name|session
 argument_list|,
