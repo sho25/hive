@@ -366,6 +366,13 @@ operator|==
 literal|null
 condition|)
 block|{
+name|options
+operator|=
+name|options
+operator|.
+name|clone
+argument_list|()
+expr_stmt|;
 name|include
 operator|=
 operator|new
