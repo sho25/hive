@@ -19704,7 +19704,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|MetaException
+name|NoSuchObjectException
 name|e
 parameter_list|)
 block|{
