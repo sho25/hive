@@ -2934,11 +2934,13 @@ argument_list|(
 name|functionClass
 argument_list|)
 decl_stmt|;
-assert|assert
+if|if
+condition|(
 name|refCount
 operator|!=
 literal|null
-assert|;
+condition|)
+block|{
 if|if
 condition|(
 name|refCount
@@ -2972,6 +2974,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Unregisters all the functions belonging to the specified database    * @param dbName database name    * @throws HiveException    */
