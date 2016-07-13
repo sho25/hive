@@ -740,7 +740,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|String
-name|fragmentFullId
+name|fragmentId
 decl_stmt|;
 specifier|private
 specifier|final
@@ -780,7 +780,7 @@ name|containerIdStr
 parameter_list|,
 specifier|final
 name|String
-name|fragFullId
+name|fragmentId
 parameter_list|,
 name|TezEvent
 name|initialEvent
@@ -824,9 +824,9 @@ name|containerIdStr
 expr_stmt|;
 name|this
 operator|.
-name|fragmentFullId
+name|fragmentId
 operator|=
-name|fragFullId
+name|fragmentId
 expr_stmt|;
 name|this
 operator|.
@@ -893,14 +893,14 @@ name|task
 operator|.
 name|addAndGetTezCounter
 argument_list|(
-name|fragmentFullId
+name|fragmentId
 argument_list|)
 decl_stmt|;
 name|FragmentCountersMap
 operator|.
 name|registerCountersForFragment
 argument_list|(
-name|fragmentFullId
+name|fragmentId
 argument_list|,
 name|tezCounters
 argument_list|)
@@ -911,7 +911,7 @@ name|info
 argument_list|(
 literal|"Registered counters for fragment: {} vertexName: {}"
 argument_list|,
-name|fragmentFullId
+name|fragmentId
 argument_list|,
 name|task
 operator|.
@@ -986,14 +986,14 @@ name|info
 argument_list|(
 literal|"Unregistered counters for fragment: {}"
 argument_list|,
-name|fragmentFullId
+name|fragmentId
 argument_list|)
 expr_stmt|;
 name|FragmentCountersMap
 operator|.
 name|unregisterCountersForFragment
 argument_list|(
-name|fragmentFullId
+name|fragmentId
 argument_list|)
 expr_stmt|;
 name|currentCallable

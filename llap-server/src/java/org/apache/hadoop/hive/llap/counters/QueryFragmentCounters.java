@@ -748,6 +748,15 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
+name|TezCounters
+name|getTezCounters
+parameter_list|()
+block|{
+return|return
+name|tezCounters
+return|;
+block|}
 block|}
 end_class
 
