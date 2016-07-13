@@ -6081,6 +6081,13 @@ literal|0
 index|]
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+literal|null
+operator|!=
+name|fpaths
+condition|)
+block|{
 name|rowOutWriters
 operator|=
 name|fpaths
@@ -6097,6 +6104,7 @@ argument_list|(
 name|recordValue
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
