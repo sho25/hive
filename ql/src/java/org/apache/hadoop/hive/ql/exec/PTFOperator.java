@@ -514,6 +514,10 @@ operator|.
 name|isMapSide
 argument_list|()
 expr_stmt|;
+name|currentKeys
+operator|=
+literal|null
+expr_stmt|;
 name|reconstructQueryDef
 argument_list|(
 name|hiveConf
