@@ -1216,28 +1216,6 @@ block|}
 comment|// Setup web UI
 try|try
 block|{
-if|if
-condition|(
-name|hiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_IN_TEST
-argument_list|)
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Web UI is disabled since in test mode"
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
 name|int
 name|webUIPort
 init|=
@@ -1250,6 +1228,51 @@ operator|.
 name|HIVE_SERVER2_WEBUI_PORT
 argument_list|)
 decl_stmt|;
+comment|// We disable web UI in tests unless the test is explicitly setting a
+comment|// unique web ui port so that we don't mess up ptests.
+name|boolean
+name|uiDisabledInTest
+init|=
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
+operator|&&
+operator|(
+name|webUIPort
+operator|==
+name|Integer
+operator|.
+name|valueOf
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_WEBUI_PORT
+operator|.
+name|getDefaultValue
+argument_list|()
+argument_list|)
+operator|)
+decl_stmt|;
+if|if
+condition|(
+name|uiDisabledInTest
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Web UI is disabled in test mode since webui port was not specified"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 if|if
 condition|(
 name|webUIPort
@@ -1269,6 +1292,15 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting Web UI on port "
+operator|+
+name|webUIPort
+argument_list|)
+expr_stmt|;
 name|HttpServer
 operator|.
 name|Builder
