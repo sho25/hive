@@ -118,7 +118,7 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|TypeDescription
+name|Integer
 argument_list|,
 name|TypeDescription
 argument_list|>
@@ -315,6 +315,9 @@ operator|.
 name|get
 argument_list|(
 name|readerType
+operator|.
+name|getId
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -637,6 +640,9 @@ operator|.
 name|put
 argument_list|(
 name|readerType
+operator|.
+name|getId
+argument_list|()
 argument_list|,
 name|fileType
 argument_list|)
