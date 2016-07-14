@@ -493,6 +493,26 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|io
+operator|.
+name|api
+operator|.
+name|LlapProxy
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|registry
 operator|.
 name|ServiceInstance
@@ -4214,6 +4234,11 @@ name|UserGroupInformation
 operator|.
 name|isSecurityEnabled
 argument_list|()
+operator|&&
+name|LlapProxy
+operator|.
+name|isDaemon
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -4306,7 +4331,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"UGI security is not enabled. Skipping setting up ZK auth."
+literal|"UGI security is not enabled, or non-daemon environment. Skipping setting up ZK auth."
 argument_list|)
 expr_stmt|;
 block|}
