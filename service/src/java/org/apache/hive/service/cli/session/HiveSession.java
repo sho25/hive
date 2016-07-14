@@ -41,6 +41,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -568,6 +580,16 @@ function_decl|;
 name|long
 name|getNoOperationTime
 parameter_list|()
+function_decl|;
+name|Future
+argument_list|<
+name|?
+argument_list|>
+name|submitBackgroundOperation
+parameter_list|(
+name|Runnable
+name|work
+parameter_list|)
 function_decl|;
 block|}
 end_interface

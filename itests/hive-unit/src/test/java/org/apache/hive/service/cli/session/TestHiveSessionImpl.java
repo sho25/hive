@@ -254,6 +254,9 @@ name|acquire
 parameter_list|(
 name|boolean
 name|userAccess
+parameter_list|,
+name|boolean
+name|isOperation
 parameter_list|)
 block|{       }
 annotation|@
@@ -265,6 +268,9 @@ name|release
 parameter_list|(
 name|boolean
 name|userAccess
+parameter_list|,
+name|boolean
+name|isOperation
 parameter_list|)
 block|{       }
 block|}

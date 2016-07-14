@@ -9139,6 +9139,15 @@ operator|+
 literal|"Setting it to 0s disables the timeout."
 argument_list|)
 block|,
+name|HIVE_SERVER2_PARALLEL_OPS_IN_SESSION
+argument_list|(
+literal|"hive.server2.parallel.ops.in.session"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to allow several parallel operations (such as SQL statements) in one session."
+argument_list|)
+block|,
 comment|// HiveServer2 WebUI
 name|HIVE_SERVER2_WEBUI_BIND_HOST
 argument_list|(

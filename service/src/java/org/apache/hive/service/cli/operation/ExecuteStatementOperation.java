@@ -169,8 +169,6 @@ argument_list|,
 name|OperationType
 operator|.
 name|EXECUTE_STATEMENT
-argument_list|,
-name|runInBackground
 argument_list|)
 expr_stmt|;
 name|this

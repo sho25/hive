@@ -488,6 +488,8 @@ block|{
 name|acquire
 argument_list|(
 literal|true
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|cancelDelegationToken
@@ -496,6 +498,13 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|release
+argument_list|(
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|super
