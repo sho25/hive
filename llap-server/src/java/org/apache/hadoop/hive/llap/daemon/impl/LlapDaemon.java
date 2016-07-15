@@ -2352,6 +2352,16 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// required for MDC based routing appender so that child threads can inherit the MDC context
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"isThreadContextMapInheritable"
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 name|Configurator
 operator|.
 name|initialize
