@@ -32,9 +32,6 @@ name|createClient
 parameter_list|(
 name|boolean
 name|setugi
-parameter_list|,
-name|int
-name|port
 parameter_list|)
 throws|throws
 name|Exception
@@ -45,8 +42,6 @@ operator|.
 name|createClient
 argument_list|(
 literal|false
-argument_list|,
-name|port
 argument_list|)
 expr_stmt|;
 block|}
