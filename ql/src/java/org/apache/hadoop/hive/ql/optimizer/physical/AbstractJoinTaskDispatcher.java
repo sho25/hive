@@ -103,6 +103,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|ql
@@ -683,7 +697,7 @@ name|currWork
 parameter_list|,
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -735,7 +749,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -750,7 +764,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|path
 init|=
 name|entry

@@ -1318,9 +1318,6 @@ name|tbl
 operator|.
 name|getDataLocation
 argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|alias
 argument_list|,

@@ -239,6 +239,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|conf
@@ -5720,7 +5734,7 @@ literal|null
 decl_stmt|;
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -5736,7 +5750,7 @@ argument_list|()
 decl_stmt|;
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -5751,7 +5765,7 @@ for|for
 control|(
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -5766,7 +5780,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|path
 init|=
 name|entry

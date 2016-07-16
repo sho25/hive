@@ -1845,7 +1845,7 @@ parameter_list|)
 block|{
 name|Set
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|paths
 init|=
@@ -1884,7 +1884,7 @@ argument_list|,
 operator|new
 name|Function
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|URI
 argument_list|>
@@ -1896,16 +1896,12 @@ specifier|public
 name|URI
 name|apply
 parameter_list|(
-name|String
-name|input
+name|Path
+name|path
 parameter_list|)
 block|{
 return|return
-operator|new
-name|Path
-argument_list|(
-name|input
-argument_list|)
+name|path
 operator|.
 name|toUri
 argument_list|()

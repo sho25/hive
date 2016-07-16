@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -128,16 +118,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TreeMap
 import|;
 end_import
 
@@ -1838,7 +1818,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|String
+name|Path
 name|onefile
 range|:
 name|conf
@@ -2295,7 +2275,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -2313,7 +2293,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|onefile
 init|=
 name|entry
@@ -2406,6 +2386,9 @@ operator|.
 name|get
 argument_list|(
 name|onefile
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -2420,6 +2403,9 @@ operator|.
 name|put
 argument_list|(
 name|onefile
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|contexts
 operator|=

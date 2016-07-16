@@ -455,7 +455,7 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -463,11 +463,7 @@ name|pathToPartitionInfo
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|PartitionDesc
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|/**    * MapWork is the Hive object which describes input files,    * columns projections, and filters.    */
@@ -541,7 +537,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -561,20 +557,15 @@ name|pathToPartitionInfo
 operator|.
 name|put
 argument_list|(
-operator|new
 name|Path
+operator|.
+name|getPathWithoutSchemeAndAuthority
 argument_list|(
 name|entry
 operator|.
 name|getKey
 argument_list|()
 argument_list|)
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
 argument_list|,
 name|entry
 operator|.
@@ -585,9 +576,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-annotation|@
-name|Deprecated
-comment|// Uses deprecated methods on ColumnProjectionUtils
 specifier|private
 name|void
 name|pushProjectionsAndFilters
@@ -646,7 +634,7 @@ name|Iterator
 argument_list|<
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -678,7 +666,7 @@ block|{
 specifier|final
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -696,14 +684,10 @@ specifier|final
 name|String
 name|key
 init|=
-operator|new
-name|Path
-argument_list|(
 name|entry
 operator|.
 name|getKey
 argument_list|()
-argument_list|)
 operator|.
 name|toUri
 argument_list|()
@@ -1001,7 +985,7 @@ condition|)
 block|{
 name|ColumnProjectionUtils
 operator|.
-name|appendReadColumnIDs
+name|appendReadColumns
 argument_list|(
 name|jobConf
 argument_list|,
@@ -1021,7 +1005,7 @@ else|else
 block|{
 name|ColumnProjectionUtils
 operator|.
-name|setFullyReadColumns
+name|setReadAllColumns
 argument_list|(
 name|jobConf
 argument_list|)
@@ -1122,9 +1106,6 @@ name|filterExprSerialized
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Deprecated
-comment|// Uses deprecated methods on ColumnProjectionUtils
 specifier|public
 name|JobConf
 name|pushProjectionsAndFilters
@@ -1163,9 +1144,6 @@ operator|.
 name|get
 argument_list|(
 name|path
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if

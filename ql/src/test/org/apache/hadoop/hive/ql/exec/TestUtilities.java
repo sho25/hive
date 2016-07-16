@@ -2157,9 +2157,12 @@ operator|new
 name|JobConf
 argument_list|()
 decl_stmt|;
-name|String
+name|Path
 name|nonExistentPath1
 init|=
+operator|new
+name|Path
+argument_list|(
 name|UUID
 operator|.
 name|randomUUID
@@ -2167,10 +2170,14 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
+argument_list|)
 decl_stmt|;
-name|String
+name|Path
 name|nonExistentPath2
 init|=
+operator|new
+name|Path
+argument_list|(
 name|UUID
 operator|.
 name|randomUUID
@@ -2178,6 +2185,7 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|PartitionDesc
 name|mockPartitionDesc

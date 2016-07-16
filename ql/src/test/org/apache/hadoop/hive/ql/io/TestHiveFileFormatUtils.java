@@ -135,7 +135,7 @@ argument_list|()
 decl_stmt|;
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -143,11 +143,7 @@ name|pathToPartitionInfo
 init|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|PartitionDesc
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|pathToPartitionInfo
@@ -159,9 +155,6 @@ name|Path
 argument_list|(
 literal|"file:///tbl/par1/part2/part3"
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|partDesc_3
 argument_list|)
@@ -175,9 +168,6 @@ name|Path
 argument_list|(
 literal|"/tbl/par1/part2/part4"
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|partDesc_4
 argument_list|)
@@ -191,9 +181,6 @@ name|Path
 argument_list|(
 literal|"/tbl/par1/part2/part5/"
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|partDesc_5
 argument_list|)
@@ -207,9 +194,6 @@ name|Path
 argument_list|(
 literal|"hdfs:///tbl/par1/part2/part6/"
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|partDesc_6
 argument_list|)

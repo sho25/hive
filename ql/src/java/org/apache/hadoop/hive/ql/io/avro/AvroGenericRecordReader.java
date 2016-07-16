@@ -694,7 +694,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -709,7 +709,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|partitionPath
 init|=
 name|pathsAndParts
@@ -886,7 +886,7 @@ parameter_list|(
 name|Path
 name|split
 parameter_list|,
-name|String
+name|Path
 name|partitionPath
 parameter_list|)
 block|{
@@ -911,11 +911,7 @@ block|{
 name|String
 name|schemelessPartitionPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|partitionPath
-argument_list|)
 operator|.
 name|toUri
 argument_list|()
@@ -946,6 +942,9 @@ operator|.
 name|startsWith
 argument_list|(
 name|partitionPath
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 return|;
 block|}

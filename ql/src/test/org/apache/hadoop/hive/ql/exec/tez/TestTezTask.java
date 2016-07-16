@@ -1265,7 +1265,7 @@ argument_list|)
 expr_stmt|;
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -1276,14 +1276,7 @@ name|pathMap
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|ArrayList
@@ -1310,7 +1303,11 @@ name|pathMap
 operator|.
 name|put
 argument_list|(
+operator|new
+name|Path
+argument_list|(
 literal|"foo"
+argument_list|)
 argument_list|,
 name|aliasList
 argument_list|)

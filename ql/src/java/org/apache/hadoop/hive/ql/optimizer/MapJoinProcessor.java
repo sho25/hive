@@ -1301,7 +1301,7 @@ comment|// get input path and remove this alias from pathToAlias
 comment|// because this file will be fetched by fetch operator
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -1321,28 +1321,24 @@ decl_stmt|;
 comment|// keep record all the input path for this alias
 name|HashSet
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|pathSet
 init|=
 operator|new
 name|HashSet
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|HashSet
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|emptyPath
 init|=
 operator|new
 name|HashSet
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 for|for
@@ -1351,7 +1347,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -1366,7 +1362,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|path
 init|=
 name|entry2
@@ -1434,15 +1430,18 @@ block|}
 comment|//remove the path, with which no alias associates
 for|for
 control|(
-name|String
+name|Path
 name|path
 range|:
 name|emptyPath
 control|)
 block|{
-name|pathToAliases
+name|newWork
 operator|.
-name|remove
+name|getMapWork
+argument_list|()
+operator|.
+name|removePathToAlias
 argument_list|(
 name|path
 argument_list|)
@@ -1482,7 +1481,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|String
+name|Path
 name|tablePath
 range|:
 name|pathSet
@@ -1530,11 +1529,7 @@ operator|=
 operator|new
 name|FetchWork
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|tablePath
-argument_list|)
 argument_list|,
 name|partitionDesc
 operator|.
@@ -1549,11 +1544,7 @@ name|partDir
 operator|.
 name|add
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|tablePath
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|partDesc

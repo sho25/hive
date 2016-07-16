@@ -2098,7 +2098,7 @@ name|Map
 operator|.
 name|Entry
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -2116,7 +2116,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
+name|Path
 name|path
 init|=
 name|entry
@@ -2239,6 +2239,9 @@ operator|.
 name|put
 argument_list|(
 name|path
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|vectorPartitionContext
 argument_list|)

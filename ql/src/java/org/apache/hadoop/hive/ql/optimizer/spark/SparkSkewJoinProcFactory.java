@@ -1402,12 +1402,6 @@ operator|.
 name|setTaskPlan
 argument_list|(
 name|taskTmpDir
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|streamDesc
 argument_list|,

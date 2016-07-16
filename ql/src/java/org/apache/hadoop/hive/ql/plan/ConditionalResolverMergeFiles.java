@@ -1019,7 +1019,7 @@ decl_stmt|;
 comment|// cleanup pathToPartitionInfo
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
@@ -1038,7 +1038,7 @@ argument_list|()
 operator|==
 literal|1
 assert|;
-name|String
+name|Path
 name|path
 init|=
 name|ptpi
@@ -1070,18 +1070,18 @@ operator|.
 name|getTableDesc
 argument_list|()
 decl_stmt|;
-name|ptpi
+name|work
 operator|.
-name|remove
+name|removePathToPartitionInfo
 argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
 comment|// the root path is not useful anymore
 comment|// cleanup pathToAliases
-name|Map
+name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -1129,9 +1129,9 @@ argument_list|(
 name|path
 argument_list|)
 decl_stmt|;
-name|pta
+name|work
 operator|.
-name|remove
+name|removePathToAlias
 argument_list|(
 name|path
 argument_list|)

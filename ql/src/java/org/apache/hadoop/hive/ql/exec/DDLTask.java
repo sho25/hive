@@ -5650,7 +5650,7 @@ argument_list|)
 decl_stmt|;
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|ArrayList
 argument_list|<
@@ -5661,14 +5661,7 @@ name|pathToAliases
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|ArrayList
@@ -5712,9 +5705,6 @@ name|get
 argument_list|(
 literal|0
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|inputDirstr
 argument_list|)

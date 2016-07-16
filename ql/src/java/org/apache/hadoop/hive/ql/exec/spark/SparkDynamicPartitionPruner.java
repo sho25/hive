@@ -1407,7 +1407,7 @@ index|]
 decl_stmt|;
 name|Iterator
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|it
 init|=
@@ -1430,7 +1430,7 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-name|String
+name|Path
 name|p
 init|=
 name|it
@@ -1601,24 +1601,12 @@ argument_list|()
 expr_stmt|;
 name|work
 operator|.
-name|getPathToAliases
-argument_list|()
-operator|.
-name|remove
+name|removePathToAlias
 argument_list|(
 name|p
 argument_list|)
 expr_stmt|;
-name|work
-operator|.
-name|getPaths
-argument_list|()
-operator|.
-name|remove
-argument_list|(
-name|p
-argument_list|)
-expr_stmt|;
+comment|// HIVE-12244 call currently ineffective
 name|work
 operator|.
 name|getPartitionDescs

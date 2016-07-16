@@ -508,7 +508,7 @@ decl_stmt|;
 specifier|private
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>

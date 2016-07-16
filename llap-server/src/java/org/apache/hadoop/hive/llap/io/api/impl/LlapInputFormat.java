@@ -2957,7 +2957,7 @@ literal|0
 decl_stmt|;
 name|Iterator
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|paths
 init|=

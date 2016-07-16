@@ -442,14 +442,14 @@ name|Map
 argument_list|<
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
 argument_list|,
 name|Map
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
