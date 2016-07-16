@@ -2904,66 +2904,6 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Check if first path is a subdirectory of second path.    * Both paths must belong to the same filesystem.    *    * @param p1 first path    * @param p2 second path    * @param fs FileSystem, both paths must belong to the same filesystem    * @return    */
-specifier|public
-specifier|static
-name|boolean
-name|isSubDir
-parameter_list|(
-name|Path
-name|p1
-parameter_list|,
-name|Path
-name|p2
-parameter_list|,
-name|FileSystem
-name|fs
-parameter_list|)
-block|{
-name|String
-name|path1
-init|=
-name|fs
-operator|.
-name|makeQualified
-argument_list|(
-name|p1
-argument_list|)
-operator|.
-name|toString
-argument_list|()
-decl_stmt|;
-name|String
-name|path2
-init|=
-name|fs
-operator|.
-name|makeQualified
-argument_list|(
-name|p2
-argument_list|)
-operator|.
-name|toString
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|path1
-operator|.
-name|startsWith
-argument_list|(
-name|path2
-argument_list|)
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
-return|return
-literal|false
-return|;
-block|}
 specifier|public
 specifier|static
 name|boolean
@@ -3131,7 +3071,7 @@ comment|// for same file system, so '==' can't be used in such cases
 comment|//FileSystem api doesn't have a .equals() function implemented, so using
 comment|//the uri for comparison. FileSystem already uses uri+Configuration for
 comment|//equality in its CACHE .
-comment|//Once equality has been added in HDFS-4321, we should make use of it
+comment|//Once equality has been added in HDFS-9159, we should make use of it
 return|return
 name|fs1
 operator|.
@@ -4000,7 +3940,7 @@ parameter_list|(
 name|Path
 name|path
 parameter_list|,
-name|Set
+name|Collection
 argument_list|<
 name|Path
 argument_list|>

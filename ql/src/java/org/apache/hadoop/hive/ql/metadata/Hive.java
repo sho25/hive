@@ -15362,6 +15362,9 @@ name|srcf
 argument_list|,
 name|srcFs
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 operator|+
 name|Path
 operator|.
@@ -15376,6 +15379,9 @@ name|destf
 argument_list|,
 name|destFs
 argument_list|)
+operator|.
+name|toString
+argument_list|()
 operator|+
 name|Path
 operator|.
@@ -15533,7 +15539,7 @@ return|;
 block|}
 specifier|private
 specifier|static
-name|String
+name|Path
 name|getQualifiedPathWithoutSchemeAndAuthority
 parameter_list|(
 name|Path
@@ -15576,9 +15582,6 @@ name|getPathWithoutSchemeAndAuthority
 argument_list|(
 name|path
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 return|;
 block|}
 specifier|private
@@ -15775,30 +15778,22 @@ specifier|final
 name|Path
 name|fullSrcPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|getQualifiedPathWithoutSchemeAndAuthority
 argument_list|(
 name|src
 argument_list|,
 name|srcFS
 argument_list|)
-argument_list|)
 decl_stmt|;
 specifier|final
 name|Path
 name|fullDestPath
 init|=
-operator|new
-name|Path
-argument_list|(
 name|getQualifiedPathWithoutSchemeAndAuthority
 argument_list|(
 name|dest
 argument_list|,
 name|destFS
-argument_list|)
 argument_list|)
 decl_stmt|;
 if|if
@@ -17661,7 +17656,7 @@ decl_stmt|;
 try|try
 block|{
 name|FileSystem
-name|fs2
+name|oldFs
 init|=
 name|oldPath
 operator|.
@@ -17672,7 +17667,7 @@ argument_list|)
 decl_stmt|;
 name|statuses
 operator|=
-name|fs2
+name|oldFs
 operator|.
 name|listStatus
 argument_list|(
@@ -17685,18 +17680,19 @@ argument_list|)
 expr_stmt|;
 comment|// Do not delete oldPath if:
 comment|//  - destf is subdir of oldPath
-comment|//if ( !(fs2.equals(destf.getFileSystem(conf))&& FileUtils.isSubDir(oldPath, destf, fs2)))
 name|isOldPathUnderDestf
 operator|=
-name|FileUtils
-operator|.
 name|isSubDir
 argument_list|(
 name|oldPath
 argument_list|,
 name|destf
 argument_list|,
-name|fs2
+name|oldFs
+argument_list|,
+name|destFs
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 if|if
@@ -17712,7 +17708,7 @@ name|oldPathDeleted
 operator|=
 name|trashFiles
 argument_list|(
-name|fs2
+name|oldFs
 argument_list|,
 name|statuses
 argument_list|,
