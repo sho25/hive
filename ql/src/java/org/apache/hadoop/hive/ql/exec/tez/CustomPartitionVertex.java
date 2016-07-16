@@ -3194,13 +3194,7 @@ init|=
 operator|new
 name|CustomEdgeConfiguration
 argument_list|(
-name|routingTable
-operator|.
-name|keySet
-argument_list|()
-operator|.
-name|size
-argument_list|()
+name|numBuckets
 argument_list|,
 name|routingTable
 argument_list|)
