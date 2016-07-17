@@ -1415,6 +1415,22 @@ return|;
 block|}
 if|if
 condition|(
+operator|!
+name|foldExpr
+operator|&&
+name|isConstant
+argument_list|(
+name|source
+argument_list|)
+condition|)
+block|{
+comment|//constant, just return
+return|return
+name|source
+return|;
+block|}
+if|if
+condition|(
 name|source
 operator|instanceof
 name|ExprNodeGenericFuncDesc
@@ -1596,7 +1612,7 @@ return|return
 name|field
 return|;
 block|}
-comment|// constant or null expr, just return
+comment|// just return
 return|return
 name|source
 return|;
