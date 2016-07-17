@@ -8835,35 +8835,6 @@ argument_list|,
 name|hconf
 argument_list|)
 decl_stmt|;
-comment|// mark the MapredWork and FileSinkOperator for gathering stats
-name|nd
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setGatherStats
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-name|nd
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setStatsReliable
-argument_list|(
-name|hconf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_STATS_RELIABLE
-argument_list|)
-argument_list|)
-expr_stmt|;
-comment|// mrWork.addDestinationTable(nd.getConf().getTableInfo().getTableName());
 comment|// subscribe feeds from the MoveTask so that MoveTask can forward the list
 comment|// of dynamic partition list to the StatsTask
 name|mvTask
@@ -9976,6 +9947,43 @@ name|isMaterialization
 argument_list|()
 condition|)
 block|{
+comment|// mark the MapredWork and FileSinkOperator for gathering stats
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setGatherStats
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setStatsReliable
+argument_list|(
+name|hconf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_STATS_RELIABLE
+argument_list|)
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|mvTask
+operator|.
+name|hasFollowingStatsTask
+argument_list|()
+condition|)
+block|{
 name|GenMapRedUtils
 operator|.
 name|addStatsTask
@@ -9989,6 +9997,7 @@ argument_list|,
 name|hconf
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

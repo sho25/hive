@@ -1747,7 +1747,7 @@ block|}
 block|}
 block|}
 comment|// we check if there is only one immediate child task and it is stats task
-specifier|private
+specifier|public
 name|boolean
 name|hasFollowingStatsTask
 parameter_list|()
