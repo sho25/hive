@@ -3403,6 +3403,9 @@ name|next
 argument_list|()
 control|)
 block|{
+name|reportProgress
+argument_list|()
+expr_stmt|;
 name|int
 name|sz
 init|=
