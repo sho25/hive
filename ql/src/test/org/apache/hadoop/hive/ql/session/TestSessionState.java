@@ -1191,7 +1191,7 @@ argument_list|)
 expr_stmt|;
 name|ss
 operator|.
-name|reloadAuxJars
+name|loadReloadableAuxJars
 argument_list|()
 expr_stmt|;
 name|Assert
@@ -1385,7 +1385,7 @@ argument_list|)
 expr_stmt|;
 name|ss
 operator|.
-name|reloadAuxJars
+name|loadReloadableAuxJars
 argument_list|()
 expr_stmt|;
 name|Assert
@@ -1440,7 +1440,7 @@ argument_list|)
 expr_stmt|;
 name|ss
 operator|.
-name|reloadAuxJars
+name|loadReloadableAuxJars
 argument_list|()
 expr_stmt|;
 name|Assert
@@ -1470,7 +1470,7 @@ argument_list|)
 expr_stmt|;
 name|ss
 operator|.
-name|reloadAuxJars
+name|loadReloadableAuxJars
 argument_list|()
 expr_stmt|;
 block|}

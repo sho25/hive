@@ -10562,8 +10562,6 @@ name|String
 index|[]
 name|newPaths
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 specifier|final
 name|URLClassLoader
@@ -10741,7 +10739,7 @@ index|[]
 name|pathsToRemove
 parameter_list|)
 throws|throws
-name|Exception
+name|IOException
 block|{
 name|Thread
 name|curThread

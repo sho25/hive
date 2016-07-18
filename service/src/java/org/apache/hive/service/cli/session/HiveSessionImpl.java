@@ -1327,7 +1327,12 @@ try|try
 block|{
 name|sessionState
 operator|.
-name|reloadAuxJars
+name|loadAuxJars
+argument_list|()
+expr_stmt|;
+name|sessionState
+operator|.
+name|loadReloadableAuxJars
 argument_list|()
 expr_stmt|;
 block|}
