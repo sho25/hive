@@ -337,6 +337,14 @@ literal|'|'
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
+name|int
+name|DEFAULT_MAX_COLUMN_WIDTH
+init|=
+literal|50
+decl_stmt|;
+specifier|public
+specifier|static
 name|String
 name|URL_ENV_PREFIX
 init|=
@@ -463,7 +471,7 @@ specifier|private
 name|int
 name|maxColumnWidth
 init|=
-literal|15
+name|DEFAULT_MAX_COLUMN_WIDTH
 decl_stmt|;
 name|int
 name|timeout

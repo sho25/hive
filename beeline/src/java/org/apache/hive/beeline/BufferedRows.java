@@ -85,6 +85,10 @@ name|Row
 argument_list|>
 name|iterator
 decl_stmt|;
+specifier|private
+name|int
+name|maxColumnWidth
+decl_stmt|;
 name|BufferedRows
 parameter_list|(
 name|BeeLine
@@ -158,6 +162,16 @@ operator|=
 name|list
 operator|.
 name|iterator
+argument_list|()
+expr_stmt|;
+name|maxColumnWidth
+operator|=
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getMaxColumnWidth
 argument_list|()
 expr_stmt|;
 block|}
@@ -256,11 +270,16 @@ name|j
 operator|++
 control|)
 block|{
+comment|// if the max column width is too large, reset it to max allowed Column width
 name|max
 index|[
 name|j
 index|]
 operator|=
+name|Math
+operator|.
+name|min
+argument_list|(
 name|Math
 operator|.
 name|max
@@ -278,6 +297,9 @@ name|j
 index|]
 operator|+
 literal|1
+argument_list|)
+argument_list|,
+name|maxColumnWidth
 argument_list|)
 expr_stmt|;
 block|}
