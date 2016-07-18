@@ -2156,6 +2156,17 @@ argument_list|,
 literal|"Invalid Primary Key syntax"
 argument_list|)
 block|,
+name|ACID_NOT_ENOUGH_HISTORY
+argument_list|(
+literal|10327
+argument_list|,
+literal|"Not enough history available for ({0},{1}).  "
+operator|+
+literal|"Oldest available base: {2}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
