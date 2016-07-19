@@ -1014,7 +1014,7 @@ decl_stmt|;
 specifier|private
 specifier|volatile
 name|int
-name|pendingCount
+name|activeCalls
 init|=
 literal|0
 decl_stmt|;
@@ -2238,7 +2238,7 @@ argument_list|(
 name|sessionHive
 argument_list|)
 expr_stmt|;
-name|pendingCount
+name|activeCalls
 operator|++
 expr_stmt|;
 name|lastIdleTime
@@ -2354,14 +2354,14 @@ name|currentTimeMillis
 argument_list|()
 expr_stmt|;
 block|}
-name|pendingCount
+name|activeCalls
 operator|--
 expr_stmt|;
 comment|// lastIdleTime is only set by the last one
 comment|// who calls release with empty opHandleSet.
 if|if
 condition|(
-name|pendingCount
+name|activeCalls
 operator|==
 literal|0
 operator|&&
