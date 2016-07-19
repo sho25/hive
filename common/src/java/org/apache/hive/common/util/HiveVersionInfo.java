@@ -202,7 +202,7 @@ else|:
 literal|"Unknown"
 return|;
 block|}
-comment|/**    * Get the subversion revision number for the root directory    * @return the revision number, eg. "451451"    */
+comment|/**    * Get the git revision number for the root directory    * @return the revision number, eg. "451451"    */
 specifier|public
 specifier|static
 name|String
@@ -282,7 +282,7 @@ else|:
 literal|"Unknown"
 return|;
 block|}
-comment|/**    * Get the subversion URL for the root Hive directory.    */
+comment|/**    * Get the git URL for the root Hive directory.    */
 specifier|public
 specifier|static
 name|String
@@ -394,7 +394,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Subversion "
+literal|"Git "
 operator|+
 name|getUrl
 argument_list|()

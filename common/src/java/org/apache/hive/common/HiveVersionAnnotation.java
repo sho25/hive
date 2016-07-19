@@ -128,12 +128,12 @@ name|String
 name|date
 parameter_list|()
 function_decl|;
-comment|/**    * Get the url for the subversion repository.    */
+comment|/**    * Get the url for the git repository.    */
 name|String
 name|url
 parameter_list|()
 function_decl|;
-comment|/**    * Get the subversion revision.    * @return the revision number as a string (eg. "451451")    */
+comment|/**    * Get the git revision.    * @return the revision number as a string (eg. "451451")    */
 name|String
 name|revision
 parameter_list|()
