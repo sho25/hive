@@ -3901,7 +3901,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|Entity
+name|WriteEntity
 name|e
 range|:
 name|sem
@@ -3936,16 +3936,20 @@ operator|.
 name|getTable
 argument_list|()
 argument_list|,
-name|WriteEntity
+name|e
 operator|.
-name|WriteType
-operator|.
-name|DDL_NO_LOCK
+name|getWriteType
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// The following union operation returns a union, which traverses over the
+comment|// first set once and then  then over each element of second set, in order,
+comment|// that is not contained in first. This means it doesn't replace anything
+comment|// in first set, and would preserve the WriteType in WriteEntity in first
+comment|// set in case of outputs list.
 name|Set
 argument_list|<
 name|ReadEntity
