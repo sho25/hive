@@ -145,6 +145,19 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+name|hconf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
+argument_list|)
+expr_stmt|;
 name|assertTrue
 argument_list|(
 literal|"default value of hive server2 doAs should be true"

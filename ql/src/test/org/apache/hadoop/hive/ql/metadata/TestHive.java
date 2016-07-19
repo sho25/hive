@@ -707,6 +707,19 @@ name|getClass
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
+argument_list|)
+expr_stmt|;
 comment|// enable trash so it can be tested
 name|hiveConf
 operator|.

@@ -64808,17 +64808,19 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|SemanticException
+comment|// Table may not be found when materialization of CTE is on.
+name|LOG
+operator|.
+name|info
 argument_list|(
 literal|"Table "
 operator|+
 name|tabIdName
 operator|+
-literal|" is not found."
+literal|" is not found in walkASTMarkTABREF."
 argument_list|)
-throw|;
+expr_stmt|;
+continue|continue;
 block|}
 name|List
 argument_list|<
