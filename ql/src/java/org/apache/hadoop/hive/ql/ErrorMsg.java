@@ -2190,6 +2190,13 @@ argument_list|,
 literal|"You cannot update or delete records in a view"
 argument_list|)
 block|,
+name|MATERIALIZED_VIEW_DEF_EMPTY
+argument_list|(
+literal|10403
+argument_list|,
+literal|"Query for the materialized view rebuild could not be retrieved"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

@@ -1894,7 +1894,13 @@ operator|.
 name|getLocation
 argument_list|()
 else|:
-literal|null
+name|pCtx
+operator|.
+name|getCreateViewDesc
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -1903,8 +1909,7 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// get the table's default location
-comment|// Always use default location for materialized view
+comment|// get the default location
 name|Path
 name|targetPath
 decl_stmt|;

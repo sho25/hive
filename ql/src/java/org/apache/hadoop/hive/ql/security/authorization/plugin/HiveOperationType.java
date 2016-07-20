@@ -199,6 +199,8 @@ name|CREATE_MATERIALIZED_VIEW
 block|,
 name|DROPVIEW
 block|,
+name|DROP_MATERIALIZED_VIEW
+block|,
 name|CREATEINDEX
 block|,
 name|DROPINDEX

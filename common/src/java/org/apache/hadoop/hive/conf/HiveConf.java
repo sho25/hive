@@ -5502,7 +5502,7 @@ argument_list|,
 literal|"ORC"
 argument_list|)
 argument_list|,
-literal|"File format for CREATE MATERIALIZED VIEW statement."
+literal|"Default file format for CREATE MATERIALIZED VIEW statement"
 argument_list|)
 block|,
 name|HIVEMATERIALIZEDVIEWSERDE
@@ -5511,7 +5511,7 @@ literal|"hive.materializedview.serde"
 argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
 argument_list|,
-literal|"Serde used for materialized views"
+literal|"Default SerDe used for materialized views"
 argument_list|)
 block|,
 name|HIVEQUERYRESULTFILEFORMAT
