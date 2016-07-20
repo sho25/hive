@@ -1346,6 +1346,13 @@ name|tableHandle
 operator|.
 name|isView
 argument_list|()
+operator|||
+name|ts
+operator|.
+name|tableHandle
+operator|.
+name|isMaterializedView
+argument_list|()
 condition|)
 block|{
 throw|throw

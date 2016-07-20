@@ -169,6 +169,24 @@ name|CreateTableDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|CreateViewDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implementation of the query block.  *  **/
 end_comment
@@ -319,6 +337,11 @@ argument_list|<
 name|String
 argument_list|>
 name|aliasInsideView
+decl_stmt|;
+comment|// If this is a materialized view, this stores the view descriptor
+specifier|private
+name|CreateViewDesc
+name|viewDesc
 decl_stmt|;
 comment|// used by PTFs
 comment|/*    * This map maintains the PTFInvocationSpec for each PTF chain invocation in this QB.    */
@@ -1605,6 +1628,46 @@ parameter_list|()
 block|{
 return|return
 name|havingClauseSubQueryPredicate
+return|;
+block|}
+specifier|public
+name|CreateViewDesc
+name|getViewDesc
+parameter_list|()
+block|{
+return|return
+name|viewDesc
+return|;
+block|}
+specifier|public
+name|void
+name|setViewDesc
+parameter_list|(
+name|CreateViewDesc
+name|viewDesc
+parameter_list|)
+block|{
+name|this
+operator|.
+name|viewDesc
+operator|=
+name|viewDesc
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isMaterializedView
+parameter_list|()
+block|{
+return|return
+name|viewDesc
+operator|!=
+literal|null
+operator|&&
+name|viewDesc
+operator|.
+name|isMaterialized
+argument_list|()
 return|;
 block|}
 name|void

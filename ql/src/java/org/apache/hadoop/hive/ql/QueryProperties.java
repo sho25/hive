@@ -137,6 +137,11 @@ specifier|private
 name|boolean
 name|filterWithSubQuery
 decl_stmt|;
+comment|// True if this statement creates or replaces a materialized view
+specifier|private
+name|boolean
+name|isMaterializedView
+decl_stmt|;
 specifier|public
 name|boolean
 name|isQuery
@@ -718,6 +723,31 @@ name|this
 operator|.
 name|filterWithSubQuery
 return|;
+block|}
+comment|/**    * True indicates this statement create or replaces a materialized view, not that it is a query    * against a materialized view.    * @return    */
+specifier|public
+name|boolean
+name|isMaterializedView
+parameter_list|()
+block|{
+return|return
+name|isMaterializedView
+return|;
+block|}
+specifier|public
+name|void
+name|setMaterializedView
+parameter_list|(
+name|boolean
+name|isMaterializedView
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isMaterializedView
+operator|=
+name|isMaterializedView
+expr_stmt|;
 block|}
 specifier|public
 name|void

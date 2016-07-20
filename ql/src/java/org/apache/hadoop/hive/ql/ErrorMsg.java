@@ -2165,6 +2165,31 @@ argument_list|,
 literal|"Invalid column name"
 argument_list|)
 block|,
+name|REPLACE_VIEW_WITH_MATERIALIZED
+argument_list|(
+literal|10400
+argument_list|,
+literal|"Attempt to replace view {0} with materialized view"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|REPLACE_MATERIALIZED_WITH_VIEW
+argument_list|(
+literal|10401
+argument_list|,
+literal|"Attempt to replace materialized view {0} with view"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|UPDATE_DELETE_VIEW
+argument_list|(
+literal|10402
+argument_list|,
+literal|"You cannot update or delete records in a view"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

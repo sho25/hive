@@ -116,6 +116,10 @@ name|CreateTableDesc
 name|createTableDesc
 parameter_list|,
 specifier|final
+name|CreateViewDesc
+name|createViewDesc
+parameter_list|,
+specifier|final
 name|Path
 name|sourcePath
 parameter_list|,
@@ -196,6 +200,24 @@ operator|+
 name|createTableDesc
 operator|.
 name|getTableName
+argument_list|()
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|createViewDesc
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// The work is already done in analyzeCreateView to assure that the view name is fully
+comment|// qualified.
+name|destinationCreateTable
+operator|=
+name|createViewDesc
+operator|.
+name|getViewName
 argument_list|()
 expr_stmt|;
 block|}

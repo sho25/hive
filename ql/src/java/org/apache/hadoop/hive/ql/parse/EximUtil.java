@@ -849,6 +849,11 @@ name|table
 operator|.
 name|isView
 argument_list|()
+operator|||
+name|table
+operator|.
+name|isMaterializedView
+argument_list|()
 condition|)
 block|{
 throw|throw

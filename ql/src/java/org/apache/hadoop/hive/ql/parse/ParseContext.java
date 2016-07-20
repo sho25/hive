@@ -535,6 +535,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|CreateViewDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ExprNodeDesc
 import|;
 end_import
@@ -897,6 +915,10 @@ name|CreateTableDesc
 name|createTableDesc
 decl_stmt|;
 specifier|private
+name|CreateViewDesc
+name|createViewDesc
+decl_stmt|;
+specifier|private
 name|boolean
 name|reduceSinkAddedBySortedDynPartition
 decl_stmt|;
@@ -933,7 +955,7 @@ specifier|public
 name|ParseContext
 parameter_list|()
 block|{   }
-comment|/**    * @param conf    * @param qb    *          current QB    * @param ast    *          current parse tree    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param opToPartList    * @param topOps    *          list of operators for the top query    * @param opParseCtx    *          operator parse context - contains a mapping from operator to    *          operator parse state (row resolver etc.)    * @param joinOps    *          context needed join processing (map join specifically)    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx    *          parse context    * @param idToTableNameMap    * @param uCtx    * @param destTableId    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    * @param groupOpToInputTables    * @param prunedPartitions    * @param opToSamplePruner    *          operator to sample pruner map    * @param globalLimitCtx    * @param nameToSplitSample    * @param rootTasks    */
+comment|/**    * @param conf    * @param opToPartPruner    *          map from table scan operator to partition pruner    * @param opToPartList    * @param topOps    *          list of operators for the top query    * @param joinOps    *          context needed join processing (map join specifically)    * @param smbMapJoinOps    * @param loadTableWork    *          list of destination tables being loaded    * @param loadFileWork    *          list of destination files being loaded    * @param ctx    *          parse context    * @param idToTableNameMap    * @param uCtx    * @param destTableId    * @param listMapJoinOpsNoReducer    *          list of map join operators with no reducer    * @param prunedPartitions    * @param opToSamplePruner    *          operator to sample pruner map    * @param globalLimitCtx    * @param nameToSplitSample    * @param rootTasks    * @param opToPartToSkewedPruner    * @param viewAliasToInput    * @param reduceSinkOperatorsAddedByEnforceBucketingSorting    * @param analyzeRewrite    * @param createTableDesc    * @param createViewDesc    * @param queryProperties    */
 specifier|public
 name|ParseContext
 parameter_list|(
@@ -1106,6 +1128,9 @@ name|analyzeRewrite
 parameter_list|,
 name|CreateTableDesc
 name|createTableDesc
+parameter_list|,
+name|CreateViewDesc
+name|createViewDesc
 parameter_list|,
 name|QueryProperties
 name|queryProperties
@@ -1289,6 +1314,12 @@ operator|.
 name|createTableDesc
 operator|=
 name|createTableDesc
+expr_stmt|;
+name|this
+operator|.
+name|createViewDesc
+operator|=
+name|createViewDesc
 expr_stmt|;
 name|this
 operator|.
@@ -2382,6 +2413,15 @@ name|createTableDesc
 operator|=
 name|createTableDesc
 expr_stmt|;
+block|}
+specifier|public
+name|CreateViewDesc
+name|getCreateViewDesc
+parameter_list|()
+block|{
+return|return
+name|createViewDesc
+return|;
 block|}
 specifier|public
 name|void

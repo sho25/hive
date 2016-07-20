@@ -195,6 +195,8 @@ name|DROPMACRO
 block|,
 name|CREATEVIEW
 block|,
+name|CREATE_MATERIALIZED_VIEW
+block|,
 name|DROPVIEW
 block|,
 name|CREATEINDEX

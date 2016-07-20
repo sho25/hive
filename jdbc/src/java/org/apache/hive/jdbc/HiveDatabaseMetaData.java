@@ -3624,6 +3624,26 @@ return|return
 literal|"EXTERNAL TABLE"
 return|;
 block|}
+elseif|else
+if|if
+condition|(
+name|hivetabletype
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|MATERIALIZED_VIEW
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|"MATERIALIZED VIEW"
+return|;
+block|}
 else|else
 block|{
 return|return
