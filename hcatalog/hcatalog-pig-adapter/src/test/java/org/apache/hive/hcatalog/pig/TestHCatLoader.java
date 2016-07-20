@@ -878,6 +878,16 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|DATE_FILE_NAME
+init|=
+name|TEST_DATA_DIR
+operator|+
+literal|"/datetimestamp.input.data"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|BASIC_TABLE
 init|=
 literal|"junit_unparted_basic"
@@ -905,6 +915,14 @@ name|String
 name|SPECIFIC_SIZE_TABLE
 init|=
 literal|"junit_specific_size"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|PARTITIONED_DATE_TABLE
+init|=
+literal|"junit_parted_date"
 decl_stmt|;
 specifier|private
 name|Driver
@@ -988,6 +1006,16 @@ expr_stmt|;
 name|add
 argument_list|(
 literal|"testReadMissingPartitionBasicNeg"
+argument_list|)
+expr_stmt|;
+name|add
+argument_list|(
+literal|"testDatePartitionPushUp"
+argument_list|)
+expr_stmt|;
+name|add
+argument_list|(
+literal|"testTimestampPartitionPushUp"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1578,6 +1606,15 @@ argument_list|,
 literal|"a int, b string"
 argument_list|)
 expr_stmt|;
+name|createTable
+argument_list|(
+name|PARTITIONED_DATE_TABLE
+argument_list|,
+literal|"b string"
+argument_list|,
+literal|"dt date"
+argument_list|)
+expr_stmt|;
 name|AllTypesTable
 operator|.
 name|setupAllTypesTable
@@ -1727,6 +1764,22 @@ block|{
 literal|"Henry Jekyll\t42\t(415-253-6367,hjekyll@contemporary.edu.uk)\t{(PHARMACOLOGY),(PSYCHIATRY)}\t[PHARMACOLOGY#A-,PSYCHIATRY#B+]\t{(415-253-6367,cell),(408-253-6367,landline)}"
 block|,
 literal|"Edward Hyde\t1337\t(415-253-6367,anonymous@b44chan.org)\t{(CREATIVE_WRITING),(COPYRIGHT_LAW)}\t[CREATIVE_WRITING#A+,COPYRIGHT_LAW#D]\t{(415-253-6367,cell),(408-253-6367,landline)}"
+block|,       }
+argument_list|)
+expr_stmt|;
+name|HcatTestUtils
+operator|.
+name|createTestDataFile
+argument_list|(
+name|DATE_FILE_NAME
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"2016-07-14 08:10:15\tHenry Jekyll"
+block|,
+literal|"2016-07-15 11:54:55\tEdward Hyde"
 block|,       }
 argument_list|)
 expr_stmt|;
@@ -1891,6 +1944,44 @@ argument_list|)
 expr_stmt|;
 name|server
 operator|.
+name|registerQuery
+argument_list|(
+literal|"E = load '"
+operator|+
+name|DATE_FILE_NAME
+operator|+
+literal|"' as (dt:chararray, b:chararray);"
+argument_list|,
+operator|++
+name|i
+argument_list|)
+expr_stmt|;
+name|server
+operator|.
+name|registerQuery
+argument_list|(
+literal|"F = foreach E generate ToDate(dt, 'yyyy-MM-dd HH:mm:ss') as dt, b;"
+argument_list|,
+operator|++
+name|i
+argument_list|)
+expr_stmt|;
+name|server
+operator|.
+name|registerQuery
+argument_list|(
+literal|"store F into '"
+operator|+
+name|PARTITIONED_DATE_TABLE
+operator|+
+literal|"' using org.apache.hive.hcatalog.pig.HCatStorer();"
+argument_list|,
+operator|++
+name|i
+argument_list|)
+expr_stmt|;
+name|server
+operator|.
 name|executeBatch
 argument_list|()
 expr_stmt|;
@@ -1931,6 +2022,11 @@ expr_stmt|;
 name|dropTable
 argument_list|(
 name|SPECIFIC_SIZE_TABLE
+argument_list|)
+expr_stmt|;
+name|dropTable
+argument_list|(
+name|PARTITIONED_DATE_TABLE
 argument_list|)
 expr_stmt|;
 name|dropTable
@@ -5471,6 +5567,131 @@ name|iterator
 operator|.
 name|hasNext
 argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Test if we can read a date partitioned table    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDatePartitionPushUp
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|assumeTrue
+argument_list|(
+operator|!
+name|TestUtil
+operator|.
+name|shouldSkip
+argument_list|(
+name|storageFormat
+argument_list|,
+name|DISABLED_STORAGE_FORMATS
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|PigServer
+name|server
+init|=
+operator|new
+name|PigServer
+argument_list|(
+name|ExecType
+operator|.
+name|LOCAL
+argument_list|)
+decl_stmt|;
+name|server
+operator|.
+name|registerQuery
+argument_list|(
+literal|"X = load '"
+operator|+
+name|PARTITIONED_DATE_TABLE
+operator|+
+literal|"' using "
+operator|+
+name|HCatLoader
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|"();"
+argument_list|)
+expr_stmt|;
+name|server
+operator|.
+name|registerQuery
+argument_list|(
+literal|"Y = filter X by dt == ToDate('2016-07-14','yyyy-MM-dd');"
+argument_list|)
+expr_stmt|;
+name|Iterator
+argument_list|<
+name|Tuple
+argument_list|>
+name|YIter
+init|=
+name|server
+operator|.
+name|openIterator
+argument_list|(
+literal|"Y"
+argument_list|)
+decl_stmt|;
+name|int
+name|numTuplesRead
+init|=
+literal|0
+decl_stmt|;
+while|while
+condition|(
+name|YIter
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+name|Tuple
+name|t
+init|=
+name|YIter
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|t
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|2
+argument_list|)
+expr_stmt|;
+name|numTuplesRead
+operator|++
+expr_stmt|;
+block|}
+name|assertTrue
+argument_list|(
+literal|"Expected "
+operator|+
+literal|1
+operator|+
+literal|"; found "
+operator|+
+name|numTuplesRead
+argument_list|,
+name|numTuplesRead
+operator|==
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
