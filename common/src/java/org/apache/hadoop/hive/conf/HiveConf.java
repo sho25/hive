@@ -10385,7 +10385,7 @@ name|HIVE_MOVE_FILES_THREAD_COUNT
 argument_list|(
 literal|"hive.mv.files.thread"
 argument_list|,
-literal|25
+literal|15
 argument_list|,
 operator|new
 name|SizeValidator

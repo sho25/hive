@@ -16330,6 +16330,24 @@ range|:
 name|srcs
 control|)
 block|{
+specifier|final
+name|Path
+name|destFile
+init|=
+operator|new
+name|Path
+argument_list|(
+name|destf
+argument_list|,
+name|srcStatus
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 literal|null
@@ -16349,7 +16367,7 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|,
-name|destf
+name|destFile
 argument_list|)
 condition|)
 block|{
@@ -16407,24 +16425,6 @@ name|parentSession
 argument_list|)
 expr_stmt|;
 specifier|final
-name|Path
-name|destPath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|destf
-argument_list|,
-name|srcStatus
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-decl_stmt|;
-specifier|final
 name|String
 name|group
 init|=
@@ -16444,7 +16444,7 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|,
-name|destf
+name|destFile
 argument_list|)
 condition|)
 block|{
@@ -16465,7 +16465,7 @@ name|group
 argument_list|,
 name|destFs
 argument_list|,
-name|destPath
+name|destFile
 argument_list|,
 literal|false
 argument_list|)
@@ -16487,7 +16487,7 @@ argument_list|()
 operator|+
 literal|" to dest path:"
 operator|+
-name|destPath
+name|destFile
 operator|+
 literal|" returned false"
 argument_list|)
