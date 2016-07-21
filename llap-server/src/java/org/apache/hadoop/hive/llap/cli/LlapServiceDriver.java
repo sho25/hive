@@ -229,7 +229,7 @@ name|daemon
 operator|.
 name|impl
 operator|.
-name|LlapDaemon
+name|LlapConstants
 import|;
 end_import
 
@@ -2080,7 +2080,7 @@ name|conf
 operator|.
 name|getResource
 argument_list|(
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|LOG4j2_PROPERTIES_FILE
 argument_list|)
@@ -3032,7 +3032,7 @@ expr_stmt|;
 name|String
 name|metricsFile
 init|=
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
 decl_stmt|;
@@ -3057,7 +3057,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
 operator|+
@@ -3065,14 +3065,14 @@ literal|" cannot be found."
 operator|+
 literal|" Looking for "
 operator|+
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|HADOOP_METRICS2_PROPERTIES_FILE
 argument_list|)
 expr_stmt|;
 name|metricsFile
 operator|=
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|HADOOP_METRICS2_PROPERTIES_FILE
 expr_stmt|;
@@ -3145,13 +3145,13 @@ name|warn
 argument_list|(
 literal|"Cannot find "
 operator|+
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
 operator|+
 literal|" or "
 operator|+
-name|LlapDaemon
+name|LlapConstants
 operator|.
 name|HADOOP_METRICS2_PROPERTIES_FILE
 operator|+

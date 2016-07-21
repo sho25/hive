@@ -109,6 +109,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|log
+operator|.
+name|Log4jQueryCompleteMarker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -128,6 +146,32 @@ operator|.
 name|token
 operator|.
 name|Token
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|log4j
+operator|.
+name|MDC
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|logging
+operator|.
+name|slf4j
+operator|.
+name|Log4jMarker
 import|;
 end_import
 
@@ -361,6 +405,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Marker
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -503,6 +557,20 @@ argument_list|(
 name|QueryTracker
 operator|.
 name|class
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Marker
+name|QUERY_COMPLETE_MARKER
+init|=
+operator|new
+name|Log4jMarker
+argument_list|(
+operator|new
+name|Log4jQueryCompleteMarker
+argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -772,6 +840,9 @@ name|String
 name|appIdString
 parameter_list|,
 name|String
+name|dagIdString
+parameter_list|,
+name|String
 name|dagName
 parameter_list|,
 name|String
@@ -810,9 +881,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// QueryIdentifier is enough to uniquely identify a fragment. At the moment, it works off of appId and dag index.
-comment|// At a later point this could be changed to the Hive query identifier.
-comment|// Sending both over RPC is unnecessary overhead.
 name|ReadWriteLock
 name|dagLock
 init|=
@@ -941,7 +1009,11 @@ name|queryIdentifier
 argument_list|,
 name|appIdString
 argument_list|,
+name|dagIdString
+argument_list|,
 name|dagName
+argument_list|,
+name|hiveQueryIdString
 argument_list|,
 name|dagIdentifier
 argument_list|,
@@ -1327,6 +1399,79 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// Inform the routing purgePolicy.
+comment|// Send out a fake log message at the ERROR level with the MDC for this query setup. With an
+comment|// LLAP custom appender this message will not be logged.
+specifier|final
+name|String
+name|dagId
+init|=
+name|queryInfo
+operator|.
+name|getDagIdString
+argument_list|()
+decl_stmt|;
+specifier|final
+name|String
+name|queryId
+init|=
+name|queryInfo
+operator|.
+name|getHiveQueryIdString
+argument_list|()
+decl_stmt|;
+name|MDC
+operator|.
+name|put
+argument_list|(
+literal|"dagId"
+argument_list|,
+name|dagId
+argument_list|)
+expr_stmt|;
+name|MDC
+operator|.
+name|put
+argument_list|(
+literal|"queryId"
+argument_list|,
+name|queryId
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|QUERY_COMPLETE_MARKER
+argument_list|,
+literal|"Ignore this. Log line to interact with logger."
+operator|+
+literal|" Query complete: "
+operator|+
+name|queryInfo
+operator|.
+name|getHiveQueryIdString
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|queryInfo
+operator|.
+name|getDagIdString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|MDC
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 block|}
 comment|// Clearing this before sending a kill is OK, since canFinish will change to false.
 comment|// Ideally this should be a state machine where kills are issued to the executor,

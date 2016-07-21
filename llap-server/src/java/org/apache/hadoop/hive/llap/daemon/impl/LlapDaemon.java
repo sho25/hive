@@ -173,18 +173,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|regex
-operator|.
-name|Pattern
-import|;
-end_import
-
-begin_import
-import|import
 name|javax
 operator|.
 name|management
@@ -1056,30 +1044,6 @@ name|LlapDaemon
 operator|.
 name|class
 argument_list|)
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|LOG4j2_PROPERTIES_FILE
-init|=
-literal|"llap-daemon-log4j2.properties"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
-init|=
-literal|"hadoop-metrics2-llapdaemon.properties"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|HADOOP_METRICS2_PROPERTIES_FILE
-init|=
-literal|"hadoop-metrics2.properties"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2331,6 +2295,8 @@ argument_list|()
 operator|.
 name|getResource
 argument_list|(
+name|LlapConstants
+operator|.
 name|LOG4j2_PROPERTIES_FILE
 argument_list|)
 decl_stmt|;
@@ -2410,6 +2376,8 @@ literal|"Log initialization failed."
 operator|+
 literal|" Unable to locate "
 operator|+
+name|LlapConstants
+operator|.
 name|LOG4j2_PROPERTIES_FILE
 operator|+
 literal|" file in classpath"

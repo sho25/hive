@@ -651,7 +651,11 @@ name|queryIdentifier
 argument_list|,
 literal|"fake_app_id_string"
 argument_list|,
+literal|"fake_dag_id_string"
+argument_list|,
 literal|"fake_dag_name"
+argument_list|,
+literal|"fakeHiveQueryId"
 argument_list|,
 literal|1
 argument_list|,
