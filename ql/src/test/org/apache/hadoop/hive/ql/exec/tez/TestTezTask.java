@@ -2435,6 +2435,229 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseRightmostXmx
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Empty java opts
+name|String
+name|javaOpts
+init|=
+literal|""
+decl_stmt|;
+name|long
+name|heapSize
+init|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts without -Xmx specified
+name|javaOpts
+operator|=
+literal|"-Xms1024m"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with -Xmx specified in GB
+name|javaOpts
+operator|=
+literal|"-Xms1024m -Xmx2g"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+literal|2147483648L
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with -Xmx specified in MB
+name|javaOpts
+operator|=
+literal|"-Xms1024m -Xmx1024m"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+literal|1073741824
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with -Xmx specified in KB
+name|javaOpts
+operator|=
+literal|"-Xms1024m -Xmx524288k"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+literal|536870912
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with -Xmx specified in B
+name|javaOpts
+operator|=
+literal|"-Xms1024m -Xmx1610612736"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+literal|1610612736
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with -Xmx specified twice
+name|javaOpts
+operator|=
+literal|"-Xmx1024m -Xmx1536m"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+literal|1610612736
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with bad -Xmx specification
+name|javaOpts
+operator|=
+literal|"pre-Xmx1024m"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+comment|// Non-empty java opts with bad -Xmx specification
+name|javaOpts
+operator|=
+literal|"-Xmx1024m-post"
+expr_stmt|;
+name|heapSize
+operator|=
+name|DagUtils
+operator|.
+name|parseRightmostXmx
+argument_list|(
+name|javaOpts
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Unexpected maximum heap size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+name|heapSize
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

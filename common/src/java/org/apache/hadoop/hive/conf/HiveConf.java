@@ -11128,6 +11128,43 @@ argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
 argument_list|)
 block|,
+name|TEZ_CONTAINER_MAX_JAVA_HEAP_FRACTION
+argument_list|(
+literal|"hive.tez.container.max.java.heap.fraction"
+argument_list|,
+literal|0.8f
+argument_list|,
+literal|"This is to override the tez setting with the same name"
+argument_list|)
+block|,
+name|TEZ_TASK_SCALE_MEMORY_RESERVE_FRACTION_MIN
+argument_list|(
+literal|"hive.tez.task.scale.memory.reserve-fraction.min"
+argument_list|,
+literal|0.3f
+argument_list|,
+literal|"This is to override the tez setting tez.task.scale.memory.reserve-fraction"
+argument_list|)
+block|,
+name|TEZ_TASK_SCALE_MEMORY_RESERVE_FRACTION_MAX
+argument_list|(
+literal|"hive.tez.task.scale.memory.reserve.fraction.max"
+argument_list|,
+literal|0.5f
+argument_list|,
+literal|"The maximum fraction of JVM memory which Tez will reserve for the processor"
+argument_list|)
+block|,
+name|TEZ_TASK_SCALE_MEMORY_RESERVE_FRACTION
+argument_list|(
+literal|"hive.tez.task.scale.memory.reserve.fraction"
+argument_list|,
+operator|-
+literal|1f
+argument_list|,
+literal|"The customized fraction of JVM memory which Tez will reserve for the processor"
+argument_list|)
+block|,
 comment|// The default is different on the client and server, so it's null here.
 name|LLAP_IO_ENABLED
 argument_list|(
