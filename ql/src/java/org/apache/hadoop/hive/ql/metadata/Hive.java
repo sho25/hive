@@ -8009,9 +8009,13 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|(
 literal|null
 operator|!=
 name|newFiles
+operator|)
+operator|||
+name|replace
 condition|)
 block|{
 name|fireInsertEvent
@@ -8021,6 +8025,16 @@ argument_list|,
 name|partSpec
 argument_list|,
 name|newFiles
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No new files were created, and is not a replace. Skipping generating INSERT event."
 argument_list|)
 expr_stmt|;
 block|}
