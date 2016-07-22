@@ -106,7 +106,7 @@ name|this
 operator|.
 name|deleteData
 operator|=
-literal|false
+name|deleteData
 expr_stmt|;
 block|}
 comment|/**    * @return the table    */
