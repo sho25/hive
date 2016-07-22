@@ -4131,7 +4131,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Exception is thrown closing timed-out operation "
+literal|"Exception is thrown closing timed-out operation, reported open_operations metrics may be incorrect "
 operator|+
 name|operation
 operator|.
