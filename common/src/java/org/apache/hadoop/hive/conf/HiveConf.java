@@ -2575,6 +2575,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_LOGGER
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -12312,6 +12323,33 @@ operator|+
 literal|"settings are both coming from job configs, we don't know at start whether this should\n"
 operator|+
 literal|"be created. Default true."
+argument_list|)
+block|,
+name|LLAP_DAEMON_LOGGER
+argument_list|(
+literal|"hive.llap.daemon.logger"
+argument_list|,
+name|Constants
+operator|.
+name|LLAP_LOGGER_NAME_RFA
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+name|Constants
+operator|.
+name|LLAP_LOGGER_NAME_QUERY_ROUTING
+argument_list|,
+name|Constants
+operator|.
+name|LLAP_LOGGER_NAME_RFA
+argument_list|,
+name|Constants
+operator|.
+name|LLAP_LOGGER_NAME_CONSOLE
+argument_list|)
+argument_list|,
+literal|"logger used for llap-daemons."
 argument_list|)
 block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT

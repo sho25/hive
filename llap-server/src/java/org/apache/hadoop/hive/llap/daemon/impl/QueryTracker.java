@@ -127,6 +127,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|log
+operator|.
+name|LogHelpers
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -614,6 +632,11 @@ specifier|final
 name|long
 name|defaultDeleteDelaySeconds
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|routeBasedLoggingEnabled
+decl_stmt|;
 comment|// TODO At the moment there's no way of knowing whether a query is running or not.
 comment|// A race is possible between dagComplete and registerFragment - where the registerFragment
 comment|// is processed after a dagCompletes.
@@ -826,6 +849,63 @@ argument_list|)
 operator|.
 name|build
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|String
+name|logger
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_LOGGER
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|logger
+operator|!=
+literal|null
+operator|&&
+operator|(
+name|logger
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|LogHelpers
+operator|.
+name|LLAP_LOGGER_NAME_QUERY_ROUTING
+argument_list|)
+operator|)
+condition|)
+block|{
+name|routeBasedLoggingEnabled
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+name|routeBasedLoggingEnabled
+operator|=
+literal|false
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"QueryTracker setup with numCleanerThreads={}, defaultCleanupDelay(s)={}, routeBasedLogging={}"
+argument_list|,
+name|numCleanerThreads
+argument_list|,
+name|defaultDeleteDelaySeconds
+argument_list|,
+name|routeBasedLoggingEnabled
 argument_list|)
 expr_stmt|;
 block|}
@@ -1400,6 +1480,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|routeBasedLoggingEnabled
+condition|)
+block|{
 comment|// Inform the routing purgePolicy.
 comment|// Send out a fake log message at the ERROR level with the MDC for this query setup. With an
 comment|// LLAP custom appender this message will not be logged.
@@ -1472,6 +1557,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|// Clearing this before sending a kill is OK, since canFinish will change to false.
 comment|// Ideally this should be a state machine where kills are issued to the executor,
