@@ -687,6 +687,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -4018,6 +4028,11 @@ name|class
 argument_list|)
 decl_stmt|;
 annotation|@
+name|Ignore
+argument_list|(
+literal|"External cache has been turned off for now"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -4032,6 +4047,11 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"External cache has been turned off for now"
+argument_list|)
 annotation|@
 name|Test
 specifier|public

@@ -700,6 +700,11 @@ name|bufferSize
 decl_stmt|;
 specifier|private
 specifier|final
+name|SchemaEvolution
+name|evolution
+decl_stmt|;
+specifier|private
+specifier|final
 name|boolean
 index|[]
 name|included
@@ -964,9 +969,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|SchemaEvolution
-name|treeReaderSchema
-decl_stmt|;
 name|this
 operator|.
 name|included
@@ -1005,7 +1007,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Schema on read not provided -- using file schema "
+literal|"Reader schema not provided -- using file schema "
 operator|+
 name|fileReader
 operator|.
@@ -1014,7 +1016,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|treeReaderSchema
+name|evolution
 operator|=
 operator|new
 name|SchemaEvolution
@@ -1033,7 +1035,7 @@ block|{
 comment|// Now that we are creating a record reader for a file, validate that the schema to read
 comment|// is compatible with the file schema.
 comment|//
-name|treeReaderSchema
+name|evolution
 operator|=
 operator|new
 name|SchemaEvolution
@@ -1051,12 +1053,61 @@ argument_list|,
 name|included
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+operator|&&
+name|evolution
+operator|.
+name|hasConversion
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"ORC file "
+operator|+
+name|fileReader
+operator|.
+name|path
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" has data type conversion --\n"
+operator|+
+literal|"reader schema: "
+operator|+
+name|options
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"\n"
+operator|+
+literal|"file schema:   "
+operator|+
+name|fileReader
+operator|.
+name|getSchema
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|this
 operator|.
 name|schema
 operator|=
-name|treeReaderSchema
+name|evolution
 operator|.
 name|getReaderSchema
 argument_list|()
@@ -1109,6 +1160,8 @@ operator|.
 name|getSearchArgument
 argument_list|()
 decl_stmt|;
+comment|// We want to use the sarg for predicate evaluation but we have data type conversion
+comment|// (i.e Schema Evolution), so we currently ignore it.
 if|if
 condition|(
 name|sarg
@@ -1118,6 +1171,12 @@ operator|&&
 name|rowIndexStride
 operator|!=
 literal|0
+operator|&&
+operator|!
+name|evolution
+operator|.
+name|hasConversion
+argument_list|()
 condition|)
 block|{
 name|sargApp
@@ -1148,6 +1207,35 @@ name|sargApp
 operator|=
 literal|null
 expr_stmt|;
+if|if
+condition|(
+name|evolution
+operator|.
+name|hasConversion
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping stripe elimination for {} since the schema has data type conversion"
+argument_list|,
+name|fileReader
+operator|.
+name|path
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 name|long
 name|rows
@@ -1393,12 +1481,12 @@ name|TreeReaderFactory
 operator|.
 name|createTreeReader
 argument_list|(
-name|treeReaderSchema
+name|evolution
 operator|.
 name|getReaderSchema
 argument_list|()
 argument_list|,
-name|treeReaderSchema
+name|evolution
 argument_list|,
 name|included
 argument_list|,

@@ -774,6 +774,8 @@ parameter_list|,
 name|int
 name|numSplits
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 comment|// Use threads to resolve directories into splits.
 if|if
