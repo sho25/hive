@@ -7998,6 +7998,16 @@ argument_list|(
 name|posToAliasMap
 argument_list|)
 expr_stmt|;
+name|joinOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setBaseSrc
+argument_list|(
+name|baseSrc
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|LOG
