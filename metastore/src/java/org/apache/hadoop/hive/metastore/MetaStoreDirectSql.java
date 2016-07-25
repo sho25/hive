@@ -6327,6 +6327,19 @@ assert|;
 if|if
 condition|(
 name|tree
+operator|==
+literal|null
+condition|)
+block|{
+comment|// consistent with other APIs like makeExpressionTree, null is returned to indicate that
+comment|// the filter could not pushed down due to parsing issue etc
+return|return
+literal|null
+return|;
+block|}
+if|if
+condition|(
+name|tree
 operator|.
 name|getRoot
 argument_list|()
