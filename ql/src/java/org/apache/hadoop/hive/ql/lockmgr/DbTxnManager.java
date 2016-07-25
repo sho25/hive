@@ -1862,6 +1862,9 @@ parameter_list|)
 throws|throws
 name|LockException
 block|{
+name|LockState
+name|ls
+init|=
 name|acquireLocks
 argument_list|(
 name|plan
@@ -1872,7 +1875,15 @@ name|username
 argument_list|,
 literal|true
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+if|if
+condition|(
+name|ls
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// If there's no lock, we don't need to do heartbeat
 name|ctx
 operator|.
 name|setHeartbeater
@@ -1883,6 +1894,7 @@ name|delay
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -2368,6 +2380,22 @@ argument_list|()
 condition|)
 block|{
 comment|// No locks, no txn, we outta here.
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No need to send heartbeat as there is no transaction and no locks."
+argument_list|)
+expr_stmt|;
+block|}
 return|return;
 block|}
 for|for
