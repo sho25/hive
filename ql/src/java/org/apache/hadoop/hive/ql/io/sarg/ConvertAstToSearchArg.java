@@ -1019,25 +1019,28 @@ if|if
 condition|(
 name|lit
 operator|instanceof
-name|Float
-operator|||
-name|lit
-operator|instanceof
 name|HiveDecimal
 condition|)
 block|{
-comment|// converting a float directly to a double causes annoying conversion
-comment|// problems
+comment|// HiveDecimal -> Float -> Number -> Double
 return|return
-name|Double
-operator|.
-name|parseDouble
+operator|(
+call|(
+name|Number
+call|)
 argument_list|(
+operator|(
+name|HiveDecimal
+operator|)
 name|lit
-operator|.
-name|toString
-argument_list|()
 argument_list|)
+operator|.
+name|floatValue
+argument_list|()
+operator|)
+operator|.
+name|doubleValue
+argument_list|()
 return|;
 block|}
 else|else

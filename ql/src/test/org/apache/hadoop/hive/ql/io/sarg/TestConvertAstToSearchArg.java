@@ -9267,7 +9267,19 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"(EQUALS flt 1.1)"
+literal|"(EQUALS flt "
+operator|+
+operator|(
+operator|(
+name|Number
+operator|)
+literal|1.1f
+operator|)
+operator|.
+name|doubleValue
+argument_list|()
+operator|+
+literal|")"
 argument_list|,
 name|leaf
 operator|.
