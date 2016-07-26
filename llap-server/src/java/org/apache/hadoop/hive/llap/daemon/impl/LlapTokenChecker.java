@@ -806,6 +806,18 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|appId
+operator|==
+literal|null
+condition|)
+block|{
+name|appId
+operator|=
+literal|""
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|kerberosName
 operator|!=
 literal|null
@@ -887,9 +899,6 @@ operator|+
 literal|", "
 operator|+
 name|appId
-operator|.
-name|hashCode
-argument_list|()
 operator|+
 literal|" ("
 operator|+
@@ -964,9 +973,6 @@ operator|+
 literal|", "
 operator|+
 name|appId
-operator|.
-name|hashCode
-argument_list|()
 operator|+
 literal|" ("
 operator|+
