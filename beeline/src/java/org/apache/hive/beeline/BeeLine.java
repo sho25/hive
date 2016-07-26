@@ -1035,6 +1035,7 @@ specifier|private
 name|History
 name|history
 decl_stmt|;
+comment|// Indicates if this instance of beeline is running in compatibility mode, or beeline mode
 specifier|private
 name|boolean
 name|isBeeLine
@@ -7152,36 +7153,24 @@ return|return
 name|prompt
 operator|+
 name|getFormattedDb
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 operator|+
 literal|"> "
 return|;
 block|}
-comment|/**    * Retrieve the current database name string to display, based on the    * configuration value.    *    * @param conf storing whether or not to show current db    * @return String to show user for current db value    */
+comment|/**    * Retrieve the current database name string to display, based on the    * configuration value.    *    * @return String to show user for current db value    */
 name|String
 name|getFormattedDb
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
 operator|!
-name|HiveConf
+name|getOpts
+argument_list|()
 operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|CLIPRINTCURRENTDB
-argument_list|)
+name|getShowDbInPrompt
+argument_list|()
 condition|)
 block|{
 return|return
@@ -7271,6 +7260,9 @@ argument_list|()
 argument_list|)
 operator|+
 name|printClosed
+operator|+
+name|getFormattedDb
+argument_list|()
 operator|+
 literal|"> "
 return|;
