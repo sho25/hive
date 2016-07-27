@@ -2069,11 +2069,29 @@ argument_list|,
 name|session
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Session opened, "
+operator|+
+name|session
+operator|.
+name|getSessionHandle
+argument_list|()
+operator|+
+literal|", current sessions:"
+operator|+
+name|getOpenSessionCount
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|session
 return|;
 block|}
 specifier|public
+specifier|synchronized
 name|void
 name|closeSession
 parameter_list|(
@@ -2110,6 +2128,20 @@ name|sessionHandle
 argument_list|)
 throw|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Session closed, "
+operator|+
+name|sessionHandle
+operator|+
+literal|", current sessions:"
+operator|+
+name|getOpenSessionCount
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|session
