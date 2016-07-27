@@ -1639,6 +1639,11 @@ operator|.
 name|printStackTrace
 argument_list|()
 expr_stmt|;
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 name|String
 name|mesg
 init|=

@@ -1044,6 +1044,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 name|String
 name|mesg
 init|=
@@ -1238,6 +1243,11 @@ condition|(
 name|success
 condition|)
 block|{
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 name|success
 operator|=
 literal|false
