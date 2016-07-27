@@ -273,14 +273,6 @@ name|mockBeeLine
 return|;
 block|}
 annotation|@
-name|BeforeClass
-specifier|public
-specifier|static
-name|void
-name|setupMockData
-parameter_list|()
-block|{   }
-annotation|@
 name|Test
 specifier|public
 name|void
