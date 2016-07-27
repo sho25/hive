@@ -937,6 +937,7 @@ name|getName
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|transient
 specifier|final
 name|PerfLogger
 name|perfLogger

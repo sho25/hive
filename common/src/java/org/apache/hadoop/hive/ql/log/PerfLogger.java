@@ -1263,6 +1263,7 @@ argument_list|)
 return|;
 block|}
 comment|//Methods for metrics integration.  Each thread-local PerfLogger will open/close scope during each perf-log method.
+specifier|transient
 name|Map
 argument_list|<
 name|String
