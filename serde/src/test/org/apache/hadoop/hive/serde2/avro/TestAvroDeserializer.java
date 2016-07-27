@@ -2086,9 +2086,10 @@ name|result
 operator|.
 name|oi
 decl_stmt|;
+comment|// The null in union type should be removed
 name|assertEquals
 argument_list|(
-literal|2
+literal|1
 argument_list|,
 name|uoi
 operator|.
@@ -2158,9 +2159,10 @@ name|result
 operator|.
 name|oi
 expr_stmt|;
+comment|// The null in union type should be removed
 name|assertEquals
 argument_list|(
-literal|1
+literal|0
 argument_list|,
 name|uoi
 operator|.

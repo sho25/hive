@@ -123,6 +123,26 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Properties
 import|;
 end_import
@@ -403,9 +423,16 @@ name|void
 name|isNullableTypeIdentifiesUnionsOfMoreThanTwoTypes
 parameter_list|()
 block|{
+name|List
+argument_list|<
 name|String
-name|schemaString
+argument_list|>
+name|schemaStrings
 init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
 literal|"{\n"
 operator|+
 literal|"  \"type\": \"record\", \n"
@@ -419,16 +446,54 @@ operator|+
 literal|"  ]\n"
 operator|+
 literal|"}"
+argument_list|,
+literal|"{\n"
+operator|+
+literal|"  \"type\": \"record\", \n"
+operator|+
+literal|"  \"name\": \"shouldNotPass\",\n"
+operator|+
+literal|"  \"fields\" : [\n"
+operator|+
+literal|"    {\"name\":\"mayBeNull\", \"type\":[\"string\", \"null\", \"int\"]}\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+argument_list|,
+literal|"{\n"
+operator|+
+literal|"  \"type\": \"record\", \n"
+operator|+
+literal|"  \"name\": \"shouldNotPass\",\n"
+operator|+
+literal|"  \"fields\" : [\n"
+operator|+
+literal|"    {\"name\":\"mayBeNull\", \"type\":[\"null\", \"string\", \"int\"]}\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+argument_list|)
 decl_stmt|;
+for|for
+control|(
+name|String
+name|schemaString
+range|:
+name|schemaStrings
+control|)
+block|{
 name|testField
 argument_list|(
 name|schemaString
 argument_list|,
 literal|"mayBeNull"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Test
