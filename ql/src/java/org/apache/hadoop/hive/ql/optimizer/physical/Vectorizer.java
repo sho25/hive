@@ -8970,6 +8970,8 @@ argument_list|,
 name|vectorTaskColumnInfo
 operator|.
 name|allColumnNames
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 name|taskVectorizationContext
@@ -9161,11 +9163,16 @@ name|VectorizationContext
 block|{
 specifier|private
 name|ValidatorVectorizationContext
-parameter_list|()
+parameter_list|(
+name|HiveConf
+name|hiveConf
+parameter_list|)
 block|{
 name|super
 argument_list|(
 literal|"No Name"
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -11432,7 +11439,9 @@ name|vc
 init|=
 operator|new
 name|ValidatorVectorizationContext
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -11754,7 +11763,9 @@ name|vc
 init|=
 operator|new
 name|ValidatorVectorizationContext
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 decl_stmt|;
 name|VectorAggregateExpression
 name|vectorAggrExpr
@@ -11984,6 +11995,8 @@ argument_list|,
 name|vectorTaskColumnInfo
 operator|.
 name|allColumnNames
+argument_list|,
+name|hiveConf
 argument_list|)
 decl_stmt|;
 return|return

@@ -10783,6 +10783,31 @@ operator|+
 literal|"The default value is false."
 argument_list|)
 block|,
+name|HIVE_VECTOR_ADAPTOR_USAGE_MODE
+argument_list|(
+literal|"hive.vectorized.adaptor.usage.mode"
+argument_list|,
+literal|"all"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"chosen"
+argument_list|,
+literal|"all"
+argument_list|)
+argument_list|,
+literal|"Specifies the extent to which the VectorUDFAdaptor will be used for UDFs that do not have a cooresponding vectorized class.\n"
+operator|+
+literal|"0. none   : disable any usage of VectorUDFAdaptor\n"
+operator|+
+literal|"1. chosen : use VectorUDFAdaptor for a small set of UDFs that were choosen for good performance\n"
+operator|+
+literal|"2. all    : use VectorUDFAdaptor for all UDFs"
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"

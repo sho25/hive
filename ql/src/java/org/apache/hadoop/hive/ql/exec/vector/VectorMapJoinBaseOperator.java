@@ -485,6 +485,9 @@ name|desc
 operator|.
 name|getOutputColumnNames
 argument_list|()
+argument_list|,
+comment|/* vContextEnvironment */
+name|vContext
 argument_list|)
 expr_stmt|;
 block|}
