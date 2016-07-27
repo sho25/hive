@@ -12749,6 +12749,25 @@ literal|"Timeout for Running Query in seconds. A nonpositive value means infinit
 operator|+
 literal|"If the query timeout is also set by thrift API call, the smaller one will be taken."
 argument_list|)
+block|,
+comment|/* BLOBSTORE section */
+name|HIVE_BLOBSTORE_SUPPORTED_SCHEMES
+argument_list|(
+literal|"hive.blobstore.supported.schemes"
+argument_list|,
+literal|"s3,s3a,s3n"
+argument_list|,
+literal|"Comma-separated list of supported blobstore schemes."
+argument_list|)
+block|,
+name|HIVE_BLOBSTORE_USE_BLOBSTORE_AS_SCRATCHDIR
+argument_list|(
+literal|"hive.blobstore.use.blobstore.as.scratchdir"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable the use of scratch directories directly on blob storage systems (it may cause performance penalties)."
+argument_list|)
 block|;
 specifier|public
 specifier|final
