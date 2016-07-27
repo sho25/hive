@@ -373,7 +373,7 @@ name|TaskDisplay
 block|{
 specifier|private
 name|Integer
-name|returnVal
+name|returnValue
 decl_stmt|;
 comment|//if set, determines that task is complete.
 specifier|private
@@ -487,7 +487,7 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|returnVal
+name|returnValue
 operator|==
 literal|null
 condition|)
@@ -499,7 +499,7 @@ block|}
 elseif|else
 if|if
 condition|(
-name|returnVal
+name|returnValue
 operator|==
 literal|0
 condition|)
@@ -517,7 +517,7 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|returnVal
+name|returnValue
 argument_list|)
 return|;
 block|}
@@ -571,7 +571,7 @@ name|getReturnValue
 parameter_list|()
 block|{
 return|return
-name|returnVal
+name|returnValue
 return|;
 block|}
 specifier|public
@@ -829,7 +829,7 @@ condition|)
 block|{
 name|taskDisplay
 operator|.
-name|returnVal
+name|returnValue
 operator|=
 name|result
 operator|.
