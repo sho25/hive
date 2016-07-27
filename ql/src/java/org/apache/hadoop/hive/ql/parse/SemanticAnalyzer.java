@@ -58562,7 +58562,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -58577,7 +58577,7 @@ argument_list|(
 name|leftalias
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

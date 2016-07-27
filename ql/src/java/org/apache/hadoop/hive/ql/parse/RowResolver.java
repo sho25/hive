@@ -1158,7 +1158,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
