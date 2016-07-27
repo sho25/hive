@@ -842,9 +842,17 @@ operator|.
 name|dumpJson
 argument_list|()
 decl_stmt|;
+name|int
+name|initialCount
+init|=
+operator|(
+operator|new
+name|Integer
+argument_list|(
+operator|(
 name|MetricsTestUtils
 operator|.
-name|verifyMetricsJson
+name|getJsonNode
 argument_list|(
 name|json
 argument_list|,
@@ -855,10 +863,17 @@ argument_list|,
 name|MetricsConstant
 operator|.
 name|OPEN_CONNECTIONS
-argument_list|,
-literal|1
 argument_list|)
-expr_stmt|;
+operator|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+operator|)
+operator|.
+name|intValue
+argument_list|()
+decl_stmt|;
 comment|//create two connections
 name|HiveMetaStoreClient
 name|msc
@@ -899,7 +914,9 @@ name|MetricsConstant
 operator|.
 name|OPEN_CONNECTIONS
 argument_list|,
-literal|3
+name|initialCount
+operator|+
+literal|2
 argument_list|)
 expr_stmt|;
 comment|//close one connection, verify still two left
@@ -929,7 +946,9 @@ name|MetricsConstant
 operator|.
 name|OPEN_CONNECTIONS
 argument_list|,
-literal|2
+name|initialCount
+operator|+
+literal|1
 argument_list|)
 expr_stmt|;
 comment|//close one connection, verify still one left
@@ -959,7 +978,7 @@ name|MetricsConstant
 operator|.
 name|OPEN_CONNECTIONS
 argument_list|,
-literal|1
+name|initialCount
 argument_list|)
 expr_stmt|;
 block|}
