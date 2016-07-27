@@ -317,6 +317,8 @@ begin_class
 specifier|public
 class|class
 name|HiveIndexResult
+implements|implements
+name|IndexResult
 block|{
 specifier|public
 specifier|static
@@ -1099,6 +1101,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|contains
