@@ -11668,8 +11668,6 @@ parameter_list|,
 name|TypeDescription
 name|readerType
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|Category
 name|readerTypeCategory
