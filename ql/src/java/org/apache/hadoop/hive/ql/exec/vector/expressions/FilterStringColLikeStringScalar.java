@@ -579,16 +579,21 @@ name|String
 name|pattern
 parameter_list|)
 block|{
+comment|// anchor the pattern to the start:end of the whole string.
 return|return
 operator|new
 name|ComplexChecker
 argument_list|(
+literal|"^"
+operator|+
 name|UDFLike
 operator|.
 name|likePatternToRegExp
 argument_list|(
 name|pattern
 argument_list|)
+operator|+
+literal|"$"
 argument_list|)
 return|;
 block|}
