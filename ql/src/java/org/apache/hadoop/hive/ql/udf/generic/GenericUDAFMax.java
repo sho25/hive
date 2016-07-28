@@ -245,6 +245,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDAFEvaluator
+operator|.
+name|AggregationType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|util
 operator|.
 name|JavaDataModel
@@ -544,6 +566,13 @@ name|outputOI
 return|;
 block|}
 comment|/** class for storing the current max value */
+annotation|@
+name|AggregationType
+argument_list|(
+name|estimable
+operator|=
+literal|true
+argument_list|)
 specifier|static
 class|class
 name|MaxAgg
@@ -553,6 +582,19 @@ block|{
 name|Object
 name|o
 decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|int
+name|estimate
+parameter_list|()
+block|{
+return|return
+name|JavaDataModel
+operator|.
+name|PRIMITIVES2
+return|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -789,7 +831,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/*    * Based on the Paper by Daniel Lemire: Streaming Max-Min filter using no more    * than 3 comparisons per elem.    *     * 1. His algorithm works on fixed size windows up to the current row. For row    * 'i' and window 'w' it computes the min/max for window (i-w, i). 2. The core    * idea is to keep a queue of (max, idx) tuples. A tuple in the queue    * represents the max value in the range (prev tuple.idx, idx). Using the    * queue data structure and following 2 operations it is easy to see that    * maxes can be computed: - on receiving the ith row; drain the queue from the    * back of any entries whose value is less than the ith entry; add the ith    * value as a tuple in the queue (i-val, i) - on the ith step, check if the    * element at the front of the queue has reached its max range of influence;    * i.e. frontTuple.idx + w> i. If yes we can remove it from the queue. - on    * the ith step o/p the front of the queue as the max for the ith entry.    *     * Here we modify the algorithm: 1. to handle window's that are of the form    * (i-p, i+f), where p is numPreceding,f = numFollowing - we start outputing    * rows only after receiving f rows. - the formula for 'influence range' of an    * idx accounts for the following rows. 2. optimize for the case when    * numPreceding is Unbounded. In this case only 1 max needs to be tarcked at    * any given time.    */
+comment|/*    * Based on the Paper by Daniel Lemire: Streaming Max-Min filter using no more    * than 3 comparisons per elem.    *    * 1. His algorithm works on fixed size windows up to the current row. For row    * 'i' and window 'w' it computes the min/max for window (i-w, i). 2. The core    * idea is to keep a queue of (max, idx) tuples. A tuple in the queue    * represents the max value in the range (prev tuple.idx, idx). Using the    * queue data structure and following 2 operations it is easy to see that    * maxes can be computed: - on receiving the ith row; drain the queue from the    * back of any entries whose value is less than the ith entry; add the ith    * value as a tuple in the queue (i-val, i) - on the ith step, check if the    * element at the front of the queue has reached its max range of influence;    * i.e. frontTuple.idx + w> i. If yes we can remove it from the queue. - on    * the ith step o/p the front of the queue as the max for the ith entry.    *    * Here we modify the algorithm: 1. to handle window's that are of the form    * (i-p, i+f), where p is numPreceding,f = numFollowing - we start outputing    * rows only after receiving f rows. - the formula for 'influence range' of an    * idx accounts for the following rows. 2. optimize for the case when    * numPreceding is Unbounded. In this case only 1 max needs to be tarcked at    * any given time.    */
 specifier|static
 class|class
 name|MaxStreamingFixedWindow
@@ -947,6 +989,8 @@ name|PRIMITIVES1
 operator|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|reset

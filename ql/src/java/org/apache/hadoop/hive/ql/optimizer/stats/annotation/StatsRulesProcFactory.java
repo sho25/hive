@@ -6541,8 +6541,15 @@ name|setAvgColLen
 argument_list|(
 name|StatsUtils
 operator|.
-name|getAvgColLenOfFixedLengthTypes
+name|getAvgColLenOf
 argument_list|(
+name|conf
+argument_list|,
+name|ci
+operator|.
+name|getObjectInspector
+argument_list|()
+argument_list|,
 name|colType
 argument_list|)
 argument_list|)
