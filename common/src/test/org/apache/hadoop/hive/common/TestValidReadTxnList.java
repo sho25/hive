@@ -132,6 +132,10 @@ literal|0
 index|]
 argument_list|,
 literal|1
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|String
@@ -147,6 +151,12 @@ operator|.
 name|assertEquals
 argument_list|(
 literal|"1:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|,
 name|str
 argument_list|)
@@ -215,6 +225,8 @@ literal|4L
 block|}
 argument_list|,
 literal|5
+argument_list|,
+literal|4L
 argument_list|)
 decl_stmt|;
 name|String
@@ -229,7 +241,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"5:2:4"
+literal|"5:4:2:4"
 argument_list|,
 name|str
 argument_list|)
@@ -372,6 +384,8 @@ argument_list|(
 name|exceptions
 argument_list|,
 literal|2000
+argument_list|,
+literal|900
 argument_list|)
 decl_stmt|;
 name|String
@@ -538,6 +552,8 @@ argument_list|(
 name|exceptions
 argument_list|,
 literal|2000
+argument_list|,
+literal|900
 argument_list|)
 decl_stmt|;
 name|String

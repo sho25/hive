@@ -2854,13 +2854,7 @@ block|{
 return|return
 operator|new
 name|ValidReadTxnList
-argument_list|(
-name|Long
-operator|.
-name|MAX_VALUE
-operator|+
-literal|":"
-argument_list|)
+argument_list|()
 return|;
 block|}
 annotation|@
@@ -4555,6 +4549,10 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"200:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|AcidUtils
@@ -5094,6 +5092,10 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"200:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 decl_stmt|;
 name|AcidUtils
@@ -6805,7 +6807,7 @@ init|=
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"2000:200"
+literal|"2000:200:200"
 argument_list|)
 decl_stmt|;
 name|merger

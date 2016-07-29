@@ -930,6 +930,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"100:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1300,6 +1306,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"100:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1769,6 +1781,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"100:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2129,6 +2147,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"150:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2299,6 +2323,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"10:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2376,7 +2406,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|/*Single statemnt txns only: since we don't compact a txn range that includes an open txn,     the existence of delta_120_130 implies that 121 in the exception list is aborted unless     delta_120_130 is from streaming ingest in which case 121 can be open     (and thus 122-130 are open too)     For multi-statment txns, see HIVE-13369*/
+comment|/*Single statemnt txns only: since we don't compact a txn range that includes an open txn,     the existence of delta_120_130 implies that 121 in the exception list is aborted unless     delta_120_130 is from streaming ingest in which case 121 can be open     (and thus 122-130 are open too)     99 here would be Aborted since 121 is minOpenTxn, base_100 is still good     For multi-statment txns, see HIVE-13369*/
 name|dir
 operator|=
 name|AcidUtils
@@ -2390,7 +2420,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"150:121"
+literal|"150:121:99:121"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2550,7 +2580,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"125:5"
+literal|"125:5:5"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2682,7 +2712,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"150:7"
+literal|"150:7:7"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2800,7 +2830,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"150:7"
+literal|"150:7:7"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2921,6 +2951,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"1:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3098,6 +3134,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"150:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3306,6 +3348,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"100:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3683,6 +3731,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"100:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -4004,7 +4058,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"100:4"
+literal|"100:4:4"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -4191,7 +4245,7 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"100:4"
+literal|"100:4:4"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -4335,7 +4389,11 @@ argument_list|,
 operator|new
 name|ValidCompactorTxnList
 argument_list|(
-literal|"100:4"
+literal|"4:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -4493,7 +4551,11 @@ argument_list|,
 operator|new
 name|ValidCompactorTxnList
 argument_list|(
-literal|"100:4"
+literal|"3:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 argument_list|)
 decl_stmt|;

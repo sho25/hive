@@ -19,6 +19,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -28,7 +42,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implmentation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by readers.  * This class will view a transaction as valid only if it is committed.  Both open and aborted  * transactions will be seen as invalid.  */
+comment|/**  * An implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by readers.  * This class will view a transaction as valid only if it is committed.  Both open and aborted  * transactions will be seen as invalid.  */
 end_comment
 
 begin_class
@@ -42,6 +56,15 @@ specifier|protected
 name|long
 index|[]
 name|exceptions
+decl_stmt|;
+comment|//default value means there are no open txn in the snapshot
+specifier|private
+name|long
+name|minOpenTxn
+init|=
+name|Long
+operator|.
+name|MAX_VALUE
 decl_stmt|;
 specifier|protected
 name|long
@@ -62,6 +85,34 @@ argument_list|,
 name|Long
 operator|.
 name|MAX_VALUE
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Used if there are no open transactions in the snapshot    */
+specifier|public
+name|ValidReadTxnList
+parameter_list|(
+name|long
+index|[]
+name|exceptions
+parameter_list|,
+name|long
+name|highWatermark
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|exceptions
+argument_list|,
+name|highWatermark
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -74,6 +125,9 @@ name|exceptions
 parameter_list|,
 name|long
 name|highWatermark
+parameter_list|,
+name|long
+name|minOpenTxn
 parameter_list|)
 block|{
 if|if
@@ -112,6 +166,42 @@ operator|.
 name|exceptions
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|minOpenTxn
+operator|=
+name|minOpenTxn
+expr_stmt|;
+if|if
+condition|(
+name|this
+operator|.
+name|exceptions
+index|[
+literal|0
+index|]
+operator|<=
+literal|0
+condition|)
+block|{
+comment|//should never happen of course
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Invalid txnid: "
+operator|+
+name|this
+operator|.
+name|exceptions
+index|[
+literal|0
+index|]
+operator|+
+literal|" found"
+argument_list|)
+throw|;
+block|}
 block|}
 name|this
 operator|.
@@ -165,6 +255,27 @@ name|txnid
 argument_list|)
 operator|<
 literal|0
+return|;
+block|}
+comment|/**    * We cannot use a base file if its range contains an open txn.    * @param txnid from base_xxxx    */
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isValidBase
+parameter_list|(
+name|long
+name|txnid
+parameter_list|)
+block|{
+return|return
+name|minOpenTxn
+operator|>
+name|txnid
+operator|&&
+name|txnid
+operator|<=
+name|highWatermark
 return|;
 block|}
 annotation|@
@@ -333,6 +444,20 @@ argument_list|(
 name|highWatermark
 argument_list|)
 expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|':'
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+name|minOpenTxn
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|exceptions
@@ -447,6 +572,18 @@ literal|0
 index|]
 argument_list|)
 expr_stmt|;
+name|minOpenTxn
+operator|=
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|values
+index|[
+literal|1
+index|]
+argument_list|)
+expr_stmt|;
 name|exceptions
 operator|=
 operator|new
@@ -456,7 +593,7 @@ name|values
 operator|.
 name|length
 operator|-
-literal|1
+literal|2
 index|]
 expr_stmt|;
 for|for
@@ -464,7 +601,7 @@ control|(
 name|int
 name|i
 init|=
-literal|1
+literal|2
 init|;
 name|i
 operator|<
@@ -480,7 +617,7 @@ name|exceptions
 index|[
 name|i
 operator|-
-literal|1
+literal|2
 index|]
 operator|=
 name|Long
@@ -517,6 +654,17 @@ parameter_list|()
 block|{
 return|return
 name|exceptions
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|long
+name|getMinOpenTxn
+parameter_list|()
+block|{
+return|return
+name|minOpenTxn
 return|;
 block|}
 block|}

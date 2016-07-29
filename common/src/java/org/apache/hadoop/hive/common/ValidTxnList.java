@@ -56,6 +56,15 @@ name|long
 name|txnid
 parameter_list|)
 function_decl|;
+comment|/**    * Returns {@code true} if such base file can be used to materialize the snapshot represented by    * this {@code ValidTxnList}.    * @param txnid highest txn in a given base_xxxx file    */
+specifier|public
+name|boolean
+name|isValidBase
+parameter_list|(
+name|long
+name|txnid
+parameter_list|)
+function_decl|;
 comment|/**    * Find out if a range of transaction ids are valid.  Note that valid may have different meanings    * for different implementations, as some will only want to see committed transactions and some    * both committed and aborted.    * @param minTxnId minimum txnid to look for, inclusive    * @param maxTxnId maximum txnid to look for, inclusive    * @return Indicate whether none, some, or all of these transactions are valid.    */
 specifier|public
 name|RangeResponse

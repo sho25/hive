@@ -233,6 +233,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -365,6 +375,31 @@ operator|=
 name|txn
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|txns
+operator|.
+name|isSetMin_open_txn
+argument_list|()
+condition|)
+block|{
+return|return
+operator|new
+name|ValidReadTxnList
+argument_list|(
+name|exceptions
+argument_list|,
+name|highWater
+argument_list|,
+name|txns
+operator|.
+name|getMin_open_txn
+argument_list|()
+argument_list|)
+return|;
+block|}
+else|else
+block|{
 return|return
 operator|new
 name|ValidReadTxnList
@@ -375,7 +410,8 @@ name|highWater
 argument_list|)
 return|;
 block|}
-comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetOpenTxnsInfoResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnList}.  This assumes that the caller intends to    * compact the files, and thus treats only open transactions as invalid.  Additionally any    * txnId> highestOpenTxnId is also invalid.  This is avoid creating something like    * delta_17_120 where txnId 80, for example, is still open.    * @param txns txn list from the metastore    * @return a valid txn list.    */
+block|}
+comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetOpenTxnsInfoResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnList}.  This assumes that the caller intends to    * compact the files, and thus treats only open transactions as invalid.  Additionally any    * txnId> highestOpenTxnId is also invalid.  This is to avoid creating something like    * delta_17_120 where txnId 80, for example, is still open.    * @param txns txn list from the metastore    * @return a valid txn list.    */
 specifier|public
 specifier|static
 name|ValidTxnList
@@ -385,8 +421,6 @@ name|GetOpenTxnsInfoResponse
 name|txns
 parameter_list|)
 block|{
-comment|//todo: this could be more efficient: using select min(txn_id) from TXNS where txn_state=" +
-comment|// quoteChar(TXN_OPEN)  to compute compute HWM...
 name|long
 name|highWater
 init|=
@@ -442,6 +476,7 @@ name|TxnState
 operator|.
 name|OPEN
 condition|)
+block|{
 name|minOpenTxn
 operator|=
 name|Math
@@ -456,6 +491,10 @@ name|getId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|//only need aborted since we don't consider anything above minOpenTxn
 name|exceptions
 index|[
 name|i
@@ -467,9 +506,29 @@ operator|.
 name|getId
 argument_list|()
 expr_stmt|;
-comment|//todo: only add Aborted
 block|}
-comment|//remove all exceptions< minOpenTxn
+block|}
+if|if
+condition|(
+name|i
+operator|<
+name|exceptions
+operator|.
+name|length
+condition|)
+block|{
+name|exceptions
+operator|=
+name|Arrays
+operator|.
+name|copyOf
+argument_list|(
+name|exceptions
+argument_list|,
+name|i
+argument_list|)
+expr_stmt|;
+block|}
 name|highWater
 operator|=
 name|minOpenTxn
@@ -489,9 +548,6 @@ operator|new
 name|ValidCompactorTxnList
 argument_list|(
 name|exceptions
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 name|highWater
 argument_list|)
