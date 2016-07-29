@@ -3601,6 +3601,33 @@ name|HiveException
 block|{
 if|if
 condition|(
+name|state
+operator|==
+name|State
+operator|.
+name|CLOSE
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"checkAndGenObject is called after operator "
+operator|+
+name|id
+operator|+
+literal|" "
+operator|+
+name|getName
+argument_list|()
+operator|+
+literal|" closed"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 name|condn
 index|[
 literal|0
