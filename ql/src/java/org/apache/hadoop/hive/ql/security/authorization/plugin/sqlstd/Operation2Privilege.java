@@ -2925,6 +2925,7 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// For alter table exchange partition, we need select& delete on input& insert on output
 name|op2Priv
 operator|.
 name|put
@@ -2937,9 +2938,18 @@ name|PrivRequirement
 operator|.
 name|newIOPrivRequirement
 argument_list|(
-literal|null
+name|arr
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|SELECT_NOGRANT
 argument_list|,
-literal|null
+name|SQLPrivTypeGrant
+operator|.
+name|DELETE_NOGRANT
+argument_list|)
+argument_list|,
+name|INS_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
