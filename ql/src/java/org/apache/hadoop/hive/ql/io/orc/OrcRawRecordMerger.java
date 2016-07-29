@@ -1418,7 +1418,7 @@ operator|)
 operator|.
 name|set
 argument_list|(
-literal|0
+name|nextRowId
 argument_list|)
 expr_stmt|;
 name|nextRecord
