@@ -1927,9 +1927,16 @@ argument_list|)
 decl_stmt|;
 name|ds
 operator|=
+operator|(
 name|betterDS
 operator|<
 literal|1
+operator|||
+name|colStats
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
 condition|?
 name|ds
 else|:
@@ -2543,9 +2550,16 @@ name|stats
 operator|.
 name|setDataSize
 argument_list|(
+operator|(
 name|betterDS
 operator|<
 literal|1
+operator|||
+name|columnStats
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
 condition|?
 name|ds
 else|:
@@ -8960,15 +8974,29 @@ operator|||
 name|colStats
 operator|==
 literal|null
-operator|||
+condition|)
+block|{
+return|return
+name|result
+return|;
+block|}
+if|if
+condition|(
 name|colStats
 operator|.
 name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// this may happen if we are not projecting any column from current operator
+comment|// think count(*) where we are projecting rows without any columns
+comment|// in such a case we estimate empty row to be of size of empty java object.
 return|return
-name|result
+name|numRows
+operator|*
+name|JavaDataModel
+operator|.
+name|JAVA64_REF
 return|;
 block|}
 for|for
