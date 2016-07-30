@@ -71,6 +71,18 @@ name|ColumnVectorBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
@@ -87,6 +99,15 @@ argument_list|<
 name|Void
 argument_list|>
 name|getReadCallable
+parameter_list|()
+function_decl|;
+name|TypeDescription
+name|getFileSchema
+parameter_list|()
+function_decl|;
+name|boolean
+index|[]
+name|getIncludedColumns
 parameter_list|()
 function_decl|;
 block|}

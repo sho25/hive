@@ -12994,7 +12994,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Generate the desired schema for reading the file.    * @param conf the configuration    * @param isAcidRead is this an acid format?    * @param dataColumns the desired number of data columns for vectorized read    * @return the desired schema or null if schema evolution isn't enabled    * @throws IOException    */
+comment|/**    * Generate the desired schema for reading the file.    * @param conf the configuration    * @param isAcidRead is this an acid format?    * @param dataColumns the desired number of data columns for vectorized read    * @return the desired schema or null if schema evolution isn't enabled    * @throws IllegalArgumentException    */
 specifier|public
 specifier|static
 name|TypeDescription
@@ -13009,8 +13009,6 @@ parameter_list|,
 name|int
 name|dataColumns
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|String
 name|columnNameProperty
@@ -13173,7 +13171,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalArgumentException
 argument_list|(
 name|ErrorMsg
 operator|.
