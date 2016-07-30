@@ -792,6 +792,13 @@ name|explainTerms
 argument_list|(
 name|pw
 argument_list|)
+operator|.
+name|item
+argument_list|(
+literal|"table:alias"
+argument_list|,
+name|tblAlias
+argument_list|)
 return|;
 block|}
 block|}
