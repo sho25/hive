@@ -2548,6 +2548,7 @@ operator|.
 name|getCurrentDeserializer
 argument_list|()
 decl_stmt|;
+comment|// deserializer is null in case of VectorMapOperator
 name|KeyValueReader
 name|reader
 init|=
@@ -2562,6 +2563,12 @@ operator|new
 name|ObjectInspector
 index|[]
 block|{
+name|deserializer
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|deserializer
 operator|.
 name|getObjectInspector
