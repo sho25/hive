@@ -7539,6 +7539,13 @@ name|HiveDriverRunHookContextImpl
 argument_list|(
 name|conf
 argument_list|,
+name|alreadyCompiled
+condition|?
+name|ctx
+operator|.
+name|getCmd
+argument_list|()
+else|:
 name|command
 argument_list|)
 decl_stmt|;
