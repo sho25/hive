@@ -1515,6 +1515,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_DATANUCLEUS_INIT_COL_INFO
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_VALIDATE_COLUMNS
 block|,
 name|HiveConf
@@ -3858,6 +3864,17 @@ argument_list|,
 literal|"BONECP"
 argument_list|,
 literal|"Specify connection pool library for datanucleus"
+argument_list|)
+block|,
+comment|// Workaround for DN bug on Postgres:
+comment|// http://www.datanucleus.org/servlet/forum/viewthread_thread,7985_offset
+name|METASTORE_DATANUCLEUS_INIT_COL_INFO
+argument_list|(
+literal|"datanucleus.rdbms.initializeColumnInfo"
+argument_list|,
+literal|"NONE"
+argument_list|,
+literal|"initializeColumnInfo setting for DataNucleus; set to NONE at least on Postgres."
 argument_list|)
 block|,
 name|METASTORE_VALIDATE_TABLES
