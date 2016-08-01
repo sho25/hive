@@ -223,6 +223,28 @@ name|SyntheticFileId
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|encoded
+operator|.
+name|IncompleteCb
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -466,6 +488,13 @@ name|current
 init|=
 name|ranges
 decl_stmt|;
+name|gotAllData
+operator|.
+name|value
+operator|=
+literal|true
+expr_stmt|;
+comment|// Assume by default that we would find everything.
 while|while
 condition|(
 name|current
@@ -535,10 +564,26 @@ literal|false
 expr_stmt|;
 continue|continue;
 block|}
+comment|// We could just remove here and handle the missing tail during read, but that can be
+comment|// dangerous; let's explicitly add an incomplete CB.
 name|check
 operator|.
-name|removeSelf
+name|replaceSelfWith
+argument_list|(
+operator|new
+name|IncompleteCb
+argument_list|(
+name|check
+operator|.
+name|getOffset
 argument_list|()
+argument_list|,
+name|check
+operator|.
+name|getEnd
+argument_list|()
+argument_list|)
+argument_list|)
 expr_stmt|;
 block|}
 return|return

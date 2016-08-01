@@ -1106,6 +1106,7 @@ operator|.
 name|hasData
 argument_list|()
 assert|;
+comment|// Assumes no ranges passed to cache to read have data.
 if|if
 condition|(
 name|gotAllData

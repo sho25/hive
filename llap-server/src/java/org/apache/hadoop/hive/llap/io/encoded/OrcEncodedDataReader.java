@@ -5286,6 +5286,43 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|LlapIoImpl
+operator|.
+name|ORC_LOGGER
+operator|.
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|ORC_LOGGER
+operator|.
+name|trace
+argument_list|(
+literal|"Disk ranges after data cache (file "
+operator|+
+name|fileKey
+operator|+
+literal|", base offset "
+operator|+
+name|baseOffset
+operator|+
+literal|"): "
+operator|+
+name|RecordReaderUtils
+operator|.
+name|stringifyDiskRanges
+argument_list|(
+name|range
+operator|.
+name|next
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|gotAllData
 operator|.
 name|value
