@@ -4146,11 +4146,6 @@ name|slr
 operator|.
 name|getLocks
 argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|pause
@@ -4228,11 +4223,6 @@ name|slr
 operator|.
 name|getLocks
 argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|pause
@@ -4305,11 +4295,6 @@ name|slr
 operator|.
 name|getLocks
 argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//should've done several heartbeats
