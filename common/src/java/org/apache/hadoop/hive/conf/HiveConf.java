@@ -12586,6 +12586,19 @@ operator|+
 literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
 block|,
+name|HIVE_MSCK_REPAIR_BATCH_SIZE
+argument_list|(
+literal|"hive.msck.repair.batch.size"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Batch size for the msck repair command. If the value is greater than zero, "
+operator|+
+literal|"it will execute batch wise with the configured batch size. "
+operator|+
+literal|"The default value is zero. Zero means it will execute directly (Not batch wise)"
+argument_list|)
+block|,
 name|HIVE_SERVER2_LLAP_CONCURRENT_QUERIES
 argument_list|(
 literal|"hive.server2.llap.concurrent.queries"
