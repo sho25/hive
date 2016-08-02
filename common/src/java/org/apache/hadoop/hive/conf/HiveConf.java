@@ -4922,7 +4922,7 @@ name|HIVEMAPREDMODE
 argument_list|(
 literal|"hive.mapred.mode"
 argument_list|,
-literal|"nonstrict"
+literal|null
 argument_list|,
 literal|"Deprecated; use hive.strict.checks.* settings instead."
 argument_list|)
