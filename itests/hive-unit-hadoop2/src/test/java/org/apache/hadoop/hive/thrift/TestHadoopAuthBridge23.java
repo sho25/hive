@@ -19,16 +19,6 @@ end_comment
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -152,24 +142,6 @@ operator|.
 name|api
 operator|.
 name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|thrift
-operator|.
-name|DelegationTokenStore
-operator|.
-name|TokenStoreException
 import|;
 end_import
 
@@ -445,6 +417,36 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -567,8 +569,6 @@ begin_class
 specifier|public
 class|class
 name|TestHadoopAuthBridge23
-extends|extends
-name|TestCase
 block|{
 comment|/**    * set to true when metastore token manager has intitialized token manager    * through call to HadoopThriftAuthBridge23.Server.startDelegationTokenSecretManager    */
 specifier|static
@@ -924,6 +924,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Before
 specifier|public
 name|void
 name|setup
@@ -1045,6 +1047,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test delegation token store/load from shared store.    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDelegationTokenSharedStore
@@ -1157,6 +1161,8 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Usernames don't match"
@@ -1190,6 +1196,8 @@ argument_list|(
 name|d
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertNotNull
 argument_list|(
 literal|"token not in store"
@@ -1197,6 +1205,8 @@ argument_list|,
 name|tokenInfo
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertFalse
 argument_list|(
 literal|"duplicate token add"
@@ -1233,6 +1243,8 @@ operator|.
 name|TOKEN_STORE
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|"master keys empty on init"
@@ -1247,6 +1259,8 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertNotNull
 argument_list|(
 literal|"token loaded"
@@ -1271,6 +1285,8 @@ name|getShortUserName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 literal|"master keys not loaded from store"
@@ -1300,6 +1316,8 @@ argument_list|(
 name|tokenStrForm
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertNull
 argument_list|(
 literal|"token not removed from store after cancel"
@@ -1314,6 +1332,8 @@ name|d
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertFalse
 argument_list|(
 literal|"token removed (again)"
@@ -1337,6 +1357,8 @@ argument_list|(
 name|d
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|fail
 argument_list|(
 literal|"InvalidToken expected after cancel"
@@ -1372,6 +1394,8 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertNotNull
 argument_list|(
 name|MyTokenStore
@@ -1389,6 +1413,8 @@ operator|.
 name|removeExpiredTokens
 argument_list|()
 expr_stmt|;
+name|Assert
+operator|.
 name|assertNull
 argument_list|(
 literal|"Expired token not removed"
@@ -1446,6 +1472,8 @@ name|expiredKey
 argument_list|)
 expr_stmt|;
 comment|// updates key with sequence number
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"expired key not in allKeys"
@@ -1469,6 +1497,8 @@ operator|.
 name|rollMasterKeyExt
 argument_list|()
 expr_stmt|;
+name|Assert
+operator|.
 name|assertFalse
 argument_list|(
 literal|"Expired key not removed"
@@ -1488,6 +1518,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSaslWithHiveMetaStore
@@ -1521,6 +1553,8 @@ literal|"tokenForFooTablePartition"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetastoreProxyUser
@@ -1626,6 +1660,8 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Expected the getDelegationToken call to fail"
@@ -1698,6 +1734,8 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Expected the getDelegationToken call to not fail"
@@ -1753,6 +1791,8 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Usernames don't match"
@@ -1998,6 +2038,8 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Usernames don't match"
@@ -2099,6 +2141,8 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Couldn't connect to metastore"
@@ -2148,17 +2192,12 @@ parameter_list|()
 block|{
 try|try
 block|{
-name|HiveMetaStoreClient
-name|hiveClient
-init|=
+return|return
 operator|new
 name|HiveMetaStoreClient
 argument_list|(
 name|conf
 argument_list|)
-decl_stmt|;
-return|return
-name|hiveClient
 return|;
 block|}
 catch|catch
@@ -2175,6 +2214,8 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Expected metastore operations to fail"
@@ -2238,6 +2279,8 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 literal|"Databases do not match"
