@@ -438,7 +438,7 @@ name|assertEquals
 argument_list|(
 name|Type
 operator|.
-name|DOUBLE_TYPE
+name|FLOAT_TYPE
 argument_list|,
 name|floatColumn
 operator|.
