@@ -8998,6 +8998,17 @@ operator|+
 literal|"Choices between memory, ssd and default"
 argument_list|)
 block|,
+name|HIVE_QUERY_LIFETIME_HOOKS
+argument_list|(
+literal|"hive.query.lifetime.hooks"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A comma separated list of hooks which implement QueryLifeTimeHook. These will be triggered"
+operator|+
+literal|" before/after query compilation and before/after query execution, in the order specified"
+argument_list|)
+block|,
 name|HIVE_DRIVER_RUN_HOOKS
 argument_list|(
 literal|"hive.exec.driver.run.hooks"
