@@ -11790,11 +11790,11 @@ literal|"hive.llap.daemon.work.dirs"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Working directories for the daemon. Needs to be set for a secure cluster, since LLAP may\n"
+literal|"Working directories for the daemon. This should not be set if running as a YARN\n"
 operator|+
-literal|"not have access to the default YARN working directories. yarn.nodemanager.local-dirs is\n"
+literal|"application via Slider. It must be set when not running via Slider on YARN. If the value\n"
 operator|+
-literal|"used if this is not set"
+literal|"is set when running as a Slider YARN application, the specified value will be used."
 argument_list|,
 literal|"llap.daemon.work.dirs"
 argument_list|)
