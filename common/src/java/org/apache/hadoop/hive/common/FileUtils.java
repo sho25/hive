@@ -2482,6 +2482,11 @@ block|{
 try|try
 block|{
 comment|//set on the entire subtree
+if|if
+condition|(
+name|inheritPerms
+condition|)
+block|{
 name|HdfsUtils
 operator|.
 name|setFullFileStatus
@@ -2507,6 +2512,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
