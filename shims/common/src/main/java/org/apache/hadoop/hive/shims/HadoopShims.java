@@ -1652,6 +1652,23 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**      * Checks if two HDFS paths are on the same encrypted or unencrypted zone.      *      * @param path1 Path to HDFS file system      * @param path2 Path to HDFS file system      * @param encryptionShim2 The encryption-shim corresponding to path2.      * @return True if both paths are in the same zone; False otherwise.      * @throws IOException If an error occurred attempting to get encryption information      */
+specifier|public
+name|boolean
+name|arePathsOnSameEncryptionZone
+parameter_list|(
+name|Path
+name|path1
+parameter_list|,
+name|Path
+name|path2
+parameter_list|,
+name|HdfsEncryptionShim
+name|encryptionShim2
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
 comment|/**      * Compares two encrypted path strengths.      *      * @param path1 HDFS path to compare.      * @param path2 HDFS path to compare.      * @return 1 if path1 is stronger; 0 if paths are equals; -1 if path1 is weaker.      * @throws IOException If an error occurred attempting to get encryption/key metadata      */
 specifier|public
 name|int
@@ -1766,6 +1783,29 @@ throws|throws
 name|IOException
 block|{
 comment|/* not supported */
+return|return
+literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|arePathsOnSameEncryptionZone
+parameter_list|(
+name|Path
+name|path1
+parameter_list|,
+name|Path
+name|path2
+parameter_list|,
+name|HdfsEncryptionShim
+name|encryptionShim2
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+comment|// Not supported.
 return|return
 literal|true
 return|;
