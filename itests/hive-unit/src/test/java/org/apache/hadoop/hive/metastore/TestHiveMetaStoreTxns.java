@@ -928,7 +928,7 @@ operator|=
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"10:4:5:6"
+literal|"10:5:4:5:6"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1518,6 +1518,12 @@ operator|new
 name|ValidReadTxnList
 argument_list|(
 literal|"1:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|)
 decl_stmt|;
 name|String
@@ -1533,6 +1539,12 @@ operator|.
 name|assertEquals
 argument_list|(
 literal|"1:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|,
 name|asString
 argument_list|)
@@ -1593,6 +1605,12 @@ operator|.
 name|assertEquals
 argument_list|(
 literal|"1:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|":"
 argument_list|,
 name|asString
 argument_list|)
@@ -1647,7 +1665,7 @@ operator|=
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"10:5:3"
+literal|"10:3:5:3"
 argument_list|)
 expr_stmt|;
 name|asString
@@ -1664,7 +1682,7 @@ name|asString
 operator|.
 name|equals
 argument_list|(
-literal|"10:3:5"
+literal|"10:3:3:5"
 argument_list|)
 operator|&&
 operator|!
@@ -1672,7 +1690,7 @@ name|asString
 operator|.
 name|equals
 argument_list|(
-literal|"10:5:3"
+literal|"10:3:5:3"
 argument_list|)
 condition|)
 block|{
