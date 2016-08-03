@@ -2193,7 +2193,7 @@ return|return
 name|removed
 return|;
 block|}
-comment|/**    * @return displays representing a number of historical SQLOperations, at max number of    * hive.server2.webui.max.historic.queries    */
+comment|/**    * @return displays representing a number of historical SQLOperations, at max number of    * hive.server2.webui.max.historic.queries. Newest items will be first.    */
 specifier|public
 name|List
 argument_list|<
@@ -2233,6 +2233,13 @@ name|historicSqlOperations
 operator|.
 name|values
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|Collections
+operator|.
+name|reverse
+argument_list|(
+name|result
 argument_list|)
 expr_stmt|;
 block|}
