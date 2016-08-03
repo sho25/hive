@@ -105,6 +105,7 @@ name|float
 name|loadFactor
 decl_stmt|;
 specifier|protected
+specifier|final
 name|int
 name|writeBuffersSize
 decl_stmt|;

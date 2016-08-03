@@ -456,7 +456,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|VectorMapJoinFastHashTable
-name|VectorMapJoinFastHashTable
+name|vectorMapJoinFastHashTable
 decl_stmt|;
 specifier|public
 name|VectorMapJoinFastTableContainer
@@ -572,7 +572,7 @@ name|keyCount
 argument_list|)
 decl_stmt|;
 comment|// LOG.debug("VectorMapJoinFastTableContainer load newThreshold " + newThreshold);
-name|VectorMapJoinFastHashTable
+name|vectorMapJoinFastHashTable
 operator|=
 name|createHashTable
 argument_list|(
@@ -588,7 +588,7 @@ name|vectorMapJoinHashTable
 parameter_list|()
 block|{
 return|return
-name|VectorMapJoinFastHashTable
+name|vectorMapJoinFastHashTable
 return|;
 block|}
 specifier|private
@@ -915,7 +915,7 @@ throws|,
 name|IOException
 block|{
 comment|// We are not using the key and value contexts, nor do we support a MapJoinKey.
-name|VectorMapJoinFastHashTable
+name|vectorMapJoinFastHashTable
 operator|.
 name|putRow
 argument_list|(
@@ -1013,7 +1013,7 @@ name|size
 parameter_list|()
 block|{
 return|return
-name|VectorMapJoinFastHashTable
+name|vectorMapJoinFastHashTable
 operator|.
 name|size
 argument_list|()

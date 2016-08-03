@@ -96,8 +96,9 @@ specifier|private
 name|WriteBuffers
 operator|.
 name|Position
-name|readPos
+name|unsafeReadPos
 decl_stmt|;
+comment|// Thread-unsafe position used at write time.
 comment|/**    * A store for arbitrary length keys in memory.    *    * The memory is a "infinite" byte array or WriteBuffers object.    *    * We give the client a 64-bit (long) key reference to keep that has the offset within    * the "infinite" byte array of the key.    *    * We optimize the common case when keys are short and store the key length in the key reference    * word.    *    * If the key is big, the big length will be encoded as an integer at the beginning of the key    * followed by the big key bytes.    */
 comment|/**    * Bit-length fields within a 64-bit (long) key reference.    *    * Lowest field: An absolute byte offset the the key in the WriteBuffers.    *    * Next field: For short keys, the length of the key.  Otherwise, a special constant    * indicating a big key whose length is stored with the key.    *    * Last field: an always on bit to insure the key reference non-zero when the offset and    * length are zero.    */
 comment|/*    * The absolute offset to the beginning of the key within the WriteBuffers.    */
@@ -379,6 +380,40 @@ return|return
 name|keyRefWord
 return|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
+specifier|public
+name|boolean
+name|unsafeEqualKey
+parameter_list|(
+name|long
+name|keyRefWord
+parameter_list|,
+name|byte
+index|[]
+name|keyBytes
+parameter_list|,
+name|int
+name|keyStart
+parameter_list|,
+name|int
+name|keyLength
+parameter_list|)
+block|{
+return|return
+name|equalKey
+argument_list|(
+name|keyRefWord
+argument_list|,
+name|keyBytes
+argument_list|,
+name|keyStart
+argument_list|,
+name|keyLength
+argument_list|,
+name|unsafeReadPos
+argument_list|)
+return|;
+block|}
 specifier|public
 name|boolean
 name|equalKey
@@ -395,6 +430,11 @@ name|keyStart
 parameter_list|,
 name|int
 name|keyLength
+parameter_list|,
+name|WriteBuffers
+operator|.
+name|Position
+name|readPos
 parameter_list|)
 block|{
 name|int
@@ -538,7 +578,7 @@ operator|.
 name|maxSize
 argument_list|)
 expr_stmt|;
-name|readPos
+name|unsafeReadPos
 operator|=
 operator|new
 name|WriteBuffers
@@ -561,7 +601,7 @@ name|writeBuffers
 operator|=
 name|writeBuffers
 expr_stmt|;
-name|readPos
+name|unsafeReadPos
 operator|=
 operator|new
 name|WriteBuffers

@@ -3382,6 +3382,31 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using "
+operator|+
+name|vectorMapJoinHashTable
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" from "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/*    * Setup our 2nd batch with the same "column schema" as the big table batch that can be used to    * build join output results in.    */
 specifier|protected

@@ -2158,6 +2158,31 @@ name|needHashTableSetup
 operator|=
 literal|true
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Created "
+operator|+
+name|vectorMapJoinHashTable
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" from "
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isLogDebugEnabled

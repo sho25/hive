@@ -51,43 +51,7 @@ name|serde2
 operator|.
 name|ByteStream
 operator|.
-name|Output
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|ByteStream
-operator|.
 name|RandomAccessOutput
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|binarysortable
-operator|.
-name|BinarySortableSerDe
 import|;
 end_import
 
@@ -106,26 +70,6 @@ operator|.
 name|lazybinary
 operator|.
 name|LazyBinaryUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|PrimitiveObjectInspector
-operator|.
-name|PrimitiveCategory
 import|;
 end_import
 
@@ -262,13 +206,13 @@ argument_list|()
 decl_stmt|;
 comment|// Position where we'd write
 name|Position
-name|defaultReadPos
+name|unsafeReadPos
 init|=
 operator|new
 name|Position
 argument_list|()
 decl_stmt|;
-comment|// Position where we'd read (by default).
+comment|// Position where we'd read (unsafely at write time).
 specifier|public
 name|WriteBuffers
 parameter_list|(
@@ -340,9 +284,10 @@ operator|-
 literal|1
 expr_stmt|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|int
-name|readVInt
+name|unsafeReadVInt
 parameter_list|()
 block|{
 return|return
@@ -351,7 +296,7 @@ name|int
 operator|)
 name|readVLong
 argument_list|(
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 return|;
 block|}
@@ -373,15 +318,16 @@ name|readPos
 argument_list|)
 return|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|long
-name|readVLong
+name|unsafeReadVLong
 parameter_list|()
 block|{
 return|return
 name|readVLong
 argument_list|(
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 return|;
 block|}
@@ -554,14 +500,15 @@ name|i
 operator|)
 return|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|void
-name|skipVLong
+name|unsafeSkipVLong
 parameter_list|()
 block|{
 name|skipVLong
 argument_list|(
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 expr_stmt|;
 block|}
@@ -672,9 +619,10 @@ name|wbSize
 expr_stmt|;
 block|}
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|void
-name|setReadPoint
+name|setUnsafeReadPoint
 parameter_list|(
 name|long
 name|offset
@@ -684,7 +632,7 @@ name|setReadPoint
 argument_list|(
 name|offset
 argument_list|,
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 expr_stmt|;
 block|}
@@ -731,9 +679,10 @@ name|offset
 argument_list|)
 expr_stmt|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|int
-name|hashCode
+name|unsafeHashCode
 parameter_list|(
 name|long
 name|offset
@@ -749,7 +698,7 @@ name|offset
 argument_list|,
 name|length
 argument_list|,
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 return|;
 block|}
@@ -2010,7 +1959,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|defaultReadPos
+name|unsafeReadPos
 operator|.
 name|clear
 argument_list|()
@@ -2052,15 +2001,16 @@ operator|.
 name|offset
 return|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|long
-name|getReadPoint
+name|getUnsafeReadPoint
 parameter_list|()
 block|{
 return|return
 name|getReadPoint
 argument_list|(
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 return|;
 block|}
@@ -2863,9 +2813,10 @@ name|clearState
 argument_list|()
 expr_stmt|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|long
-name|readNByteLong
+name|unsafeReadNByteLong
 parameter_list|(
 name|long
 name|offset
@@ -2881,7 +2832,7 @@ name|offset
 argument_list|,
 name|bytes
 argument_list|,
-name|defaultReadPos
+name|unsafeReadPos
 argument_list|)
 return|;
 block|}
@@ -3260,7 +3211,7 @@ return|return
 operator|(
 name|int
 operator|)
-name|readNByteLong
+name|unsafeReadNByteLong
 argument_list|(
 name|offset
 argument_list|,
@@ -3563,13 +3514,14 @@ operator|)
 name|wbSize
 return|;
 block|}
+comment|/** THIS METHOD IS NOT THREAD-SAFE. Use only at load time (or be mindful of thread safety). */
 specifier|public
 name|Position
-name|getReadPosition
+name|getUnsafeReadPosition
 parameter_list|()
 block|{
 return|return
-name|defaultReadPos
+name|unsafeReadPos
 return|;
 block|}
 block|}

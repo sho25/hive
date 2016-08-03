@@ -105,6 +105,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|WriteBuffers
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|BytesWritable
@@ -379,7 +395,7 @@ index|]
 operator|&&
 name|keyStore
 operator|.
-name|equalKey
+name|unsafeEqualKey
 argument_list|(
 name|slotTriples
 index|[
@@ -761,6 +777,7 @@ expr_stmt|;
 comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
 block|}
 specifier|protected
+specifier|final
 name|long
 name|findReadSlot
 parameter_list|(
@@ -776,6 +793,11 @@ name|keyLength
 parameter_list|,
 name|long
 name|hashCode
+parameter_list|,
+name|WriteBuffers
+operator|.
+name|Position
+name|readPos
 parameter_list|)
 block|{
 name|int
@@ -854,6 +876,8 @@ argument_list|,
 name|keyStart
 argument_list|,
 name|keyLength
+argument_list|,
+name|readPos
 argument_list|)
 condition|)
 block|{

@@ -43,6 +43,22 @@ name|JoinUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|WriteBuffers
+import|;
+end_import
+
 begin_comment
 comment|/*  * Root abstract class for a hash table result.  */
 end_comment
@@ -63,6 +79,13 @@ specifier|private
 name|int
 name|spillPartitionId
 decl_stmt|;
+specifier|private
+specifier|final
+name|WriteBuffers
+operator|.
+name|Position
+name|readPos
+decl_stmt|;
 specifier|public
 name|VectorMapJoinHashTableResult
 parameter_list|()
@@ -79,6 +102,14 @@ name|spillPartitionId
 operator|=
 operator|-
 literal|1
+expr_stmt|;
+name|readPos
+operator|=
+operator|new
+name|WriteBuffers
+operator|.
+name|Position
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * @return The join result from the most recent hash map match, or hash multi-set / set contains    *         call.    */
@@ -183,6 +214,17 @@ name|sb
 operator|.
 name|toString
 argument_list|()
+return|;
+block|}
+specifier|public
+name|WriteBuffers
+operator|.
+name|Position
+name|getReadPos
+parameter_list|()
+block|{
+return|return
+name|readPos
 return|;
 block|}
 block|}

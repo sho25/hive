@@ -329,6 +329,11 @@ argument_list|,
 name|keyLength
 argument_list|,
 name|hashCode
+argument_list|,
+name|hashSetResult
+operator|.
+name|getReadPos
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|JoinUtil

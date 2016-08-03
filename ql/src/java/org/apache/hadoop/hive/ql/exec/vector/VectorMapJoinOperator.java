@@ -881,7 +881,6 @@ block|{
 name|int
 name|columnIndex
 decl_stmt|;
-empty_stmt|;
 name|int
 name|writerIndex
 decl_stmt|;

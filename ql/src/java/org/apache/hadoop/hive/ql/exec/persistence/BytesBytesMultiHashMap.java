@@ -1276,7 +1276,7 @@ operator|)
 condition|?
 name|writeBuffers
 operator|.
-name|hashCode
+name|unsafeHashCode
 argument_list|(
 name|keyOffset
 argument_list|,
@@ -2203,7 +2203,7 @@ comment|// Hash bits in ref don't match.
 block|}
 name|writeBuffers
 operator|.
-name|setReadPoint
+name|setUnsafeReadPoint
 argument_list|(
 name|getFirstRecordLengthsOffset
 argument_list|(
@@ -2221,7 +2221,7 @@ name|int
 operator|)
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 decl_stmt|,
 name|keyLength
@@ -2231,7 +2231,7 @@ name|int
 operator|)
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 decl_stmt|;
 if|if
@@ -2516,7 +2516,7 @@ operator|)
 condition|?
 name|writeBuffers
 operator|.
-name|readNByteLong
+name|unsafeReadNByteLong
 argument_list|(
 name|tailOffset
 argument_list|,
@@ -2659,7 +2659,7 @@ comment|//       match or a probe, and in the former case use hash bits (for a f
 comment|// int hashCodeOrPart = oldSlot | Ref.getNthHashBit(oldRef, startingHashBitCount, newHashBitCount);
 name|writeBuffers
 operator|.
-name|setReadPoint
+name|setUnsafeReadPoint
 argument_list|(
 name|getFirstRecordLengthsOffset
 argument_list|(
@@ -2678,7 +2678,7 @@ name|int
 operator|)
 name|writeBuffers
 operator|.
-name|readNByteLong
+name|unsafeReadNByteLong
 argument_list|(
 name|Ref
 operator|.
@@ -2689,12 +2689,12 @@ argument_list|)
 operator|-
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 operator|-
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 operator|-
 literal|4
@@ -2795,7 +2795,7 @@ comment|// LOG.info("Found list record at " + writeBuffers.getReadPoint());
 return|return
 name|writeBuffers
 operator|.
-name|getReadPoint
+name|getUnsafeReadPoint
 argument_list|()
 return|;
 comment|// Assumes we are here after key compare.
@@ -2814,19 +2814,19 @@ comment|// LOG.info("First tail offset to create list record is " + firstTailOff
 comment|// Determine the length of storage for value and key lengths of the first record.
 name|writeBuffers
 operator|.
-name|setReadPoint
+name|setUnsafeReadPoint
 argument_list|(
 name|firstTailOffset
 argument_list|)
 expr_stmt|;
 name|writeBuffers
 operator|.
-name|skipVLong
+name|unsafeSkipVLong
 argument_list|()
 expr_stmt|;
 name|writeBuffers
 operator|.
-name|skipVLong
+name|unsafeSkipVLong
 argument_list|()
 expr_stmt|;
 name|int
@@ -2838,7 +2838,7 @@ call|)
 argument_list|(
 name|writeBuffers
 operator|.
-name|getReadPoint
+name|getUnsafeReadPoint
 argument_list|()
 operator|-
 name|firstTailOffset
@@ -2907,7 +2907,7 @@ name|prevHeadOffset
 init|=
 name|writeBuffers
 operator|.
-name|readNByteLong
+name|unsafeReadNByteLong
 argument_list|(
 name|lrPtrOffset
 argument_list|,
@@ -3233,7 +3233,7 @@ argument_list|)
 decl_stmt|;
 name|writeBuffers
 operator|.
-name|setReadPoint
+name|setUnsafeReadPoint
 argument_list|(
 name|recOffset
 argument_list|)
@@ -3246,7 +3246,7 @@ name|int
 operator|)
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 decl_stmt|,
 name|keyLength
@@ -3256,7 +3256,7 @@ name|int
 operator|)
 name|writeBuffers
 operator|.
-name|readVLong
+name|unsafeReadVLong
 argument_list|()
 decl_stmt|;
 name|long
@@ -3264,7 +3264,7 @@ name|ptrOffset
 init|=
 name|writeBuffers
 operator|.
-name|getReadPoint
+name|getUnsafeReadPoint
 argument_list|()
 decl_stmt|;
 if|if
