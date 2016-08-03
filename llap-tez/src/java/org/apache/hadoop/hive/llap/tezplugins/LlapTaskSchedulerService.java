@@ -2853,6 +2853,11 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+name|int
+name|numInstancesFound
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|ServiceInstance
@@ -2883,15 +2888,6 @@ operator|.
 name|getResource
 argument_list|()
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Found instance "
-operator|+
-name|inst
-argument_list|)
-expr_stmt|;
 name|memory
 operator|+=
 name|r
@@ -2906,19 +2902,32 @@ operator|.
 name|getVirtualCores
 argument_list|()
 expr_stmt|;
+name|numInstancesFound
+operator|++
+expr_stmt|;
 block|}
-else|else
+block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Ignoring dead instance "
-operator|+
-name|inst
+literal|"GetTotalResources: numInstancesFound={}, totalMem={}, totalVcores={}"
+argument_list|,
+name|numInstancesFound
+argument_list|,
+name|memory
+argument_list|,
+name|vcores
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 finally|finally
@@ -3258,6 +3267,26 @@ name|getTime
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received allocateRequest. task={}, priority={}, capability={}, hosts={}"
+argument_list|,
+name|task
+argument_list|,
+name|priority
+argument_list|,
+name|capability
+argument_list|,
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|hosts
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|writeLock
 operator|.
 name|lock
@@ -3347,6 +3376,21 @@ name|getTime
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received allocateRequest. task={}, priority={}, capability={}, containerId={}"
+argument_list|,
+name|task
+argument_list|,
+name|priority
+argument_list|,
+name|capability
+argument_list|,
+name|containerId
+argument_list|)
+expr_stmt|;
 name|writeLock
 operator|.
 name|lock
@@ -3402,6 +3446,28 @@ name|String
 name|diagnostics
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Processing deallocateTask for task={}, taskSucceeded={}, endReason={}"
+argument_list|,
+name|task
+argument_list|,
+name|taskSucceeded
+argument_list|,
+name|endReason
+argument_list|)
+expr_stmt|;
+block|}
 name|writeLock
 operator|.
 name|lock
@@ -3534,6 +3600,24 @@ name|nodeInfo
 operator|!=
 literal|null
 assert|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Processing de-allocate request for task={}, state={}, endReason={}"
+argument_list|,
+name|taskInfo
+operator|.
+name|task
+argument_list|,
+name|taskInfo
+operator|.
+name|getState
+argument_list|()
+argument_list|,
+name|endReason
+argument_list|)
+expr_stmt|;
 comment|// Re-enable the node if preempted
 if|if
 condition|(
@@ -3907,6 +3991,33 @@ name|request
 operator|.
 name|requestedHosts
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"selectingHost for task={} on hosts={}"
+argument_list|,
+name|request
+operator|.
+name|task
+argument_list|,
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|requestedHosts
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|long
 name|schedulerAttemptTime
 init|=
@@ -3949,6 +4060,26 @@ argument_list|(
 name|schedulerAttemptTime
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"ShouldDelayForLocality={} for task={} on hosts={}"
+argument_list|,
+name|shouldDelayForLocality
+argument_list|,
+name|request
+operator|.
+name|task
+argument_list|,
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|requestedHosts
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|requestedHosts
@@ -4145,6 +4276,15 @@ name|hadCommFailure
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Host={} will not become available within requested timeout"
+argument_list|,
+name|nodeInfo
+argument_list|)
+expr_stmt|;
 comment|// This node will likely be activated after the task timeout expires.
 block|}
 else|else
@@ -4204,7 +4344,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Skipping non-local location allocation for ["
+literal|"Delaying local allocation for ["
 operator|+
 name|request
 operator|.
@@ -4252,7 +4392,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Not skipping non-local location allocation for ["
+literal|"Skipping local allocation for ["
 operator|+
 name|request
 operator|.
@@ -4274,7 +4414,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/* fall through - miss in locality (random scheduling) */
+comment|/* fall through - miss in locality (random scheduling) or no locality-requested */
 name|Entry
 argument_list|<
 name|String
@@ -4299,6 +4439,26 @@ index|]
 argument_list|)
 decl_stmt|;
 comment|// Check again
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Attempting random allocation for task={}"
+argument_list|,
+name|request
+operator|.
+name|task
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|all
@@ -4898,6 +5058,25 @@ name|incrPendingTasksCount
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"PendingTasksInfo={}"
+argument_list|,
+name|constructPendingTaskCountsLogMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 finally|finally
 block|{
@@ -5249,6 +5428,25 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"ScheduleRun: {}"
+argument_list|,
+name|constructPendingTaskCountsLogMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|Iterator
 argument_list|<
 name|Entry
@@ -5369,17 +5567,9 @@ argument_list|(
 name|taskInfo
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
+name|info
 argument_list|(
 literal|"ScheduleResult for Task: {} = {}"
 argument_list|,
@@ -5388,7 +5578,6 @@ argument_list|,
 name|scheduleResult
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|scheduleResult
@@ -5427,6 +5616,7 @@ expr_stmt|;
 name|startTimeoutMonitor
 argument_list|()
 expr_stmt|;
+comment|// TODO Nothing else should be done for this task. Move on.
 block|}
 comment|// Try pre-empting a task so that a higher priority task can take it's place.
 comment|// Preempt only if there's no pending preemptions to avoid preempting twice for a task.
@@ -5485,6 +5675,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|// At this point we're dealing with all return types, except ScheduleResult.SCHEDULED.
 if|if
 condition|(
 name|potentialHosts
@@ -5492,6 +5683,31 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Attempting to preempt on requested host for task={}, potentialHosts={}"
+argument_list|,
+name|taskInfo
+argument_list|,
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|potentialHosts
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Preempt on specific host
 name|boolean
 name|shouldPreempt
@@ -5538,6 +5754,24 @@ name|shouldPreempt
 operator|=
 literal|false
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not preempting for task={}. Found an existing preemption request on host={}, pendingPreemptionCount={}"
+argument_list|,
+name|taskInfo
+operator|.
+name|task
+argument_list|,
+name|host
+argument_list|,
+name|pendingHostPreemptions
+operator|.
+name|intValue
+argument_list|()
+argument_list|)
+expr_stmt|;
 break|break;
 block|}
 block|}
@@ -5548,18 +5782,13 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Attempting to preempt for {}, pendingPreemptions={} on hosts={}"
+literal|"Preempting for {} on potential hosts={}. TotalPendingPreemptions={}"
 argument_list|,
 name|taskInfo
 operator|.
 name|task
-argument_list|,
-name|pendingPreemptions
-operator|.
-name|get
-argument_list|()
 argument_list|,
 name|Arrays
 operator|.
@@ -5567,6 +5796,11 @@ name|toString
 argument_list|(
 name|potentialHosts
 argument_list|)
+argument_list|,
+name|pendingPreemptions
+operator|.
+name|get
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|preemptTasks
@@ -5585,11 +5819,49 @@ name|potentialHosts
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not preempting for {} on potential hosts={}. An existing preemption request exists"
+argument_list|,
+name|taskInfo
+operator|.
+name|task
+argument_list|,
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|potentialHosts
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
+comment|// Either DELAYED_RESOURCES or DELAYED_LOCALITY with an unknown requested host.
 comment|// Request for a preemption if there's none pending. If a single preemption is pending,
 comment|// and this is the next task to be assigned, it will be assigned once that slot becomes available.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Attempting to preempt on any host for task={}, pendingPreemptions={}"
+argument_list|,
+name|taskInfo
+operator|.
+name|task
+argument_list|,
+name|pendingPreemptions
+operator|.
+name|get
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|pendingPreemptions
@@ -5604,16 +5876,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Attempting to preempt for {}, pendingPreemptions={} on any host"
+literal|"Preempting for task={} on any available host"
 argument_list|,
 name|taskInfo
 operator|.
 name|task
-argument_list|,
-name|pendingPreemptions
-operator|.
-name|get
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|preemptTasks
@@ -5631,6 +5898,32 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping preemption since there are {} pending preemption request. For task={}"
+argument_list|,
+name|pendingPreemptions
+operator|.
+name|get
+argument_list|()
+argument_list|,
+name|taskInfo
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 comment|// Since there was an allocation failure - don't try assigning tasks at the next priority.
@@ -5675,6 +5968,18 @@ operator|!
 name|scheduledAllAtPriority
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Unable to schedule all requests at priority={}. Skipping subsequent priority levels"
+argument_list|,
+name|entry
+operator|.
+name|getKey
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Don't attempt scheduling for additional priorities
 break|break;
 block|}
@@ -5688,6 +5993,181 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|String
+name|constructPendingTaskCountsLogMessage
+parameter_list|()
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|int
+name|totalCount
+init|=
+literal|0
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"numPriorityLevels="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|pendingTasks
+operator|.
+name|size
+argument_list|()
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|". "
+argument_list|)
+expr_stmt|;
+name|Iterator
+argument_list|<
+name|Entry
+argument_list|<
+name|Priority
+argument_list|,
+name|List
+argument_list|<
+name|TaskInfo
+argument_list|>
+argument_list|>
+argument_list|>
+name|pendingIterator
+init|=
+name|pendingTasks
+operator|.
+name|entrySet
+argument_list|()
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+while|while
+condition|(
+name|pendingIterator
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+name|Entry
+argument_list|<
+name|Priority
+argument_list|,
+name|List
+argument_list|<
+name|TaskInfo
+argument_list|>
+argument_list|>
+name|entry
+init|=
+name|pendingIterator
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|int
+name|count
+init|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|size
+argument_list|()
+decl_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"[p="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|",c="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|count
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"]"
+argument_list|)
+expr_stmt|;
+name|totalCount
+operator|+=
+name|count
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|". totalPendingTasks="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|totalCount
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|". delayedTaskQueueSize="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|delayedTaskQueue
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
 block|}
 specifier|private
 name|ScheduleResult
@@ -5773,13 +6253,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Assigned task {} to container {}"
+literal|"Assigned task {} to container {} on node={}"
 argument_list|,
 name|taskInfo
 argument_list|,
 name|container
 operator|.
 name|getId
+argument_list|()
+argument_list|,
+name|nsPair
+operator|.
+name|getServiceInstance
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6296,7 +6781,7 @@ operator|=
 operator|new
 name|MutableInt
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 expr_stmt|;
 name|pendingPreemptionsPerHost
@@ -7361,24 +7846,14 @@ operator|.
 name|varname
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
+name|info
 argument_list|(
-literal|"Setting up node: "
-operator|+
+literal|"Setting up node: {} with available capacity={}, pendingQueueSize={}, memory={}"
+argument_list|,
 name|serviceInstance
-operator|+
-literal|", with available capacity="
-operator|+
+argument_list|,
 name|serviceInstance
 operator|.
 name|getResource
@@ -7386,13 +7861,18 @@ argument_list|()
 operator|.
 name|getVirtualCores
 argument_list|()
-operator|+
-literal|", pendingQueueCapacity="
-operator|+
+argument_list|,
 name|pendingQueueCapacityString
+argument_list|,
+name|serviceInstance
+operator|.
+name|getResource
+argument_list|()
+operator|.
+name|getMemory
+argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|pendingQueueCapacityString
@@ -7433,6 +7913,21 @@ name|numSchedulableTasks
 operator|=
 name|numSchedulableTasksConf
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Setting up node: "
+operator|+
+name|serviceInstance
+operator|+
+literal|" with schedulableCapacity="
+operator|+
+name|this
+operator|.
+name|numSchedulableTasks
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -7449,21 +7944,6 @@ name|numSchedulableTasks
 argument_list|)
 expr_stmt|;
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Setting up node: "
-operator|+
-name|serviceInstance
-operator|+
-literal|" with schedulableCapacity="
-operator|+
-name|this
-operator|.
-name|numSchedulableTasks
-argument_list|)
-expr_stmt|;
 block|}
 name|ServiceInstance
 name|getServiceInstance
@@ -7590,15 +8070,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Disabling instance "
-operator|+
+literal|"Disabling instance {} for {} milli-seconds. commFailure={}"
+argument_list|,
 name|serviceInstance
-operator|+
-literal|" for "
-operator|+
+argument_list|,
 name|delayTime
-operator|+
-literal|" milli-seconds"
+argument_list|,
+name|commFailure
 argument_list|)
 expr_stmt|;
 block|}
