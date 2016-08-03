@@ -2601,6 +2601,23 @@ name|isSuccessful
 operator|=
 literal|true
 expr_stmt|;
+comment|// sessionState.getQueueName() comes from cluster wide configured queue names.
+comment|// sessionState.getConf().get("tez.queue.name") is explicitly set by user in a session.
+comment|// TezSessionPoolManager sets tez.queue.name if user has specified one or use the one from
+comment|// cluster wide queue names.
+comment|// There is no way to differentiate how this was set (user vs system).
+comment|// Unset this after opening the session so that reopening of session uses the correct queue
+comment|// names i.e, if client has not died and if the user has explicitly set a queue name
+comment|// then reopened session will use user specified queue name else default cluster queue names.
+name|conf
+operator|.
+name|unset
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+argument_list|)
+expr_stmt|;
 return|return
 name|session
 return|;

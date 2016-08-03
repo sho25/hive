@@ -1553,21 +1553,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"QueueName: "
+literal|"QueueName: {} nonDefaultUser: {} defaultQueuePool: {} hasInitialSessions: {}"
 operator|+
+literal|" forceCreate: {}"
+argument_list|,
 name|queueName
-operator|+
-literal|" nonDefaultUser: "
-operator|+
+argument_list|,
 name|nonDefaultUser
-operator|+
-literal|" defaultQueuePool: "
-operator|+
+argument_list|,
 name|defaultQueuePool
-operator|+
-literal|" hasInitialSessions: "
-operator|+
+argument_list|,
 name|hasInitialSessions
+argument_list|,
+name|forceCreate
 argument_list|)
 expr_stmt|;
 return|return
@@ -2405,6 +2403,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// user has explicitly specified queue name
 name|conf
 operator|.
 name|set
@@ -2423,6 +2422,35 @@ name|TEZ_QUEUE_NAME
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// default queue name when the initial session was created
+if|if
+condition|(
+name|sessionState
+operator|.
+name|getQueueName
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+argument_list|,
+name|sessionState
+operator|.
+name|getQueueName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// TODO: close basically resets the object to a bunch of nulls.
 comment|//       We should ideally not reuse the object because it's pointless and error-prone.
