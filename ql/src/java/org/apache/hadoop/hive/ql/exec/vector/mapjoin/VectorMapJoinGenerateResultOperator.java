@@ -1252,7 +1252,9 @@ argument_list|()
 decl_stmt|;
 while|while
 condition|(
-literal|true
+name|byteSegmentRef
+operator|!=
+literal|null
 condition|)
 block|{
 comment|// Fill up as much of the overflow batch as possible with small table values.
@@ -1317,7 +1319,7 @@ name|overflowBatch
 argument_list|,
 name|overflowBatch
 operator|.
-name|DEFAULT_SIZE
+name|size
 argument_list|)
 expr_stmt|;
 block|}
