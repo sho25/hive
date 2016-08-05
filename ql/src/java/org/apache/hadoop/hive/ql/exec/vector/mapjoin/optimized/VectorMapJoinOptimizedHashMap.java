@@ -329,7 +329,7 @@ name|isCappedCountAvailable
 parameter_list|()
 block|{
 return|return
-literal|false
+literal|true
 return|;
 block|}
 annotation|@
@@ -339,7 +339,20 @@ name|int
 name|cappedCount
 parameter_list|()
 block|{
+comment|// the return values are capped to return ==0, ==1 and>= 2
 return|return
+name|hasRows
+argument_list|()
+condition|?
+operator|(
+name|isSingleRow
+argument_list|()
+condition|?
+literal|1
+else|:
+literal|2
+operator|)
+else|:
 literal|0
 return|;
 block|}
