@@ -12184,7 +12184,7 @@ operator|.
 name|getKey
 argument_list|()
 operator|+
-literal|"_,"
+literal|"_@"
 decl_stmt|;
 name|String
 name|replacementString2
@@ -12196,7 +12196,7 @@ operator|.
 name|getValue
 argument_list|()
 operator|+
-literal|","
+literal|"@"
 decl_stmt|;
 try|try
 block|{
@@ -12317,7 +12317,7 @@ operator|.
 name|getAbsolutePath
 argument_list|()
 operator|+
-literal|"', ',', null, 'UTF-8', 1)"
+literal|"', '@', null, 'UTF-8', 1)"
 decl_stmt|;
 try|try
 block|{
