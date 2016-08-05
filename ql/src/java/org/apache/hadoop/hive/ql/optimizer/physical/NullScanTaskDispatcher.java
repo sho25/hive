@@ -963,6 +963,25 @@ control|)
 block|{
 comment|// use LinkedHashMap<String, Operator<? extends OperatorDesc>>
 comment|// getAliasToWork()
+comment|// should not apply this for non-native table
+if|if
+condition|(
+name|tso
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getTableMetadata
+argument_list|()
+operator|.
+name|getStorageHandler
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+continue|continue;
+block|}
 name|String
 name|alias
 init|=
