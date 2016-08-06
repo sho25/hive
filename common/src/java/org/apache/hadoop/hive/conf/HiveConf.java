@@ -3284,7 +3284,7 @@ name|METASTORE_FS_HANDLER_THREADS_COUNT
 argument_list|(
 literal|"hive.metastore.fshandler.threads"
 argument_list|,
-literal|20
+literal|15
 argument_list|,
 literal|"Number of threads to be allocated for metastore handler for fs operations."
 argument_list|)
