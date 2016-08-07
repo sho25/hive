@@ -3143,7 +3143,7 @@ name|AcidUtils
 operator|.
 name|setTransactionalTableScan
 argument_list|(
-name|job
+name|jobClone
 argument_list|,
 name|ts
 operator|.
