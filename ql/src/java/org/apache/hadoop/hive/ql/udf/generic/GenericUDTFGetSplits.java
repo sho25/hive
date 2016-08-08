@@ -3051,6 +3051,15 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Created the token for remote user: {}"
+argument_list|,
+name|token
+argument_list|)
+expr_stmt|;
 name|bos
 operator|.
 name|reset

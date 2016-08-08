@@ -992,7 +992,6 @@ specifier|public
 name|FakeSecretManager
 parameter_list|()
 block|{
-comment|// The keys instantly expire and are rolled.
 name|super
 argument_list|(
 literal|10000000
