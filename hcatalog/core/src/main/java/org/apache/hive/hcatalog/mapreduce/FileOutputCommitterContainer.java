@@ -963,6 +963,13 @@ operator|!
 name|dynamicPartitioningUsed
 condition|)
 block|{
+name|FileOutputFormatContainer
+operator|.
+name|setWorkOutputPath
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
 name|getBaseOutputCommitter
 argument_list|()
 operator|.
@@ -1095,6 +1102,13 @@ operator|!
 name|dynamicPartitioningUsed
 condition|)
 block|{
+name|FileOutputFormatContainer
+operator|.
+name|setWorkOutputPath
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
 return|return
 name|getBaseOutputCommitter
 argument_list|()
