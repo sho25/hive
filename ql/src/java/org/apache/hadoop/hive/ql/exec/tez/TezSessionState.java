@@ -3365,14 +3365,7 @@ operator|.
 name|getPath
 argument_list|()
 expr_stmt|;
-comment|// don't keep the directory around on non-clean exit
-name|fs
-operator|.
-name|deleteOnExit
-argument_list|(
-name|tezDir
-argument_list|)
-expr_stmt|;
+comment|// Directory removal will be handled by cleanup at the SessionState level.
 return|return
 name|tezDir
 return|;

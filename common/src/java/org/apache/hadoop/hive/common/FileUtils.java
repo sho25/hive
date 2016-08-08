@@ -3373,7 +3373,7 @@ name|directory
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * create temporary file and register it to delete-on-exit hook.    * File.deleteOnExit is not used for possible memory leakage.    */
+comment|/**    * create temporary file and register it to delete-on-exit hook.    * File.deleteOnExit is not used for possible memory leakage.    *    * Make sure to use {@link #deleteTmpFile(File)} after the file is no longer required,    * and has been deleted to avoid a memory leak.    */
 specifier|public
 specifier|static
 name|File
