@@ -238,6 +238,15 @@ name|DIRECTSQL_ERRORS
 init|=
 literal|"directsql_errors"
 decl_stmt|;
+comment|// The number of Hive operations that are waiting to enter the compile block
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|WAITING_COMPILE_OPS
+init|=
+literal|"waiting_compile_ops"
+decl_stmt|;
 block|}
 end_class
 
