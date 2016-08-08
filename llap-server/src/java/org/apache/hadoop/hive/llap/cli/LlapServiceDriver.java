@@ -297,6 +297,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|registry
+operator|.
+name|client
+operator|.
+name|binding
+operator|.
+name|RegistryUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|tez
 operator|.
 name|dag
@@ -2404,6 +2422,13 @@ operator|.
 name|class
 operator|,
 comment|// hive-common (https deps)
+name|RegistryUtils
+operator|.
+name|ServiceRecordMarshal
+operator|.
+name|class
+operator|,
+comment|// ZK registry
 comment|// log4j2
 name|com
 operator|.
