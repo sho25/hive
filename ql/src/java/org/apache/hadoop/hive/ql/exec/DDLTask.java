@@ -11880,7 +11880,7 @@ parameter_list|,
 name|Table
 name|table
 parameter_list|,
-name|List
+name|Set
 argument_list|<
 name|CheckResult
 operator|.
@@ -12255,7 +12255,7 @@ argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-name|List
+name|Set
 argument_list|<
 name|CheckResult
 operator|.
@@ -12996,7 +12996,7 @@ specifier|private
 name|boolean
 name|writeMsckResult
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|?
 extends|extends

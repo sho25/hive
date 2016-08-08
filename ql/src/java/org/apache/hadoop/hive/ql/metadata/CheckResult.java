@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Set
 import|;
 end_import
 
@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|TreeSet
 import|;
 end_import
 
@@ -49,56 +49,56 @@ class|class
 name|CheckResult
 block|{
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
 name|tablesNotOnFs
 init|=
 operator|new
-name|ArrayList
+name|TreeSet
 argument_list|<
 name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
 name|tablesNotInMs
 init|=
 operator|new
-name|ArrayList
+name|TreeSet
 argument_list|<
 name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
 name|partitionsNotOnFs
 init|=
 operator|new
-name|ArrayList
+name|TreeSet
 argument_list|<
 name|PartitionResult
 argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
 name|partitionsNotInMs
 init|=
 operator|new
-name|ArrayList
+name|TreeSet
 argument_list|<
 name|PartitionResult
 argument_list|>
@@ -106,7 +106,7 @@ argument_list|()
 decl_stmt|;
 comment|/**    * @return a list of tables not found on the filesystem.    */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -122,7 +122,7 @@ specifier|public
 name|void
 name|setTablesNotOnFs
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -138,7 +138,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return a list of tables not found in the metastore.    */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -154,7 +154,7 @@ specifier|public
 name|void
 name|setTablesNotInMs
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -170,7 +170,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return a list of partitions not found on the fs    */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
@@ -186,7 +186,7 @@ specifier|public
 name|void
 name|setPartitionsNotOnFs
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
@@ -202,7 +202,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return a list of partitions not found in the metastore    */
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
@@ -218,7 +218,7 @@ specifier|public
 name|void
 name|setPartitionsNotInMs
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|PartitionResult
 argument_list|>
