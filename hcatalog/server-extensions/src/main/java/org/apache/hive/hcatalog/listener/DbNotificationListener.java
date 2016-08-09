@@ -1492,6 +1492,13 @@ specifier|private
 name|int
 name|ttl
 decl_stmt|;
+specifier|static
+specifier|private
+name|long
+name|sleepTime
+init|=
+literal|60000
+decl_stmt|;
 name|CleanerThread
 parameter_list|(
 name|HiveConf
@@ -1561,13 +1568,20 @@ name|ttl
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Cleaner thread done"
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|60000
+name|sleepTime
 argument_list|)
 expr_stmt|;
 block|}
