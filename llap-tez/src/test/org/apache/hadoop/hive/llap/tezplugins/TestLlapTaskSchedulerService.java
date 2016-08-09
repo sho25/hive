@@ -5203,7 +5203,9 @@ expr_stmt|;
 name|tsWrapper
 operator|.
 name|awaitSchedulerRun
-argument_list|()
+argument_list|(
+literal|1000l
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -8073,6 +8075,19 @@ argument_list|(
 name|tsWrapper
 operator|.
 name|mockAppCallback
+argument_list|)
+expr_stmt|;
+comment|// Flush any pending scheduler runs which may be blocked. Wait 2 seconds for the run to complete.
+name|tsWrapper
+operator|.
+name|signalSchedulerRun
+argument_list|()
+expr_stmt|;
+name|tsWrapper
+operator|.
+name|awaitSchedulerRun
+argument_list|(
+literal|2000l
 argument_list|)
 expr_stmt|;
 comment|// Mark a task as failed due to a comm failure.

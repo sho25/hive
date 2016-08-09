@@ -4959,6 +4959,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Trigger a scheduling run - in case there's some task which was waiting for this node to
+comment|// become available.
+name|trySchedulingPendingTasks
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 finally|finally
