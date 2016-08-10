@@ -3295,33 +3295,15 @@ name|MetaException
 throws|,
 name|IOException
 block|{
-name|IMetaStoreClient
-name|imsc
-init|=
-name|getHiveMetastoreClient
+name|LOG
+operator|.
+name|warn
 argument_list|(
-name|hiveConf
+literal|"HCatUtil.getHiveClient is unsafe and can be a resource leak depending on HMSC "
+operator|+
+literal|"implementation and caching mechanism. Use HCatUtil.getHiveMetastoreClient instead."
 argument_list|)
-decl_stmt|;
-comment|// Try piggybacking on the function that returns IMSC. Current implementation of the IMSC cache
-comment|// has CacheableMetaStoreClients, which are HMSC, so we can return them as-is. If not, it's okay
-comment|// for us to ignore the caching aspect and return a vanilla HMSC.
-if|if
-condition|(
-name|imsc
-operator|instanceof
-name|HiveMetaStoreClient
-condition|)
-block|{
-return|return
-operator|(
-name|HiveMetaStoreClient
-operator|)
-name|imsc
-return|;
-block|}
-else|else
-block|{
+expr_stmt|;
 return|return
 operator|new
 name|HiveMetaStoreClient
@@ -3329,7 +3311,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 return|;
-block|}
 block|}
 specifier|public
 specifier|static

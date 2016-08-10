@@ -135,6 +135,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|annotation
+operator|.
+name|NoReconnect
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|AggrStats
@@ -1311,6 +1329,8 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * close connection to meta store    */
+annotation|@
+name|NoReconnect
 name|void
 name|close
 parameter_list|()

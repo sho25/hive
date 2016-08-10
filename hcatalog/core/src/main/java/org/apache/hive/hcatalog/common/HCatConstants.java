@@ -277,6 +277,33 @@ name|HCAT_HIVE_CLIENT_DISABLE_CACHE
 init|=
 literal|"hcatalog.hive.client.cache.disabled"
 decl_stmt|;
+comment|// Indicates the initial capacity of the cache.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HIVE_CLIENT_CACHE_INITIAL_CAPACITY
+init|=
+literal|"hcatalog.hive.client.cache.initial.capacity"
+decl_stmt|;
+comment|// Indicates the maximum capacity of the cache. Minimum value should be the number of threads.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HIVE_CLIENT_CACHE_MAX_CAPACITY
+init|=
+literal|"hcatalog.hive.client.cache.max.capacity"
+decl_stmt|;
+comment|// Indicates whether cache statistics should be collected.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HCAT_HIVE_CLIENT_CACHE_STATS_ENABLED
+init|=
+literal|"hcatalog.hive.client.cache.stats.enabled"
+decl_stmt|;
 specifier|private
 name|HCatConstants
 parameter_list|()
