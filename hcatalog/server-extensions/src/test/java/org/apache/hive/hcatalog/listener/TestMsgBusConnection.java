@@ -322,6 +322,14 @@ specifier|private
 name|MessageConsumer
 name|consumer
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|TIMEOUT
+init|=
+literal|2000
+decl_stmt|;
 annotation|@
 name|Override
 specifier|protected
@@ -567,7 +575,9 @@ init|=
 name|consumer
 operator|.
 name|receive
-argument_list|()
+argument_list|(
+name|TIMEOUT
+argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
@@ -661,7 +671,9 @@ operator|=
 name|consumer
 operator|.
 name|receive
-argument_list|()
+argument_list|(
+name|TIMEOUT
+argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
@@ -714,7 +726,9 @@ operator|=
 name|consumer
 operator|.
 name|receive
-argument_list|()
+argument_list|(
+name|TIMEOUT
+argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
