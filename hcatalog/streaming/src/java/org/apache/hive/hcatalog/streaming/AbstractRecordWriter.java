@@ -417,6 +417,16 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Properties
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|abstract
@@ -1579,6 +1589,26 @@ name|SerializationError
 block|{
 try|try
 block|{
+comment|// Initialize table properties from the table parameters. This is required because the table
+comment|// may define certain table parameters that may be required while writing. The table parameter
+comment|// 'transactional_properties' is one such example.
+name|Properties
+name|tblProperties
+init|=
+operator|new
+name|Properties
+argument_list|()
+decl_stmt|;
+name|tblProperties
+operator|.
+name|putAll
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|outf
 operator|.
@@ -1606,6 +1636,11 @@ operator|.
 name|bucket
 argument_list|(
 name|bucketId
+argument_list|)
+operator|.
+name|tableProperties
+argument_list|(
+name|tblProperties
 argument_list|)
 operator|.
 name|minimumTransactionId

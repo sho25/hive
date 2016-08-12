@@ -692,7 +692,7 @@ specifier|public
 class|class
 name|TestTxnCommands2
 block|{
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -737,7 +737,7 @@ argument_list|,
 literal|"/"
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -748,7 +748,7 @@ operator|+
 literal|"/warehouse"
 decl_stmt|;
 comment|//bucket count for test tables; set it to 1 for easier debugging
-specifier|private
+specifier|protected
 specifier|static
 name|int
 name|BUCKET_COUNT
@@ -765,15 +765,15 @@ operator|new
 name|TestName
 argument_list|()
 decl_stmt|;
-specifier|private
+specifier|protected
 name|HiveConf
 name|hiveConf
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Driver
 name|d
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 enum|enum
 name|Table
@@ -834,6 +834,22 @@ specifier|public
 name|void
 name|setUp
 parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|setUpWithTableProperties
+argument_list|(
+literal|"'transactional'='true'"
+argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|setUpWithTableProperties
+parameter_list|(
+name|String
+name|tableProperties
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -1051,7 +1067,11 @@ literal|"(a int, b int) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
-literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+literal|" buckets stored as orc TBLPROPERTIES ("
+operator|+
+name|tableProperties
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1066,7 +1086,11 @@ literal|"(a int, b int) partitioned by (p string) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
-literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+literal|" buckets stored as orc TBLPROPERTIES ("
+operator|+
+name|tableProperties
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1096,7 +1120,7 @@ literal|"(a int, b int) partitioned by (p string) stored as orc TBLPROPERTIES ('
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|dropTables
 parameter_list|()
@@ -7729,6 +7753,21 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|testInitiatorWithMultipleFailedCompactionsForVariousTblProperties
+argument_list|(
+literal|"'transactional'='true'"
+argument_list|)
+expr_stmt|;
+block|}
+name|void
+name|testInitiatorWithMultipleFailedCompactionsForVariousTblProperties
+parameter_list|(
+name|String
+name|tblProperties
+parameter_list|)
+throws|throws
+name|Exception
+block|{
 name|String
 name|tblName
 init|=
@@ -7752,7 +7791,11 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
+literal|" STORED AS ORC  TBLPROPERTIES ( "
+operator|+
+name|tblProperties
+operator|+
+literal|" )"
 argument_list|)
 expr_stmt|;
 name|hiveConf
@@ -9201,6 +9244,22 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|writeBetweenWorkerAndCleanerForVariousTblProperties
+argument_list|(
+literal|"'transactional'='true'"
+argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|writeBetweenWorkerAndCleanerForVariousTblProperties
+parameter_list|(
+name|String
+name|tblProperties
+parameter_list|)
+throws|throws
+name|Exception
+block|{
 name|String
 name|tblName
 init|=
@@ -9224,7 +9283,11 @@ operator|+
 literal|" CLUSTERED BY(a) INTO 1 BUCKETS"
 operator|+
 comment|//currently ACID requires table to be bucketed
-literal|" STORED AS ORC  TBLPROPERTIES ('transactional'='true')"
+literal|" STORED AS ORC  TBLPROPERTIES ( "
+operator|+
+name|tblProperties
+operator|+
+literal|" )"
 argument_list|)
 expr_stmt|;
 comment|//create some data
@@ -10197,8 +10260,385 @@ name|ACIDTBL
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testACIDwithSchemaEvolutionAndCompaction
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testACIDwithSchemaEvolutionForVariousTblProperties
+argument_list|(
+literal|"'transactional'='true'"
+argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|testACIDwithSchemaEvolutionForVariousTblProperties
+parameter_list|(
+name|String
+name|tblProperties
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|String
+name|tblName
+init|=
+literal|"acidWithSchemaEvol"
+decl_stmt|;
+name|int
+name|numBuckets
+init|=
+literal|1
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tblName
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|tblName
+operator|+
+literal|"(a INT, b STRING) "
+operator|+
+literal|" CLUSTERED BY(a) INTO "
+operator|+
+name|numBuckets
+operator|+
+literal|" BUCKETS"
+operator|+
+comment|//currently ACID requires table to be bucketed
+literal|" STORED AS ORC  TBLPROPERTIES ( "
+operator|+
+name|tblProperties
+operator|+
+literal|" )"
+argument_list|)
+expr_stmt|;
+comment|// create some data
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|tblName
+operator|+
+literal|" values(1, 'foo'),(2, 'bar'),(3, 'baz')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|tblName
+operator|+
+literal|" set b = 'blah' where a = 3"
+argument_list|)
+expr_stmt|;
+comment|// apply schema evolution by adding some columns
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|tblName
+operator|+
+literal|" add columns(c int, d string)"
+argument_list|)
+expr_stmt|;
+comment|// insert some data in new schema
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|tblName
+operator|+
+literal|" values(4, 'acid', 100, 'orc'),"
+operator|+
+literal|"(5, 'llap', 200, 'tez')"
+argument_list|)
+expr_stmt|;
+comment|// update old data with values for the new schema columns
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|tblName
+operator|+
+literal|" set d = 'hive' where a<= 3"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|tblName
+operator|+
+literal|" set c = 999 where a<= 3"
+argument_list|)
+expr_stmt|;
+comment|// read the entire data back and see if did everything right
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from "
+operator|+
+name|tblName
+operator|+
+literal|" order by a"
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|expectedResult
+init|=
+block|{
+literal|"1\tfoo\t999\thive"
+block|,
+literal|"2\tbar\t999\thive"
+block|,
+literal|"3\tblah\t999\thive"
+block|,
+literal|"4\tacid\t100\torc"
+block|,
+literal|"5\tllap\t200\ttez"
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|expectedResult
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+comment|// now compact and see if compaction still preserves the data correctness
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|tblName
+operator|+
+literal|" compact 'MAJOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|runCleaner
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|// Cleaner would remove the obsolete files.
+comment|// Verify that there is now only 1 new directory: base_xxxxxxx and the rest have have been cleaned.
+name|FileSystem
+name|fs
+init|=
+name|FileSystem
+operator|.
+name|get
+argument_list|(
+name|hiveConf
+argument_list|)
+decl_stmt|;
+name|FileStatus
+index|[]
+name|status
+decl_stmt|;
+name|status
+operator|=
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|TEST_WAREHOUSE_DIR
+operator|+
+literal|"/"
+operator|+
+name|tblName
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+argument_list|,
+name|FileUtils
+operator|.
+name|STAGING_DIR_PATH_FILTER
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|status
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+name|boolean
+name|sawNewBase
+init|=
+literal|false
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|status
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
+if|if
+condition|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|"base_.*"
+argument_list|)
+condition|)
+block|{
+name|sawNewBase
+operator|=
+literal|true
+expr_stmt|;
+name|FileStatus
+index|[]
+name|buckets
+init|=
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|FileUtils
+operator|.
+name|STAGING_DIR_PATH_FILTER
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|numBuckets
+argument_list|,
+name|buckets
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|buckets
+index|[
+literal|0
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|"bucket_00000"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|sawNewBase
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from "
+operator|+
+name|tblName
+operator|+
+literal|" order by a"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|expectedResult
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * takes raw data and turns it into a string as if from Driver.getResults()    * sorts rows in dictionary order    */
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|String
@@ -10557,7 +10997,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-specifier|private
+specifier|protected
 name|List
 argument_list|<
 name|String

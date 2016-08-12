@@ -529,6 +529,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|PathFilter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|common
@@ -17500,10 +17514,11 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// The layout for ACID files is table|partname/base|delta/bucket
+comment|// The layout for ACID files is table|partname/base|delta|delete_delta/bucket
 comment|// We will always only be writing delta files.  In the buckets created by FileSinkOperator
-comment|// it will look like bucket/delta/bucket.  So we need to move that into the above structure.
-comment|// For the first mover there will be no delta directory, so we can move the whole directory.
+comment|// it will look like bucket/delta|delete_delta/bucket.  So we need to move that into
+comment|// the above structure. For the first mover there will be no delta directory,
+comment|// so we can move the whole directory.
 comment|// For everyone else we will need to just move the buckets under the existing delta
 comment|// directory.
 name|Set
@@ -17632,11 +17647,95 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+name|moveAcidDeltaFiles
+argument_list|(
+name|AcidUtils
+operator|.
+name|DELTA_PREFIX
+argument_list|,
+name|AcidUtils
+operator|.
+name|deltaFileFilter
+argument_list|,
+name|fs
+argument_list|,
+name|dst
+argument_list|,
+name|origBucketPath
+argument_list|,
+name|createdDeltaDirs
+argument_list|,
+name|newFiles
+argument_list|)
+expr_stmt|;
+name|moveAcidDeltaFiles
+argument_list|(
+name|AcidUtils
+operator|.
+name|DELETE_DELTA_PREFIX
+argument_list|,
+name|AcidUtils
+operator|.
+name|deleteEventDeltaDirFilter
+argument_list|,
+name|fs
+argument_list|,
+name|dst
+argument_list|,
+name|origBucketPath
+argument_list|,
+name|createdDeltaDirs
+argument_list|,
+name|newFiles
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+specifier|private
+specifier|static
+name|void
+name|moveAcidDeltaFiles
+parameter_list|(
+name|String
+name|deltaFileType
+parameter_list|,
+name|PathFilter
+name|pathFilter
+parameter_list|,
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|dst
+parameter_list|,
+name|Path
+name|origBucketPath
+parameter_list|,
+name|Set
+argument_list|<
+name|Path
+argument_list|>
+name|createdDeltaDirs
+parameter_list|,
+name|List
+argument_list|<
+name|Path
+argument_list|>
+name|newFiles
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Acid move looking for delta files in bucket "
+literal|"Acid move looking for "
+operator|+
+name|deltaFileType
+operator|+
+literal|" files in bucket "
 operator|+
 name|origBucketPath
 argument_list|)
@@ -17657,9 +17756,7 @@ name|listStatus
 argument_list|(
 name|origBucketPath
 argument_list|,
-name|AcidUtils
-operator|.
-name|deltaFileFilter
+name|pathFilter
 argument_list|)
 expr_stmt|;
 block|}
@@ -17673,7 +17770,11 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unable to look for delta files in original bucket "
+literal|"Unable to look for "
+operator|+
+name|deltaFileType
+operator|+
+literal|" files in original bucket "
 operator|+
 name|origBucketPath
 operator|.
@@ -17697,7 +17798,11 @@ name|deltaStats
 operator|.
 name|length
 operator|+
-literal|" delta files"
+literal|" "
+operator|+
+name|deltaFileType
+operator|+
+literal|" files"
 argument_list|)
 expr_stmt|;
 for|for
@@ -17775,7 +17880,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Unable to create delta directory "
+literal|"Unable to create "
+operator|+
+name|deltaFileType
+operator|+
+literal|" directory "
 operator|+
 name|deltaDest
 operator|+
@@ -17916,8 +18025,6 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
-block|}
-block|}
 block|}
 block|}
 block|}

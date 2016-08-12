@@ -3154,6 +3154,21 @@ name|isAcidTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|AcidUtils
+operator|.
+name|setAcidOperationalProperties
+argument_list|(
+name|jobClone
+argument_list|,
+name|ts
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getAcidOperationalProperties
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// create a fetch operator
 name|FetchOperator
 name|fetchOp
