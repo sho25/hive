@@ -5690,6 +5690,7 @@ block|{
 comment|// The following check is only a guard against failures.
 comment|// TODO: Knowing which expr is constant in GBY's aggregation function
 comment|// arguments could be better done using Metadata provider of Calcite.
+comment|//check the corresponding expression in exprs to see if it is literal
 if|if
 condition|(
 name|exprs
@@ -5707,12 +5708,19 @@ name|exprs
 operator|.
 name|get
 argument_list|(
+name|inputRefs
+operator|.
+name|get
+argument_list|(
 name|index
+argument_list|)
 argument_list|)
 operator|instanceof
 name|RexLiteral
 condition|)
 block|{
+comment|//because rexInputRefs represent ref expr corresponding to value in inputRefs it is used to get
+comment|//  corresponding index
 name|ExprNodeDesc
 name|exprNodeDesc
 init|=
@@ -5727,7 +5735,12 @@ name|exprs
 operator|.
 name|get
 argument_list|(
+name|inputRefs
+operator|.
+name|get
+argument_list|(
 name|index
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
