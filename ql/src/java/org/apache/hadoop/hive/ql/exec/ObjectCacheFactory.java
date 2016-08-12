@@ -198,6 +198,9 @@ name|conf
 parameter_list|,
 name|String
 name|queryId
+parameter_list|,
+name|boolean
+name|isPlanCache
 parameter_list|)
 block|{
 if|if
@@ -244,6 +247,9 @@ name|ConfVars
 operator|.
 name|LLAP_OBJECT_CACHE_ENABLED
 argument_list|)
+operator|&&
+operator|!
+name|isPlanCache
 condition|)
 block|{
 comment|// LLAP object cache, unlike others, does not use globals. Thus, get the existing one.

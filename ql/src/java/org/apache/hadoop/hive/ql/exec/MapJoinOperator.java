@@ -1180,6 +1180,8 @@ argument_list|(
 name|hconf
 argument_list|,
 name|queryId
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|loader
