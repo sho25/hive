@@ -1338,11 +1338,13 @@ name|query
 argument_list|)
 expr_stmt|;
 comment|/*       here is a portion of the above "explain".  The "filterExpr:" in the TableScan is the pushed predicate       w/o PPD, the line is simply not there, otherwise the plan is the same        Map Operator Tree:,          TableScan,           alias: acidtbl,           filterExpr: (a = 3) (type: boolean),             Filter Operator,              predicate: (a = 3) (type: boolean),              Select Operator,              ...        */
-name|assertPredicateIsPushed
+name|assertExplainHasString
 argument_list|(
 literal|"filterExpr: (a = 3)"
 argument_list|,
 name|explain
+argument_list|,
+literal|"PPD wasn't pushed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1377,11 +1379,13 @@ operator|+
 name|query
 argument_list|)
 expr_stmt|;
-name|assertPredicateIsPushed
+name|assertExplainHasString
 argument_list|(
 literal|"filterExpr: (b = 4)"
 argument_list|,
 name|explain
+argument_list|,
+literal|"PPD wasn't pushed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1550,11 +1554,13 @@ operator|+
 literal|" where a=7 and b=8"
 argument_list|)
 expr_stmt|;
-name|assertPredicateIsPushed
+name|assertExplainHasString
 argument_list|(
 literal|"filterExpr: ((a = 7) and (b = 8))"
 argument_list|,
 name|explain
+argument_list|,
+literal|"PPD wasn't pushed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1595,11 +1601,13 @@ operator|+
 name|query
 argument_list|)
 expr_stmt|;
-name|assertPredicateIsPushed
+name|assertExplainHasString
 argument_list|(
 literal|"filterExpr: (a> 1)"
 argument_list|,
 name|explain
+argument_list|,
+literal|"PPD wasn't pushed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1671,19 +1679,21 @@ name|originalPpd
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
 specifier|static
 name|void
-name|assertPredicateIsPushed
+name|assertExplainHasString
 parameter_list|(
 name|String
-name|ppd
+name|string
 parameter_list|,
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|queryPlan
+parameter_list|,
+name|String
+name|errMsg
 parameter_list|)
 block|{
 for|for
@@ -1704,7 +1714,7 @@ name|line
 operator|.
 name|contains
 argument_list|(
-name|ppd
+name|string
 argument_list|)
 condition|)
 block|{
@@ -1715,11 +1725,7 @@ name|Assert
 operator|.
 name|assertFalse
 argument_list|(
-literal|"PPD '"
-operator|+
-name|ppd
-operator|+
-literal|"' wasn't pushed"
+name|errMsg
 argument_list|,
 literal|true
 argument_list|)
@@ -10638,7 +10644,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * takes raw data and turns it into a string as if from Driver.getResults()    * sorts rows in dictionary order    */
-specifier|protected
+specifier|static
 name|List
 argument_list|<
 name|String
