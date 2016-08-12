@@ -174,9 +174,15 @@ literal|"min"
 else|:
 literal|"max"
 argument_list|,
+name|isMin
+condition|?
 name|SqlKind
 operator|.
-name|OTHER_FUNCTION
+name|MIN
+else|:
+name|SqlKind
+operator|.
+name|MAX
 argument_list|,
 name|returnTypeInference
 argument_list|,

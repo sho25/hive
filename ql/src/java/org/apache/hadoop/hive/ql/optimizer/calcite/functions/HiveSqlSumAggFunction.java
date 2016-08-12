@@ -383,7 +383,7 @@ literal|"sum"
 argument_list|,
 name|SqlKind
 operator|.
-name|OTHER_FUNCTION
+name|SUM
 argument_list|,
 name|returnTypeInference
 argument_list|,

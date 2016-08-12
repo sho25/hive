@@ -252,7 +252,7 @@ literal|"count"
 argument_list|,
 name|SqlKind
 operator|.
-name|OTHER_FUNCTION
+name|COUNT
 argument_list|,
 name|returnTypeInference
 argument_list|,

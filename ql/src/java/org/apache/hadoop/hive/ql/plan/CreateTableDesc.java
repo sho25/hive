@@ -75,6 +75,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -163,7 +177,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|SQLPrimaryKey
+name|Order
 import|;
 end_import
 
@@ -199,7 +213,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Order
+name|SQLPrimaryKey
 import|;
 end_import
 
@@ -2476,7 +2490,14 @@ name|hasMetastoreBasedSchema
 argument_list|(
 name|conf
 argument_list|,
-name|getSerName
+name|serName
+argument_list|)
+operator|&&
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|getStorageHandler
 argument_list|()
 argument_list|)
 condition|)

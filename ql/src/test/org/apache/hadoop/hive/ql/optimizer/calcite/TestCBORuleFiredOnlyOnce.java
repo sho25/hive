@@ -446,6 +446,8 @@ name|HivePlannerContext
 argument_list|(
 literal|null
 argument_list|,
+literal|null
+argument_list|,
 name|registry
 argument_list|)
 decl_stmt|;

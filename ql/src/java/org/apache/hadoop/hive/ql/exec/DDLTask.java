@@ -505,6 +505,22 @@ name|hive
 operator|.
 name|conf
 operator|.
+name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
 name|HiveConf
 import|;
 end_import
@@ -27833,7 +27849,7 @@ name|Table
 name|tbl
 parameter_list|)
 block|{
-comment|// If we are ok with breaking compatibility of existing 3rd party StorageHandlers,
+comment|// TODO: If we are ok with breaking compatibility of existing 3rd party StorageHandlers,
 comment|// this method could be moved to the HiveStorageHandler interface.
 name|boolean
 name|retval
@@ -27850,9 +27866,9 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|retval
-operator|=
-operator|!
+name|String
+name|sh
+init|=
 name|tbl
 operator|.
 name|getStorageHandler
@@ -27860,10 +27876,25 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
+decl_stmt|;
+name|retval
+operator|=
+operator|!
+name|sh
 operator|.
 name|equals
 argument_list|(
 literal|"org.apache.hadoop.hive.hbase.HBaseStorageHandler"
+argument_list|)
+operator|&&
+operator|!
+name|sh
+operator|.
+name|equals
+argument_list|(
+name|Constants
+operator|.
+name|DRUID_HIVE_STORAGE_HANDLER_ID
 argument_list|)
 expr_stmt|;
 block|}

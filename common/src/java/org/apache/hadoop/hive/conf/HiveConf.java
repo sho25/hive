@@ -8307,6 +8307,35 @@ argument_list|,
 literal|"Frequency of WriteSet reaper runs"
 argument_list|)
 block|,
+comment|// For Druid storage handler
+name|HIVE_DRUID_BROKER_DEFAULT_ADDRESS
+argument_list|(
+literal|"hive.druid.broker.address.default"
+argument_list|,
+literal|"localhost:8082"
+argument_list|,
+literal|"Address of the Druid broker. If we are querying Druid from Hive, this address needs to be\n"
+operator|+
+literal|"declared"
+argument_list|)
+block|,
+name|HIVE_DRUID_SELECT_THRESHOLD
+argument_list|(
+literal|"hive.druid.select.threshold"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"When we can split a Select query, this is the maximum number of rows that we try to retrieve\n"
+operator|+
+literal|"per query. In order to do that, we obtain the estimated size for the complete result. If the\n"
+operator|+
+literal|"number of records of the query results is larger than this threshold, we split the query in\n"
+operator|+
+literal|"total number of rows/threshold parts across the time dimension. Note that we assume the\n"
+operator|+
+literal|"records to be split uniformly across the time dimension"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
