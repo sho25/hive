@@ -1570,7 +1570,6 @@ throw|;
 block|}
 block|}
 block|}
-comment|// XXX: pending merge of ACC ; and upgrade of executor
 specifier|public
 specifier|static
 class|class
@@ -1584,10 +1583,11 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-literal|null
+name|CoreAccumuloCliDriver
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
-comment|// super(CoreAccumuloCliDriver.class);
 try|try
 block|{
 name|setQueryDir

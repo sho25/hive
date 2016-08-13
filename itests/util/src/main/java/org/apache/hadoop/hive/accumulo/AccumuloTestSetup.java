@@ -283,8 +283,6 @@ begin_class
 specifier|public
 class|class
 name|AccumuloTestSetup
-extends|extends
-name|TestSetup
 block|{
 specifier|public
 specifier|static
@@ -308,17 +306,8 @@ name|miniCluster
 decl_stmt|;
 specifier|public
 name|AccumuloTestSetup
-parameter_list|(
-name|Test
-name|test
-parameter_list|)
-block|{
-name|super
-argument_list|(
-name|test
-argument_list|)
-expr_stmt|;
-block|}
+parameter_list|()
+block|{   }
 specifier|protected
 name|void
 name|setupWithHiveConf
@@ -1009,9 +998,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Override
-specifier|protected
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
