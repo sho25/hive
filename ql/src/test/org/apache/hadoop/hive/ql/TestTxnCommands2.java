@@ -10643,6 +10643,238 @@ name|rs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testETLSplitStrategyForACID
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_SPLIT_STRATEGY
+argument_list|,
+literal|"ETL"
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTINDEXFILTER
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" values(1,2)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" compact 'MAJOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" where a = 1"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|resultData
+init|=
+operator|new
+name|int
+index|[]
+index|[]
+block|{
+block|{
+literal|1
+block|,
+literal|2
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|resultData
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testAcidWithSchemaEvolution
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ORC_SPLIT_STRATEGY
+argument_list|,
+literal|"ETL"
+argument_list|)
+expr_stmt|;
+name|String
+name|tblName
+init|=
+literal|"acidTblWithSchemaEvol"
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tblName
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|tblName
+operator|+
+literal|"(a INT, b STRING) "
+operator|+
+literal|" CLUSTERED BY(a) INTO 2 BUCKETS"
+operator|+
+comment|//currently ACID requires table to be bucketed
+literal|" STORED AS ORC TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|tblName
+operator|+
+literal|" VALUES (1, 'foo'), (2, 'bar')"
+argument_list|)
+expr_stmt|;
+comment|// Major compact to create a base that has ACID schema.
+name|runStatementOnDriver
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|tblName
+operator|+
+literal|" COMPACT 'MAJOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|// Alter table for perform schema evolution.
+name|runStatementOnDriver
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|tblName
+operator|+
+literal|" ADD COLUMNS(c int)"
+argument_list|)
+expr_stmt|;
+comment|// Validate there is an added NULL for column c.
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|tblName
+operator|+
+literal|" ORDER BY a"
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|expectedResult
+init|=
+block|{
+literal|"1\tfoo\tNULL"
+block|,
+literal|"2\tbar\tNULL"
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|expectedResult
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * takes raw data and turns it into a string as if from Driver.getResults()    * sorts rows in dictionary order    */
 specifier|static
 name|List
