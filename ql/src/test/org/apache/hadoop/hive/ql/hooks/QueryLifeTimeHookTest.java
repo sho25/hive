@@ -37,10 +37,22 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
 begin_class
+annotation|@
+name|Ignore
 specifier|public
 class|class
-name|TestQueryLifeTimeHook
+name|QueryLifeTimeHookTest
 implements|implements
 name|QueryLifeTimeHook
 block|{
