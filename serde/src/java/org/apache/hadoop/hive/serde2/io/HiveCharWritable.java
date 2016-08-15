@@ -314,6 +314,13 @@ name|int
 name|maxLength
 parameter_list|)
 block|{
+if|if
+condition|(
+name|getCharacterLength
+argument_list|()
+operator|!=
+name|maxLength
+condition|)
 name|set
 argument_list|(
 name|getHiveChar

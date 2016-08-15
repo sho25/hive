@@ -262,6 +262,20 @@ name|maxLength
 parameter_list|)
 block|{
 comment|// Might be possible to truncate the existing Text value, for now just do something simple.
+if|if
+condition|(
+name|value
+operator|.
+name|getLength
+argument_list|()
+operator|>
+name|maxLength
+operator|&&
+name|getCharacterLength
+argument_list|()
+operator|>
+name|maxLength
+condition|)
 name|set
 argument_list|(
 name|getHiveVarchar
