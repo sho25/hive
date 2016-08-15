@@ -7279,9 +7279,7 @@ name|isBlocking
 parameter_list|()
 block|{
 return|return
-name|ppdResult
-operator|!=
-literal|null
+literal|true
 return|;
 block|}
 name|Path
