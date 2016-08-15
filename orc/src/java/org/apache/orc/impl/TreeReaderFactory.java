@@ -6655,6 +6655,15 @@ operator|.
 name|isNull
 expr_stmt|;
 comment|// Notice we are replacing the isNull vector here...
+name|scratchlcv
+operator|.
+name|ensureSize
+argument_list|(
+name|batchSize
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|lengths
 operator|.
 name|nextVector
