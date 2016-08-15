@@ -217,6 +217,19 @@ literal|'-'
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|j
+operator|<
+name|row
+operator|.
+name|sizes
+operator|.
+name|length
+operator|-
+literal|1
+condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -224,6 +237,7 @@ argument_list|(
 literal|"-+-"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|headerCols
 operator|=
