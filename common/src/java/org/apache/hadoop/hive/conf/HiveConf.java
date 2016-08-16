@@ -8409,7 +8409,7 @@ name|HIVEOPTIMIZEMETADATAQUERIES
 argument_list|(
 literal|"hive.compute.query.using.stats"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"When set to true Hive will answer a few queries like count(1) purely using stats\n"
 operator|+
