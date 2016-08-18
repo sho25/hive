@@ -223,6 +223,10 @@ operator|.
 name|ParseNegativeConfig
 argument_list|()
 decl_stmt|;
+specifier|static
+name|boolean
+name|firstRun
+decl_stmt|;
 specifier|public
 name|CoreParseNegative
 parameter_list|(
@@ -269,6 +273,10 @@ operator|.
 name|getCleanupScript
 argument_list|()
 decl_stmt|;
+name|firstRun
+operator|=
+literal|true
+expr_stmt|;
 try|try
 block|{
 name|String
@@ -372,54 +380,7 @@ specifier|public
 name|void
 name|tearDown
 parameter_list|()
-block|{
-try|try
-block|{
-name|qt
-operator|.
-name|clearPostTestEffects
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Exception: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|flush
-argument_list|()
-expr_stmt|;
-name|fail
-argument_list|(
-literal|"Unexpected exception in tearDown"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
+block|{   }
 annotation|@
 name|Override
 annotation|@
@@ -431,8 +392,22 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|reason
+init|=
+literal|"clear post test effects"
+decl_stmt|;
 try|try
 block|{
+name|qt
+operator|.
+name|clearPostTestEffects
+argument_list|()
+expr_stmt|;
+name|reason
+operator|=
+literal|"shutdown"
+expr_stmt|;
 name|qt
 operator|.
 name|shutdown
@@ -475,7 +450,9 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Unexpected exception in shutdown"
+literal|"Unexpected exception in "
+operator|+
+name|reason
 argument_list|,
 name|e
 argument_list|)
@@ -536,6 +513,11 @@ argument_list|(
 name|fpath
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|firstRun
+condition|)
+block|{
 name|qt
 operator|.
 name|init
@@ -543,6 +525,11 @@ argument_list|(
 name|fname
 argument_list|)
 expr_stmt|;
+name|firstRun
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|ASTNode
 name|tree
 init|=
