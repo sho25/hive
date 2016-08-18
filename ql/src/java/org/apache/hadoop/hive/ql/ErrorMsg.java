@@ -2158,6 +2158,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|INVALID_COLUMN_NAME
+argument_list|(
+literal|10328
+argument_list|,
+literal|"Invalid column name"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
