@@ -8341,15 +8341,6 @@ argument_list|,
 literal|"Whether to enable optimization of group-by queries using Aggregate indexes."
 argument_list|)
 block|,
-name|HIVEOUTERJOINSUPPORTSFILTERS
-argument_list|(
-literal|"hive.outerjoin.supports.filters"
-argument_list|,
-literal|true
-argument_list|,
-literal|""
-argument_list|)
-block|,
 name|HIVEFETCHTASKCONVERSION
 argument_list|(
 literal|"hive.fetch.task.conversion"

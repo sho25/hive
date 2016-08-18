@@ -982,15 +982,6 @@ argument_list|,
 literal|"Query against an offline table or partition"
 argument_list|)
 block|,
-name|OUTERJOIN_USES_FILTERS
-argument_list|(
-literal|10114
-argument_list|,
-literal|"The query results could be wrong. "
-operator|+
-literal|"Turn on hive.outerjoin.supports.filters"
-argument_list|)
-block|,
 name|NEED_PARTITION_SPECIFICATION
 argument_list|(
 literal|10115

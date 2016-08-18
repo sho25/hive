@@ -385,6 +385,8 @@ argument_list|,
 literal|"hive.enforce.sorting"
 argument_list|,
 literal|"hive.enforce.bucketing"
+argument_list|,
+literal|"hive.outerjoin.supports.filters"
 argument_list|)
 decl_stmt|;
 specifier|public
