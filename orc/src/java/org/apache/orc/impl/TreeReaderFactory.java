@@ -4314,7 +4314,7 @@ name|Long
 argument_list|>
 name|baseTimestampMap
 decl_stmt|;
-specifier|private
+specifier|protected
 name|long
 name|base_timestamp
 decl_stmt|;
@@ -4355,6 +4355,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|skipCorrupt
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -4380,6 +4382,9 @@ name|encoding
 parameter_list|,
 name|boolean
 name|skipCorrupt
+parameter_list|,
+name|String
+name|writerTimezone
 parameter_list|)
 throws|throws
 name|IOException
@@ -4508,6 +4513,13 @@ name|skipCorrupt
 argument_list|)
 expr_stmt|;
 block|}
+name|base_timestamp
+operator|=
+name|getBaseTimestamp
+argument_list|(
+name|writerTimezone
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 annotation|@
@@ -4694,7 +4706,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|long
 name|getBaseTimestamp
 parameter_list|(
