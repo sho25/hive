@@ -7042,6 +7042,8 @@ name|HiveChar
 operator|)
 name|constantValue
 operator|)
+argument_list|,
+name|typeName
 argument_list|)
 return|;
 case|case
@@ -7059,6 +7061,8 @@ name|HiveVarchar
 operator|)
 name|constantValue
 operator|)
+argument_list|,
+name|typeName
 argument_list|)
 return|;
 default|default:
