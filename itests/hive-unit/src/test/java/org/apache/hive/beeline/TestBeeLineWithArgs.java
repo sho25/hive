@@ -414,6 +414,19 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTIMIZEMETADATAQUERIES
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|miniHS2
 operator|=
 operator|new
@@ -3609,6 +3622,8 @@ name|String
 name|SCRIPT_TEXT
 init|=
 literal|"set hive.lock.manager=org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager;\n"
+operator|+
+literal|"set hive.compute.query.using.stats=false;\n"
 operator|+
 literal|"create table if not exists embeddedBeelineOutputs(d int);\n"
 operator|+
