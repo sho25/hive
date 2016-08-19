@@ -805,17 +805,20 @@ name|f
 argument_list|)
 return|;
 block|}
-comment|/**    * Rename a file.  Unlike {@link FileSystem#rename(Path, Path)}, if the destPath already exists    * and is a directory, this will NOT move the sourcePath into it.  It will throw an IOException    * instead.    * @param fs file system paths are on    * @param sourcePath source file or directory to move    * @param destPath destination file name.  This must be a file and not an existing directory.    * @return result of fs.rename.    * @throws IOException if fs.rename throws it, or if destPath already exists.    */
+comment|/**    * Rename a file.  Unlike {@link FileSystem#rename(Path, Path)}, if the destPath already exists    * and is a directory, this will NOT move the sourcePath into it.  It will throw an IOException    * instead.    * @param srcfs file system src paths are on    * @param destfs file system dest paths are on    * @param sourcePath source file or directory to move    * @param destPath destination file name.  This must be a file and not an existing directory.    * @return result of fs.rename.    * @throws IOException if fs.rename throws it, or if destPath already exists.    */
 specifier|public
 specifier|static
 name|boolean
 name|rename
 parameter_list|(
 name|FileSystem
-name|fs
+name|srcFs
+parameter_list|,
+name|FileSystem
+name|destFs
 parameter_list|,
 name|Path
-name|sourcePath
+name|srcPath
 parameter_list|,
 name|Path
 name|destPath
@@ -829,18 +832,18 @@ name|info
 argument_list|(
 literal|"Renaming "
 operator|+
-name|sourcePath
+name|srcPath
 operator|+
 literal|" to "
 operator|+
 name|destPath
 argument_list|)
 expr_stmt|;
-comment|// If destPath directory exists, rename call will move the sourcePath
+comment|// If destPath directory exists, rename call will move the srcPath
 comment|// into destPath without failing. So check it before renaming.
 if|if
 condition|(
-name|fs
+name|destFs
 operator|.
 name|exists
 argument_list|(
@@ -858,16 +861,58 @@ literal|"path already exists."
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|equalsFileSystem
+argument_list|(
+name|srcFs
+argument_list|,
+name|destFs
+argument_list|)
+condition|)
+block|{
+comment|//just rename the directory
 return|return
-name|fs
+name|srcFs
 operator|.
 name|rename
 argument_list|(
-name|sourcePath
+name|srcPath
 argument_list|,
 name|destPath
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+name|Configuration
+name|conf
+init|=
+operator|new
+name|Configuration
+argument_list|()
+decl_stmt|;
+return|return
+name|copy
+argument_list|(
+name|srcFs
+argument_list|,
+name|srcPath
+argument_list|,
+name|destFs
+argument_list|,
+name|destPath
+argument_list|,
+literal|true
+argument_list|,
+comment|// delete source
+literal|false
+argument_list|,
+comment|// overwrite destination
+name|conf
+argument_list|)
+return|;
+block|}
 block|}
 comment|// NOTE: This is for generating the internal path name for partitions. Users
 comment|// should always use the MetaStore API to get the path name for a partition.
