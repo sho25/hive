@@ -2324,6 +2324,8 @@ argument_list|,
 name|keyLength
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|keyBinarySortableDeserializeToRow
 operator|.
 name|deserialize
@@ -2333,6 +2335,28 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"\nDeserializeRead details: "
+operator|+
+name|keyBinarySortableDeserializeToRow
+operator|.
+name|getDetailedReadPositionString
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 for|for
 control|(
 name|int

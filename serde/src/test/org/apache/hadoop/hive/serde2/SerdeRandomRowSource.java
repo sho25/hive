@@ -14,8 +14,6 @@ operator|.
 name|hive
 operator|.
 name|serde2
-operator|.
-name|fast
 package|;
 end_package
 
@@ -740,7 +738,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|RandomRowObjectSource
+name|SerdeRandomRowSource
 block|{
 specifier|private
 name|Random
@@ -1666,7 +1664,7 @@ index|[]
 name|rows
 parameter_list|)
 block|{
-name|RandomRowObjectSource
+name|SerdeRandomRowSource
 operator|.
 name|sort
 argument_list|(

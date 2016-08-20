@@ -221,6 +221,8 @@ argument_list|,
 name|keyLength
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|keyBinarySortableDeserializeRead
@@ -230,6 +232,33 @@ argument_list|()
 condition|)
 block|{
 return|return;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"\nDeserializeRead details: "
+operator|+
+name|keyBinarySortableDeserializeRead
+operator|.
+name|getDetailedReadPositionString
+argument_list|()
+operator|+
+literal|"\nException: "
+operator|+
+name|e
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+throw|;
 block|}
 name|hashTable
 operator|.

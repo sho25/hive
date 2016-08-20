@@ -1047,17 +1047,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-else|else
-block|{
-name|assertTrue
-argument_list|(
-name|hashMapResult
-operator|.
-name|isEof
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|assertEquals
 argument_list|(
 name|state

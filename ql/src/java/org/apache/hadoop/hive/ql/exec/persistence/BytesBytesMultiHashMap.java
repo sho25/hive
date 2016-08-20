@@ -743,7 +743,7 @@ name|internalRead
 argument_list|()
 return|;
 block|}
-comment|/**      * Read the current value.        *       * @return      *           The ByteSegmentRef to the current value read.      */
+comment|/**      * Read the current value.      *      * @return      *           The ByteSegmentRef to the current value read.      */
 specifier|private
 name|WriteBuffers
 operator|.
@@ -1047,65 +1047,6 @@ expr_stmt|;
 return|return
 name|byteSegmentRef
 return|;
-block|}
-comment|/**      * @return Whether we have read all the values or not.      */
-specifier|public
-name|boolean
-name|isEof
-parameter_list|()
-block|{
-comment|// LOG.info("BytesBytesMultiHashMap isEof hasRows " + hasRows + " hasList " + hasList + " readIndex " + readIndex + " nextTailOffset " + nextTailOffset);
-if|if
-condition|(
-operator|!
-name|hasRows
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
-if|if
-condition|(
-operator|!
-name|hasList
-condition|)
-block|{
-return|return
-operator|(
-name|readIndex
-operator|>
-literal|0
-operator|)
-return|;
-block|}
-else|else
-block|{
-comment|// Multiple values.
-if|if
-condition|(
-name|readIndex
-operator|<=
-literal|1
-condition|)
-block|{
-comment|// Careful: We have not read the list record and 2nd value yet, so nextTailOffset
-comment|// is not valid yet.
-return|return
-literal|false
-return|;
-block|}
-else|else
-block|{
-return|return
-operator|(
-name|nextTailOffset
-operator|<=
-literal|0
-operator|)
-return|;
-block|}
-block|}
 block|}
 comment|/**      * Lets go of any references to a hash map.      */
 specifier|public

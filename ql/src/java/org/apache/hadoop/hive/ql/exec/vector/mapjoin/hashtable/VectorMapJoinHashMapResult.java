@@ -97,11 +97,11 @@ name|ByteSegmentRef
 name|next
 parameter_list|()
 function_decl|;
-comment|/**    * @return Whether reading is at the end.    */
+comment|/**    * Get detailed HashMap result position information to help diagnose exceptions.    */
 specifier|public
 specifier|abstract
-name|boolean
-name|isEof
+name|String
+name|getDetailedHashMapResultPositionString
 parameter_list|()
 function_decl|;
 block|}

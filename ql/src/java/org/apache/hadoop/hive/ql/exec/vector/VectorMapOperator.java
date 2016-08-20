@@ -2988,6 +2988,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Deserialize and append new row using the current batch size as the index.
+try|try
+block|{
 name|currentVectorDeserializeRow
 operator|.
 name|deserialize
@@ -3000,6 +3002,28 @@ name|size
 operator|++
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"\nDeserializeRead detail: "
+operator|+
+name|currentVectorDeserializeRow
+operator|.
+name|getDetailedReadPositionString
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 break|break;
 case|case

@@ -514,13 +514,14 @@ function_decl|;
 specifier|public
 specifier|abstract
 name|boolean
-name|readBeyondBufferRangeWarned
+name|bufferRangeHasExtraDataWarned
 parameter_list|()
 function_decl|;
+comment|/*    * Get detailed read position information to help diagnose exceptions.    */
 specifier|public
 specifier|abstract
-name|boolean
-name|bufferRangeHasExtraDataWarned
+name|String
+name|getDetailedReadPositionString
 parameter_list|()
 function_decl|;
 comment|/*    * These members hold the current value that was read when readCheckNull return false.    */

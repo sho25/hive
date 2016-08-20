@@ -264,7 +264,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/*    * STRING.    *     * Can be used to write CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    */
+comment|/*    * STRING.    *    * Can be used to write CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    */
 name|void
 name|writeString
 parameter_list|(
