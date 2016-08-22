@@ -10241,6 +10241,54 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|// Check to see if the bucketName matches the pattern "bucket_([0-9]+).*"
+comment|// This can happen in ACID cases when we have splits on delta files, where the filenames
+comment|// are of the form delta_x_y/bucket_a.
+if|if
+condition|(
+name|bucketName
+operator|.
+name|startsWith
+argument_list|(
+name|AcidUtils
+operator|.
+name|BUCKET_PREFIX
+argument_list|)
+condition|)
+block|{
+name|m
+operator|=
+name|AcidUtils
+operator|.
+name|BUCKET_DIGIT_PATTERN
+operator|.
+name|matcher
+argument_list|(
+name|bucketName
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|m
+operator|.
+name|find
+argument_list|()
+condition|)
+block|{
+return|return
+name|Integer
+operator|.
+name|parseInt
+argument_list|(
+name|m
+operator|.
+name|group
+argument_list|()
+argument_list|)
+return|;
+block|}
+comment|// Note that legacy bucket digit pattern are being ignored here.
+block|}
 return|return
 operator|-
 literal|1
