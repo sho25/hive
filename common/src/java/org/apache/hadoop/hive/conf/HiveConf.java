@@ -12782,6 +12782,21 @@ operator|+
 name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
 operator|.
 name|varname
+comment|// Adding the S3 credentials from Hadoop config to be hidden
+operator|+
+literal|",fs.s3.awsAccessKeyId"
+operator|+
+literal|",fs.s3.awsSecretAccessKey"
+operator|+
+literal|",fs.s3n.awsAccessKeyId"
+operator|+
+literal|",fs.s3n.awsSecretAccessKey"
+operator|+
+literal|",fs.s3a.access.key"
+operator|+
+literal|",fs.s3a.secret.key"
+operator|+
+literal|",fs.s3a.proxy.password"
 argument_list|,
 literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
 argument_list|)
