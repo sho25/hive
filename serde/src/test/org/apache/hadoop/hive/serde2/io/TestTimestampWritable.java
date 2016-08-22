@@ -3243,12 +3243,35 @@ name|void
 name|testSetTimestamp
 parameter_list|()
 block|{
-comment|// make sure we need a 2nd VInt
-name|Timestamp
-name|t1
-init|=
-operator|new
-name|Timestamp
+comment|// one VInt without nanos
+name|verifySetTimestamp
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
+comment|// one VInt with nanos
+name|verifySetTimestamp
+argument_list|(
+literal|1001
+argument_list|)
+expr_stmt|;
+comment|// two VInt without nanos
+name|verifySetTimestamp
+argument_list|(
+operator|(
+name|long
+operator|)
+name|Integer
+operator|.
+name|MAX_VALUE
+operator|*
+literal|1000
+operator|+
+literal|1000
+argument_list|)
+expr_stmt|;
+comment|// two VInt with nanos
+name|verifySetTimestamp
 argument_list|(
 operator|(
 name|long
@@ -3260,6 +3283,25 @@ operator|*
 literal|1000
 operator|+
 literal|1234
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+name|void
+name|verifySetTimestamp
+parameter_list|(
+name|long
+name|time
+parameter_list|)
+block|{
+name|Timestamp
+name|t1
+init|=
+operator|new
+name|Timestamp
+argument_list|(
+name|time
 argument_list|)
 decl_stmt|;
 name|TimestampWritable
