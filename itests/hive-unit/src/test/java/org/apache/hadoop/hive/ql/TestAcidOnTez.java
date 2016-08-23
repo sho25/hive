@@ -707,7 +707,10 @@ literal|"(a int, b int) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
-literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+literal|" buckets stored as orc "
+operator|+
+name|getTblProperties
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -722,7 +725,10 @@ literal|"(a int, b int) partitioned by (p string) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
-literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+literal|" buckets stored as orc "
+operator|+
+name|getTblProperties
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -737,7 +743,7 @@ literal|"(a int, b int) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
-literal|" buckets stored as orc TBLPROPERTIES ('transactional'='false')"
+literal|" buckets stored as orc "
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -748,7 +754,7 @@ name|Table
 operator|.
 name|NONACIDPART
 operator|+
-literal|"(a int, b int) partitioned by (p string) stored as orc TBLPROPERTIES ('transactional'='false')"
+literal|"(a int, b int) partitioned by (p string) stored as orc "
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -817,6 +823,15 @@ operator|+
 literal|"(a,b) values(1,2),(3,4),(5,6),(7,8),(9,10)"
 argument_list|)
 expr_stmt|;
+block|}
+comment|/**    * this is to test differety types of Acid tables    */
+name|String
+name|getTblProperties
+parameter_list|()
+block|{
+return|return
+literal|"TBLPROPERTIES ('transactional'='true')"
+return|;
 block|}
 specifier|private
 name|void
