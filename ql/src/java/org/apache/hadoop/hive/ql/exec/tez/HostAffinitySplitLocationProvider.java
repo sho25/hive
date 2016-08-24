@@ -47,15 +47,15 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|apache
+name|google
 operator|.
-name|hadoop
+name|common
 operator|.
-name|io
+name|hash
 operator|.
-name|DataOutputBuffer
+name|Hashing
 import|;
 end_import
 
@@ -247,10 +247,10 @@ name|FileSplit
 operator|)
 name|split
 decl_stmt|;
-name|long
-name|hash
+name|int
+name|index
 init|=
-name|generateHash
+name|chooseBucket
 argument_list|(
 name|fsplit
 operator|.
@@ -264,30 +264,6 @@ name|fsplit
 operator|.
 name|getStart
 argument_list|()
-argument_list|)
-decl_stmt|;
-name|int
-name|indexRaw
-init|=
-call|(
-name|int
-call|)
-argument_list|(
-name|hash
-operator|%
-name|knownLocations
-operator|.
-name|length
-argument_list|)
-decl_stmt|;
-name|int
-name|index
-init|=
-name|Math
-operator|.
-name|abs
-argument_list|(
-name|indexRaw
 argument_list|)
 decl_stmt|;
 if|if
@@ -373,8 +349,8 @@ return|;
 block|}
 block|}
 specifier|private
-name|long
-name|generateHash
+name|int
+name|chooseBucket
 parameter_list|(
 name|String
 name|path
@@ -385,48 +361,44 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// Explicitly using only the start offset of a split, and not the length.
-comment|// Splits generated on block boundaries and stripe boundaries can vary slightly. Try hashing both to the same node.
-comment|// There is the drawback of potentially hashing the same data on multiple nodes though, when a large split
-comment|// is sent to 1 node, and a second invocation uses smaller chunks of the previous large split and send them
-comment|// to different nodes.
-name|DataOutputBuffer
-name|dob
+comment|// Explicitly using only the start offset of a split, and not the length. Splits generated on
+comment|// block boundaries and stripe boundaries can vary slightly. Try hashing both to the same node.
+comment|// There is the drawback of potentially hashing the same data on multiple nodes though, when a
+comment|// large split is sent to 1 node, and a second invocation uses smaller chunks of the previous
+comment|// large split and send them to different nodes.
+name|long
+name|hashCode
 init|=
-operator|new
-name|DataOutputBuffer
-argument_list|()
-decl_stmt|;
-name|dob
-operator|.
-name|writeLong
-argument_list|(
+operator|(
+operator|(
 name|startOffset
-argument_list|)
-expr_stmt|;
-name|dob
-operator|.
-name|writeUTF
-argument_list|(
-name|path
-argument_list|)
-expr_stmt|;
-return|return
+operator|>>
+literal|2
+operator|)
+operator|*
+literal|37
+operator|)
+operator|^
 name|Murmur3
 operator|.
 name|hash64
 argument_list|(
-name|dob
+name|path
 operator|.
-name|getData
+name|getBytes
 argument_list|()
-argument_list|,
-literal|0
-argument_list|,
-name|dob
+argument_list|)
+decl_stmt|;
+return|return
+name|Hashing
 operator|.
-name|getLength
-argument_list|()
+name|consistentHash
+argument_list|(
+name|hashCode
+argument_list|,
+name|knownLocations
+operator|.
+name|length
 argument_list|)
 return|;
 block|}
