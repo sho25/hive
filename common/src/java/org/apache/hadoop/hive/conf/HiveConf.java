@@ -5253,6 +5253,17 @@ operator|+
 literal|"joins unnecessary memory will be allocated and then trimmed."
 argument_list|)
 block|,
+name|HIVEHYBRIDGRACEHASHJOINBLOOMFILTER
+argument_list|(
+literal|"hive.mapjoin.hybridgrace.bloomfilter"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to "
+operator|+
+literal|"use BloomFilter in Hybrid grace hash join to minimize unnecessary spilling."
+argument_list|)
+block|,
 name|HIVESMBJOINCACHEROWS
 argument_list|(
 literal|"hive.smbjoin.cache.rows"
