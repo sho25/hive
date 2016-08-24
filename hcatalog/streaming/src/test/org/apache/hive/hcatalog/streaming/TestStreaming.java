@@ -8412,7 +8412,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// bucket 2
-comment|// no data for bucket 3 -- expect 0 length bucket file
 name|txnBatch2
 operator|.
 name|commit
@@ -8506,7 +8505,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|4
+literal|3
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -8549,9 +8548,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|"records in bucket does not match expectation"
+literal|"bucket 2 shouldn't have been created"
 argument_list|,
 name|actual1
 operator|.
@@ -8559,11 +8558,8 @@ name|get
 argument_list|(
 literal|2
 argument_list|)
-operator|.
-name|size
-argument_list|()
-argument_list|,
-literal|0
+operator|==
+literal|null
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -9547,53 +9543,13 @@ literal|"bucket_00002"
 argument_list|)
 condition|)
 block|{
-comment|// since we are adding more bytes we know the length of the file is already readable
-name|Path
-name|bPath
-init|=
-operator|new
-name|Path
-argument_list|(
-name|file
-argument_list|)
-decl_stmt|;
-name|FileSystem
-name|fs
-init|=
-name|bPath
+name|Assert
 operator|.
-name|getFileSystem
+name|assertFalse
 argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|FileStatus
-name|fileStatus
-init|=
-name|fs
-operator|.
-name|getFileStatus
-argument_list|(
-name|bPath
-argument_list|)
-decl_stmt|;
-name|readableFooter
-operator|=
-operator|(
-name|int
-operator|)
-name|fileStatus
-operator|.
-name|getLen
-argument_list|()
-expr_stmt|;
-name|corruptDataFile
-argument_list|(
-name|file
+literal|"bucket 2 shouldn't have been created"
 argument_list|,
-name|conf
-argument_list|,
-literal|2
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -9707,7 +9663,7 @@ name|errDump
 operator|.
 name|contains
 argument_list|(
-literal|"4 file(s) are corrupted"
+literal|"3 file(s) are corrupted"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9829,39 +9785,6 @@ operator|.
 name|contains
 argument_list|(
 literal|"bucket_00001 recovered successfully!"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|true
-argument_list|,
-name|errDump
-operator|.
-name|contains
-argument_list|(
-literal|"bucket_00002 recovered successfully!"
-argument_list|)
-argument_list|)
-expr_stmt|;
-comment|// check for bucket2's last readable footer offset
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|true
-argument_list|,
-name|errDump
-operator|.
-name|contains
-argument_list|(
-literal|"Readable footerOffsets: ["
-operator|+
-name|readableFooter
-operator|+
-literal|"]"
 argument_list|)
 argument_list|)
 expr_stmt|;

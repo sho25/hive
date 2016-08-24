@@ -554,9 +554,7 @@ argument_list|(
 name|encodedRow
 argument_list|)
 decl_stmt|;
-name|updaters
-operator|.
-name|get
+name|getRecordUpdater
 argument_list|(
 name|bucket
 argument_list|)
