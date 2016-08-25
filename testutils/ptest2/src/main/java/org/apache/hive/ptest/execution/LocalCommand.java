@@ -332,7 +332,7 @@ name|logger
 operator|.
 name|info
 argument_list|(
-literal|"Finished LocalCommandId={}. ElapsedTime(seconds)={}"
+literal|"Finished LocalCommandId={}. ElapsedTime(ms)={}"
 argument_list|,
 name|commandId
 argument_list|,
@@ -342,7 +342,7 @@ name|elapsed
 argument_list|(
 name|TimeUnit
 operator|.
-name|SECONDS
+name|MILLISECONDS
 argument_list|)
 argument_list|)
 expr_stmt|;

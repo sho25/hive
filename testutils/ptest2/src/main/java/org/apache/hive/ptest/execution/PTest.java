@@ -191,6 +191,22 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ThreadFactoryBuilder
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -796,7 +812,24 @@ argument_list|(
 name|Executors
 operator|.
 name|newCachedThreadPool
+argument_list|(
+operator|new
+name|ThreadFactoryBuilder
 argument_list|()
+operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+operator|.
+name|setNameFormat
+argument_list|(
+literal|"HostExecutor %d"
+argument_list|)
+operator|.
+name|build
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 specifier|final
