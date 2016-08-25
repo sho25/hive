@@ -650,15 +650,6 @@ operator|+
 literal|" is required"
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Reading configuration from file: "
-operator|+
-name|executionContextConfigurationFile
-argument_list|)
-expr_stmt|;
 name|mExecutionContextConfiguration
 operator|=
 name|ExecutionContextConfiguration
@@ -666,15 +657,6 @@ operator|.
 name|fromFile
 argument_list|(
 name|executionContextConfigurationFile
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"ExecutionContext is [{}]"
-argument_list|,
-name|mExecutionContextConfiguration
 argument_list|)
 expr_stmt|;
 name|mExecutionContextProvider

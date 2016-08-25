@@ -834,7 +834,7 @@ name|mLogger
 operator|.
 name|info
 argument_list|(
-literal|"Finishing submitTests on host: {}. ElapsedTime(ms)={},"
+literal|"Finishing submitTests on host: {}. ElapsedTime(seconds)={},"
 operator|+
 literal|" NumParallelBatchesProcessed={}, NumIsolatedBatchesProcessed={}"
 argument_list|,
@@ -854,7 +854,7 @@ name|elapsed
 argument_list|(
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|)
 block|,
 name|numParallelBatchesProcessed
@@ -1139,7 +1139,7 @@ name|mLogger
 operator|.
 name|info
 argument_list|(
-literal|"Finished processing parallel batch [{}] on host {}. ElapsedTime(ms)={}"
+literal|"Finished processing parallel batch [{}] on host {}. ElapsedTime(seconds)={}"
 argument_list|,
 operator|new
 name|Object
@@ -1162,7 +1162,7 @@ name|elapsed
 argument_list|(
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|)
 block|}
 argument_list|)
@@ -1377,7 +1377,7 @@ name|mLogger
 operator|.
 name|info
 argument_list|(
-literal|"Finished processing isolated batch [{}] on host {}. ElapsedTime(ms)={}"
+literal|"Finished processing isolated batch [{}] on host {}. ElapsedTime(seconds)={}"
 argument_list|,
 operator|new
 name|Object
@@ -1400,7 +1400,7 @@ name|elapsed
 argument_list|(
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|)
 block|}
 argument_list|)
@@ -1747,7 +1747,7 @@ name|mLogger
 operator|.
 name|info
 argument_list|(
-literal|"Completed executing tests for batch [{}] on host {}. ElapsedTime(ms)={}"
+literal|"Completed executing tests for batch [{}] on host {}. ElapsedTime(seconds)={}"
 argument_list|,
 operator|new
 name|Object
@@ -1770,7 +1770,7 @@ name|elapsed
 argument_list|(
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|)
 block|}
 argument_list|)
