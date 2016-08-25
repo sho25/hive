@@ -569,7 +569,7 @@ name|row
 operator|.
 name|matches
 argument_list|(
-literal|"^(FATAL|ERROR|WARN|INFO|DEBUG|TRACE).*$"
+literal|"^.*(FATAL|ERROR|WARN|INFO|DEBUG|TRACE).*$"
 argument_list|)
 argument_list|)
 expr_stmt|;
