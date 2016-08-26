@@ -601,6 +601,49 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"ExecutionContextConfiguration{"
+operator|+
+literal|"mExecutionContextProvider="
+operator|+
+name|mExecutionContextProvider
+operator|+
+literal|", mWorkingDirectory='"
+operator|+
+name|mWorkingDirectory
+operator|+
+literal|'\''
+operator|+
+literal|", mGlobalLogDirectory='"
+operator|+
+name|mGlobalLogDirectory
+operator|+
+literal|'\''
+operator|+
+literal|", mProfileDirectory='"
+operator|+
+name|mProfileDirectory
+operator|+
+literal|'\''
+operator|+
+literal|", mMaxLogDirectoriesPerProfile="
+operator|+
+name|mMaxLogDirectoriesPerProfile
+operator|+
+literal|", mMaxRsyncThreads="
+operator|+
+name|mMaxRsyncThreads
+operator|+
+literal|'}'
+return|;
+block|}
 block|}
 end_class
 

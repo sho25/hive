@@ -655,7 +655,12 @@ literal|"Profile "
 operator|+
 name|profile
 operator|+
-literal|" not found"
+literal|" not found in directory "
+operator|+
+name|mExecutionContextConfiguration
+operator|.
+name|getProfileDirectory
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -883,7 +888,7 @@ operator|.
 name|flush
 argument_list|()
 expr_stmt|;
-comment|// if all drones where abandoned on a host, replace it
+comment|// if all drones where abandoned on a host, try replacing them.
 name|mExecutionContext
 operator|.
 name|replaceBadHosts
