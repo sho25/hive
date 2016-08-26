@@ -846,9 +846,19 @@ name|slotTriples
 index|[
 name|tripleIndex
 index|]
-operator|!=
+operator|==
 literal|0
-operator|&&
+condition|)
+block|{
+comment|// Given that we do not delete, an empty slot means no match.
+return|return
+operator|-
+literal|1
+return|;
+block|}
+elseif|else
+if|if
+condition|(
 name|hashCode
 operator|==
 name|slotTriples
