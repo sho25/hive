@@ -11715,6 +11715,7 @@ decl_stmt|;
 try|try
 block|{
 comment|// 1. If the table has a Sample specified, bail from Calcite path.
+comment|// 2. if returnpath is on and hivetestmode is on bail
 if|if
 condition|(
 name|qb
@@ -11736,6 +11737,32 @@ name|containsKey
 argument_list|(
 name|tableAlias
 argument_list|)
+operator|||
+operator|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CBO_RETPATH_HIVEOP
+argument_list|)
+operator|)
+operator|&&
+operator|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVETESTMODE
+argument_list|)
+operator|)
 condition|)
 block|{
 name|String
