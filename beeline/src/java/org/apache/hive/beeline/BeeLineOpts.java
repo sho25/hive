@@ -2658,6 +2658,8 @@ operator|=
 name|delimiterForDSV
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
 specifier|public
 name|HiveConf
 name|getConf
