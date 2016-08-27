@@ -4248,30 +4248,11 @@ name|ExprNodeGenericFuncDesc
 operator|)
 name|exprDesc
 decl_stmt|;
-if|if
-condition|(
-name|isCustomUDF
-argument_list|(
-name|expr
-argument_list|)
-condition|)
-block|{
-name|ve
-operator|=
-name|getCustomUDFExpression
-argument_list|(
-name|expr
-argument_list|,
-name|mode
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
 comment|// Add cast expression if needed. Child expressions of a udf may return different data types
 comment|// and that would require converting their data types to evaluate the udf.
 comment|// For example decimal column added to an integer column would require integer column to be
 comment|// cast to decimal.
+comment|// Note: this is a no-op for custom UDFs
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -4493,7 +4474,6 @@ operator|+
 literal|" even for the VectorUDFAdaptor"
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 block|}
@@ -4821,6 +4801,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|isCustomUDF
+argument_list|(
+name|genericUDF
+operator|.
+name|getUdfName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// no implicit casts possible
+return|return
+name|children
+return|;
+block|}
 if|if
 condition|(
 name|isExcludedFromCast
@@ -6255,7 +6251,7 @@ name|type
 return|;
 block|}
 comment|// Return true if this is a custom UDF or custom GenericUDF.
-comment|// This is for use only in the planner. It will fail in a task.
+comment|// This two functions are for use only in the planner. It will fail in a task.
 specifier|public
 specifier|static
 name|boolean
@@ -6265,14 +6261,25 @@ name|ExprNodeGenericFuncDesc
 name|expr
 parameter_list|)
 block|{
-name|String
-name|udfName
-init|=
+return|return
+name|isCustomUDF
+argument_list|(
 name|expr
 operator|.
 name|getFuncText
 argument_list|()
-decl_stmt|;
+argument_list|)
+return|;
+block|}
+specifier|private
+specifier|static
+name|boolean
+name|isCustomUDF
+parameter_list|(
+name|String
+name|udfName
+parameter_list|)
+block|{
 if|if
 condition|(
 name|udfName
