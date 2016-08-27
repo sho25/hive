@@ -2078,6 +2078,8 @@ name|arenaSize
 argument_list|)
 expr_stmt|;
 comment|// truncate (TODO: posix_fallocate?)
+comment|// Use RW, not PRIVATE because the copy-on-write is irrelevant for a deleted file
+comment|// see discussion in YARN-5551 for the memory accounting discussion
 name|ByteBuffer
 name|rwbuf
 init|=
@@ -2090,7 +2092,7 @@ name|map
 argument_list|(
 name|MapMode
 operator|.
-name|PRIVATE
+name|READ_WRITE
 argument_list|,
 literal|0
 argument_list|,
