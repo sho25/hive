@@ -406,6 +406,15 @@ name|byteBuffer
 operator|=
 literal|null
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|bb
+operator|.
+name|isDirect
+argument_list|()
+condition|)
+return|return;
 name|Field
 name|field
 init|=
