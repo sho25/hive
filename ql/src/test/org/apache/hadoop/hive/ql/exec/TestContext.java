@@ -243,6 +243,40 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// When local filesystem paths are used, then getMRTmpPatch() should be called to
+comment|// get a temporary directory
+name|assertEquals
+argument_list|(
+name|mrTmpPath
+argument_list|,
+name|spyContext
+operator|.
+name|getTempDirForPath
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+literal|"file:/user"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|mrTmpPath
+argument_list|,
+name|spyContext
+operator|.
+name|getTempDirForPath
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+literal|"file:///user"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// When Non-Object store paths are used, then getExtTmpPathRelTo is called to get a temporary
 comment|// directory on the same path passed as a parameter
 name|Path
