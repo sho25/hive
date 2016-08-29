@@ -7389,6 +7389,11 @@ name|fs
 init|=
 literal|null
 decl_stmt|;
+name|FSDataOutputStream
+name|out
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 if|if
@@ -7468,16 +7473,15 @@ argument_list|,
 literal|"data_file"
 argument_list|)
 decl_stmt|;
-name|FSDataOutputStream
 name|out
-init|=
+operator|=
 name|fs
 operator|.
 name|create
 argument_list|(
 name|dataFile
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -7635,11 +7639,6 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-name|out
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 comment|// Step 2, create a temp table, using the created file as the data
 name|StorageFormat
 name|format
@@ -7806,6 +7805,16 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+finally|finally
+block|{
+name|IOUtils
+operator|.
+name|closeStream
+argument_list|(
+name|out
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Step 3, return a new subtree with a from clause built around that temp table
 comment|// The form of the tree is TOK_TABREF->TOK_TABNAME->identifier(tablename)
