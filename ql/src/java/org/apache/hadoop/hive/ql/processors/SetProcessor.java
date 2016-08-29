@@ -97,16 +97,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -1352,7 +1342,6 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @return A console message that is not strong enough to fail the command (e.g. deprecation).    */
-specifier|private
 specifier|static
 name|String
 name|setConf
