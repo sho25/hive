@@ -187,6 +187,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|Node
@@ -1209,6 +1227,7 @@ name|FileSinkDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// TODO# special case #N - unions
 for|for
 control|(
 name|Operator
@@ -1263,6 +1282,24 @@ name|fileSinkDesc
 operator|.
 name|setParentDir
 argument_list|(
+name|parentDirName
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Created LinkedFileSink for union "
+operator|+
+name|fileSinkDesc
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|"; parent "
+operator|+
 name|parentDirName
 argument_list|)
 expr_stmt|;

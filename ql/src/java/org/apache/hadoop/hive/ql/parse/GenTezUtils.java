@@ -2057,6 +2057,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO# special case #N - unions (tez)
 name|desc
 operator|.
 name|setDirName
@@ -2073,6 +2074,24 @@ operator|.
 name|getIndexInTezUnion
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"removing union - new desc with "
+operator|+
+name|desc
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|"; parent "
+operator|+
+name|path
 argument_list|)
 expr_stmt|;
 name|desc
@@ -2390,6 +2409,28 @@ argument_list|(
 literal|"using CombineHiveInputformat for the merge job"
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"merging files from "
+operator|+
+name|fileSink
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|" to "
+operator|+
+name|finalName
+argument_list|)
+expr_stmt|;
+comment|// TODO# special case #N - merge
 name|GenMapRedUtils
 operator|.
 name|createMRWorkForMergingFiles

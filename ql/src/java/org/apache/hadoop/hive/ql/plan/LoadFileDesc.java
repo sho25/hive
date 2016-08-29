@@ -61,6 +61,24 @@ name|PTFUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_comment
 comment|/**  * LoadFileDesc.  *  */
 end_comment
@@ -227,6 +245,25 @@ block|{
 name|super
 argument_list|(
 name|sourcePath
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"creating LFD from "
+operator|+
+name|sourcePath
+operator|+
+literal|" to "
+operator|+
+name|targetDir
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this

@@ -2718,6 +2718,20 @@ specifier|final
 class|class
 name|Utilities
 block|{
+comment|// TODO: remove when merging
+specifier|public
+specifier|static
+specifier|final
+name|Logger
+name|LOG14535
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+literal|"Log14535"
+argument_list|)
+decl_stmt|;
 comment|/**    * The object in the reducer are composed of these top level fields.    */
 specifier|public
 specifier|static
@@ -8550,6 +8564,7 @@ condition|(
 name|success
 condition|)
 block|{
+comment|// TODO# specPath instead of tmpPath
 name|FileStatus
 index|[]
 name|statuses
@@ -8637,7 +8652,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// move to the file destination
-name|log
+name|Utilities
+operator|.
+name|LOG14535
 operator|.
 name|info
 argument_list|(
@@ -8662,9 +8679,32 @@ name|specPath
 argument_list|)
 expr_stmt|;
 block|}
+name|List
+argument_list|<
+name|Path
+argument_list|>
+name|paths
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+comment|// TODO#: HERE listFilesToCommit(specPath, fs, paths);
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"deleting tmpPath "
+operator|+
+name|tmpPath
+argument_list|)
+expr_stmt|;
 name|fs
 operator|.
 name|delete
@@ -8675,6 +8715,17 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"deleting taskTmpPath "
+operator|+
+name|taskTmpPath
+argument_list|)
+expr_stmt|;
 name|fs
 operator|.
 name|delete
@@ -8878,6 +8929,17 @@ range|:
 name|paths
 control|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"creating empty bucket for "
+operator|+
+name|path
+argument_list|)
+expr_stmt|;
 name|RecordWriter
 name|writer
 init|=
@@ -9684,6 +9746,24 @@ name|one
 argument_list|)
 condition|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"removeTempOrDuplicateFiles deleting "
+operator|+
+name|one
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -9730,6 +9810,28 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"removeTempOrDuplicateFiles pondering "
+operator|+
+name|one
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|", taskId "
+operator|+
+name|taskId
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|FileStatus
 name|otherFile
 init|=
@@ -9759,6 +9861,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// TODO# file choice!
 comment|// Compare the file sizes of all the attempt files for the same task, the largest win
 comment|// any attempt files could contain partial results (due to task failures or
 comment|// speculative runs), but the largest should be the correct one since the result

@@ -7642,6 +7642,7 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
+comment|// TODO# special case #N - merge FS is created here
 name|FileSinkDesc
 name|fsOutputDesc
 init|=
@@ -10289,6 +10290,7 @@ argument_list|()
 decl_stmt|;
 comment|// Create the required temporary file in the HDFS location if the destination
 comment|// path of the FileSinkOperator table is a blobstore path.
+comment|// TODO# HERE
 name|Path
 name|tmpDir
 init|=
@@ -10348,6 +10350,31 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"createMoveTask setting tmpDir for LinkedFileSink chDir "
+operator|+
+name|fsConf
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|"; new parent "
+operator|+
+name|tmpDir
+operator|+
+literal|", dest was "
+operator|+
+name|fileSinkDesc
+operator|.
+name|getDestPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -10357,6 +10384,24 @@ operator|.
 name|setDirName
 argument_list|(
 name|tmpDir
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"createMoveTask setting tmpDir for LinkedFileSink chDir "
+operator|+
+name|tmpDir
+operator|+
+literal|"; dest was "
+operator|+
+name|fileSinkDesc
+operator|.
+name|getDestPath
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

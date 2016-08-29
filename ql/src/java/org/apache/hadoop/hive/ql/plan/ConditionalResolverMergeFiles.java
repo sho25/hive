@@ -187,6 +187,24 @@ name|Task
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_comment
 comment|/**  * Conditional task resolution interface. This is invoked at run time to get the  * task to invoke. Developers can plug in their own resolvers  */
 end_comment
@@ -1070,6 +1088,17 @@ operator|.
 name|getTableDesc
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"merge resolver removing "
+operator|+
+name|path
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|removePathToPartitionInfo
@@ -1234,6 +1263,23 @@ argument_list|)
 else|:
 name|partDesc
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"merge resolver will merge "
+operator|+
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|resolveDynamicPartitionStoredAsSubDirsMerge
@@ -1258,6 +1304,23 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"merge resolver will move "
+operator|+
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|toMove
 operator|.
 name|add
