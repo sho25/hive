@@ -177,6 +177,14 @@ name|LowLevelCacheCounters
 name|qfCounters
 parameter_list|)
 function_decl|;
+comment|/** Notifies the cache that a particular buffer should be removed due to eviction. */
+name|void
+name|notifyEvicted
+parameter_list|(
+name|MemoryBuffer
+name|buffer
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

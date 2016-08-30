@@ -60,7 +60,7 @@ name|IncrementalRows
 extends|extends
 name|Rows
 block|{
-specifier|private
+specifier|protected
 specifier|final
 name|ResultSet
 name|rs
@@ -83,7 +83,7 @@ specifier|private
 name|boolean
 name|endOfResult
 decl_stmt|;
-specifier|private
+specifier|protected
 name|boolean
 name|normalizingWidths
 decl_stmt|;

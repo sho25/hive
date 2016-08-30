@@ -475,7 +475,7 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|init
+name|startThreads
 parameter_list|()
 block|{
 if|if
@@ -2155,12 +2155,14 @@ return|return
 name|fake
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 specifier|final
 name|void
 name|notifyEvicted
 parameter_list|(
-name|LlapDataBuffer
+name|MemoryBuffer
 name|buffer
 parameter_list|)
 block|{

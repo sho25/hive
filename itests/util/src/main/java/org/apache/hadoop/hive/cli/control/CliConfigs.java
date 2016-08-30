@@ -377,7 +377,7 @@ argument_list|)
 expr_stmt|;
 name|setInitScript
 argument_list|(
-literal|"q_test_init.sql"
+literal|"q_test_init_for_minimr.sql"
 argument_list|)
 expr_stmt|;
 name|setCleanupScript

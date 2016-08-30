@@ -11357,16 +11357,14 @@ name|StringSet
 argument_list|(
 literal|"cache"
 argument_list|,
-literal|"allocator"
-argument_list|,
 literal|"none"
 argument_list|)
 argument_list|,
 literal|"LLAP IO memory usage; 'cache' (the default) uses data and metadata cache with a\n"
 operator|+
-literal|"custom off-heap allocator, 'allocator' uses the custom allocator without the caches,\n"
+literal|"custom off-heap allocator, 'none' doesn't use either (this mode may result in\n"
 operator|+
-literal|"'none' doesn't use either (this mode may result in significant performance degradation)"
+literal|"significant performance degradation)"
 argument_list|)
 block|,
 name|LLAP_ALLOCATOR_MIN_ALLOC

@@ -300,6 +300,14 @@ name|ROW_COUNT
 init|=
 literal|"numRows"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|RUN_TIME_ROW_COUNT
+init|=
+literal|"runTimeNumRows"
+decl_stmt|;
 comment|/**    * The name of the statistic Raw Data Size to be published or gathered.    */
 specifier|public
 specifier|static

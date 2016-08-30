@@ -113,7 +113,7 @@ name|EvictionListener
 block|{
 specifier|private
 specifier|final
-name|LowLevelCacheImpl
+name|LowLevelCache
 name|dataCache
 decl_stmt|;
 specifier|private
@@ -124,7 +124,7 @@ decl_stmt|;
 specifier|public
 name|EvictionDispatcher
 parameter_list|(
-name|LowLevelCacheImpl
+name|LowLevelCache
 name|dataCache
 parameter_list|,
 name|OrcMetadataCache

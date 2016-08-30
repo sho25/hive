@@ -2742,6 +2742,14 @@ literal|"file:///"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
+name|String
+name|HADOOP_LOCAL_FS_SCHEME
+init|=
+literal|"file"
+decl_stmt|;
+specifier|public
+specifier|static
 name|String
 name|MAP_PLAN_NAME
 init|=

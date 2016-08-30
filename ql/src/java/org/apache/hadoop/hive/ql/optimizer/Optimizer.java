@@ -1660,7 +1660,7 @@ operator|.
 name|getContext
 argument_list|()
 operator|.
-name|getExplain
+name|isExplainSkipExecution
 argument_list|()
 operator|&&
 operator|!

@@ -6015,6 +6015,13 @@ name|hashAggregations
 operator|=
 literal|null
 expr_stmt|;
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Group by contains the columns needed - no need to aggregate from children
 specifier|public

@@ -385,6 +385,13 @@ literal|"No sufficient row found"
 argument_list|)
 throw|;
 block|}
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

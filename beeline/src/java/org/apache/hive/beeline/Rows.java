@@ -100,7 +100,7 @@ name|Rows
 implements|implements
 name|Iterator
 block|{
-specifier|private
+specifier|protected
 specifier|final
 name|BeeLine
 name|beeLine

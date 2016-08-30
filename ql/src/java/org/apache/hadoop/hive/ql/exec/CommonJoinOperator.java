@@ -4116,6 +4116,13 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

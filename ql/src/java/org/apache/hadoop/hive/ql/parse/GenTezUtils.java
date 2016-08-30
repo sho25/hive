@@ -1496,6 +1496,9 @@ name|context
 parameter_list|,
 name|BaseWork
 name|work
+parameter_list|,
+name|int
+name|indexForTezUnion
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -1574,6 +1577,8 @@ operator|.
 name|cloneOperatorTree
 argument_list|(
 name|roots
+argument_list|,
+name|indexForTezUnion
 argument_list|)
 decl_stmt|;
 comment|// we're cloning the operator plan but we're retaining the original work. That means
@@ -2047,16 +2052,6 @@ argument_list|(
 name|desc
 argument_list|)
 expr_stmt|;
-name|desc
-operator|.
-name|setIndexInTezUnion
-argument_list|(
-name|linked
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// TODO# special case #N - unions (tez)
 name|desc
 operator|.
@@ -2069,9 +2064,9 @@ name|path
 argument_list|,
 literal|""
 operator|+
-name|desc
+name|linked
 operator|.
-name|getIndexInTezUnion
+name|size
 argument_list|()
 argument_list|)
 argument_list|)
