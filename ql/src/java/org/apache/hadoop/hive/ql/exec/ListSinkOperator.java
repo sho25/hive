@@ -509,6 +509,9 @@ expr_stmt|;
 name|numRows
 operator|++
 expr_stmt|;
+name|runTimeNumRows
+operator|++
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

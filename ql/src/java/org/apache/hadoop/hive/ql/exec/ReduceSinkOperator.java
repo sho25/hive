@@ -3303,6 +3303,9 @@ block|{
 name|numRows
 operator|++
 expr_stmt|;
+name|runTimeNumRows
+operator|++
+expr_stmt|;
 if|if
 condition|(
 name|isLogInfoEnabled

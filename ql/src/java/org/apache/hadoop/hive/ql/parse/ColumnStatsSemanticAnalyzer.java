@@ -2256,6 +2256,16 @@ argument_list|(
 name|ctx
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setExplainConfig
+argument_list|(
+name|origCtx
+operator|.
+name|getExplainConfig
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info

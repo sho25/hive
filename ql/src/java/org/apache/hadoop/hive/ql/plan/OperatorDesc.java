@@ -104,6 +104,19 @@ name|long
 name|memoryNeeded
 parameter_list|)
 function_decl|;
+specifier|public
+name|String
+name|getRuntimeStatsTmpDir
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setRuntimeStatsTmpDir
+parameter_list|(
+name|String
+name|runtimeStatsTmpDir
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

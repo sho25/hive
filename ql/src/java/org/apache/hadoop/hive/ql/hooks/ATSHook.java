@@ -193,6 +193,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|ExplainConfiguration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExplainWork
@@ -793,6 +811,20 @@ block|{
 case|case
 name|PRE_EXEC_HOOK
 case|:
+name|ExplainConfiguration
+name|config
+init|=
+operator|new
+name|ExplainConfiguration
+argument_list|()
+decl_stmt|;
+name|config
+operator|.
+name|setFormatted
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|ExplainWork
 name|work
 init|=
@@ -820,24 +852,9 @@ comment|// FetchTask
 literal|null
 argument_list|,
 comment|// analyzer
-literal|false
+name|config
 argument_list|,
-comment|// extended
-literal|true
-argument_list|,
-comment|// formatted
-literal|false
-argument_list|,
-comment|// dependency
-literal|false
-argument_list|,
-comment|// logical
-literal|false
-argument_list|,
-comment|// authorize
-literal|false
-argument_list|,
-comment|// userLevelExplain
+comment|//explainConfig
 literal|null
 comment|// cboInfo
 argument_list|)

@@ -736,6 +736,13 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

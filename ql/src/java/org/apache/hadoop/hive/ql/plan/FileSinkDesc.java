@@ -241,13 +241,6 @@ specifier|private
 name|boolean
 name|gatherStats
 decl_stmt|;
-specifier|private
-name|int
-name|indexInTezUnion
-init|=
-operator|-
-literal|1
-decl_stmt|;
 comment|// Consider a query like:
 comment|// insert overwrite table T3 select ... from T1 join T2 on T1.key = T2.key;
 comment|// where T1, T2 and T3 are sorted and bucketed by key into the same number of buckets,
@@ -1620,30 +1613,6 @@ operator|.
 name|statsTmpDir
 operator|=
 name|statsCollectionTempDir
-expr_stmt|;
-block|}
-specifier|public
-name|int
-name|getIndexInTezUnion
-parameter_list|()
-block|{
-return|return
-name|indexInTezUnion
-return|;
-block|}
-specifier|public
-name|void
-name|setIndexInTezUnion
-parameter_list|(
-name|int
-name|indexInTezUnion
-parameter_list|)
-block|{
-name|this
-operator|.
-name|indexInTezUnion
-operator|=
-name|indexInTezUnion
 expr_stmt|;
 block|}
 block|}

@@ -164,9 +164,11 @@ name|SemanticException
 block|{
 name|ctx
 operator|.
-name|setExplain
+name|setExplainConfig
 argument_list|(
-literal|true
+operator|new
+name|ExplainConfiguration
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Create a semantic analyzer for the query

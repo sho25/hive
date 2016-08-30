@@ -4044,6 +4044,9 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|runTimeNumRows
+operator|++
+expr_stmt|;
 comment|/* Create list bucketing sub-directory only if stored-as-directories is on. */
 name|String
 name|lbDirName
@@ -6420,6 +6423,13 @@ name|prevFsp
 operator|=
 literal|null
 expr_stmt|;
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * @return the name of the operator    */
 annotation|@
@@ -7122,9 +7132,7 @@ name|setIndexForTezUnion
 argument_list|(
 name|this
 operator|.
-name|conf
-operator|.
-name|getIndexInTezUnion
+name|getIndexForTezUnion
 argument_list|()
 argument_list|)
 expr_stmt|;

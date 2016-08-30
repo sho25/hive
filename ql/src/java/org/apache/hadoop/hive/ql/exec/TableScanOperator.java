@@ -1493,6 +1493,13 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+name|super
+operator|.
+name|closeOp
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * The operator name for this operator type. This is used to construct the    * rule for an operator    *    * @return the operator name    **/
 annotation|@

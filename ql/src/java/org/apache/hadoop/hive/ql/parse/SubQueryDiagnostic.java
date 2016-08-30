@@ -74,7 +74,7 @@ if|if
 condition|(
 name|ctx
 operator|.
-name|getExplain
+name|isExplainSkipExecution
 argument_list|()
 condition|)
 block|{
