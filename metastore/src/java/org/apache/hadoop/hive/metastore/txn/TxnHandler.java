@@ -17157,6 +17157,8 @@ block|}
 block|}
 block|}
 comment|/**    * Helper class that generates SQL queries with syntax specific to target DB    */
+annotation|@
+name|VisibleForTesting
 specifier|static
 specifier|final
 class|class
@@ -17575,7 +17577,6 @@ throw|;
 block|}
 block|}
 comment|/**      * Given a {@code selectStatement}, decorated it with FOR UPDATE or semantically equivalent      * construct.  If the DB doesn't support, return original select.      */
-specifier|private
 name|String
 name|addForUpdateClause
 parameter_list|(
@@ -17620,10 +17621,60 @@ name|SQLSERVER
 case|:
 comment|//https://msdn.microsoft.com/en-us/library/ms189499.aspx
 comment|//https://msdn.microsoft.com/en-us/library/ms187373.aspx
+name|String
+name|modifier
+init|=
+literal|" with (updlock)"
+decl_stmt|;
+name|int
+name|wherePos
+init|=
+name|selectStatement
+operator|.
+name|toUpperCase
+argument_list|()
+operator|.
+name|indexOf
+argument_list|(
+literal|" WHERE "
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|wherePos
+operator|<
+literal|0
+condition|)
+block|{
 return|return
 name|selectStatement
 operator|+
-literal|" with(updlock)"
+name|modifier
+return|;
+block|}
+return|return
+name|selectStatement
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+name|wherePos
+argument_list|)
+operator|+
+name|modifier
+operator|+
+name|selectStatement
+operator|.
+name|substring
+argument_list|(
+name|wherePos
+argument_list|,
+name|selectStatement
+operator|.
+name|length
+argument_list|()
+argument_list|)
 return|;
 default|default:
 name|String
