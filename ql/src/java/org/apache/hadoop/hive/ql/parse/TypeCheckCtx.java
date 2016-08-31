@@ -440,10 +440,7 @@ operator|.
 name|toStringTree
 argument_list|()
 operator|)
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 block|}

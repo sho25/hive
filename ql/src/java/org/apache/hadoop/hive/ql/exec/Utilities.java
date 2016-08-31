@@ -8572,7 +8572,6 @@ condition|(
 name|success
 condition|)
 block|{
-comment|// TODO# specPath instead of tmpPath
 name|FileStatus
 index|[]
 name|statuses
@@ -8687,18 +8686,6 @@ name|specPath
 argument_list|)
 expr_stmt|;
 block|}
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|paths
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-decl_stmt|;
-comment|// TODO#: HERE listFilesToCommit(specPath, fs, paths);
 block|}
 else|else
 block|{
@@ -8745,7 +8732,6 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Check the existence of buckets according to bucket specification. Create empty buckets if    * needed.    *    * @param hconf    * @param paths A list of empty buckets to create    * @param conf The definition of the FileSink.    * @param reporter The mapreduce reporter object    * @throws HiveException    * @throws IOException    */
-specifier|private
 specifier|static
 name|void
 name|createEmptyBuckets
@@ -9766,10 +9752,7 @@ name|one
 operator|.
 name|getPath
 argument_list|()
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 if|if
@@ -9834,10 +9817,7 @@ operator|+
 literal|", taskId "
 operator|+
 name|taskId
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 name|FileStatus
@@ -9869,7 +9849,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// TODO# file choice!
 comment|// Compare the file sizes of all the attempt files for the same task, the largest win
 comment|// any attempt files could contain partial results (due to task failures or
 comment|// speculative runs), but the largest should be the correct one since the result

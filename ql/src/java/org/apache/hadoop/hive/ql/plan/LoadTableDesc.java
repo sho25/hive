@@ -252,6 +252,9 @@ name|AcidUtils
 operator|.
 name|Operation
 name|writeType
+parameter_list|,
+name|boolean
+name|isMmTable
 parameter_list|)
 block|{
 name|super
@@ -275,10 +278,7 @@ name|table
 operator|.
 name|getTableName
 argument_list|()
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 name|init
@@ -291,7 +291,7 @@ name|replace
 argument_list|,
 name|writeType
 argument_list|,
-literal|false
+name|isMmTable
 argument_list|)
 expr_stmt|;
 block|}
@@ -321,6 +321,7 @@ name|boolean
 name|replace
 parameter_list|)
 block|{
+comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -336,6 +337,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -376,8 +379,12 @@ name|AcidUtils
 operator|.
 name|Operation
 name|writeType
+parameter_list|,
+name|boolean
+name|isMmTable
 parameter_list|)
 block|{
+comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -389,6 +396,8 @@ argument_list|,
 literal|true
 argument_list|,
 name|writeType
+argument_list|,
+name|isMmTable
 argument_list|)
 expr_stmt|;
 block|}
@@ -426,6 +435,7 @@ argument_list|>
 name|partitionSpec
 parameter_list|)
 block|{
+comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -441,6 +451,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -505,10 +517,7 @@ name|table
 operator|.
 name|getTableName
 argument_list|()
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 name|this
