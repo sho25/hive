@@ -5731,6 +5731,21 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_TRANSACTIONAL_NUM_EVENTS_IN_MEMORY
+argument_list|(
+literal|"hive.transactional.events.mem"
+argument_list|,
+literal|10000000
+argument_list|,
+literal|"Vectorized ACID readers can often load all the delete events from all the delete deltas\n"
+operator|+
+literal|"into memory to optimize for performance. To prevent out-of-memory errors, this is a rough heuristic\n"
+operator|+
+literal|"that limits the total number of delete events that can be loaded into memory at once.\n"
+operator|+
+literal|"Roughly it has been set to 10 million delete events per bucket (~160 MB).\n"
+argument_list|)
+block|,
 name|HIVESAMPLERANDOMNUM
 argument_list|(
 literal|"hive.sample.seednumber"

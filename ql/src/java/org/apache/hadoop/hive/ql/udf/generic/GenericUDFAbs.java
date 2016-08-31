@@ -912,6 +912,17 @@ argument_list|(
 name|valObject
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|valObject
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|resultDouble
 operator|.
 name|set

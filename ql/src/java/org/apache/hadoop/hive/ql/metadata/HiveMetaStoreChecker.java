@@ -1676,20 +1676,25 @@ argument_list|(
 name|basePath
 argument_list|)
 expr_stmt|;
-comment|// we only use the keySet of ConcurrentHashMap
-comment|// Neither the key nor the value can be null.
-name|Map
+name|Set
 argument_list|<
 name|Path
-argument_list|,
-name|Object
 argument_list|>
 name|dirSet
 init|=
+name|Collections
+operator|.
+name|newSetFromMap
+argument_list|(
 operator|new
 name|ConcurrentHashMap
-argument_list|<>
+argument_list|<
+name|Path
+argument_list|,
+name|Boolean
+argument_list|>
 argument_list|()
+argument_list|)
 decl_stmt|;
 comment|// Here we just reuse the THREAD_COUNT configuration for
 comment|// HIVE_MOVE_FILES_THREAD_COUNT
@@ -1814,9 +1819,6 @@ operator|.
 name|addAll
 argument_list|(
 name|dirSet
-operator|.
-name|keySet
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1837,11 +1839,9 @@ argument_list|>
 name|basePaths
 parameter_list|,
 specifier|final
-name|Map
+name|Set
 argument_list|<
 name|Path
-argument_list|,
-name|Object
 argument_list|>
 name|allDirs
 parameter_list|,
@@ -2097,15 +2097,11 @@ block|}
 block|}
 else|else
 block|{
-comment|// true is just a boolean object place holder because neither the
-comment|// key nor the value can be null.
 name|allDirs
 operator|.
-name|put
+name|add
 argument_list|(
 name|path
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -2368,15 +2364,11 @@ block|}
 block|}
 else|else
 block|{
-comment|// true is just a boolean object place holder because neither the
-comment|// key nor the value can be null.
 name|allDirs
 operator|.
-name|put
+name|add
 argument_list|(
 name|path
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}

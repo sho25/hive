@@ -91,15 +91,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"join1.q"
-block|,
 literal|"join2.q"
 block|,
 literal|"groupby1.q"
-block|,
-literal|"groupby2.q"
-block|,
-literal|"join3.q"
 block|,
 literal|"input1.q"
 block|,
