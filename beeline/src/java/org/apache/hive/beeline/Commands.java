@@ -7865,6 +7865,13 @@ condition|(
 name|password
 operator|==
 literal|null
+operator|||
+name|password
+operator|.
+name|length
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 name|password
