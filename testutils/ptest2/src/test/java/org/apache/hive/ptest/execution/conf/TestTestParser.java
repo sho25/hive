@@ -757,6 +757,15 @@ name|context
 operator|.
 name|put
 argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
 literal|"unitTests.exclude"
 argument_list|,
 literal|"TestA"
@@ -906,6 +915,15 @@ name|context
 operator|.
 name|put
 argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
 literal|"unitTests.include"
 argument_list|,
 literal|"TestA TestB"
@@ -1049,6 +1067,15 @@ argument_list|(
 literal|"unitTests.directories"
 argument_list|,
 literal|"build/1 build/2"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
 argument_list|)
 expr_stmt|;
 name|context
