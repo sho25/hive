@@ -131,6 +131,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|LogUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -729,7 +745,7 @@ name|SPARK_DEFAULT_CONF_FILE
 argument_list|,
 name|propertyName
 argument_list|,
-name|Utilities
+name|LogUtils
 operator|.
 name|maskIfPassword
 argument_list|(
@@ -955,7 +971,7 @@ literal|"load spark property from hive configuration (%s -> %s)."
 argument_list|,
 name|propertyName
 argument_list|,
-name|Utilities
+name|LogUtils
 operator|.
 name|maskIfPassword
 argument_list|(
@@ -1032,7 +1048,7 @@ name|sparkMaster
 argument_list|,
 name|propertyName
 argument_list|,
-name|Utilities
+name|LogUtils
 operator|.
 name|maskIfPassword
 argument_list|(
@@ -1147,7 +1163,7 @@ literal|"load HBase configuration (%s -> %s)."
 argument_list|,
 name|propertyName
 argument_list|,
-name|Utilities
+name|LogUtils
 operator|.
 name|maskIfPassword
 argument_list|(
@@ -1204,7 +1220,7 @@ literal|"load RPC property from hive configuration (%s -> %s)."
 argument_list|,
 name|propertyName
 argument_list|,
-name|Utilities
+name|LogUtils
 operator|.
 name|maskIfPassword
 argument_list|(
