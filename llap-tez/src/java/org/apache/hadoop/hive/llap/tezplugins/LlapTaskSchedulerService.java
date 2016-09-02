@@ -2251,9 +2251,6 @@ name|activeInstances
 operator|.
 name|getAll
 argument_list|()
-operator|.
-name|values
-argument_list|()
 control|)
 block|{
 name|addNode
@@ -2312,7 +2309,6 @@ specifier|public
 name|void
 name|onCreate
 parameter_list|(
-specifier|final
 name|ServiceInstance
 name|serviceInstance
 parameter_list|)
@@ -2355,7 +2351,6 @@ specifier|public
 name|void
 name|onUpdate
 parameter_list|(
-specifier|final
 name|ServiceInstance
 name|serviceInstance
 parameter_list|)
@@ -2403,7 +2398,6 @@ specifier|public
 name|void
 name|onRemove
 parameter_list|(
-specifier|final
 name|ServiceInstance
 name|serviceInstance
 parameter_list|)
@@ -2867,9 +2861,6 @@ name|activeInstances
 operator|.
 name|getAll
 argument_list|()
-operator|.
-name|values
-argument_list|()
 control|)
 block|{
 if|if
@@ -3091,9 +3082,6 @@ range|:
 name|activeInstances
 operator|.
 name|getAll
-argument_list|()
-operator|.
-name|values
 argument_list|()
 control|)
 block|{
@@ -4640,9 +4628,6 @@ name|activeInstances
 operator|.
 name|getAll
 argument_list|()
-operator|.
-name|values
-argument_list|()
 control|)
 block|{
 if|if
@@ -4719,15 +4704,6 @@ name|NodeInfo
 name|node
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Adding node: "
-operator|+
-name|inst
-argument_list|)
-expr_stmt|;
 comment|// we have just added a new node. Signal timeout monitor to reset timer
 if|if
 condition|(

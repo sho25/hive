@@ -23,9 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|IOException
+name|Collection
 import|;
 end_import
 
@@ -36,16 +36,6 @@ operator|.
 name|util
 operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
 import|;
 end_import
 
@@ -66,10 +56,8 @@ name|ServiceInstanceSet
 block|{
 comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return    */
 specifier|public
-name|Map
+name|Collection
 argument_list|<
-name|String
-argument_list|,
 name|ServiceInstance
 argument_list|>
 name|getAll
@@ -77,7 +65,7 @@ parameter_list|()
 function_decl|;
 comment|/**    * Gets a list containing all the instances. This list has the same iteration order across    * different processes, assuming the list of registry entries is the same.    * @return    */
 specifier|public
-name|List
+name|Collection
 argument_list|<
 name|ServiceInstance
 argument_list|>
