@@ -11661,6 +11661,8 @@ argument_list|,
 operator|new
 name|StringSet
 argument_list|(
+literal|true
+argument_list|,
 literal|"mr"
 argument_list|,
 literal|"tez"
