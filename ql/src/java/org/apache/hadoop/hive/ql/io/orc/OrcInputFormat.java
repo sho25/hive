@@ -7058,8 +7058,16 @@ decl_stmt|;
 specifier|private
 name|boolean
 index|[]
+name|included
+decl_stmt|;
+comment|// The included columns from the Hive configuration.
+specifier|private
+name|boolean
+index|[]
 name|readerIncluded
 decl_stmt|;
+comment|// The included columns of the reader / file schema that
+comment|// include ACID columns if present.
 specifier|private
 specifier|final
 name|boolean
@@ -8123,7 +8131,7 @@ name|context
 operator|.
 name|conf
 argument_list|,
-name|readerIncluded
+name|included
 argument_list|,
 name|isOriginal
 argument_list|)
@@ -8930,7 +8938,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|readerIncluded
+name|included
 operator|=
 name|genIncludedColumns
 argument_list|(
@@ -8950,14 +8958,18 @@ name|SchemaEvolution
 argument_list|(
 name|fileSchema
 argument_list|,
-name|readerIncluded
+name|included
 argument_list|)
+expr_stmt|;
+name|readerIncluded
+operator|=
+name|included
 expr_stmt|;
 block|}
 else|else
 block|{
-comment|// The readerSchema always comes in without ACID columns.
-name|readerIncluded
+comment|// The reader schema always comes in without ACID columns.
+name|included
 operator|=
 name|genIncludedColumns
 argument_list|(
@@ -8973,7 +8985,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|readerIncluded
+name|included
 operator|!=
 literal|null
 operator|&&
@@ -8987,8 +8999,15 @@ name|readerIncluded
 operator|=
 name|shiftReaderIncludedForAcid
 argument_list|(
-name|readerIncluded
+name|included
 argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|readerIncluded
+operator|=
+name|included
 expr_stmt|;
 block|}
 name|TypeDescription
