@@ -4860,6 +4860,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"nullif"
+argument_list|,
+name|GenericUDFNullif
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"hash"
 argument_list|,
 name|GenericUDFHash
