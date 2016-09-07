@@ -4970,6 +4970,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"sort_array_by"
+argument_list|,
+name|GenericUDFSortArrayByField
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"array_contains"
 argument_list|,
 name|GenericUDFArrayContains
