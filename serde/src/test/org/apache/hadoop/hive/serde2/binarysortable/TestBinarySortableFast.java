@@ -778,6 +778,9 @@ name|BinarySortableDeserializeRead
 argument_list|(
 name|primitiveTypeInfos
 argument_list|,
+comment|/* useExternalBuffer */
+literal|false
+argument_list|,
 name|columnSortOrderIsDesc
 argument_list|)
 decl_stmt|;
@@ -931,6 +934,9 @@ operator|new
 name|BinarySortableDeserializeRead
 argument_list|(
 name|primitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|,
 name|columnSortOrderIsDesc
 argument_list|)
@@ -1585,6 +1591,9 @@ operator|new
 name|BinarySortableDeserializeRead
 argument_list|(
 name|primitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|,
 name|columnSortOrderIsDesc
 argument_list|)

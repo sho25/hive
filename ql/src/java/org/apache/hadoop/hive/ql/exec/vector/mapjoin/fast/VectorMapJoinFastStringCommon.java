@@ -309,6 +309,9 @@ operator|new
 name|BinarySortableDeserializeRead
 argument_list|(
 name|primitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

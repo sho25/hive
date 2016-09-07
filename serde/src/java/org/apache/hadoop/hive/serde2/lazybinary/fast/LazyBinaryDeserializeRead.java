@@ -337,11 +337,16 @@ parameter_list|(
 name|TypeInfo
 index|[]
 name|typeInfos
+parameter_list|,
+name|boolean
+name|useExternalBuffer
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|typeInfos
+argument_list|,
+name|useExternalBuffer
 argument_list|)
 expr_stmt|;
 name|fieldCount
@@ -361,6 +366,10 @@ operator|=
 operator|new
 name|VLong
 argument_list|()
+expr_stmt|;
+name|currentExternalBufferNeeded
+operator|=
+literal|false
 expr_stmt|;
 name|readBeyondConfiguredFieldsWarned
 operator|=

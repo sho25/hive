@@ -514,6 +514,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|typeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|)
 decl_stmt|;
 name|lazyBinaryDeserializeRead
@@ -824,6 +827,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|typeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|)
 decl_stmt|;
 name|lazyBinaryDeserializeRead

@@ -647,6 +647,9 @@ name|LazySimpleDeserializeRead
 argument_list|(
 name|writePrimitiveTypeInfos
 argument_list|,
+comment|/* useExternalBuffer */
+literal|false
+argument_list|,
 name|separator
 argument_list|,
 name|serdeParams
@@ -1220,6 +1223,9 @@ operator|new
 name|LazySimpleDeserializeRead
 argument_list|(
 name|writePrimitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|,
 name|separator
 argument_list|,

@@ -212,6 +212,10 @@ name|typeInfos
 decl_stmt|;
 specifier|protected
 name|boolean
+name|useExternalBuffer
+decl_stmt|;
+specifier|protected
+name|boolean
 index|[]
 name|columnsToInclude
 decl_stmt|;
@@ -225,12 +229,16 @@ name|PrimitiveCategory
 index|[]
 name|primitiveCategories
 decl_stmt|;
+comment|/**    * Constructor.    *    * When useExternalBuffer is specified true and readCheckNull reads a string/char/varchar/binary    * field, it will request an external buffer to receive the data of format conversion.    *    * if (!deserializeRead.readCheckNull()) {    *   if (deserializeRead.currentExternalBufferNeeded) {    *<Ensure external buffer is as least deserializeRead.currentExternalBufferNeededLen bytes>    *     deserializeRead.copyToExternalBuffer(externalBuffer, externalBufferStart);    *   } else {    *<Otherwise, field data is available in the currentBytes, currentBytesStart, and    *      currentBytesLength of deserializeRead>    *   }    *    * @param typeInfos    * @param useExternalBuffer   Specify true when the caller is prepared to provide a bytes buffer    *                            to receive a string/char/varchar/binary field that needs format    *                            conversion.    */
 specifier|public
 name|DeserializeRead
 parameter_list|(
 name|TypeInfo
 index|[]
 name|typeInfos
+parameter_list|,
+name|boolean
+name|useExternalBuffer
 parameter_list|)
 block|{
 name|this
@@ -432,6 +440,12 @@ default|default:
 comment|// No writable needed for this data type.
 block|}
 block|}
+name|this
+operator|.
+name|useExternalBuffer
+operator|=
+name|useExternalBuffer
+expr_stmt|;
 block|}
 name|columnsToInclude
 operator|=
@@ -560,7 +574,37 @@ specifier|public
 name|double
 name|currentDouble
 decl_stmt|;
-comment|/*    * STRING, CHAR, VARCHAR, and BINARY.    *    * For CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    */
+comment|/*    * STRING, CHAR, VARCHAR, and BINARY.    *    * For CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    *    * When currentExternalBufferNeeded is true, conversion is needed into an external buffer of    * at least currentExternalBufferNeededLen bytes.  Use copyToExternalBuffer to get the result.    *    * Otherwise, currentBytes, currentBytesStart, and currentBytesLength are the result.    */
+specifier|public
+name|boolean
+name|currentExternalBufferNeeded
+decl_stmt|;
+specifier|public
+name|int
+name|currentExternalBufferNeededLen
+decl_stmt|;
+specifier|public
+name|void
+name|copyToExternalBuffer
+parameter_list|(
+name|byte
+index|[]
+name|externalBuffer
+parameter_list|,
+name|int
+name|externalBufferStart
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not implemented"
+argument_list|)
+throw|;
+block|}
 specifier|public
 name|byte
 index|[]

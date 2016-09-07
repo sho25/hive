@@ -1233,6 +1233,9 @@ argument_list|(
 name|keyStructInspector
 argument_list|)
 argument_list|,
+comment|/* useExternalBuffer */
+literal|true
+argument_list|,
 name|binarySortableSerDe
 operator|.
 name|getSortOrders
@@ -1283,6 +1286,9 @@ name|typeInfosFromStructObjectInspector
 argument_list|(
 name|valueStructInspectors
 argument_list|)
+argument_list|,
+comment|/* useExternalBuffer */
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
