@@ -1285,7 +1285,6 @@ block|{
 comment|// Append task specific info to stagingPathName, instead of creating a sub-directory.
 comment|// This way we don't have to worry about deleting the stagingPathName separately at
 comment|// end of query execution.
-comment|// TODO# HERE
 name|dir
 operator|=
 name|fs
@@ -1299,7 +1298,15 @@ name|stagingPathName
 operator|+
 literal|"_"
 operator|+
-name|getExecutionPrefix
+name|this
+operator|.
+name|executionId
+operator|+
+literal|"-"
+operator|+
+name|TaskRunner
+operator|.
+name|getTaskRunnerID
 argument_list|()
 argument_list|)
 argument_list|)
@@ -3574,24 +3581,6 @@ name|skipTableMasking
 operator|=
 name|skipTableMasking
 expr_stmt|;
-block|}
-specifier|public
-name|String
-name|getExecutionPrefix
-parameter_list|()
-block|{
-return|return
-name|this
-operator|.
-name|executionId
-operator|+
-literal|"-"
-operator|+
-name|TaskRunner
-operator|.
-name|getTaskRunnerID
-argument_list|()
-return|;
 block|}
 specifier|public
 name|ExplainConfiguration

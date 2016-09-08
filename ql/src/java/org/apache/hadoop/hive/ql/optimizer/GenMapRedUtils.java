@@ -7842,6 +7842,7 @@ block|}
 comment|//
 comment|// 2. Constructing a conditional task consisting of a move task and a map reduce task
 comment|//
+comment|// TODO# movetask is created here; handle MM tables
 name|MoveWork
 name|dummyMv
 init|=

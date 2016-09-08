@@ -1617,25 +1617,6 @@ return|return
 name|loadTableWork
 return|;
 block|}
-comment|/**    * @param loadTableWork    *          the loadTableWork to set    */
-specifier|public
-name|void
-name|setLoadTableWork
-parameter_list|(
-name|List
-argument_list|<
-name|LoadTableDesc
-argument_list|>
-name|loadTableWork
-parameter_list|)
-block|{
-name|this
-operator|.
-name|loadTableWork
-operator|=
-name|loadTableWork
-expr_stmt|;
-block|}
 comment|/**    * @return the loadFileWork    */
 specifier|public
 name|List

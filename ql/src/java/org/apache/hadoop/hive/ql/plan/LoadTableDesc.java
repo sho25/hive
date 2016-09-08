@@ -181,8 +181,8 @@ name|Operation
 name|writeType
 decl_stmt|;
 specifier|private
-name|boolean
-name|isMmTable
+name|Long
+name|mmWriteId
 decl_stmt|;
 comment|// TODO: the below seems like they should just be combined into partitionDesc
 specifier|private
@@ -253,8 +253,8 @@ operator|.
 name|Operation
 name|writeType
 parameter_list|,
-name|boolean
-name|isMmTable
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
 name|super
@@ -291,7 +291,7 @@ name|replace
 argument_list|,
 name|writeType
 argument_list|,
-name|isMmTable
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -338,7 +338,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-literal|false
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -380,11 +380,10 @@ operator|.
 name|Operation
 name|writeType
 parameter_list|,
-name|boolean
-name|isMmTable
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
-comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -397,7 +396,7 @@ literal|true
 argument_list|,
 name|writeType
 argument_list|,
-name|isMmTable
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -452,7 +451,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-literal|false
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -492,8 +491,8 @@ parameter_list|,
 name|boolean
 name|isReplace
 parameter_list|,
-name|boolean
-name|isMmTable
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
 name|super
@@ -557,7 +556,7 @@ name|isReplace
 argument_list|,
 name|writeType
 argument_list|,
-name|isMmTable
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -580,7 +579,7 @@ name|isReplace
 argument_list|,
 name|writeType
 argument_list|,
-name|isMmTable
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -623,8 +622,8 @@ operator|.
 name|Operation
 name|writeType
 parameter_list|,
-name|boolean
-name|isMmTable
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
 name|this
@@ -653,9 +652,9 @@ name|writeType
 expr_stmt|;
 name|this
 operator|.
-name|isMmTable
+name|mmWriteId
 operator|=
-name|isMmTable
+name|mmWriteId
 expr_stmt|;
 block|}
 annotation|@
@@ -789,7 +788,9 @@ name|isMmTable
 parameter_list|()
 block|{
 return|return
-name|isMmTable
+name|mmWriteId
+operator|!=
+literal|null
 return|;
 block|}
 specifier|public
@@ -891,6 +892,15 @@ parameter_list|()
 block|{
 return|return
 name|writeType
+return|;
+block|}
+specifier|public
+name|Long
+name|getMmWriteId
+parameter_list|()
+block|{
+return|return
+name|mmWriteId
 return|;
 block|}
 block|}
