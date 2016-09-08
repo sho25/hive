@@ -2075,7 +2075,7 @@ argument_list|(
 name|opHandle
 argument_list|)
 decl_stmt|;
-comment|/**      * If this is a background operation run asynchronously,      * we block for a configured duration, before we return      * (duration: HIVE_SERVER2_LONG_POLLING_TIMEOUT).      * However, if the background operation is complete, we return immediately.      */
+comment|/**      * If this is a background operation run asynchronously,      * we block for a duration determined by a step function, before we return      * However, if the background operation is complete, we return immediately.      */
 if|if
 condition|(
 name|operation
@@ -2096,7 +2096,7 @@ name|getHiveConf
 argument_list|()
 decl_stmt|;
 name|long
-name|timeout
+name|maxTimeout
 init|=
 name|HiveConf
 operator|.
@@ -2113,6 +2113,50 @@ argument_list|,
 name|TimeUnit
 operator|.
 name|MILLISECONDS
+argument_list|)
+decl_stmt|;
+specifier|final
+name|long
+name|elapsed
+init|=
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|operation
+operator|.
+name|getBeginTime
+argument_list|()
+decl_stmt|;
+comment|// A step function to increase the polling timeout by 500 ms every 10 sec,
+comment|// starting from 500 ms up to HIVE_SERVER2_LONG_POLLING_TIMEOUT
+specifier|final
+name|long
+name|timeout
+init|=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|maxTimeout
+argument_list|,
+operator|(
+name|elapsed
+operator|/
+name|TimeUnit
+operator|.
+name|SECONDS
+operator|.
+name|toMillis
+argument_list|(
+literal|10
+argument_list|)
+operator|+
+literal|1
+operator|)
+operator|*
+literal|500
 argument_list|)
 decl_stmt|;
 try|try

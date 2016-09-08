@@ -394,8 +394,6 @@ name|hashTableKeyType
 operator|=
 name|hashTableKeyType
 expr_stmt|;
-comment|// PrimitiveTypeInfo[] primitiveTypeInfos = { hashTableKeyType.getPrimitiveTypeInfo() };
-comment|// keyBinarySortableDeserializeRead = new BinarySortableDeserializeRead(primitiveTypeInfos);
 name|keyBinarySortableSerializeWrite
 operator|=
 operator|new

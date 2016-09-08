@@ -4986,6 +4986,14 @@ comment|// nothing
 block|}
 try|try
 block|{
+name|ConsoleReader
+name|reader
+init|=
+name|getConsoleReader
+argument_list|(
+name|inputStream
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|isBeeLine
@@ -5092,14 +5100,6 @@ parameter_list|)
 block|{
 comment|// ignore
 block|}
-name|ConsoleReader
-name|reader
-init|=
-name|getConsoleReader
-argument_list|(
-name|inputStream
-argument_list|)
-decl_stmt|;
 return|return
 name|execute
 argument_list|(
@@ -5919,6 +5919,13 @@ name|void
 name|run
 parameter_list|()
 block|{
+if|if
+condition|(
+name|consoleReader
+operator|!=
+literal|null
+condition|)
+block|{
 name|History
 name|h
 init|=
@@ -5958,6 +5965,7 @@ argument_list|(
 name|e
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

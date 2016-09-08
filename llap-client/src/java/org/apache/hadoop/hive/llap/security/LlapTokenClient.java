@@ -890,10 +890,8 @@ name|getInstances
 argument_list|()
 expr_stmt|;
 block|}
-name|Map
+name|Collection
 argument_list|<
-name|String
-argument_list|,
 name|ServiceInstance
 argument_list|>
 name|daemons
@@ -926,9 +924,6 @@ block|}
 name|lastKnownInstances
 operator|=
 name|daemons
-operator|.
-name|values
-argument_list|()
 expr_stmt|;
 return|return
 operator|new

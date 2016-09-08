@@ -882,9 +882,10 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|// Our hash tables are immutable.  We can safely do by reference STRING, CHAR/VARCHAR, etc.
 name|smallTableVectorDeserializeRow
 operator|.
-name|deserialize
+name|deserializeByRef
 argument_list|(
 name|batch
 argument_list|,
@@ -1819,6 +1820,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|bigTableTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;

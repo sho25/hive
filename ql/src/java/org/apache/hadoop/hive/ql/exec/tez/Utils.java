@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Collection
 import|;
 end_import
 
@@ -227,7 +227,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|List
+name|Collection
 argument_list|<
 name|ServiceInstance
 argument_list|>

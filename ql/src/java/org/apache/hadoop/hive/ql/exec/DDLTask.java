@@ -11880,7 +11880,7 @@ parameter_list|,
 name|Table
 name|table
 parameter_list|,
-name|List
+name|Set
 argument_list|<
 name|CheckResult
 operator|.
@@ -12255,7 +12255,7 @@ argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-name|List
+name|Set
 argument_list|<
 name|CheckResult
 operator|.
@@ -12604,8 +12604,17 @@ expr_stmt|;
 if|if
 condition|(
 name|counter
-operator|==
+operator|%
 name|batch_size
+operator|==
+literal|0
+operator|||
+name|counter
+operator|==
+name|partsNotInMs
+operator|.
+name|size
+argument_list|()
 condition|)
 block|{
 name|db
@@ -12632,10 +12641,6 @@ argument_list|()
 argument_list|,
 literal|false
 argument_list|)
-expr_stmt|;
-name|counter
-operator|=
-literal|0
 expr_stmt|;
 block|}
 block|}
@@ -12991,7 +12996,7 @@ specifier|private
 name|boolean
 name|writeMsckResult
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|?
 extends|extends

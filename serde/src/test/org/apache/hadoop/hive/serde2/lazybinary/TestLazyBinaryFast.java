@@ -565,6 +565,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|writePrimitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
@@ -1177,6 +1180,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|primitiveTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|false
 argument_list|)
 decl_stmt|;
 if|if

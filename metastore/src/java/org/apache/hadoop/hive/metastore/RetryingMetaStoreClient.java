@@ -1163,6 +1163,11 @@ condition|(
 name|retriesMade
 operator|>=
 name|retryLimit
+operator|||
+name|base
+operator|.
+name|isLocalMetaStore
+argument_list|()
 condition|)
 block|{
 throw|throw

@@ -1932,6 +1932,15 @@ argument_list|)
 expr_stmt|;
 name|connector
 operator|.
+name|setRequestHeaderSize
+argument_list|(
+literal|1024
+operator|*
+literal|64
+argument_list|)
+expr_stmt|;
+name|connector
+operator|.
 name|setReuseAddress
 argument_list|(
 operator|!

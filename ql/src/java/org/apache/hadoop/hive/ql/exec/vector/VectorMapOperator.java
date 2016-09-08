@@ -1243,6 +1243,9 @@ name|LazySimpleDeserializeRead
 argument_list|(
 name|dataTypeInfos
 argument_list|,
+comment|/* useExternalBuffer */
+literal|true
+argument_list|,
 name|simpleSerdeParams
 argument_list|)
 decl_stmt|;
@@ -1286,6 +1289,9 @@ operator|new
 name|LazyBinaryDeserializeRead
 argument_list|(
 name|dataTypeInfos
+argument_list|,
+comment|/* useExternalBuffer */
+literal|true
 argument_list|)
 decl_stmt|;
 name|vectorDeserializeRow

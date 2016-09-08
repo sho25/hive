@@ -3098,6 +3098,9 @@ operator|.
 name|getTypeNames
 argument_list|()
 argument_list|)
+argument_list|,
+comment|/* useExternalBuffer */
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
