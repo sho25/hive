@@ -32455,6 +32455,16 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+name|int
+name|numOfColsRmedFromkey
+init|=
+name|grpByExprs
+operator|.
+name|size
+argument_list|()
+operator|-
+name|keyLength
+decl_stmt|;
 comment|// add a key for reduce sink
 if|if
 condition|(
@@ -32573,6 +32583,8 @@ name|reduceKeys
 operator|.
 name|size
 argument_list|()
+operator|+
+name|numOfColsRmedFromkey
 decl_stmt|;
 for|for
 control|(
