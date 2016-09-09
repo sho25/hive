@@ -2174,10 +2174,9 @@ argument_list|)
 operator|)
 operator|&&
 operator|(
-operator|!
 name|hiveServer2
 operator|.
-name|isRegisteredWithZooKeeper
+name|isDeregisteredWithZooKeeper
 argument_list|()
 operator|)
 condition|)
