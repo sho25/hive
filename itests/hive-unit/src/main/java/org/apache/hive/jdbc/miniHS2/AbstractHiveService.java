@@ -407,7 +407,7 @@ return|return
 name|startedHiveService
 return|;
 block|}
-specifier|protected
+specifier|public
 name|void
 name|setStarted
 parameter_list|(

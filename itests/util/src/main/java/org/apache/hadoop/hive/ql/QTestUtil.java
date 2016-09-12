@@ -5380,15 +5380,16 @@ operator|!=
 literal|0
 condition|)
 block|{
-name|Assert
+name|LOG
 operator|.
-name|fail
+name|error
 argument_list|(
-literal|"Failed during cleanup processLine with code="
-operator|+
+literal|"Failed during cleanup processLine with code={}. Ignoring"
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
+comment|// TODO Convert this to an Assert.fail once HIVE-14682 is fixed
 block|}
 name|SessionState
 operator|.

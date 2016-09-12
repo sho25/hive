@@ -19022,7 +19022,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Trashes or deletes all files under a directory. Leaves the directory as is.    * @param fs FileSystem to use    * @param statuses fileStatuses of files to be deleted    * @param conf hive configuration    * @return true if deletion successful    * @throws IOException    */
-specifier|private
+specifier|public
+specifier|static
 name|boolean
 name|trashFiles
 parameter_list|(

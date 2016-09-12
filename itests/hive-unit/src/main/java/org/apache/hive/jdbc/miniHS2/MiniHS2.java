@@ -2550,6 +2550,20 @@ literal|true
 condition|)
 do|;
 block|}
+specifier|public
+name|Service
+operator|.
+name|STATE
+name|getState
+parameter_list|()
+block|{
+return|return
+name|hiveServer2
+operator|.
+name|getServiceState
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

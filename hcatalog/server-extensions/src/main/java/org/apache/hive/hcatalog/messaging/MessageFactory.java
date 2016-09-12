@@ -180,9 +180,7 @@ specifier|static
 name|MessageFactory
 name|instance
 init|=
-operator|new
-name|JSONMessageFactory
-argument_list|()
+literal|null
 decl_stmt|;
 specifier|protected
 specifier|static

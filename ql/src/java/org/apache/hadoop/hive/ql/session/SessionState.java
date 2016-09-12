@@ -1278,6 +1278,13 @@ name|isHiveServerQuery
 init|=
 literal|false
 decl_stmt|;
+comment|/**    * The flag to indicate if the session using thrift jdbc binary serde or not.    */
+specifier|private
+name|boolean
+name|isUsingThriftJDBCBinarySerDe
+init|=
+literal|false
+decl_stmt|;
 comment|/*    * HiveHistory Object    */
 specifier|protected
 name|HiveHistory
@@ -1741,6 +1748,30 @@ name|isVerbose
 operator|=
 name|isVerbose
 expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setIsUsingThriftJDBCBinarySerDe
+parameter_list|(
+name|boolean
+name|isUsingThriftJDBCBinarySerDe
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isUsingThriftJDBCBinarySerDe
+operator|=
+name|isUsingThriftJDBCBinarySerDe
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getIsUsingThriftJDBCBinarySerDe
+parameter_list|()
+block|{
+return|return
+name|isUsingThriftJDBCBinarySerDe
+return|;
 block|}
 specifier|public
 name|void
