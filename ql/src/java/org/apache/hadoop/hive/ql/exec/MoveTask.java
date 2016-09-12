@@ -2328,29 +2328,7 @@ name|tbd
 operator|.
 name|isMmTable
 argument_list|()
-condition|)
-block|{
-if|if
-condition|(
-name|tbd
-operator|.
-name|getReplace
-argument_list|()
-condition|)
-block|{
-comment|// TODO#: would need a list of new files to support. Then, old ones only would need
-comment|//        to be removed from MS (and FS). Also, per-partition IOW is problematic for
-comment|//        the prefix case.
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Replace and MM are not supported"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
+operator|&&
 name|isAcid
 condition|)
 block|{
@@ -2362,7 +2340,6 @@ argument_list|(
 literal|"ACID and MM are not supported"
 argument_list|)
 throw|;
-block|}
 block|}
 comment|// Create a data container
 name|DataContainer

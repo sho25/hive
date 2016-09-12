@@ -10291,7 +10291,7 @@ argument_list|()
 decl_stmt|;
 comment|// Create the required temporary file in the HDFS location if the destination
 comment|// path of the FileSinkOperator table is a blobstore path.
-comment|// TODO# HERE
+comment|// TODO# special case #N - linked FDs (unions?)
 name|Path
 name|tmpDir
 init|=

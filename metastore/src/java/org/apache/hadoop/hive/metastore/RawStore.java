@@ -787,6 +787,15 @@ name|boolean
 name|commitTransaction
 parameter_list|()
 function_decl|;
+comment|/**    * Commits transaction and detects if the failure to do so is a deadlock or not.    * Must be called on the top level with regard to openTransaction calls; attempting to    * call this after several nested openTransaction calls will throw.    * @return true or false - same as commitTransaction; null in case of deadlock.    */
+annotation|@
+name|CanNotRetry
+specifier|public
+specifier|abstract
+name|Boolean
+name|commitTransactionExpectDeadlock
+parameter_list|()
+function_decl|;
 comment|/**    * Rolls back the current transaction if it is active    */
 annotation|@
 name|CanNotRetry
@@ -3044,6 +3053,30 @@ parameter_list|,
 name|long
 name|heartbeat
 parameter_list|)
+function_decl|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|getWriteIds
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|long
+name|watermarkId
+parameter_list|,
+name|long
+name|nextWriteId
+parameter_list|,
+name|char
+name|state
+parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 block|}
 end_interface

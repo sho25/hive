@@ -5446,23 +5446,6 @@ name|resultStr
 argument_list|)
 return|;
 block|}
-specifier|public
-specifier|static
-name|String
-name|getMmFilePrefix
-parameter_list|(
-name|long
-name|mmWriteId
-parameter_list|)
-block|{
-return|return
-literal|"mm_"
-operator|+
-name|mmWriteId
-operator|+
-literal|"_"
-return|;
-block|}
 block|}
 end_class
 
