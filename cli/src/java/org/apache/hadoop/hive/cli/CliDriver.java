@@ -833,6 +833,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|ShutdownHookManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -4739,15 +4755,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// add shutdown hook to flush the history to history file
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
+name|ShutdownHookManager
 operator|.
 name|addShutdownHook
-argument_list|(
-operator|new
-name|Thread
 argument_list|(
 operator|new
 name|Runnable
@@ -4812,7 +4822,6 @@ block|}
 block|}
 block|}
 block|}
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
