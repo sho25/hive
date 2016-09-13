@@ -821,15 +821,12 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
+name|ShutdownHookManager
 operator|.
 name|addShutdownHook
 argument_list|(
 operator|new
-name|Thread
+name|Runnable
 argument_list|()
 block|{
 annotation|@
