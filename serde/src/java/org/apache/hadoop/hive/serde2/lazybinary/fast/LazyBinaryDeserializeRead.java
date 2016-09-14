@@ -252,7 +252,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readCheckNull).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
+comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readNextField).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
 end_comment
 
 begin_class
@@ -323,14 +323,6 @@ specifier|private
 name|VLong
 name|tempVLong
 decl_stmt|;
-specifier|private
-name|boolean
-name|readBeyondConfiguredFieldsWarned
-decl_stmt|;
-specifier|private
-name|boolean
-name|bufferRangeHasExtraDataWarned
-decl_stmt|;
 specifier|public
 name|LazyBinaryDeserializeRead
 parameter_list|(
@@ -368,14 +360,6 @@ name|VLong
 argument_list|()
 expr_stmt|;
 name|currentExternalBufferNeeded
-operator|=
-literal|false
-expr_stmt|;
-name|readBeyondConfiguredFieldsWarned
-operator|=
-literal|false
-expr_stmt|;
-name|bufferRangeHasExtraDataWarned
 operator|=
 literal|false
 expr_stmt|;
@@ -575,12 +559,12 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/*    * Reads the NULL information for a field.    *    * @return Returns true when the field is NULL; reading is positioned to the next field.    *         Otherwise, false when the field is NOT NULL; reading is positioned to the field data.    */
+comment|/*    * Reads the the next field.    *    * Afterwards, reading is positioned to the next field.    *    * @return  Return true when the field was not null and data is put in the appropriate    *          current* member.    *          Otherwise, false when the field is null.    *    */
 annotation|@
 name|Override
 specifier|public
 name|boolean
-name|readCheckNull
+name|readNextField
 parameter_list|()
 throws|throws
 name|IOException
@@ -592,34 +576,8 @@ operator|>=
 name|fieldCount
 condition|)
 block|{
-comment|// Reading beyond the specified field count produces NULL.
-if|if
-condition|(
-operator|!
-name|readBeyondConfiguredFieldsWarned
-condition|)
-block|{
-comment|// Warn only once.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Reading beyond configured fields! Configured "
-operator|+
-name|fieldCount
-operator|+
-literal|" fields but "
-operator|+
-literal|" reading more (NULLs returned).  Ignoring similar problems."
-argument_list|)
-expr_stmt|;
-name|readBeyondConfiguredFieldsWarned
-operator|=
-literal|true
-expr_stmt|;
-block|}
 return|return
-literal|true
+literal|false
 return|;
 block|}
 name|fieldStart
@@ -657,10 +615,7 @@ operator|++
 index|]
 expr_stmt|;
 block|}
-comment|// NOTE: The bit is set to 1 if a field is NOT NULL.
-name|boolean
-name|isNull
-decl_stmt|;
+comment|// NOTE: The bit is set to 1 if a field is NOT NULL.    boolean isNull;
 if|if
 condition|(
 operator|(
@@ -680,18 +635,59 @@ operator|==
 literal|0
 condition|)
 block|{
-name|isNull
-operator|=
-literal|true
+comment|// Logically move past this field.
+name|fieldIndex
+operator|++
 expr_stmt|;
+comment|// Every 8 fields we read a new NULL byte.
+if|if
+condition|(
+name|fieldIndex
+operator|<
+name|fieldCount
+condition|)
+block|{
+if|if
+condition|(
+operator|(
+name|fieldIndex
+operator|%
+literal|8
+operator|)
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Get next null byte.
+if|if
+condition|(
+name|offset
+operator|>=
+name|end
+condition|)
+block|{
+throw|throw
+operator|new
+name|EOFException
+argument_list|()
+throw|;
+block|}
+name|nullByte
+operator|=
+name|bytes
+index|[
+name|offset
+operator|++
+index|]
+expr_stmt|;
+block|}
+block|}
+return|return
+literal|false
+return|;
 block|}
 else|else
 block|{
-name|isNull
-operator|=
-literal|false
-expr_stmt|;
-comment|// Assume.
 comment|// Make sure there is at least one byte that can be read for a value.
 if|if
 condition|(
@@ -1501,13 +1497,57 @@ operator|==
 literal|null
 condition|)
 block|{
-name|isNull
+comment|// Logically move past this field.
+name|fieldIndex
+operator|++
+expr_stmt|;
+comment|// Every 8 fields we read a new NULL byte.
+if|if
+condition|(
+name|fieldIndex
+operator|<
+name|fieldCount
+condition|)
+block|{
+if|if
+condition|(
+operator|(
+name|fieldIndex
+operator|%
+literal|8
+operator|)
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Get next null byte.
+if|if
+condition|(
+name|offset
+operator|>=
+name|end
+condition|)
+block|{
+throw|throw
+operator|new
+name|EOFException
+argument_list|()
+throw|;
+block|}
+name|nullByte
 operator|=
-literal|true
+name|bytes
+index|[
+name|offset
+operator|++
+index|]
 expr_stmt|;
 block|}
-else|else
-block|{
+block|}
+return|return
+literal|false
+return|;
+block|}
 comment|// Put value back into writable.
 name|currentHiveDecimalWritable
 operator|.
@@ -1516,7 +1556,6 @@ argument_list|(
 name|decimal
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 break|break;
 default|default:
@@ -1535,25 +1574,6 @@ name|name
 argument_list|()
 argument_list|)
 throw|;
-block|}
-comment|/*        * Now that we have read through the field -- did we really want it?        */
-if|if
-condition|(
-name|columnsToInclude
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|columnsToInclude
-index|[
-name|fieldIndex
-index|]
-condition|)
-block|{
-name|isNull
-operator|=
-literal|true
-expr_stmt|;
 block|}
 block|}
 comment|// Logically move past this field.
@@ -1604,101 +1624,34 @@ expr_stmt|;
 block|}
 block|}
 return|return
-name|isNull
+literal|true
 return|;
 block|}
-comment|/*    * Call this method after all fields have been read to check for extra fields.    */
+comment|/*    * Reads through an undesired field.    *    * No data values are valid after this call.    * Designed for skipping columns that are not included.    */
 specifier|public
 name|void
-name|extraFieldsCheck
+name|skipNextField
 parameter_list|()
+throws|throws
+name|IOException
 block|{
-if|if
-condition|(
-name|offset
-operator|<
-name|end
-condition|)
-block|{
-comment|// We did not consume all of the byte range.
-if|if
-condition|(
-operator|!
-name|bufferRangeHasExtraDataWarned
-condition|)
-block|{
-comment|// Warn only once.
-name|int
-name|length
-init|=
-name|end
-operator|-
-name|start
-decl_stmt|;
-name|int
-name|remaining
-init|=
-name|end
-operator|-
-name|offset
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Not all fields were read in the buffer range! Buffer range "
-operator|+
-name|start
-operator|+
-literal|" for length "
-operator|+
-name|length
-operator|+
-literal|" but "
-operator|+
-name|remaining
-operator|+
-literal|" bytes remain. "
-operator|+
-literal|"(total buffer length "
-operator|+
-name|bytes
-operator|.
-name|length
-operator|+
-literal|")"
-operator|+
-literal|"  Ignoring similar problems."
-argument_list|)
-expr_stmt|;
-name|bufferRangeHasExtraDataWarned
-operator|=
-literal|true
+comment|// Not a known use case for LazyBinary -- so don't optimize.
+name|readNextField
+argument_list|()
 expr_stmt|;
 block|}
-block|}
-block|}
-comment|/*    * Read integrity warning flags.    */
-annotation|@
-name|Override
+comment|/*    * Call this method may be called after all the all fields have been read to check    * for unread fields.    *    * Note that when optimizing reading to stop reading unneeded include columns, worrying    * about whether all data is consumed is not appropriate (often we aren't reading it all by    * design).    *    * Since LazySimpleDeserializeRead parses the line through the last desired column it does    * support this function.    */
 specifier|public
 name|boolean
-name|readBeyondConfiguredFieldsWarned
+name|isEndOfInputReached
 parameter_list|()
 block|{
 return|return
-name|readBeyondConfiguredFieldsWarned
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|bufferRangeHasExtraDataWarned
-parameter_list|()
-block|{
-return|return
-name|bufferRangeHasExtraDataWarned
+operator|(
+name|offset
+operator|==
+name|end
+operator|)
 return|;
 block|}
 block|}

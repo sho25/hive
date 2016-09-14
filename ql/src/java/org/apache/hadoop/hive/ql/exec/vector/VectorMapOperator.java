@@ -1199,6 +1199,60 @@ operator|.
 name|getDataTypeInfos
 argument_list|()
 decl_stmt|;
+comment|// We need to provide the minimum number of columns to be read so
+comment|// LazySimpleDeserializeRead's separator parser does not waste time.
+comment|//
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|dataColumnsToIncludeTruncated
+operator|!=
+literal|null
+argument_list|)
+expr_stmt|;
+name|TypeInfo
+index|[]
+name|minimalDataTypeInfos
+decl_stmt|;
+if|if
+condition|(
+name|dataColumnsToIncludeTruncated
+operator|.
+name|length
+operator|<
+name|dataTypeInfos
+operator|.
+name|length
+condition|)
+block|{
+name|minimalDataTypeInfos
+operator|=
+name|Arrays
+operator|.
+name|copyOf
+argument_list|(
+name|dataTypeInfos
+argument_list|,
+name|dataColumnsToIncludeTruncated
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|minimalDataTypeInfos
+operator|=
+name|dataTypeInfos
+expr_stmt|;
+block|}
+name|readerColumnCount
+operator|=
+name|minimalDataTypeInfos
+operator|.
+name|length
+expr_stmt|;
 switch|switch
 condition|(
 name|vectorPartDesc
@@ -1241,7 +1295,7 @@ init|=
 operator|new
 name|LazySimpleDeserializeRead
 argument_list|(
-name|dataTypeInfos
+name|minimalDataTypeInfos
 argument_list|,
 comment|/* useExternalBuffer */
 literal|true
@@ -1261,8 +1315,6 @@ name|lazySimpleDeserializeRead
 argument_list|)
 expr_stmt|;
 comment|// Initialize with data row type conversion parameters.
-name|readerColumnCount
-operator|=
 name|vectorDeserializeRow
 operator|.
 name|initConversion
@@ -1306,8 +1358,6 @@ name|lazyBinaryDeserializeRead
 argument_list|)
 expr_stmt|;
 comment|// Initialize with data row type conversion parameters.
-name|readerColumnCount
-operator|=
 name|vectorDeserializeRow
 operator|.
 name|initConversion
