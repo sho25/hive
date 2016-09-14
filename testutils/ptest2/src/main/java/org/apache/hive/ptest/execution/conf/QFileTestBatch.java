@@ -61,7 +61,7 @@ begin_class
 specifier|public
 class|class
 name|QFileTestBatch
-extends|extends
+implements|implements
 name|TestBatch
 block|{
 specifier|private
@@ -327,12 +327,7 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"QFileTestBatch [batchId="
-operator|+
-name|getBatchId
-argument_list|()
-operator|+
-literal|", driver="
+literal|"QFileTestBatch [driver="
 operator|+
 name|driver
 operator|+
@@ -374,25 +369,11 @@ annotation|@
 name|Override
 specifier|public
 name|String
-name|getTestModuleRelativeDir
+name|getTestModule
 parameter_list|()
 block|{
 return|return
 name|moduleName
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|int
-name|getNumTestsInBatch
-parameter_list|()
-block|{
-return|return
-name|tests
-operator|.
-name|size
-argument_list|()
 return|;
 block|}
 annotation|@

@@ -340,7 +340,6 @@ name|LOGS_URL
 init|=
 literal|"logsURL"
 decl_stmt|;
-comment|// This ends up being set to "test" | mvn ${testCasePropertyName} for instance
 specifier|private
 specifier|static
 specifier|final
@@ -1278,7 +1277,6 @@ return|return
 name|testCasePropertyName
 return|;
 block|}
-comment|// TODO Make sure this method is eventually used to find the prep / batch scripts.
 specifier|public
 name|String
 name|getApplyPathScriptPath
@@ -1288,7 +1286,6 @@ return|return
 name|applyPathScriptPath
 return|;
 block|}
-comment|// TODO Make sure this method is eventually used to find the prep / batch scripts.
 specifier|public
 name|String
 name|getPrepTemplatePath
@@ -1298,7 +1295,6 @@ return|return
 name|prepTemplatePath
 return|;
 block|}
-comment|// TODO Make sure this method is eventually used to find the prep / batch scripts.
 specifier|public
 name|String
 name|getBatchExecTemplatePath
