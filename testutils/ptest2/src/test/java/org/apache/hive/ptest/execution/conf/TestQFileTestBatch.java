@@ -256,7 +256,7 @@ name|TEST_MODULE_NAME
 argument_list|,
 name|batch
 operator|.
-name|getTestModule
+name|getTestModuleRelativeDir
 argument_list|()
 argument_list|)
 expr_stmt|;
