@@ -346,7 +346,7 @@ name|source
 operator|.
 name|randomRows
 argument_list|(
-literal|100000
+literal|10000
 argument_list|)
 decl_stmt|;
 if|if
