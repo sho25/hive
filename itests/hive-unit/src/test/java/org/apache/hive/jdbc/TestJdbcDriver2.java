@@ -289,6 +289,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|AfterClass
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Before
 import|;
 end_import
@@ -352,16 +362,6 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|File
 import|;
 end_import
 
@@ -768,7 +768,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestJdbcDriver2  *  */
+comment|/**  * TestJdbcDriver2  * This class tests the JDBC API for HiveServer2 via an embedded HiveServer2 instance  *  */
 end_comment
 
 begin_class
@@ -803,9 +803,25 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|testDbName
+init|=
+literal|"testjdbcdriver"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|tableName
 init|=
-literal|"testHiveJdbcDriver_Table"
+literal|"testjdbcdrivertbl"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -821,7 +837,7 @@ specifier|final
 name|String
 name|viewName
 init|=
-literal|"testHiveJdbcDriverView"
+literal|"testjdbcdriverview"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -837,7 +853,7 @@ specifier|final
 name|String
 name|partitionedTableName
 init|=
-literal|"testHiveJdbcDriverPartitionedTable"
+literal|"testjdbcdriverparttbl"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -845,7 +861,7 @@ specifier|final
 name|String
 name|partitionedColumnName
 init|=
-literal|"partcolabc"
+literal|"partcoljdbc"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -869,7 +885,7 @@ specifier|final
 name|String
 name|dataTypeTableName
 init|=
-literal|"testdatatypetable"
+literal|"testjdbcdriverdatatypetbl"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -881,27 +897,11 @@ literal|"Table with many column data types"
 decl_stmt|;
 specifier|private
 specifier|static
-name|File
-name|workDir
-init|=
-operator|new
-name|File
-argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"test.tmp.dir"
-argument_list|)
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
 specifier|final
 name|String
-name|externalTable
+name|externalTableName
 init|=
-literal|"testHiveJdbcDriver_External"
+literal|"testjdbcdriverexttbl"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -936,16 +936,11 @@ specifier|final
 name|Path
 name|dataTypeDataFilePath
 decl_stmt|;
-specifier|private
-name|Connection
-name|con
-decl_stmt|;
+comment|// Creating a new connection is expensive, so we'll reuse this object
 specifier|private
 specifier|static
-name|boolean
-name|standAloneServer
-init|=
-literal|false
+name|Connection
+name|con
 decl_stmt|;
 specifier|private
 specifier|static
@@ -966,9 +961,18 @@ operator|.
 name|none
 argument_list|()
 decl_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"deprecation"
+argument_list|)
 specifier|public
 name|TestJdbcDriver2
 parameter_list|()
+throws|throws
+name|SQLException
+throws|,
+name|ClassNotFoundException
 block|{
 name|conf
 operator|=
@@ -1027,33 +1031,7 @@ argument_list|,
 literal|"datatypes.txt"
 argument_list|)
 expr_stmt|;
-name|standAloneServer
-operator|=
-literal|"true"
-operator|.
-name|equals
-argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"test.service.standalone.server"
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|BeforeClass
-specifier|public
-specifier|static
-name|void
-name|setUpBeforeClass
-parameter_list|()
-throws|throws
-name|SQLException
-throws|,
-name|ClassNotFoundException
-block|{
+comment|// Create test database and base tables once for all the test
 name|Class
 operator|.
 name|forName
@@ -1061,14 +1039,15 @@ argument_list|(
 name|driverName
 argument_list|)
 expr_stmt|;
-name|Connection
-name|con1
-init|=
+name|con
+operator|=
 name|getConnection
 argument_list|(
-literal|"default"
+name|defaultDbName
+operator|+
+literal|";create=true"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|System
 operator|.
 name|setProperty
@@ -1122,132 +1101,6 @@ literal|"false"
 argument_list|)
 expr_stmt|;
 name|Statement
-name|stmt1
-init|=
-name|con1
-operator|.
-name|createStatement
-argument_list|()
-decl_stmt|;
-name|assertNotNull
-argument_list|(
-literal|"Statement is null"
-argument_list|,
-name|stmt1
-argument_list|)
-expr_stmt|;
-name|stmt1
-operator|.
-name|execute
-argument_list|(
-literal|"set hive.support.concurrency = false"
-argument_list|)
-expr_stmt|;
-name|DatabaseMetaData
-name|metadata
-init|=
-name|con1
-operator|.
-name|getMetaData
-argument_list|()
-decl_stmt|;
-comment|// Drop databases created by other test cases
-name|ResultSet
-name|databaseRes
-init|=
-name|metadata
-operator|.
-name|getSchemas
-argument_list|()
-decl_stmt|;
-while|while
-condition|(
-name|databaseRes
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
-name|String
-name|db
-init|=
-name|databaseRes
-operator|.
-name|getString
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|db
-operator|.
-name|equals
-argument_list|(
-literal|"default"
-argument_list|)
-condition|)
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Dropping database "
-operator|+
-name|db
-argument_list|)
-expr_stmt|;
-name|stmt1
-operator|.
-name|execute
-argument_list|(
-literal|"DROP DATABASE "
-operator|+
-name|db
-operator|+
-literal|" CASCADE"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-name|stmt1
-operator|.
-name|execute
-argument_list|(
-literal|"create database testdb"
-argument_list|)
-expr_stmt|;
-name|stmt1
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|con1
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-block|}
-annotation|@
-name|Before
-specifier|public
-name|void
-name|setUp
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-name|con
-operator|=
-name|getConnection
-argument_list|(
-literal|"default"
-argument_list|)
-expr_stmt|;
-name|Statement
 name|stmt
 init|=
 name|con
@@ -1267,54 +1120,99 @@ operator|.
 name|execute
 argument_list|(
 literal|"set hive.support.concurrency = false"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"drop database if exists "
+operator|+
+name|testDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"create database "
+operator|+
+name|testDbName
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"use "
+operator|+
+name|testDbName
 argument_list|)
 expr_stmt|;
 name|createTestTables
 argument_list|(
 name|stmt
+argument_list|,
+name|testDbName
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+specifier|static
+name|Connection
+name|getConnection
+parameter_list|(
+name|String
+name|postfix
+parameter_list|)
+throws|throws
+name|SQLException
+block|{
+name|Connection
+name|con1
+decl_stmt|;
+name|con1
+operator|=
+name|DriverManager
+operator|.
+name|getConnection
+argument_list|(
+literal|"jdbc:hive2:///"
+operator|+
+name|postfix
 argument_list|,
 literal|""
 argument_list|,
-literal|true
+literal|""
 argument_list|)
 expr_stmt|;
-name|createTestTables
+name|assertNotNull
 argument_list|(
-name|stmt
+literal|"Connection is null"
 argument_list|,
-literal|"testdb."
+name|con1
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+literal|"Connection should not be closed"
 argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|stmt
+name|con1
 operator|.
-name|execute
-argument_list|(
-literal|"drop table "
-operator|+
-name|externalTable
+name|isClosed
+argument_list|()
 argument_list|)
 expr_stmt|;
-name|stmt
-operator|.
-name|execute
-argument_list|(
-literal|"create external table "
-operator|+
-name|externalTable
-operator|+
-literal|" (a int) comment '"
-operator|+
-name|externalTableComment
-operator|+
-literal|"' location '"
-operator|+
-name|dataFileDir
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
+return|return
+name|con1
+return|;
 block|}
 specifier|private
 name|void
@@ -1324,46 +1222,43 @@ name|Statement
 name|stmt
 parameter_list|,
 name|String
-name|prefix
-parameter_list|,
-name|boolean
-name|loadData
+name|testDbName
 parameter_list|)
 throws|throws
 name|SQLException
 block|{
-comment|// drop test tables/views
-name|dropTestTables
-argument_list|(
-name|stmt
-argument_list|,
+comment|// We've already dropped testDbName in constructor& we also drop it in tearDownAfterClass
+name|String
 name|prefix
-argument_list|)
-expr_stmt|;
+init|=
+name|testDbName
+operator|+
+literal|"."
+decl_stmt|;
 name|String
 name|tableName
 init|=
 name|prefix
 operator|+
-name|this
+name|TestJdbcDriver2
 operator|.
 name|tableName
 decl_stmt|;
 name|String
-name|externalTable
+name|externalTableName
 init|=
 name|prefix
 operator|+
-name|this
+name|TestJdbcDriver2
 operator|.
-name|tableName
+name|externalTableName
 decl_stmt|;
 name|String
 name|partitionedTableName
 init|=
 name|prefix
 operator|+
-name|this
+name|TestJdbcDriver2
 operator|.
 name|partitionedTableName
 decl_stmt|;
@@ -1372,7 +1267,7 @@ name|dataTypeTableName
 init|=
 name|prefix
 operator|+
-name|this
+name|TestJdbcDriver2
 operator|.
 name|dataTypeTableName
 decl_stmt|;
@@ -1381,11 +1276,11 @@ name|viewName
 init|=
 name|prefix
 operator|+
-name|this
+name|TestJdbcDriver2
 operator|.
 name|viewName
 decl_stmt|;
-comment|// create table
+comment|// create a table
 name|stmt
 operator|.
 name|execute
@@ -1402,11 +1297,6 @@ literal|"'"
 argument_list|)
 expr_stmt|;
 comment|// load data
-if|if
-condition|(
-name|loadData
-condition|)
-block|{
 name|stmt
 operator|.
 name|execute
@@ -1423,8 +1313,27 @@ operator|+
 name|tableName
 argument_list|)
 expr_stmt|;
-block|}
-comment|// also initialize a paritioned table to test against.
+comment|// create an external table
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"create external table "
+operator|+
+name|externalTableName
+operator|+
+literal|" (a int) comment '"
+operator|+
+name|externalTableComment
+operator|+
+literal|"' location '"
+operator|+
+name|dataFileDir
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// create a paritioned table
 name|stmt
 operator|.
 name|execute
@@ -1445,11 +1354,6 @@ literal|" STRING)"
 argument_list|)
 expr_stmt|;
 comment|// load data
-if|if
-condition|(
-name|loadData
-condition|)
-block|{
 name|stmt
 operator|.
 name|execute
@@ -1476,7 +1380,6 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
-block|}
 comment|// tables with various types
 name|stmt
 operator|.
@@ -1523,11 +1426,7 @@ operator|+
 literal|"' partitioned by (dt STRING)"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|loadData
-condition|)
-block|{
+comment|// load data
 name|stmt
 operator|.
 name|execute
@@ -1546,7 +1445,6 @@ operator|+
 literal|" PARTITION (dt='20090619')"
 argument_list|)
 expr_stmt|;
-block|}
 comment|// create view
 name|stmt
 operator|.
@@ -1565,209 +1463,81 @@ operator|+
 name|tableName
 argument_list|)
 expr_stmt|;
-block|}
-comment|// drop test tables/views. ignore error.
-specifier|private
-name|void
-name|dropTestTables
-parameter_list|(
-name|Statement
 name|stmt
-parameter_list|,
-name|String
-name|prefix
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-name|String
-name|tableName
-init|=
-name|prefix
-operator|+
-name|this
 operator|.
-name|tableName
-decl_stmt|;
-name|String
-name|partitionedTableName
-init|=
-name|prefix
-operator|+
-name|this
-operator|.
-name|partitionedTableName
-decl_stmt|;
-name|String
-name|dataTypeTableName
-init|=
-name|prefix
-operator|+
-name|this
-operator|.
-name|dataTypeTableName
-decl_stmt|;
-name|String
-name|viewName
-init|=
-name|prefix
-operator|+
-name|this
-operator|.
-name|viewName
-decl_stmt|;
-name|executeWithIgnore
-argument_list|(
-name|stmt
-argument_list|,
-literal|"drop table "
-operator|+
-name|tableName
-argument_list|)
-expr_stmt|;
-name|executeWithIgnore
-argument_list|(
-name|stmt
-argument_list|,
-literal|"drop table "
-operator|+
-name|partitionedTableName
-argument_list|)
-expr_stmt|;
-name|executeWithIgnore
-argument_list|(
-name|stmt
-argument_list|,
-literal|"drop table "
-operator|+
-name|dataTypeTableName
-argument_list|)
-expr_stmt|;
-name|executeWithIgnore
-argument_list|(
-name|stmt
-argument_list|,
-literal|"drop view "
-operator|+
-name|viewName
-argument_list|)
+name|close
+argument_list|()
 expr_stmt|;
 block|}
-specifier|private
+annotation|@
+name|BeforeClass
+specifier|public
+specifier|static
 name|void
-name|executeWithIgnore
-parameter_list|(
-name|Statement
-name|stmt
-parameter_list|,
-name|String
-name|sql
-parameter_list|)
+name|setUpBeforeClass
+parameter_list|()
 throws|throws
 name|SQLException
+throws|,
+name|ClassNotFoundException
+block|{   }
+annotation|@
+name|AfterClass
+specifier|public
+specifier|static
+name|void
+name|tearDownAfterClass
+parameter_list|()
+throws|throws
+name|Exception
 block|{
-comment|// drop table. ignore error.
-try|try
-block|{
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+comment|// drop test db and its tables and views
 name|stmt
 operator|.
 name|execute
 argument_list|(
-name|sql
+literal|"set hive.support.concurrency = false"
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|ex
-parameter_list|)
-block|{
-name|fail
-argument_list|(
-name|ex
+name|stmt
 operator|.
-name|toString
-argument_list|()
+name|execute
+argument_list|(
+literal|"drop database if exists "
+operator|+
+name|testDbName
+operator|+
+literal|" cascade"
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|con
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
-block|}
-specifier|private
-specifier|static
-name|Connection
-name|getConnection
-parameter_list|(
-name|String
-name|postfix
-parameter_list|)
+annotation|@
+name|Before
+specifier|public
+name|void
+name|setUp
+parameter_list|()
 throws|throws
-name|SQLException
-block|{
-name|Connection
-name|con1
-decl_stmt|;
-if|if
-condition|(
-name|standAloneServer
-condition|)
-block|{
-comment|// get connection
-name|con1
-operator|=
-name|DriverManager
-operator|.
-name|getConnection
-argument_list|(
-literal|"jdbc:hive2://localhost:10000/"
-operator|+
-name|postfix
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|con1
-operator|=
-name|DriverManager
-operator|.
-name|getConnection
-argument_list|(
-literal|"jdbc:hive2:///"
-operator|+
-name|postfix
-argument_list|,
-literal|""
-argument_list|,
-literal|""
-argument_list|)
-expr_stmt|;
-block|}
-name|assertNotNull
-argument_list|(
-literal|"Connection is null"
-argument_list|,
-name|con1
-argument_list|)
-expr_stmt|;
-name|assertFalse
-argument_list|(
-literal|"Connection should not be closed"
-argument_list|,
-name|con1
-operator|.
-name|isClosed
-argument_list|()
-argument_list|)
-expr_stmt|;
-return|return
-name|con1
-return|;
-block|}
+name|Exception
+block|{   }
 annotation|@
 name|After
 specifier|public
@@ -1776,86 +1546,10 @@ name|tearDown
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-comment|// drop table
-name|Statement
-name|stmt
-init|=
-name|con
-operator|.
-name|createStatement
-argument_list|()
-decl_stmt|;
-name|assertNotNull
-argument_list|(
-literal|"Statement is null"
-argument_list|,
-name|stmt
-argument_list|)
-expr_stmt|;
-name|dropTestTables
-argument_list|(
-name|stmt
-argument_list|,
-literal|""
-argument_list|)
-expr_stmt|;
-name|dropTestTables
-argument_list|(
-name|stmt
-argument_list|,
-literal|"testdb."
-argument_list|)
-expr_stmt|;
-name|con
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
-name|assertTrue
-argument_list|(
-literal|"Connection should be closed"
-argument_list|,
-name|con
-operator|.
-name|isClosed
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Exception
-name|expectedException
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|con
-operator|.
-name|createStatement
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|expectedException
-operator|=
-name|e
-expr_stmt|;
-block|}
-name|assertNotNull
-argument_list|(
-literal|"createStatement() on closed connection should throw exception"
-argument_list|,
-name|expectedException
-argument_list|)
-expr_stmt|;
-block|}
+block|{   }
 annotation|@
 name|Test
+comment|/**    * Tests malformed JDBC URL    * @throws Exception    */
 specifier|public
 name|void
 name|testBadURL
@@ -1878,42 +1572,6 @@ expr_stmt|;
 name|checkBadUrl
 argument_list|(
 literal|"jdbc:hive2://localhost:10000test"
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testURLWithFetchSize
-parameter_list|()
-throws|throws
-name|SQLException
-block|{
-name|Connection
-name|con
-init|=
-name|getConnection
-argument_list|(
-literal|"default;fetchSize=1234"
-argument_list|)
-decl_stmt|;
-name|Statement
-name|stmt
-init|=
-name|con
-operator|.
-name|createStatement
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|stmt
-operator|.
-name|getFetchSize
-argument_list|()
-argument_list|,
-literal|1234
 argument_list|)
 expr_stmt|;
 block|}
@@ -1969,6 +1627,56 @@ block|}
 block|}
 annotation|@
 name|Test
+comment|/**    * Tests setting a custom fetch size for the RPC call    * @throws SQLException    */
+specifier|public
+name|void
+name|testURLWithFetchSize
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|Connection
+name|con
+init|=
+name|getConnection
+argument_list|(
+name|testDbName
+operator|+
+literal|";fetchSize=1234"
+argument_list|)
+decl_stmt|;
+name|Statement
+name|stmt
+init|=
+name|con
+operator|.
+name|createStatement
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|stmt
+operator|.
+name|getFetchSize
+argument_list|()
+argument_list|,
+literal|1234
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|con
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+comment|/**    * Test running parallel queries (with parallel queries disabled).    * Should be serialized in the order of execution.    * @throws Exception    */
 specifier|public
 name|void
 name|testSerializedExecution
@@ -1976,8 +1684,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// Test running parallel queries (with parallel queries disabled).
-comment|// Should be serialized in the order of execution.
 name|HiveStatement
 name|stmt1
 init|=
@@ -2073,6 +1779,16 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|stmt1
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt2
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -2087,8 +1803,6 @@ comment|/* Test parent references from Statement */
 name|Statement
 name|s
 init|=
-name|this
-operator|.
 name|con
 operator|.
 name|createStatement
@@ -2113,8 +1827,6 @@ operator|.
 name|getConnection
 argument_list|()
 operator|==
-name|this
-operator|.
 name|con
 argument_list|)
 expr_stmt|;
@@ -2142,8 +1854,6 @@ comment|/* Test parent references from PreparedStatement */
 name|PreparedStatement
 name|ps
 init|=
-name|this
-operator|.
 name|con
 operator|.
 name|prepareStatement
@@ -2167,8 +1877,6 @@ operator|.
 name|getConnection
 argument_list|()
 operator|==
-name|this
-operator|.
 name|con
 argument_list|)
 expr_stmt|;
@@ -2196,8 +1904,6 @@ comment|/* Test DatabaseMetaData queries which do not have a parent Statement */
 name|DatabaseMetaData
 name|md
 init|=
-name|this
-operator|.
 name|con
 operator|.
 name|getMetaData
@@ -2210,8 +1916,6 @@ operator|.
 name|getConnection
 argument_list|()
 operator|==
-name|this
-operator|.
 name|con
 argument_list|)
 expr_stmt|;
@@ -2323,7 +2027,7 @@ name|getPrimaryKeys
 argument_list|(
 literal|null
 argument_list|,
-literal|"testdb"
+name|testDbName
 argument_list|,
 name|tableName
 argument_list|)
@@ -2511,8 +2215,6 @@ argument_list|(
 literal|"select c5, c1 from "
 operator|+
 name|dataTypeTableName
-operator|+
-literal|" order by c1"
 argument_list|)
 decl_stmt|;
 name|ResultSetMetaData
@@ -2562,6 +2264,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -2683,6 +2390,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * verify 'explain ...' resultset    * @throws SQLException    */
 annotation|@
@@ -2761,6 +2473,11 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -2786,10 +2503,7 @@ literal|" and timestamp '2012-04-22 09:00:00.123456789' = timestamp ?"
 operator|+
 literal|" ) t SELECT '2011-03-25' ddate,'China',true bv, 10 num LIMIT 1"
 decl_stmt|;
-comment|///////////////////////////////////////////////
-comment|//////////////////// correct testcase
-comment|//////////////////// executed twice: once with the typed ps setters, once with the generic setObject
-comment|//////////////////////////////////////////////
+comment|// executed twice: once with the typed ps setters, once with the generic setObject
 try|try
 block|{
 try|try
@@ -2863,9 +2577,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|///////////////////////////////////////////////
-comment|//////////////////// other failure testcases
-comment|//////////////////////////////////////////////
 comment|// set nothing for prepared sql
 name|Exception
 name|expectedException
@@ -4367,39 +4078,30 @@ name|createStatement
 argument_list|()
 decl_stmt|;
 comment|// -select- should return a ResultSet
-try|try
-block|{
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
+name|testQuery
+operator|=
 literal|"select * from "
 operator|+
 name|tableName
-argument_list|)
+operator|+
+literal|" limit 5"
 expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
+name|checkResultSetExpected
 argument_list|(
-literal|"select: success"
+name|stmt
+argument_list|,
+name|setupQueries
+argument_list|,
+name|testQuery
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SQLException
-name|e
-parameter_list|)
-block|{
-name|failWithExceptionMsg
-argument_list|(
-name|e
-argument_list|)
+name|setupQueries
+operator|.
+name|clear
+argument_list|()
 expr_stmt|;
-block|}
 comment|// -create- should not return a ResultSet
 name|setupQueries
 operator|.
@@ -4441,6 +4143,8 @@ operator|=
 literal|"create table test_t1 as select * from "
 operator|+
 name|tableName
+operator|+
+literal|" limit 5"
 expr_stmt|;
 name|checkResultSetExpected
 argument_list|(
@@ -4478,6 +4182,8 @@ operator|=
 literal|"insert into table test_t1 select under_col, value from "
 operator|+
 name|tableName
+operator|+
+literal|" limit 5"
 expr_stmt|;
 name|checkResultSetExpected
 argument_list|(
@@ -4664,8 +4370,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|dataTypeTableName
-operator|+
-literal|" order by c1"
 argument_list|)
 decl_stmt|;
 name|ResultSetMetaData
@@ -5784,6 +5488,11 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -5816,8 +5525,6 @@ operator|+
 literal|" c17 -  c17 as col2 from "
 operator|+
 name|dataTypeTableName
-operator|+
-literal|" order by col1"
 argument_list|)
 decl_stmt|;
 name|ResultSetMetaData
@@ -6179,6 +5886,11 @@ operator|.
 name|getDays
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -6767,9 +6479,8 @@ literal|"42000"
 decl_stmt|;
 comment|// These tests inherently cause exceptions to be written to the test output
 comment|// logs. This is undesirable, since you it might appear to someone looking
-comment|// at the test output logs as if something is failing when it isn't. Not
-comment|// sure
-comment|// how to get around that.
+comment|// at the test output logs as if something is failing when it isn't.
+comment|// Not sure how to get around that.
 name|doTestErrorCase
 argument_list|(
 literal|"SELECTT * FROM "
@@ -6967,6 +6678,11 @@ argument_list|,
 name|exceptionFound
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -7058,6 +6774,11 @@ literal|" not found in SHOW TABLES result set"
 argument_list|,
 name|testTableExists
 argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -7288,7 +7009,7 @@ argument_list|()
 operator|.
 name|getTables
 argument_list|(
-literal|null
+name|testDbName
 argument_list|,
 literal|null
 argument_list|,
@@ -7404,7 +7125,7 @@ name|assertEquals
 argument_list|(
 name|resultDbName
 argument_list|,
-literal|"default"
+name|testDbName
 argument_list|)
 expr_stmt|;
 name|String
@@ -7421,7 +7142,7 @@ name|assertEquals
 argument_list|(
 name|resultTableName
 argument_list|,
-name|externalTable
+name|externalTableName
 operator|.
 name|toLowerCase
 argument_list|()
@@ -7482,7 +7203,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the type returned for pre-created table type table and view type    * table    * @param tableTypeNames expected table types    * @param viewTypeName expected view type    * @throws SQLException    */
+comment|/**    * Test the type returned for pre-created table type table and view type table    * @param tableTypeNames expected table types    * @param viewTypeName expected view type    * @throws SQLException    */
 specifier|private
 name|void
 name|getTablesTest
@@ -7559,22 +7280,49 @@ name|viewTypeName
 argument_list|)
 expr_stmt|;
 name|String
-index|[]
-name|VIEWORTABLE
+name|testTblWithDb
 init|=
-name|viewOrTableArray
-operator|.
-name|toArray
-argument_list|(
-operator|new
+name|testDbName
+operator|+
+literal|"."
+operator|+
+name|tableName
+decl_stmt|;
 name|String
-index|[
-name|viewOrTableArray
-operator|.
-name|size
-argument_list|()
-index|]
-argument_list|)
+name|testPartTblWithDb
+init|=
+name|testDbName
+operator|+
+literal|"."
+operator|+
+name|partitionedTableName
+decl_stmt|;
+name|String
+name|testDataTypeTblWithDb
+init|=
+name|testDbName
+operator|+
+literal|"."
+operator|+
+name|dataTypeTableName
+decl_stmt|;
+name|String
+name|testViewWithDb
+init|=
+name|testDbName
+operator|+
+literal|"."
+operator|+
+name|viewName
+decl_stmt|;
+name|String
+name|testExtTblWithDb
+init|=
+name|testDbName
+operator|+
+literal|"."
+operator|+
+name|externalTableName
 decl_stmt|;
 name|Map
 argument_list|<
@@ -7607,7 +7355,7 @@ index|[]
 block|{
 literal|null
 block|,
-literal|"test%jdbc%"
+literal|"testjdbc%"
 block|,
 name|ALL
 block|}
@@ -7616,19 +7364,15 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
+name|testTblWithDb
 block|,
-literal|"default.testhivejdbcdriverpartitionedtable"
+name|testPartTblWithDb
 block|,
-literal|"default.testhivejdbcdriverview"
+name|testViewWithDb
 block|,
-literal|"testdb.testhivejdbcdriver_table"
+name|testExtTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriverpartitionedtable"
-block|,
-literal|"testdb.testhivejdbcdriverview"
-block|,
-literal|"default.testhivejdbcdriver_external"
+name|testDataTypeTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7642,7 +7386,7 @@ index|[]
 block|{
 literal|"test%"
 block|,
-literal|"test%jdbc%"
+literal|"testjdbc%"
 block|,
 name|ALL
 block|}
@@ -7651,11 +7395,15 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"testdb.testhivejdbcdriver_table"
+name|testTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriverpartitionedtable"
+name|testPartTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriverview"
+name|testViewWithDb
+block|,
+name|testExtTblWithDb
+block|,
+name|testDataTypeTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7669,7 +7417,7 @@ index|[]
 block|{
 literal|"test%"
 block|,
-literal|"test%jdbc%"
+literal|"testjdbc%"
 block|,
 name|VIEW_ONLY
 block|}
@@ -7678,7 +7426,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"testdb.testhivejdbcdriverview"
+name|testViewWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7692,77 +7440,7 @@ index|[]
 block|{
 literal|null
 block|,
-literal|"%jdbcdriver\\_table"
-block|,
-name|VIEWORTABLE
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"default.testhivejdbcdriver_table"
-block|,
-literal|"testdb.testhivejdbcdriver_table"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|"def%"
-block|,
-literal|"%jdbcdriver\\_table"
-block|,
-name|VIEWORTABLE
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"default.testhivejdbcdriver_table"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|"def%"
-block|,
-literal|"%jdbcdriver\\_table"
-block|,
-name|VIEW_ONLY
-block|}
-argument_list|,
-operator|new
-name|String
-index|[
-literal|0
-index|]
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|null
-block|,
-literal|"testhivejdbcdriver\\_table"
+literal|"testjdbcdrivertbl"
 block|,
 name|ALL
 block|}
@@ -7771,9 +7449,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
-block|,
-literal|"testdb.testhivejdbcdriver_table"
+name|testTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7785,9 +7461,9 @@ operator|new
 name|Object
 index|[]
 block|{
-literal|"%faul%"
+literal|"%jdbc%"
 block|,
-literal|"testhivejdbcdriver\\_table"
+literal|"testjdbcdrivertbl"
 block|,
 name|ALL
 block|}
@@ -7796,7 +7472,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
+name|testTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7808,9 +7484,40 @@ operator|new
 name|Object
 index|[]
 block|{
-literal|"%faul%"
+literal|"%jdbc%"
 block|,
-literal|"testhivejdbcdriver\\_table"
+literal|"testjdbc%"
+block|,
+name|ALL
+block|}
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+name|testTblWithDb
+block|,
+name|testPartTblWithDb
+block|,
+name|testViewWithDb
+block|,
+name|testExtTblWithDb
+block|,
+name|testDataTypeTblWithDb
+block|}
+argument_list|)
+expr_stmt|;
+name|tests
+operator|.
+name|put
+argument_list|(
+operator|new
+name|Object
+index|[]
+block|{
+literal|"%jdbc%"
+block|,
+literal|"testjdbcdrivertbl"
 block|,
 name|TABLE_ONLY
 block|}
@@ -7819,7 +7526,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
+name|testTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7833,7 +7540,7 @@ index|[]
 block|{
 literal|null
 block|,
-literal|"test_ivejdbcdri_er\\_table"
+literal|"test_dbcdri_ertbl"
 block|,
 name|ALL
 block|}
@@ -7842,86 +7549,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
-block|,
-literal|"testdb.testhivejdbcdriver_table"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|"test__"
-block|,
-literal|"test_ivejdbcdri_er\\_table"
-block|,
-name|ALL
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"testdb.testhivejdbcdriver_table"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|null
-block|,
-literal|"test_ivejdbcdri_er_table"
-block|,
-name|ALL
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"default.testhivejdbcdriver_table"
-block|,
-literal|"testdb.testhivejdbcdriver_table"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|null
-block|,
-literal|"test_ivejdbcdri_er%table"
-block|,
-name|ALL
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"default.testhivejdbcdriver_table"
-block|,
-literal|"default.testhivejdbcdriverpartitionedtable"
-block|,
-literal|"testdb.testhivejdbcdriver_table"
-block|,
-literal|"testdb.testhivejdbcdriverpartitionedtable"
+name|testTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7944,19 +7572,15 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
+name|testTblWithDb
 block|,
-literal|"default.testhivejdbcdriverpartitionedtable"
+name|testPartTblWithDb
 block|,
-literal|"default.testhivejdbcdriverview"
+name|testViewWithDb
 block|,
-literal|"testdb.testhivejdbcdriver_table"
+name|testDataTypeTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriverpartitionedtable"
-block|,
-literal|"testdb.testhivejdbcdriverview"
-block|,
-literal|"default.testhivejdbcdriver_external"
+name|testExtTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -7979,56 +7603,8 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriverview"
-block|,
-literal|"testdb.testhivejdbcdriverview"
+name|testViewWithDb
 block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|"%"
-block|,
-literal|"%jdbc%"
-block|,
-name|VIEW_ONLY
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-literal|"default.testhivejdbcdriverview"
-block|,
-literal|"testdb.testhivejdbcdriverview"
-block|}
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|Object
-index|[]
-block|{
-literal|null
-block|,
-literal|""
-block|,
-name|ALL
-block|}
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{}
 argument_list|)
 expr_stmt|;
 name|tests
@@ -8050,15 +7626,13 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"default.testhivejdbcdriver_table"
+name|testTblWithDb
 block|,
-literal|"default.testhivejdbcdriverpartitionedtable"
+name|testPartTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriver_table"
+name|testExtTblWithDb
 block|,
-literal|"testdb.testhivejdbcdriverpartitionedtable"
-block|,
-literal|"default.testhivejdbcdriver_external"
+name|testDataTypeTblWithDb
 block|}
 argument_list|)
 expr_stmt|;
@@ -8569,7 +8143,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"testdb"
+name|testDbName
 argument_list|,
 name|rs
 operator|.
@@ -8872,7 +8446,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"testhivejdbcdriver\\_table"
+literal|"testjdbcdrivertbl"
 block|,
 literal|null
 block|}
@@ -8888,39 +8462,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"testhivejdbc%"
-block|,
-literal|null
-block|}
-argument_list|,
-literal|8
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-literal|"testhiveJDBC%"
-block|,
-literal|null
-block|}
-argument_list|,
-literal|8
-argument_list|)
-expr_stmt|;
-name|tests
-operator|.
-name|put
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-literal|"%jdbcdriver\\_table"
+literal|"%jdbcdrivertbl"
 block|,
 literal|null
 block|}
@@ -8936,7 +8478,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"under\\_col"
 block|}
@@ -8944,7 +8486,6 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-comment|//    tests.put(new String[]{"%jdbcdriver\\_table%", "under\\_COL"}, 1);
 name|tests
 operator|.
 name|put
@@ -8953,7 +8494,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"under\\_co_"
 block|}
@@ -8969,7 +8510,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"under_col"
 block|}
@@ -8985,7 +8526,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"und%"
 block|}
@@ -9001,7 +8542,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"%"
 block|}
@@ -9017,7 +8558,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"%jdbcdriver\\_table%"
+literal|"%jdbcdrivertbl%"
 block|,
 literal|"_%"
 block|}
@@ -9049,7 +8590,7 @@ name|getColumns
 argument_list|(
 literal|null
 argument_list|,
-literal|"default"
+name|testDbName
 argument_list|,
 name|checkPattern
 index|[
@@ -9220,7 +8761,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|"testhivejdbcdriver\\_table"
+literal|"testhivejdbcdrivertable"
 argument_list|,
 literal|null
 argument_list|)
@@ -9312,7 +8853,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*   public void testConversionsBaseResultSet() throws SQLException {     ResultSet rs = new HiveMetaDataResultSet(Arrays.asList("key")             , Arrays.asList("long")             , Arrays.asList(1234, "1234", "abc")) {       private int cnt=1;       public boolean next() throws SQLException {         if (cnt<data.size()) {           row = Arrays.asList(data.get(cnt));           cnt++;           return true;         } else {           return false;         }       }     };      while (rs.next()) {       String key = rs.getString("key");       if ("1234".equals(key)) {         assertEquals("Converting a string column into a long failed.", rs.getLong("key"), 1234L);         assertEquals("Converting a string column into a int failed.", rs.getInt("key"), 1234);       } else if ("abc".equals(key)) {         Object result = null;         Exception expectedException = null;         try {           result = rs.getLong("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a long should not work.", expectedException!=null);         try {           result = rs.getInt("key");         } catch (SQLException e) {           expectedException = e;         }         assertTrue("Trying to convert 'abc' into a int should not work.", expectedException!=null);       }     }   }    */
 annotation|@
 name|Test
 specifier|public
@@ -9425,6 +8965,11 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -9509,6 +9054,11 @@ operator|.
 name|next
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -9648,7 +9198,7 @@ name|supportsAlterTableWithAddColumn
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//-1 indicates malformed version.
+comment|// -1 indicates malformed version.
 name|assertTrue
 argument_list|(
 name|meta
@@ -9856,6 +9406,11 @@ name|msg
 argument_list|)
 expr_stmt|;
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -12888,6 +12443,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -13019,6 +12579,11 @@ argument_list|(
 literal|3
 argument_list|)
 argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
 expr_stmt|;
 block|}
 comment|// [url] [host] [port] [db]
@@ -13476,7 +13041,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//check if there is data in the resultset
+comment|// check if there is data in the resultset
 name|int
 name|numLines
 init|=
@@ -13539,7 +13104,8 @@ argument_list|)
 operator|)
 argument_list|)
 expr_stmt|;
-comment|// the only conf allowed to have the metastore pwd keyname is the hidden list configuration value
+comment|// the only conf allowed to have the metastore pwd keyname is the hidden list configuration
+comment|// value
 block|}
 name|assertTrue
 argument_list|(
@@ -13623,7 +13189,7 @@ parameter_list|(
 name|SQLException
 name|e
 parameter_list|)
-block|{ }
+block|{     }
 try|try
 block|{
 name|res
@@ -13642,7 +13208,7 @@ parameter_list|(
 name|SQLException
 name|e
 parameter_list|)
-block|{ }
+block|{     }
 try|try
 block|{
 name|res
@@ -13663,7 +13229,12 @@ parameter_list|(
 name|SQLException
 name|e
 parameter_list|)
-block|{ }
+block|{     }
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/*    * The JDBC spec says when you have duplicate column names,    * the first one should be returned.    */
 annotation|@
@@ -13716,6 +13287,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 name|rs
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
 operator|.
 name|close
 argument_list|()
@@ -13792,6 +13368,11 @@ name|SQLException
 name|e
 parameter_list|)
 block|{     }
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Verify selecting using builtin UDFs    * @throws SQLException    */
 annotation|@
@@ -13890,6 +13471,11 @@ literal|"1"
 argument_list|)
 expr_stmt|;
 name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
 operator|.
 name|close
 argument_list|()
@@ -14005,6 +13591,11 @@ literal|1
 argument_list|)
 expr_stmt|;
 name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|stmt
 operator|.
 name|close
 argument_list|()
@@ -14174,7 +13765,7 @@ name|getPrimaryKeys
 argument_list|(
 literal|null
 argument_list|,
-literal|"testdb"
+name|testDbName
 argument_list|,
 name|tableName
 argument_list|)
@@ -14587,6 +14178,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Read the results locally. Then reset the read position to start and read the    * rows again verify that we get the same results next time.    * @param sqlStmt - SQL statement to execute    * @param colName - columns name to read    * @param oneRowOnly -  read and compare only one row from the resultset    * @throws Exception    */
 specifier|private
@@ -14775,6 +14371,11 @@ block|{
 break|break;
 block|}
 block|}
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -14831,7 +14432,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|testDbName
 argument_list|,
 name|res
 operator|.
@@ -14965,6 +14566,11 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -15084,6 +14690,11 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|stmt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * Useful for modifying outer class context from anonymous inner class    */
 specifier|public
@@ -15121,7 +14732,7 @@ block|{
 name|String
 name|udfName
 init|=
-name|SleepUDF
+name|SleepMsUDF
 operator|.
 name|class
 operator|.
@@ -15140,7 +14751,7 @@ name|stmt1
 operator|.
 name|execute
 argument_list|(
-literal|"create temporary function sleepUDF as '"
+literal|"create temporary function sleepMsUDF as '"
 operator|+
 name|udfName
 operator|+
@@ -15190,11 +14801,12 @@ argument_list|(
 literal|"Executing query: "
 argument_list|)
 expr_stmt|;
+comment|// The test table has 500 rows, so total query time should be ~ 500*500ms
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select sleepUDF(t1.under_col) as u0, t1.under_col as u1, "
+literal|"select sleepMsUDF(t1.under_col, 1) as u0, t1.under_col as u1, "
 operator|+
 literal|"t2.under_col as u2 from "
 operator|+
@@ -15262,11 +14874,12 @@ parameter_list|()
 block|{
 try|try
 block|{
+comment|// Sleep for 100ms
 name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|10000
+literal|100
 argument_list|)
 expr_stmt|;
 name|System
@@ -15334,7 +14947,7 @@ block|{
 name|String
 name|udfName
 init|=
-name|SleepUDF
+name|SleepMsUDF
 operator|.
 name|class
 operator|.
@@ -15353,7 +14966,7 @@ name|stmt1
 operator|.
 name|execute
 argument_list|(
-literal|"create temporary function sleepUDF as '"
+literal|"create temporary function sleepMsUDF as '"
 operator|+
 name|udfName
 operator|+
@@ -15374,12 +14987,12 @@ name|createStatement
 argument_list|()
 decl_stmt|;
 comment|// Test a query where timeout kicks in
-comment|// Set query timeout to 15 seconds
+comment|// Set query timeout to 1 second
 name|stmt
 operator|.
 name|setQueryTimeout
 argument_list|(
-literal|15
+literal|1
 argument_list|)
 expr_stmt|;
 name|System
@@ -15393,13 +15006,12 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-comment|// Sleep UDF sleeps for 100ms for each select call
-comment|// The test table has 500 rows, so that should be sufficient time
+comment|// The test table has 500 rows, so total query time should be ~ 2500ms
 name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select sleepUDF(t1.under_col) as u0, t1.under_col as u1, "
+literal|"select sleepMsUDF(t1.under_col, 5) as u0, t1.under_col as u1, "
 operator|+
 literal|"t2.under_col as u2 from "
 operator|+
@@ -15461,12 +15073,13 @@ name|printStackTrace
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Test a query where timeout does not kick in. Set it to 25s
+comment|// Test a query where timeout does not kick in. Set it to 5s;
+comment|// show tables should be faster than that
 name|stmt
 operator|.
 name|setQueryTimeout
 argument_list|(
-literal|25
+literal|5
 argument_list|)
 expr_stmt|;
 try|try
@@ -15517,7 +15130,7 @@ block|{
 name|String
 name|udfName
 init|=
-name|SleepUDF
+name|SleepMsUDF
 operator|.
 name|class
 operator|.
@@ -15536,7 +15149,7 @@ name|stmt1
 operator|.
 name|execute
 argument_list|(
-literal|"create temporary function sleepUDF as '"
+literal|"create temporary function sleepMsUDF as '"
 operator|+
 name|udfName
 operator|+
@@ -15625,6 +15238,7 @@ parameter_list|()
 block|{
 try|try
 block|{
+comment|// The test table has 500 rows, so total query time should be ~ 500*500ms
 name|System
 operator|.
 name|out
@@ -15638,7 +15252,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select sleepUDF(t1.under_col) as u0, t1.under_col as u1, "
+literal|"select sleepMsUDF(t1.under_col, 1) as u0, t1.under_col as u1, "
 operator|+
 literal|"t2.under_col as u2 from "
 operator|+
@@ -15688,7 +15302,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|10000
+literal|500
 argument_list|)
 expr_stmt|;
 block|}
@@ -15797,46 +15411,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-block|}
-comment|// A udf which sleeps for 100ms to simulate a long running query
-specifier|public
-specifier|static
-class|class
-name|SleepUDF
-extends|extends
-name|UDF
-block|{
-specifier|public
-name|Integer
-name|evaluate
-parameter_list|(
-specifier|final
-name|Integer
-name|value
-parameter_list|)
-block|{
-try|try
-block|{
-name|Thread
-operator|.
-name|sleep
-argument_list|(
-literal|100
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InterruptedException
-name|e
-parameter_list|)
-block|{
-comment|// No-op
-block|}
-return|return
-name|value
-return|;
-block|}
 block|}
 comment|// A udf which sleeps for some number of ms to simulate a long running query
 specifier|public
