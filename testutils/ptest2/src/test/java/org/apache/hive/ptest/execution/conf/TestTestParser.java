@@ -71,6 +71,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|junit
 operator|.
 name|framework
@@ -757,6 +771,15 @@ name|context
 operator|.
 name|put
 argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
 literal|"unitTests.exclude"
 argument_list|,
 literal|"TestA"
@@ -850,6 +873,12 @@ name|TestParser
 argument_list|(
 name|context
 argument_list|,
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|1
+argument_list|)
+argument_list|,
 literal|"testcase"
 argument_list|,
 name|workingDirectory
@@ -900,6 +929,15 @@ argument_list|(
 literal|"unitTests.directories"
 argument_list|,
 literal|"build/1 build/2"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
 argument_list|)
 expr_stmt|;
 name|context
@@ -999,6 +1037,12 @@ name|TestParser
 argument_list|(
 name|context
 argument_list|,
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|1
+argument_list|)
+argument_list|,
 literal|"testcase"
 argument_list|,
 name|workingDirectory
@@ -1049,6 +1093,15 @@ argument_list|(
 literal|"unitTests.directories"
 argument_list|,
 literal|"build/1 build/2"
+argument_list|)
+expr_stmt|;
+name|context
+operator|.
+name|put
+argument_list|(
+literal|"unitTests.subdirForPrefix"
+argument_list|,
+literal|"units"
 argument_list|)
 expr_stmt|;
 name|context
@@ -1180,6 +1233,12 @@ operator|new
 name|TestParser
 argument_list|(
 name|context
+argument_list|,
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|1
+argument_list|)
 argument_list|,
 literal|"testcase"
 argument_list|,
