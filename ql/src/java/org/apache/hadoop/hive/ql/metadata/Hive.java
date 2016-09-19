@@ -7740,11 +7740,14 @@ name|checkState
 argument_list|(
 name|isMmTableWrite
 operator|==
-name|AcidUtils
+name|MetaStoreUtils
 operator|.
 name|isMmTable
 argument_list|(
 name|tbl
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

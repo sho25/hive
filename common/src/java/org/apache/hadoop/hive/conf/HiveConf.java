@@ -1944,6 +1944,24 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_HBASE_FILE_METADATA_THREADS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_MM_THREAD_SCAN_INTERVAL
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_MM_HEARTBEAT_TIMEOUT
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_MM_ABSOLUTE_TIMEOUT
 block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
@@ -12841,6 +12859,77 @@ operator|+
 name|LOG_PREFIX_LENGTH
 operator|+
 literal|" characters. Defaults to use auto-generated session id."
+argument_list|)
+block|,
+name|HIVE_METASTORE_MM_THREAD_SCAN_INTERVAL
+argument_list|(
+literal|"hive.metastore.mm.thread.scan.interval"
+argument_list|,
+literal|"900s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MM table housekeeping thread interval in this metastore instance. 0 to disable."
+argument_list|)
+block|,
+name|HIVE_METASTORE_MM_HEARTBEAT_TIMEOUT
+argument_list|(
+literal|"hive.metastore.mm.heartbeat.timeout"
+argument_list|,
+literal|"1800s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MM write ID times out after this long if a heartbeat is not send. Currently disabled."
+argument_list|)
+block|,
+comment|// TODO# heartbeating not implemented
+name|HIVE_METASTORE_MM_ABSOLUTE_TIMEOUT
+argument_list|(
+literal|"hive.metastore.mm.absolute.timeout"
+argument_list|,
+literal|"7d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MM write ID cannot be outstanding for more than this long."
+argument_list|)
+block|,
+name|HIVE_METASTORE_MM_ABORTED_GRACE_PERIOD
+argument_list|(
+literal|"hive.metastore.mm.aborted.grace.period"
+argument_list|,
+literal|"1d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"MM write ID will not be removed up for that long after it has been aborted;\n"
+operator|+
+literal|"this is to work around potential races e.g. with FS visibility, when deleting files."
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST

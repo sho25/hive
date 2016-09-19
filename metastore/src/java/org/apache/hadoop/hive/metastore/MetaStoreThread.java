@@ -91,6 +91,7 @@ name|threadId
 parameter_list|)
 function_decl|;
 comment|/**    * Initialize the thread.  This must not be called until after    * {@link #setHiveConf(org.apache.hadoop.hive.conf.HiveConf)} and  {@link #setThreadId(int)}    * have been called.    * @param stop a flag to watch for when to stop.  If this value is set to true,    *             the thread will terminate the next time through its main loop.    * @param looped a flag that is set to true everytime a thread goes through it's main loop.    *               This is purely for testing so that tests can assure themselves that the thread    *               has run through it's loop once.  The test can set this value to false.  The    *               thread should then assure that the loop has been gone completely through at    *               least once.    */
+comment|// TODO: move these test parameters to more specific places... there's no need to have them here
 name|void
 name|init
 parameter_list|(

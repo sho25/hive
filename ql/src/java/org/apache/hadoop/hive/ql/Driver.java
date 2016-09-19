@@ -8980,11 +8980,14 @@ operator|.
 name|isTemporary
 argument_list|()
 operator|&&
-name|AcidUtils
+name|MetaStoreUtils
 operator|.
 name|isMmTable
 argument_list|(
 name|t
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 operator|)
 condition|?
