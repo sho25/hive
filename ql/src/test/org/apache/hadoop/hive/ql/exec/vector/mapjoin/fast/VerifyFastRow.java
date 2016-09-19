@@ -582,9 +582,10 @@ name|isNull
 decl_stmt|;
 name|isNull
 operator|=
+operator|!
 name|deserializeRead
 operator|.
-name|readCheckNull
+name|readNextField
 argument_list|()
 expr_stmt|;
 if|if

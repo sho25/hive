@@ -2457,7 +2457,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-literal|false
+literal|null
 argument_list|,
 literal|true
 argument_list|,

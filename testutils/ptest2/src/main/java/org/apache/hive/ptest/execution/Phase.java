@@ -887,7 +887,7 @@ name|hostExecutor
 operator|.
 name|exec
 argument_list|(
-literal|"killall -q -9 -f java || true"
+literal|"killall -q -9 java || true"
 argument_list|)
 operator|.
 name|get

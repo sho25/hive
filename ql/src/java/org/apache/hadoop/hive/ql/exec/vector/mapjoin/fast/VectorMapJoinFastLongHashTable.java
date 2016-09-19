@@ -451,9 +451,10 @@ try|try
 block|{
 if|if
 condition|(
+operator|!
 name|keyBinarySortableDeserializeRead
 operator|.
-name|readCheckNull
+name|readNextField
 argument_list|()
 condition|)
 block|{

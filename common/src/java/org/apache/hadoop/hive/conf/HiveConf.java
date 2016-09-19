@@ -5482,6 +5482,38 @@ operator|+
 literal|"for all tables."
 argument_list|)
 block|,
+name|HIVEMATERIALIZEDVIEWFILEFORMAT
+argument_list|(
+literal|"hive.materializedview.fileformat"
+argument_list|,
+literal|"ORC"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"TextFile"
+argument_list|,
+literal|"SequenceFile"
+argument_list|,
+literal|"RCfile"
+argument_list|,
+literal|"ORC"
+argument_list|)
+argument_list|,
+literal|"Default file format for CREATE MATERIALIZED VIEW statement"
+argument_list|)
+block|,
+name|HIVEMATERIALIZEDVIEWSERDE
+argument_list|(
+literal|"hive.materializedview.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
+argument_list|,
+literal|"Default SerDe used for materialized views"
+argument_list|)
+block|,
 name|HIVEQUERYRESULTFILEFORMAT
 argument_list|(
 literal|"hive.query.result.fileformat"

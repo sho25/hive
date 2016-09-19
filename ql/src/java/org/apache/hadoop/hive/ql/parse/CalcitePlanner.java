@@ -3828,7 +3828,7 @@ name|PreCboCtx
 operator|.
 name|Type
 operator|.
-name|CTAS
+name|CTAS_OR_MV
 condition|)
 block|{
 name|queryForCbo
@@ -3871,6 +3871,16 @@ name|boolean
 name|reAnalyzeAST
 init|=
 literal|false
+decl_stmt|;
+specifier|final
+name|boolean
+name|materializedView
+init|=
+name|getQB
+argument_list|()
+operator|.
+name|isMaterializedView
+argument_list|()
 decl_stmt|;
 try|try
 block|{
@@ -3930,10 +3940,10 @@ init|=
 name|getOptimizedAST
 argument_list|()
 decl_stmt|;
-comment|// 1.1. Fix up the query for insert/ctas
+comment|// 1.1. Fix up the query for insert/ctas/materialized views
 name|newAST
 operator|=
-name|fixUpCtasAndInsertAfterCbo
+name|fixUpAfterCbo
 argument_list|(
 name|ast
 argument_list|,
@@ -3958,10 +3968,16 @@ name|PreCboCtx
 operator|.
 name|Type
 operator|.
-name|CTAS
+name|CTAS_OR_MV
 condition|)
 block|{
-comment|// Redo create-table analysis, because it's not part of doPhase1.
+comment|// Redo create-table/view analysis, because it's not part of doPhase1.
+if|if
+condition|(
+name|materializedView
+condition|)
+block|{
+comment|// Use the REWRITTEN AST
 name|setAST
 argument_list|(
 name|newAST
@@ -3969,11 +3985,82 @@ argument_list|)
 expr_stmt|;
 name|newAST
 operator|=
-name|reAnalyzeCtasAfterCbo
+name|reAnalyzeMaterializedViewAfterCbo
 argument_list|(
 name|newAST
 argument_list|)
 expr_stmt|;
+comment|// Store text of the ORIGINAL QUERY
+name|String
+name|originalText
+init|=
+name|ctx
+operator|.
+name|getTokenRewriteStream
+argument_list|()
+operator|.
+name|toString
+argument_list|(
+name|cboCtx
+operator|.
+name|nodeOfInterest
+operator|.
+name|getTokenStartIndex
+argument_list|()
+argument_list|,
+name|cboCtx
+operator|.
+name|nodeOfInterest
+operator|.
+name|getTokenStopIndex
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|createVwDesc
+operator|.
+name|setViewOriginalText
+argument_list|(
+name|originalText
+argument_list|)
+expr_stmt|;
+name|viewSelect
+operator|=
+name|newAST
+expr_stmt|;
+name|viewsExpanded
+operator|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+expr_stmt|;
+name|viewsExpanded
+operator|.
+name|add
+argument_list|(
+name|createVwDesc
+operator|.
+name|getViewName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// CTAS
+name|setAST
+argument_list|(
+name|newAST
+argument_list|)
+expr_stmt|;
+name|newAST
+operator|=
+name|reAnalyzeCTASAfterCbo
+argument_list|(
+name|newAST
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|Phase1Ctx
 name|ctx_1
@@ -4395,6 +4482,11 @@ name|qb
 operator|.
 name|isCTAS
 argument_list|()
+operator|||
+name|qb
+operator|.
+name|isMaterializedView
+argument_list|()
 decl_stmt|;
 comment|// Queries without a source table currently are not supported by CBO
 name|boolean
@@ -4416,6 +4508,11 @@ operator|||
 name|qb
 operator|.
 name|isCTAS
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|isMaterializedView
 argument_list|()
 operator|||
 name|cboCtx
@@ -4445,10 +4542,18 @@ name|isSupportedRoot
 operator|&&
 name|isSupportedType
 operator|&&
+operator|(
 name|getCreateViewDesc
 argument_list|()
 operator|==
 literal|null
+operator|||
+name|getCreateViewDesc
+argument_list|()
+operator|.
+name|isMaterialized
+argument_list|()
+operator|)
 operator|&&
 name|noBadTokens
 decl_stmt|;
@@ -4498,6 +4603,13 @@ name|getCreateViewDesc
 argument_list|()
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|getCreateViewDesc
+argument_list|()
+operator|.
+name|isMaterialized
+argument_list|()
 condition|)
 block|{
 name|msg
@@ -5251,7 +5363,7 @@ name|NONE
 block|,
 name|INSERT
 block|,
-name|CTAS
+name|CTAS_OR_MV
 block|,
 name|UNEXPECTED
 block|}
@@ -5344,7 +5456,7 @@ block|}
 annotation|@
 name|Override
 name|void
-name|setCTASToken
+name|setCTASOrMVToken
 parameter_list|(
 name|ASTNode
 name|child
@@ -5356,7 +5468,7 @@ name|PreCboCtx
 operator|.
 name|Type
 operator|.
-name|CTAS
+name|CTAS_OR_MV
 argument_list|,
 name|child
 argument_list|)
@@ -5395,7 +5507,7 @@ block|}
 block|}
 block|}
 name|ASTNode
-name|fixUpCtasAndInsertAfterCbo
+name|fixUpAfterCbo
 parameter_list|(
 name|ASTNode
 name|originalAst
@@ -5424,7 +5536,7 @@ return|return
 name|newAst
 return|;
 case|case
-name|CTAS
+name|CTAS_OR_MV
 case|:
 block|{
 comment|// Patch the optimized query back into original CTAS AST, replacing the
@@ -5527,7 +5639,7 @@ throw|;
 block|}
 block|}
 name|ASTNode
-name|reAnalyzeCtasAfterCbo
+name|reAnalyzeCTASAfterCbo
 parameter_list|(
 name|ASTNode
 name|newAst
@@ -5576,6 +5688,63 @@ operator|new
 name|SemanticException
 argument_list|(
 literal|"analyzeCreateTable failed to initialize CTAS after CBO"
+argument_list|)
+throw|;
+block|}
+return|return
+name|newAst
+return|;
+block|}
+name|ASTNode
+name|reAnalyzeMaterializedViewAfterCbo
+parameter_list|(
+name|ASTNode
+name|newAst
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+comment|// analyzeCreateView uses this.ast, but doPhase1 doesn't, so only reset it
+comment|// here.
+name|newAst
+operator|=
+name|analyzeCreateView
+argument_list|(
+name|newAst
+argument_list|,
+name|getQB
+argument_list|()
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|newAst
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"analyzeCreateTable failed to initialize materialized view after CBO;"
+operator|+
+literal|" new ast is "
+operator|+
+name|getAST
+argument_list|()
+operator|.
+name|dump
+argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"analyzeCreateTable failed to initialize materialized view after CBO"
 argument_list|)
 throw|;
 block|}

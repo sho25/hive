@@ -216,7 +216,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readCheckNull).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
+comment|/*  * Directly deserialize with the caller reading field-by-field the LazyBinary serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readNextField).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
 end_comment
 
 begin_class
@@ -251,7 +251,7 @@ name|boolean
 index|[]
 name|columnSortOrderIsDesc
 decl_stmt|;
-comment|// Which field we are on.  We start with -1 so readCheckNull can increment once and the read
+comment|// Which field we are on.  We start with -1 so readNextField can increment once and the read
 comment|// field data methods don't increment.
 specifier|private
 name|int
@@ -295,14 +295,6 @@ specifier|private
 name|byte
 index|[]
 name|tempDecimalBuffer
-decl_stmt|;
-specifier|private
-name|boolean
-name|readBeyondConfiguredFieldsWarned
-decl_stmt|;
-specifier|private
-name|boolean
-name|bufferRangeHasExtraDataWarned
 decl_stmt|;
 specifier|private
 name|InputByteBuffer
@@ -407,14 +399,6 @@ operator|=
 operator|new
 name|InputByteBuffer
 argument_list|()
-expr_stmt|;
-name|readBeyondConfiguredFieldsWarned
-operator|=
-literal|false
-expr_stmt|;
-name|bufferRangeHasExtraDataWarned
-operator|=
-literal|false
 expr_stmt|;
 name|internalBufferLen
 operator|=
@@ -666,12 +650,12 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/*    * Reads the NULL information for a field.    *    * @return Returns true when the field is NULL; reading is positioned to the next field.    *         Otherwise, false when the field is NOT NULL; reading is positioned to the field data.    */
+comment|/*    * Reads the the next field.    *    * Afterwards, reading is positioned to the next field.    *    * @return  Return true when the field was not null and data is put in the appropriate    *          current* member.    *          Otherwise, false when the field is null.    *    */
 annotation|@
 name|Override
 specifier|public
 name|boolean
-name|readCheckNull
+name|readNextField
 parameter_list|()
 throws|throws
 name|IOException
@@ -688,19 +672,8 @@ operator|>=
 name|fieldCount
 condition|)
 block|{
-comment|// Reading beyond the specified field count produces NULL.
-if|if
-condition|(
-operator|!
-name|readBeyondConfiguredFieldsWarned
-condition|)
-block|{
-name|doReadBeyondConfiguredFieldsWarned
-argument_list|()
-expr_stmt|;
-block|}
 return|return
-literal|true
+literal|false
 return|;
 block|}
 if|if
@@ -713,7 +686,7 @@ condition|)
 block|{
 comment|// Also, reading beyond our byte range produces NULL.
 return|return
-literal|true
+literal|false
 return|;
 block|}
 name|fieldStart
@@ -744,16 +717,10 @@ literal|0
 condition|)
 block|{
 return|return
-literal|true
+literal|false
 return|;
 block|}
 comment|/*      * We have a field and are positioned to it.  Read it.      */
-name|boolean
-name|isNull
-init|=
-literal|false
-decl_stmt|;
-comment|// Assume.
 switch|switch
 condition|(
 name|primitiveCategories
@@ -781,7 +748,9 @@ operator|==
 literal|2
 operator|)
 expr_stmt|;
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|BYTE
 case|:
@@ -804,7 +773,9 @@ operator|^
 literal|0x80
 argument_list|)
 expr_stmt|;
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|SHORT
 case|:
@@ -857,7 +828,9 @@ operator|)
 name|v
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|INT
 case|:
@@ -923,7 +896,9 @@ operator|=
 name|v
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|LONG
 case|:
@@ -989,7 +964,9 @@ operator|=
 name|v
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|DATE
 case|:
@@ -1058,7 +1035,9 @@ name|v
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|TIMESTAMP
 case|:
@@ -1130,7 +1109,9 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|FLOAT
 case|:
@@ -1230,7 +1211,9 @@ name|v
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|DOUBLE
 case|:
@@ -1330,7 +1313,9 @@ name|v
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|BINARY
 case|:
@@ -1528,7 +1513,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|INTERVAL_YEAR_MONTH
 case|:
@@ -1597,7 +1584,9 @@ name|v
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|INTERVAL_DAY_TIME
 case|:
@@ -1715,7 +1704,9 @@ name|nanos
 argument_list|)
 expr_stmt|;
 block|}
-break|break;
+return|return
+literal|true
+return|;
 case|case
 name|DECIMAL
 case|:
@@ -2108,13 +2099,10 @@ operator|==
 literal|null
 condition|)
 block|{
-name|isNull
-operator|=
-literal|true
-expr_stmt|;
+return|return
+literal|false
+return|;
 block|}
-else|else
-block|{
 comment|// Put value back into writable.
 name|currentHiveDecimalWritable
 operator|.
@@ -2124,8 +2112,9 @@ name|decimal
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-break|break;
+return|return
+literal|true
+return|;
 default|default:
 throw|throw
 operator|new
@@ -2140,28 +2129,19 @@ index|]
 argument_list|)
 throw|;
 block|}
-comment|/*      * Now that we have read through the field -- did we really want it?      */
-if|if
-condition|(
-name|columnsToInclude
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|columnsToInclude
-index|[
-name|fieldIndex
-index|]
-condition|)
-block|{
-name|isNull
-operator|=
-literal|true
-expr_stmt|;
 block|}
-return|return
-name|isNull
-return|;
+comment|/*    * Reads through an undesired field.    *    * No data values are valid after this call.    * Designed for skipping columns that are not included.    */
+specifier|public
+name|void
+name|skipNextField
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+comment|// Not a known use case for BinarySortable -- so don't optimize.
+name|readNextField
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -2312,138 +2292,18 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*    * Call this method after all fields have been read to check for extra fields.    */
+comment|/*    * Call this method may be called after all the all fields have been read to check    * for unread fields.    *    * Note that when optimizing reading to stop reading unneeded include columns, worrying    * about whether all data is consumed is not appropriate (often we aren't reading it all by    * design).    *    * Since LazySimpleDeserializeRead parses the line through the last desired column it does    * support this function.    */
 specifier|public
-name|void
-name|extraFieldsCheck
+name|boolean
+name|isEndOfInputReached
 parameter_list|()
 block|{
-if|if
-condition|(
-operator|!
+return|return
 name|inputByteBuffer
 operator|.
 name|isEof
 argument_list|()
-condition|)
-block|{
-comment|// We did not consume all of the byte range.
-if|if
-condition|(
-operator|!
-name|bufferRangeHasExtraDataWarned
-condition|)
-block|{
-comment|// Warn only once.
-name|int
-name|length
-init|=
-name|inputByteBuffer
-operator|.
-name|getEnd
-argument_list|()
-operator|-
-name|start
-decl_stmt|;
-name|int
-name|remaining
-init|=
-name|inputByteBuffer
-operator|.
-name|getEnd
-argument_list|()
-operator|-
-name|inputByteBuffer
-operator|.
-name|tell
-argument_list|()
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Not all fields were read in the buffer range! Buffer range "
-operator|+
-name|start
-operator|+
-literal|" for length "
-operator|+
-name|length
-operator|+
-literal|" but "
-operator|+
-name|remaining
-operator|+
-literal|" bytes remain. "
-operator|+
-literal|"(total buffer length "
-operator|+
-name|inputByteBuffer
-operator|.
-name|getData
-argument_list|()
-operator|.
-name|length
-operator|+
-literal|")"
-operator|+
-literal|"  Ignoring similar problems."
-argument_list|)
-expr_stmt|;
-name|bufferRangeHasExtraDataWarned
-operator|=
-literal|true
-expr_stmt|;
-block|}
-block|}
-block|}
-comment|/*    * Read integrity warning flags.    */
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|readBeyondConfiguredFieldsWarned
-parameter_list|()
-block|{
-return|return
-name|readBeyondConfiguredFieldsWarned
 return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|bufferRangeHasExtraDataWarned
-parameter_list|()
-block|{
-return|return
-name|bufferRangeHasExtraDataWarned
-return|;
-block|}
-comment|/*    * Pull these out of the regular execution path.    */
-specifier|private
-name|void
-name|doReadBeyondConfiguredFieldsWarned
-parameter_list|()
-block|{
-comment|// Warn only once.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Reading beyond configured fields! Configured "
-operator|+
-name|fieldCount
-operator|+
-literal|" fields but "
-operator|+
-literal|" reading more (NULLs returned).  Ignoring similar problems."
-argument_list|)
-expr_stmt|;
-name|readBeyondConfiguredFieldsWarned
-operator|=
-literal|true
-expr_stmt|;
 block|}
 block|}
 end_class

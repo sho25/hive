@@ -4537,6 +4537,7 @@ name|level
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test if it's implicitly convertible for data comparison.    */
 specifier|public
 specifier|static
 name|boolean

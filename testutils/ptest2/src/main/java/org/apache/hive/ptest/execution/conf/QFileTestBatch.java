@@ -31,6 +31,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -61,7 +75,7 @@ begin_class
 specifier|public
 class|class
 name|QFileTestBatch
-implements|implements
+extends|extends
 name|TestBatch
 block|{
 specifier|private
@@ -105,6 +119,9 @@ decl_stmt|;
 specifier|public
 name|QFileTestBatch
 parameter_list|(
+name|AtomicInteger
+name|batchIdCounter
+parameter_list|,
 name|String
 name|testCasePropertyName
 parameter_list|,
@@ -127,6 +144,11 @@ name|String
 name|moduleName
 parameter_list|)
 block|{
+name|super
+argument_list|(
+name|batchIdCounter
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|testCasePropertyName
@@ -327,7 +349,19 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"QFileTestBatch [driver="
+literal|"QFileTestBatch [batchId="
+operator|+
+name|getBatchId
+argument_list|()
+operator|+
+literal|", size="
+operator|+
+name|tests
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|", driver="
 operator|+
 name|driver
 operator|+
@@ -369,11 +403,25 @@ annotation|@
 name|Override
 specifier|public
 name|String
-name|getTestModule
+name|getTestModuleRelativeDir
 parameter_list|()
 block|{
 return|return
 name|moduleName
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|getNumTestsInBatch
+parameter_list|()
+block|{
+return|return
+name|tests
+operator|.
+name|size
+argument_list|()
 return|;
 block|}
 annotation|@

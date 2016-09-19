@@ -1341,6 +1341,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|ShutdownHookManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TException
@@ -25504,7 +25520,9 @@ argument_list|()
 expr_stmt|;
 name|startFunction
 argument_list|(
-literal|"get_column_statistics_by_table: db="
+literal|"get_column_statistics_by_table"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -25567,7 +25585,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_column_statistics_by_table: "
+literal|"get_column_statistics_by_table"
 argument_list|,
 name|statsObj
 operator|!=
@@ -25620,7 +25638,9 @@ argument_list|()
 decl_stmt|;
 name|startFunction
 argument_list|(
-literal|"get_table_statistics_req: db="
+literal|"get_table_statistics_req"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -25731,7 +25751,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_table_statistics_req: "
+literal|"get_table_statistics_req"
 argument_list|,
 name|result
 operator|==
@@ -25807,7 +25827,9 @@ argument_list|)
 decl_stmt|;
 name|startFunction
 argument_list|(
-literal|"get_column_statistics_by_partition: db="
+literal|"get_column_statistics_by_partition"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -25908,7 +25930,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_column_statistics_by_partition: "
+literal|"get_column_statistics_by_partition"
 argument_list|,
 name|statsObj
 operator|!=
@@ -25964,7 +25986,9 @@ argument_list|()
 decl_stmt|;
 name|startFunction
 argument_list|(
-literal|"get_partitions_statistics_req: db="
+literal|"get_partitions_statistics_req"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -26149,7 +26173,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_partitions_statistics_req: "
+literal|"get_partitions_statistics_req"
 argument_list|,
 name|result
 operator|==
@@ -26270,6 +26294,23 @@ operator|.
 name|getStatsObj
 argument_list|()
 decl_stmt|;
+name|startFunction
+argument_list|(
+literal|"write_column_statistics"
+argument_list|,
+literal|":  db="
+operator|+
+name|dbName
+operator|+
+literal|" table="
+operator|+
+name|tableName
+operator|+
+literal|" column="
+operator|+
+name|colName
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|ColumnStatisticsObj
@@ -26292,21 +26333,6 @@ name|statsObj
 operator|.
 name|setColName
 argument_list|(
-name|colName
-argument_list|)
-expr_stmt|;
-name|startFunction
-argument_list|(
-literal|"write_column_statistics:  db="
-operator|+
-name|dbName
-operator|+
-literal|" table="
-operator|+
-name|tableName
-operator|+
-literal|" column="
-operator|+
 name|colName
 argument_list|)
 expr_stmt|;
@@ -26350,7 +26376,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"write_column_statistics: "
+literal|"write_column_statistics"
 argument_list|,
 name|ret
 operator|!=
@@ -26489,6 +26515,27 @@ operator|.
 name|getStatsObj
 argument_list|()
 decl_stmt|;
+name|startFunction
+argument_list|(
+literal|"write_partition_column_statistics"
+argument_list|,
+literal|":  db="
+operator|+
+name|dbName
+operator|+
+literal|" table="
+operator|+
+name|tableName
+operator|+
+literal|" part="
+operator|+
+name|partName
+operator|+
+literal|"column="
+operator|+
+name|colName
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|ColumnStatisticsObj
@@ -26511,25 +26558,6 @@ name|statsObj
 operator|.
 name|setColName
 argument_list|(
-name|colName
-argument_list|)
-expr_stmt|;
-name|startFunction
-argument_list|(
-literal|"write_partition_column_statistics:  db="
-operator|+
-name|dbName
-operator|+
-literal|" table="
-operator|+
-name|tableName
-operator|+
-literal|" part="
-operator|+
-name|partName
-operator|+
-literal|"column="
-operator|+
 name|colName
 argument_list|)
 expr_stmt|;
@@ -26605,7 +26633,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"write_partition_column_statistics: "
+literal|"write_partition_column_statistics"
 argument_list|,
 name|ret
 operator|!=
@@ -26715,7 +26743,9 @@ argument_list|)
 decl_stmt|;
 name|startFunction
 argument_list|(
-literal|"delete_column_statistics_by_partition: db="
+literal|"delete_column_statistics_by_partition"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -26780,7 +26810,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"delete_column_statistics_by_partition: "
+literal|"delete_column_statistics_by_partition"
 argument_list|,
 name|ret
 operator|!=
@@ -26853,7 +26883,9 @@ expr_stmt|;
 block|}
 name|startFunction
 argument_list|(
-literal|"delete_column_statistics_by_table: db="
+literal|"delete_column_statistics_by_table"
+argument_list|,
+literal|": db="
 operator|+
 name|dbName
 operator|+
@@ -26892,7 +26924,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"delete_column_statistics_by_table: "
+literal|"delete_column_statistics_by_table"
 argument_list|,
 name|ret
 operator|!=
@@ -34099,7 +34131,9 @@ argument_list|()
 decl_stmt|;
 name|startFunction
 argument_list|(
-literal|"get_aggr_stats_for: db="
+literal|"get_aggr_stats_for"
+argument_list|,
+literal|": db="
 operator|+
 name|request
 operator|.
@@ -34235,7 +34269,7 @@ finally|finally
 block|{
 name|endFunction
 argument_list|(
-literal|"get_partitions_statistics_req: "
+literal|"get_aggr_stats_for"
 argument_list|,
 name|aggrStats
 operator|==
@@ -38276,15 +38310,12 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Add shutdown hook.
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
+name|ShutdownHookManager
 operator|.
 name|addShutdownHook
 argument_list|(
 operator|new
-name|Thread
+name|Runnable
 argument_list|()
 block|{
 annotation|@

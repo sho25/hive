@@ -196,7 +196,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Directly deserialize with the caller reading field-by-field a serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readCheckNull).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
+comment|/*  * Directly deserialize with the caller reading field-by-field a serialization format.  *  * The caller is responsible for calling the read method for the right type of each field  * (after calling readNextField).  *  * Reading some fields require a results object to receive value information.  A separate  * results object is created by the caller at initialization per different field even for the same  * type.  *  * Some type values are by reference to either bytes in the deserialization buffer or to  * other type specific buffers.  So, those references are only valid until the next time set is  * called.  */
 end_comment
 
 begin_class
@@ -215,11 +215,6 @@ name|boolean
 name|useExternalBuffer
 decl_stmt|;
 specifier|protected
-name|boolean
-index|[]
-name|columnsToInclude
-decl_stmt|;
-specifier|protected
 name|Category
 index|[]
 name|categories
@@ -229,7 +224,7 @@ name|PrimitiveCategory
 index|[]
 name|primitiveCategories
 decl_stmt|;
-comment|/**    * Constructor.    *    * When useExternalBuffer is specified true and readCheckNull reads a string/char/varchar/binary    * field, it will request an external buffer to receive the data of format conversion.    *    * if (!deserializeRead.readCheckNull()) {    *   if (deserializeRead.currentExternalBufferNeeded) {    *<Ensure external buffer is as least deserializeRead.currentExternalBufferNeededLen bytes>    *     deserializeRead.copyToExternalBuffer(externalBuffer, externalBufferStart);    *   } else {    *<Otherwise, field data is available in the currentBytes, currentBytesStart, and    *      currentBytesLength of deserializeRead>    *   }    *    * @param typeInfos    * @param useExternalBuffer   Specify true when the caller is prepared to provide a bytes buffer    *                            to receive a string/char/varchar/binary field that needs format    *                            conversion.    */
+comment|/**    * Constructor.    *    * When useExternalBuffer is specified true and readNextField reads a string/char/varchar/binary    * field, it will request an external buffer to receive the data of format conversion.    *    * if (deserializeRead.readNextField()) {    *   if (deserializeRead.currentExternalBufferNeeded) {    *<Ensure external buffer is as least deserializeRead.currentExternalBufferNeededLen bytes>    *     deserializeRead.copyToExternalBuffer(externalBuffer, externalBufferStart);    *   } else {    *<Otherwise, field data is available in the currentBytes, currentBytesStart, and    *      currentBytesLength of deserializeRead>    *   }    *    * @param typeInfos    * @param useExternalBuffer   Specify true when the caller is prepared to provide a bytes buffer    *                            to receive a string/char/varchar/binary field that needs format    *                            conversion.    */
 specifier|public
 name|DeserializeRead
 parameter_list|(
@@ -447,10 +442,6 @@ operator|=
 name|useExternalBuffer
 expr_stmt|;
 block|}
-name|columnsToInclude
-operator|=
-literal|null
-expr_stmt|;
 block|}
 comment|// Don't allow for public.
 specifier|protected
@@ -467,23 +458,6 @@ block|{
 return|return
 name|typeInfos
 return|;
-block|}
-comment|/*    * If some fields are are not going to be used by the query, use this routine to specify    * the columns to return.  The readCheckNull method will automatically return NULL for the    * other columns.    */
-specifier|public
-name|void
-name|setColumnsToInclude
-parameter_list|(
-name|boolean
-index|[]
-name|columnsToInclude
-parameter_list|)
-block|{
-name|this
-operator|.
-name|columnsToInclude
-operator|=
-name|columnsToInclude
-expr_stmt|;
 block|}
 comment|/*    * Set the range of bytes to be deserialized.    */
 specifier|public
@@ -502,33 +476,58 @@ name|int
 name|length
 parameter_list|)
 function_decl|;
-comment|/*    * Reads the NULL information for a field.    *    * @return Return true when the field is NULL; reading is positioned to the next field.    *         Otherwise, false when the field is NOT NULL; reading is positioned to the field data.    */
+comment|/*    * Reads the the next field.    *    * Afterwards, reading is positioned to the next field.    *    * @return  Return true when the field was not null and data is put in the appropriate    *          current* member.    *          Otherwise, false when the field is null.    *    */
 specifier|public
 specifier|abstract
 name|boolean
-name|readCheckNull
+name|readNextField
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/*    * Call this method after all fields have been read to check for extra fields.    */
+comment|/*    * Reads through an undesired field.    *    * No data values are valid after this call.    * Designed for skipping columns that are not included.    */
 specifier|public
 specifier|abstract
 name|void
-name|extraFieldsCheck
+name|skipNextField
 parameter_list|()
+throws|throws
+name|IOException
 function_decl|;
-comment|/*    * Read integrity warning flags.    */
+comment|/*    * Returns true if the readField method is supported;    */
+specifier|public
+name|boolean
+name|isReadFieldSupported
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|/*    * When supported, read a field by field number (i.e. random access).    *    * Currently, only LazySimpleDeserializeRead supports this.    *    * @return  Return true when the field was not null and data is put in the appropriate    *          current* member.    *          Otherwise, false when the field is null.    */
+specifier|public
+name|boolean
+name|readField
+parameter_list|(
+name|int
+name|fieldIndex
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not supported"
+argument_list|)
+throw|;
+block|}
+comment|/*    * Call this method may be called after all the all fields have been read to check    * for unread fields.    *    * Note that when optimizing reading to stop reading unneeded include columns, worrying    * about whether all data is consumed is not appropriate (often we aren't reading it all by    * design).    *    * Since LazySimpleDeserializeRead parses the line through the last desired column it does    * support this function.    */
 specifier|public
 specifier|abstract
 name|boolean
-name|readBeyondConfiguredFieldsWarned
-parameter_list|()
-function_decl|;
-specifier|public
-specifier|abstract
-name|boolean
-name|bufferRangeHasExtraDataWarned
+name|isEndOfInputReached
 parameter_list|()
 function_decl|;
 comment|/*    * Get detailed read position information to help diagnose exceptions.    */
@@ -538,7 +537,7 @@ name|String
 name|getDetailedReadPositionString
 parameter_list|()
 function_decl|;
-comment|/*    * These members hold the current value that was read when readCheckNull return false.    */
+comment|/*    * These members hold the current value that was read when readNextField return false.    */
 comment|/*    * BOOLEAN.    */
 specifier|public
 name|boolean

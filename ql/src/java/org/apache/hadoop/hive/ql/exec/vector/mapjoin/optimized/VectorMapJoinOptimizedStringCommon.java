@@ -125,7 +125,6 @@ specifier|transient
 name|SerializedBytes
 name|serializedBytes
 decl_stmt|;
-comment|/*   private BytesWritable bytesWritable;    public void adaptPutRow(VectorMapJoinOptimizedHashTable hashTable,       BytesWritable currentKey, BytesWritable currentValue)       throws SerDeException, HiveException, IOException {      byte[] keyBytes = currentKey.getBytes();     int keyLength = currentKey.getLength();     keyBinarySortableDeserializeRead.set(keyBytes, 0, keyLength);     if (keyBinarySortableDeserializeRead.readCheckNull()) {       if (isOuterJoin) {         return;       } else {         // For inner join, we expect all NULL values to have been filtered out before now.         throw new HiveException("Unexpected NULL");       }     }     keyBinarySortableDeserializeRead.readString(readStringResults);      bytesWritable.set(readStringResults.bytes, readStringResults.start, readStringResults.length);      hashTable.putRowInternal(bytesWritable, currentValue);   }   */
 specifier|public
 name|SerializedBytes
 name|serialize
