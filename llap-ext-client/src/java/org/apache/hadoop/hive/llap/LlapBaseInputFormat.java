@@ -1381,6 +1381,8 @@ name|llapSplit
 operator|.
 name|getFragmentBytesSignature
 argument_list|()
+argument_list|,
+name|job
 argument_list|)
 decl_stmt|;
 name|llapClient
@@ -2168,6 +2170,9 @@ parameter_list|,
 name|byte
 index|[]
 name|fragmentBytesSignature
+parameter_list|,
+name|JobConf
+name|job
 parameter_list|)
 throws|throws
 name|IOException
@@ -2415,10 +2420,14 @@ name|builder
 operator|.
 name|setAmHost
 argument_list|(
-name|address
+name|LlapUtil
 operator|.
-name|getHostName
-argument_list|()
+name|getAmHostNameFromAddress
+argument_list|(
+name|address
+argument_list|,
+name|job
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|builder

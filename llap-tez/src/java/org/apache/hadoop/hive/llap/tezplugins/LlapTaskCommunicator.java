@@ -303,6 +303,22 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|LlapUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|daemon
 operator|.
 name|rpc
@@ -1283,6 +1299,10 @@ specifier|final
 name|String
 name|user
 decl_stmt|;
+specifier|private
+name|String
+name|amHost
+decl_stmt|;
 comment|// These two structures track the list of known nodes, and the list of nodes which are sending in keep-alive heartbeats.
 comment|// Primarily for debugging purposes a.t.m, since there's some unexplained TASK_TIMEOUTS which are currently being observed.
 specifier|private
@@ -1903,6 +1923,19 @@ argument_list|(
 name|server
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|amHost
+operator|=
+name|LlapUtil
+operator|.
+name|getAmHostNameFromAddress
+argument_list|(
+name|address
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
@@ -1924,6 +1957,10 @@ operator|+
 literal|" with numHandlers="
 operator|+
 name|numHandlers
+operator|+
+literal|" using the host name "
+operator|+
+name|amHost
 argument_list|)
 expr_stmt|;
 block|}
@@ -3940,10 +3977,7 @@ name|builder
 operator|.
 name|setAmHost
 argument_list|(
-name|getAddress
-argument_list|()
-operator|.
-name|getHostName
+name|getAmHostString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -5097,6 +5131,15 @@ argument_list|)
 operator|.
 name|build
 argument_list|()
+return|;
+block|}
+specifier|public
+name|String
+name|getAmHostString
+parameter_list|()
+block|{
+return|return
+name|amHost
 return|;
 block|}
 block|}

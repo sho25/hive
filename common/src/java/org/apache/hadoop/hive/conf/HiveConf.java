@@ -2648,6 +2648,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_AM_USE_FQDN
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -12063,6 +12074,15 @@ operator|+
 literal|"considering the AM to be dead."
 argument_list|,
 literal|"llap.am.liveness.connection.timeout-millis"
+argument_list|)
+block|,
+name|LLAP_DAEMON_AM_USE_FQDN
+argument_list|(
+literal|"hive.llap.am.use.fqdn"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use FQDN of the AM machine when submitting work to LLAP."
 argument_list|)
 block|,
 comment|// Not used yet - since the Writable RPC engine does not support this policy.
