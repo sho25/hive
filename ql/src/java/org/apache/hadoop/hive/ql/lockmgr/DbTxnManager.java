@@ -665,6 +665,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
 name|int
 name|heartbeaterThreadPoolSize
 init|=
@@ -3351,6 +3352,11 @@ argument_list|(
 name|target
 argument_list|,
 name|name
+argument_list|)
+expr_stmt|;
+name|setDaemon
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
