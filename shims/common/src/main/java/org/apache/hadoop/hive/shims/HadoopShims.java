@@ -626,6 +626,17 @@ name|IOException
 function_decl|;
 specifier|public
 name|MiniMrShim
+name|getLocalMiniTezCluster
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|boolean
+name|usingLlap
+parameter_list|)
+function_decl|;
+specifier|public
+name|MiniMrShim
 name|getMiniSparkCluster
 parameter_list|(
 name|Configuration
