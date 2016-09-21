@@ -8207,6 +8207,11 @@ name|getId
 argument_list|()
 argument_list|,
 name|alias
+argument_list|,
+name|qb
+operator|.
+name|isInsideView
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// If the alias is already there then we have a conflict
