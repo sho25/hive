@@ -1074,12 +1074,12 @@ argument_list|)
 expr_stmt|;
 name|setInitScript
 argument_list|(
-literal|"q_test_init.sql"
+literal|"q_test_init_for_encryption.sql"
 argument_list|)
 expr_stmt|;
 name|setCleanupScript
 argument_list|(
-literal|"q_test_cleanup.sql"
+literal|"q_test_cleanup_for_encryption.sql"
 argument_list|)
 expr_stmt|;
 name|setHiveConfDir
