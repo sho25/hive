@@ -12764,6 +12764,19 @@ operator|+
 literal|"hive.server2.thrift.bind.host is to be used."
 argument_list|)
 block|,
+name|SPARK_RPC_SERVER_PORT
+argument_list|(
+literal|"hive.spark.client.rpc.server.port"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A list of port ranges which can be used by RPC server "
+operator|+
+literal|"with the format of 49152-49222,49228 and a random one is selected from the list. Default is empty, which randomly "
+operator|+
+literal|"selects one port from all available ones."
+argument_list|)
+block|,
 name|SPARK_DYNAMIC_PARTITION_PRUNING
 argument_list|(
 literal|"hive.spark.dynamic.partition.pruning"
