@@ -559,6 +559,8 @@ operator|.
 name|ConfVars
 operator|.
 name|SPARK_RPC_SERVER_ADDRESS
+operator|.
+name|varname
 argument_list|)
 decl_stmt|;
 if|if
@@ -598,6 +600,8 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_THRIFT_BIND_HOST
+operator|.
+name|varname
 argument_list|)
 expr_stmt|;
 block|}
