@@ -9236,6 +9236,33 @@ literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)
 block|,
 comment|// HiveServer2 specific configs
+name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
+argument_list|(
+literal|"hive.server2.sleep.interval.between.start.attempts"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+literal|0l
+argument_list|,
+literal|true
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Amount of time to sleep between HiveServer2 start attempts. Primarily meant for tests"
+argument_list|)
+block|,
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.max.start.attempts"
@@ -9250,9 +9277,17 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|,
-literal|"Number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds "
+literal|"Number of times HiveServer2 will attempt to start before exiting. The sleep interval between retries"
 operator|+
-literal|"between retries. \n The default of 30 will keep trying for 30 minutes."
+literal|" is determined by "
+operator|+
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
+operator|.
+name|varname
+operator|+
+literal|"\n The default of 30 will keep trying for 30 minutes."
 argument_list|)
 block|,
 name|HIVE_SERVER2_SUPPORT_DYNAMIC_SERVICE_DISCOVERY

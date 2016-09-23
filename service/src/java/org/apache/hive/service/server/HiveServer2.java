@@ -3409,6 +3409,22 @@ operator|.
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|)
 expr_stmt|;
+name|long
+name|retrySleepIntervalMs
+init|=
+name|hiveConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+decl_stmt|;
 name|HiveServer2
 name|server
 init|=
@@ -3632,7 +3648,11 @@ literal|"Error starting HiveServer2 on attempt "
 operator|+
 name|attempts
 operator|+
-literal|", will retry in 60 seconds"
+literal|", will retry in "
+operator|+
+name|retrySleepIntervalMs
+operator|+
+literal|"ms"
 argument_list|,
 name|throwable
 argument_list|)
@@ -3643,9 +3663,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|60L
-operator|*
-literal|1000L
+name|retrySleepIntervalMs
 argument_list|)
 expr_stmt|;
 block|}
