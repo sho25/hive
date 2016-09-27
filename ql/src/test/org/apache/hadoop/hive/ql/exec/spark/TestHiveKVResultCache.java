@@ -1676,17 +1676,9 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
-name|Iterator
-name|it
-init|=
-name|resultList
-operator|.
-name|iterator
-argument_list|()
-decl_stmt|;
 while|while
 condition|(
-name|it
+name|resultList
 operator|.
 name|hasNext
 argument_list|()
@@ -1695,7 +1687,7 @@ block|{
 name|Object
 name|item
 init|=
-name|it
+name|resultList
 operator|.
 name|next
 argument_list|()

@@ -131,7 +131,7 @@ argument_list|)
 annotation|@
 name|Override
 specifier|public
-name|Iterable
+name|Iterator
 argument_list|<
 name|Tuple2
 argument_list|<

@@ -147,7 +147,7 @@ parameter_list|<
 name|T
 parameter_list|>
 implements|implements
-name|Iterable
+name|Iterator
 implements|,
 name|OutputCollector
 argument_list|<
@@ -187,12 +187,6 @@ specifier|final
 name|HiveKVResultCache
 name|lastRecordOutput
 decl_stmt|;
-specifier|private
-name|boolean
-name|iteratorAlreadyCreated
-init|=
-literal|false
-decl_stmt|;
 specifier|public
 name|HiveBaseFunctionResultList
 parameter_list|(
@@ -217,33 +211,6 @@ operator|new
 name|HiveKVResultCache
 argument_list|()
 expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|Iterator
-name|iterator
-parameter_list|()
-block|{
-name|Preconditions
-operator|.
-name|checkState
-argument_list|(
-operator|!
-name|iteratorAlreadyCreated
-argument_list|,
-literal|"Iterator can only be created once."
-argument_list|)
-expr_stmt|;
-name|iteratorAlreadyCreated
-operator|=
-literal|true
-expr_stmt|;
-return|return
-operator|new
-name|ResultIterator
-argument_list|()
-return|;
 block|}
 annotation|@
 name|Override
@@ -306,13 +273,6 @@ name|void
 name|closeRecordProcessor
 parameter_list|()
 function_decl|;
-comment|/** Implement Iterator interface. */
-specifier|public
-class|class
-name|ResultIterator
-implements|implements
-name|Iterator
-block|{
 annotation|@
 name|Override
 specifier|public
@@ -474,7 +434,6 @@ argument_list|(
 literal|"Iterator.remove() is not supported"
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 end_class
