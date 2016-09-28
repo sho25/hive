@@ -392,6 +392,13 @@ argument_list|,
 name|useHBaseMetastore
 argument_list|,
 literal|true
+argument_list|,
+literal|false
+argument_list|,
+name|cliConfig
+operator|.
+name|getFsType
+argument_list|()
 argument_list|)
 return|;
 block|}
