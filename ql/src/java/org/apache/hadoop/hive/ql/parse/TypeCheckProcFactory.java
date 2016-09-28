@@ -925,9 +925,7 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|primitive
-operator|.
-name|PrimitiveObjectInspectorUtils
+name|PrimitiveObjectInspector
 import|;
 end_import
 
@@ -945,7 +943,9 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
-name|PrimitiveObjectInspector
+name|primitive
+operator|.
+name|PrimitiveObjectInspectorUtils
 import|;
 end_import
 

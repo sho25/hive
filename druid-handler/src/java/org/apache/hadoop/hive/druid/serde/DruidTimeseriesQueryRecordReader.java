@@ -55,13 +55,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|calcite
 operator|.
-name|hive
+name|adapter
 operator|.
 name|druid
 operator|.
-name|DruidStorageHandlerUtils
+name|DruidTable
 import|;
 end_import
 
@@ -75,15 +75,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|calcite
-operator|.
 name|druid
 operator|.
-name|DruidTable
+name|DruidStorageHandlerUtils
 import|;
 end_import
 
