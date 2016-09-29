@@ -85,8 +85,8 @@ decl_stmt|;
 specifier|public
 name|WindowFunctionInfo
 parameter_list|(
-name|boolean
-name|isNative
+name|FunctionType
+name|functionType
 parameter_list|,
 name|String
 name|functionName
@@ -101,7 +101,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|isNative
+name|functionType
 argument_list|,
 name|functionName
 argument_list|,

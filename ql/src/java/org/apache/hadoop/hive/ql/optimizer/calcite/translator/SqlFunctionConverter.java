@@ -1707,7 +1707,7 @@ name|FunctionInfo
 argument_list|(
 name|fi
 operator|.
-name|isNative
+name|getFunctionType
 argument_list|()
 argument_list|,
 name|fi

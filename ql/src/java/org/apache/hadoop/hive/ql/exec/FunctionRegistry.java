@@ -10430,8 +10430,12 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Use session registry - see Registry.isPermanentFunc()
 return|return
-name|system
+name|SessionState
+operator|.
+name|getRegistryForWrite
+argument_list|()
 operator|.
 name|isPermanentFunc
 argument_list|(
