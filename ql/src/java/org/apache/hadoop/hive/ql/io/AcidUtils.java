@@ -4034,7 +4034,6 @@ literal|null
 condition|)
 block|{
 comment|/**        * If here, it means there was a base_x (> 1 perhaps) but none were suitable for given        * {@link txnList}.  Note that 'original' files are logically a base_Long.MIN_VALUE and thus        * cannot have any data for an open txn.  We could check {@link deltas} has files to cover        * [1,n] w/o gaps but this would almost never happen...*/
-comment|//todo: this should only care about 'open' tnxs (HIVE-14211)
 name|long
 index|[]
 name|exceptions
@@ -4220,7 +4219,6 @@ name|ValidTxnList
 name|txnList
 parameter_list|)
 block|{
-comment|/*This implementation is suboptimal.  It considers open/aborted txns invalid while we are only     * concerned with 'open' ones.  (Compaction removes any data that belongs to aborted txns and     * reads skip anything that belongs to aborted txn, thus base_7 is still OK if the only exception     * is txn 5 which is aborted).  So this implementation can generate false positives. (HIVE-14211)     * */
 if|if
 condition|(
 name|baseTxnId
