@@ -3262,8 +3262,6 @@ name|Metrics
 name|metrics
 parameter_list|)
 block|{
-try|try
-block|{
 name|metrics
 operator|.
 name|incrementCounter
@@ -3273,25 +3271,6 @@ operator|.
 name|HIVE_TEZ_TASKS
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|ex
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Could not increment metrics for "
-operator|+
-name|this
-argument_list|,
-name|ex
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override

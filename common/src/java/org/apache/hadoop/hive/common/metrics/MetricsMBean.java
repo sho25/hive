@@ -21,11 +21,11 @@ end_package
 
 begin_import
 import|import
-name|java
+name|javax
 operator|.
-name|io
+name|management
 operator|.
-name|IOException
+name|DynamicMBean
 import|;
 end_import
 
@@ -35,7 +35,7 @@ name|javax
 operator|.
 name|management
 operator|.
-name|DynamicMBean
+name|JMException
 import|;
 end_import
 
@@ -60,7 +60,7 @@ name|String
 name|name
 parameter_list|)
 function_decl|;
-comment|/**      * Add a key/metric and its value to track      * @param name Name of the key/metric      * @param value value associated with the key      * @throws Exception      */
+comment|/**      * Add a key/metric and its value to track      * @param name Name of the key/metric      * @param value value associated with the key      */
 specifier|public
 specifier|abstract
 name|void
@@ -72,10 +72,8 @@ parameter_list|,
 name|Object
 name|value
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**      *      * @param name      * @return value associated with the key      * @throws Exception      */
+comment|/**      *      * @param name      * @return value associated with the key      * @throws JMException      */
 specifier|public
 specifier|abstract
 name|Object
@@ -85,9 +83,9 @@ name|String
 name|name
 parameter_list|)
 throws|throws
-name|IOException
+name|JMException
 function_decl|;
-comment|/**      * Removes all the keys and values from this MetricsMBean.       */
+comment|/**      * Removes all the keys and values from this MetricsMBean.      */
 name|void
 name|clear
 parameter_list|()

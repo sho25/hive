@@ -21,42 +21,6 @@ name|common
 package|;
 end_package
 
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
 begin_comment
 comment|/**  * Generic Metics interface.  */
 end_comment
@@ -74,7 +38,7 @@ parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
-comment|/**    *    * @param name starts a scope of a given name.  Scopes is stored as thread-local variable.    * @throws IOException    */
+comment|/**    *    * @param name starts a scope of a given name.  Scopes is stored as thread-local variable.    */
 specifier|public
 name|void
 name|startStoredScope
@@ -82,10 +46,8 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Closes the stored scope of a given name.    * Note that this must be called on the same thread as where the scope was started.    * @param name    * @throws IOException    */
+comment|/**    * Closes the stored scope of a given name.    * Note that this must be called on the same thread as where the scope was started.    * @param name    */
 specifier|public
 name|void
 name|endStoredScope
@@ -93,10 +55,8 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Create scope with given name and returns it.    * @param name    * @return    * @throws IOException    */
+comment|/**    * Create scope with given name and returns it.    * @param name    * @return    */
 specifier|public
 name|MetricsScope
 name|createScope
@@ -104,10 +64,8 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Close the given scope.    * @param scope    * @throws IOException    */
+comment|/**    * Close the given scope.    * @param scope    */
 specifier|public
 name|void
 name|endScope
@@ -115,11 +73,9 @@ parameter_list|(
 name|MetricsScope
 name|scope
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
 comment|//Counter-related methods
-comment|/**    * Increments a counter of the given name by 1.    * @param name    * @return    * @throws IOException    */
+comment|/**    * Increments a counter of the given name by 1.    * @param name    * @return    */
 specifier|public
 name|Long
 name|incrementCounter
@@ -127,10 +83,8 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Increments a counter of the given name by "increment"    * @param name    * @param increment    * @return    * @throws IOException    */
+comment|/**    * Increments a counter of the given name by "increment"    * @param name    * @param increment    * @return    */
 specifier|public
 name|Long
 name|incrementCounter
@@ -141,10 +95,8 @@ parameter_list|,
 name|long
 name|increment
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Decrements a counter of the given name by 1.    * @param name    * @return    * @throws IOException    */
+comment|/**    * Decrements a counter of the given name by 1.    * @param name    * @return    */
 specifier|public
 name|Long
 name|decrementCounter
@@ -152,10 +104,8 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Decrements a counter of the given name by "decrement"    * @param name    * @param decrement    * @return    * @throws IOException    */
+comment|/**    * Decrements a counter of the given name by "decrement"    * @param name    * @param decrement    * @return    */
 specifier|public
 name|Long
 name|decrementCounter
@@ -166,10 +116,8 @@ parameter_list|,
 name|long
 name|decrement
 parameter_list|)
-throws|throws
-name|IOException
 function_decl|;
-comment|/**    * Adds a metrics-gauge to track variable.  For example, number of open database connections.    * @param name name of gauge    * @param variable variable to track.    * @throws IOException    */
+comment|/**    * Adds a metrics-gauge to track variable.  For example, number of open database connections.    * @param name name of gauge    * @param variable variable to track.    */
 specifier|public
 name|void
 name|addGauge

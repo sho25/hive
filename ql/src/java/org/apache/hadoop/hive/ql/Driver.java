@@ -7425,8 +7425,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-try|try
-block|{
 name|metrics
 operator|.
 name|incrementCounter
@@ -7438,24 +7436,6 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-comment|// This won't happen if we are using the newer CodaHale metrics. Same for below.
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error while incrementing metrics counter."
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 specifier|final
 name|ReentrantLock
@@ -7493,8 +7473,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-try|try
-block|{
 name|metrics
 operator|.
 name|decrementCounter
@@ -7506,23 +7484,6 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error while decrementing metrics counter."
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 name|ret
 operator|=

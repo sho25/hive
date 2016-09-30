@@ -2094,8 +2094,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-try|try
-block|{
 if|if
 condition|(
 name|stateScope
@@ -2154,23 +2152,6 @@ argument_list|(
 name|completedOperationPrefix
 operator|+
 name|state
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error metrics"
-argument_list|,
-name|e
 argument_list|)
 expr_stmt|;
 block|}

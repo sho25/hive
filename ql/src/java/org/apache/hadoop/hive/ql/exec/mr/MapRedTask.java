@@ -2171,8 +2171,6 @@ name|Metrics
 name|metrics
 parameter_list|)
 block|{
-try|try
-block|{
 name|metrics
 operator|.
 name|incrementCounter
@@ -2182,25 +2180,6 @@ operator|.
 name|HIVE_MR_TASKS
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|ex
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Could not increment metrics for "
-operator|+
-name|this
-argument_list|,
-name|ex
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 comment|/**    * Set the number of reducers for the mapred work.    */
 specifier|private

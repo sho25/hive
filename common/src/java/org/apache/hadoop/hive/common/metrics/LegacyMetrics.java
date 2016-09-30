@@ -97,11 +97,21 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|io
+name|slf4j
 operator|.
-name|IOException
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -124,6 +134,16 @@ operator|.
 name|util
 operator|.
 name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|management
+operator|.
+name|JMException
 import|;
 end_import
 
@@ -169,6 +189,21 @@ implements|implements
 name|Metrics
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|LegacyMetrics
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
+specifier|private
 name|LegacyMetrics
 parameter_list|()
 block|{
@@ -182,22 +217,27 @@ name|LegacyMetricsScope
 implements|implements
 name|MetricsScope
 block|{
+specifier|private
 specifier|final
 name|LegacyMetrics
 name|metrics
 decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|name
 decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|numCounter
 decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|timeCounter
 decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|avgTimeCounter
@@ -214,7 +254,7 @@ name|startTime
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Instantiates a named scope - intended to only be called by Metrics, so locally scoped.      * @param name - name of the variable      * @throws IOException      */
+comment|/**      * Instantiates a named scope - intended to only be called by Metrics, so locally scoped.      * @param name - name of the variable      */
 specifier|private
 name|LegacyMetricsScope
 parameter_list|(
@@ -224,8 +264,6 @@ parameter_list|,
 name|LegacyMetrics
 name|metrics
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|this
 operator|.
@@ -271,8 +309,8 @@ specifier|public
 name|Long
 name|getNumCounter
 parameter_list|()
-throws|throws
-name|IOException
+block|{
+try|try
 block|{
 return|return
 operator|(
@@ -286,12 +324,36 @@ name|numCounter
 argument_list|)
 return|;
 block|}
+catch|catch
+parameter_list|(
+name|JMException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Could not find counter value for "
+operator|+
+name|numCounter
+operator|+
+literal|", returning null instead. "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+block|}
 specifier|public
 name|Long
 name|getTimeCounter
 parameter_list|()
-throws|throws
-name|IOException
+block|{
+try|try
 block|{
 return|return
 operator|(
@@ -305,13 +367,35 @@ name|timeCounter
 argument_list|)
 return|;
 block|}
-comment|/**      * Opens scope, and makes note of the time started, increments run counter      * @throws IOException      *      */
+catch|catch
+parameter_list|(
+name|JMException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Could not find timer value for "
+operator|+
+name|timeCounter
+operator|+
+literal|", returning null instead. "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+block|}
+comment|/**      * Opens scope, and makes note of the time started, increments run counter      *      */
 specifier|public
 name|void
 name|open
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -333,9 +417,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"Scope named "
 operator|+
@@ -343,16 +427,14 @@ name|name
 operator|+
 literal|" is not closed, cannot be opened."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 block|}
-comment|/**      * Closes scope, and records the time taken      * @throws IOException      */
+comment|/**      * Closes scope, and records the time taken      */
 specifier|public
 name|void
 name|close
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -434,9 +516,9 @@ block|}
 block|}
 else|else
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"Scope named "
 operator|+
@@ -444,20 +526,18 @@ name|name
 operator|+
 literal|" is not open, cannot be closed."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|isOpen
 operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**      * Closes scope if open, and reopens it      * @throws IOException      */
+comment|/**      * Closes scope if open, and reopens it      */
 specifier|public
 name|void
 name|reopen
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -602,8 +682,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 return|return
 name|incrementCounter
@@ -629,11 +707,11 @@ parameter_list|,
 name|long
 name|increment
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|Long
 name|value
+init|=
+literal|null
 decl_stmt|;
 synchronized|synchronized
 init|(
@@ -669,6 +747,8 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
+try|try
 block|{
 name|value
 operator|=
@@ -692,6 +772,27 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
+catch|catch
+parameter_list|(
+name|JMException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Could not find counter value for "
+operator|+
+name|name
+operator|+
+literal|", increment operation skipped."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 return|return
 name|value
@@ -704,8 +805,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 return|return
 name|decrementCounter
@@ -731,11 +830,11 @@ parameter_list|,
 name|long
 name|decrement
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|Long
 name|value
+init|=
+literal|null
 decl_stmt|;
 synchronized|synchronized
 init|(
@@ -773,6 +872,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+try|try
+block|{
 name|value
 operator|=
 operator|(
@@ -794,6 +895,27 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|JMException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Could not find counter value for "
+operator|+
+name|name
+operator|+
+literal|", decrement operation skipped."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 return|return
@@ -825,8 +947,6 @@ parameter_list|,
 name|Object
 name|value
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|metrics
 operator|.
@@ -846,7 +966,7 @@ name|String
 name|name
 parameter_list|)
 throws|throws
-name|IOException
+name|JMException
 block|{
 return|return
 name|metrics
@@ -864,8 +984,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -924,7 +1042,7 @@ name|String
 name|name
 parameter_list|)
 throws|throws
-name|IOException
+name|IllegalStateException
 block|{
 if|if
 condition|(
@@ -955,7 +1073,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalStateException
 argument_list|(
 literal|"No metrics scope named "
 operator|+
@@ -971,8 +1089,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -1009,8 +1125,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 return|return
 operator|new
@@ -1029,8 +1143,6 @@ parameter_list|(
 name|MetricsScope
 name|scope
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 operator|(
 operator|(

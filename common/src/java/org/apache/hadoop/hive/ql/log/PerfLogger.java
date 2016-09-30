@@ -1297,8 +1297,6 @@ operator|.
 name|getInstance
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 if|if
 condition|(
 name|metrics
@@ -1327,23 +1325,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error recording metrics"
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 specifier|private
 name|void
 name|endMetrics
@@ -1360,8 +1341,6 @@ operator|.
 name|getInstance
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 if|if
 condition|(
 name|metrics
@@ -1396,23 +1375,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error recording metrics"
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
-block|}
 comment|/**    * Cleans up any dangling perfLog metric call scopes.    */
 specifier|public
 name|void
@@ -1427,8 +1389,6 @@ operator|.
 name|getInstance
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 if|if
 condition|(
 name|metrics
@@ -1455,23 +1415,6 @@ name|openScope
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error cleaning up metrics"
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
 block|}
 name|openScopes
 operator|.
