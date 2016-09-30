@@ -1357,6 +1357,65 @@ condition|(
 operator|!
 name|operationLogFile
 operator|.
+name|getParentFile
+argument_list|()
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Operations log directory for this session does not exist, it could have been deleted "
+operator|+
+literal|"externally. Recreating the directory for future queries in this session but the older operation "
+operator|+
+literal|"logs for this session are no longer available"
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|operationLogFile
+operator|.
+name|getParentFile
+argument_list|()
+operator|.
+name|mkdir
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Log directory for this session could not be created, disabling "
+operator|+
+literal|"operation logs: "
+operator|+
+name|operationLogFile
+operator|.
+name|getParentFile
+argument_list|()
+operator|.
+name|getAbsolutePath
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isOperationLogEnabled
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+block|}
+if|if
+condition|(
+operator|!
+name|operationLogFile
+operator|.
 name|createNewFile
 argument_list|()
 condition|)
