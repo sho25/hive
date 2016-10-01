@@ -10303,7 +10303,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|metaStoreClient
+name|getMSC
+argument_list|()
 operator|.
 name|addDynamicPartitions
 argument_list|(

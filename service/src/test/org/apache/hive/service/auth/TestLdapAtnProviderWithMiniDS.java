@@ -912,13 +912,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|ldapProvider
-operator|.
-name|init
-argument_list|(
-name|hiveConf
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|AfterClass
@@ -1076,8 +1069,9 @@ expr_stmt|;
 block|}
 block|}
 name|ldapProvider
-operator|.
-name|init
+operator|=
+operator|new
+name|LdapAuthenticationProviderImpl
 argument_list|(
 name|hiveConf
 argument_list|)

@@ -247,6 +247,33 @@ name|WAITING_COMPILE_OPS
 init|=
 literal|"waiting_compile_ops"
 decl_stmt|;
+comment|// The number of map reduce tasks executed by the HiveServer2 since the last restart
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_MR_TASKS
+init|=
+literal|"hive_mapred_tasks"
+decl_stmt|;
+comment|// The number of spark tasks executed by the HiveServer2 since the last restart
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_SPARK_TASKS
+init|=
+literal|"hive_spark_tasks"
+decl_stmt|;
+comment|// The number of tez tasks executed by the HiveServer2 since the last restart
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_TEZ_TASKS
+init|=
+literal|"hive_tez_tasks"
+decl_stmt|;
 block|}
 end_class
 

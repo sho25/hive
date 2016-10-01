@@ -79,13 +79,13 @@ block|{
 comment|/** Number of remote blocks fetched in shuffles by tasks. */
 specifier|public
 specifier|final
-name|int
+name|long
 name|remoteBlocksFetched
 decl_stmt|;
 comment|/** Number of local blocks fetched in shuffles by tasks. */
 specifier|public
 specifier|final
-name|int
+name|long
 name|localBlocksFetched
 decl_stmt|;
 comment|/**    * Time tasks spent waiting for remote shuffle blocks. This only includes the    * time blocking on shuffle input data. For instance if block B is being    * fetched while the task is still not finished processing block A, it is not    * considered to be blocking on block B.    */
@@ -120,10 +120,10 @@ block|}
 specifier|public
 name|ShuffleReadMetrics
 parameter_list|(
-name|int
+name|long
 name|remoteBlocksFetched
 parameter_list|,
-name|int
+name|long
 name|localBlocksFetched
 parameter_list|,
 name|long
@@ -172,18 +172,12 @@ operator|.
 name|shuffleReadMetrics
 argument_list|()
 operator|.
-name|get
-argument_list|()
-operator|.
 name|remoteBlocksFetched
 argument_list|()
 argument_list|,
 name|metrics
 operator|.
 name|shuffleReadMetrics
-argument_list|()
-operator|.
-name|get
 argument_list|()
 operator|.
 name|localBlocksFetched
@@ -194,18 +188,12 @@ operator|.
 name|shuffleReadMetrics
 argument_list|()
 operator|.
-name|get
-argument_list|()
-operator|.
 name|fetchWaitTime
 argument_list|()
 argument_list|,
 name|metrics
 operator|.
 name|shuffleReadMetrics
-argument_list|()
-operator|.
-name|get
 argument_list|()
 operator|.
 name|remoteBytesRead
@@ -215,7 +203,7 @@ expr_stmt|;
 block|}
 comment|/**    * Number of blocks fetched in shuffle by tasks (remote or local).    */
 specifier|public
-name|int
+name|long
 name|getTotalBlocksFetched
 parameter_list|()
 block|{

@@ -83,7 +83,9 @@ name|apache
 operator|.
 name|spark
 operator|.
-name|JavaSparkListener
+name|executor
+operator|.
+name|TaskMetrics
 import|;
 end_import
 
@@ -95,9 +97,9 @@ name|apache
 operator|.
 name|spark
 operator|.
-name|executor
+name|scheduler
 operator|.
-name|TaskMetrics
+name|SparkListener
 import|;
 end_import
 
@@ -162,7 +164,7 @@ specifier|public
 class|class
 name|JobMetricsListener
 extends|extends
-name|JavaSparkListener
+name|SparkListener
 block|{
 specifier|private
 specifier|static

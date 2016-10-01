@@ -4184,6 +4184,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"logged_in_user"
+argument_list|,
+name|GenericUDFLoggedInUser
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"isnull"
 argument_list|,
 name|GenericUDFOPNull
@@ -10430,8 +10441,12 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Use session registry - see Registry.isPermanentFunc()
 return|return
-name|system
+name|SessionState
+operator|.
+name|getRegistryForWrite
+argument_list|()
 operator|.
 name|isPermanentFunc
 argument_list|(

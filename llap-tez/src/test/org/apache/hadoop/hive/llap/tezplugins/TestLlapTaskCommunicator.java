@@ -2767,6 +2767,17 @@ literal|15001
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getAmHostString
+parameter_list|()
+block|{
+return|return
+literal|"localhost"
+return|;
+block|}
 block|}
 block|}
 end_class

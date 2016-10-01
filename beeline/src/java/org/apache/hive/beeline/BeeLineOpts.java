@@ -427,7 +427,7 @@ specifier|private
 name|boolean
 name|incremental
 init|=
-literal|false
+literal|true
 decl_stmt|;
 specifier|private
 name|int

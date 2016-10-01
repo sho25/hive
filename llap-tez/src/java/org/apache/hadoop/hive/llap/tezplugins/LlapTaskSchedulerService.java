@@ -1988,6 +1988,20 @@ expr_stmt|;
 if|if
 condition|(
 name|initMetrics
+operator|&&
+operator|!
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+operator|.
+name|varname
+argument_list|,
+literal|false
+argument_list|)
 condition|)
 block|{
 comment|// Initialize the metrics system

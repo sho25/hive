@@ -840,27 +840,26 @@ block|}
 block|}
 decl_stmt|;
 specifier|public
-specifier|static
 class|class
 name|CodahaleMetricsScope
 implements|implements
 name|MetricsScope
 block|{
+specifier|private
 specifier|final
 name|String
 name|name
 decl_stmt|;
+specifier|private
 specifier|final
 name|Timer
 name|timer
 decl_stmt|;
+specifier|private
 name|Timer
 operator|.
 name|Context
 name|timerContext
-decl_stmt|;
-name|CodahaleMetrics
-name|metrics
 decl_stmt|;
 specifier|private
 name|boolean
@@ -868,18 +867,13 @@ name|isOpen
 init|=
 literal|false
 decl_stmt|;
-comment|/**      * Instantiates a named scope - intended to only be called by Metrics, so locally scoped.      * @param name - name of the variable      * @throws IOException      */
+comment|/**      * Instantiates a named scope - intended to only be called by Metrics, so locally scoped.      * @param name - name of the variable      */
 specifier|private
 name|CodahaleMetricsScope
 parameter_list|(
 name|String
 name|name
-parameter_list|,
-name|CodahaleMetrics
-name|metrics
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|this
 operator|.
@@ -889,15 +883,11 @@ name|name
 expr_stmt|;
 name|this
 operator|.
-name|metrics
-operator|=
-name|metrics
-expr_stmt|;
-name|this
-operator|.
 name|timer
 operator|=
-name|metrics
+name|CodahaleMetrics
+operator|.
+name|this
 operator|.
 name|getTimer
 argument_list|(
@@ -908,13 +898,11 @@ name|open
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**      * Opens scope, and makes note of the time started, increments run counter      * @throws IOException      *      */
+comment|/**      * Opens scope, and makes note of the time started, increments run counter      *      */
 specifier|public
 name|void
 name|open
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -935,7 +923,9 @@ operator|.
 name|time
 argument_list|()
 expr_stmt|;
-name|metrics
+name|CodahaleMetrics
+operator|.
+name|this
 operator|.
 name|incrementCounter
 argument_list|(
@@ -947,9 +937,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOGGER
+operator|.
+name|warn
 argument_list|(
 literal|"Scope named "
 operator|+
@@ -957,16 +947,14 @@ name|name
 operator|+
 literal|" is not closed, cannot be opened."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 block|}
-comment|/**      * Closes scope, and records the time taken      * @throws IOException      */
+comment|/**      * Closes scope, and records the time taken      */
 specifier|public
 name|void
 name|close
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -978,7 +966,9 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|metrics
+name|CodahaleMetrics
+operator|.
+name|this
 operator|.
 name|decrementCounter
 argument_list|(
@@ -990,9 +980,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
-throw|throw
-operator|new
-name|IOException
+name|LOGGER
+operator|.
+name|warn
 argument_list|(
 literal|"Scope named "
 operator|+
@@ -1000,7 +990,7 @@ name|name
 operator|+
 literal|" is not open, cannot be closed."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|isOpen
 operator|=
@@ -1014,8 +1004,6 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|this
 operator|.
@@ -1063,8 +1051,6 @@ parameter_list|(
 name|String
 name|key
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|Timer
 name|timer
@@ -1120,8 +1106,6 @@ parameter_list|(
 name|String
 name|key
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|Counter
 name|counter
@@ -1408,8 +1392,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|name
 operator|=
@@ -1459,8 +1441,6 @@ operator|new
 name|CodahaleMetricsScope
 argument_list|(
 name|name
-argument_list|,
-name|this
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1475,8 +1455,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|name
 operator|=
@@ -1530,7 +1508,7 @@ name|String
 name|name
 parameter_list|)
 throws|throws
-name|IOException
+name|IllegalArgumentException
 block|{
 if|if
 condition|(
@@ -1561,7 +1539,7 @@ else|else
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalArgumentException
 argument_list|(
 literal|"No metrics scope named "
 operator|+
@@ -1577,8 +1555,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|name
 operator|=
@@ -1591,8 +1567,6 @@ operator|new
 name|CodahaleMetricsScope
 argument_list|(
 name|name
-argument_list|,
-name|this
 argument_list|)
 return|;
 block|}
@@ -1603,8 +1577,6 @@ parameter_list|(
 name|MetricsScope
 name|scope
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 operator|(
 operator|(
@@ -1626,8 +1598,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 return|return
 name|incrementCounter
@@ -1650,8 +1620,6 @@ parameter_list|,
 name|long
 name|increment
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|String
 name|key
@@ -1697,8 +1665,10 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
+literal|"Error retrieving counter from the metric registry "
+argument_list|,
 name|ee
 argument_list|)
 throw|;
@@ -1721,8 +1691,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 return|return
 name|decrementCounter
@@ -1745,8 +1713,6 @@ parameter_list|,
 name|long
 name|decrement
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|String
 name|key
@@ -1792,8 +1758,10 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
+literal|"Error retrieving counter from the metric registry "
+argument_list|,
 name|ee
 argument_list|)
 throw|;
@@ -1922,8 +1890,6 @@ parameter_list|(
 name|String
 name|name
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|String
 name|key
@@ -1959,8 +1925,10 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalStateException
 argument_list|(
+literal|"Error retrieving timer from the metric registry "
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -2128,8 +2096,6 @@ name|MetricsReporting
 argument_list|>
 name|reportingSet
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 for|for
 control|(

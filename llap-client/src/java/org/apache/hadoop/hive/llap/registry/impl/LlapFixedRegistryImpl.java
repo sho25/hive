@@ -1217,7 +1217,10 @@ argument_list|<
 name|ServiceInstance
 argument_list|>
 name|getAllInstancesOrdered
-parameter_list|()
+parameter_list|(
+name|boolean
+name|consistentIndexes
+parameter_list|)
 block|{
 name|List
 argument_list|<

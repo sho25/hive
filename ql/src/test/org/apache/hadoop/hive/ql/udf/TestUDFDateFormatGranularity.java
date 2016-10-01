@@ -74,6 +74,7 @@ name|TestUDFDateFormatGranularity
 extends|extends
 name|TestCase
 block|{
+comment|// Timestamp values are PST (timezone for tests is set to PST by default)
 annotation|@
 name|Test
 specifier|public
@@ -95,7 +96,7 @@ argument_list|(
 operator|new
 name|Timestamp
 argument_list|(
-literal|494218022082L
+literal|494243222000L
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -122,7 +123,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|473385600000L
+literal|473414400000L
 argument_list|,
 name|i1
 operator|.
@@ -153,7 +154,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|489024000000L
+literal|489049200000L
 argument_list|,
 name|i2
 operator|.
@@ -184,7 +185,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|491702400000L
+literal|491727600000L
 argument_list|,
 name|i3
 operator|.
@@ -215,7 +216,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|493862400000L
+literal|493887600000L
 argument_list|,
 name|i4
 operator|.
@@ -246,7 +247,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|494208000000L
+literal|494233200000L
 argument_list|,
 name|i5
 operator|.
@@ -277,7 +278,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|494215200000L
+literal|494240400000L
 argument_list|,
 name|i6
 operator|.
@@ -308,7 +309,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|494218020000L
+literal|494243220000L
 argument_list|,
 name|i7
 operator|.
@@ -339,7 +340,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|494218022000L
+literal|494243222000L
 argument_list|,
 name|i8
 operator|.

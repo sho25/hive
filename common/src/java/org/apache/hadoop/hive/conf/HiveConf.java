@@ -2666,6 +2666,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_AM_USE_FQDN
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -9243,6 +9254,33 @@ literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)
 block|,
 comment|// HiveServer2 specific configs
+name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
+argument_list|(
+literal|"hive.server2.sleep.interval.between.start.attempts"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+literal|0l
+argument_list|,
+literal|true
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Amount of time to sleep between HiveServer2 start attempts. Primarily meant for tests"
+argument_list|)
+block|,
 name|HIVE_SERVER2_MAX_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.max.start.attempts"
@@ -9257,9 +9295,17 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|,
-literal|"Number of times HiveServer2 will attempt to start before exiting, sleeping 60 seconds "
+literal|"Number of times HiveServer2 will attempt to start before exiting. The sleep interval between retries"
 operator|+
-literal|"between retries. \n The default of 30 will keep trying for 30 minutes."
+literal|" is determined by "
+operator|+
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
+operator|.
+name|varname
+operator|+
+literal|"\n The default of 30 will keep trying for 30 minutes."
 argument_list|)
 block|,
 name|HIVE_SERVER2_SUPPORT_DYNAMIC_SERVICE_DISCOVERY
@@ -12083,6 +12129,15 @@ argument_list|,
 literal|"llap.am.liveness.connection.timeout-millis"
 argument_list|)
 block|,
+name|LLAP_DAEMON_AM_USE_FQDN
+argument_list|(
+literal|"hive.llap.am.use.fqdn"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to use FQDN of the AM machine when submitting work to LLAP."
+argument_list|)
+block|,
 comment|// Not used yet - since the Writable RPC engine does not support this policy.
 name|LLAP_DAEMON_AM_LIVENESS_CONNECTION_SLEEP_BETWEEN_RETRIES_MS
 argument_list|(
@@ -12725,6 +12780,19 @@ operator|+
 literal|"This is only necessary if the host has mutiple network addresses and if a different network address other than "
 operator|+
 literal|"hive.server2.thrift.bind.host is to be used."
+argument_list|)
+block|,
+name|SPARK_RPC_SERVER_PORT
+argument_list|(
+literal|"hive.spark.client.rpc.server.port"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A list of port ranges which can be used by RPC server "
+operator|+
+literal|"with the format of 49152-49222,49228 and a random one is selected from the list. Default is empty, which randomly "
+operator|+
+literal|"selects one port from all available ones."
 argument_list|)
 block|,
 name|SPARK_DYNAMIC_PARTITION_PRUNING

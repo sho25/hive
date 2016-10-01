@@ -1228,11 +1228,6 @@ argument_list|(
 literal|"LlapDaemon"
 argument_list|)
 expr_stmt|;
-name|initializeLogging
-argument_list|(
-name|daemonConf
-argument_list|)
-expr_stmt|;
 name|printAsciiArt
 argument_list|()
 expr_stmt|;
@@ -2267,6 +2262,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
 name|void
 name|initializeLogging
 parameter_list|(
@@ -3287,6 +3283,13 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+name|LlapDaemon
+operator|.
+name|initializeLogging
+argument_list|(
+name|daemonConf
+argument_list|)
+expr_stmt|;
 name|llapDaemon
 operator|=
 operator|new

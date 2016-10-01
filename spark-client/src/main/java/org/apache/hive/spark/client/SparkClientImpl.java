@@ -4050,6 +4050,42 @@ block|}
 block|}
 catch|catch
 parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isAlive
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"I/O error in redirector thread."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// When stopping the remote driver the process might be destroyed during reading from the stream.
+comment|// We should not log the related exceptions in a visible level as they might mislead the user.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"I/O error in redirector thread while stopping the remote driver"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
 name|Exception
 name|e
 parameter_list|)
