@@ -9718,6 +9718,10 @@ name|AcidUtils
 operator|.
 name|Operation
 name|operation
+parameter_list|,
+specifier|final
+name|Long
+name|mmWriteId
 parameter_list|)
 throws|throws
 name|HiveException
@@ -10034,10 +10038,9 @@ name|isAcid
 argument_list|,
 name|hasFollowingStatsTask
 argument_list|,
-literal|null
+name|mmWriteId
 argument_list|)
 decl_stmt|;
-comment|// TODO# special case #N
 name|partitionsMap
 operator|.
 name|put
@@ -10194,7 +10197,22 @@ name|get
 argument_list|()
 expr_stmt|;
 block|}
-comment|// TODO# special case #N - DP - we would commit the txn to metastore here
+if|if
+condition|(
+name|mmWriteId
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Commit after we have processed all the partitions.
+name|commitMmTableWrite
+argument_list|(
+name|tbl
+argument_list|,
+name|mmWriteId
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
