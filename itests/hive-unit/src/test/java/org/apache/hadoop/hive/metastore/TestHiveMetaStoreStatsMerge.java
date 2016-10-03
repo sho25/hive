@@ -623,7 +623,7 @@ specifier|final
 name|String
 name|dbName
 init|=
-literal|"hive3252"
+literal|"hive3253"
 decl_stmt|;
 specifier|private
 specifier|static

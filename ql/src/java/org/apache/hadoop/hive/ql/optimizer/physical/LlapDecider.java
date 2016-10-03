@@ -1261,6 +1261,15 @@ operator|==
 literal|1
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Converting work to uber: {}"
+argument_list|,
+name|work
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|setUberMode
