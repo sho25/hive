@@ -696,6 +696,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|SHOWVIEWS
+argument_list|(
+literal|"SHOWVIEWS"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|CREATEFUNCTION
 argument_list|(
 literal|"CREATEFUNCTION"
