@@ -183,6 +183,8 @@ name|SHOWLOCKS
 block|,
 name|SHOWCONF
 block|,
+name|SHOWVIEWS
+block|,
 name|CREATEFUNCTION
 block|,
 name|DROPFUNCTION
