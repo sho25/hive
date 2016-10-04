@@ -8251,6 +8251,21 @@ block|}
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"moving "
+operator|+
+name|loadPath
+operator|+
+literal|" to "
+operator|+
+name|newPartPath
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|replace
@@ -10609,6 +10624,24 @@ operator|==
 literal|null
 condition|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"moving "
+operator|+
+name|loadPath
+operator|+
+literal|" to "
+operator|+
+name|tbl
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|replace
@@ -10698,6 +10731,24 @@ block|}
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"not moving "
+operator|+
+name|loadPath
+operator|+
+literal|" to "
+operator|+
+name|tbl
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|replace
