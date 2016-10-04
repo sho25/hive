@@ -5385,6 +5385,17 @@ name|system
 operator|.
 name|registerGenericUDTF
 argument_list|(
+literal|"replicate_rows"
+argument_list|,
+name|GenericUDTFReplicateRows
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDTF
+argument_list|(
 literal|"inline"
 argument_list|,
 name|GenericUDTFInline
