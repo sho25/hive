@@ -122,6 +122,10 @@ argument_list|,
 name|resDir
 argument_list|,
 name|logDir
+argument_list|,
+literal|"q_test_init_src_with_stats.sql"
+argument_list|,
+literal|"q_test_cleanup_src_with_stats.sql"
 argument_list|)
 decl_stmt|;
 for|for
