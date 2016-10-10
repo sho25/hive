@@ -21,36 +21,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|ByteArrayOutputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|File
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|FileOutputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|HashMap
@@ -81,51 +51,11 @@ begin_import
 import|import
 name|javax
 operator|.
-name|naming
-operator|.
-name|NamingEnumeration
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|naming
-operator|.
-name|ldap
-operator|.
-name|LdapContext
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
 name|security
 operator|.
 name|sasl
 operator|.
 name|AuthenticationException
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|directory
-operator|.
-name|server
-operator|.
-name|integ
-operator|.
-name|ServerIntegrationUtils
-operator|.
-name|getWiredContext
 import|;
 end_import
 
@@ -175,7 +105,7 @@ name|core
 operator|.
 name|annotations
 operator|.
-name|ApplyLdifs
+name|ApplyLdifFiles
 import|;
 end_import
 
@@ -293,22 +223,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|directory
-operator|.
-name|server
-operator|.
-name|ldap
-operator|.
-name|LdapServer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|hive
@@ -316,46 +230,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|auth
-operator|.
-name|LdapAuthenticationProviderImpl
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNotNull
 import|;
 end_import
 
@@ -368,16 +242,6 @@ operator|.
 name|Assert
 operator|.
 name|assertTrue
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|After
 import|;
 end_import
 
@@ -418,16 +282,6 @@ operator|.
 name|junit
 operator|.
 name|BeforeClass
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Ignore
 import|;
 end_import
 
@@ -488,7 +342,6 @@ literal|"LDAPS"
 argument_list|)
 block|}
 argument_list|)
-comment|// Define the DirectoryService
 annotation|@
 name|CreateDS
 argument_list|(
@@ -538,7 +391,7 @@ name|CreateIndex
 argument_list|(
 name|attribute
 operator|=
-literal|"dc"
+literal|"cn"
 argument_list|)
 block|,
 annotation|@
@@ -546,214 +399,16 @@ name|CreateIndex
 argument_list|(
 name|attribute
 operator|=
-literal|"ou"
-argument_list|)
-block|,
-annotation|@
-name|CreateIndex
-argument_list|(
-name|attribute
-operator|=
-literal|"distinguishedName"
+literal|"uid"
 argument_list|)
 block|}
 argument_list|)
 block|}
 argument_list|)
 annotation|@
-name|ApplyLdifs
+name|ApplyLdifFiles
 argument_list|(
-block|{
-literal|"dn: ou=People,dc=example,dc=com"
-block|,
-literal|"distinguishedName: ou=People,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: organizationalUnit"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"ou: People"
-block|,
-literal|"description: Contains entries which describe persons (seamen)"
-block|,
-literal|"dn: ou=Groups,dc=example,dc=com"
-block|,
-literal|"distinguishedName: ou=Groups,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: organizationalUnit"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"ou: Groups"
-block|,
-literal|"description: Contains entries which describe groups (crews, for instance)"
-block|,
-literal|"dn: uid=group1,ou=Groups,dc=example,dc=com"
-block|,
-literal|"distinguishedName: uid=group1,ou=Groups,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: groupOfNames"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"cn: group1"
-block|,
-literal|"ou: Groups"
-block|,
-literal|"sn: group1"
-block|,
-literal|"member: uid=user1,ou=People,dc=example,dc=com"
-block|,
-literal|"dn: uid=group2,ou=Groups,dc=example,dc=com"
-block|,
-literal|"distinguishedName: uid=group2,ou=Groups,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: groupOfNames"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"givenName: Group2"
-block|,
-literal|"ou: Groups"
-block|,
-literal|"cn: group2"
-block|,
-literal|"sn: group2"
-block|,
-literal|"member: uid=user2,ou=People,dc=example,dc=com"
-block|,
-literal|"dn: cn=group3,ou=Groups,dc=example,dc=com"
-block|,
-literal|"distinguishedName: cn=group3,ou=Groups,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: groupOfNames"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"cn: group3"
-block|,
-literal|"ou: Groups"
-block|,
-literal|"sn: group3"
-block|,
-literal|"member: cn=user3,ou=People,dc=example,dc=com"
-block|,
-literal|"dn: cn=group4,ou=Groups,dc=example,dc=com"
-block|,
-literal|"distinguishedName: cn=group4,ou=Groups,dc=example,dc=com"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: groupOfUniqueNames"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"ou: Groups"
-block|,
-literal|"cn: group4"
-block|,
-literal|"sn: group4"
-block|,
-literal|"uniqueMember: cn=user4,ou=People,dc=example,dc=com"
-block|,
-literal|"dn: uid=user1,ou=People,dc=example,dc=com"
-block|,
-literal|"distinguishedName: uid=user1,ou=People,dc=example,dc=com"
-block|,
-literal|"objectClass: inetOrgPerson"
-block|,
-literal|"objectClass: person"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"givenName: Test1"
-block|,
-literal|"cn: Test User1"
-block|,
-literal|"sn: user1"
-block|,
-literal|"uid: user1"
-block|,
-literal|"userPassword: user1"
-block|,
-literal|"dn: uid=user2,ou=People,dc=example,dc=com"
-block|,
-literal|"distinguishedName: uid=user2,ou=People,dc=example,dc=com"
-block|,
-literal|"objectClass: inetOrgPerson"
-block|,
-literal|"objectClass: person"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"givenName: Test2"
-block|,
-literal|"cn: Test User2"
-block|,
-literal|"sn: user2"
-block|,
-literal|"uid: user2"
-block|,
-literal|"userPassword: user2"
-block|,
-literal|"dn: cn=user3,ou=People,dc=example,dc=com"
-block|,
-literal|"distinguishedName: cn=user3,ou=People,dc=example,dc=com"
-block|,
-literal|"objectClass: inetOrgPerson"
-block|,
-literal|"objectClass: person"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"givenName: Test1"
-block|,
-literal|"cn: Test User3"
-block|,
-literal|"sn: user3"
-block|,
-literal|"uid: user3"
-block|,
-literal|"userPassword: user3"
-block|,
-literal|"dn: cn=user4,ou=People,dc=example,dc=com"
-block|,
-literal|"distinguishedName: cn=user4,ou=People,dc=example,dc=com"
-block|,
-literal|"objectClass: inetOrgPerson"
-block|,
-literal|"objectClass: person"
-block|,
-literal|"objectClass: top"
-block|,
-literal|"objectClass: ExtensibleObject"
-block|,
-literal|"givenName: Test4"
-block|,
-literal|"cn: Test User4"
-block|,
-literal|"sn: user4"
-block|,
-literal|"uid: user4"
-block|,
-literal|"userPassword: user4"
-block|}
+literal|"ldap/example.com.ldif"
 argument_list|)
 specifier|public
 class|class
@@ -763,34 +418,16 @@ name|AbstractLdapTestUnit
 block|{
 specifier|private
 specifier|static
-name|String
-name|ldapUrl
-decl_stmt|;
-specifier|private
-specifier|static
-name|LdapServer
-name|server
-decl_stmt|;
-specifier|private
-specifier|static
-name|HiveConf
-name|hiveConf
-decl_stmt|;
-specifier|private
-specifier|static
-name|byte
-index|[]
-name|hiveConfBackup
-decl_stmt|;
-specifier|private
-specifier|static
-name|LdapContext
-name|ctx
-decl_stmt|;
-specifier|private
-specifier|static
 name|LdapAuthenticationProviderImpl
 name|ldapProvider
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|ldapProperties
 decl_stmt|;
 specifier|static
 specifier|final
@@ -861,33 +498,14 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|ctx
+name|ldapProperties
 operator|=
-operator|(
-name|LdapContext
-operator|)
-name|getWiredContext
-argument_list|(
-name|ldapServer
-argument_list|,
-literal|null
-argument_list|)
-operator|.
-name|lookup
-argument_list|(
-literal|"dc=example,dc=com"
-argument_list|)
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
 expr_stmt|;
 block|}
-annotation|@
-name|After
-specifier|public
-name|void
-name|shutdown
-parameter_list|()
-throws|throws
-name|Exception
-block|{   }
 annotation|@
 name|BeforeClass
 specifier|public
@@ -898,18 +516,14 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|hiveConf
-operator|=
-operator|new
-name|HiveConf
-argument_list|()
-expr_stmt|;
 name|ldapProvider
 operator|=
 operator|new
 name|LdapAuthenticationProviderImpl
 argument_list|(
-name|hiveConf
+operator|new
+name|HiveConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -939,55 +553,29 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
-specifier|static
 name|void
 name|initLdapAtn
-parameter_list|(
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|hiveProperties
-parameter_list|)
+parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|hiveConf
-operator|=
-operator|new
-name|HiveConf
-argument_list|()
-expr_stmt|;
-name|int
-name|port
-decl_stmt|;
-if|if
-condition|(
+name|String
 name|ldapUrl
-operator|==
-literal|null
-condition|)
-block|{
-name|port
-operator|=
+init|=
+literal|"ldap://localhost:"
+operator|+
 name|ldapServer
 operator|.
 name|getPort
 argument_list|()
-expr_stmt|;
-name|ldapUrl
-operator|=
+decl_stmt|;
+name|HiveConf
+name|hiveConf
+init|=
 operator|new
-name|String
-argument_list|(
-literal|"ldap://localhost:"
-operator|+
-name|port
-argument_list|)
-expr_stmt|;
-block|}
+name|HiveConf
+argument_list|()
+decl_stmt|;
 name|hiveConf
 operator|.
 name|set
@@ -1006,67 +594,39 @@ argument_list|,
 name|ldapUrl
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|hiveProperties
-operator|!=
-literal|null
-condition|)
-block|{
-name|String
-name|key
-decl_stmt|;
-name|String
-name|value
-decl_stmt|;
-name|Iterator
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
 argument_list|<
 name|String
+argument_list|,
+name|String
 argument_list|>
-name|iter
-init|=
-name|hiveProperties
+name|entry
+range|:
+name|ldapProperties
 operator|.
-name|keySet
+name|entrySet
 argument_list|()
-operator|.
-name|iterator
-argument_list|()
-decl_stmt|;
-while|while
-condition|(
-name|iter
-operator|.
-name|hasNext
-argument_list|()
-condition|)
+control|)
 block|{
-name|key
-operator|=
-name|iter
-operator|.
-name|next
-argument_list|()
-expr_stmt|;
-name|value
-operator|=
-name|hiveProperties
-operator|.
-name|get
-argument_list|(
-name|key
-argument_list|)
-expr_stmt|;
 name|hiveConf
 operator|.
 name|set
 argument_list|(
-name|key
+name|entry
+operator|.
+name|getKey
+argument_list|()
 argument_list|,
-name|value
+name|entry
+operator|.
+name|getValue
+argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|ldapProvider
 operator|=
@@ -1087,9 +647,7 @@ throws|throws
 name|Exception
 block|{
 name|initLdapAtn
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1119,23 +677,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1155,9 +696,7 @@ literal|"uid=%s,ou=Groups,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|String
 name|user
@@ -1291,23 +830,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1318,9 +840,7 @@ literal|"ou=People,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|String
 name|user
@@ -1454,23 +974,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1490,9 +993,7 @@ literal|"uid=%s,ou=Groups,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1614,23 +1115,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1641,9 +1125,7 @@ literal|"ou=People,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -1768,23 +1250,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1804,9 +1269,7 @@ literal|"uid=%s,ou=Groups,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1957,23 +1420,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -1984,9 +1430,7 @@ literal|"ou=People,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2127,23 +1571,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -2154,9 +1581,7 @@ literal|"ou=DummyPeople,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2297,23 +1722,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -2333,9 +1741,7 @@ literal|"uid=%s,ou=DummyGroups,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2476,23 +1882,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -2512,9 +1901,7 @@ literal|" "
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2655,23 +2042,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -2682,9 +2052,7 @@ literal|""
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2825,23 +2193,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -2861,9 +2212,7 @@ literal|"uid=%s,ou=Groups,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -2996,23 +2345,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -3023,9 +2355,7 @@ literal|"ou=People,dc=example,dc=com"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -3158,23 +2488,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -3197,9 +2510,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -3286,11 +2597,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -3315,9 +2622,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3404,11 +2709,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -3440,9 +2741,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -3534,23 +2833,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -3573,9 +2855,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -3683,11 +2963,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -3712,9 +2988,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -3822,11 +3096,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -3851,9 +3121,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -3970,23 +3238,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -4015,9 +3266,7 @@ literal|"group1,group2"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4134,11 +3383,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -4169,9 +3414,7 @@ literal|"group2"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4237,23 +3480,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -4282,9 +3508,7 @@ literal|"group1"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4341,11 +3565,7 @@ name|ldapProperties
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|ldapProperties
@@ -4376,9 +3596,7 @@ literal|"group2"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4444,23 +3662,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -4508,9 +3709,7 @@ literal|"group1,group2"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4657,23 +3856,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -4721,9 +3903,7 @@ literal|"group1"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -4849,23 +4029,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -4917,9 +4080,7 @@ literal|")))"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5045,23 +4206,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -5089,9 +4233,7 @@ literal|"))"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5209,23 +4351,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -5254,9 +4379,7 @@ literal|"(&(objectClass=groupOfNames)(|(cn=group1)(cn=group2)))"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5369,9 +4492,7 @@ literal|"(|(&(objectClass=groupOfNames)(cn=group1))(&(objectClass=person)(sn=use
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5491,9 +4612,7 @@ literal|"(&(objectClass=groupOfUniqueNames)(cn=group4))"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5589,23 +4708,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -5634,9 +4736,7 @@ literal|"(&(objectClass=groupOfNames)(|(cn=group1)(cn=group2)))"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5753,23 +4853,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -5807,9 +4890,7 @@ literal|"group3"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -5905,23 +4986,6 @@ block|{
 name|String
 name|user
 decl_stmt|;
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|ldapProperties
-init|=
-operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|ldapProperties
 operator|.
 name|put
@@ -5977,9 +5041,7 @@ literal|"groupOfUniqueNames"
 argument_list|)
 expr_stmt|;
 name|initLdapAtn
-argument_list|(
-name|ldapProperties
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|user
 operator|=
@@ -6063,10 +5125,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
-end_class
-
-begin_class
+specifier|private
+specifier|static
 class|class
 name|User
 block|{
@@ -6136,6 +5196,7 @@ block|{
 return|return
 name|ldapDN
 return|;
+block|}
 block|}
 block|}
 end_class
