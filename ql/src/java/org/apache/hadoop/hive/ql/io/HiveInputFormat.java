@@ -2557,6 +2557,19 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|warn
+argument_list|(
+literal|"Checking "
+operator|+
+name|dir
+operator|+
+literal|" (root) for inputs"
+argument_list|)
+expr_stmt|;
 name|FileStatus
 index|[]
 name|files
@@ -2675,6 +2688,19 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|warn
+argument_list|(
+literal|"Checking "
+operator|+
+name|path
+operator|+
+literal|" for inputs"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

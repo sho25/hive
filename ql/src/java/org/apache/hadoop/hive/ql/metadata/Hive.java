@@ -8190,9 +8190,6 @@ expr_stmt|;
 assert|assert
 operator|!
 name|isAcid
-operator|&&
-operator|!
-name|replace
 assert|;
 if|if
 condition|(
@@ -8214,19 +8211,33 @@ name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"maybe deleting stuff from "
+operator|+
+name|oldPartPath
+operator|+
+literal|" (new "
+operator|+
+name|newPartPath
+operator|+
+literal|") for replace"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|replace
+operator|&&
+name|oldPartPath
+operator|!=
+literal|null
 condition|)
 block|{
-name|Path
-name|tableDest
-init|=
-name|tbl
-operator|.
-name|getPath
-argument_list|()
-decl_stmt|;
+comment|// TODO# is this correct? ignore until iow jira
 name|deleteOldPathForReplace
 argument_list|(
 name|newPartPath

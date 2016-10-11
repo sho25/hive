@@ -9926,7 +9926,6 @@ operator|+
 literal|", taskId "
 operator|+
 name|taskId
-comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 name|FileStatus
