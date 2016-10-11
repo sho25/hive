@@ -1285,6 +1285,13 @@ name|isUsingThriftJDBCBinarySerDe
 init|=
 literal|false
 decl_stmt|;
+comment|/**    * The flag to indicate if the session already started so we can skip the init    */
+specifier|private
+name|boolean
+name|isStarted
+init|=
+literal|false
+decl_stmt|;
 comment|/*    * HiveHistory Object    */
 specifier|protected
 name|HiveHistory
@@ -2722,6 +2729,7 @@ name|endOpen
 argument_list|()
 expr_stmt|;
 block|}
+specifier|synchronized
 specifier|private
 specifier|static
 name|void
@@ -2741,6 +2749,21 @@ name|setCurrentSessionState
 argument_list|(
 name|startSs
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|startSs
+operator|.
+name|isStarted
+condition|)
+block|{
+return|return;
+block|}
+name|startSs
+operator|.
+name|isStarted
+operator|=
+literal|true
 expr_stmt|;
 if|if
 condition|(
