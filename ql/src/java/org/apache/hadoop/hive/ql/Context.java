@@ -754,6 +754,7 @@ name|TokenRewriteStream
 name|tokenRewriteStream
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|executionId
 decl_stmt|;
@@ -2010,6 +2011,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Deleting scratch dir: {}"
+argument_list|,
+name|p
+argument_list|)
+expr_stmt|;
 name|fs
 operator|.
 name|delete
@@ -2504,6 +2514,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Deleting result dir: {}"
+argument_list|,
+name|resDir
+argument_list|)
+expr_stmt|;
 name|fs
 operator|.
 name|delete
@@ -2555,6 +2574,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Deleting result file: {}"
+argument_list|,
+name|resFile
+argument_list|)
+expr_stmt|;
 name|fs
 operator|.
 name|delete

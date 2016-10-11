@@ -916,15 +916,76 @@ operator|!
 name|runningViaChild
 condition|)
 block|{
+comment|// since we are running the mapred task in the same jvm, we should update the job conf
+comment|// in ExecDriver as well to have proper local properties.
+if|if
+condition|(
+name|this
+operator|.
+name|isLocalMode
+argument_list|()
+condition|)
+block|{
+comment|// save the original job tracker
+name|ctx
+operator|.
+name|setOriginalTracker
+argument_list|(
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getJobLauncherRpcAddress
+argument_list|(
+name|job
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// change it to local
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|setJobLauncherRpcAddress
+argument_list|(
+name|job
+argument_list|,
+literal|"local"
+argument_list|)
+expr_stmt|;
+block|}
 comment|// we are not running this mapred task via child jvm
 comment|// so directly invoke ExecDriver
-return|return
+name|int
+name|ret
+init|=
 name|super
 operator|.
 name|execute
 argument_list|(
 name|driverContext
 argument_list|)
+decl_stmt|;
+comment|// restore the previous properties for framework name, RM address etc.
+if|if
+condition|(
+name|this
+operator|.
+name|isLocalMode
+argument_list|()
+condition|)
+block|{
+comment|// restore the local job tracker back to original
+name|ctx
+operator|.
+name|restoreOriginalTracker
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|ret
 return|;
 block|}
 comment|// we need to edit the configuration to setup cmdline. clone it first

@@ -355,20 +355,6 @@ name|commons
 operator|.
 name|lang
 operator|.
-name|StringEscapeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
 name|StringUtils
 import|;
 end_import
@@ -3610,6 +3596,22 @@ operator|.
 name|util
 operator|.
 name|AnnotationUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
 import|;
 end_import
 
@@ -13484,6 +13486,8 @@ name|createDb_str
 operator|.
 name|append
 argument_list|(
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|database
@@ -14070,6 +14074,8 @@ name|columnDesc
 operator|+
 literal|" COMMENT '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|col
@@ -14134,6 +14140,8 @@ name|tbl_comment
 operator|=
 literal|"COMMENT '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|tabComment
@@ -14227,6 +14235,8 @@ name|partColDesc
 operator|+
 literal|" COMMENT '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|partKey
@@ -14502,6 +14512,8 @@ name|append
 argument_list|(
 literal|"  '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|serdeInfo
@@ -14582,6 +14594,8 @@ name|append
 argument_list|(
 literal|"STORED AS INPUTFORMAT \n  '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|sd
@@ -14599,6 +14613,8 @@ name|append
 argument_list|(
 literal|"OUTPUTFORMAT \n  '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|sd
@@ -14626,6 +14642,8 @@ name|append
 argument_list|(
 literal|"STORED BY \n  '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|tbl
@@ -14669,6 +14687,8 @@ name|tbl_location
 init|=
 literal|"  '"
 operator|+
+name|HiveStringUtils
+operator|.
 name|escapeHiveCommand
 argument_list|(
 name|sd
@@ -14951,18 +14971,15 @@ name|key
 operator|+
 literal|"'='"
 operator|+
-name|escapeHiveCommand
-argument_list|(
-name|StringEscapeUtils
+name|HiveStringUtils
 operator|.
-name|escapeJava
+name|escapeHiveCommand
 argument_list|(
 name|properties
 operator|.
 name|get
 argument_list|(
 name|key
-argument_list|)
 argument_list|)
 argument_list|)
 operator|+
@@ -15065,17 +15082,14 @@ argument_list|()
 operator|+
 literal|"'='"
 operator|+
-name|escapeHiveCommand
-argument_list|(
-name|StringEscapeUtils
+name|HiveStringUtils
 operator|.
-name|escapeJava
+name|escapeHiveCommand
 argument_list|(
 name|entry
 operator|.
 name|getValue
 argument_list|()
-argument_list|)
 argument_list|)
 operator|+
 literal|"'"
@@ -15173,6 +15187,20 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+comment|// In case the query is served by HiveServer2, don't pad it with spaces,
+comment|// as HiveServer2 output is consumed by JDBC/ODBC clients.
+name|boolean
+name|isOutputPadded
+init|=
+operator|!
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|isHiveServerQuery
+argument_list|()
+decl_stmt|;
 comment|// write the results in the file
 name|DataOutputStream
 name|outStream
@@ -15242,9 +15270,11 @@ name|write
 argument_list|(
 name|MetaDataFormatUtils
 operator|.
-name|getAllColumnsInformation
+name|getIndexInformation
 argument_list|(
 name|index
+argument_list|,
+name|isOutputPadded
 argument_list|)
 operator|.
 name|getBytes

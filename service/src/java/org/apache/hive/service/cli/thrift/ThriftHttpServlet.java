@@ -1921,6 +1921,8 @@ operator|.
 name|getAuthenticationProvider
 argument_list|(
 name|authMethod
+argument_list|,
+name|hiveConf
 argument_list|)
 decl_stmt|;
 name|provider

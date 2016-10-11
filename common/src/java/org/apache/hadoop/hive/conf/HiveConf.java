@@ -13004,9 +13004,11 @@ name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
 argument_list|,
-literal|"hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role,"
+literal|"hive.security.authenticator.manager,hive.security.authorization.manager,"
 operator|+
-literal|"hive.server2.xsrf.filter.enabled"
+literal|"hive.security.metastore.authorization.manager,hive.security.metastore.authenticator.manager,"
+operator|+
+literal|"hive.users.in.admin.role,hive.server2.xsrf.filter.enabled,hive.security.authorization.enabled"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
