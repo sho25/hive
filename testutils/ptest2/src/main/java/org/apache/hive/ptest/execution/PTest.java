@@ -1295,6 +1295,11 @@ name|failedLogDir
 argument_list|,
 literal|10
 argument_list|,
+name|configuration
+operator|.
+name|shouldFetchLogsForSuccessfulTests
+argument_list|()
+argument_list|,
 name|logger
 argument_list|)
 return|;
