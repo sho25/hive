@@ -11183,17 +11183,6 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
-name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
-argument_list|(
-literal|"hive.support.sql11.reserved.keywords"
-argument_list|,
-literal|true
-argument_list|,
-literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
-operator|+
-literal|"The default value is true."
-argument_list|)
-block|,
 name|HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
 argument_list|(
 literal|"hive.support.special.characters.tablename"
@@ -18069,12 +18058,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
 operator|.
 name|varname
 block|,
