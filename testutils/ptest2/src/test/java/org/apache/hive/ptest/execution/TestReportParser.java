@@ -304,7 +304,7 @@ literal|3
 argument_list|,
 name|parser
 operator|.
-name|getFailedTests
+name|getAllFailedTests
 argument_list|()
 operator|.
 name|size
@@ -328,7 +328,7 @@ argument_list|)
 argument_list|,
 name|parser
 operator|.
-name|getFailedTests
+name|getAllFailedTests
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -377,7 +377,7 @@ argument_list|)
 argument_list|,
 name|parser
 operator|.
-name|getExecutedTests
+name|getAllExecutedTests
 argument_list|()
 argument_list|)
 expr_stmt|;

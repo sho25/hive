@@ -25,6 +25,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|atomic
@@ -56,6 +66,16 @@ name|getAndIncrement
 argument_list|()
 expr_stmt|;
 block|}
+specifier|public
+specifier|final
+name|int
+name|getBatchId
+parameter_list|()
+block|{
+return|return
+name|batchId
+return|;
+block|}
 specifier|private
 specifier|final
 name|int
@@ -65,13 +85,6 @@ specifier|public
 specifier|abstract
 name|String
 name|getTestArguments
-parameter_list|()
-function_decl|;
-comment|// TODO Get rid of this.
-specifier|public
-specifier|abstract
-name|String
-name|getTestClass
 parameter_list|()
 function_decl|;
 specifier|public
@@ -98,16 +111,16 @@ name|int
 name|getNumTestsInBatch
 parameter_list|()
 function_decl|;
+comment|/* Comma separated list of classes in a batch */
 specifier|public
-specifier|final
-name|int
-name|getBatchId
+specifier|abstract
+name|Collection
+argument_list|<
+name|String
+argument_list|>
+name|getTestClasses
 parameter_list|()
-block|{
-return|return
-name|batchId
-return|;
-block|}
+function_decl|;
 block|}
 end_class
 

@@ -232,6 +232,8 @@ argument_list|)
 operator|.
 name|join
 argument_list|(
+literal|"1"
+argument_list|,
 name|DRIVER
 argument_list|,
 literal|"a"
@@ -340,6 +342,8 @@ argument_list|)
 operator|.
 name|join
 argument_list|(
+literal|"1"
+argument_list|,
 name|DRIVER
 argument_list|,
 literal|"a"
