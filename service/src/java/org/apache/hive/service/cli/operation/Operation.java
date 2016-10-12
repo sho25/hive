@@ -584,6 +584,7 @@ name|DEFAULT_FETCH_MAX_ROWS
 init|=
 literal|100
 decl_stmt|;
+comment|// TODO# remove this
 specifier|protected
 name|boolean
 name|hasResultSet
@@ -1819,24 +1820,6 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
-specifier|public
-name|RowSet
-name|getNextRowSet
-parameter_list|()
-throws|throws
-name|HiveSQLException
-block|{
-return|return
-name|getNextRowSet
-argument_list|(
-name|FetchOrientation
-operator|.
-name|FETCH_NEXT
-argument_list|,
-name|DEFAULT_FETCH_MAX_ROWS
-argument_list|)
-return|;
-block|}
 specifier|public
 name|String
 name|getTaskStatus

@@ -10592,9 +10592,20 @@ name|HIVE_SERVER2_THRIFT_RESULTSET_MAX_FETCH_SIZE
 argument_list|(
 literal|"hive.server2.thrift.resultset.max.fetch.size"
 argument_list|,
-literal|1000
+literal|10000
 argument_list|,
 literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
+argument_list|)
+block|,
+name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+argument_list|(
+literal|"hive.server2.resultset.default.fetch.size"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"The number of rows sent in one Fetch RPC call by the server to the client, if not\n"
+operator|+
+literal|"specified by the client."
 argument_list|)
 block|,
 name|HIVE_SERVER2_XSRF_FILTER_ENABLED
