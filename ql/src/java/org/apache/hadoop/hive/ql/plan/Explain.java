@@ -140,6 +140,92 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|// By default, many existing @Explain classes/methods are NON_VECTORIZED.
+comment|//
+comment|// Vectorized methods/classes have detail levels:
+comment|//     SUMMARY, OPERATOR, EXPRESSION, or DETAIL.
+comment|// As you go to the right you get more detail and the information for the previous level(s) is
+comment|// included.  The default is SUMMARY.
+comment|//
+comment|// The "path" enumerations are used to mark methods/classes that lead to vectorization specific
+comment|// ones so we can avoid displaying headers for things that have no vectorization information
+comment|// below.
+comment|//
+comment|// For example, the TezWork class is marked SUMMARY_PATH because it leads to both
+comment|// SUMMARY and OPERATOR methods/classes. And, MapWork.getAllRootOperators is marked OPERATOR_PATH
+comment|// because we only display operator information for OPERATOR.
+comment|//
+comment|// EXPRESSION and DETAIL typically live inside SUMMARY or OPERATOR classes.
+comment|//
+specifier|public
+enum|enum
+name|Vectorization
+block|{
+name|SUMMARY_PATH
+argument_list|(
+literal|4
+argument_list|)
+block|,
+name|OPERATOR_PATH
+argument_list|(
+literal|3
+argument_list|)
+block|,
+name|SUMMARY
+argument_list|(
+literal|4
+argument_list|)
+block|,
+name|OPERATOR
+argument_list|(
+literal|3
+argument_list|)
+block|,
+name|EXPRESSION
+argument_list|(
+literal|2
+argument_list|)
+block|,
+name|DETAIL
+argument_list|(
+literal|1
+argument_list|)
+block|,
+name|NON_VECTORIZED
+parameter_list|(
+name|Integer
+operator|.
+name|MAX_VALUE
+parameter_list|)
+constructor_decl|;
+specifier|public
+specifier|final
+name|int
+name|rank
+decl_stmt|;
+name|Vectorization
+parameter_list|(
+name|int
+name|rank
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rank
+operator|=
+name|rank
+expr_stmt|;
+block|}
+block|}
+empty_stmt|;
+name|Vectorization
+name|vectorization
+parameter_list|()
+default|default
+name|Vectorization
+operator|.
+name|NON_VECTORIZED
+function_decl|;
 block|}
 end_annotation_defn
 

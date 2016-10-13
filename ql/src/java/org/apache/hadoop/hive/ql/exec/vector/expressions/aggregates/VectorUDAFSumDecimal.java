@@ -472,6 +472,17 @@ specifier|private
 name|VectorExpression
 name|inputExpression
 decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|VectorExpression
+name|inputExpression
+parameter_list|()
+block|{
+return|return
+name|inputExpression
+return|;
+block|}
 specifier|transient
 specifier|private
 specifier|final

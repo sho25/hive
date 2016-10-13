@@ -103,6 +103,26 @@ name|Level
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Vectorization
+import|;
+end_import
+
 begin_comment
 comment|/**  * Map Join operator Descriptor implementation.  *  */
 end_comment
