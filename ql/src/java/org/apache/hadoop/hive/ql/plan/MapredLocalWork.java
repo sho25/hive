@@ -179,6 +179,26 @@ name|Level
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Vectorization
+import|;
+end_import
+
 begin_comment
 comment|/**  * MapredLocalWork.  *  */
 end_comment
@@ -206,6 +226,12 @@ name|Level
 operator|.
 name|EXTENDED
 block|}
+argument_list|,
+name|vectorization
+operator|=
+name|Vectorization
+operator|.
+name|SUMMARY_PATH
 argument_list|)
 specifier|public
 class|class

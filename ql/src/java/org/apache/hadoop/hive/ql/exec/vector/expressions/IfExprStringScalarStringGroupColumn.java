@@ -25,6 +25,18 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|charset
+operator|.
+name|StandardCharsets
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -935,6 +947,35 @@ parameter_list|()
 block|{
 return|return
 literal|"String"
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|arg1Column
+operator|+
+literal|", val "
+operator|+
+operator|new
+name|String
+argument_list|(
+name|arg2Scalar
+argument_list|,
+name|StandardCharsets
+operator|.
+name|UTF_8
+argument_list|)
+operator|+
+literal|", col "
+operator|+
+name|arg3Column
 return|;
 block|}
 annotation|@

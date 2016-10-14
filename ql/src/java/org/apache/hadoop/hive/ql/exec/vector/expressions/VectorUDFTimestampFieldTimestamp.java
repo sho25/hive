@@ -135,6 +135,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|DateUtils
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -717,6 +733,43 @@ name|outputColumn
 operator|=
 name|outputColumn
 expr_stmt|;
+block|}
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+if|if
+condition|(
+name|field
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+return|;
+block|}
+else|else
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+operator|+
+literal|", field "
+operator|+
+name|DateUtils
+operator|.
+name|getFieldName
+argument_list|(
+name|field
+argument_list|)
+return|;
+block|}
 block|}
 annotation|@
 name|Override
