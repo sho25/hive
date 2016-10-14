@@ -43,24 +43,6 @@ name|Mapping
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|TypeInfo
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class collects column information for copying a row from one VectorizedRowBatch to  * same/another batch.  *  * In this variation, column information is ordered by the output column number.  */
 end_comment
@@ -105,8 +87,8 @@ parameter_list|,
 name|int
 name|outputColumn
 parameter_list|,
-name|TypeInfo
-name|typeInfo
+name|String
+name|typeName
 parameter_list|)
 block|{
 comment|// Order on outputColumn.
@@ -118,7 +100,7 @@ name|outputColumn
 argument_list|,
 name|sourceColumn
 argument_list|,
-name|typeInfo
+name|typeName
 argument_list|)
 expr_stmt|;
 block|}
@@ -169,11 +151,11 @@ operator|.
 name|getOrderedColumns
 argument_list|()
 expr_stmt|;
-name|typeInfos
+name|typeNames
 operator|=
 name|mapping
 operator|.
-name|getTypeInfos
+name|getTypeNames
 argument_list|()
 expr_stmt|;
 comment|// Not needed anymore.

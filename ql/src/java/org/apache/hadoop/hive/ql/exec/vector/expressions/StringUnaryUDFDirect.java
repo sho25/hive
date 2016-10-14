@@ -675,17 +675,6 @@ return|return
 literal|"String"
 return|;
 block|}
-specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-return|return
-literal|"col "
-operator|+
-name|inputColumn
-return|;
-block|}
 annotation|@
 name|Override
 specifier|public

@@ -287,18 +287,6 @@ literal|0L
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Override
-specifier|public
-name|VectorExpression
-name|inputExpression
-parameter_list|()
-block|{
-comment|// None.
-return|return
-literal|null
-return|;
-block|}
 specifier|transient
 specifier|private
 specifier|final

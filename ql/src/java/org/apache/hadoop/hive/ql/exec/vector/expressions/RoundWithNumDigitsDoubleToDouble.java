@@ -225,26 +225,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-return|return
-literal|"col "
-operator|+
-name|colNum
-operator|+
-literal|", decimalPlaces "
-operator|+
-name|decimalPlaces
-operator|.
-name|get
-argument_list|()
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor

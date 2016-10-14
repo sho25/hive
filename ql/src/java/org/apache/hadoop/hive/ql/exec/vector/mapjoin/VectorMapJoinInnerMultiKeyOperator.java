@@ -285,20 +285,6 @@ name|BinarySortableSerializeWrite
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
 begin_comment
 comment|/*  * Specialized class for doing a vectorized map join that is an inner join on a Multi-Key  * using a hash map.  */
 end_comment
@@ -318,20 +304,6 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|//------------------------------------------------------------------------------------------------
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|CLASS_NAME
-init|=
-name|VectorMapJoinInnerMultiKeyOperator
-operator|.
-name|class
-operator|.
-name|getName
-argument_list|()
-decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -350,21 +322,19 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|protected
+specifier|private
+specifier|static
+specifier|final
 name|String
-name|getLoggingPrefix
-parameter_list|()
-block|{
-return|return
-name|super
-operator|.
-name|getLoggingPrefix
-argument_list|(
 name|CLASS_NAME
-argument_list|)
-return|;
-block|}
-comment|//------------------------------------------------------------------------------------------------
+init|=
+name|VectorMapJoinInnerMultiKeyOperator
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
 comment|// (none)
 comment|// The above members are initialized by the constructor and must not be
 comment|// transient.
@@ -512,7 +482,7 @@ name|keyVectorSerializeWrite
 operator|.
 name|init
 argument_list|(
-name|bigTableKeyTypeInfos
+name|bigTableKeyTypeNames
 argument_list|,
 name|bigTableKeyColumnMap
 argument_list|)

@@ -935,9 +935,6 @@ name|desc
 expr_stmt|;
 name|vectorDesc
 operator|=
-operator|(
-name|VectorReduceSinkDesc
-operator|)
 name|desc
 operator|.
 name|getVectorDesc
