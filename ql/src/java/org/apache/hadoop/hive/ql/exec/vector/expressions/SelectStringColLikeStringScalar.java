@@ -967,6 +967,17 @@ return|return
 literal|"String_Family"
 return|;
 block|}
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

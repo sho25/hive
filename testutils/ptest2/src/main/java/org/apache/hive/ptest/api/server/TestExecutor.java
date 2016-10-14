@@ -634,6 +634,15 @@ name|profile
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Attempting to run using profile file: {}"
+argument_list|,
+name|profileConfFile
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

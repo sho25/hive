@@ -10610,9 +10610,20 @@ name|HIVE_SERVER2_THRIFT_RESULTSET_MAX_FETCH_SIZE
 argument_list|(
 literal|"hive.server2.thrift.resultset.max.fetch.size"
 argument_list|,
-literal|1000
+literal|10000
 argument_list|,
 literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
+argument_list|)
+block|,
+name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+argument_list|(
+literal|"hive.server2.resultset.default.fetch.size"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"The number of rows sent in one Fetch RPC call by the server to the client, if not\n"
+operator|+
+literal|"specified by the client."
 argument_list|)
 block|,
 name|HIVE_SERVER2_XSRF_FILTER_ENABLED
@@ -11199,17 +11210,6 @@ operator|+
 literal|"  none: default(past) behavior. Implies only alphaNumeric and underscore are valid characters in identifiers.\n"
 operator|+
 literal|"  column: implies column names can contain any character."
-argument_list|)
-block|,
-name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
-argument_list|(
-literal|"hive.support.sql11.reserved.keywords"
-argument_list|,
-literal|true
-argument_list|,
-literal|"This flag should be set to true to enable support for SQL2011 reserved keywords.\n"
-operator|+
-literal|"The default value is true."
 argument_list|)
 block|,
 name|HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
@@ -18158,12 +18158,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_THRIFT_RESULTSET_SERIALIZE_IN_TASKS
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
 operator|.
 name|varname
 block|,

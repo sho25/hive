@@ -3169,10 +3169,9 @@ name|getMmWriteId
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|console
-operator|.
-name|printInfo
-argument_list|(
+name|String
+name|loadTime
+init|=
 literal|"\t Time taken to load dynamic partitions: "
 operator|+
 operator|(
@@ -3187,6 +3186,19 @@ operator|/
 literal|1000.0
 operator|+
 literal|" seconds"
+decl_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|loadTime
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|loadTime
 argument_list|)
 expr_stmt|;
 if|if

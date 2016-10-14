@@ -668,7 +668,6 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-specifier|static
 name|ConcurrentMap
 argument_list|<
 name|String
@@ -678,17 +677,14 @@ argument_list|>
 name|partUpdates
 decl_stmt|;
 specifier|private
-specifier|static
 name|Table
 name|table
 decl_stmt|;
 specifier|private
-specifier|static
 name|String
 name|tableFullName
 decl_stmt|;
 specifier|private
-specifier|static
 name|JobConf
 name|jc
 init|=

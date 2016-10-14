@@ -236,7 +236,10 @@ parameter_list|()
 operator|,
 constructor|TO_LOCAL(
 block|)
-enum|;
+enum|,
+name|TO_LOCAL_NON_RECURSIVE
+parameter_list|()
+constructor_decl|;
 block|}
 end_class
 

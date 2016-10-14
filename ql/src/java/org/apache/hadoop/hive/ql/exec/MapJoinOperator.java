@@ -989,7 +989,7 @@ name|UnwrapRowContainer
 index|[]
 name|unwrapContainer
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|transient
 name|Configuration
 name|hconf

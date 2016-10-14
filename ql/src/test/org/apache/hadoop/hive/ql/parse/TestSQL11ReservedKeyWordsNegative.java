@@ -138,7 +138,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 74 + 2 (MySQL)  */
+comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 81  * ALL,ALTER,ARRAY,AS,AUTHORIZATION,BETWEEN,BIGINT,BINARY  * ,BOOLEAN,BOTH,BY,CONSTRAINT  * ,CREATE,CUBE,CURRENT_DATE,CURRENT_TIMESTAMP,CURSOR,  * DATE,DECIMAL,DELETE,DESCRIBE  * ,DOUBLE,DROP,EXISTS,EXTERNAL,FALSE,FETCH,FLOAT,FOR  * ,FOREIGN,FULL,GRANT,GROUP,GROUPING  * ,IMPORT,IN,INNER,INSERT,INT,INTERSECT,INTO,IS  * ,LATERAL,LEFT,LIKE,LOCAL,NONE,NULL  * ,OF,ORDER,OUT,OUTER,PARTITION,PERCENT,PRECISION  * ,PRIMARY,PROCEDURE,RANGE,READS,  * REFERENCES,REGEXP,REVOKE,RIGHT,RLIKE,ROLLUP,ROW  * ,ROWS,SET,SMALLINT,TABLE,TIMESTAMP  * ,TO,TRIGGER,TRUE,TRUNCATE,UNION,UPDATE,USER,USING,VALUES,WITH,  */
 end_comment
 
 begin_class
@@ -171,17 +171,6 @@ argument_list|(
 name|SemanticAnalyzer
 operator|.
 name|class
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SUPPORT_SQL11_RESERVED_KEYWORDS
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|SessionState
@@ -302,7 +291,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ALL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'ALL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -348,7 +337,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ALTER'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'ALTER' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -394,7 +383,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ARRAY'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'ARRAY' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -440,7 +429,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'AS'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'AS' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -486,7 +475,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'AUTHORIZATION'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'AUTHORIZATION' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -532,7 +521,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BETWEEN'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BETWEEN' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -578,7 +567,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BIGINT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BIGINT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -624,7 +613,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BINARY'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BINARY' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -670,7 +659,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BOOLEAN'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BOOLEAN' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -716,7 +705,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BOTH'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BOTH' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -762,7 +751,53 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'BY'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'BY' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_CONSTRAINT
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE CONSTRAINT (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'CONSTRAINT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -808,7 +843,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'CREATE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'CREATE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -854,7 +889,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'CUBE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'CUBE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -900,7 +935,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'CURRENT_DATE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'CURRENT_DATE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -946,7 +981,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'CURRENT_TIMESTAMP'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'CURRENT_TIMESTAMP' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -992,7 +1027,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'CURSOR'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'CURSOR' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1038,7 +1073,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DATE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DATE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1084,7 +1119,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DECIMAL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DECIMAL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1130,7 +1165,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DELETE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DELETE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1176,7 +1211,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DESCRIBE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DESCRIBE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1222,7 +1257,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DOUBLE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DOUBLE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1268,7 +1303,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'DROP'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'DROP' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1314,7 +1349,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'EXISTS'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'EXISTS' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1360,7 +1395,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'EXTERNAL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'EXTERNAL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1406,7 +1441,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'FALSE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'FALSE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1452,7 +1487,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'FETCH'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'FETCH' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1498,7 +1533,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'FLOAT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'FLOAT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1544,7 +1579,53 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'FOR'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'FOR' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_FOREIGN
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE FOREIGN (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'FOREIGN' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1590,7 +1671,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'FULL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'FULL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1636,7 +1717,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'GRANT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'GRANT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1682,7 +1763,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'GROUP'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'GROUP' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1728,7 +1809,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'GROUPING'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'GROUPING' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1774,7 +1855,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'IMPORT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'IMPORT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1820,7 +1901,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'IN'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'IN' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1866,7 +1947,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'INNER'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'INNER' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1912,7 +1993,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'INSERT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'INSERT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -1958,7 +2039,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'INT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'INT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2004,7 +2085,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'INTERSECT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'INTERSECT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2050,7 +2131,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'INTO'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'INTO' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2096,7 +2177,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'IS'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'IS' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2142,7 +2223,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'LATERAL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'LATERAL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2188,7 +2269,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'LEFT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'LEFT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2234,7 +2315,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'LIKE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'LIKE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2280,7 +2361,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'LOCAL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'LOCAL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2326,7 +2407,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'NONE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'NONE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2372,7 +2453,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'NULL'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'NULL' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2418,7 +2499,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'OF'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'OF' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2464,7 +2545,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ORDER'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'ORDER' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2510,7 +2591,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'OUT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'OUT' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2556,7 +2637,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'OUTER'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'OUTER' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2602,7 +2683,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'PARTITION'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'PARTITION' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2648,7 +2729,99 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'PERCENT'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'PERCENT' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_PRECISION
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE PRECISION (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'PRECISION' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_PRIMARY
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE PRIMARY (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'PRIMARY' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2694,7 +2867,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'PROCEDURE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'PROCEDURE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2740,7 +2913,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'RANGE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'RANGE' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2786,7 +2959,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'READS'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'READS' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -2800,14 +2973,14 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testSQL11ReservedKeyWords_REVOKE
+name|testSQL11ReservedKeyWords_REFERENCES
 parameter_list|()
 block|{
 try|try
 block|{
 name|parse
 argument_list|(
-literal|"CREATE TABLE REVOKE (col STRING)"
+literal|"CREATE TABLE REFERENCES (col STRING)"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -2832,882 +3005,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'REVOKE'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_RIGHT
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE RIGHT (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'RIGHT'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_ROLLUP
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE ROLLUP (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ROLLUP'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_ROW
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE ROW (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ROW'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_ROWS
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE ROWS (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'ROWS'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_SET
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE SET (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'SET'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_SMALLINT
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE SMALLINT (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'SMALLINT'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TABLE
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TABLE (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TABLE'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TIMESTAMP
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TIMESTAMP (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TIMESTAMP'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TO
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TO (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TO'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TRIGGER
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TRIGGER (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TRIGGER'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TRUE
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TRUE (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TRUE'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_TRUNCATE
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE TRUNCATE (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'TRUNCATE'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_UNION
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE UNION (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'UNION'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_UPDATE
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE UPDATE (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'UPDATE'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_USER
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE USER (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'USER'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_USING
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE USING (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'USING'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_VALUES
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE VALUES (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'VALUES'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_WITH
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE WITH (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'WITH'. Failed rule: 'identifier' in table name"
-argument_list|,
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-comment|// MySQL reserved keywords.
-annotation|@
-name|Test
-specifier|public
-name|void
-name|testSQL11ReservedKeyWords_RLIKE
-parameter_list|()
-block|{
-try|try
-block|{
-name|parse
-argument_list|(
-literal|"CREATE TABLE RLIKE (col STRING)"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-literal|"Expected ParseException"
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|ParseException
-name|ex
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Failure didn't match."
-argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'RLIKE'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'REFERENCES' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
@@ -3753,7 +3051,927 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:13 Failed to recognize predicate 'REGEXP'. Failed rule: 'identifier' in table name"
+literal|"line 1:13 cannot recognize input near 'REGEXP' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_REVOKE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE REVOKE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'REVOKE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_RIGHT
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE RIGHT (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'RIGHT' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_RLIKE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE RLIKE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'RLIKE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_ROLLUP
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE ROLLUP (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'ROLLUP' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_ROW
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE ROW (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'ROW' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_ROWS
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE ROWS (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'ROWS' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_SET
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE SET (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'SET' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_SMALLINT
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE SMALLINT (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'SMALLINT' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TABLE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TABLE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TABLE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TIMESTAMP
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TIMESTAMP (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TIMESTAMP' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TO
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TO (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TO' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TRIGGER
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TRIGGER (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TRIGGER' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TRUE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TRUE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TRUE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_TRUNCATE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE TRUNCATE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'TRUNCATE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_UNION
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE UNION (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'UNION' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_UPDATE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE UPDATE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'UPDATE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_USER
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE USER (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'USER' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_USING
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE USING (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'USING' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_VALUES
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE VALUES (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'VALUES' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_WITH
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE WITH (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'WITH' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.

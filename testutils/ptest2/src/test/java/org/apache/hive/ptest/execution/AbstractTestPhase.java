@@ -750,6 +750,8 @@ name|failedLogDir
 argument_list|,
 literal|1
 argument_list|,
+literal|true
+argument_list|,
 name|logger
 argument_list|)
 expr_stmt|;

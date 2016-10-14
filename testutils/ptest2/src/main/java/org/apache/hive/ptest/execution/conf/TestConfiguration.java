@@ -357,6 +357,14 @@ name|BUILD_TOOL
 init|=
 literal|"buildTool"
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|FETCH_LOGS_FOR_SUCCESSFUL_TESTS
+init|=
+literal|"fetchLogsForSuccessfulTests"
+decl_stmt|;
 comment|// The following parameters are not supported yet. TODO Add support
 specifier|private
 specifier|static
@@ -489,6 +497,11 @@ specifier|private
 specifier|final
 name|String
 name|buildTool
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|fetchLogsForSuccessfulTests
 decl_stmt|;
 specifier|private
 specifier|final
@@ -966,6 +979,17 @@ operator|.
 name|trim
 argument_list|()
 expr_stmt|;
+name|fetchLogsForSuccessfulTests
+operator|=
+name|context
+operator|.
+name|getBoolean
+argument_list|(
+name|FETCH_LOGS_FOR_SUCCESSFUL_TESTS
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|applyPathScriptPath
 operator|=
 name|context
@@ -1276,6 +1300,15 @@ parameter_list|()
 block|{
 return|return
 name|testCasePropertyName
+return|;
+block|}
+specifier|public
+name|boolean
+name|shouldFetchLogsForSuccessfulTests
+parameter_list|()
+block|{
+return|return
+name|fetchLogsForSuccessfulTests
 return|;
 block|}
 comment|// TODO Make sure this method is eventually used to find the prep / batch scripts.

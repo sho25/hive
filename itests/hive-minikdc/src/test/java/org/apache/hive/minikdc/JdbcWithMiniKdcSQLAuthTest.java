@@ -490,6 +490,24 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tableName1
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tableName2
+argument_list|)
+expr_stmt|;
 comment|// create tables
 name|stmt
 operator|.
