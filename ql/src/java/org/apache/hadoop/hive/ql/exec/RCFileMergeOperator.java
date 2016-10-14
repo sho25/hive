@@ -450,7 +450,8 @@ name|fs
 argument_list|,
 name|jc
 argument_list|,
-name|outPath
+name|getOutPath
+argument_list|()
 argument_list|,
 literal|null
 argument_list|,
@@ -557,12 +558,6 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-name|this
-operator|.
-name|exception
-operator|=
-literal|true
-expr_stmt|;
 name|closeOp
 argument_list|(
 literal|true

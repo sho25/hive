@@ -2052,7 +2052,6 @@ argument_list|(
 name|desc
 argument_list|)
 expr_stmt|;
-comment|// TODO# special case #N - unions (tez)
 name|desc
 operator|.
 name|setDirName
@@ -2410,7 +2409,7 @@ name|LOG14535
 operator|.
 name|info
 argument_list|(
-literal|"merging files from "
+literal|"will generate MR work for merging files from "
 operator|+
 name|fileSink
 operator|.
@@ -2425,7 +2424,6 @@ operator|+
 name|finalName
 argument_list|)
 expr_stmt|;
-comment|// TODO# special case #N - merge
 name|GenMapRedUtils
 operator|.
 name|createMRWorkForMergingFiles

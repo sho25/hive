@@ -39359,7 +39359,7 @@ name|LOG14535
 operator|.
 name|info
 argument_list|(
-literal|"createFS for table specifying "
+literal|"create filesink w/DEST_TABLE specifying "
 operator|+
 name|queryTmpdir
 operator|+
@@ -39754,7 +39754,7 @@ name|LOG14535
 operator|.
 name|info
 argument_list|(
-literal|"createFS for partition specifying "
+literal|"create filesink w/DEST_PARTITION specifying "
 operator|+
 name|queryTmpdir
 operator|+

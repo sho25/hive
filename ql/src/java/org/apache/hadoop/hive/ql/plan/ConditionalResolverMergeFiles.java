@@ -316,22 +316,6 @@ return|return
 name|dir
 return|;
 block|}
-comment|/**      * @param dir      *          the dir to set      */
-specifier|public
-name|void
-name|setDir
-parameter_list|(
-name|String
-name|dir
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dir
-operator|=
-name|dir
-expr_stmt|;
-block|}
 comment|/**      * @return the listTasks      */
 specifier|public
 name|List
@@ -833,6 +817,21 @@ argument_list|,
 name|avgConditionSize
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"merge resolve simple case - totalSz "
+operator|+
+name|totalSz
+operator|+
+literal|" from "
+operator|+
+name|dirPath
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|totalSz
@@ -907,6 +906,17 @@ block|}
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Resolver returning movetask for "
+operator|+
+name|dirPath
+argument_list|)
+expr_stmt|;
 name|resTsks
 operator|.
 name|add
@@ -1010,6 +1020,17 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"generateActualTasks for "
+operator|+
+name|dirPath
+argument_list|)
+expr_stmt|;
 name|DynamicPartitionCtx
 name|dpCtx
 init|=
@@ -1364,6 +1385,7 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// Note: this path should be specific to concatenate; never executed in a select query.
 comment|// modify the existing move task as it is already in the candidate running tasks
 comment|// running the MoveTask and MR task in parallel may
 comment|// cause the mvTask write to /ds=1 and MR task write
@@ -1813,6 +1835,20 @@ range|:
 name|fStats
 control|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Resolver looking at "
+operator|+
+name|fStat
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|fStat

@@ -12120,6 +12120,28 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
+comment|// TODO: we should probably block all ACID tables here.
+if|if
+condition|(
+name|MetaStoreUtils
+operator|.
+name|isMmTable
+argument_list|(
+name|tblObj
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Merge is not supported for MM tables"
+argument_list|)
+throw|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -12651,7 +12673,7 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
-comment|// TODO# movetask is created here; handle MM tables
+comment|// No need to handle MM tables - unsupported path.
 name|Task
 argument_list|<
 name|MoveWork

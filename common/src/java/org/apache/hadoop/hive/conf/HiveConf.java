@@ -12963,7 +12963,6 @@ argument_list|,
 literal|"MM write ID times out after this long if a heartbeat is not send. Currently disabled."
 argument_list|)
 block|,
-comment|// TODO# heartbeating not implemented
 name|HIVE_METASTORE_MM_ABSOLUTE_TIMEOUT
 argument_list|(
 literal|"hive.metastore.mm.absolute.timeout"

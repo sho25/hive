@@ -1891,6 +1891,47 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Executing MoveWork "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|work
+argument_list|)
+operator|+
+literal|" with "
+operator|+
+name|work
+operator|.
+name|getLoadFileWork
+argument_list|()
+operator|+
+literal|"; "
+operator|+
+name|work
+operator|.
+name|getLoadTableWork
+argument_list|()
+operator|+
+literal|"; "
+operator|+
+name|work
+operator|.
+name|getLoadMultiFilesWork
+argument_list|()
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 if|if
@@ -2332,7 +2373,6 @@ operator|&&
 name|isAcid
 condition|)
 block|{
-comment|// TODO# need to make sure ACID writes to final directories. Otherwise, might need to move.
 throw|throw
 operator|new
 name|HiveException
@@ -2389,6 +2429,13 @@ operator|+
 name|tbd
 operator|.
 name|getTable
+argument_list|()
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+operator|new
+name|Exception
 argument_list|()
 argument_list|)
 expr_stmt|;

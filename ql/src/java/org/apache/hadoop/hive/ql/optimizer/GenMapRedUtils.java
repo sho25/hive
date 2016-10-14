@@ -1257,6 +1257,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|DependencyCollectionWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|LoadFileDesc
 import|;
 end_import
@@ -7603,6 +7621,42 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Creating merge work from "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|fsInput
+argument_list|)
+operator|+
+literal|" with write ID "
+operator|+
+operator|(
+name|fsInputDesc
+operator|.
+name|isMmTable
+argument_list|()
+condition|?
+name|fsInputDesc
+operator|.
+name|getMmWriteId
+argument_list|()
+else|:
+literal|null
+operator|)
+operator|+
+literal|" into "
+operator|+
+name|finalName
+argument_list|)
+expr_stmt|;
 comment|// Create a TableScan operator
 name|RowSchema
 name|inputRS
@@ -7627,6 +7681,21 @@ argument_list|,
 name|inputRS
 argument_list|)
 decl_stmt|;
+name|Long
+name|srcMmWriteId
+init|=
+name|fsInputDesc
+operator|.
+name|isMmTable
+argument_list|()
+condition|?
+name|fsInputDesc
+operator|.
+name|getMmWriteId
+argument_list|()
+else|:
+literal|null
+decl_stmt|;
 comment|// Create a FileSink operator
 name|TableDesc
 name|ts
@@ -7642,7 +7711,6 @@ operator|.
 name|clone
 argument_list|()
 decl_stmt|;
-comment|// TODO# special case #N - merge FS is created here
 name|FileSinkDesc
 name|fsOutputDesc
 init|=
@@ -7663,12 +7731,14 @@ name|COMPRESSRESULT
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|FileSinkOperator
-name|fsOutput
-init|=
-operator|(
-name|FileSinkOperator
-operator|)
+name|fsOutputDesc
+operator|.
+name|setMmWriteId
+argument_list|(
+name|srcMmWriteId
+argument_list|)
+expr_stmt|;
+comment|// Create and attach the filesink for the merge. We don't actually need it for anything here.
 name|OperatorFactory
 operator|.
 name|getAndMakeChild
@@ -7679,7 +7749,7 @@ name|inputRS
 argument_list|,
 name|tsMerge
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// If the input FileSinkOperator is a dynamic partition enabled, the tsMerge input schema
 comment|// needs to include the partition column, and the fsOutput should have
 comment|// a DynamicPartitionCtx to indicate that it needs to dynamically partitioned.
@@ -7842,38 +7912,13 @@ block|}
 comment|//
 comment|// 2. Constructing a conditional task consisting of a move task and a map reduce task
 comment|//
-comment|// TODO# movetask is created here; handle MM tables
-name|MoveWork
-name|dummyMv
+name|Path
+name|inputDirName
 init|=
-operator|new
-name|MoveWork
-argument_list|(
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-operator|new
-name|LoadFileDesc
-argument_list|(
 name|fsInputDesc
 operator|.
-name|getFinalDirName
+name|getMergeInputDirName
 argument_list|()
-argument_list|,
-name|finalName
-argument_list|,
-literal|true
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|)
-argument_list|,
-literal|false
-argument_list|)
 decl_stmt|;
 name|MapWork
 name|cplan
@@ -8238,6 +8283,57 @@ argument_list|)
 expr_stmt|;
 comment|// NOTE: we should gather stats in MR1 rather than MR2 at merge job since we don't
 comment|// know if merge MR2 will be triggered at execution time
+name|MoveWork
+name|dummyMv
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|srcMmWriteId
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Only create the movework for non-MM table. No action needed for a MM table.
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"creating dummy movetask for merge (with lfd)"
+argument_list|)
+expr_stmt|;
+name|dummyMv
+operator|=
+operator|new
+name|MoveWork
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+operator|new
+name|LoadFileDesc
+argument_list|(
+name|inputDirName
+argument_list|,
+name|finalName
+argument_list|,
+literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 name|ConditionalTask
 name|cndTsk
 init|=
@@ -8255,7 +8351,7 @@ name|work
 argument_list|,
 name|fsInputDesc
 operator|.
-name|getFinalDirName
+name|getMergeInputDirName
 argument_list|()
 operator|.
 name|toString
@@ -8297,9 +8393,30 @@ expr_stmt|;
 comment|//
 comment|// 3. add the moveTask as the children of the conditional task
 comment|//
+comment|// Use the original fsOp path here in case of MM - while the new FSOP merges files inside the
+comment|// MM directory, the original MoveTask still commits based on the parent. Note that this path
+comment|// can only be triggered for a merge that's part of insert for now; MM tables do not support
+comment|// concatenate. Keeping the old logic for non-MM tables with temp directories and stuff.
+name|Path
+name|fsopPath
+init|=
+name|srcMmWriteId
+operator|!=
+literal|null
+condition|?
+name|fsInputDesc
+operator|.
+name|getFinalDirName
+argument_list|()
+else|:
+name|fsOutputDesc
+operator|.
+name|getFinalDirName
+argument_list|()
+decl_stmt|;
 name|linkMoveTask
 argument_list|(
-name|fsOutput
+name|fsopPath
 argument_list|,
 name|cndTsk
 argument_list|,
@@ -8312,13 +8429,13 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Make the move task in the GenMRProcContext following the FileSinkOperator a dependent of all    * possible subtrees branching from the ConditionalTask.    *    * @param newOutput    * @param cndTsk    * @param mvTasks    * @param hconf    * @param dependencyTask    */
-specifier|public
+specifier|private
 specifier|static
 name|void
 name|linkMoveTask
 parameter_list|(
-name|FileSinkOperator
-name|newOutput
+name|Path
+name|fsopPath
 parameter_list|,
 name|ConditionalTask
 name|cndTsk
@@ -8347,11 +8464,11 @@ name|mvTask
 init|=
 name|GenMapRedUtils
 operator|.
-name|findMoveTask
+name|findMoveTaskForFsopOutput
 argument_list|(
 name|mvTasks
 argument_list|,
-name|newOutput
+name|fsopPath
 argument_list|)
 decl_stmt|;
 for|for
@@ -8384,7 +8501,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Follows the task tree down from task and makes all leaves parents of mvTask    *    * @param mvTask    * @param task    * @param hconf    * @param dependencyTask    */
-specifier|public
+specifier|private
 specifier|static
 name|void
 name|linkMoveTask
@@ -8932,7 +9049,7 @@ name|inputDir
 init|=
 name|fsDesc
 operator|.
-name|getFinalDirName
+name|getMergeInputDirName
 argument_list|()
 decl_stmt|;
 name|TableDesc
@@ -8954,6 +9071,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// dummy alias: just use the input path
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"createMRWorkForMergingFiles for "
+operator|+
+name|inputDir
+argument_list|)
+expr_stmt|;
 comment|// constructing the default MapredWork
 name|MapredWork
 name|cMrPlan
@@ -9049,7 +9177,7 @@ name|inputDir
 init|=
 name|fsInputDesc
 operator|.
-name|getFinalDirName
+name|getMergeInputDirName
 argument_list|()
 decl_stmt|;
 name|TableDesc
@@ -9191,6 +9319,21 @@ literal|" format other than RCFile or ORCFile"
 argument_list|)
 throw|;
 block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"creating mergefilework from "
+operator|+
+name|inputDirs
+operator|+
+literal|" to "
+operator|+
+name|finalName
+argument_list|)
+expr_stmt|;
 comment|// create the merge file work
 name|MergeFileWork
 name|work
@@ -9364,6 +9507,16 @@ expr_stmt|;
 block|}
 name|fmd
 operator|.
+name|setMmWriteId
+argument_list|(
+name|fsInputDesc
+operator|.
+name|getMmWriteId
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|fmd
+operator|.
 name|setDpCtx
 argument_list|(
 name|fsInputDesc
@@ -9492,12 +9645,39 @@ name|String
 name|inputPath
 parameter_list|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Creating conditional merge task for "
+operator|+
+name|inputPath
+argument_list|)
+expr_stmt|;
 comment|// There are 3 options for this ConditionalTask:
 comment|// 1) Merge the partitions
 comment|// 2) Move the partitions (i.e. don't merge the partitions)
 comment|// 3) Merge some partitions and move other partitions (i.e. merge some partitions and don't
 comment|// merge others) in this case the merge is done first followed by the move to prevent
 comment|// conflicts.
+comment|// TODO: if we are not dealing with concatenate DDL, we should not create a merge+move path
+comment|//       because it should be impossible to get incompatible outputs.
+comment|// Create a dummy task if no move is needed.
+name|Serializable
+name|moveWork
+init|=
+name|mvWork
+operator|!=
+literal|null
+condition|?
+name|mvWork
+else|:
+operator|new
+name|DependencyCollectionWork
+argument_list|()
+decl_stmt|;
 name|Task
 argument_list|<
 name|?
@@ -9527,7 +9707,7 @@ name|TaskFactory
 operator|.
 name|get
 argument_list|(
-name|mvWork
+name|moveWork
 argument_list|,
 name|conf
 argument_list|)
@@ -9561,7 +9741,7 @@ name|TaskFactory
 operator|.
 name|get
 argument_list|(
-name|mvWork
+name|moveWork
 argument_list|,
 name|conf
 argument_list|)
@@ -9593,7 +9773,7 @@ name|listWorks
 operator|.
 name|add
 argument_list|(
-name|mvWork
+name|moveWork
 argument_list|)
 expr_stmt|;
 name|listWorks
@@ -9755,7 +9935,7 @@ name|Task
 argument_list|<
 name|MoveWork
 argument_list|>
-name|findMoveTask
+name|findMoveTaskForFsopOutput
 parameter_list|(
 name|List
 argument_list|<
@@ -9766,8 +9946,8 @@ argument_list|>
 argument_list|>
 name|mvTasks
 parameter_list|,
-name|FileSinkOperator
-name|fsOp
+name|Path
+name|fsopFinalDir
 parameter_list|)
 block|{
 comment|// find the move task
@@ -9838,6 +10018,30 @@ name|getSourcePath
 argument_list|()
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Observing MoveWork "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|mvWork
+argument_list|)
+operator|+
+literal|" with "
+operator|+
+name|srcDir
+operator|+
+literal|" while looking for "
+operator|+
+name|fsopFinalDir
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|(
@@ -9846,20 +10050,12 @@ operator|!=
 literal|null
 operator|)
 operator|&&
-operator|(
 name|srcDir
 operator|.
 name|equals
 argument_list|(
-name|fsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getFinalDirName
-argument_list|()
+name|fsopFinalDir
 argument_list|)
-operator|)
 condition|)
 block|{
 return|return
@@ -9907,22 +10103,20 @@ block|{
 comment|// Has the user enabled merging of files for map-only jobs or for all jobs
 if|if
 condition|(
-operator|(
 name|mvTasks
-operator|!=
+operator|==
 literal|null
-operator|)
-operator|&&
-operator|(
-operator|!
+operator|||
 name|mvTasks
 operator|.
 name|isEmpty
 argument_list|()
-operator|)
 condition|)
-block|{
+return|return
+literal|false
+return|;
 comment|// no need of merging if the move is to a local file system
+comment|// We are looking based on the original FSOP, so use the original path as is.
 name|MoveTask
 name|mvTask
 init|=
@@ -9931,13 +10125,20 @@ name|MoveTask
 operator|)
 name|GenMapRedUtils
 operator|.
-name|findMoveTask
+name|findMoveTaskForFsopOutput
 argument_list|(
 name|mvTasks
 argument_list|,
 name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getFinalDirName
+argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// TODO: wtf? wtf?!! why is this in this method?
 if|if
 condition|(
 name|mvTask
@@ -10019,18 +10220,16 @@ block|}
 block|}
 if|if
 condition|(
-operator|(
 name|mvTask
-operator|!=
+operator|==
 literal|null
-operator|)
-operator|&&
-operator|!
+operator|||
 name|mvTask
 operator|.
 name|isLocal
 argument_list|()
-operator|&&
+operator|||
+operator|!
 name|fsOp
 operator|.
 name|getConf
@@ -10039,7 +10238,9 @@ operator|.
 name|canBeMerged
 argument_list|()
 condition|)
-block|{
+return|return
+literal|false
+return|;
 if|if
 condition|(
 name|currTask
@@ -10050,8 +10251,7 @@ operator|instanceof
 name|TezWork
 condition|)
 block|{
-comment|// tez blurs the boundary between map and reduce, thus it has it's own
-comment|// config
+comment|// tez blurs the boundary between map and reduce, thus it has it's own config
 return|return
 name|hconf
 operator|.
@@ -10086,6 +10286,37 @@ name|HIVEMERGESPARKFILES
 argument_list|)
 return|;
 block|}
+return|return
+name|isMergeRequiredForMr
+argument_list|(
+name|hconf
+argument_list|,
+name|fsOp
+argument_list|,
+name|currTask
+argument_list|)
+return|;
+block|}
+specifier|private
+specifier|static
+name|boolean
+name|isMergeRequiredForMr
+parameter_list|(
+name|HiveConf
+name|hconf
+parameter_list|,
+name|FileSinkOperator
+name|fsOp
+parameter_list|,
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|currTask
+parameter_list|)
+block|{
 if|if
 condition|(
 name|fsOp
@@ -10101,8 +10332,8 @@ comment|// If the user has HIVEMERGEMAPREDFILES set to false, the idea was the
 comment|// number of reducers are few, so the number of files anyway are small.
 comment|// However, with this optimization, we are increasing the number of files
 comment|// possibly by a big margin. So, merge aggresively.
-if|if
-condition|(
+return|return
+operator|(
 name|hconf
 operator|.
 name|getBoolVar
@@ -10120,15 +10351,9 @@ name|ConfVars
 operator|.
 name|HIVEMERGEMAPREDFILES
 argument_list|)
-condition|)
-block|{
-return|return
-literal|true
+operator|)
 return|;
 block|}
-block|}
-else|else
-block|{
 comment|// There are separate configuration parameters to control whether to
 comment|// merge for a map-only job
 comment|// or for a map-reduce job
@@ -10202,15 +10427,6 @@ literal|true
 return|;
 block|}
 block|}
-else|else
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
-block|}
-block|}
 return|return
 literal|false
 return|;
@@ -10259,11 +10475,6 @@ name|dest
 init|=
 literal|null
 decl_stmt|;
-if|if
-condition|(
-name|chDir
-condition|)
-block|{
 name|FileSinkDesc
 name|fileSinkDesc
 init|=
@@ -10272,13 +10483,32 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+name|boolean
+name|isMmTable
+init|=
+name|fileSinkDesc
+operator|.
+name|isMmTable
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|chDir
+condition|)
+block|{
 name|dest
 operator|=
 name|fileSinkDesc
 operator|.
-name|getFinalDirName
+name|getMergeInputDirName
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isMmTable
+condition|)
+block|{
 comment|// generate the temporary file
 comment|// it must be on the same file system as the current destination
 name|Context
@@ -10291,7 +10521,6 @@ argument_list|()
 decl_stmt|;
 comment|// Create the required temporary file in the HDFS location if the destination
 comment|// path of the FileSinkOperator table is a blobstore path.
-comment|// TODO# special case #N - linked FDs (unions?)
 name|Path
 name|tmpDir
 init|=
@@ -10393,7 +10622,7 @@ name|LOG14535
 operator|.
 name|info
 argument_list|(
-literal|"createMoveTask setting tmpDir for LinkedFileSink chDir "
+literal|"createMoveTask setting tmpDir  chDir "
 operator|+
 name|tmpDir
 operator|+
@@ -10405,6 +10634,7 @@ name|getDestPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|Task
@@ -10425,11 +10655,17 @@ name|mvTask
 operator|=
 name|GenMapRedUtils
 operator|.
-name|findMoveTask
+name|findMoveTaskForFsopOutput
 argument_list|(
 name|mvTasks
 argument_list|,
 name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getFinalDirName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
