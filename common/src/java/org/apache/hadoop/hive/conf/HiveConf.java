@@ -9791,13 +9791,15 @@ argument_list|,
 literal|"Path for the HS2 generated cookies"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
 argument_list|(
 literal|"hive.server2.thrift.http.cookie.is.secure"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Secure attribute of the HS2 generated cookie."
+literal|"Deprecated: Secure attribute of the HS2 generated cookie (this is automatically enabled for SSL enabled HiveServer2)."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_HTTPONLY
