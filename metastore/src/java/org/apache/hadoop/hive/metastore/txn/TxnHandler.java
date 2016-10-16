@@ -1317,7 +1317,7 @@ name|List
 argument_list|<
 name|TxnInfo
 argument_list|>
-name|txnInfo
+name|txnInfos
 init|=
 operator|new
 name|ArrayList
@@ -1329,7 +1329,9 @@ decl_stmt|;
 comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state, txn_user, txn_host from TXNS where txn_id<= "
+literal|"select txn_id, txn_state, txn_user, txn_host, txn_started, txn_last_heartbeat from "
+operator|+
+literal|"TXNS where txn_id<= "
 operator|+
 name|hwm
 expr_stmt|;
@@ -1417,10 +1419,9 @@ literal|" found in txns table"
 argument_list|)
 throw|;
 block|}
+name|TxnInfo
 name|txnInfo
-operator|.
-name|add
-argument_list|(
+init|=
 operator|new
 name|TxnInfo
 argument_list|(
@@ -1447,6 +1448,36 @@ argument_list|(
 literal|4
 argument_list|)
 argument_list|)
+decl_stmt|;
+name|txnInfo
+operator|.
+name|setStartedTime
+argument_list|(
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|5
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|txnInfo
+operator|.
+name|setLastHeartbeatTime
+argument_list|(
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|6
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|txnInfos
+operator|.
+name|add
+argument_list|(
+name|txnInfo
 argument_list|)
 expr_stmt|;
 block|}
@@ -1468,7 +1499,7 @@ name|GetOpenTxnsInfoResponse
 argument_list|(
 name|hwm
 argument_list|,
-name|txnInfo
+name|txnInfos
 argument_list|)
 return|;
 block|}
