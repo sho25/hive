@@ -125,6 +125,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConfUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|Context
@@ -764,6 +780,16 @@ operator|.
 name|mkdirs
 argument_list|(
 name|emptyScratchDir
+argument_list|)
+expr_stmt|;
+comment|// Update credential provider location
+comment|// the password to the credential provider in already set in the sparkConf
+comment|// in HiveSparkClientFactory
+name|HiveConfUtil
+operator|.
+name|updateJobCredentialProviders
+argument_list|(
+name|jobConf
 argument_list|)
 expr_stmt|;
 name|SparkCounters

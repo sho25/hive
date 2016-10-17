@@ -381,6 +381,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConfUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|CompilationOpContext
@@ -3069,6 +3085,13 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+name|HiveConfUtil
+operator|.
+name|updateJobCredentialProviders
+argument_list|(
+name|job
+argument_list|)
+expr_stmt|;
 comment|// Finally SUBMIT the JOB!
 name|rj
 operator|=

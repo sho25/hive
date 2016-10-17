@@ -315,6 +315,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConfUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|io
 operator|.
 name|HdfsUtils
@@ -2654,6 +2670,13 @@ operator|.
 name|info
 argument_list|(
 literal|"Launch distributed copy (distcp) job."
+argument_list|)
+expr_stmt|;
+name|HiveConfUtil
+operator|.
+name|updateJobCredentialProviders
+argument_list|(
+name|conf
 argument_list|)
 expr_stmt|;
 name|copied
