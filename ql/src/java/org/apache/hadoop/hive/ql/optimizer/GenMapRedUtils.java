@@ -4559,7 +4559,7 @@ literal|"Adding "
 operator|+
 name|path
 operator|+
-literal|" of table"
+literal|" of table "
 operator|+
 name|alias_id
 argument_list|)

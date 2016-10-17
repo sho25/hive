@@ -171,6 +171,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -976,12 +992,32 @@ init|=
 literal|""
 decl_stmt|;
 comment|// check if input pruning is possible
+comment|// TODO: this relies a lot on having one file per bucket. No support for MM tables for now.
+name|boolean
+name|isMmTable
+init|=
+name|MetaStoreUtils
+operator|.
+name|isMmTable
+argument_list|(
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|sampleDescr
 operator|.
 name|getInputPruning
 argument_list|()
+operator|&&
+operator|!
+name|isMmTable
 condition|)
 block|{
 name|LOG
@@ -1193,6 +1229,10 @@ block|{
 comment|// need to do full scan
 name|fullScanMsg
 operator|=
+name|isMmTable
+condition|?
+literal|"MM table"
+else|:
 literal|"Tablesample not on clustered columns"
 expr_stmt|;
 block|}
