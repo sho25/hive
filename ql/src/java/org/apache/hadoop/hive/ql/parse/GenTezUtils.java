@@ -2097,13 +2097,6 @@ argument_list|)
 expr_stmt|;
 name|desc
 operator|.
-name|setParentDir
-argument_list|(
-name|path
-argument_list|)
-expr_stmt|;
-name|desc
-operator|.
 name|setLinkedFileSinkDesc
 argument_list|(
 name|linked

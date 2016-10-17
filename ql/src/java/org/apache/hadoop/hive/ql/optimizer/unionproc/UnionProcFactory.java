@@ -1278,13 +1278,6 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|fileSinkDesc
-operator|.
-name|setParentDir
-argument_list|(
-name|parentDirName
-argument_list|)
-expr_stmt|;
 name|Utilities
 operator|.
 name|LOG14535

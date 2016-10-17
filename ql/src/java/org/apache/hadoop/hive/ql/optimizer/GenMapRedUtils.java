@@ -10556,13 +10556,6 @@ control|)
 block|{
 name|fsConf
 operator|.
-name|setParentDir
-argument_list|(
-name|tmpDir
-argument_list|)
-expr_stmt|;
-name|fsConf
-operator|.
 name|setDirName
 argument_list|(
 operator|new
@@ -10593,11 +10586,7 @@ operator|.
 name|getDirName
 argument_list|()
 operator|+
-literal|"; new parent "
-operator|+
-name|tmpDir
-operator|+
-literal|", dest was "
+literal|"; dest was "
 operator|+
 name|fileSinkDesc
 operator|.

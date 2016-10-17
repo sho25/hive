@@ -282,7 +282,10 @@ operator|+
 literal|" to "
 operator|+
 name|targetDir
-comment|/*, new Exception()*/
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this

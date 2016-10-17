@@ -7927,7 +7927,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|public
 name|void
 name|commitMmTableWrite
 parameter_list|(

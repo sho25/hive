@@ -1238,7 +1238,12 @@ decl_stmt|;
 specifier|protected
 specifier|transient
 name|String
-name|childSpecPathDynLinkedPartitions
+name|unionPath
+decl_stmt|;
+specifier|protected
+specifier|transient
+name|boolean
+name|isUnionDp
 decl_stmt|;
 specifier|protected
 specifier|transient
@@ -2347,11 +2352,32 @@ operator|.
 name|getMmWriteId
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|unionPath
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Create the union directory inside the MM directory.
+name|subdirPath
+operator|+=
+name|Path
+operator|.
+name|SEPARATOR
 operator|+
-literal|"/"
+name|unionPath
+expr_stmt|;
+block|}
+name|subdirPath
+operator|+=
+name|Path
+operator|.
+name|SEPARATOR
 operator|+
 name|taskId
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -2655,7 +2681,6 @@ name|void
 name|initializeSpecPath
 parameter_list|()
 block|{
-comment|// TODO# special case #N
 comment|// For a query of the type:
 comment|// insert overwrite table T1
 comment|// select * from (subq1 union all subq2)u;
@@ -2668,23 +2693,21 @@ comment|// subQ2 have to write to directories: Parent/DynamicPartition/Child_1
 comment|// and Parent/DynamicPartition/Child_1 respectively.
 comment|// The movetask that follows subQ1 and subQ2 tasks still moves the directory
 comment|// 'Parent'
-if|if
-condition|(
-operator|(
-operator|!
+name|boolean
+name|isLinked
+init|=
 name|conf
 operator|.
 name|isLinkedFileSink
 argument_list|()
-operator|)
-operator|||
-operator|(
-name|dpCtx
-operator|==
-literal|null
-operator|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|isLinked
 condition|)
 block|{
+comment|// Simple case - no union.
 name|specPath
 operator|=
 name|conf
@@ -2692,43 +2715,32 @@ operator|.
 name|getDirName
 argument_list|()
 expr_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Setting up FSOP "
-operator|+
-name|System
-operator|.
-name|identityHashCode
-argument_list|(
-name|this
-argument_list|)
-operator|+
-literal|" ("
-operator|+
-name|conf
-operator|.
-name|isLinkedFileSink
-argument_list|()
-operator|+
-literal|") with "
-operator|+
-name|taskId
-operator|+
-literal|" and "
-operator|+
-name|specPath
-argument_list|)
-expr_stmt|;
-name|childSpecPathDynLinkedPartitions
+name|unionPath
 operator|=
 literal|null
 expr_stmt|;
-return|return;
 block|}
+else|else
+block|{
+name|isUnionDp
+operator|=
+operator|(
+name|dpCtx
+operator|!=
+literal|null
+operator|)
+expr_stmt|;
+if|if
+condition|(
+name|conf
+operator|.
+name|isMmTable
+argument_list|()
+operator|||
+name|isUnionDp
+condition|)
+block|{
+comment|// MM tables need custom handling for union suffix; DP tables use parent too.
 name|specPath
 operator|=
 name|conf
@@ -2736,7 +2748,7 @@ operator|.
 name|getParentDir
 argument_list|()
 expr_stmt|;
-name|childSpecPathDynLinkedPartitions
+name|unionPath
 operator|=
 name|conf
 operator|.
@@ -2746,6 +2758,23 @@ operator|.
 name|getName
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// For now, keep the old logic for non-MM non-DP union case. Should probably be unified.
+name|specPath
+operator|=
+name|conf
+operator|.
+name|getDirName
+argument_list|()
+expr_stmt|;
+name|unionPath
+operator|=
+literal|null
+expr_stmt|;
+block|}
+block|}
 name|Utilities
 operator|.
 name|LOG14535
@@ -2775,6 +2804,10 @@ operator|+
 literal|" and "
 operator|+
 name|specPath
+operator|+
+literal|" + "
+operator|+
+name|unionPath
 argument_list|)
 expr_stmt|;
 block|}
@@ -5659,14 +5692,23 @@ name|isMmTable
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// TODO# this will break
 name|fsp2
 operator|.
 name|configureDynPartPath
 argument_list|(
 name|dirName
 argument_list|,
-name|childSpecPathDynLinkedPartitions
+operator|!
+name|conf
+operator|.
+name|isMmTable
+argument_list|()
+operator|&&
+name|isUnionDp
+condition|?
+name|unionPath
+else|:
+literal|null
 argument_list|)
 expr_stmt|;
 name|Utilities
@@ -5681,7 +5723,7 @@ name|dirName
 operator|+
 literal|", childSpec "
 operator|+
-name|childSpecPathDynLinkedPartitions
+name|unionPath
 operator|+
 literal|": tmpPath "
 operator|+
@@ -6986,7 +7028,7 @@ operator|.
 name|getMmWriteId
 argument_list|()
 argument_list|,
-name|childSpecPathDynLinkedPartitions
+name|unionPath
 argument_list|)
 expr_stmt|;
 block|}
@@ -7147,6 +7189,11 @@ operator|(
 name|dpCtx
 operator|!=
 literal|null
+operator|||
+name|conf
+operator|.
+name|isMmTable
+argument_list|()
 operator|)
 condition|)
 block|{
@@ -7156,19 +7203,6 @@ name|conf
 operator|.
 name|getParentDir
 argument_list|()
-expr_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Setting specPath to "
-operator|+
-name|specPath
-operator|+
-literal|" for dynparts"
-argument_list|)
 expr_stmt|;
 name|unionSuffix
 operator|=
@@ -7181,6 +7215,17 @@ name|getName
 argument_list|()
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"jobCloseOp using specPath "
+operator|+
+name|specPath
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -7228,6 +7273,12 @@ argument_list|()
 decl_stmt|,
 name|lbLevels
 init|=
+name|lbCtx
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
 name|lbCtx
 operator|.
 name|calculateListBucketingLevel

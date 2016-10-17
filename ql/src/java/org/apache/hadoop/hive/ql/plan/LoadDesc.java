@@ -129,6 +129,21 @@ return|return
 name|sourcePath
 return|;
 block|}
+specifier|public
+name|void
+name|setSourcePath
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+block|{
+name|this
+operator|.
+name|sourcePath
+operator|=
+name|path
+expr_stmt|;
+block|}
 block|}
 end_class
 
