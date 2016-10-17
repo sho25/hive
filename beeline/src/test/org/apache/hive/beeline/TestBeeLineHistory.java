@@ -258,7 +258,7 @@ argument_list|)
 expr_stmt|;
 name|beeline
 operator|.
-name|getConsoleReader
+name|initializeConsoleReader
 argument_list|(
 literal|null
 argument_list|)
@@ -358,7 +358,7 @@ argument_list|)
 expr_stmt|;
 name|beeline
 operator|.
-name|getConsoleReader
+name|initializeConsoleReader
 argument_list|(
 literal|null
 argument_list|)

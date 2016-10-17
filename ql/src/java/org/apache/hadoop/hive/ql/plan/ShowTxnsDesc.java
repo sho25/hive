@@ -70,7 +70,7 @@ specifier|final
 name|String
 name|schema
 init|=
-literal|"txnid,state,user,host#string:string:string:string"
+literal|"txnid,state,startedtime,lastheartbeattime,user,host#string:string:string:string:string:string"
 decl_stmt|;
 specifier|private
 name|String

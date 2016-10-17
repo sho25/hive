@@ -301,6 +301,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConfUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|Context
@@ -1359,6 +1375,14 @@ argument_list|(
 name|hiveConf
 argument_list|)
 decl_stmt|;
+comment|//update the credential provider location in the jobConf
+name|HiveConfUtil
+operator|.
+name|updateJobCredentialProviders
+argument_list|(
+name|jobConf
+argument_list|)
+expr_stmt|;
 comment|// Create temporary scratch dir
 specifier|final
 name|Path

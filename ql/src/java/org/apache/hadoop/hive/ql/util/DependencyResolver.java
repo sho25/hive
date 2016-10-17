@@ -414,9 +414,6 @@ name|authorityTokens
 init|=
 name|authority
 operator|.
-name|toLowerCase
-argument_list|()
-operator|.
 name|split
 argument_list|(
 literal|":"

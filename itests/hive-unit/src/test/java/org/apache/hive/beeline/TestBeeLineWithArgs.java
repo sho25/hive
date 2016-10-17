@@ -4223,6 +4223,65 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Attempt to execute Beeline with force option to continue running script even after errors.    * Test for presence of an expected pattern to match the output of a valid command at the end.    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBeelineWithForce
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+specifier|final
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"drop table does_not_exist;\ncreate table incomplete_syntax(a, string, );\n "
+operator|+
+literal|"drop table if exists new_table;\n create table new_table(foo int, bar string);\n "
+operator|+
+literal|"desc new_table;\n"
+decl_stmt|;
+specifier|final
+name|String
+name|EXPECTED_PATTERN
+init|=
+literal|"2 rows selected"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|argList
+init|=
+name|getBaseArgs
+argument_list|(
+name|miniHS2
+operator|.
+name|getBaseJdbcURL
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|argList
+operator|.
+name|add
+argument_list|(
+literal|"--force"
+argument_list|)
+expr_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|,
+name|argList
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

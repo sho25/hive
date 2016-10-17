@@ -901,6 +901,7 @@ operator|.
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_PATH
 argument_list|)
 expr_stmt|;
+comment|// always send secure cookies for SSL mode
 name|this
 operator|.
 name|isCookieSecure
@@ -911,7 +912,7 @@ name|getBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
+name|HIVE_SERVER2_USE_SSL
 argument_list|)
 expr_stmt|;
 name|this

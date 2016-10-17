@@ -9809,13 +9809,15 @@ argument_list|,
 literal|"Path for the HS2 generated cookies"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
 argument_list|(
 literal|"hive.server2.thrift.http.cookie.is.secure"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Secure attribute of the HS2 generated cookie."
+literal|"Deprecated: Secure attribute of the HS2 generated cookie (this is automatically enabled for SSL enabled HiveServer2)."
 argument_list|)
 block|,
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_HTTPONLY
@@ -10644,6 +10646,19 @@ argument_list|,
 literal|"set,reset,dfs,add,list,delete,reload,compile"
 argument_list|,
 literal|"Comma separated list of non-SQL Hive commands users are authorized to execute"
+argument_list|)
+block|,
+name|HIVE_SERVER2_JOB_CREDENTIAL_PROVIDER_PATH
+argument_list|(
+literal|"hive.server2.job.credential.provider.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If set, this configuration property should provide a comma-separated list of URLs that indicates the type and "
+operator|+
+literal|"location of providers to be used by hadoop credential provider API. It provides HiveServer2 the ability to provide job-specific "
+operator|+
+literal|"credential providers for jobs run using MR and Spark execution engines. This functionality has not been tested against Tez."
 argument_list|)
 block|,
 name|HIVE_MOVE_FILES_THREAD_COUNT

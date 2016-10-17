@@ -410,17 +410,6 @@ argument_list|)
 expr_stmt|;
 name|hiveConf
 operator|.
-name|setBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_IS_SECURE
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|hiveConf
-operator|.
 name|setVar
 argument_list|(
 name|ConfVars
