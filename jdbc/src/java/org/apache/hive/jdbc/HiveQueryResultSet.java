@@ -2094,11 +2094,6 @@ name|iterator
 argument_list|()
 expr_stmt|;
 block|}
-name|String
-name|rowStr
-init|=
-literal|""
-decl_stmt|;
 if|if
 condition|(
 name|fetchedRowsItr
@@ -2124,24 +2119,6 @@ block|}
 name|rowsFetched
 operator|++
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Fetched row string: "
-operator|+
-name|rowStr
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
