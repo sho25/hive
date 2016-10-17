@@ -967,6 +967,8 @@ argument_list|(
 literal|"SomeTest."
 operator|+
 name|QFILENAME
+operator|+
+literal|" (batchId=1)"
 argument_list|)
 argument_list|,
 name|failedTests
@@ -1149,6 +1151,8 @@ argument_list|(
 literal|"SomeTest."
 operator|+
 name|QFILENAME
+operator|+
+literal|" (batchId=1)"
 argument_list|)
 argument_list|,
 name|failedTests
@@ -1160,7 +1164,7 @@ name|Test
 argument_list|(
 name|timeout
 operator|=
-literal|2000000
+literal|20000
 argument_list|)
 specifier|public
 name|void
@@ -1232,7 +1236,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"TestClass-2 - did not produce a TEST-*.xml file"
+literal|"TestClass-2 - did not produce a TEST-*.xml file (likely timed out) (batchId=1)"
 argument_list|,
 name|failedTests
 operator|.
