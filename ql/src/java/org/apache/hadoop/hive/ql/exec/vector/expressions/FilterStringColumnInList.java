@@ -25,16 +25,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -806,28 +796,6 @@ name|inListValues
 operator|=
 name|a
 expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-return|return
-literal|"col "
-operator|+
-name|inputCol
-operator|+
-literal|", values "
-operator|+
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|inListValues
-argument_list|)
-return|;
 block|}
 block|}
 end_class

@@ -31,24 +31,6 @@ name|Arrays
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|TypeInfo
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class collects column information for copying a row from one VectorizedRowBatch to  * same/another batch.  */
 end_comment
@@ -78,9 +60,9 @@ index|[]
 name|outputColumns
 decl_stmt|;
 specifier|protected
-name|TypeInfo
+name|String
 index|[]
-name|typeInfos
+name|typeNames
 decl_stmt|;
 specifier|protected
 name|VectorColumnOrderedMap
@@ -115,8 +97,8 @@ parameter_list|,
 name|int
 name|outputColumn
 parameter_list|,
-name|TypeInfo
-name|typeInfo
+name|String
+name|typeName
 parameter_list|)
 function_decl|;
 specifier|public
@@ -157,13 +139,13 @@ name|outputColumns
 return|;
 block|}
 specifier|public
-name|TypeInfo
+name|String
 index|[]
-name|getTypeInfos
+name|getTypeNames
 parameter_list|()
 block|{
 return|return
-name|typeInfos
+name|typeNames
 return|;
 block|}
 annotation|@
@@ -226,13 +208,13 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"type infos: "
+literal|"type names: "
 operator|+
 name|Arrays
 operator|.
 name|toString
 argument_list|(
-name|typeInfos
+name|typeNames
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -103,7 +103,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|protected
+specifier|private
 name|int
 name|colNum
 decl_stmt|;
@@ -612,19 +612,6 @@ parameter_list|()
 block|{
 return|return
 literal|"double"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-return|return
-literal|"col "
-operator|+
-name|colNum
 return|;
 block|}
 block|}
