@@ -7981,13 +7981,17 @@ literal|0
 argument_list|,
 literal|"Sets the operational properties that control the appropriate behavior for various\n"
 operator|+
-literal|"versions of the Hive ACID subsystem. Setting it to zero will turn on the legacy mode\n"
+literal|"versions of the Hive ACID subsystem. Mostly it is intended to be used as an internal property\n"
 operator|+
-literal|"for ACID, while setting it to one will enable a split-update feature found in the newer\n"
+literal|"for future versions of ACID. (See HIVE-14035 for details.)\n"
 operator|+
-literal|"version of Hive ACID subsystem. Mostly it is intended to be used as an internal property\n"
+literal|"0: Turn on the legacy mode for ACID\n"
 operator|+
-literal|"for future versions of ACID. (See HIVE-14035 for details.)"
+literal|"1: Enable split-update feature found in the newer version of Hive ACID subsystem\n"
+operator|+
+literal|"2: Hash-based merge, which combines delta files using GRACE hash join based approach (not implemented)\n"
+operator|+
+literal|"3: Make the table 'quarter-acid' as it only supports insert. But it doesn't require ORC or bucketing."
 argument_list|)
 block|,
 name|HIVE_MAX_OPEN_TXNS
