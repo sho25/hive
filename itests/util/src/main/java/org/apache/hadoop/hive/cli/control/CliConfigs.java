@@ -528,7 +528,7 @@ name|setMetastoreType
 argument_list|(
 name|MetastoreType
 operator|.
-name|hbase
+name|sql
 argument_list|)
 expr_stmt|;
 name|setFsType
