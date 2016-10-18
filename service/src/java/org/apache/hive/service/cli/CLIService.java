@@ -457,10 +457,6 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
-name|HiveConf
-name|hiveConf
-decl_stmt|;
-specifier|private
 name|SessionManager
 name|sessionManager
 decl_stmt|;
