@@ -21123,7 +21123,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|FileStatus
 index|[]
@@ -21244,7 +21244,39 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|filter
+operator|==
+literal|null
+condition|)
+block|{
+comment|// TODO: do we need this? Likely yes; we don't want mm_10 when we use ".../mm_1" pattern.
+name|filter
+operator|=
+operator|new
+name|ValidWriteIds
+operator|.
+name|IdPathFilter
+argument_list|(
+name|mmWriteId
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 return|return
+name|filter
+operator|==
+literal|null
+condition|?
+name|fs
+operator|.
+name|globStatus
+argument_list|(
+name|pathPattern
+argument_list|)
+else|:
 name|fs
 operator|.
 name|globStatus
@@ -21679,7 +21711,6 @@ name|hconf
 argument_list|)
 decl_stmt|;
 comment|// Manifests would be at the root level, but the results at target level.
-comment|// TODO# special case - doesn't take bucketing into account
 name|Path
 name|manifestDir
 init|=

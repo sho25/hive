@@ -2380,6 +2380,21 @@ name|taskId
 expr_stmt|;
 if|if
 condition|(
+name|conf
+operator|.
+name|isMerge
+argument_list|()
+condition|)
+block|{
+comment|// Make sure we don't collide with the source files.
+comment|// MM tables don't support concat so we don't expect the merge of merged files.
+name|subdirPath
+operator|+=
+literal|".merged"
+expr_stmt|;
+block|}
+if|if
+condition|(
 operator|!
 name|bDynParts
 operator|&&
@@ -2404,7 +2419,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// TODO# does this need extra special handing for bucketing?
 comment|// Note: tmpPath here has the correct partition key
 name|finalPaths
 index|[

@@ -705,7 +705,7 @@ block|{
 specifier|private
 specifier|final
 name|String
-name|prefix
+name|mmDirName
 decl_stmt|,
 name|tmpPrefix
 decl_stmt|;
@@ -726,7 +726,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|prefix
+name|mmDirName
 operator|=
 name|ValidWriteIds
 operator|.
@@ -741,7 +741,7 @@ name|tmpPrefix
 operator|=
 literal|"_tmp."
 operator|+
-name|prefix
+name|mmDirName
 expr_stmt|;
 name|this
 operator|.
@@ -774,9 +774,9 @@ operator|==
 operator|(
 name|name
 operator|.
-name|startsWith
+name|equals
 argument_list|(
-name|prefix
+name|mmDirName
 argument_list|)
 operator|||
 name|name
