@@ -110,7 +110,14 @@ specifier|final
 name|String
 name|fileName
 init|=
-literal|"history"
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.tmp.dir"
+argument_list|)
+operator|+
+literal|"/history"
 decl_stmt|;
 annotation|@
 name|BeforeClass
