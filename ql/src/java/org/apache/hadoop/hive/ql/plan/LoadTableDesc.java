@@ -319,9 +319,12 @@ parameter_list|,
 specifier|final
 name|boolean
 name|replace
+parameter_list|,
+specifier|final
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
-comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -338,7 +341,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-literal|null
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}

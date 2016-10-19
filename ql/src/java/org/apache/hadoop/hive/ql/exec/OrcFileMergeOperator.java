@@ -540,10 +540,6 @@ argument_list|(
 literal|"OrcFileMergeOperator processing "
 operator|+
 name|filePath
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|fixTmpPath

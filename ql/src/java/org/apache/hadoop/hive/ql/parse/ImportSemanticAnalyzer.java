@@ -2317,6 +2317,7 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// TODO# we assume mm=false here
 name|LoadTableDesc
 name|loadTableWork
 init|=
@@ -2342,9 +2343,10 @@ argument_list|>
 argument_list|()
 argument_list|,
 name|replace
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
-comment|// TODO# movetask is created here; handle MM tables
 name|Task
 argument_list|<
 name|?
@@ -2827,6 +2829,7 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// TODO# we assume mm=false here
 name|LoadTableDesc
 name|loadTableWork
 init|=
@@ -2848,6 +2851,8 @@ name|getPartSpec
 argument_list|()
 argument_list|,
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|loadTableWork

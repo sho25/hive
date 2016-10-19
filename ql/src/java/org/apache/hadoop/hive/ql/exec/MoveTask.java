@@ -2429,10 +2429,6 @@ argument_list|()
 operator|.
 name|getTableName
 argument_list|()
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|db
