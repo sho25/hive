@@ -103,22 +103,6 @@ name|calcite
 operator|.
 name|rel
 operator|.
-name|core
-operator|.
-name|RelFactories
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
 name|type
 operator|.
 name|RelDataType
@@ -238,6 +222,20 @@ operator|.
 name|fun
 operator|.
 name|SqlStdOperatorTable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|tools
+operator|.
+name|RelBuilder
 import|;
 end_import
 
@@ -1636,17 +1634,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Creates a relational expression that projects the given fields of the    * input.    *    *<p>Optimizes if the fields are the identity projection.    *    * @param factory ProjectFactory    * @param child Input relational expression    * @param posList Source of each projected field    * @return Relational expression that projects given fields    */
+comment|/**    * Creates a relational expression that projects the given fields of the    * input.    *    *<p>Optimizes if the fields are the identity projection.    *    * @param relBuilder RelBuilder    * @param child Input relational expression    * @param posList Source of each projected field    * @return Relational expression that projects given fields    */
 specifier|public
 specifier|static
 name|RelNode
 name|createProject
 parameter_list|(
 specifier|final
-name|RelFactories
-operator|.
-name|ProjectFactory
-name|factory
+name|RelBuilder
+name|relBuilder
 parameter_list|,
 specifier|final
 name|RelNode
@@ -1799,7 +1795,7 @@ block|}
 argument_list|,
 literal|true
 argument_list|,
-name|factory
+name|relBuilder
 argument_list|)
 return|;
 block|}

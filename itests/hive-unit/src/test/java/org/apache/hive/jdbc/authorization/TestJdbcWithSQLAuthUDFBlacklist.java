@@ -399,7 +399,7 @@ decl_stmt|;
 name|String
 name|tableName1
 init|=
-literal|"test_jdbc_sql_auth_udf"
+literal|"test_jdbc_sql_auth_udf_blacklist"
 decl_stmt|;
 name|stmt
 operator|.

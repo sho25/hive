@@ -25,18 +25,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|charset
-operator|.
-name|StandardCharsets
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -803,31 +791,6 @@ name|outputColumn
 operator|=
 name|outputColumn
 expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-return|return
-literal|"col "
-operator|+
-name|colNum
-operator|+
-literal|", val "
-operator|+
-operator|new
-name|String
-argument_list|(
-name|value
-argument_list|,
-name|StandardCharsets
-operator|.
-name|UTF_8
-argument_list|)
-return|;
 block|}
 annotation|@
 name|Override

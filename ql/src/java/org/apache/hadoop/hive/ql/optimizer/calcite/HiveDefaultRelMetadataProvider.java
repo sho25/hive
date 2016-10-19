@@ -586,9 +586,9 @@ name|HiveRelMdPredicates
 operator|.
 name|SOURCE
 argument_list|,
-operator|new
 name|DefaultRelMetadataProvider
-argument_list|()
+operator|.
+name|INSTANCE
 argument_list|)
 argument_list|)
 return|;

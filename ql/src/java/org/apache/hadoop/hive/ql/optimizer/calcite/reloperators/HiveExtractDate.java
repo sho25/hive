@@ -124,7 +124,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|HiveDateGranularity
+name|HiveExtractDate
 extends|extends
 name|SqlFunction
 block|{
@@ -135,7 +135,7 @@ name|SqlFunction
 name|YEAR
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"YEAR"
 argument_list|)
@@ -147,7 +147,7 @@ name|SqlFunction
 name|QUARTER
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"QUARTER"
 argument_list|)
@@ -159,7 +159,7 @@ name|SqlFunction
 name|MONTH
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"MONTH"
 argument_list|)
@@ -171,7 +171,7 @@ name|SqlFunction
 name|WEEK
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"WEEK"
 argument_list|)
@@ -183,7 +183,7 @@ name|SqlFunction
 name|DAY
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"DAY"
 argument_list|)
@@ -195,7 +195,7 @@ name|SqlFunction
 name|HOUR
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"HOUR"
 argument_list|)
@@ -207,7 +207,7 @@ name|SqlFunction
 name|MINUTE
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"MINUTE"
 argument_list|)
@@ -219,7 +219,7 @@ name|SqlFunction
 name|SECOND
 init|=
 operator|new
-name|HiveDateGranularity
+name|HiveExtractDate
 argument_list|(
 literal|"SECOND"
 argument_list|)
@@ -255,7 +255,7 @@ name|SECOND
 argument_list|)
 decl_stmt|;
 specifier|private
-name|HiveDateGranularity
+name|HiveExtractDate
 parameter_list|(
 name|String
 name|name
@@ -267,21 +267,21 @@ name|name
 argument_list|,
 name|SqlKind
 operator|.
-name|OTHER_FUNCTION
+name|EXTRACT
 argument_list|,
 name|ReturnTypes
 operator|.
-name|TIME_NULLABLE
+name|INTEGER_NULLABLE
 argument_list|,
 literal|null
 argument_list|,
 name|OperandTypes
 operator|.
-name|ANY
+name|INTERVALINTERVAL_INTERVALDATETIME
 argument_list|,
 name|SqlFunctionCategory
 operator|.
-name|TIMEDATE
+name|SYSTEM
 argument_list|)
 expr_stmt|;
 block|}

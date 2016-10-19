@@ -25,16 +25,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -170,18 +160,6 @@ parameter_list|()
 block|{
 return|return
 literal|"boolean"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|vectorExpressionParameters
-parameter_list|()
-block|{
-comment|// The children are input.
-return|return
-literal|null
 return|;
 block|}
 annotation|@

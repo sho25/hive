@@ -361,14 +361,12 @@ name|HiveRelMdSelectivity
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|protected
+comment|//~ Constructors -----------------------------------------------------------
+specifier|private
 name|HiveRelMdSelectivity
 parameter_list|()
-block|{
-name|super
-argument_list|()
-expr_stmt|;
-block|}
+block|{}
+comment|//~ Methods ----------------------------------------------------------------
 specifier|public
 name|Double
 name|getSelectivity
@@ -425,8 +423,6 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
-throws|throws
-name|CalciteSemanticException
 block|{
 if|if
 condition|(
@@ -585,8 +581,6 @@ parameter_list|,
 name|RexNode
 name|predicate
 parameter_list|)
-throws|throws
-name|CalciteSemanticException
 block|{
 name|double
 name|ndvCrossProduct
@@ -643,7 +637,11 @@ argument_list|()
 decl_stmt|;
 name|JoinPredicateInfo
 name|jpi
-init|=
+decl_stmt|;
+try|try
+block|{
+name|jpi
+operator|=
 name|JoinPredicateInfo
 operator|.
 name|constructJoinPredicateInfo
@@ -652,7 +650,22 @@ name|j
 argument_list|,
 name|combinedPredicate
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CalciteSemanticException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 name|ImmutableMap
 operator|.
 name|Builder

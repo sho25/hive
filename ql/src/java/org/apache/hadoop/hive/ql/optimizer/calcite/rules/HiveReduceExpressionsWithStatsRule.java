@@ -311,26 +311,6 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|HiveRexUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|calcite
-operator|.
 name|RelOptHiveTable
 import|;
 end_import
@@ -871,10 +851,6 @@ argument_list|)
 expr_stmt|;
 name|kind
 operator|=
-name|HiveRexUtil
-operator|.
-name|invert
-argument_list|(
 name|call
 operator|.
 name|getOperator
@@ -882,7 +858,9 @@ argument_list|()
 operator|.
 name|getKind
 argument_list|()
-argument_list|)
+operator|.
+name|reverse
+argument_list|()
 expr_stmt|;
 block|}
 comment|// Found an expression that we can try to reduce
@@ -1636,7 +1614,7 @@ condition|)
 block|{
 name|node
 operator|=
-name|HiveRexUtil
+name|RexUtil
 operator|.
 name|simplify
 argument_list|(
