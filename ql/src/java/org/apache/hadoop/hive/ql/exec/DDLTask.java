@@ -25369,12 +25369,24 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|Long
+name|mmWriteId
+init|=
+name|crtTbl
+operator|.
+name|getInitialMmWriteId
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|crtTbl
 operator|.
 name|isCTAS
 argument_list|()
+operator|||
+name|mmWriteId
+operator|!=
+literal|null
 condition|)
 block|{
 name|Table
@@ -25397,10 +25409,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|crtTbl
-operator|.
-name|getInitialWriteId
-argument_list|()
+name|mmWriteId
 operator|!=
 literal|null
 condition|)
@@ -25429,10 +25438,7 @@ if|if
 condition|(
 name|initialWriteId
 operator|!=
-name|crtTbl
-operator|.
-name|getInitialWriteId
-argument_list|()
+name|mmWriteId
 condition|)
 block|{
 throw|throw
@@ -25441,10 +25447,7 @@ name|HiveException
 argument_list|(
 literal|"Initial write ID mismatch - expected "
 operator|+
-name|crtTbl
-operator|.
-name|getInitialWriteId
-argument_list|()
+name|mmWriteId
 operator|+
 literal|" but got "
 operator|+
@@ -25452,6 +25455,16 @@ name|initialWriteId
 argument_list|)
 throw|;
 block|}
+comment|// CTAS create the table on a directory that already exists; import creates the table
+comment|// first  (in parallel with copies?), then commits after all the loads.
+if|if
+condition|(
+name|crtTbl
+operator|.
+name|isCTAS
+argument_list|()
+condition|)
+block|{
 name|db
 operator|.
 name|commitMmTableWrite
@@ -25462,6 +25475,15 @@ name|initialWriteId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|crtTbl
+operator|.
+name|isCTAS
+argument_list|()
+condition|)
+block|{
 name|DataContainer
 name|dc
 init|=
@@ -25497,6 +25519,7 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|work

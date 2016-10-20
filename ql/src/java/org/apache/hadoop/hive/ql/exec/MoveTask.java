@@ -2431,6 +2431,28 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tbd
+operator|.
+name|isMmTable
+argument_list|()
+operator|&&
+operator|!
+name|tbd
+operator|.
+name|isCommitMmWrite
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Only single-partition LoadTableDesc can skip commiting write ID"
+argument_list|)
+throw|;
+block|}
 name|db
 operator|.
 name|loadTable
@@ -2830,6 +2852,14 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|boolean
+name|isCommitMmWrite
+init|=
+name|tbd
+operator|.
+name|isCommitMmWrite
+argument_list|()
+decl_stmt|;
 name|db
 operator|.
 name|loadSinglePartition
@@ -2909,6 +2939,8 @@ name|tbd
 operator|.
 name|getMmWriteId
 argument_list|()
+argument_list|,
+name|isCommitMmWrite
 argument_list|)
 expr_stmt|;
 name|Partition
@@ -3132,6 +3164,28 @@ comment|// After that check the number of DPs created to not exceed the limit an
 comment|// iterate over it and call loadPartition() here.
 comment|// The reason we don't do inside HIVE-1361 is the latter is large and we
 comment|// want to isolate any potential issue it may introduce.
+if|if
+condition|(
+name|tbd
+operator|.
+name|isMmTable
+argument_list|()
+operator|&&
+operator|!
+name|tbd
+operator|.
+name|isCommitMmWrite
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Only single-partition LoadTableDesc can skip commiting write ID"
+argument_list|)
+throw|;
+block|}
 name|Map
 argument_list|<
 name|Map

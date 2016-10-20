@@ -40101,7 +40101,7 @@ literal|0l
 expr_stmt|;
 name|tblDesc
 operator|.
-name|setInitialWriteId
+name|setInitialMmWriteId
 argument_list|(
 name|mmWriteId
 argument_list|)

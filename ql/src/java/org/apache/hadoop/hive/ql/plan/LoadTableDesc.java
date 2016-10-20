@@ -212,6 +212,12 @@ name|partitionSpec
 decl_stmt|;
 comment|// NOTE: this partitionSpec has to be ordered map
 specifier|private
+name|boolean
+name|commitMmWriteId
+init|=
+literal|true
+decl_stmt|;
+specifier|private
 name|LoadTableDesc
 parameter_list|(
 specifier|final
@@ -435,9 +441,11 @@ argument_list|,
 name|String
 argument_list|>
 name|partitionSpec
+parameter_list|,
+name|Long
+name|mmWriteId
 parameter_list|)
 block|{
-comment|// TODO# we assume mm=false here
 name|this
 argument_list|(
 name|sourcePath
@@ -454,7 +462,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-literal|null
+name|mmWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -904,6 +912,31 @@ parameter_list|()
 block|{
 return|return
 name|mmWriteId
+return|;
+block|}
+specifier|public
+name|void
+name|setIntermediateInMmWrite
+parameter_list|(
+name|boolean
+name|b
+parameter_list|)
+block|{
+name|this
+operator|.
+name|commitMmWriteId
+operator|=
+operator|!
+name|b
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isCommitMmWrite
+parameter_list|()
+block|{
+return|return
+name|commitMmWriteId
 return|;
 block|}
 block|}

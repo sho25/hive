@@ -5828,6 +5828,17 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEEXIMTESTMODE
+argument_list|(
+literal|"hive.exim.test.mode"
+argument_list|,
+literal|false
+argument_list|,
+literal|"The subset of test mode that only enables custom path handling for ExIm."
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVETESTMODEPREFIX
 argument_list|(
 literal|"hive.test.mode.prefix"

@@ -7851,6 +7851,9 @@ name|hasFollowingStatsTask
 parameter_list|,
 name|Long
 name|mmWriteId
+parameter_list|,
+name|boolean
+name|isCommitMmWrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -7915,9 +7918,11 @@ expr_stmt|;
 if|if
 condition|(
 name|isMmTableWrite
+operator|&&
+name|isCommitMmWrite
 condition|)
 block|{
-comment|// The assumption behind committing here is that this partition is the only one outputted
+comment|// The assumption behind committing here is that this partition is the only one outputted.
 name|commitMmTableWrite
 argument_list|(
 name|tbl

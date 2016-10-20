@@ -8527,6 +8527,7 @@ argument_list|(
 name|queryTmpdir
 argument_list|)
 expr_stmt|;
+comment|// TODO# movetask is created here; handle MM tables
 name|LoadTableDesc
 name|ltd
 init|=
@@ -8551,6 +8552,8 @@ argument_list|>
 argument_list|()
 else|:
 name|partSpec
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|ltd
@@ -8560,7 +8563,6 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
-comment|// TODO# movetask is created here; handle MM tables
 name|Task
 argument_list|<
 name|MoveWork
@@ -12640,6 +12642,7 @@ argument_list|(
 name|queryTmpdir
 argument_list|)
 expr_stmt|;
+comment|// No need to handle MM tables - unsupported path.
 name|LoadTableDesc
 name|ltd
 init|=
@@ -12664,6 +12667,8 @@ argument_list|>
 argument_list|()
 else|:
 name|partSpec
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|ltd
@@ -12673,7 +12678,6 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
-comment|// No need to handle MM tables - unsupported path.
 name|Task
 argument_list|<
 name|MoveWork

@@ -2450,7 +2450,7 @@ name|mmWriteIdForCtas
 operator|=
 name|ctd
 operator|.
-name|getInitialWriteId
+name|getInitialMmWriteId
 argument_list|()
 expr_stmt|;
 name|loc

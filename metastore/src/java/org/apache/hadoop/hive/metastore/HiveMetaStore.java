@@ -37479,6 +37479,17 @@ argument_list|,
 name|writeId
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|tw
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 assert|assert
 name|tw
 operator|.

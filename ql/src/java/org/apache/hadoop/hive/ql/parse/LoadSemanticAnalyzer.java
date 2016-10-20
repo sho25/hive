@@ -1781,7 +1781,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// TODO# movetask is created here; handle MM tables
 name|Long
 name|mmWriteId
 init|=

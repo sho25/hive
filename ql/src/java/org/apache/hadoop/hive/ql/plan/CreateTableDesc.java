@@ -743,8 +743,9 @@ name|foreignKeys
 decl_stmt|;
 specifier|private
 name|Long
-name|initialWriteId
+name|initialMmWriteId
 decl_stmt|;
+comment|// Initial MM write ID for CTAS and import.
 comment|// The FSOP configuration for the FSOP that is going to write initial data during ctas.
 comment|// This is not needed beyond compilation, so it is transient.
 specifier|private
@@ -4257,7 +4258,7 @@ return|;
 block|}
 specifier|public
 name|void
-name|setInitialWriteId
+name|setInitialMmWriteId
 parameter_list|(
 name|Long
 name|mmWriteId
@@ -4265,18 +4266,18 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|initialWriteId
+name|initialMmWriteId
 operator|=
 name|mmWriteId
 expr_stmt|;
 block|}
 specifier|public
 name|Long
-name|getInitialWriteId
+name|getInitialMmWriteId
 parameter_list|()
 block|{
 return|return
-name|initialWriteId
+name|initialMmWriteId
 return|;
 block|}
 specifier|public
