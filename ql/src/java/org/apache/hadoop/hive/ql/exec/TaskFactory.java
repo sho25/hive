@@ -1302,6 +1302,8 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|SafeVarargs
 specifier|public
 specifier|static
 parameter_list|<

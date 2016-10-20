@@ -7947,6 +7947,28 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+comment|// It would be possible to support this, but this is such a pointless command.
+if|if
+condition|(
+name|MetaStoreUtils
+operator|.
+name|isMmTable
+argument_list|(
+name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Truncating MM table columns not presently supported"
+argument_list|)
+throw|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -8527,7 +8549,6 @@ argument_list|(
 name|queryTmpdir
 argument_list|)
 expr_stmt|;
-comment|// TODO# movetask is created here; handle MM tables
 name|LoadTableDesc
 name|ltd
 init|=
@@ -8563,6 +8584,11 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|Task
 argument_list|<
 name|MoveWork
