@@ -3616,7 +3616,7 @@ name|String
 name|confDir
 parameter_list|,
 name|String
-name|hadoopVer
+name|hadzoopVer
 parameter_list|,
 name|String
 name|initScript
