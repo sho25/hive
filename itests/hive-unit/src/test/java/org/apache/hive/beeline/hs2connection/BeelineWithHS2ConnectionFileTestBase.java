@@ -351,7 +351,7 @@ begin_class
 specifier|public
 specifier|abstract
 class|class
-name|TestBeelineWithHS2ConnectionFile
+name|BeelineWithHS2ConnectionFileTestBase
 block|{
 specifier|protected
 name|MiniHS2

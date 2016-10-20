@@ -60,7 +60,7 @@ specifier|public
 class|class
 name|TestBeelineConnectionUsingHiveSite
 extends|extends
-name|TestBeelineWithHS2ConnectionFile
+name|BeelineWithHS2ConnectionFileTestBase
 block|{
 annotation|@
 name|Test
