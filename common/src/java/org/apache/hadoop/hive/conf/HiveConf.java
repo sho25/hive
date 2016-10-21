@@ -4670,6 +4670,52 @@ argument_list|,
 literal|"Enable a metadata count at metastore startup for metrics."
 argument_list|)
 block|,
+comment|// Metastore SSL settings
+name|HIVE_METASTORE_USE_SSL
+argument_list|(
+literal|"hive.metastore.use.SSL"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true for using SSL encryption in HMS server."
+argument_list|)
+block|,
+name|HIVE_METASTORE_SSL_KEYSTORE_PATH
+argument_list|(
+literal|"hive.metastore.keystore.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Metastore SSL certificate keystore location."
+argument_list|)
+block|,
+name|HIVE_METASTORE_SSL_KEYSTORE_PASSWORD
+argument_list|(
+literal|"hive.metastore.keystore.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Metastore SSL certificate keystore password."
+argument_list|)
+block|,
+name|HIVE_METASTORE_SSL_TRUSTSTORE_PATH
+argument_list|(
+literal|"hive.metastore.truststore.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Metastore SSL certificate keystore location."
+argument_list|)
+block|,
+name|HIVE_METASTORE_SSL_TRUSTSTORE_PASSWORD
+argument_list|(
+literal|"hive.metastore.truststore.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Metastore SSL certificate keystore password."
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION

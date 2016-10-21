@@ -35,6 +35,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|auth
+operator|.
+name|HiveAuthUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|jdbc
@@ -3073,7 +3091,7 @@ condition|)
 block|{
 name|transport
 operator|=
-name|HiveAuthFactory
+name|HiveAuthUtils
 operator|.
 name|getSSLSocket
 argument_list|(
@@ -3089,7 +3107,7 @@ else|else
 block|{
 name|transport
 operator|=
-name|HiveAuthFactory
+name|HiveAuthUtils
 operator|.
 name|getSSLSocket
 argument_list|(
@@ -3111,7 +3129,7 @@ block|{
 comment|// get non-SSL socket transport
 name|transport
 operator|=
-name|HiveAuthFactory
+name|HiveAuthUtils
 operator|.
 name|getSocketTransport
 argument_list|(
