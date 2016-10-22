@@ -224,6 +224,7 @@ name|stringObject
 decl_stmt|;
 comment|/**    * This is derived from t and p, but we need to serialize this field to make    * sure Entity.hashCode() does not need to recursively read into t and p.    */
 specifier|private
+specifier|final
 name|String
 name|name
 decl_stmt|;
@@ -264,21 +265,6 @@ block|{
 return|return
 name|name
 return|;
-block|}
-specifier|public
-name|void
-name|setName
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-block|{
-name|this
-operator|.
-name|name
-operator|=
-name|name
-expr_stmt|;
 block|}
 specifier|public
 name|Database
@@ -462,7 +448,12 @@ comment|/**    * Only used by serialization.    */
 specifier|public
 name|Entity
 parameter_list|()
-block|{   }
+block|{
+name|name
+operator|=
+literal|null
+expr_stmt|;
+block|}
 comment|/**    * Constructor for a database.    *    * @param database    *          Database that is read or written to.    * @param complete    *          Means the database is target, not for table or partition, etc.    */
 specifier|public
 name|Entity
@@ -1027,7 +1018,8 @@ name|toString
 parameter_list|()
 block|{
 return|return
-name|name
+name|getName
+argument_list|()
 return|;
 block|}
 specifier|private
@@ -1171,14 +1163,14 @@ name|o
 decl_stmt|;
 return|return
 operator|(
-name|toString
+name|getName
 argument_list|()
 operator|.
 name|equalsIgnoreCase
 argument_list|(
 name|ore
 operator|.
-name|toString
+name|getName
 argument_list|()
 argument_list|)
 operator|)
@@ -1200,7 +1192,7 @@ name|hashCode
 parameter_list|()
 block|{
 return|return
-name|toString
+name|getName
 argument_list|()
 operator|.
 name|hashCode
