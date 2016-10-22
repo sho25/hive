@@ -138,7 +138,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 81  * ALL,ALTER,ARRAY,AS,AUTHORIZATION,BETWEEN,BIGINT,BINARY  * ,BOOLEAN,BOTH,BY,CONSTRAINT  * ,CREATE,CUBE,CURRENT_DATE,CURRENT_TIMESTAMP,CURSOR,  * DATE,DECIMAL,DELETE,DESCRIBE  * ,DOUBLE,DROP,EXISTS,EXTERNAL,FALSE,FETCH,FLOAT,FOR  * ,FOREIGN,FULL,GRANT,GROUP,GROUPING  * ,IMPORT,IN,INNER,INSERT,INT,INTERSECT,INTO,IS  * ,LATERAL,LEFT,LIKE,LOCAL,NONE,NULL  * ,OF,ORDER,OUT,OUTER,PARTITION,PERCENT,PRECISION  * ,PRIMARY,PROCEDURE,RANGE,READS,  * REFERENCES,REGEXP,REVOKE,RIGHT,RLIKE,ROLLUP,ROW  * ,ROWS,SET,SMALLINT,TABLE,TIMESTAMP  * ,TO,TRIGGER,TRUE,TRUNCATE,UNION,UPDATE,USER,USING,VALUES,WITH,  */
+comment|/**  * Parser tests for SQL11 Reserved KeyWords. Please find more information in  * HIVE-6617. Total number : 82  * ALL,ALTER,ARRAY,AS,AUTHORIZATION,BETWEEN,BIGINT,BINARY  * ,BOOLEAN,BOTH,BY,CONSTRAINT  * ,CREATE,CUBE,CURRENT_DATE,CURRENT_TIMESTAMP,CURSOR,  * DATE,DECIMAL,DELETE,DESCRIBE  * ,DOUBLE,DROP,EXISTS,EXTERNAL,FALSE,FETCH,FLOAT,FOR  * ,FOREIGN,FULL,GRANT,GROUP,GROUPING  * ,IMPORT,IN,INNER,INSERT,INT,INTERSECT,INTO,IS  * ,LATERAL,LEFT,LIKE,LOCAL,MINUS,NONE,NULL  * ,OF,ORDER,OUT,OUTER,PARTITION,PERCENT,PRECISION  * ,PRIMARY,PROCEDURE,RANGE,READS,  * REFERENCES,REGEXP,REVOKE,RIGHT,RLIKE,ROLLUP,ROW  * ,ROWS,SET,SMALLINT,TABLE,TIMESTAMP  * ,TO,TRIGGER,TRUE,TRUNCATE,UNION,UPDATE,USER,USING,VALUES,WITH,  */
 end_comment
 
 begin_class
@@ -2362,6 +2362,52 @@ argument_list|(
 literal|"Failure didn't match."
 argument_list|,
 literal|"line 1:13 cannot recognize input near 'LOCAL' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_MINUS
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE MINUS (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'MINUS' '(' 'col' in table name"
 argument_list|,
 name|ex
 operator|.
