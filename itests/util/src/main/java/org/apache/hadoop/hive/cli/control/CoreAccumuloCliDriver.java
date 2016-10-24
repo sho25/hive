@@ -177,8 +177,11 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// FIXME: possibly missing
-comment|// setup.tearDown();
+name|setup
+operator|.
+name|tearDown
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override
