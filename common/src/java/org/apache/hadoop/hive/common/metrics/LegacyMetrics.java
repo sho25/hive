@@ -937,6 +937,30 @@ parameter_list|)
 block|{
 comment|//Not implemented.
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|addRatio
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|MetricsVariable
+argument_list|<
+name|Integer
+argument_list|>
+name|numerator
+parameter_list|,
+name|MetricsVariable
+argument_list|<
+name|Integer
+argument_list|>
+name|denominator
+parameter_list|)
+block|{
+comment|//Not implemented
+block|}
 specifier|public
 name|void
 name|set
