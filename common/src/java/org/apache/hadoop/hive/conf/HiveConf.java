@@ -13029,6 +13029,15 @@ operator|+
 literal|"this is to work around potential races e.g. with FS visibility, when deleting files."
 argument_list|)
 block|,
+name|HIVE_MM_AVOID_GLOBSTATUS_ON_S3
+argument_list|(
+literal|"hive.mm.avoid.s3.globstatus"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use listFiles (optimized on S3) instead of globStatus when on S3."
+argument_list|)
+block|,
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"

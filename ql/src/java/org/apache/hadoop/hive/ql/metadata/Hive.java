@@ -8205,6 +8205,7 @@ argument_list|,
 literal|"FileMoves"
 argument_list|)
 expr_stmt|;
+comment|// TODO: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
 name|mmWriteId
@@ -9044,7 +9045,7 @@ name|srcs
 operator|=
 name|srcFs
 operator|.
-name|globStatus
+name|listStatus
 argument_list|(
 name|loadPath
 argument_list|)
@@ -9774,12 +9775,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|FileStatus
-index|[]
-name|leafStatus
-init|=
-literal|null
-decl_stmt|;
 if|if
 condition|(
 name|mmWriteId
@@ -9787,8 +9782,10 @@ operator|==
 literal|null
 condition|)
 block|{
+name|FileStatus
+index|[]
 name|leafStatus
-operator|=
+init|=
 name|HiveStatsUtils
 operator|.
 name|getFileStatusRecurse
@@ -9799,32 +9796,7 @@ name|numDP
 argument_list|,
 name|fs
 argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// The non-MM path only finds new partitions, as it is looking at the temp path.
-comment|// To produce the same effect, we will find all the partitions affected by this write ID.
-name|leafStatus
-operator|=
-name|Utilities
-operator|.
-name|getMmDirectoryCandidates
-argument_list|(
-name|fs
-argument_list|,
-name|loadPath
-argument_list|,
-name|numDP
-argument_list|,
-name|numLB
-argument_list|,
-literal|null
-argument_list|,
-name|mmWriteId
-argument_list|)
-expr_stmt|;
-block|}
+decl_stmt|;
 comment|// Check for empty partitions
 for|for
 control|(
@@ -9836,10 +9808,6 @@ control|)
 block|{
 if|if
 condition|(
-name|mmWriteId
-operator|==
-literal|null
-operator|&&
 operator|!
 name|s
 operator|.
@@ -9870,20 +9838,69 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|mmWriteId
-operator|!=
-literal|null
-condition|)
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Found DP "
+operator|+
+name|dpPath
+argument_list|)
+expr_stmt|;
+name|validPartitions
+operator|.
+name|add
+argument_list|(
+name|dpPath
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
 block|{
+comment|// The non-MM path only finds new partitions, as it is looking at the temp path.
+comment|// To produce the same effect, we will find all the partitions affected by this write ID.
+name|Path
+index|[]
+name|leafStatus
+init|=
+name|Utilities
+operator|.
+name|getMmDirectoryCandidates
+argument_list|(
+name|fs
+argument_list|,
+name|loadPath
+argument_list|,
+name|numDP
+argument_list|,
+name|numLB
+argument_list|,
+literal|null
+argument_list|,
+name|mmWriteId
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|Path
+name|p
+range|:
+name|leafStatus
+control|)
+block|{
+name|Path
 name|dpPath
-operator|=
-name|dpPath
+init|=
+name|p
 operator|.
 name|getParent
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 comment|// Skip the MM directory that we have found.
 for|for
 control|(
@@ -9909,7 +9926,6 @@ argument_list|()
 expr_stmt|;
 comment|// Now skip the LB directories, if any...
 block|}
-block|}
 name|Utilities
 operator|.
 name|LOG14535
@@ -9928,6 +9944,7 @@ argument_list|(
 name|dpPath
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
@@ -10857,6 +10874,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
 name|mmWriteId
