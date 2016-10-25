@@ -552,6 +552,11 @@ name|ts
 operator|.
 name|getNeededColumns
 argument_list|()
+argument_list|,
+name|ts
+operator|.
+name|getNeededNestedColumnPaths
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// push down filters
