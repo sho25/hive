@@ -609,7 +609,6 @@ argument_list|>
 argument_list|>
 name|moveTask
 decl_stmt|;
-comment|// TODO#
 comment|// rootTasks is the entry point for all generated tasks
 specifier|public
 specifier|final

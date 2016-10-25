@@ -1742,7 +1742,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-comment|// TODO# do we need to account for any subdirectories here? decide after special-case jiras
+comment|// TODO# this doesn't account for list bucketing. Do nothing now, ACID will solve all problems.
 name|files
 operator|=
 name|fs

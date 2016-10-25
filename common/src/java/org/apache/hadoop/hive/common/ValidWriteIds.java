@@ -781,7 +781,7 @@ argument_list|)
 operator|||
 name|name
 operator|.
-name|startsWith
+name|equals
 argument_list|(
 name|tmpPrefix
 argument_list|)

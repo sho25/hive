@@ -1227,7 +1227,6 @@ name|FileSinkDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// TODO# special case #N - unions
 for|for
 control|(
 name|Operator

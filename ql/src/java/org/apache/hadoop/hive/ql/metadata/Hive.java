@@ -9805,7 +9805,6 @@ else|else
 block|{
 comment|// The non-MM path only finds new partitions, as it is looking at the temp path.
 comment|// To produce the same effect, we will find all the partitions affected by this write ID.
-comment|// TODO# how would this work with multi-insert into the same table? how does the existing one work?
 name|leafStatus
 operator|=
 name|Utilities
