@@ -121,6 +121,24 @@ name|ASTNodeOrigin
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|SemanticException
+import|;
+end_import
+
 begin_comment
 comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  *  * This class supports parametrized messages such as (@link #TRUNCATE_FOR_NON_MANAGED_TABLE}.  These are  * preferable over un-parametrized ones where arbitrary String is appended to the end of the message,  * for example {@link #getMsg(String)} and {@link #INVALID_TABLE}.  */
 end_comment
@@ -2163,6 +2181,13 @@ argument_list|(
 literal|10328
 argument_list|,
 literal|"Invalid column name"
+argument_list|)
+block|,
+name|UNSUPPORTED_SET_OPERATOR
+argument_list|(
+literal|10329
+argument_list|,
+literal|"Unsupported set operator"
 argument_list|)
 block|,
 name|REPLACE_VIEW_WITH_MATERIALIZED

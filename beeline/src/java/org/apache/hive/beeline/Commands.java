@@ -5501,6 +5501,7 @@ return|return
 literal|true
 return|;
 block|}
+comment|/*    * Check if the input line is a multi-line command which needs to read further    */
 specifier|public
 name|String
 name|handleMultiLineCmd
@@ -5511,6 +5512,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+comment|//When using -e, console reader is not initialized and command is always a single line
 while|while
 condition|(
 name|isMultiLine
@@ -5606,6 +5608,27 @@ block|}
 name|String
 name|extra
 decl_stmt|;
+comment|//avoid NPE below if for some reason -e argument has multi-line command
+if|if
+condition|(
+name|beeLine
+operator|.
+name|getConsoleReader
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Console reader not initialized. This could happen when there "
+operator|+
+literal|"is a multi-line command using -e option and which requires further reading from console"
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|beeLine
@@ -5726,14 +5749,7 @@ name|endsWith
 argument_list|(
 literal|";"
 argument_list|)
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-if|if
-condition|(
+operator|||
 name|beeLine
 operator|.
 name|isComment
@@ -7466,22 +7482,6 @@ operator|.
 name|AUTH_PASSWD
 argument_list|,
 name|value
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|//if the password is not provided, beeline assumes a empty string as
-comment|//password
-name|props
-operator|.
-name|setProperty
-argument_list|(
-name|JdbcConnectionParams
-operator|.
-name|AUTH_PASSWD
-argument_list|,
-literal|""
 argument_list|)
 expr_stmt|;
 block|}

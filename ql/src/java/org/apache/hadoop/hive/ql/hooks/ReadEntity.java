@@ -478,14 +478,14 @@ name|o
 decl_stmt|;
 return|return
 operator|(
-name|toString
+name|getName
 argument_list|()
 operator|.
 name|equalsIgnoreCase
 argument_list|(
 name|ore
 operator|.
-name|toString
+name|getName
 argument_list|()
 argument_list|)
 operator|)

@@ -73,6 +73,12 @@ name|UNION
 block|,
 name|INTERSECT
 block|,
+name|INTERSECTALL
+block|,
+name|EXCEPT
+block|,
+name|EXCEPTALL
+block|,
 name|DIFF
 block|}
 empty_stmt|;

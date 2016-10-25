@@ -482,12 +482,15 @@ name|RelNode
 operator|.
 name|class
 argument_list|,
+name|unordered
+argument_list|(
 name|operand
 argument_list|(
 name|sortClass
 argument_list|,
 name|any
 argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 argument_list|,

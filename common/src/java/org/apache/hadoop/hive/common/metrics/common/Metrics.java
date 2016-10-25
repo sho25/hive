@@ -130,6 +130,27 @@ name|MetricsVariable
 name|variable
 parameter_list|)
 function_decl|;
+comment|/**    * Add a ratio metric to track the correlation between two variables    * @param name name of the ratio gauge    * @param numerator numerator of the ratio    * @param denominator denominator of the ratio    */
+specifier|public
+name|void
+name|addRatio
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|MetricsVariable
+argument_list|<
+name|Integer
+argument_list|>
+name|numerator
+parameter_list|,
+name|MetricsVariable
+argument_list|<
+name|Integer
+argument_list|>
+name|denominator
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
