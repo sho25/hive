@@ -569,7 +569,7 @@ name|node
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -651,7 +651,7 @@ name|node
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -712,7 +712,7 @@ name|deletedTrigger
 operator|.
 name|firedWithin
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -757,7 +757,7 @@ name|createdTrigger
 operator|.
 name|firedWithin
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -795,7 +795,7 @@ name|node
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -865,7 +865,7 @@ name|createdWatchTrigger
 operator|.
 name|firedWithin
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -917,7 +917,7 @@ name|node1
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -939,7 +939,7 @@ name|node2
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -977,7 +977,7 @@ name|node3
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
@@ -1179,6 +1179,12 @@ name|i
 argument_list|)
 expr_stmt|;
 block|}
+specifier|final
+name|int
+name|ix
+init|=
+name|i
+decl_stmt|;
 name|startTasks
 index|[
 name|i
@@ -1219,17 +1225,62 @@ argument_list|,
 name|cdlOut
 argument_list|)
 expr_stmt|;
-return|return
+name|int
+name|id
+init|=
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|node
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting the node "
+operator|+
+name|id
+operator|+
+literal|" from task #"
+operator|+
+name|ix
+argument_list|)
+expr_stmt|;
+name|boolean
+name|result
+init|=
 name|node
 operator|.
 name|start
 argument_list|(
-literal|5
+literal|30
 argument_list|,
 name|TimeUnit
 operator|.
 name|SECONDS
 argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+operator|(
+name|result
+condition|?
+literal|"Started"
+else|:
+literal|"Failed to start"
+operator|)
+operator|+
+literal|" the node from task #"
+operator|+
+name|ix
+argument_list|)
+expr_stmt|;
+return|return
+name|result
 condition|?
 name|node
 else|:
@@ -1323,6 +1374,10 @@ argument_list|()
 decl_stmt|;
 name|assertNotNull
 argument_list|(
+literal|"failed to start the node from task #"
+operator|+
+name|i
+argument_list|,
 name|node
 argument_list|)
 expr_stmt|;
