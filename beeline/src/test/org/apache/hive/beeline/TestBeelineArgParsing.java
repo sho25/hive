@@ -1861,6 +1861,18 @@ block|{
 comment|// no need to add for the default supported local jar driver
 name|Assert
 operator|.
+name|assertNotNull
+argument_list|(
+name|bl
+operator|.
+name|findLocalDriver
+argument_list|(
+name|connectionString
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|bl
