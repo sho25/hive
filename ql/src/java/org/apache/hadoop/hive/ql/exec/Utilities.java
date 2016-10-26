@@ -22356,6 +22356,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+comment|// TODO# may be wrong if there are no splits (empty insert/CTAS)
 name|FileStatus
 index|[]
 name|manifestFiles
