@@ -795,7 +795,7 @@ literal|"micromanaged table"
 argument_list|)
 specifier|public
 name|Boolean
-name|isMmTable
+name|isMmTableExplain
 parameter_list|()
 block|{
 return|return
@@ -805,6 +805,17 @@ literal|null
 condition|?
 literal|true
 else|:
+literal|null
+return|;
+block|}
+specifier|public
+name|boolean
+name|isMmTable
+parameter_list|()
+block|{
+return|return
+name|mmWriteId
+operator|!=
 literal|null
 return|;
 block|}
