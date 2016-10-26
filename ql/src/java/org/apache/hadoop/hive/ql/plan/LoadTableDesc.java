@@ -794,13 +794,17 @@ operator|=
 literal|"micromanaged table"
 argument_list|)
 specifier|public
-name|boolean
+name|Boolean
 name|isMmTable
 parameter_list|()
 block|{
 return|return
 name|mmWriteId
 operator|!=
+literal|null
+condition|?
+literal|true
+else|:
 literal|null
 return|;
 block|}
