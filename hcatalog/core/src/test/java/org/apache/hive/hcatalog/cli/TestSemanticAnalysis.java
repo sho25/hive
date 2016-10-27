@@ -1969,6 +1969,16 @@ argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
+literal|"The old table location is: "
+operator|+
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+argument_list|,
 name|tbl
 operator|.
 name|getSd
@@ -2003,17 +2013,25 @@ argument_list|,
 literal|"newname"
 argument_list|)
 expr_stmt|;
+comment|// since the oldname table is not under its database (See HIVE-15059), the renamed oldname table will keep
+comment|// its location after HIVE-14909. I changed to check the existence of the newname table and its name instead
+comment|// of verifying its location
+comment|// assertTrue(tbl.getSd().getLocation().contains("newname"));
+name|assertTrue
+argument_list|(
+name|tbl
+operator|!=
+literal|null
+argument_list|)
+expr_stmt|;
 name|assertTrue
 argument_list|(
 name|tbl
 operator|.
-name|getSd
+name|getTableName
 argument_list|()
 operator|.
-name|getLocation
-argument_list|()
-operator|.
-name|contains
+name|equalsIgnoreCase
 argument_list|(
 literal|"newname"
 argument_list|)
