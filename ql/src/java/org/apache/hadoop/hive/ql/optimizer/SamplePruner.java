@@ -998,7 +998,7 @@ name|isMmTable
 init|=
 name|MetaStoreUtils
 operator|.
-name|isMmTable
+name|isInsertOnlyTable
 argument_list|(
 name|part
 operator|.

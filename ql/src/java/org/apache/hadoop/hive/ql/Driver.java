@@ -9405,7 +9405,7 @@ argument_list|()
 operator|&&
 name|MetaStoreUtils
 operator|.
-name|isMmTable
+name|isInsertOnlyTable
 argument_list|(
 name|t
 operator|.
