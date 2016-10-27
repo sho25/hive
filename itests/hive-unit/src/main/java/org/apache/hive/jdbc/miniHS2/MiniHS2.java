@@ -1269,6 +1269,7 @@ block|{
 case|case
 name|TEZ
 case|:
+comment|// TODO: This should be making use of confDir to load configs setup for Tez, etc.
 name|mr
 operator|=
 name|ShimLoader
@@ -1280,7 +1281,7 @@ name|getMiniTezCluster
 argument_list|(
 name|hiveConf
 argument_list|,
-literal|4
+literal|2
 argument_list|,
 name|uriString
 argument_list|)
@@ -1328,7 +1329,7 @@ name|getMiniTezCluster
 argument_list|(
 name|hiveConf
 argument_list|,
-literal|4
+literal|2
 argument_list|,
 name|uriString
 argument_list|)
@@ -1348,7 +1349,7 @@ name|getMiniMrCluster
 argument_list|(
 name|hiveConf
 argument_list|,
-literal|4
+literal|2
 argument_list|,
 name|uriString
 argument_list|,
