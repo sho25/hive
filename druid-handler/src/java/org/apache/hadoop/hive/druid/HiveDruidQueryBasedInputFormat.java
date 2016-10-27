@@ -1944,6 +1944,11 @@ argument_list|()
 operator|.
 name|getMillis
 argument_list|()
+argument_list|,
+name|ISOChronology
+operator|.
+name|getInstanceUTC
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2266,6 +2271,11 @@ argument_list|(
 name|startTime
 argument_list|,
 name|endTime
+argument_list|,
+name|ISOChronology
+operator|.
+name|getInstanceUTC
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2296,6 +2306,11 @@ argument_list|(
 name|startTime
 argument_list|,
 name|endTime
+argument_list|,
+name|ISOChronology
+operator|.
+name|getInstanceUTC
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
