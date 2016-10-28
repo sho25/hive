@@ -2698,6 +2698,17 @@ argument_list|(
 name|inputFormat
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Setting fetch inputs to "
+operator|+
+name|inputs
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|inputs
