@@ -668,6 +668,9 @@ name|dq
 operator|.
 name|getQueryType
 argument_list|()
+operator|.
+name|getQueryName
+argument_list|()
 operator|+
 literal|"\""
 argument_list|)

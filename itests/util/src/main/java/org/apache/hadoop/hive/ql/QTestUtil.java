@@ -4440,6 +4440,8 @@ expr_stmt|;
 block|}
 name|int
 name|numTrackers
+init|=
+literal|2
 decl_stmt|;
 if|if
 condition|(
@@ -4477,18 +4479,9 @@ argument_list|,
 name|confDir
 argument_list|)
 expr_stmt|;
-name|numTrackers
-operator|=
-literal|2
-expr_stmt|;
 block|}
 else|else
-block|{
-name|numTrackers
-operator|=
-literal|4
-expr_stmt|;
-block|}
+block|{       }
 if|if
 condition|(
 name|EnumSet
@@ -4561,7 +4554,7 @@ name|getMiniSparkCluster
 argument_list|(
 name|conf
 argument_list|,
-literal|4
+literal|2
 argument_list|,
 name|uriString
 argument_list|,
@@ -4587,7 +4580,7 @@ name|getMiniMrCluster
 argument_list|(
 name|conf
 argument_list|,
-literal|4
+literal|2
 argument_list|,
 name|uriString
 argument_list|,

@@ -1166,10 +1166,12 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// if this alter is a rename, the table is not a virtual view, the user
-comment|// didn't change the default location (or new location is empty), and
-comment|// table is not an external table, that means user is asking metastore to
-comment|// move data to the new location corresponding to the new name
+comment|// rename needs change the data location and move the data to the new location corresponding
+comment|// to the new name if:
+comment|// 1) the table is not a virtual view, and
+comment|// 2) the table is not an external table, and
+comment|// 3) the user didn't change the default location (or new location is empty), and
+comment|// 4) the table was not initially created with a specified location
 if|if
 condition|(
 name|rename
@@ -1235,6 +1237,21 @@ name|oldt
 argument_list|)
 condition|)
 block|{
+name|Database
+name|olddb
+init|=
+name|msdb
+operator|.
+name|getDatabase
+argument_list|(
+name|dbname
+argument_list|)
+decl_stmt|;
+comment|// if a table was created in a user specified location using the DDL like
+comment|// create table tbl ... location ...., it should be treated like an external table
+comment|// in the table rename, its data location should not be changed. We can check
+comment|// if the table directory was created directly under its database directory to tell
+comment|// if it is such a table
 name|srcPath
 operator|=
 operator|new
@@ -1249,6 +1266,63 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|String
+name|oldtRelativePath
+init|=
+operator|(
+operator|new
+name|Path
+argument_list|(
+name|olddb
+operator|.
+name|getLocationUri
+argument_list|()
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|)
+operator|.
+name|relativize
+argument_list|(
+name|srcPath
+operator|.
+name|toUri
+argument_list|()
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
+name|boolean
+name|tableInSpecifiedLoc
+init|=
+operator|!
+name|oldtRelativePath
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|name
+argument_list|)
+operator|&&
+operator|!
+name|oldtRelativePath
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|name
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|tableInSpecifiedLoc
+condition|)
+block|{
 name|srcFs
 operator|=
 name|wh
@@ -1258,8 +1332,6 @@ argument_list|(
 name|srcPath
 argument_list|)
 expr_stmt|;
-comment|// that means user is asking metastore to move data to new location
-comment|// corresponding to the new name
 comment|// get new location
 name|Database
 name|db
@@ -1660,6 +1732,7 @@ argument_list|,
 name|part
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

@@ -345,7 +345,8 @@ name|iterator
 argument_list|()
 expr_stmt|;
 return|return
-literal|true
+name|nextKeyValue
+argument_list|()
 return|;
 block|}
 return|return
