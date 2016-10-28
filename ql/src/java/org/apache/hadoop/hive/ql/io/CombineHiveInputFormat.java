@@ -21,6 +21,26 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|merge
+operator|.
+name|MergeFileWork
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -710,6 +730,11 @@ specifier|final
 name|JobConf
 name|conf
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isMerge
+decl_stmt|;
 specifier|public
 name|CheckNonCombinablePathCallable
 parameter_list|(
@@ -725,6 +750,9 @@ name|length
 parameter_list|,
 name|JobConf
 name|conf
+parameter_list|,
+name|boolean
+name|isMerge
 parameter_list|)
 block|{
 name|this
@@ -750,6 +778,12 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+name|this
+operator|.
+name|isMerge
+operator|=
+name|isMerge
 expr_stmt|;
 block|}
 annotation|@
@@ -872,9 +906,14 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Combined splits are not supported for MM tables right now.
+comment|// However, the merge for MM always combines one directory and should ignore that it's MM.
 name|boolean
-name|isMmTable
+name|isMmTableNonMerge
 init|=
+operator|!
+name|isMerge
+operator|&&
 name|MetaStoreUtils
 operator|.
 name|isInsertOnlyTable
@@ -892,20 +931,15 @@ if|if
 condition|(
 name|isAvoidSplitCombine
 operator|||
-name|isMmTable
+name|isMmTableNonMerge
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
+comment|//if (LOG.isDebugEnabled()) {
+name|Utilities
 operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
+name|LOG14535
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"The path ["
 operator|+
@@ -919,7 +953,7 @@ operator|+
 literal|"] is being parked for HiveInputFormat.getSplits"
 argument_list|)
 expr_stmt|;
-block|}
+comment|//}
 name|nonCombinablePathIndices
 operator|.
 name|add
@@ -2555,6 +2589,14 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
+name|boolean
+name|isMerge
+init|=
+name|mrwork
+operator|.
+name|isMergeFromResolver
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -2612,6 +2654,8 @@ argument_list|,
 name|length
 argument_list|,
 name|job
+argument_list|,
+name|isMerge
 argument_list|)
 argument_list|)
 argument_list|)

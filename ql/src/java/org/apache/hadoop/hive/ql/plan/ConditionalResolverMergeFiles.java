@@ -1722,6 +1722,13 @@ argument_list|(
 name|targetSize
 argument_list|)
 expr_stmt|;
+name|mWork
+operator|.
+name|setIsMergeFromResolver
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static

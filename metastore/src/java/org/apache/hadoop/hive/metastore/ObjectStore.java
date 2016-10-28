@@ -4558,13 +4558,6 @@ name|COMMITED
 expr_stmt|;
 try|try
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# grrrrr"
-argument_list|)
-expr_stmt|;
 name|currentTransaction
 operator|.
 name|commit

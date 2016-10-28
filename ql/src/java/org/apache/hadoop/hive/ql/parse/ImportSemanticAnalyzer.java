@@ -2536,7 +2536,7 @@ argument_list|)
 decl_stmt|;
 name|cv
 operator|.
-name|setIsSourceMm
+name|setSkipSourceMmDirs
 argument_list|(
 name|isSourceMm
 argument_list|)
@@ -3131,7 +3131,7 @@ argument_list|)
 decl_stmt|;
 name|cw
 operator|.
-name|setIsSourceMm
+name|setSkipSourceMmDirs
 argument_list|(
 name|isSourceMm
 argument_list|)
