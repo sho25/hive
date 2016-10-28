@@ -13752,7 +13752,7 @@ name|isAcid
 init|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|tab
 argument_list|)
@@ -38706,7 +38706,7 @@ argument_list|,
 operator|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -39277,7 +39277,7 @@ name|destTableIsAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -39718,7 +39718,7 @@ name|destTableIsAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -40168,6 +40168,9 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
+operator|!
+name|destTableIsTemporary
+operator|&&
 name|MetaStoreUtils
 operator|.
 name|isInsertOnlyTable
@@ -69641,7 +69644,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|tbl
 argument_list|)
@@ -69947,7 +69950,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|tbl
 argument_list|)

@@ -192,6 +192,15 @@ operator|.
 name|RUNNING
 condition|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Exiting due to explain"
+argument_list|)
+expr_stmt|;
 return|return
 literal|0
 return|;

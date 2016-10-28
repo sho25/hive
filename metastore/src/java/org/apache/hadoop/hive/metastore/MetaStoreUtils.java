@@ -10647,6 +10647,7 @@ block|}
 comment|// TODO The following two utility methods can be moved to AcidUtils once no class in metastore is relying on them,
 comment|// right now ObjectStore.getAllMmTablesForCleanup is calling these method
 comment|/**    * Checks if a table is an ACID table that only supports INSERT, but not UPDATE/DELETE    * @param params table properties    * @return true if table is an INSERT_ONLY table, false otherwise    */
+comment|// TODO# also check that transactional is true
 specifier|public
 specifier|static
 name|boolean

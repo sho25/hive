@@ -762,6 +762,17 @@ if|if
 condition|(
 operator|!
 name|hasValidTransactionalValue
+operator|&&
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|oldTable
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// if here, there is attempt to set transactional to something other than 'true'
@@ -803,6 +814,7 @@ comment|// value will throw an error. An exception will still be thrown if the p
 comment|// null and an attempt is made to set it. This behaviour can be changed in the future.
 if|if
 condition|(
+operator|(
 name|oldTransactionalPropertiesValue
 operator|==
 literal|null
@@ -813,6 +825,18 @@ operator|.
 name|equalsIgnoreCase
 argument_list|(
 name|transactionalPropertiesValue
+argument_list|)
+operator|)
+operator|&&
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|oldTable
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 condition|)
 block|{

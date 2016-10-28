@@ -2018,6 +2018,7 @@ expr_stmt|;
 block|}
 comment|// Multi-file load is for dynamic partitions when some partitions do not
 comment|// need to merge and they can simply be moved to the target directory.
+comment|// This is also used for MM table conversion.
 name|LoadMultiFilesDesc
 name|lmfd
 init|=

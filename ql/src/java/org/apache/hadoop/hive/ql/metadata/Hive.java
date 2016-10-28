@@ -13996,7 +13996,7 @@ return|return
 name|names
 return|;
 block|}
-comment|/**    * get all the partitions that the table has    *    * @param tbl    *          object for which partition is needed    * @return list of partition objects    * @throws HiveException    */
+comment|/**    * get all the partitions that the table has    *    * @param tbl    *          object for which partition is needed    * @return list of partition objects    */
 specifier|public
 name|List
 argument_list|<
@@ -17578,14 +17578,14 @@ name|destStatus
 init|=
 literal|null
 decl_stmt|;
-comment|// If source path is a subdirectory of the destination path:
+comment|// If source path is a subdirectory of the destination path (or the other way around):
 comment|//   ex: INSERT OVERWRITE DIRECTORY 'target/warehouse/dest4.out' SELECT src.value WHERE src.key>= 300;
 comment|//   where the staging directory is a subdirectory of the destination directory
 comment|// (1) Do not delete the dest dir before doing the move operation.
 comment|// (2) It is assumed that subdir and dir are in same encryption zone.
 comment|// (3) Move individual files from scr dir to dest dir.
 name|boolean
-name|destIsSubDir
+name|srcIsSubDirOfDest
 init|=
 name|isSubDir
 argument_list|(
@@ -17598,6 +17598,21 @@ argument_list|,
 name|destFs
 argument_list|,
 name|isSrcLocal
+argument_list|)
+decl_stmt|,
+name|destIsSubDirOfSrc
+init|=
+name|isSubDir
+argument_list|(
+name|destf
+argument_list|,
+name|srcf
+argument_list|,
+name|destFs
+argument_list|,
+name|srcFs
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 try|try
@@ -17635,7 +17650,7 @@ condition|(
 name|replace
 operator|&&
 operator|!
-name|destIsSubDir
+name|srcIsSubDirOfDest
 condition|)
 block|{
 name|destFs
@@ -17849,7 +17864,9 @@ else|else
 block|{
 if|if
 condition|(
-name|destIsSubDir
+name|srcIsSubDirOfDest
+operator|||
+name|destIsSubDirOfSrc
 condition|)
 block|{
 name|FileStatus
@@ -17937,6 +17954,38 @@ argument_list|)
 else|:
 literal|null
 decl_stmt|;
+if|if
+condition|(
+name|destIsSubDirOfSrc
+operator|&&
+operator|!
+name|destFs
+operator|.
+name|exists
+argument_list|(
+name|destf
+argument_list|)
+condition|)
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Creating "
+operator|+
+name|destf
+argument_list|)
+expr_stmt|;
+name|destFs
+operator|.
+name|mkdirs
+argument_list|(
+name|destf
+argument_list|)
+expr_stmt|;
+block|}
 comment|/* Move files one by one because source is a subdirectory of destination */
 for|for
 control|(

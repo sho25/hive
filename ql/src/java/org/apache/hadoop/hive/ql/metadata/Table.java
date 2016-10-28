@@ -5128,6 +5128,24 @@ operator|!=
 literal|null
 return|;
 block|}
+specifier|public
+name|void
+name|setMmNextWriteId
+parameter_list|(
+name|long
+name|writeId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|tTable
+operator|.
+name|setMmNextWriteId
+argument_list|(
+name|writeId
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

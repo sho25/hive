@@ -1143,7 +1143,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|table
 argument_list|)
@@ -1483,7 +1483,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|table
 argument_list|)
