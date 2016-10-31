@@ -545,6 +545,10 @@ name|HiveConf
 operator|.
 name|class
 block|,
+name|HiveMetaHookLoader
+operator|.
+name|class
+block|,
 name|Boolean
 operator|.
 name|class
@@ -555,6 +559,8 @@ name|Object
 index|[]
 block|{
 name|hiveConf
+block|,
+literal|null
 block|,
 name|allowEmbedded
 block|}
