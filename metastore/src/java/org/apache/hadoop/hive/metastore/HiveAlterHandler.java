@@ -4059,7 +4059,7 @@ operator|.
 name|getColName
 argument_list|()
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|newCol
 operator|.
@@ -4072,7 +4072,7 @@ operator|.
 name|getColType
 argument_list|()
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|newCol
 operator|.
@@ -4728,7 +4728,7 @@ operator|.
 name|getColType
 argument_list|()
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|newCol
 operator|.

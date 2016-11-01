@@ -4722,7 +4722,7 @@ literal|"hive.metastore.truststore.path"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Metastore SSL certificate keystore location."
+literal|"Metastore SSL certificate truststore location."
 argument_list|)
 block|,
 name|HIVE_METASTORE_SSL_TRUSTSTORE_PASSWORD
@@ -4731,7 +4731,7 @@ literal|"hive.metastore.truststore.password"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Metastore SSL certificate keystore password."
+literal|"Metastore SSL certificate truststore password."
 argument_list|)
 block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)

@@ -9481,6 +9481,13 @@ index|]
 decl_stmt|;
 if|if
 condition|(
+name|initargs
+index|[
+name|i
+index|]
+operator|!=
+literal|null
+operator|&&
 operator|!
 operator|(
 name|clazz
