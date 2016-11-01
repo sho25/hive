@@ -2593,6 +2593,10 @@ name|boolean
 name|isMerge
 init|=
 name|mrwork
+operator|!=
+literal|null
+operator|&&
+name|mrwork
 operator|.
 name|isMergeFromResolver
 argument_list|()

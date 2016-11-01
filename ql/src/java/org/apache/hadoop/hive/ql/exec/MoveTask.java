@@ -1891,6 +1891,17 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 block|{
+if|if
+condition|(
+name|work
+operator|.
+name|isNoop
+argument_list|()
+condition|)
+return|return
+literal|0
+return|;
+comment|// TODO# temporary flag for HIVE-14990
 name|Utilities
 operator|.
 name|LOG14535

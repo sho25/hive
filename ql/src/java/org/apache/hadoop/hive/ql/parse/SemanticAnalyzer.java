@@ -41747,10 +41747,10 @@ argument_list|)
 expr_stmt|;
 comment|// If this is an insert, update, or delete on an ACID table then mark that so the
 comment|// FileSinkOperator knows how to properly write to it.
-if|if
-condition|(
-name|destTableIsAcid
-operator|&&
+name|boolean
+name|isDestInsertOnly
+init|=
+operator|(
 name|dest_part
 operator|!=
 literal|null
@@ -41762,7 +41762,6 @@ argument_list|()
 operator|!=
 literal|null
 operator|&&
-operator|!
 name|MetaStoreUtils
 operator|.
 name|isInsertOnlyTable
@@ -41775,6 +41774,30 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|table_desc
+operator|!=
+literal|null
+operator|&&
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|table_desc
+operator|.
+name|getProperties
+argument_list|()
+argument_list|)
+operator|)
+decl_stmt|;
+if|if
+condition|(
+name|destTableIsAcid
+operator|&&
+operator|!
+name|isDestInsertOnly
 condition|)
 block|{
 name|AcidUtils
