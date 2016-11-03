@@ -1676,6 +1676,17 @@ name|getLocation
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Aggregating stats for "
+operator|+
+name|dir
+argument_list|)
+expr_stmt|;
 name|long
 name|numRows
 init|=
@@ -1735,6 +1746,17 @@ range|:
 name|fileList
 control|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Computing stats for "
+operator|+
+name|file
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -2024,7 +2046,9 @@ argument_list|)
 operator|+
 literal|']'
 decl_stmt|;
-name|LOG
+name|Utilities
+operator|.
+name|LOG14535
 operator|.
 name|debug
 argument_list|(
@@ -2050,7 +2074,9 @@ name|tableFullName
 operator|+
 literal|" does not provide stats."
 decl_stmt|;
-name|LOG
+name|Utilities
+operator|.
+name|LOG14535
 operator|.
 name|debug
 argument_list|(

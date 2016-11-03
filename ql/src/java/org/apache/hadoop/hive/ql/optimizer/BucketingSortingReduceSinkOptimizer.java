@@ -105,6 +105,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|FieldSchema
@@ -1492,6 +1508,7 @@ index|]
 argument_list|)
 condition|)
 block|{
+comment|// TODO# HERE
 throw|throw
 operator|new
 name|RuntimeException
@@ -2327,12 +2344,9 @@ literal|0
 argument_list|)
 operator|)
 decl_stmt|;
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|isFullAcidTable
-argument_list|(
+name|Table
+name|tab
+init|=
 name|tso
 operator|.
 name|getConf
@@ -2340,10 +2354,37 @@ argument_list|()
 operator|.
 name|getTableMetadata
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|AcidUtils
+operator|.
+name|isFullAcidTable
+argument_list|(
+name|tab
 argument_list|)
 condition|)
 block|{
 comment|/*ACID tables have complex directory layout and require merging of delta files           * on read thus we should not try to read bucket files directly*/
+return|return
+literal|null
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|tab
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// Do not support MM tables either at this point. We could do it with some extra logic.
 return|return
 literal|null
 return|;
@@ -2546,6 +2587,11 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+name|boolean
+name|isSrcMmTable
+init|=
+literal|false
+decl_stmt|;
 while|while
 condition|(
 literal|true
@@ -2795,6 +2841,24 @@ operator|.
 name|getTableMetadata
 argument_list|()
 decl_stmt|;
+comment|// Not supported for MM tables for now.
+if|if
+condition|(
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|destTable
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Find the positions of the bucketed columns in the table corresponding
 comment|// to the select list.
 comment|// Consider the following scenario:

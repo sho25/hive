@@ -85,6 +85,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -1422,6 +1432,7 @@ name|RecordUpdater
 index|[]
 name|updaters
 decl_stmt|;
+specifier|private
 name|Stat
 name|stat
 decl_stmt|;
@@ -2178,15 +2189,6 @@ block|}
 block|}
 block|}
 specifier|public
-name|Stat
-name|getStat
-parameter_list|()
-block|{
-return|return
-name|stat
-return|;
-block|}
-specifier|public
 name|void
 name|configureDynPartPath
 parameter_list|(
@@ -2518,6 +2520,93 @@ parameter_list|()
 block|{
 return|return
 name|taskOutputTempPath
+return|;
+block|}
+specifier|public
+name|void
+name|addToStat
+parameter_list|(
+name|String
+name|statType
+parameter_list|,
+name|long
+name|amount
+parameter_list|)
+block|{
+if|if
+condition|(
+literal|"rowCount"
+operator|.
+name|equals
+argument_list|(
+name|statType
+argument_list|)
+condition|)
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Adding "
+operator|+
+name|statType
+operator|+
+literal|" = "
+operator|+
+name|amount
+operator|+
+literal|" to "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|this
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|stat
+operator|.
+name|addToStat
+argument_list|(
+name|statType
+argument_list|,
+name|amount
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|Collection
+argument_list|<
+name|String
+argument_list|>
+name|getStoredStats
+parameter_list|()
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Getting stats from "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|this
+argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|stat
+operator|.
+name|getStoredStats
+argument_list|()
 return|;
 block|}
 block|}
@@ -3248,6 +3337,40 @@ argument_list|,
 name|conf
 operator|.
 name|isMmTable
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"creating new paths "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|fsp
+argument_list|)
+operator|+
+literal|" from ctor; childSpec "
+operator|+
+name|unionPath
+operator|+
+literal|": tmpPath "
+operator|+
+name|fsp
+operator|.
+name|getTmpPath
+argument_list|()
+operator|+
+literal|", task path "
+operator|+
+name|fsp
+operator|.
+name|getTaskOutputTempPath
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4999,8 +5122,6 @@ condition|)
 block|{
 name|fpaths
 operator|.
-name|stat
-operator|.
 name|addToStat
 argument_list|(
 name|StatsSetupConst
@@ -5015,8 +5136,6 @@ argument_list|)
 expr_stmt|;
 block|}
 name|fpaths
-operator|.
-name|stat
 operator|.
 name|addToStat
 argument_list|(
@@ -5764,7 +5883,16 @@ name|LOG14535
 operator|.
 name|info
 argument_list|(
-literal|"creating new paths for "
+literal|"creating new paths "
+operator|+
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|fsp2
+argument_list|)
+operator|+
+literal|" for "
 operator|+
 name|dirName
 operator|+
@@ -5785,7 +5913,10 @@ name|fsp2
 operator|.
 name|getTaskOutputTempPath
 argument_list|()
-comment|/*, new Exception()*/
+argument_list|,
+operator|new
+name|Exception
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -6386,8 +6517,6 @@ condition|)
 block|{
 name|prevFsp
 operator|.
-name|stat
-operator|.
 name|addToStat
 argument_list|(
 name|StatsSetupConst
@@ -6401,8 +6530,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|prevFsp
-operator|.
-name|stat
 operator|.
 name|addToStat
 argument_list|(
@@ -6930,8 +7057,6 @@ condition|)
 block|{
 name|fsp
 operator|.
-name|stat
-operator|.
 name|addToStat
 argument_list|(
 name|StatsSetupConst
@@ -6945,8 +7070,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|fsp
-operator|.
-name|stat
 operator|.
 name|addToStat
 argument_list|(
@@ -7019,8 +7142,6 @@ condition|)
 block|{
 name|fsp
 operator|.
-name|stat
-operator|.
 name|addToStat
 argument_list|(
 name|StatsSetupConst
@@ -7034,8 +7155,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 name|fsp
-operator|.
-name|stat
 operator|.
 name|addToStat
 argument_list|(
@@ -7956,8 +8075,6 @@ name|String
 name|statType
 range|:
 name|fspValue
-operator|.
-name|stat
 operator|.
 name|getStoredStats
 argument_list|()

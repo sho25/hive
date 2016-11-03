@@ -1391,7 +1391,9 @@ literal|']'
 argument_list|)
 expr_stmt|;
 block|}
-name|LOG
+name|Utilities
+operator|.
+name|LOG14535
 operator|.
 name|info
 argument_list|(

@@ -14838,6 +14838,9 @@ argument_list|(
 name|partSpec
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|Warehouse
 operator|.
 name|makeSpecFromName
@@ -14845,6 +14848,47 @@ argument_list|(
 name|fullPartSpec
 argument_list|,
 name|partPath
+argument_list|,
+operator|new
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|partSpec
+operator|.
+name|keySet
+argument_list|()
+argument_list|)
+argument_list|)
+condition|)
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|warn
+argument_list|(
+literal|"Ignoring invalid DP directory "
+operator|+
+name|partPath
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Adding partition spec from "
+operator|+
+name|partPath
+operator|+
+literal|": "
+operator|+
+name|fullPartSpec
 argument_list|)
 expr_stmt|;
 name|fullPartSpecs

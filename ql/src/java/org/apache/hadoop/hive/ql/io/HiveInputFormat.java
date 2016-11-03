@@ -2575,6 +2575,23 @@ operator|+
 literal|" (root) for inputs"
 argument_list|)
 expr_stmt|;
+comment|// Ignore nullscan-optimized paths.
+if|if
+condition|(
+name|fs
+operator|instanceof
+name|NullScanFileSystem
+condition|)
+block|{
+name|finalPaths
+operator|.
+name|add
+argument_list|(
+name|dir
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|FileStatus
 index|[]
 name|files

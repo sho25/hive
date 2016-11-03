@@ -198,6 +198,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|// TODO# this is completely broken, esp. w/load into bucketed tables (should perhaps be forbidden for MM tables)
 comment|// table alias (small) --> input file name (big) --> target file names (small)
 specifier|private
 name|Map

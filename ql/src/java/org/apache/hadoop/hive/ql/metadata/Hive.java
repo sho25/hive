@@ -8305,6 +8305,8 @@ argument_list|(
 name|mmWriteId
 argument_list|,
 literal|false
+argument_list|,
+literal|true
 argument_list|)
 argument_list|,
 name|mmWriteId
@@ -8364,6 +8366,8 @@ argument_list|(
 name|mmWriteId
 argument_list|,
 literal|false
+argument_list|,
+literal|true
 argument_list|)
 else|:
 name|filter
@@ -8472,7 +8476,7 @@ name|conf
 argument_list|,
 name|loadPath
 argument_list|,
-name|newPartPath
+name|destPath
 argument_list|,
 name|fs
 argument_list|,
@@ -8617,6 +8621,7 @@ name|getSkewedInfo
 argument_list|()
 decl_stmt|;
 comment|/* Construct list bucketing location mappings from sub-directory name. */
+comment|// TODO# HERE probably broken
 name|Map
 argument_list|<
 name|List
@@ -10330,6 +10335,9 @@ argument_list|(
 name|partSpec
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|Warehouse
 operator|.
 name|makeSpecFromName
@@ -10337,8 +10345,34 @@ argument_list|(
 name|fullPartSpec
 argument_list|,
 name|partPath
+argument_list|,
+operator|new
+name|HashSet
+argument_list|<
+name|String
+argument_list|>
+argument_list|(
+name|partSpec
+operator|.
+name|keySet
+argument_list|()
+argument_list|)
+argument_list|)
+condition|)
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|warn
+argument_list|(
+literal|"Ignoring invalid DP directory "
+operator|+
+name|partPath
 argument_list|)
 expr_stmt|;
+continue|continue;
+block|}
 name|futures
 operator|.
 name|add
@@ -10939,6 +10973,8 @@ argument_list|(
 name|mmWriteId
 argument_list|,
 literal|false
+argument_list|,
+literal|true
 argument_list|)
 argument_list|,
 name|mmWriteId
@@ -11014,6 +11050,8 @@ argument_list|(
 name|mmWriteId
 argument_list|,
 literal|false
+argument_list|,
+literal|true
 argument_list|)
 else|:
 name|filter
