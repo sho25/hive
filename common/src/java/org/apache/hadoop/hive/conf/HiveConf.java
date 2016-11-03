@@ -11497,6 +11497,15 @@ argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
 argument_list|)
 block|,
+name|SPARK_EXEC_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.spark.exec.inplace.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Updates spark job execution progress in-place in the terminal."
+argument_list|)
+block|,
 name|TEZ_CONTAINER_MAX_JAVA_HEAP_FRACTION
 argument_list|(
 literal|"hive.tez.container.max.java.heap.fraction"

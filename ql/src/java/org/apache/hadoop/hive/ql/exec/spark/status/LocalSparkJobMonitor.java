@@ -191,14 +191,13 @@ operator|.
 name|SPARK_SUBMIT_TO_RUNNING
 argument_list|)
 expr_stmt|;
-name|long
 name|startTime
-init|=
+operator|=
 name|System
 operator|.
 name|currentTimeMillis
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 while|while
 condition|(
 literal|true
@@ -257,7 +256,7 @@ if|if
 condition|(
 name|timeCount
 operator|>
-name|monitorTimeoutInteval
+name|monitorTimeoutInterval
 condition|)
 block|{
 name|console
