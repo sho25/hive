@@ -301,6 +301,18 @@ name|FileSplit
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -456,6 +468,9 @@ name|columnNames
 parameter_list|,
 name|QueryFragmentCounters
 name|counters
+parameter_list|,
+name|TypeDescription
+name|readerSchema
 parameter_list|)
 throws|throws
 name|IOException
@@ -510,6 +525,8 @@ argument_list|,
 name|edc
 argument_list|,
 name|counters
+argument_list|,
+name|readerSchema
 argument_list|)
 decl_stmt|;
 name|edc

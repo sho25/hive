@@ -137,6 +137,18 @@ name|FileSplit
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
 begin_comment
 comment|/**  * Entry point used by LlapInputFormat to create read pipeline to get data.  */
 end_comment
@@ -173,6 +185,9 @@ name|columnNames
 parameter_list|,
 name|QueryFragmentCounters
 name|counters
+parameter_list|,
+name|TypeDescription
+name|readerSchema
 parameter_list|)
 throws|throws
 name|IOException

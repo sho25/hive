@@ -105,6 +105,10 @@ name|TypeDescription
 name|getFileSchema
 parameter_list|()
 function_decl|;
+name|TypeDescription
+name|getReaderSchema
+parameter_list|()
+function_decl|;
 name|boolean
 index|[]
 name|getIncludedColumns
