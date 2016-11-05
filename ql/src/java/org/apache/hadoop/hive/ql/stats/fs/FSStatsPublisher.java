@@ -502,9 +502,11 @@ argument_list|>
 name|stats
 parameter_list|)
 block|{
-name|LOG
+name|Utilities
 operator|.
-name|debug
+name|LOG14535
+operator|.
+name|info
 argument_list|(
 literal|"Putting in map : "
 operator|+

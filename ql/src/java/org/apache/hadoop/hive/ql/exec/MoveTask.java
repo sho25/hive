@@ -1999,6 +1999,30 @@ operator|.
 name|getSourcePath
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|targetPath
+operator|.
+name|equals
+argument_list|(
+name|sourcePath
+argument_list|)
+condition|)
+block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"MoveTask not moving LFD "
+operator|+
+name|sourcePath
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|Utilities
 operator|.
 name|LOG14535
@@ -2026,6 +2050,7 @@ name|getIsDfsDir
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Multi-file load is for dynamic partitions when some partitions do not
 comment|// need to merge and they can simply be moved to the target directory.

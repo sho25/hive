@@ -1369,6 +1369,13 @@ name|rowIndex
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+specifier|transient
+name|boolean
+name|inheritPerms
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Counters.    */
 specifier|public
 specifier|static
@@ -1924,10 +1931,12 @@ name|getParent
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|fs
+name|FileUtils
 operator|.
-name|mkdirs
+name|mkdir
 argument_list|(
+name|fs
+argument_list|,
 name|finalPaths
 index|[
 name|idx
@@ -1935,6 +1944,10 @@ index|]
 operator|.
 name|getParent
 argument_list|()
+argument_list|,
+name|inheritPerms
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 block|}
@@ -3147,6 +3160,19 @@ name|serializer
 operator|.
 name|getSerializedClass
 argument_list|()
+expr_stmt|;
+name|inheritPerms
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hconf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -4511,6 +4537,22 @@ operator|.
 name|INSERT_ONLY
 condition|)
 block|{
+name|Path
+name|outPath
+init|=
+name|fsp
+operator|.
+name|outPaths
+index|[
+name|filesIdx
+index|]
+decl_stmt|;
+name|mkDirIfPermsAreNeeded
+argument_list|(
+name|outPath
+argument_list|)
+expr_stmt|;
+comment|// Make sure we inherit permissions.
 name|fsp
 operator|.
 name|outWriters
@@ -4533,12 +4575,7 @@ name|outputClass
 argument_list|,
 name|conf
 argument_list|,
-name|fsp
-operator|.
-name|outPaths
-index|[
-name|filesIdx
-index|]
+name|outPath
 argument_list|,
 name|reporter
 argument_list|)
@@ -4685,6 +4722,49 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
+block|}
+block|}
+specifier|private
+name|void
+name|mkDirIfPermsAreNeeded
+parameter_list|(
+name|Path
+name|outPath
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+name|inheritPerms
+operator|&&
+operator|!
+name|FileUtils
+operator|.
+name|mkdir
+argument_list|(
+name|fs
+argument_list|,
+name|outPath
+operator|.
+name|getParent
+argument_list|()
+argument_list|,
+name|inheritPerms
+argument_list|,
+name|hconf
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unable to create directory with inheritPerms: "
+operator|+
+name|outPath
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Report status to JT so that JT won't kill this task if closing takes too long    * due to too many files to close and the NN is overloaded.    *    * @return true if a new progress update is reported, false otherwise.    */
@@ -7783,6 +7863,15 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|error
+argument_list|(
+literal|"FSOP publishStats called."
+argument_list|)
+expr_stmt|;
 name|boolean
 name|isStatsReliable
 init|=
@@ -7938,6 +8027,24 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Observing entry for stats "
+operator|+
+name|fspKey
+operator|+
+literal|" => FSP with tmpPath "
+operator|+
+name|fspValue
+operator|.
+name|getTmpPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// for bucketed tables, hive.optimize.sort.dynamic.partition optimization
 comment|// adds the taskId to the fspKey.
 if|if
@@ -7983,6 +8090,17 @@ argument_list|)
 index|[
 literal|0
 index|]
+expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Adjusting fspKey for stats to "
+operator|+
+name|fspKey
+argument_list|)
 expr_stmt|;
 block|}
 comment|// split[0] = DP, split[1] = LB
@@ -8052,6 +8170,27 @@ name|Path
 operator|.
 name|SEPARATOR
 expr_stmt|;
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Prefix for stats "
+operator|+
+name|prefix
+operator|+
+literal|" (from "
+operator|+
+name|spSpec
+operator|+
+literal|", "
+operator|+
+name|dpSpec
+operator|+
+literal|")"
+argument_list|)
+expr_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -8115,6 +8254,15 @@ name|statsToPublish
 argument_list|)
 condition|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|error
+argument_list|(
+literal|"Failed to publish stats"
+argument_list|)
+expr_stmt|;
 comment|// The original exception is lost.
 comment|// Not changing the interface to maintain backward compatibility
 if|if
@@ -8158,6 +8306,15 @@ name|sContext
 argument_list|)
 condition|)
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|error
+argument_list|(
+literal|"Failed to close stats"
+argument_list|)
+expr_stmt|;
 comment|// The original exception is lost.
 comment|// Not changing the interface to maintain backward compatibility
 if|if

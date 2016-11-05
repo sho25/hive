@@ -1951,10 +1951,7 @@ operator|.
 name|info
 argument_list|(
 name|s
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
+comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
 name|params

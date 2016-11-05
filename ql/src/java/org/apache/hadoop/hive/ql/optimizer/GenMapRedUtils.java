@@ -8484,6 +8484,7 @@ comment|// Use the original fsOp path here in case of MM - while the new FSOP me
 comment|// MM directory, the original MoveTask still commits based on the parent. Note that this path
 comment|// can only be triggered for a merge that's part of insert for now; MM tables do not support
 comment|// concatenate. Keeping the old logic for non-MM tables with temp directories and stuff.
+comment|// TODO# is this correct?
 name|Path
 name|fsopPath
 init|=
@@ -8498,48 +8499,15 @@ argument_list|()
 else|:
 name|finalName
 decl_stmt|;
-name|linkMoveTask
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
 argument_list|(
-name|fsopPath
-argument_list|,
-name|cndTsk
-argument_list|,
-name|mvTasks
-argument_list|,
-name|conf
-argument_list|,
-name|dependencyTask
+literal|"Looking for MoveTask to make it dependant on the conditional tasks"
 argument_list|)
 expr_stmt|;
-block|}
-comment|/**    * Make the move task in the GenMRProcContext following the FileSinkOperator a dependent of all    * possible subtrees branching from the ConditionalTask.    *    * @param newOutput    * @param cndTsk    * @param mvTasks    * @param hconf    * @param dependencyTask    */
-specifier|private
-specifier|static
-name|void
-name|linkMoveTask
-parameter_list|(
-name|Path
-name|fsopPath
-parameter_list|,
-name|ConditionalTask
-name|cndTsk
-parameter_list|,
-name|List
-argument_list|<
-name|Task
-argument_list|<
-name|MoveWork
-argument_list|>
-argument_list|>
-name|mvTasks
-parameter_list|,
-name|HiveConf
-name|hconf
-parameter_list|,
-name|DependencyCollectionTask
-name|dependencyTask
-parameter_list|)
-block|{
 name|Task
 argument_list|<
 name|MoveWork
@@ -8553,6 +8521,11 @@ argument_list|(
 name|mvTasks
 argument_list|,
 name|fsopPath
+argument_list|,
+name|fsInputDesc
+operator|.
+name|isMmTable
+argument_list|()
 argument_list|)
 decl_stmt|;
 for|for
@@ -8577,7 +8550,7 @@ name|mvTask
 argument_list|,
 name|tsk
 argument_list|,
-name|hconf
+name|conf
 argument_list|,
 name|dependencyTask
 argument_list|)
@@ -10032,6 +10005,9 @@ name|mvTasks
 parameter_list|,
 name|Path
 name|fsopFinalDir
+parameter_list|,
+name|boolean
+name|isMmFsop
 parameter_list|)
 block|{
 comment|// find the move task
@@ -10054,10 +10030,23 @@ operator|.
 name|getWork
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|mvWork
+operator|.
+name|isNoop
+argument_list|()
+condition|)
+continue|continue;
 name|Path
 name|srcDir
 init|=
 literal|null
+decl_stmt|;
+name|boolean
+name|isLfd
+init|=
+literal|false
 decl_stmt|;
 if|if
 condition|(
@@ -10079,6 +10068,23 @@ operator|.
 name|getSourcePath
 argument_list|()
 expr_stmt|;
+name|isLfd
+operator|=
+literal|true
+expr_stmt|;
+if|if
+condition|(
+name|isMmFsop
+condition|)
+block|{
+name|srcDir
+operator|=
+name|srcDir
+operator|.
+name|getParent
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -10101,6 +10107,7 @@ operator|.
 name|getSourcePath
 argument_list|()
 expr_stmt|;
+comment|// TODO# THIS
 block|}
 name|Utilities
 operator|.
@@ -10121,9 +10128,25 @@ literal|" with "
 operator|+
 name|srcDir
 operator|+
-literal|" while looking for "
+literal|"(from "
+operator|+
+operator|(
+name|isLfd
+condition|?
+literal|"LFD"
+else|:
+literal|"LTD"
+operator|)
+operator|+
+literal|") while looking for "
 operator|+
 name|fsopFinalDir
+operator|+
+literal|"(mm = "
+operator|+
+name|isMmFsop
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 if|if
@@ -10151,7 +10174,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Returns true iff the fsOp requires a merge    * @param mvTasks    * @param hconf    * @param fsOp    * @param currTask    * @param isInsertTable    * @return    */
+comment|/**    * Returns true iff the fsOp requires a merge    */
 specifier|public
 specifier|static
 name|boolean
@@ -10219,6 +10242,14 @@ name|getConf
 argument_list|()
 operator|.
 name|getFinalDirName
+argument_list|()
+argument_list|,
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isMmTable
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -10724,6 +10755,16 @@ operator|!
 name|chDir
 condition|)
 block|{
+comment|// TODO# is it correct to always use MM dir in MM case here? Where does MoveTask point?
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Looking for MoveTask from createMoveTask"
+argument_list|)
+expr_stmt|;
 name|mvTask
 operator|=
 name|GenMapRedUtils
@@ -10738,6 +10779,14 @@ name|getConf
 argument_list|()
 operator|.
 name|getFinalDirName
+argument_list|()
+argument_list|,
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isMmTable
 argument_list|()
 argument_list|)
 expr_stmt|;
