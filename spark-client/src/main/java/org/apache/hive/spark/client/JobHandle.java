@@ -134,17 +134,6 @@ name|State
 name|getState
 parameter_list|()
 function_decl|;
-comment|/**    * Add a listener to the job handle. If the job's state is not SENT, a callback for the    * corresponding state will be invoked immediately.    *    * @param l The listener to add.    */
-name|void
-name|addListener
-parameter_list|(
-name|Listener
-argument_list|<
-name|T
-argument_list|>
-name|l
-parameter_list|)
-function_decl|;
 comment|/**    * The current state of the submitted job.    */
 specifier|static
 enum|enum
