@@ -1446,12 +1446,12 @@ operator|+
 literal|" min(s)"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 while|while
 condition|(
 name|running
 condition|)
+block|{
+try|try
 block|{
 name|long
 name|now
@@ -1540,12 +1540,11 @@ name|LOGGER
 operator|.
 name|error
 argument_list|(
-literal|"InterruptedExcpetion recieved for ExpiredTokenRemover thread "
+literal|"InterruptedException received for ExpiredTokenRemover thread "
 operator|+
 name|ie
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 catch|catch
@@ -1565,6 +1564,38 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
+comment|// Wait 5 seconds too in case of an exception, so we do not end up in busy waiting for
+comment|// the solution for this exception
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|5000
+argument_list|)
+expr_stmt|;
+comment|// 5 seconds
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|ie
+parameter_list|)
+block|{
+name|LOGGER
+operator|.
+name|error
+argument_list|(
+literal|"InterruptedException received for ExpiredTokenRemover thread during "
+operator|+
+literal|"wait in exception sleep "
+operator|+
+name|ie
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 block|}
