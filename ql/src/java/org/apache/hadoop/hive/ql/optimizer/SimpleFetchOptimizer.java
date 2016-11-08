@@ -1463,6 +1463,18 @@ operator|.
 name|getOuterQueryLimit
 argument_list|()
 decl_stmt|;
+comment|// limit = 0 means that we do not need any task.
+if|if
+condition|(
+name|limit
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|FetchData
 name|fetch
 init|=
