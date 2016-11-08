@@ -4160,6 +4160,21 @@ operator|+
 literal|"on the storage)."
 argument_list|)
 block|,
+name|METASTORE_AUTHORIZATION_EXTERNALTABLE_DROP_CHECK
+argument_list|(
+literal|"hive.metastore.authorization.storage.check.externaltable.drop"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Should StorageBasedAuthorization check permission of the storage before dropping external table.\n"
+operator|+
+literal|"StorageBasedAuthorization already does this check for managed table. For external table however,\n"
+operator|+
+literal|"anyone who has read permission of the directory could drop external table, which is surprising.\n"
+operator|+
+literal|"The flag is set to false by default to maintain backward compatibility."
+argument_list|)
+block|,
 name|METASTORE_EVENT_CLEAN_FREQ
 argument_list|(
 literal|"hive.metastore.event.clean.freq"

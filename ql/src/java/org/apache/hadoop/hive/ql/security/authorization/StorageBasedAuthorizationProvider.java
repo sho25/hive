@@ -213,6 +213,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|HiveMetaStore
@@ -813,7 +829,9 @@ name|getDataLocation
 argument_list|()
 decl_stmt|;
 comment|// authorize drops if there was a drop privilege requirement, and
-comment|// table is not external (external table data is not dropped)
+comment|// table is not external (external table data is not dropped) or
+comment|// "hive.metastore.authorization.storage.check.externaltable.drop"
+comment|// set to true
 if|if
 condition|(
 name|privExtractor
@@ -821,6 +839,7 @@ operator|.
 name|hasDropPrivilege
 argument_list|()
 operator|&&
+operator|(
 name|table
 operator|.
 name|getTableType
@@ -829,6 +848,29 @@ operator|!=
 name|TableType
 operator|.
 name|EXTERNAL_TABLE
+operator|||
+name|getConf
+argument_list|()
+operator|.
+name|getBoolean
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AUTHORIZATION_EXTERNALTABLE_DROP_CHECK
+operator|.
+name|varname
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_AUTHORIZATION_EXTERNALTABLE_DROP_CHECK
+operator|.
+name|defaultBoolVal
+argument_list|)
+operator|)
 condition|)
 block|{
 name|checkDeletePermission
