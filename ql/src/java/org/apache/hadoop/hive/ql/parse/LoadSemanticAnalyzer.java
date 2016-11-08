@@ -1507,6 +1507,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+comment|/* TODO# enable later - fails srcbucket creation in 14990     List<String> bucketCols = ts.tableHandle.getBucketCols();     if (bucketCols != null&& !bucketCols.isEmpty()&& MetaStoreUtils.isInsertOnlyTable(ts.tableHandle.getMetadata())) {       throw new SemanticException("Cannot load into a bucketed insert-only table. Please load into"           + " an intermediate table and use insert... select to allow Hive to enforce bucketing.");     }*/
 comment|// make sure the arguments make sense
 name|List
 argument_list|<
