@@ -1397,8 +1397,7 @@ argument_list|(
 name|executorService
 argument_list|)
 expr_stmt|;
-comment|// 80% of memory considered for accounted buffers. Rest for objects.
-comment|// TODO Tune this based on the available size.
+comment|// Distribute the available memory between the tasks.
 name|this
 operator|.
 name|memoryPerExecutor
@@ -1408,8 +1407,6 @@ name|long
 call|)
 argument_list|(
 name|totalMemoryAvailableBytes
-operator|*
-literal|0.8
 operator|/
 operator|(
 name|float

@@ -12302,7 +12302,7 @@ name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|(
 literal|"hive.llap.daemon.memory.per.instance.mb"
 argument_list|,
-literal|4096
+literal|3276
 argument_list|,
 literal|"The total amount of memory to use for the executors inside LLAP (in megabytes)."
 argument_list|,
