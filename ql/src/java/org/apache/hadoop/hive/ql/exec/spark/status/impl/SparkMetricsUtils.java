@@ -82,9 +82,9 @@ import|;
 end_import
 
 begin_class
-specifier|public
+specifier|final
 class|class
-name|SparkJobUtils
+name|SparkMetricsUtils
 block|{
 specifier|private
 specifier|final
@@ -138,7 +138,7 @@ specifier|private
 specifier|final
 specifier|static
 name|String
-name|DISK_BYTES_SPLIED
+name|DISK_BYTES_SPILLED
 init|=
 literal|"DiskBytesSpilled"
 decl_stmt|;
@@ -206,7 +206,11 @@ name|SHUFFLE_WRITE_TIME
 init|=
 literal|"ShuffleWriteTime"
 decl_stmt|;
-specifier|public
+specifier|private
+name|SparkMetricsUtils
+parameter_list|()
+block|{}
+specifier|static
 name|Map
 argument_list|<
 name|String
@@ -306,7 +310,7 @@ name|results
 operator|.
 name|put
 argument_list|(
-name|DISK_BYTES_SPLIED
+name|DISK_BYTES_SPILLED
 argument_list|,
 name|allMetrics
 operator|.
