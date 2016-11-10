@@ -12291,11 +12291,11 @@ name|LLAP_DAEMON_RPC_PORT
 argument_list|(
 literal|"hive.llap.daemon.rpc.port"
 argument_list|,
-literal|15001
+literal|0
 argument_list|,
 literal|"The LLAP daemon RPC port."
 argument_list|,
-literal|"llap.daemon.rpc.port"
+literal|"llap.daemon.rpc.port. A value of 0 indicates a dynamic port"
 argument_list|)
 block|,
 name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
