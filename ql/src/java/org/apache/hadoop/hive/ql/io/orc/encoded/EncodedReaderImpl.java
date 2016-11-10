@@ -2253,6 +2253,8 @@ name|cb
 init|=
 literal|null
 decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|RecordReaderUtils
@@ -2596,6 +2598,97 @@ argument_list|,
 name|cb
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|DiskRangeList
+name|drl
+init|=
+name|toRead
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|toRead
+operator|.
+name|next
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error getting stream ["
+operator|+
+name|sctx
+operator|.
+name|kind
+operator|+
+literal|", "
+operator|+
+name|ctx
+operator|.
+name|encoding
+operator|+
+literal|"] for"
+operator|+
+literal|" column "
+operator|+
+name|ctx
+operator|.
+name|colIx
+operator|+
+literal|" RG "
+operator|+
+name|rgIx
+operator|+
+literal|" at "
+operator|+
+name|sctx
+operator|.
+name|offset
+operator|+
+literal|", "
+operator|+
+name|sctx
+operator|.
+name|length
+operator|+
+literal|"; toRead "
+operator|+
+name|RecordReaderUtils
+operator|.
+name|stringifyDiskRanges
+argument_list|(
+name|drl
+argument_list|)
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|(
+name|ex
+operator|instanceof
+name|IOException
+operator|)
+condition|?
+operator|(
+name|IOException
+operator|)
+name|ex
+else|:
+operator|new
+name|IOException
+argument_list|(
+name|ex
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 if|if
@@ -3494,6 +3587,8 @@ init|=
 literal|null
 decl_stmt|;
 comment|// 2. Go thru the blocks; add stuff to results and prepare the decompression work (see below).
+try|try
+block|{
 name|lastUncompressed
 operator|=
 name|isCompressed
@@ -3534,6 +3629,82 @@ argument_list|,
 name|csd
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed "
+operator|+
+operator|(
+name|isCompressed
+condition|?
+literal|""
+else|:
+literal|"un"
+operator|)
+operator|+
+literal|" compressed read; cOffset "
+operator|+
+name|cOffset
+operator|+
+literal|", endCOffset "
+operator|+
+name|endCOffset
+operator|+
+literal|", streamOffset "
+operator|+
+name|streamOffset
+operator|+
+literal|", unlockUntilCOffset "
+operator|+
+name|unlockUntilCOffset
+operator|+
+literal|"; ranges passed in "
+operator|+
+name|RecordReaderUtils
+operator|.
+name|stringifyDiskRanges
+argument_list|(
+name|start
+argument_list|)
+operator|+
+literal|"; ranges passed to prepate "
+operator|+
+name|RecordReaderUtils
+operator|.
+name|stringifyDiskRanges
+argument_list|(
+name|current
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Don't log exception here.
+throw|throw
+operator|(
+name|ex
+operator|instanceof
+name|IOException
+operator|)
+condition|?
+operator|(
+name|IOException
+operator|)
+name|ex
+else|:
+operator|new
+name|IOException
+argument_list|(
+name|ex
+argument_list|)
+throw|;
+block|}
 comment|// 2.5. Remember the bad estimates for future reference.
 if|if
 condition|(
@@ -4140,6 +4311,52 @@ else|else
 block|{
 comment|// 2c. This is a compressed buffer. We need to uncompress it; the buffer can comprise
 comment|// several disk ranges, so we might need to combine them.
+if|if
+condition|(
+operator|!
+operator|(
+name|current
+operator|instanceof
+name|BufferChunk
+operator|)
+condition|)
+block|{
+name|String
+name|msg
+init|=
+literal|"Found an unexpected "
+operator|+
+name|current
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|current
+operator|+
+literal|" while looking at "
+operator|+
+name|currentOffset
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
 name|BufferChunk
 name|bc
 init|=
