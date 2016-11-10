@@ -1980,6 +1980,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_CAPABILITY_CHECK
 block|}
 decl_stmt|;
 static|static
@@ -3332,6 +3338,15 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore."
+argument_list|)
+block|,
+name|METASTORE_CAPABILITY_CHECK
+argument_list|(
+literal|"hive.metastore.client.capability.check"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to check client capabilities for potentially breaking API usage."
 argument_list|)
 block|,
 name|METASTORE_FASTPATH
