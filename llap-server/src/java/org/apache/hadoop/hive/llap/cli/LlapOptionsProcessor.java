@@ -354,7 +354,7 @@ init|=
 literal|"iothreads"
 decl_stmt|;
 comment|// llap-daemon-site
-comment|// Options for the pythin script that are here because our option parser cannot ignore the unknown ones
+comment|// Options for the python script that are here because our option parser cannot ignore the unknown ones
 specifier|public
 specifier|static
 specifier|final
@@ -414,6 +414,14 @@ name|String
 name|OPTION_SLIDER_PRINCIPAL
 init|=
 literal|"slider-principal"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|OPTION_SLIDER_PLACEMENT
+init|=
+literal|"slider-placement"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1170,6 +1178,36 @@ operator|.
 name|withDescription
 argument_list|(
 literal|"Slider AM principal; should be the user running the cluster, e.g. hive@EXAMPLE.COM"
+argument_list|)
+operator|.
+name|create
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+name|OPTION_SLIDER_PLACEMENT
+argument_list|)
+operator|.
+name|withLongOpt
+argument_list|(
+name|OPTION_SLIDER_PLACEMENT
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"Slider placement policy; see slider documentation at https://slider.incubator.apache.org/docs/placement.html."
+operator|+
+literal|" 4 means anti-affinity (the default; unnecessary if LLAP is going to take more than half of the YARN capacity of a node), 0 is normal."
 argument_list|)
 operator|.
 name|create
