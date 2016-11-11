@@ -9944,6 +9944,11 @@ name|getUserIpAddress
 argument_list|()
 argument_list|,
 name|operationId
+argument_list|,
+name|ss
+operator|.
+name|getSessionId
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|hookContext
