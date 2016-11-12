@@ -394,7 +394,7 @@ annotation|@
 name|Override
 specifier|public
 name|int
-name|getStatementId
+name|getWriteIdAndIncrement
 parameter_list|()
 block|{
 return|return

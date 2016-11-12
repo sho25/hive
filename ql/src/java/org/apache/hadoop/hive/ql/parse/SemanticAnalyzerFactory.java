@@ -2330,6 +2330,11 @@ name|HiveParser
 operator|.
 name|TOK_DELETE_FROM
 case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_MERGE
+case|:
 return|return
 operator|new
 name|UpdateDeleteSemanticAnalyzer

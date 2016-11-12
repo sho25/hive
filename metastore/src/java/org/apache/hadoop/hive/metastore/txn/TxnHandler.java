@@ -3018,7 +3018,7 @@ argument_list|(
 name|rs
 argument_list|)
 expr_stmt|;
-comment|//here means currently committing txn performed update/delete and we should check WW conflict
+comment|//if here it means currently committing txn performed update/delete and we should check WW conflict
 comment|/**            * This S4U will mutex with other commitTxn() and openTxns().             * -1 below makes txn intervals look like [3,3] [4,4] if all txns are serial            * Note: it's possible to have several txns have the same commit id.  Suppose 3 txns start            * at the same time and no new txns start until all 3 commit.            * We could've incremented the sequence for commitId is well but it doesn't add anything functionally.            */
 name|commitIdRs
 operator|=
@@ -3102,7 +3102,9 @@ literal|1
 argument_list|,
 literal|"committed.ws_txnid, committed.ws_commit_id, committed.ws_database,"
 operator|+
-literal|"committed.ws_table, committed.ws_partition, cur.ws_commit_id cur_ws_commit_id "
+literal|"committed.ws_table, committed.ws_partition, cur.ws_commit_id cur_ws_commit_id, "
+operator|+
+literal|"cur.ws_operation_type cur_op, committed.ws_operation_type committed_op "
 operator|+
 literal|"from WRITE_SET committed INNER JOIN WRITE_SET cur "
 operator|+
@@ -3281,6 +3283,24 @@ operator|+
 literal|" committed by "
 operator|+
 name|committedTxn
+operator|+
+literal|" "
+operator|+
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|7
+argument_list|)
+operator|+
+literal|"/"
+operator|+
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|8
+argument_list|)
 decl_stmt|;
 name|close
 argument_list|(
@@ -3407,6 +3427,7 @@ literal|1
 condition|)
 block|{
 comment|//this can be reasonable for an empty txn START/COMMIT or read-only txn
+comment|//also an IUD with DP that didn't match any rows.
 name|LOG
 operator|.
 name|info
@@ -4227,7 +4248,6 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|/**            * todo QueryPlan has BaseSemanticAnalyzer which has acidFileSinks list of FileSinkDesc            * FileSinkDesc.table is ql.metadata.Table            * Table.tableSpec which is TableSpec, which has specType which is SpecType            * So maybe this can work to know that this is part of dynamic partition insert in which case            * we'll get addDynamicPartitions() call and should not write TXN_COMPONENTS here.            * In any case, that's an optimization for now;  will be required when adding multi-stmt txns            */
 comment|// For each component in this lock request,
 comment|// add an entry to the txn_components table
 for|for
@@ -4296,10 +4316,33 @@ case|:
 case|case
 name|DELETE
 case|:
+if|if
+condition|(
+operator|!
+name|lc
+operator|.
+name|isSetIsDynamicPartitionWrite
+argument_list|()
+condition|)
+block|{
+comment|//must be old client talking, i.e. we don't know if it's DP so be conservative
 name|updateTxnComponents
 operator|=
 literal|true
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|/**                      * we know this is part of DP operation and so we'll get                      * {@link #addDynamicPartitions(AddDynamicPartitions)} call with the list                      * of partitions actually chaged.                      */
+name|updateTxnComponents
+operator|=
+operator|!
+name|lc
+operator|.
+name|isIsDynamicPartitionWrite
+argument_list|()
+expr_stmt|;
+block|}
 break|break;
 case|case
 name|SELECT
@@ -7945,53 +7988,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//what if a txn writes the same table> 1 time...(HIVE-9675) let's go with this for now, but really
-comment|//need to not write this in the first place, i.e. make this delete not needed
-comment|//see enqueueLockWithRetry() - that's where we write to TXN_COMPONENTS
-name|String
-name|deleteSql
-init|=
-literal|"delete from TXN_COMPONENTS where tc_txnid="
-operator|+
-name|rqst
-operator|.
-name|getTxnid
-argument_list|()
-operator|+
-literal|" and tc_database="
-operator|+
-name|quoteString
-argument_list|(
-name|rqst
-operator|.
-name|getDbname
-argument_list|()
-argument_list|)
-operator|+
-literal|" and tc_table="
-operator|+
-name|quoteString
-argument_list|(
-name|rqst
-operator|.
-name|getTablename
-argument_list|()
-argument_list|)
-decl_stmt|;
-comment|//we delete the entries made by enqueueLockWithRetry() since those are based on lock information which is
-comment|//much "wider" than necessary in a lot of cases.  Here on the other hand, we know exactly which
-comment|//partitions have been written to.  w/o this WRITE_SET would contain entries for partitions not actually
-comment|//written to
-name|int
-name|modCount
-init|=
-name|stmt
-operator|.
-name|executeUpdate
-argument_list|(
-name|deleteSql
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -8061,6 +8057,12 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|int
+name|modCount
+init|=
+literal|0
+decl_stmt|;
+comment|//record partitions that were written to
 name|List
 argument_list|<
 name|String
@@ -10721,7 +10723,7 @@ name|LockInfo
 name|info2
 parameter_list|)
 block|{
-comment|// We sort by state (acquired vs waiting) and then by LockType, they by id
+comment|// We sort by state (acquired vs waiting) and then by LockType, then by id
 if|if
 condition|(
 name|info1
@@ -11555,7 +11557,7 @@ operator|new
 name|LockResponse
 argument_list|()
 decl_stmt|;
-comment|/**      * todo: Longer term we should pass this from client somehow - this would be an optimization;  once      * that is in place make sure to build and test "writeSet" below using OperationType not LockType      */
+comment|/**      * todo: Longer term we should pass this from client somehow - this would be an optimization;  once      * that is in place make sure to build and test "writeSet" below using OperationType not LockType      * With SP we assume that the query modifies exactly the partitions it locked.  (not entirely      * realistic since Update/Delete may have some predicate that filters out all records out of      * some partition(s), but plausible).  For DP, we acquire locks very wide (all known partitions),      * but for most queries only a fraction will actually be updated.  #addDynamicPartitions() tells      * us exactly which ones were written to.  Thus using this trick to kill a query early for      * DP queries may be too restrictive.      */
 name|boolean
 name|isPartOfDynamicPartitionInsert
 init|=
@@ -13127,6 +13129,7 @@ operator|)
 operator|||
 comment|//txnId=0 means it's a select or IUD which does not write to ACID table, e.g
 comment|//insert overwrite table T partition(p=1) select a,b from T and autoCommit=true
+comment|// todo: fix comment as of HIVE-14988
 operator|(
 name|desiredLock
 operator|.

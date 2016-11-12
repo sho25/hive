@@ -290,6 +290,25 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
+name|LockComponentBuilder
+name|setIsDynamicPartitionWrite
+parameter_list|(
+name|boolean
+name|t
+parameter_list|)
+block|{
+name|component
+operator|.
+name|setIsDynamicPartitionWrite
+argument_list|(
+name|t
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**    * Get the constructed lock component.    * @return lock component.    */
 specifier|public
 name|LockComponent
