@@ -2459,6 +2459,29 @@ name|colInfos
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|//now that we let Calcite process subqueries we might have more than one
+comment|// tablescan with same alias.
+if|if
+condition|(
+name|topOps
+operator|.
+name|get
+argument_list|(
+name|tableAlias
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+name|tableAlias
+operator|=
+name|tableAlias
+operator|+
+name|this
+operator|.
+name|uniqueCounter
+expr_stmt|;
+block|}
 name|topOps
 operator|.
 name|put

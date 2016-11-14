@@ -23,6 +23,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|RelNode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -57,6 +71,16 @@ name|NodeProcessorCtx
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class implements the context information that is used for typechecking  * phase in query compilation.  */
 end_comment
@@ -88,6 +112,21 @@ specifier|private
 name|RowResolver
 name|inputRR
 decl_stmt|;
+comment|/**    * RowResolver of outer query. This is used to resolve co-rrelated columns in Filter    * TODO:    *  this currently will only be able to resolve reference to parent query's column    *  this will not work for references to grand-parent column    */
+specifier|private
+name|RowResolver
+name|outerRR
+decl_stmt|;
+comment|/**    * Map from astnode of a subquery to it's logical plan.    */
+specifier|private
+name|Map
+argument_list|<
+name|ASTNode
+argument_list|,
+name|RelNode
+argument_list|>
+name|subqueryToRelNode
+decl_stmt|;
 specifier|private
 specifier|final
 name|boolean
@@ -108,7 +147,7 @@ specifier|private
 name|String
 name|error
 decl_stmt|;
-comment|/**    * The node that generated the potential typecheck error    */
+comment|/**    * The node that generated the potential typecheck error.    */
 specifier|private
 name|ASTNode
 name|errorSrcNode
@@ -316,6 +355,18 @@ name|allowSubQueryExpr
 operator|=
 name|allowSubQueryExpr
 expr_stmt|;
+name|this
+operator|.
+name|outerRR
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|subqueryToRelNode
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|/**    * @param inputRR    *          the inputRR to set    */
 specifier|public
@@ -341,6 +392,68 @@ parameter_list|()
 block|{
 return|return
 name|inputRR
+return|;
+block|}
+comment|/**    * @param outerRR    *          the outerRR to set    */
+specifier|public
+name|void
+name|setOuterRR
+parameter_list|(
+name|RowResolver
+name|outerRR
+parameter_list|)
+block|{
+name|this
+operator|.
+name|outerRR
+operator|=
+name|outerRR
+expr_stmt|;
+block|}
+comment|/**    * @return the outerRR    */
+specifier|public
+name|RowResolver
+name|getOuterRR
+parameter_list|()
+block|{
+return|return
+name|outerRR
+return|;
+block|}
+comment|/**    * @param subqueryToRelNode    *          the subqueryToRelNode to set    */
+specifier|public
+name|void
+name|setSubqueryToRelNode
+parameter_list|(
+name|Map
+argument_list|<
+name|ASTNode
+argument_list|,
+name|RelNode
+argument_list|>
+name|subqueryToRelNode
+parameter_list|)
+block|{
+name|this
+operator|.
+name|subqueryToRelNode
+operator|=
+name|subqueryToRelNode
+expr_stmt|;
+block|}
+comment|/**    * @return the outerRR    */
+specifier|public
+name|Map
+argument_list|<
+name|ASTNode
+argument_list|,
+name|RelNode
+argument_list|>
+name|getSubqueryToRelNode
+parameter_list|()
+block|{
+return|return
+name|subqueryToRelNode
 return|;
 block|}
 comment|/**    * @param unparseTranslator    *          the unparseTranslator to set    */
