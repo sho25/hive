@@ -2397,6 +2397,7 @@ operator|!
 name|isLlap
 condition|)
 block|{
+comment|// Conf for non-llap
 name|conf
 operator|.
 name|setBoolean
@@ -2404,6 +2405,19 @@ argument_list|(
 literal|"hive.llap.io.enabled"
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Conf for llap
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"hive.llap.execution.mode"
+argument_list|,
+literal|"only"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2435,6 +2449,9 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
+parameter_list|,
+name|boolean
+name|usingLlap
 parameter_list|)
 throws|throws
 name|IOException
@@ -2448,6 +2465,8 @@ argument_list|,
 name|numberOfTaskTrackers
 argument_list|,
 name|nameNode
+argument_list|,
+name|usingLlap
 argument_list|)
 return|;
 block|}
@@ -2470,6 +2489,11 @@ specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isLlap
+decl_stmt|;
 specifier|public
 name|MiniTezShim
 parameter_list|(
@@ -2481,6 +2505,9 @@ name|numberOfTaskTrackers
 parameter_list|,
 name|String
 name|nameNode
+parameter_list|,
+name|boolean
+name|usingLlap
 parameter_list|)
 throws|throws
 name|IOException
@@ -2642,6 +2669,12 @@ name|mr
 operator|.
 name|getConfig
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|isLlap
+operator|=
+name|usingLlap
 expr_stmt|;
 block|}
 annotation|@
@@ -2830,6 +2863,21 @@ argument_list|,
 literal|0.4f
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|isLlap
+condition|)
+block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"hive.llap.execution.mode"
+argument_list|,
+literal|"all"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private

@@ -11922,6 +11922,8 @@ argument_list|,
 literal|"all"
 argument_list|,
 literal|"map"
+argument_list|,
+literal|"only"
 argument_list|)
 argument_list|,
 literal|"Chooses whether query fragments will run in container or in llap"
