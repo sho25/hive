@@ -1427,6 +1427,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|REPLDIR
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTOREURIS
 block|,
 name|HiveConf
@@ -2730,6 +2736,15 @@ operator|+
 literal|"For each connecting user, an HDFS scratch dir: ${hive.exec.scratchdir}/<username> is created, "
 operator|+
 literal|"with ${hive.scratch.dir.permission}."
+argument_list|)
+block|,
+name|REPLDIR
+argument_list|(
+literal|"hive.repl.rootdir"
+argument_list|,
+literal|"/user/hive/repl/"
+argument_list|,
+literal|"HDFS root dir for all replication dumps."
 argument_list|)
 block|,
 name|LOCALSCRATCHDIR
@@ -8888,7 +8903,7 @@ name|HIVE_EXIM_URI_SCHEME_WL
 argument_list|(
 literal|"hive.exim.uri.scheme.whitelist"
 argument_list|,
-literal|"hdfs,pfile"
+literal|"hdfs,pfile,file"
 argument_list|,
 literal|"A comma separated list of acceptable URI schemes for import and export."
 argument_list|)

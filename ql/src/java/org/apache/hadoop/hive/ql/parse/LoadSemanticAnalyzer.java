@@ -575,7 +575,9 @@ name|name
 operator|.
 name|equals
 argument_list|(
-literal|"_metadata"
+name|EximUtil
+operator|.
+name|METADATA_NAME
 argument_list|)
 condition|?
 literal|true
