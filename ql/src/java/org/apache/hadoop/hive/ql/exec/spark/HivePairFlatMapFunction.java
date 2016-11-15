@@ -302,8 +302,12 @@ literal|"r_"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Spark task attempt id is increased by Spark context instead of task, which may introduce
-comment|// unstable qtest output, since non Hive features depends on this, we always set it to 0 here.
+comment|// Hive requires this TaskAttemptId to be unique. MR's TaskAttemptId is composed
+comment|// of "attempt_timestamp_jobNum_m/r_taskNum_attemptNum". The counterpart for
+comment|// Spark should be "attempt_timestamp_stageNum_m/r_partitionId_attemptNum".
+comment|// When there're multiple attempts for a task, Hive will rely on the partitionId
+comment|// to figure out if the data are duplicate or not when collecting the final outputs
+comment|// (see org.apache.hadoop.hive.ql.exec.Utils.removeTempOrDuplicateFiles)
 name|taskAttemptIdBuilder
 operator|.
 name|append
@@ -324,7 +328,18 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|"_0"
+literal|"_"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|TaskContext
+operator|.
+name|get
+argument_list|()
+operator|.
+name|attemptNumber
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|String

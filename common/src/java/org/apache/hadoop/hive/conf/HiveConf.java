@@ -9315,6 +9315,32 @@ literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)
 block|,
 comment|// HiveServer2 specific configs
+name|HIVE_SERVER2_CLEAR_DANGLING_SCRATCH_DIR
+argument_list|(
+literal|"hive.server2.clear.dangling.scratchdir"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Clear dangling scratch dir periodically in HS2"
+argument_list|)
+block|,
+name|HIVE_SERVER2_CLEAR_DANGLING_SCRATCH_DIR_INTERVAL
+argument_list|(
+literal|"hive.server2.clear.dangling.scratchdir.interval"
+argument_list|,
+literal|"1800s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Interval to clear dangling scratch dir periodically in HS2"
+argument_list|)
+block|,
 name|HIVE_SERVER2_SLEEP_INTERVAL_BETWEEN_START_ATTEMPTS
 argument_list|(
 literal|"hive.server2.sleep.interval.between.start.attempts"
@@ -11502,6 +11528,15 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Updates tez job execution progress in-place in the terminal."
+argument_list|)
+block|,
+name|SPARK_EXEC_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.spark.exec.inplace.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Updates spark job execution progress in-place in the terminal."
 argument_list|)
 block|,
 name|TEZ_CONTAINER_MAX_JAVA_HEAP_FRACTION

@@ -1711,8 +1711,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|tez
-operator|.
 name|InPlaceUpdates
 import|;
 end_import
