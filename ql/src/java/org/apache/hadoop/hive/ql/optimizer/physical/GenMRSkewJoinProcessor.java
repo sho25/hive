@@ -1932,7 +1932,7 @@ operator|)
 name|ts
 operator|)
 operator|.
-name|setTableDesc
+name|setTableDescSkewJoin
 argument_list|(
 name|tableDescList
 operator|.

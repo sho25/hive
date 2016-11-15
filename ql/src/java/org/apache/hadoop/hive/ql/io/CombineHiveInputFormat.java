@@ -906,11 +906,28 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
-comment|// Combined splits are not supported for MM tables right now.
-comment|// However, the merge for MM always combines one directory and should ignore that it's MM.
-name|boolean
-name|isMmTableNonMerge
+name|TableDesc
+name|tbl
 init|=
+name|part
+operator|.
+name|getTableDesc
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isMmNonMerge
+init|=
+literal|false
+decl_stmt|;
+if|if
+condition|(
+name|tbl
+operator|!=
+literal|null
+condition|)
+block|{
+name|isMmNonMerge
+operator|=
 operator|!
 name|isMerge
 operator|&&
@@ -918,20 +935,33 @@ name|MetaStoreUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
-name|part
-operator|.
-name|getTableDesc
-argument_list|()
+name|tbl
 operator|.
 name|getProperties
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// This would be the case for obscure tasks like truncate column (unsupported for MM).
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|warn
+argument_list|(
+literal|"Assuming not insert-only; no table in partition spec "
+operator|+
+name|part
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|isAvoidSplitCombine
 operator|||
-name|isMmTableNonMerge
+name|isMmNonMerge
 condition|)
 block|{
 comment|//if (LOG.isDebugEnabled()) {

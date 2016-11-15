@@ -1187,6 +1187,33 @@ return|return
 name|ret
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"TableDesc [inputFileFormatClass="
+operator|+
+name|inputFileFormatClass
+operator|+
+literal|", outputFileFormatClass="
+operator|+
+name|outputFileFormatClass
+operator|+
+literal|", properties="
+operator|+
+name|properties
+operator|+
+literal|", jobProperties="
+operator|+
+name|jobProperties
+operator|+
+literal|"]"
+return|;
+block|}
 block|}
 end_class
 

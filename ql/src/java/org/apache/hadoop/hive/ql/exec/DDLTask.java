@@ -5819,6 +5819,11 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+name|mergeFilesDesc
+operator|.
+name|getTableDesc
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|LinkedHashMap

@@ -7629,6 +7629,11 @@ name|getMmWriteId
 argument_list|()
 argument_list|,
 name|reporter
+argument_list|,
+name|conf
+operator|.
+name|isMmCtas
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

@@ -40136,6 +40136,11 @@ operator|.
 name|getViewDesc
 argument_list|()
 decl_stmt|;
+name|boolean
+name|isCtas
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|tblDesc
@@ -41036,6 +41041,8 @@ argument_list|,
 name|canBeMerged
 argument_list|,
 name|mmWriteId
+argument_list|,
+name|isMmCtas
 argument_list|)
 decl_stmt|;
 if|if
@@ -41678,6 +41685,9 @@ name|canBeMerged
 parameter_list|,
 name|Long
 name|mmWriteId
+parameter_list|,
+name|boolean
+name|isMmCtas
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -41732,6 +41742,8 @@ argument_list|,
 name|dest_path
 argument_list|,
 name|mmWriteId
+argument_list|,
+name|isMmCtas
 argument_list|)
 decl_stmt|;
 name|fileSinkDesc

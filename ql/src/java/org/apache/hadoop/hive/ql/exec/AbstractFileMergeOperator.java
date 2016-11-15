@@ -670,10 +670,6 @@ operator|+
 literal|", out "
 operator|+
 name|outPath
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1438,6 +1434,8 @@ argument_list|,
 name|mmWriteId
 argument_list|,
 name|reporter
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

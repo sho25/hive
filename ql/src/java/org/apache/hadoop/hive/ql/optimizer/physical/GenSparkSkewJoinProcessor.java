@@ -2150,7 +2150,7 @@ operator|)
 name|ts
 operator|)
 operator|.
-name|setTableDesc
+name|setTableDescSkewJoin
 argument_list|(
 name|tableDescList
 operator|.
@@ -3122,7 +3122,7 @@ name|setTbl
 argument_list|(
 name|tableScan
 operator|.
-name|getTableDesc
+name|getTableDescSkewJoin
 argument_list|()
 argument_list|)
 expr_stmt|;

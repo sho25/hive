@@ -2355,6 +2355,8 @@ operator|new
 name|PartialScanWork
 argument_list|(
 name|inputPaths
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|DriverContext

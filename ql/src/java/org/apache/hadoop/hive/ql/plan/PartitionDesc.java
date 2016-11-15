@@ -531,6 +531,29 @@ specifier|public
 name|PartitionDesc
 parameter_list|()
 block|{   }
+specifier|private
+specifier|final
+specifier|static
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+name|LOG
+init|=
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|PartitionDesc
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 name|PartitionDesc
 parameter_list|(
@@ -1818,6 +1841,45 @@ parameter_list|()
 block|{
 return|return
 name|vectorPartitionDesc
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"PartitionDesc [tableDesc="
+operator|+
+name|tableDesc
+operator|+
+literal|", partSpec="
+operator|+
+name|partSpec
+operator|+
+literal|", inputFileFormatClass="
+operator|+
+name|inputFileFormatClass
+operator|+
+literal|", outputFileFormatClass="
+operator|+
+name|outputFileFormatClass
+operator|+
+literal|", properties="
+operator|+
+name|properties
+operator|+
+literal|", baseFileName="
+operator|+
+name|baseFileName
+operator|+
+literal|", vectorPartitionDesc="
+operator|+
+name|vectorPartitionDesc
+operator|+
+literal|"]"
 return|;
 block|}
 block|}
