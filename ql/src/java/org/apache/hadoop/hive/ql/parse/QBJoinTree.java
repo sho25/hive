@@ -1677,10 +1677,7 @@ control|)
 block|{
 name|cloned
 operator|.
-name|getPostJoinFilters
-argument_list|()
-operator|.
-name|add
+name|addPostJoinFilter
 argument_list|(
 name|filter
 argument_list|)

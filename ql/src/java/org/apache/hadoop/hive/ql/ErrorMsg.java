@@ -121,24 +121,6 @@ name|ASTNodeOrigin
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|SemanticException
-import|;
-end_import
-
 begin_comment
 comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  *  * This class supports parametrized messages such as (@link #TRUNCATE_FOR_NON_MANAGED_TABLE}.  These are  * preferable over un-parametrized ones where arbitrary String is appended to the end of the message,  * for example {@link #getMsg(String)} and {@link #INVALID_TABLE}.  */
 end_comment
@@ -284,6 +266,8 @@ argument_list|,
 literal|"Argument type mismatch"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|INVALID_JOIN_CONDITION_1
 argument_list|(
 literal|10017
@@ -291,6 +275,8 @@ argument_list|,
 literal|"Both left and right aliases encountered in JOIN"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|INVALID_JOIN_CONDITION_2
 argument_list|(
 literal|10018
@@ -298,6 +284,8 @@ argument_list|,
 literal|"Neither left nor right aliases encountered in JOIN"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|INVALID_JOIN_CONDITION_3
 argument_list|(
 literal|10019
@@ -2249,6 +2237,13 @@ argument_list|,
 literal|"MERGE statment can have at most 1 WHEN MATCHED ... UPDATE clause:<{0}>"
 argument_list|,
 literal|true
+argument_list|)
+block|,
+name|INVALID_JOIN_CONDITION
+argument_list|(
+literal|10407
+argument_list|,
+literal|"Complex condition not supported for (LEFT|RIGHT|FULL) OUTER JOIN"
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

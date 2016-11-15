@@ -11355,6 +11355,7 @@ argument_list|()
 operator|!=
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -11375,6 +11376,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 throw|;
+block|}
 name|ExprNodeDesc
 name|joinCondnExprNode
 init|=
