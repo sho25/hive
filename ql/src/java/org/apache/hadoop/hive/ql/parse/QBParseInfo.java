@@ -986,6 +986,7 @@ name|ast
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * See also {@link #getInsertOverwriteTables()}    */
 specifier|public
 name|boolean
 name|isInsertIntoTable
@@ -1018,7 +1019,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Check if a table is in the list to be inserted into    * @param fullTableName table name in dbname.tablename format    * @return    */
+comment|/**    * Check if a table is in the list to be inserted into    * See also {@link #getInsertOverwriteTables()}    * @param fullTableName table name in dbname.tablename format    * @return    */
 specifier|public
 name|boolean
 name|isInsertIntoTable
@@ -2791,6 +2792,7 @@ operator|=
 name|isPartialScanAnalyzeCommand
 expr_stmt|;
 block|}
+comment|/**    * See also {@link #isInsertIntoTable(String)}    */
 specifier|public
 name|Map
 argument_list|<

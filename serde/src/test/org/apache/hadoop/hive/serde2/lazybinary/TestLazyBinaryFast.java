@@ -79,7 +79,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -274,13 +274,13 @@ index|[]
 index|[]
 name|rows
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|,
 name|StructObjectInspector
 name|rowOI
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde_fewer
 parameter_list|,
 name|StructObjectInspector
@@ -1450,7 +1450,7 @@ argument_list|(
 name|rowStructObjectInspector
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|TestLazyBinarySerDe
@@ -1462,7 +1462,7 @@ argument_list|,
 name|fieldTypes
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde_fewer
 init|=
 literal|null

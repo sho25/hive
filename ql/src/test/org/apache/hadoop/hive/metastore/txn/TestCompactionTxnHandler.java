@@ -3255,6 +3255,13 @@ argument_list|)
 decl_stmt|;
 name|lc
 operator|.
+name|setIsDynamicPartitionWrite
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|lc
+operator|.
 name|setTablename
 argument_list|(
 name|tableName

@@ -147,7 +147,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1039,7 +1039,7 @@ specifier|static
 name|void
 name|initializeOutputSerDe
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|Configuration

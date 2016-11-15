@@ -303,6 +303,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
@@ -4979,6 +4997,197 @@ expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"ALTER TABLE ex1.exchange_part_test1 EXCHANGE PARTITION (ds='2013-04-05') WITH TABLE ex2.exchange_part_test2"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeNegative
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"MERGE INTO "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" target USING "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" source\nON target.a = source.a "
+operator|+
+literal|"\nWHEN MATCHED THEN UPDATE set b = 1 "
+operator|+
+literal|"\nWHEN MATCHED THEN DELETE "
+operator|+
+literal|"\nWHEN NOT MATCHED AND a< 1 THEN INSERT VALUES(1,2)"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|MERGE_PREDIACTE_REQUIRED
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeNegative2
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"MERGE INTO "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" target USING "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"\n source ON target.pk = source.pk "
+operator|+
+literal|"\nWHEN MATCHED THEN UPDATE set t = 1 "
+operator|+
+literal|"\nWHEN MATCHED THEN UPDATE set b=a"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|MERGE_TOO_MANY_UPDATE
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Ignore
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSpecialChar
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|target
+init|=
+literal|"`aci/d_u/ami`"
+decl_stmt|;
+name|String
+name|src
+init|=
+literal|"`src/name`"
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|target
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|src
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|target
+operator|+
+literal|"(i int,"
+operator|+
+literal|"`d?*de e` decimal(5,2),"
+operator|+
+literal|"vc varchar(128)) clustered by (i) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|src
+operator|+
+literal|"(`g/h` int, j decimal(5,2), k varchar(128))"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=`g/h` "
+operator|+
+literal|"\nwhen matched and i> 5 then delete "
+operator|+
+literal|"\nwhen matched then update set vc=`∆∋` "
+operator|+
+literal|"\nwhen not matched then insert values(`a/b`.`g/h`,`a/b`.j,`a/b`.k)"
 argument_list|)
 expr_stmt|;
 block|}

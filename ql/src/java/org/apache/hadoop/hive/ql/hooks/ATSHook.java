@@ -932,10 +932,7 @@ name|conf
 operator|.
 name|getLogIdVar
 argument_list|(
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|hookContext
 operator|.
 name|getSessionId
 argument_list|()

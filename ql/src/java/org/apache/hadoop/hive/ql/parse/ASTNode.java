@@ -207,6 +207,10 @@ name|visited
 init|=
 literal|false
 decl_stmt|;
+specifier|transient
+name|String
+name|matchedText
+decl_stmt|;
 specifier|public
 name|ASTNode
 parameter_list|()
@@ -1622,6 +1626,16 @@ name|startIndx
 argument_list|,
 name|endIndx
 argument_list|)
+return|;
+block|}
+comment|/**    * The string that generated this node.    * Only set for a node if parser grammar sets it for a particular rule    */
+specifier|public
+name|String
+name|getMatchedText
+parameter_list|()
+block|{
+return|return
+name|matchedText
 return|;
 block|}
 block|}

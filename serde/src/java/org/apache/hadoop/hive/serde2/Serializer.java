@@ -74,12 +74,10 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  * All serializers should extend the abstract class AbstractSerializer, and eventually  * Serializer interface should be removed  */
+comment|/**  * HiveSerializer is used to serialize data to a Hadoop Writable object. The  * serialize In addition to the interface below, all implementations are assume  * to have a ctor that takes a single 'Table' object as argument.  * All serializers should extend the abstract class AbstractSerializer.  * The interface is necessary for SerDes to be able to implement both Serializer and Deserializer.  */
 end_comment
 
 begin_interface
-annotation|@
-name|Deprecated
 specifier|public
 interface|interface
 name|Serializer

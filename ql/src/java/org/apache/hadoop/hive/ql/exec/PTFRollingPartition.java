@@ -103,7 +103,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -200,7 +200,7 @@ parameter_list|(
 name|Configuration
 name|cfg
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector

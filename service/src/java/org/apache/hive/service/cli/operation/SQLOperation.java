@@ -621,7 +621,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1000,7 +1000,7 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 literal|null
@@ -3330,7 +3330,7 @@ name|rowSet
 return|;
 block|}
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|getSerDe
 parameter_list|()
 throws|throws

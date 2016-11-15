@@ -74,12 +74,10 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a  * custom java object that can be of any type that the developer wants.  *  * HiveDeserializer also provides the ObjectInspector which can be used to  * inspect the internal structure of the object (that is returned by deserialize  * function).  * All deserializers should extend the abstract class AbstractDeserializer, and eventually  * Deserializer interface should be removed  */
+comment|/**  * HiveDeserializer is used to deserialize the data from hadoop Writable to a  * custom java object that can be of any type that the developer wants.  *  * HiveDeserializer also provides the ObjectInspector which can be used to  * inspect the internal structure of the object (that is returned by deserialize  * function).  * All deserializers should extend the abstract class AbstractDeserializer.  * The interface is necessary for SerDes to be able to implement both Serializer and Deserializer.  */
 end_comment
 
 begin_interface
-annotation|@
-name|Deprecated
 specifier|public
 interface|interface
 name|Deserializer

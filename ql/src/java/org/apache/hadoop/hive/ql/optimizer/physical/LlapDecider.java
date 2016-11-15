@@ -89,6 +89,30 @@ name|LlapDecider
 operator|.
 name|LlapMode
 operator|.
+name|only
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|physical
+operator|.
+name|LlapDecider
+operator|.
+name|LlapMode
+operator|.
 name|map
 import|;
 end_import
@@ -173,6 +197,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|EnumSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -224,6 +258,20 @@ operator|.
 name|util
 operator|.
 name|Stack
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
 import|;
 end_import
 
@@ -919,10 +967,13 @@ block|,
 comment|// map operators only
 name|all
 block|,
-comment|// all operators
+comment|// all operators. Launch containers if user code etc prevents running inside llap.
 name|none
 block|,
 comment|// no operators
+name|only
+block|,
+comment|// Try running everything in llap, fail if that is not possible (non blessed user code, script, etc)
 name|auto
 comment|// please hive, choose for me
 block|}
@@ -961,6 +1012,16 @@ argument_list|<
 name|MapJoinOperator
 argument_list|>
 name|mapJoinOpList
+decl_stmt|;
+specifier|private
+specifier|final
+name|Map
+argument_list|<
+name|Rule
+argument_list|,
+name|NodeProcessor
+argument_list|>
+name|rules
 decl_stmt|;
 specifier|public
 name|LlapDecisionDispatcher
@@ -1032,6 +1093,11 @@ name|ArrayList
 argument_list|<
 name|MapJoinOperator
 argument_list|>
+argument_list|()
+expr_stmt|;
+name|rules
+operator|=
+name|getRules
 argument_list|()
 expr_stmt|;
 block|}
@@ -1344,6 +1410,34 @@ argument_list|(
 literal|"some operators cannot be run in llap"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|mode
+operator|==
+name|only
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Cannot run all parts of query in llap. Failing since "
+operator|+
+name|ConfVars
+operator|.
+name|LLAP_EXECUTION_MODE
+operator|.
+name|varname
+operator|+
+literal|" is set to "
+operator|+
+name|only
+operator|.
+name|name
+argument_list|()
+argument_list|)
+throw|;
+block|}
 return|return
 literal|false
 return|;
@@ -1352,16 +1446,30 @@ comment|// --- From here on out we choose whether we *want* to run in llap
 comment|// if mode is all just run it
 if|if
 condition|(
-name|mode
-operator|==
+name|EnumSet
+operator|.
+name|of
+argument_list|(
 name|all
+argument_list|,
+name|only
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+name|mode
+argument_list|)
 condition|)
 block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"LLAP mode set to 'all' so can convert any work."
+literal|"LLAP mode set to '"
+operator|+
+name|mode
+operator|+
+literal|"' so can convert any work."
 argument_list|)
 expr_stmt|;
 return|return
@@ -1389,6 +1497,15 @@ assert|assert
 name|mode
 operator|==
 name|auto
+operator|:
+literal|"Mode must be "
+operator|+
+name|auto
+operator|.
+name|name
+argument_list|()
+operator|+
+literal|" at this point"
 assert|;
 comment|// if parents aren't in llap neither should the child
 if|if
@@ -2574,8 +2691,7 @@ name|DefaultRuleDispatcher
 argument_list|(
 literal|null
 argument_list|,
-name|getRules
-argument_list|()
+name|rules
 argument_list|,
 literal|null
 argument_list|)
@@ -2677,13 +2793,6 @@ argument_list|)
 operator|)
 condition|)
 block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Cannot run in LLAP mode."
-argument_list|)
-expr_stmt|;
 return|return
 literal|false
 return|;
@@ -3039,6 +3148,32 @@ name|LlapMode
 operator|.
 name|valueOf
 argument_list|(
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|LLAP_EXECUTION_MODE
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|this
+operator|.
+name|mode
+operator|!=
+literal|null
+argument_list|,
+literal|"Unrecognized LLAP mode configuration: "
+operator|+
 name|HiveConf
 operator|.
 name|getVar

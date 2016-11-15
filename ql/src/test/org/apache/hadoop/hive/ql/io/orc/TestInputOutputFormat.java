@@ -931,7 +931,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -10221,7 +10221,7 @@ name|JAVA
 argument_list|)
 expr_stmt|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -11217,7 +11217,7 @@ name|JAVA
 argument_list|)
 expr_stmt|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -11791,7 +11791,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -12194,7 +12194,7 @@ name|JAVA
 argument_list|)
 expr_stmt|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -16941,7 +16941,7 @@ name|JAVA
 argument_list|)
 expr_stmt|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -17233,7 +17233,7 @@ init|=
 name|createSoi
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new
@@ -25000,7 +25000,7 @@ argument_list|,
 name|newMaxSplitSize
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new

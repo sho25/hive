@@ -2749,7 +2749,13 @@ operator|.
 name|INVALID_COLUMN
 operator|.
 name|getMsg
-argument_list|()
+argument_list|(
+literal|" \'"
+operator|+
+name|bucketCol
+operator|+
+literal|"\'"
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -2863,7 +2869,13 @@ operator|.
 name|INVALID_COLUMN
 operator|.
 name|getMsg
-argument_list|()
+argument_list|(
+literal|" \'"
+operator|+
+name|sortCol
+operator|+
+literal|"\'"
+argument_list|)
 argument_list|)
 throw|;
 block|}

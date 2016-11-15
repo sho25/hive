@@ -213,7 +213,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1762,7 +1762,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|SerDe
+name|AbstractSerDe
 name|getSpillSerDe
 parameter_list|(
 name|byte
@@ -1804,11 +1804,11 @@ return|return
 literal|null
 return|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|sd
 init|=
 operator|(
-name|SerDe
+name|AbstractSerDe
 operator|)
 name|ReflectionUtil
 operator|.
@@ -2259,7 +2259,7 @@ argument_list|,
 name|noFilter
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|JoinUtil

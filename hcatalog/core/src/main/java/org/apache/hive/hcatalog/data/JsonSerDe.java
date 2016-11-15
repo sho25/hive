@@ -263,7 +263,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1066,8 +1066,8 @@ argument_list|)
 specifier|public
 class|class
 name|JsonSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|private
 specifier|static

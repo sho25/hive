@@ -1867,7 +1867,7 @@ name|UPDATEDELETE_PARSE_ERROR
 argument_list|(
 literal|10290
 argument_list|,
-literal|"Encountered parse error while parsing rewritten update or "
+literal|"Encountered parse error while parsing rewritten merge/update or "
 operator|+
 literal|"delete query"
 argument_list|)
@@ -2220,6 +2220,35 @@ argument_list|(
 literal|10403
 argument_list|,
 literal|"Query for the materialized view rebuild could not be retrieved"
+argument_list|)
+block|,
+name|MERGE_PREDIACTE_REQUIRED
+argument_list|(
+literal|10404
+argument_list|,
+literal|"MERGE statement with both UPDATE and DELETE clauses "
+operator|+
+literal|"requires \"AND<boolean>\" on the 1st WHEN MATCHED clause of<{0}>"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|MERGE_TOO_MANY_DELETE
+argument_list|(
+literal|10405
+argument_list|,
+literal|"MERGE statment can have at most 1 WHEN MATCHED ... DELETE clause:<{0}>"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|MERGE_TOO_MANY_UPDATE
+argument_list|(
+literal|10406
+argument_list|,
+literal|"MERGE statment can have at most 1 WHEN MATCHED ... UPDATE clause:<{0}>"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//
@@ -3491,6 +3520,38 @@ name|tree
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|renderPosition
+parameter_list|(
+name|ASTNode
+name|n
+parameter_list|)
+block|{
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|ErrorMsg
+operator|.
+name|renderPosition
+argument_list|(
+name|sb
+argument_list|,
+name|n
+argument_list|)
+expr_stmt|;
+return|return
+name|sb
+operator|.
+name|toString
+argument_list|()
+return|;
 block|}
 specifier|public
 name|String

@@ -323,24 +323,6 @@ name|SessionState
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|ImportSemanticAnalyzer
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class listens for drop events and, if set, exports the table's metadata as JSON to the trash  * of the user performing the drop  */
 end_comment
@@ -658,7 +640,7 @@ name|metaPath
 argument_list|,
 name|name
 operator|+
-name|ImportSemanticAnalyzer
+name|EximUtil
 operator|.
 name|METADATA_NAME
 argument_list|)

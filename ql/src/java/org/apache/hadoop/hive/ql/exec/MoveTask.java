@@ -1612,6 +1612,20 @@ operator|.
 name|getCtx
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|ctx
+operator|.
+name|getHiveTxnManager
+argument_list|()
+operator|.
+name|supportsAcid
+argument_list|()
+condition|)
+block|{
+comment|//Acid LM doesn't maintain getOutputLockObjects(); this 'if' just makes it more explicit
+return|return;
+block|}
 name|HiveLockManager
 name|lockMgr
 init|=

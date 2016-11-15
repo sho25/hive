@@ -33,6 +33,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|AbstractSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|SerDeException
 import|;
 end_import
@@ -73,11 +89,16 @@ begin_comment
 comment|/**  * Serdes that support vectorized {@link VectorizedRowBatch} must implement this interface.  */
 end_comment
 
-begin_interface
+begin_class
 specifier|public
-interface|interface
+specifier|abstract
+class|class
 name|VectorizedSerde
+extends|extends
+name|AbstractSerDe
 block|{
+specifier|public
+specifier|abstract
 name|Writable
 name|serializeVector
 parameter_list|(
@@ -90,6 +111,8 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
+specifier|public
+specifier|abstract
 name|void
 name|deserializeVector
 parameter_list|(
@@ -106,7 +129,7 @@ throws|throws
 name|SerDeException
 function_decl|;
 block|}
-end_interface
+end_class
 
 end_unit
 

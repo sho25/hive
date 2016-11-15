@@ -325,7 +325,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -603,7 +603,7 @@ name|addCursor
 decl_stmt|;
 comment|// append cursor in the lastBlock
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|serde
 decl_stmt|;
 comment|// serialization/deserialization for the row
@@ -924,7 +924,7 @@ specifier|public
 name|void
 name|setSerDe
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|sd
 parameter_list|,
 name|ObjectInspector

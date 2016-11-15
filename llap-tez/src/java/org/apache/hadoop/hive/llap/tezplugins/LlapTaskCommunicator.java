@@ -3172,6 +3172,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO HIVE-15163. Handle cases where nodes go down and come back on the same port. Historic information
+comment|// can prevent updates from being sent out to the new node.
 specifier|public
 name|void
 name|sendStateUpdate

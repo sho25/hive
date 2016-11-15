@@ -4532,6 +4532,24 @@ argument_list|,
 name|numTrackers
 argument_list|,
 name|uriString
+argument_list|,
+name|EnumSet
+operator|.
+name|of
+argument_list|(
+name|MiniClusterType
+operator|.
+name|llap
+argument_list|,
+name|MiniClusterType
+operator|.
+name|llap_local
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+name|clusterType
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -10178,6 +10196,8 @@ block|,
 literal|".*at com\\.sun\\.proxy.*"
 block|,
 literal|".*at com\\.jolbox.*"
+block|,
+literal|".*at com\\.zaxxer.*"
 block|,
 literal|"org\\.apache\\.hadoop\\.hive\\.metastore\\.model\\.MConstraint@([0-9]|[a-z])*"
 block|,

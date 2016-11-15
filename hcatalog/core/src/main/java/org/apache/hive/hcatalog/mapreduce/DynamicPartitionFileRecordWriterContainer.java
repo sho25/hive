@@ -109,7 +109,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -428,7 +428,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 name|baseDynamicSerDe
 decl_stmt|;
@@ -567,7 +567,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1124,7 +1124,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Setup serDe.
-name|SerDe
+name|AbstractSerDe
 name|currSerDe
 init|=
 name|ReflectionUtils

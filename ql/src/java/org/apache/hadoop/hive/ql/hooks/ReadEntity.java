@@ -190,6 +190,14 @@ name|isUpdateOrDelete
 init|=
 literal|false
 decl_stmt|;
+comment|//https://issues.apache.org/jira/browse/HIVE-15048
+specifier|public
+specifier|transient
+name|boolean
+name|isFromTopLevelQuery
+init|=
+literal|true
+decl_stmt|;
 comment|// For views, the entities can be nested - by default, entities are at the top level
 comment|// Must be deterministic order set for consistent q-test output across Java versions
 specifier|private

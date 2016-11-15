@@ -241,8 +241,6 @@ argument_list|(
 name|CLASS_NAME
 argument_list|)
 decl_stmt|;
-comment|// Always access COMPACTION_QUEUE before COMPLETED_TXN_COMPONENTS
-comment|// See TxnHandler for notes on how to deal with deadlocks.  Follow those notes.
 specifier|public
 name|CompactionTxnHandler
 parameter_list|()
@@ -2424,7 +2422,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Clean up aborted transactions from txns that have no components in txn_components.  The reson such    * txns exist can be that now work was done in this txn (e.g. Streaming opened TransactionBatch and    * abandoned it w/o doing any work) or due to {@link #markCleaned(CompactionInfo)} being called.    */
+comment|/**    * Clean up aborted transactions from txns that have no components in txn_components.  The reason such    * txns exist can be that now work was done in this txn (e.g. Streaming opened TransactionBatch and    * abandoned it w/o doing any work) or due to {@link #markCleaned(CompactionInfo)} being called.    */
 specifier|public
 name|void
 name|cleanEmptyAbortedTxns

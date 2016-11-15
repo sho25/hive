@@ -251,7 +251,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -472,7 +472,7 @@ name|schema
 decl_stmt|;
 specifier|protected
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|serde
 decl_stmt|;
 specifier|protected
@@ -907,7 +907,7 @@ name|schema
 return|;
 block|}
 specifier|protected
-name|SerDe
+name|AbstractSerDe
 name|initSerDe
 parameter_list|(
 name|Configuration
@@ -1051,7 +1051,7 @@ argument_list|,
 literal|"\\"
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 operator|new

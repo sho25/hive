@@ -576,15 +576,6 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|long
-name|DEFAULT_FETCH_MAX_ROWS
-init|=
-literal|100
-decl_stmt|;
-comment|// TODO# remove this
 specifier|protected
 name|boolean
 name|hasResultSet

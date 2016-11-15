@@ -7021,13 +7021,15 @@ name|getCurrentTxnId
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//it's possible to have> 1 FileSink writing to the same table/partition
+comment|//e.g. Merge stmt, multi-insert stmt when mixing DP and SP writes
 name|desc
 operator|.
 name|setStatementId
 argument_list|(
 name|txnMgr
 operator|.
-name|getStatementId
+name|getWriteIdAndIncrement
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -10297,6 +10299,11 @@ name|getUserIpAddress
 argument_list|()
 argument_list|,
 name|operationId
+argument_list|,
+name|ss
+operator|.
+name|getSessionId
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|hookContext

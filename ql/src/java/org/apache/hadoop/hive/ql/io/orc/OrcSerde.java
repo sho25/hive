@@ -185,7 +185,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -350,9 +350,7 @@ argument_list|)
 specifier|public
 class|class
 name|OrcSerde
-implements|implements
-name|SerDe
-implements|,
+extends|extends
 name|VectorizedSerde
 block|{
 specifier|private

@@ -103,7 +103,9 @@ specifier|abstract
 class|class
 name|AbstractSerDe
 implements|implements
-name|SerDe
+name|Deserializer
+implements|,
+name|Serializer
 block|{
 specifier|protected
 name|String

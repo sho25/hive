@@ -1284,6 +1284,8 @@ argument_list|,
 literal|2
 argument_list|,
 name|uriString
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 break|break;
@@ -1332,6 +1334,8 @@ argument_list|,
 literal|2
 argument_list|,
 name|uriString
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 break|break;
