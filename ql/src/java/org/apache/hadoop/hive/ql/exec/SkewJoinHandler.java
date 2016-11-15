@@ -255,7 +255,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -461,7 +461,7 @@ name|Map
 argument_list|<
 name|Byte
 argument_list|,
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 name|tblSerializers
 init|=
@@ -628,7 +628,7 @@ name|HashMap
 argument_list|<
 name|Byte
 argument_list|,
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 argument_list|(
 name|numAliases
@@ -833,11 +833,11 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
-name|SerDe
+name|AbstractSerDe
 name|serializer
 init|=
 operator|(
-name|SerDe
+name|AbstractSerDe
 operator|)
 name|ReflectionUtils
 operator|.

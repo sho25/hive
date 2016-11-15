@@ -107,7 +107,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -156,7 +156,7 @@ name|StructObjectInspector
 name|OI
 decl_stmt|;
 specifier|transient
-name|SerDe
+name|AbstractSerDe
 name|serde
 decl_stmt|;
 specifier|transient
@@ -278,7 +278,7 @@ name|oI
 expr_stmt|;
 block|}
 specifier|public
-name|SerDe
+name|AbstractSerDe
 name|getSerde
 parameter_list|()
 block|{
@@ -290,7 +290,7 @@ specifier|public
 name|void
 name|setSerde
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|)
 block|{

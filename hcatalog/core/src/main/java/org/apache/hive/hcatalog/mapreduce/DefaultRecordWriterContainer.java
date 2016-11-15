@@ -57,7 +57,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -200,7 +200,7 @@ name|storageHandler
 decl_stmt|;
 specifier|private
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|serDe
 decl_stmt|;
 specifier|private

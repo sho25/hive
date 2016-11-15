@@ -844,7 +844,7 @@ specifier|private
 name|void
 name|deserializeAndSerializeLazyBinary
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|Object

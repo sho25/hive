@@ -409,7 +409,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -764,7 +764,7 @@ decl_stmt|;
 comment|// Input value serde needs to be an array to support different SerDe
 comment|// for different tags
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|inputValueDeserializer
 decl_stmt|;
 specifier|private
@@ -1066,7 +1066,7 @@ expr_stmt|;
 name|inputValueDeserializer
 operator|=
 operator|(
-name|SerDe
+name|AbstractSerDe
 operator|)
 name|ReflectionUtils
 operator|.

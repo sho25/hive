@@ -79,7 +79,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -479,7 +479,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|SerDe
+name|AbstractSerDe
 name|getSerde
 parameter_list|()
 block|{

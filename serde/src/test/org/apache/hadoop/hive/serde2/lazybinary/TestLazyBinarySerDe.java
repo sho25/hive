@@ -179,7 +179,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -744,7 +744,7 @@ block|}
 comment|/**    * Initialize the LazyBinarySerDe.    *    * @param fieldNames    *          table field names    * @param fieldTypes    *          table field types    * @return the initialized LazyBinarySerDe    * @throws Throwable    */
 specifier|protected
 specifier|static
-name|SerDe
+name|AbstractSerDe
 name|getSerDe
 parameter_list|(
 name|String
@@ -823,7 +823,7 @@ parameter_list|,
 name|ObjectInspector
 name|rowOI
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|)
 throws|throws
@@ -1277,7 +1277,7 @@ argument_list|(
 name|rowOI1
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde1
 init|=
 name|getSerDe
@@ -1331,7 +1331,7 @@ argument_list|(
 name|rowOI2
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde2
 init|=
 name|getSerDe
@@ -1545,7 +1545,7 @@ argument_list|(
 name|rowOI1
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde1
 init|=
 name|getSerDe
@@ -1599,7 +1599,7 @@ argument_list|(
 name|rowOI2
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde2
 init|=
 name|getSerDe
@@ -1812,7 +1812,7 @@ argument_list|(
 name|rowOI1
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde1
 init|=
 name|getSerDe
@@ -1866,7 +1866,7 @@ argument_list|(
 name|rowOI2
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde2
 init|=
 name|getSerDe
@@ -2079,7 +2079,7 @@ argument_list|(
 name|rowOI1
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde1
 init|=
 name|getSerDe
@@ -2133,7 +2133,7 @@ argument_list|(
 name|rowOI2
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde2
 init|=
 name|getSerDe
@@ -2345,7 +2345,7 @@ argument_list|(
 name|rowOI
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|getSerDe

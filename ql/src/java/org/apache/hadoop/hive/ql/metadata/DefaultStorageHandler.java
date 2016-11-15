@@ -89,7 +89,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -279,7 +279,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 name|getSerDeClass
 parameter_list|()

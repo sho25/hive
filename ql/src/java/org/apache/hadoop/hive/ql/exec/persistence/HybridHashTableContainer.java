@@ -445,7 +445,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -5511,7 +5511,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 block|{
-name|SerDe
+name|AbstractSerDe
 name|keySerde
 init|=
 name|keyCtx

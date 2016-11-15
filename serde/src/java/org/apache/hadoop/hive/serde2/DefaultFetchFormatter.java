@@ -171,7 +171,7 @@ name|String
 argument_list|>
 block|{
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|mSerde
 decl_stmt|;
 annotation|@
@@ -200,7 +200,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|initializeSerde
 parameter_list|(
 name|Configuration
@@ -232,7 +232,7 @@ name|Class
 argument_list|<
 name|?
 extends|extends
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 name|serdeClass
 decl_stmt|;
@@ -256,7 +256,7 @@ argument_list|)
 operator|.
 name|asSubclass
 argument_list|(
-name|SerDe
+name|AbstractSerDe
 operator|.
 name|class
 argument_list|)
@@ -277,7 +277,7 @@ argument_list|)
 throw|;
 block|}
 comment|// cast only needed for Hadoop 0.17 compatibility
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|ReflectionUtil

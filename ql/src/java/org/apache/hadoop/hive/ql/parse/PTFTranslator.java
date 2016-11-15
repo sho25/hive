@@ -1131,7 +1131,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -4392,7 +4392,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 literal|null
@@ -5278,7 +5278,7 @@ block|}
 comment|/*    * OI& Serde helper methods    */
 specifier|protected
 specifier|static
-name|SerDe
+name|AbstractSerDe
 name|createLazyBinarySerDe
 parameter_list|(
 name|Configuration
@@ -5324,7 +5324,7 @@ argument_list|,
 name|serdePropsMap
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serDe
 init|=
 operator|new

@@ -713,7 +713,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1847,11 +1847,11 @@ operator|.
 name|getKeyTblDesc
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|keySerializer
 init|=
 operator|(
-name|SerDe
+name|AbstractSerDe
 operator|)
 name|ReflectionUtil
 operator|.
@@ -1957,11 +1957,11 @@ name|pos
 argument_list|)
 expr_stmt|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|valueSerDe
 init|=
 operator|(
-name|SerDe
+name|AbstractSerDe
 operator|)
 name|ReflectionUtil
 operator|.

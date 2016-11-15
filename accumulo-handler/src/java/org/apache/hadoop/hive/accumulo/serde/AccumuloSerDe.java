@@ -169,7 +169,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -359,8 +359,8 @@ begin_class
 specifier|public
 class|class
 name|AccumuloSerDe
-implements|implements
-name|SerDe
+extends|extends
+name|AbstractSerDe
 block|{
 specifier|private
 name|AccumuloSerDeParameters

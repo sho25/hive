@@ -105,7 +105,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -436,7 +436,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|SerDe
+name|AbstractSerDe
 name|getSerDe
 parameter_list|(
 name|String
@@ -542,7 +542,7 @@ parameter_list|,
 name|ObjectInspector
 name|rowOI
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|,
 name|boolean

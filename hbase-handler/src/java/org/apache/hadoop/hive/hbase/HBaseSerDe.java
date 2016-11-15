@@ -177,7 +177,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -629,7 +629,7 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
-comment|/**    * Initialize the SerDe given parameters.    * @see SerDe#initialize(Configuration, Properties)    */
+comment|/**    * Initialize the SerDe given parameters.    * @see AbstractSerDe#initialize(Configuration, Properties)    */
 annotation|@
 name|Override
 specifier|public
@@ -1371,7 +1371,7 @@ return|return
 name|serdeParams
 return|;
 block|}
-comment|/**    * Deserialize a row from the HBase Result writable to a LazyObject    * @param result the HBase Result Writable containing the row    * @return the deserialized object    * @see SerDe#deserialize(Writable)    */
+comment|/**    * Deserialize a row from the HBase Result writable to a LazyObject    * @param result the HBase Result Writable containing the row    * @return the deserialized object    * @see AbstractSerDe#deserialize(Writable)    */
 annotation|@
 name|Override
 specifier|public

@@ -543,7 +543,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1810,7 +1810,7 @@ expr_stmt|;
 block|}
 try|try
 block|{
-name|SerDe
+name|AbstractSerDe
 name|serDe
 init|=
 name|ReflectionUtils
@@ -1826,7 +1826,7 @@ argument_list|)
 operator|.
 name|asSubclass
 argument_list|(
-name|SerDe
+name|AbstractSerDe
 operator|.
 name|class
 argument_list|)

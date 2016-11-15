@@ -537,7 +537,7 @@ name|serdeParams
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Initialize the SerDe given the parameters.    *    * @see SerDe#initialize(Configuration, Properties)    */
+comment|/**    * Initialize the SerDe given the parameters.    *    * @see AbstractSerDe#initialize(Configuration, Properties)    */
 annotation|@
 name|Override
 specifier|public
@@ -687,7 +687,7 @@ name|size
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @see SerDe#serialize(Object, ObjectInspector)    */
+comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @see AbstractSerDe#serialize(Object, ObjectInspector)    */
 annotation|@
 name|Override
 specifier|public

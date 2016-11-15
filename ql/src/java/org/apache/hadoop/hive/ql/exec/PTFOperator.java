@@ -333,7 +333,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1753,7 +1753,7 @@ operator|.
 name|getOI
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|conf

@@ -33,7 +33,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -126,7 +126,7 @@ name|standardOI
 decl_stmt|;
 specifier|private
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|serde
 decl_stmt|;
 specifier|private
@@ -137,7 +137,7 @@ decl_stmt|;
 specifier|public
 name|MapJoinObjectSerDeContext
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|,
 name|boolean
@@ -189,7 +189,7 @@ return|;
 block|}
 comment|/**    * @return the serde    */
 specifier|public
-name|SerDe
+name|AbstractSerDe
 name|getSerDe
 parameter_list|()
 block|{

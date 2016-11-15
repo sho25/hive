@@ -253,7 +253,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1606,7 +1606,7 @@ class|class
 name|StorageFormatTest
 block|{
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|serDe
 decl_stmt|;
 specifier|private
@@ -1624,7 +1624,7 @@ decl_stmt|;
 specifier|public
 name|StorageFormatTest
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serDeImpl
 parameter_list|,
 name|HiveOutputFormat

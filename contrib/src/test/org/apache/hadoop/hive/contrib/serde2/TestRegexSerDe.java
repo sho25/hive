@@ -81,7 +81,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -183,7 +183,7 @@ extends|extends
 name|TestCase
 block|{
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|createSerDe
 parameter_list|(
 name|String
@@ -285,7 +285,7 @@ block|{
 try|try
 block|{
 comment|// Create the SerDe
-name|SerDe
+name|AbstractSerDe
 name|serDe
 init|=
 name|createSerDe

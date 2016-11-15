@@ -129,7 +129,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -324,7 +324,7 @@ init|=
 literal|"int,string,double,int,string,string"
 decl_stmt|;
 specifier|static
-name|SerDe
+name|AbstractSerDe
 name|serDe
 decl_stmt|;
 specifier|static

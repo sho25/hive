@@ -666,7 +666,7 @@ parameter_list|()
 throws|throws
 name|SerDeException
 block|{   }
-comment|/**    * Initialize the SerDe given the parameters. serialization.format: separator    * char or byte code (only supports byte-value up to 127) columns:    * ","-separated column names columns.types: ",", ":", or ";"-separated column    * types    *    * @see SerDe#initialize(Configuration, Properties)    */
+comment|/**    * Initialize the SerDe given the parameters. serialization.format: separator    * char or byte code (only supports byte-value up to 127) columns:    * ","-separated column names columns.types: ",", ":", or ";"-separated column    * types    *    * @see AbstractSerDe#initialize(Configuration, Properties)    */
 annotation|@
 name|Override
 specifier|public
@@ -770,7 +770,7 @@ comment|// The wrapper for byte array
 name|ByteArrayRef
 name|byteArrayRef
 decl_stmt|;
-comment|/**    * Deserialize a row from the Writable to a LazyObject.    *    * @param field    *          the Writable that contains the data    * @return The deserialized row Object.    * @see SerDe#deserialize(Writable)    */
+comment|/**    * Deserialize a row from the Writable to a LazyObject.    *    * @param field    *          the Writable that contains the data    * @return The deserialized row Object.    * @see AbstractSerDe#deserialize(Writable)    */
 annotation|@
 name|Override
 specifier|public
@@ -855,7 +855,7 @@ return|return
 name|cachedObjectInspector
 return|;
 block|}
-comment|/**    * Returns the Writable Class after serialization.    *    * @see SerDe#getSerializedClass()    */
+comment|/**    * Returns the Writable Class after serialization.    *    * @see AbstractSerDe#getSerializedClass()    */
 annotation|@
 name|Override
 specifier|public
@@ -892,7 +892,7 @@ operator|.
 name|Output
 argument_list|()
 decl_stmt|;
-comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws IOException    * @see SerDe#serialize(Object, ObjectInspector)    */
+comment|/**    * Serialize a row of data.    *    * @param obj    *          The row object    * @param objInspector    *          The ObjectInspector for the row object    * @return The serialized Writable object    * @throws IOException    * @see AbstractSerDe#serialize(Object, ObjectInspector)    */
 annotation|@
 name|Override
 specifier|public

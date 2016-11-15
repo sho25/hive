@@ -253,7 +253,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -382,7 +382,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 init|=
 name|keyContext
@@ -390,7 +390,7 @@ operator|.
 name|getSerDe
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|valueSerDe
 init|=
 name|valueContext
@@ -702,7 +702,7 @@ name|valueContext
 argument_list|)
 return|;
 block|}
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 init|=
 name|keyContext
@@ -710,7 +710,7 @@ operator|.
 name|getSerDe
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|valueSerDe
 init|=
 name|valueContext
@@ -1335,7 +1335,7 @@ operator|>
 literal|0
 condition|)
 block|{
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 init|=
 name|keyContext
@@ -1343,7 +1343,7 @@ operator|.
 name|getSerDe
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|valueSerDe
 init|=
 name|valueContext

@@ -265,7 +265,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1201,7 +1201,7 @@ name|KeyValueHelper
 block|{
 specifier|private
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 decl_stmt|,
 name|valSerDe
@@ -1239,10 +1239,10 @@ decl_stmt|;
 specifier|public
 name|KeyValueWriter
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|valSerDe
 parameter_list|,
 name|boolean
@@ -1709,7 +1709,7 @@ name|value
 decl_stmt|;
 specifier|private
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 decl_stmt|;
 specifier|private
@@ -1722,7 +1722,7 @@ comment|// sanity check - we should not receive keys with tags
 specifier|public
 name|LazyBinaryKvWriter
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|keySerDe
 parameter_list|,
 name|LazyBinaryStructObjectInspector
@@ -2637,7 +2637,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 block|{
-name|SerDe
+name|AbstractSerDe
 name|keySerde
 init|=
 name|keyContext

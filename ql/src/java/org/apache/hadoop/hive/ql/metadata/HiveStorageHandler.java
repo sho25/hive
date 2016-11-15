@@ -89,7 +89,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -188,13 +188,13 @@ argument_list|>
 name|getOutputFormatClass
 parameter_list|()
 function_decl|;
-comment|/**    * @return Class providing an implementation of {@link SerDe}    */
+comment|/**    * @return Class providing an implementation of {@link AbstractSerDe}    */
 specifier|public
 name|Class
 argument_list|<
 name|?
 extends|extends
-name|SerDe
+name|AbstractSerDe
 argument_list|>
 name|getSerDeClass
 parameter_list|()

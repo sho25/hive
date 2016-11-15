@@ -103,7 +103,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -313,13 +313,13 @@ name|byte
 index|[]
 name|columnNotNullMarker
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|,
 name|StructObjectInspector
 name|rowOI
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serde_fewer
 parameter_list|,
 name|StructObjectInspector
@@ -1900,7 +1900,7 @@ argument_list|,
 literal|'a'
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde_ascending
 init|=
 name|TestBinarySortableSerDe
@@ -1916,7 +1916,7 @@ argument_list|,
 name|nullOrder
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde_ascending_fewer
 init|=
 literal|null
@@ -1988,7 +1988,7 @@ argument_list|,
 literal|'z'
 argument_list|)
 expr_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde_descending
 init|=
 name|TestBinarySortableSerDe
@@ -2004,7 +2004,7 @@ argument_list|,
 name|nullOrder
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serde_descending_fewer
 init|=
 literal|null

@@ -127,7 +127,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -409,7 +409,7 @@ name|storageHandler
 decl_stmt|;
 specifier|protected
 specifier|final
-name|SerDe
+name|AbstractSerDe
 name|serDe
 decl_stmt|;
 specifier|protected
@@ -660,7 +660,7 @@ operator|.
 name|getLocalObjectInspector
 argument_list|()
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|localSerDe
 init|=
 name|localFileWriter
@@ -747,7 +747,7 @@ name|ObjectInspector
 name|localObjectInspector
 decl_stmt|;
 specifier|private
-name|SerDe
+name|AbstractSerDe
 name|localSerDe
 decl_stmt|;
 specifier|private
@@ -763,7 +763,7 @@ parameter_list|,
 name|ObjectInspector
 name|localObjectInspector
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|localSerDe
 parameter_list|,
 name|OutputJobInfo
@@ -814,7 +814,7 @@ name|localObjectInspector
 return|;
 block|}
 specifier|public
-name|SerDe
+name|AbstractSerDe
 name|getLocalSerDe
 parameter_list|()
 block|{

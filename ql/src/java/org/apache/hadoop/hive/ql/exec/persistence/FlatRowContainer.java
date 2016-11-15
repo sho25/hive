@@ -161,7 +161,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -388,7 +388,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|SerDe
+name|AbstractSerDe
 name|serde
 init|=
 name|context
@@ -1055,7 +1055,7 @@ specifier|private
 name|void
 name|read
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serde
 parameter_list|,
 name|Writable

@@ -233,7 +233,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -1056,7 +1056,7 @@ block|}
 comment|/**    * Get the SerDe for the Objects created by {@link #encode}.  This is public so that test    * frameworks can use it.    * @return serde    * @throws SerializationError    */
 specifier|public
 specifier|abstract
-name|SerDe
+name|AbstractSerDe
 name|getSerde
 parameter_list|()
 throws|throws

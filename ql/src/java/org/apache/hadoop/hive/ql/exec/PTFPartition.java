@@ -167,7 +167,7 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|SerDe
+name|AbstractSerDe
 import|;
 end_import
 
@@ -271,7 +271,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-name|SerDe
+name|AbstractSerDe
 name|serDe
 decl_stmt|;
 name|StructObjectInspector
@@ -297,7 +297,7 @@ parameter_list|(
 name|Configuration
 name|cfg
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector
@@ -329,7 +329,7 @@ parameter_list|(
 name|Configuration
 name|cfg
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector
@@ -443,7 +443,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
-name|SerDe
+name|AbstractSerDe
 name|getSerDe
 parameter_list|()
 block|{
@@ -1079,7 +1079,7 @@ parameter_list|(
 name|Configuration
 name|cfg
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector
@@ -1113,7 +1113,7 @@ parameter_list|(
 name|Configuration
 name|cfg
 parameter_list|,
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector
@@ -1154,7 +1154,7 @@ specifier|static
 name|StructObjectInspector
 name|setupPartitionOutputOI
 parameter_list|(
-name|SerDe
+name|AbstractSerDe
 name|serDe
 parameter_list|,
 name|StructObjectInspector
