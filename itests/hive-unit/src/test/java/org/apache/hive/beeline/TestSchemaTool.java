@@ -396,6 +396,126 @@ name|errStream
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test the sequence validation functionality    * @throws Exception    */
+specifier|public
+name|void
+name|testValidateSequences
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|schemaTool
+operator|.
+name|doInit
+argument_list|()
+expr_stmt|;
+comment|// Test empty database
+name|boolean
+name|isValid
+init|=
+operator|(
+name|boolean
+operator|)
+name|schemaTool
+operator|.
+name|validateSequences
+argument_list|()
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+comment|// Test valid case
+name|String
+index|[]
+name|scripts
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100)"
+block|,
+literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test')"
+block|}
+decl_stmt|;
+name|File
+name|scriptFile
+init|=
+name|generateTestScript
+argument_list|(
+name|scripts
+argument_list|)
+decl_stmt|;
+name|schemaTool
+operator|.
+name|runBeeLine
+argument_list|(
+name|scriptFile
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateSequences
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+comment|// Test invalid case
+name|scripts
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"delete from SEQUENCE_TABLE"
+block|,
+literal|"delete from DBS"
+block|,
+literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100)"
+block|,
+literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test')"
+block|}
+expr_stmt|;
+name|scriptFile
+operator|=
+name|generateTestScript
+argument_list|(
+name|scripts
+argument_list|)
+expr_stmt|;
+name|schemaTool
+operator|.
+name|runBeeLine
+argument_list|(
+name|scriptFile
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateSequences
+argument_list|()
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * Test dryrun of schema initialization    * @throws Exception    */
 specifier|public
 name|void
