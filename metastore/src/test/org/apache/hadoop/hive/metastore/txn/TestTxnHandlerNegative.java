@@ -23,20 +23,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|tools
-operator|.
-name|ant
-operator|.
-name|RuntimeConfigurable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -73,27 +59,33 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|junit
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
+name|Test
 import|;
 end_import
 
 begin_import
-import|import
-name|org
-operator|.
+import|import static
 name|junit
 operator|.
-name|Test
+name|framework
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|junit
+operator|.
+name|framework
+operator|.
+name|Assert
+operator|.
+name|assertTrue
 import|;
 end_import
 
@@ -187,11 +179,13 @@ operator|=
 name|ex
 expr_stmt|;
 block|}
-assert|assert
+name|assertNotNull
+argument_list|(
 name|e
-operator|!=
-literal|null
-operator|&&
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
 name|e
 operator|.
 name|getMessage
@@ -201,9 +195,18 @@ name|contains
 argument_list|(
 literal|"No suitable driver found for blah"
 argument_list|)
-operator|:
-literal|"did not get exception"
-assert|;
+operator|||
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Failed to get driver instance for jdbcUrl=blah"
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

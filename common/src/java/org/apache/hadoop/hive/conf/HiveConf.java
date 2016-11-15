@@ -3966,6 +3966,18 @@ literal|"datanucleus.connectionPoolingType"
 argument_list|,
 literal|"BONECP"
 argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"BONECP"
+argument_list|,
+literal|"DBCP"
+argument_list|,
+literal|"HikariCP"
+argument_list|,
+literal|"NONE"
+argument_list|)
+argument_list|,
 literal|"Specify connection pool library for datanucleus"
 argument_list|)
 block|,

@@ -10197,6 +10197,8 @@ literal|".*at com\\.sun\\.proxy.*"
 block|,
 literal|".*at com\\.jolbox.*"
 block|,
+literal|".*at com\\.zaxxer.*"
+block|,
 literal|"org\\.apache\\.hadoop\\.hive\\.metastore\\.model\\.MConstraint@([0-9]|[a-z])*"
 block|,
 literal|"(s3.?|swift|wasb.?):\\/\\/[\\w\\.\\/-]*"
