@@ -7296,7 +7296,7 @@ argument_list|,
 name|tableTree
 argument_list|)
 expr_stmt|;
-comment|// if alias to CTE contains the alias, we do not do the translation because
+comment|// if alias to CTE contains the table name, we do not do the translation because
 comment|// cte is actually a subquery.
 if|if
 condition|(
@@ -7307,7 +7307,7 @@ name|aliasToCTEs
 operator|.
 name|containsKey
 argument_list|(
-name|alias
+name|tabIdName
 argument_list|)
 condition|)
 block|{
