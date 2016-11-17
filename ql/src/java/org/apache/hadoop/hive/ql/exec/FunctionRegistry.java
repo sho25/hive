@@ -6922,6 +6922,31 @@ argument_list|(
 name|pcB
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|pgA
+operator|==
+name|pgB
+condition|)
+block|{
+comment|// grouping is same, but category is not.
+if|if
+condition|(
+name|pgA
+operator|==
+name|PrimitiveGrouping
+operator|.
+name|DATE_GROUP
+condition|)
+block|{
+comment|// we got timestamp& date and timestamp has higher precedence than date
+return|return
+name|TypeInfoFactory
+operator|.
+name|timestampTypeInfo
+return|;
+block|}
+block|}
 comment|// handle string types properly
 if|if
 condition|(
