@@ -919,6 +919,22 @@ name|testBlobstorePath
 operator|+
 name|uid
 expr_stmt|;
+name|qt
+operator|.
+name|addPatternWithMaskComment
+argument_list|(
+name|testBlobstorePathUnique
+argument_list|,
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"### %s ###"
+argument_list|,
+name|HCONF_TEST_BLOBSTORE_PATH
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
