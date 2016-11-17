@@ -2255,6 +2255,206 @@ name|flattenedSql
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test validate uri of locations    * @throws Exception    */
+specifier|public
+name|void
+name|testValidateLocations
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|schemaTool
+operator|.
+name|doInit
+argument_list|()
+expr_stmt|;
+name|String
+name|defaultRoot
+init|=
+literal|"hdfs://myhost.com:8020"
+decl_stmt|;
+comment|//check empty DB
+name|boolean
+name|isValid
+init|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+literal|null
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+name|defaultRoot
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+name|String
+name|dbmydbLocation
+init|=
+name|defaultRoot
+operator|+
+literal|"/user/hive/warehouse/mydb"
+decl_stmt|;
+comment|// Test valid case
+name|String
+index|[]
+name|scripts
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role')"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (2,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/admin/2015_11_18',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into TBLS(TBL_ID,CREATE_TIME,DB_ID,LAST_ACCESS_TIME,OWNER,RETENTION,SD_ID,TBL_NAME,TBL_TYPE,VIEW_EXPANDED_TEXT,VIEW_ORIGINAL_TEXT) values (2 ,1435255431,2,0 ,'hive',0,1,'mytal','MANAGED_TABLE',NULL,NULL)"
+block|,
+literal|"insert into PARTITiONS(PART_ID,CREATE_TIME,LAST_ACCESS_TIME, PART_NAME,SD_ID,TBL_ID) values(1, 1441402388,0, 'd1=1/d2=1',2,2)"
+block|}
+decl_stmt|;
+name|File
+name|scriptFile
+init|=
+name|generateTestScript
+argument_list|(
+name|scripts
+argument_list|)
+decl_stmt|;
+name|schemaTool
+operator|.
+name|runBeeLine
+argument_list|(
+name|scriptFile
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+name|defaultRoot
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+name|scripts
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"delete from PARTITIONS"
+block|,
+literal|"delete from TBLS"
+block|,
+literal|"delete from SDS"
+block|,
+literal|"delete from DBS"
+block|,
+literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role')"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (2,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','file:///user/admin/2015_11_18',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into TBLS(TBL_ID,CREATE_TIME,DB_ID,LAST_ACCESS_TIME,OWNER,RETENTION,SD_ID,TBL_NAME,TBL_TYPE,VIEW_EXPANDED_TEXT,VIEW_ORIGINAL_TEXT) values (2 ,1435255431,2,0 ,'hive',0,1,'mytal','MANAGED_TABLE',NULL,NULL)"
+block|,
+literal|"insert into PARTITiONS(PART_ID,CREATE_TIME,LAST_ACCESS_TIME, PART_NAME,SD_ID,TBL_ID) values(1, 1441402388,0, 'd1=1/d2=1',2,2)"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (3000,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (5000,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','file:///user/admin/2016_11_18',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
+block|,
+literal|"insert into TBLS(TBL_ID,CREATE_TIME,DB_ID,LAST_ACCESS_TIME,OWNER,RETENTION,SD_ID,TBL_NAME,TBL_TYPE,VIEW_EXPANDED_TEXT,VIEW_ORIGINAL_TEXT) values (3000 ,1435255431,2,0 ,'hive',0,3000,'mytal3000','MANAGED_TABLE',NULL,NULL)"
+block|,
+literal|"insert into PARTITiONS(PART_ID,CREATE_TIME,LAST_ACCESS_TIME, PART_NAME,SD_ID,TBL_ID) values(5000, 1441402388,0, 'd1=1/d2=5000',5000,2)"
+block|}
+expr_stmt|;
+name|scriptFile
+operator|=
+name|generateTestScript
+argument_list|(
+name|scripts
+argument_list|)
+expr_stmt|;
+name|schemaTool
+operator|.
+name|runBeeLine
+argument_list|(
+name|scriptFile
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+name|schemaTool
+operator|.
+name|validateLocations
+argument_list|(
+name|defaultRoot
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|isValid
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|File
 name|generateTestScript
