@@ -5306,6 +5306,15 @@ argument_list|,
 literal|"push aggregates through join"
 argument_list|)
 block|,
+name|SEMIJOIN_CONVERSION
+argument_list|(
+literal|"hive.enable.semijoin.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"convert group by followed by inner equi join into semijoin"
+argument_list|)
+block|,
 name|HIVE_COLUMN_ALIGNMENT
 argument_list|(
 literal|"hive.order.columnalignment"
