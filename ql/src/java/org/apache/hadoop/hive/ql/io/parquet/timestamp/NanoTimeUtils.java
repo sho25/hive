@@ -258,7 +258,7 @@ name|get
 argument_list|()
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|Calendar
 name|getCalendar

@@ -600,7 +600,7 @@ name|TypeInfo
 name|hiveTypeInfo
 decl_stmt|;
 comment|/**    * From a string which columns names (including hive column), return a list    * of string columns    *    * @param columns comma separated list of columns    * @return list with virtual columns removed    */
-specifier|private
+specifier|public
 specifier|static
 name|List
 argument_list|<
@@ -634,7 +634,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Returns a list of TypeInfo objects from a string which contains column    * types strings.    *    * @param types Comma separated list of types    * @return A list of TypeInfo objects.    */
-specifier|private
+specifier|public
 specifier|static
 name|List
 argument_list|<
@@ -1103,7 +1103,7 @@ name|fieldType
 return|;
 block|}
 comment|/**    * Searches column names by name on a given Parquet message schema, and returns its projected    * Parquet schema types.    *    * @param schema Message type schema where to search for column names.    * @param colNames List of column names.    * @param colTypes List of column types.    * @return A MessageType object of projected columns.    */
-specifier|private
+specifier|public
 specifier|static
 name|MessageType
 name|getSchemaByName
@@ -1175,7 +1175,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Searches column names by indexes on a given Parquet file schema, and returns its corresponded    * Parquet schema types.    *    * @param schema Message schema where to search for column names.    * @param colNames List of column names.    * @param colIndexes List of column indexes.    * @return A MessageType object of the column names found.    */
-specifier|private
+specifier|public
 specifier|static
 name|MessageType
 name|getSchemaByIndex
