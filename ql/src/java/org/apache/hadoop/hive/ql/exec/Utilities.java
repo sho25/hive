@@ -19887,7 +19887,7 @@ comment|/**    * Check if LLAP IO supports the column type that is being read   
 specifier|public
 specifier|static
 name|boolean
-name|checkLlapIOSupportedTypes
+name|checkVectorizerSupportedTypes
 parameter_list|(
 specifier|final
 name|Configuration
@@ -20016,7 +20016,7 @@ name|typeInfos
 argument_list|)
 decl_stmt|;
 return|return
-name|checkLlapIOSupportedTypes
+name|checkVectorizerSupportedTypes
 argument_list|(
 name|Lists
 operator|.
@@ -20035,7 +20035,7 @@ comment|/**    * Check if LLAP IO supports the column type that is being read   
 specifier|public
 specifier|static
 name|boolean
-name|checkLlapIOSupportedTypes
+name|checkVectorizerSupportedTypes
 parameter_list|(
 specifier|final
 name|List

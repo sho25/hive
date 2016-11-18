@@ -237,7 +237,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-comment|/**      * All the previous streams are data streams, this and the next ones are index streams.      * We assume the sort will stay the same for backward compat.      */
+comment|/**      * All the previous streams are data streams, this and the next ones are index streams.      * We assume the order will stay the same for backward compat.      */
 specifier|public
 specifier|static
 specifier|final
@@ -309,6 +309,24 @@ block|}
 name|resetColumnArrays
 argument_list|(
 name|columnCount
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|initOrcColumn
+parameter_list|(
+name|int
+name|colIx
+parameter_list|)
+block|{
+name|super
+operator|.
+name|initColumn
+argument_list|(
+name|colIx
+argument_list|,
+name|MAX_DATA_STREAMS
 argument_list|)
 expr_stmt|;
 block|}
