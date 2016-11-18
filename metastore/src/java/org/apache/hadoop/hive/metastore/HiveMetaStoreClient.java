@@ -1963,6 +1963,8 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|alter_table_with_environmentContext
@@ -2895,6 +2897,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTokenStrForm
@@ -5193,6 +5197,27 @@ argument_list|(
 name|tbl
 argument_list|,
 name|deleteData
+operator|||
+operator|(
+name|envContext
+operator|!=
+literal|null
+operator|&&
+literal|"TRUE"
+operator|.
+name|equals
+argument_list|(
+name|envContext
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"ifPurge"
+argument_list|)
+argument_list|)
+operator|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -7228,6 +7253,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Get number of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getNumPartitionsByFilter
