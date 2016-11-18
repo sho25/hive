@@ -2068,7 +2068,7 @@ name|fs
 operator|.
 name|getFileStatus
 argument_list|(
-name|tblPath
+name|loc
 argument_list|)
 decl_stmt|;
 comment|// no matter loc is the table location or part location, it must be a
@@ -2078,7 +2078,7 @@ condition|(
 operator|!
 name|status
 operator|.
-name|isDir
+name|isDirectory
 argument_list|()
 condition|)
 block|{
@@ -2586,6 +2586,20 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Utilities
+operator|.
+name|LOG14535
+operator|.
+name|info
+argument_list|(
+literal|"Processing dir for status: "
+operator|+
+name|status
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|long
 name|accessTime
 init|=
@@ -2660,7 +2674,7 @@ if|if
 condition|(
 name|currentStatus
 operator|.
-name|isDir
+name|isDirectory
 argument_list|()
 condition|)
 block|{
