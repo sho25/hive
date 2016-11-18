@@ -1805,6 +1805,11 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
+if|if
+condition|(
+name|shouldEventSucceed
+condition|)
+block|{
 return|return
 name|objectStore
 operator|.
@@ -1813,6 +1818,17 @@ argument_list|(
 name|index
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Event failed."
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -1863,6 +1879,11 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+if|if
+condition|(
+name|shouldEventSucceed
+condition|)
+block|{
 return|return
 name|objectStore
 operator|.
@@ -1875,6 +1896,17 @@ argument_list|,
 name|indexName
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Event failed."
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -1967,6 +1999,11 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
+if|if
+condition|(
+name|shouldEventSucceed
+condition|)
+block|{
 name|objectStore
 operator|.
 name|alterIndex
@@ -1980,6 +2017,17 @@ argument_list|,
 name|newIndex
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Event failed."
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -4109,6 +4157,11 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
+if|if
+condition|(
+name|shouldEventSucceed
+condition|)
+block|{
 name|objectStore
 operator|.
 name|createFunction
@@ -4116,6 +4169,17 @@ argument_list|(
 name|func
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Event failed."
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -4170,6 +4234,11 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 block|{
+if|if
+condition|(
+name|shouldEventSucceed
+condition|)
+block|{
 name|objectStore
 operator|.
 name|dropFunction
@@ -4179,6 +4248,17 @@ argument_list|,
 name|funcName
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Event failed."
+argument_list|)
+throw|;
+block|}
 block|}
 annotation|@
 name|Override

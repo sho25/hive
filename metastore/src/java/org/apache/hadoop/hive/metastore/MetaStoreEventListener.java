@@ -203,6 +203,24 @@ name|metastore
 operator|.
 name|events
 operator|.
+name|CreateFunctionEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
 name|CreateTableEvent
 import|;
 end_import
@@ -222,6 +240,24 @@ operator|.
 name|events
 operator|.
 name|DropDatabaseEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|DropFunctionEvent
 import|;
 end_import
 
@@ -484,6 +520,28 @@ name|onAlterIndex
 parameter_list|(
 name|AlterIndexEvent
 name|indexEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param fnEvent function event    * @throws MetaException    */
+specifier|public
+name|void
+name|onCreateFunction
+parameter_list|(
+name|CreateFunctionEvent
+name|fnEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param fnEvent function event    * @throws MetaException    */
+specifier|public
+name|void
+name|onDropFunction
+parameter_list|(
+name|DropFunctionEvent
+name|fnEvent
 parameter_list|)
 throws|throws
 name|MetaException
