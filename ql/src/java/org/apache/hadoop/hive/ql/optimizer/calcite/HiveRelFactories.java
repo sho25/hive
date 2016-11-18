@@ -928,8 +928,6 @@ argument_list|,
 name|condition
 argument_list|,
 name|joinType
-argument_list|,
-literal|false
 argument_list|)
 return|;
 block|}
@@ -980,8 +978,6 @@ argument_list|,
 name|condition
 argument_list|,
 name|joinType
-argument_list|,
-name|semiJoinDone
 argument_list|)
 return|;
 block|}

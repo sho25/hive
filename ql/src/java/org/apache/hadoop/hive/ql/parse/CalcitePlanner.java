@@ -12072,8 +12072,6 @@ argument_list|,
 name|calciteJoinCond
 argument_list|,
 name|calciteJoinType
-argument_list|,
-name|leftSemiJoin
 argument_list|)
 expr_stmt|;
 name|topRR
