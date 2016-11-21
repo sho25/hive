@@ -487,6 +487,24 @@ name|common
 operator|.
 name|type
 operator|.
+name|HiveIntervalDayTime
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
 name|HiveIntervalYearMonth
 import|;
 end_import
@@ -4439,31 +4457,82 @@ break|break;
 case|case
 name|INTERVAL_DAY_TIME
 case|:
-comment|// Calcite RexBuilder L525 divides value by the multiplier.
-comment|// Need to get CAlCITE-1020 in.
-throw|throw
-operator|new
-name|CalciteSemanticException
-argument_list|(
-literal|"INTERVAL_DAY_TIME is not well supported"
-argument_list|,
-name|UnsupportedFeature
-operator|.
-name|Invalid_interval
-argument_list|)
-throw|;
 comment|// Calcite day-time interval is millis value as BigDecimal
 comment|// Seconds converted to millis
-comment|// BigDecimal secsValueBd = BigDecimal
-comment|// .valueOf(((HiveIntervalDayTime) value).getTotalSeconds() * 1000);
-comment|// // Nanos converted to millis
-comment|// BigDecimal nanosValueBd = BigDecimal.valueOf(((HiveIntervalDayTime)
-comment|// value).getNanos(), 6);
-comment|// calciteLiteral =
-comment|// rexBuilder.makeIntervalLiteral(secsValueBd.add(nanosValueBd),
-comment|// new SqlIntervalQualifier(TimeUnit.MILLISECOND, null, new
-comment|// SqlParserPos(1, 1)));
-comment|// break;
+name|BigDecimal
+name|secsValueBd
+init|=
+name|BigDecimal
+operator|.
+name|valueOf
+argument_list|(
+operator|(
+operator|(
+name|HiveIntervalDayTime
+operator|)
+name|value
+operator|)
+operator|.
+name|getTotalSeconds
+argument_list|()
+operator|*
+literal|1000
+argument_list|)
+decl_stmt|;
+comment|// Nanos converted to millis
+name|BigDecimal
+name|nanosValueBd
+init|=
+name|BigDecimal
+operator|.
+name|valueOf
+argument_list|(
+operator|(
+operator|(
+name|HiveIntervalDayTime
+operator|)
+name|value
+operator|)
+operator|.
+name|getNanos
+argument_list|()
+argument_list|,
+literal|6
+argument_list|)
+decl_stmt|;
+name|calciteLiteral
+operator|=
+name|rexBuilder
+operator|.
+name|makeIntervalLiteral
+argument_list|(
+name|secsValueBd
+operator|.
+name|add
+argument_list|(
+name|nanosValueBd
+argument_list|)
+argument_list|,
+operator|new
+name|SqlIntervalQualifier
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECOND
+argument_list|,
+literal|null
+argument_list|,
+operator|new
+name|SqlParserPos
+argument_list|(
+literal|1
+argument_list|,
+literal|1
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+break|break;
 case|case
 name|VOID
 case|:
