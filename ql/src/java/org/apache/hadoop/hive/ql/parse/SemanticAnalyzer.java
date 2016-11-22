@@ -39887,6 +39887,8 @@ operator|.
 name|getTempDirForPath
 argument_list|(
 name|dest_path
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -40613,6 +40615,8 @@ operator|.
 name|getTempDirForPath
 argument_list|(
 name|dest_path
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|table_desc
@@ -40909,6 +40913,8 @@ operator|.
 name|getTempDirForPath
 argument_list|(
 name|qPath
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

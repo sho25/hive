@@ -13189,6 +13189,21 @@ literal|false
 argument_list|,
 literal|"Enable the use of scratch directories directly on blob storage systems (it may cause performance penalties)."
 argument_list|)
+block|,
+name|HIVE_BLOBSTORE_OPTIMIZATIONS_ENABLED
+argument_list|(
+literal|"hive.blobstore.optimizations.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This parameter enables a number of optimizations when running on blobstores:\n"
+operator|+
+literal|"(1) If hive.blobstore.use.blobstore.as.scratchdir is false, force the last Hive job to write to the blobstore.\n"
+operator|+
+literal|"This is a performance optimization that forces the final FileSinkOperator to write to the blobstore.\n"
+operator|+
+literal|"See HIVE-15121 for details."
+argument_list|)
 block|;
 specifier|public
 specifier|final
