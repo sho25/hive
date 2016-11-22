@@ -5400,6 +5400,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"internal_interval"
+argument_list|,
+name|GenericUDFInternalInterval
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Generic UDTF's
 name|system
 operator|.

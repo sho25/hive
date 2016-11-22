@@ -5120,9 +5120,20 @@ literal|"hive.strict.checks.cartesian.product"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Enabling strict large query checks disallows the following:\n"
+literal|"Enabling strict Cartesian join checks disallows the following:\n"
 operator|+
 literal|"  Cartesian product (cross join)."
+argument_list|)
+block|,
+name|HIVE_STRICT_CHECKS_BUCKETING
+argument_list|(
+literal|"hive.strict.checks.bucketing"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enabling strict bucketing checks disallows the following:\n"
+operator|+
+literal|"  Load into bucketed tables."
 argument_list|)
 block|,
 annotation|@
@@ -19560,6 +19571,21 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
+name|String
+name|NO_BUCKETING_MSG
+init|=
+name|makeMessage
+argument_list|(
+literal|"Load into bucketed tables"
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_STRICT_CHECKS_BUCKETING
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|static
 name|String
 name|makeMessage
 parameter_list|(
@@ -19573,15 +19599,13 @@ block|{
 return|return
 name|what
 operator|+
-literal|" are disabled for safety reasons. If you know what you are doing, please make"
-operator|+
-literal|" sure that "
+literal|" are disabled for safety reasons. If you know what you are doing, please set"
 operator|+
 name|setting
 operator|.
 name|varname
 operator|+
-literal|" is set to false and that "
+literal|" to false and that "
 operator|+
 name|ConfVars
 operator|.
@@ -19589,7 +19613,11 @@ name|HIVEMAPREDMODE
 operator|.
 name|varname
 operator|+
-literal|" is not set to 'strict' to enable them."
+literal|" is not"
+operator|+
+literal|" set to 'strict' to proceed. Note that if you may get errors or incorrect results if"
+operator|+
+literal|" you make a mistake while using some of the unsafe features."
 return|;
 block|}
 specifier|public
@@ -19686,6 +19714,30 @@ condition|?
 literal|null
 else|:
 name|NO_CARTESIAN_MSG
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|checkBucketing
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+return|return
+name|isAllowed
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_STRICT_CHECKS_BUCKETING
+argument_list|)
+condition|?
+literal|null
+else|:
+name|NO_BUCKETING_MSG
 return|;
 block|}
 specifier|private

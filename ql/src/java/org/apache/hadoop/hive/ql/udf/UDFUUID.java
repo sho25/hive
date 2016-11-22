@@ -109,6 +109,13 @@ literal|"> SELECT _FUNC_();\n"
 operator|+
 literal|"  '36718a53-84f5-45d6-8796-4f79983ad49d'"
 argument_list|)
+annotation|@
+name|UDFType
+argument_list|(
+name|deterministic
+operator|=
+literal|false
+argument_list|)
 specifier|public
 class|class
 name|UDFUUID

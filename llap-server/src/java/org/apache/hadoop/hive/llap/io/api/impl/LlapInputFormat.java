@@ -1112,22 +1112,6 @@ argument_list|(
 name|job
 argument_list|)
 decl_stmt|;
-comment|// validate for supported types. Until we fix HIVE-14089 we need this check.
-if|if
-condition|(
-name|useLlapIo
-condition|)
-block|{
-name|useLlapIo
-operator|=
-name|Utilities
-operator|.
-name|checkLlapIOSupportedTypes
-argument_list|(
-name|job
-argument_list|)
-expr_stmt|;
-block|}
 if|if
 condition|(
 operator|!

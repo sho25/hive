@@ -2119,6 +2119,7 @@ return|;
 block|}
 block|}
 comment|/**    * Get the root column for the row. In ACID format files, it is offset by    * the extra metadata columns.    * @param isOriginal is the file in the original format?    * @return the column number for the root of row.    */
+specifier|public
 specifier|static
 name|int
 name|getRootColumn
