@@ -21582,6 +21582,12 @@ argument_list|>
 name|parentCols
 init|=
 name|parentCD
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|parentCD
 operator|.
 name|getCols
 argument_list|()
@@ -22118,6 +22124,12 @@ name|parentIntegerIndex
 init|=
 name|getColumnIndexFromTableColumns
 argument_list|(
+name|parentCD
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|parentCD
 operator|.
 name|getCols
