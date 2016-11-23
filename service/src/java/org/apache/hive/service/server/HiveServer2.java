@@ -1669,6 +1669,13 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|builder
+operator|.
+name|setContextRootRewriteTarget
+argument_list|(
+literal|"/hiveserver2.jsp"
+argument_list|)
+expr_stmt|;
 name|webServer
 operator|=
 name|builder
