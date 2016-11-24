@@ -134,6 +134,11 @@ name|State
 name|getState
 parameter_list|()
 function_decl|;
+comment|/**    * Return the error if the job has failed.    */
+name|Throwable
+name|getError
+parameter_list|()
+function_decl|;
 comment|/**    * The current state of the submitted job.    */
 specifier|static
 enum|enum
