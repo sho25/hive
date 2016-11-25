@@ -3517,6 +3517,7 @@ name|isSuccess
 argument_list|()
 condition|)
 block|{
+comment|// If the spark job finishes before this listener is called, the QUEUED status will not be set
 name|handle
 operator|.
 name|changeState
