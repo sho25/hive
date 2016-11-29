@@ -319,7 +319,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Variable subsitution to apply to hive commands. e"
+literal|"Variable substitution to apply to Hive commands. e"
 operator|+
 literal|".g. -d A=B or --define A=B"
 argument_list|)
@@ -357,7 +357,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Variable subsitution to apply to hive commands. "
+literal|"Variable substitution to apply to Hive commands. "
 operator|+
 literal|"e.g. --hivevar A=B"
 argument_list|)

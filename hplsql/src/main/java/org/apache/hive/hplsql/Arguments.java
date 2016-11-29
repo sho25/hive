@@ -333,7 +333,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Variable subsitution e.g. -d A=B or --define A=B"
+literal|"Variable substitution e.g. -d A=B or --define A=B"
 argument_list|)
 operator|.
 name|create
@@ -369,7 +369,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Variable subsitution e.g. --hivevar A=B"
+literal|"Variable substitution e.g. --hivevar A=B"
 argument_list|)
 operator|.
 name|create
