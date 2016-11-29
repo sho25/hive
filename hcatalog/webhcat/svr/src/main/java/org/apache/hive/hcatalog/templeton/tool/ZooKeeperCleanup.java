@@ -315,7 +315,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Run the cleanup loop.    *    * @throws IOException    */
+comment|/**    * Run the cleanup loop.    */
 specifier|public
 name|void
 name|run
@@ -507,7 +507,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Get the list of jobs from JobState    *    * @throws IOException    */
+comment|/**    * Get the list of jobs from JobState    */
 specifier|public
 name|List
 argument_list|<

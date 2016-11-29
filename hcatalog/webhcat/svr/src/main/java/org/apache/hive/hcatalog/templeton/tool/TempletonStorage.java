@@ -147,7 +147,7 @@ parameter_list|)
 throws|throws
 name|NotFoundException
 function_decl|;
-comment|/**    * Get the id of each data grouping of a given type in the storage    * system.    * @param type The data type (as listed above)    * @return An ArrayList<String> of ids.    */
+comment|/**    * Get the id of each data grouping of a given type in the storage    * system.    * @param type The data type (as listed above)    * @return A list of ids.    */
 specifier|public
 name|List
 argument_list|<
