@@ -2098,9 +2098,6 @@ name|processStop
 argument_list|()
 condition|)
 block|{
-name|cleanupReaders
-argument_list|()
-expr_stmt|;
 name|recordReaderTime
 argument_list|(
 name|startTime
@@ -2229,9 +2226,6 @@ name|processStop
 argument_list|()
 condition|)
 block|{
-name|cleanupReaders
-argument_list|()
-expr_stmt|;
 name|recordReaderTime
 argument_list|(
 name|startTime
@@ -2653,9 +2647,6 @@ name|processStop
 argument_list|()
 condition|)
 block|{
-name|cleanupReaders
-argument_list|()
-expr_stmt|;
 name|recordReaderTime
 argument_list|(
 name|startTime
