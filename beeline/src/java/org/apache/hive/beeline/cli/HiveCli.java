@@ -116,6 +116,8 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 return|return
 name|beeLine
 operator|.
@@ -126,6 +128,15 @@ argument_list|,
 name|inputStream
 argument_list|)
 return|;
+block|}
+finally|finally
+block|{
+name|beeLine
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
