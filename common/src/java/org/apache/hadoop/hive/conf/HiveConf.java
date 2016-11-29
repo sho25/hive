@@ -8529,6 +8529,28 @@ operator|+
 literal|"records to be split uniformly across the time dimension"
 argument_list|)
 block|,
+name|HIVE_DRUID_NUM_HTTP_CONNECTION
+argument_list|(
+literal|"hive.druid.http.numConnection"
+argument_list|,
+literal|20
+argument_list|,
+literal|"Number of connections used by\n"
+operator|+
+literal|"the HTTP client."
+argument_list|)
+block|,
+name|HIVE_DRUID_HTTP_READ_TIMEOUT
+argument_list|(
+literal|"hive.druid.http.read.timeout"
+argument_list|,
+literal|"PT1M"
+argument_list|,
+literal|"Read timeout period for the HTTP\n"
+operator|+
+literal|"client in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 1 minute."
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
