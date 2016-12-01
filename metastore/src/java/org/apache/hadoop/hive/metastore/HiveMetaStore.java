@@ -41656,7 +41656,7 @@ name|maxMessageSize
 init|=
 name|conf
 operator|.
-name|getIntVar
+name|getLongVar
 argument_list|(
 name|HiveConf
 operator|.

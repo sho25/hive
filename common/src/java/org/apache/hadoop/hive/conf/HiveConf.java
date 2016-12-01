@@ -3790,7 +3790,7 @@ literal|100
 operator|*
 literal|1024
 operator|*
-literal|1024
+literal|1024L
 argument_list|,
 literal|"Maximum message size in bytes a HMS will accept."
 argument_list|)
