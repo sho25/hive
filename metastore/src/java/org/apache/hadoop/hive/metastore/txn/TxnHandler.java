@@ -16905,6 +16905,14 @@ name|ex
 argument_list|)
 throw|;
 block|}
+comment|//if here, it means a concrurrent acquireLock() inserted the 'key'
+comment|//rollback is done for the benefit of Postgres which throws (SQLState=25P02, ErrorCode=0) if
+comment|//you attempt any stmt in a txn which had an error.
+name|dbConn
+operator|.
+name|rollback
+argument_list|()
+expr_stmt|;
 block|}
 name|rs
 operator|=
