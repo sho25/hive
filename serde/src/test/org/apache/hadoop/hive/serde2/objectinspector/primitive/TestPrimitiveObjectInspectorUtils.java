@@ -1868,6 +1868,40 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testGetTimestampFromString
+parameter_list|()
+block|{
+name|DateFormat
+name|localDateFormat
+init|=
+operator|new
+name|SimpleDateFormat
+argument_list|(
+literal|"yyyy-MM-dd HH:mm:ss.SSS"
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|"2015-02-07 00:00:00.000"
+argument_list|,
+name|localDateFormat
+operator|.
+name|format
+argument_list|(
+name|PrimitiveObjectInspectorUtils
+operator|.
+name|getTimestampFromString
+argument_list|(
+literal|"2015-02-07"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

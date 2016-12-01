@@ -6336,6 +6336,28 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|s
+operator|.
+name|indexOf
+argument_list|(
+literal|' '
+argument_list|)
+operator|<
+literal|0
+condition|)
+block|{
+name|s
+operator|=
+name|s
+operator|.
+name|concat
+argument_list|(
+literal|" 00:00:00"
+argument_list|)
+expr_stmt|;
+block|}
 try|try
 block|{
 name|result
