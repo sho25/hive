@@ -14619,7 +14619,7 @@ argument_list|(
 name|extLockIDs
 argument_list|)
 expr_stmt|;
-comment|////easier to read logs
+comment|//easier to read logs
 name|LOG
 operator|.
 name|info
@@ -14628,14 +14628,9 @@ literal|"Deleted "
 operator|+
 name|deletedLocks
 operator|+
-literal|" ext locks from HIVE_LOCKS due to timeout (vs. "
+literal|" int locks from HIVE_LOCKS due to timeout ("
 operator|+
-name|extLockIDs
-operator|.
-name|size
-argument_list|()
-operator|+
-literal|" found. List: "
+literal|"HL_LOCK_EXT_ID list:  "
 operator|+
 name|extLockIDs
 operator|+
@@ -16749,7 +16744,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|/**      * The implementation here is a bit kludgey but done so that code exercised by unit tests      * (which run against Derby which has no support for select for update) is as similar to      * production code as possible.      * In particular, with Derby we always run in a single process with a single metastore and      * the absence of For Update is handled via a Semaphore.  The later would strictly speaking      * make the SQL statments below unnecessary (for Derby), but then they would not be tested.      */
+comment|/**      * The implementation here is a bit kludgey but done so that code exercised by unit tests      * (which run against Derby which has no support for select for update) is as similar to      * production code as possible.      * In particular, with Derby we always run in a single process with a single metastore and      * the absence of For Update is handled via a Semaphore.  The later would strictly speaking      * make the SQL statements below unnecessary (for Derby), but then they would not be tested.      */
 name|Connection
 name|dbConn
 init|=
@@ -16992,7 +16987,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|quoteString
 argument_list|(
@@ -17343,7 +17338,7 @@ control|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|quoteString
 argument_list|(
