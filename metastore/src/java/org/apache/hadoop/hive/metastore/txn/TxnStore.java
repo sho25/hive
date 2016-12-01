@@ -176,6 +176,8 @@ block|,
 name|CheckLock
 block|,
 name|WriteSetCleaner
+block|,
+name|CompactionScheduler
 block|}
 comment|// Compactor states (Should really be enum)
 specifier|static
@@ -404,9 +406,9 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Submit a compaction request into the queue.  This is called when a user manually requests a    * compaction.    * @param rqst information on what to compact    * @return id of the compaction that has been started    * @throws MetaException    */
+comment|/**    * Submit a compaction request into the queue.  This is called when a user manually requests a    * compaction.    * @param rqst information on what to compact    * @return id of the compaction that has been started or existing id if this resource is already scheduled    * @throws MetaException    */
 specifier|public
-name|long
+name|CompactionResponse
 name|compact
 parameter_list|(
 name|CompactionRequest
