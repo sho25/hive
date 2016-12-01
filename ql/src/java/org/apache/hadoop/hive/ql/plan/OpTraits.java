@@ -195,6 +195,29 @@ return|return
 name|sortColNames
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"{ bucket column names: "
+operator|+
+name|bucketColNames
+operator|+
+literal|"; sort column names: "
+operator|+
+name|sortColNames
+operator|+
+literal|"; bucket count: "
+operator|+
+name|numBuckets
+operator|+
+literal|" }"
+return|;
+block|}
 block|}
 end_class
 
