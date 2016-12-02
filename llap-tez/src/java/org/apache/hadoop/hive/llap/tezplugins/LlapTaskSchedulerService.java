@@ -6705,7 +6705,7 @@ block|{
 comment|// No tasks qualify as preemptable
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"No tasks qualify as killable to schedule tasks at priority {}"
 argument_list|,
@@ -8212,13 +8212,13 @@ if|if
 condition|(
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Node["
 operator|+

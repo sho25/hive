@@ -592,9 +592,17 @@ name|toByteArray
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"Writing additional {} bytes to OrcSplit as payload. Required {} bytes."
 argument_list|,
@@ -603,6 +611,7 @@ argument_list|,
 name|required
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
