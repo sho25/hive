@@ -854,6 +854,9 @@ argument_list|,
 name|context
 argument_list|)
 expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 block|}
 comment|// if we have traits, and table info is present in the traits, we know the
@@ -1598,6 +1601,16 @@ argument_list|(
 name|joinDesc
 operator|.
 name|getFilterMap
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|mapJoinDesc
+operator|.
+name|setResidualFilterExprs
+argument_list|(
+name|joinDesc
+operator|.
+name|getResidualFilterExprs
 argument_list|()
 argument_list|)
 expr_stmt|;

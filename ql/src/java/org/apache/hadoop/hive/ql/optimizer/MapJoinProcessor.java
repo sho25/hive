@@ -6905,6 +6905,16 @@ name|getFilterMap
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|mapJoinDescriptor
+operator|.
+name|setResidualFilterExprs
+argument_list|(
+name|desc
+operator|.
+name|getResidualFilterExprs
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

@@ -2243,7 +2243,7 @@ name|INVALID_JOIN_CONDITION
 argument_list|(
 literal|10407
 argument_list|,
-literal|"Complex condition not supported for (LEFT|RIGHT|FULL) OUTER JOIN"
+literal|"Error parsing condition in outer join"
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//
