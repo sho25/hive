@@ -3735,7 +3735,7 @@ name|AUTOGEN_COLALIAS_PRFX_MAXLENGTH
 init|=
 literal|20
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -14403,6 +14403,18 @@ argument_list|,
 name|viewAliasToInput
 argument_list|)
 decl_stmt|;
+comment|// Temporary tables created during the execution are not the input sources
+if|if
+condition|(
+operator|!
+name|PlanUtils
+operator|.
+name|isValuesTempTable
+argument_list|(
+name|alias
+argument_list|)
+condition|)
+block|{
 name|PlanUtils
 operator|.
 name|addInput
@@ -14424,6 +14436,7 @@ argument_list|,
 name|mergeIsDirect
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|LOG
 operator|.
