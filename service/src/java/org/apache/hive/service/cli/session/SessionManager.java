@@ -2458,7 +2458,7 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"Cannot initilize session class:"
+literal|"Cannot initialize session class:"
 operator|+
 name|sessionImplclassName
 argument_list|,

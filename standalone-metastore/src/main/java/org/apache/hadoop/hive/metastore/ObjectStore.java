@@ -49371,7 +49371,7 @@ name|error
 argument_list|(
 literal|"Version information found in metastore differs {} "
 operator|+
-literal|"from expected schema version {}. Schema verififcation is disabled {}"
+literal|"from expected schema version {}. Schema verification is disabled {}"
 argument_list|,
 name|dbSchemaVer
 argument_list|,

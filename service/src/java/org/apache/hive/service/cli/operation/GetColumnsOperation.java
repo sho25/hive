@@ -748,7 +748,7 @@ name|Type
 operator|.
 name|STRING_TYPE
 argument_list|,
-literal|"Table name that this the scope of a reference attribure "
+literal|"Table name that this the scope of a reference attribute "
 operator|+
 literal|"(null if the DATA_TYPE isn't REF)"
 argument_list|)

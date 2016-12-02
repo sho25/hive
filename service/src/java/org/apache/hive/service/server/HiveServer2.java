@@ -1563,7 +1563,7 @@ throw|throw
 operator|new
 name|Error
 argument_list|(
-literal|"Unable to intitialize HiveServer2"
+literal|"Unable to initialize HiveServer2"
 argument_list|,
 name|t
 argument_list|)
@@ -3433,7 +3433,7 @@ name|warn
 argument_list|(
 literal|"This HiveServer2 instance is now de-registered from ZooKeeper. "
 operator|+
-literal|"The server will be shut down after the last client sesssion completes."
+literal|"The server will be shut down after the last client session completes."
 argument_list|)
 expr_stmt|;
 block|}

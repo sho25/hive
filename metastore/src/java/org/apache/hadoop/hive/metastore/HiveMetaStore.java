@@ -5366,7 +5366,7 @@ literal|"No user is added in admin role, since config value "
 operator|+
 name|userStr
 operator|+
-literal|" is in incorrect format. We accept comma seprated list of users."
+literal|" is in incorrect format. We accept comma separated list of users."
 argument_list|)
 expr_stmt|;
 return|return;
@@ -29402,7 +29402,7 @@ throw|throw
 operator|new
 name|InvalidObjectException
 argument_list|(
-literal|"Unable to add index because database or the orginal table do not exist"
+literal|"Unable to add index because database or the original table do not exist"
 argument_list|)
 throw|;
 block|}
@@ -33784,7 +33784,7 @@ literal|"No user can be added to "
 operator|+
 name|PUBLIC
 operator|+
-literal|". Since all users implictly"
+literal|". Since all users implicitly"
 operator|+
 literal|" belong to "
 operator|+
@@ -34083,7 +34083,7 @@ name|MetaException
 argument_list|(
 name|PUBLIC
 operator|+
-literal|" role implictly exists. It can't be created."
+literal|" role implicitly exists. It can't be created."
 argument_list|)
 throw|;
 block|}
@@ -45823,7 +45823,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Signalling thread was interuppted: "
+literal|"Signalling thread was interrupted: "
 operator|+
 name|e
 operator|.

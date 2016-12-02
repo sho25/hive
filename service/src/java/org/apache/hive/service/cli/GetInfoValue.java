@@ -149,7 +149,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Unreconigzed TGetInfoValue"
+literal|"Unrecognized TGetInfoValue"
 argument_list|)
 throw|;
 block|}

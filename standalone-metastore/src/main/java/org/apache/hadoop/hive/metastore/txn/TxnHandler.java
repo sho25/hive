@@ -12766,7 +12766,7 @@ argument_list|(
 literal|5
 argument_list|)
 operator|+
-literal|"] has already updated resouce '"
+literal|"] has already updated resource '"
 operator|+
 name|resourceName
 operator|+
