@@ -7023,6 +7023,15 @@ argument_list|,
 literal|"Will the join be automatically converted to a sort-merge join, if the joined tables pass the criteria for sort-merge join."
 argument_list|)
 block|,
+name|HIVE_AUTO_SORTMERGE_JOIN_REDUCE
+argument_list|(
+literal|"hive.auto.convert.sortmerge.join.reduce.side"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether hive.auto.convert.sortmerge.join (if enabled) should be applied to reduce side."
+argument_list|)
+block|,
 name|HIVE_AUTO_SORTMERGE_JOIN_BIGTABLE_SELECTOR
 argument_list|(
 literal|"hive.auto.convert.sortmerge.join.bigtable.selection.policy"
