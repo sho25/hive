@@ -117,26 +117,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collections
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Comparator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -158,16 +138,6 @@ operator|.
 name|util
 operator|.
 name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|LinkedHashMap
 import|;
 end_import
 
@@ -620,24 +590,6 @@ operator|.
 name|registry
 operator|.
 name|ServiceRegistry
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|registry
-operator|.
-name|client
-operator|.
-name|binding
-operator|.
-name|RegistryPathUtils
 import|;
 end_import
 
@@ -2728,12 +2680,6 @@ name|ServiceRecord
 name|srv
 decl_stmt|;
 specifier|private
-name|boolean
-name|alive
-init|=
-literal|true
-decl_stmt|;
-specifier|private
 specifier|final
 name|String
 name|host
@@ -3067,39 +3013,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
-name|isAlive
-parameter_list|()
-block|{
-return|return
-name|alive
-return|;
-block|}
-specifier|public
-name|void
-name|kill
-parameter_list|()
-block|{
-comment|// May be possible to generate a notification back to the scheduler from here.
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Killing service instance: "
-operator|+
-name|this
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|alive
-operator|=
-literal|false
-expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|Map
 argument_list|<
 name|String
@@ -3180,9 +3093,10 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"DynamicServiceInstance [alive="
+literal|"DynamicServiceInstance [id="
 operator|+
-name|alive
+name|getWorkerIdentity
+argument_list|()
 operator|+
 literal|", host="
 operator|+
@@ -3237,8 +3151,8 @@ return|return
 name|outputFormatPort
 return|;
 block|}
-comment|// Relying on the identity hashCode and equality, since refreshing instances retains the old copy
-comment|// of an already known instance.
+comment|// TODO: This needs a hashCode/equality implementation if used as a key in various structures.
+comment|// A new ServiceInstance is created each time.
 block|}
 specifier|private
 class|class

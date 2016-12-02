@@ -1588,8 +1588,6 @@ name|HOST1
 argument_list|,
 name|disabledNodeInfo
 operator|.
-name|serviceInstance
-operator|.
 name|getHost
 argument_list|()
 argument_list|)
