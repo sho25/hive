@@ -3609,7 +3609,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cleaner thread sleep interupted"
+literal|"Cleaner thread sleep interrupted"
 argument_list|,
 name|e
 argument_list|)

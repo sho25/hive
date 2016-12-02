@@ -2095,7 +2095,7 @@ decl_stmt|;
 annotation|@
 name|Metric
 argument_list|(
-literal|"# of succeeeded shuffle outputs"
+literal|"# of succeeded shuffle outputs"
 argument_list|)
 name|MutableCounterInt
 name|shuffleOutputsOK
@@ -5893,7 +5893,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Fetcher request verfied. enc_str="
+literal|"Fetcher request verified. enc_str="
 operator|+
 name|enc_str
 operator|+

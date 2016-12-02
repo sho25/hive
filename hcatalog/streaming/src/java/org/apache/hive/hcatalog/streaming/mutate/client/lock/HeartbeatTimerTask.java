@@ -383,7 +383,7 @@ literal|"Lock "
 operator|+
 name|lockId
 operator|+
-literal|" failed, cancelling heartbeat and notifiying listener: "
+literal|" failed, cancelling heartbeat and notifying listener: "
 operator|+
 name|listener
 argument_list|,

@@ -946,7 +946,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Primitve type "
+literal|"Primitive type "
 operator|+
 name|typeInfo
 operator|.

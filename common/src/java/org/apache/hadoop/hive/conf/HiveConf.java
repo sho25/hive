@@ -5224,7 +5224,7 @@ literal|"hive.txn.valid.txns,hive.script.operator.env.blacklist"
 argument_list|,
 literal|"Comma separated list of keys from the configuration file not to convert to environment "
 operator|+
-literal|"variables when envoking the script operator"
+literal|"variables when invoking the script operator"
 argument_list|)
 block|,
 name|HIVE_STRICT_CHECKS_LARGE_QUERY
@@ -5407,7 +5407,7 @@ literal|"hive.cbo.costmodel.network"
 argument_list|,
 literal|"150.0"
 argument_list|,
-literal|"Default cost of a transfering a byte over network;"
+literal|"Default cost of a transferring a byte over network;"
 operator|+
 literal|" expressed as multiple of CPU cost"
 argument_list|)
@@ -6202,7 +6202,7 @@ literal|"hive.test.mode.prefix"
 argument_list|,
 literal|"test_"
 argument_list|,
-literal|"In test mode, specfies prefixes for the output table"
+literal|"In test mode, specifies prefixes for the output table"
 argument_list|,
 literal|false
 argument_list|)
@@ -6213,7 +6213,7 @@ literal|"hive.test.mode.samplefreq"
 argument_list|,
 literal|32
 argument_list|,
-literal|"In test mode, specfies sampling frequency for table, which is not bucketed,\n"
+literal|"In test mode, specifies sampling frequency for table, which is not bucketed,\n"
 operator|+
 literal|"For example, the following query:\n"
 operator|+
@@ -6670,7 +6670,7 @@ literal|false
 argument_list|,
 literal|"LazySimpleSerde uses this property to determine if it treats 'T', 't', 'F', 'f',\n"
 operator|+
-literal|"'1', and '0' as extened, legal boolean literal, in addition to 'TRUE' and 'FALSE'.\n"
+literal|"'1', and '0' as extended, legal boolean literal, in addition to 'TRUE' and 'FALSE'.\n"
 operator|+
 literal|"The default is false, which means only 'TRUE' and 'FALSE' are treated as legal\n"
 operator|+
@@ -10960,7 +10960,7 @@ literal|null
 argument_list|,
 literal|"LDAP connection URL(s),\n"
 operator|+
-literal|"this value could contain URLs to mutiple LDAP servers instances for HA,\n"
+literal|"this value could contain URLs to multiple LDAP servers instances for HA,\n"
 operator|+
 literal|"each LDAP URL is separated by a SPACE character. URLs are used in the \n"
 operator|+
@@ -11930,11 +11930,11 @@ argument_list|,
 literal|"all"
 argument_list|)
 argument_list|,
-literal|"Specifies the extent to which the VectorUDFAdaptor will be used for UDFs that do not have a cooresponding vectorized class.\n"
+literal|"Specifies the extent to which the VectorUDFAdaptor will be used for UDFs that do not have a corresponding vectorized class.\n"
 operator|+
 literal|"0. none   : disable any usage of VectorUDFAdaptor\n"
 operator|+
-literal|"1. chosen : use VectorUDFAdaptor for a small set of UDFs that were choosen for good performance\n"
+literal|"1. chosen : use VectorUDFAdaptor for a small set of UDFs that were chosen for good performance\n"
 operator|+
 literal|"2. all    : use VectorUDFAdaptor for all UDFs"
 argument_list|)
@@ -13914,7 +13914,7 @@ literal|"hive.llap.daemon.wait.queue.comparator.class.name"
 argument_list|,
 literal|"org.apache.hadoop.hive.llap.daemon.impl.comparator.ShortestJobFirstComparator"
 argument_list|,
-literal|"The priority comparator to use for LLAP scheduler prioroty queue. The built-in options\n"
+literal|"The priority comparator to use for LLAP scheduler priority queue. The built-in options\n"
 operator|+
 literal|"are org.apache.hadoop.hive.llap.daemon.impl.comparator.ShortestJobFirstComparator and\n"
 operator|+
@@ -14321,7 +14321,7 @@ literal|"The server address of HiverServer2 host to be used for communication be
 operator|+
 literal|"Default is empty, which means the address will be determined in the same way as for hive.server2.thrift.bind.host."
 operator|+
-literal|"This is only necessary if the host has mutiple network addresses and if a different network address other than "
+literal|"This is only necessary if the host has multiple network addresses and if a different network address other than "
 operator|+
 literal|"hive.server2.thrift.bind.host is to be used."
 argument_list|)

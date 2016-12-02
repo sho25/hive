@@ -1462,7 +1462,7 @@ operator|<
 literal|65536
 operator|)
 argument_list|,
-literal|"Shuffle Port must be betwee 1024 and 65535, or 0 for automatic selection"
+literal|"Shuffle Port must be between 1024 and 65535, or 0 for automatic selection"
 argument_list|)
 expr_stmt|;
 name|int

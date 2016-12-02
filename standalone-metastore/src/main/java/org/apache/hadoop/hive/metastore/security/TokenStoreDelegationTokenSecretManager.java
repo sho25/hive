@@ -625,7 +625,7 @@ name|LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Token cancelation requested for identifier: "
+literal|"Token cancellation requested for identifier: "
 operator|+
 name|id
 argument_list|)

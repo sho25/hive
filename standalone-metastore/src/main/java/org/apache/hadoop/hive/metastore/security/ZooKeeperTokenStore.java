@@ -2350,7 +2350,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Zookeeper connect string has to be specifed through "
+literal|"Zookeeper connect string has to be specified through "
 operator|+
 literal|"either "
 operator|+

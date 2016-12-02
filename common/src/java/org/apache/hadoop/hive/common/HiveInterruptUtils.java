@@ -193,7 +193,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Interuppted"
+literal|"Interrupted"
 argument_list|,
 name|interrupt
 argument_list|)

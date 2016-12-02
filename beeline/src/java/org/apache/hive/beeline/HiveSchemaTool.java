@@ -2137,7 +2137,7 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Failed to get Partiton Location Info."
+literal|"Failed to get Partition Location Info."
 argument_list|,
 name|e
 argument_list|)

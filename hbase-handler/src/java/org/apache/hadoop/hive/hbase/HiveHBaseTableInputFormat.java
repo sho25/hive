@@ -1832,7 +1832,7 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Currently only primitve types are supported. Found: "
+literal|"Currently only primitive types are supported. Found: "
 operator|+
 name|sc
 operator|.

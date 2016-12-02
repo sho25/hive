@@ -1763,7 +1763,7 @@ operator|.
 name|getShortUserName
 argument_list|()
 operator|+
-literal|" is denied acccess. Please set "
+literal|" is denied access. Please set "
 operator|+
 name|ConfVars
 operator|.

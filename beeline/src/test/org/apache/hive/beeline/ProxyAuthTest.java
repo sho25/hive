@@ -1217,7 +1217,7 @@ throw|throw
 operator|new
 name|Exception
 argument_list|(
-literal|"connection should have failed after token cancelation"
+literal|"connection should have failed after token cancellation"
 argument_list|)
 throw|;
 block|}
