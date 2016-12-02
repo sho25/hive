@@ -3002,6 +3002,21 @@ name|HiveException
 block|{
 if|if
 condition|(
+name|isLogDebugEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"close called for operator "
+operator|+
+name|this
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|state
 operator|==
 name|State
@@ -3044,16 +3059,16 @@ name|CLOSE
 expr_stmt|;
 if|if
 condition|(
-name|isLogDebugEnabled
+name|isLogInfoEnabled
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
-name|id
+literal|"Closing operator "
 operator|+
-literal|" finished. closing... "
+name|this
 argument_list|)
 expr_stmt|;
 block|}

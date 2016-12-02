@@ -2071,7 +2071,7 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|closeOp
+name|close
 parameter_list|(
 name|boolean
 name|abort
@@ -2082,6 +2082,27 @@ block|{
 name|joinFinalLeftData
 argument_list|()
 expr_stmt|;
+comment|// Do this WITHOUT checking for parents
+name|super
+operator|.
+name|close
+argument_list|(
+name|abort
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|closeOp
+parameter_list|(
+name|boolean
+name|abort
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 name|super
 operator|.
 name|closeOp
