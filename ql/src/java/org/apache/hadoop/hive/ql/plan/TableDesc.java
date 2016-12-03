@@ -1058,6 +1058,17 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|o
+operator|==
+name|this
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+if|if
+condition|(
 operator|!
 operator|(
 name|o

@@ -56507,6 +56507,8 @@ operator|new
 name|ExprNodeColumnDesc
 argument_list|(
 name|col
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -56533,6 +56535,8 @@ operator|new
 name|ExprNodeColumnDesc
 argument_list|(
 name|col
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
