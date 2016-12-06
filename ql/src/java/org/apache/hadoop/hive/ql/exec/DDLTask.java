@@ -25353,6 +25353,89 @@ name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|crtTbl
+operator|.
+name|getReplicationSpec
+argument_list|()
+operator|.
+name|isInReplicationScope
+argument_list|()
+operator|&&
+operator|(
+operator|!
+name|crtTbl
+operator|.
+name|getReplaceMode
+argument_list|()
+operator|)
+condition|)
+block|{
+comment|// if this is a replication spec, then replace-mode semantics might apply.
+comment|// if we're already asking for a table replacement, then we can skip this check.
+comment|// however, otherwise, if in replication scope, and we've not been explicitly asked
+comment|// to replace, we should check if the object we're looking at exists, and if so,
+comment|// trigger replace-mode semantics.
+name|Table
+name|existingTable
+init|=
+name|db
+operator|.
+name|getTable
+argument_list|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|existingTable
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|crtTbl
+operator|.
+name|getReplicationSpec
+argument_list|()
+operator|.
+name|allowEventReplacementInto
+argument_list|(
+name|existingTable
+argument_list|)
+condition|)
+block|{
+return|return
+literal|0
+return|;
+comment|// no replacement, the existing table state is newer than our update.
+block|}
+else|else
+block|{
+name|crtTbl
+operator|.
+name|setReplaceMode
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+comment|// we replace existing table.
+block|}
+block|}
+block|}
 comment|// create the table
 if|if
 condition|(

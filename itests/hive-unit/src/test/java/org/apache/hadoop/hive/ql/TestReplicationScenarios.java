@@ -105,6 +105,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|ReplicationSemanticAnalyzer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
@@ -367,6 +385,13 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|private
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+name|lastResults
+decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -446,8 +471,22 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|//    System.setProperty(HiveConf.ConfVars.METASTORE_EVENT_LISTENERS.varname,
-comment|//        DBNOTIF_LISTENER_CLASSNAME); // turn on db notification listener on metastore
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_EVENT_LISTENERS
+operator|.
+name|varname
+argument_list|,
+name|DBNOTIF_LISTENER_CLASSNAME
+argument_list|)
+expr_stmt|;
+comment|// turn on db notification listener on metastore
 name|msPort
 operator|=
 name|MetaStoreUtils
@@ -651,6 +690,35 @@ name|tearDown
 parameter_list|()
 block|{
 comment|// after each test
+block|}
+specifier|private
+specifier|static
+name|int
+name|next
+init|=
+literal|0
+decl_stmt|;
+specifier|private
+specifier|synchronized
+name|void
+name|advanceDumpDir
+parameter_list|()
+block|{
+name|next
+operator|++
+expr_stmt|;
+name|ReplicationSemanticAnalyzer
+operator|.
+name|injectNextDumpDirForTest
+argument_list|(
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|next
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Tests basic operation - creates a db, with 4 tables, 2 ptned and 2 unptned.    * Inserts data into one of the ptned tables, and one of the unptned tables,    * and verifies that a REPL DUMP followed by a REPL LOAD is able to load it    * appropriately.    */
 annotation|@
@@ -967,6 +1035,9 @@ argument_list|(
 name|empty
 argument_list|)
 expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
 name|run
 argument_list|(
 literal|"REPL DUMP "
@@ -1068,6 +1139,632 @@ name|empty
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalAdds
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalAdds"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_empty(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_empty(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"thirteen"
+block|,
+literal|"fourteen"
+block|,
+literal|"fifteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"sixteen"
+block|,
+literal|"seventeen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|String
+name|unptn_locn
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_unptn"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|String
+name|ptn_locn_1
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_ptn1"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|String
+name|ptn_locn_2
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_ptn2"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|createTestDataFile
+argument_list|(
+name|unptn_locn
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|createTestDataFile
+argument_list|(
+name|ptn_locn_1
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|createTestDataFile
+argument_list|(
+name|ptn_locn_2
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_empty"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|empty
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_empty"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|empty
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|unptn_locn
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late AS SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_1
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned WHERE b=1"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_2
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned WHERE b=2"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// verified up to here.
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_late(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_1
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_late PARTITION(b=1)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_late WHERE b=1"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_2
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_late PARTITION(b=2)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_late WHERE b=2"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_empty"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|empty
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_empty"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|empty
+argument_list|)
+expr_stmt|;
+comment|//  this does not work because LOAD DATA LOCAL INPATH into an unptned table seems
+comment|//  to use ALTER_TABLE only - it does not emit an INSERT or CREATE - re-enable after
+comment|//  fixing that.
+comment|//    run("SELECT * from " + dbName + "_dupe.unptned");
+comment|//    verifyResults(unptn_data);
+name|run
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_late"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned WHERE b=1"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned WHERE b=2"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// verified up to here.
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_late WHERE b=1"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_late WHERE b=2"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|String
 name|getResult
@@ -1081,26 +1778,55 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|List
-argument_list|<
+return|return
+name|getResult
+argument_list|(
+name|rowNum
+argument_list|,
+name|colNum
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+specifier|private
 name|String
-argument_list|>
-name|results
-init|=
+name|getResult
+parameter_list|(
+name|int
+name|rowNum
+parameter_list|,
+name|int
+name|colNum
+parameter_list|,
+name|boolean
+name|reuse
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+operator|!
+name|reuse
+condition|)
+block|{
+name|lastResults
+operator|=
 operator|new
 name|ArrayList
 argument_list|<
 name|String
 argument_list|>
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 try|try
 block|{
 name|driver
 operator|.
 name|getResults
 argument_list|(
-name|results
+name|lastResults
 argument_list|)
 expr_stmt|;
 block|}
@@ -1123,9 +1849,10 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
 return|return
 operator|(
-name|results
+name|lastResults
 operator|.
 name|get
 argument_list|(

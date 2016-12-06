@@ -1961,6 +1961,23 @@ init|(
 name|NOTIFICATION_TBL_LOCK
 init|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"DbNotif:Enqueueing : {}:{}"
+argument_list|,
+name|event
+operator|.
+name|getEventId
+argument_list|()
+argument_list|,
+name|event
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|rs
 operator|.
 name|addNotificationEvent
