@@ -10354,7 +10354,7 @@ name|add
 argument_list|(
 name|toPatternPair
 argument_list|(
-literal|"(s3.?|swift|wasb.?).*hive-staging.*"
+literal|"(pblob|s3.?|swift|wasb.?).*hive-staging.*"
 argument_list|,
 literal|"### BLOBSTORE_STAGING_PATH ###"
 argument_list|)
