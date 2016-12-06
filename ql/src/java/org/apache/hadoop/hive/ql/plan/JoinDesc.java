@@ -1655,6 +1655,22 @@ argument_list|(
 name|displayName
 operator|=
 literal|"residual filter predicates"
+argument_list|,
+name|explainLevels
+operator|=
+block|{
+name|Level
+operator|.
+name|USER
+block|,
+name|Level
+operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
+name|EXTENDED
+block|}
 argument_list|)
 specifier|public
 name|String
