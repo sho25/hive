@@ -2263,6 +2263,22 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Setting dummy ops for work "
+operator|+
+name|work
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|dummyOps
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|setDummyOps

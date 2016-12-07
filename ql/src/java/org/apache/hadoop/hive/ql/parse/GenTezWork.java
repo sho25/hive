@@ -1613,6 +1613,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// Note: it's not quite clear why this is done inside this if. Seems like it should be on the top level.
 if|if
 condition|(
 name|context
@@ -1625,6 +1626,38 @@ name|mj
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Adding dummy ops to work: "
+operator|+
+name|work
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|context
+operator|.
+name|linkChildOpWithDummyOp
+operator|.
+name|get
+argument_list|(
+name|mj
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|Operator
