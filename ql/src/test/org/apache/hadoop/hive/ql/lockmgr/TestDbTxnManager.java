@@ -1796,7 +1796,7 @@ literal|"Wrong Exception2"
 argument_list|,
 name|ErrorMsg
 operator|.
-name|TXN_NO_SUCH_TRANSACTION
+name|TXN_ABORTED
 argument_list|,
 name|exception
 operator|.

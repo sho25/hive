@@ -291,6 +291,8 @@ throws|throws
 name|NoSuchTxnException
 throws|,
 name|MetaException
+throws|,
+name|TxnAbortedException
 function_decl|;
 comment|/**    * Abort (rollback) a list of transactions in one request.    * @param rqst info on transactions to abort    * @throws NoSuchTxnException    * @throws MetaException    */
 specifier|public
