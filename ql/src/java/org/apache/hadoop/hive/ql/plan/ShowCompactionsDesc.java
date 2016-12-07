@@ -72,7 +72,7 @@ name|schema
 init|=
 literal|"dbname,tabname,partname,type,state,workerid,"
 operator|+
-literal|"starttime#string:string:string:string:string:string:string"
+literal|"starttime,duration,hadoopjobid#string:string:string:string:string:string:string:string:string"
 decl_stmt|;
 specifier|private
 name|String

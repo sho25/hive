@@ -7760,6 +7760,7 @@ name|s
 init|=
 literal|"select cq_database, cq_table, cq_partition, cq_state, cq_type, cq_worker_id, "
 operator|+
+comment|//-1 because 'null' literal doesn't work for all DBs...
 literal|"cq_start, -1 cc_end, cq_run_as, cq_hadoop_job_id, cq_id from COMPACTION_QUEUE union all "
 operator|+
 literal|"select cc_database, cc_table, cc_partition, cc_state, cc_type, cc_worker_id, "
@@ -7918,18 +7919,33 @@ literal|6
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|e
-operator|.
-name|setStart
-argument_list|(
+name|long
+name|start
+init|=
 name|rs
 operator|.
 name|getLong
 argument_list|(
 literal|7
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|rs
+operator|.
+name|wasNull
+argument_list|()
+condition|)
+block|{
+name|e
+operator|.
+name|setStart
+argument_list|(
+name|start
 argument_list|)
 expr_stmt|;
+block|}
 name|long
 name|endTime
 init|=
@@ -7980,17 +7996,18 @@ literal|10
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|long
-name|id
-init|=
+name|e
+operator|.
+name|setId
+argument_list|(
 name|rs
 operator|.
 name|getLong
 argument_list|(
 literal|11
 argument_list|)
-decl_stmt|;
-comment|//for debugging
+argument_list|)
+expr_stmt|;
 name|response
 operator|.
 name|addToCompacts
@@ -10118,7 +10135,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Fatal error. Retry limit ("
+literal|"Fatal error in "
+operator|+
+name|caller
+operator|+
+literal|". Retry limit ("
 operator|+
 name|retryLimit
 operator|+
@@ -10139,7 +10160,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Non-retryable error: "
+literal|"Non-retryable error in "
+operator|+
+name|caller
+operator|+
+literal|" : "
 operator|+
 name|getMessage
 argument_list|(
