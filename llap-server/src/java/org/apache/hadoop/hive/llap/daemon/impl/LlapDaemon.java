@@ -2059,6 +2059,8 @@ name|QueryFailedHandlerProxy
 argument_list|()
 argument_list|,
 name|daemonConf
+argument_list|,
+name|daemonId
 argument_list|)
 expr_stmt|;
 name|SecretManager

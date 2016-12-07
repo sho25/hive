@@ -351,6 +351,22 @@ name|hive
 operator|.
 name|llap
 operator|.
+name|DaemonId
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
 name|LlapNodeId
 import|;
 end_import
@@ -618,7 +634,6 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-specifier|volatile
 name|LlapNodeId
 name|nodeId
 decl_stmt|;
@@ -718,6 +733,11 @@ name|Void
 argument_list|>
 name|queueLookupFuture
 decl_stmt|;
+specifier|private
+specifier|final
+name|DaemonId
+name|daemonId
+decl_stmt|;
 specifier|public
 name|AMReporter
 parameter_list|(
@@ -732,6 +752,9 @@ name|queryFailedHandler
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|DaemonId
+name|daemonId
 parameter_list|)
 block|{
 name|super
@@ -761,6 +784,12 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+name|this
+operator|.
+name|daemonId
+operator|=
+name|daemonId
 expr_stmt|;
 name|ExecutorService
 name|rawExecutor
@@ -1055,6 +1084,7 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+comment|// TODO: why is this needed? we could just save the host and port?
 name|nodeId
 operator|=
 name|LlapNodeId
@@ -1082,7 +1112,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"AMReporter running with NodeId: {}"
+literal|"AMReporter running with DaemonId: {}, NodeId: {}"
+argument_list|,
+name|daemonId
 argument_list|,
 name|nodeId
 argument_list|)
@@ -2016,6 +2048,15 @@ argument_list|(
 name|nodeId
 operator|.
 name|getHostname
+argument_list|()
+argument_list|)
+argument_list|,
+operator|new
+name|Text
+argument_list|(
+name|daemonId
+operator|.
+name|getUniqueNodeIdInCluster
 argument_list|()
 argument_list|)
 argument_list|,

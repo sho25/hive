@@ -2558,6 +2558,30 @@ literal|"SubmissionState in response is expected!"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|response
+operator|.
+name|hasUniqueNodeId
+argument_list|()
+condition|)
+block|{
+name|entityTracker
+operator|.
+name|registerTaskSubmittedToNode
+argument_list|(
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+argument_list|,
+name|response
+operator|.
+name|getUniqueNodeId
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -3648,10 +3672,14 @@ parameter_list|(
 name|String
 name|hostname
 parameter_list|,
+name|String
+name|uniqueId
+parameter_list|,
 name|int
 name|port
 parameter_list|)
 block|{
+comment|// TODO: do we ever need the port? we could just do away with nodeId altogether.
 name|LlapNodeId
 name|nodeId
 init|=
@@ -3714,6 +3742,45 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+comment|// TODO: this is a stopgap fix. We really need to change all mappings by unique node ID,
+comment|//       or at least (in this case) track the latest unique ID for LlapNode and retry all
+comment|//       older-node tasks proactively. For now let the heartbeats fail them.
+name|TezTaskAttemptID
+name|attemptId
+init|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+decl_stmt|;
+name|String
+name|taskNodeId
+init|=
+name|entityTracker
+operator|.
+name|getUniqueNodeId
+argument_list|(
+name|attemptId
+argument_list|)
+decl_stmt|;
+comment|// Unique ID is registered based on Submit response. Theoretically, we could get a ping
+comment|// when the task is valid but we haven't stored the unique ID yet, so taskNodeId is null.
+comment|// However, the next heartbeat(s) should get the value eventually and mark task as alive.
+comment|// Also, we prefer a missed heartbeat over a stuck query in case of discrepancy in ET.
+if|if
+condition|(
+name|taskNodeId
+operator|!=
+literal|null
+operator|&&
+name|taskNodeId
+operator|.
+name|equals
+argument_list|(
+name|uniqueId
+argument_list|)
+condition|)
+block|{
 name|getContext
 argument_list|()
 operator|.
@@ -3736,6 +3803,7 @@ name|getKey
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -4269,6 +4337,9 @@ parameter_list|(
 name|Text
 name|hostname
 parameter_list|,
+name|Text
+name|uniqueId
+parameter_list|,
 name|int
 name|port
 parameter_list|)
@@ -4278,6 +4349,11 @@ block|{
 name|nodePinged
 argument_list|(
 name|hostname
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|uniqueId
 operator|.
 name|toString
 argument_list|()
@@ -4305,7 +4381,11 @@ literal|":"
 operator|+
 name|port
 operator|+
-literal|"]"
+literal|" ("
+operator|+
+name|uniqueId
+operator|+
+literal|")]"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4406,6 +4486,7 @@ specifier|final
 class|class
 name|EntityTracker
 block|{
+comment|// TODO: need the description of how these maps are kept consistent.
 annotation|@
 name|VisibleForTesting
 specifier|final
@@ -4453,6 +4534,24 @@ name|TezTaskAttemptID
 argument_list|>
 argument_list|>
 name|nodeMap
+init|=
+operator|new
+name|ConcurrentHashMap
+argument_list|<>
+argument_list|()
+decl_stmt|;
+comment|// TODO: we currently put task info everywhere before we submit it and know the "real" node id.
+comment|//       Therefore, we are going to store this separately. Ideally, we should roll uniqueness
+comment|//       into LlapNodeId. We get node info from registry; that should (or can) include it.
+specifier|private
+specifier|final
+name|ConcurrentMap
+argument_list|<
+name|TezTaskAttemptID
+argument_list|,
+name|String
+argument_list|>
+name|uniqueNodeMap
 init|=
 operator|new
 name|ConcurrentHashMap
@@ -4611,6 +4710,68 @@ name|usedInstance
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|getUniqueNodeId
+parameter_list|(
+name|TezTaskAttemptID
+name|attemptId
+parameter_list|)
+block|{
+return|return
+name|uniqueNodeMap
+operator|.
+name|get
+argument_list|(
+name|attemptId
+argument_list|)
+return|;
+block|}
+specifier|public
+name|void
+name|registerTaskSubmittedToNode
+parameter_list|(
+name|TezTaskAttemptID
+name|taskAttemptID
+parameter_list|,
+name|String
+name|uniqueNodeId
+parameter_list|)
+block|{
+name|String
+name|prev
+init|=
+name|uniqueNodeMap
+operator|.
+name|putIfAbsent
+argument_list|(
+name|taskAttemptID
+argument_list|,
+name|uniqueNodeId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|prev
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Replaced the unique node mapping for task from "
+operator|+
+name|prev
+operator|+
+literal|" to "
+operator|+
+name|uniqueNodeId
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|void
 name|unregisterTaskAttempt
 parameter_list|(
@@ -4618,6 +4779,13 @@ name|TezTaskAttemptID
 name|attemptId
 parameter_list|)
 block|{
+name|uniqueNodeMap
+operator|.
+name|remove
+argument_list|(
+name|attemptId
+argument_list|)
+expr_stmt|;
 name|LlapNodeId
 name|llapNodeId
 init|=
@@ -5056,6 +5224,13 @@ argument_list|(
 name|matched
 argument_list|)
 expr_stmt|;
+name|uniqueNodeMap
+operator|.
+name|remove
+argument_list|(
+name|matched
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**      * Return a {@link BiMap} containing container->taskAttemptId mapping for the host specified.      *</p>      *<p/>      * This method return the internal structure used by the EntityTracker. Users must synchronize      * on the structure to ensure correct usage.      *      * @param llapNodeId      * @return      */
@@ -5071,23 +5246,13 @@ name|LlapNodeId
 name|llapNodeId
 parameter_list|)
 block|{
-name|BiMap
-argument_list|<
-name|ContainerId
-argument_list|,
-name|TezTaskAttemptID
-argument_list|>
-name|biMap
-init|=
+return|return
 name|nodeMap
 operator|.
 name|get
 argument_list|(
 name|llapNodeId
 argument_list|)
-decl_stmt|;
-return|return
-name|biMap
 return|;
 block|}
 block|}

@@ -210,6 +210,9 @@ parameter_list|(
 name|Text
 name|hostname
 parameter_list|,
+name|Text
+name|uniqueId
+parameter_list|,
 name|int
 name|port
 parameter_list|)
