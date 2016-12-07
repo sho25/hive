@@ -5278,6 +5278,7 @@ name|TMP_LOCATION
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|//this contains base_xxx or delta_xxx_yyy
 name|Path
 name|finalLocation
 init|=
@@ -5332,6 +5333,9 @@ argument_list|(
 name|tmpLocation
 argument_list|)
 decl_stmt|;
+comment|//expect 1 base or delta dir in this list
+comment|//we have MIN_TXN, MAX_TXN and IS_MAJOR in JobConf so we could figure out exactly what the dir
+comment|//name is that we want to rename; leave it for another day
 for|for
 control|(
 name|int
