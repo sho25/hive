@@ -4274,8 +4274,13 @@ argument_list|(
 literal|"No plan file found: "
 operator|+
 name|path
-argument_list|,
+operator|+
+literal|"; "
+operator|+
 name|fnf
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
