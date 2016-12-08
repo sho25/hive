@@ -89,6 +89,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Connection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Random
@@ -225,6 +235,10 @@ name|HiveSchemaTool
 name|schemaTool
 decl_stmt|;
 specifier|private
+name|Connection
+name|conn
+decl_stmt|;
+specifier|private
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -346,6 +360,15 @@ name|System
 operator|.
 name|out
 expr_stmt|;
+name|conn
+operator|=
+name|schemaTool
+operator|.
+name|getConnectionToMetastore
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -395,6 +418,19 @@ argument_list|(
 name|errStream
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|conn
+operator|!=
+literal|null
+condition|)
+block|{
+name|conn
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/**    * Test the sequence validation functionality    * @throws Exception    */
 specifier|public
@@ -416,7 +452,9 @@ init|=
 name|schemaTool
 operator|.
 name|validateSequences
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
@@ -460,7 +498,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSequences
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -505,7 +545,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSequences
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -537,7 +579,9 @@ operator|)
 name|schemaTool
 operator|.
 name|validateSchemaTables
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
@@ -560,7 +604,9 @@ operator|)
 name|schemaTool
 operator|.
 name|validateSchemaTables
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -604,7 +650,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaTables
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -645,7 +693,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaTables
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -673,7 +723,9 @@ init|=
 name|schemaTool
 operator|.
 name|validateColumnNullValues
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
@@ -689,7 +741,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateColumnNullValues
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 comment|// Test invalid case
 name|String
@@ -726,7 +780,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateColumnNullValues
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -888,7 +944,9 @@ init|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 decl_stmt|;
 comment|// Test an invalid case with multiple versions
 name|String
@@ -925,7 +983,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -963,7 +1023,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1002,7 +1064,9 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|()
+argument_list|(
+name|conn
+argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -2500,6 +2564,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
@@ -2514,6 +2580,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 name|defaultRoot
 argument_list|)
 expr_stmt|;
@@ -2522,13 +2590,6 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
-name|String
-name|dbmydbLocation
-init|=
-name|defaultRoot
-operator|+
-literal|"/user/hive/warehouse/mydb"
-decl_stmt|;
 comment|// Test valid case
 name|String
 index|[]
@@ -2573,6 +2634,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -2587,6 +2650,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 name|defaultRoot
 argument_list|)
 expr_stmt|;
@@ -2651,6 +2716,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -2665,6 +2732,8 @@ name|schemaTool
 operator|.
 name|validateLocations
 argument_list|(
+name|conn
+argument_list|,
 name|defaultRoot
 argument_list|)
 expr_stmt|;
