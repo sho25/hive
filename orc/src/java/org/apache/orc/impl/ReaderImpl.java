@@ -1793,7 +1793,7 @@ name|this
 operator|.
 name|codec
 operator|=
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|createCodec
 argument_list|(
@@ -2573,7 +2573,7 @@ decl_stmt|;
 name|CompressionCodec
 name|codec
 init|=
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|createCodec
 argument_list|(
@@ -2920,7 +2920,7 @@ argument_list|()
 expr_stmt|;
 name|codec
 operator|=
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|createCodec
 argument_list|(

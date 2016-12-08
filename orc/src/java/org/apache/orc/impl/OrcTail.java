@@ -423,7 +423,7 @@ name|getCompressionCodec
 parameter_list|()
 block|{
 return|return
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|createCodec
 argument_list|(
