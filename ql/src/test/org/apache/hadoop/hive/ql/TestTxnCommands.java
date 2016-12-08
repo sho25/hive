@@ -508,7 +508,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  */
+comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  *   * Tests here are for multi-statement transactions (WIP) and those that don't need to  * run with Acid 2.0 (see subclasses of TestTxnCommands2)  */
 end_comment
 
 begin_class
@@ -5042,7 +5042,7 @@ name|NONACIDORCTBL
 operator|+
 literal|"\n source ON target.pk = source.pk "
 operator|+
-literal|"\nWHEN MATCHED THEN UPDATE set t = 1 "
+literal|"\nWHEN MATCHED THEN UPDATE set b = 1 "
 operator|+
 literal|"\nWHEN MATCHED THEN UPDATE set b=a"
 argument_list|)
@@ -5144,6 +5144,95 @@ operator|+
 literal|"\nwhen matched then update set vc=`∆∋` "
 operator|+
 literal|"\nwhen not matched then insert values(`a/b`.`g/h`,`a/b`.j,`a/b`.k)"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSetClauseFakeColumn
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"MERGE INTO "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" target USING "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"\n source ON target.a = source.a "
+operator|+
+literal|"\nWHEN MATCHED THEN UPDATE set t = 1"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|cpr
+operator|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set t = 1"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

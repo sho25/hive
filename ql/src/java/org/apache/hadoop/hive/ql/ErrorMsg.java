@@ -2246,6 +2246,15 @@ argument_list|,
 literal|"Error parsing condition in outer join"
 argument_list|)
 block|,
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|(
+literal|10408
+argument_list|,
+literal|"Target column \"{0}\" of set clause is not found in table \"{1}\"."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
