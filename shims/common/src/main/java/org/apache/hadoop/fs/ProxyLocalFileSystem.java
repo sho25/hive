@@ -79,24 +79,8 @@ name|ShimLoader
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|HadoopShims
-import|;
-end_import
-
 begin_comment
-comment|/****************************************************************  * A Proxy for LocalFileSystem  *  * Serves uri's corresponding to 'pfile:///' namespace with using  * a LocalFileSystem  *****************************************************************/
+comment|/****************************************************************  * A Proxy for LocalFileSystem  *  * As an example, it serves uri's corresponding to:  * 'pfile:///' namespace with using a LocalFileSystem  *****************************************************************/
 end_comment
 
 begin_class
@@ -109,6 +93,11 @@ block|{
 specifier|protected
 name|LocalFileSystem
 name|localFs
+decl_stmt|;
+comment|/**    * URI scheme    */
+specifier|private
+name|String
+name|scheme
 decl_stmt|;
 specifier|public
 name|ProxyLocalFileSystem
@@ -154,14 +143,15 @@ block|{
 comment|// create a proxy for the local filesystem
 comment|// the scheme/authority serving as the proxy is derived
 comment|// from the supplied URI
-name|String
+name|this
+operator|.
 name|scheme
-init|=
+operator|=
 name|name
 operator|.
 name|getScheme
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|String
 name|nameUriString
 init|=
@@ -234,7 +224,7 @@ decl_stmt|;
 name|String
 name|proxyUriString
 init|=
-name|nameUriString
+name|scheme
 operator|+
 literal|"://"
 operator|+
@@ -270,6 +260,17 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getScheme
+parameter_list|()
+block|{
+return|return
+name|scheme
+return|;
 block|}
 block|}
 end_class

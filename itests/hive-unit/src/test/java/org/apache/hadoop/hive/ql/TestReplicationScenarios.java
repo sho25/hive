@@ -1850,6 +1850,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|// Split around the 'tab' character
 return|return
 operator|(
 name|lastResults
@@ -1861,7 +1862,7 @@ argument_list|)
 operator|.
 name|split
 argument_list|(
-literal|"\\001"
+literal|"\\t"
 argument_list|)
 operator|)
 index|[

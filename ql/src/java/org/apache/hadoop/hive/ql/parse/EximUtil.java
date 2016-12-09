@@ -911,6 +911,18 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|FileSystem
+operator|.
+name|get
+argument_list|(
+name|uri
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
 name|LOG
 operator|.
 name|info
@@ -994,37 +1006,15 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// set correct scheme and authority
-if|if
-condition|(
-name|StringUtils
+comment|// Get scheme from FileSystem
+name|scheme
+operator|=
+name|fs
 operator|.
-name|isEmpty
-argument_list|(
-name|scheme
-argument_list|)
-condition|)
-block|{
-if|if
-condition|(
-name|testMode
-condition|)
-block|{
-name|scheme
-operator|=
-literal|"pfile"
+name|getScheme
+argument_list|()
 expr_stmt|;
-block|}
-else|else
-block|{
-name|scheme
-operator|=
-literal|"hdfs"
-expr_stmt|;
-block|}
-block|}
-comment|// if scheme is specified but not authority then use the default
-comment|// authority
+comment|// if scheme is specified but not authority then use the default authority
 if|if
 condition|(
 name|StringUtils
@@ -1187,6 +1177,13 @@ name|IO_ERROR
 operator|.
 name|getMsg
 argument_list|()
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
@@ -1277,6 +1274,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+try|try
+block|{
 name|boolean
 name|testMode
 init|=
@@ -1308,10 +1307,22 @@ operator|.
 name|toUri
 argument_list|()
 decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|FileSystem
+operator|.
+name|get
+argument_list|(
+name|uri
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
 name|String
 name|scheme
 init|=
-name|uri
+name|fs
 operator|.
 name|getScheme
 argument_list|()
@@ -1367,21 +1378,6 @@ name|getPath
 argument_list|()
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|StringUtils
-operator|.
-name|isEmpty
-argument_list|(
-name|scheme
-argument_list|)
-condition|)
-block|{
-name|scheme
-operator|=
-literal|"pfile"
-expr_stmt|;
-block|}
 try|try
 block|{
 name|uri
@@ -1431,10 +1427,39 @@ return|;
 block|}
 else|else
 block|{
-comment|//no-op for non-test mode for now
+comment|// no-op for non-test mode for now
 return|return
 name|location
 return|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|IO_ERROR
+operator|.
+name|getMsg
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 block|}
 comment|/* major version number should match for backward compatibility */

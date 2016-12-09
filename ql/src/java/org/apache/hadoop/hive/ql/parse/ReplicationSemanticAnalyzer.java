@@ -685,6 +685,14 @@ init|=
 literal|null
 decl_stmt|;
 comment|// unit tests can overwrite this to affect default dump behaviour
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|dumpSchema
+init|=
+literal|"dump_dir,last_repl_id#string,string"
+decl_stmt|;
 specifier|public
 name|ReplicationSemanticAnalyzer
 parameter_list|(
@@ -1170,6 +1178,9 @@ argument_list|,
 literal|"_dumpmetadata"
 argument_list|)
 decl_stmt|;
+name|String
+name|lastReplId
+decl_stmt|;
 try|try
 block|{
 if|if
@@ -1429,25 +1440,10 @@ argument_list|,
 name|bootDumpEndReplId
 argument_list|)
 expr_stmt|;
-name|prepareReturnValues
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-name|dumpRoot
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|,
+comment|// Set the correct last repl id to return to the user
+name|lastReplId
+operator|=
 name|bootDumpEndReplId
-argument_list|)
-argument_list|,
-literal|"dump_dir,last_repl_id#string,string"
-argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -1681,6 +1677,17 @@ argument_list|,
 name|dumpMetadata
 argument_list|)
 expr_stmt|;
+comment|// Set the correct last repl id to return to the user
+name|lastReplId
+operator|=
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|eventTo
+argument_list|)
+expr_stmt|;
+block|}
 name|prepareReturnValues
 argument_list|(
 name|Arrays
@@ -1695,18 +1702,20 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|eventTo
-argument_list|)
+name|lastReplId
 argument_list|)
 argument_list|,
-literal|"dump_dir,last_repl_id#string,string"
+name|dumpSchema
 argument_list|)
 expr_stmt|;
-block|}
+name|setFetchTask
+argument_list|(
+name|createFetchTask
+argument_list|(
+name|dumpSchema
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -4003,11 +4012,6 @@ name|getLocalTmpPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// FIXME : this should not accessible by the user if we write to it from the frontend.
-comment|// Thus, we should Desc/Work this, otherwise there is a security issue here.
-comment|// Note: if we don't call ctx.setResFile, we get a NPE from the following code section
-comment|// If we do call it, then FetchWork thinks that the "table" here winds up thinking that
-comment|// this is a partitioned dir, which does not work. Thus, this does not work.
 name|writeOutput
 argument_list|(
 name|values
@@ -4116,7 +4120,7 @@ name|write
 argument_list|(
 name|Utilities
 operator|.
-name|ctrlaCode
+name|tabCode
 argument_list|)
 expr_stmt|;
 name|outStream
@@ -4170,8 +4174,6 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
-comment|// TODO : simple wrap& rethrow for now, clean up with error
-comment|// codes
 block|}
 finally|finally
 block|{
@@ -4182,8 +4184,6 @@ argument_list|(
 name|outStream
 argument_list|)
 expr_stmt|;
-comment|// TODO : we have other closes here, and in ReplCopyTask -
-comment|// replace with this
 block|}
 block|}
 specifier|private
