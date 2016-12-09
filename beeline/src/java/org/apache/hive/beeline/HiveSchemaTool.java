@@ -1704,7 +1704,13 @@ name|tabLoc
 operator|=
 literal|"select tbl.\"TBL_ID\", tbl.\"TBL_NAME\", sd.\"LOCATION\", dbt.\"DB_ID\", dbt.\"NAME\" from \"TBLS\" tbl inner join "
 operator|+
-literal|"\"SDS\" sd on tbl.\"SD_ID\" = sd.\"SD_ID\" and tbl.\"TBL_ID\">= ? and tbl.\"TBL_ID\"<= ? "
+literal|"\"SDS\" sd on tbl.\"SD_ID\" = sd.\"SD_ID\" and tbl.\"TBL_TYPE\" != '"
+operator|+
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+operator|+
+literal|"' and tbl.\"TBL_ID\">= ? and tbl.\"TBL_ID\"<= ? "
 operator|+
 literal|"inner join \"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" "
 expr_stmt|;
@@ -1713,7 +1719,13 @@ else|else
 block|{
 name|tabLoc
 operator|=
-literal|"select tbl.TBL_ID, tbl.TBL_NAME, sd.LOCATION, dbt.DB_ID, dbt.NAME from TBLS tbl join SDS sd on tbl.SD_ID = sd.SD_ID and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID"
+literal|"select tbl.TBL_ID, tbl.TBL_NAME, sd.LOCATION, dbt.DB_ID, dbt.NAME from TBLS tbl join SDS sd on tbl.SD_ID = sd.SD_ID and tbl.TBL_TYPE !='"
+operator|+
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+operator|+
+literal|"' and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID"
 expr_stmt|;
 block|}
 name|long
