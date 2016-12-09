@@ -8744,6 +8744,13 @@ condition|(
 name|table
 operator|==
 literal|null
+operator|||
+name|table
+operator|.
+name|getParameters
+argument_list|()
+operator|==
+literal|null
 condition|)
 block|{
 return|return
