@@ -1499,8 +1499,6 @@ name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
 argument_list|)
 condition|)
 block|{
-try|try
-block|{
 name|HdfsUtils
 operator|.
 name|setFullFileStatus
@@ -1526,25 +1524,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting permissions or group of "
-operator|+
-name|actualPath
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 return|return

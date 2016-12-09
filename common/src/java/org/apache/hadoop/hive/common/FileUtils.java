@@ -2495,8 +2495,6 @@ return|;
 block|}
 else|else
 block|{
-try|try
-block|{
 comment|//set on the entire subtree
 if|if
 condition|(
@@ -2526,25 +2524,6 @@ argument_list|,
 name|firstNonExistentParent
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting permissions of "
-operator|+
-name|firstNonExistentParent
-argument_list|,
-name|e
 argument_list|)
 expr_stmt|;
 block|}
@@ -2797,8 +2776,6 @@ operator|&&
 name|inheritPerms
 condition|)
 block|{
-try|try
-block|{
 name|HdfsUtils
 operator|.
 name|setFullFileStatus
@@ -2827,25 +2804,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting permissions or group of "
-operator|+
-name|dst
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 return|return
 name|copied
@@ -3060,8 +3018,6 @@ name|destPath
 argument_list|)
 condition|)
 block|{
-try|try
-block|{
 name|HdfsUtils
 operator|.
 name|setFullFileStatus
@@ -3090,25 +3046,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting permissions or group of "
-operator|+
-name|destPath
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 literal|true
 return|;

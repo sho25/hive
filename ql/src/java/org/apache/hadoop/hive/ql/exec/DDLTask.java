@@ -27518,8 +27518,6 @@ argument_list|(
 name|location
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|HdfsUtils
 operator|.
 name|setFullFileStatus
@@ -27537,25 +27535,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting permissions of "
-operator|+
-name|location
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 else|else
 block|{
