@@ -5337,6 +5337,48 @@ operator|+
 literal|"columns in operators such as Aggregate or Join so that we try to reduce the number of shuffling stages"
 argument_list|)
 block|,
+comment|// materialized views
+name|HIVE_MATERIALIZED_VIEW_ENABLE_AUTO_REWRITING
+argument_list|(
+literal|"hive.materializedview.rewriting"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
+argument_list|(
+literal|"hive.materializedview.fileformat"
+argument_list|,
+literal|"ORC"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"TextFile"
+argument_list|,
+literal|"SequenceFile"
+argument_list|,
+literal|"RCfile"
+argument_list|,
+literal|"ORC"
+argument_list|)
+argument_list|,
+literal|"Default file format for CREATE MATERIALIZED VIEW statement"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZED_VIEW_SERDE
+argument_list|(
+literal|"hive.materializedview.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
+argument_list|,
+literal|"Default SerDe used for materialized views"
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
@@ -5661,38 +5703,6 @@ operator|+
 literal|"created with format specified by hive.default.fileformat. Leaving this null will result in using hive.default.fileformat \n"
 operator|+
 literal|"for all tables."
-argument_list|)
-block|,
-name|HIVEMATERIALIZEDVIEWFILEFORMAT
-argument_list|(
-literal|"hive.materializedview.fileformat"
-argument_list|,
-literal|"ORC"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"none"
-argument_list|,
-literal|"TextFile"
-argument_list|,
-literal|"SequenceFile"
-argument_list|,
-literal|"RCfile"
-argument_list|,
-literal|"ORC"
-argument_list|)
-argument_list|,
-literal|"Default file format for CREATE MATERIALIZED VIEW statement"
-argument_list|)
-block|,
-name|HIVEMATERIALIZEDVIEWSERDE
-argument_list|(
-literal|"hive.materializedview.serde"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
-argument_list|,
-literal|"Default SerDe used for materialized views"
 argument_list|)
 block|,
 name|HIVEQUERYRESULTFILEFORMAT

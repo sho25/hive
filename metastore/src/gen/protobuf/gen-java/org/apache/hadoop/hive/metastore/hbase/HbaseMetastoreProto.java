@@ -155271,6 +155271,17 @@ name|boolean
 name|getIsTemporary
 parameter_list|()
 function_decl|;
+comment|// optional bool is_rewrite_enabled = 15;
+comment|/**      *<code>optional bool is_rewrite_enabled = 15;</code>      */
+name|boolean
+name|hasIsRewriteEnabled
+parameter_list|()
+function_decl|;
+comment|/**      *<code>optional bool is_rewrite_enabled = 15;</code>      */
+name|boolean
+name|getIsRewriteEnabled
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * Protobuf type {@code org.apache.hadoop.hive.metastore.hbase.Table}    */
 specifier|public
@@ -156071,6 +156082,23 @@ operator||=
 literal|0x00001000
 expr_stmt|;
 name|isTemporary_
+operator|=
+name|input
+operator|.
+name|readBool
+argument_list|()
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|120
+case|:
+block|{
+name|bitField0_
+operator||=
+literal|0x00002000
+expr_stmt|;
+name|isRewriteEnabled_
 operator|=
 name|input
 operator|.
@@ -158117,6 +158145,47 @@ return|return
 name|isTemporary_
 return|;
 block|}
+comment|// optional bool is_rewrite_enabled = 15;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|IS_REWRITE_ENABLED_FIELD_NUMBER
+init|=
+literal|15
+decl_stmt|;
+specifier|private
+name|boolean
+name|isRewriteEnabled_
+decl_stmt|;
+comment|/**      *<code>optional bool is_rewrite_enabled = 15;</code>      */
+specifier|public
+name|boolean
+name|hasIsRewriteEnabled
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00002000
+operator|)
+operator|==
+literal|0x00002000
+operator|)
+return|;
+block|}
+comment|/**      *<code>optional bool is_rewrite_enabled = 15;</code>      */
+specifier|public
+name|boolean
+name|getIsRewriteEnabled
+parameter_list|()
+block|{
+return|return
+name|isRewriteEnabled_
+return|;
+block|}
 specifier|private
 name|void
 name|initFields
@@ -158241,6 +158310,10 @@ name|getDefaultInstance
 argument_list|()
 expr_stmt|;
 name|isTemporary_
+operator|=
+literal|false
+expr_stmt|;
+name|isRewriteEnabled_
 operator|=
 literal|false
 expr_stmt|;
@@ -158770,6 +158843,29 @@ name|isTemporary_
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00002000
+operator|)
+operator|==
+literal|0x00002000
+operator|)
+condition|)
+block|{
+name|output
+operator|.
+name|writeBool
+argument_list|(
+literal|15
+argument_list|,
+name|isRewriteEnabled_
+argument_list|)
+expr_stmt|;
+block|}
 name|getUnknownFields
 argument_list|()
 operator|.
@@ -159256,6 +159352,37 @@ argument_list|(
 literal|14
 argument_list|,
 name|isTemporary_
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00002000
+operator|)
+operator|==
+literal|0x00002000
+operator|)
+condition|)
+block|{
+name|size
+operator|+=
+name|com
+operator|.
+name|google
+operator|.
+name|protobuf
+operator|.
+name|CodedOutputStream
+operator|.
+name|computeBoolSize
+argument_list|(
+literal|15
+argument_list|,
+name|isRewriteEnabled_
 argument_list|)
 expr_stmt|;
 block|}
@@ -160439,6 +160566,19 @@ operator|~
 literal|0x00002000
 operator|)
 expr_stmt|;
+name|isRewriteEnabled_
+operator|=
+literal|false
+expr_stmt|;
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00004000
+operator|)
+expr_stmt|;
 return|return
 name|this
 return|;
@@ -161089,6 +161229,30 @@ name|isTemporary_
 operator|=
 name|isTemporary_
 expr_stmt|;
+if|if
+condition|(
+operator|(
+operator|(
+name|from_bitField0_
+operator|&
+literal|0x00004000
+operator|)
+operator|==
+literal|0x00004000
+operator|)
+condition|)
+block|{
+name|to_bitField0_
+operator||=
+literal|0x00002000
+expr_stmt|;
+block|}
+name|result
+operator|.
+name|isRewriteEnabled_
+operator|=
+name|isRewriteEnabled_
+expr_stmt|;
 name|result
 operator|.
 name|bitField0_
@@ -161604,6 +161768,23 @@ argument_list|(
 name|other
 operator|.
 name|getIsTemporary
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|other
+operator|.
+name|hasIsRewriteEnabled
+argument_list|()
+condition|)
+block|{
+name|setIsRewriteEnabled
+argument_list|(
+name|other
+operator|.
+name|getIsRewriteEnabled
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -167267,6 +167448,89 @@ literal|0x00002000
 operator|)
 expr_stmt|;
 name|isTemporary_
+operator|=
+literal|false
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|// optional bool is_rewrite_enabled = 15;
+specifier|private
+name|boolean
+name|isRewriteEnabled_
+decl_stmt|;
+comment|/**        *<code>optional bool is_rewrite_enabled = 15;</code>        */
+specifier|public
+name|boolean
+name|hasIsRewriteEnabled
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|(
+name|bitField0_
+operator|&
+literal|0x00004000
+operator|)
+operator|==
+literal|0x00004000
+operator|)
+return|;
+block|}
+comment|/**        *<code>optional bool is_rewrite_enabled = 15;</code>        */
+specifier|public
+name|boolean
+name|getIsRewriteEnabled
+parameter_list|()
+block|{
+return|return
+name|isRewriteEnabled_
+return|;
+block|}
+comment|/**        *<code>optional bool is_rewrite_enabled = 15;</code>        */
+specifier|public
+name|Builder
+name|setIsRewriteEnabled
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|bitField0_
+operator||=
+literal|0x00004000
+expr_stmt|;
+name|isRewriteEnabled_
+operator|=
+name|value
+expr_stmt|;
+name|onChanged
+argument_list|()
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**        *<code>optional bool is_rewrite_enabled = 15;</code>        */
+specifier|public
+name|Builder
+name|clearIsRewriteEnabled
+parameter_list|()
+block|{
+name|bitField0_
+operator|=
+operator|(
+name|bitField0_
+operator|&
+operator|~
+literal|0x00004000
+operator|)
+expr_stmt|;
+name|isRewriteEnabled_
 operator|=
 literal|false
 expr_stmt|;
@@ -223521,7 +223785,7 @@ literal|"ColValueList\022\030\n\020skewed_col_value\030\001 \003(\t\0327"
 operator|+
 literal|"\n\031SkewedColValueLocationMap\022\013\n\003key\030\001 \003(\t"
 operator|+
-literal|"\022\r\n\005value\030\002 \002(\t\"\220\004\n\005Table\022\r\n\005owner\030\001 \001(\t"
+literal|"\022\r\n\005value\030\002 \002(\t\"\254\004\n\005Table\022\r\n\005owner\030\001 \001(\t"
 operator|+
 literal|"\022\023\n\013create_time\030\002 \001(\003\022\030\n\020last_access_tim"
 block|,
@@ -223547,97 +223811,97 @@ literal|"\t\022Q\n\nprivileges\030\r \001(\0132=.org.apache.hadoo"
 block|,
 literal|"p.hive.metastore.hbase.PrincipalPrivileg"
 operator|+
-literal|"eSet\022\024\n\014is_temporary\030\016 \001(\010\"\334\002\n\005Index\022\031\n\021"
+literal|"eSet\022\024\n\014is_temporary\030\016 \001(\010\022\032\n\022is_rewrite"
 operator|+
-literal|"indexHandlerClass\030\001 \001(\t\022\016\n\006dbName\030\002 \002(\t\022"
+literal|"_enabled\030\017 \001(\010\"\334\002\n\005Index\022\031\n\021indexHandler"
 operator|+
-literal|"\025\n\rorigTableName\030\003 \002(\t\022\020\n\010location\030\004 \001(\t"
+literal|"Class\030\001 \001(\t\022\016\n\006dbName\030\002 \002(\t\022\025\n\rorigTable"
 operator|+
-literal|"\022I\n\rsd_parameters\030\005 \001(\01322.org.apache.had"
+literal|"Name\030\003 \002(\t\022\020\n\010location\030\004 \001(\t\022I\n\rsd_param"
 operator|+
-literal|"oop.hive.metastore.hbase.Parameters\022\022\n\nc"
+literal|"eters\030\005 \001(\01322.org.apache.hadoop.hive.met"
 operator|+
-literal|"reateTime\030\006 \001(\005\022\026\n\016lastAccessTime\030\007 \001(\005\022"
+literal|"astore.hbase.Parameters\022\022\n\ncreateTime\030\006 "
 operator|+
-literal|"\026\n\016indexTableName\030\010 \001(\t\022\017\n\007sd_hash\030\t \001(\014"
+literal|"\001(\005\022\026\n\016lastAccessTime\030\007 \001(\005\022\026\n\016indexTabl"
 operator|+
-literal|"\022F\n\nparameters\030\n \001(\01322.org.apache.hadoop"
+literal|"eName\030\010 \001(\t\022\017\n\007sd_hash\030\t \001(\014\022F\n\nparamete"
 operator|+
-literal|".hive.metastore.hbase.Parameters\022\027\n\017defe"
+literal|"rs\030\n \001(\01322.org.apache.hadoop.hive.metast"
 block|,
-literal|"rredRebuild\030\013 \001(\010\"\353\004\n\026PartitionKeyCompar"
+literal|"ore.hbase.Parameters\022\027\n\017deferredRebuild\030"
 operator|+
-literal|"ator\022\r\n\005names\030\001 \002(\t\022\r\n\005types\030\002 \002(\t\022S\n\002op"
+literal|"\013 \001(\010\"\353\004\n\026PartitionKeyComparator\022\r\n\005name"
 operator|+
-literal|"\030\003 \003(\0132G.org.apache.hadoop.hive.metastor"
+literal|"s\030\001 \002(\t\022\r\n\005types\030\002 \002(\t\022S\n\002op\030\003 \003(\0132G.org"
 operator|+
-literal|"e.hbase.PartitionKeyComparator.Operator\022"
+literal|".apache.hadoop.hive.metastore.hbase.Part"
 operator|+
-literal|"S\n\005range\030\004 \003(\0132D.org.apache.hadoop.hive."
+literal|"itionKeyComparator.Operator\022S\n\005range\030\004 \003"
 operator|+
-literal|"metastore.hbase.PartitionKeyComparator.R"
+literal|"(\0132D.org.apache.hadoop.hive.metastore.hb"
 operator|+
-literal|"ange\032(\n\004Mark\022\r\n\005value\030\001 \002(\t\022\021\n\tinclusive"
+literal|"ase.PartitionKeyComparator.Range\032(\n\004Mark"
 operator|+
-literal|"\030\002 \002(\010\032\272\001\n\005Range\022\013\n\003key\030\001 \002(\t\022R\n\005start\030\002"
+literal|"\022\r\n\005value\030\001 \002(\t\022\021\n\tinclusive\030\002 \002(\010\032\272\001\n\005R"
 operator|+
-literal|" \001(\0132C.org.apache.hadoop.hive.metastore."
+literal|"ange\022\013\n\003key\030\001 \002(\t\022R\n\005start\030\002 \001(\0132C.org.a"
 operator|+
-literal|"hbase.PartitionKeyComparator.Mark\022P\n\003end"
+literal|"pache.hadoop.hive.metastore.hbase.Partit"
 block|,
-literal|"\030\003 \001(\0132C.org.apache.hadoop.hive.metastor"
+literal|"ionKeyComparator.Mark\022P\n\003end\030\003 \001(\0132C.org"
 operator|+
-literal|"e.hbase.PartitionKeyComparator.Mark\032\241\001\n\010"
+literal|".apache.hadoop.hive.metastore.hbase.Part"
 operator|+
-literal|"Operator\022Z\n\004type\030\001 \002(\0162L.org.apache.hado"
+literal|"itionKeyComparator.Mark\032\241\001\n\010Operator\022Z\n\004"
 operator|+
-literal|"op.hive.metastore.hbase.PartitionKeyComp"
+literal|"type\030\001 \002(\0162L.org.apache.hadoop.hive.meta"
 operator|+
-literal|"arator.Operator.Type\022\013\n\003key\030\002 \002(\t\022\013\n\003val"
+literal|"store.hbase.PartitionKeyComparator.Opera"
 operator|+
-literal|"\030\003 \002(\t\"\037\n\004Type\022\010\n\004LIKE\020\000\022\r\n\tNOTEQUALS\020\001\""
+literal|"tor.Type\022\013\n\003key\030\002 \002(\t\022\013\n\003val\030\003 \002(\t\"\037\n\004Ty"
 operator|+
-literal|"\373\001\n\nPrimaryKey\022\017\n\007pk_name\030\001 \002(\t\022Q\n\004cols\030"
+literal|"pe\022\010\n\004LIKE\020\000\022\r\n\tNOTEQUALS\020\001\"\373\001\n\nPrimaryK"
 operator|+
-literal|"\002 \003(\0132C.org.apache.hadoop.hive.metastore"
+literal|"ey\022\017\n\007pk_name\030\001 \002(\t\022Q\n\004cols\030\002 \003(\0132C.org."
 operator|+
-literal|".hbase.PrimaryKey.PrimaryKeyColumn\022\031\n\021en"
+literal|"apache.hadoop.hive.metastore.hbase.Prima"
 operator|+
-literal|"able_constraint\030\003 \001(\010\022\033\n\023validate_constr"
+literal|"ryKey.PrimaryKeyColumn\022\031\n\021enable_constra"
 block|,
-literal|"aint\030\004 \001(\010\022\027\n\017rely_constraint\030\005 \001(\010\0328\n\020P"
+literal|"int\030\003 \001(\010\022\033\n\023validate_constraint\030\004 \001(\010\022\027"
 operator|+
-literal|"rimaryKeyColumn\022\023\n\013column_name\030\001 \002(\t\022\017\n\007"
+literal|"\n\017rely_constraint\030\005 \001(\010\0328\n\020PrimaryKeyCol"
 operator|+
-literal|"key_seq\030\002 \002(\021\"\205\004\n\013ForeignKeys\022K\n\003fks\030\001 \003"
+literal|"umn\022\023\n\013column_name\030\001 \002(\t\022\017\n\007key_seq\030\002 \002("
 operator|+
-literal|"(\0132>.org.apache.hadoop.hive.metastore.hb"
+literal|"\021\"\205\004\n\013ForeignKeys\022K\n\003fks\030\001 \003(\0132>.org.apa"
 operator|+
-literal|"ase.ForeignKeys.ForeignKey\032\250\003\n\nForeignKe"
+literal|"che.hadoop.hive.metastore.hbase.ForeignK"
 operator|+
-literal|"y\022\017\n\007fk_name\030\001 \002(\t\022\032\n\022referenced_db_name"
+literal|"eys.ForeignKey\032\250\003\n\nForeignKey\022\017\n\007fk_name"
 operator|+
-literal|"\030\002 \002(\t\022\035\n\025referenced_table_name\030\003 \002(\t\022\032\n"
+literal|"\030\001 \002(\t\022\032\n\022referenced_db_name\030\002 \002(\t\022\035\n\025re"
 operator|+
-literal|"\022referenced_pk_name\030\004 \001(\t\022\023\n\013update_rule"
+literal|"ferenced_table_name\030\003 \002(\t\022\032\n\022referenced_"
 operator|+
-literal|"\030\005 \001(\005\022\023\n\013delete_rule\030\006 \001(\005\022]\n\004cols\030\007 \003("
+literal|"pk_name\030\004 \001(\t\022\023\n\013update_rule\030\005 \001(\005\022\023\n\013de"
 operator|+
-literal|"\0132O.org.apache.hadoop.hive.metastore.hba"
+literal|"lete_rule\030\006 \001(\005\022]\n\004cols\030\007 \003(\0132O.org.apac"
 block|,
-literal|"se.ForeignKeys.ForeignKey.ForeignKeyColu"
+literal|"he.hadoop.hive.metastore.hbase.ForeignKe"
 operator|+
-literal|"mn\022\031\n\021enable_constraint\030\010 \001(\010\022\033\n\023validat"
+literal|"ys.ForeignKey.ForeignKeyColumn\022\031\n\021enable"
 operator|+
-literal|"e_constraint\030\t \001(\010\022\027\n\017rely_constraint\030\n "
+literal|"_constraint\030\010 \001(\010\022\033\n\023validate_constraint"
 operator|+
-literal|"\001(\010\032X\n\020ForeignKeyColumn\022\023\n\013column_name\030\001"
+literal|"\030\t \001(\010\022\027\n\017rely_constraint\030\n \001(\010\032X\n\020Forei"
 operator|+
-literal|" \002(\t\022\036\n\026referenced_column_name\030\002 \002(\t\022\017\n\007"
+literal|"gnKeyColumn\022\023\n\013column_name\030\001 \002(\t\022\036\n\026refe"
 operator|+
-literal|"key_seq\030\003 \002(\021*#\n\rPrincipalType\022\010\n\004USER\020\000"
+literal|"renced_column_name\030\002 \002(\t\022\017\n\007key_seq\030\003 \002("
 operator|+
-literal|"\022\010\n\004ROLE\020\001"
+literal|"\021*#\n\rPrincipalType\022\010\n\004USER\020\000\022\010\n\004ROLE\020\001"
 block|}
 decl_stmt|;
 name|com
@@ -225248,6 +225512,8 @@ block|,
 literal|"Privileges"
 block|,
 literal|"IsTemporary"
+block|,
+literal|"IsRewriteEnabled"
 block|, }
 argument_list|)
 expr_stmt|;

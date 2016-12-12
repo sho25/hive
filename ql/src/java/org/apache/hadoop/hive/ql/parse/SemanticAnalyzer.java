@@ -73025,6 +73025,11 @@ init|=
 literal|false
 decl_stmt|;
 name|boolean
+name|rewriteEnabled
+init|=
+literal|false
+decl_stmt|;
+name|boolean
 name|orReplace
 init|=
 literal|false
@@ -73179,6 +73184,16 @@ operator|.
 name|TOK_IFNOTEXISTS
 case|:
 name|ifNotExists
+operator|=
+literal|true
+expr_stmt|;
+break|break;
+case|case
+name|HiveParser
+operator|.
+name|TOK_REWRITE_ENABLED
+case|:
+name|rewriteEnabled
 operator|=
 literal|true
 expr_stmt|;
@@ -73521,6 +73536,8 @@ name|ifNotExists
 argument_list|,
 name|orReplace
 argument_list|,
+name|rewriteEnabled
+argument_list|,
 name|isAlterViewAs
 argument_list|,
 name|storageFormat
@@ -73673,8 +73690,7 @@ operator|.
 name|createVwDesc
 return|;
 block|}
-comment|// validate the create view statement
-comment|// the statement could be CREATE VIEW, REPLACE VIEW, or ALTER VIEW AS SELECT
+comment|// validate the (materialized) view statement
 comment|// check semantic conditions
 specifier|private
 name|void

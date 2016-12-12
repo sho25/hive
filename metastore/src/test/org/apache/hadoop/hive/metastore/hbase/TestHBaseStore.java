@@ -115,16 +115,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|SortedSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|TreeMap
 import|;
 end_import
@@ -752,16 +742,6 @@ operator|.
 name|junit
 operator|.
 name|BeforeClass
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Ignore
 import|;
 end_import
 

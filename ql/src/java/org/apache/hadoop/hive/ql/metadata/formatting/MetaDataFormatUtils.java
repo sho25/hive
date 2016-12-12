@@ -2602,6 +2602,11 @@ name|table
 operator|.
 name|isView
 argument_list|()
+operator|||
+name|table
+operator|.
+name|isMaterializedView
+argument_list|()
 condition|)
 block|{
 name|tableInfo
@@ -2668,6 +2673,22 @@ name|tbl
 operator|.
 name|getViewExpandedText
 argument_list|()
+argument_list|,
+name|tableInfo
+argument_list|)
+expr_stmt|;
+name|formatOutput
+argument_list|(
+literal|"View Rewrite Enabled:"
+argument_list|,
+name|tbl
+operator|.
+name|isRewriteEnabled
+argument_list|()
+condition|?
+literal|"Yes"
+else|:
+literal|"No"
 argument_list|,
 name|tableInfo
 argument_list|)

@@ -1157,9 +1157,9 @@ literal|null
 argument_list|,
 name|params
 argument_list|,
-literal|"viewOriginalText"
+literal|null
 argument_list|,
-literal|"viewExpandedText"
+literal|null
 argument_list|,
 literal|"MANAGED_TABLE"
 argument_list|)
@@ -1236,9 +1236,9 @@ literal|null
 argument_list|,
 name|params
 argument_list|,
-literal|"viewOriginalText"
+literal|null
 argument_list|,
-literal|"viewExpandedText"
+literal|null
 argument_list|,
 literal|"MANAGED_TABLE"
 argument_list|)
@@ -1493,9 +1493,9 @@ argument_list|)
 argument_list|,
 name|tableParams
 argument_list|,
-literal|"viewOriginalText"
+literal|null
 argument_list|,
-literal|"viewExpandedText"
+literal|null
 argument_list|,
 literal|"MANAGED_TABLE"
 argument_list|)

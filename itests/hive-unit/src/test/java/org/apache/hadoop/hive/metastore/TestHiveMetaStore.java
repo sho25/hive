@@ -5623,6 +5623,13 @@ operator|+
 literal|"`"
 argument_list|)
 expr_stmt|;
+name|view
+operator|.
+name|setRewriteEnabled
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 name|StorageDescriptor
 name|viewSd
 init|=
