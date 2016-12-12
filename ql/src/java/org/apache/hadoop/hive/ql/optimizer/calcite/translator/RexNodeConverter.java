@@ -1638,8 +1638,12 @@ decl_stmt|;
 if|if
 condition|(
 name|rexNode
-operator|instanceof
-name|RexCall
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|isStruct
+argument_list|()
 condition|)
 block|{
 comment|// regular case of accessing nested field in a column
