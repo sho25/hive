@@ -372,6 +372,31 @@ operator|)
 name|object
 expr_stmt|;
 block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Unexpected scalar object "
+operator|+
+name|object
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" "
+operator|+
+name|object
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|public
 name|VectorUDFDateDiffScalarCol

@@ -11121,7 +11121,7 @@ name|i
 index|]
 operator|=
 operator|(
-name|Integer
+name|Long
 operator|)
 name|getVectorTypeScalarValue
 argument_list|(
@@ -14923,6 +14923,9 @@ case|case
 name|DATE
 case|:
 return|return
+operator|new
+name|Long
+argument_list|(
 name|DateWritable
 operator|.
 name|dateToDays
@@ -14931,6 +14934,7 @@ operator|(
 name|Date
 operator|)
 name|scalarValue
+argument_list|)
 argument_list|)
 return|;
 case|case
