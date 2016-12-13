@@ -2502,6 +2502,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 operator|.
 name|varname
@@ -12437,11 +12448,26 @@ name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|(
 literal|"hive.llap.daemon.memory.per.instance.mb"
 argument_list|,
-literal|3276
+literal|4096
 argument_list|,
 literal|"The total amount of memory to use for the executors inside LLAP (in megabytes)."
 argument_list|,
 literal|"llap.daemon.memory.per.instance.mb"
+argument_list|)
+block|,
+name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+argument_list|(
+literal|"hive.llap.daemon.headroom.memory.per.instance.mb"
+argument_list|,
+literal|512
+argument_list|,
+literal|"The total amount of memory deducted from daemon memory required for other LLAP services. The remaining memory"
+operator|+
+literal|" will be used by the executors. If the cache is off-heap, Executor memory + Headroom memory = Xmx. If the "
+operator|+
+literal|"cache is on-heap, Executor memory + Cache memory + Headroom memory = Xmx. The headroom memory has to be "
+operator|+
+literal|"minimum of 5% from the daemon memory."
 argument_list|)
 block|,
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
