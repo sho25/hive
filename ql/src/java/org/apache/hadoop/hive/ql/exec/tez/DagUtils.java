@@ -6467,6 +6467,30 @@ name|IOException
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+literal|"Exception while contacting value generator"
+operator|.
+name|equals
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// HADOOP-13155, fixed version: 2.8.0, 3.0.0-alpha1
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"copyFromLocalFile failed due to HDFS KMS failure"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 name|LOG
 operator|.
 name|info
