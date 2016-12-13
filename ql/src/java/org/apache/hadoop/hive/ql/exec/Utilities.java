@@ -13584,14 +13584,14 @@ specifier|static
 name|boolean
 name|isEmptyPath
 parameter_list|(
-name|JobConf
+name|Configuration
 name|job
 parameter_list|,
 name|Path
 name|dirPath
 parameter_list|)
 throws|throws
-name|Exception
+name|IOException
 block|{
 name|FileSystem
 name|inpFs
@@ -17249,6 +17249,12 @@ operator|+
 literal|" to empty file "
 operator|+
 name|newPath
+operator|+
+literal|" ("
+operator|+
+name|oneRow
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}

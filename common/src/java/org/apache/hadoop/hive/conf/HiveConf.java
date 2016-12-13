@@ -7209,9 +7209,13 @@ name|HIVEMETADATAONLYQUERIES
 argument_list|(
 literal|"hive.optimize.metadataonly"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
-literal|""
+literal|"Whether to eliminate scans of the tables from which no columns are selected. Note\n"
+operator|+
+literal|"that, when selecting from empty tables with data files, this can produce incorrect\n"
+operator|+
+literal|"results, so it's disabled by default. It works correctly for normal tables."
 argument_list|)
 block|,
 name|HIVENULLSCANOPTIMIZE

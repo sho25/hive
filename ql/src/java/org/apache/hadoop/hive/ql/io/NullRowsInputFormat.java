@@ -468,7 +468,13 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Null record reader in "
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|" in "
 operator|+
 operator|(
 name|isVectorMode
