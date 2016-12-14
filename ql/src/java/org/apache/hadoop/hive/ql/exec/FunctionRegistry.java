@@ -4171,6 +4171,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"grouping"
+argument_list|,
+name|GenericUDFGrouping
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"current_database"
 argument_list|,
 name|UDFCurrentDB

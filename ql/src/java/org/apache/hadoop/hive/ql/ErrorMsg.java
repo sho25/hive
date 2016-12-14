@@ -2255,6 +2255,13 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_GROUPING_FUNCTION_EXPR_NOT_IN_GROUPBY
+argument_list|(
+literal|10409
+argument_list|,
+literal|"Expression in GROUPING function not present in GROUP BY"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

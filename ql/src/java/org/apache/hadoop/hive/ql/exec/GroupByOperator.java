@@ -147,16 +147,6 @@ end_import
 
 begin_import
 import|import
-name|javolution
-operator|.
-name|util
-operator|.
-name|FastBitSet
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -731,7 +721,31 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|IntWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|javolution
+operator|.
+name|util
+operator|.
+name|FastBitSet
 import|;
 end_import
 
@@ -1017,7 +1031,7 @@ decl_stmt|;
 comment|// bitsets acquired from grouping set values
 specifier|private
 specifier|transient
-name|Text
+name|IntWritable
 index|[]
 name|newKeysGroupingSets
 decl_stmt|;
@@ -1364,7 +1378,7 @@ expr_stmt|;
 name|newKeysGroupingSets
 operator|=
 operator|new
-name|Text
+name|IntWritable
 index|[
 name|groupingSets
 operator|.
@@ -1403,14 +1417,9 @@ name|pos
 index|]
 operator|=
 operator|new
-name|Text
-argument_list|(
-name|String
-operator|.
-name|valueOf
+name|IntWritable
 argument_list|(
 name|groupingSet
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|groupingSetsBitSet
