@@ -16749,6 +16749,17 @@ argument_list|,
 name|planStream
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|Utilities
+operator|.
+name|HAS_MAP_WORK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|planStream
 operator|.
 name|close
