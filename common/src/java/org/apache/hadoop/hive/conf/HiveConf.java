@@ -8534,6 +8534,51 @@ literal|"Frequency of WriteSet reaper runs"
 argument_list|)
 block|,
 comment|// For Druid storage handler
+name|HIVE_DRUID_INDEXING_GRANULARITY
+argument_list|(
+literal|"hive.druid.indexer.segments.granularity"
+argument_list|,
+literal|"DAY"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"YEAR"
+argument_list|,
+literal|"MONTH"
+argument_list|,
+literal|"WEEK"
+argument_list|,
+literal|"DAY"
+argument_list|,
+literal|"HOUR"
+argument_list|,
+literal|"MINUTE"
+argument_list|,
+literal|"SECOND"
+argument_list|)
+argument_list|,
+literal|"Granularity for the segments created by the Druid storage handler"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_PARTITION_SIZE
+argument_list|(
+literal|"hive.druid.indexer.partition.size.max"
+argument_list|,
+literal|5000000
+argument_list|,
+literal|"Maximum number of records per segment partition"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_ROW_IN_MEMORY
+argument_list|(
+literal|"hive.druid.indexer.memory.rownum.max"
+argument_list|,
+literal|75000
+argument_list|,
+literal|"Maximum number of records in memory while storing data in Druid"
+argument_list|)
+block|,
 name|HIVE_DRUID_BROKER_DEFAULT_ADDRESS
 argument_list|(
 literal|"hive.druid.broker.address.default"
@@ -8582,6 +8627,86 @@ argument_list|,
 literal|"Read timeout period for the HTTP\n"
 operator|+
 literal|"client in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 1 minute."
+argument_list|)
+block|,
+name|HIVE_DRUID_BASE_PERSIST_DIRECTORY
+argument_list|(
+literal|"hive.druid.basePersistDirectory"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"Local temporary directory used to persist intermediate indexing state."
+argument_list|)
+block|,
+name|DRUID_SEGMENT_DIRECTORY
+argument_list|(
+literal|"hive.druid.storage.storageDirectory"
+argument_list|,
+literal|"/druid/segments"
+argument_list|,
+literal|"druid deep storage location."
+argument_list|)
+block|,
+name|DRUID_METADATA_BASE
+argument_list|(
+literal|"hive.druid.metadata.base"
+argument_list|,
+literal|"druid"
+argument_list|,
+literal|"Default prefix for metadata tables"
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_TYPE
+argument_list|(
+literal|"hive.druid.metadata.db.type"
+argument_list|,
+literal|"mysql"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"mysql"
+argument_list|,
+literal|"postgres"
+argument_list|)
+argument_list|,
+literal|"Type of the metadata database."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_USERNAME
+argument_list|(
+literal|"hive.druid.metadata.username"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Username to connect to Type of the metadata DB."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_PASSWORD
+argument_list|(
+literal|"hive.druid.metadata.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Password to connect to Type of the metadata DB."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_URI
+argument_list|(
+literal|"hive.druid.metadata.uri"
+argument_list|,
+literal|""
+argument_list|,
+literal|"URI to connect to the database (for example jdbc:mysql://hostname:port/DBName)."
+argument_list|)
+block|,
+name|DRUID_WORKING_DIR
+argument_list|(
+literal|"hive.druid.working.directory"
+argument_list|,
+literal|"/tmp/workingDirectory"
+argument_list|,
+literal|"Default hdfs working directory used to store some intermediate metadata"
 argument_list|)
 block|,
 comment|// For HBase storage handler

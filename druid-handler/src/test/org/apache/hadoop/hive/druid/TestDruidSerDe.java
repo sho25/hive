@@ -2176,7 +2176,7 @@ argument_list|)
 block|}
 block|}
 decl_stmt|;
-comment|/**    * Test the default behavior of the objects and object inspectors.    * @throws IOException     * @throws IllegalAccessException     * @throws IllegalArgumentException     * @throws SecurityException     * @throws NoSuchFieldException     * @throws JsonMappingException     * @throws JsonParseException     * @throws InvocationTargetException     * @throws NoSuchMethodException     */
+comment|/**    * Test the default behavior of the objects and object inspectors.    * @throws IOException    * @throws IllegalAccessException    * @throws IllegalArgumentException    * @throws SecurityException    * @throws NoSuchFieldException    * @throws JsonMappingException    * @throws JsonParseException    * @throws InvocationTargetException    * @throws NoSuchMethodException    */
 annotation|@
 name|Test
 specifier|public
@@ -2581,7 +2581,7 @@ argument_list|>
 argument_list|>
 argument_list|>
 argument_list|()
-block|{}
+block|{                 }
 argument_list|)
 expr_stmt|;
 break|break;
@@ -2629,7 +2629,7 @@ argument_list|>
 argument_list|>
 argument_list|>
 argument_list|()
-block|{}
+block|{                 }
 argument_list|)
 expr_stmt|;
 break|break;
@@ -2674,7 +2674,7 @@ name|Row
 argument_list|>
 argument_list|>
 argument_list|()
-block|{}
+block|{                 }
 argument_list|)
 expr_stmt|;
 break|break;
@@ -2722,7 +2722,7 @@ argument_list|>
 argument_list|>
 argument_list|>
 argument_list|()
-block|{}
+block|{                 }
 argument_list|)
 expr_stmt|;
 break|break;

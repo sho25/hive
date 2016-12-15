@@ -14,6 +14,8 @@ operator|.
 name|hive
 operator|.
 name|druid
+operator|.
+name|io
 package|;
 end_package
 
