@@ -5334,6 +5334,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"extract_union"
+argument_list|,
+name|GenericUDFExtractUnion
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"case"
 argument_list|,
 name|GenericUDFCase
