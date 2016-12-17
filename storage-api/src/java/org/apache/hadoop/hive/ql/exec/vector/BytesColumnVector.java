@@ -1368,9 +1368,10 @@ argument_list|(
 operator|new
 name|String
 argument_list|(
-name|this
-operator|.
-name|buffer
+name|vector
+index|[
+name|row
+index|]
 argument_list|,
 name|start
 index|[

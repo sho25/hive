@@ -854,8 +854,6 @@ name|fast1
 argument_list|,
 name|fast2
 argument_list|,
-name|fastIntegerDigitCount
-argument_list|,
 name|fastScale
 argument_list|,
 name|this

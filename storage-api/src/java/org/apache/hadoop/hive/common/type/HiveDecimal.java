@@ -80,7 +80,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveDecimal is a decimal data type with a maximum precision and scale.  *<p>  * It is the Hive DECIMAL data type.  *<p>  * The scale is the number of fractional decimal digits.  The digits after the dot.  It is limited  * to 38 (MAX_SCALE).  *<p>  * The precision is the integer (or whole-number) decimal digits plus fractional decimal digits.  * It is limited to a total of 38 digits (MAX_PRECISION).  *<p>  * Hive syntax for declaring DECIMAL has 3 forms:  *<p>  * {@code  *       DECIMAL                            // Use the default precision/scale.}  *<p>  * {@code  *       DECIMAL(precision)                 // Use the default scale.}  *<p>  * {@code  *       DECIMAL(precision, scale)}  * }  *<p>  * The declared scale must be<= precision.  *<p>  * Use DECIMAL instead of DOUBLE when exact numeric accuracy is required.  Not all decimal numbers  * (radix 10) are exactly representable in the binary (radix 2 based) floating point type DOUBLE and  * cause accuracy anomalies (i.e. wrong results).  See the Internet for more details.  *<p>  * HiveDecimal is implemented as a classic Java immutable object.  All operations on HiveDecimal  * that produce a different value will create a new HiveDecimal object.  *<p>  * Decimals are physically stored without any extra leading or trailing zeroes.  The scale of  * a decimal is the number of non-trailing zero fractional digits.  *<p>  * Math operations on decimals typically cause the scale to change as a result of the math and  * from trailing fractional digit elimination.  *<p>  * Typically, Hive, when it wants to make sure a result decimal fits in the column decimal's  * precision/scale it calls enforcePrecisionScale.  That method will scale down or trim off  * result fractional digits if necessary with rounding when the column has a smaller scale.  * And, it will also indicate overflow when the decimal has exceeded the column's maximum precision.  *<p>  * NOTE: When Hive gets ready to serialize a decimal into text or binary, it usually sometimes  * wants trailing fractional zeroes.  See the special notes for toFormatString and  * bigIntegerBytesScaled for details.  *<p>  * ------------------------------------- Version 2 ------------------------------------------------  *<p>  * This is the 2nd major version of HiveDecimal called V2.  The previous version has been  * renamed to HiveDecimalV1 and is kept as a test and behavior reference.  *<p>  * For good performance we do not represent the decimal using a BigDecimal object like the previous  * version V1 did.  Using Java objects to represent our decimal incurs too high a penalty  * for memory allocations and general logic.  *<p>  * The original V1 public methods and fields are annotated with @HiveDecimalVersionV1; new public  * methods and fields are annotated with @HiveDecimalVersionV2.  *  */
+comment|/**  * HiveDecimal is a decimal data type with a maximum precision and scale.  *<p>  * It is the Hive DECIMAL data type.  *<p>  * The scale is the number of fractional decimal digits.  The digits after the dot.  It is limited  * to 38 (MAX_SCALE).  *<p>  * The precision is the integer (or whole-number) decimal digits plus fractional decimal digits.  * It is limited to a total of 38 digits (MAX_PRECISION).  *<p>  * Hive syntax for declaring DECIMAL has 3 forms:  *<p>  * {@code  *       DECIMAL                            // Use the default precision/scale.}  *<p>  * {@code  *       DECIMAL(precision)                 // Use the default scale.}  *<p>  * {@code  *       DECIMAL(precision, scale)}  * }  *<p>  * The declared scale must be&lt;= precision.  *<p>  * Use DECIMAL instead of DOUBLE when exact numeric accuracy is required.  Not all decimal numbers  * (radix 10) are exactly representable in the binary (radix 2 based) floating point type DOUBLE and  * cause accuracy anomalies (i.e. wrong results).  See the Internet for more details.  *<p>  * HiveDecimal is implemented as a classic Java immutable object.  All operations on HiveDecimal  * that produce a different value will create a new HiveDecimal object.  *<p>  * Decimals are physically stored without any extra leading or trailing zeroes.  The scale of  * a decimal is the number of non-trailing zero fractional digits.  *<p>  * Math operations on decimals typically cause the scale to change as a result of the math and  * from trailing fractional digit elimination.  *<p>  * Typically, Hive, when it wants to make sure a result decimal fits in the column decimal's  * precision/scale it calls enforcePrecisionScale.  That method will scale down or trim off  * result fractional digits if necessary with rounding when the column has a smaller scale.  * And, it will also indicate overflow when the decimal has exceeded the column's maximum precision.  *<p>  * NOTE: When Hive gets ready to serialize a decimal into text or binary, it usually sometimes  * wants trailing fractional zeroes.  See the special notes for toFormatString and  * bigIntegerBytesScaled for details.  *<p>  * ------------------------------------- Version 2 ------------------------------------------------  *<p>  * This is the 2nd major version of HiveDecimal called V2.  The previous version has been  * renamed to HiveDecimalV1 and is kept as a test and behavior reference.  *<p>  * For good performance we do not represent the decimal using a BigDecimal object like the previous  * version V1 did.  Using Java objects to represent our decimal incurs too high a penalty  * for memory allocations and general logic.  *<p>  * The original V1 public methods and fields are annotated with @HiveDecimalVersionV1; new public  * methods and fields are annotated with @HiveDecimalVersionV2.  *  */
 end_comment
 
 begin_class
@@ -216,7 +216,7 @@ name|BigDecimal
 operator|.
 name|ROUND_CEILING
 decl_stmt|;
-comment|/**    * ROUND_HALF_UP:    *<p>    *   Round towards "nearest neighbor" unless both neighbors are equidistant then round up.    *<p>    *   The Hive function is ROUND.    *<p>    *   For result, throw away round fraction.  If the round fraction is>= 0.5, then add 1 when    *   positive and subtract 1 when negative.  So, the sign is irrelevant.    *<p>    *      (Example here rounds at scale 0)    *       Value        ROUND                  Value        ROUND    *       0.3           0                     -0.3           0    *       2             2                     -2            -2    *       2.1           2                     -2.1          -2    *       2.49          2                     -2.49         -2    *       2.5           3                     -2.5          -3    *    */
+comment|/**    * ROUND_HALF_UP:    *<p>    *   Round towards "nearest neighbor" unless both neighbors are equidistant then round up.    *<p>    *   The Hive function is ROUND.    *<p>    *   For result, throw away round fraction.  If the round fraction is&gt;= 0.5, then add 1 when    *   positive and subtract 1 when negative.  So, the sign is irrelevant.    *<p>    *      (Example here rounds at scale 0)    *       Value        ROUND                  Value        ROUND    *       0.3           0                     -0.3           0    *       2             2                     -2            -2    *       2.1           2                     -2.1          -2    *       2.49          2                     -2.49         -2    *       2.5           3                     -2.5          -3    *    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -338,7 +338,7 @@ block|}
 comment|//-----------------------------------------------------------------------------------------------
 comment|// Create methods.
 comment|//-----------------------------------------------------------------------------------------------
-comment|/**    * Create a HiveDecimal from a FastHiveDecimal object. Used by HiveDecimalWritable.    */
+comment|/**    * Create a HiveDecimal from a FastHiveDecimal object. Used by HiveDecimalWritable.    * @param fastDec the value to set    * @return new hive decimal    */
 annotation|@
 name|HiveDecimalVersionV2
 specifier|public
@@ -358,7 +358,7 @@ name|fastDec
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a HiveDecimal from BigDecimal object.    *    * A BigDecimal object has a decimal scale.    *    * We will have overflow if BigDecimal's integer part exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * When the BigDecimal value's precision exceeds MAX_PRECISION and there are fractional digits    * because of scale> 0, then lower digits are trimmed off with rounding to meet the    * MAX_PRECISION requirement.    *    * Also, BigDecimal supports negative scale -- which means multiplying the value by 10^abs(scale).    * And, BigDecimal allows for a non-zero scale for zero.  We normalize that so zero always has    * scale 0.    *    * @param bigDecimal    * @return  The HiveDecimal with the BigDecimal's value adjusted down to a maximum precision.    *          Otherwise, null is returned for overflow.    */
+comment|/**    * Create a HiveDecimal from BigDecimal object.    *    * A BigDecimal object has a decimal scale.    *    * We will have overflow if BigDecimal's integer part exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * When the BigDecimal value's precision exceeds MAX_PRECISION and there are fractional digits    * because of scale&gt; 0, then lower digits are trimmed off with rounding to meet the    * MAX_PRECISION requirement.    *    * Also, BigDecimal supports negative scale -- which means multiplying the value by 10^abs(scale).    * And, BigDecimal allows for a non-zero scale for zero.  We normalize that so zero always has    * scale 0.    *    * @param bigDecimal the value to set    * @return  The HiveDecimal with the BigDecimal's value adjusted down to a maximum precision.    *          Otherwise, null is returned for overflow.    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -379,7 +379,7 @@ literal|true
 argument_list|)
 return|;
 block|}
-comment|/**    * Same as the above create method, except fractional digit rounding can be turned off.    * @param bigDecimal    * @param allowRounding  True requires all of the bigDecimal value be converted to the decimal    *                       without loss of precision.    * @return    */
+comment|/**    * Same as the above create method, except fractional digit rounding can be turned off.    * @param bigDecimal the value to set    * @param allowRounding  True requires all of the bigDecimal value be converted to the decimal    *                       without loss of precision.    * @return    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -422,7 +422,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Creates a HiveDecimal from a BigInteger's value with a scale of 0.    *    * We will have overflow if BigInteger exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * @param bigInteger    * @return  A HiveDecimal object with the exact BigInteger's value.    *          Otherwise, null is returned on overflow.    */
+comment|/**    * Creates a HiveDecimal from a BigInteger's value with a scale of 0.    *    * We will have overflow if BigInteger exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * @param bigInteger the value to set    * @return  A HiveDecimal object with the exact BigInteger's value.    *          Otherwise, null is returned on overflow.    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -460,7 +460,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Creates a HiveDecimal from a BigInteger's value with a specified scale.    *    * We will have overflow if BigInteger exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * The resulting decimal will have fractional digits when the specified scale is greater than 0.    *    * When the BigInteger's value's precision exceeds MAX_PRECISION and there are fractional digits    * because of scale> 0, then lower digits are trimmed off with rounding to meet the    * MAX_PRECISION requirement.    *    * @param bigInteger    * @param scale    * @return  A HiveDecimal object with the BigInteger's value adjusted for scale.    *          Otherwise, null is returned on overflow.    */
+comment|/**    * Creates a HiveDecimal from a BigInteger's value with a specified scale.    *    * We will have overflow if BigInteger exceed MAX_PRECISION digits or    * 99,999,999,999,999,999,999,999,999,999,999,999,999 or 10^38 - 1.    *    * The resulting decimal will have fractional digits when the specified scale is greater than 0.    *    * When the BigInteger's value's precision exceeds MAX_PRECISION and there are fractional digits    * because of scale&gt; 0, then lower digits are trimmed off with rounding to meet the    * MAX_PRECISION requirement.    *    * @param bigInteger the value to set    * @param scale the scale to set    * @return  A HiveDecimal object with the BigInteger's value adjusted for scale.    *          Otherwise, null is returned on overflow.    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -503,7 +503,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Create a HiveDecimal by parsing a whole string.    *    * We support parsing a decimal with an exponent because the previous version    * (i.e. OldHiveDecimal) uses the BigDecimal parser and was able to.    *    */
+comment|/**    * Create a HiveDecimal by parsing a whole string.    *    * We support parsing a decimal with an exponent because the previous version    * (i.e. OldHiveDecimal) uses the BigDecimal parser and was able to.    *    * @param string the string to parse    * @return a new hive decimal    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -543,7 +543,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Same as the method above, except blanks before and after are tolerated.    * @param string    * @param trimBlanks  True specifies leading and trailing blanks are to be ignored.    * @return    */
+comment|/**    * Same as the method above, except blanks before and after are tolerated.    * @param string the string to parse    * @param trimBlanks  True specifies leading and trailing blanks are to be ignored.    * @return a new hive decimal    */
 annotation|@
 name|HiveDecimalVersionV2
 specifier|public
@@ -1552,7 +1552,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Return a string representation of the decimal using the specified scale.    *<p>    * This method is designed to ALWAYS SUCCEED (unless the newScale parameter is out of range).    *<p>    * Is does the equivalent of a setScale(int newScale).  So, more than 38 digits may be returned.    * See that method for more details on how this can happen.    *<p>    * @param scale The number of digits after the decimal point    * @return The scaled decimal representation string representation.    */
+comment|/**    * Return a string representation of the decimal using the specified scale.    *<p>    * This method is designed to ALWAYS SUCCEED (unless the newScale parameter is out of range).    *<p>    * Is does the equivalent of a setScale(int newScale).  So, more than 38 digits may be returned.    * See that method for more details on how this can happen.    *<p>    * @param formatScale The number of digits after the decimal point    * @return The scaled decimal representation string representation.    */
 annotation|@
 name|HiveDecimalVersionV1
 specifier|public
@@ -1729,7 +1729,7 @@ name|fastHashCode
 argument_list|()
 return|;
 block|}
-comment|/**    * Are two decimal content (values) equal?    *<p>    * @obj   The 2nd decimal.    * @return  When obj is null or not class HiveDecimal, the return is false.    *          Otherwise, returns true when the decimal values are exactly equal.    */
+comment|/**    * Are two decimal content (values) equal?    *<p>    * @param obj   The 2nd decimal.    * @return  When obj is null or not class HiveDecimal, the return is false.    *          Otherwise, returns true when the decimal values are exactly equal.    */
 annotation|@
 name|HiveDecimalVersionV1
 annotation|@

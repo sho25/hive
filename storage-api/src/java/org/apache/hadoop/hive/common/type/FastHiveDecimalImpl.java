@@ -99,20 +99,6 @@ name|RoundingMode
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
-name|StringUtils
-import|;
-end_import
-
 begin_comment
 comment|/**  *    This class is a companion to the FastHiveDecimal class that separates the essential of code  *    out of FastHiveDecimal into static methods in this class so that they can be used directly  *    by vectorization to implement decimals by storing the fast0, fast1, and fast2 longs and  *    the fastSignum, fastScale, etc ints in the DecimalColumnVector class.  */
 end_comment
@@ -718,7 +704,7 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|/**    * Scan a byte array slice for a decimal number in UTF-8 bytes.    *    * Syntax:    *   [+|-][integerPortion][.[fractionalDigits]][{E|e}[+|-]exponent]    *                                                  // Where at least one integer or fractional    *                                                  // digit is required...    *    * We handle too many fractional digits by doing rounding ROUND_HALF_UP.    *    * NOTE: The fastSetFromBytes method requires the caller to pass a fastResult parameter has been    * reset for better performance.    *    * @param fastResult  True if the byte array slice was successfully converted to a decimal.    * @return    */
+comment|/**    * Scan a byte array slice for a decimal number in UTF-8 bytes.    *    * Syntax:    *   [+|-][integerPortion][.[fractionalDigits]][{E|e}[+|-]exponent]    *                                                  // Where at least one integer or fractional    *                                                  // digit is required...    *    * We handle too many fractional digits by doing rounding ROUND_HALF_UP.    *    * NOTE: The fastSetFromBytes method requires the caller to pass a fastResult parameter has been    * reset for better performance.    *    * @param bytes the bytes to copy from    * @param offset the starting location in bytes    * @param length the number of bytes to use from bytes    * @param trimBlanks should spaces be trimmed?    * @param fastResult  True if the byte array slice was successfully converted to a decimal.    * @return Was a valid number found?    */
 specifier|public
 specifier|static
 name|boolean
@@ -2239,7 +2225,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Scans a byte array slice for UNSIGNED RAW DIGITS ONLY in UTF-8 (ASCII) characters    * and forms a decimal from the digits and a sign and scale.    *    * Designed for BinarySortable serialization format that separates the sign and scale    * from the raw digits.    *    * NOTE: The fastSetFromDigitsOnlyBytesAndScale method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @return True if the sign, digits, and scale were successfully converted to a decimal.    */
+comment|/**    * Scans a byte array slice for UNSIGNED RAW DIGITS ONLY in UTF-8 (ASCII) characters    * and forms a decimal from the digits and a sign and scale.    *    * Designed for BinarySortable serialization format that separates the sign and scale    * from the raw digits.    *    * NOTE: The fastSetFromDigitsOnlyBytesAndScale method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param isNegative is the number negative    * @param bytes the bytes to read from    * @param offset the position to start at    * @param length the number of bytes to read    * @param scale the scale of the number    * @param fastResult an object it into    * @return True if the sign, digits, and scale were successfully converted to a decimal.    */
 specifier|public
 specifier|static
 name|boolean
@@ -2781,7 +2767,7 @@ return|return
 name|quotient
 return|;
 block|}
-comment|/**    * Create a fast decimal from a BigDecimal.    *    * NOTE: The fastSetFromBigDecimal method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @return True if the BigDecimal could be converted to our decimal representation.    */
+comment|/**    * Create a fast decimal from a BigDecimal.    *    * NOTE: The fastSetFromBigDecimal method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param bigDecimal the big decimal to copy    * @param allowRounding is rounding allowed?    * @param fastResult an object to reuse    * @return True if the BigDecimal could be converted to our decimal representation.    */
 specifier|public
 specifier|static
 name|boolean
@@ -2994,7 +2980,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Scan a String for a decimal number in UTF-8 characters.    *    * NOTE: The fastSetFromString method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @return True if the String was successfully converted to a decimal.    */
+comment|/**    * Scan a String for a decimal number in UTF-8 characters.    *    * NOTE: The fastSetFromString method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param string the string to parse    * @param trimBlanks should the blanks be trimmed    * @param result an object to reuse    * @return True if the String was successfully converted to a decimal.    */
 specifier|public
 specifier|static
 name|boolean
@@ -3036,7 +3022,7 @@ name|result
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a scale 0 fast decimal from an int.    *    * NOTE: The fastSetFromString method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    */
+comment|/**    * Creates a scale 0 fast decimal from an int.    *    * NOTE: The fastSetFromString method requires the caller to pass a fastResult    * parameter has been reset for better performance.    * @param intValue the value to set    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -3114,7 +3100,7 @@ name|fast0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates a scale 0 fast decimal from a long.    *    * NOTE: The fastSetFromLong method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    */
+comment|/**    * Creates a scale 0 fast decimal from a long.    *    * NOTE: The fastSetFromLong method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param longValue the value to set    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -3266,7 +3252,7 @@ block|}
 block|}
 return|return;
 block|}
-comment|/**    * Creates a fast decimal from a long with a specified scale.    *    * NOTE: The fastSetFromLongAndScale method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    */
+comment|/**    * Creates a fast decimal from a long with a specified scale.    *    * NOTE: The fastSetFromLongAndScale method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param longValue the value to set as a long    * @param scale the scale to use    * @param fastResult an object to reuse    * @return was the conversion successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -3339,7 +3325,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Creates fast decimal from a float.    *    * NOTE: The fastSetFromFloat method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    */
+comment|/**    * Creates fast decimal from a float.    *    * NOTE: The fastSetFromFloat method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param floatValue the value to set    * @param fastResult an object to reuse    * @return was the conversion successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -3373,7 +3359,7 @@ name|fastResult
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates fast decimal from a double.    *    * NOTE: The fastSetFromDouble method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    */
+comment|/**    * Creates fast decimal from a double.    *    * NOTE: The fastSetFromDouble method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param doubleValue the value to set    * @param fastResult an object to reuse    * @return was the conversion successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -3407,7 +3393,7 @@ name|fastResult
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a fast decimal from a BigInteger with scale 0.    *    * For efficiency, we assume that fastResult is fastReset.  This method does not set the    * fastScale field.    *    * NOTE: The fastSetFromBigInteger method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @return Return true if the BigInteger value fit within HiveDecimal.MAX_PRECISION.  Otherwise,    *         false for overflow.    */
+comment|/**    * Creates a fast decimal from a BigInteger with scale 0.    *    * For efficiency, we assume that fastResult is fastReset.  This method does not set the    * fastScale field.    *    * NOTE: The fastSetFromBigInteger method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param bigInteger the value to set    * @param fastResult an object to reuse    * @return Return true if the BigInteger value fit within HiveDecimal.MAX_PRECISION.  Otherwise,    *         false for overflow.    */
 specifier|public
 specifier|static
 name|boolean
@@ -3719,7 +3705,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Creates a fast decimal from a BigInteger with a specified scale.    *    * NOTE: The fastSetFromBigInteger method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @return True if the BigInteger and scale were successfully converted to a decimal.    */
+comment|/**    * Creates a fast decimal from a BigInteger with a specified scale.    *    * NOTE: The fastSetFromBigInteger method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param bigInteger the value to set as an integer    * @param scale the scale to use    * @param fastResult an object to reuse    * @return True if the BigInteger and scale were successfully converted to a decimal.    */
 specifier|public
 specifier|static
 name|boolean
@@ -4148,7 +4134,7 @@ return|;
 block|}
 comment|//************************************************************************************************
 comment|// Take Integer or Fractional Portion.
-comment|/**    * Creates fast decimal from the fraction portion of a fast decimal.    *    * NOTE: The fastFractionPortion method requires the caller to pass a fastResult    * parameter has been reset for better performance.    */
+comment|/**    * Creates fast decimal from the fraction portion of a fast decimal.    *    * NOTE: The fastFractionPortion method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param fastSignum the sign of the number (1, 0, or -1)    * @param fast0 high bits    * @param fast1 second word bits    * @param fast2 third word bits    * @param fastScale the scale    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -4165,9 +4151,6 @@ name|fast1
 parameter_list|,
 name|long
 name|fast2
-parameter_list|,
-name|int
-name|fastIntegerDigitCount
 parameter_list|,
 name|int
 name|fastScale
@@ -4358,7 +4341,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Creates fast decimal from the integer portion.    *    * NOTE: The fastFractionPortion method requires the caller to pass a fastResult    * parameter has been reset for better performance.    */
+comment|/**    * Creates fast decimal from the integer portion.    *    * NOTE: The fastFractionPortion method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param fastSignum the sign of the number (1, 0, or -1)    * @param fast0 high bits    * @param fast1 second word bits    * @param fast2 third word bits    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -4460,7 +4443,7 @@ expr_stmt|;
 block|}
 comment|//************************************************************************************************
 comment|// Binary to Decimal Conversion.
-comment|/**    * Convert 3 binary words of N bits each to a fast decimal (scale 0).    *    * The 3 binary words highWord, middleWord, and lowerWord form a large binary value:    *    *    highWord * 2^(M+L) + middleWord * 2^L + lowerWord.    *    * Where L is the number of bits in the lower word; M is the number of bits in the middle word.    * We let L and M be different to support the SerializationUtil serialization where the lower    * word is 62 bits and the remaining words are 63 bits...    *    * The fast decimal middleWordMultiplier is 2^L.    * The fast decimal highWordMultiplier is 2^(M+L).    *    * @return True if the conversion of the 3 binary words to decimal was successful.    */
+comment|/**    * Convert 3 binary words of N bits each to a fast decimal (scale 0).    *    * The 3 binary words highWord, middleWord, and lowerWord form a large binary value:    *    *    highWord * 2^(M+L) + middleWord * 2^L + lowerWord.    *    * Where L is the number of bits in the lower word; M is the number of bits in the middle word.    * We let L and M be different to support the SerializationUtil serialization where the lower    * word is 62 bits and the remaining words are 63 bits...    *    * @param lowerWord the lower internal representation    * @param middleWord the middle internal representation    * @param highWord the high internal representation    * @param middleWordMultiplier 2^L    * @param highWordMultiplier 2^(M+L)    * @param fastResult an object to reuse    * @return True if the conversion of the 3 binary words to decimal was successful.    */
 specifier|public
 specifier|static
 name|boolean
@@ -4958,7 +4941,7 @@ return|;
 block|}
 comment|//************************************************************************************************
 comment|// Decimal to Binary Conversion.
-comment|/**    * A helper method that produces a single binary word remainder from a fast decimal (and    * quotient).    *    * The fast decimal is longwords of 16 digits each and we need binary words of 2^N.  Since    * we are in decimal form, we have do work to get to convert to binary form.    *    * We effectively need to produce on big binary value (i.e. greater than 64 bits since    * HiveDecimal needs 128 bits of binary which Java does not provide primitive support for)    * from the decimal long words and get the lower N binary bit remainder.    *    * We could try and do decimal division by 2^N to get the (integer) quotient, multiply the    * quotient by 2^N decimal, and finally do a decimal subtract that from the original decimal.    * The resulting decimal can be used to easily get the binary remainder.    *    * However, currently, we do not have fast decimal division.    *    * The "trick" we do here is to remember from your Algebra in school than multiplication and    * division are inverses of each other.    *    * So instead of doing decimal division by 2^N we multiply by the inverse: 2^-N.    *    * We produce 1 binary word (remainder) and a decimal quotient for the higher portion.    *    * So, the parameters are:    *    *   The input decimal (dividendFast0, dividendFast1, and dividendFast2) that will produce a    *   single binary word remainder and decimal quotient.    *    *   The fast decimal inverse of 2^N = 2^-N (fastInverseConst).    *    *   Where in the inverse multiplication result (quotientIntegerWordNum and    *   quotientIntegerDigitNum) to find the quotient integer decimal portion.    *    *   The fast decimal multiplier for converting the quotient integer to the larger number to    *   subtract from the input decimal to get the remainder.    *    *   And, the scratch longs where to store the result remainder word (index 3) and result quotient    *   decimal longwords (indices 0 .. 2).    *    * @return True if the results were produced without overflow.    */
+comment|/**    * A helper method that produces a single binary word remainder from a fast decimal (and    * quotient).    *    * The fast decimal is longwords of 16 digits each and we need binary words of 2^N.  Since    * we are in decimal form, we have do work to get to convert to binary form.    *    * We effectively need to produce on big binary value (i.e. greater than 64 bits since    * HiveDecimal needs 128 bits of binary which Java does not provide primitive support for)    * from the decimal long words and get the lower N binary bit remainder.    *    * We could try and do decimal division by 2^N to get the (integer) quotient, multiply the    * quotient by 2^N decimal, and finally do a decimal subtract that from the original decimal.    * The resulting decimal can be used to easily get the binary remainder.    *    * However, currently, we do not have fast decimal division.    *    * The "trick" we do here is to remember from your Algebra in school than multiplication and    * division are inverses of each other.    *    * So instead of doing decimal division by 2^N we multiply by the inverse: 2^-N.    *    * We produce 1 binary word (remainder) and a decimal quotient for the higher portion.    *    * @param dividendFast0 The input decimal that will produce a    *                      single binary word remainder and decimal quotient.    * @param dividendFast1 second word    * @param dividendFast2 third word    * @param fastInverseConst the fast decimal inverse of 2^N = 2^-N    * @param quotientIntegerWordNum the word in the inverse multiplication result    *                               to find the quotient integer decimal portion    * @param quotientIntegerDigitNum the digit in the result to find the quotient    *                                integer decimal portion    * @param fastMultiplierConst The fast decimal multiplier for converting the    *                            quotient integer to the larger number to    *                            subtract from the input decimal to get the    *                            remainder.    * @param scratchLongs where to store the result remainder word (index 3) and    *                     result quotient decimal longwords (indices 0 .. 2)    * @return True if the results were produced without overflow.    */
 specifier|public
 specifier|static
 name|boolean
@@ -5621,7 +5604,7 @@ name|SERIALIZATION_UTILS_WRITE_QUOTIENT_INTEGER_DIGIT_NUM
 init|=
 literal|15
 decl_stmt|;
-comment|/**    * Deserialize data written in the format used by the SerializationUtils methods    * readBigInteger/writeBigInteger and create a decimal using the supplied scale.    *    * ORC uses those SerializationUtils methods for its serialization.    *    * A scratch bytes array is necessary to do the binary to decimal conversion for better    * performance.  Pass a FAST_SCRATCH_BUFFER_LEN_SERIALIZATION_UTILS_READ byte array for    * scratchBytes.    *    * @return The deserialized decimal or null if the conversion failed.    */
+comment|/**    * Deserialize data written in the format used by the SerializationUtils methods    * readBigInteger/writeBigInteger and create a decimal using the supplied scale.    *    * ORC uses those SerializationUtils methods for its serialization.    *    * A scratch bytes array is necessary to do the binary to decimal conversion for better    * performance.  Pass a FAST_SCRATCH_BUFFER_LEN_SERIALIZATION_UTILS_READ byte array for    * scratchBytes.    *    * @param inputStream the stream to read from    * @param scale the scale of the number    * @param scratchBytes  An array for the binary to decimal conversion for better    *                      performance.  Must have length of    *                      FAST_SCRATCH_BUFFER_LEN_SERIALIZATION_UTILS_READ.    * @param fastResult an object to reuse    * @return The deserialized decimal or null if the conversion failed.    * @throws IOException failures in reading the stream    */
 specifier|public
 specifier|static
 name|boolean
@@ -5642,8 +5625,6 @@ name|fastResult
 parameter_list|)
 throws|throws
 name|IOException
-throws|,
-name|EOFException
 block|{
 comment|// Following a suggestion from Gopal, quickly read in the bytes from the stream.
 comment|// CONSIDER: Have ORC read the whole input stream into a big byte array with one call to
@@ -6111,7 +6092,7 @@ return|;
 block|}
 comment|//************************************************************************************************
 comment|// Emulate SerializationUtils Serialization used by ORC.
-comment|/**    * Write the value of this decimal just like SerializationUtils.writeBigInteger.  It header    * comments are:    *    *     Write the arbitrarily sized signed BigInteger in vint format.    *    *     Signed integers are encoded using the low bit as the sign bit using zigzag    *     encoding.    *    *     Each byte uses the low 7 bits for data and the high bit for stop/continue.    *    *     Bytes are stored LSB first.    *    * NOTE:    *    SerializationUtils.writeBigInteger sometimes pads the result with extra zeroes due to    *    BigInteger.bitLength -- we do not emulate that.  SerializationUtils.readBigInteger will    *    produce the same result for both.    *    * @return True if the decimal was successfully serialized into the output stream.    */
+comment|/**    * Write the value of this decimal just like SerializationUtils.writeBigInteger.  It header    * comments are:    *    *     Write the arbitrarily sized signed BigInteger in vint format.    *    *     Signed integers are encoded using the low bit as the sign bit using zigzag    *     encoding.    *    *     Each byte uses the low 7 bits for data and the high bit for stop/continue.    *    *     Bytes are stored LSB first.    *    * NOTE:    *    SerializationUtils.writeBigInteger sometimes pads the result with extra zeroes due to    *    BigInteger.bitLength -- we do not emulate that.  SerializationUtils.readBigInteger will    *    produce the same result for both.    *    * @param outputStream the stream to write to    * @param fastSignum the sign digit (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1 of the internal representation    * @param fast2 word 2 of the internal representation    * @param fastIntegerDigitCount unused    * @param fastScale unused    * @param scratchLongs scratch space    * @return True if the decimal was successfully serialized into the output stream.    * @throws IOException for problems in writing    */
 specifier|public
 specifier|static
 name|boolean
@@ -6820,7 +6801,7 @@ name|byte
 operator|)
 literal|0xFF
 decl_stmt|;
-comment|/**    * Convert bytes in the format used by BigInteger's toByteArray format (and accepted by its    * constructor) into a decimal using the specified scale.    *    * Our bigIntegerBytes methods create bytes in this format, too.    *    * This method is designed for high performance and does not create an actual BigInteger during    * binary to decimal conversion.    *    * @return    */
+comment|/**    * Convert bytes in the format used by BigInteger's toByteArray format (and accepted by its    * constructor) into a decimal using the specified scale.    *    * Our bigIntegerBytes methods create bytes in this format, too.    *    * This method is designed for high performance and does not create an actual BigInteger during    * binary to decimal conversion.    *    * @param bytes the bytes to read from    * @param offset the starting position in the bytes array    * @param length the number of bytes to read from the bytes array    * @param scale the scale of the number    * @param fastResult an object to reused    * @return did the conversion succeed?    */
 specifier|public
 specifier|static
 name|boolean
@@ -7669,7 +7650,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Return binary representation of this decimal's BigInteger equivalent unscaled value using    * the format that the BigInteger's toByteArray method returns (and the BigInteger constructor    * accepts).    *    * Used by LazyBinary, Avro, and Parquet serialization.    *    * Scratch objects necessary to do the decimal to binary conversion without actually creating a    * BigInteger object are passed for better performance.    *    * Allocate scratchLongs with SCRATCH_LONGS_LEN longs.    * And, allocate buffer with SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes.    * @return The number of bytes used for the binary result in buffer.  Otherwise, 0 if the    *         conversion failed.    */
+comment|/**    * Return binary representation of this decimal's BigInteger equivalent unscaled value using    * the format that the BigInteger's toByteArray method returns (and the BigInteger constructor    * accepts).    *    * Used by LazyBinary, Avro, and Parquet serialization.    *    * Scratch objects necessary to do the decimal to binary conversion without actually creating a    * BigInteger object are passed for better performance.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scratchLongs scratch array of SCRATCH_LONGS_LEN longs    * @param buffer scratch array of SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes    * @return The number of bytes used for the binary result in buffer.  Otherwise, 0 if the    *         conversion failed.    */
 specifier|public
 specifier|static
 name|int
@@ -8763,7 +8744,7 @@ return|return
 name|byteIndex
 return|;
 block|}
-comment|/**    * Convert decimal to BigInteger binary bytes with a serialize scale, similar to the formatScale    * for toFormatString.  It adds trailing zeroes when a serializeScale is greater than current    * scale.  Or, rounds if scale is less than current scale.    *    * Used by Avro and Parquet serialization.    *    * This emulates the OldHiveDecimal setScale / OldHiveDecimal getInternalStorage() behavior.    *    * @param serializeScale    * @param scratchLongs    * @param buffer    * @return    */
+comment|/**    * Convert decimal to BigInteger binary bytes with a serialize scale, similar to the formatScale    * for toFormatString.  It adds trailing zeroes when a serializeScale is greater than current    * scale.  Or, rounds if scale is less than current scale.    *    * Used by Avro and Parquet serialization.    *    * This emulates the OldHiveDecimal setScale / OldHiveDecimal getInternalStorage() behavior.    *    * @param fastSignum the sign number (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale    * @param serializeScale the scale to serialize    * @param scratchLongs a scratch array of longs    * @param buffer the buffer to serialize into    * @return the number of bytes used to serialize the number    */
 specifier|public
 specifier|static
 name|int
@@ -9335,7 +9316,7 @@ operator|.
 name|ONE
 argument_list|)
 decl_stmt|;
-comment|/**    * Is the decimal value a byte? Range -128            to      127.    *                                    Byte.MIN_VALUE          Byte.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().byteValue()))    *    * NOTE: Fractional digits are ignored in the test since fastByteValueClip() will    *       remove them (round down).    *    * @return True when fastByteValueClip() will return a correct byte.    */
+comment|/**    * Is the decimal value a byte? Range -128            to      127.    *                                    Byte.MIN_VALUE          Byte.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().byteValue()))    *    * NOTE: Fractional digits are ignored in the test since fastByteValueClip() will    *       remove them (round down).    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return True when fastByteValueClip() will return a correct byte.    */
 specifier|public
 specifier|static
 name|boolean
@@ -9875,7 +9856,7 @@ return|;
 block|}
 block|}
 comment|/**     * @return True when shortValue() will return a correct short.    */
-comment|/**    * Is the decimal value a short? Range -32,768         to     32,767.    *                                     Short.MIN_VALUE        Short.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().shortValue()))    *    * NOTE: Fractional digits are ignored in the test since fastShortValueClip() will    *       remove them (round down).    *    * @return True when fastShortValueClip() will return a correct short.    */
+comment|/**    * Is the decimal value a short? Range -32,768         to     32,767.    *                                     Short.MIN_VALUE        Short.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().shortValue()))    *    * NOTE: Fractional digits are ignored in the test since fastShortValueClip() will    *       remove them (round down).    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return True when fastShortValueClip() will return a correct short.    */
 specifier|public
 specifier|static
 name|boolean
@@ -10414,7 +10395,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Is the decimal value a int? Range -2,147,483,648     to   2,147,483,647.    *                                   Integer.MIN_VALUE       Integer.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().intValue()))    *    * NOTE: Fractional digits are ignored in the test since fastIntValueClip() will    *       remove them (round down).    *    * @return True when fastIntValueClip() will return a correct int.    */
+comment|/**    * Is the decimal value a int? Range -2,147,483,648     to   2,147,483,647.    *                                   Integer.MIN_VALUE       Integer.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().intValue()))    *    * NOTE: Fractional digits are ignored in the test since fastIntValueClip() will    *       remove them (round down).    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return True when fastIntValueClip() will return a correct int.    */
 specifier|public
 specifier|static
 name|boolean
@@ -10953,7 +10934,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Is the decimal value a long? Range -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.    *                                    Long.MIN_VALUE                Long.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().longValue()))    *    * NOTE: Fractional digits are ignored in the test since fastLongValueClip() will    *       remove them (round down).    *    * @return True when fastLongValueClip() will return a correct long.    */
+comment|/**    * Is the decimal value a long? Range -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.    *                                    Long.MIN_VALUE                Long.MAX_VALUE    *    * Emulates testing for no value corruption:    *      bigDecimalValue().setScale(0).equals(BigDecimal.valueOf(bigDecimalValue().longValue()))    *    * NOTE: Fractional digits are ignored in the test since fastLongValueClip() will    *       remove them (round down).    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return True when fastLongValueClip() will return a correct long.    */
 specifier|public
 specifier|static
 name|boolean
@@ -11706,7 +11687,7 @@ name|doubleValue
 argument_list|()
 return|;
 block|}
-comment|/**    * Get a BigInteger representing the decimal's digits without a dot.    *    * @return Returns a signed BigInteger.    */
+comment|/**    * Get a BigInteger representing the decimal's digits without a dot.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @param fastSerializationScale the scale to serialize    * @return Returns a signed BigInteger.    */
 specifier|public
 specifier|static
 name|BigInteger
@@ -11992,7 +11973,7 @@ name|unscaledValue
 argument_list|()
 return|;
 block|}
-comment|/**    * Return a BigDecimal representing the decimal.  The BigDecimal class is able to accurately    * represent the decimal.    *    * NOTE: We are not representing our decimal as BigDecimal now as OldHiveDecimal did, so this    * is now slower.    *    * @return    */
+comment|/**    * Return a BigDecimal representing the decimal.  The BigDecimal class is able to accurately    * represent the decimal.    *    * NOTE: We are not representing our decimal as BigDecimal now as OldHiveDecimal did, so this    * is now slower.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return the BigDecimal equivalent    */
 specifier|public
 specifier|static
 name|BigDecimal
@@ -13687,7 +13668,7 @@ argument_list|,
 literal|0
 argument_list|)
 decl_stmt|;
-comment|/**    * Hash code based on (new) decimal representation.    *    * Faster than fastHashCode().    *    * Used by map join and other Hive internal purposes where performance is important.    *    * IMPORTANT: See comments for fastHashCode(), too.    */
+comment|/**    * Hash code based on (new) decimal representation.    *    * Faster than fastHashCode().    *    * Used by map join and other Hive internal purposes where performance is important.    *    * IMPORTANT: See comments for fastHashCode(), too.    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return the hash code    */
 specifier|public
 specifier|static
 name|int
@@ -13745,7 +13726,7 @@ return|return
 name|hashCode
 return|;
 block|}
-comment|/**    * This is the original hash code as returned by OldHiveDecimal.    *    * We need this when the OldHiveDecimal hash code has been exposed and and written or affected    * how data is written.    *    * This method supports compatibility.    *    * Examples: bucketing and the Hive hash() function.    *    * NOTE: It is necessary to create a BigDecimal object and use its hash code, so this method is    *       slow.    * @return    */
+comment|/**    * This is the original hash code as returned by OldHiveDecimal.    *    * We need this when the OldHiveDecimal hash code has been exposed and and written or affected    * how data is written.    *    * This method supports compatibility.    *    * Examples: bucketing and the Hive hash() function.    *    * NOTE: It is necessary to create a BigDecimal object and use its hash code, so this method is    *       slow.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @return the hash code    */
 specifier|public
 specifier|static
 name|int
@@ -16900,7 +16881,7 @@ operator|=
 name|result2
 expr_stmt|;
 block|}
-comment|/**    * Fast decimal integer part rounding ROUND_UP.    *    * ceiling(12400.8302, -2) = 12500     // E.g. Positive case FAST_ROUND_CEILING    *            rr rrrr    *    */
+comment|/**    * Fast decimal integer part rounding ROUND_UP.    *    * ceiling(12400.8302, -2) = 12500     // E.g. Positive case FAST_ROUND_CEILING    *            rr rrrr    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @param roundPower the power to round to    * @param fastResult an object to reuse    * @return was the operation successful    */
 specifier|public
 specifier|static
 name|boolean
@@ -17148,7 +17129,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_DOWN.    *    * The fraction being scaled away is thrown away.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_DOWN.    *    * The fraction being scaled away is thrown away.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @param roundPower the power to round to    * @param fastResult an object to reuse    * @return was the operation successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -17382,7 +17363,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is>= 0.5, the add 1.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is&gt;= 0.5, the add 1.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @param roundPower the power to round to    * @param fastResult an object to reuse    * @return was the operation successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -17661,7 +17642,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_EVEN.    *    * When the fraction being scaled away is exactly 0.5, then round and add 1 only if aaa.    * When fraction is not exactly 0.5, then if fraction> 0.5 then add 1.    * Otherwise, throw away fraction.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_EVEN.    *    * When the fraction being scaled away is exactly 0.5, then round and add 1 only if aaa.    * When fraction is not exactly 0.5, then if fraction&gt; 0.5 then add 1.    * Otherwise, throw away fraction.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fastIntegerDigitCount the number of integer digits    * @param fastScale the scale of the number    * @param roundPower the power to round to    * @param fastResult an object to reuse    * @return was the operation successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -17937,7 +17918,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 and do not allow rounding.    *    * When the fraction being scaled away is non-zero, return false.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    */
+comment|/**    * Fast decimal scale down by factor of 10 and do not allow rounding.    *    * When the fraction being scaled away is non-zero, return false.    *    * The signum will be updated if the result is 0, otherwise the original sign    * is unchanged.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the digits to scale down by    * @param fastResult an object to reuse    * @return was the operation successful?    */
 specifier|public
 specifier|static
 name|boolean
@@ -18348,7 +18329,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_UP.    *    * When the fraction being scaled away is non-zero, the add 1.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_UP.    *    * When the fraction being scaled away is non-zero, the add 1.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    * @return was the operation successfule?    */
 specifier|public
 specifier|static
 name|boolean
@@ -18605,7 +18586,7 @@ name|MAX_HIGHWORD_DECIMAL
 operator|)
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_DOWN.    *    * The fraction being scaled away is thrown away.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_DOWN.    *    * The fraction being scaled away is thrown away.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -18735,7 +18716,7 @@ name|fastSignum
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is>= 0.5, the add 1.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is&gt;= 0.5, the add 1.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    * @return was the operation successfule?    */
 specifier|public
 specifier|static
 name|boolean
@@ -19005,7 +18986,7 @@ name|MAX_HIGHWORD_DECIMAL
 operator|)
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is>= 0.5, the add 1.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_UP.    *    * When the fraction being scaled away is&gt;= 0.5, the add 1.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param fast3 word 3    * @param fast4 word 4    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    * @return was the operation successfule?    */
 specifier|public
 specifier|static
 name|boolean
@@ -19843,7 +19824,7 @@ name|MAX_HIGHWORD_DECIMAL
 operator|)
 return|;
 block|}
-comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_EVEN.    *    * When the fraction being scaled away is exactly 0.5, then round and add 1 only if aaa.    * When fraction is not exactly 0.5, then if fraction> 0.5 then add 1.    * Otherwise, throw away fraction.    *    */
+comment|/**    * Fast decimal scale down by factor of 10 with rounding ROUND_HALF_EVEN.    *    * When the fraction being scaled away is exactly 0.5, then round and add 1 only if aaa.    * When fraction is not exactly 0.5, then if fraction&gt; 0.5 then add 1.    * Otherwise, throw away fraction.    *    * @param fastSignum the sign (-1, 0, or +1)    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    * @return was the operation successfule?    */
 specifier|public
 specifier|static
 name|boolean
@@ -20222,7 +20203,7 @@ expr_stmt|;
 block|}
 comment|//************************************************************************************************
 comment|// Decimal Scale Up/Down.
-comment|/**    * Fast decimal scale down by factor of 10 with NO rounding.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    */
+comment|/**    * Fast decimal scale down by factor of 10 with NO rounding.    *    * The signum will be updated if the result is 0, otherwise the original sign is unchanged.    *    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleDown the number of integer digits to scale    * @param fastResult an object to reuse    */
 specifier|public
 specifier|static
 name|void
@@ -20493,7 +20474,7 @@ name|fastResult
 argument_list|)
 return|;
 block|}
-comment|/**    * Fast decimal scale up by factor of 10.    */
+comment|/**    * Fast decimal scale up by factor of 10.    * @param fast0 word 0 of the internal representation    * @param fast1 word 1    * @param fast2 word 2    * @param scaleUp the number of integer digits to scale up by    * @param fastResult an object to reuse    * @return was the operation successfule?    */
 specifier|public
 specifier|static
 name|boolean
@@ -27345,7 +27326,7 @@ name|fastResult
 argument_list|)
 return|;
 block|}
-comment|/**    * Add the two decimals.    *    * NOTE: Scale Determination for Addition/Subtraction    *    * One could take the Math.min of the scales and adjust the operand with the lower scale have a    * scale = higher scale.    *    * But this does not seem to work with decimals with widely varying scales as these:    *    *     598575157855521918987423259.94094                            dec1 (int digits 27,scale 5)    *  +                            0.0000000000006711991169422033     dec2 (int digits 0, scale 28)    *    * Trying to make dec1 to have a scale of 28 (i.e. by adding trailing zeroes) would exceed    * MAX_PRECISION (int digits 27 + 28> 38).    *    * In this example we need to make sure we have enough integer digit room in the result to    * handle dec1's digits.  In order to maintain that, we will need to get rid of lower    * fractional digits of dec2.  But when do we do that?    *    * OldHiveDecimal.add does the full arithmetic add with all the digits using BigDecimal and    * then adjusts the result to fit in MAX_PRECISION, etc.    *    * If we try to do pre-rounding dec2 it is problematic.  We'd need to know if there is a carry in    * the arithmetic in order to know at which scale to do the rounding.  This gets complicated.    *    * So, the simplest thing is to emulate what OldHiveDecimal does and do the full digit addition    * and then fit the result afterwards.    *    * @return True if the addition was successful; Otherwise, false is returned on overflow.    */
+comment|/**    * Add the two decimals.    *    * NOTE: Scale Determination for Addition/Subtraction    *    * One could take the Math.min of the scales and adjust the operand with the lower scale have a    * scale = higher scale.    *    * But this does not seem to work with decimals with widely varying scales as these:    *    *     598575157855521918987423259.94094                            dec1 (int digits 27,scale 5)    *  +                            0.0000000000006711991169422033     dec2 (int digits 0, scale 28)    *    * Trying to make dec1 to have a scale of 28 (i.e. by adding trailing zeroes) would exceed    * MAX_PRECISION (int digits 27 + 28&gt; 38).    *    * In this example we need to make sure we have enough integer digit room in the result to    * handle dec1's digits.  In order to maintain that, we will need to get rid of lower    * fractional digits of dec2.  But when do we do that?    *    * OldHiveDecimal.add does the full arithmetic add with all the digits using BigDecimal and    * then adjusts the result to fit in MAX_PRECISION, etc.    *    * If we try to do pre-rounding dec2 it is problematic.  We'd need to know if there is a carry in    * the arithmetic in order to know at which scale to do the rounding.  This gets complicated.    *    * So, the simplest thing is to emulate what OldHiveDecimal does and do the full digit addition    * and then fit the result afterwards.    *    * @param leftSignum The left sign (-1, 0, or +1)    * @param leftFast0 The left word 0 of reprentation    * @param leftFast1 word 1    * @param leftFast2 word 2    * @param leftIntegerDigitCount The left number of integer digits    * @param leftScale the left scale    * @param rightSignum The right sign (-1, 0, or +1)    * @param rightFast0 The right word 0 of reprentation    * @param rightFast1 word 1    * @param rightFast2 word 2    * @param rightIntegerDigitCount The right number of integer digits    * @param rightScale the right scale    * @param fastResult an object to reuse    * @return True if the addition was successful; Otherwise, false is returned on overflow.    */
 specifier|public
 specifier|static
 name|boolean

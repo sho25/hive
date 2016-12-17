@@ -37,12 +37,12 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
-comment|/** Called to create an object when one cannot be provided. */
+comment|/** Called to create an object when one cannot be provided.      * @return a newly allocated object      */
 name|T
 name|create
 parameter_list|()
 function_decl|;
-comment|/** Called before the object is put in the pool (regardless of whether put succeeds). */
+comment|/** Called before the object is put in the pool (regardless of whether put succeeds).      * @param t the object to reset      */
 name|void
 name|resetBeforeOffer
 parameter_list|(

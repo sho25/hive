@@ -444,7 +444,7 @@ return|return
 name|t
 return|;
 block|}
-comment|/**    * Take a HiveDecimalWritable and return the timestamp representation where the fraction part    * is the nanoseconds and integer part is the number of seconds.    *    * This is a HiveDecimalWritable variation with supplied scratch objects.    * @param decdecWritable    * @param scratchDecWritable1    * @param scratchDecWritable2    * @return    */
+comment|/**    * Take a HiveDecimalWritable and return the timestamp representation where the fraction part    * is the nanoseconds and integer part is the number of seconds.    *    * This is a HiveDecimalWritable variation with supplied scratch objects.    * @param decWritable    * @param scratchDecWritable1    * @param scratchDecWritable2    * @return    */
 specifier|public
 specifier|static
 name|Timestamp
