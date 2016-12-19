@@ -36825,9 +36825,6 @@ argument_list|()
 operator|.
 name|getInsertData
 argument_list|()
-operator|.
-name|getFilesAdded
-argument_list|()
 argument_list|,
 name|rqst
 operator|.

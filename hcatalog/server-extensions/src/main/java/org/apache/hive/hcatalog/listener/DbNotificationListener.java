@@ -563,20 +563,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -773,6 +759,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * @param tableEvent table event.    * @throws org.apache.hadoop.hive.metastore.api.MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onConfigChange
@@ -853,6 +841,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * @param tableEvent table event.    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onCreateTable
@@ -920,13 +910,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param tableEvent table event.    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onDropTable
@@ -994,13 +986,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param tableEvent alter table event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onAlterTable
@@ -1078,13 +1072,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onAddPartition
@@ -1162,13 +1158,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onDropPartition
@@ -1241,13 +1239,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param partitionEvent partition event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onAlterPartition
@@ -1330,13 +1330,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbEvent database event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onCreateDatabase
@@ -1394,13 +1396,15 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param dbEvent database event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onDropDatabase
@@ -1458,13 +1462,15 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param fnEvent function event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onCreateFunction
@@ -1522,13 +1528,15 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param fnEvent function event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onDropFunction
@@ -1586,13 +1594,15 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param indexEvent index event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onAddIndex
@@ -1650,13 +1660,15 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param indexEvent index event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onDropIndex
@@ -1714,13 +1726,15 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param indexEvent index event    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onAlterIndex
@@ -1788,7 +1802,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
@@ -1847,6 +1861,11 @@ name|insertEvent
 operator|.
 name|getFiles
 argument_list|()
+argument_list|,
+name|insertEvent
+operator|.
+name|getFileChecksums
+argument_list|()
 argument_list|)
 operator|.
 name|toString
@@ -1873,13 +1892,15 @@ name|getTable
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|enqueue
+name|process
 argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @param partSetDoneEvent    * @throws MetaException    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onLoadPartitionDone
@@ -1941,9 +1962,10 @@ operator|)
 name|millis
 return|;
 block|}
+comment|// Process this notification by adding it to metastore DB
 specifier|private
 name|void
-name|enqueue
+name|process
 parameter_list|(
 name|NotificationEvent
 name|event
@@ -1965,7 +1987,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"DbNotif:Enqueueing : {}:{}"
+literal|"DbNotificationListener: Processing : {}:{}"
 argument_list|,
 name|event
 operator|.

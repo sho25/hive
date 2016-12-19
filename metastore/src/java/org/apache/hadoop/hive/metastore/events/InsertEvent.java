@@ -31,24 +31,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
-operator|.
-name|ClientCapabilities
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|HiveMetaStoreClient
 import|;
 end_import
@@ -103,7 +85,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|FieldSchema
+name|InsertEventRequestData
 import|;
 end_import
 
@@ -158,6 +140,26 @@ operator|.
 name|api
 operator|.
 name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|ArrayList
 import|;
 end_import
 
@@ -228,7 +230,21 @@ name|String
 argument_list|>
 name|files
 decl_stmt|;
-comment|/**    *    * @param db name of the database the table is in    * @param table name of the table being inserted into    * @param partVals list of partition values, can be null    * @param status status of insert, true = success, false = failure    * @param handler handler that is firing the event    */
+specifier|private
+name|List
+argument_list|<
+name|ByteBuffer
+argument_list|>
+name|fileChecksums
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ByteBuffer
+argument_list|>
+argument_list|()
+decl_stmt|;
+comment|/**    *    * @param db name of the database the table is in    * @param table name of the table being inserted into    * @param partVals list of partition values, can be null    * @param insertData the inserted files& their checksums    * @param status status of insert, true = success, false = failure    * @param handler handler that is firing the event    */
 specifier|public
 name|InsertEvent
 parameter_list|(
@@ -244,11 +260,8 @@ name|String
 argument_list|>
 name|partVals
 parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|files
+name|InsertEventRequestData
+name|insertData
 parameter_list|,
 name|boolean
 name|status
@@ -284,9 +297,11 @@ name|this
 operator|.
 name|files
 operator|=
-name|files
+name|insertData
+operator|.
+name|getFilesAdded
+argument_list|()
 expr_stmt|;
-comment|// TODO: why does this use the handler directly?
 name|GetTableRequest
 name|req
 init|=
@@ -383,6 +398,22 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|insertData
+operator|.
+name|isSetFilesAddedChecksum
+argument_list|()
+condition|)
+block|{
+name|fileChecksums
+operator|=
+name|insertData
+operator|.
+name|getFilesAddedChecksum
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 specifier|public
 name|String
@@ -418,7 +449,7 @@ return|return
 name|keyValues
 return|;
 block|}
-comment|/**    * Get list of files created as a result of this DML operation    * @return list of new files    */
+comment|/**    * Get list of files created as a result of this DML operation    *    * @return list of new files    */
 specifier|public
 name|List
 argument_list|<
@@ -429,6 +460,19 @@ parameter_list|()
 block|{
 return|return
 name|files
+return|;
+block|}
+comment|/**    * Get a list of file checksums corresponding to the files created (if available)    *    * @return    */
+specifier|public
+name|List
+argument_list|<
+name|ByteBuffer
+argument_list|>
+name|getFileChecksums
+parameter_list|()
+block|{
+return|return
+name|fileChecksums
 return|;
 block|}
 block|}

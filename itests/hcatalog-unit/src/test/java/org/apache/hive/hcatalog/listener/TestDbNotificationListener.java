@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing,  * software distributed under the License is distributed on an  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY  * KIND, either express or implied.  See the License for the  * specific language governing permissions and limitations  * under the License. */
+comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing,  * software distributed under the License is distributed on an  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY  * KIND, either express or implied.  See the License for the  * specific language governing permissions and limitations  * under the License.  */
 end_comment
 
 begin_package
@@ -113,7 +113,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|LinkedHashMap
 import|;
 end_import
 
@@ -539,6 +539,26 @@ name|metastore
 operator|.
 name|messaging
 operator|.
+name|EventMessage
+operator|.
+name|EventType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|messaging
+operator|.
 name|json
 operator|.
 name|JSONMessageFactory
@@ -583,91 +603,13 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|hcatalog
-operator|.
-name|common
-operator|.
-name|HCatConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TDeserializer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|protocol
-operator|.
-name|TJSONProtocol
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|codehaus
 operator|.
 name|jackson
 operator|.
-name|JsonFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|node
 operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|JsonNode
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|JsonParser
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|map
-operator|.
-name|ObjectMapper
+name|ArrayNode
 import|;
 end_import
 
@@ -734,6 +676,10 @@ operator|.
 name|LoggerFactory
 import|;
 end_import
+
+begin_comment
+comment|/**  * Tests DbNotificationListener when used as a transactional event listener  * (hive.metastore.transactional.event.listeners)  */
+end_comment
 
 begin_class
 specifier|public
@@ -1070,12 +1016,15 @@ name|Integer
 operator|.
 name|MAX_VALUE
 condition|)
+block|{
 name|fail
 argument_list|(
 literal|"Bummer, time has fallen over the edge"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|startTime
 operator|=
 operator|(
@@ -1083,6 +1032,7 @@ name|int
 operator|)
 name|now
 expr_stmt|;
+block|}
 name|firstEventId
 operator|=
 name|msClient
@@ -1110,17 +1060,37 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|dbName
+init|=
+literal|"createdb"
+decl_stmt|;
+name|String
+name|dbName2
+init|=
+literal|"createdb2"
+decl_stmt|;
+name|String
+name|dbLocationUri
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|String
+name|dbDescription
+init|=
+literal|"no description"
+decl_stmt|;
 name|Database
 name|db
 init|=
 operator|new
 name|Database
 argument_list|(
-literal|"mydb"
+name|dbName
 argument_list|,
-literal|"no description"
+name|dbDescription
 argument_list|,
-literal|"file:/tmp"
+name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
@@ -1132,6 +1102,7 @@ argument_list|(
 name|db
 argument_list|)
 expr_stmt|;
+comment|// Read notification from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -1156,6 +1127,7 @@ name|getEventsSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Read event from notification
 name|NotificationEvent
 name|event
 init|=
@@ -1193,9 +1165,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_DATABASE_EVENT
+name|CREATE_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -1205,7 +1180,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"mydb"
+name|dbName
 argument_list|,
 name|event
 operator|.
@@ -1221,21 +1196,54 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"CREATE_DATABASE\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"mydb\",\"timestamp\":[0-9]+}"
 argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|EventType
+operator|.
+name|CREATE_DATABASE
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"eventType"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+name|dbName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"db"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -1248,11 +1256,11 @@ operator|=
 operator|new
 name|Database
 argument_list|(
-literal|"mydb2"
+name|dbName2
 argument_list|,
-literal|"no description"
+name|dbDescription
 argument_list|,
-literal|"file:/tmp"
+name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
@@ -1264,6 +1272,11 @@ operator|.
 name|createDatabase
 argument_list|(
 name|db
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: create database should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1308,17 +1321,37 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|dbName
+init|=
+literal|"dropdb"
+decl_stmt|;
+name|String
+name|dbName2
+init|=
+literal|"dropdb2"
+decl_stmt|;
+name|String
+name|dbLocationUri
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|String
+name|dbDescription
+init|=
+literal|"no description"
+decl_stmt|;
 name|Database
 name|db
 init|=
 operator|new
 name|Database
 argument_list|(
-literal|"dropdb"
+name|dbName
 argument_list|,
-literal|"no description"
+name|dbDescription
 argument_list|,
-literal|"file:/tmp"
+name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
@@ -1334,9 +1367,10 @@ name|msClient
 operator|.
 name|dropDatabase
 argument_list|(
-literal|"dropdb"
+name|dbName
 argument_list|)
 expr_stmt|;
+comment|// Read notification from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -1351,6 +1385,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Two events: one for create db and other for drop db
 name|assertEquals
 argument_list|(
 literal|2
@@ -1361,6 +1396,7 @@ name|getEventsSize
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Read event from notification
 name|NotificationEvent
 name|event
 init|=
@@ -1398,9 +1434,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_DATABASE_EVENT
+name|DROP_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -1410,7 +1449,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"dropdb"
+name|dbName
 argument_list|,
 name|event
 operator|.
@@ -1426,31 +1465,64 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"DROP_DATABASE\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"dropdb\",\"timestamp\":[0-9]+}"
 argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|EventType
+operator|.
+name|DROP_DATABASE
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"eventType"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+name|dbName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"db"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|db
 operator|=
 operator|new
 name|Database
 argument_list|(
-literal|"dropdb"
+name|dbName2
 argument_list|,
-literal|"no description"
+name|dbDescription
 argument_list|,
-literal|"file:/tmp"
+name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
@@ -1475,7 +1547,12 @@ name|msClient
 operator|.
 name|dropDatabase
 argument_list|(
-literal|"dropdb"
+name|dbName2
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: drop database should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1520,6 +1597,44 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+name|String
+name|tblName
+init|=
+literal|"createtable"
+decl_stmt|;
+name|String
+name|tblName2
+init|=
+literal|"createtable2"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col1"
+argument_list|,
+literal|"int"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -1537,15 +1652,7 @@ name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"col1"
-argument_list|,
-literal|"int"
-argument_list|,
-literal|"nocomment"
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -1569,7 +1676,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -1594,11 +1701,11 @@ init|=
 operator|new
 name|Table
 argument_list|(
-literal|"mytable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -1626,7 +1733,7 @@ argument_list|(
 name|table
 argument_list|)
 expr_stmt|;
-comment|// Get the event
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -1688,9 +1795,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_TABLE_EVENT
+name|CREATE_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -1700,7 +1810,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -1710,7 +1820,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"mytable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -1731,9 +1841,12 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_TABLE_EVENT
+name|CREATE_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|jsonTree
 operator|.
@@ -1748,7 +1861,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|jsonTree
 operator|.
@@ -1763,7 +1876,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"mytable"
+name|tblName
 argument_list|,
 name|jsonTree
 operator|.
@@ -1793,16 +1906,18 @@ argument_list|,
 name|tableObj
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|table
 operator|=
 operator|new
 name|Table
 argument_list|(
-literal|"mytable2"
+name|tblName2
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -1837,6 +1952,11 @@ operator|.
 name|createTable
 argument_list|(
 name|table
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: create table should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1881,6 +2001,52 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+name|String
+name|tblName
+init|=
+literal|"altertabletbl"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col1"
+argument_list|,
+literal|"int"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
+name|FieldSchema
+name|col2
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col2"
+argument_list|,
+literal|"int"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -1898,15 +2064,7 @@ name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"col1"
-argument_list|,
-literal|"int"
-argument_list|,
-literal|"nocomment"
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -1930,7 +2088,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -1955,11 +2113,11 @@ init|=
 operator|new
 name|Table
 argument_list|(
-literal|"alttable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -1997,15 +2155,7 @@ name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"col2"
-argument_list|,
-literal|"int"
-argument_list|,
-literal|""
-argument_list|)
+name|col2
 argument_list|)
 expr_stmt|;
 name|table
@@ -2013,11 +2163,11 @@ operator|=
 operator|new
 name|Table
 argument_list|(
-literal|"alttable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -2048,13 +2198,14 @@ name|msClient
 operator|.
 name|alter_table
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alttable"
+name|tblName
 argument_list|,
 name|table
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -2116,9 +2267,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_TABLE_EVENT
+name|ALTER_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -2128,7 +2282,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -2138,7 +2292,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"alttable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -2159,9 +2313,12 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_TABLE_EVENT
+name|ALTER_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|jsonTree
 operator|.
@@ -2176,7 +2333,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|jsonTree
 operator|.
@@ -2191,7 +2348,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"alttable"
+name|tblName
 argument_list|,
 name|jsonTree
 operator|.
@@ -2221,6 +2378,8 @@ argument_list|,
 name|tableObj
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -2234,11 +2393,16 @@ name|msClient
 operator|.
 name|alter_table
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alttable"
+name|tblName
 argument_list|,
 name|table
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: alter table should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2283,6 +2447,44 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+name|String
+name|tblName
+init|=
+literal|"droptbl"
+decl_stmt|;
+name|String
+name|tblName2
+init|=
+literal|"droptbl2"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col1"
+argument_list|,
+literal|"int"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -2300,15 +2502,7 @@ name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"col1"
-argument_list|,
-literal|"int"
-argument_list|,
-literal|"nocomment"
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -2332,7 +2526,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -2357,11 +2551,11 @@ init|=
 operator|new
 name|Table
 argument_list|(
-literal|"droptable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -2382,6 +2576,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -2389,15 +2584,17 @@ argument_list|(
 name|table
 argument_list|)
 expr_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|dropTable
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"droptable"
+name|tblName
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -2459,9 +2656,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_TABLE_EVENT
+name|DROP_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -2471,7 +2671,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -2481,7 +2681,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"droptable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -2489,33 +2689,79 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"DROP_TABLE\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"default\",\"table\":"
-operator|+
-literal|"\"droptable\",\"timestamp\":[0-9]+}"
 argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|EventType
+operator|.
+name|DROP_TABLE
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"eventType"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+name|defaultDbName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"db"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|tblName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"table"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|table
 operator|=
 operator|new
 name|Table
 argument_list|(
-literal|"droptable2"
+name|tblName2
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -2556,9 +2802,14 @@ name|msClient
 operator|.
 name|dropTable
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"droptable2"
+name|tblName2
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: drop table should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2603,23 +2854,34 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|cols
+name|String
+name|defaultDbName
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|FieldSchema
-argument_list|>
-argument_list|()
+literal|"default"
 decl_stmt|;
-name|cols
-operator|.
-name|add
-argument_list|(
+name|String
+name|tblName
+init|=
+literal|"addptn"
+decl_stmt|;
+name|String
+name|tblName2
+init|=
+literal|"addptn2"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
 operator|new
 name|FieldSchema
 argument_list|(
@@ -2627,15 +2889,14 @@ literal|"col1"
 argument_list|,
 literal|"int"
 argument_list|,
-literal|"nocomment"
+literal|"no comment"
 argument_list|)
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
-name|partCols
+name|cols
 init|=
 operator|new
 name|ArrayList
@@ -2644,19 +2905,11 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|partCols
+name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"ds"
-argument_list|,
-literal|"string"
-argument_list|,
-literal|""
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -2680,7 +2933,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -2699,17 +2952,63 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+name|FieldSchema
+name|partCol1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"ds"
+argument_list|,
+literal|"string"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partCols
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCol1Vals
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"today"
+argument_list|)
+decl_stmt|;
+name|partCols
+operator|.
+name|add
+argument_list|(
+name|partCol1
+argument_list|)
+expr_stmt|;
 name|Table
 name|table
 init|=
 operator|new
 name|Table
 argument_list|(
-literal|"addPartTable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -2730,6 +3029,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -2743,16 +3043,11 @@ init|=
 operator|new
 name|Partition
 argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"addPartTable"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -2763,6 +3058,7 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|add_partition
@@ -2770,6 +3066,7 @@ argument_list|(
 name|partition
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -2831,9 +3128,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -2843,7 +3143,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -2853,7 +3153,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"addparttable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -2874,9 +3174,12 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|jsonTree
 operator|.
@@ -2891,7 +3194,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|jsonTree
 operator|.
@@ -2906,7 +3209,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"addparttable"
+name|tblName
 argument_list|,
 name|jsonTree
 operator|.
@@ -2944,6 +3247,8 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|partition
 operator|=
 operator|new
@@ -2956,9 +3261,9 @@ argument_list|(
 literal|"tomorrow"
 argument_list|)
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"tableDoesNotExist"
+name|tblName2
 argument_list|,
 name|startTime
 argument_list|,
@@ -2983,6 +3288,11 @@ operator|.
 name|add_partition
 argument_list|(
 name|partition
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: add partition should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3027,23 +3337,29 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|cols
+name|String
+name|defaultDbName
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|FieldSchema
-argument_list|>
-argument_list|()
+literal|"default"
 decl_stmt|;
-name|cols
-operator|.
-name|add
-argument_list|(
+name|String
+name|tblName
+init|=
+literal|"alterptn"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
 operator|new
 name|FieldSchema
 argument_list|(
@@ -3051,15 +3367,14 @@ literal|"col1"
 argument_list|,
 literal|"int"
 argument_list|,
-literal|"nocomment"
+literal|"no comment"
 argument_list|)
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
-name|partCols
+name|cols
 init|=
 operator|new
 name|ArrayList
@@ -3068,19 +3383,11 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|partCols
+name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"ds"
-argument_list|,
-literal|"string"
-argument_list|,
-literal|""
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -3104,7 +3411,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -3123,17 +3430,63 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+name|FieldSchema
+name|partCol1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"ds"
+argument_list|,
+literal|"string"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partCols
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCol1Vals
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"today"
+argument_list|)
+decl_stmt|;
+name|partCols
+operator|.
+name|add
+argument_list|(
+name|partCol1
+argument_list|)
+expr_stmt|;
 name|Table
 name|table
 init|=
 operator|new
 name|Table
 argument_list|(
-literal|"alterparttable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -3154,6 +3507,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -3167,16 +3521,11 @@ init|=
 operator|new
 name|Partition
 argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -3187,6 +3536,7 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|add_partition
@@ -3207,9 +3557,9 @@ argument_list|(
 literal|"today"
 argument_list|)
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -3222,19 +3572,21 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+comment|// Event 3
 name|msClient
 operator|.
 name|alter_partition
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|newPart
 argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -3296,9 +3648,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_PARTITION_EVENT
+name|ALTER_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -3308,7 +3663,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -3318,7 +3673,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -3339,9 +3694,12 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_PARTITION_EVENT
+name|ALTER_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|jsonTree
 operator|.
@@ -3356,7 +3714,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|jsonTree
 operator|.
@@ -3371,7 +3729,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|jsonTree
 operator|.
@@ -3409,6 +3767,8 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -3422,13 +3782,18 @@ name|msClient
 operator|.
 name|alter_partition
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"alterparttable"
+name|tblName
 argument_list|,
 name|newPart
 argument_list|,
 literal|null
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: alter partition should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3473,23 +3838,29 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|cols
+name|String
+name|defaultDbName
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|FieldSchema
-argument_list|>
-argument_list|()
+literal|"default"
 decl_stmt|;
-name|cols
-operator|.
-name|add
-argument_list|(
+name|String
+name|tblName
+init|=
+literal|"dropptn"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
 operator|new
 name|FieldSchema
 argument_list|(
@@ -3497,15 +3868,14 @@ literal|"col1"
 argument_list|,
 literal|"int"
 argument_list|,
-literal|"nocomment"
+literal|"no comment"
 argument_list|)
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
-name|partCols
+name|cols
 init|=
 operator|new
 name|ArrayList
@@ -3514,19 +3884,11 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|partCols
+name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"ds"
-argument_list|,
-literal|"string"
-argument_list|,
-literal|""
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -3550,7 +3912,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -3569,17 +3931,63 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+name|FieldSchema
+name|partCol1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"ds"
+argument_list|,
+literal|"string"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partCols
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCol1Vals
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"today"
+argument_list|)
+decl_stmt|;
+name|partCols
+operator|.
+name|add
+argument_list|(
+name|partCol1
+argument_list|)
+expr_stmt|;
 name|Table
 name|table
 init|=
 operator|new
 name|Table
 argument_list|(
-literal|"dropPartTable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -3600,6 +4008,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -3613,16 +4022,11 @@ init|=
 operator|new
 name|Partition
 argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"dropPartTable"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -3633,6 +4037,7 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|add_partition
@@ -3640,24 +4045,21 @@ argument_list|(
 name|partition
 argument_list|)
 expr_stmt|;
+comment|// Event 3
 name|msClient
 operator|.
 name|dropPartition
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"dropparttable"
+name|tblName
 argument_list|,
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -3719,9 +4121,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_PARTITION_EVENT
+name|DROP_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -3731,7 +4136,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -3741,7 +4146,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"dropparttable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -3749,38 +4154,92 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"DROP_PARTITION\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"default\",\"table\":"
-operator|+
-literal|"\"dropparttable\",\"timestamp\":[0-9]+,\"partitions\":\\[\\{\"ds\":\"today\"}]}"
 argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|EventType
+operator|.
+name|DROP_PARTITION
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"eventType"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
 argument_list|)
 expr_stmt|;
-name|partition
-operator|=
-operator|new
-name|Partition
+name|assertEquals
 argument_list|(
+name|defaultDbName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"db"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|tblName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"table"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|newpartCol1Vals
+init|=
 name|Arrays
 operator|.
 name|asList
 argument_list|(
 literal|"tomorrow"
 argument_list|)
+decl_stmt|;
+name|partition
+operator|=
+operator|new
+name|Partition
+argument_list|(
+name|newpartCol1Vals
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"dropPartTable"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -3811,18 +4270,18 @@ name|msClient
 operator|.
 name|dropPartition
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"dropparttable"
+name|tblName
 argument_list|,
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"tomorrow"
-argument_list|)
+name|newpartCol1Vals
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: drop partition should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3868,14 +4327,19 @@ throws|throws
 name|Exception
 block|{
 name|String
-name|funcName
-init|=
-literal|"createFunction"
-decl_stmt|;
-name|String
-name|dbName
+name|defaultDbName
 init|=
 literal|"default"
+decl_stmt|;
+name|String
+name|funcName
+init|=
+literal|"createfunction"
+decl_stmt|;
+name|String
+name|funcName2
+init|=
+literal|"createfunction2"
 decl_stmt|;
 name|String
 name|ownerName
@@ -3885,12 +4349,22 @@ decl_stmt|;
 name|String
 name|funcClass
 init|=
-literal|"o.a.h.h.myfunc"
+literal|"o.a.h.h.createfunc"
+decl_stmt|;
+name|String
+name|funcClass2
+init|=
+literal|"o.a.h.h.createfunc2"
 decl_stmt|;
 name|String
 name|funcResource
 init|=
 literal|"file:/tmp/somewhere"
+decl_stmt|;
+name|String
+name|funcResource2
+init|=
+literal|"file:/tmp/somewhere2"
 decl_stmt|;
 name|Function
 name|func
@@ -3900,7 +4374,7 @@ name|Function
 argument_list|(
 name|funcName
 argument_list|,
-name|dbName
+name|defaultDbName
 argument_list|,
 name|funcClass
 argument_list|,
@@ -3932,6 +4406,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createFunction
@@ -3939,6 +4414,7 @@ argument_list|(
 name|func
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -4000,9 +4476,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_FUNCTION_EVENT
+name|CREATE_FUNCTION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -4012,7 +4491,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -4020,6 +4499,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Parse the message field
 name|Function
 name|funcObj
 init|=
@@ -4037,7 +4517,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
 name|funcObj
 operator|.
@@ -4135,6 +4615,8 @@ name|getUri
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -4147,13 +4629,13 @@ operator|=
 operator|new
 name|Function
 argument_list|(
-literal|"createFunction2"
+name|funcName2
 argument_list|,
-name|dbName
+name|defaultDbName
 argument_list|,
-literal|"o.a.h.h.myfunc2"
+name|funcClass2
 argument_list|,
-literal|"me"
+name|ownerName
 argument_list|,
 name|PrincipalType
 operator|.
@@ -4176,7 +4658,7 @@ name|ResourceType
 operator|.
 name|JAR
 argument_list|,
-literal|"file:/tmp/somewhere2"
+name|funcResource2
 argument_list|)
 argument_list|)
 argument_list|)
@@ -4188,6 +4670,11 @@ operator|.
 name|createFunction
 argument_list|(
 name|func
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: create function should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4233,14 +4720,19 @@ throws|throws
 name|Exception
 block|{
 name|String
-name|funcName
-init|=
-literal|"dropfunctiontest"
-decl_stmt|;
-name|String
-name|dbName
+name|defaultDbName
 init|=
 literal|"default"
+decl_stmt|;
+name|String
+name|funcName
+init|=
+literal|"dropfunction"
+decl_stmt|;
+name|String
+name|funcName2
+init|=
+literal|"dropfunction2"
 decl_stmt|;
 name|String
 name|ownerName
@@ -4250,12 +4742,22 @@ decl_stmt|;
 name|String
 name|funcClass
 init|=
-literal|"o.a.h.h.dropFunctionTest"
+literal|"o.a.h.h.dropfunction"
+decl_stmt|;
+name|String
+name|funcClass2
+init|=
+literal|"o.a.h.h.dropfunction2"
 decl_stmt|;
 name|String
 name|funcResource
 init|=
 literal|"file:/tmp/somewhere"
+decl_stmt|;
+name|String
+name|funcResource2
+init|=
+literal|"file:/tmp/somewhere2"
 decl_stmt|;
 name|Function
 name|func
@@ -4265,7 +4767,7 @@ name|Function
 argument_list|(
 name|funcName
 argument_list|,
-name|dbName
+name|defaultDbName
 argument_list|,
 name|funcClass
 argument_list|,
@@ -4297,6 +4799,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createFunction
@@ -4304,15 +4807,17 @@ argument_list|(
 name|func
 argument_list|)
 expr_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|dropFunction
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
 name|funcName
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -4374,9 +4879,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_FUNCTION_EVENT
+name|DROP_FUNCTION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -4386,7 +4894,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -4394,6 +4902,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Parse the message field
 name|Function
 name|funcObj
 init|=
@@ -4411,7 +4920,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
 name|funcObj
 operator|.
@@ -4509,18 +5018,20 @@ name|getUri
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|func
 operator|=
 operator|new
 name|Function
 argument_list|(
-literal|"dropfunctiontest2"
+name|funcName2
 argument_list|,
-name|dbName
+name|defaultDbName
 argument_list|,
-literal|"o.a.h.h.dropFunctionTest2"
+name|funcClass2
 argument_list|,
-literal|"me"
+name|ownerName
 argument_list|,
 name|PrincipalType
 operator|.
@@ -4543,7 +5054,7 @@ name|ResourceType
 operator|.
 name|JAR
 argument_list|,
-literal|"file:/tmp/somewhere2"
+name|funcResource2
 argument_list|)
 argument_list|)
 argument_list|)
@@ -4568,9 +5079,14 @@ name|msClient
 operator|.
 name|dropFunction
 argument_list|(
-name|dbName
+name|defaultDbName
 argument_list|,
-literal|"dropfunctiontest2"
+name|funcName2
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: drop function should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -4797,6 +5313,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -4862,6 +5379,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 2, 3 (index table and index)
 name|msClient
 operator|.
 name|createIndex
@@ -4871,6 +5389,7 @@ argument_list|,
 name|indexTable
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -4932,9 +5451,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_INDEX_EVENT
+name|CREATE_INDEX
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -4952,6 +5474,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Parse the message field
 name|Index
 name|indexObj
 init|=
@@ -5007,6 +5530,8 @@ name|getIndexTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -5080,6 +5605,11 @@ argument_list|(
 name|index
 argument_list|,
 name|indexTable2
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: create index should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -5306,6 +5836,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -5371,6 +5902,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 2, 3 (index table and index)
 name|msClient
 operator|.
 name|createIndex
@@ -5380,6 +5912,7 @@ argument_list|,
 name|indexTable
 argument_list|)
 expr_stmt|;
+comment|// Event 4 (drops index and indexTable)
 name|msClient
 operator|.
 name|dropIndex
@@ -5393,7 +5926,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// drops index and indexTable
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -5455,9 +5988,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_INDEX_EVENT
+name|DROP_INDEX
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -5475,6 +6011,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Parse the message field
 name|Index
 name|indexObj
 init|=
@@ -5539,6 +6076,8 @@ name|getIndexTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|index
 operator|=
 operator|new
@@ -5614,6 +6153,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|// drops index and indexTable
 name|msClient
 operator|.
 name|dropIndex
@@ -5627,7 +6167,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// drops index and indexTable
+name|fail
+argument_list|(
+literal|"Error: drop index should've failed"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5852,6 +6396,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -5917,6 +6462,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 2, 3
 name|msClient
 operator|.
 name|createIndex
@@ -5956,6 +6502,7 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+comment|// Event 4
 name|msClient
 operator|.
 name|alter_index
@@ -5969,6 +6516,7 @@ argument_list|,
 name|newIndex
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -6030,9 +6578,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_INDEX_EVENT
+name|ALTER_INDEX
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -6050,6 +6601,7 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Parse the message field
 name|Index
 name|indexObj
 init|=
@@ -6120,6 +6672,8 @@ name|getLastAccessTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// When hive.metastore.transactional.event.listeners is set,
+comment|// a failed event should not create a new notification
 name|DummyRawStoreFailEvent
 operator|.
 name|setEventSucceed
@@ -6140,6 +6694,11 @@ argument_list|,
 name|indexName
 argument_list|,
 name|newIndex
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Error: alter index should've failed"
 argument_list|)
 expr_stmt|;
 block|}
@@ -6184,6 +6743,44 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+name|String
+name|tblName
+init|=
+literal|"inserttbl"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|String
+name|fileAdded
+init|=
+literal|"/warehouse/mytable/b1"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col1"
+argument_list|,
+literal|"int"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -6201,15 +6798,7 @@ name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"col1"
-argument_list|,
-literal|"int"
-argument_list|,
-literal|"nocomment"
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -6233,7 +6822,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -6258,11 +6847,11 @@ init|=
 operator|new
 name|Table
 argument_list|(
-literal|"insertTable"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -6283,6 +6872,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -6315,7 +6905,7 @@ name|insertData
 operator|.
 name|addToFilesAdded
 argument_list|(
-literal|"/warehouse/mytable/b1"
+name|fileAdded
 argument_list|)
 expr_stmt|;
 name|FireEventRequest
@@ -6333,16 +6923,17 @@ name|rqst
 operator|.
 name|setDbName
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|)
 expr_stmt|;
 name|rqst
 operator|.
 name|setTableName
 argument_list|(
-literal|"insertTable"
+name|tblName
 argument_list|)
 expr_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|fireListenerEvent
@@ -6350,6 +6941,7 @@ argument_list|(
 name|rqst
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -6411,9 +7003,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -6423,7 +7018,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -6433,7 +7028,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"insertTable"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -6441,28 +7036,16 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
 argument_list|,
-name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"INSERT\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"default\",\"table\":"
-operator|+
-literal|"\"insertTable\",\"timestamp\":[0-9]+,\"files\":\\[\"/warehouse/mytable/b1\"],"
-operator|+
-literal|"\"partKeyVals\":\\{},\"partitionKeyValues\":\\{}}"
-argument_list|)
+name|defaultDbName
+argument_list|,
+name|tblName
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -6475,23 +7058,34 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|cols
+name|String
+name|defaultDbName
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|FieldSchema
-argument_list|>
-argument_list|()
+literal|"default"
 decl_stmt|;
-name|cols
-operator|.
-name|add
-argument_list|(
+name|String
+name|tblName
+init|=
+literal|"insertptn"
+decl_stmt|;
+name|String
+name|tblOwner
+init|=
+literal|"me"
+decl_stmt|;
+name|String
+name|serdeLocation
+init|=
+literal|"file:/tmp"
+decl_stmt|;
+name|String
+name|fileAdded
+init|=
+literal|"/warehouse/mytable/b1"
+decl_stmt|;
+name|FieldSchema
+name|col1
+init|=
 operator|new
 name|FieldSchema
 argument_list|(
@@ -6499,15 +7093,14 @@ literal|"col1"
 argument_list|,
 literal|"int"
 argument_list|,
-literal|"nocomment"
+literal|"no comment"
 argument_list|)
-argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
-name|partCols
+name|cols
 init|=
 operator|new
 name|ArrayList
@@ -6516,19 +7109,11 @@ name|FieldSchema
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|partCols
+name|cols
 operator|.
 name|add
 argument_list|(
-operator|new
-name|FieldSchema
-argument_list|(
-literal|"ds"
-argument_list|,
-literal|"string"
-argument_list|,
-literal|""
-argument_list|)
+name|col1
 argument_list|)
 expr_stmt|;
 name|SerDeInfo
@@ -6552,7 +7137,7 @@ name|StorageDescriptor
 argument_list|(
 name|cols
 argument_list|,
-literal|"file:/tmp"
+name|serdeLocation
 argument_list|,
 literal|"input"
 argument_list|,
@@ -6571,17 +7156,89 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+name|FieldSchema
+name|partCol1
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"ds"
+argument_list|,
+literal|"string"
+argument_list|,
+literal|"no comment"
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partCols
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|FieldSchema
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partCol1Vals
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"today"
+argument_list|)
+decl_stmt|;
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partKeyVals
+init|=
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|partKeyVals
+operator|.
+name|put
+argument_list|(
+literal|"ds"
+argument_list|,
+literal|"today"
+argument_list|)
+expr_stmt|;
+name|partCols
+operator|.
+name|add
+argument_list|(
+name|partCol1
+argument_list|)
+expr_stmt|;
 name|Table
 name|table
 init|=
 operator|new
 name|Table
 argument_list|(
-literal|"insertPartition"
+name|tblName
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"me"
+name|tblOwner
 argument_list|,
 name|startTime
 argument_list|,
@@ -6602,6 +7259,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+comment|// Event 1
 name|msClient
 operator|.
 name|createTable
@@ -6615,16 +7273,11 @@ init|=
 operator|new
 name|Partition
 argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|,
-literal|"default"
+name|defaultDbName
 argument_list|,
-literal|"insertPartition"
+name|tblName
 argument_list|,
 name|startTime
 argument_list|,
@@ -6635,6 +7288,7 @@ argument_list|,
 name|emptyParameters
 argument_list|)
 decl_stmt|;
+comment|// Event 2
 name|msClient
 operator|.
 name|add_partition
@@ -6667,7 +7321,7 @@ name|insertData
 operator|.
 name|addToFilesAdded
 argument_list|(
-literal|"/warehouse/mytable/today/b1"
+name|fileAdded
 argument_list|)
 expr_stmt|;
 name|FireEventRequest
@@ -6685,28 +7339,24 @@ name|rqst
 operator|.
 name|setDbName
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|)
 expr_stmt|;
 name|rqst
 operator|.
 name|setTableName
 argument_list|(
-literal|"insertPartition"
+name|tblName
 argument_list|)
 expr_stmt|;
 name|rqst
 operator|.
 name|setPartitionVals
 argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"today"
-argument_list|)
+name|partCol1Vals
 argument_list|)
 expr_stmt|;
+comment|// Event 3
 name|msClient
 operator|.
 name|fireListenerEvent
@@ -6714,6 +7364,7 @@ argument_list|(
 name|rqst
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -6775,9 +7426,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -6787,7 +7441,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default"
+name|defaultDbName
 argument_list|,
 name|event
 operator|.
@@ -6797,7 +7451,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"insertPartition"
+name|tblName
 argument_list|,
 name|event
 operator|.
@@ -6805,30 +7459,65 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
 argument_list|,
-name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"\\{\"eventType\":\"INSERT\",\"server\":\"\","
-operator|+
-literal|"\"servicePrincipal\":\"\",\"db\":\"default\",\"table\":"
-operator|+
-literal|"\"insertPartition\",\"timestamp\":[0-9]+,"
-operator|+
-literal|"\"files\":\\[\"/warehouse/mytable/today/b1\"],\"partKeyVals\":\\{\"ds\":\"today\"},"
-operator|+
-literal|"\"partitionKeyValues\":\\{\"ds\":\"today\"}}"
+name|defaultDbName
+argument_list|,
+name|tblName
+argument_list|,
+literal|false
 argument_list|)
+expr_stmt|;
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
+argument_list|(
+name|event
+argument_list|)
+decl_stmt|;
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partKeyValsFromNotif
+init|=
+name|JSONMessageFactory
+operator|.
+name|getAsMap
+argument_list|(
+operator|(
+name|ObjectNode
+operator|)
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"partKeyVals"
+argument_list|)
+argument_list|,
+operator|new
+name|LinkedHashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|partKeyVals
+argument_list|,
+name|partKeyValsFromNotif
 argument_list|)
 expr_stmt|;
 block|}
@@ -6905,6 +7594,7 @@ argument_list|(
 name|db
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7058,14 +7748,18 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_DATABASE_EVENT
+name|DROP_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
 decl_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7199,14 +7893,18 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_DATABASE_EVENT
+name|CREATE_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 return|;
 block|}
 block|}
 decl_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7261,34 +7959,63 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|defaultDbName
+init|=
+literal|"default"
+decl_stmt|;
+name|String
+name|tblName
+init|=
+literal|"sqlins"
+decl_stmt|;
+comment|// Event 1
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table sit (c int)"
+literal|"create table "
+operator|+
+name|tblName
+operator|+
+literal|" (c int)"
 argument_list|)
 expr_stmt|;
+comment|// Event 2 (alter: marker stats event), 3 (insert), 4 (alter: stats update event)
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sit values (1)"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" values (1)"
 argument_list|)
 expr_stmt|;
+comment|// Event 5
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"alter table sit add columns (c2 int)"
+literal|"alter table "
+operator|+
+name|tblName
+operator|+
+literal|" add columns (c2 int)"
 argument_list|)
 expr_stmt|;
+comment|// Event 6
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"drop table sit"
+literal|"drop table "
+operator|+
+name|tblName
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7303,8 +8030,6 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-comment|// For reasons not clear to me there's an alter after the create table and one after the
-comment|// insert.  I think the one after the insert is a stats calculation.
 name|assertEquals
 argument_list|(
 literal|6
@@ -7342,9 +8067,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_TABLE_EVENT
+name|CREATE_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7378,9 +8106,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7388,18 +8119,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Make sure the files are listed in the insert
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+name|defaultDbName
+argument_list|,
+name|tblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -7428,9 +8157,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_TABLE_EVENT
+name|ALTER_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7464,9 +8196,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_TABLE_EVENT
+name|DROP_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7484,27 +8219,55 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|sourceTblName
+init|=
+literal|"sqlctasins1"
+decl_stmt|;
+name|String
+name|targetTblName
+init|=
+literal|"sqlctasins2"
+decl_stmt|;
+comment|// Event 1
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table ctas_source (c int)"
+literal|"create table "
+operator|+
+name|sourceTblName
+operator|+
+literal|" (c int)"
 argument_list|)
 expr_stmt|;
+comment|// Event 2 (alter: marker stats event), 3 (insert), 4 (alter: stats update event)
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table ctas_source values (1)"
+literal|"insert into table "
+operator|+
+name|sourceTblName
+operator|+
+literal|" values (1)"
 argument_list|)
 expr_stmt|;
+comment|// Event 5, 6 (alter: stats update event)
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table ctas_target as select c from ctas_source"
+literal|"create table "
+operator|+
+name|targetTblName
+operator|+
+literal|" as select c from "
+operator|+
+name|sourceTblName
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7556,9 +8319,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_TABLE_EVENT
+name|CREATE_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7592,9 +8358,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7602,18 +8371,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Make sure the files are listed in the insert
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+name|sourceTblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -7642,9 +8409,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_TABLE_EVENT
+name|CREATE_TABLE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7662,27 +8432,34 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|LOG
+name|String
+name|tempTblName
+init|=
+literal|"sqltemptbl"
+decl_stmt|;
+name|driver
 operator|.
-name|info
+name|run
 argument_list|(
-literal|"XXX Starting temp table"
+literal|"create temporary table "
+operator|+
+name|tempTblName
+operator|+
+literal|"  (c int)"
 argument_list|)
 expr_stmt|;
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create temporary table tmp1 (c int)"
+literal|"insert into table "
+operator|+
+name|tempTblName
+operator|+
+literal|" values (1)"
 argument_list|)
 expr_stmt|;
-name|driver
-operator|.
-name|run
-argument_list|(
-literal|"insert into table tmp1 values (1)"
-argument_list|)
-expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7717,20 +8494,32 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|dbName
+init|=
+literal|"sqldb"
+decl_stmt|;
+comment|// Event 1
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create database sd"
+literal|"create database "
+operator|+
+name|dbName
 argument_list|)
 expr_stmt|;
+comment|// Event 2
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"drop database sd"
+literal|"drop database "
+operator|+
+name|dbName
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7782,9 +8571,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_CREATE_DATABASE_EVENT
+name|CREATE_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7818,9 +8610,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_DATABASE_EVENT
+name|DROP_DATABASE
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -7838,83 +8633,148 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|String
+name|tblName
+init|=
+literal|"sqlinsptn"
+decl_stmt|;
+comment|// Event 1
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table sip (c int) partitioned by (ds string)"
+literal|"create table "
+operator|+
+name|tblName
+operator|+
+literal|" (c int) partitioned by (ds string)"
 argument_list|)
 expr_stmt|;
+comment|// Event 2, 3, 4
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds = 'today') values (1)"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds = 'today') values (1)"
 argument_list|)
 expr_stmt|;
+comment|// Event 5, 6, 7
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds = 'today') values (2)"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds = 'today') values (2)"
 argument_list|)
 expr_stmt|;
+comment|// Event 8, 9, 10
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds) values (3, 'today')"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds) values (3, 'today')"
 argument_list|)
 expr_stmt|;
+comment|// Event 9, 10
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"alter table sip add partition (ds = 'yesterday')"
+literal|"alter table "
+operator|+
+name|tblName
+operator|+
+literal|" add partition (ds = 'yesterday')"
 argument_list|)
 expr_stmt|;
+comment|// Event 10, 11, 12
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds = 'yesterday') values (2)"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds = 'yesterday') values (2)"
 argument_list|)
 expr_stmt|;
+comment|// Event 12, 13, 14
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds) values (3, 'yesterday')"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds) values (3, 'yesterday')"
 argument_list|)
 expr_stmt|;
+comment|// Event 15, 16, 17
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds) values (3, 'tomorrow')"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds) values (3, 'tomorrow')"
 argument_list|)
 expr_stmt|;
+comment|// Event 18
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"alter table sip drop partition (ds = 'tomorrow')"
+literal|"alter table "
+operator|+
+name|tblName
+operator|+
+literal|" drop partition (ds = 'tomorrow')"
 argument_list|)
 expr_stmt|;
+comment|// Event 19, 20, 21
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert into table sip partition (ds) values (42, 'todaytwo')"
+literal|"insert into table "
+operator|+
+name|tblName
+operator|+
+literal|" partition (ds) values (42, 'todaytwo')"
 argument_list|)
 expr_stmt|;
+comment|// Event 22, 23, 24
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"insert overwrite table sip partition(ds='todaytwo') select c from sip where 'ds'='today'"
+literal|"insert overwrite table "
+operator|+
+name|tblName
+operator|+
+literal|" partition(ds='todaytwo') select c from "
+operator|+
+name|tblName
+operator|+
+literal|" where 'ds'='today'"
 argument_list|)
 expr_stmt|;
+comment|// Get notifications from metastore
 name|NotificationEventResponse
 name|rsp
 init|=
@@ -7929,30 +8789,6 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-for|for
-control|(
-name|NotificationEvent
-name|ne
-range|:
-name|rsp
-operator|.
-name|getEvents
-argument_list|()
-control|)
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"EVENT: "
-operator|+
-name|ne
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// For reasons not clear to me there's one or more alter partitions after add partition and
-comment|// insert.
 name|assertEquals
 argument_list|(
 literal|24
@@ -7990,9 +8826,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8026,9 +8865,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8036,18 +8878,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Make sure the files are listed in the insert
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+name|tblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -8076,9 +8916,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8086,17 +8929,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+name|tblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -8125,9 +8967,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8161,9 +9006,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8171,17 +9019,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+name|tblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -8210,9 +9057,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8220,17 +9070,16 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertTrue
+comment|// Parse the message field
+name|verifyInsertJSON
 argument_list|(
 name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\"pfile.*"
-argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+name|tblName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|event
@@ -8259,9 +9108,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8295,9 +9147,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_DROP_PARTITION_EVENT
+name|DROP_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8331,9 +9186,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ADD_PARTITION_EVENT
+name|ADD_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8367,9 +9225,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_PARTITION_EVENT
+name|ALTER_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8416,9 +9277,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_INSERT_EVENT
+name|INSERT
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8426,6 +9290,7 @@ name|getEventType
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// replace-overwrite introduces no new files
 name|assertTrue
 argument_list|(
 name|event
@@ -8439,7 +9304,6 @@ literal|".*\"files\":\\[\\].*"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// replace-overwrite introduces no new files
 name|event
 operator|=
 name|rsp
@@ -8466,9 +9330,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_PARTITION_EVENT
+name|ALTER_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8515,9 +9382,12 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|HCatConstants
+name|EventType
 operator|.
-name|HCAT_ALTER_PARTITION_EVENT
+name|ALTER_PARTITION
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|event
 operator|.
@@ -8538,6 +9408,201 @@ literal|".*\"ds\":\"todaytwo\".*"
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|void
+name|verifyInsertJSON
+parameter_list|(
+name|NotificationEvent
+name|event
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|boolean
+name|verifyChecksums
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+comment|// Parse the message field
+name|ObjectNode
+name|jsonTree
+init|=
+name|JSONMessageFactory
+operator|.
+name|getJsonTree
+argument_list|(
+name|event
+argument_list|)
+decl_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"JSONInsertMessage: "
+operator|+
+name|jsonTree
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|EventType
+operator|.
+name|INSERT
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"eventType"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|dbName
+operator|!=
+literal|null
+condition|)
+block|{
+name|assertEquals
+argument_list|(
+name|dbName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"db"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|tblName
+operator|!=
+literal|null
+condition|)
+block|{
+name|assertEquals
+argument_list|(
+name|tblName
+argument_list|,
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"table"
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Should have list of files
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
+init|=
+name|JSONMessageFactory
+operator|.
+name|getAsList
+argument_list|(
+operator|(
+name|ArrayNode
+operator|)
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"files"
+argument_list|)
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|files
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|verifyChecksums
+condition|)
+block|{
+comment|// Should have list of file checksums
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|fileChecksums
+init|=
+name|JSONMessageFactory
+operator|.
+name|getAsList
+argument_list|(
+operator|(
+name|ArrayNode
+operator|)
+name|jsonTree
+operator|.
+name|get
+argument_list|(
+literal|"fileChecksums"
+argument_list|)
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|fileChecksums
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Test
@@ -8609,6 +9674,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// sleep for expiry time, and then fetch again
+comment|// sleep twice the TTL interval - things should have been cleaned by then.
 name|Thread
 operator|.
 name|sleep
@@ -8620,7 +9686,6 @@ operator|*
 literal|1000
 argument_list|)
 expr_stmt|;
-comment|// sleep twice the TTL interval - things should have been cleaned by then.
 name|LOG
 operator|.
 name|info
