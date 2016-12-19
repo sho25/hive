@@ -1221,10 +1221,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|isTracingEnabled
-operator|=
-literal|true
-expr_stmt|;
 comment|// Note: for now we don't have to setError here, caller will setError if we throw.
 comment|// We are also not supposed to call setDone, since we are only part of the operation.
 name|long
@@ -1263,7 +1259,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|trace
 argument_list|(
 literal|"The following columns have PRESENT streams: "
 operator|+
@@ -1355,7 +1351,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|trace
 argument_list|(
 literal|"Creating context: "
 operator|+
