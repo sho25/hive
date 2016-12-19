@@ -1055,6 +1055,34 @@ argument_list|,
 literal|0
 argument_list|)
 decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|()
+expr_stmt|;
 name|run
 argument_list|(
 literal|"REPL LOAD "
@@ -1066,6 +1094,25 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+name|replDumpId
+block|}
 argument_list|)
 expr_stmt|;
 name|run
@@ -1536,7 +1583,6 @@ argument_list|(
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-comment|// verified up to here.
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -1649,6 +1695,22 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -1660,6 +1722,20 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|)
+expr_stmt|;
+comment|//    verifyResults(new String[] {incrementalDumpId});
+comment|// TODO: this will currently not work because we need to add in ALTER_DB support into this
+comment|// and queue in a dummy ALTER_DB to update the repl.last.id on the last event of every
+comment|// incremental dump. Currently, the dump id fetched will be the last dump id at the time
+comment|// the db was created from the bootstrap export dump
 name|run
 argument_list|(
 literal|"SELECT * from "
@@ -1688,11 +1764,11 @@ argument_list|(
 name|empty
 argument_list|)
 expr_stmt|;
-comment|//  this does not work because LOAD DATA LOCAL INPATH into an unptned table seems
-comment|//  to use ALTER_TABLE only - it does not emit an INSERT or CREATE - re-enable after
-comment|//  fixing that.
 comment|//    run("SELECT * from " + dbName + "_dupe.unptned");
 comment|//    verifyResults(unptn_data);
+comment|// TODO :this does not work because LOAD DATA LOCAL INPATH into an unptned table seems
+comment|// to use ALTER_TABLE only - it does not emit an INSERT or CREATE - re-enable after
+comment|// fixing that.
 name|run
 argument_list|(
 literal|"SELECT * from "
@@ -1887,49 +1963,9 @@ name|String
 argument_list|>
 name|results
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+name|getOutput
 argument_list|()
 decl_stmt|;
-try|try
-block|{
-name|driver
-operator|.
-name|getResults
-argument_list|(
-name|results
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 name|LOG
 operator|.
 name|info
@@ -1995,6 +2031,94 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getOutput
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|results
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|driver
+operator|.
+name|getResults
+argument_list|(
+name|results
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandNeedRetryException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+return|return
+name|results
+return|;
+block|}
+specifier|private
+name|void
+name|printOutput
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+for|for
+control|(
+name|String
+name|s
+range|:
+name|getOutput
+argument_list|()
+control|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|private
 specifier|static
 name|void
 name|run
@@ -2005,6 +2129,8 @@ parameter_list|)
 throws|throws
 name|RuntimeException
 block|{
+try|try
+block|{
 name|run
 argument_list|(
 name|cmd
@@ -2013,6 +2139,31 @@ literal|false
 argument_list|)
 expr_stmt|;
 comment|// default arg-less run simply runs, and does not care about failure
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|ae
+parameter_list|)
+block|{
+comment|// Hive code has AssertionErrors in some cases - we want to record what happens
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"AssertionError:"
+argument_list|,
+name|ae
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|ae
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|private
 specifier|static

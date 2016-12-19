@@ -879,10 +879,12 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// waitOnCreateDb determines whether or not non-existence of
-comment|// db is an error. For regular imports, it is.
+comment|// waitOnPrecursor determines whether or not non-existence of
+comment|// a dependent object is an error. For regular imports, it is.
+comment|// for now, the only thing this affects is whether or not the
+comment|// db exists.
 name|boolean
-name|waitOnCreateDb
+name|waitOnPrecursor
 init|=
 literal|false
 decl_stmt|;
@@ -1067,7 +1069,7 @@ name|isExternalSet
 argument_list|,
 name|isPartSpecSet
 argument_list|,
-name|waitOnCreateDb
+name|waitOnPrecursor
 argument_list|,
 name|parsedLocation
 argument_list|,
@@ -1307,7 +1309,7 @@ name|boolean
 name|isPartSpecSet
 parameter_list|,
 name|boolean
-name|waitOnCreateDb
+name|waitOnPrecursor
 parameter_list|,
 name|String
 name|parsedLocation
@@ -1969,7 +1971,7 @@ name|isPartSpecSet
 argument_list|,
 name|replicationSpec
 argument_list|,
-name|waitOnCreateDb
+name|waitOnPrecursor
 argument_list|,
 name|table
 argument_list|,
@@ -5388,7 +5390,7 @@ name|ReplicationSpec
 name|replicationSpec
 parameter_list|,
 name|boolean
-name|waitOnCreateDb
+name|waitOnPrecursor
 parameter_list|,
 name|Table
 name|table
@@ -5528,7 +5530,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|waitOnCreateDb
+name|waitOnPrecursor
 condition|)
 block|{
 throw|throw
@@ -5563,7 +5565,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|waitOnCreateDb
+name|waitOnPrecursor
 condition|)
 block|{
 name|tblDesc
