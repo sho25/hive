@@ -10699,6 +10699,15 @@ name|cluster
 argument_list|,
 literal|null
 argument_list|)
+argument_list|,
+name|profilesCBO
+operator|.
+name|contains
+argument_list|(
+name|ExtendedCBOProfile
+operator|.
+name|JOIN_REORDERING
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|basePlan
