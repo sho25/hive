@@ -20506,6 +20506,8 @@ name|mod
 argument_list|(
 operator|-
 name|i
+operator|-
+literal|1
 argument_list|,
 name|grpByAstExprs
 operator|.
