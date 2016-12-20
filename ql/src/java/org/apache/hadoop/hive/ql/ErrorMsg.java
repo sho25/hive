@@ -1517,9 +1517,9 @@ name|PARTITION_VALUE_NOT_CONTINUOUS
 argument_list|(
 literal|10234
 argument_list|,
-literal|"Parition values specifed are not continuous."
+literal|"Partition values specified are not continuous."
 operator|+
-literal|" A subpartition value is specified without specififying the parent partition's value"
+literal|" A subpartition value is specified without specifying the parent partition's value"
 argument_list|)
 block|,
 name|TABLES_INCOMPATIBLE_SCHEMAS
@@ -2108,7 +2108,7 @@ name|IO_ERROR
 argument_list|(
 literal|10320
 argument_list|,
-literal|"Error while peforming IO operation "
+literal|"Error while performing IO operation "
 argument_list|)
 block|,
 name|ERROR_SERIALIZE_METADATA

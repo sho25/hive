@@ -8025,7 +8025,7 @@ name|console
 operator|.
 name|printError
 argument_list|(
-literal|"Unsupported Alter commnad"
+literal|"Unsupported Alter command"
 argument_list|)
 expr_stmt|;
 return|return
@@ -11581,7 +11581,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Succefully Copied "
+literal|"Successfully Copied "
 operator|+
 name|copySource
 operator|+
@@ -16820,7 +16820,7 @@ name|os
 operator|.
 name|writeBytes
 argument_list|(
-literal|"Last Hearbeat"
+literal|"Last Heartbeat"
 argument_list|)
 expr_stmt|;
 name|os

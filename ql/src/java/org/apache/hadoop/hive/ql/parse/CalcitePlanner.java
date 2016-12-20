@@ -23039,7 +23039,7 @@ throw|throw
 operator|new
 name|CalciteSemanticException
 argument_list|(
-literal|"Distinct without an aggreggation."
+literal|"Distinct without an aggregation."
 argument_list|,
 name|UnsupportedFeature
 operator|.

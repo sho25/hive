@@ -18796,7 +18796,7 @@ literal|" Giving up after "
 operator|+
 name|MAX_ATTEMPS
 operator|+
-literal|" attemps"
+literal|" attempts"
 argument_list|)
 throw|;
 block|}

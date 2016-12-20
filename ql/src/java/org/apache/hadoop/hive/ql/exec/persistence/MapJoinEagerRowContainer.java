@@ -823,7 +823,7 @@ throw|throw
 operator|new
 name|ConcurrentModificationException
 argument_list|(
-literal|"Values was modifified while persisting"
+literal|"Values was modified while persisting"
 argument_list|)
 throw|;
 block|}

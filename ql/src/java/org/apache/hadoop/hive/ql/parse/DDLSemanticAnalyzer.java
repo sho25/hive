@@ -12373,7 +12373,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Only RCFile and ORCFile Formats are supportted right now."
+literal|"Only RCFile and ORCFile Formats are supported right now."
 argument_list|)
 throw|;
 block|}

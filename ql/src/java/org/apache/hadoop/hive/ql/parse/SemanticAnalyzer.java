@@ -43395,7 +43395,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Generate an operator pipleline to autogather column stats for table "
+literal|"Generate an operator pipeline to autogather column stats for table "
 operator|+
 name|tableName
 operator|+
@@ -72058,7 +72058,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Unxpected Exception thrown: "
+literal|"Unexpected Exception thrown: "
 operator|+
 name|e
 operator|.

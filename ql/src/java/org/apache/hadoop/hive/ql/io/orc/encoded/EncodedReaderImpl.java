@@ -3810,7 +3810,7 @@ argument_list|(
 name|start
 argument_list|)
 operator|+
-literal|"; ranges passed to prepate "
+literal|"; ranges passed to prepare "
 operator|+
 name|RecordReaderUtils
 operator|.

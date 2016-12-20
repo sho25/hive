@@ -1982,7 +1982,7 @@ name|rowInspector
 operator|instanceof
 name|StructObjectInspector
 operator|:
-literal|"Exptected rowInspector to be instance of StructObjectInspector but it is a "
+literal|"Expected rowInspector to be instance of StructObjectInspector but it is a "
 operator|+
 name|rowInspector
 operator|.

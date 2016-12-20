@@ -4005,7 +4005,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Ambigous column mapping"
+literal|"Ambiguous column mapping"
 argument_list|)
 throw|;
 block|}

@@ -3069,7 +3069,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-literal|"Recoginze a Sorted Merge Join operator to setup the right edge and"
+literal|"Recognize a Sorted Merge Join operator to setup the right edge and"
 operator|+
 literal|" stop traversing the DummyStore-MapJoin"
 argument_list|,

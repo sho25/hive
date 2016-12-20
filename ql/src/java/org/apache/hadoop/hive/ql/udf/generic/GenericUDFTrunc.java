@@ -978,7 +978,7 @@ throw|throw
 operator|new
 name|UDFArgumentException
 argument_list|(
-literal|"Only primitive type arguments are accepted, when arguments lenght is one, got "
+literal|"Only primitive type arguments are accepted, when arguments length is one, got "
 operator|+
 name|arguments
 index|[

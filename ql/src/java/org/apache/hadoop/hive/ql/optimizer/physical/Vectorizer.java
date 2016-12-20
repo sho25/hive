@@ -11945,7 +11945,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Vectorization of aggreation should have succeeded "
+literal|"Vectorization of aggregation should have succeeded "
 argument_list|,
 name|e
 argument_list|)

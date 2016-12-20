@@ -2476,7 +2476,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// Create a new threadlocal synchronized metastore client for use in hearbeater threads.
+comment|// Create a new threadlocal synchronized metastore client for use in heartbeater threads.
 comment|// This makes the concurrent use of heartbeat thread safe, and won't cause transaction
 comment|// abort due to a long metastore client call blocking the heartbeat call.
 name|heartbeaterClient
@@ -2536,7 +2536,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"The number of hearbeater metastore clients - + "
+literal|"The number of heartbeater metastore clients - + "
 operator|+
 name|heartbeaterMSClientCount
 operator|.

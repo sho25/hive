@@ -189,7 +189,7 @@ name|HIVE_AUTHORIZATION_SQL_STD_AUTH_CONFIG_WHITELIST
 operator|.
 name|varname
 operator|+
-literal|" is not iniatialized."
+literal|" is not initialized."
 argument_list|)
 throw|;
 block|}

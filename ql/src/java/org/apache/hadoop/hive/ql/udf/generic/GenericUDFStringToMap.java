@@ -337,7 +337,7 @@ name|extended
 operator|=
 literal|"Split text into key-value pairs"
 operator|+
-literal|" using two delimiters. The first delimiter seperates pairs, and the"
+literal|" using two delimiters. The first delimiter separates pairs, and the"
 operator|+
 literal|" second delimiter sperates key and value. If only one parameter is given, default"
 operator|+

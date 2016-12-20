@@ -525,7 +525,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Invalid partition specifiation: "
+literal|"Invalid partition specification: "
 operator|+
 name|partSpec
 argument_list|)

@@ -1469,7 +1469,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Bug in handle skew key in a seperate job."
+literal|"Bug in handle skew key in a separate job."
 argument_list|)
 throw|;
 block|}

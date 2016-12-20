@@ -3105,7 +3105,7 @@ operator|.
 name|size
 argument_list|()
 operator|:
-literal|"number of dynamic paritions should be the same as the size of DP mapping"
+literal|"number of dynamic partitions should be the same as the size of DP mapping"
 assert|;
 if|if
 condition|(

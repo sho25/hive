@@ -1896,7 +1896,7 @@ block|{
 name|String
 name|msg
 init|=
-literal|"Error while attemping to create table container"
+literal|"Error while attempting to create table container"
 operator|+
 literal|" of type: "
 operator|+

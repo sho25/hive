@@ -1729,7 +1729,7 @@ literal|"> "
 operator|+
 name|fetchLimit
 operator|+
-literal|". Doesn't qualify limit optimiztion."
+literal|". Doesn't qualify limit optimization."
 argument_list|)
 expr_stmt|;
 name|globalLimitCtx

@@ -3996,7 +3996,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Empty input: skip limit optimiztion"
+literal|"Empty input: skip limit optimization"
 argument_list|)
 expr_stmt|;
 block|}
@@ -8805,7 +8805,7 @@ name|statsWork
 operator|!=
 literal|null
 operator|:
-literal|"Error when genereting StatsTask"
+literal|"Error when generating StatsTask"
 assert|;
 name|statsWork
 operator|.
