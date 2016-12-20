@@ -4262,30 +4262,15 @@ return|return
 literal|false
 return|;
 block|}
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Expected (from schema definition) "
-operator|+
+comment|// now diff the lists
+name|int
+name|schemaSize
+init|=
 name|schemaTables
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|" tables, Found (from HMS metastore) "
-operator|+
-name|dbTables
-operator|.
-name|size
-argument_list|()
-operator|+
-literal|" tables"
-argument_list|)
-expr_stmt|;
-comment|// now diff the lists
+decl_stmt|;
 name|schemaTables
 operator|.
 name|removeAll
@@ -4309,6 +4294,12 @@ name|out
 operator|.
 name|println
 argument_list|(
+literal|"Found "
+operator|+
+name|schemaSize
+operator|+
+literal|" tables in schema definition, "
+operator|+
 name|schemaTables
 operator|.
 name|size
@@ -4326,7 +4317,16 @@ name|toArray
 argument_list|()
 argument_list|)
 operator|+
-literal|" ] are missing from the database schema."
+literal|" ] are missing from the metastore database schema."
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Schema table validation failed!!!"
 argument_list|)
 expr_stmt|;
 return|return
