@@ -21798,7 +21798,7 @@ return|return
 name|result
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|ExprNodeGenericFuncDesc
 name|makeBinaryPredicate
