@@ -7149,6 +7149,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @return            the column statistics for the specified columns    * @throws MetaException    */
 specifier|public
 name|ColumnStatistics
 name|getTableStats
@@ -7172,6 +7173,10 @@ name|MetaException
 block|{
 if|if
 condition|(
+name|colNames
+operator|==
+literal|null
+operator|||
 name|colNames
 operator|.
 name|isEmpty
