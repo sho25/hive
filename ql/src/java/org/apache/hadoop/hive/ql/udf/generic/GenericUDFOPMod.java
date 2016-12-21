@@ -716,29 +716,13 @@ name|int
 name|scale2
 parameter_list|)
 block|{
-name|int
-name|scale
-init|=
-name|Math
-operator|.
-name|max
-argument_list|(
-name|scale1
-argument_list|,
-name|scale2
-argument_list|)
-decl_stmt|;
+comment|// From https://msdn.microsoft.com/en-us/library/ms190476.aspx
+comment|// e1 % e2
+comment|// Precision: min(p1-s1, p2 -s2) + max( s1,s2 )
+comment|// Scale: max(s1, s2)
 name|int
 name|prec
 init|=
-name|Math
-operator|.
-name|min
-argument_list|(
-name|HiveDecimal
-operator|.
-name|MAX_PRECISION
-argument_list|,
 name|Math
 operator|.
 name|min
@@ -752,13 +736,29 @@ operator|-
 name|scale2
 argument_list|)
 operator|+
+name|Math
+operator|.
+name|max
+argument_list|(
+name|scale1
+argument_list|,
+name|scale2
+argument_list|)
+decl_stmt|;
+name|int
 name|scale
+init|=
+name|Math
+operator|.
+name|max
+argument_list|(
+name|scale1
+argument_list|,
+name|scale2
 argument_list|)
 decl_stmt|;
 return|return
-name|TypeInfoFactory
-operator|.
-name|getDecimalTypeInfo
+name|adjustPrecScale
 argument_list|(
 name|prec
 argument_list|,

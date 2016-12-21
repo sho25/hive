@@ -553,6 +553,10 @@ name|int
 name|scale2
 parameter_list|)
 block|{
+comment|// From https://msdn.microsoft.com/en-us/library/ms190476.aspx
+comment|// e1 + e2
+comment|// Precision: max(s1, s2) + max(p1-s1, p2-s2) + 1
+comment|// Scale: max(s1, s2)
 name|int
 name|intPart
 init|=
@@ -584,25 +588,14 @@ decl_stmt|;
 name|int
 name|prec
 init|=
-name|Math
-operator|.
-name|min
-argument_list|(
 name|intPart
 operator|+
 name|scale
 operator|+
 literal|1
-argument_list|,
-name|HiveDecimal
-operator|.
-name|MAX_PRECISION
-argument_list|)
 decl_stmt|;
 return|return
-name|TypeInfoFactory
-operator|.
-name|getDecimalTypeInfo
+name|adjustPrecScale
 argument_list|(
 name|prec
 argument_list|,

@@ -1634,7 +1634,7 @@ literal|18
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1649,7 +1649,7 @@ literal|0
 argument_list|,
 literal|38
 argument_list|,
-literal|27
+literal|18
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1739,7 +1739,7 @@ literal|38
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1754,7 +1754,7 @@ literal|0
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 block|}
