@@ -1594,10 +1594,16 @@ argument_list|()
 operator|==
 literal|0
 operator|&&
+operator|(
+name|enablePreemption
+operator|==
+literal|false
+operator|||
 name|preemptionQueue
 operator|.
 name|isEmpty
 argument_list|()
+operator|)
 condition|)
 block|{
 name|shouldWait
