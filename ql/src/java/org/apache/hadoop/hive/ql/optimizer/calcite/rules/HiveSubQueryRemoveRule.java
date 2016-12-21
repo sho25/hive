@@ -429,6 +429,28 @@ name|HiveSubQRemoveRelBuilder
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|reloperators
+operator|.
+name|HiveFilter
+import|;
+end_import
+
 begin_comment
 comment|/**  * NOTE: this rule is replicated from Calcite's SubqueryRemoveRule  * Transform that converts IN, EXISTS and scalar sub-queries into joins.  * TODO:  *  Reason this is replicated instead of using Calcite's is  *    Calcite creates null literal with null type but hive needs it to be properly typed  *    Need fix for Calcite-1493  *  *<p>Sub-queries are represented by {@link RexSubQuery} expressions.  *  *<p>A sub-query may or may not be correlated. If a sub-query is correlated,  * the wrapped {@link RelNode} will contain a {@link RexCorrelVariable} before  * the rewrite, and the product of the rewrite will be a {@link Correlate}.  * The Correlate can be removed using {@link RelDecorrelator}.  */
 end_comment
@@ -495,6 +517,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 comment|//final RelBuilder builder = call.builder();
+comment|//TODO: replace HiveSubQRemoveRelBuilder with calcite's once calcite 1.11.0 is released
 specifier|final
 name|HiveSubQRemoveRelBuilder
 name|builder
@@ -592,6 +615,13 @@ operator|.
 name|getFieldCount
 argument_list|()
 decl_stmt|;
+assert|assert
+operator|(
+name|filter
+operator|instanceof
+name|HiveFilter
+operator|)
+assert|;
 specifier|final
 name|RexNode
 name|target
@@ -600,10 +630,17 @@ name|apply
 argument_list|(
 name|e
 argument_list|,
+operator|(
+operator|(
+name|HiveFilter
+operator|)
 name|filter
+operator|)
 operator|.
 name|getVariablesSet
-argument_list|()
+argument_list|(
+name|e
+argument_list|)
 argument_list|,
 name|logic
 argument_list|,

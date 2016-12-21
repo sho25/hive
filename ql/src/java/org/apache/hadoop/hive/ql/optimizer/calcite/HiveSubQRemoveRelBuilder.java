@@ -1254,9 +1254,9 @@ operator|.
 name|class
 argument_list|)
 argument_list|,
-name|RelFactories
+name|HiveRelFactories
 operator|.
-name|DEFAULT_FILTER_FACTORY
+name|HIVE_FILTER_FACTORY
 argument_list|)
 expr_stmt|;
 name|this
