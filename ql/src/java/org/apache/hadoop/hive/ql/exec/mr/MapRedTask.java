@@ -2011,6 +2011,57 @@ literal|"y"
 argument_list|)
 condition|)
 block|{
+comment|// HADOOP_CLIENT_OPTS is appended to HADOOP_OPTS in HADOOP.sh, so we should remove the old
+comment|// HADOOP_CLIENT_OPTS which might have the main debug options from current HADOOP_OPTS. A new
+comment|// HADOOP_CLIENT_OPTS is created with child JVM debug options, and it will be appended to
+comment|// HADOOP_OPTS agina when HADOOP.sh is executed for the child process.
+assert|assert
+name|environmentVariables
+operator|.
+name|containsKey
+argument_list|(
+name|HADOOP_OPTS_KEY
+argument_list|)
+operator|&&
+name|environmentVariables
+operator|.
+name|get
+argument_list|(
+name|HADOOP_OPTS_KEY
+argument_list|)
+operator|!=
+literal|null
+operator|:
+name|HADOOP_OPTS_KEY
+operator|+
+literal|" environment variable must have been set."
+assert|;
+name|environmentVariables
+operator|.
+name|put
+argument_list|(
+name|HADOOP_OPTS_KEY
+argument_list|,
+name|environmentVariables
+operator|.
+name|get
+argument_list|(
+name|HADOOP_OPTS_KEY
+argument_list|)
+operator|.
+name|replace
+argument_list|(
+name|environmentVariables
+operator|.
+name|get
+argument_list|(
+name|HADOOP_CLIENT_OPTS
+argument_list|)
+argument_list|,
+literal|""
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// swap debug options in HADOOP_CLIENT_OPTS to those that the child JVM should have
 assert|assert
 name|environmentVariables
