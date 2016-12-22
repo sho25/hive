@@ -604,7 +604,34 @@ name|TestCase
 operator|.
 name|fail
 argument_list|(
-literal|"Field reports null but object is not null"
+name|deserializeRead
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" field reports null but object is not null "
+operator|+
+literal|"(class "
+operator|+
+name|writable
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|writable
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}

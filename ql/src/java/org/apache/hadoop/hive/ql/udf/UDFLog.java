@@ -319,12 +319,6 @@ name|base
 init|=
 name|baseWritable
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
-name|bigDecimalValue
-argument_list|()
-operator|.
 name|doubleValue
 argument_list|()
 decl_stmt|;
@@ -332,12 +326,6 @@ name|double
 name|d
 init|=
 name|writable
-operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
-name|bigDecimalValue
-argument_list|()
 operator|.
 name|doubleValue
 argument_list|()

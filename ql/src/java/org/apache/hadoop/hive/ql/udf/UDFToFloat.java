@@ -755,6 +755,12 @@ condition|(
 name|i
 operator|==
 literal|null
+operator|||
+operator|!
+name|i
+operator|.
+name|isSet
+argument_list|()
 condition|)
 block|{
 return|return
@@ -768,9 +774,6 @@ operator|.
 name|set
 argument_list|(
 name|i
-operator|.
-name|getHiveDecimal
-argument_list|()
 operator|.
 name|floatValue
 argument_list|()

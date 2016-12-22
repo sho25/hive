@@ -132,9 +132,6 @@ index|[
 name|i
 index|]
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
 name|doubleValue
 argument_list|()
 expr_stmt|;

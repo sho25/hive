@@ -2429,6 +2429,9 @@ literal|0
 index|]
 condition|)
 block|{
+comment|// We serialize specifying the HiveDecimalWritable but also the desired
+comment|// serialization scale that will be used by text serialization for adding
+comment|// trailing fractional zeroes.
 name|serializeWrite
 operator|.
 name|writeHiveDecimal
@@ -2439,9 +2442,6 @@ name|vector
 index|[
 literal|0
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|,
 name|colVector
 operator|.
@@ -2491,9 +2491,6 @@ name|vector
 index|[
 name|batchIndex
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|,
 name|colVector
 operator|.

@@ -616,7 +616,24 @@ name|TestCase
 operator|.
 name|fail
 argument_list|(
-literal|"Field reports null but object is not null"
+literal|"Field reports null but object is not null (class "
+operator|+
+name|writable
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|writable
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}

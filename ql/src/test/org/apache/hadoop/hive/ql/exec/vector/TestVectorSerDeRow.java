@@ -1023,7 +1023,38 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Unexpected NULL"
+literal|"Unexpected NULL when reading primitiveCategory "
+operator|+
+name|primitiveCategory
+operator|+
+literal|" expected ("
+operator|+
+name|expected
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|expected
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|") "
+operator|+
+literal|" deserializeRead "
+operator|+
+name|deserializeRead
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -2273,9 +2304,6 @@ block|}
 name|void
 name|testVectorSerializeRow
 parameter_list|(
-name|int
-name|caseNum
-parameter_list|,
 name|Random
 name|r
 parameter_list|,
@@ -2766,7 +2794,30 @@ condition|)
 block|{
 name|fail
 argument_list|(
-literal|"Unexpected NULL from extractRow"
+literal|"Unexpected NULL from extractRow.  Expected class "
+operator|+
+name|expectedObj
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" value "
+operator|+
+name|expectedObj
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" batch index "
+operator|+
+name|i
+operator|+
+literal|" firstRandomRowIndex "
+operator|+
+name|firstRandomRowIndex
 argument_list|)
 expr_stmt|;
 block|}
@@ -3557,9 +3608,6 @@ block|}
 name|void
 name|testVectorDeserializeRow
 parameter_list|(
-name|int
-name|caseNum
-parameter_list|,
 name|Random
 name|r
 parameter_list|,
@@ -4388,7 +4436,7 @@ block|}
 block|}
 specifier|public
 name|void
-name|testVectorSerDeRow
+name|testVectorBinarySortableSerializeRow
 parameter_list|()
 throws|throws
 name|Throwable
@@ -4399,32 +4447,37 @@ init|=
 operator|new
 name|Random
 argument_list|(
-literal|5678
+literal|8732
 argument_list|)
 decl_stmt|;
-name|int
-name|c
+name|testVectorSerializeRow
+argument_list|(
+name|r
+argument_list|,
+name|SerializationType
+operator|.
+name|BINARY_SORTABLE
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|testVectorLazyBinarySerializeRow
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|Random
+name|r
 init|=
-literal|0
+operator|new
+name|Random
+argument_list|(
+literal|8732
+argument_list|)
 decl_stmt|;
-comment|/*      * SERIALIZE tests.      */
 name|testVectorSerializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
-name|r
-argument_list|,
-name|SerializationType
-operator|.
-name|BINARY_SORTABLE
-argument_list|)
-expr_stmt|;
-name|testVectorSerializeRow
-argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4432,11 +4485,25 @@ operator|.
 name|LAZY_BINARY
 argument_list|)
 expr_stmt|;
+block|}
+specifier|public
+name|void
+name|testVectorLazySimpleSerializeRow
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|Random
+name|r
+init|=
+operator|new
+name|Random
+argument_list|(
+literal|8732
+argument_list|)
+decl_stmt|;
 name|testVectorSerializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4444,13 +4511,25 @@ operator|.
 name|LAZY_SIMPLE
 argument_list|)
 expr_stmt|;
-comment|/*      * DESERIALIZE tests.      */
-comment|// BINARY_SORTABLE
+block|}
+specifier|public
+name|void
+name|testVectorBinarySortableDeserializeRow
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|Random
+name|r
+init|=
+operator|new
+name|Random
+argument_list|(
+literal|8732
+argument_list|)
+decl_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4469,9 +4548,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4490,9 +4566,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4511,9 +4584,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4532,9 +4602,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4553,9 +4620,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4574,9 +4638,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4595,9 +4656,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4614,33 +4672,25 @@ comment|/* useExternalBuffer */
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// LAZY_BINARY
-name|testVectorDeserializeRow
-argument_list|(
-name|c
-operator|++
-argument_list|,
+block|}
+specifier|public
+name|void
+name|testVectorLazyBinaryDeserializeRow
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|Random
 name|r
-argument_list|,
-name|SerializationType
-operator|.
-name|LAZY_BINARY
-argument_list|,
-comment|/* alternate1 = unused */
-literal|false
-argument_list|,
-comment|/* alternate2 = unused */
-literal|false
-argument_list|,
-comment|/* useExternalBuffer */
-literal|false
+init|=
+operator|new
+name|Random
+argument_list|(
+literal|8732
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4654,15 +4704,46 @@ comment|/* alternate2 = unused */
 literal|false
 argument_list|,
 comment|/* useExternalBuffer */
+literal|false
+argument_list|)
+expr_stmt|;
+name|testVectorDeserializeRow
+argument_list|(
+name|r
+argument_list|,
+name|SerializationType
+operator|.
+name|LAZY_BINARY
+argument_list|,
+comment|/* alternate1 = unused */
+literal|false
+argument_list|,
+comment|/* alternate2 = unused */
+literal|false
+argument_list|,
+comment|/* useExternalBuffer */
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// LAZY_SIMPLE
+block|}
+specifier|public
+name|void
+name|testVectorLazySimpleDeserializeRow
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|Random
+name|r
+init|=
+operator|new
+name|Random
+argument_list|(
+literal|8732
+argument_list|)
+decl_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4681,9 +4762,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4702,9 +4780,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType
@@ -4723,9 +4798,6 @@ argument_list|)
 expr_stmt|;
 name|testVectorDeserializeRow
 argument_list|(
-name|c
-operator|++
-argument_list|,
 name|r
 argument_list|,
 name|SerializationType

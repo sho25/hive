@@ -139,9 +139,6 @@ index|[
 name|i
 index|]
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
 name|signum
 argument_list|()
 operator|==
@@ -151,6 +148,17 @@ literal|0
 else|:
 literal|1
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getOutputType
+parameter_list|()
+block|{
+return|return
+literal|"Boolean"
+return|;
 block|}
 block|}
 end_class

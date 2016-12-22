@@ -661,6 +661,7 @@ name|i
 operator|++
 control|)
 block|{
+comment|// Use the new faster hash code since we are hashing memory objects.
 name|hashcode
 operator|^=
 name|decimalValues
@@ -668,10 +669,7 @@ index|[
 name|i
 index|]
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
-name|hashCode
+name|newFasterHashCode
 argument_list|()
 expr_stmt|;
 block|}

@@ -131,6 +131,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|util
@@ -8893,6 +8911,19 @@ specifier|final
 name|PositionedOutputStream
 name|valueStream
 decl_stmt|;
+comment|// These scratch buffers allow us to serialize decimals much faster.
+specifier|private
+specifier|final
+name|long
+index|[]
+name|scratchLongs
+decl_stmt|;
+specifier|private
+specifier|final
+name|byte
+index|[]
+name|scratchBuffer
+decl_stmt|;
 specifier|private
 specifier|final
 name|IntegerWriter
@@ -8956,6 +8987,26 @@ name|Kind
 operator|.
 name|DATA
 argument_list|)
+expr_stmt|;
+name|scratchLongs
+operator|=
+operator|new
+name|long
+index|[
+name|HiveDecimal
+operator|.
+name|SCRATCH_LONGS_LEN
+index|]
+expr_stmt|;
+name|scratchBuffer
+operator|=
+operator|new
+name|byte
+index|[
+name|HiveDecimal
+operator|.
+name|SCRATCH_BUFFER_LEN_TO_BYTES
+index|]
 expr_stmt|;
 name|this
 operator|.
@@ -9108,7 +9159,7 @@ literal|0
 index|]
 condition|)
 block|{
-name|HiveDecimal
+name|HiveDecimalWritable
 name|value
 init|=
 name|vec
@@ -9117,9 +9168,6 @@ name|vector
 index|[
 literal|0
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 decl_stmt|;
 name|indexStatistics
 operator|.
@@ -9133,6 +9181,9 @@ condition|(
 name|createBloomFilter
 condition|)
 block|{
+comment|// The HiveDecimalWritable toString() method with a scratch buffer for good performance
+comment|// when creating the String.  We need to use a String hash code and not UTF-8 byte[]
+comment|// hash code in order to get the right hash code.
 name|bloomFilter
 operator|.
 name|addString
@@ -9140,7 +9191,9 @@ argument_list|(
 name|value
 operator|.
 name|toString
-argument_list|()
+argument_list|(
+name|scratchBuffer
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -9159,16 +9212,15 @@ operator|++
 name|i
 control|)
 block|{
-name|SerializationUtils
+comment|// Use the fast ORC serialization method that emulates SerializationUtils.writeBigInteger
+comment|// provided by HiveDecimalWritable.
+name|value
 operator|.
-name|writeBigInteger
+name|serializationUtilsWrite
 argument_list|(
 name|valueStream
 argument_list|,
-name|value
-operator|.
-name|unscaledValue
-argument_list|()
+name|scratchLongs
 argument_list|)
 expr_stmt|;
 name|scaleStream
@@ -9218,7 +9270,7 @@ name|offset
 index|]
 condition|)
 block|{
-name|HiveDecimal
+name|HiveDecimalWritable
 name|value
 init|=
 name|vec
@@ -9229,20 +9281,14 @@ name|i
 operator|+
 name|offset
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 decl_stmt|;
-name|SerializationUtils
+name|value
 operator|.
-name|writeBigInteger
+name|serializationUtilsWrite
 argument_list|(
 name|valueStream
 argument_list|,
-name|value
-operator|.
-name|unscaledValue
-argument_list|()
+name|scratchLongs
 argument_list|)
 expr_stmt|;
 name|scaleStream
@@ -9274,7 +9320,9 @@ argument_list|(
 name|value
 operator|.
 name|toString
-argument_list|()
+argument_list|(
+name|scratchBuffer
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

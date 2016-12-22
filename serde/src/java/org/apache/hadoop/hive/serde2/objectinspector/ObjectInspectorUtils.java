@@ -4432,6 +4432,8 @@ return|;
 case|case
 name|DECIMAL
 case|:
+comment|// Since getBucketHashCode uses this, HiveDecimal return the old (much slower) but
+comment|// compatible hash code.
 return|return
 operator|(
 operator|(

@@ -1289,15 +1289,8 @@ return|return
 literal|null
 return|;
 block|}
-name|dec
-operator|=
-name|dec
-operator|.
-name|setScale
-argument_list|(
-name|scale
-argument_list|)
-expr_stmt|;
+comment|// NOTE: Previously, we did OldHiveDecimal.setScale(scale), called OldHiveDecimal
+comment|//       unscaledValue().toByteArray().
 return|return
 name|AvroSerdeUtils
 operator|.
@@ -1305,11 +1298,10 @@ name|getBufferFromBytes
 argument_list|(
 name|dec
 operator|.
-name|unscaledValue
-argument_list|()
-operator|.
-name|toByteArray
-argument_list|()
+name|bigIntegerBytesScaled
+argument_list|(
+name|scale
+argument_list|)
 argument_list|)
 return|;
 block|}

@@ -147,9 +147,6 @@ name|getWritableConstantValue
 parameter_list|()
 block|{
 comment|// We need to enforce precision/scale here.
-comment|// A little inefficiency here as we need to create a HiveDecimal instance from the writable and
-comment|// recreate a HiveDecimalWritable instance on the HiveDecimal instance. However, we don't know
-comment|// the precision/scale of the original writable until we get a HiveDecimal instance from it.
 name|DecimalTypeInfo
 name|decTypeInfo
 init|=
@@ -158,18 +155,18 @@ name|DecimalTypeInfo
 operator|)
 name|typeInfo
 decl_stmt|;
-name|HiveDecimal
-name|dec
+name|HiveDecimalWritable
+name|result
 init|=
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|value
-operator|==
-literal|null
-condition|?
-literal|null
-else|:
-name|value
+argument_list|)
+decl_stmt|;
+name|result
 operator|.
-name|getHiveDecimal
+name|mutateEnforcePrecisionScale
 argument_list|(
 name|decTypeInfo
 operator|.
@@ -181,12 +178,14 @@ operator|.
 name|scale
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
-name|dec
-operator|==
-literal|null
+operator|!
+name|result
+operator|.
+name|isSet
+argument_list|()
 condition|)
 block|{
 return|return
@@ -194,11 +193,7 @@ literal|null
 return|;
 block|}
 return|return
-operator|new
-name|HiveDecimalWritable
-argument_list|(
-name|dec
-argument_list|)
+name|result
 return|;
 block|}
 annotation|@
@@ -224,9 +219,6 @@ return|;
 block|}
 return|return
 name|value
-operator|.
-name|getHiveDecimal
-argument_list|()
 operator|.
 name|precision
 argument_list|()

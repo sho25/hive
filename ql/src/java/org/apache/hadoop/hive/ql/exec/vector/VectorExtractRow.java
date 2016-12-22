@@ -1864,6 +1864,7 @@ block|}
 case|case
 name|DECIMAL
 case|:
+comment|// The HiveDecimalWritable set method will quickly copy the deserialized decimal writable fields.
 operator|(
 operator|(
 name|HiveDecimalWritable
@@ -1889,9 +1890,6 @@ name|vector
 index|[
 name|adjustedIndex
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
