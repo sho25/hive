@@ -357,6 +357,9 @@ specifier|public
 name|long
 name|openTxn
 parameter_list|(
+name|Context
+name|ctx
+parameter_list|,
 name|String
 name|user
 parameter_list|)

@@ -6889,6 +6889,8 @@ name|txnMgr
 operator|.
 name|openTxn
 argument_list|(
+name|ctx
+argument_list|,
 name|userFromUGI
 argument_list|)
 expr_stmt|;
