@@ -1282,11 +1282,11 @@ name|prunedInfo
 operator|!=
 literal|null
 argument_list|,
-literal|"PrunedStructTypeInfo for path "
+literal|"PrunedStructTypeInfo for path '"
 operator|+
 name|path
 operator|+
-literal|" should not be null"
+literal|"' should not be null"
 argument_list|)
 expr_stmt|;
 name|int
