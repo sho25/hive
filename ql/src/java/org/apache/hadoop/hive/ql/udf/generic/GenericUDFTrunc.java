@@ -990,7 +990,7 @@ literal|"Only primitive type arguments are accepted, when arguments length is on
 operator|+
 name|arguments
 index|[
-literal|1
+literal|0
 index|]
 operator|.
 name|getTypeName
