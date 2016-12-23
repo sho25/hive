@@ -14880,6 +14880,9 @@ case|:
 case|case
 name|HASHTABLESINK
 case|:
+case|case
+name|SPARKPRUNINGSINK
+case|:
 name|vectorOp
 operator|=
 name|OperatorFactory
