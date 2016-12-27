@@ -269,6 +269,24 @@ name|serde2
 operator|.
 name|objectinspector
 operator|.
+name|ConstantObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|objectinspector
+operator|.
 name|ObjectInspector
 import|;
 end_import
@@ -347,7 +365,9 @@ literal|"months_between"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(date1, date2) - returns number of months between dates date1 and date2"
+literal|"_FUNC_(date1, date2, roundOff) "
+operator|+
+literal|"- returns number of months between dates date1 and date2"
 argument_list|,
 name|extended
 operator|=
@@ -367,7 +387,7 @@ literal|"date1 and date2 type can be date, timestamp or string in the format "
 operator|+
 literal|"'yyyy-MM-dd' or 'yyyy-MM-dd HH:mm:ss'. "
 operator|+
-literal|"The result is rounded to 8 decimal places.\n"
+literal|"The result is rounded to 8 decimal places by default. Set roundOff=false otherwise.\n"
 operator|+
 literal|" Example:\n"
 operator|+
@@ -456,6 +476,12 @@ operator|new
 name|DoubleWritable
 argument_list|()
 decl_stmt|;
+specifier|private
+name|boolean
+name|isRoundOffNeeded
+init|=
+literal|true
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -475,7 +501,7 @@ name|arguments
 argument_list|,
 literal|2
 argument_list|,
-literal|2
+literal|3
 argument_list|)
 expr_stmt|;
 name|checkArgPrimitive
@@ -492,6 +518,36 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|arguments
+operator|.
+name|length
+operator|==
+literal|3
+condition|)
+block|{
+if|if
+condition|(
+name|arguments
+index|[
+literal|2
+index|]
+operator|instanceof
+name|ConstantObjectInspector
+condition|)
+block|{
+name|isRoundOffNeeded
+operator|=
+name|getConstantBooleanValue
+argument_list|(
+name|arguments
+argument_list|,
+literal|2
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|// the function should support both short date and full timestamp format
 comment|// time part of the timestamp should not be skipped
 name|checkArgGroups
@@ -846,10 +902,14 @@ operator|)
 operator|/
 literal|2678400D
 decl_stmt|;
+if|if
+condition|(
+name|isRoundOffNeeded
+condition|)
+block|{
 comment|// Round a double to 8 decimal places.
-name|double
-name|result
-init|=
+name|monBtwDbl
+operator|=
 name|BigDecimal
 operator|.
 name|valueOf
@@ -866,12 +926,13 @@ argument_list|)
 operator|.
 name|doubleValue
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
 name|output
 operator|.
 name|set
 argument_list|(
-name|result
+name|monBtwDbl
 argument_list|)
 expr_stmt|;
 return|return
