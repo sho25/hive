@@ -541,7 +541,7 @@ name|File
 operator|.
 name|separator
 operator|+
-name|TestHCatLoader
+name|TestE2EScenarios
 operator|.
 name|class
 operator|.
