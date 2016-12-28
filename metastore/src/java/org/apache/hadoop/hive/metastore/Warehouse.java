@@ -2553,7 +2553,7 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2589,7 +2589,7 @@ parameter_list|(
 name|Path
 name|tblPath
 parameter_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

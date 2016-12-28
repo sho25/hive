@@ -40718,6 +40718,13 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+name|ReplChangeManager
+operator|.
+name|scheduleCMClearer
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 decl_stmt|;

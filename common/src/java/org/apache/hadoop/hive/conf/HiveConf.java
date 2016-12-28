@@ -2770,6 +2770,58 @@ argument_list|,
 literal|"HDFS root dir for all replication dumps."
 argument_list|)
 block|,
+name|REPLCMENABLED
+argument_list|(
+literal|"hive.repl.cm.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Turn on ChangeManager, so delete files will goes to cmrootdir."
+argument_list|)
+block|,
+name|REPLCMDIR
+argument_list|(
+literal|"hive.repl.cmrootdir"
+argument_list|,
+literal|"/user/hive/cmroot/"
+argument_list|,
+literal|"Root dir for ChangeManager, used for deleted files."
+argument_list|)
+block|,
+name|REPLCMRETIAN
+argument_list|(
+literal|"hive.repl.cm.retain"
+argument_list|,
+literal|"24h"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|HOURS
+argument_list|)
+argument_list|,
+literal|"Time to retain removed files in cmrootdir."
+argument_list|)
+block|,
+name|REPLCMINTERVAL
+argument_list|(
+literal|"hive.repl.cm.interval"
+argument_list|,
+literal|"3600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Inteval for cmroot cleanup thread."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
