@@ -18710,7 +18710,7 @@ literal|"hive\\.convert\\..*"
 block|,
 literal|"hive\\.exec\\.dynamic\\.partition.*"
 block|,
-literal|"hive\\.exec\\..*\\.dynamic\\.partitions\\..*"
+literal|"hive\\.exec\\.max\\.dynamic\\.partitions.*"
 block|,
 literal|"hive\\.exec\\.compress\\..*"
 block|,
