@@ -19,6 +19,24 @@ name|messaging
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|abstract
@@ -39,12 +57,20 @@ name|CREATE_TABLE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Getter for the name of table created in HCatalog.    * @return Table-name (String).    */
+comment|/**    * Getter for the name of table created    * @return Table-name (String).    */
 specifier|public
 specifier|abstract
 name|String
 name|getTable
 parameter_list|()
+function_decl|;
+specifier|public
+specifier|abstract
+name|Table
+name|getTableObj
+parameter_list|()
+throws|throws
+name|Exception
 function_decl|;
 annotation|@
 name|Override

@@ -1102,6 +1102,21 @@ return|return
 name|isMetadataOnly
 return|;
 block|}
+specifier|public
+name|void
+name|setIsMetadataOnly
+parameter_list|(
+name|boolean
+name|isMetadataOnly
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isMetadataOnly
+operator|=
+name|isMetadataOnly
+expr_stmt|;
+block|}
 comment|/**    * @return the replication state of the event that spawned this statement    */
 specifier|public
 name|String
