@@ -10961,23 +10961,6 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|plannerCtx
-operator|!=
-literal|null
-condition|)
-block|{
-name|plannerCtx
-operator|.
-name|setInsertToken
-argument_list|(
-name|ast
-argument_list|,
-name|isTmpFileDest
-argument_list|)
-expr_stmt|;
-block|}
 name|qbp
 operator|.
 name|setDestForClause
@@ -11015,15 +10998,92 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|>
-literal|1
+operator|==
+literal|2
 condition|)
 block|{
+comment|// From the moment that we have two destination clauses,
+comment|// we know that this is a multi-insert query.
+comment|// Thus, set property to right value.
+comment|// Using qbp.getClauseNamesForDest().size()>= 2 would be
+comment|// equivalent, but we use == to avoid setting the property
+comment|// multiple times
 name|queryProperties
 operator|.
 name|setMultiDestQuery
 argument_list|(
 literal|true
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|plannerCtx
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|queryProperties
+operator|.
+name|hasMultiDestQuery
+argument_list|()
+condition|)
+block|{
+name|plannerCtx
+operator|.
+name|setInsertToken
+argument_list|(
+name|ast
+argument_list|,
+name|isTmpFileDest
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|plannerCtx
+operator|!=
+literal|null
+operator|&&
+name|qbp
+operator|.
+name|getClauseNamesForDest
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|2
+condition|)
+block|{
+comment|// For multi-insert query, currently we only optimize the FROM clause.
+comment|// Hence, introduce multi-insert token on top of it.
+comment|// However, first we need to reset existing token (insert).
+comment|// Using qbp.getClauseNamesForDest().size()>= 2 would be
+comment|// equivalent, but we use == to avoid setting the property
+comment|// multiple times
+name|plannerCtx
+operator|.
+name|resetToken
+argument_list|()
+expr_stmt|;
+name|plannerCtx
+operator|.
+name|setMultiInsertToken
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|qbp
+operator|.
+name|getQueryFrom
+argument_list|()
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -11062,6 +11122,23 @@ name|child_count
 argument_list|)
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+operator|!
+name|qbp
+operator|.
+name|getIsSubQ
+argument_list|()
+condition|)
+block|{
+name|qbp
+operator|.
+name|setQueryFromExpr
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Check if this is a subquery / lateral view
 name|ASTNode
@@ -65660,6 +65737,17 @@ parameter_list|,
 name|boolean
 name|isTmpFileDest
 parameter_list|)
+block|{     }
+name|void
+name|setMultiInsertToken
+parameter_list|(
+name|ASTNode
+name|child
+parameter_list|)
+block|{     }
+name|void
+name|resetToken
+parameter_list|()
 block|{     }
 block|}
 specifier|private

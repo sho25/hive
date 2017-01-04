@@ -94,8 +94,6 @@ name|Invalid_decimal
 block|,
 name|Less_than_equal_greater_than
 block|,
-name|Multi_insert
-block|,
 name|Others
 block|,
 name|Same_name_in_multiple_expressions
