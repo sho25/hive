@@ -90,24 +90,10 @@ block|{
 name|IN
 block|,
 name|EXISTS
-block|,   }
+block|,
+name|SCALAR
+block|}
 empty_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|IN
-init|=
-literal|1
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|int
-name|EXISTS
-init|=
-literal|2
-decl_stmt|;
 comment|/**    * RexNode corresponding to subquery.    */
 specifier|private
 name|RelNode

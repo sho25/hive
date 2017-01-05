@@ -1814,13 +1814,10 @@ name|FilterProjectTransposeRule
 operator|.
 name|INSTANCE
 argument_list|)
-operator|.
-name|addRuleInstance
-argument_list|(
-name|FilterCorrelateRule
-operator|.
-name|INSTANCE
-argument_list|)
+comment|// FilterCorrelateRule rule mistakenly pushes a FILTER, consiting of correlated vars,
+comment|// on top of LogicalCorrelate to within  left input for scalar corr queries
+comment|// which causes exception during decorrelation. This has been disabled for now.
+comment|//.addRuleInstance(FilterCorrelateRule.INSTANCE)
 operator|.
 name|build
 argument_list|()

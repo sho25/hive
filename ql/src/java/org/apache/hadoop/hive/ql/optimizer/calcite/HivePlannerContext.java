@@ -41,6 +41,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|RelNode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -79,6 +93,16 @@ name|HiveRulesRegistry
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -94,6 +118,13 @@ specifier|private
 name|HiveRulesRegistry
 name|registry
 decl_stmt|;
+specifier|private
+name|Set
+argument_list|<
+name|RelNode
+argument_list|>
+name|corrScalarRexSQWithAgg
+decl_stmt|;
 specifier|public
 name|HivePlannerContext
 parameter_list|(
@@ -102,6 +133,12 @@ name|algoConfig
 parameter_list|,
 name|HiveRulesRegistry
 name|registry
+parameter_list|,
+name|Set
+argument_list|<
+name|RelNode
+argument_list|>
+name|corrScalarRexSQWithAgg
 parameter_list|)
 block|{
 name|this
@@ -115,6 +152,15 @@ operator|.
 name|registry
 operator|=
 name|registry
+expr_stmt|;
+comment|// this is to keep track if a subquery is correlated and contains aggregate
+comment|// this is computed in CalcitePlanner while planning and is later required by subuery remove rule
+comment|// hence this is passed using HivePlannerContext
+name|this
+operator|.
+name|corrScalarRexSQWithAgg
+operator|=
+name|corrScalarRexSQWithAgg
 expr_stmt|;
 block|}
 specifier|public
@@ -166,6 +212,25 @@ operator|.
 name|cast
 argument_list|(
 name|registry
+argument_list|)
+return|;
+block|}
+if|if
+condition|(
+name|clazz
+operator|.
+name|isInstance
+argument_list|(
+name|corrScalarRexSQWithAgg
+argument_list|)
+condition|)
+block|{
+return|return
+name|clazz
+operator|.
+name|cast
+argument_list|(
+name|corrScalarRexSQWithAgg
 argument_list|)
 return|;
 block|}

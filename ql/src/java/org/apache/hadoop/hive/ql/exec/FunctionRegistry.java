@@ -2774,6 +2774,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"sq_count_check"
+argument_list|,
+name|GenericUDFSQCountCheck
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"pmod"
 argument_list|,
 name|GenericUDFPosMod
