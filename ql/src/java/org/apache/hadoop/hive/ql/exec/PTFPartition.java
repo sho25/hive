@@ -889,14 +889,15 @@ name|i
 operator|=
 name|i
 operator|>=
-name|end
+name|createTimeSz
 condition|?
-name|end
+name|createTimeSz
 operator|-
 literal|1
 else|:
 name|i
 expr_stmt|;
+comment|// Lead on the whole partition not the iterator range
 return|return
 name|getAt
 argument_list|(
@@ -927,12 +928,13 @@ name|i
 operator|=
 name|i
 operator|<
-name|start
+literal|0
 condition|?
-name|start
+literal|0
 else|:
 name|i
 expr_stmt|;
+comment|// Lag on the whole partition not the iterator range
 return|return
 name|getAt
 argument_list|(
@@ -1014,7 +1016,7 @@ expr_stmt|;
 block|}
 block|}
 empty_stmt|;
-comment|/*    * provide an Iterator on the rows in a Partiton.    * Iterator exposes the index of the next location.    * Client can invoke lead/lag relative to the next location.    */
+comment|/*    * provide an Iterator on the rows in a Partition.    * Iterator exposes the index of the next location.    * Client can invoke lead/lag relative to the next location.    */
 specifier|public
 specifier|static
 interface|interface
