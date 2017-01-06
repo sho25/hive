@@ -11816,7 +11816,18 @@ literal|"hive.tez.exec.inplace.progress"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Updates tez job execution progress in-place in the terminal."
+literal|"Updates tez job execution progress in-place in the terminal when hive-cli is used."
+argument_list|)
+block|,
+name|HIVE_SERVER2_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.server2.in.place.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Allows hive server 2 to send progress bar update information. This is currently available"
+operator|+
+literal|" only if the execution engine is tez."
 argument_list|)
 block|,
 name|SPARK_EXEC_INPLACE_PROGRESS

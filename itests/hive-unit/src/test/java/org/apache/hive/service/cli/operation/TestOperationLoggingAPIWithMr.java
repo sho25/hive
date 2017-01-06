@@ -477,6 +477,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|operationHandle
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Assert

@@ -903,6 +903,28 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|tez
+operator|.
+name|monitoring
+operator|.
+name|TezJobMonitor
+import|;
+end_import
+
 begin_comment
 comment|/**  * Holds session state related to Tez  */
 end_comment
@@ -3820,9 +3842,7 @@ block|{
 return|return
 operator|new
 name|ArrayList
-argument_list|<
-name|LocalResource
-argument_list|>
+argument_list|<>
 argument_list|(
 name|localizedResources
 argument_list|)

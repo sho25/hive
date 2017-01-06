@@ -49,11 +49,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|exec
+name|log
 operator|.
-name|InPlaceUpdates
+name|InPlaceUpdate
 import|;
 end_import
 
@@ -506,12 +506,21 @@ argument_list|)
 expr_stmt|;
 name|inPlaceUpdate
 operator|=
-name|InPlaceUpdates
+name|InPlaceUpdate
 operator|.
-name|inPlaceEligible
+name|canRenderInPlace
 argument_list|(
 name|hiveConf
 argument_list|)
+operator|&&
+operator|!
+name|SessionState
+operator|.
+name|getConsole
+argument_list|()
+operator|.
+name|getIsSilent
+argument_list|()
 expr_stmt|;
 name|console
 operator|=
@@ -1673,7 +1682,7 @@ name|String
 name|line
 parameter_list|)
 block|{
-name|InPlaceUpdates
+name|InPlaceUpdate
 operator|.
 name|reprintLine
 argument_list|(

@@ -610,6 +610,9 @@ name|getOperationStatus
 parameter_list|(
 name|OperationHandle
 name|opHandle
+parameter_list|,
+name|boolean
+name|getProgressUpdate
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -620,6 +623,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+name|getProgressUpdate
 argument_list|)
 return|;
 block|}

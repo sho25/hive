@@ -23,18 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|lang
-operator|.
-name|reflect
-operator|.
-name|Method
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|slf4j
@@ -50,6 +38,18 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|Method
 import|;
 end_import
 
@@ -113,7 +113,7 @@ name|classLoader
 operator|.
 name|loadClass
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.exec.tez.TezJobMonitor"
+literal|"org.apache.hadoop.hive.ql.exec.tez.monitoring.TezJobMonitor"
 argument_list|)
 operator|.
 name|getMethod
