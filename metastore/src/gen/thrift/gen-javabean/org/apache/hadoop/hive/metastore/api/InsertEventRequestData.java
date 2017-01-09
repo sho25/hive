@@ -548,7 +548,7 @@ comment|// required
 specifier|private
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|filesAddedChecksum
 decl_stmt|;
@@ -1006,8 +1006,6 @@ operator|.
 name|TType
 operator|.
 name|STRING
-argument_list|,
-literal|true
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1116,14 +1114,14 @@ condition|)
 block|{
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|__this__filesAddedChecksum
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 argument_list|(
 name|other
@@ -1377,7 +1375,7 @@ name|util
 operator|.
 name|Iterator
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|getFilesAddedChecksumIterator
 parameter_list|()
@@ -1405,7 +1403,7 @@ specifier|public
 name|void
 name|addToFilesAddedChecksum
 parameter_list|(
-name|ByteBuffer
+name|String
 name|elem
 parameter_list|)
 block|{
@@ -1425,7 +1423,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -1443,7 +1441,7 @@ block|}
 specifier|public
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|getFilesAddedChecksum
 parameter_list|()
@@ -1460,7 +1458,7 @@ name|setFilesAddedChecksum
 parameter_list|(
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|filesAddedChecksum
 parameter_list|)
@@ -1586,7 +1584,7 @@ argument_list|(
 operator|(
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 operator|)
 name|value
@@ -2337,21 +2335,13 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|org
+name|sb
 operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TBaseHelper
-operator|.
-name|toString
+name|append
 argument_list|(
 name|this
 operator|.
 name|filesAddedChecksum
-argument_list|,
-name|sb
 argument_list|)
 expr_stmt|;
 block|}
@@ -2856,7 +2846,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 argument_list|(
 name|_list561
@@ -2864,7 +2854,7 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
-name|ByteBuffer
+name|String
 name|_elem562
 decl_stmt|;
 for|for
@@ -2888,7 +2878,7 @@ name|_elem562
 operator|=
 name|iprot
 operator|.
-name|readBinary
+name|readString
 argument_list|()
 expr_stmt|;
 name|struct
@@ -3161,7 +3151,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|ByteBuffer
+name|String
 name|_iter565
 range|:
 name|struct
@@ -3171,7 +3161,7 @@ control|)
 block|{
 name|oprot
 operator|.
-name|writeBinary
+name|writeString
 argument_list|(
 name|_iter565
 argument_list|)
@@ -3355,7 +3345,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|ByteBuffer
+name|String
 name|_iter567
 range|:
 name|struct
@@ -3365,7 +3355,7 @@ control|)
 block|{
 name|oprot
 operator|.
-name|writeBinary
+name|writeString
 argument_list|(
 name|_iter567
 argument_list|)
@@ -3580,7 +3570,7 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 argument_list|(
 name|_list571
@@ -3588,7 +3578,7 @@ operator|.
 name|size
 argument_list|)
 expr_stmt|;
-name|ByteBuffer
+name|String
 name|_elem572
 decl_stmt|;
 for|for
@@ -3612,7 +3602,7 @@ name|_elem572
 operator|=
 name|iprot
 operator|.
-name|readBinary
+name|readString
 argument_list|()
 expr_stmt|;
 name|struct

@@ -27,9 +27,13 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|hive
 operator|.
-name|FSDataInputStream
+name|ql
+operator|.
+name|parse
+operator|.
+name|EximUtil
 import|;
 end_import
 
@@ -124,16 +128,6 @@ operator|.
 name|io
 operator|.
 name|InputStreamReader
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|OutputStream
 import|;
 end_import
 
@@ -764,7 +758,9 @@ name|Path
 argument_list|(
 name|toPath
 argument_list|,
-literal|"_files"
+name|EximUtil
+operator|.
+name|FILES_NAME
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -1112,7 +1108,9 @@ name|Path
 argument_list|(
 name|path
 argument_list|,
-literal|"_files"
+name|EximUtil
+operator|.
+name|FILES_NAME
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -1211,15 +1209,27 @@ operator|+
 name|line
 argument_list|)
 expr_stmt|;
+name|String
+name|fileUriStr
+init|=
+name|EximUtil
+operator|.
+name|getCMDecodedFileName
+argument_list|(
+name|line
+argument_list|)
+decl_stmt|;
+comment|// TODO HIVE-15490: Add checksum validation here
 name|Path
 name|p
 init|=
 operator|new
 name|Path
 argument_list|(
-name|line
+name|fileUriStr
 argument_list|)
 decl_stmt|;
+comment|// TODO: again, fs cache should make this okay, but if not, revisit
 name|FileSystem
 name|srcFs
 init|=
@@ -1230,7 +1240,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|// TODO : again, fs cache should make this okay, but if not, revisit
 name|ret
 operator|.
 name|add

@@ -159,16 +159,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|nio
-operator|.
-name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Iterator
@@ -765,7 +755,7 @@ name|files
 parameter_list|,
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|fileChecksums
 parameter_list|)

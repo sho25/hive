@@ -1249,7 +1249,7 @@ name|files
 parameter_list|,
 name|List
 argument_list|<
-name|ByteBuffer
+name|String
 argument_list|>
 name|fileChecksums
 parameter_list|)

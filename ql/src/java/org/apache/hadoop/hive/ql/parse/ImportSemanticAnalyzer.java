@@ -2505,7 +2505,9 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-literal|"data"
+name|EximUtil
+operator|.
+name|DATA_PATH_NAME
 argument_list|)
 decl_stmt|;
 name|Path
@@ -5245,7 +5247,9 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-literal|"data"
+name|EximUtil
+operator|.
+name|DATA_PATH_NAME
 argument_list|)
 decl_stmt|;
 name|tblDesc
