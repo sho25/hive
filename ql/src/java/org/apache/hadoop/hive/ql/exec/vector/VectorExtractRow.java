@@ -1853,8 +1853,10 @@ operator|.
 name|UTF_8
 argument_list|)
 argument_list|,
-operator|-
-literal|1
+name|maxLengths
+index|[
+name|logicalColumnIndex
+index|]
 argument_list|)
 expr_stmt|;
 return|return
