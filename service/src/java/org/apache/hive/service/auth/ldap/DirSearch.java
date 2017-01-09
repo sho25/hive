@@ -70,6 +70,29 @@ parameter_list|)
 throws|throws
 name|NamingException
 function_decl|;
+comment|/**    * Finds group's distinguished name.    * @param group group name or unique identifier    * @return DN for the specified group name    * @throws NamingException    */
+name|String
+name|findGroupDn
+parameter_list|(
+name|String
+name|group
+parameter_list|)
+throws|throws
+name|NamingException
+function_decl|;
+comment|/**    * Verifies that specified user is a member of specified group.    * @param user user id or distinguished name    * @param groupDn group's DN    * @return {@code true} if the user is a member of the group, {@code false} - otherwise.    * @throws NamingException    */
+name|boolean
+name|isUserMemberOfGroup
+parameter_list|(
+name|String
+name|user
+parameter_list|,
+name|String
+name|groupDn
+parameter_list|)
+throws|throws
+name|NamingException
+function_decl|;
 comment|/**    * Finds groups that contain the specified user.    * @param userDn user's distinguished name    * @return list of groups    * @throws NamingException    */
 name|List
 argument_list|<

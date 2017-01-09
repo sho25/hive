@@ -2037,6 +2037,14 @@ name|HIVE_LLAP_DAEMON_SERVICE_PRINCIPAL_NAME
 init|=
 literal|"hive.llap.daemon.service.principal"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_SERVER2_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+init|=
+literal|"hive.server2.authentication.ldap.userMembershipKey"
+decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
 specifier|public
 specifier|static
@@ -10657,9 +10665,26 @@ literal|"hive.server2.authentication.ldap.groupMembershipKey"
 argument_list|,
 literal|"member"
 argument_list|,
-literal|"LDAP attribute name on the user entry that references a group, the user belongs to.\n"
+literal|"LDAP attribute name on the group object that contains the list of distinguished names\n"
+operator|+
+literal|"for the user, group, and contact objects that are members of the group.\n"
 operator|+
 literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_USERMEMBERSHIP_KEY
+argument_list|(
+name|HIVE_SERVER2_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+argument_list|,
+literal|null
+argument_list|,
+literal|"LDAP attribute name on the user object that contains groups of which the user is\n"
+operator|+
+literal|"a direct member, except for the primary group, which is represented by the\n"
+operator|+
+literal|"primaryGroupId.\n"
+operator|+
+literal|"For example: memberOf"
 argument_list|)
 block|,
 name|HIVE_SERVER2_PLAIN_LDAP_GROUPCLASS_KEY

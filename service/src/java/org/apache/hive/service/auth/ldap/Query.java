@@ -260,6 +260,32 @@ return|return
 name|this
 return|;
 block|}
+comment|/**      * Sets mapping between names in the search filter template and actual values.      * @param key marker in the search filter template.      * @param values array of values      * @return the current instance of the builder      */
+specifier|public
+name|QueryBuilder
+name|map
+parameter_list|(
+name|String
+name|key
+parameter_list|,
+name|String
+index|[]
+name|values
+parameter_list|)
+block|{
+name|filterTemplate
+operator|.
+name|add
+argument_list|(
+name|key
+argument_list|,
+name|values
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**      * Sets attribute that should be returned in results for the query.      * @param attributeName attribute name      * @return the current instance of the builder      */
 specifier|public
 name|QueryBuilder
