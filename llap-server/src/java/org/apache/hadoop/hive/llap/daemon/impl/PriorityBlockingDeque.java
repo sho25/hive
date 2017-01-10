@@ -304,7 +304,7 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-comment|//        Collections.sort(list, comparator);
+comment|// Inserted in sort order. Hence no explict sort.
 name|notEmpty
 operator|.
 name|signal
@@ -473,6 +473,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * @throws NullPointerException {@inheritDoc}    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|offerLast
@@ -1477,6 +1479,8 @@ literal|true
 return|;
 block|}
 comment|/**    * @throws NullPointerException if the specified element is null    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|offer

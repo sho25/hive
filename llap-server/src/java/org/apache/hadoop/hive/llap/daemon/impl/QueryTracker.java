@@ -1411,6 +1411,8 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// One case where this happens is when a query is killed via an explicit signal, and then
+comment|// another message is received from teh AMHeartbeater.
 name|LOG
 operator|.
 name|warn

@@ -1039,12 +1039,19 @@ block|}
 if|if
 condition|(
 name|lastFinishableState
-operator|!=
+operator|==
 name|fragmentInfo
 operator|.
 name|canFinish
 argument_list|()
 condition|)
+block|{
+comment|// State has not changed.
+return|return
+literal|true
+return|;
+block|}
+else|else
 block|{
 name|entityInfo
 operator|.
@@ -1058,12 +1065,6 @@ argument_list|)
 expr_stmt|;
 return|return
 literal|false
-return|;
-block|}
-else|else
-block|{
-return|return
-literal|true
 return|;
 block|}
 block|}

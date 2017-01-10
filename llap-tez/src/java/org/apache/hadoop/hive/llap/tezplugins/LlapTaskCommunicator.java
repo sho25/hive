@@ -4738,6 +4738,23 @@ name|String
 name|uniqueNodeId
 parameter_list|)
 block|{
+synchronized|synchronized
+init|(
+name|attemptToNodeMap
+init|)
+block|{
+if|if
+condition|(
+name|attemptToNodeMap
+operator|.
+name|containsKey
+argument_list|(
+name|taskAttemptID
+argument_list|)
+condition|)
+block|{
+comment|// Register only if the attempt is known. In case an unregister call
+comment|// came in before the register call.
 name|String
 name|prev
 init|=
@@ -4772,6 +4789,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+block|}
 name|void
 name|unregisterTaskAttempt
 parameter_list|(
@@ -4788,14 +4807,21 @@ argument_list|)
 expr_stmt|;
 name|LlapNodeId
 name|llapNodeId
-init|=
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|attemptToNodeMap
+init|)
+block|{
+name|llapNodeId
+operator|=
 name|attemptToNodeMap
 operator|.
 name|remove
 argument_list|(
 name|attemptId
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|llapNodeId
@@ -4805,6 +4831,7 @@ condition|)
 block|{
 comment|// Possible since either container / task can be unregistered.
 return|return;
+block|}
 block|}
 name|BiMap
 argument_list|<
