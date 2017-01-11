@@ -1045,6 +1045,15 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|jobID
+operator|=
+name|rj
+operator|.
+name|getJobID
+argument_list|()
+expr_stmt|;
 name|returnVal
 operator|=
 name|jobExecHelper
@@ -1190,16 +1199,6 @@ name|killJob
 argument_list|()
 expr_stmt|;
 block|}
-name|jobID
-operator|=
-name|rj
-operator|.
-name|getID
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-expr_stmt|;
 block|}
 comment|// get the list of Dynamic partition paths
 if|if
