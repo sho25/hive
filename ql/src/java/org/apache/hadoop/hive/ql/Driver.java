@@ -2020,6 +2020,14 @@ operator|new
 name|QueryDisplay
 argument_list|()
 decl_stmt|;
+specifier|private
+name|LockedDriverState
+name|lDrvState
+init|=
+operator|new
+name|LockedDriverState
+argument_list|()
+decl_stmt|;
 comment|// Query specific info
 specifier|private
 name|QueryState
@@ -2032,26 +2040,7 @@ name|QueryLifeTimeHook
 argument_list|>
 name|queryHooks
 decl_stmt|;
-comment|// a lock is used for synchronizing the state transition and its associated
-comment|// resource releases
-specifier|private
-specifier|final
-name|ReentrantLock
-name|stateLock
-init|=
-operator|new
-name|ReentrantLock
-argument_list|()
-decl_stmt|;
-specifier|private
-name|DriverState
-name|driverState
-init|=
-name|DriverState
-operator|.
-name|INITIALIZED
-decl_stmt|;
-specifier|private
+specifier|public
 enum|enum
 name|DriverState
 block|{
@@ -2077,6 +2066,31 @@ comment|// a state that the driver enters after destroy() is called and it is th
 name|DESTROYED
 block|,
 name|ERROR
+block|}
+specifier|public
+specifier|static
+class|class
+name|LockedDriverState
+block|{
+comment|// a lock is used for synchronizing the state transition and its associated
+comment|// resource releases
+specifier|public
+specifier|final
+name|ReentrantLock
+name|stateLock
+init|=
+operator|new
+name|ReentrantLock
+argument_list|()
+decl_stmt|;
+specifier|public
+name|DriverState
+name|driverState
+init|=
+name|DriverState
+operator|.
+name|INITIALIZED
+decl_stmt|;
 block|}
 specifier|private
 name|boolean
@@ -2856,6 +2870,8 @@ operator|.
 name|COMPILE
 argument_list|)
 expr_stmt|;
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -2863,6 +2879,8 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -2872,6 +2890,8 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -4139,6 +4159,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -4151,6 +4173,8 @@ condition|(
 name|isInterrupted
 condition|)
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|deferClose
@@ -4166,6 +4190,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|compileError
@@ -4182,6 +4208,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -4264,6 +4292,8 @@ name|boolean
 name|isInterrupted
 parameter_list|()
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -4273,6 +4303,8 @@ try|try
 block|{
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -4301,6 +4333,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -6971,6 +7005,8 @@ argument_list|,
 name|ctx
 argument_list|,
 name|userFromUGI
+argument_list|,
+name|lDrvState
 argument_list|)
 expr_stmt|;
 if|if
@@ -8215,6 +8251,8 @@ name|downstreamError
 operator|=
 literal|null
 expr_stmt|;
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -8229,6 +8267,8 @@ condition|)
 block|{
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -8236,6 +8276,8 @@ operator|.
 name|COMPILED
 condition|)
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -8266,6 +8308,8 @@ block|}
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -8276,6 +8320,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -9075,6 +9121,8 @@ name|releaseResources
 argument_list|()
 expr_stmt|;
 block|}
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -9084,6 +9132,8 @@ try|try
 block|{
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -9091,6 +9141,8 @@ operator|.
 name|INTERRUPT
 condition|)
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -9100,6 +9152,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|isFinishedWithError
@@ -9116,6 +9170,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -9740,6 +9796,8 @@ operator|.
 name|getQueryString
 argument_list|()
 decl_stmt|;
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -9751,12 +9809,16 @@ comment|// if query is not in compiled state, or executing state which is carrie
 comment|// a combined compile/execute in runInternal, throws the error
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|!=
 name|DriverState
 operator|.
 name|COMPILED
 operator|&&
+name|lDrvState
+operator|.
 name|driverState
 operator|!=
 name|DriverState
@@ -9777,6 +9839,8 @@ operator|+
 literal|" has "
 operator|+
 operator|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -9801,6 +9865,8 @@ return|;
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -9811,6 +9877,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -11799,6 +11867,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -11817,6 +11887,8 @@ operator|!
 name|deferClose
 condition|)
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -11827,6 +11899,8 @@ block|}
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|executionError
@@ -11843,6 +11917,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -11919,6 +11995,8 @@ name|plan
 parameter_list|)
 block|{
 comment|// Plan maybe null if Driver.close is called in another thread for the same Driver object
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -11986,6 +12064,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -12653,12 +12733,16 @@ name|CommandNeedRetryException
 block|{
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
 operator|.
 name|DESTROYED
 operator|||
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -12932,12 +13016,16 @@ name|IOException
 block|{
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
 operator|.
 name|DESTROYED
 operator|||
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -13045,6 +13133,8 @@ name|void
 name|releaseDriverContext
 parameter_list|()
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -13088,6 +13178,8 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -13430,6 +13522,8 @@ name|int
 name|close
 parameter_list|()
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -13442,18 +13536,24 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
 operator|.
 name|COMPILING
 operator|||
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
 operator|.
 name|EXECUTING
 operator|||
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -13461,6 +13561,8 @@ operator|.
 name|INTERRUPT
 condition|)
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -13483,6 +13585,8 @@ expr_stmt|;
 name|releaseContext
 argument_list|()
 expr_stmt|;
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -13492,6 +13596,8 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock
@@ -13531,6 +13637,8 @@ name|void
 name|destroy
 parameter_list|()
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|lock
@@ -13542,12 +13650,16 @@ comment|// in the cancel case where the driver state is INTERRUPTED, destroy wil
 comment|// the query process
 if|if
 condition|(
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
 operator|.
 name|DESTROYED
 operator|||
+name|lDrvState
+operator|.
 name|driverState
 operator|==
 name|DriverState
@@ -13559,6 +13671,8 @@ return|return;
 block|}
 else|else
 block|{
+name|lDrvState
+operator|.
 name|driverState
 operator|=
 name|DriverState
@@ -13569,6 +13683,8 @@ block|}
 block|}
 finally|finally
 block|{
+name|lDrvState
+operator|.
 name|stateLock
 operator|.
 name|unlock

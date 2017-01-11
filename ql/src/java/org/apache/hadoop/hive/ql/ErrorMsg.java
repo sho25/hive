@@ -2178,6 +2178,13 @@ argument_list|,
 literal|"Unsupported set operator"
 argument_list|)
 block|,
+name|LOCK_ACQUIRE_CANCELLED
+argument_list|(
+literal|10330
+argument_list|,
+literal|"Query was cancelled while acquiring locks on the underlying objects. "
+argument_list|)
+block|,
 name|REPLACE_VIEW_WITH_MATERIALIZED
 argument_list|(
 literal|10400
