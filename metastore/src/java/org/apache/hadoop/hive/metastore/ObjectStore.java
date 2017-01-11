@@ -42194,12 +42194,6 @@ block|{
 name|rollbackTransaction
 argument_list|()
 expr_stmt|;
-return|return
-name|Lists
-operator|.
-name|newArrayList
-argument_list|()
-return|;
 block|}
 block|}
 block|}
