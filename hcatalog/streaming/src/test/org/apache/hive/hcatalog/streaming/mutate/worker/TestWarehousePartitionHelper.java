@@ -93,9 +93,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
+name|fs
 operator|.
-name|Configuration
+name|Path
 import|;
 end_import
 
@@ -107,9 +107,11 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
+name|hive
 operator|.
-name|Path
+name|conf
+operator|.
+name|HiveConf
 import|;
 end_import
 
@@ -131,11 +133,11 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|Configuration
+name|HiveConf
 name|CONFIGURATION
 init|=
 operator|new
-name|Configuration
+name|HiveConf
 argument_list|()
 decl_stmt|;
 specifier|private

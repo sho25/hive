@@ -2784,7 +2784,7 @@ literal|"hive.repl.cm.enabled"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Turn on ChangeManager, so delete files will goes to cmrootdir."
+literal|"Turn on ChangeManager, so delete files will go to cmrootdir."
 argument_list|)
 block|,
 name|REPLCMDIR
