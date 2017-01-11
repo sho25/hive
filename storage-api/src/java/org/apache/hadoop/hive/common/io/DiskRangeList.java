@@ -688,7 +688,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Creating new range; last range (which can include some previous adds) was "
 operator|+

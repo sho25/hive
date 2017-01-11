@@ -1810,8 +1810,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isTracingEnabled
-operator|&&
+comment|/*isTracingEnabled&& */
 name|LOG
 operator|.
 name|isInfoEnabled
@@ -1820,7 +1819,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|trace
+name|info
 argument_list|(
 literal|"Resulting disk ranges to read (file "
 operator|+
@@ -1870,8 +1869,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isTracingEnabled
-operator|&&
+comment|/*isTracingEnabled&& */
 name|LOG
 operator|.
 name|isInfoEnabled
@@ -1880,9 +1878,15 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|trace
+name|info
 argument_list|(
-literal|"Disk ranges after cache (file "
+literal|"Disk ranges after cache (found everything "
+operator|+
+name|isAllInCache
+operator|.
+name|value
+operator|+
+literal|"; file "
 operator|+
 name|fileKey
 operator|+
@@ -3785,7 +3789,7 @@ else|:
 literal|"un"
 operator|)
 operator|+
-literal|" compressed read; cOffset "
+literal|"compressed read; cOffset "
 operator|+
 name|cOffset
 operator|+
