@@ -820,6 +820,10 @@ elseif|else
 if|if
 condition|(
 name|gotAllData
+operator|!=
+literal|null
+operator|&&
+name|gotAllData
 operator|.
 name|value
 condition|)
