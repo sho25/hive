@@ -19,20 +19,6 @@ end_package
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -373,16 +359,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -538,6 +514,18 @@ name|String
 argument_list|>
 name|lastResults
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|VERIFY_SETUP_STEPS
+init|=
+literal|true
+decl_stmt|;
+comment|// if verifySetup is set to true, all the test setup we do will perform additional
+comment|// verifications as well, which is useful to verify that our setup occurred
+comment|// correctly when developing and debugging tests. These verifications, however
+comment|// do not test any new functionality for replication, and thus, are not relevant
+comment|// for testing replication itself. For steady state, we want this to be false.
 annotation|@
 name|BeforeClass
 specifier|public
@@ -874,7 +862,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Tests basic operation - creates a db, with 4 tables, 2 ptned and 2 unptned.    * Inserts data into one of the ptned tables, and one of the unptned tables,    * and verifies that a REPL DUMP followed by a REPL LOAD is able to load it    * appropriately.    */
+comment|/**    * Tests basic operation - creates a db, with 4 tables, 2 ptned and 2 unptned.    * Inserts data into one of the ptned tables, and one of the unptned tables,    * and verifies that a REPL DUMP followed by a REPL LOAD is able to load it    * appropriately. This tests bootstrap behaviour primarily.    */
 annotation|@
 name|Test
 specifier|public
@@ -1093,17 +1081,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -1120,17 +1105,14 @@ operator|+
 literal|".ptned PARTITION(b=1)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -1147,45 +1129,36 @@ operator|+
 literal|".ptned PARTITION(b=2)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
@@ -1269,73 +1242,58 @@ name|replDumpId
 block|}
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
@@ -1601,34 +1559,30 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
+comment|// Now, we load data into the tables, and see if an incremental
+comment|// repl drop/load can duplicate it.
 name|run
 argument_list|(
 literal|"LOAD DATA LOCAL INPATH '"
@@ -1642,17 +1596,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -1669,17 +1620,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_late"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -1696,17 +1644,14 @@ operator|+
 literal|".ptned PARTITION(b=1)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -1723,17 +1668,14 @@ operator|+
 literal|".ptned PARTITION(b=2)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -1759,17 +1701,14 @@ operator|+
 literal|".ptned_late PARTITION(b=1)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_late WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -1786,20 +1725,18 @@ operator|+
 literal|".ptned_late PARTITION(b=2)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_late WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -1890,107 +1827,85 @@ comment|// TODO: this will currently not work because we need to add in ALTER_DB
 comment|// and queue in a dummy ALTER_DB to update the repl.last.id on the last event of every
 comment|// incremental dump. Currently, the dump id fetched will be the last dump id at the time
 comment|// the db was created from the bootstrap export dump
-name|run
+comment|// VERIFY tables and partitions on destination for equivalence.
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
-literal|".ptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+literal|"_dupe.ptned_empty"
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-comment|//    run("SELECT * from " + dbName + "_dupe.unptned");
-comment|//    verifyResults(unptn_data);
+comment|//    verifyRun("SELECT * from " + dbName + "_dupe.unptned", unptn_data);
 comment|// TODO :this does not work because LOAD DATA LOCAL INPATH into an unptned table seems
 comment|// to use ALTER_TABLE only - it does not emit an INSERT or CREATE - re-enable after
 comment|// fixing that.
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned_late"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-comment|// verified up to here.
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_late WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_late WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -2204,17 +2119,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -2231,17 +2143,14 @@ operator|+
 literal|".ptned PARTITION(b='1')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -2258,17 +2167,14 @@ operator|+
 literal|".ptned PARTITION(b='2')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -2285,17 +2191,14 @@ operator|+
 literal|".ptned2 PARTITION(b='1')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -2312,20 +2215,19 @@ operator|+
 literal|".ptned2 PARTITION(b='2')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// At this point, we've set up all the tables and ptns we're going to test drops across
+comment|// Replicate it first, and then we'll drop it on the source.
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -2387,17 +2289,14 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"REPL STATUS "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 operator|new
 name|String
 index|[]
@@ -2406,76 +2305,62 @@ name|replDumpId
 block|}
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// All tables good on destination, drop on source.
 name|run
 argument_list|(
 literal|"DROP TABLE "
@@ -2503,34 +2388,29 @@ operator|+
 literal|".ptned2"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
+comment|// replicate the incremental drops
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -2610,6 +2490,9 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
+comment|// verify that drops were replicated. This can either be from tables or ptns
+comment|// not existing, and thus, throwing a NoSuchObjectException, or returning nulls
+comment|// or select * returning empty, depending on what we're testing.
 name|Exception
 name|e
 init|=
@@ -2665,31 +2548,25 @@ name|getClass
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -2967,17 +2844,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -2994,17 +2868,14 @@ operator|+
 literal|".unptned2"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -3021,17 +2892,14 @@ operator|+
 literal|".ptned PARTITION(b='1')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -3048,17 +2916,14 @@ operator|+
 literal|".ptned PARTITION(b='2')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -3075,17 +2940,14 @@ operator|+
 literal|".ptned2 PARTITION(b='1')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -3102,20 +2964,18 @@ operator|+
 literal|".ptned2 PARTITION(b='2')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// base tables set up, let's replicate them over
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -3196,90 +3056,75 @@ name|replDumpId
 block|}
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='1'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='2'"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// tables have been replicated over, and verified to be identical. Now, we do a couple of
+comment|// alters on the source
+comment|// Rename unpartitioned table
 name|run
 argument_list|(
 literal|"ALTER TABLE "
@@ -3293,20 +3138,18 @@ operator|+
 literal|".unptned_rn"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_rn"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
+comment|// Alter unpartitioned table set table property
 name|String
 name|testKey
 init|=
@@ -3334,6 +3177,11 @@ operator|+
 literal|"')"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|VERIFY_SETUP_STEPS
+condition|)
+block|{
 try|try
 block|{
 name|Table
@@ -3389,6 +3237,8 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// alter partitioned table, rename partition
 name|run
 argument_list|(
 literal|"ALTER TABLE "
@@ -3398,34 +3248,29 @@ operator|+
 literal|".ptned PARTITION (b='2') RENAME TO PARTITION (b='22')"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=22"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// alter partitioned table set table property
 name|run
 argument_list|(
 literal|"ALTER TABLE "
@@ -3443,6 +3288,11 @@ operator|+
 literal|"')"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|VERIFY_SETUP_STEPS
+condition|)
+block|{
 try|try
 block|{
 name|Table
@@ -3498,7 +3348,9 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
-comment|// No DDL way to alter a partition, so we use the MSC api directly.
+block|}
+comment|// alter partitioned table's partition set partition property
+comment|// Note : No DDL way to alter a partition, so we use the MSC api directly.
 try|try
 block|{
 name|List
@@ -3573,17 +3425,15 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
-name|run
+comment|// rename partitioned table
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -3600,20 +3450,18 @@ operator|+
 literal|".ptned2_rn"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned2_rn WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// All alters done, now we replicate them over.
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -3692,6 +3540,8 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
+comment|// Replication done, we now do the following verifications:
+comment|// verify that unpartitioned table rename succeeded.
 name|Exception
 name|e
 init|=
@@ -3747,6 +3597,18 @@ name|getClass
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_rn"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+comment|// verify that partition rename succeded.
 try|try
 block|{
 name|Table
@@ -3804,48 +3666,29 @@ name|te
 argument_list|)
 expr_stmt|;
 block|}
-name|run
-argument_list|(
-literal|"SELECT * from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned_rn"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-name|unptn_data
-argument_list|)
-expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=22"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+comment|// verify that ptned table rename succeded.
 name|Exception
 name|e2
 init|=
@@ -3901,6 +3744,18 @@ name|getClass
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned2_rn WHERE b=2"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// verify that ptned table property set worked
 try|try
 block|{
 name|Table
@@ -3958,6 +3813,7 @@ name|te
 argument_list|)
 expr_stmt|;
 block|}
+comment|// verify that partitioned table partition property set worked.
 try|try
 block|{
 name|List
@@ -4037,20 +3893,6 @@ name|te
 argument_list|)
 expr_stmt|;
 block|}
-name|run
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned2_rn WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-name|ptn_data_2
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -4313,31 +4155,25 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
@@ -4354,17 +4190,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -4394,17 +4227,14 @@ operator|+
 literal|".unptned"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|".unptned_late"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -4484,17 +4314,14 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned_late"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|unptn_data
 argument_list|)
 expr_stmt|;
@@ -4511,17 +4338,14 @@ operator|+
 literal|".ptned PARTITION(b=1)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -4538,17 +4362,14 @@ operator|+
 literal|".ptned PARTITION(b=2)"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -4574,17 +4395,14 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_late WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
@@ -4601,17 +4419,14 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|".ptned_late WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -4689,31 +4504,25 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_late WHERE b=1"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_late WHERE b=2"
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
+argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
@@ -4994,6 +4803,62 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+name|void
+name|verifySetup
+parameter_list|(
+name|String
+name|cmd
+parameter_list|,
+name|String
+index|[]
+name|data
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+name|VERIFY_SETUP_STEPS
+condition|)
+block|{
+name|run
+argument_list|(
+name|cmd
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|data
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|private
+name|void
+name|verifyRun
+parameter_list|(
+name|String
+name|cmd
+parameter_list|,
+name|String
+index|[]
+name|data
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|run
+argument_list|(
+name|cmd
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+name|data
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static

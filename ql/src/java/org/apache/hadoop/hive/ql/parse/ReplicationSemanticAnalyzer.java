@@ -2916,9 +2916,6 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// FIXME : Current MessageFactory api is lacking,
-comment|// and impl is in JSONMessageFactory instead. This needs to be
-comment|// refactored correctly so we don't depend on a specific impl.
 name|Iterable
 argument_list|<
 name|org
