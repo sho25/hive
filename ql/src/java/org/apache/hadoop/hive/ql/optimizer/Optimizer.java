@@ -636,6 +636,13 @@ name|contains
 argument_list|(
 literal|"org.apache.hadoop.hive.ql.hooks.LineageLogger"
 argument_list|)
+operator|||
+name|postExecHooks
+operator|.
+name|contains
+argument_list|(
+literal|"org.apache.atlas.hive.hook.HiveHook"
+argument_list|)
 condition|)
 block|{
 name|transformations
