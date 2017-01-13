@@ -5498,6 +5498,8 @@ case|case
 name|EVENT_DROP_PARTITION
 case|:
 block|{
+try|try
+block|{
 name|DropPartitionMessage
 name|dropPartitionMessage
 init|=
@@ -5521,15 +5523,26 @@ name|ExprNodeGenericFuncDesc
 argument_list|>
 argument_list|>
 name|partSpecs
-init|=
+decl_stmt|;
+name|partSpecs
+operator|=
 name|genPartSpecs
 argument_list|(
+operator|new
+name|Table
+argument_list|(
+name|dropPartitionMessage
+operator|.
+name|getTableObj
+argument_list|()
+argument_list|)
+argument_list|,
 name|dropPartitionMessage
 operator|.
 name|getPartitions
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|partSpecs
@@ -5691,6 +5704,43 @@ name|getPayload
 argument_list|()
 argument_list|)
 throw|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|e
+operator|instanceof
+name|SemanticException
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Error reading message members"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+else|else
+block|{
+throw|throw
+operator|(
+name|SemanticException
+operator|)
+name|e
+throw|;
+block|}
 block|}
 block|}
 case|case
@@ -6436,6 +6486,9 @@ argument_list|>
 argument_list|>
 name|genPartSpecs
 parameter_list|(
+name|Table
+name|table
+parameter_list|,
 name|List
 argument_list|<
 name|Map
@@ -6508,7 +6561,8 @@ operator|.
 name|size
 argument_list|()
 expr_stmt|;
-comment|// pick the length of the first ptn, we expect all ptns listed to have the same number of key-vals.
+comment|// pick the length of the first ptn, we expect all ptns listed to have the same number of
+comment|// key-vals.
 block|}
 name|List
 argument_list|<
@@ -6576,15 +6630,20 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-comment|// FIXME : bug here, value is being placed as a String, but should actually be the underlying type
-comment|// as converted to it by looking at the table's col schema. To do that, however, we need the
-comment|// tableObjJson from the DropTableMessage. So, currently, this will only work for partitions for
-comment|// which the partition keys are all strings. So, for now, we hardcode it, but we need to fix this.
 name|String
 name|type
 init|=
-literal|"string"
+name|table
+operator|.
+name|getPartColByName
+argument_list|(
+name|key
+argument_list|)
+operator|.
+name|getType
+argument_list|()
 decl_stmt|;
+empty_stmt|;
 name|PrimitiveTypeInfo
 name|pti
 init|=

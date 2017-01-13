@@ -1976,6 +1976,15 @@ operator|+
 literal|".ptned2(a string) partitioned by (b string) STORED AS TEXTFILE"
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -2226,6 +2235,54 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_1
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3 PARTITION(b=1)"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned2 WHERE b=1"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn_2
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3 PARTITION(b=2)"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned2 WHERE b=2"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
 comment|// At this point, we've set up all the tables and ptns we're going to test drops across
 comment|// Replicate it first, and then we'll drop it on the source.
 name|advanceDumpDir
@@ -2360,6 +2417,28 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned3 WHERE b=1"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned3 WHERE b=2"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
 comment|// All tables good on destination, drop on source.
 name|run
 argument_list|(
@@ -2388,13 +2467,22 @@ operator|+
 literal|".ptned2"
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3 DROP PARTITION (b=1)"
+argument_list|)
+expr_stmt|;
 name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
-literal|".ptned WHERE b=2"
+literal|".ptned WHERE b='2'"
 argument_list|,
 name|empty
 argument_list|)
@@ -2410,11 +2498,32 @@ argument_list|,
 name|ptn_data_1
 argument_list|)
 expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3 WHERE b=1"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned3"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
 comment|// replicate the incremental drops
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
-empty_stmt|;
 name|run
 argument_list|(
 literal|"REPL DUMP "
@@ -2554,7 +2663,7 @@ literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|"_dupe.ptned WHERE b='2'"
 argument_list|,
 name|empty
 argument_list|)
@@ -2568,6 +2677,28 @@ operator|+
 literal|"_dupe.ptned"
 argument_list|,
 name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned3 WHERE b=1"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned3"
+argument_list|,
+name|ptn_data_2
 argument_list|)
 expr_stmt|;
 name|Exception
