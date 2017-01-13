@@ -12303,6 +12303,28 @@ operator|+
 literal|"ZooKeeper for ZooKeeper SecretManager."
 argument_list|)
 block|,
+name|LLAP_WEBUI_SPNEGO_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.webui.spnego.keytab"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the LLAP WebUI SPNEGO principal.\n"
+operator|+
+literal|"Typical value would look like /etc/security/keytabs/spnego.service.keytab."
+argument_list|)
+block|,
+name|LLAP_WEBUI_SPNEGO_PRINCIPAL
+argument_list|(
+literal|"hive.llap.webui.spnego.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The LLAP WebUI SPNEGO service principal. Configured similarly to\n"
+operator|+
+literal|"hive.server2.webui.spnego.principal"
+argument_list|)
+block|,
 name|LLAP_FS_KERBEROS_PRINCIPAL
 argument_list|(
 literal|"hive.llap.task.principal"
