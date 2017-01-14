@@ -11479,7 +11479,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"c12_1"
+literal|"_c12"
 argument_list|,
 name|meta
 operator|.
@@ -12811,7 +12811,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"c2_2"
+literal|"_c2"
 argument_list|,
 name|meta
 operator|.
@@ -13675,7 +13675,7 @@ argument_list|(
 literal|2
 argument_list|)
 argument_list|,
-literal|"c1"
+literal|"_c1"
 argument_list|)
 expr_stmt|;
 comment|// verify the system generated column name
