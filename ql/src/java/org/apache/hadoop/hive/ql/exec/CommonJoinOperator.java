@@ -704,6 +704,13 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+specifier|private
+specifier|transient
+name|boolean
+name|closeOpCalled
+init|=
+literal|false
+decl_stmt|;
 comment|/** Kryo ctor. */
 specifier|protected
 name|CommonJoinOperator
@@ -1158,6 +1165,10 @@ name|initializeOp
 argument_list|(
 name|hconf
 argument_list|)
+expr_stmt|;
+name|closeOpCalled
+operator|=
+literal|false
 expr_stmt|;
 name|this
 operator|.
@@ -4402,6 +4413,29 @@ name|HiveException
 block|{
 if|if
 condition|(
+name|closeOpCalled
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"checkAndGenObject is called after operator "
+operator|+
+name|id
+operator|+
+literal|" "
+operator|+
+name|getName
+argument_list|()
+operator|+
+literal|" called closeOp"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 name|condn
 index|[
 literal|0
@@ -4885,6 +4919,10 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|closeOpCalled
+operator|=
+literal|true
+expr_stmt|;
 for|for
 control|(
 name|AbstractRowContainer
