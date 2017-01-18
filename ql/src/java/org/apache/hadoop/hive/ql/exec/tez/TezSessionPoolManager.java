@@ -2552,6 +2552,23 @@ operator|.
 name|getQueueName
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|queueName
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Pool session has a null queue: "
+operator|+
+name|oldSession
+argument_list|)
+expr_stmt|;
+block|}
 name|HiveConf
 name|conf
 init|=
@@ -2617,6 +2634,18 @@ argument_list|,
 name|isDefault
 argument_list|)
 decl_stmt|;
+comment|// There's some bogus code that can modify the queue name. Force-set it for pool sessions.
+name|conf
+operator|.
+name|set
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+argument_list|,
+name|queueName
+argument_list|)
+expr_stmt|;
 name|newSession
 operator|.
 name|open
