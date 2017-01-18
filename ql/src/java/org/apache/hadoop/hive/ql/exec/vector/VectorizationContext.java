@@ -2422,7 +2422,7 @@ specifier|private
 name|int
 name|firstOutputColumnIndex
 decl_stmt|;
-specifier|private
+specifier|public
 enum|enum
 name|HiveVectorAdaptorUsageMode
 block|{
