@@ -64,19 +64,6 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-specifier|public
-name|void
-name|validateQueueConfiguration
-parameter_list|(
-name|Configuration
-name|configuration
-parameter_list|,
-name|String
-name|forUser
-parameter_list|)
-throws|throws
-name|IOException
-function_decl|;
 block|}
 end_interface
 
