@@ -10147,6 +10147,10 @@ name|lastWasMasked
 operator|=
 literal|true
 expr_stmt|;
+name|partialMaskWasMatched
+operator|=
+literal|false
+expr_stmt|;
 block|}
 block|}
 else|else
