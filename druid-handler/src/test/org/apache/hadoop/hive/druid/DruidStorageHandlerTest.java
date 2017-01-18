@@ -660,6 +660,8 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 try|try
@@ -803,6 +805,8 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
@@ -851,6 +855,8 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
@@ -1107,6 +1113,8 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|String

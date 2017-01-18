@@ -8632,6 +8632,15 @@ operator|+
 literal|"declared"
 argument_list|)
 block|,
+name|HIVE_DRUID_COORDINATOR_DEFAULT_ADDRESS
+argument_list|(
+literal|"hive.druid.coordinator.address.default"
+argument_list|,
+literal|"localhost:8081"
+argument_list|,
+literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
+argument_list|)
+block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
 argument_list|(
 literal|"hive.druid.select.threshold"
@@ -8669,6 +8678,15 @@ argument_list|,
 literal|"Read timeout period for the HTTP\n"
 operator|+
 literal|"client in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 1 minute."
+argument_list|)
+block|,
+name|HIVE_DRUID_SLEEP_TIME
+argument_list|(
+literal|"hive.druid.sleep.time"
+argument_list|,
+literal|"PT10S"
+argument_list|,
+literal|"Sleep time between retries in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 10 seconds."
 argument_list|)
 block|,
 name|HIVE_DRUID_BASE_PERSIST_DIRECTORY
@@ -8749,6 +8767,24 @@ argument_list|,
 literal|"/tmp/workingDirectory"
 argument_list|,
 literal|"Default hdfs working directory used to store some intermediate metadata"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_TRIES
+argument_list|(
+literal|"hive.druid.maxTries"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Maximum number of retries before giving up"
+argument_list|)
+block|,
+name|HIVE_DRUID_PASSIVE_WAIT_TIME
+argument_list|(
+literal|"hive.druid.passiveWaitTimeMs"
+argument_list|,
+literal|30000
+argument_list|,
+literal|"Wait time in ms default to 30 seconds."
 argument_list|)
 block|,
 comment|// For HBase storage handler
