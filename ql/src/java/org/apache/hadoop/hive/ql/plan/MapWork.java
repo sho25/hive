@@ -1403,6 +1403,7 @@ name|boolean
 name|isExecDriver
 parameter_list|)
 block|{
+comment|// TODO# HiveConf.getBoolVar(conf, ConfVars.LLAP_IO_NONVECTOR_WRAPPER_ENABLED)
 name|boolean
 name|hasLlap
 init|=

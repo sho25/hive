@@ -36,6 +36,15 @@ index|[]
 name|a
 parameter_list|)
 block|{
+if|if
+condition|(
+name|a
+operator|==
+literal|null
+condition|)
+return|return
+literal|"null"
+return|;
 name|StringBuilder
 name|b
 init|=

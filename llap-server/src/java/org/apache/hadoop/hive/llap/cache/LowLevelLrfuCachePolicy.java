@@ -1791,7 +1791,7 @@ name|LlapIoImpl
 operator|.
 name|CACHE_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
 literal|"Evicting {} at {}"
 argument_list|,

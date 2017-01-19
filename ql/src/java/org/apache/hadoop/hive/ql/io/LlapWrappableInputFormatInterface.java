@@ -20,14 +20,14 @@ package|;
 end_package
 
 begin_comment
-comment|/** Marker interface for LLAP; serves no other purpose. */
+comment|/** Marker interface for LLAP IO. */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
 name|LlapWrappableInputFormatInterface
-block|{}
+block|{ }
 end_interface
 
 end_unit

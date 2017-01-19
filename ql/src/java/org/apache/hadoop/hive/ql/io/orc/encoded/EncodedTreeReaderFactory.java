@@ -8372,8 +8372,6 @@ operator|!=
 literal|null
 argument_list|,
 name|data
-operator|!=
-literal|null
 argument_list|,
 name|dictionary
 operator|!=

@@ -3363,7 +3363,7 @@ specifier|static
 name|BaseWork
 name|getMergeWork
 parameter_list|(
-name|JobConf
+name|Configuration
 name|jconf
 parameter_list|)
 block|{
@@ -3422,7 +3422,7 @@ specifier|static
 name|BaseWork
 name|getMergeWork
 parameter_list|(
-name|JobConf
+name|Configuration
 name|jconf
 parameter_list|,
 name|String

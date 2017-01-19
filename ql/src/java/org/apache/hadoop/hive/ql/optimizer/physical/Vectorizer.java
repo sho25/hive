@@ -9464,6 +9464,9 @@ operator|.
 name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
 argument_list|)
 expr_stmt|;
+comment|// TODO: we could also vectorize some formats based on hive.llap.io.encode.formats if LLAP IO
+comment|//       is enabled and we are going to run in LLAP. However, we don't know if we end up in
+comment|//       LLAP or not at this stage, so don't do this now. We may need to add a 'force' option.
 name|isSchemaEvolution
 operator|=
 name|HiveConf

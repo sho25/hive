@@ -12114,6 +12114,63 @@ operator|+
 literal|"cases of file overwrites. This is supported on HDFS."
 argument_list|)
 block|,
+comment|// Restricted to text for now as this is a new feature; only text files can be sliced.
+name|LLAP_IO_ENCODE_FORMATS
+argument_list|(
+literal|"hive.llap.io.encode.formats"
+argument_list|,
+literal|"org.apache.hadoop.mapred.TextInputFormat,"
+argument_list|,
+literal|"The table input formats for which LLAP IO should re-encode and cache data.\n"
+operator|+
+literal|"Comma-separated list."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_ALLOC_SIZE
+argument_list|(
+literal|"hive.llap.io.encode.alloc.size"
+argument_list|,
+literal|"256Kb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"Allocation size for the buffers used to cache encoded data from non-ORC files. Must\n"
+operator|+
+literal|"be a power of two between "
+operator|+
+name|LLAP_ALLOCATOR_MIN_ALLOC
+operator|+
+literal|" and\n"
+operator|+
+name|LLAP_ALLOCATOR_MAX_ALLOC
+operator|+
+literal|"."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_SLICE_ROW_COUNT
+argument_list|(
+literal|"hive.llap.io.encode.slice.row.count"
+argument_list|,
+literal|100000
+argument_list|,
+literal|"Row count to use to separate cache slices when reading encoded data from row-based\n"
+operator|+
+literal|"inputs into LLAP cache, if this feature is enabled."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_SLICE_LRR
+argument_list|(
+literal|"hive.llap.io.encode.slice.lrr"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to separate cache slices when reading encoded data from text inputs via MR\n"
+operator|+
+literal|"MR LineRecordRedader into LLAP cache, if this feature is enabled. Safety flag."
+argument_list|)
+block|,
 name|LLAP_ORC_ENABLE_TIME_COUNTERS
 argument_list|(
 literal|"hive.llap.io.orc.time.counters"

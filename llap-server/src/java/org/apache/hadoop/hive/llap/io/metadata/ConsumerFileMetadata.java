@@ -17,7 +17,7 @@ name|llap
 operator|.
 name|io
 operator|.
-name|decode
+name|metadata
 package|;
 end_package
 
@@ -27,9 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|concurrent
-operator|.
-name|Callable
+name|List
 import|;
 end_import
 
@@ -39,13 +37,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|orc
 operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|ConsumerFeedback
+name|CompressionKind
 import|;
 end_import
 
@@ -55,19 +49,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|orc
 operator|.
-name|hive
+name|OrcProto
 operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|impl
-operator|.
-name|ColumnVectorBatch
+name|Type
 import|;
 end_import
 
@@ -86,33 +72,25 @@ end_import
 begin_interface
 specifier|public
 interface|interface
-name|ReadPipeline
-extends|extends
-name|ConsumerFeedback
-argument_list|<
-name|ColumnVectorBatch
-argument_list|>
+name|ConsumerFileMetadata
 block|{
-specifier|public
-name|Callable
+name|int
+name|getStripeCount
+parameter_list|()
+function_decl|;
+name|CompressionKind
+name|getCompressionKind
+parameter_list|()
+function_decl|;
+name|List
 argument_list|<
-name|Void
+name|Type
 argument_list|>
-name|getReadCallable
+name|getTypes
 parameter_list|()
 function_decl|;
 name|TypeDescription
-name|getFileSchema
-parameter_list|()
-function_decl|;
-comment|// TODO: this is ORC-specific and should be removed
-name|TypeDescription
-name|getReaderSchema
-parameter_list|()
-function_decl|;
-name|boolean
-index|[]
-name|getIncludedColumns
+name|getSchema
 parameter_list|()
 function_decl|;
 block|}

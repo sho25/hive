@@ -1720,14 +1720,7 @@ throw|;
 block|}
 block|}
 return|return
-name|HiveInputFormat
-operator|.
-name|wrapForLlap
-argument_list|(
 name|format
-argument_list|,
-name|conf
-argument_list|)
 return|;
 block|}
 specifier|private

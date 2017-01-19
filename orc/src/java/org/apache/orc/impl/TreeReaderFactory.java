@@ -6720,6 +6720,28 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|private
+specifier|static
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+name|LOG
+init|=
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|TreeReaderFactory
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|// This class collects together very similar methods for reading an ORC vector of byte arrays and
 comment|// creating the BytesColumnVector.
 comment|//

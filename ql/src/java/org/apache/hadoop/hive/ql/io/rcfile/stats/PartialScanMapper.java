@@ -564,7 +564,7 @@ expr_stmt|;
 block|}
 try|try
 block|{
-comment|//CombineHiveInputFormat is set in PartialScanTask.
+comment|//CombineHiveInputFormat may be set in PartialScanTask.
 name|RCFileKeyBufferWrapper
 name|key
 init|=
@@ -573,13 +573,23 @@ name|RCFileKeyBufferWrapper
 call|)
 argument_list|(
 operator|(
+name|k
+operator|instanceof
+name|CombineHiveKey
+operator|)
+condition|?
+operator|(
+operator|(
 name|CombineHiveKey
 operator|)
 name|k
-argument_list|)
+operator|)
 operator|.
 name|getKey
 argument_list|()
+else|:
+name|k
+argument_list|)
 decl_stmt|;
 comment|// calculate rawdatasize
 name|KeyBuffer
