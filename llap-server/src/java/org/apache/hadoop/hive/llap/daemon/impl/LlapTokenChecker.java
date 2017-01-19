@@ -443,7 +443,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
 specifier|static
 name|List
 argument_list|<
@@ -521,6 +520,10 @@ name|id
 decl_stmt|;
 if|if
 condition|(
+name|clusterId
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|clusterId
 operator|.
