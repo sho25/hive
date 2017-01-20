@@ -1323,6 +1323,8 @@ argument_list|()
 operator|.
 name|getQueryIdentifier
 argument_list|()
+argument_list|,
+name|attemptId
 argument_list|)
 expr_stmt|;
 block|}
@@ -1463,6 +1465,14 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Unregister from the AMReporter, since the task is now running.
+name|TezTaskAttemptID
+name|ta
+init|=
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+decl_stmt|;
 name|this
 operator|.
 name|amReporter
@@ -1478,6 +1488,8 @@ name|request
 operator|.
 name|getAmPort
 argument_list|()
+argument_list|,
+name|ta
 argument_list|)
 expr_stmt|;
 synchronized|synchronized
@@ -1497,10 +1509,7 @@ name|info
 argument_list|(
 literal|"Not starting task {} since it was killed earlier"
 argument_list|,
-name|taskSpec
-operator|.
-name|getTaskAttemptID
-argument_list|()
+name|ta
 argument_list|)
 expr_stmt|;
 return|return
@@ -2109,22 +2118,25 @@ init|(
 name|this
 init|)
 block|{
+name|TezTaskAttemptID
+name|ta
+init|=
+name|taskSpec
+operator|.
+name|getTaskAttemptID
+argument_list|()
+decl_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
 literal|"Kill task requested for id={}, taskRunnerSetup={}"
 argument_list|,
-name|taskSpec
-operator|.
-name|getTaskAttemptID
-argument_list|()
+name|ta
 argument_list|,
-operator|(
 name|taskRunner
 operator|!=
 literal|null
-operator|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -2171,10 +2183,7 @@ name|info
 argument_list|(
 literal|"Kill request for task {} completed. Informing AM"
 argument_list|,
-name|taskSpec
-operator|.
-name|getTaskAttemptID
-argument_list|()
+name|ta
 argument_list|)
 expr_stmt|;
 name|reportTaskKilled
@@ -2189,10 +2198,7 @@ name|info
 argument_list|(
 literal|"Kill request for task {} did not complete because the task is already complete"
 argument_list|,
-name|taskSpec
-operator|.
-name|getTaskAttemptID
-argument_list|()
+name|ta
 argument_list|)
 expr_stmt|;
 block|}
@@ -2251,6 +2257,8 @@ name|request
 operator|.
 name|getAmPort
 argument_list|()
+argument_list|,
+name|ta
 argument_list|)
 expr_stmt|;
 block|}
