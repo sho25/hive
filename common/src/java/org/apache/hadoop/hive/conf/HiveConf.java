@@ -5945,34 +5945,6 @@ operator|+
 literal|"The last record before the end of stream can have less than hive.binary.record.max.length bytes"
 argument_list|)
 block|,
-comment|// HWI
-name|HIVEHWILISTENHOST
-argument_list|(
-literal|"hive.hwi.listen.host"
-argument_list|,
-literal|"0.0.0.0"
-argument_list|,
-literal|"This is the host address the Hive Web Interface will listen on"
-argument_list|)
-block|,
-name|HIVEHWILISTENPORT
-argument_list|(
-literal|"hive.hwi.listen.port"
-argument_list|,
-literal|"9999"
-argument_list|,
-literal|"This is the port the Hive Web Interface will listen on"
-argument_list|)
-block|,
-name|HIVEHWIWARFILE
-argument_list|(
-literal|"hive.hwi.war.file"
-argument_list|,
-literal|"${env:HWI_WAR_FILE}"
-argument_list|,
-literal|"This sets the path to the HWI war file, relative to ${HIVE_HOME}. "
-argument_list|)
-block|,
 name|HIVEHADOOPMAXMEM
 argument_list|(
 literal|"hive.mapred.local.mem"
