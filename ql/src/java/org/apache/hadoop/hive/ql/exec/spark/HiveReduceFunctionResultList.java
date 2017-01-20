@@ -92,10 +92,7 @@ name|Tuple2
 argument_list|<
 name|HiveKey
 argument_list|,
-name|Iterable
-argument_list|<
 name|BytesWritable
-argument_list|>
 argument_list|>
 argument_list|>
 block|{
@@ -122,10 +119,7 @@ name|Tuple2
 argument_list|<
 name|HiveKey
 argument_list|,
-name|Iterable
-argument_list|<
 name|BytesWritable
-argument_list|>
 argument_list|>
 argument_list|>
 name|inputIterator
@@ -156,10 +150,7 @@ name|Tuple2
 argument_list|<
 name|HiveKey
 argument_list|,
-name|Iterable
-argument_list|<
 name|BytesWritable
-argument_list|>
 argument_list|>
 name|inputRecord
 parameter_list|)
@@ -178,9 +169,6 @@ argument_list|,
 name|inputRecord
 operator|.
 name|_2
-argument_list|()
-operator|.
-name|iterator
 argument_list|()
 argument_list|)
 expr_stmt|;
