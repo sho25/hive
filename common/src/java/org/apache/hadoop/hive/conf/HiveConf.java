@@ -13197,6 +13197,17 @@ argument_list|,
 literal|"logger used for llap-daemons."
 argument_list|)
 block|,
+name|SPARK_USE_FILE_SIZE_FOR_MAPJOIN
+argument_list|(
+literal|"hive.spark.use.file.size.for.mapjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If this is set to true, mapjoin optimization in Hive/Spark will use source file sizes associated"
+operator|+
+literal|"with TableScan operator on the root of operator tree, instead of using operator statistics."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
