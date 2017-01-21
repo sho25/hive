@@ -161,6 +161,11 @@ name|Object
 index|[]
 name|singleRow
 decl_stmt|;
+specifier|protected
+specifier|transient
+name|int
+name|savePosBigTable
+decl_stmt|;
 comment|/** Kryo ctor. */
 annotation|@
 name|VisibleForTesting
@@ -237,6 +242,10 @@ operator|.
 name|getPosBigTable
 argument_list|()
 decl_stmt|;
+name|savePosBigTable
+operator|=
+name|posBigTable
+expr_stmt|;
 comment|// We need a input object inspector that is for the row we will extract out of the
 comment|// vectorized row batch, not for example, an original inspector for an ORC table, etc.
 name|inputObjInspectors
@@ -338,7 +347,7 @@ name|StructObjectInspector
 operator|)
 name|inputObjInspectors
 index|[
-literal|0
+name|savePosBigTable
 index|]
 argument_list|,
 name|vContext
