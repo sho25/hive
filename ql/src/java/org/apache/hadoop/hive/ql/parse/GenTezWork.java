@@ -2649,13 +2649,15 @@ decl_stmt|;
 name|EdgeType
 name|edgeType
 init|=
-name|utils
+name|GenTezUtils
 operator|.
 name|determineEdgeType
 argument_list|(
 name|work
 argument_list|,
 name|followingWork
+argument_list|,
+name|rs
 argument_list|)
 decl_stmt|;
 if|if

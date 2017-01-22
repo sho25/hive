@@ -1095,6 +1095,8 @@ operator|.
 name|preceedingWork
 argument_list|,
 name|reduceWork
+argument_list|,
+name|reduceSink
 argument_list|)
 decl_stmt|;
 if|if
@@ -3085,6 +3087,9 @@ name|preceedingWork
 parameter_list|,
 name|BaseWork
 name|followingWork
+parameter_list|,
+name|ReduceSinkOperator
+name|reduceSinkOperator
 parameter_list|)
 block|{
 if|if
@@ -3145,6 +3150,25 @@ name|CUSTOM_SIMPLE_EDGE
 return|;
 block|}
 block|}
+block|}
+if|if
+condition|(
+operator|!
+name|reduceSinkOperator
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isOrdering
+argument_list|()
+condition|)
+block|{
+comment|//if no sort keys are specified, use an edge that does not sort
+return|return
+name|EdgeType
+operator|.
+name|CUSTOM_SIMPLE_EDGE
+return|;
 block|}
 return|return
 name|EdgeType
