@@ -129,6 +129,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Operator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|hooks
 operator|.
 name|LineageInfo
@@ -186,14 +204,14 @@ specifier|public
 class|class
 name|LineageState
 block|{
-comment|/**    * Mapping from the directory name to FileSinkOperator. This    * mapping is generated at the filesink operator creation    * time and is then later used to created the mapping from    * movetask to the set of filesink operators.    */
+comment|/**    * Mapping from the directory name to FileSinkOperator (may not be FileSinkOperator for views). This    * mapping is generated at the filesink operator creation    * time and is then later used to created the mapping from    * movetask to the set of filesink operators.    */
 specifier|private
 specifier|final
 name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|FileSinkOperator
+name|Operator
 argument_list|>
 name|dirToFop
 decl_stmt|;
@@ -220,7 +238,7 @@ name|HashMap
 argument_list|<
 name|Path
 argument_list|,
-name|FileSinkOperator
+name|Operator
 argument_list|>
 argument_list|()
 expr_stmt|;
@@ -237,15 +255,15 @@ name|Index
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Adds a mapping from the load work to the file sink operator.    *    * @param dir The directory name.    * @param fop The file sink operator.    */
+comment|/**    * Adds a mapping from the load work to the file sink operator.    *    * @param dir The directory name.    * @param fop The sink operator.    */
 specifier|public
 name|void
-name|mapDirToFop
+name|mapDirToOp
 parameter_list|(
 name|Path
 name|dir
 parameter_list|,
-name|FileSinkOperator
+name|Operator
 name|fop
 parameter_list|)
 block|{
@@ -278,8 +296,11 @@ name|cols
 parameter_list|)
 block|{
 comment|// First lookup the file sink operator from the load work.
-name|FileSinkOperator
-name|fop
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|op
 init|=
 name|dirToFop
 operator|.
@@ -292,7 +313,7 @@ comment|// Go over the associated fields and look up the dependencies
 comment|// by position in the row schema of the filesink operator.
 if|if
 condition|(
-name|fop
+name|op
 operator|==
 literal|null
 condition|)
@@ -305,7 +326,7 @@ name|ColumnInfo
 argument_list|>
 name|signature
 init|=
-name|fop
+name|op
 operator|.
 name|getSchema
 argument_list|()
@@ -338,7 +359,7 @@ name|index
 operator|.
 name|getDependency
 argument_list|(
-name|fop
+name|op
 argument_list|,
 name|signature
 operator|.
