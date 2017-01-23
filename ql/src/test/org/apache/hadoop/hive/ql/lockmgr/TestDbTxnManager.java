@@ -3632,7 +3632,7 @@ name|ConfVars
 operator|.
 name|HIVE_TXN_TIMEOUT
 argument_list|,
-literal|1
+literal|10
 argument_list|,
 name|TimeUnit
 operator|.
