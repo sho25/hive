@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -82,10 +72,10 @@ argument_list|>
 name|getPartitionKeyValues
 parameter_list|()
 function_decl|;
-comment|/**    * Get the list of files created as a result of this DML operation. May be null. The file uri may    * be an encoded uri, which represents both a uri and the file checksum    *    * @return List of new files, or null.    */
+comment|/**    * Get list of file name and checksum created as a result of this DML operation    *    * @return The iterable of files    */
 specifier|public
 specifier|abstract
-name|List
+name|Iterable
 argument_list|<
 name|String
 argument_list|>

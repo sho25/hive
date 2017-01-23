@@ -171,16 +171,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
 import|;
 end_import
@@ -566,7 +556,7 @@ name|Database
 name|db
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for CreateTableMessage.    * @param table The Table being created.    * @return CreateTableMessage instance.    */
+comment|/**    * Factory method for CreateTableMessage.    * @param table The Table being created.    * @param files Iterator of files    * @return CreateTableMessage instance.    */
 specifier|public
 specifier|abstract
 name|CreateTableMessage
@@ -574,6 +564,12 @@ name|buildCreateTableMessage
 parameter_list|(
 name|Table
 name|table
+parameter_list|,
+name|Iterator
+argument_list|<
+name|String
+argument_list|>
+name|files
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for AlterTableMessage.  Unlike most of these calls, this one can return null,    * which means no message should be sent.  This is because there are many flavors of alter    * table (add column, add partition, etc.).  Some are covered elsewhere (like add partition)    * and some are not yet supported.    * @param before The table before the alter    * @param after The table after the alter    * @return    */
@@ -599,7 +595,7 @@ name|Table
 name|table
 parameter_list|)
 function_decl|;
-comment|/**      * Factory method for AddPartitionMessage.      * @param table The Table to which the partitions are added.      * @param partitions The iterator to set of Partitions being added.      * @return AddPartitionMessage instance.      */
+comment|/**      * Factory method for AddPartitionMessage.      * @param table The Table to which the partitions are added.      * @param partitions The iterator to set of Partitions being added.      * @param partitionFiles The iterator of partition files      * @return AddPartitionMessage instance.      */
 specifier|public
 specifier|abstract
 name|AddPartitionMessage
@@ -613,6 +609,12 @@ argument_list|<
 name|Partition
 argument_list|>
 name|partitions
+parameter_list|,
+name|Iterator
+argument_list|<
+name|PartitionFiles
+argument_list|>
+name|partitionFiles
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for building AlterPartitionMessage    * @param table The table in which the partition is being altered    * @param before The partition before it was altered    * @param after The partition after it was altered    * @return a new AlterPartitionMessage    */
@@ -700,7 +702,7 @@ name|Index
 name|after
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for building insert message    *    * @param db Name of the database the insert occurred in    * @param table Name of the table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null if    *          the insert was done into a non-partitioned table    * @param files List of files created as a result of the insert, may be null.    * @return instance of InsertMessage    */
+comment|/**    * Factory method for building insert message    *    * @param db Name of the database the insert occurred in    * @param table Name of the table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null if    *          the insert was done into a non-partitioned table    * @param files Iterator of file created    * @return instance of InsertMessage    */
 specifier|public
 specifier|abstract
 name|InsertMessage
@@ -720,44 +722,11 @@ name|String
 argument_list|>
 name|partVals
 parameter_list|,
-name|List
+name|Iterator
 argument_list|<
 name|String
 argument_list|>
 name|files
-parameter_list|)
-function_decl|;
-comment|/**    * Factory method for building insert message    *    * @param db Name of the database the insert occurred in    * @param table Name of the table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null if    *          the insert was done into a non-partitioned table    * @param files List of files created as a result of the insert, may be null    * @param fileChecksums List of checksums corresponding to the files added during insert    * @return instance of InsertMessage    */
-specifier|public
-specifier|abstract
-name|InsertMessage
-name|buildInsertMessage
-parameter_list|(
-name|String
-name|db
-parameter_list|,
-name|String
-name|table
-parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partVals
-parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|files
-parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|fileChecksums
 parameter_list|)
 function_decl|;
 block|}

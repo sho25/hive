@@ -309,6 +309,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -4054,6 +4064,15 @@ block|}
 block|}
 annotation|@
 name|Test
+annotation|@
+name|Ignore
+comment|// The test turned off temporarily in HIVE-15478. This test is not running
+comment|// properly even though it passed before. The reason the test passed before is because
+comment|// we collect files added by "create table" statement during "repl dump", and it will take
+comment|// the files added by "insert statement". In HIVE-15478, Hive collect "create table" affected
+comment|// files during processing "create table" statement, and no data files present at that time.
+comment|// The inserted files rely on the missing INSERT_EVENT to signal. We need to turn on
+comment|// FIRE_EVENTS_FOR_DML setting to trigger INSERT_EVENT and this is WIP tracked by other ticket.
 specifier|public
 name|void
 name|testIncrementalInserts

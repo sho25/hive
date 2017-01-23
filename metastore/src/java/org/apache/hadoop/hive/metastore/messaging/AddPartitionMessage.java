@@ -178,6 +178,16 @@ name|checkValid
 argument_list|()
 return|;
 block|}
+comment|/**    * Get iterable of partition name and file lists created as a result of this DDL operation    *    * @return The iterable of partition PartitionFiles    */
+specifier|public
+specifier|abstract
+name|Iterable
+argument_list|<
+name|PartitionFiles
+argument_list|>
+name|getPartitionFilesIter
+parameter_list|()
+function_decl|;
 block|}
 end_class
 

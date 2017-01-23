@@ -6785,6 +6785,11 @@ name|fileAdded
 init|=
 literal|"/warehouse/mytable/b1"
 decl_stmt|;
+name|String
+name|checksumAdded
+init|=
+literal|"1234"
+decl_stmt|;
 name|FieldSchema
 name|col1
 init|=
@@ -6923,6 +6928,13 @@ operator|.
 name|addToFilesAdded
 argument_list|(
 name|fileAdded
+argument_list|)
+expr_stmt|;
+name|insertData
+operator|.
+name|addToFilesAddedChecksum
+argument_list|(
+name|checksumAdded
 argument_list|)
 expr_stmt|;
 name|FireEventRequest
@@ -7097,6 +7109,11 @@ name|String
 name|fileAdded
 init|=
 literal|"/warehouse/mytable/b1"
+decl_stmt|;
+name|String
+name|checksumAdded
+init|=
+literal|"1234"
 decl_stmt|;
 name|FieldSchema
 name|col1
@@ -7337,6 +7354,13 @@ operator|.
 name|addToFilesAdded
 argument_list|(
 name|fileAdded
+argument_list|)
+expr_stmt|;
+name|insertData
+operator|.
+name|addToFilesAddedChecksum
+argument_list|(
+name|checksumAdded
 argument_list|)
 expr_stmt|;
 name|FireEventRequest
@@ -9474,8 +9498,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Should have list of files
-name|List
+comment|// Should have files
+name|Iterator
 argument_list|<
 name|String
 argument_list|>
@@ -9485,15 +9509,16 @@ name|insertMsg
 operator|.
 name|getFiles
 argument_list|()
+operator|.
+name|iterator
+argument_list|()
 decl_stmt|;
 name|assertTrue
 argument_list|(
 name|files
 operator|.
-name|size
+name|hasNext
 argument_list|()
-operator|>
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
