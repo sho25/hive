@@ -822,8 +822,6 @@ argument_list|)
 operator|.
 name|extractSubset
 argument_list|(
-literal|0
-argument_list|,
 name|numRows
 argument_list|)
 argument_list|)
