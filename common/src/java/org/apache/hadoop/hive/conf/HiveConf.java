@@ -3065,6 +3065,17 @@ operator|+
 literal|"org.apache.hadoop.hive.ql.stats.ClientStatsPublisher interface."
 argument_list|)
 block|,
+name|ATSHOOKQUEUECAPACITY
+argument_list|(
+literal|"hive.ats.hook.queue.capacity"
+argument_list|,
+literal|64
+argument_list|,
+literal|"Queue size for the ATS Hook executor. If the number of outstanding submissions \n"
+operator|+
+literal|"to the ATS executor exceed this amount, the Hive ATS Hook will not try to log queries to ATS."
+argument_list|)
+block|,
 name|EXECPARALLEL
 argument_list|(
 literal|"hive.exec.parallel"
