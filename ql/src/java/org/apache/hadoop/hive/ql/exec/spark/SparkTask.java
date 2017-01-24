@@ -1294,6 +1294,22 @@ operator|.
 name|SPARK_SUBMIT_TO_RUNNING
 argument_list|)
 expr_stmt|;
+comment|// The startTime may not be set if the sparkTask finished too fast,
+comment|// because SparkJobMonitor will sleep for 1 second then check the state,
+comment|// right after sleep, the spark job may be already completed.
+comment|// In this case, set startTime the same as submitTime.
+if|if
+condition|(
+name|startTime
+operator|<
+name|submitTime
+condition|)
+block|{
+name|startTime
+operator|=
+name|submitTime
+expr_stmt|;
+block|}
 name|finishTime
 operator|=
 name|perfLogger
