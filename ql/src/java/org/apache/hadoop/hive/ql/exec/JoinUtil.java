@@ -868,6 +868,9 @@ name|inputMap
 parameter_list|,
 name|int
 name|posBigTableAlias
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException
@@ -882,6 +885,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|posBigTableAlias
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}
@@ -914,6 +919,9 @@ name|order
 parameter_list|,
 name|int
 name|posBigTableAlias
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1027,6 +1035,8 @@ operator|.
 name|get
 argument_list|(
 name|expr
+argument_list|,
+name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;

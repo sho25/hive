@@ -115,6 +115,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|ql
@@ -264,6 +278,15 @@ specifier|public
 class|class
 name|TestConvertAstToSearchArg
 block|{
+specifier|private
+specifier|final
+name|Configuration
+name|conf
+init|=
+operator|new
+name|Configuration
+argument_list|()
+decl_stmt|;
 specifier|private
 specifier|static
 name|void
@@ -1379,6 +1402,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -2449,6 +2474,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -3910,6 +3937,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -4605,6 +4634,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -5583,6 +5614,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -6663,6 +6696,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -7450,6 +7485,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -7771,6 +7808,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -8072,6 +8111,8 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|conf
+argument_list|,
 name|getFuncDesc
 argument_list|(
 name|exprStr
@@ -8420,6 +8461,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -8525,6 +8568,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -8632,6 +8677,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -8739,6 +8786,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -8846,6 +8895,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -8951,6 +9002,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -9060,6 +9113,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -9201,6 +9256,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression
@@ -9318,6 +9375,8 @@ init|=
 operator|new
 name|ConvertAstToSearchArg
 argument_list|(
+name|conf
+argument_list|,
 name|SerializationUtilities
 operator|.
 name|deserializeExpression

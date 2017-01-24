@@ -955,6 +955,8 @@ name|getKeys
 argument_list|()
 argument_list|,
 name|posBigTableAlias
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|joinKeysObjectInspectors
@@ -993,6 +995,8 @@ name|getExprs
 argument_list|()
 argument_list|,
 name|posBigTableAlias
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|joinValuesObjectInspectors
@@ -1031,6 +1035,8 @@ name|getFilters
 argument_list|()
 argument_list|,
 name|posBigTableAlias
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|joinFilterObjectInspectors

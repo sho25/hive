@@ -1295,6 +1295,8 @@ argument_list|,
 name|order
 argument_list|,
 name|NOTSKIPBIGTABLE
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 comment|//process join filters
@@ -1320,6 +1322,8 @@ argument_list|,
 name|order
 argument_list|,
 name|NOTSKIPBIGTABLE
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|joinValuesObjectInspectors

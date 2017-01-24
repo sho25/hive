@@ -11857,6 +11857,26 @@ argument_list|,
 literal|"Maximum total data size of events in dynamic pruning."
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When dynamic semijoin is enabled, shuffle joins will perform a leaky semijoin before shuffle. This "
+operator|+
+literal|"requires hive.tez.dynamic.partition.pruning to be enabled."
+argument_list|)
+block|,
+name|TEZ_MAX_BLOOM_FILTER_ENTRIES
+argument_list|(
+literal|"hive.tez.max.bloom.filter.entries"
+argument_list|,
+literal|100000000L
+argument_list|,
+literal|"Bloom filter should be of at max certain size to be effective"
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"

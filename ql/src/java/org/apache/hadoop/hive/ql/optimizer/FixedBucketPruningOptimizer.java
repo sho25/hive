@@ -1020,6 +1020,13 @@ name|ConvertAstToSearchArg
 operator|.
 name|create
 argument_list|(
+name|ctxt
+operator|.
+name|pctx
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|filter
 argument_list|)
 decl_stmt|;

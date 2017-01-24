@@ -626,6 +626,16 @@ return|return
 literal|null
 return|;
 block|}
+comment|/**    * Optional information to add to expression string. Subclasses can override.    */
+specifier|public
+name|String
+name|getExprString
+parameter_list|()
+block|{
+return|return
+literal|""
+return|;
+block|}
 specifier|protected
 name|BasePartitionEvaluator
 name|partitionEvaluator

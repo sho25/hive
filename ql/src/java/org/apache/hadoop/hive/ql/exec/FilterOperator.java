@@ -324,6 +324,8 @@ name|conf
 operator|.
 name|getPredicate
 argument_list|()
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 if|if
