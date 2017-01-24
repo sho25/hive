@@ -199,6 +199,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|RetrySemantics
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|DatabaseProduct
@@ -234,18 +252,6 @@ operator|.
 name|metastore
 operator|.
 name|Warehouse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|TException
 import|;
 end_import
 
@@ -538,7 +544,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  *  * In general there can be multiple metastores where this logic can execute, thus the DB is  * used to ensure proper mutexing of operations.  * Select ... For Update (or equivalent: either MsSql with(updlock) or actual Update stmt) is  * used to properly sequence operations.  Most notably:  * 1. various sequence IDs are generated with aid of this mutex  * 2. ensuring that each (Hive) Transaction state is transitioned atomically.  Transaction state  *  includes its actual state (Open, Aborted) as well as it's lock list/component list.  Thus all  *  per transaction ops, either start by update/delete of the relevant TXNS row or do S4U on that row.  *  This allows almost all operations to run at READ_COMMITTED and minimizes DB deadlocks.  * 3. checkLock() - this is mutexted entirely since we must ensure that while we check if some lock  *  can be granted, no other (strictly speaking "earlier") lock can change state.  *  * The exception to his is Derby which doesn't support proper S4U.  Derby is always running embedded  * (this is the only supported configuration for Derby)  * in the same JVM as HiveMetaStoreHandler thus we use JVM wide lock to properly sequnce the operations.  *  * {@link #derbyLock}   * If we ever decide to run remote Derby server, according to  * https://db.apache.org/derby/docs/10.0/manuals/develop/develop78.html all transactions will be  * seriazlied, so that would also work though has not been tested.  *  * General design note:  * It's imperative that any operation on a txn (e.g. commit), ensure (atomically) that this txn is  * still valid and active.  In the code this is usually achieved at the same time the txn record  * is locked for some operation.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  *  * In general there can be multiple metastores where this logic can execute, thus the DB is  * used to ensure proper mutexing of operations.  * Select ... For Update (or equivalent: either MsSql with(updlock) or actual Update stmt) is  * used to properly sequence operations.  Most notably:  * 1. various sequence IDs are generated with aid of this mutex  * 2. ensuring that each (Hive) Transaction state is transitioned atomically.  Transaction state  *  includes its actual state (Open, Aborted) as well as it's lock list/component list.  Thus all  *  per transaction ops, either start by update/delete of the relevant TXNS row or do S4U on that row.  *  This allows almost all operations to run at READ_COMMITTED and minimizes DB deadlocks.  * 3. checkLock() - this is mutexted entirely since we must ensure that while we check if some lock  *  can be granted, no other (strictly speaking "earlier") lock can change state.  *  * The exception to his is Derby which doesn't support proper S4U.  Derby is always running embedded  * (this is the only supported configuration for Derby)  * in the same JVM as HiveMetaStoreHandler thus we use JVM wide lock to properly sequnce the operations.  *  * {@link #derbyLock}   * If we ever decide to run remote Derby server, according to  * https://db.apache.org/derby/docs/10.0/manuals/develop/develop78.html all transactions will be  * seriazlied, so that would also work though has not been tested.  *  * General design note:  * It's imperative that any operation on a txn (e.g. commit), ensure (atomically) that this txn is  * still valid and active.  In the code this is usually achieved at the same time the txn record  * is locked for some operation.  *   * Note on retry logic:  * Metastore has retry logic in both {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}  * and {@link org.apache.hadoop.hive.metastore.RetryingHMSHandler}.  The retry logic there is very  * generic and is not aware whether the operations are idempotent or not.  (This is separate from  * retry logic here in TxnHander which can/does retry DB errors intelligently).  The worst case is  * when an op here issues a successful commit against the RDBMS but the calling stack doesn't  * receive the ack and retries.  (If an op fails before commit, it's trivially idempotent)  * Thus the ops here need to be made idempotent as much as possible or  * the metstore call stack should have logic not to retry.  There are {@link RetrySemantics}  * annotations to document the behavior.  */
 end_comment
 
 begin_class
@@ -639,6 +645,18 @@ name|TXN_OPEN
 init|=
 literal|'o'
 decl_stmt|;
+comment|//todo: make these like OperationType and remove above char constatns
+enum|enum
+name|TxnStatus
+block|{
+name|OPEN
+block|,
+name|ABORTED
+block|,
+name|COMMITTED
+block|,
+name|UNKNOWN
+block|}
 comment|// Lock states
 specifier|static
 specifier|final
@@ -1225,6 +1243,12 @@ literal|false
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|GetOpenTxnsInfoResponse
 name|getOpenTxnsInfo
@@ -1611,6 +1635,12 @@ argument_list|()
 return|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|GetOpenTxnsResponse
 name|getOpenTxns
@@ -2016,6 +2046,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Retry-by-caller note:    * Worst case, it will leave an open txn which will timeout.    */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|OpenTxnsResponse
 name|openTxns
@@ -2544,6 +2581,12 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|void
 name|abortTxn
@@ -2611,18 +2654,6 @@ operator|!=
 literal|1
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
 name|stmt
 operator|=
 name|dbConn
@@ -2630,13 +2661,52 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-name|ensureValidTxn
+name|TxnStatus
+name|status
+init|=
+name|findTxnState
 argument_list|(
-name|dbConn
-argument_list|,
 name|txnid
 argument_list|,
 name|stmt
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|status
+operator|==
+name|TxnStatus
+operator|.
+name|ABORTED
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"abortTxn("
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+operator|+
+literal|") requested by it is already "
+operator|+
+name|TxnStatus
+operator|.
+name|ABORTED
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+name|raiseTxnUnexpectedState
+argument_list|(
+name|status
+argument_list|,
+name|txnid
 argument_list|)
 expr_stmt|;
 block|}
@@ -2728,6 +2798,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|void
 name|abortTxns
@@ -2795,7 +2871,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Abort Transactions command only abort "
+literal|"Abort Transactions command only aborted "
 operator|+
 name|numAborted
 operator|+
@@ -2903,6 +2979,15 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Concurrency/isolation notes:    * This is mutexed with {@link #openTxns(OpenTxnRequest)} and other {@link #commitTxn(CommitTxnRequest)}    * operations using select4update on NEXT_TXN_ID.  Also, mutexes on TXNX table for specific txnid:X    * see more notes below.    * In order to prevent lost updates, we need to determine if any 2 transactions overlap.  Each txn    * is viewed as an interval [M,N]. M is the txnid and N is taken from the same NEXT_TXN_ID sequence    * so that we can compare commit time of txn T with start time of txn S.  This sequence can be thought of    * as a logical time counter.  If S.commitTime< T.startTime, T and S do NOT overlap.    *    * Motivating example:    * Suppose we have multi-statment transactions T and S both of which are attempting x = x + 1    * In order to prevent lost update problem, the the non-overlapping txns must lock in the snapshot    * that they read appropriately.  In particular, if txns do not overlap, then one follows the other    * (assumig they write the same entity), and thus the 2nd must see changes of the 1st.  We ensure    * this by locking in snapshot after     * {@link #openTxns(OpenTxnRequest)} call is made (see {@link org.apache.hadoop.hive.ql.Driver#acquireLocksAndOpenTxn()})    * and mutexing openTxn() with commit().  In other words, once a S.commit() starts we must ensure    * that txn T which will be considered a later txn, locks in a snapshot that includes the result    * of S's commit (assuming no other txns).    * As a counter example, suppose we have S[3,3] and T[4,4] (commitId=txnid means no other transactions    * were running in parallel).  If T and S both locked in the same snapshot (for example commit of    * txnid:2, which is possible if commitTxn() and openTxnx() is not mutexed)    * 'x' would be updated to the same value by both, i.e. lost update.     */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
+argument_list|(
+literal|"No-op if already committed"
+argument_list|)
 specifier|public
 name|void
 name|commitTxn
@@ -2989,14 +3074,50 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|//this also ensures that txn is still there and in expected state (hasn't been timed out)
-name|ensureValidTxn
+comment|//if here, txn was not found (in expected state)
+name|TxnStatus
+name|actualTxnStatus
+init|=
+name|findTxnState
 argument_list|(
-name|dbConn
-argument_list|,
 name|txnid
 argument_list|,
 name|stmt
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|actualTxnStatus
+operator|==
+name|TxnStatus
+operator|.
+name|COMMITTED
+condition|)
+block|{
+comment|/**              * This makes the operation idempotent              * (assume that this is most likely due to retry logic)              */
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Nth commitTxn("
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+operator|+
+literal|") msg"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+name|raiseTxnUnexpectedState
+argument_list|(
+name|actualTxnStatus
+argument_list|,
+name|txnid
 argument_list|)
 expr_stmt|;
 name|shouldNeverHappen
@@ -3004,6 +3125,7 @@ argument_list|(
 name|txnid
 argument_list|)
 expr_stmt|;
+comment|//dbConn is rolled back in finally{}
 block|}
 name|String
 name|conflictSQLSuffix
@@ -3118,6 +3240,7 @@ operator|.
 name|setSavepoint
 argument_list|()
 decl_stmt|;
+comment|/**            * "select distinct" is used below because            * 1. once we get to multi-statement txns, we only care to record that something was updated once            * 2. if {@link #addDynamicPartitions(AddDynamicPartitions)} is retried by caller it my create            *  duplicate entries in TXN_COMPONENTS            * but we want to add a PK on WRITE_SET which won't have unique rows w/o this distinct            * even if it includes all of it's columns            */
 name|int
 name|numCompsWritten
 init|=
@@ -3127,7 +3250,7 @@ name|executeUpdate
 argument_list|(
 literal|"insert into WRITE_SET (ws_database, ws_table, ws_partition, ws_txnid, ws_commit_id, ws_operation_type)"
 operator|+
-literal|" select tc_database, tc_table, tc_partition, tc_txnid, "
+literal|" select distinct tc_database, tc_table, tc_partition, tc_txnid, "
 operator|+
 name|commitId
 operator|+
@@ -3667,6 +3790,10 @@ block|}
 block|}
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
 specifier|public
 name|void
 name|performWriteSetGC
@@ -3884,7 +4011,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another fron the pool, the 2nd one    * doesn't see results of the first.    */
+comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another fron the pool, the 2nd one    * doesn't see results of the first.    *     * Retry-by-caller note: If the call to lock is from a transaction, then in the worst case    * there will be a duplicate set of locks but both sets will belong to the same txn so they     * will not conflict with each other.  For locks w/o txn context (i.e. read-only query), this    * may lead to deadlock (at least a long wait).  (e.g. 1st call creates locks in {@code LOCK_WAITING}    * mode and response gets lost.  Then {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}    * retries, and enqueues another set of locks in LOCK_WAITING.  The 2nd LockResponse is delivered    * to the DbLockManager, which will keep dong {@link #checkLock(CheckLockRequest)} until the 1st    * set of locks times out.    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|CannotRetry
 specifier|public
 name|LockResponse
 name|lock
@@ -5143,7 +5274,13 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Why doesn't this get a txnid as parameter?  The caller should either know the txnid or know there isn't one.    * Either way getTxnIdFromLockId() will not be needed.  This would be a Thrift change.    *    * Also, when lock acquisition returns WAITING, it's retried every 15 seconds (best case, see DbLockManager.backoff(),    * in practice more often)    * which means this is heartbeating way more often than hive.txn.timeout and creating extra load on DB.    *    * The clients that operate in blocking mode, can't heartbeat a lock until the lock is acquired.    * We should make CheckLockRequest include timestamp or last request to skip unnecessary heartbeats. Thrift change.    *    * {@link #checkLock(java.sql.Connection, long)}  must run at SERIALIZABLE (make sure some lock we are checking    * against doesn't move from W to A in another txn) but this method can heartbeat in    * separate txn at READ_COMMITTED.    */
+comment|/**    * Why doesn't this get a txnid as parameter?  The caller should either know the txnid or know there isn't one.    * Either way getTxnIdFromLockId() will not be needed.  This would be a Thrift change.    *    * Also, when lock acquisition returns WAITING, it's retried every 15 seconds (best case, see DbLockManager.backoff(),    * in practice more often)    * which means this is heartbeating way more often than hive.txn.timeout and creating extra load on DB.    *    * The clients that operate in blocking mode, can't heartbeat a lock until the lock is acquired.    * We should make CheckLockRequest include timestamp or last request to skip unnecessary heartbeats. Thrift change.    *    * {@link #checkLock(java.sql.Connection, long)}  must run at SERIALIZABLE (make sure some lock we are checking    * against doesn't move from W to A in another txn) but this method can heartbeat in    * separate txn at READ_COMMITTED.    *     * Retry-by-caller note:    * Retryable because {@link #checkLock(Connection, long)} is    */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
 specifier|public
 name|LockResponse
 name|checkLock
@@ -5347,6 +5484,10 @@ return|;
 block|}
 block|}
 comment|/**    * This would have been made simpler if all locks were associated with a txn.  Then only txn needs to    * be heartbeated, committed, etc.  no need for client to track individual locks.    * When removing locks not associated with txn this potentially conflicts with    * heartbeat/performTimeout which are update/delete of HIVE_LOCKS thus will be locked as needed by db.    * since this only removes from HIVE_LOCKS at worst some lock acquire is delayed    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|void
 name|unlock
@@ -5479,7 +5620,7 @@ comment|//didn't find any lock with extLockId but at ReadCommitted there is a po
 comment|//it existed when above delete ran but it didn't have the expected state.
 name|LOG
 operator|.
-name|error
+name|info
 argument_list|(
 literal|"No lock in "
 operator|+
@@ -5487,25 +5628,21 @@ name|LOCK_WAITING
 operator|+
 literal|" mode found for unlock("
 operator|+
-name|rqst
-operator|+
-literal|")"
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|NoSuchLockException
-argument_list|(
-literal|"No such lock "
-operator|+
 name|JavaUtils
 operator|.
 name|lockIdToString
 argument_list|(
-name|extLockId
+name|rqst
+operator|.
+name|getLockid
+argument_list|()
 argument_list|)
+operator|+
+literal|")"
 argument_list|)
-throw|;
+expr_stmt|;
+comment|//bail here to make the operation idempotent
+return|return;
 block|}
 if|if
 condition|(
@@ -5523,6 +5660,8 @@ literal|"Unlocking locks associated with transaction not permitted.  "
 operator|+
 name|info
 decl_stmt|;
+comment|//if a lock is associated with a txn we can only "unlock" if if it's in WAITING state
+comment|// which really means that the caller wants to give up waiting for the lock
 name|LOG
 operator|.
 name|error
@@ -5699,6 +5838,10 @@ name|e
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|ShowLocksResponse
 name|showLocks
@@ -6486,6 +6629,12 @@ return|;
 block|}
 block|}
 comment|/**    * {@code ids} should only have txnid or lockid but not both, ideally.    * Currently DBTxnManager.heartbeat() enforces this.    */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
 specifier|public
 name|void
 name|heartbeat
@@ -6609,6 +6758,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
 specifier|public
 name|HeartbeatTxnRangeResponse
 name|heartbeatTxnRange
@@ -6927,6 +7082,10 @@ return|;
 block|}
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|CompactionResponse
 name|compact
@@ -7726,6 +7885,10 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|ShowCompactResponse
 name|showCompact
@@ -8198,6 +8361,13 @@ name|intLockId
 argument_list|)
 throw|;
 block|}
+comment|/**    * Retry-by-caller note:    * This may be retried after dbConn.commit.  At worst, it will create duplicate entries in    * TXN_COMPONENTS which won't affect anything.  See more comments in {@link #commitTxn(CommitTxnRequest)}    */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
 specifier|public
 name|void
 name|addDynamicPartitions
@@ -8534,7 +8704,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Clean up corresponding records in metastore tables when corresponding object is dropped,    * specifically: TXN_COMPONENTS, COMPLETED_TXN_COMPONENTS, COMPACTION_QUEUE, COMPLETED_COMPACTIONS    */
+comment|/**    * Clean up corresponding records in metastore tables when corresponding object is dropped,    * specifically: TXN_COMPONENTS, COMPLETED_TXN_COMPONENTS, COMPACTION_QUEUE, COMPLETED_COMPACTIONS    * Retry-by-caller note: this is only idempotent assuming it's only called by dropTable/Db/etc    * operations.    */
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|void
 name|cleanupRecords
@@ -11873,6 +12049,13 @@ literal|0
 return|;
 block|}
 comment|/**    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    * hl_lock_ext_id by only checking earlier locks.    *    * For any given SQL statment all locks required by it are grouped under single extLockId and are    * granted all at once or all locks wait.    *    * This is expected to run at READ_COMMITTED.    *    * Note: this calls acquire() for (extLockId,intLockId) but extLockId is the same and we either take    * all locks for given extLockId or none.  Would be more efficient to update state on all locks    * at once.  Semantics are the same since this is all part of the same txn.    *    * If there is a concurrent commitTxn/rollbackTxn, those can only remove rows from HIVE_LOCKS.    * If they happen to be for the same txnid, there will be a WW conflict (in MS DB), if different txnid,    * checkLock() will in the worst case keep locks in Waiting state a little longer.    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
+argument_list|(
+literal|"See @SafeToRetry"
+argument_list|)
 specifier|private
 name|LockResponse
 name|checkLock
@@ -11920,7 +12103,7 @@ operator|new
 name|LockResponse
 argument_list|()
 decl_stmt|;
-comment|/**      * todo: Longer term we should pass this from client somehow - this would be an optimization;  once      * that is in place make sure to build and test "writeSet" below using OperationType not LockType      * With SP we assume that the query modifies exactly the partitions it locked.  (not entirely      * realistic since Update/Delete may have some predicate that filters out all records out of      * some partition(s), but plausible).  For DP, we acquire locks very wide (all known partitions),      * but for most queries only a fraction will actually be updated.  #addDynamicPartitions() tells      * us exactly which ones were written to.  Thus using this trick to kill a query early for      * DP queries may be too restrictive.      */
+comment|/**      * todo: Longer term we should pass this from client somehow - this would be an optimization;  once      * that is in place make sure to build and test "writeSet" below using OperationType not LockType      * With Static Partitions we assume that the query modifies exactly the partitions it locked.  (not entirely      * realistic since Update/Delete may have some predicate that filters out all records out of      * some partition(s), but plausible).  For DP, we acquire locks very wide (all known partitions),      * but for most queries only a fraction will actually be updated.  #addDynamicPartitions() tells      * us exactly which ones were written to.  Thus using this trick to kill a query early for      * DP queries may be too restrictive.      */
 name|boolean
 name|isPartOfDynamicPartitionInsert
 init|=
@@ -12953,6 +13136,7 @@ operator|.
 name|ACQUIRED
 condition|)
 block|{
+comment|/**this is what makes this method @SafeToRetry*/
 continue|continue;
 block|}
 comment|// Look at everything in front of this lock to see if it should block
@@ -14034,6 +14218,266 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Returns the state of the transaction iff it's able to determine it.  Some cases where it cannot:    * 1. txnid was Aborted/Committed and then GC'd (compacted)    * 2. txnid was committed but it didn't modify anything (nothing in COMPLETED_TXN_COMPONENTS)    */
+specifier|private
+name|TxnStatus
+name|findTxnState
+parameter_list|(
+name|long
+name|txnid
+parameter_list|,
+name|Statement
+name|stmt
+parameter_list|)
+throws|throws
+name|SQLException
+throws|,
+name|MetaException
+block|{
+name|String
+name|s
+init|=
+literal|"select txn_state from TXNS where txn_id = "
+operator|+
+name|txnid
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|ResultSet
+name|rs
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|s
+operator|=
+name|sqlGenerator
+operator|.
+name|addLimitClause
+argument_list|(
+literal|1
+argument_list|,
+literal|"1 from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
+operator|+
+name|txnid
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|ResultSet
+name|rs2
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|rs2
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+return|return
+name|TxnStatus
+operator|.
+name|COMMITTED
+return|;
+block|}
+comment|//could also check WRITE_SET but that seems overkill
+return|return
+name|TxnStatus
+operator|.
+name|UNKNOWN
+return|;
+block|}
+name|char
+name|txnState
+init|=
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|1
+argument_list|)
+operator|.
+name|charAt
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|txnState
+operator|==
+name|TXN_ABORTED
+condition|)
+block|{
+return|return
+name|TxnStatus
+operator|.
+name|ABORTED
+return|;
+block|}
+assert|assert
+name|txnState
+operator|==
+name|TXN_OPEN
+operator|:
+literal|"we found it in TXNS but it's not ABORTED, so must be OPEN"
+assert|;
+return|return
+name|TxnStatus
+operator|.
+name|OPEN
+return|;
+block|}
+comment|/**    * Used to raise an informative error when the caller expected a txn in a particular TxnStatus    * but found it in some other status    */
+specifier|private
+specifier|static
+name|void
+name|raiseTxnUnexpectedState
+parameter_list|(
+name|TxnStatus
+name|actualStatus
+parameter_list|,
+name|long
+name|txnid
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|TxnAbortedException
+block|{
+switch|switch
+condition|(
+name|actualStatus
+condition|)
+block|{
+case|case
+name|ABORTED
+case|:
+throw|throw
+operator|new
+name|TxnAbortedException
+argument_list|(
+literal|"Transaction "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+operator|+
+literal|" already aborted"
+argument_list|)
+throw|;
+case|case
+name|COMMITTED
+case|:
+throw|throw
+operator|new
+name|NoSuchTxnException
+argument_list|(
+literal|"Transaction "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+operator|+
+literal|" is already committed."
+argument_list|)
+throw|;
+case|case
+name|UNKNOWN
+case|:
+throw|throw
+operator|new
+name|NoSuchTxnException
+argument_list|(
+literal|"No such transaction "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+argument_list|)
+throw|;
+case|case
+name|OPEN
+case|:
+throw|throw
+operator|new
+name|NoSuchTxnException
+argument_list|(
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnid
+argument_list|)
+operator|+
+literal|" is "
+operator|+
+name|TxnStatus
+operator|.
+name|OPEN
+argument_list|)
+throw|;
+default|default:
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Unknown TxnStatus "
+operator|+
+name|actualStatus
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Returns the state of the transaction with {@code txnid} or throws if {@code raiseError} is true.    */
 specifier|private
 specifier|static
 name|void
@@ -14136,10 +14580,10 @@ argument_list|(
 literal|"Going to rollback"
 argument_list|)
 expr_stmt|;
+name|rollbackDBConn
+argument_list|(
 name|dbConn
-operator|.
-name|rollback
-argument_list|()
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -14203,10 +14647,10 @@ argument_list|(
 literal|"Going to rollback"
 argument_list|)
 expr_stmt|;
+name|rollbackDBConn
+argument_list|(
 name|dbConn
-operator|.
-name|rollback
-argument_list|()
+argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
@@ -14832,6 +15276,10 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Isolation Level Notes    * Plain: RC is OK    * This will find transactions that have timed out and abort them.    * Will also delete locks which are not associated with a transaction and have timed out    * Tries to keep transactions (against metastore db) small to reduce lock contention.    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|void
 name|performTimeOuts
@@ -15211,6 +15659,12 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|void
 name|countOpenTxns
@@ -16845,6 +17299,10 @@ block|}
 block|}
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|Idempotent
 specifier|public
 name|MutexAPI
 name|getMutexAPI
@@ -17480,7 +17938,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Helper class that generates SQL queries with syntax specific to target DB    */
+comment|/**    * Helper class that generates SQL queries with syntax specific to target DB    * todo: why throw MetaException?    */
 annotation|@
 name|VisibleForTesting
 specifier|static
@@ -18026,7 +18484,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**      * Suppose you have a query "select a,b from T" and you want to limit the result set      * to the first 5 rows.  The mechanism to do that differs in different DB.      * Make {@code noSelectsqlQuery} to be "a,b from T" and this method will return the      * appropriately modified row limiting query.      *      * Note that if {@code noSelectsqlQuery} contains a join, you must make sure that      * all columns are unique for Oracle.      */
+comment|/**      * Suppose you have a query "select a,b from T" and you want to limit the result set      * to the first 5 rows.  The mechanism to do that differs in different DBs.      * Make {@code noSelectsqlQuery} to be "a,b from T" and this method will return the      * appropriately modified row limiting query.      *      * Note that if {@code noSelectsqlQuery} contains a join, you must make sure that      * all columns are unique for Oracle.      */
 specifier|private
 name|String
 name|addLimitClause

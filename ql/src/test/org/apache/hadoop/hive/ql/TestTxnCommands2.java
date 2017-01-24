@@ -2030,11 +2030,7 @@ literal|" where a> 0 order by a,b,c"
 argument_list|)
 decl_stmt|;
 block|}
-annotation|@
-name|Ignore
-argument_list|(
-literal|"not needed but useful for testing"
-argument_list|)
+comment|//  @Ignore("not needed but useful for testing")
 annotation|@
 name|Test
 specifier|public

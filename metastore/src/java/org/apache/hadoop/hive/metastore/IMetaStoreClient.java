@@ -169,6 +169,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|RetrySemantics
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -3651,6 +3669,10 @@ throws|throws
 name|TException
 function_decl|;
 comment|/**    * Request a set of locks.  All locks needed for a particular query, DML,    * or DDL operation should be batched together and requested in one lock    * call.  This avoids deadlocks.  It also avoids blocking other users who    * only require some of the locks required by this user.    *    *<p>If the operation requires a transaction (INSERT, UPDATE,    * or DELETE) that transaction id must be provided as part this lock    * request.  All locks associated with a transaction will be released when    * that transaction is committed or rolled back.</p>    * *    *<p>Once a lock is acquired, {@link #heartbeat(long, long)} must be called    * on a regular basis to avoid the lock being timed out by the system.</p>    * @param request The lock request.  {@link LockRequestBuilder} can be used    *                construct this request.    * @return a lock response, which will provide two things,    * the id of the lock (to be used in all further calls regarding this lock)    * as well as a state of the lock.  If the state is ACQUIRED then the user    * can proceed.  If it is WAITING the user should wait and call    * {@link #checkLock(long)} before proceeding.  All components of the lock    * will have the same state.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|CannotRetry
 name|LockResponse
 name|lock
 parameter_list|(
