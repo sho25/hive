@@ -111,6 +111,9 @@ block|,
 name|Union_type
 block|,
 name|Unique_join
+block|,
+name|HighPrecissionTimestamp
+comment|// CALCITE-1690
 block|}
 empty_stmt|;
 specifier|private
