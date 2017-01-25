@@ -27902,10 +27902,6 @@ operator|+
 literal|" table="
 operator|+
 name|tableName
-operator|+
-literal|" column="
-operator|+
-name|colName
 argument_list|)
 expr_stmt|;
 for|for
@@ -28140,10 +28136,6 @@ operator|+
 literal|" part="
 operator|+
 name|partName
-operator|+
-literal|"column="
-operator|+
-name|colName
 argument_list|)
 expr_stmt|;
 for|for
