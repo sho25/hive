@@ -4559,7 +4559,7 @@ argument_list|)
 expr_stmt|;
 name|disableJoinMerge
 operator|=
-literal|false
+name|defaultJoinMerge
 expr_stmt|;
 name|sinkOp
 operator|=
@@ -4826,7 +4826,7 @@ literal|false
 expr_stmt|;
 name|disableJoinMerge
 operator|=
-literal|false
+name|defaultJoinMerge
 expr_stmt|;
 name|disableSemJoinReordering
 operator|=

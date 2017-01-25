@@ -13432,6 +13432,15 @@ argument_list|,
 literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
 argument_list|)
 block|,
+name|HIVE_MERGE_NWAY_JOINS
+argument_list|(
+literal|"hive.merge.nway.joins"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Merge adjacent joins into a single n-way join"
+argument_list|)
+block|,
 name|HIVE_LOG_N_RECORDS
 argument_list|(
 literal|"hive.log.every.n.records"
