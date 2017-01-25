@@ -3899,7 +3899,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Performs the pre/commit/rollback to the metadata storage for insert operator from external storage handler.    * @param table table name    * @param overwrite true if the insert is overwrite    *    * @throws MetaException    */
+comment|/**    * Performs the commit/rollback to the metadata storage for insert operator from external storage handler.    * @param table table name    * @param overwrite true if the insert is overwrite    *    * @throws MetaException    */
 name|void
 name|insertTable
 parameter_list|(
