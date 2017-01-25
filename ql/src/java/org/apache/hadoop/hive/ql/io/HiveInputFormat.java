@@ -1445,7 +1445,7 @@ operator|!
 name|isVectorized
 condition|)
 block|{
-comment|// Pretend it's vectorized.
+comment|// Pretend it's vectorized if the non-vector wrapped is enabled.
 name|isVectorized
 operator|=
 name|HiveConf
@@ -1482,8 +1482,20 @@ name|isVectorized
 operator|&&
 operator|!
 name|isSupported
+operator|&&
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_IO_ENCODE_ENABLED
+argument_list|)
 condition|)
 block|{
+comment|// See if we can use re-encoding to read the format thru IO elevator.
 name|String
 name|formatList
 init|=
@@ -1782,9 +1794,14 @@ argument_list|)
 throw|;
 block|}
 block|}
-return|return
-name|castInputFormat
-argument_list|(
+name|InputFormat
+argument_list|<
+name|?
+argument_list|,
+name|?
+argument_list|>
+name|wrappedIf
+init|=
 name|llapIo
 operator|.
 name|getInputFormat
@@ -1793,6 +1810,23 @@ name|inputFormat
 argument_list|,
 name|serde
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|wrappedIf
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+name|inputFormat
+return|;
+comment|// We cannot wrap; the cause is logged inside.
+block|}
+return|return
+name|castInputFormat
+argument_list|(
+name|wrappedIf
 argument_list|)
 return|;
 block|}

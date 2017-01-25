@@ -208,6 +208,13 @@ argument_list|(
 name|buffer
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|serdeCache
+operator|!=
+literal|null
+condition|)
+block|{
 name|serdeCache
 operator|.
 name|notifyEvicted
@@ -215,6 +222,7 @@ argument_list|(
 name|buffer
 argument_list|)
 expr_stmt|;
+block|}
 name|allocator
 operator|.
 name|deallocateEvicted

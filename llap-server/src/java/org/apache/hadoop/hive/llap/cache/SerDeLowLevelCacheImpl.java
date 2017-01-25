@@ -1120,7 +1120,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"["
+literal|"colData ["
 argument_list|)
 expr_stmt|;
 for|for
@@ -1169,7 +1169,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"["
+literal|"buffers ["
 argument_list|)
 expr_stmt|;
 for|for
@@ -1189,24 +1189,14 @@ operator|++
 name|k
 control|)
 block|{
-name|LlapDataBuffer
-name|s
-init|=
-name|streamData
-index|[
-name|k
-index|]
-decl_stmt|;
 name|sb
 operator|.
 name|append
 argument_list|(
-name|LlapDataBuffer
-operator|.
-name|toDataString
-argument_list|(
-name|s
-argument_list|)
+name|streamData
+index|[
+name|k
+index|]
 argument_list|)
 expr_stmt|;
 block|}
@@ -2332,17 +2322,25 @@ operator|==
 literal|null
 condition|)
 block|{
-assert|assert
+if|if
+condition|(
 name|cStripe
 operator|.
 name|data
 index|[
 name|colIx
 index|]
-operator|==
+operator|!=
 literal|null
+condition|)
+block|{
+assert|assert
+literal|false
+operator|:
+name|cStripe
 assert|;
 comment|// No encoding => must have no data.
+block|}
 name|isMissed
 operator|=
 literal|true

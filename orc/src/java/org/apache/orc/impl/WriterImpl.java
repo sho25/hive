@@ -4714,8 +4714,6 @@ decl_stmt|;
 specifier|protected
 name|boolean
 name|useDictionaryEncoding
-init|=
-literal|true
 decl_stmt|;
 specifier|private
 name|boolean
@@ -4930,9 +4928,17 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|useDictionaryEncoding
+operator|=
+name|dictionaryKeySizeThreshold
+operator|>=
+literal|0.000001
+expr_stmt|;
+comment|// Epsilon.
 name|doneDictionaryCheck
 operator|=
-literal|false
+operator|!
+name|useDictionaryEncoding
 expr_stmt|;
 block|}
 specifier|private

@@ -12154,6 +12154,17 @@ literal|"cases of file overwrites. This is supported on HDFS."
 argument_list|)
 block|,
 comment|// Restricted to text for now as this is a new feature; only text files can be sliced.
+name|LLAP_IO_ENCODE_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should try to re-encode and cache data for non-ORC formats. This is used\n"
+operator|+
+literal|"on LLAP Server side to determine if the infrastructure for that is initialized."
+argument_list|)
+block|,
 name|LLAP_IO_ENCODE_FORMATS
 argument_list|(
 literal|"hive.llap.io.encode.formats"
@@ -12186,6 +12197,15 @@ operator|+
 name|LLAP_ALLOCATOR_MAX_ALLOC
 operator|+
 literal|"."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_VECTOR_SERDE_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.vector.serde.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should use vectorized SerDe reader to read text data when re-encoding."
 argument_list|)
 block|,
 name|LLAP_IO_ENCODE_SLICE_ROW_COUNT
