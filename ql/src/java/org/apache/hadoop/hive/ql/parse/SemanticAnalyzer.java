@@ -14182,6 +14182,36 @@ argument_list|)
 expr_stmt|;
 comment|// This is the last time we'll see the Table objects for views, so add it to the inputs
 comment|// now. isInsideView will tell if this view is embedded in another view.
+comment|// If the view is Inside another view, it should have at least one parent
+if|if
+condition|(
+name|qb
+operator|.
+name|isInsideView
+argument_list|()
+operator|&&
+name|parentInput
+operator|==
+literal|null
+condition|)
+block|{
+name|parentInput
+operator|=
+name|PlanUtils
+operator|.
+name|getParentViewInfo
+argument_list|(
+name|getAliasId
+argument_list|(
+name|alias
+argument_list|,
+name|qb
+argument_list|)
+argument_list|,
+name|viewAliasToInput
+argument_list|)
+expr_stmt|;
+block|}
 name|ReadEntity
 name|viewInput
 init|=

@@ -6049,6 +6049,7 @@ comment|// Find the immediate parent possible.
 comment|// For eg: for a query like 'select * from V3', where V3 -> V2, V2 -> V1, V1 -> T
 comment|// -> implies depends on.
 comment|// T's parent would be V1
+comment|// do not check last alias in the array for parent can not be itself.
 for|for
 control|(
 name|int
@@ -6061,6 +6062,8 @@ operator|<
 name|aliases
 operator|.
 name|length
+operator|-
+literal|1
 condition|;
 name|pos
 operator|++
