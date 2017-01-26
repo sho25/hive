@@ -472,7 +472,7 @@ name|HiveException
 argument_list|(
 literal|"Internal error : Partition Spec size, "
 operator|+
-name|partProps
+name|partSpec
 operator|.
 name|size
 argument_list|()
