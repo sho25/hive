@@ -1712,6 +1712,31 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// Ignore the interrupt status while returning the session, but set it back
+comment|// on the thread in case anything else needs to deal with it.
+name|boolean
+name|isInterrupted
+init|=
+name|Thread
+operator|.
+name|interrupted
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+if|if
+condition|(
+name|isInterrupted
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"returnSession invoked with interrupt status set"
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|llap
@@ -1807,6 +1832,25 @@ block|}
 block|}
 comment|// non default session nothing changes. The user can continue to use the existing
 comment|// session in the SessionState
+block|}
+finally|finally
+block|{
+comment|// Reset the interrupt status.
+if|if
+condition|(
+name|isInterrupted
+condition|)
+block|{
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|interrupt
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 block|}
 specifier|public
 specifier|static
