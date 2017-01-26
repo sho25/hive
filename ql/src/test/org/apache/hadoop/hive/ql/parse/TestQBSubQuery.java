@@ -750,7 +750,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|2
+literal|3
 argument_list|,
 name|SubQueryUtils
 operator|.

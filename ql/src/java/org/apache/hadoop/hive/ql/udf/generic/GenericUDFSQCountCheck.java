@@ -357,15 +357,15 @@ condition|(
 name|arguments
 operator|.
 name|length
-operator|!=
-literal|1
+operator|>
+literal|2
 condition|)
 block|{
 throw|throw
 operator|new
 name|UDFArgumentLengthException
 argument_list|(
-literal|"Invalid scalar subquery expression. Subquery count check expected one argument but received: "
+literal|"Invalid scalar subquery expression. Subquery count check expected two argument but received: "
 operator|+
 name|arguments
 operator|.
@@ -457,6 +457,17 @@ operator|>=
 literal|0
 operator|)
 assert|;
+switch|switch
+condition|(
+name|arguments
+operator|.
+name|length
+condition|)
+block|{
+case|case
+literal|1
+case|:
+comment|//Scalar queries, should expect value/count less than 1
 if|if
 condition|(
 name|val
@@ -471,6 +482,28 @@ argument_list|(
 literal|" Scalar subquery expression returns more than one row."
 argument_list|)
 throw|;
+block|}
+break|break;
+case|case
+literal|2
+case|:
+if|if
+condition|(
+name|val
+operator|==
+literal|0
+condition|)
+block|{
+comment|// IN/NOT IN subqueries with aggregate
+throw|throw
+operator|new
+name|UDFArgumentException
+argument_list|(
+literal|" IN/NOT IN subquery with aggregate returning zero result. Currently this is not supported."
+argument_list|)
+throw|;
+block|}
+break|break;
 block|}
 name|resultLong
 operator|.

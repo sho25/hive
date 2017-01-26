@@ -365,11 +365,51 @@ name|getType
 argument_list|()
 condition|)
 block|{
+comment|// opNode's type is always either KW_EXISTS or KW_IN never NOTEXISTS or NOTIN
+comment|//  to figure this out we need to check it's grand parent's parent
 case|case
 name|HiveParser
 operator|.
 name|KW_EXISTS
 case|:
+if|if
+condition|(
+name|opNode
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|opNode
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|KW_NOT
+condition|)
+block|{
+return|return
+name|NOT_EXISTS
+return|;
+block|}
 return|return
 name|EXISTS
 return|;
@@ -386,6 +426,44 @@ name|HiveParser
 operator|.
 name|KW_IN
 case|:
+if|if
+condition|(
+name|opNode
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|opNode
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getParent
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|KW_NOT
+condition|)
+block|{
+return|return
+name|NOT_IN
+return|;
+block|}
 return|return
 name|IN
 return|;
@@ -2153,6 +2231,13 @@ name|hasWindowing
 init|=
 literal|false
 decl_stmt|;
+comment|// we need to know if aggregate is COUNT since IN corr subq with count aggregate
+comment|// is not special cased later in subquery remove rule
+name|boolean
+name|hasCount
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -2201,7 +2286,7 @@ operator||
 operator|(
 name|r
 operator|==
-literal|2
+literal|3
 operator|)
 expr_stmt|;
 name|hasAggreateExprs
@@ -2212,6 +2297,20 @@ operator|(
 name|r
 operator|==
 literal|1
+operator||
+name|r
+operator|==
+literal|2
+operator|)
+expr_stmt|;
+name|hasCount
+operator|=
+name|hasCount
+operator||
+operator|(
+name|r
+operator|==
+literal|2
 operator|)
 expr_stmt|;
 block|}
@@ -2439,6 +2538,14 @@ argument_list|)
 throw|;
 block|}
 comment|/*      * Restriction.13.m :: In the case of an implied Group By on a      * correlated SubQuery, the SubQuery always returns 1 row.      * An exists on a SubQuery with an implied GBy will always return true.      * Whereas Algebraically transforming to a Join may not return true. See      * Specification doc for details.      * Similarly a not exists on a SubQuery with a implied GBY will always return false.      */
+comment|// Following is special cases for different type of subqueries which have aggregate and no implicit group by
+comment|// and are correlatd
+comment|// * EXISTS/NOT EXISTS - NOT allowed, throw an error for now. We plan to allow this later
+comment|// * SCALAR - only allow if it has non equi join predicate. This should return true since later in subquery remove
+comment|//              rule we need to know about this case.
+comment|// * IN - always allowed, BUT returns true for cases with aggregate other than COUNT since later in subquery remove
+comment|//        rule we need to know about this case.
+comment|// * NOT IN - always allow, but always return true because later subq remove rule will generate diff plan for this case
 if|if
 condition|(
 name|hasAggreateExprs
@@ -2448,9 +2555,6 @@ condition|)
 block|{
 if|if
 condition|(
-name|hasCorrelation
-operator|&&
-operator|(
 name|operator
 operator|.
 name|getType
@@ -2468,25 +2572,11 @@ operator|==
 name|SubQueryType
 operator|.
 name|NOT_EXISTS
-operator|||
-name|operator
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|SubQueryType
-operator|.
-name|IN
-operator|||
-name|operator
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|SubQueryType
-operator|.
-name|NOT_IN
-operator|)
+condition|)
+block|{
+if|if
+condition|(
+name|hasCorrelation
 condition|)
 block|{
 throw|throw
@@ -2501,12 +2591,13 @@ name|getMsg
 argument_list|(
 name|subQueryAST
 argument_list|,
-literal|"A predicate on EXISTS/NOT EXISTS/IN/NOT IN SubQuery with implicit Aggregation(no Group By clause) "
+literal|"A predicate on EXISTS/NOT EXISTS SubQuery with implicit Aggregation(no Group By clause) "
 operator|+
 literal|"cannot be rewritten."
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 elseif|else
 if|if
@@ -2519,11 +2610,13 @@ operator|==
 name|SubQueryType
 operator|.
 name|SCALAR
-operator|&&
+condition|)
+block|{
+if|if
+condition|(
 name|hasNonEquiJoinPred
 condition|)
 block|{
-comment|// throw an error if predicates are not equal
 throw|throw
 operator|new
 name|CalciteSubquerySemanticException
@@ -2541,6 +2634,16 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|hasCorrelation
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+block|}
 elseif|else
 if|if
 condition|(
@@ -2551,7 +2654,12 @@ argument_list|()
 operator|==
 name|SubQueryType
 operator|.
-name|SCALAR
+name|IN
+condition|)
+block|{
+if|if
+condition|(
+name|hasCount
 operator|&&
 name|hasCorrelation
 condition|)
@@ -2559,6 +2667,30 @@ block|{
 return|return
 literal|true
 return|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|operator
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|SubQueryType
+operator|.
+name|NOT_IN
+condition|)
+block|{
+if|if
+condition|(
+name|hasCorrelation
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 block|}
 block|}
 return|return
@@ -2824,7 +2956,7 @@ operator||
 operator|(
 name|r
 operator|==
-literal|2
+literal|3
 operator|)
 expr_stmt|;
 name|containsAggregationExprs
