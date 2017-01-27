@@ -13231,7 +13231,7 @@ literal|"hive.llap.daemon.logger"
 argument_list|,
 name|Constants
 operator|.
-name|LLAP_LOGGER_NAME_RFA
+name|LLAP_LOGGER_NAME_QUERY_ROUTING
 argument_list|,
 operator|new
 name|StringSet
