@@ -3526,8 +3526,9 @@ name|initializeSerDe
 argument_list|(
 name|serde
 argument_list|,
-operator|new
-name|HiveConf
+name|queryState
+operator|.
+name|getConf
 argument_list|()
 argument_list|,
 name|props
