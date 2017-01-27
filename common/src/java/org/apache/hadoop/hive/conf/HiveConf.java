@@ -12783,6 +12783,19 @@ argument_list|,
 literal|"llap.daemon.num.executors"
 argument_list|)
 block|,
+name|LLAP_DAEMON_AM_REPORTER_MAX_THREADS
+argument_list|(
+literal|"hive.llap.daemon.am-reporter.max.threads"
+argument_list|,
+literal|4
+argument_list|,
+literal|"Maximum number of threads to be used for AM reporter. If this is lower than number of\n"
+operator|+
+literal|"executors in llap daemon, it would be set to number of executors at runtime."
+argument_list|,
+literal|"llap.daemon.am-reporter.max.threads"
+argument_list|)
+block|,
 name|LLAP_DAEMON_RPC_PORT
 argument_list|(
 literal|"hive.llap.daemon.rpc.port"
