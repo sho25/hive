@@ -3944,6 +3944,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|supportedGenericUDFs
+operator|.
+name|add
+argument_list|(
+name|GenericUDFInBloomFilter
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// For type casts
 name|supportedGenericUDFs
 operator|.
@@ -4172,6 +4181,13 @@ operator|.
 name|add
 argument_list|(
 literal|"stddev_samp"
+argument_list|)
+expr_stmt|;
+name|supportedAggregationUdfs
+operator|.
+name|add
+argument_list|(
+literal|"bloom_filter"
 argument_list|)
 expr_stmt|;
 block|}

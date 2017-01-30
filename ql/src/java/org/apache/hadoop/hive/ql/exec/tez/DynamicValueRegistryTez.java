@@ -884,11 +884,75 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// For now, expecting a single row (min/max, aggregated bloom filter)
+comment|// For now, expecting a single row (min/max, aggregated bloom filter), or no rows
 if|if
 condition|(
 name|rowCount
-operator|!=
+operator|==
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No input rows from "
+operator|+
+name|inputSourceName
+operator|+
+literal|", filling dynamic values with nulls"
+argument_list|)
+expr_stmt|;
+for|for
+control|(
+name|int
+name|colIdx
+init|=
+literal|0
+init|;
+name|colIdx
+operator|<
+name|colExprEvaluators
+operator|.
+name|size
+argument_list|()
+condition|;
+operator|++
+name|colIdx
+control|)
+block|{
+name|ExprNodeEvaluator
+name|eval
+init|=
+name|colExprEvaluators
+operator|.
+name|get
+argument_list|(
+name|colIdx
+argument_list|)
+decl_stmt|;
+name|setValue
+argument_list|(
+name|runtimeValuesInfo
+operator|.
+name|getDynamicValueIDs
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|colIdx
+argument_list|)
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|rowCount
+operator|>
 literal|1
 condition|)
 block|{
@@ -896,7 +960,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Expected 1 row from "
+literal|"Expected 0 or 1 rows from "
 operator|+
 name|inputSourceName
 operator|+
