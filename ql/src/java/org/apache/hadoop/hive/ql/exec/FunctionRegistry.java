@@ -5404,6 +5404,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"cardinality_violation"
+argument_list|,
+name|GenericUDFCardinalityViolation
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"from_utc_timestamp"
 argument_list|,
 name|GenericUDFFromUtcTimestamp

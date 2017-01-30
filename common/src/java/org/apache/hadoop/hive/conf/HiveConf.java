@@ -8586,6 +8586,17 @@ argument_list|,
 literal|"Frequency of WriteSet reaper runs"
 argument_list|)
 block|,
+name|MERGE_CARDINALITY_VIOLATION_CHECK
+argument_list|(
+literal|"hive.merge.cardinality.check"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Set to true to ensure that each SQL Merge statement ensures that for each row in the target\n"
+operator|+
+literal|"table there is at most 1 matching row in the source table per SQL Specification."
+argument_list|)
+block|,
 comment|// For Druid storage handler
 name|HIVE_DRUID_INDEXING_GRANULARITY
 argument_list|(

@@ -658,6 +658,11 @@ argument_list|(
 literal|"acidTbl"
 argument_list|)
 block|,
+name|ACIDTBLPART
+argument_list|(
+literal|"acidTblPart"
+argument_list|)
+block|,
 name|ACIDTBL2
 argument_list|(
 literal|"acidTbl2"
@@ -812,6 +817,19 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|MERGE_CARDINALITY_VIOLATION_CHECK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|setConfValues
@@ -912,6 +930,21 @@ operator|.
 name|ACIDTBL
 operator|+
 literal|"(a int, b int) clustered by (a) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|"(a int, b int) partitioned by (p string) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
@@ -6027,6 +6060,23 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|1
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|1
+argument_list|)
+argument_list|,
 name|explain
 operator|.
 name|get
@@ -6038,7 +6088,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 2<- Map 1 (SIMPLE_EDGE), Map 6 (SIMPLE_EDGE)"
+literal|"Reducer 2<- Map 1 (SIMPLE_EDGE), Map 7 (SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6046,6 +6096,23 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|2
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|2
+argument_list|)
+argument_list|,
 name|explain
 operator|.
 name|get
@@ -6065,6 +6132,23 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|3
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|3
+argument_list|)
+argument_list|,
 name|explain
 operator|.
 name|get
@@ -6084,6 +6168,23 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|4
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|4
+argument_list|)
+argument_list|,
 name|explain
 operator|.
 name|get
@@ -6095,7 +6196,43 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 5<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
+literal|"Reducer 5<- Reducer 2 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|5
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|5
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|5
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 6<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6478,6 +6615,177 @@ name|rExpected
 argument_list|)
 argument_list|,
 name|r
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * see https://issues.apache.org/jira/browse/HIVE-14949 for details    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeCardinalityViolation
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|sourceVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|44
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|5
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|sourceVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED and s.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b) "
+decl_stmt|;
+name|runStatementOnDriverNegative
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p) values(1,1,'p1'),(2,2,'p1'),(3,3,'p1'),(4,4,'p2')"
+argument_list|)
+expr_stmt|;
+name|query
+operator|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED and s.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b, 'p1') "
+expr_stmt|;
+name|runStatementOnDriverNegative
+argument_list|(
+name|query
 argument_list|)
 expr_stmt|;
 block|}

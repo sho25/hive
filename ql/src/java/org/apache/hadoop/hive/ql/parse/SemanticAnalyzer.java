@@ -7497,7 +7497,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Generate a temp table out of a value clause    * See also {@link #preProcessForInsert(ASTNode, QB)}    */
+comment|/**    * Generate a temp table out of a values clause    * See also {@link #preProcessForInsert(ASTNode, QB)}    */
 specifier|private
 name|ASTNode
 name|genValuesTempTable
