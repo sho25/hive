@@ -1788,6 +1788,13 @@ operator|+
 name|len
 return|;
 block|}
+specifier|public
+specifier|static
+name|int
+name|VLONG_BYTES_LEN
+init|=
+literal|9
+decl_stmt|;
 specifier|private
 specifier|static
 name|ThreadLocal
@@ -1817,7 +1824,7 @@ return|return
 operator|new
 name|byte
 index|[
-literal|9
+name|VLONG_BYTES_LEN
 index|]
 return|;
 block|}
