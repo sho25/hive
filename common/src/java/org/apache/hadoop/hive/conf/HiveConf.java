@@ -5379,6 +5379,15 @@ operator|+
 literal|" expressed as multiple of Local FS read cost"
 argument_list|)
 block|,
+name|HIVE_CBO_SHOW_WARNINGS
+argument_list|(
+literal|"hive.cbo.show.warnings"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Toggle display of CBO warnings like missing column stats"
+argument_list|)
+block|,
 name|AGGR_JOIN_TRANSPOSE
 argument_list|(
 literal|"hive.transpose.aggr.join"
