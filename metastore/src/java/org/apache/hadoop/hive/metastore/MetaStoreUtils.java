@@ -2093,13 +2093,11 @@ name|environmentContext
 operator|.
 name|isSetProperties
 argument_list|()
-operator|&&
-name|StatsSetupConst
-operator|.
-name|TASK
-operator|.
-name|equals
-argument_list|(
+condition|)
+block|{
+name|String
+name|statsType
+init|=
 name|environmentContext
 operator|.
 name|getProperties
@@ -2111,12 +2109,35 @@ name|StatsSetupConst
 operator|.
 name|STATS_GENERATED
 argument_list|)
+decl_stmt|;
+comment|// no matter STATS_GENERATED is USER or TASK, all need to re-calculate the stats:
+comment|// USER: alter table .. update statistics
+comment|// TASK: from some sql operation which could collect and compute stats
+if|if
+condition|(
+name|StatsSetupConst
+operator|.
+name|TASK
+operator|.
+name|equals
+argument_list|(
+name|statsType
+argument_list|)
+operator|||
+name|StatsSetupConst
+operator|.
+name|USER
+operator|.
+name|equals
+argument_list|(
+name|statsType
 argument_list|)
 condition|)
 block|{
 return|return
 literal|true
 return|;
+block|}
 block|}
 comment|// requires to calculate stats if new and old have different fast stats
 return|return

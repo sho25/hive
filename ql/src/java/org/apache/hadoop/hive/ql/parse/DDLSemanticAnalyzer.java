@@ -10611,40 +10611,10 @@ name|environmentContext
 init|=
 literal|null
 decl_stmt|;
-if|if
-condition|(
-name|queryState
-operator|.
-name|getCommandType
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|HiveOperation
-operator|.
-name|ALTERTABLE_UPDATETABLESTATS
-operator|.
-name|getOperationName
-argument_list|()
-argument_list|)
-operator|||
-name|queryState
-operator|.
-name|getCommandType
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|HiveOperation
-operator|.
-name|ALTERTABLE_UPDATEPARTSTATS
-operator|.
-name|getOperationName
-argument_list|()
-argument_list|)
-condition|)
-block|{
 comment|// we need to check if the properties are valid, especially for stats.
+comment|// they might be changed via alter table .. update statistics or
+comment|// alter table .. set tblproperties. If the property is not row_count
+comment|// or raw_data_size, it could not be changed through update statistics
 name|boolean
 name|changeStatsSucceeded
 init|=
@@ -10741,6 +10711,39 @@ block|}
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|queryState
+operator|.
+name|getCommandType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|HiveOperation
+operator|.
+name|ALTERTABLE_UPDATETABLESTATS
+operator|.
+name|getOperationName
+argument_list|()
+argument_list|)
+operator|||
+name|queryState
+operator|.
+name|getCommandType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|HiveOperation
+operator|.
+name|ALTERTABLE_UPDATEPARTSTATS
+operator|.
+name|getOperationName
+argument_list|()
+argument_list|)
+condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -10752,7 +10755,7 @@ operator|.
 name|getKey
 argument_list|()
 operator|+
-literal|" failed because the only valid keys are"
+literal|" failed because the only valid keys are "
 operator|+
 name|StatsSetupConst
 operator|.
