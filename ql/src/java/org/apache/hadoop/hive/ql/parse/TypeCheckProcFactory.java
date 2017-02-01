@@ -565,6 +565,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|CalciteSubquerySemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|translator
 operator|.
 name|TypeConverter
@@ -8680,7 +8700,7 @@ argument_list|()
 condition|)
 throw|throw
 operator|new
-name|SemanticException
+name|CalciteSubquerySemanticException
 argument_list|(
 name|SemanticAnalyzer
 operator|.
@@ -8693,7 +8713,11 @@ operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|()
+argument_list|(
+literal|"Currently SubQuery expressions are only allowed as "
+operator|+
+literal|"Where and Having Clause predicates"
+argument_list|)
 argument_list|)
 argument_list|)
 throw|;
@@ -8894,7 +8918,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|CalciteSubquerySemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
@@ -9013,7 +9037,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SemanticException
+name|CalciteSubquerySemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
