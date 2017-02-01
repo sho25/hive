@@ -253,7 +253,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|/**    * Translate the search argument to the filter predicate parquet uses. It includes    * only the columns from the passed schema.    * @return translate the sarg into a filter predicate    */
+comment|/**    * Translate the search argument to the filter predicate parquet uses. It includes    * only the columns from the passed schema.    * @return  a filter predicate translated from search argument. null is returned    *          if failed to convert.    */
 specifier|public
 specifier|static
 name|FilterPredicate
@@ -313,6 +313,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+try|try
+block|{
 return|return
 name|translate
 argument_list|(
@@ -331,6 +333,17 @@ argument_list|,
 name|schema
 argument_list|)
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 specifier|private
 specifier|static
@@ -355,6 +368,8 @@ parameter_list|,
 name|MessageType
 name|schema
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|FilterPredicate
 name|p
@@ -660,6 +675,8 @@ parameter_list|,
 name|Type
 name|parquetType
 parameter_list|)
+throws|throws
+name|Exception
 block|{
 name|LeafFilterFactory
 name|leafFilterFactory
@@ -687,17 +704,6 @@ argument_list|,
 name|parquetType
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|builder
-operator|==
-literal|null
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
 if|if
 condition|(
 name|isMultiLiteralsOperator
@@ -773,9 +779,9 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-return|return
-literal|null
-return|;
+throw|throw
+name|e
+throw|;
 block|}
 block|}
 specifier|private

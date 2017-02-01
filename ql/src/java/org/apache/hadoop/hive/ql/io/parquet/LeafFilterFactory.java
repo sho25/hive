@@ -89,6 +89,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -1009,7 +1027,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * get leaf filter builder by FilterPredicateType, currently date, decimal and timestamp is not    * supported yet.    * @param type FilterPredicateType    * @return    */
+comment|/**    * get leaf filter builder by FilterPredicateType, currently date, decimal and timestamp is not    * supported yet.    * @param type FilterPredicateType    * @return    * @throws HiveException Exception is thrown for unsupported data types so we can skip filtering    */
 specifier|public
 name|FilterPredicateLeafBuilder
 name|getLeafFilterBuilderByType
@@ -1022,6 +1040,8 @@ parameter_list|,
 name|Type
 name|parquetType
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 switch|switch
 condition|(
@@ -1123,18 +1143,27 @@ case|case
 name|TIMESTAMP
 case|:
 default|default:
+name|String
+name|msg
+init|=
+literal|"Conversion to Parquet FilterPredicate not supported for "
+operator|+
+name|type
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Conversion to Parquet FilterPredicate not supported for "
-operator|+
-name|type
+name|msg
 argument_list|)
 expr_stmt|;
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
 block|}
 block|}
 block|}
