@@ -1203,6 +1203,11 @@ name|serdeConstants
 operator|.
 name|DOUBLE_TYPE_NAME
 case|:
+case|case
+name|serdeConstants
+operator|.
+name|DECIMAL_TYPE_NAME
+case|:
 name|af
 operator|=
 operator|new
