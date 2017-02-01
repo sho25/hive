@@ -5383,7 +5383,7 @@ name|HIVE_CBO_SHOW_WARNINGS
 argument_list|(
 literal|"hive.cbo.show.warnings"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Toggle display of CBO warnings like missing column stats"
 argument_list|)
