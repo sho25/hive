@@ -201,6 +201,22 @@ name|apache
 operator|.
 name|calcite
 operator|.
+name|sql
+operator|.
+name|type
+operator|.
+name|SqlTypeName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
 name|tools
 operator|.
 name|RelBuilder
@@ -672,6 +688,42 @@ operator|.
 name|get
 argument_list|(
 literal|0
+argument_list|)
+expr_stmt|;
+block|}
+comment|// reduce might end up creating an expression with null type
+comment|// e.g condition(null = null) is reduced to condition (null) with null type
+comment|// since this is a condition which will always be boolean type we cast it to
+comment|// boolean type
+if|if
+condition|(
+name|newConditionExp
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getSqlTypeName
+argument_list|()
+operator|==
+name|SqlTypeName
+operator|.
+name|NULL
+condition|)
+block|{
+name|newConditionExp
+operator|=
+name|call
+operator|.
+name|builder
+argument_list|()
+operator|.
+name|cast
+argument_list|(
+name|newConditionExp
+argument_list|,
+name|SqlTypeName
+operator|.
+name|BOOLEAN
 argument_list|)
 expr_stmt|;
 block|}
