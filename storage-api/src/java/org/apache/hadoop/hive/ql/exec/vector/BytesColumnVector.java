@@ -50,6 +50,8 @@ name|int
 index|[]
 name|length
 decl_stmt|;
+comment|// A call to increaseBufferSpace() or ensureValPreallocated() will ensure that buffer[] points to
+comment|// a byte[] with sufficient space for the specified size.
 specifier|private
 name|byte
 index|[]
@@ -61,6 +63,20 @@ name|int
 name|nextFree
 decl_stmt|;
 comment|// next free position in buffer
+comment|// Hang onto a byte array for holding smaller byte values
+specifier|private
+name|byte
+index|[]
+name|smallBuffer
+decl_stmt|;
+specifier|private
+name|int
+name|smallBufferNextFree
+decl_stmt|;
+specifier|private
+name|int
+name|bufferAllocationCount
+decl_stmt|;
 comment|// Estimate that there will be 16 bytes per entry
 specifier|static
 specifier|final
@@ -83,6 +99,16 @@ operator|(
 name|float
 operator|)
 literal|1.2
+decl_stmt|;
+comment|// Largest size allowed in smallBuffer
+specifier|static
+specifier|final
+name|int
+name|MAX_SIZE_FOR_SMALL_BUFFER
+init|=
+literal|1024
+operator|*
+literal|1024
 decl_stmt|;
 comment|/**    * Use this constructor for normal operation.    * All column vectors should be the default size normally.    */
 specifier|public
@@ -213,6 +239,10 @@ name|nextFree
 operator|=
 literal|0
 expr_stmt|;
+name|smallBufferNextFree
+operator|=
+literal|0
+expr_stmt|;
 comment|// if buffer is already allocated, keep using it, don't re-allocate
 if|if
 condition|(
@@ -221,8 +251,48 @@ operator|!=
 literal|null
 condition|)
 block|{
-return|return;
+comment|// Free up any previously allocated buffers that are referenced by vector
+if|if
+condition|(
+name|bufferAllocationCount
+operator|>
+literal|0
+condition|)
+block|{
+for|for
+control|(
+name|int
+name|idx
+init|=
+literal|0
+init|;
+name|idx
+operator|<
+name|vector
+operator|.
+name|length
+condition|;
+operator|++
+name|idx
+control|)
+block|{
+name|vector
+index|[
+name|idx
+index|]
+operator|=
+literal|null
+expr_stmt|;
 block|}
+name|buffer
+operator|=
+name|smallBuffer
+expr_stmt|;
+comment|// In case last row was a large bytes value
+block|}
+block|}
+else|else
+block|{
 comment|// allocate a little extra space to limit need to re-allocate
 name|int
 name|bufferSize
@@ -261,6 +331,15 @@ name|byte
 index|[
 name|bufferSize
 index|]
+expr_stmt|;
+name|smallBuffer
+operator|=
+name|buffer
+expr_stmt|;
+block|}
+name|bufferAllocationCount
+operator|=
+literal|0
 expr_stmt|;
 block|}
 comment|/**    * Initialize buffer to default size.    */
@@ -626,33 +705,19 @@ name|int
 name|nextElemLength
 parameter_list|)
 block|{
-comment|// Keep doubling buffer size until there will be enough space for next element.
-name|int
-name|newLength
-init|=
-literal|2
-operator|*
-name|buffer
-operator|.
-name|length
-decl_stmt|;
-while|while
+comment|// A call to increaseBufferSpace() or ensureValPreallocated() will ensure that buffer[] points to
+comment|// a byte[] with sufficient space for the specified size.
+comment|// This will either point to smallBuffer, or to a newly allocated byte array for larger values.
+if|if
 condition|(
-operator|(
-name|nextFree
-operator|+
 name|nextElemLength
-operator|)
 operator|>
-name|newLength
+name|MAX_SIZE_FOR_SMALL_BUFFER
 condition|)
 block|{
-name|newLength
-operator|*=
-literal|2
-expr_stmt|;
-block|}
-comment|// Allocate new buffer, copy data to it, and set buffer to new buffer.
+comment|// Larger allocations will be special-cased and will not use the normal buffer.
+comment|// buffer/nextFree will be set to a newly allocated array just for the current row.
+comment|// The next row will require another call to increaseBufferSpace() since this new buffer should be used up.
 name|byte
 index|[]
 name|newBuffer
@@ -660,28 +725,141 @@ init|=
 operator|new
 name|byte
 index|[
-name|newLength
+name|nextElemLength
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|arraycopy
-argument_list|(
-name|buffer
-argument_list|,
-literal|0
-argument_list|,
-name|newBuffer
-argument_list|,
-literal|0
-argument_list|,
-name|nextFree
-argument_list|)
+operator|++
+name|bufferAllocationCount
 expr_stmt|;
+comment|// If the buffer was pointing to smallBuffer, then nextFree keeps track of the current state
+comment|// of the free index for smallBuffer. We now need to save this value to smallBufferNextFree
+comment|// so we don't lose this. A bit of a weird dance here.
+if|if
+condition|(
+name|smallBuffer
+operator|==
+name|buffer
+condition|)
+block|{
+name|smallBufferNextFree
+operator|=
+name|nextFree
+expr_stmt|;
+block|}
 name|buffer
 operator|=
 name|newBuffer
 expr_stmt|;
+name|nextFree
+operator|=
+literal|0
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// This value should go into smallBuffer.
+if|if
+condition|(
+name|smallBuffer
+operator|!=
+name|buffer
+condition|)
+block|{
+comment|// Previous row was for a large bytes value (> MAX_SIZE_FOR_SMALL_BUFFER).
+comment|// Use smallBuffer if possible.
+name|buffer
+operator|=
+name|smallBuffer
+expr_stmt|;
+name|nextFree
+operator|=
+name|smallBufferNextFree
+expr_stmt|;
+block|}
+comment|// smallBuffer might still be out of space
+if|if
+condition|(
+operator|(
+name|nextFree
+operator|+
+name|nextElemLength
+operator|)
+operator|>
+name|buffer
+operator|.
+name|length
+condition|)
+block|{
+name|int
+name|newLength
+init|=
+name|smallBuffer
+operator|.
+name|length
+operator|*
+literal|2
+decl_stmt|;
+while|while
+condition|(
+name|newLength
+operator|<
+name|nextElemLength
+condition|)
+block|{
+if|if
+condition|(
+name|newLength
+operator|<
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Overflow of newLength. smallBuffer.length="
+operator|+
+name|smallBuffer
+operator|.
+name|length
+operator|+
+literal|", nextElemLength="
+operator|+
+name|nextElemLength
+argument_list|)
+throw|;
+block|}
+name|newLength
+operator|*=
+literal|2
+expr_stmt|;
+block|}
+name|smallBuffer
+operator|=
+operator|new
+name|byte
+index|[
+name|newLength
+index|]
+expr_stmt|;
+operator|++
+name|bufferAllocationCount
+expr_stmt|;
+name|smallBufferNextFree
+operator|=
+literal|0
+expr_stmt|;
+comment|// Update buffer
+name|buffer
+operator|=
+name|smallBuffer
+expr_stmt|;
+name|nextFree
+operator|=
+literal|0
+expr_stmt|;
+block|}
+block|}
 block|}
 comment|/** Copy the current object contents into the output. Only copy selected entries,     * as indicated by selectedInUse and the sel array.     */
 specifier|public
