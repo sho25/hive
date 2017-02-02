@@ -922,6 +922,8 @@ name|String
 index|[]
 block|{
 literal|"org.apache.hive.hcatalog.data.JsonSerDe"
+block|,
+literal|"org.apache.hadoop.hive.druid.DruidStorageHandler"
 block|}
 decl_stmt|;
 specifier|private
