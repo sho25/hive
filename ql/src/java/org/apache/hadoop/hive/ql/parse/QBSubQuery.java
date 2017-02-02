@@ -2158,7 +2158,7 @@ argument_list|()
 operator|==
 name|HiveParser
 operator|.
-name|TOK_HINTLIST
+name|QUERY_HINT
 condition|)
 block|{
 name|selectExprStart
@@ -2774,7 +2774,7 @@ argument_list|()
 operator|==
 name|HiveParser
 operator|.
-name|TOK_HINTLIST
+name|QUERY_HINT
 condition|)
 block|{
 name|selectExprStart
