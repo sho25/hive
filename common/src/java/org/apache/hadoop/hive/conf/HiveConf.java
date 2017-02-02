@@ -8159,6 +8159,23 @@ operator|+
 literal|"no transactions."
 argument_list|)
 block|,
+name|HIVE_TXN_STRICT_LOCKING_MODE
+argument_list|(
+literal|"hive.txn.strict.locking.mode"
+argument_list|,
+literal|true
+argument_list|,
+literal|"In strict mode non-ACID\n"
+operator|+
+literal|"resources use standard R/W lock semantics, e.g. INSERT will acquire exclusive lock.\n"
+operator|+
+literal|"In nonstrict mode, for non-ACID resources, INSERT will only acquire shared lock, which\n"
+operator|+
+literal|"allows two concurrent writes to the same partition but still lets lock manager prevent\n"
+operator|+
+literal|"DROP TABLE etc. when the table is being written to"
+argument_list|)
+block|,
 name|HIVE_TXN_TIMEOUT
 argument_list|(
 literal|"hive.txn.timeout"
