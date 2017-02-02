@@ -882,6 +882,20 @@ name|void
 name|cleanup
 parameter_list|()
 block|{    }
+annotation|@
+name|Override
+specifier|public
+name|Throwable
+name|getError
+parameter_list|()
+block|{
+return|return
+name|jobHandle
+operator|.
+name|getError
+argument_list|()
+return|;
+block|}
 specifier|private
 name|SparkJobInfo
 name|getSparkJobInfo

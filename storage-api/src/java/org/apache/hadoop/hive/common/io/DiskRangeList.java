@@ -89,7 +89,7 @@ name|end
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Replaces this element with another in the list; returns the new element. */
+comment|/** Replaces this element with another in the list; returns the new element.    * @param other the disk range to swap into this list    * @return the new element    */
 specifier|public
 name|DiskRangeList
 name|replaceSelfWith
@@ -164,7 +164,7 @@ return|return
 name|other
 return|;
 block|}
-comment|/**    * Inserts an intersecting range before current in the list and adjusts offset accordingly.    * @returns the new element.    */
+comment|/**    * Inserts an intersecting range before current in the list and adjusts offset accordingly.    * @param other the element to insert    * @return the new element.    */
 specifier|public
 name|DiskRangeList
 name|insertPartBefore
@@ -232,7 +232,7 @@ return|return
 name|other
 return|;
 block|}
-comment|/**    * Inserts an element after current in the list.    * @returns the new element.    * */
+comment|/**    * Inserts an element after current in the list.    * @param other the new element to insert    * @return the new element.    * */
 specifier|public
 name|DiskRangeList
 name|insertAfter
@@ -283,7 +283,7 @@ return|return
 name|other
 return|;
 block|}
-comment|/**    * Inserts an intersecting range after current in the list and adjusts offset accordingly.    * @returns the new element.    */
+comment|/**    * Inserts an intersecting range after current in the list and adjusts offset accordingly.    * @param other the new element to insert    * @return the new element.    */
 specifier|public
 name|DiskRangeList
 name|insertPartAfter
@@ -423,7 +423,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-comment|/** Splits current element in the list, using DiskRange::slice */
+comment|/** Splits current element in the list, using DiskRange::slice.    * @param cOffset the position to split the list    * @return the split list    */
 specifier|public
 specifier|final
 name|DiskRangeList
@@ -688,7 +688,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Creating new range; last range (which can include some previous adds) was "
 operator|+
@@ -851,6 +851,43 @@ return|return
 name|result
 return|;
 block|}
+block|}
+specifier|public
+name|void
+name|setEnd
+parameter_list|(
+name|long
+name|newEnd
+parameter_list|)
+block|{
+assert|assert
+name|newEnd
+operator|>=
+name|this
+operator|.
+name|offset
+assert|;
+assert|assert
+name|this
+operator|.
+name|next
+operator|==
+literal|null
+operator|||
+name|this
+operator|.
+name|next
+operator|.
+name|offset
+operator|>=
+name|newEnd
+assert|;
+name|this
+operator|.
+name|end
+operator|=
+name|newEnd
+expr_stmt|;
 block|}
 block|}
 end_class

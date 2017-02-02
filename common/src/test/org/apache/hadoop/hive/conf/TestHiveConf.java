@@ -1010,7 +1010,7 @@ name|verifyAndSet
 argument_list|(
 literal|"spark.master"
 argument_list|,
-literal|"yarn-cluster"
+literal|"yarn"
 argument_list|)
 expr_stmt|;
 name|Assert

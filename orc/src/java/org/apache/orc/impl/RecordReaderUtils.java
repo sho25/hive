@@ -465,7 +465,7 @@ name|this
 operator|.
 name|codec
 operator|=
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|createCodec
 argument_list|(

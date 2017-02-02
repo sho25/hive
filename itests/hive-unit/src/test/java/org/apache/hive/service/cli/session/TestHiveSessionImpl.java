@@ -234,6 +234,8 @@ init|=
 operator|new
 name|HiveSessionImpl
 argument_list|(
+literal|null
+argument_list|,
 name|protocol
 argument_list|,
 name|username

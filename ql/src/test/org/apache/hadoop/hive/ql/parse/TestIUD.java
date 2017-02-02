@@ -638,7 +638,7 @@ name|assertEquals
 argument_list|(
 literal|"Failure didn't match."
 argument_list|,
-literal|"line 1:23 missing EOF at '(' near 'values'"
+literal|"line 1:24 cannot recognize input near 'values' '(' '3' in joinSource"
 argument_list|,
 name|ex
 operator|.

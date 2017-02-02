@@ -1218,6 +1218,13 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+name|tbl
+operator|.
+name|setRewriteEnabled
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// create table
 name|setNullCreateTableGrants
 argument_list|()
@@ -1514,6 +1521,13 @@ expr_stmt|;
 name|tbl
 operator|.
 name|setStoredAsSubDirectories
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
+name|setRewriteEnabled
 argument_list|(
 literal|false
 argument_list|)

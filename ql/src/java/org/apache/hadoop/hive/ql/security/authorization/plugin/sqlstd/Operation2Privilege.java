@@ -823,7 +823,10 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// meta store check command - require admin priv
+comment|// meta store check command - equivalent to add partition command
+comment|// no input objects are passed to it currently, but keeping admin priv
+comment|// requirement on inputs just in case some input object like file
+comment|// uri is added later
 name|op2Priv
 operator|.
 name|put
@@ -838,7 +841,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|ADMIN_PRIV_AR
 argument_list|,
-literal|null
+name|INS_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;

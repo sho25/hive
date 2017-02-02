@@ -39,6 +39,10 @@ name|Set
 import|;
 end_import
 
+begin_comment
+comment|/**  * Note: For most of the implementations, there's no guarantee that the ServiceInstance returned by  * one invocation is the same as the instance returned by another invocation. e.g. the ZK registry  * returns a new ServiceInstance object each time a getInstance call is made.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface

@@ -447,6 +447,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|registry
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|HepPlanner

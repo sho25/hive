@@ -395,7 +395,7 @@ name|scratchTimestamp
 argument_list|)
 return|;
 block|}
-comment|/**    * Return a double representation of a Timestamp.    * @param elementNum    * @return    */
+comment|/**    * Return a double representation of a Timestamp.    * @param timestamp    * @return    */
 specifier|public
 specifier|static
 name|double

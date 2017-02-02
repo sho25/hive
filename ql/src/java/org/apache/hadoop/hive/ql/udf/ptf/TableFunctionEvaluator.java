@@ -429,6 +429,9 @@ operator|.
 name|connectLeadLagFunctionsToPartition
 argument_list|(
 name|ptfDesc
+operator|.
+name|getLlInfo
+argument_list|()
 argument_list|,
 name|pItr
 argument_list|)

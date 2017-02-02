@@ -67,7 +67,7 @@ literal|128
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(
@@ -101,7 +101,7 @@ literal|256
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(
@@ -135,7 +135,7 @@ literal|32
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(
@@ -169,7 +169,7 @@ literal|16
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(
@@ -203,7 +203,7 @@ literal|8
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(
@@ -237,7 +237,7 @@ literal|4
 operator|*
 literal|1024
 argument_list|,
-name|WriterImpl
+name|PhysicalFsWriter
 operator|.
 name|getEstimatedBufferSize
 argument_list|(

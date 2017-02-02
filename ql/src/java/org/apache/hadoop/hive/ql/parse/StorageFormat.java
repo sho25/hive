@@ -676,7 +676,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVEMATERIALIZEDVIEWFILEFORMAT
+name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
 argument_list|)
 expr_stmt|;
 name|serde
@@ -691,7 +691,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVEMATERIALIZEDVIEWSERDE
+name|HIVE_MATERIALIZED_VIEW_SERDE
 argument_list|)
 expr_stmt|;
 block|}

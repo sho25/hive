@@ -871,7 +871,7 @@ literal|"List bucketing pruner has a column name "
 operator|+
 name|columnNameInFilter
 operator|+
-literal|" which is not found in the partiton's skewed column list"
+literal|" which is not found in the partition's skewed column list"
 assert|;
 name|int
 name|index

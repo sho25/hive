@@ -119,7 +119,7 @@ name|long
 name|startTime
 decl_stmt|;
 comment|/**    * The configuration. Will be null until the service is initialized.    */
-specifier|private
+specifier|protected
 name|HiveConf
 name|hiveConf
 decl_stmt|;

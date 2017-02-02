@@ -876,6 +876,8 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|(
 name|desc
+argument_list|,
+name|hconf
 argument_list|)
 block|{
 name|int

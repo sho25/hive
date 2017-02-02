@@ -1871,6 +1871,13 @@ argument_list|,
 literal|"miniSparkOnYarn.query.files"
 argument_list|)
 expr_stmt|;
+name|includesFrom
+argument_list|(
+name|testConfigProps
+argument_list|,
+literal|"spark.only.query.files"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/spark"

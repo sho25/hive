@@ -1496,7 +1496,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Offerring constants "
+literal|"Offering constants "
 operator|+
 name|constants
 operator|.

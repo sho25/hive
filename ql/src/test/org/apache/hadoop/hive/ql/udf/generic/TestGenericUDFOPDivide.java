@@ -484,9 +484,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|21
+literal|9
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -511,7 +511,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"0.666666666666666667"
+literal|"0.666667"
 argument_list|)
 argument_list|,
 name|res
@@ -838,9 +838,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|38
+literal|9
 argument_list|,
-literal|15
+literal|4
 argument_list|)
 argument_list|)
 block|}
@@ -884,9 +884,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|38
+literal|33
 argument_list|,
-literal|20
+literal|10
 argument_list|)
 argument_list|,
 name|oi
@@ -916,7 +916,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"0.44260969485466229731"
+literal|"0.4426096949"
 argument_list|)
 argument_list|,
 name|res
@@ -1057,7 +1057,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testDoubleDivideDecimal
+name|testDouleDivideDecimal
 parameter_list|()
 throws|throws
 name|HiveException
@@ -1314,9 +1314,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|22
+literal|11
 argument_list|,
-literal|18
+literal|7
 argument_list|)
 argument_list|,
 name|oi
@@ -1346,7 +1346,7 @@ name|HiveDecimal
 operator|.
 name|create
 argument_list|(
-literal|"0.061710005532621186"
+literal|"0.06171"
 argument_list|)
 argument_list|,
 name|res
@@ -1473,9 +1473,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|19
+literal|7
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 argument_list|,
 name|oi
@@ -1586,9 +1586,9 @@ name|TypeInfoFactory
 operator|.
 name|getDecimalTypeInfo
 argument_list|(
-literal|23
+literal|13
 argument_list|,
-literal|18
+literal|8
 argument_list|)
 argument_list|,
 name|oi
@@ -1617,9 +1617,9 @@ literal|3
 argument_list|,
 literal|2
 argument_list|,
-literal|23
+literal|11
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1634,7 +1634,7 @@ literal|18
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1649,7 +1649,7 @@ literal|0
 argument_list|,
 literal|38
 argument_list|,
-literal|27
+literal|18
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1662,9 +1662,9 @@ literal|8
 argument_list|,
 literal|5
 argument_list|,
-literal|38
+literal|34
 argument_list|,
-literal|13
+literal|9
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1677,9 +1677,9 @@ literal|10
 argument_list|,
 literal|0
 argument_list|,
-literal|28
+literal|21
 argument_list|,
-literal|18
+literal|11
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1692,9 +1692,9 @@ literal|5
 argument_list|,
 literal|5
 argument_list|,
-literal|26
+literal|16
 argument_list|,
-literal|18
+literal|8
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1707,9 +1707,9 @@ literal|5
 argument_list|,
 literal|0
 argument_list|,
-literal|18
+literal|16
 argument_list|,
-literal|18
+literal|16
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1722,9 +1722,9 @@ literal|5
 argument_list|,
 literal|5
 argument_list|,
-literal|23
+literal|21
 argument_list|,
-literal|18
+literal|16
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1739,7 +1739,7 @@ literal|38
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 name|testDecimalDivisionResultType
@@ -1754,7 +1754,7 @@ literal|0
 argument_list|,
 literal|38
 argument_list|,
-literal|18
+literal|6
 argument_list|)
 expr_stmt|;
 block|}
@@ -1936,7 +1936,7 @@ literal|"int"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"decimal(30,18)"
+literal|"decimal(23,11)"
 argument_list|)
 expr_stmt|;
 name|verifyReturnType
@@ -2014,7 +2014,7 @@ literal|"decimal(10,2)"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"decimal(28,18)"
+literal|"decimal(23,13)"
 argument_list|)
 expr_stmt|;
 comment|// Most tests are done with ANSI SQL mode enabled, set it back to true
@@ -2076,7 +2076,7 @@ literal|"int"
 argument_list|,
 literal|"int"
 argument_list|,
-literal|"decimal(28,18)"
+literal|"decimal(21,11)"
 argument_list|)
 expr_stmt|;
 name|verifyReturnType
@@ -2115,7 +2115,7 @@ literal|"int"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"decimal(30,18)"
+literal|"decimal(23,11)"
 argument_list|)
 expr_stmt|;
 name|verifyReturnType
@@ -2193,7 +2193,7 @@ literal|"decimal(10,2)"
 argument_list|,
 literal|"decimal(10,2)"
 argument_list|,
-literal|"decimal(28,18)"
+literal|"decimal(23,13)"
 argument_list|)
 expr_stmt|;
 block|}

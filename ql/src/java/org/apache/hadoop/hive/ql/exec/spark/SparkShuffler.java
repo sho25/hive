@@ -78,10 +78,7 @@ name|JavaPairRDD
 argument_list|<
 name|HiveKey
 argument_list|,
-name|Iterable
-argument_list|<
 name|BytesWritable
-argument_list|>
 argument_list|>
 name|shuffle
 parameter_list|(

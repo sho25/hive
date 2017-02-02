@@ -658,9 +658,6 @@ name|vector
 index|[
 name|adjustedIndex
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|,
 name|decColVector
 operator|.

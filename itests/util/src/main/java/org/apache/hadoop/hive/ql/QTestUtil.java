@@ -8305,15 +8305,17 @@ name|String
 name|commands
 parameter_list|)
 block|{
+name|List
+argument_list|<
 name|String
-index|[]
+argument_list|>
 name|cmds
 init|=
-name|commands
+name|CliDriver
 operator|.
-name|split
+name|splitSemiColon
 argument_list|(
-literal|";"
+name|commands
 argument_list|)
 decl_stmt|;
 name|int
@@ -9025,6 +9027,7 @@ argument_list|(
 name|commands
 argument_list|)
 decl_stmt|;
+comment|// remove the comments
 while|while
 condition|(
 name|commentMatcher
@@ -9047,23 +9050,6 @@ name|commentMatcher
 operator|.
 name|start
 argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|newCommands
-operator|.
-name|append
-argument_list|(
-name|commentMatcher
-operator|.
-name|group
-argument_list|()
-operator|.
-name|replaceAll
-argument_list|(
-literal|"(?<!\\\\);"
-argument_list|,
-literal|"\\\\;"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10161,6 +10147,10 @@ name|lastWasMasked
 operator|=
 literal|true
 expr_stmt|;
+name|partialMaskWasMatched
+operator|=
+literal|false
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -10354,7 +10344,7 @@ name|add
 argument_list|(
 name|toPatternPair
 argument_list|(
-literal|"(s3.?|swift|wasb.?).*hive-staging.*"
+literal|"(pblob|s3.?|swift|wasb.?).*hive-staging.*"
 argument_list|,
 literal|"### BLOBSTORE_STAGING_PATH ###"
 argument_list|)

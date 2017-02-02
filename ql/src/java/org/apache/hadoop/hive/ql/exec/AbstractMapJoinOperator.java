@@ -363,6 +363,8 @@ name|getKeys
 argument_list|()
 argument_list|,
 name|NOTSKIPBIGTABLE
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|joinKeysObjectInspectors

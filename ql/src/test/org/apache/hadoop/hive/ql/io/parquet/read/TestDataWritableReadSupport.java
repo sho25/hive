@@ -25,6 +25,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Sets
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -68,6 +82,16 @@ operator|.
 name|util
 operator|.
 name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
 import|;
 end_import
 
@@ -157,9 +181,9 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-name|Arrays
+name|Sets
 operator|.
-name|asList
+name|newHashSet
 argument_list|(
 literal|"structCol.a"
 argument_list|)
@@ -225,9 +249,9 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-name|Arrays
+name|Sets
 operator|.
-name|asList
+name|newHashSet
 argument_list|(
 literal|"structCol.a"
 argument_list|,
@@ -301,9 +325,9 @@ argument_list|,
 literal|1
 argument_list|)
 argument_list|,
-name|Arrays
+name|Sets
 operator|.
-name|asList
+name|newHashSet
 argument_list|(
 literal|"structCol.b"
 argument_list|,
@@ -379,9 +403,9 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-name|Arrays
+name|Sets
 operator|.
-name|asList
+name|newHashSet
 argument_list|(
 literal|"structCol.subStructCol.b"
 argument_list|)
@@ -455,9 +479,9 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-name|Arrays
+name|Sets
 operator|.
-name|asList
+name|newHashSet
 argument_list|(
 literal|"structCol.subStructCol"
 argument_list|,

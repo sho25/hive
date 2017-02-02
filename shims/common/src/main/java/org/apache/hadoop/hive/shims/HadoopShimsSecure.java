@@ -731,6 +731,10 @@ block|,
 name|Integer
 operator|.
 name|class
+block|,
+name|RecordReader
+operator|.
+name|class
 block|}
 decl_stmt|;
 specifier|protected
@@ -1185,6 +1189,12 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|RecordReader
+name|preReader
+init|=
+name|curReader
+decl_stmt|;
+comment|//it is OK, curReader is closed, for we only need footer buffer info from preReader.
 if|if
 condition|(
 name|curReader
@@ -1270,6 +1280,8 @@ name|valueOf
 argument_list|(
 name|idx
 argument_list|)
+block|,
+name|preReader
 block|}
 argument_list|)
 expr_stmt|;

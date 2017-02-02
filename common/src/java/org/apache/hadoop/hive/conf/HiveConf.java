@@ -1667,6 +1667,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|METASTORE_EVENT_MESSAGE_FACTORY
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTORE_FILTER_HOOK
 block|,
 name|HiveConf
@@ -2048,6 +2054,14 @@ name|String
 name|HIVE_LLAP_DAEMON_SERVICE_PRINCIPAL_NAME
 init|=
 literal|"hive.llap.daemon.service.principal"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_SERVER2_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+init|=
+literal|"hive.server2.authentication.ldap.userMembershipKey"
 decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
 specifier|public
@@ -2514,6 +2528,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
 operator|.
 name|varname
@@ -2771,6 +2796,58 @@ argument_list|,
 literal|"HDFS root dir for all replication dumps."
 argument_list|)
 block|,
+name|REPLCMENABLED
+argument_list|(
+literal|"hive.repl.cm.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Turn on ChangeManager, so delete files will go to cmrootdir."
+argument_list|)
+block|,
+name|REPLCMDIR
+argument_list|(
+literal|"hive.repl.cmrootdir"
+argument_list|,
+literal|"/user/hive/cmroot/"
+argument_list|,
+literal|"Root dir for ChangeManager, used for deleted files."
+argument_list|)
+block|,
+name|REPLCMRETIAN
+argument_list|(
+literal|"hive.repl.cm.retain"
+argument_list|,
+literal|"24h"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|HOURS
+argument_list|)
+argument_list|,
+literal|"Time to retain removed files in cmrootdir."
+argument_list|)
+block|,
+name|REPLCMINTERVAL
+argument_list|(
+literal|"hive.repl.cm.interval"
+argument_list|,
+literal|"3600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Inteval for cmroot cleanup thread."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
@@ -3004,6 +3081,17 @@ operator|+
 literal|"A client stats publisher is specified as the name of a Java class which implements the \n"
 operator|+
 literal|"org.apache.hadoop.hive.ql.stats.ClientStatsPublisher interface."
+argument_list|)
+block|,
+name|ATSHOOKQUEUECAPACITY
+argument_list|(
+literal|"hive.ats.hook.queue.capacity"
+argument_list|,
+literal|64
+argument_list|,
+literal|"Queue size for the ATS Hook executor. If the number of outstanding submissions \n"
+operator|+
+literal|"to the ATS executor exceed this amount, the Hive ATS Hook will not try to log queries to ATS."
 argument_list|)
 block|,
 name|EXECPARALLEL
@@ -3802,7 +3890,7 @@ literal|100
 operator|*
 literal|1024
 operator|*
-literal|1024
+literal|1024L
 argument_list|,
 literal|"Maximum message size in bytes a HMS will accept."
 argument_list|)
@@ -4288,6 +4376,15 @@ name|SECONDS
 argument_list|)
 argument_list|,
 literal|"Duration after which events expire from events table"
+argument_list|)
+block|,
+name|METASTORE_EVENT_MESSAGE_FACTORY
+argument_list|(
+literal|"hive.metastore.event.message.factory"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.messaging.json.JSONMessageFactory"
+argument_list|,
+literal|"Factory class for making encoding and decoding messages in the events generated."
 argument_list|)
 block|,
 name|METASTORE_EXECUTE_SET_UGI
@@ -5300,6 +5397,15 @@ operator|+
 literal|" expressed as multiple of Local FS read cost"
 argument_list|)
 block|,
+name|HIVE_CBO_SHOW_WARNINGS
+argument_list|(
+literal|"hive.cbo.show.warnings"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Toggle display of CBO warnings like missing column stats"
+argument_list|)
+block|,
 name|AGGR_JOIN_TRANSPOSE
 argument_list|(
 literal|"hive.transpose.aggr.join"
@@ -5307,6 +5413,15 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"push aggregates through join"
+argument_list|)
+block|,
+name|SEMIJOIN_CONVERSION
+argument_list|(
+literal|"hive.enable.semijoin.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"convert group by followed by inner equi join into semijoin"
 argument_list|)
 block|,
 name|HIVE_COLUMN_ALIGNMENT
@@ -5318,6 +5433,48 @@ argument_list|,
 literal|"Flag to control whether we want to try to align"
 operator|+
 literal|"columns in operators such as Aggregate or Join so that we try to reduce the number of shuffling stages"
+argument_list|)
+block|,
+comment|// materialized views
+name|HIVE_MATERIALIZED_VIEW_ENABLE_AUTO_REWRITING
+argument_list|(
+literal|"hive.materializedview.rewriting"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
+argument_list|(
+literal|"hive.materializedview.fileformat"
+argument_list|,
+literal|"ORC"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"TextFile"
+argument_list|,
+literal|"SequenceFile"
+argument_list|,
+literal|"RCfile"
+argument_list|,
+literal|"ORC"
+argument_list|)
+argument_list|,
+literal|"Default file format for CREATE MATERIALIZED VIEW statement"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZED_VIEW_SERDE
+argument_list|(
+literal|"hive.materializedview.serde"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
+argument_list|,
+literal|"Default SerDe used for materialized views"
 argument_list|)
 block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
@@ -5646,38 +5803,6 @@ operator|+
 literal|"for all tables."
 argument_list|)
 block|,
-name|HIVEMATERIALIZEDVIEWFILEFORMAT
-argument_list|(
-literal|"hive.materializedview.fileformat"
-argument_list|,
-literal|"ORC"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"none"
-argument_list|,
-literal|"TextFile"
-argument_list|,
-literal|"SequenceFile"
-argument_list|,
-literal|"RCfile"
-argument_list|,
-literal|"ORC"
-argument_list|)
-argument_list|,
-literal|"Default file format for CREATE MATERIALIZED VIEW statement"
-argument_list|)
-block|,
-name|HIVEMATERIALIZEDVIEWSERDE
-argument_list|(
-literal|"hive.materializedview.serde"
-argument_list|,
-literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
-argument_list|,
-literal|"Default SerDe used for materialized views"
-argument_list|)
-block|,
 name|HIVEQUERYRESULTFILEFORMAT
 argument_list|(
 literal|"hive.query.result.fileformat"
@@ -5856,34 +5981,6 @@ argument_list|,
 literal|"Read from a binary stream and treat each hive.binary.record.max.length bytes as a record. \n"
 operator|+
 literal|"The last record before the end of stream can have less than hive.binary.record.max.length bytes"
-argument_list|)
-block|,
-comment|// HWI
-name|HIVEHWILISTENHOST
-argument_list|(
-literal|"hive.hwi.listen.host"
-argument_list|,
-literal|"0.0.0.0"
-argument_list|,
-literal|"This is the host address the Hive Web Interface will listen on"
-argument_list|)
-block|,
-name|HIVEHWILISTENPORT
-argument_list|(
-literal|"hive.hwi.listen.port"
-argument_list|,
-literal|"9999"
-argument_list|,
-literal|"This is the port the Hive Web Interface will listen on"
-argument_list|)
-block|,
-name|HIVEHWIWARFILE
-argument_list|(
-literal|"hive.hwi.war.file"
-argument_list|,
-literal|"${env:HWI_WAR_FILE}"
-argument_list|,
-literal|"This sets the path to the HWI war file, relative to ${HIVE_HOME}. "
 argument_list|)
 block|,
 name|HIVEHADOOPMAXMEM
@@ -7028,6 +7125,15 @@ argument_list|,
 literal|"Will the join be automatically converted to a sort-merge join, if the joined tables pass the criteria for sort-merge join."
 argument_list|)
 block|,
+name|HIVE_AUTO_SORTMERGE_JOIN_REDUCE
+argument_list|(
+literal|"hive.auto.convert.sortmerge.join.reduce.side"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether hive.auto.convert.sortmerge.join (if enabled) should be applied to reduce side."
+argument_list|)
+block|,
 name|HIVE_AUTO_SORTMERGE_JOIN_BIGTABLE_SELECTOR
 argument_list|(
 literal|"hive.auto.convert.sortmerge.join.bigtable.selection.policy"
@@ -7205,9 +7311,13 @@ name|HIVEMETADATAONLYQUERIES
 argument_list|(
 literal|"hive.optimize.metadataonly"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
-literal|""
+literal|"Whether to eliminate scans of the tables from which no columns are selected. Note\n"
+operator|+
+literal|"that, when selecting from empty tables with data files, this can produce incorrect\n"
+operator|+
+literal|"results, so it's disabled by default. It works correctly for normal tables."
 argument_list|)
 block|,
 name|HIVENULLSCANOPTIMIZE
@@ -8518,7 +8628,63 @@ argument_list|,
 literal|"Frequency of WriteSet reaper runs"
 argument_list|)
 block|,
+name|MERGE_CARDINALITY_VIOLATION_CHECK
+argument_list|(
+literal|"hive.merge.cardinality.check"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Set to true to ensure that each SQL Merge statement ensures that for each row in the target\n"
+operator|+
+literal|"table there is at most 1 matching row in the source table per SQL Specification."
+argument_list|)
+block|,
 comment|// For Druid storage handler
+name|HIVE_DRUID_INDEXING_GRANULARITY
+argument_list|(
+literal|"hive.druid.indexer.segments.granularity"
+argument_list|,
+literal|"DAY"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"YEAR"
+argument_list|,
+literal|"MONTH"
+argument_list|,
+literal|"WEEK"
+argument_list|,
+literal|"DAY"
+argument_list|,
+literal|"HOUR"
+argument_list|,
+literal|"MINUTE"
+argument_list|,
+literal|"SECOND"
+argument_list|)
+argument_list|,
+literal|"Granularity for the segments created by the Druid storage handler"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_PARTITION_SIZE
+argument_list|(
+literal|"hive.druid.indexer.partition.size.max"
+argument_list|,
+literal|5000000
+argument_list|,
+literal|"Maximum number of records per segment partition"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_ROW_IN_MEMORY
+argument_list|(
+literal|"hive.druid.indexer.memory.rownum.max"
+argument_list|,
+literal|75000
+argument_list|,
+literal|"Maximum number of records in memory while storing data in Druid"
+argument_list|)
+block|,
 name|HIVE_DRUID_BROKER_DEFAULT_ADDRESS
 argument_list|(
 literal|"hive.druid.broker.address.default"
@@ -8528,6 +8694,15 @@ argument_list|,
 literal|"Address of the Druid broker. If we are querying Druid from Hive, this address needs to be\n"
 operator|+
 literal|"declared"
+argument_list|)
+block|,
+name|HIVE_DRUID_COORDINATOR_DEFAULT_ADDRESS
+argument_list|(
+literal|"hive.druid.coordinator.address.default"
+argument_list|,
+literal|"localhost:8081"
+argument_list|,
+literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
 argument_list|)
 block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
@@ -8545,6 +8720,135 @@ operator|+
 literal|"total number of rows/threshold parts across the time dimension. Note that we assume the\n"
 operator|+
 literal|"records to be split uniformly across the time dimension"
+argument_list|)
+block|,
+name|HIVE_DRUID_NUM_HTTP_CONNECTION
+argument_list|(
+literal|"hive.druid.http.numConnection"
+argument_list|,
+literal|20
+argument_list|,
+literal|"Number of connections used by\n"
+operator|+
+literal|"the HTTP client."
+argument_list|)
+block|,
+name|HIVE_DRUID_HTTP_READ_TIMEOUT
+argument_list|(
+literal|"hive.druid.http.read.timeout"
+argument_list|,
+literal|"PT1M"
+argument_list|,
+literal|"Read timeout period for the HTTP\n"
+operator|+
+literal|"client in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 1 minute."
+argument_list|)
+block|,
+name|HIVE_DRUID_SLEEP_TIME
+argument_list|(
+literal|"hive.druid.sleep.time"
+argument_list|,
+literal|"PT10S"
+argument_list|,
+literal|"Sleep time between retries in ISO8601 format (for example P2W, P3M, PT1H30M, PT0.750S), default is period of 10 seconds."
+argument_list|)
+block|,
+name|HIVE_DRUID_BASE_PERSIST_DIRECTORY
+argument_list|(
+literal|"hive.druid.basePersistDirectory"
+argument_list|,
+literal|"/tmp"
+argument_list|,
+literal|"Local temporary directory used to persist intermediate indexing state."
+argument_list|)
+block|,
+name|DRUID_SEGMENT_DIRECTORY
+argument_list|(
+literal|"hive.druid.storage.storageDirectory"
+argument_list|,
+literal|"/druid/segments"
+argument_list|,
+literal|"druid deep storage location."
+argument_list|)
+block|,
+name|DRUID_METADATA_BASE
+argument_list|(
+literal|"hive.druid.metadata.base"
+argument_list|,
+literal|"druid"
+argument_list|,
+literal|"Default prefix for metadata tables"
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_TYPE
+argument_list|(
+literal|"hive.druid.metadata.db.type"
+argument_list|,
+literal|"mysql"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"mysql"
+argument_list|,
+literal|"postgres"
+argument_list|)
+argument_list|,
+literal|"Type of the metadata database."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_USERNAME
+argument_list|(
+literal|"hive.druid.metadata.username"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Username to connect to Type of the metadata DB."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_PASSWORD
+argument_list|(
+literal|"hive.druid.metadata.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Password to connect to Type of the metadata DB."
+argument_list|)
+block|,
+name|DRUID_METADATA_DB_URI
+argument_list|(
+literal|"hive.druid.metadata.uri"
+argument_list|,
+literal|""
+argument_list|,
+literal|"URI to connect to the database (for example jdbc:mysql://hostname:port/DBName)."
+argument_list|)
+block|,
+name|DRUID_WORKING_DIR
+argument_list|(
+literal|"hive.druid.working.directory"
+argument_list|,
+literal|"/tmp/workingDirectory"
+argument_list|,
+literal|"Default hdfs working directory used to store some intermediate metadata"
+argument_list|)
+block|,
+name|HIVE_DRUID_MAX_TRIES
+argument_list|(
+literal|"hive.druid.maxTries"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Maximum number of retries before giving up"
+argument_list|)
+block|,
+name|HIVE_DRUID_PASSIVE_WAIT_TIME
+argument_list|(
+literal|"hive.druid.passiveWaitTimeMs"
+argument_list|,
+literal|30000
+argument_list|,
+literal|"Wait time in ms default to 30 seconds."
 argument_list|)
 block|,
 comment|// For HBase storage handler
@@ -9778,6 +10082,40 @@ operator|+
 literal|"threads to use to initialize the default sessions."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_SESSION_RESTRICTED_CONFIGS
+argument_list|(
+literal|"hive.server2.tez.sessions.restricted.configs"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The configuration settings that cannot be set when submitting jobs to HiveServer2. If\n"
+operator|+
+literal|"any of these are set to values different from those in the server configuration, an\n"
+operator|+
+literal|"exception will be thrown."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_SESSION_CUSTOM_QUEUE_ALLOWED
+argument_list|(
+literal|"hive.server2.tez.sessions.custom.queue.allowed"
+argument_list|,
+literal|"true"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"true"
+argument_list|,
+literal|"false"
+argument_list|,
+literal|"ignore"
+argument_list|)
+argument_list|,
+literal|"Whether Tez session pool should allow submitting queries to custom queues. The options\n"
+operator|+
+literal|"are true, false (error out), ignore (accept the query but ignore the queue setting)."
+argument_list|)
+block|,
 comment|// Operation log configuration
 name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
 argument_list|(
@@ -10433,9 +10771,26 @@ literal|"hive.server2.authentication.ldap.groupMembershipKey"
 argument_list|,
 literal|"member"
 argument_list|,
-literal|"LDAP attribute name on the user entry that references a group, the user belongs to.\n"
+literal|"LDAP attribute name on the group object that contains the list of distinguished names\n"
+operator|+
+literal|"for the user, group, and contact objects that are members of the group.\n"
 operator|+
 literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_USERMEMBERSHIP_KEY
+argument_list|(
+name|HIVE_SERVER2_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+argument_list|,
+literal|null
+argument_list|,
+literal|"LDAP attribute name on the user object that contains groups of which the user is\n"
+operator|+
+literal|"a direct member, except for the primary group, which is represented by the\n"
+operator|+
+literal|"primaryGroupId.\n"
+operator|+
+literal|"For example: memberOf"
 argument_list|)
 block|,
 name|HIVE_SERVER2_PLAIN_LDAP_GROUPCLASS_KEY
@@ -11589,6 +11944,26 @@ argument_list|,
 literal|"Maximum total data size of events in dynamic pruning."
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When dynamic semijoin is enabled, shuffle joins will perform a leaky semijoin before shuffle. This "
+operator|+
+literal|"requires hive.tez.dynamic.partition.pruning to be enabled."
+argument_list|)
+block|,
+name|TEZ_MAX_BLOOM_FILTER_ENTRIES
+argument_list|(
+literal|"hive.tez.max.bloom.filter.entries"
+argument_list|,
+literal|100000000L
+argument_list|,
+literal|"Bloom filter should be of at max certain size to be effective"
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"
@@ -11865,6 +12240,83 @@ operator|+
 literal|"cases of file overwrites. This is supported on HDFS."
 argument_list|)
 block|,
+comment|// Restricted to text for now as this is a new feature; only text files can be sliced.
+name|LLAP_IO_ENCODE_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should try to re-encode and cache data for non-ORC formats. This is used\n"
+operator|+
+literal|"on LLAP Server side to determine if the infrastructure for that is initialized."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_FORMATS
+argument_list|(
+literal|"hive.llap.io.encode.formats"
+argument_list|,
+literal|"org.apache.hadoop.mapred.TextInputFormat,"
+argument_list|,
+literal|"The table input formats for which LLAP IO should re-encode and cache data.\n"
+operator|+
+literal|"Comma-separated list."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_ALLOC_SIZE
+argument_list|(
+literal|"hive.llap.io.encode.alloc.size"
+argument_list|,
+literal|"256Kb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"Allocation size for the buffers used to cache encoded data from non-ORC files. Must\n"
+operator|+
+literal|"be a power of two between "
+operator|+
+name|LLAP_ALLOCATOR_MIN_ALLOC
+operator|+
+literal|" and\n"
+operator|+
+name|LLAP_ALLOCATOR_MAX_ALLOC
+operator|+
+literal|"."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_VECTOR_SERDE_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.vector.serde.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should use vectorized SerDe reader to read text data when re-encoding."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_SLICE_ROW_COUNT
+argument_list|(
+literal|"hive.llap.io.encode.slice.row.count"
+argument_list|,
+literal|100000
+argument_list|,
+literal|"Row count to use to separate cache slices when reading encoded data from row-based\n"
+operator|+
+literal|"inputs into LLAP cache, if this feature is enabled."
+argument_list|)
+block|,
+name|LLAP_IO_ENCODE_SLICE_LRR
+argument_list|(
+literal|"hive.llap.io.encode.slice.lrr"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to separate cache slices when reading encoded data from text inputs via MR\n"
+operator|+
+literal|"MR LineRecordRedader into LLAP cache, if this feature is enabled. Safety flag."
+argument_list|)
+block|,
 name|LLAP_ORC_ENABLE_TIME_COUNTERS
 argument_list|(
 literal|"hive.llap.io.orc.time.counters"
@@ -12052,6 +12504,28 @@ argument_list|,
 literal|"The path to the Kerberos Keytab file containing the principal to use to talk to\n"
 operator|+
 literal|"ZooKeeper for ZooKeeper SecretManager."
+argument_list|)
+block|,
+name|LLAP_WEBUI_SPNEGO_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.webui.spnego.keytab"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos Keytab file containing the LLAP WebUI SPNEGO principal.\n"
+operator|+
+literal|"Typical value would look like /etc/security/keytabs/spnego.service.keytab."
+argument_list|)
+block|,
+name|LLAP_WEBUI_SPNEGO_PRINCIPAL
+argument_list|(
+literal|"hive.llap.webui.spnego.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The LLAP WebUI SPNEGO service principal. Configured similarly to\n"
+operator|+
+literal|"hive.server2.webui.spnego.principal"
 argument_list|)
 block|,
 name|LLAP_FS_KERBEROS_PRINCIPAL
@@ -12396,6 +12870,19 @@ argument_list|,
 literal|"llap.daemon.num.executors"
 argument_list|)
 block|,
+name|LLAP_DAEMON_AM_REPORTER_MAX_THREADS
+argument_list|(
+literal|"hive.llap.daemon.am-reporter.max.threads"
+argument_list|,
+literal|4
+argument_list|,
+literal|"Maximum number of threads to be used for AM reporter. If this is lower than number of\n"
+operator|+
+literal|"executors in llap daemon, it would be set to number of executors at runtime."
+argument_list|,
+literal|"llap.daemon.am-reporter.max.threads"
+argument_list|)
+block|,
 name|LLAP_DAEMON_RPC_PORT
 argument_list|(
 literal|"hive.llap.daemon.rpc.port"
@@ -12411,11 +12898,26 @@ name|LLAP_DAEMON_MEMORY_PER_INSTANCE_MB
 argument_list|(
 literal|"hive.llap.daemon.memory.per.instance.mb"
 argument_list|,
-literal|3276
+literal|4096
 argument_list|,
 literal|"The total amount of memory to use for the executors inside LLAP (in megabytes)."
 argument_list|,
 literal|"llap.daemon.memory.per.instance.mb"
+argument_list|)
+block|,
+name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+argument_list|(
+literal|"hive.llap.daemon.headroom.memory.per.instance.mb"
+argument_list|,
+literal|512
+argument_list|,
+literal|"The total amount of memory deducted from daemon memory required for other LLAP services. The remaining memory"
+operator|+
+literal|" will be used by the executors. If the cache is off-heap, Executor memory + Headroom memory = Xmx. If the "
+operator|+
+literal|"cache is on-heap, Executor memory + Cache memory + Headroom memory = Xmx. The headroom memory has to be "
+operator|+
+literal|"minimum of 5% from the daemon memory."
 argument_list|)
 block|,
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
@@ -12829,7 +13331,7 @@ literal|"hive.llap.daemon.logger"
 argument_list|,
 name|Constants
 operator|.
-name|LLAP_LOGGER_NAME_RFA
+name|LLAP_LOGGER_NAME_QUERY_ROUTING
 argument_list|,
 operator|new
 name|StringSet
@@ -13030,6 +13532,15 @@ argument_list|,
 literal|"Runs reordering of tables within single n-way join (i.e.: picks streamtable)"
 argument_list|)
 block|,
+name|HIVE_MERGE_NWAY_JOINS
+argument_list|(
+literal|"hive.merge.nway.joins"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Merge adjacent joins into a single n-way join"
+argument_list|)
+block|,
 name|HIVE_LOG_N_RECORDS
 argument_list|(
 literal|"hive.log.every.n.records"
@@ -13218,7 +13729,29 @@ literal|"hive.security.authenticator.manager,hive.security.authorization.manager
 operator|+
 literal|"hive.security.metastore.authorization.manager,hive.security.metastore.authenticator.manager,"
 operator|+
-literal|"hive.users.in.admin.role,hive.server2.xsrf.filter.enabled,hive.security.authorization.enabled"
+literal|"hive.users.in.admin.role,hive.server2.xsrf.filter.enabled,hive.security.authorization.enabled,"
+operator|+
+literal|"hive.server2.authentication.ldap.baseDN,"
+operator|+
+literal|"hive.server2.authentication.ldap.url,"
+operator|+
+literal|"hive.server2.authentication.ldap.Domain,"
+operator|+
+literal|"hive.server2.authentication.ldap.groupDNPattern,"
+operator|+
+literal|"hive.server2.authentication.ldap.groupFilter,"
+operator|+
+literal|"hive.server2.authentication.ldap.userDNPattern,"
+operator|+
+literal|"hive.server2.authentication.ldap.userFilter,"
+operator|+
+literal|"hive.server2.authentication.ldap.groupMembershipKey,"
+operator|+
+literal|"hive.server2.authentication.ldap.userMembershipKey,"
+operator|+
+literal|"hive.server2.authentication.ldap.groupClassKey,"
+operator|+
+literal|"hive.server2.authentication.ldap.customLDAPQuery"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -13301,13 +13834,28 @@ literal|false
 argument_list|,
 literal|"Enable the use of scratch directories directly on blob storage systems (it may cause performance penalties)."
 argument_list|)
+block|,
+name|HIVE_BLOBSTORE_OPTIMIZATIONS_ENABLED
+argument_list|(
+literal|"hive.blobstore.optimizations.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This parameter enables a number of optimizations when running on blobstores:\n"
+operator|+
+literal|"(1) If hive.blobstore.use.blobstore.as.scratchdir is false, force the last Hive job to write to the blobstore.\n"
+operator|+
+literal|"This is a performance optimization that forces the final FileSinkOperator to write to the blobstore.\n"
+operator|+
+literal|"See HIVE-15121 for details."
+argument_list|)
 block|;
 specifier|public
 specifier|final
 name|String
 name|varname
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|final
 name|String
 name|altName
@@ -14855,21 +15403,12 @@ name|sparkMaster
 operator|!=
 literal|null
 operator|&&
-operator|(
 name|sparkMaster
 operator|.
-name|equals
+name|startsWith
 argument_list|(
-literal|"yarn-client"
+literal|"yarn"
 argument_list|)
-operator|||
-name|sparkMaster
-operator|.
-name|equals
-argument_list|(
-literal|"yarn-cluster"
-argument_list|)
-operator|)
 condition|)
 block|{
 name|result
@@ -16615,6 +17154,61 @@ argument_list|,
 name|var
 operator|.
 name|defaultStrVal
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|getVarWithoutType
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|ConfVars
+name|var
+parameter_list|)
+block|{
+return|return
+name|var
+operator|.
+name|altName
+operator|!=
+literal|null
+condition|?
+name|conf
+operator|.
+name|get
+argument_list|(
+name|var
+operator|.
+name|varname
+argument_list|,
+name|conf
+operator|.
+name|get
+argument_list|(
+name|var
+operator|.
+name|altName
+argument_list|,
+name|var
+operator|.
+name|defaultExpr
+argument_list|)
+argument_list|)
+else|:
+name|conf
+operator|.
+name|get
+argument_list|(
+name|var
+operator|.
+name|varname
+argument_list|,
+name|var
+operator|.
+name|defaultExpr
 argument_list|)
 return|;
 block|}
@@ -18535,7 +19129,7 @@ literal|"hive\\.convert\\..*"
 block|,
 literal|"hive\\.exec\\.dynamic\\.partition.*"
 block|,
-literal|"hive\\.exec\\..*\\.dynamic\\.partitions\\..*"
+literal|"hive\\.exec\\.max\\.dynamic\\.partitions.*"
 block|,
 literal|"hive\\.exec\\.compress\\..*"
 block|,
@@ -19873,6 +20467,149 @@ argument_list|()
 operator|+
 literal|") or using Hive 1.X releases."
 return|;
+block|}
+specifier|private
+specifier|static
+specifier|final
+name|Object
+name|reverseMapLock
+init|=
+operator|new
+name|Object
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ConfVars
+argument_list|>
+name|reverseMap
+init|=
+literal|null
+decl_stmt|;
+specifier|public
+specifier|static
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ConfVars
+argument_list|>
+name|getOrCreateReverseMap
+parameter_list|()
+block|{
+comment|// This should be called rarely enough; for now it's ok to just lock every time.
+synchronized|synchronized
+init|(
+name|reverseMapLock
+init|)
+block|{
+if|if
+condition|(
+name|reverseMap
+operator|!=
+literal|null
+condition|)
+return|return
+name|reverseMap
+return|;
+block|}
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|ConfVars
+argument_list|>
+name|vars
+init|=
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|ConfVars
+name|val
+range|:
+name|ConfVars
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
+name|vars
+operator|.
+name|put
+argument_list|(
+name|val
+operator|.
+name|varname
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|,
+name|val
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|val
+operator|.
+name|altName
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|val
+operator|.
+name|altName
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|vars
+operator|.
+name|put
+argument_list|(
+name|val
+operator|.
+name|altName
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|,
+name|val
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+synchronized|synchronized
+init|(
+name|reverseMapLock
+init|)
+block|{
+if|if
+condition|(
+name|reverseMap
+operator|!=
+literal|null
+condition|)
+return|return
+name|reverseMap
+return|;
+name|reverseMap
+operator|=
+name|vars
+expr_stmt|;
+return|return
+name|reverseMap
+return|;
+block|}
 block|}
 block|}
 end_class

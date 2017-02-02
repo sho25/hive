@@ -87,6 +87,22 @@ name|calcite
 operator|.
 name|rel
 operator|.
+name|core
+operator|.
+name|SemiJoin
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
 name|metadata
 operator|.
 name|ChainedRelMetadataProvider
@@ -619,10 +635,9 @@ decl_stmt|;
 comment|//TODO: Improve this
 if|if
 condition|(
-name|hjRel
-operator|.
-name|isLeftSemiJoin
-argument_list|()
+name|rel
+operator|instanceof
+name|SemiJoin
 condition|)
 block|{
 return|return

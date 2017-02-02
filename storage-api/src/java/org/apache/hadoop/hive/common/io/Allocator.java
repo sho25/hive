@@ -91,12 +91,12 @@ parameter_list|)
 throws|throws
 name|AllocatorOutOfMemoryException
 function_decl|;
-comment|/**    * Creates an unallocated memory buffer object. This object can be passed to allocateMultiple    * to allocate; this is useful if data structures are created for separate buffers that can    * later be allocated together.    */
+comment|/**    * Creates an unallocated memory buffer object. This object can be passed to allocateMultiple    * to allocate; this is useful if data structures are created for separate buffers that can    * later be allocated together.    * @return a new unallocated memory buffer    */
 name|MemoryBuffer
 name|createUnallocated
 parameter_list|()
 function_decl|;
-comment|/** Deallocates a memory buffer. */
+comment|/** Deallocates a memory buffer.    * @param buffer the buffer to deallocate    */
 name|void
 name|deallocate
 parameter_list|(
@@ -104,12 +104,12 @@ name|MemoryBuffer
 name|buffer
 parameter_list|)
 function_decl|;
-comment|/** Whether the allocator uses direct buffers. */
+comment|/** Whether the allocator uses direct buffers.    * @return are they direct buffers?    */
 name|boolean
 name|isDirectAlloc
 parameter_list|()
 function_decl|;
-comment|/** Maximum allocation size supported by this allocator. */
+comment|/** Maximum allocation size supported by this allocator.    * @return a number of bytes    */
 name|int
 name|getMaxAllocation
 parameter_list|()

@@ -682,6 +682,19 @@ return|return
 literal|null
 return|;
 block|}
+if|if
+condition|(
+name|map
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// nothing to intern
+return|return
+name|map
+return|;
+block|}
 name|Map
 argument_list|<
 name|String

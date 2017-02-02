@@ -105,6 +105,11 @@ name|TypeDescription
 name|getFileSchema
 parameter_list|()
 function_decl|;
+comment|// TODO: this is ORC-specific and should be removed
+name|TypeDescription
+name|getReaderSchema
+parameter_list|()
+function_decl|;
 name|boolean
 index|[]
 name|getIncludedColumns

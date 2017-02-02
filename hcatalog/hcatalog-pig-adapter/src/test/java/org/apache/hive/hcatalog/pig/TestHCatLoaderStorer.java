@@ -316,7 +316,7 @@ name|dataDir
 operator|+
 literal|"/inputtrw.data"
 decl_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|dropTable
 argument_list|(
@@ -339,7 +339,7 @@ literal|"40\t1"
 block|}
 argument_list|)
 expr_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|executeStatementOnDriver
 argument_list|(
@@ -364,7 +364,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|dropTable
 argument_list|(
@@ -373,7 +373,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|createTable
 argument_list|(
@@ -457,7 +457,7 @@ name|queryNumber
 argument_list|)
 expr_stmt|;
 comment|//perform simple checksum here; make sure nothing got turned to NULL
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|executeStatementOnDriver
 argument_list|(

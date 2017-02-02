@@ -587,6 +587,10 @@ operator|+
 literal|", app ID "
 operator|+
 name|appId
+operator|+
+literal|", signing "
+operator|+
+name|isSigningRequired
 return|;
 block|}
 annotation|@

@@ -1221,10 +1221,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|isTracingEnabled
-operator|=
-literal|true
-expr_stmt|;
 comment|// Note: for now we don't have to setError here, caller will setError if we throw.
 comment|// We are also not supposed to call setDone, since we are only part of the operation.
 name|long
@@ -1263,7 +1259,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|trace
 argument_list|(
 literal|"The following columns have PRESENT streams: "
 operator|+
@@ -1355,7 +1351,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|error
+name|trace
 argument_list|(
 literal|"Creating context: "
 operator|+
@@ -1814,8 +1810,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isTracingEnabled
-operator|&&
+comment|/*isTracingEnabled&& */
 name|LOG
 operator|.
 name|isInfoEnabled
@@ -1824,7 +1819,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|trace
+name|info
 argument_list|(
 literal|"Resulting disk ranges to read (file "
 operator|+
@@ -1874,8 +1869,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isTracingEnabled
-operator|&&
+comment|/*isTracingEnabled&& */
 name|LOG
 operator|.
 name|isInfoEnabled
@@ -1884,9 +1878,15 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|trace
+name|info
 argument_list|(
-literal|"Disk ranges after cache (file "
+literal|"Disk ranges after cache (found everything "
+operator|+
+name|isAllInCache
+operator|.
+name|value
+operator|+
+literal|"; file "
 operator|+
 name|fileKey
 operator|+
@@ -3789,7 +3789,7 @@ else|:
 literal|"un"
 operator|)
 operator|+
-literal|" compressed read; cOffset "
+literal|"compressed read; cOffset "
 operator|+
 name|cOffset
 operator|+
@@ -3814,7 +3814,7 @@ argument_list|(
 name|start
 argument_list|)
 operator|+
-literal|"; ranges passed to prepate "
+literal|"; ranges passed to prepare "
 operator|+
 name|RecordReaderUtils
 operator|.

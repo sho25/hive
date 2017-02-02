@@ -1467,7 +1467,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"An slibing of ReduceSinkOperator is nethier a "
+literal|"A sibling of ReduceSinkOperator is neither a "
 operator|+
 literal|"DemuxOperator nor a ReduceSinkOperator"
 argument_list|)

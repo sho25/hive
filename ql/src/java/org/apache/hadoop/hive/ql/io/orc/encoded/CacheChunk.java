@@ -353,6 +353,21 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|adjustEnd
+parameter_list|(
+name|long
+name|l
+parameter_list|)
+block|{
+name|this
+operator|.
+name|end
+operator|+=
+name|l
+expr_stmt|;
+block|}
 block|}
 end_class
 

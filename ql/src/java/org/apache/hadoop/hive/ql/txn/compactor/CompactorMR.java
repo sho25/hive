@@ -363,6 +363,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|txn
+operator|.
+name|TxnStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -1515,6 +1533,9 @@ name|Worker
 operator|.
 name|StatsUpdater
 name|su
+parameter_list|,
+name|TxnStore
+name|txnHandler
 parameter_list|)
 throws|throws
 name|IOException
@@ -1760,6 +1781,12 @@ operator|-
 literal|1
 argument_list|,
 name|conf
+argument_list|,
+name|txnHandler
+argument_list|,
+name|ci
+operator|.
+name|id
 argument_list|)
 expr_stmt|;
 block|}
@@ -1994,6 +2021,12 @@ name|size
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+name|txnHandler
+argument_list|,
+name|ci
+operator|.
+name|id
 argument_list|)
 expr_stmt|;
 name|su
@@ -2034,6 +2067,12 @@ name|obsoleteDirNumber
 parameter_list|,
 name|HiveConf
 name|hiveConf
+parameter_list|,
+name|TxnStore
+name|txnHandler
+parameter_list|,
+name|long
+name|id
 parameter_list|)
 throws|throws
 name|IOException
@@ -2308,6 +2347,25 @@ name|rj
 operator|.
 name|getID
 argument_list|()
+operator|+
+literal|" compaction ID="
+operator|+
+name|id
+argument_list|)
+expr_stmt|;
+name|txnHandler
+operator|.
+name|setHadoopJobId
+argument_list|(
+name|rj
+operator|.
+name|getID
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|id
 argument_list|)
 expr_stmt|;
 name|rj
@@ -5278,6 +5336,7 @@ name|TMP_LOCATION
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|//this contains base_xxx or delta_xxx_yyy
 name|Path
 name|finalLocation
 init|=
@@ -5332,6 +5391,9 @@ argument_list|(
 name|tmpLocation
 argument_list|)
 decl_stmt|;
+comment|//expect 1 base or delta dir in this list
+comment|//we have MIN_TXN, MAX_TXN and IS_MAJOR in JobConf so we could figure out exactly what the dir
+comment|//name is that we want to rename; leave it for another day
 for|for
 control|(
 name|int

@@ -134,14 +134,14 @@ name|void
 name|setSourcePath
 parameter_list|(
 name|Path
-name|path
+name|sourcePath
 parameter_list|)
 block|{
 name|this
 operator|.
 name|sourcePath
 operator|=
-name|path
+name|sourcePath
 expr_stmt|;
 block|}
 block|}

@@ -2033,13 +2033,6 @@ name|scale
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|d3
-operator|.
-name|setScale
-argument_list|(
-literal|5
-argument_list|)
-expr_stmt|;
 name|DecimalUtil
 operator|.
 name|sign

@@ -2702,7 +2702,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|+
-literal|" is undeterministic. Don't evalulate immediately."
+literal|" is undeterministic. Don't evaluate immediately."
 argument_list|)
 expr_stmt|;
 block|}
@@ -6682,7 +6682,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|+
-literal|" failed in Constant Propagatation Optimizer."
+literal|" failed in Constant Propagation Optimizer."
 argument_list|)
 expr_stmt|;
 throw|throw

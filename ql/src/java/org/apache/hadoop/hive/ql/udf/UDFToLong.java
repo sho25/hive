@@ -781,6 +781,18 @@ condition|(
 name|i
 operator|==
 literal|null
+operator|||
+operator|!
+name|i
+operator|.
+name|isSet
+argument_list|()
+operator|||
+operator|!
+name|i
+operator|.
+name|isLong
+argument_list|()
 condition|)
 block|{
 return|return
@@ -795,14 +807,10 @@ name|set
 argument_list|(
 name|i
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
 name|longValue
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: lossy conversion!
 return|return
 name|longWritable
 return|;

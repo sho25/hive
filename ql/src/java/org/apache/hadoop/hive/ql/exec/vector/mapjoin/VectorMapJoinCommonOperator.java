@@ -1927,6 +1927,16 @@ block|{
 comment|// For outer joins, since the small table key can be null when there is no match,
 comment|// we must have a physical (scratch) column for those keys.  We cannot use the
 comment|// projection optimization used by inner joins above.
+name|TypeInfo
+name|typeInfo
+init|=
+name|TypeInfoUtils
+operator|.
+name|getTypeInfoFromTypeString
+argument_list|(
+name|typeName
+argument_list|)
+decl_stmt|;
 name|int
 name|scratchColumn
 init|=
@@ -1934,7 +1944,7 @@ name|vOutContext
 operator|.
 name|allocateScratchColumn
 argument_list|(
-name|typeName
+name|typeInfo
 argument_list|)
 decl_stmt|;
 name|projectionMapping
@@ -2001,6 +2011,16 @@ name|getTypeString
 argument_list|()
 decl_stmt|;
 comment|// Make a new big table scratch column for the small table value.
+name|TypeInfo
+name|typeInfo
+init|=
+name|TypeInfoUtils
+operator|.
+name|getTypeInfoFromTypeString
+argument_list|(
+name|typeName
+argument_list|)
+decl_stmt|;
 name|int
 name|scratchColumn
 init|=
@@ -2008,7 +2028,7 @@ name|vOutContext
 operator|.
 name|allocateScratchColumn
 argument_list|(
-name|typeName
+name|typeInfo
 argument_list|)
 decl_stmt|;
 name|projectionMapping
@@ -2078,6 +2098,29 @@ name|i
 argument_list|)
 decl_stmt|;
 comment|// Make a new big table scratch column for the small table value.
+name|TypeInfo
+name|typeInfo
+init|=
+name|smallTableExprs
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getTypeInfo
+argument_list|()
+decl_stmt|;
+name|int
+name|scratchColumn
+init|=
+name|vOutContext
+operator|.
+name|allocateScratchColumn
+argument_list|(
+name|typeInfo
+argument_list|)
+decl_stmt|;
 name|String
 name|typeName
 init|=
@@ -2090,16 +2133,6 @@ argument_list|)
 operator|.
 name|getTypeString
 argument_list|()
-decl_stmt|;
-name|int
-name|scratchColumn
-init|=
-name|vOutContext
-operator|.
-name|allocateScratchColumn
-argument_list|(
-name|typeName
-argument_list|)
 decl_stmt|;
 name|projectionMapping
 operator|.

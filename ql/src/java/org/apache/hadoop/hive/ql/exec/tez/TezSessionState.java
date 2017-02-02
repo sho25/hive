@@ -1597,10 +1597,9 @@ operator|=
 name|conf
 expr_stmt|;
 comment|// TODO Why is the queue name set again. It has already been setup via setQueueName. Do only one of the two.
-name|this
-operator|.
-name|queueName
-operator|=
+name|String
+name|confQueueName
+init|=
 name|conf
 operator|.
 name|get
@@ -1609,6 +1608,41 @@ name|TezConfiguration
 operator|.
 name|TEZ_QUEUE_NAME
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|queueName
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|queueName
+operator|.
+name|equals
+argument_list|(
+name|confQueueName
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Resetting a queue name that was already set: was "
+operator|+
+name|queueName
+operator|+
+literal|", now "
+operator|+
+name|confQueueName
+argument_list|)
+expr_stmt|;
+block|}
+name|this
+operator|.
+name|queueName
+operator|=
+name|confQueueName
 expr_stmt|;
 name|this
 operator|.

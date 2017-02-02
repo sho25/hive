@@ -342,6 +342,8 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 block|}

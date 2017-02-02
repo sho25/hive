@@ -1887,7 +1887,7 @@ argument_list|,
 literal|":table"
 argument_list|)
 expr_stmt|;
-name|verifyDdlParam
+name|verifyPropertyParam
 argument_list|(
 name|property
 argument_list|,
@@ -2087,7 +2087,7 @@ argument_list|,
 literal|":table"
 argument_list|)
 expr_stmt|;
-name|verifyDdlParam
+name|verifyPropertyParam
 argument_list|(
 name|property
 argument_list|,
@@ -5037,7 +5037,7 @@ name|jobid
 argument_list|)
 return|;
 block|}
-comment|/**    * Return all the known job ids for this user based on the optional filter conditions.    *<p>    * Example usages:    * 1. curl -s 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan'    * Return all the Job IDs submitted by hsubramaniyan    * 2. curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&showall=true'    * Return all the Job IDs that are visible to hsubramaniyan    * 3. curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&jobid=job_201312091733_0003'    * Return all the Job IDs for hsubramaniyan after job_201312091733_0003.    * 4. curl -s 'http://localhost:50111/templeton/v1/jobs?    * user.name=hsubramaniyan&jobid=job_201312091733_0003&numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after job_201312091733_0003.    * 5.  curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan&numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after sorting the Job ID list    * lexicographically.    *</p>    *<p>    * Supporting pagination using "jobid" and "numrecords" parameters:    * Step 1: Get the start "jobid" = job_xxx_000, "numrecords" = n    * Step 2: Issue a curl command by specifying the user-defined "numrecords" and "jobid"    * Step 3: If list obtained from Step 2 has size equal to "numrecords", retrieve the list's    * last record and get the Job Id of the last record as job_yyy_k, else quit.    * Step 4: set "jobid"=job_yyy_k and go to step 2.    *</p>    * @param fields If "fields" set to "*", the request will return full details of the job.    * If "fields" is missing, will only return the job ID. Currently the value can only    * be "*", other values are not allowed and will throw exception.    * @param showall If "showall" is set to "true", the request will return all jobs the user    * has permission to view, not only the jobs belonging to the user.    * @param jobid If "jobid" is present, the records whose Job Id is lexicographically greater    * than "jobid" are only returned. For example, if "jobid" = "job_201312091733_0001",    * the jobs whose Job ID is greater than "job_201312091733_0001" are returned. The number of    * records returned depends on the value of "numrecords".    * @param numrecords If the "jobid" and "numrecords" parameters are present, the top #numrecords    * records appearing after "jobid" will be returned after sorting the Job Id list    * lexicographically.    * If "jobid" parameter is missing and "numrecords" is present, the top #numrecords will    * be returned after lexicographically sorting the Job Id list. If "jobid" parameter is present    * and "numrecords" is missing, all the records whose Job Id is greater than "jobid" are returned.    * @return list of job items based on the filter conditions specified by the user.    */
+comment|/**    * Return all the known job ids for this user based on the optional filter conditions.    *<p>    * Example usages:    * 1. curl -s 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan'    * Return all the Job IDs submitted by hsubramaniyan    * 2. curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan%26showall=true'    * Return all the Job IDs that are visible to hsubramaniyan    * 3. curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan%26jobid=job_201312091733_0003'    * Return all the Job IDs for hsubramaniyan after job_201312091733_0003.    * 4. curl -s 'http://localhost:50111/templeton/v1/jobs?    * user.name=hsubramaniyan%26jobid=job_201312091733_0003%26numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after job_201312091733_0003.    * 5.  curl -s    * 'http://localhost:50111/templeton/v1/jobs?user.name=hsubramaniyan%26numrecords=5'    * Return the first 5(atmost) Job IDs submitted by hsubramaniyan after sorting the Job ID list    * lexicographically.    *</p>    *<p>    * Supporting pagination using "jobid" and "numrecords" parameters:    * Step 1: Get the start "jobid" = job_xxx_000, "numrecords" = n    * Step 2: Issue a curl command by specifying the user-defined "numrecords" and "jobid"    * Step 3: If list obtained from Step 2 has size equal to "numrecords", retrieve the list's    * last record and get the Job Id of the last record as job_yyy_k, else quit.    * Step 4: set "jobid"=job_yyy_k and go to step 2.    *</p>    * @param fields If "fields" set to "*", the request will return full details of the job.    * If "fields" is missing, will only return the job ID. Currently the value can only    * be "*", other values are not allowed and will throw exception.    * @param showall If "showall" is set to "true", the request will return all jobs the user    * has permission to view, not only the jobs belonging to the user.    * @param jobid If "jobid" is present, the records whose Job Id is lexicographically greater    * than "jobid" are only returned. For example, if "jobid" = "job_201312091733_0001",    * the jobs whose Job ID is greater than "job_201312091733_0001" are returned. The number of    * records returned depends on the value of "numrecords".    * @param numrecords If the "jobid" and "numrecords" parameters are present, the top #numrecords    * records appearing after "jobid" will be returned after sorting the Job Id list    * lexicographically.    * If "jobid" parameter is missing and "numrecords" is present, the top #numrecords will    * be returned after lexicographically sorting the Job Id list. If "jobid" parameter is present    * and "numrecords" is missing, all the records whose Job Id is greater than "jobid" are returned.    * @return list of job items based on the filter conditions specified by the user.    */
 annotation|@
 name|GET
 annotation|@
@@ -5759,6 +5759,19 @@ argument_list|(
 literal|"[a-zA-Z]\\w*"
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Pattern
+name|PROPERTY_ID
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"[a-zA-Z0-9][\\w\\.\\-]*(?<!\\-)(?<!\\.)(?<!\\_)$"
+argument_list|)
+decl_stmt|;
 comment|/**    * Verify that the parameter exists and is a simple DDL identifier    * name.  Throw an exception if invalid.    *    * Bug: This needs to allow for quoted ddl identifiers.    */
 specifier|public
 name|void
@@ -5804,6 +5817,57 @@ operator|new
 name|BadParam
 argument_list|(
 literal|"Invalid DDL identifier "
+operator|+
+name|name
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Verify that the parameter exists and is a valid property    * name.  Throw an exception if invalid.    *    */
+specifier|public
+name|void
+name|verifyPropertyParam
+parameter_list|(
+name|String
+name|param
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|BadParam
+block|{
+name|verifyParam
+argument_list|(
+name|param
+argument_list|,
+name|name
+argument_list|)
+expr_stmt|;
+name|Matcher
+name|m
+init|=
+name|PROPERTY_ID
+operator|.
+name|matcher
+argument_list|(
+name|param
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|m
+operator|.
+name|matches
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|BadParam
+argument_list|(
+literal|"Invalid property name "
 operator|+
 name|name
 argument_list|)

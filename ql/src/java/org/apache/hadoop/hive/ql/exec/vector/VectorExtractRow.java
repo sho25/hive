@@ -1853,8 +1853,10 @@ operator|.
 name|UTF_8
 argument_list|)
 argument_list|,
-operator|-
-literal|1
+name|maxLengths
+index|[
+name|logicalColumnIndex
+index|]
 argument_list|)
 expr_stmt|;
 return|return
@@ -1864,6 +1866,7 @@ block|}
 case|case
 name|DECIMAL
 case|:
+comment|// The HiveDecimalWritable set method will quickly copy the deserialized decimal writable fields.
 operator|(
 operator|(
 name|HiveDecimalWritable
@@ -1889,9 +1892,6 @@ name|vector
 index|[
 name|adjustedIndex
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

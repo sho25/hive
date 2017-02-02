@@ -1996,7 +1996,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|dropTable
 argument_list|(
@@ -2011,7 +2011,7 @@ name|field
 init|=
 literal|"f1"
 decl_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|createTable
 argument_list|(
@@ -2523,7 +2523,7 @@ name|tblName
 init|=
 literal|"junit_date_char"
 decl_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|dropTable
 argument_list|(
@@ -2532,7 +2532,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|TestHCatLoader
+name|AbstractHCatLoaderTest
 operator|.
 name|createTable
 argument_list|(

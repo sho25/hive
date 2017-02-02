@@ -3449,7 +3449,7 @@ literal|"\"partitionKeys\":[{\"name\":\"pcol1\",\"type\":\"string\",\"comment\":
 operator|+
 literal|"{\"name\":\"pcol2\",\"type\":\"string\",\"comment\":\"\"}],\"parameters\":{},"
 operator|+
-literal|"\"tableType\":\"\"} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats:"
+literal|"\"tableType\":\"\",\"rewriteEnabled\":0} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats:"
 operator|+
 name|lsep
 argument_list|,
@@ -3506,7 +3506,7 @@ literal|"\"partitionKeys\":[{\"name\":\"pcol1\",\"type\":\"string\",\"comment\":
 operator|+
 literal|"{\"name\":\"pcol2\",\"type\":\"string\",\"comment\":\"\"}],\"parameters\":{\"COLUMN_STATS_ACCURATE\":\"{\\\"COLUMN_STATS\\\":{\\\"col1\\\":\\\"true\\\",\\\"col2\\\":\\\"true\\\"}}\"},"
 operator|+
-literal|"\"tableType\":\"\"} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats: column "
+literal|"\"tableType\":\"\",\"rewriteEnabled\":0} sdHash: qQTgZAi5VzgpozzFGmIVTQ stats: column "
 operator|+
 literal|"col1: {\"colName\":\"col1\",\"colType\":\"int\","
 operator|+
@@ -3526,7 +3526,7 @@ literal|"\"lastAccessTime\":0,\"retention\":0,\"partitionKeys\":[{\"name\":\"pco
 operator|+
 literal|"\"type\":\"string\",\"comment\":\"\"},{\"name\":\"pcol2\",\"type\":\"string\","
 operator|+
-literal|"\"comment\":\"\"}],\"parameters\":{},\"tableType\":\"\"} sdHash: "
+literal|"\"comment\":\"\"}],\"parameters\":{},\"tableType\":\"\",\"rewriteEnabled\":0} sdHash: "
 operator|+
 literal|"qQTgZAi5VzgpozzFGmIVTQ stats:"
 operator|+
@@ -3538,7 +3538,7 @@ literal|"\"lastAccessTime\":0,\"retention\":0,\"partitionKeys\":[{\"name\":\"pco
 operator|+
 literal|"\"type\":\"string\",\"comment\":\"\"},{\"name\":\"pcol2\",\"type\":\"string\","
 operator|+
-literal|"\"comment\":\"\"}],\"parameters\":{},\"tableType\":\"\"} sdHash: "
+literal|"\"comment\":\"\"}],\"parameters\":{},\"tableType\":\"\",\"rewriteEnabled\":0} sdHash: "
 operator|+
 literal|"qQTgZAi5VzgpozzFGmIVTQ stats:"
 operator|+

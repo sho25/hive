@@ -678,6 +678,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|String
+name|COLUMN_NAME_DELIMITER
+init|=
+literal|"column.name.delimiter"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|Set
 argument_list|<
 name|String

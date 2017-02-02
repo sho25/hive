@@ -207,6 +207,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|JvmPauseMonitor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|LogUtils
 import|;
 end_import
@@ -859,20 +875,6 @@ name|hadoop
 operator|.
 name|util
 operator|.
-name|JvmPauseMonitor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
 name|StringUtils
 import|;
 end_import
@@ -1044,6 +1046,14 @@ name|LlapDaemon
 operator|.
 name|class
 argument_list|)
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|double
+name|MIN_HEADROOM_PERCENT
+init|=
+literal|0.05
 decl_stmt|;
 specifier|private
 specifier|final
@@ -1221,6 +1231,10 @@ name|webPort
 parameter_list|,
 name|String
 name|appName
+parameter_list|,
+specifier|final
+name|long
+name|headRoomBytes
 parameter_list|)
 block|{
 name|super
@@ -1437,11 +1451,58 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|daemonId
-operator|=
-operator|new
-name|DaemonId
+comment|// re-login with kerberos. This makes sure all daemons have the same login user.
+if|if
+condition|(
+name|UserGroupInformation
+operator|.
+name|isSecurityEnabled
+argument_list|()
+condition|)
+block|{
+specifier|final
+name|String
+name|daemonPrincipal
+init|=
+name|HiveConf
+operator|.
+name|getVar
 argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_KERBEROS_PRINCIPAL
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
+name|daemonKeytab
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_KERBEROS_KEYTAB_FILE
+argument_list|)
+decl_stmt|;
+name|LlapUtil
+operator|.
+name|loginWithKerberosAndUpdateCurrentUser
+argument_list|(
+name|daemonPrincipal
+argument_list|,
+name|daemonKeytab
+argument_list|)
+expr_stmt|;
+block|}
+name|String
+name|currentUser
+init|=
 name|UserGroupInformation
 operator|.
 name|getCurrentUser
@@ -1449,6 +1510,22 @@ argument_list|()
 operator|.
 name|getShortUserName
 argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting daemon as user: {}"
+argument_list|,
+name|currentUser
+argument_list|)
+expr_stmt|;
+name|daemonId
+operator|=
+operator|new
+name|DaemonId
+argument_list|(
+name|currentUser
 argument_list|,
 name|LlapUtil
 operator|.
@@ -1495,11 +1572,57 @@ name|llapIoEnabled
 operator|=
 name|ioEnabled
 expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|headRoomBytes
+operator|<
+name|executorMemoryBytes
+argument_list|,
+literal|"LLAP daemon headroom size should be less "
+operator|+
+literal|"than daemon max memory size. headRoomBytes: "
+operator|+
+name|headRoomBytes
+operator|+
+literal|" executorMemoryBytes: "
+operator|+
+name|executorMemoryBytes
+argument_list|)
+expr_stmt|;
+specifier|final
+name|long
+name|minHeadRoomBytes
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+name|executorMemoryBytes
+operator|*
+name|MIN_HEADROOM_PERCENT
+argument_list|)
+decl_stmt|;
+specifier|final
+name|long
+name|headroom
+init|=
+name|headRoomBytes
+operator|<
+name|minHeadRoomBytes
+condition|?
+name|minHeadRoomBytes
+else|:
+name|headRoomBytes
+decl_stmt|;
 name|this
 operator|.
 name|executorMemoryPerInstance
 operator|=
 name|executorMemoryBytes
+operator|-
+name|headroom
 expr_stmt|;
 name|this
 operator|.
@@ -1553,9 +1676,92 @@ name|warn
 argument_list|(
 literal|"Attempting to start LlapDaemonConf with the following configuration: "
 operator|+
-literal|"numExecutors="
+literal|"maxJvmMemory="
+operator|+
+name|maxJvmMemory
+operator|+
+literal|" ("
+operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
+name|maxJvmMemory
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|", requestedExecutorMemory="
+operator|+
+name|executorMemoryBytes
+operator|+
+literal|" ("
+operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
+name|executorMemoryBytes
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|", llapIoCacheSize="
+operator|+
+name|ioMemoryBytes
+operator|+
+literal|" ("
+operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
+name|ioMemoryBytes
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|", headRoomMemory="
+operator|+
+name|headroom
+operator|+
+literal|" ("
+operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
+name|headroom
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|", adjustedExecutorMemory="
+operator|+
+name|executorMemoryPerInstance
+operator|+
+literal|" ("
+operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
+name|executorMemoryPerInstance
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|", numExecutors="
 operator|+
 name|numExecutors
+operator|+
+literal|", llapIoEnabled="
+operator|+
+name|ioEnabled
+operator|+
+literal|", llapIoCacheIsDirect="
+operator|+
+name|isDirectCache
 operator|+
 literal|", rpcListenerPort="
 operator|+
@@ -1585,26 +1791,6 @@ operator|+
 literal|", shufflePort="
 operator|+
 name|shufflePort
-operator|+
-literal|", executorMemory="
-operator|+
-name|executorMemoryBytes
-operator|+
-literal|", llapIoEnabled="
-operator|+
-name|ioEnabled
-operator|+
-literal|", llapIoCacheIsDirect="
-operator|+
-name|isDirectCache
-operator|+
-literal|", llapIoCacheSize="
-operator|+
-name|ioMemoryBytes
-operator|+
-literal|", jvmAvailableMemory="
-operator|+
-name|maxJvmMemory
 operator|+
 literal|", waitQueueSize= "
 operator|+
@@ -1643,11 +1829,21 @@ name|memRequired
 argument_list|,
 literal|"Invalid configuration. Xmx value too small. maxAvailable="
 operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
 name|maxJvmMemory
+argument_list|)
 operator|+
 literal|", configured(exec + io if enabled)="
 operator|+
+name|LlapUtil
+operator|.
+name|humanReadableByteCount
+argument_list|(
 name|memRequired
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|this
@@ -1977,7 +2173,7 @@ name|metrics
 operator|.
 name|setMemoryPerInstance
 argument_list|(
-name|executorMemoryBytes
+name|executorMemoryPerInstance
 argument_list|)
 expr_stmt|;
 name|this
@@ -2005,16 +2201,6 @@ operator|.
 name|setWaitQueueSize
 argument_list|(
 name|waitQueueSize
-argument_list|)
-expr_stmt|;
-name|metrics
-operator|.
-name|getJvmMetrics
-argument_list|()
-operator|.
-name|setPauseMonitor
-argument_list|(
-name|pauseMonitor
 argument_list|)
 expr_stmt|;
 name|this
@@ -2045,6 +2231,20 @@ operator|+
 name|sessionId
 argument_list|)
 expr_stmt|;
+name|int
+name|maxAmReporterThreads
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_AM_REPORTER_MAX_THREADS
+argument_list|)
+decl_stmt|;
 name|this
 operator|.
 name|amReporter
@@ -2052,6 +2252,10 @@ operator|=
 operator|new
 name|AMReporter
 argument_list|(
+name|numExecutors
+argument_list|,
+name|maxAmReporterThreads
+argument_list|,
 name|srvAddress
 argument_list|,
 operator|new
@@ -2059,6 +2263,8 @@ name|QueryFailedHandlerProxy
 argument_list|()
 argument_list|,
 name|daemonConf
+argument_list|,
+name|daemonId
 argument_list|)
 expr_stmt|;
 name|SecretManager
@@ -2173,7 +2379,7 @@ name|shufflePort
 argument_list|,
 name|srvAddress
 argument_list|,
-name|executorMemoryBytes
+name|executorMemoryPerInstance
 argument_list|,
 name|metrics
 argument_list|,
@@ -3238,6 +3444,24 @@ operator|*
 literal|1024l
 decl_stmt|;
 name|long
+name|headroomBytes
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+argument_list|)
+operator|*
+literal|1024l
+operator|*
+literal|1024l
+decl_stmt|;
+name|long
 name|ioMemoryBytes
 init|=
 name|HiveConf
@@ -3318,6 +3542,8 @@ argument_list|,
 name|webPort
 argument_list|,
 name|appName
+argument_list|,
+name|headroomBytes
 argument_list|)
 expr_stmt|;
 name|LOG

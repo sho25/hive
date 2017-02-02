@@ -797,6 +797,18 @@ condition|(
 name|i
 operator|==
 literal|null
+operator|||
+operator|!
+name|i
+operator|.
+name|isShort
+argument_list|()
+operator|||
+operator|!
+name|i
+operator|.
+name|isShort
+argument_list|()
 condition|)
 block|{
 return|return
@@ -811,14 +823,10 @@ name|set
 argument_list|(
 name|i
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
 name|shortValue
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: lossy conversion!
 return|return
 name|shortWritable
 return|;

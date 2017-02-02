@@ -94,12 +94,6 @@ name|int
 name|getOutputFormatPort
 parameter_list|()
 function_decl|;
-comment|/**    * Return the last known state (without refreshing)    *     * @return    */
-specifier|public
-name|boolean
-name|isAlive
-parameter_list|()
-function_decl|;
 comment|/**    * Config properties of the Service Instance (llap.daemon.*)    *     * @return    */
 specifier|public
 name|Map

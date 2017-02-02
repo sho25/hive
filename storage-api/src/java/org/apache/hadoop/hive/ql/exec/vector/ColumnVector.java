@@ -427,7 +427,7 @@ parameter_list|()
 block|{
 comment|// Do nothing by default
 block|}
-comment|/**      * Ensure the ColumnVector can hold at least size values.      * This method is deliberately *not* recursive because the complex types      * can easily have more (or less) children than the upper levels.      * @param size the new minimum size      * @param presesrveData should the old data be preserved?      */
+comment|/**      * Ensure the ColumnVector can hold at least size values.      * This method is deliberately *not* recursive because the complex types      * can easily have more (or less) children than the upper levels.      * @param size the new minimum size      * @param preserveData should the old data be preserved?      */
 specifier|public
 name|void
 name|ensureSize
@@ -436,7 +436,7 @@ name|int
 name|size
 parameter_list|,
 name|boolean
-name|presesrveData
+name|preserveData
 parameter_list|)
 block|{
 if|if
@@ -464,7 +464,7 @@ index|]
 expr_stmt|;
 if|if
 condition|(
-name|presesrveData
+name|preserveData
 operator|&&
 operator|!
 name|noNulls

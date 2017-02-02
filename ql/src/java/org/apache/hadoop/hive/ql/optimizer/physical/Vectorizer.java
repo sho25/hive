@@ -839,6 +839,28 @@ name|vector
 operator|.
 name|VectorizationContext
 operator|.
+name|HiveVectorAdaptorUsageMode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|VectorizationContext
+operator|.
 name|InConstantType
 import|;
 end_import
@@ -3212,10 +3234,14 @@ decl_stmt|;
 name|boolean
 name|isSchemaEvolution
 decl_stmt|;
+name|HiveVectorAdaptorUsageMode
+name|hiveVectorAdaptorUsageMode
+decl_stmt|;
 specifier|public
 name|Vectorizer
 parameter_list|()
 block|{
+comment|/*      * We check UDFs against the supportedGenericUDFs when      * hive.vectorized.adaptor.usage.mode=chosen or none.      *      * We allow all UDFs for hive.vectorized.adaptor.usage.mode=all.      */
 name|supportedGenericUDFs
 operator|.
 name|add
@@ -3918,6 +3944,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|supportedGenericUDFs
+operator|.
+name|add
+argument_list|(
+name|GenericUDFInBloomFilter
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// For type casts
 name|supportedGenericUDFs
 operator|.
@@ -4146,6 +4181,13 @@ operator|.
 name|add
 argument_list|(
 literal|"stddev_samp"
+argument_list|)
+expr_stmt|;
+name|supportedAggregationUdfs
+operator|.
+name|add
+argument_list|(
+literal|"bloom_filter"
 argument_list|)
 expr_stmt|;
 block|}
@@ -9438,6 +9480,9 @@ operator|.
 name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
 argument_list|)
 expr_stmt|;
+comment|// TODO: we could also vectorize some formats based on hive.llap.io.encode.formats if LLAP IO
+comment|//       is enabled and we are going to run in LLAP. However, we don't know if we end up in
+comment|//       LLAP or not at this stage, so don't do this now. We may need to add a 'force' option.
 name|isSchemaEvolution
 operator|=
 name|HiveConf
@@ -9451,6 +9496,15 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_SCHEMA_EVOLUTION
+argument_list|)
+expr_stmt|;
+name|hiveVectorAdaptorUsageMode
+operator|=
+name|HiveVectorAdaptorUsageMode
+operator|.
+name|getHiveConfValue
+argument_list|(
+name|hiveConf
 argument_list|)
 expr_stmt|;
 comment|// create dispatcher and graph walker
@@ -10314,6 +10368,36 @@ operator|.
 name|info
 argument_list|(
 literal|"Cannot vectorize map work small table expression"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+if|if
+condition|(
+name|desc
+operator|.
+name|getResidualFilterExprs
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|desc
+operator|.
+name|getResidualFilterExprs
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cannot vectorize outer join with complex ON clause"
 argument_list|)
 expr_stmt|;
 return|return
@@ -11675,6 +11759,21 @@ return|return
 literal|true
 return|;
 block|}
+if|if
+condition|(
+name|hiveVectorAdaptorUsageMode
+operator|==
+name|HiveVectorAdaptorUsageMode
+operator|.
+name|NONE
+operator|||
+name|hiveVectorAdaptorUsageMode
+operator|==
+name|HiveVectorAdaptorUsageMode
+operator|.
+name|CHOSEN
+condition|)
+block|{
 name|GenericUDF
 name|genericUDF
 init|=
@@ -11731,6 +11830,10 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+block|}
+return|return
+literal|true
+return|;
 block|}
 specifier|private
 name|boolean
@@ -11915,7 +12018,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Vectorization of aggreation should have succeeded "
+literal|"Vectorization of aggregation should have succeeded "
 argument_list|,
 name|e
 argument_list|)
@@ -14849,6 +14952,9 @@ name|EVENT
 case|:
 case|case
 name|HASHTABLESINK
+case|:
+case|case
+name|SPARKPRUNINGSINK
 case|:
 name|vectorOp
 operator|=

@@ -868,7 +868,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|TestHCatLoader
+name|TestHCatLoaderEncryption
 operator|.
 name|class
 argument_list|)
@@ -893,7 +893,7 @@ name|File
 operator|.
 name|separator
 operator|+
-name|TestHCatLoader
+name|TestHCatLoaderEncryption
 operator|.
 name|class
 operator|.

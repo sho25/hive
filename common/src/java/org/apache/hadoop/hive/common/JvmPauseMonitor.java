@@ -263,6 +263,18 @@ name|Set
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
 begin_comment
 comment|/**  * Based on the JvmPauseMonitor from Hadoop.  */
 end_comment
@@ -914,8 +926,12 @@ name|extraSleepTime
 init|=
 name|sw
 operator|.
-name|elapsedMillis
-argument_list|()
+name|elapsed
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
 operator|-
 name|SLEEP_INTERVAL_MS
 decl_stmt|;

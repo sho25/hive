@@ -190,7 +190,7 @@ name|isUpdateOrDelete
 init|=
 literal|false
 decl_stmt|;
-comment|//https://issues.apache.org/jira/browse/HIVE-15048
+comment|/**    * https://issues.apache.org/jira/browse/HIVE-15048    * It is possible that the same table is used in top level query and a sub-query, e.g.    * select * from T where T.c in (select c from T inner join S on T.a=S.b)    */
 specifier|public
 specifier|transient
 name|boolean

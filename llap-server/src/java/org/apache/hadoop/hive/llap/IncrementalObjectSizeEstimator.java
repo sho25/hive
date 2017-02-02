@@ -310,7 +310,7 @@ specifier|public
 class|class
 name|IncrementalObjectSizeEstimator
 block|{
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|JavaDataModel

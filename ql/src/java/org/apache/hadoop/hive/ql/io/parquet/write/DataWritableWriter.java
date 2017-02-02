@@ -2895,16 +2895,10 @@ name|decimalBytes
 init|=
 name|hiveDecimal
 operator|.
-name|setScale
+name|bigIntegerBytesScaled
 argument_list|(
 name|scale
 argument_list|)
-operator|.
-name|unscaledValue
-argument_list|()
-operator|.
-name|toByteArray
-argument_list|()
 decl_stmt|;
 comment|// Estimated number of bytes needed.
 name|int

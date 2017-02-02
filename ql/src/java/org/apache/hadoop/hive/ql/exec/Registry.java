@@ -3045,7 +3045,7 @@ name|functionName
 operator|+
 literal|" is hive builtin function, "
 operator|+
-literal|"which cannot be overriden."
+literal|"which cannot be overridden."
 argument_list|)
 throw|;
 block|}

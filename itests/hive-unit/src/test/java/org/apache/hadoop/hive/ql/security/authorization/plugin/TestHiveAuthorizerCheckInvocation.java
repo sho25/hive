@@ -2270,7 +2270,7 @@ literal|"update "
 operator|+
 name|acidTableName
 operator|+
-literal|" set i = 5, l = k where j = 3"
+literal|" set i = 5, j = k where j = 3"
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2352,7 +2352,7 @@ name|asList
 argument_list|(
 literal|"i"
 argument_list|,
-literal|"l"
+literal|"j"
 argument_list|)
 argument_list|,
 name|getSortedList

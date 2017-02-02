@@ -186,11 +186,14 @@ name|int
 name|outputColumn
 decl_stmt|;
 comment|// The set object containing the IN list.
+comment|// We use a HashSet of HiveDecimalWritable objects instead of HiveDecimal objects so
+comment|// we can lookup DecimalColumnVector HiveDecimalWritable quickly without creating
+comment|// a HiveDecimal lookup object.
 specifier|private
 specifier|transient
 name|HashSet
 argument_list|<
-name|HiveDecimal
+name|HiveDecimalWritable
 argument_list|>
 name|inSet
 decl_stmt|;
@@ -271,7 +274,7 @@ operator|=
 operator|new
 name|HashSet
 argument_list|<
-name|HiveDecimal
+name|HiveDecimalWritable
 argument_list|>
 argument_list|(
 name|inListValues
@@ -291,7 +294,11 @@ name|inSet
 operator|.
 name|add
 argument_list|(
+operator|new
+name|HiveDecimalWritable
+argument_list|(
 name|val
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -422,9 +429,6 @@ name|vector
 index|[
 literal|0
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1
@@ -482,9 +486,6 @@ name|vector
 index|[
 name|i
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1
@@ -523,9 +524,6 @@ name|vector
 index|[
 name|i
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1
@@ -568,9 +566,6 @@ name|vector
 index|[
 literal|0
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1
@@ -665,9 +660,6 @@ name|vector
 index|[
 name|i
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1
@@ -731,9 +723,6 @@ name|vector
 index|[
 name|i
 index|]
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 condition|?
 literal|1

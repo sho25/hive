@@ -37,6 +37,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|io
+operator|.
+name|output
+operator|.
+name|StringBuilderWriter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -528,7 +544,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  */
+comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  *   * Tests here are for multi-statement transactions (WIP) and those that don't need to  * run with Acid 2.0 (see subclasses of TestTxnCommands2)  */
 end_comment
 
 begin_class
@@ -536,6 +552,21 @@ specifier|public
 class|class
 name|TestTxnCommands
 block|{
+specifier|static
+specifier|final
+specifier|private
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|TestTxnCommands
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -625,6 +656,11 @@ block|{
 name|ACIDTBL
 argument_list|(
 literal|"acidTbl"
+argument_list|)
+block|,
+name|ACIDTBLPART
+argument_list|(
+literal|"acidTblPart"
 argument_list|)
 block|,
 name|ACIDTBL2
@@ -781,6 +817,19 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|MERGE_CARDINALITY_VIOLATION_CHECK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|setConfValues
@@ -862,6 +911,13 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+name|d
+operator|.
+name|setMaxRows
+argument_list|(
+literal|10000
+argument_list|)
+expr_stmt|;
 name|dropTables
 argument_list|()
 expr_stmt|;
@@ -874,6 +930,21 @@ operator|.
 name|ACIDTBL
 operator|+
 literal|"(a int, b int) clustered by (a) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|"(a int, b int) partitioned by (p string) clustered by (a) into "
 operator|+
 name|BUCKET_COUNT
 operator|+
@@ -4825,21 +4896,6 @@ argument_list|()
 return|;
 block|}
 specifier|private
-specifier|static
-specifier|final
-name|Logger
-name|LOG
-init|=
-name|LoggerFactory
-operator|.
-name|getLogger
-argument_list|(
-name|TestTxnCommands
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
-specifier|private
 name|List
 argument_list|<
 name|String
@@ -5086,7 +5142,7 @@ name|NONACIDORCTBL
 operator|+
 literal|"\n source ON target.pk = source.pk "
 operator|+
-literal|"\nWHEN MATCHED THEN UPDATE set t = 1 "
+literal|"\nWHEN MATCHED THEN UPDATE set b = 1 "
 operator|+
 literal|"\nWHEN MATCHED THEN UPDATE set b=a"
 argument_list|)
@@ -5114,13 +5170,144 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Ignore
+comment|/**    * `1` means 1 is a column name and '1' means 1 is a string literal    * HiveConf.HIVE_QUOTEDID_SUPPORT    * HiveConf.HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES    * {@link TestTxnCommands#testMergeType2SCD01()}    */
 annotation|@
 name|Test
 specifier|public
 name|void
-name|testSpecialChar
+name|testQuotedIdentifier
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|target
+init|=
+literal|"`aci/d_u/ami`"
+decl_stmt|;
+name|String
+name|src
+init|=
+literal|"`src/name`"
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|target
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|src
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|target
+operator|+
+literal|"(i int,"
+operator|+
+literal|"`d?*de e` decimal(5,2),"
+operator|+
+literal|"vc varchar(128)) clustered by (i) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|src
+operator|+
+literal|"(gh int, j decimal(5,2), k varchar(128))"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=gh "
+operator|+
+literal|"\nwhen matched and i> 5 then delete "
+operator|+
+literal|"\nwhen matched then update set vc='blah' "
+operator|+
+literal|"\nwhen not matched then insert values(1,2.1,'baz')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=gh "
+operator|+
+literal|"\nwhen matched and i> 5 then delete "
+operator|+
+literal|"\nwhen matched then update set vc='blah',  `d?*de e` = current_timestamp()  "
+operator|+
+literal|"\nwhen not matched then insert values(1,2.1, concat('baz', current_timestamp()))"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=gh "
+operator|+
+literal|"\nwhen matched and i> 5 then delete "
+operator|+
+literal|"\nwhen matched then update set vc='blah' "
+operator|+
+literal|"\nwhen not matched then insert values(1,2.1,'a\\b')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=gh "
+operator|+
+literal|"\nwhen matched and i> 5 then delete "
+operator|+
+literal|"\nwhen matched then update set vc='∆∋'"
+operator|+
+literal|"\nwhen not matched then insert values(`a/b`.gh,`a/b`.j,'c\\t')"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testQuotedIdentifier2
 parameter_list|()
 throws|throws
 name|Exception
@@ -5181,13 +5368,1522 @@ literal|" as `d/8` using "
 operator|+
 name|src
 operator|+
-literal|" as `a/b` on i=`g/h` "
+literal|" as `a/b` on i=`g/h`"
 operator|+
-literal|"\nwhen matched and i> 5 then delete "
+literal|"\nwhen matched and `g/h`> 5 then delete "
 operator|+
-literal|"\nwhen matched then update set vc=`∆∋` "
+literal|"\nwhen matched and `g/h`< 0 then update set vc='∆∋', `d?*de e` =  `d?*de e` * j + 1"
 operator|+
-literal|"\nwhen not matched then insert values(`a/b`.`g/h`,`a/b`.j,`a/b`.k)"
+literal|"\nwhen not matched and `d?*de e`<> 0 then insert values(`a/b`.`g/h`,`a/b`.j,`a/b`.k)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"merge into "
+operator|+
+name|target
+operator|+
+literal|" as `d/8` using "
+operator|+
+name|src
+operator|+
+literal|" as `a/b` on i=`g/h`"
+operator|+
+literal|"\nwhen matched and `g/h`> 5 then delete"
+operator|+
+literal|"\n when matched and `g/h`< 0 then update set vc='∆∋'  , `d?*de e` =  `d?*de e` * j + 1  "
+operator|+
+literal|"\n when not matched and `d?*de e`<> 0 then insert values(`a/b`.`g/h`,`a/b`.j,`a/b`.k)"
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * https://www.linkedin.com/pulse/how-load-slowly-changing-dimension-type-2-using-oracle-padhy    * also test QuotedIdentifier inside source expression    * {@link TestTxnCommands#testQuotedIdentifier()}    * {@link TestTxnCommands#testQuotedIdentifier2()}    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeType2SCD01
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists target"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists source"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists splitTable"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table splitTable(op int)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into splitTable values (0),(1)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table source (key int, data int)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table target (key int, data int, cur int) clustered by (key) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|5
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|6
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|18
+block|,
+literal|0
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into target "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|sourceVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|7
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into source "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|sourceVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|//augment source with a col which has 1 if it will cause an update in target, 0 otherwise
+name|String
+name|curMatch
+init|=
+literal|"select s.*, case when t.cur is null then 0 else 1 end m from source s left outer join (select * from target where target.cur=1) t on s.key=t.key"
+decl_stmt|;
+comment|//split each row (duplicate) which will cause an update into 2 rows and augment with 'op' col which has 0 to insert, 1 to update
+name|String
+name|teeCurMatch
+init|=
+literal|"select curMatch.*, case when splitTable.op is null or splitTable.op = 0 then 0 else 1 end `o/p\\n` from ("
+operator|+
+name|curMatch
+operator|+
+literal|") curMatch left outer join splitTable on curMatch.m=1"
+decl_stmt|;
+if|if
+condition|(
+literal|false
+condition|)
+block|{
+comment|//this is just for debug
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r1
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|curMatch
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r2
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|teeCurMatch
+argument_list|)
+decl_stmt|;
+block|}
+name|String
+name|stmt
+init|=
+literal|"merge into target t using ("
+operator|+
+name|teeCurMatch
+operator|+
+literal|") s on t.key=s.key and t.cur=1 and s.`o/p\\n`=1 "
+operator|+
+literal|"when matched then update set cur=0 "
+operator|+
+literal|"when not matched then insert values(s.key,s.data,1)"
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+name|stmt
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|resultVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|5
+block|,
+literal|0
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|7
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|18
+block|,
+literal|0
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|6
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|8
+block|,
+literal|1
+block|}
+block|}
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from target order by key,data,cur"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|resultVals
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * https://www.linkedin.com/pulse/how-load-slowly-changing-dimension-type-2-using-oracle-padhy    * Same as testMergeType2SCD01 but with a more intuitive "source" expression    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeType2SCD02
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists target"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists source"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table source (key int, data int)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table target (key int, data int, cur int) clustered by (key) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|5
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|6
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|18
+block|,
+literal|0
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into target "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|sourceVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|7
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into source "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|sourceVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|baseSrc
+init|=
+literal|"select source.*, 0 c from source "
+operator|+
+literal|"union all "
+operator|+
+literal|"select source.*, 1 c from source "
+operator|+
+literal|"inner join target "
+operator|+
+literal|"on source.key=target.key where target.cur=1"
+decl_stmt|;
+if|if
+condition|(
+literal|false
+condition|)
+block|{
+comment|//this is just for debug
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r1
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|baseSrc
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r2
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select t.*, s.* from target t right outer join ("
+operator|+
+name|baseSrc
+operator|+
+literal|") s "
+operator|+
+literal|"\non t.key=s.key and t.cur=s.c and t.cur=1"
+argument_list|)
+decl_stmt|;
+block|}
+name|String
+name|stmt
+init|=
+literal|"merge into target t using "
+operator|+
+literal|"("
+operator|+
+name|baseSrc
+operator|+
+literal|") s "
+operator|+
+literal|"on t.key=s.key and t.cur=s.c and t.cur=1 "
+operator|+
+literal|"when matched then update set cur=0 "
+operator|+
+literal|"when not matched then insert values(s.key,s.data,1)"
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+name|stmt
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|resultVals
+init|=
+block|{
+block|{
+literal|1
+block|,
+literal|5
+block|,
+literal|0
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|7
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|1
+block|,
+literal|18
+block|,
+literal|0
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|6
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|8
+block|,
+literal|1
+block|}
+block|}
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from target order by key,data,cur"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|resultVals
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeOnTezEdges
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|String
+name|query
+init|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED AND s.a> 8 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED THEN UPDATE SET b = 7 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b) "
+decl_stmt|;
+name|d
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
+name|HiveConf
+name|hc
+init|=
+operator|new
+name|HiveConf
+argument_list|(
+name|hiveConf
+argument_list|)
+decl_stmt|;
+name|hc
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|,
+literal|"tez"
+argument_list|)
+expr_stmt|;
+name|hc
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXPLAIN_USER
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|d
+operator|=
+operator|new
+name|Driver
+argument_list|(
+name|hc
+argument_list|)
+expr_stmt|;
+name|d
+operator|.
+name|setMaxRows
+argument_list|(
+literal|10000
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|explain
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"explain "
+operator|+
+name|query
+argument_list|)
+decl_stmt|;
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|String
+name|s
+range|:
+name|explain
+control|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+name|s
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|'\n'
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Explain1: "
+operator|+
+name|sb
+argument_list|)
+expr_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|explain
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+if|if
+condition|(
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Edges:"
+argument_list|)
+condition|)
+block|{
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|1
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|1
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|1
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 2<- Map 1 (SIMPLE_EDGE), Map 7 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|2
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|2
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|2
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 3<- Reducer 2 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|3
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|3
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|3
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 4<- Reducer 2 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|4
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|4
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|4
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 5<- Reducer 2 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|5
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|5
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|5
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 6<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeUpdateDelete
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|baseValsOdd
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|44
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|5
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|baseValsOdd
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|vals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|vals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN MATCHED and t.a> 3 and t.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b) "
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|rExpected
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|0
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|rExpected
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeDeleteUpdate
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|sourceVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|44
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|5
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|sourceVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED and s.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b) "
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|rExpected
+init|=
+block|{
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|rExpected
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * see https://issues.apache.org/jira/browse/HIVE-14949 for details    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMergeCardinalityViolation
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|int
+index|[]
+index|[]
+name|sourceVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|2
+block|,
+literal|44
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|5
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|sourceVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED and s.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b) "
+decl_stmt|;
+name|runStatementOnDriverNegative
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p) values(1,1,'p1'),(2,2,'p1'),(3,3,'p1'),(4,4,'p2')"
+argument_list|)
+expr_stmt|;
+name|query
+operator|=
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" as t using "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|" s ON t.a = s.a "
+operator|+
+literal|"WHEN MATCHED and s.a< 5 THEN DELETE "
+operator|+
+literal|"WHEN MATCHED AND s.a< 3 THEN update set b = 0 "
+operator|+
+literal|"WHEN NOT MATCHED THEN INSERT VALUES(s.a, s.b, 'p1') "
+expr_stmt|;
+name|runStatementOnDriverNegative
+argument_list|(
+name|query
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSetClauseFakeColumn
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"MERGE INTO "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" target USING "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"\n source ON target.a = source.a "
+operator|+
+literal|"\nWHEN MATCHED THEN UPDATE set t = 1"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|cpr
+operator|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set t = 1"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|ErrorMsg
+operator|.
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|,
+operator|(
+operator|(
+name|HiveException
+operator|)
+name|cpr
+operator|.
+name|getException
+argument_list|()
+operator|)
+operator|.
+name|getCanonicalErrorMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

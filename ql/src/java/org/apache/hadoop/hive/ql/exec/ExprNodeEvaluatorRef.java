@@ -88,6 +88,11 @@ name|referencing
 operator|.
 name|getExpr
 argument_list|()
+argument_list|,
+name|referencing
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this

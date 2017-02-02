@@ -988,6 +988,8 @@ argument_list|,
 name|ci
 argument_list|,
 name|su
+argument_list|,
+name|txnHandler
 argument_list|)
 expr_stmt|;
 block|}
@@ -1051,6 +1053,8 @@ argument_list|,
 name|ci
 argument_list|,
 name|su
+argument_list|,
+name|txnHandler
 argument_list|)
 expr_stmt|;
 return|return

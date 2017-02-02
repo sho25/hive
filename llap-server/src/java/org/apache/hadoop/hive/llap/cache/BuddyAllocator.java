@@ -3772,6 +3772,14 @@ argument_list|)
 operator|-
 name|minAllocLog2
 operator|)
+operator|:
+name|buffer
+operator|.
+name|allocSize
+operator|+
+literal|" "
+operator|+
+name|freeListIx
 assert|;
 while|while
 condition|(

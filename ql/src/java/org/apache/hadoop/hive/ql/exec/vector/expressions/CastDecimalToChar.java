@@ -112,6 +112,9 @@ index|[]
 name|bytes
 parameter_list|,
 name|int
+name|offset
+parameter_list|,
+name|int
 name|length
 parameter_list|)
 block|{
@@ -125,7 +128,7 @@ name|i
 argument_list|,
 name|bytes
 argument_list|,
-literal|0
+name|offset
 argument_list|,
 name|length
 argument_list|,

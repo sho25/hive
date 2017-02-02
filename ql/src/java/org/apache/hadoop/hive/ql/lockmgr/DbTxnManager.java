@@ -796,8 +796,39 @@ specifier|public
 name|long
 name|openTxn
 parameter_list|(
+name|Context
+name|ctx
+parameter_list|,
 name|String
 name|user
+parameter_list|)
+throws|throws
+name|LockException
+block|{
+return|return
+name|openTxn
+argument_list|(
+name|ctx
+argument_list|,
+name|user
+argument_list|,
+literal|0
+argument_list|)
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+name|long
+name|openTxn
+parameter_list|(
+name|Context
+name|ctx
+parameter_list|,
+name|String
+name|user
+parameter_list|,
+name|long
+name|delay
 parameter_list|)
 throws|throws
 name|LockException
@@ -854,6 +885,16 @@ operator|.
 name|txnIdToString
 argument_list|(
 name|txnId
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|ctx
+operator|.
+name|setHeartbeater
+argument_list|(
+name|startHeartbeat
+argument_list|(
+name|delay
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1882,9 +1923,15 @@ condition|(
 name|ls
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|isTxnOpen
+argument_list|()
 condition|)
 block|{
 comment|// If there's no lock, we don't need to do heartbeat
+comment|// Start heartbeat for read-only queries which don't open transactions but requires locks.
+comment|// For those that require transactions, the heartbeat has already been started in openTxn.
 name|ctx
 operator|.
 name|setHeartbeater
@@ -2202,6 +2249,31 @@ throw|;
 block|}
 catch|catch
 parameter_list|(
+name|TxnAbortedException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|LockException
+argument_list|(
+name|e
+argument_list|,
+name|ErrorMsg
+operator|.
+name|TXN_ABORTED
+argument_list|,
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txnId
+argument_list|)
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|TException
 name|e
 parameter_list|)
@@ -2451,7 +2523,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// Create a new threadlocal synchronized metastore client for use in hearbeater threads.
+comment|// Create a new threadlocal synchronized metastore client for use in heartbeater threads.
 comment|// This makes the concurrent use of heartbeat thread safe, and won't cause transaction
 comment|// abort due to a long metastore client call blocking the heartbeat call.
 name|heartbeaterClient
@@ -2511,7 +2583,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"The number of hearbeater metastore clients - + "
+literal|"The number of heartbeater metastore clients - + "
 operator|+
 name|heartbeaterMSClientCount
 operator|.

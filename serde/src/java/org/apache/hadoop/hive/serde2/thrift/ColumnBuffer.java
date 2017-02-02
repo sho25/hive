@@ -81,6 +81,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1208,13 +1222,11 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Get a subset of this ColumnBuffer, starting from the 1st value.    *    * @param end index after the last value to include    */
 specifier|public
 name|ColumnBuffer
 name|extractSubset
 parameter_list|(
-name|int
-name|start
-parameter_list|,
 name|int
 name|end
 parameter_list|)
@@ -1226,7 +1238,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1256,7 +1268,7 @@ name|copyOfRange
 argument_list|(
 name|boolVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1281,7 +1293,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1321,7 +1333,7 @@ name|copyOfRange
 argument_list|(
 name|byteVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1346,7 +1358,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1386,7 +1398,7 @@ name|copyOfRange
 argument_list|(
 name|shortVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1411,7 +1423,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1451,7 +1463,7 @@ name|copyOfRange
 argument_list|(
 name|intVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1476,7 +1488,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1516,7 +1528,7 @@ name|copyOfRange
 argument_list|(
 name|longVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1541,7 +1553,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1587,7 +1599,7 @@ name|copyOfRange
 argument_list|(
 name|doubleVars
 argument_list|,
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1612,7 +1624,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1650,7 +1662,7 @@ name|binaryVars
 operator|.
 name|subList
 argument_list|(
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1676,7 +1688,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1715,7 +1727,7 @@ name|stringVars
 operator|.
 name|subList
 argument_list|(
-name|start
+literal|0
 argument_list|,
 name|end
 argument_list|)
@@ -1741,7 +1753,7 @@ name|nulls
 operator|.
 name|get
 argument_list|(
-name|start
+name|end
 argument_list|,
 name|size
 argument_list|)
@@ -1764,6 +1776,16 @@ argument_list|(
 literal|"invalid union object"
 argument_list|)
 throw|;
+block|}
+annotation|@
+name|VisibleForTesting
+name|BitSet
+name|getNulls
+parameter_list|()
+block|{
+return|return
+name|nulls
+return|;
 block|}
 specifier|private
 specifier|static

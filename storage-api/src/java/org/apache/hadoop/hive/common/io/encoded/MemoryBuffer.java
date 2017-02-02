@@ -40,7 +40,7 @@ specifier|public
 interface|interface
 name|MemoryBuffer
 block|{
-comment|/** Note - raw buffer should not be modified. */
+comment|/**    * Get the raw byte buffer that backs this buffer.    * Note - raw buffer should not be modified.    * @return the shared byte buffer    */
 specifier|public
 name|ByteBuffer
 name|getByteBufferRaw

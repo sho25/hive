@@ -63,6 +63,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|Driver
+operator|.
+name|LockedDriverState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|QueryPlan
 import|;
 end_import
@@ -194,10 +212,13 @@ specifier|public
 interface|interface
 name|HiveTxnManager
 block|{
-comment|/**    * Open a new transaction.    * @param user Hive user who is opening this transaction.    * @return The new transaction id    * @throws LockException if a transaction is already open.    */
+comment|/**    * Open a new transaction.    * @param ctx Context for this query    * @param user Hive user who is opening this transaction.    * @return The new transaction id    * @throws LockException if a transaction is already open.    */
 name|long
 name|openTxn
 parameter_list|(
+name|Context
+name|ctx
+parameter_list|,
 name|String
 name|user
 parameter_list|)
@@ -211,7 +232,7 @@ parameter_list|()
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * Acquire all of the locks needed by a query.  If used with a query that    * requires transactions, this should be called after {@link #openTxn(String)}.    * A list of acquired locks will be stored in the    * {@link org.apache.hadoop.hive.ql.Context} object and can be retrieved    * via {@link org.apache.hadoop.hive.ql.Context#getHiveLocks}.    *    * @param plan query plan    * @param ctx Context for this query    * @param username name of the user for this query    * @throws LockException if there is an error getting the locks.  Use {@link LockException#getCanonicalErrorMsg()}    * to get more info on how to handle the exception.    */
+comment|/**    * Acquire all of the locks needed by a query.  If used with a query that    * requires transactions, this should be called after {@link #openTxn(Context, String)}.    * A list of acquired locks will be stored in the    * {@link org.apache.hadoop.hive.ql.Context} object and can be retrieved    * via {@link org.apache.hadoop.hive.ql.Context#getHiveLocks}.    *    * @param plan query plan    * @param ctx Context for this query    * @param username name of the user for this query    * @throws LockException if there is an error getting the locks.  Use {@link LockException#getCanonicalErrorMsg()}    * to get more info on how to handle the exception.    */
 name|void
 name|acquireLocks
 parameter_list|(
@@ -223,6 +244,25 @@ name|ctx
 parameter_list|,
 name|String
 name|username
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * Acquire all of the locks needed by a query.  If used with a query that    * requires transactions, this should be called after {@link #openTxn(String)}.    * A list of acquired locks will be stored in the    * {@link org.apache.hadoop.hive.ql.Context} object and can be retrieved    * via {@link org.apache.hadoop.hive.ql.Context#getHiveLocks}.    * @param plan query plan    * @param ctx Context for this query    * @param username name of the user for this query    * @param lDrvState the state to inform if the query cancelled or not    * @throws LockException if there is an error getting the locks    */
+name|void
+name|acquireLocks
+parameter_list|(
+name|QueryPlan
+name|plan
+parameter_list|,
+name|Context
+name|ctx
+parameter_list|,
+name|String
+name|username
+parameter_list|,
+name|LockedDriverState
+name|lDrvState
 parameter_list|)
 throws|throws
 name|LockException

@@ -1517,9 +1517,9 @@ name|PARTITION_VALUE_NOT_CONTINUOUS
 argument_list|(
 literal|10234
 argument_list|,
-literal|"Parition values specifed are not continuous."
+literal|"Partition values specified are not continuous."
 operator|+
-literal|" A subpartition value is specified without specififying the parent partition's value"
+literal|" A subpartition value is specified without specifying the parent partition's value"
 argument_list|)
 block|,
 name|TABLES_INCOMPATIBLE_SCHEMAS
@@ -2108,7 +2108,7 @@ name|IO_ERROR
 argument_list|(
 literal|10320
 argument_list|,
-literal|"Error while peforming IO operation "
+literal|"Error while performing IO operation "
 argument_list|)
 block|,
 name|ERROR_SERIALIZE_METADATA
@@ -2178,6 +2178,13 @@ argument_list|,
 literal|"Unsupported set operator"
 argument_list|)
 block|,
+name|LOCK_ACQUIRE_CANCELLED
+argument_list|(
+literal|10330
+argument_list|,
+literal|"Query was cancelled while acquiring locks on the underlying objects. "
+argument_list|)
+block|,
 name|REPLACE_VIEW_WITH_MATERIALIZED
 argument_list|(
 literal|10400
@@ -2243,7 +2250,23 @@ name|INVALID_JOIN_CONDITION
 argument_list|(
 literal|10407
 argument_list|,
-literal|"Complex condition not supported for (LEFT|RIGHT|FULL) OUTER JOIN"
+literal|"Error parsing condition in outer join"
+argument_list|)
+block|,
+name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
+argument_list|(
+literal|10408
+argument_list|,
+literal|"Target column \"{0}\" of set clause is not found in table \"{1}\"."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|HIVE_GROUPING_FUNCTION_EXPR_NOT_IN_GROUPBY
+argument_list|(
+literal|10409
+argument_list|,
+literal|"Expression in GROUPING function not present in GROUP BY"
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

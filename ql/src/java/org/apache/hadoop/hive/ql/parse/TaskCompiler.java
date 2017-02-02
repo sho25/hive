@@ -1779,7 +1779,7 @@ literal|"> "
 operator|+
 name|fetchLimit
 operator|+
-literal|". Doesn't qualify limit optimiztion."
+literal|". Doesn't qualify limit optimization."
 argument_list|)
 expr_stmt|;
 name|globalLimitCtx
@@ -3921,6 +3921,26 @@ argument_list|(
 name|pCtx
 operator|.
 name|getMapJoinOps
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|clone
+operator|.
+name|setRsToRuntimeValuesInfoMap
+argument_list|(
+name|pCtx
+operator|.
+name|getRsToRuntimeValuesInfoMap
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|clone
+operator|.
+name|setRsOpToTsOpMap
+argument_list|(
+name|pCtx
+operator|.
+name|getRsOpToTsOpMap
 argument_list|()
 argument_list|)
 expr_stmt|;

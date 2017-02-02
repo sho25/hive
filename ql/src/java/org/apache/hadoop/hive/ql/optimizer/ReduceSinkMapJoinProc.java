@@ -2481,6 +2481,22 @@ range|:
 name|mapJoinWork
 control|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"adding dummy op to work "
+operator|+
+name|myWork
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" from MJ work: "
+operator|+
+name|dummyOp
+argument_list|)
+expr_stmt|;
 name|myWork
 operator|.
 name|addDummyOp

@@ -1317,7 +1317,7 @@ name|Integer
 argument_list|>
 name|colIndexes
 parameter_list|,
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -1388,6 +1388,17 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
+name|String
+name|tn
+init|=
+name|t
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1395,10 +1406,7 @@ name|prunedCols
 operator|.
 name|containsKey
 argument_list|(
-name|t
-operator|.
-name|getName
-argument_list|()
+name|tn
 argument_list|)
 condition|)
 block|{
@@ -1460,10 +1468,7 @@ name|prunedCols
 operator|.
 name|get
 argument_list|(
-name|t
-operator|.
-name|getName
-argument_list|()
+name|tn
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1534,7 +1539,7 @@ name|schemaTypes
 argument_list|)
 return|;
 block|}
-comment|/**    * Return the columns which contains required nested attribute level    * e.g.    * Given struct a<x:int, y:int> and a is required while y is not, so the method will return a    * who contains the attribute x    *    * @param nestedColPaths the paths for required nested attribute    * @return column list contains required nested attribute    */
+comment|/**    * Return the columns which contains required nested attribute level    * E.g., given struct a:<x:int, y:int> while 'x' is required and 'y' is not, the method will return    * a pruned struct for 'a' which only contains the attribute 'x'    *    * @param nestedColPaths the paths for required nested attribute    * @return a map from the column to its selected nested column paths, of which the keys are all lower-cased.    */
 specifier|private
 specifier|static
 name|Map
@@ -1545,7 +1550,7 @@ name|FieldNode
 argument_list|>
 name|getPrunedNestedColumns
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -1599,6 +1604,9 @@ argument_list|)
 index|[
 literal|0
 index|]
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -1784,6 +1792,9 @@ name|n
 operator|.
 name|getFieldName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|n
 argument_list|)
@@ -1803,6 +1814,9 @@ init|=
 name|type
 operator|.
 name|getName
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 decl_stmt|;
 if|if
@@ -2172,7 +2186,7 @@ argument_list|,
 name|columnTypesList
 argument_list|)
 expr_stmt|;
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>

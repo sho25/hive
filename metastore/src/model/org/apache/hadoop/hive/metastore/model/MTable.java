@@ -97,6 +97,10 @@ name|String
 name|viewExpandedText
 decl_stmt|;
 specifier|private
+name|boolean
+name|rewriteEnabled
+decl_stmt|;
+specifier|private
 name|String
 name|tableType
 decl_stmt|;
@@ -156,6 +160,9 @@ name|viewOriginalText
 parameter_list|,
 name|String
 name|viewExpandedText
+parameter_list|,
+name|boolean
+name|rewriteEnabled
 parameter_list|,
 name|String
 name|tableType
@@ -233,6 +240,12 @@ operator|.
 name|viewExpandedText
 operator|=
 name|viewExpandedText
+expr_stmt|;
+name|this
+operator|.
+name|rewriteEnabled
+operator|=
+name|rewriteEnabled
 expr_stmt|;
 name|this
 operator|.
@@ -423,6 +436,32 @@ operator|.
 name|viewExpandedText
 operator|=
 name|viewExpandedText
+expr_stmt|;
+block|}
+comment|/**    * @return whether the view can be used for rewriting queries    */
+specifier|public
+name|boolean
+name|isRewriteEnabled
+parameter_list|()
+block|{
+return|return
+name|rewriteEnabled
+return|;
+block|}
+comment|/**    * @param rewriteEnabled whether the view can be used for rewriting queries    */
+specifier|public
+name|void
+name|setRewriteEnabled
+parameter_list|(
+name|boolean
+name|rewriteEnabled
+parameter_list|)
+block|{
+name|this
+operator|.
+name|rewriteEnabled
+operator|=
+name|rewriteEnabled
 expr_stmt|;
 block|}
 comment|/**    * @return the owner    */

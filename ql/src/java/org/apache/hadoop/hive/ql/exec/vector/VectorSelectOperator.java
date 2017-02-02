@@ -675,6 +675,16 @@ name|i
 operator|++
 control|)
 block|{
+name|vExpressions
+index|[
+name|i
+index|]
+operator|.
+name|init
+argument_list|(
+name|hconf
+argument_list|)
+expr_stmt|;
 name|projectedColumns
 index|[
 name|i

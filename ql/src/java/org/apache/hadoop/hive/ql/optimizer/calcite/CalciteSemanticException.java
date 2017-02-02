@@ -92,11 +92,7 @@ name|Invalid_column_reference
 block|,
 name|Invalid_decimal
 block|,
-name|Invalid_interval
-block|,
 name|Less_than_equal_greater_than
-block|,
-name|Multi_insert
 block|,
 name|Others
 block|,

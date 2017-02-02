@@ -1594,10 +1594,16 @@ argument_list|()
 operator|==
 literal|0
 operator|&&
+operator|(
+name|enablePreemption
+operator|==
+literal|false
+operator|||
 name|preemptionQueue
 operator|.
 name|isEmpty
 argument_list|()
+operator|)
 condition|)
 block|{
 name|shouldWait
@@ -1950,6 +1956,7 @@ argument_list|(
 name|taskWrapper
 argument_list|)
 expr_stmt|;
+comment|// Finishable state is checked on the task, via an explicit query to the TaskRunnerCallable
 comment|// null evicted task means offer accepted
 comment|// evictedTask is not equal taskWrapper means current task is accepted and it evicted
 comment|// some other task
@@ -1959,9 +1966,13 @@ name|evictedTask
 operator|==
 literal|null
 operator|||
+operator|!
 name|evictedTask
-operator|!=
+operator|.
+name|equals
+argument_list|(
 name|taskWrapper
+argument_list|)
 condition|)
 block|{
 name|knownTasks
@@ -2120,15 +2131,13 @@ return|return
 name|result
 return|;
 block|}
-block|}
-comment|// At this point, the task has been added into the queue. It may have caused an eviction for
-comment|// some other task.
-comment|// This registration has to be done after knownTasks has been populated.
-comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
-comment|// if the fragment moves in or out of the finishable state.
+comment|// Register for notifications inside the lock. Should avoid races with unregisterForNotifications
+comment|// happens in a different Submission thread. i.e. Avoid register running for this task
+comment|// after some other submission has evicted it.
 name|boolean
 name|stateChanged
 init|=
+operator|!
 name|taskWrapper
 operator|.
 name|maybeRegisterForFinishedStateNotifications
@@ -2171,6 +2180,12 @@ name|canFinish
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// At this point, the task has been added into the queue. It may have caused an eviction for
+comment|// some other task.
+comment|// This registration has to be done after knownTasks has been populated.
+comment|// Register for state change notifications so that the waitQueue can be re-ordered correctly
+comment|// if the fragment moves in or out of the finishable state.
 if|if
 condition|(
 name|isDebugEnabled
@@ -2192,6 +2207,31 @@ name|evictedTask
 operator|!=
 literal|null
 condition|)
+block|{
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"{} evicted from wait queue in favor of {} because of lower priority"
+argument_list|,
+name|evictedTask
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|,
+name|task
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+try|try
 block|{
 name|knownTasks
 operator|.
@@ -2215,6 +2255,11 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+comment|// This is dealing with tasks from a different submission, and cause the kill
+comment|// to go out before the previous submissions has completed. Handled in the AM
 name|evictedTask
 operator|.
 name|getTaskRunnerCallable
@@ -2222,28 +2267,6 @@ argument_list|()
 operator|.
 name|killTask
 argument_list|()
-expr_stmt|;
-if|if
-condition|(
-name|isInfoEnabled
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"{} evicted from wait queue in favor of {} because of lower priority"
-argument_list|,
-name|evictedTask
-operator|.
-name|getRequestId
-argument_list|()
-argument_list|,
-name|task
-operator|.
-name|getRequestId
-argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 if|if
@@ -3841,6 +3864,7 @@ return|;
 block|}
 else|else
 block|{
+comment|// State has not changed / already registered for notifications.
 return|return
 literal|true
 return|;
@@ -4099,6 +4123,90 @@ argument_list|,
 name|finishableState
 argument_list|)
 expr_stmt|;
+block|}
+comment|// TaskWrapper is used in structures, as well as for ordering using Comparators
+comment|// in the waitQueue. Avoid Object comparison.
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|equals
+parameter_list|(
+name|Object
+name|o
+parameter_list|)
+block|{
+if|if
+condition|(
+name|this
+operator|==
+name|o
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+if|if
+condition|(
+name|o
+operator|==
+literal|null
+operator|||
+name|getClass
+argument_list|()
+operator|!=
+name|o
+operator|.
+name|getClass
+argument_list|()
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+name|TaskWrapper
+name|that
+init|=
+operator|(
+name|TaskWrapper
+operator|)
+name|o
+decl_stmt|;
+return|return
+name|taskRunnerCallable
+operator|.
+name|getRequestId
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|that
+operator|.
+name|taskRunnerCallable
+operator|.
+name|getRequestId
+argument_list|()
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|int
+name|hashCode
+parameter_list|()
+block|{
+return|return
+name|taskRunnerCallable
+operator|.
+name|getRequestId
+argument_list|()
+operator|.
+name|hashCode
+argument_list|()
+return|;
 block|}
 block|}
 specifier|private

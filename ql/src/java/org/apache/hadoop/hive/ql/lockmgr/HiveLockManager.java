@@ -29,6 +29,24 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|Driver
+operator|.
+name|LockedDriverState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Manager for locks in Hive.  Users should not instantiate a lock manager  * directly.  Instead they should get an instance from their instance of  * {@link HiveTxnManager}.  */
 end_comment
@@ -80,6 +98,9 @@ name|objs
 parameter_list|,
 name|boolean
 name|keepAlive
+parameter_list|,
+name|LockedDriverState
+name|lDrvState
 parameter_list|)
 throws|throws
 name|LockException

@@ -1550,6 +1550,10 @@ name|isMapGroupBy
 argument_list|()
 argument_list|,
 name|this
+argument_list|,
+name|conf
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1982,7 +1986,7 @@ name|rowInspector
 operator|instanceof
 name|StructObjectInspector
 operator|:
-literal|"Exptected rowInspector to be instance of StructObjectInspector but it is a "
+literal|"Expected rowInspector to be instance of StructObjectInspector but it is a "
 operator|+
 name|rowInspector
 operator|.

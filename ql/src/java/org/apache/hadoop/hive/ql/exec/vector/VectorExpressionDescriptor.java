@@ -882,6 +882,11 @@ name|SCALAR
 argument_list|(
 literal|2
 argument_list|)
+block|,
+name|DYNAMICVALUE
+argument_list|(
+literal|3
+argument_list|)
 block|;
 specifier|private
 specifier|final

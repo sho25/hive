@@ -527,6 +527,7 @@ name|nominal
 operator|=
 name|onefile
 expr_stmt|;
+break|break;
 block|}
 if|if
 condition|(

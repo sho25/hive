@@ -868,7 +868,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Partiton Directory list size doesn't match Partition Descriptor list size"
+literal|"Partition Directory list size doesn't match Partition Descriptor list size"
 argument_list|)
 throw|;
 block|}

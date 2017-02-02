@@ -1454,9 +1454,9 @@ block|{
 comment|// Don't fail execution due to counters - just don't print summary info
 name|LOG
 operator|.
-name|error
+name|warn
 argument_list|(
-literal|"Failed to get counters: "
+literal|"Failed to get counters. Ignoring, summary info will be incomplete. "
 operator|+
 name|err
 argument_list|,
@@ -1472,6 +1472,8 @@ block|}
 finally|finally
 block|{
 comment|// We return this to the pool even if it's unusable; reopen is supposed to handle this.
+try|try
+block|{
 name|TezSessionPoolManager
 operator|.
 name|getInstance
@@ -1488,6 +1490,28 @@ name|getLlapMode
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to return session: {} to pool"
+argument_list|,
+name|session
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
+block|}
 block|}
 if|if
 condition|(

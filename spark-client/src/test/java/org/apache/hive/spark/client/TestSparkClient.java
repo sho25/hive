@@ -758,16 +758,6 @@ argument_list|(
 name|listener
 argument_list|)
 operator|.
-name|onJobQueued
-argument_list|(
-name|handle
-argument_list|)
-expr_stmt|;
-name|verify
-argument_list|(
-name|listener
-argument_list|)
-operator|.
 name|onJobStarted
 argument_list|(
 name|handle

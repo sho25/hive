@@ -2391,6 +2391,7 @@ break|break;
 case|case
 name|DECIMAL
 case|:
+comment|// The DecimalColumnVector set method will quickly copy the deserialized decimal writable fields.
 operator|(
 operator|(
 name|DecimalColumnVector
@@ -2410,9 +2411,6 @@ argument_list|,
 name|deserializeRead
 operator|.
 name|currentHiveDecimalWritable
-operator|.
-name|getHiveDecimal
-argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;

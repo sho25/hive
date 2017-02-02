@@ -2795,7 +2795,9 @@ name|Long
 argument_list|>
 name|txnIds
 decl_stmt|;
+comment|//volatile because heartbeat() may be in a "different" thread; updates of this are "piggybacking"
 specifier|private
+specifier|volatile
 name|int
 name|currentTxnIndex
 init|=
@@ -2807,7 +2809,9 @@ specifier|final
 name|String
 name|partNameForLock
 decl_stmt|;
+comment|//volatile because heartbeat() may be in a "different" thread
 specifier|private
+specifier|volatile
 name|TxnState
 name|state
 decl_stmt|;
@@ -4316,6 +4320,30 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+name|state
+operator|!=
+name|TxnState
+operator|.
+name|OPEN
+operator|&&
+name|currentTxnIndex
+operator|>=
+name|txnIds
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+condition|)
+block|{
+comment|//here means last txn in the batch is resolved but the close() hasn't been called yet so
+comment|//there is nothing to heartbeat
+return|return;
+block|}
+comment|//if here after commit()/abort() but before next beginNextTransaction(), currentTxnIndex still
+comment|//points at the last txn which we don't want to heartbeat
 name|Long
 name|first
 init|=
@@ -4323,7 +4351,17 @@ name|txnIds
 operator|.
 name|get
 argument_list|(
+name|state
+operator|==
+name|TxnState
+operator|.
+name|OPEN
+condition|?
 name|currentTxnIndex
+else|:
+name|currentTxnIndex
+operator|+
+literal|1
 argument_list|)
 decl_stmt|;
 name|Long

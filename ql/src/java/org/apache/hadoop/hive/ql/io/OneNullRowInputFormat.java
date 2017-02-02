@@ -211,7 +211,7 @@ name|split
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|boolean
 name|processed
 decl_stmt|;

@@ -955,6 +955,10 @@ name|typeInfo
 operator|.
 name|scale
 argument_list|()
+argument_list|,
+name|HiveDecimal
+operator|.
+name|ROUND_HALF_UP
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1028,7 +1032,6 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
-comment|//Decimal128.ONE;
 block|}
 else|else
 block|{
@@ -1097,6 +1100,10 @@ name|typeInfo
 operator|.
 name|scale
 argument_list|()
+argument_list|,
+name|HiveDecimal
+operator|.
+name|ROUND_HALF_UP
 argument_list|)
 argument_list|)
 expr_stmt|;

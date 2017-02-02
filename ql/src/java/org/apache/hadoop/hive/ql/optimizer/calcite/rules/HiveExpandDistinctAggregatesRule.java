@@ -987,6 +987,15 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Trigger countDistinct rewrite. numCountDistinct is "
+operator|+
+name|numCountDistinct
+argument_list|)
+expr_stmt|;
 comment|// now positions contains all the distinct positions, i.e., $5, $4, $6
 comment|// we need to first sort them as group by set
 comment|// and then get their position later, i.e., $4->1, $5->2, $6->3
@@ -1207,7 +1216,7 @@ expr_stmt|;
 return|return;
 block|}
 block|}
-comment|/**    * Converts an aggregate relational expression that contains only    * count(distinct) to grouping sets with count. For example select    * count(distinct department_id), count(distinct gender), count(distinct    * education_level) from employee; can be transformed to select count(case i    * when 1 then 1 else null end) as c0, count(case i when 2 then 1 else null    * end) as c1, count(case i when 4 then 1 else null end) as c2 from (select    * grouping__id as i, department_id, gender, education_level from employee    * group by department_id, gender, education_level grouping sets    * (department_id, gender, education_level))subq;    * @throws CalciteSemanticException     */
+comment|/**    * Converts an aggregate relational expression that contains only    * count(distinct) to grouping sets with count. For example select    * count(distinct department_id), count(distinct gender), count(distinct    * education_level) from employee; can be transformed to     * select     * count(case when i=1 and department_id is not null then 1 else null end) as c0,     * count(case when i=2 and gender is not null then 1 else null end) as c1,     * count(case when i=4 and education_level is not null then 1 else null end) as c2     * from (select    * grouping__id as i, department_id, gender, education_level from employee    * group by department_id, gender, education_level grouping sets    * (department_id, gender, education_level))subq;    * @throws CalciteSemanticException     */
 specifier|private
 name|RelNode
 name|convert
@@ -1450,6 +1459,9 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
+comment|// for singular arg, count should not include null
+comment|// e.g., count(case when i=1 and department_id is not null then 1 else null end) as c0,
+comment|// for non-singular args, count can include null, i.e. (,) is counted as 1
 for|for
 control|(
 name|List
@@ -1462,7 +1474,7 @@ name|cleanArgList
 control|)
 block|{
 name|RexNode
-name|equal
+name|condition
 init|=
 name|rexBuilder
 operator|.
@@ -1501,8 +1513,63 @@ argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|list
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|1
+condition|)
+block|{
+name|int
+name|pos
+init|=
+name|list
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
 name|RexNode
+name|notNull
+init|=
+name|rexBuilder
+operator|.
+name|makeCall
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|IS_NOT_NULL
+argument_list|,
+name|originalInputRefs
+operator|.
+name|get
+argument_list|(
+name|pos
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|condition
+operator|=
+name|rexBuilder
+operator|.
+name|makeCall
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|AND
+argument_list|,
+name|condition
+argument_list|,
+name|notNull
+argument_list|)
+expr_stmt|;
+block|}
+name|RexNode
+name|when
 init|=
 name|rexBuilder
 operator|.
@@ -1512,7 +1579,7 @@ name|SqlStdOperatorTable
 operator|.
 name|CASE
 argument_list|,
-name|equal
+name|condition
 argument_list|,
 name|rexBuilder
 operator|.
@@ -1533,7 +1600,7 @@ name|gbChildProjLst
 operator|.
 name|add
 argument_list|(
-name|condition
+name|when
 argument_list|)
 expr_stmt|;
 block|}

@@ -1162,7 +1162,9 @@ operator|.
 name|getLocalTmpPath
 argument_list|()
 argument_list|,
-literal|"_metadata"
+name|EximUtil
+operator|.
+name|METADATA_NAME
 argument_list|)
 decl_stmt|;
 name|EximUtil
@@ -1544,7 +1546,9 @@ name|Path
 argument_list|(
 name|parentPath
 argument_list|,
-literal|"data"
+name|EximUtil
+operator|.
+name|DATA_PATH_NAME
 argument_list|)
 decl_stmt|;
 name|Task
@@ -1595,6 +1599,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// TODO# master merge - did master remove this path or did it never exit? we need it for MM
 name|CopyWork
 name|cw
 init|=

@@ -1987,25 +1987,21 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS)    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @return A path to the new temporary directory      */
+comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS), unless isFinalJob and    * {@link BlobStorageUtils#areOptimizationsEnabled(Configuration)} are both true, then return a path on    * the blobstore.    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @param isFinalJob true if the required {@link Path} will be used for the final job (e.g. the final FSOP)    *    * @return A path to the new temporary directory    */
 specifier|public
 name|Path
 name|getTempDirForPath
 parameter_list|(
 name|Path
 name|path
+parameter_list|,
+name|boolean
+name|isFinalJob
 parameter_list|)
 block|{
-name|boolean
-name|isLocal
-init|=
-name|isPathLocal
-argument_list|(
-name|path
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
+operator|(
 operator|(
 name|BlobStorageUtils
 operator|.
@@ -2025,7 +2021,26 @@ name|conf
 argument_list|)
 operator|)
 operator|||
-name|isLocal
+name|isPathLocal
+argument_list|(
+name|path
+argument_list|)
+operator|)
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|isFinalJob
+operator|&&
+name|BlobStorageUtils
+operator|.
+name|areOptimizationsEnabled
+argument_list|(
+name|conf
+argument_list|)
+operator|)
 condition|)
 block|{
 comment|// For better write performance, we use HDFS for temporary data when object store is used.
@@ -2036,8 +2051,7 @@ name|getMRTmpPath
 argument_list|()
 return|;
 block|}
-else|else
-block|{
+block|}
 return|return
 name|getExtTmpPathRelTo
 argument_list|(
@@ -2045,6 +2059,23 @@ name|path
 argument_list|)
 return|;
 block|}
+comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS)    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @return A path to the new temporary directory    */
+specifier|public
+name|Path
+name|getTempDirForPath
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+block|{
+return|return
+name|getTempDirForPath
+argument_list|(
+name|path
+argument_list|,
+literal|false
+argument_list|)
+return|;
 block|}
 comment|/*    * Checks if the path is for the local filesystem or not    */
 specifier|private

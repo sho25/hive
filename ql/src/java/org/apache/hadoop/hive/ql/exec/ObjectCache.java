@@ -99,6 +99,20 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * Retrieve object from cache.    *    * @param<T>    * @param key    *          function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
+specifier|public
+parameter_list|<
+name|T
+parameter_list|>
+name|T
+name|retrieve
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
 comment|/**    * Retrieve object from cache asynchronously.    *    * @param<T>    * @param key    * @param fn    *          function to generate the object if it's not there    * @return the last cached object with the key, null if none.    */
 specifier|public
 parameter_list|<

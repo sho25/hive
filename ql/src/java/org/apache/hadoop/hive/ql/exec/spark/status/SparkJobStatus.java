@@ -154,6 +154,10 @@ name|void
 name|cleanup
 parameter_list|()
 function_decl|;
+name|Throwable
+name|getError
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

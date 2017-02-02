@@ -65,6 +65,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|Statement
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLException
 import|;
 end_import
@@ -1550,6 +1560,11 @@ operator|.
 name|getDataStoreConnection
 argument_list|()
 decl_stmt|;
+name|Statement
+name|statement
+init|=
+literal|null
+decl_stmt|;
 name|boolean
 name|doTrace
 init|=
@@ -1572,6 +1587,8 @@ argument_list|()
 else|:
 literal|0
 decl_stmt|;
+name|statement
+operator|=
 operator|(
 operator|(
 name|Connection
@@ -1584,6 +1601,8 @@ operator|)
 operator|.
 name|createStatement
 argument_list|()
+expr_stmt|;
+name|statement
 operator|.
 name|execute
 argument_list|(
@@ -1611,6 +1630,19 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+if|if
+condition|(
+name|statement
+operator|!=
+literal|null
+condition|)
+block|{
+name|statement
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 name|jdoConn
 operator|.
 name|close
@@ -7112,6 +7144,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @return            the column statistics for the specified columns    * @throws MetaException    */
 specifier|public
 name|ColumnStatistics
 name|getTableStats
@@ -7135,6 +7168,10 @@ name|MetaException
 block|{
 if|if
 condition|(
+name|colNames
+operator|==
+literal|null
+operator|||
 name|colNames
 operator|.
 name|isEmpty
