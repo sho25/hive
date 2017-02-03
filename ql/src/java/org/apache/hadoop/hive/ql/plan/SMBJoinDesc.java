@@ -166,7 +166,24 @@ block|}
 specifier|public
 name|SMBJoinDesc
 parameter_list|()
-block|{   }
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|SMBJoinDesc
+parameter_list|(
+name|SMBJoinDesc
+name|clone
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|clone
+argument_list|)
+expr_stmt|;
+block|}
 specifier|public
 name|MapredLocalWork
 name|getLocalWork

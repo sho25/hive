@@ -782,6 +782,27 @@ return|return
 literal|"long"
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|arg1Column
+operator|+
+literal|", col "
+operator|+
+name|arg2Column
+operator|+
+literal|", col "
+operator|+
+name|arg3Column
+return|;
+block|}
 block|}
 end_class
 

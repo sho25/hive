@@ -680,6 +680,21 @@ operator|=
 name|outputColumn
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+operator|+
+literal|", val "
+operator|+
+name|value
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

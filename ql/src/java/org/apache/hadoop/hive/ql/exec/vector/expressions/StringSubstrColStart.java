@@ -1256,6 +1256,23 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+operator|+
+literal|", start "
+operator|+
+name|startIdx
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor

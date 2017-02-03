@@ -983,6 +983,18 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+comment|// The children are input.
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor
