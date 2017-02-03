@@ -158,6 +158,13 @@ name|Throwable
 name|getError
 parameter_list|()
 function_decl|;
+name|void
+name|setError
+parameter_list|(
+name|Throwable
+name|e
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

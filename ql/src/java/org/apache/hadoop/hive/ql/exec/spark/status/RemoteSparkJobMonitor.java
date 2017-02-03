@@ -844,6 +844,13 @@ name|done
 operator|=
 literal|true
 expr_stmt|;
+name|sparkJobStatus
+operator|.
+name|setError
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 finally|finally
 block|{
