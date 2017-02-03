@@ -1825,21 +1825,6 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SerDeException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 switch|switch
 condition|(
 name|query
@@ -1889,6 +1874,48 @@ name|Query
 operator|.
 name|SELECT
 case|:
+name|String
+name|address
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|configuration
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_DRUID_BROKER_DEFAULT_ADDRESS
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|address
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SerDeException
+argument_list|(
+literal|"Druid broker address not specified in configuration"
+argument_list|)
+throw|;
+block|}
 name|inferSchema
 argument_list|(
 operator|(
@@ -1899,6 +1926,8 @@ argument_list|,
 name|columnNames
 argument_list|,
 name|columnTypes
+argument_list|,
+name|address
 argument_list|)
 expr_stmt|;
 break|break;
@@ -1926,6 +1955,21 @@ operator|new
 name|SerDeException
 argument_list|(
 literal|"Not supported Druid query"
+argument_list|)
+throw|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SerDeException
+argument_list|(
+name|e
 argument_list|)
 throw|;
 block|}
@@ -2339,6 +2383,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Post-aggregator columns
+comment|// TODO: Currently Calcite only infers avg for post-aggregate,
+comment|// but once we recognize other functions, we will need to infer
+comment|// different types for post-aggregation functions
 for|for
 control|(
 name|PostAggregator
@@ -2473,6 +2520,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Post-aggregator columns
+comment|// TODO: Currently Calcite only infers avg for post-aggregate,
+comment|// but once we recognize other functions, we will need to infer
+comment|// different types for post-aggregation functions
 for|for
 control|(
 name|PostAggregator
@@ -2524,7 +2574,12 @@ argument_list|<
 name|PrimitiveTypeInfo
 argument_list|>
 name|columnTypes
+parameter_list|,
+name|String
+name|address
 parameter_list|)
+throws|throws
+name|SerDeException
 block|{
 comment|// Timestamp column
 name|columnNames
@@ -2577,7 +2632,92 @@ name|stringTypeInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Metric columns
+comment|// The type for metric columns is not explicit in the query, thus in this case
+comment|// we need to emit a metadata query to know their type
+name|SegmentMetadataQueryBuilder
+name|builder
+init|=
+operator|new
+name|Druids
+operator|.
+name|SegmentMetadataQueryBuilder
+argument_list|()
+decl_stmt|;
+name|builder
+operator|.
+name|dataSource
+argument_list|(
+name|query
+operator|.
+name|getDataSource
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
+name|merge
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|builder
+operator|.
+name|analysisTypes
+argument_list|()
+expr_stmt|;
+name|SegmentMetadataQuery
+name|metadataQuery
+init|=
+name|builder
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
+comment|// Execute query in Druid
+name|SegmentAnalysis
+name|schemaInfo
+decl_stmt|;
+try|try
+block|{
+name|schemaInfo
+operator|=
+name|submitMetadataRequest
+argument_list|(
+name|address
+argument_list|,
+name|metadataQuery
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SerDeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|schemaInfo
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|SerDeException
+argument_list|(
+literal|"Connected to Druid but could not retrieve datasource information"
+argument_list|)
+throw|;
+block|}
 for|for
 control|(
 name|String
@@ -2600,9 +2740,23 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
-name|TypeInfoFactory
+name|DruidSerDeUtils
 operator|.
-name|floatTypeInfo
+name|convertDruidToHiveType
+argument_list|(
+name|schemaInfo
+operator|.
+name|getColumns
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|metric
+argument_list|)
+operator|.
+name|getType
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -2718,6 +2872,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Post-aggregator columns
+comment|// TODO: Currently Calcite only infers avg for post-aggregate,
+comment|// but once we recognize other functions, we will need to infer
+comment|// different types for post-aggregation functions
 for|for
 control|(
 name|PostAggregator

@@ -2501,11 +2501,11 @@ throws|,
 name|InvocationTargetException
 block|{
 comment|// Create, initialize, and test the SerDe
-name|DruidSerDe
+name|QTestDruidSerDe
 name|serDe
 init|=
 operator|new
-name|DruidSerDe
+name|QTestDruidSerDe
 argument_list|()
 decl_stmt|;
 name|Configuration
