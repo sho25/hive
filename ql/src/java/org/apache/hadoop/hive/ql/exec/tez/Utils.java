@@ -227,14 +227,24 @@ condition|)
 block|{
 name|LlapRegistryService
 name|serviceRegistry
-decl_stmt|;
-name|serviceRegistry
-operator|=
+init|=
 name|LlapRegistryService
 operator|.
 name|getClient
 argument_list|(
 name|conf
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using LLAP instance "
+operator|+
+name|serviceRegistry
+operator|.
+name|getApplicationId
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Collection

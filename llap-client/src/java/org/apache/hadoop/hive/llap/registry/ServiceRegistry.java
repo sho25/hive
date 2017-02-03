@@ -29,6 +29,24 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|yarn
+operator|.
+name|api
+operator|.
+name|records
+operator|.
+name|ApplicationId
+import|;
+end_import
+
 begin_comment
 comment|/**  * ServiceRegistry interface for switching between fixed host and dynamic registry implementations.  */
 end_comment
@@ -89,6 +107,13 @@ parameter_list|(
 name|ServiceInstanceStateChangeListener
 name|listener
 parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * @return The application ID of the LLAP cluster.    */
+name|ApplicationId
+name|getApplicationId
+parameter_list|()
 throws|throws
 name|IOException
 function_decl|;

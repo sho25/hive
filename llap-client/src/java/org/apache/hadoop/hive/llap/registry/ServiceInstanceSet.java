@@ -49,7 +49,6 @@ interface|interface
 name|ServiceInstanceSet
 block|{
 comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return    */
-specifier|public
 name|Collection
 argument_list|<
 name|ServiceInstance
@@ -58,7 +57,6 @@ name|getAll
 parameter_list|()
 function_decl|;
 comment|/**    * Gets a list containing all the instances. This list has the same iteration order across    * different processes, assuming the list of registry entries is the same.    * @param consistentIndexes if true, also try to maintain the same exact index for each node    *                          across calls, by inserting inactive instances to replace the    *                          removed ones.    */
-specifier|public
 name|Collection
 argument_list|<
 name|ServiceInstance
@@ -70,7 +68,6 @@ name|consistentIndexes
 parameter_list|)
 function_decl|;
 comment|/**    * Get an instance by worker identity.    *     * @param name    * @return    */
-specifier|public
 name|ServiceInstance
 name|getInstance
 parameter_list|(
@@ -79,7 +76,6 @@ name|name
 parameter_list|)
 function_decl|;
 comment|/**    * Get a list of service instances for a given host.    *     * The list could include dead and alive instances.    *     * @param host    * @return    */
-specifier|public
 name|Set
 argument_list|<
 name|ServiceInstance
@@ -91,7 +87,6 @@ name|host
 parameter_list|)
 function_decl|;
 comment|/**    * Get number of instances in the currently availabe.    *    * @return - number of instances    */
-specifier|public
 name|int
 name|size
 parameter_list|()
