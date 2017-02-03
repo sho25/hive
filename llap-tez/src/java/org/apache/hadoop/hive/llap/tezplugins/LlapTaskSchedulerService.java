@@ -3998,6 +3998,16 @@ name|request
 operator|.
 name|requestedHosts
 decl_stmt|;
+name|String
+name|requestedHostsDebugStr
+init|=
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|requestedHosts
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|LOG
@@ -4016,12 +4026,7 @@ name|request
 operator|.
 name|task
 argument_list|,
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -4041,22 +4046,6 @@ expr_stmt|;
 comment|// Read-lock. Not updating any stats at the moment.
 try|try
 block|{
-comment|// If there's no memory available, fail
-if|if
-condition|(
-name|getTotalResources
-argument_list|()
-operator|.
-name|getMemory
-argument_list|()
-operator|<=
-literal|0
-condition|)
-block|{
-return|return
-name|SELECT_HOST_RESULT_INADEQUATE_TOTAL_CAPACITY
-return|;
-block|}
 name|boolean
 name|shouldDelayForLocality
 init|=
@@ -4079,12 +4068,7 @@ name|request
 operator|.
 name|task
 argument_list|,
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 argument_list|)
 expr_stmt|;
 if|if
@@ -4186,21 +4170,17 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Assigning "
+literal|"Assigning {} when looking for {}."
 operator|+
+literal|" local=true FirstRequestedHost={}, #prefLocations={}"
+argument_list|,
 name|nodeInfo
 operator|.
 name|toShortString
 argument_list|()
-operator|+
-literal|" when looking for "
-operator|+
+argument_list|,
 name|host
-operator|+
-literal|". local=true"
-operator|+
-literal|" FirstRequestedHost="
-operator|+
+argument_list|,
 operator|(
 name|prefHostCount
 operator|==
@@ -4352,12 +4332,7 @@ name|task
 operator|+
 literal|"] when trying to allocate on ["
 operator|+
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 operator|+
 literal|"]"
 operator|+
@@ -4400,12 +4375,7 @@ name|task
 operator|+
 literal|"] when trying to allocate on ["
 operator|+
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 operator|+
 literal|"] since none of these hosts are part of the known list"
 argument_list|)
@@ -4535,22 +4505,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Assigning "
-operator|+
+literal|"Assigning {} when looking for any host, from #hosts={}, requestedHosts={}"
+argument_list|,
 name|nodeInfo
 operator|.
 name|toShortString
 argument_list|()
-operator|+
-literal|" when looking for any host, from #hosts="
-operator|+
+argument_list|,
 name|allNodes
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|", requestedHosts="
-operator|+
+argument_list|,
 operator|(
 operator|(
 name|requestedHosts
@@ -4566,12 +4532,7 @@ operator|)
 condition|?
 literal|"null"
 else|:
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 operator|)
 argument_list|)
 expr_stmt|;
@@ -4718,26 +4679,32 @@ name|canAcceptTask
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Assigning "
+literal|"Assigning {} when looking for first requested host, from #hosts={},"
 operator|+
+literal|" requestedHosts={}"
+argument_list|,
 name|nodeInfo
 operator|.
 name|toShortString
 argument_list|()
-operator|+
-literal|" when looking for first requested host, from #hosts="
-operator|+
+argument_list|,
 name|allNodes
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|", requestedHosts="
-operator|+
+argument_list|,
 operator|(
 operator|(
 name|requestedHosts
@@ -4753,15 +4720,11 @@ operator|)
 condition|?
 literal|"null"
 else|:
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|requestedHosts
-argument_list|)
+name|requestedHostsDebugStr
 operator|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 operator|new
 name|SelectHostResult
@@ -5707,6 +5670,12 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
+name|Resource
+name|totalResource
+init|=
+name|getTotalResources
+argument_list|()
+decl_stmt|;
 while|while
 condition|(
 name|pendingIterator
@@ -5803,6 +5772,8 @@ init|=
 name|scheduleTask
 argument_list|(
 name|taskInfo
+argument_list|,
+name|totalResource
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -6018,6 +5989,14 @@ condition|(
 name|shouldPreempt
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -6041,6 +6020,7 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|preemptTasks
 argument_list|(
 name|entry
@@ -6058,6 +6038,14 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 block|{
 name|LOG
 operator|.
@@ -6077,6 +6065,7 @@ name|potentialHosts
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -6413,8 +6402,37 @@ name|scheduleTask
 parameter_list|(
 name|TaskInfo
 name|taskInfo
+parameter_list|,
+name|Resource
+name|totalResource
 parameter_list|)
 block|{
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|totalResource
+argument_list|,
+literal|"totalResource can not be null"
+argument_list|)
+expr_stmt|;
+comment|// If there's no memory available, fail
+if|if
+condition|(
+name|totalResource
+operator|.
+name|getMemory
+argument_list|()
+operator|<=
+literal|0
+condition|)
+block|{
+return|return
+name|SELECT_HOST_RESULT_INADEQUATE_TOTAL_CAPACITY
+operator|.
+name|scheduleResult
+return|;
+block|}
 name|SelectHostResult
 name|selectHostResult
 init|=
@@ -6597,31 +6615,9 @@ argument_list|<
 name|String
 argument_list|>
 name|preemptHosts
+init|=
+literal|null
 decl_stmt|;
-if|if
-condition|(
-name|potentialHosts
-operator|==
-literal|null
-condition|)
-block|{
-name|preemptHosts
-operator|=
-literal|null
-expr_stmt|;
-block|}
-else|else
-block|{
-name|preemptHosts
-operator|=
-name|Sets
-operator|.
-name|newHashSet
-argument_list|(
-name|potentialHosts
-argument_list|)
-expr_stmt|;
-block|}
 name|writeLock
 operator|.
 name|lock
@@ -6718,6 +6714,27 @@ operator|>
 name|forPriority
 condition|)
 block|{
+if|if
+condition|(
+name|potentialHosts
+operator|!=
+literal|null
+operator|&&
+name|preemptHosts
+operator|==
+literal|null
+condition|)
+block|{
+name|preemptHosts
+operator|=
+name|Sets
+operator|.
+name|newHashSet
+argument_list|(
+name|potentialHosts
+argument_list|)
+expr_stmt|;
+block|}
 name|Iterator
 argument_list|<
 name|TaskInfo
