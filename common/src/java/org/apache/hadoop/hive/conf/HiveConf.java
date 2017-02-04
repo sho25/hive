@@ -8582,7 +8582,7 @@ name|PatternSet
 argument_list|(
 literal|"mysql"
 argument_list|,
-literal|"postgres"
+literal|"postgresql"
 argument_list|)
 argument_list|,
 literal|"Type of the metadata database."
