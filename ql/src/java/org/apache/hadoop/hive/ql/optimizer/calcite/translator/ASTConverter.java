@@ -2711,8 +2711,12 @@ name|getRight
 argument_list|()
 operator|instanceof
 name|Join
+operator|&&
+operator|!
+name|semiJoin
 condition|)
 block|{
+comment|// should not be done for semijoin since it will change the semantics
 comment|// Invert join inputs; this is done because otherwise the SemanticAnalyzer
 comment|// methods to merge joins will not kick in
 name|JoinRelType
