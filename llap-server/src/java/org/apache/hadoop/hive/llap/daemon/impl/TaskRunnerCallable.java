@@ -205,6 +205,24 @@ name|llap
 operator|.
 name|daemon
 operator|.
+name|SchedulerFragmentCompletingListener
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|daemon
+operator|.
 name|rpc
 operator|.
 name|LlapDaemonProtocolProtos
@@ -1114,6 +1132,11 @@ name|TezEvent
 name|initialEvent
 decl_stmt|;
 specifier|private
+specifier|final
+name|SchedulerFragmentCompletingListener
+name|completionListener
+decl_stmt|;
+specifier|private
 name|UserGroupInformation
 name|taskUgi
 decl_stmt|;
@@ -1177,6 +1200,9 @@ name|initialEvent
 parameter_list|,
 name|UserGroupInformation
 name|taskUgi
+parameter_list|,
+name|SchedulerFragmentCompletingListener
+name|completionListener
 parameter_list|)
 block|{
 name|this
@@ -1385,6 +1411,12 @@ operator|.
 name|taskUgi
 operator|=
 name|taskUgi
+expr_stmt|;
+name|this
+operator|.
+name|completionListener
+operator|=
+name|completionListener
 expr_stmt|;
 block|}
 specifier|public
@@ -1758,6 +1790,8 @@ operator|=
 operator|new
 name|LlapTaskReporter
 argument_list|(
+name|completionListener
+argument_list|,
 name|umbilical
 argument_list|,
 name|confParams
@@ -1786,6 +1820,8 @@ argument_list|,
 name|fragmentId
 argument_list|,
 name|initialEvent
+argument_list|,
+name|requestId
 argument_list|)
 expr_stmt|;
 name|String
@@ -2184,6 +2220,23 @@ argument_list|(
 literal|"Kill request for task {} completed. Informing AM"
 argument_list|,
 name|ta
+argument_list|)
+expr_stmt|;
+comment|// Inform the scheduler that this fragment has been killed.
+comment|// If the kill failed - that means the task has already hit a final condition,
+comment|// and a notification comes from the LlapTaskReporter
+name|completionListener
+operator|.
+name|fragmentCompleting
+argument_list|(
+name|getRequestId
+argument_list|()
+argument_list|,
+name|SchedulerFragmentCompletingListener
+operator|.
+name|State
+operator|.
+name|KILLED
 argument_list|)
 expr_stmt|;
 name|reportTaskKilled

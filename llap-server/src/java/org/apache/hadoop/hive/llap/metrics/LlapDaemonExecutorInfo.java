@@ -192,7 +192,42 @@ name|ExecutorTotalEvictedFromWaitQueue
 argument_list|(
 literal|"Total number of tasks evicted from wait queue because of low priority"
 argument_list|)
-block|;
+block|,
+name|ExecutorFallOffSuccessTimeLost
+argument_list|(
+literal|"Total time lost in an executor completing after informing the AM - successful fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffSuccessMaxTimeLost
+argument_list|(
+literal|"Max value of time lost in an executor completing after informing the AM - successful fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffFailedTimeLost
+argument_list|(
+literal|"Total time lost in an executor completing after informing the AM - failed fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffFailedMaxTimeLost
+argument_list|(
+literal|"Max value of time lost in an executor completing after informing the AM - failed fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffKilledTimeLost
+argument_list|(
+literal|"Total time lost in an executor completing after informing the AM - killed fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffKilledMaxTimeLost
+argument_list|(
+literal|"Max value of time lost in an executor completing after informing the AM - killed fragments"
+argument_list|)
+block|,
+name|ExecutorFallOffNumCompletedFragments
+argument_list|(
+literal|"Number of completed fragments w.r.t falloff values"
+argument_list|)
+block|,   ;
 specifier|private
 specifier|final
 name|String

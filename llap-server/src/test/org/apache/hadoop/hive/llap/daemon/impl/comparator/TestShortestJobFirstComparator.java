@@ -301,6 +301,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -321,6 +323,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -341,6 +345,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -361,6 +367,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -384,6 +392,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -556,6 +566,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -576,6 +588,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -596,6 +610,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -616,6 +632,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -639,6 +657,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -811,6 +831,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -831,6 +853,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -851,6 +875,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -871,6 +897,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -894,6 +922,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1066,6 +1096,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1086,6 +1118,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1106,6 +1140,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1126,6 +1162,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1149,6 +1187,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1321,6 +1361,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1341,6 +1383,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1361,6 +1405,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1381,6 +1427,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1404,6 +1452,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1576,6 +1626,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1596,6 +1648,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1616,6 +1670,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1636,6 +1692,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1659,6 +1717,8 @@ operator|.
 name|offer
 argument_list|(
 name|r5
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1816,6 +1876,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1826,6 +1888,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1836,6 +1900,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1983,6 +2049,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1993,6 +2061,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2003,6 +2073,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2041,6 +2113,8 @@ operator|.
 name|offer
 argument_list|(
 name|r4
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2167,6 +2241,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2177,6 +2253,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2187,6 +2265,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2328,6 +2408,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2338,6 +2420,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2348,6 +2432,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2470,6 +2556,8 @@ operator|.
 name|offer
 argument_list|(
 name|r1
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2480,6 +2568,8 @@ operator|.
 name|offer
 argument_list|(
 name|r2
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2490,6 +2580,8 @@ operator|.
 name|offer
 argument_list|(
 name|r3
+argument_list|,
+literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
