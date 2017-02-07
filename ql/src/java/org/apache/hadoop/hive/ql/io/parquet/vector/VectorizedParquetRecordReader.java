@@ -708,6 +708,8 @@ comment|/**    * The number of rows that have been returned.    */
 specifier|private
 name|long
 name|rowsReturned
+init|=
+literal|0
 decl_stmt|;
 comment|/**    * The number of rows that have been reading, including the current in flight row group.    */
 specifier|private
@@ -720,6 +722,8 @@ comment|/**    * The total number of rows this RecordReader will eventually read
 specifier|protected
 name|long
 name|totalRowCount
+init|=
+literal|0
 decl_stmt|;
 annotation|@
 name|VisibleForTesting
@@ -899,6 +903,16 @@ name|IOException
 throws|,
 name|InterruptedException
 block|{
+comment|// the oldSplit may be null during the split phase
+if|if
+condition|(
+name|oldSplit
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 name|jobConf
 operator|=
 name|configuration
