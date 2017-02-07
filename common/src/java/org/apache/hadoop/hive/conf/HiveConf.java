@@ -5661,13 +5661,47 @@ operator|+
 literal|"is that it limits the number of mappers to the number of files."
 argument_list|)
 block|,
+name|HIVE_GROUPBY_POSITION_ALIAS
+argument_list|(
+literal|"hive.groupby.position.alias"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable using Column Position Alias in Group By"
+argument_list|)
+block|,
+name|HIVE_ORDERBY_POSITION_ALIAS
+argument_list|(
+literal|"hive.orderby.position.alias"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable using Column Position Alias in Order By"
+argument_list|)
+block|,
+annotation|@
+name|Deprecated
 name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS
 argument_list|(
 literal|"hive.groupby.orderby.position.alias"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to enable using Column Position Alias in Group By or Order By"
+literal|"Whether to enable using Column Position Alias in Group By or Order By (deprecated).\n"
+operator|+
+literal|"Use "
+operator|+
+name|HIVE_ORDERBY_POSITION_ALIAS
+operator|.
+name|varname
+operator|+
+literal|" or "
+operator|+
+name|HIVE_GROUPBY_POSITION_ALIAS
+operator|.
+name|varname
+operator|+
+literal|" instead"
 argument_list|)
 block|,
 name|HIVE_NEW_JOB_GROUPING_SET_CARDINALITY
