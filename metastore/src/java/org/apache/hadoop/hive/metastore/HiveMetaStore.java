@@ -5004,6 +5004,10 @@ argument_list|()
 operator|.
 name|startStoredScope
 argument_list|(
+name|MetricsConstant
+operator|.
+name|API_PREFIX
+operator|+
 name|function
 argument_list|)
 expr_stmt|;
@@ -5274,6 +5278,10 @@ argument_list|()
 operator|.
 name|endStoredScope
 argument_list|(
+name|MetricsConstant
+operator|.
+name|API_PREFIX
+operator|+
 name|function
 argument_list|)
 expr_stmt|;

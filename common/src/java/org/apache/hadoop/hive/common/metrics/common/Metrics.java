@@ -151,6 +151,15 @@ argument_list|>
 name|denominator
 parameter_list|)
 function_decl|;
+comment|/**    * Mark an event occurance for a meter. Meters measure the rate of an event and track    * 1/5/15 minute moving averages    * @param name name of the meter    */
+specifier|public
+name|void
+name|markMeter
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
