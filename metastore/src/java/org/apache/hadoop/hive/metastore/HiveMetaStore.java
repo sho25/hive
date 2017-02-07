@@ -5143,6 +5143,10 @@ argument_list|()
 operator|.
 name|startStoredScope
 argument_list|(
+name|MetricsConstant
+operator|.
+name|API_PREFIX
+operator|+
 name|function
 argument_list|)
 expr_stmt|;
@@ -5413,6 +5417,10 @@ argument_list|()
 operator|.
 name|endStoredScope
 argument_list|(
+name|MetricsConstant
+operator|.
+name|API_PREFIX
+operator|+
 name|function
 argument_list|)
 expr_stmt|;
@@ -26438,6 +26446,14 @@ argument_list|)
 expr_stmt|;
 comment|// ok even if the data is not deleted
 block|}
+comment|// Skip the event listeners if the index is NULL
+if|if
+condition|(
+name|index
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|MetaStoreEventListener
@@ -26466,6 +26482,7 @@ argument_list|(
 name|dropIndexEvent
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 return|return

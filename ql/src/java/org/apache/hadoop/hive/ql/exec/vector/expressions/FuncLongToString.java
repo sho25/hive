@@ -672,6 +672,19 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|inputCol
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor

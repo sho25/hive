@@ -329,7 +329,7 @@ name|io
 operator|.
 name|orc
 operator|.
-name|WriterImpl
+name|Writer
 import|;
 end_import
 
@@ -634,7 +634,7 @@ implements|implements
 name|EncodingWriter
 block|{
 specifier|private
-name|WriterImpl
+name|Writer
 name|orcWriter
 decl_stmt|;
 specifier|private
@@ -1743,7 +1743,7 @@ specifier|public
 name|void
 name|init
 parameter_list|(
-name|WriterImpl
+name|Writer
 name|orcWriter
 parameter_list|)
 block|{

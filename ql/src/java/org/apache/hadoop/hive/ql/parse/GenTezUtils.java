@@ -1780,7 +1780,6 @@ operator|)
 name|newRoot
 argument_list|)
 expr_stmt|;
-break|break;
 block|}
 block|}
 block|}
@@ -3475,8 +3474,9 @@ operator|new
 name|DynamicValuePredicateContext
 argument_list|()
 decl_stmt|;
-name|collectDynamicValuePredicates
-argument_list|(
+name|FilterDesc
+name|filterDesc
+init|=
 operator|(
 call|(
 name|FilterOperator
@@ -3496,6 +3496,10 @@ operator|)
 operator|.
 name|getConf
 argument_list|()
+decl_stmt|;
+name|collectDynamicValuePredicates
+argument_list|(
+name|filterDesc
 operator|.
 name|getPredicate
 argument_list|()
@@ -3628,15 +3632,12 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// This was the only predicate, set filter expression to null
-name|ts
+comment|// This was the only predicate, set filter expression to const
+name|filterDesc
 operator|.
-name|getConf
-argument_list|()
-operator|.
-name|setFilterExpr
+name|setPredicate
 argument_list|(
-literal|null
+name|constNode
 argument_list|)
 expr_stmt|;
 block|}

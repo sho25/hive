@@ -4671,8 +4671,8 @@ return|return
 name|mapJoinOp
 return|;
 block|}
-comment|// Remove any semijoin branch associated with mapjoin's parent's operator
-comment|// pipeline which can cause a cycle after mapjoin optimization.
+comment|// Remove any semijoin branch associated with hashjoin's parent's operator
+comment|// pipeline which can cause a cycle after hashjoin optimization.
 specifier|private
 name|void
 name|removeCycleCreatingSemiJoinOps
@@ -4692,20 +4692,22 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|boolean
-name|semiJoinCycle
-init|=
-literal|false
-decl_stmt|;
+name|Map
+argument_list|<
 name|ReduceSinkOperator
-name|rs
-init|=
-literal|null
-decl_stmt|;
+argument_list|,
 name|TableScanOperator
-name|ts
+argument_list|>
+name|semiJoinMap
 init|=
-literal|null
+operator|new
+name|HashMap
+argument_list|<
+name|ReduceSinkOperator
+argument_list|,
+name|TableScanOperator
+argument_list|>
+argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -4758,6 +4760,8 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
+comment|// If not ReduceSink Op, skip
 if|if
 condition|(
 operator|!
@@ -4770,15 +4774,17 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|ReduceSinkOperator
 name|rs
-operator|=
+init|=
 operator|(
 name|ReduceSinkOperator
 operator|)
 name|op
-expr_stmt|;
+decl_stmt|;
+name|TableScanOperator
 name|ts
-operator|=
+init|=
 name|parseContext
 operator|.
 name|getRsOpToTsOpMap
@@ -4788,7 +4794,7 @@ name|get
 argument_list|(
 name|rs
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|ts
@@ -4796,8 +4802,10 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// skip, no semijoin branch
 continue|continue;
 block|}
+comment|// Found a semijoin branch.
 for|for
 control|(
 name|Operator
@@ -4857,21 +4865,40 @@ operator|==
 name|parentTS
 condition|)
 block|{
-name|semiJoinCycle
-operator|=
-literal|true
+name|semiJoinMap
+operator|.
+name|put
+argument_list|(
+name|rs
+argument_list|,
+name|ts
+argument_list|)
 expr_stmt|;
 break|break;
 block|}
 block|}
 block|}
 block|}
-block|}
-comment|// By design there can be atmost 1 such cycle.
 if|if
 condition|(
-name|semiJoinCycle
+name|semiJoinMap
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
 condition|)
+block|{
+for|for
+control|(
+name|ReduceSinkOperator
+name|rs
+range|:
+name|semiJoinMap
+operator|.
+name|keySet
+argument_list|()
+control|)
 block|{
 name|GenTezUtils
 operator|.
@@ -4888,9 +4915,15 @@ name|parseContext
 argument_list|,
 name|rs
 argument_list|,
-name|ts
+name|semiJoinMap
+operator|.
+name|get
+argument_list|(
+name|rs
+argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private

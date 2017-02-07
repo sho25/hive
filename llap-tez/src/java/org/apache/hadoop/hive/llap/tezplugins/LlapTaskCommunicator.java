@@ -1488,6 +1488,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Not closing this at the moment at shutdown, since this could be a shared instance.
+comment|// TODO: this is unused.
 name|serviceRegistry
 operator|=
 name|LlapRegistryService

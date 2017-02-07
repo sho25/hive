@@ -175,6 +175,23 @@ operator|=
 name|maxLength
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"col "
+operator|+
+name|inputColumn
+operator|+
+literal|", maxLength "
+operator|+
+name|maxLength
+return|;
+block|}
 block|}
 end_class
 

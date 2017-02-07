@@ -1091,6 +1091,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|checkOperationTimes
@@ -1114,6 +1116,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|getState
@@ -1493,6 +1497,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|checkOperationTimes
@@ -1509,6 +1515,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|getState
@@ -3136,6 +3144,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|state
@@ -3281,6 +3291,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|getState
@@ -3476,6 +3488,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|getState
@@ -3529,6 +3543,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|opHandle
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|getState
@@ -3714,6 +3730,8 @@ operator|.
 name|getOperationStatus
 argument_list|(
 name|ophandle
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|checkOperationTimes

@@ -633,20 +633,6 @@ name|unpause
 argument_list|()
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|TypeDescription
-name|getFileSchema
-parameter_list|()
-block|{
-comment|// TODO: the ORC-specific method should be removed from the interface instead.
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|()
-throw|;
-block|}
 block|}
 end_class
 

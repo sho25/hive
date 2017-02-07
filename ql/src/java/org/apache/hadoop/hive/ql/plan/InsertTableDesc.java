@@ -29,9 +29,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|api
+name|metadata
 operator|.
 name|Table
 import|;

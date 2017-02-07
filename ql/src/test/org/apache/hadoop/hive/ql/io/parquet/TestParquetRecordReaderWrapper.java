@@ -22,18 +22,6 @@ package|;
 end_package
 
 begin_import
-import|import static
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
 import|import
 name|org
 operator|.
@@ -147,28 +135,6 @@ name|io
 operator|.
 name|sarg
 operator|.
-name|SearchArgument
-operator|.
-name|TruthValue
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|sarg
-operator|.
 name|SearchArgumentFactory
 import|;
 end_import
@@ -230,6 +196,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -264,21 +242,6 @@ specifier|public
 class|class
 name|TestParquetRecordReaderWrapper
 block|{
-specifier|private
-specifier|static
-name|TruthValue
-index|[]
-name|values
-parameter_list|(
-name|TruthValue
-modifier|...
-name|vals
-parameter_list|)
-block|{
-return|return
-name|vals
-return|;
-block|}
 annotation|@
 name|Test
 specifier|public
@@ -411,6 +374,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Check the converted filter predicate is null if unsupported types are included    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -508,7 +472,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"lteq(y, Binary{\"hi        \"})"
+literal|null
 argument_list|,
 name|ParquetFilterPredicateConverter
 operator|.
@@ -518,9 +482,6 @@ name|sarg
 argument_list|,
 name|schema
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|sarg
@@ -631,9 +592,10 @@ operator|+
 literal|" optional binary a;}"
 argument_list|)
 expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
 name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
@@ -642,25 +604,10 @@ name|sarg
 argument_list|,
 name|schema
 argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(not(eq(x, null)), not(or(or(eq(z, 1), eq(z, 2)), eq(z, 3)))), "
-operator|+
-literal|"not(eq(a, Binary{\"stinger\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Check the converted filter predicate is null if unsupported types are included    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -758,7 +705,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|"lteq(y, Binary{\"hi        \"})"
+literal|null
 argument_list|,
 name|ParquetFilterPredicateConverter
 operator|.
@@ -768,9 +715,6 @@ name|sarg
 argument_list|,
 name|schema
 argument_list|)
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|sarg
@@ -881,9 +825,10 @@ operator|+
 literal|" optional binary a;}"
 argument_list|)
 expr_stmt|;
-name|FilterPredicate
-name|p
-init|=
+name|assertEquals
+argument_list|(
+literal|null
+argument_list|,
 name|ParquetFilterPredicateConverter
 operator|.
 name|toFilterPredicate
@@ -892,22 +837,6 @@ name|sarg
 argument_list|,
 name|schema
 argument_list|)
-decl_stmt|;
-name|String
-name|expected
-init|=
-literal|"and(and(not(eq(x, null)), not(or(or(eq(z, 1), eq(z, 2)), eq(z, 3)))), "
-operator|+
-literal|"not(eq(a, Binary{\"stinger\"})))"
-decl_stmt|;
-name|assertEquals
-argument_list|(
-name|expected
-argument_list|,
-name|p
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

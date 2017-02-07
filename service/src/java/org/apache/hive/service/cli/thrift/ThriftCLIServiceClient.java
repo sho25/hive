@@ -2595,6 +2595,9 @@ name|getOperationStatus
 parameter_list|(
 name|OperationHandle
 name|opHandle
+parameter_list|,
+name|boolean
+name|getProgressUpdate
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -2613,6 +2616,13 @@ name|toTOperationHandle
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|req
+operator|.
+name|setGetProgressUpdate
+argument_list|(
+name|getProgressUpdate
+argument_list|)
+expr_stmt|;
 name|TGetOperationStatusResp
 name|resp
 init|=

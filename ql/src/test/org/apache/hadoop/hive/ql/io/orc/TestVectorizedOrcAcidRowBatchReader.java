@@ -557,7 +557,7 @@ name|getColumnNamesProperty
 parameter_list|()
 block|{
 return|return
-literal|"x"
+literal|"field"
 return|;
 block|}
 specifier|static

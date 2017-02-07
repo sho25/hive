@@ -2949,6 +2949,26 @@ name|getPort
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Ensure this is set in the config so that the AM can read it.
+name|getConfig
+argument_list|()
+operator|.
+name|setIfUnset
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
+operator|.
+name|varname
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_TASK_SCHEDULER_WAIT_QUEUE_SIZE
+operator|.
+name|getDefaultValue
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|registry

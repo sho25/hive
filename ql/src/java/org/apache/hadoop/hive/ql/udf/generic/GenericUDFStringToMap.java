@@ -341,7 +341,7 @@ literal|" using two delimiters. The first delimiter separates pairs, and the"
 operator|+
 literal|" second delimiter sperates key and value. If only one parameter is given, default"
 operator|+
-literal|" delimiters are used: ',' as delimiter1 and '=' as delimiter2."
+literal|" delimiters are used: ',' as delimiter1 and ':' as delimiter2."
 argument_list|)
 specifier|public
 class|class

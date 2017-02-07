@@ -252,6 +252,9 @@ decl_stmt|;
 name|VectorMapJoinDesc
 name|vectorDesc
 init|=
+operator|(
+name|VectorMapJoinDesc
+operator|)
 name|desc
 operator|.
 name|getVectorDesc

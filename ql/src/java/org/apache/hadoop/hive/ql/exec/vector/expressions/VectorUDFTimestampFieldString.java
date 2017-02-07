@@ -979,6 +979,44 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+if|if
+condition|(
+name|fieldStart
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+return|;
+block|}
+else|else
+block|{
+return|return
+literal|"col "
+operator|+
+name|colNum
+operator|+
+literal|", fieldStart "
+operator|+
+name|fieldStart
+operator|+
+literal|", fieldLength "
+operator|+
+name|fieldLength
+return|;
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor

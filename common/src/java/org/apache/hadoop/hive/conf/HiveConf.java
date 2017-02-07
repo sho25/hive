@@ -5679,13 +5679,47 @@ operator|+
 literal|"is that it limits the number of mappers to the number of files."
 argument_list|)
 block|,
+name|HIVE_GROUPBY_POSITION_ALIAS
+argument_list|(
+literal|"hive.groupby.position.alias"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable using Column Position Alias in Group By"
+argument_list|)
+block|,
+name|HIVE_ORDERBY_POSITION_ALIAS
+argument_list|(
+literal|"hive.orderby.position.alias"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable using Column Position Alias in Order By"
+argument_list|)
+block|,
+annotation|@
+name|Deprecated
 name|HIVE_GROUPBY_ORDERBY_POSITION_ALIAS
 argument_list|(
 literal|"hive.groupby.orderby.position.alias"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to enable using Column Position Alias in Group By or Order By"
+literal|"Whether to enable using Column Position Alias in Group By or Order By (deprecated).\n"
+operator|+
+literal|"Use "
+operator|+
+name|HIVE_ORDERBY_POSITION_ALIAS
+operator|.
+name|varname
+operator|+
+literal|" or "
+operator|+
+name|HIVE_GROUPBY_POSITION_ALIAS
+operator|.
+name|varname
+operator|+
+literal|" instead"
 argument_list|)
 block|,
 name|HIVE_NEW_JOB_GROUPING_SET_CARDINALITY
@@ -6376,100 +6410,6 @@ operator|+
 literal|"Set this flag to true to interpret the value as seconds to be consistent with float/double."
 argument_list|)
 block|,
-name|HIVE_ORC_FILE_MEMORY_POOL
-argument_list|(
-literal|"hive.exec.orc.memory.pool"
-argument_list|,
-literal|0.5f
-argument_list|,
-literal|"Maximum fraction of heap that can be used by ORC file writers"
-argument_list|)
-block|,
-name|HIVE_ORC_WRITE_FORMAT
-argument_list|(
-literal|"hive.exec.orc.write.format"
-argument_list|,
-literal|null
-argument_list|,
-literal|"Define the version of the file to write. Possible values are 0.11 and 0.12.\n"
-operator|+
-literal|"If this parameter is not defined, ORC will use the run length encoding (RLE)\n"
-operator|+
-literal|"introduced in Hive 0.12. Any value other than 0.11 results in the 0.12 encoding."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_STRIPE_SIZE
-argument_list|(
-literal|"hive.exec.orc.default.stripe.size"
-argument_list|,
-literal|64L
-operator|*
-literal|1024
-operator|*
-literal|1024
-argument_list|,
-literal|"Define the default ORC stripe size, in bytes."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_BLOCK_SIZE
-argument_list|(
-literal|"hive.exec.orc.default.block.size"
-argument_list|,
-literal|256L
-operator|*
-literal|1024
-operator|*
-literal|1024
-argument_list|,
-literal|"Define the default file system block size for ORC files."
-argument_list|)
-block|,
-name|HIVE_ORC_DICTIONARY_KEY_SIZE_THRESHOLD
-argument_list|(
-literal|"hive.exec.orc.dictionary.key.size.threshold"
-argument_list|,
-literal|0.8f
-argument_list|,
-literal|"If the number of keys in a dictionary is greater than this fraction of the total number of\n"
-operator|+
-literal|"non-null rows, turn off dictionary encoding.  Use 1 to always use dictionary encoding."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_ROW_INDEX_STRIDE
-argument_list|(
-literal|"hive.exec.orc.default.row.index.stride"
-argument_list|,
-literal|10000
-argument_list|,
-literal|"Define the default ORC index stride in number of rows. (Stride is the number of rows\n"
-operator|+
-literal|"an index entry represents.)"
-argument_list|)
-block|,
-name|HIVE_ORC_ROW_INDEX_STRIDE_DICTIONARY_CHECK
-argument_list|(
-literal|"hive.orc.row.index.stride.dictionary.check"
-argument_list|,
-literal|true
-argument_list|,
-literal|"If enabled dictionary check will happen after first row index stride (default 10000 rows)\n"
-operator|+
-literal|"else dictionary check will happen before writing first stripe. In both cases, the decision\n"
-operator|+
-literal|"to use dictionary or not will be retained thereafter."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_BUFFER_SIZE
-argument_list|(
-literal|"hive.exec.orc.default.buffer.size"
-argument_list|,
-literal|256
-operator|*
-literal|1024
-argument_list|,
-literal|"Define the default ORC buffer size, in bytes."
-argument_list|)
-block|,
 name|HIVE_ORC_BASE_DELTA_RATIO
 argument_list|(
 literal|"hive.exec.orc.base.delta.ratio"
@@ -6479,85 +6419,6 @@ argument_list|,
 literal|"The ratio of base writer and\n"
 operator|+
 literal|"delta writer in terms of STRIPE_SIZE and BUFFER_SIZE."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_BLOCK_PADDING
-argument_list|(
-literal|"hive.exec.orc.default.block.padding"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Define the default block padding, which pads stripes to the HDFS block boundaries."
-argument_list|)
-block|,
-name|HIVE_ORC_BLOCK_PADDING_TOLERANCE
-argument_list|(
-literal|"hive.exec.orc.block.padding.tolerance"
-argument_list|,
-literal|0.05f
-argument_list|,
-literal|"Define the tolerance for block padding as a decimal fraction of stripe size (for\n"
-operator|+
-literal|"example, the default value 0.05 is 5% of the stripe size). For the defaults of 64Mb\n"
-operator|+
-literal|"ORC stripe and 256Mb HDFS blocks, the default block padding tolerance of 5% will\n"
-operator|+
-literal|"reserve a maximum of 3.2Mb for padding within the 256Mb block. In that case, if the\n"
-operator|+
-literal|"available size within the block is more than 3.2Mb, a new smaller stripe will be\n"
-operator|+
-literal|"inserted to fit within that space. This will make sure that no stripe written will\n"
-operator|+
-literal|"cross block boundaries and cause remote reads within a node local task."
-argument_list|)
-block|,
-name|HIVE_ORC_DEFAULT_COMPRESS
-argument_list|(
-literal|"hive.exec.orc.default.compress"
-argument_list|,
-literal|"ZLIB"
-argument_list|,
-literal|"Define the default compression codec for ORC file"
-argument_list|)
-block|,
-name|HIVE_ORC_ENCODING_STRATEGY
-argument_list|(
-literal|"hive.exec.orc.encoding.strategy"
-argument_list|,
-literal|"SPEED"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"SPEED"
-argument_list|,
-literal|"COMPRESSION"
-argument_list|)
-argument_list|,
-literal|"Define the encoding strategy to use while writing data. Changing this will\n"
-operator|+
-literal|"only affect the light weight encoding for integers. This flag will not\n"
-operator|+
-literal|"change the compression level of higher level compression codec (like ZLIB)."
-argument_list|)
-block|,
-name|HIVE_ORC_COMPRESSION_STRATEGY
-argument_list|(
-literal|"hive.exec.orc.compression.strategy"
-argument_list|,
-literal|"SPEED"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"SPEED"
-argument_list|,
-literal|"COMPRESSION"
-argument_list|)
-argument_list|,
-literal|"Define the compression strategy to use while writing data. \n"
-operator|+
-literal|"This changes the compression level of higher level compression codec (like ZLIB)."
 argument_list|)
 block|,
 name|HIVE_ORC_SPLIT_STRATEGY
@@ -6680,26 +6541,6 @@ operator|+
 literal|"issues under memory pressure (in some cases) at the cost of slight unpredictability in\n"
 operator|+
 literal|"overall query performance."
-argument_list|)
-block|,
-name|HIVE_ORC_SKIP_CORRUPT_DATA
-argument_list|(
-literal|"hive.exec.orc.skip.corrupt.data"
-argument_list|,
-literal|false
-argument_list|,
-literal|"If ORC reader encounters corrupt data, this value will be used to determine\n"
-operator|+
-literal|"whether to skip the corrupt data or throw exception. The default behavior is to throw exception."
-argument_list|)
-block|,
-name|HIVE_ORC_ZEROCOPY
-argument_list|(
-literal|"hive.exec.orc.zerocopy"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Use zerocopy reads with ORC. (This requires Hadoop 2.3 or later.)"
 argument_list|)
 block|,
 name|HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL
@@ -8188,6 +8029,23 @@ operator|+
 literal|"no transactions."
 argument_list|)
 block|,
+name|HIVE_TXN_STRICT_LOCKING_MODE
+argument_list|(
+literal|"hive.txn.strict.locking.mode"
+argument_list|,
+literal|true
+argument_list|,
+literal|"In strict mode non-ACID\n"
+operator|+
+literal|"resources use standard R/W lock semantics, e.g. INSERT will acquire exclusive lock.\n"
+operator|+
+literal|"In nonstrict mode, for non-ACID resources, INSERT will only acquire shared lock, which\n"
+operator|+
+literal|"allows two concurrent writes to the same partition but still lets lock manager prevent\n"
+operator|+
+literal|"DROP TABLE etc. when the table is being written to"
+argument_list|)
+block|,
 name|HIVE_TXN_TIMEOUT
 argument_list|(
 literal|"hive.txn.timeout"
@@ -8791,7 +8649,7 @@ name|PatternSet
 argument_list|(
 literal|"mysql"
 argument_list|,
-literal|"postgres"
+literal|"postgresql"
 argument_list|)
 argument_list|,
 literal|"Type of the metadata database."
@@ -11991,7 +11849,18 @@ literal|"hive.tez.exec.inplace.progress"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Updates tez job execution progress in-place in the terminal."
+literal|"Updates tez job execution progress in-place in the terminal when hive-cli is used."
+argument_list|)
+block|,
+name|HIVE_SERVER2_INPLACE_PROGRESS
+argument_list|(
+literal|"hive.server2.in.place.progress"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Allows hive server 2 to send progress bar update information. This is currently available"
+operator|+
+literal|" only if the execution engine is tez."
 argument_list|)
 block|,
 name|SPARK_EXEC_INPLACE_PROGRESS

@@ -760,6 +760,24 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|"columns "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|inputColumns
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor

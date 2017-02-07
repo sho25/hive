@@ -1231,6 +1231,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|INVALID_TABLE_IN_ON_CLAUSE_OF_MERGE
+argument_list|(
+literal|10149
+argument_list|,
+literal|"No columns from target table ''{0}'' found in ON "
+operator|+
+literal|"clause ''{1}'' of MERGE statement."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOAD_INTO_STORED_AS_DIR
 argument_list|(
 literal|10195

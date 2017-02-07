@@ -33688,6 +33688,15 @@ literal|10
 argument_list|)
 expr_stmt|;
 comment|// initialize with estimated element size 10
+comment|// Record initial buffer size
+name|int
+name|initialBufferSize
+init|=
+name|bcv
+operator|.
+name|bufferSize
+argument_list|()
+decl_stmt|;
 name|String
 name|s
 init|=
@@ -33771,6 +33780,7 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Current buffer size should be larger than initial size
 name|Assert
 operator|.
 name|assertTrue
@@ -33779,14 +33789,8 @@ name|bcv
 operator|.
 name|bufferSize
 argument_list|()
-operator|>=
-name|b
-operator|.
-name|length
-operator|*
-name|VectorizedRowBatch
-operator|.
-name|DEFAULT_SIZE
+operator|>
+name|initialBufferSize
 argument_list|)
 expr_stmt|;
 block|}

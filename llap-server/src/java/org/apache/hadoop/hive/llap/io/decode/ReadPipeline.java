@@ -83,6 +83,20 @@ name|TypeDescription
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|SchemaEvolution
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
@@ -101,13 +115,8 @@ argument_list|>
 name|getReadCallable
 parameter_list|()
 function_decl|;
-name|TypeDescription
-name|getFileSchema
-parameter_list|()
-function_decl|;
-comment|// TODO: this is ORC-specific and should be removed
-name|TypeDescription
-name|getReaderSchema
+name|SchemaEvolution
+name|getSchemaEvolution
 parameter_list|()
 function_decl|;
 name|boolean

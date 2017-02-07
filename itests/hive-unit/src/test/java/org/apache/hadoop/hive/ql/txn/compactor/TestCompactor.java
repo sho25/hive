@@ -9432,9 +9432,9 @@ comment|// 2048 MB memory for compaction map job
 literal|"'compactorthreshold.hive.compactor.delta.num.threshold'='4',"
 operator|+
 comment|// minor compaction if more than 4 delta dirs
-literal|"'compactorthreshold.hive.compactor.delta.pct.threshold'='0.5'"
+literal|"'compactorthreshold.hive.compactor.delta.pct.threshold'='0.49'"
 operator|+
-comment|// major compaction if more than 50%
+comment|// major compaction if more than 49%
 literal|")"
 argument_list|,
 name|driver
