@@ -522,13 +522,6 @@ name|MessageDeserializer
 name|getDeserializer
 parameter_list|()
 function_decl|;
-comment|/**    * Getter for version-string, corresponding to all constructed messages.    */
-specifier|public
-specifier|abstract
-name|String
-name|getVersion
-parameter_list|()
-function_decl|;
 comment|/**    * Getter for message-format.    */
 specifier|public
 specifier|abstract
