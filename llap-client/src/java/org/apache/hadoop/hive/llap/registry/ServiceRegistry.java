@@ -56,51 +56,48 @@ specifier|public
 interface|interface
 name|ServiceRegistry
 block|{
-comment|/**    * Start the service registry    *    * @throws IOException    */
-specifier|public
+comment|/**    * Start the service registry    */
 name|void
 name|start
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Stop the service registry    *    * @throws IOException    */
-specifier|public
+comment|/**    * Stop the service registry    */
 name|void
 name|stop
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    *    * @return self identifying name    *     * @throws IOException    */
-specifier|public
+comment|/**    * Register the current instance - the implementation takes care of the endpoints to register.    * @return self identifying name    */
 name|String
 name|register
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Remove the current registration cleanly (implementation defined cleanup)    *    * @throws IOException    */
-specifier|public
+comment|/**    * Remove the current registration cleanly (implementation defined cleanup)    */
 name|void
 name|unregister
 parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Client API to get the list of instances registered via the current registry key.    *    * @param component    * @return    * @throws IOException    */
-specifier|public
+comment|/**    * Client API to get the list of instances registered via the current registry key.    * @param component    * @param clusterReadyTimeoutMs The time to wait for the cluster to be ready, if it's not    *                              started yet. 0 means do not wait.    */
 name|ServiceInstanceSet
 name|getInstances
 parameter_list|(
 name|String
 name|component
+parameter_list|,
+name|long
+name|clusterReadyTimeoutMs
 parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Adds state change listeners for service instances.    *    * @param listener - state change listener    * @throws IOException    */
-specifier|public
+comment|/**    * Adds state change listeners for service instances.    * @param listener - state change listener    */
 name|void
 name|registerStateChangeListener
 parameter_list|(

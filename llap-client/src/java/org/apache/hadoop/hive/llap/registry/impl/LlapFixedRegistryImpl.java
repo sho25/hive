@@ -1396,6 +1396,9 @@ name|getInstances
 parameter_list|(
 name|String
 name|component
+parameter_list|,
+name|long
+name|timeoutMs
 parameter_list|)
 throws|throws
 name|IOException

@@ -1038,6 +1038,9 @@ name|run
 parameter_list|(
 name|LlapStatusOptions
 name|options
+parameter_list|,
+name|long
+name|watchTimeoutMs
 parameter_list|)
 block|{
 name|appStatusBuilder
@@ -1464,6 +1467,8 @@ operator|=
 name|populateAppStatusFromLlapRegistry
 argument_list|(
 name|appStatusBuilder
+argument_list|,
+name|watchTimeoutMs
 argument_list|)
 expr_stmt|;
 block|}
@@ -2598,6 +2603,9 @@ name|populateAppStatusFromLlapRegistry
 parameter_list|(
 name|AppStatusBuilder
 name|appStatusBuilder
+parameter_list|,
+name|long
+name|watchTimeoutMs
 parameter_list|)
 throws|throws
 name|LlapStatusCliException
@@ -2655,7 +2663,9 @@ operator|=
 name|llapRegistry
 operator|.
 name|getInstances
-argument_list|()
+argument_list|(
+name|watchTimeoutMs
+argument_list|)
 operator|.
 name|getAll
 argument_list|()
@@ -4519,6 +4529,12 @@ operator|.
 name|run
 argument_list|(
 name|options
+argument_list|,
+name|watchMode
+condition|?
+name|watchTimeout
+else|:
+literal|0
 argument_list|)
 expr_stmt|;
 if|if
