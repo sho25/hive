@@ -6878,6 +6878,55 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBadOnClause
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"merge into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" trgt using (select * from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+operator|+
+literal|"src) sub on sub.a = target.a when not matched then insert values (sub.a,sub.b)"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Error didn't match: "
+operator|+
+name|cpr
+argument_list|,
+name|cpr
+operator|.
+name|getErrorMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"No columns from target table 'trgt' found in ON clause '`sub`.`a` = `target`.`a`' of MERGE statement."
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
