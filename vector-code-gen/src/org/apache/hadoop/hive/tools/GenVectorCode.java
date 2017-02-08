@@ -13,7 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ant
+name|tools
 package|;
 end_package
 
