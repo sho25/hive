@@ -75,6 +75,9 @@ begin_class
 specifier|public
 class|class
 name|HiveReduceFunction
+parameter_list|<
+name|V
+parameter_list|>
 extends|extends
 name|HivePairFlatMapFunction
 argument_list|<
@@ -84,7 +87,7 @@ name|Tuple2
 argument_list|<
 name|HiveKey
 argument_list|,
-name|BytesWritable
+name|V
 argument_list|>
 argument_list|>
 argument_list|,
@@ -145,7 +148,7 @@ name|Tuple2
 argument_list|<
 name|HiveKey
 argument_list|,
-name|BytesWritable
+name|V
 argument_list|>
 argument_list|>
 name|it
@@ -164,10 +167,16 @@ name|SparkReduceRecordHandler
 argument_list|()
 decl_stmt|;
 name|HiveReduceFunctionResultList
+argument_list|<
+name|V
+argument_list|>
 name|result
 init|=
 operator|new
 name|HiveReduceFunctionResultList
+argument_list|<
+name|V
+argument_list|>
 argument_list|(
 name|it
 argument_list|,

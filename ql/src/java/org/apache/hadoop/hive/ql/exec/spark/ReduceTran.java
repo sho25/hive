@@ -73,12 +73,15 @@ begin_class
 specifier|public
 class|class
 name|ReduceTran
+parameter_list|<
+name|V
+parameter_list|>
 extends|extends
 name|CacheTran
 argument_list|<
 name|HiveKey
 argument_list|,
-name|BytesWritable
+name|V
 argument_list|,
 name|HiveKey
 argument_list|,
@@ -87,6 +90,9 @@ argument_list|>
 block|{
 specifier|private
 name|HiveReduceFunction
+argument_list|<
+name|V
+argument_list|>
 name|reduceFunc
 decl_stmt|;
 specifier|private
@@ -133,7 +139,7 @@ name|JavaPairRDD
 argument_list|<
 name|HiveKey
 argument_list|,
-name|BytesWritable
+name|V
 argument_list|>
 name|input
 parameter_list|)
@@ -152,6 +158,9 @@ name|void
 name|setReduceFunction
 parameter_list|(
 name|HiveReduceFunction
+argument_list|<
+name|V
+argument_list|>
 name|redFunc
 parameter_list|)
 block|{

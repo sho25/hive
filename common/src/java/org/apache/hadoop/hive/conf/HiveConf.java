@@ -13359,6 +13359,17 @@ argument_list|,
 literal|"Maximum total data size in dynamic pruning."
 argument_list|)
 block|,
+name|SPARK_USE_GROUPBY_SHUFFLE
+argument_list|(
+literal|"hive.spark.use.groupby.shuffle"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Spark groupByKey transformation has better performance but uses unbounded memory."
+operator|+
+literal|"Turn this off when there is a memory issue."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"
