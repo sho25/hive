@@ -943,8 +943,6 @@ specifier|private
 specifier|final
 name|BeeLineSignalHandler
 name|signalHandler
-init|=
-literal|null
 decl_stmt|;
 specifier|private
 specifier|static
@@ -3234,6 +3232,16 @@ operator|.
 name|isBeeLine
 operator|=
 name|isBeeLine
+expr_stmt|;
+name|this
+operator|.
+name|signalHandler
+operator|=
+operator|new
+name|SunSignalHandler
+argument_list|(
+name|this
+argument_list|)
 expr_stmt|;
 block|}
 name|DatabaseConnection
