@@ -81,6 +81,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|SQLFeatureNotSupportedException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|Statement
 import|;
 end_import
@@ -2151,7 +2161,7 @@ name|ex
 argument_list|)
 throw|;
 block|}
-comment|// NOTE: fetchOne dosn't throw new SQLException("Method not supported").
+comment|// NOTE: fetchOne doesn't throw new SQLFeatureNotSupportedException("Method not supported").
 return|return
 literal|true
 return|;
@@ -2305,7 +2315,7 @@ block|{
 comment|//JDK 1.7
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2333,7 +2343,7 @@ block|{
 comment|//JDK 1.7
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)

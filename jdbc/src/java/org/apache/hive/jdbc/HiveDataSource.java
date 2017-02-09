@@ -172,7 +172,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -191,7 +191,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -229,7 +229,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -251,7 +251,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -276,7 +276,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -304,7 +304,7 @@ block|{
 comment|// TODO Auto-generated method stub
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
