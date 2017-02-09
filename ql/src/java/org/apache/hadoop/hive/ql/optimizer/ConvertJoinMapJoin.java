@@ -4639,6 +4639,9 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Remove semijoin Op if there is any.
+comment|// The semijoin branch can potentially create a task level cycle
+comment|// with the hashjoin except when it is dynamically partitioned hash
+comment|// join which takes place in a separate task.
 if|if
 condition|(
 name|context
@@ -4652,6 +4655,8 @@ name|size
 argument_list|()
 operator|>
 literal|0
+operator|&&
+name|removeReduceSink
 condition|)
 block|{
 name|removeCycleCreatingSemiJoinOps
