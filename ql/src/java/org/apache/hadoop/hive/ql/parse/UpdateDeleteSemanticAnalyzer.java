@@ -3615,6 +3615,9 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+name|boolean
+name|validating
+init|=
 name|handleCardinalityViolation
 argument_list|(
 name|rewrittenQueryStr
@@ -3625,7 +3628,7 @@ name|onClauseAsText
 argument_list|,
 name|targetTable
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|ReparseResult
 name|rr
 init|=
@@ -3672,8 +3675,14 @@ operator|.
 name|getChildCount
 argument_list|()
 operator|-
+operator|(
+name|validating
+condition|?
 literal|1
+else|:
+literal|0
 comment|/*skip cardinality violation clause*/
+operator|)
 condition|;
 name|insClauseIdx
 operator|++
@@ -4115,9 +4124,9 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Per SQL Spec ISO/IEC 9075-2:2011(E) Section 14.2 under "General Rules" Item 6/Subitem a/Subitem 2/Subitem B,    * an error should be raised if> 1 row of "source" matches the same row in "target".    * This should not affect the runtime of the query as it's running in parallel with other    * branches of the multi-insert.  It won't actually write any data to merge_tmp_table since the    * cardinality_violation() UDF throws an error whenever it's called killing the query    */
+comment|/**    * Per SQL Spec ISO/IEC 9075-2:2011(E) Section 14.2 under "General Rules" Item 6/Subitem a/Subitem 2/Subitem B,    * an error should be raised if> 1 row of "source" matches the same row in "target".    * This should not affect the runtime of the query as it's running in parallel with other    * branches of the multi-insert.  It won't actually write any data to merge_tmp_table since the    * cardinality_violation() UDF throws an error whenever it's called killing the query    * @return true if another Insert clause was added    */
 specifier|private
-name|void
+name|boolean
 name|handleCardinalityViolation
 parameter_list|(
 name|StringBuilder
@@ -4165,7 +4174,9 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|false
+return|;
 block|}
 comment|//this is a tmp table and thus Session scoped and acid requires SQL statement to be serial in a
 comment|// given session, i.e. the name can be fixed across all invocations
@@ -4450,6 +4461,9 @@ name|e
 argument_list|)
 throw|;
 block|}
+return|return
+literal|true
+return|;
 block|}
 comment|/**    * @param onClauseAsString - because there is no clone() and we need to use in multiple places    * @param deleteExtraPredicate - see notes at caller    */
 specifier|private
