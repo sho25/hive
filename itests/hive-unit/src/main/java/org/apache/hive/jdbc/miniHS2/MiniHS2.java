@@ -259,22 +259,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|WindowsPathUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|exec
 operator|.
 name|Utilities
@@ -1247,10 +1231,6 @@ expr_stmt|;
 name|String
 name|uriString
 init|=
-name|WindowsPathUtil
-operator|.
-name|getHdfsUriString
-argument_list|(
 name|fs
 operator|.
 name|getUri
@@ -1258,7 +1238,6 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// Initialize the execution engine based on cluster type
 switch|switch

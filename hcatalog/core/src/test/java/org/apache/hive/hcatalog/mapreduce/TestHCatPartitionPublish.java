@@ -1326,16 +1326,6 @@ operator|!=
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// In Windows, we cannot remove the output directory when job fail. See
-comment|// FileOutputCommitterContainer.abortJob
-if|if
-condition|(
-operator|!
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
 name|Path
 name|path
 init|=
@@ -1370,7 +1360,6 @@ name|path
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|void
 name|runMRCreateFail

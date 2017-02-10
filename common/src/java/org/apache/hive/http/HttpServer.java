@@ -1999,10 +1999,7 @@ name|connector
 operator|.
 name|setReuseAddress
 argument_list|(
-operator|!
-name|Shell
-operator|.
-name|WINDOWS
+literal|true
 argument_list|)
 expr_stmt|;
 return|return

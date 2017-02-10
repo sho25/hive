@@ -14527,16 +14527,6 @@ expr_stmt|;
 comment|// Launch hadoop command file on windows.
 return|return
 name|val
-operator|+
-operator|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|?
-literal|".cmd"
-else|:
-literal|""
-operator|)
 return|;
 block|}
 specifier|private
@@ -14577,16 +14567,6 @@ operator|)
 expr_stmt|;
 return|return
 name|val
-operator|+
-operator|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|?
-literal|".cmd"
-else|:
-literal|""
-operator|)
 return|;
 block|}
 specifier|private

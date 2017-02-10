@@ -2768,23 +2768,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Windows paths should be converted after MiniMrShim.setupConfiguration()
-comment|// since setupConfiguration may overwrite configuration values.
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-name|WindowsPathUtil
-operator|.
-name|convertPathsFromWindowsToHdfs
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 specifier|private
 name|void
@@ -2803,10 +2786,6 @@ block|{
 name|String
 name|fsUriString
 init|=
-name|WindowsPathUtil
-operator|.
-name|getHdfsUriString
-argument_list|(
 name|fs
 operator|.
 name|getUri
@@ -2814,7 +2793,6 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// Different paths if running locally vs a remote fileSystem. Ideally this difference should not exist.
 name|Path
@@ -4406,10 +4384,6 @@ block|{
 name|String
 name|uriString
 init|=
-name|WindowsPathUtil
-operator|.
-name|getHdfsUriString
-argument_list|(
 name|fs
 operator|.
 name|getUri
@@ -4417,7 +4391,6 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
-argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -4992,16 +4965,6 @@ argument_list|()
 argument_list|,
 name|query
 argument_list|)
-operator|||
-name|checkOSExclude
-argument_list|(
-name|qf
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|query
-argument_list|)
 condition|)
 block|{
 name|qSkipSet
@@ -5517,133 +5480,6 @@ expr_stmt|;
 return|return
 literal|true
 return|;
-block|}
-return|return
-literal|false
-return|;
-block|}
-end_function
-
-begin_function
-specifier|private
-name|boolean
-name|checkOSExclude
-parameter_list|(
-name|String
-name|fileName
-parameter_list|,
-name|String
-name|query
-parameter_list|)
-block|{
-comment|// Look for a hint to not run a test on some Hadoop versions
-name|Pattern
-name|pattern
-init|=
-name|Pattern
-operator|.
-name|compile
-argument_list|(
-literal|"-- (EX|IN)CLUDE_OS_WINDOWS"
-argument_list|)
-decl_stmt|;
-comment|// detect whether this query wants to be excluded or included
-comment|// on windows
-name|Matcher
-name|matcher
-init|=
-name|pattern
-operator|.
-name|matcher
-argument_list|(
-name|query
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|matcher
-operator|.
-name|find
-argument_list|()
-condition|)
-block|{
-name|String
-name|prefix
-init|=
-name|matcher
-operator|.
-name|group
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-literal|"EX"
-operator|.
-name|equals
-argument_list|(
-name|prefix
-argument_list|)
-condition|)
-block|{
-comment|//windows is to be exluded
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Due to the OS being windows "
-operator|+
-literal|"adding the  query "
-operator|+
-name|fileName
-operator|+
-literal|" to the set of tests to skip"
-argument_list|)
-expr_stmt|;
-return|return
-literal|true
-return|;
-block|}
-block|}
-elseif|else
-if|if
-condition|(
-operator|!
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-comment|//non windows to be exluded
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"Due to the OS not being windows "
-operator|+
-literal|"adding the  query "
-operator|+
-name|fileName
-operator|+
-literal|" to the set of tests to skip"
-argument_list|)
-expr_stmt|;
-return|return
-literal|true
-return|;
-block|}
 block|}
 return|return
 literal|false
@@ -10893,10 +10729,6 @@ comment|// Ignore changes in the amount of white space
 if|if
 condition|(
 name|ignoreWhiteSpace
-operator|||
-name|Shell
-operator|.
-name|WINDOWS
 condition|)
 block|{
 name|diffCommandArgs
@@ -10906,35 +10738,6 @@ argument_list|(
 literal|"-b"
 argument_list|)
 expr_stmt|;
-block|}
-comment|// Files created on Windows machines have different line endings
-comment|// than files created on Unix/Linux. Windows uses carriage return and line feed
-comment|// ("\r\n") as a line ending, whereas Unix uses just line feed ("\n").
-comment|// Also StringBuilder.toString(), Stream to String conversions adds extra
-comment|// spaces at the end of the line.
-if|if
-condition|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-name|diffCommandArgs
-operator|.
-name|add
-argument_list|(
-literal|"--strip-trailing-cr"
-argument_list|)
-expr_stmt|;
-comment|// Strip trailing carriage return on input
-name|diffCommandArgs
-operator|.
-name|add
-argument_list|(
-literal|"-B"
-argument_list|)
-expr_stmt|;
-comment|// Ignore changes whose lines are all blank
 block|}
 comment|// Add files to compare to the arguments list
 name|diffCommandArgs
@@ -11353,19 +11156,6 @@ name|str
 parameter_list|)
 block|{
 return|return
-name|Shell
-operator|.
-name|WINDOWS
-condition|?
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"\"%s\""
-argument_list|,
-name|str
-argument_list|)
-else|:
 name|str
 return|;
 block|}
