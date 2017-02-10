@@ -625,6 +625,23 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|shallowCopyTo
+parameter_list|(
+name|ColumnVector
+name|otherCv
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|()
+throw|;
+comment|// Implement if needed.
+block|}
 block|}
 end_class
 

@@ -724,7 +724,7 @@ class|class
 name|StripeData
 block|{
 comment|// In LRR case, if we just store 2 boundaries (which could be split boundaries or reader
-comment|// positions, we wouldn't be able to account for torn rows correctly because the semantics of
+comment|// positions), we wouldn't be able to account for torn rows correctly because the semantics of
 comment|// our "exact" reader positions, and inexact split boundaries, are different. We cannot even
 comment|// tell LRR to use exact boundaries, as there can be a mismatch in an original mid-file split
 comment|// wrt first row when caching - we may produce incorrect result if we adjust the split
@@ -985,7 +985,7 @@ block|}
 specifier|public
 specifier|static
 name|StripeData
-name|duplicateForResults
+name|duplicateStructure
 parameter_list|(
 name|StripeData
 name|s
@@ -2256,7 +2256,7 @@ name|stripe
 init|=
 name|StripeData
 operator|.
-name|duplicateForResults
+name|duplicateStructure
 argument_list|(
 name|cStripe
 argument_list|)
@@ -2334,11 +2334,13 @@ operator|!=
 literal|null
 condition|)
 block|{
-assert|assert
-literal|false
-operator|:
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
 name|cStripe
-assert|;
+argument_list|)
+throw|;
 comment|// No encoding => must have no data.
 block|}
 name|isMissed
@@ -2482,6 +2484,11 @@ operator|+
 name|streamIx
 argument_list|)
 expr_stmt|;
+name|handleRemovedColumnData
+argument_list|(
+name|cColData
+argument_list|)
+expr_stmt|;
 name|cColData
 operator|=
 literal|null
@@ -2489,11 +2496,6 @@ expr_stmt|;
 name|isMissed
 operator|=
 literal|true
-expr_stmt|;
-name|handleRemovedColumnData
-argument_list|(
-name|cColData
-argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -2524,6 +2526,23 @@ index|]
 operator|=
 name|cColData
 expr_stmt|;
+if|if
+condition|(
+name|cColData
+operator|==
+literal|null
+condition|)
+block|{
+name|stripe
+operator|.
+name|encodings
+index|[
+name|colIx
+index|]
+operator|=
+literal|null
+expr_stmt|;
+block|}
 block|}
 name|doMetricsStuffForOneSlice
 argument_list|(

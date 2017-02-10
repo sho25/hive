@@ -12131,6 +12131,15 @@ argument_list|,
 literal|"Whether LLAP should use vectorized SerDe reader to read text data when re-encoding."
 argument_list|)
 block|,
+name|LLAP_IO_ENCODE_VECTOR_SERDE_ASYNC_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.vector.serde.async.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should use async mode in vectorized SerDe reader to read text data."
+argument_list|)
+block|,
 name|LLAP_IO_ENCODE_SLICE_ROW_COUNT
 argument_list|(
 literal|"hive.llap.io.encode.slice.row.count"
