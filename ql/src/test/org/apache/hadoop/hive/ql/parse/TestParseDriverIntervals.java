@@ -210,7 +210,7 @@ operator|new
 name|Object
 index|[]
 block|{
-literal|"select (1+1) days"
+literal|"select interval (1+1) days"
 block|}
 argument_list|)
 expr_stmt|;
