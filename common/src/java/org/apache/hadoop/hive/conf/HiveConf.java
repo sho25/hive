@@ -5399,7 +5399,7 @@ argument_list|)
 block|,
 name|SEMIJOIN_CONVERSION
 argument_list|(
-literal|"hive.enable.semijoin.conversion"
+literal|"hive.optimize.semijoin.conversion"
 argument_list|,
 literal|true
 argument_list|,
