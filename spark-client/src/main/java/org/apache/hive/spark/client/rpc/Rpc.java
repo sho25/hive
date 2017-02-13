@@ -833,10 +833,7 @@ name|schedule
 argument_list|(
 name|timeoutTask
 argument_list|,
-name|rpcConf
-operator|.
-name|getServerConnectTimeoutMs
-argument_list|()
+name|connectTimeoutMs
 argument_list|,
 name|TimeUnit
 operator|.
