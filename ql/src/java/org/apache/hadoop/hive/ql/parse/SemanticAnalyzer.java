@@ -63431,7 +63431,7 @@ name|statsTmpLoc
 init|=
 name|ctx
 operator|.
-name|getExtTmpPathRelTo
+name|getTempDirForPath
 argument_list|(
 name|tab
 operator|.
