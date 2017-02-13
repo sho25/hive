@@ -3627,6 +3627,14 @@ argument_list|,
 name|onClauseAsText
 argument_list|,
 name|targetTable
+argument_list|,
+name|numWhenMatchedDeleteClauses
+operator|==
+literal|0
+operator|&&
+name|numWhenMatchedUpdateClauses
+operator|==
+literal|0
 argument_list|)
 decl_stmt|;
 name|ReparseResult
@@ -4140,6 +4148,9 @@ name|onClauseAsString
 parameter_list|,
 name|Table
 name|targetTable
+parameter_list|,
+name|boolean
+name|onlyHaveWhenNotMatchedClause
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -4174,6 +4185,16 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+if|if
+condition|(
+name|onlyHaveWhenNotMatchedClause
+condition|)
+block|{
+comment|//if no update or delete in Merge, there is no need to to do cardinality check
 return|return
 literal|false
 return|;
