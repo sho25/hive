@@ -9411,7 +9411,7 @@ name|path
 argument_list|,
 name|createOrcWriterOptions
 argument_list|(
-name|sourceOi
+name|oi
 argument_list|,
 name|conf
 argument_list|,
