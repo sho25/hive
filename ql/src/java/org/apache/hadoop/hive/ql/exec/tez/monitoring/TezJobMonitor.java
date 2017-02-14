@@ -1749,8 +1749,8 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * killRunningJobs tries to terminate execution of all    * currently running tez queries. No guarantees, best effort only.    */
-specifier|private
+comment|/**    * killRunningJobs tries to terminate execution of all    * currently running tez queries. No guarantees, best effort only.    *    * {@link org.apache.hadoop.hive.ql.exec.tez.TezJobExecHelper#killRunningJobs()} makes use of    * this method via reflection.    */
+specifier|public
 specifier|static
 name|void
 name|killRunningJobs
