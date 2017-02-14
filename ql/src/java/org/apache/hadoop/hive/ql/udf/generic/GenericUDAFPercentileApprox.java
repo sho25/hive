@@ -1637,6 +1637,21 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+else|else
+block|{
+name|partialHistogram
+operator|.
+name|subList
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|)
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
 comment|// merge histograms
 name|myagg
 operator|.
