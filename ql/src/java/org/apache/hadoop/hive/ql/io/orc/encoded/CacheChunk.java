@@ -194,6 +194,17 @@ name|end
 operator|=
 name|end
 expr_stmt|;
+name|this
+operator|.
+name|next
+operator|=
+name|this
+operator|.
+name|prev
+operator|=
+literal|null
+expr_stmt|;
+comment|// Just in case.
 block|}
 annotation|@
 name|Override
