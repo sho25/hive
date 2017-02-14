@@ -599,7 +599,7 @@ name|io
 operator|.
 name|encoded
 operator|.
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 operator|.
 name|AsyncCallback
 import|;
@@ -1643,7 +1643,7 @@ decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 argument_list|>
 name|asyncWriters
 init|=
@@ -8867,7 +8867,7 @@ comment|// fileread writes to the writer, which writes to orcWriter, which write
 name|EncodingWriter
 name|writer
 init|=
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 operator|.
 name|create
 argument_list|(
@@ -8942,14 +8942,14 @@ if|if
 condition|(
 name|writer
 operator|instanceof
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 condition|)
 block|{
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 name|asyncWriter
 init|=
 operator|(
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 operator|)
 name|writer
 decl_stmt|;
@@ -9046,7 +9046,7 @@ specifier|public
 name|void
 name|onComplete
 parameter_list|(
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 name|writer
 parameter_list|)
 block|{
@@ -10051,7 +10051,7 @@ condition|)
 return|return;
 for|for
 control|(
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 name|asyncWriter
 range|:
 name|asyncWriters

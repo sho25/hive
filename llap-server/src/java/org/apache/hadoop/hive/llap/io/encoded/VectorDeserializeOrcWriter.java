@@ -673,7 +673,7 @@ end_comment
 
 begin_class
 class|class
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 extends|extends
 name|EncodingWriter
 implements|implements
@@ -1050,7 +1050,7 @@ argument_list|)
 expr_stmt|;
 return|return
 operator|new
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 argument_list|(
 name|daemonConf
 argument_list|,
@@ -1067,7 +1067,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 parameter_list|(
 name|Configuration
 name|conf
@@ -1712,7 +1712,7 @@ block|{
 name|void
 name|onComplete
 parameter_list|(
-name|VertorDeserializeOrcWriter
+name|VectorDeserializeOrcWriter
 name|writer
 parameter_list|)
 function_decl|;
