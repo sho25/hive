@@ -2819,6 +2819,19 @@ name|fastHashCode
 argument_list|()
 return|;
 block|}
+specifier|private
+specifier|static
+specifier|final
+name|byte
+index|[]
+name|EMPTY_ARRAY
+init|=
+operator|new
+name|byte
+index|[
+literal|0
+index|]
+decl_stmt|;
 annotation|@
 name|HiveDecimalWritableVersionV1
 specifier|public
@@ -2836,11 +2849,7 @@ condition|)
 block|{
 comment|// don't break old callers that are trying to reuse storages
 return|return
-operator|new
-name|byte
-index|[
-literal|0
-index|]
+name|EMPTY_ARRAY
 return|;
 block|}
 if|if
