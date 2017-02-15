@@ -2834,13 +2834,14 @@ name|isSet
 argument_list|()
 condition|)
 block|{
-throw|throw
+comment|// don't break old callers that are trying to reuse storages
+return|return
 operator|new
-name|RuntimeException
-argument_list|(
-literal|"no value set"
-argument_list|)
-throw|;
+name|byte
+index|[
+literal|0
+index|]
+return|;
 block|}
 if|if
 condition|(
