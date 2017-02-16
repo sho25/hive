@@ -193,6 +193,40 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Matcher
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|regex
+operator|.
+name|Pattern
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -227,6 +261,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|jdbc
@@ -248,6 +300,24 @@ operator|.
 name|miniHS2
 operator|.
 name|MiniHS2
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|jdbc
+operator|.
+name|miniHS2
+operator|.
+name|MiniHS2
+operator|.
+name|MiniClusterType
 import|;
 end_import
 
@@ -300,6 +370,15 @@ specifier|public
 class|class
 name|TestBeeLineWithArgs
 block|{
+specifier|private
+enum|enum
+name|OutStream
+block|{
+name|ERR
+block|,
+name|OUT
+block|}
+empty_stmt|;
 comment|// Default location of HiveServer2
 specifier|private
 specifier|static
@@ -321,6 +400,19 @@ specifier|private
 specifier|static
 name|MiniHS2
 name|miniHS2
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|userName
+init|=
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
 decl_stmt|;
 specifier|private
 name|List
@@ -378,6 +470,20 @@ argument_list|(
 name|jdbcUrl
 argument_list|)
 expr_stmt|;
+name|argList
+operator|.
+name|add
+argument_list|(
+literal|"-n"
+argument_list|)
+expr_stmt|;
+name|argList
+operator|.
+name|add
+argument_list|(
+name|userName
+argument_list|)
+expr_stmt|;
 return|return
 name|argList
 return|;
@@ -400,7 +506,6 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
-comment|// Set to non-zk lock manager to prevent HS2 from trying to connect
 name|hiveConf
 operator|.
 name|setVar
@@ -427,18 +532,39 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|set
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
+operator|.
+name|varname
+argument_list|,
+literal|"verbose"
+argument_list|)
+expr_stmt|;
 name|miniHS2
 operator|=
 operator|new
 name|MiniHS2
 argument_list|(
 name|hiveConf
+argument_list|,
+name|MiniClusterType
+operator|.
+name|TEZ
 argument_list|)
 expr_stmt|;
-name|miniHS2
-operator|.
-name|start
-argument_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|confOverlay
+init|=
 operator|new
 name|HashMap
 argument_list|<
@@ -447,6 +573,12 @@ argument_list|,
 name|String
 argument_list|>
 argument_list|()
+decl_stmt|;
+name|miniHS2
+operator|.
+name|start
+argument_list|(
+name|confOverlay
 argument_list|)
 expr_stmt|;
 name|createTable
@@ -485,7 +617,7 @@ operator|.
 name|getBaseJdbcURL
 argument_list|()
 argument_list|,
-literal|""
+name|userName
 argument_list|,
 literal|""
 argument_list|)
@@ -657,7 +789,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Execute a script with "beeline -f or -i"    *    * @return The stderr and stdout from running the script    */
+comment|/**    * Execute a script with "beeline -f or -i"    * @param argList List of arguments for beeline    * @param inputStream input stream if any    * @param streamType if output from STDERR or STDOUT needs to be returned    * @return The stderr and stdout from running the script    * @throws Throwable    */
 specifier|private
 name|String
 name|testCommandLineScript
@@ -670,6 +802,9 @@ name|argList
 parameter_list|,
 name|InputStream
 name|inputStream
+parameter_list|,
+name|OutStream
+name|streamType
 parameter_list|)
 throws|throws
 name|Throwable
@@ -697,6 +832,14 @@ argument_list|(
 name|os
 argument_list|)
 decl_stmt|;
+switch|switch
+condition|(
+name|streamType
+condition|)
+block|{
+case|case
+name|OUT
+case|:
 name|beeLine
 operator|.
 name|setOutputStream
@@ -704,6 +847,10 @@ argument_list|(
 name|beelineOutputStream
 argument_list|)
 expr_stmt|;
+break|break;
+case|case
+name|ERR
+case|:
 name|beeLine
 operator|.
 name|setErrorStream
@@ -711,6 +858,18 @@ argument_list|(
 name|beelineOutputStream
 argument_list|)
 expr_stmt|;
+break|break;
+default|default:
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Unexpected outstream type "
+operator|+
+name|streamType
+argument_list|)
+throw|;
+block|}
 name|String
 index|[]
 name|args
@@ -757,7 +916,7 @@ return|return
 name|output
 return|;
 block|}
-comment|/**    * Attempt to execute a simple script file with the -f and -i option    * to BeeLine to test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found.    * Print PASSED or FAILED    * @param expectedPattern Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @throws Exception on command execution error    */
+comment|/**    * Attempt to execute a simple script file with the -f and -i option to    * BeeLine to test for presence of an expected pattern in the output (stdout    * or stderr), fail if not found. Print PASSED or FAILED    *     * @param expectedRegex    *          Text to look for in command output (stdout)    * @param shouldMatch    *          true if the pattern should be found, false if it should not    * @throws Exception    *           on command execution error    */
 specifier|private
 name|void
 name|testScriptFile
@@ -766,7 +925,7 @@ name|String
 name|scriptText
 parameter_list|,
 name|String
-name|expectedPattern
+name|expectedRegex
 parameter_list|,
 name|boolean
 name|shouldMatch
@@ -784,7 +943,7 @@ name|testScriptFile
 argument_list|(
 name|scriptText
 argument_list|,
-name|expectedPattern
+name|expectedRegex
 argument_list|,
 name|shouldMatch
 argument_list|,
@@ -793,10 +952,14 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Attempt to execute a simple script file with the -f or -i option    * to BeeLine (or both) to  test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found.    * Print PASSED or FAILED    * @param expectedPattern Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @param testScript Whether we should test -f    * @param testInit Whether we should test -i    * @throws Exception on command execution error    */
+comment|/**    * Attempt to execute a simple script file with the -f and -i option    * to BeeLine to test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found.    * Print PASSED or FAILED    * @param expectedRegex Text to look for in command output (stdout)    * @param shouldMatch true if the pattern should be found, false if it should not    * @param argList arguments    * @param outType output stream type    * @throws Throwable    */
 specifier|private
 name|void
 name|testScriptFile
@@ -805,7 +968,51 @@ name|String
 name|scriptText
 parameter_list|,
 name|String
-name|expectedPattern
+name|expectedRegex
+parameter_list|,
+name|boolean
+name|shouldMatch
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|argList
+parameter_list|,
+name|OutStream
+name|outType
+parameter_list|)
+throws|throws
+name|Throwable
+block|{
+name|testScriptFile
+argument_list|(
+name|scriptText
+argument_list|,
+name|expectedRegex
+argument_list|,
+name|shouldMatch
+argument_list|,
+name|argList
+argument_list|,
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+name|outType
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Attempt to execute a simple script file with the -f or -i option    * to BeeLine (or both) to  test for presence of an expected pattern    * in the output (stdout or stderr), fail if not found.    * Print PASSED or FAILED    * @param expectedRegex Text to look for in command output/error    * @param shouldMatch true if the pattern should be found, false if it should not    * @param testScript Whether we should test -f    * @param testInit Whether we should test -i    * @param streamType Whether match should be done against STDERR or STDOUT    * @throws Exception on command execution error    */
+specifier|private
+name|void
+name|testScriptFile
+parameter_list|(
+name|String
+name|scriptText
+parameter_list|,
+name|String
+name|expectedRegex
 parameter_list|,
 name|boolean
 name|shouldMatch
@@ -821,6 +1028,9 @@ name|testScript
 parameter_list|,
 name|boolean
 name|testInit
+parameter_list|,
+name|OutStream
+name|streamType
 parameter_list|)
 throws|throws
 name|Throwable
@@ -888,6 +1098,24 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|Pattern
+name|expectedPattern
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|".*"
+operator|+
+name|expectedRegex
+operator|+
+literal|".*"
+argument_list|,
+name|Pattern
+operator|.
+name|DOTALL
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|testScript
@@ -933,17 +1161,27 @@ argument_list|(
 name|copy
 argument_list|,
 literal|null
+argument_list|,
+name|streamType
+argument_list|)
+decl_stmt|;
+name|Matcher
+name|m
+init|=
+name|expectedPattern
+operator|.
+name|matcher
+argument_list|(
+name|output
 argument_list|)
 decl_stmt|;
 name|boolean
 name|matches
 init|=
-name|output
+name|m
 operator|.
-name|contains
-argument_list|(
-name|expectedPattern
-argument_list|)
+name|matches
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -971,7 +1209,7 @@ operator|)
 operator|+
 literal|" contain "
 operator|+
-name|expectedPattern
+name|expectedRegex
 argument_list|)
 expr_stmt|;
 block|}
@@ -1028,17 +1266,27 @@ name|StringBufferInputStream
 argument_list|(
 literal|"!quit\n"
 argument_list|)
+argument_list|,
+name|streamType
+argument_list|)
+decl_stmt|;
+name|Matcher
+name|m
+init|=
+name|expectedPattern
+operator|.
+name|matcher
+argument_list|(
+name|output
 argument_list|)
 decl_stmt|;
 name|boolean
 name|matches
 init|=
-name|output
+name|m
 operator|.
-name|contains
-argument_list|(
-name|expectedPattern
-argument_list|)
+name|matches
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -1066,7 +1314,7 @@ operator|)
 operator|+
 literal|" contain "
 operator|+
-name|expectedPattern
+name|expectedRegex
 argument_list|)
 expr_stmt|;
 block|}
@@ -1096,6 +1344,9 @@ argument_list|<
 name|String
 argument_list|>
 name|argList
+parameter_list|,
+name|OutStream
+name|out
 parameter_list|)
 throws|throws
 name|Throwable
@@ -1137,6 +1388,8 @@ argument_list|(
 name|copy
 argument_list|,
 literal|null
+argument_list|,
+name|out
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -1366,7 +1619,7 @@ specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
-literal|"create table ${DUMMY_TBL} (d int);\nshow tables;\n"
+literal|"create table ${DUMMY_TBL} (d int);\nshow tables;\n drop table  ${DUMMY_TBL};"
 decl_stmt|;
 specifier|final
 name|String
@@ -1428,6 +1681,8 @@ name|String
 name|SCRIPT_TEXT
 init|=
 literal|"create table ${hiveconf:test.hive.table.name} (d int);\nshow tables;\n"
+operator|+
+literal|" drop table ${hiveconf:test.hive.table.name};\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -1545,7 +1800,11 @@ specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
-literal|"${COMMAND} ${OBJECT} ${TABLE_NAME} (${hiveconf:COLUMN_NAME} ${hiveconf:COLUMN_TYPE});\nshow tables;\n"
+literal|"${COMMAND} ${OBJECT} ${TABLE_NAME} "
+operator|+
+literal|"(${hiveconf:COLUMN_NAME} ${hiveconf:COLUMN_TYPE});"
+operator|+
+literal|"\nshow tables;\n drop ${OBJECT} ${TABLE_NAME};\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -1641,6 +1900,8 @@ name|String
 name|SCRIPT_TEXT
 init|=
 literal|"CREATE\tTABLE IF NOT EXISTS testTabInScriptFile\n(id\tint);\nSHOW TABLES;"
+operator|+
+literal|"\ndrop table testTabInScriptFile"
 decl_stmt|;
 specifier|final
 name|String
@@ -2515,6 +2776,10 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -2570,6 +2835,14 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -2801,6 +3074,10 @@ argument_list|(
 name|argList
 argument_list|,
 literal|null
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 decl_stmt|;
 if|if
@@ -3021,7 +3298,7 @@ specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
-literal|"create table ${D_TBL} (d int);\nshow tables;\n"
+literal|"create table ${D_TBL} (d int);\nshow tables;\ndrop  table ${D_TBL};\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -3091,7 +3368,7 @@ name|SCRIPT_TEXT
 init|=
 literal|"set hive.lock.manager=org.apache.hadoop.hive.ql.lockmgr.EmbeddedLockManager;\n"
 operator|+
-literal|"create table ${DUMMY_TBL} (d int);\nshow tables;\n"
+literal|"create table ${DUMMY_TBL} (d int);\nshow tables;\n drop table ${DUMMY_TBL};\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -3133,11 +3410,12 @@ name|tableName
 operator|+
 literal|";\n"
 decl_stmt|;
+comment|// Check for part of log message as well as part of progress information
 specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"number of splits"
+literal|"Number of reducers determined to be.*ELAPSED TIME"
 decl_stmt|;
 name|testScriptFile
 argument_list|(
@@ -3154,6 +3432,10 @@ operator|.
 name|getBaseJdbcURL
 argument_list|()
 argument_list|)
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -3181,11 +3463,12 @@ name|tableName
 operator|+
 literal|";\n"
 decl_stmt|;
+comment|// Check for part of log message as well as part of progress information
 specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|"number of splits"
+literal|"Number of reducers determined to be.*ELAPSED TIME"
 decl_stmt|;
 name|testScriptFile
 argument_list|(
@@ -3202,6 +3485,10 @@ operator|.
 name|getBaseJdbcURL
 argument_list|()
 argument_list|)
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -3250,6 +3537,10 @@ operator|.
 name|getBaseJdbcURL
 argument_list|()
 argument_list|)
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -3365,6 +3656,10 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -3382,6 +3677,10 @@ argument_list|,
 literal|false
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
@@ -3567,6 +3866,10 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -3584,6 +3887,10 @@ argument_list|,
 literal|false
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
@@ -3628,6 +3935,8 @@ operator|+
 literal|"create table if not exists embeddedBeelineOutputs(d int);\n"
 operator|+
 literal|"set a=1;\nselect count(*) from embeddedBeelineOutputs;\n"
+operator|+
+literal|"drop table embeddedBeelineOutputs;\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -3644,6 +3953,10 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}
@@ -3764,7 +4077,7 @@ specifier|final
 name|String
 name|SCRIPT_TEXT
 init|=
-literal|"create table blueconnecttest (d int);\nshow tables;\n"
+literal|"create table blueconnecttest (d int);\nshow tables;\ndrop table blueconnecttest;\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -3855,6 +4168,10 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
@@ -3890,7 +4207,7 @@ literal|"!close\n"
 operator|+
 literal|"!reconnect\n\n\n"
 operator|+
-literal|"create table reconnecttest (d int);\nshow tables;\n"
+literal|"create table reconnecttest (d int);\nshow tables;\ndrop table reconnecttest;\n"
 decl_stmt|;
 specifier|final
 name|String
@@ -3911,6 +4228,10 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
@@ -4115,7 +4436,7 @@ specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|" (default)>"
+literal|" \\(default\\)>"
 decl_stmt|;
 name|List
 argument_list|<
@@ -4220,6 +4541,10 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
 argument_list|)
 expr_stmt|;
 block|}
@@ -4279,6 +4604,10 @@ argument_list|,
 literal|true
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|)
 expr_stmt|;
 block|}

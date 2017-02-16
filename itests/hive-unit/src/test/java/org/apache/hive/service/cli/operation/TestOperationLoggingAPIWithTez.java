@@ -204,18 +204,6 @@ argument_list|,
 literal|"verbose"
 argument_list|)
 expr_stmt|;
-comment|// Change the engine to tez
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_EXECUTION_ENGINE
-argument_list|,
-literal|"tez"
-argument_list|)
-expr_stmt|;
 comment|// Set tez execution summary to false.
 name|hiveConf
 operator|.

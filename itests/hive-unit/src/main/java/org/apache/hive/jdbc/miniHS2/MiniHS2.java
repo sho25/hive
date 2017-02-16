@@ -1248,6 +1248,18 @@ block|{
 case|case
 name|TEZ
 case|:
+comment|// Change the engine to tez
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|,
+literal|"tez"
+argument_list|)
+expr_stmt|;
 comment|// TODO: This should be making use of confDir to load configs setup for Tez, etc.
 name|mr
 operator|=
