@@ -1131,9 +1131,7 @@ specifier|final
 name|String
 name|TIMESERIES_QUERY_SPLIT
 init|=
-literal|"[HiveDruidSplit{localhost:8082, "
-operator|+
-literal|"{\"queryType\":\"timeseries\","
+literal|"[HiveDruidSplit{{\"queryType\":\"timeseries\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
@@ -1149,7 +1147,7 @@ literal|"\"aggregations\":[],"
 operator|+
 literal|"\"postAggregations\":[],"
 operator|+
-literal|"\"context\":null}}]"
+literal|"\"context\":null}, [localhost:8082]}]"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -1205,9 +1203,7 @@ specifier|final
 name|String
 name|TOPN_QUERY_SPLIT
 init|=
-literal|"[HiveDruidSplit{localhost:8082, "
-operator|+
-literal|"{\"queryType\":\"topN\","
+literal|"[HiveDruidSplit{{\"queryType\":\"topN\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_data\"},"
 operator|+
@@ -1231,7 +1227,7 @@ literal|"\"postAggregations\":[],"
 operator|+
 literal|"\"context\":null,"
 operator|+
-literal|"\"descending\":false}}]"
+literal|"\"descending\":false}, [localhost:8082]}]"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -1273,9 +1269,7 @@ specifier|final
 name|String
 name|GROUP_BY_QUERY_SPLIT
 init|=
-literal|"[HiveDruidSplit{localhost:8082, "
-operator|+
-literal|"{\"queryType\":\"groupBy\","
+literal|"[HiveDruidSplit{{\"queryType\":\"groupBy\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
@@ -1303,7 +1297,7 @@ literal|"{\"dimension\":\"data_transfer\",\"direction\":\"ascending\",\"dimensio
 operator|+
 literal|"\"context\":null,"
 operator|+
-literal|"\"descending\":false}}]"
+literal|"\"descending\":false}, [localhost:8082]}]"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -1333,9 +1327,7 @@ specifier|final
 name|String
 name|SELECT_QUERY_SPLIT
 init|=
-literal|"[HiveDruidSplit{localhost:8082, "
-operator|+
-literal|"{\"queryType\":\"select\","
+literal|"[HiveDruidSplit{{\"queryType\":\"select\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"wikipedia\"},"
 operator|+
@@ -1367,7 +1359,7 @@ literal|"\"metrics\":[\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],"
 operator|+
 literal|"\"pagingSpec\":{\"pagingIdentifiers\":{},\"threshold\":5,\"fromNext\":false},"
 operator|+
-literal|"\"context\":{\"druid.query.fetch\":true}}}]"
+literal|"\"context\":{\"druid.query.fetch\":true}}, [localhost:8082]}]"
 decl_stmt|;
 annotation|@
 name|Test
@@ -1653,6 +1645,21 @@ operator|.
 name|DRUID_QUERY_TYPE
 argument_list|,
 name|queryType
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_DRUID_SELECT_DISTRIBUTE
+operator|.
+name|varname
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 return|return

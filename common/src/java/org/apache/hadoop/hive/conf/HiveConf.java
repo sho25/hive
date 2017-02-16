@@ -8530,12 +8530,33 @@ argument_list|,
 literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
 argument_list|)
 block|,
+name|HIVE_DRUID_SELECT_DISTRIBUTE
+argument_list|(
+literal|"hive.druid.select.distribute"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If it is set to true, we distribute the execution of Druid Select queries. Concretely, we retrieve\n"
+operator|+
+literal|"the result for Select queries directly from the Druid nodes containing the segments data.\n"
+operator|+
+literal|"In particular, first we contact the Druid broker node to obtain the nodes containing the segments\n"
+operator|+
+literal|"for the given query, and then we contact those nodes to retrieve the results for the query.\n"
+operator|+
+literal|"If it is set to false, we do not execute the Select queries in a distributed fashion. Instead, results\n"
+operator|+
+literal|"for those queries are returned by the Druid broker node."
+argument_list|)
+block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
 argument_list|(
 literal|"hive.druid.select.threshold"
 argument_list|,
 literal|10000
 argument_list|,
+literal|"Takes only effect when hive.druid.select.distribute is set to false. \n"
+operator|+
 literal|"When we can split a Select query, this is the maximum number of rows that we try to retrieve\n"
 operator|+
 literal|"per query. In order to do that, we obtain the estimated size for the complete result. If the\n"
@@ -8544,7 +8565,7 @@ literal|"number of records of the query results is larger than this threshold, w
 operator|+
 literal|"total number of rows/threshold parts across the time dimension. Note that we assume the\n"
 operator|+
-literal|"records to be split uniformly across the time dimension"
+literal|"records to be split uniformly across the time dimension."
 argument_list|)
 block|,
 name|HIVE_DRUID_NUM_HTTP_CONNECTION
