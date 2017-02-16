@@ -2029,6 +2029,33 @@ name|oldNode
 argument_list|)
 condition|)
 block|{
+specifier|final
+name|CorelMap
+name|corelMap
+init|=
+operator|new
+name|CorelMapBuilder
+argument_list|()
+operator|.
+name|build
+argument_list|(
+name|newNode
+argument_list|)
+decl_stmt|;
+comment|// since after various rules original relnode could have different
+comment|// corref (or might not have at all) we need to traverse the new node
+comment|// to figure out new cor refs and put that into map
+if|if
+condition|(
+operator|!
+name|corelMap
+operator|.
+name|mapRefRelToCorRef
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|cm
 operator|.
 name|mapRefRelToCorRef
@@ -2037,16 +2064,17 @@ name|putAll
 argument_list|(
 name|newNode
 argument_list|,
-name|cm
+name|corelMap
 operator|.
 name|mapRefRelToCorRef
 operator|.
 name|get
 argument_list|(
-name|oldNode
+name|newNode
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
