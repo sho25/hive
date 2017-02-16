@@ -157,6 +157,9 @@ name|loadFactor
 parameter_list|,
 name|int
 name|writeBuffersSize
+parameter_list|,
+name|long
+name|estimatedKeyCount
 parameter_list|)
 block|{
 name|super
@@ -166,6 +169,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBuffersSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 block|}

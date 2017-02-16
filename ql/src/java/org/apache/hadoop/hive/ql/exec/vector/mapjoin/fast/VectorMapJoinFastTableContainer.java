@@ -451,7 +451,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|long
-name|keyCount
+name|estimatedKeyCount
 decl_stmt|;
 specifier|private
 specifier|final
@@ -468,7 +468,7 @@ name|Configuration
 name|hconf
 parameter_list|,
 name|long
-name|keyCount
+name|estimatedKeyCount
 parameter_list|)
 throws|throws
 name|SerDeException
@@ -547,9 +547,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|keyCount
+name|estimatedKeyCount
 operator|=
-name|keyCount
+name|estimatedKeyCount
 expr_stmt|;
 comment|// LOG.info("VectorMapJoinFastTableContainer load keyCountAdj " + keyCountAdj);
 comment|// LOG.info("VectorMapJoinFastTableContainer load threshold " + threshold);
@@ -568,7 +568,7 @@ name|threshold
 argument_list|,
 name|loadFactor
 argument_list|,
-name|keyCount
+name|estimatedKeyCount
 argument_list|)
 decl_stmt|;
 comment|// LOG.debug("VectorMapJoinFastTableContainer load newThreshold " + newThreshold);
@@ -716,6 +716,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -738,6 +740,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -760,6 +764,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -788,6 +794,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -806,6 +814,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -824,6 +834,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -852,6 +864,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -870,6 +884,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
@@ -888,6 +904,8 @@ argument_list|,
 name|loadFactor
 argument_list|,
 name|writeBufferSize
+argument_list|,
+name|estimatedKeyCount
 argument_list|)
 expr_stmt|;
 break|break;
