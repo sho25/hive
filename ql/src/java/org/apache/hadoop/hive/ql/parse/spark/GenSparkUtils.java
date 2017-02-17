@@ -879,24 +879,41 @@ name|reduceWork
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// All parents should be reduce sinks. We pick the one we just walked
-comment|// to choose the number of reducers. In the join/union case they will
-comment|// all be -1. In sort/order case where it matters there will be only
-comment|// one parent.
+comment|// Pick the maximum # reducers across all parents as the # of reduce tasks.
+name|int
+name|maxExecutors
+init|=
+operator|-
+literal|1
+decl_stmt|;
+for|for
+control|(
+name|Operator
+argument_list|<
+name|?
+extends|extends
+name|OperatorDesc
+argument_list|>
+name|parentOfRoot
+range|:
+name|root
+operator|.
+name|getParentOperators
+argument_list|()
+control|)
+block|{
 name|Preconditions
 operator|.
 name|checkArgument
 argument_list|(
-name|context
-operator|.
 name|parentOfRoot
 operator|instanceof
 name|ReduceSinkOperator
 argument_list|,
-literal|"AssertionError: expected context.parentOfRoot to be an instance of ReduceSinkOperator, but was "
+literal|"AssertionError: expected parentOfRoot to be an "
 operator|+
-name|context
-operator|.
+literal|"instance of ReduceSinkOperator, but was "
+operator|+
 name|parentOfRoot
 operator|.
 name|getClass
@@ -912,14 +929,16 @@ init|=
 operator|(
 name|ReduceSinkOperator
 operator|)
-name|context
-operator|.
 name|parentOfRoot
 decl_stmt|;
-name|reduceWork
+name|maxExecutors
+operator|=
+name|Math
 operator|.
-name|setNumReduceTasks
+name|max
 argument_list|(
+name|maxExecutors
+argument_list|,
 name|reduceSink
 operator|.
 name|getConf
@@ -929,6 +948,24 @@ name|getNumReducers
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+name|reduceWork
+operator|.
+name|setNumReduceTasks
+argument_list|(
+name|maxExecutors
+argument_list|)
+expr_stmt|;
+name|ReduceSinkOperator
+name|reduceSink
+init|=
+operator|(
+name|ReduceSinkOperator
+operator|)
+name|context
+operator|.
+name|parentOfRoot
+decl_stmt|;
 name|setupReduceSink
 argument_list|(
 name|context

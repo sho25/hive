@@ -13222,13 +13222,28 @@ argument_list|,
 literal|"logger used for llap-daemons."
 argument_list|)
 block|,
+name|SPARK_USE_OP_STATS
+argument_list|(
+literal|"hive.spark.use.op.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use operator stats to determine reducer parallelism for Hive on Spark. "
+operator|+
+literal|"If this is false, Hive will use source table stats to determine reducer "
+operator|+
+literal|"parallelism for all first level reduce tasks, and the maximum reducer parallelism "
+operator|+
+literal|"from all parents for all the rest (second level and onward) reducer tasks."
+argument_list|)
+block|,
 name|SPARK_USE_FILE_SIZE_FOR_MAPJOIN
 argument_list|(
 literal|"hive.spark.use.file.size.for.mapjoin"
 argument_list|,
 literal|false
 argument_list|,
-literal|"If this is set to true, mapjoin optimization in Hive/Spark will use source file sizes associated"
+literal|"If this is set to true, mapjoin optimization in Hive/Spark will use source file sizes associated "
 operator|+
 literal|"with TableScan operator on the root of operator tree, instead of using operator statistics."
 argument_list|)
