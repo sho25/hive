@@ -12127,7 +12127,7 @@ condition|)
 block|{
 name|defaultValue
 operator|=
-literal|"null"
+literal|"HiveDecimal.ZERO"
 expr_stmt|;
 name|vectorType
 operator|=
@@ -12191,7 +12191,7 @@ condition|)
 block|{
 name|defaultValue
 operator|=
-literal|"null"
+literal|"new HiveChar(\"\", 1)"
 expr_stmt|;
 name|vectorType
 operator|=
@@ -12224,7 +12224,7 @@ condition|)
 block|{
 name|defaultValue
 operator|=
-literal|"null"
+literal|"new HiveVarchar(\"\", 1)"
 expr_stmt|;
 name|vectorType
 operator|=
@@ -12293,7 +12293,7 @@ condition|)
 block|{
 name|defaultValue
 operator|=
-literal|"null"
+literal|"new Timestamp(0)"
 expr_stmt|;
 name|vectorType
 operator|=
