@@ -3663,6 +3663,26 @@ argument_list|()
 expr_stmt|;
 comment|// Don't sync.
 block|}
+specifier|public
+name|String
+name|getDagIdentifierString
+parameter_list|()
+block|{
+comment|// TODO: Implement this when tez is upgraded. TEZ-3550
+return|return
+literal|null
+return|;
+block|}
+specifier|public
+name|String
+name|getSessionIdentifierString
+parameter_list|()
+block|{
+comment|// TODO: Implement this when tez is upgraded. TEZ-3550
+return|return
+literal|null
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
