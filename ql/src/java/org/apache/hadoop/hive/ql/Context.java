@@ -878,6 +878,11 @@ specifier|private
 name|boolean
 name|skipTableMasking
 decl_stmt|;
+comment|// Identify whether the query involves an UPDATE, DELETE or MERGE
+specifier|private
+name|boolean
+name|isUpdateDeleteMerge
+decl_stmt|;
 comment|/**    * This determines the prefix of the    * {@link org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx#dest}    * name for a given subtree of the AST.  Most of the times there is only 1 destination in a    * given tree but multi-insert has several and multi-insert representing MERGE must use    * different prefixes to encode the purpose of different Insert branches    */
 specifier|private
 name|Map
@@ -4175,6 +4180,30 @@ operator|=
 operator|new
 name|AtomicInteger
 argument_list|()
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getIsUpdateDeleteMerge
+parameter_list|()
+block|{
+return|return
+name|isUpdateDeleteMerge
+return|;
+block|}
+specifier|public
+name|void
+name|setIsUpdateDeleteMerge
+parameter_list|(
+name|boolean
+name|isUpdate
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isUpdateDeleteMerge
+operator|=
+name|isUpdate
 expr_stmt|;
 block|}
 block|}

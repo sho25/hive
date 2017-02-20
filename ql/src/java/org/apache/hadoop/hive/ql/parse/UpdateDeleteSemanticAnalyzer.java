@@ -1685,6 +1685,13 @@ name|getExplainConfig
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|rewrittenCtx
+operator|.
+name|setIsUpdateDeleteMerge
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

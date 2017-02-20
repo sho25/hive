@@ -1862,6 +1862,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|MASKING_FILTERING_ON_ACID_NOT_SUPPORTED
+argument_list|(
+literal|10287
+argument_list|,
+literal|"Detected {0}.{1} has row masking/column filtering enabled, "
+operator|+
+literal|"which is not supported for query involving ACID operations"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|UPDATEDELETE_PARSE_ERROR
 argument_list|(
 literal|10290
