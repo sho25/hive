@@ -4289,6 +4289,12 @@ operator|new
 name|PreCboCtx
 argument_list|()
 decl_stmt|;
+comment|//change the location of position alias process here
+name|processPositionAlias
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

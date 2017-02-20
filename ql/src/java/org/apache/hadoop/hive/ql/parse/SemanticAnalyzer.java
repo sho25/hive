@@ -67103,11 +67103,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 comment|// 1. analyze and process the position alias
-name|processPositionAlias
-argument_list|(
-name|ast
-argument_list|)
-expr_stmt|;
+comment|// step processPositionAlias out of genResolvedParseTree
 comment|// 2. analyze create table command
 if|if
 condition|(
@@ -67770,6 +67766,12 @@ argument_list|(
 literal|"Starting Semantic Analysis"
 argument_list|)
 expr_stmt|;
+comment|//change the location of position alias process here
+name|processPositionAlias
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -67834,6 +67836,12 @@ expr_stmt|;
 name|init
 argument_list|(
 literal|true
+argument_list|)
+expr_stmt|;
+comment|//change the location of position alias process here
+name|processPositionAlias
+argument_list|(
+name|tree
 argument_list|)
 expr_stmt|;
 name|genResolvedParseTree
@@ -74686,7 +74694,7 @@ throw|;
 block|}
 block|}
 comment|// Process the position alias in GROUPBY and ORDERBY
-specifier|private
+specifier|public
 name|void
 name|processPositionAlias
 parameter_list|(
