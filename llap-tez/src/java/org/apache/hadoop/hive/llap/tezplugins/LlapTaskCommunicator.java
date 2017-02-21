@@ -3621,6 +3621,10 @@ condition|(
 name|timelineServerUri
 operator|!=
 literal|null
+operator|&&
+name|containerNodeId
+operator|!=
+literal|null
 condition|)
 block|{
 name|LlapNodeId
@@ -3755,6 +3759,10 @@ decl_stmt|;
 if|if
 condition|(
 name|timelineServerUri
+operator|!=
+literal|null
+operator|&&
+name|containerNodeId
 operator|!=
 literal|null
 condition|)
