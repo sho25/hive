@@ -20323,6 +20323,18 @@ condition|(
 operator|!
 name|isCBOExecuted
 argument_list|()
+operator|&&
+operator|!
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// If CBO did not optimize the query, we might need to replace grouping function
@@ -20386,11 +20398,6 @@ name|isEmpty
 argument_list|()
 operator|)
 decl_stmt|;
-if|if
-condition|(
-name|cubeRollupGrpSetPresent
-condition|)
-block|{
 comment|// Special handling of grouping function
 name|condn
 operator|=
@@ -20407,9 +20414,11 @@ name|destClauseName
 argument_list|)
 argument_list|,
 name|condn
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/*      * Now a having clause can contain a SubQuery predicate;      * so we invoke genFilterPlan to handle SubQuery algebraic transformation,      * just as is done for SubQuery predicates appearing in the Where Clause.      */
 name|Operator
@@ -20457,6 +20466,10 @@ name|grpByAstExprs
 parameter_list|,
 name|ASTNode
 name|targetNode
+parameter_list|,
+specifier|final
+name|boolean
+name|noneSet
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -20639,7 +20652,43 @@ condition|)
 block|{
 name|ASTNode
 name|child1
-init|=
+decl_stmt|;
+if|if
+condition|(
+name|noneSet
+condition|)
+block|{
+comment|// Query does not contain CUBE, ROLLUP, or GROUPING SETS, and thus,
+comment|// grouping should return 0
+name|child1
+operator|=
+operator|(
+name|ASTNode
+operator|)
+name|ParseDriver
+operator|.
+name|adaptor
+operator|.
+name|create
+argument_list|(
+name|HiveParser
+operator|.
+name|IntegralLiteral
+argument_list|,
+name|String
+operator|.
+name|valueOf
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// We refer to grouping_id column
+name|child1
+operator|=
 operator|(
 name|ASTNode
 operator|)
@@ -20655,7 +20704,7 @@ name|TOK_TABLE_OR_COL
 argument_list|,
 literal|"TOK_TABLE_OR_COL"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|ParseDriver
 operator|.
 name|adaptor
@@ -20683,6 +20732,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|ASTNode
 name|child2
 init|=
@@ -28246,7 +28296,17 @@ operator|!
 name|isCBOExecuted
 argument_list|()
 operator|&&
-name|cubeRollupGrpSetPresent
+operator|!
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// If CBO did not optimize the query, we might need to replace grouping function
@@ -28266,6 +28326,9 @@ name|dest
 argument_list|)
 argument_list|,
 name|expr
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 expr_stmt|;
 block|}
@@ -78975,6 +79038,18 @@ condition|(
 operator|!
 name|isCBOExecuted
 argument_list|()
+operator|&&
+operator|!
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// If CBO did not optimize the query, we might need to replace grouping function
@@ -79038,11 +79113,6 @@ name|isEmpty
 argument_list|()
 operator|)
 decl_stmt|;
-if|if
-condition|(
-name|cubeRollupGrpSetPresent
-condition|)
-block|{
 for|for
 control|(
 name|WindowExpressionSpec
@@ -79075,10 +79145,12 @@ name|wExprSpec
 operator|.
 name|getExpression
 argument_list|()
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 name|WindowingComponentizer
