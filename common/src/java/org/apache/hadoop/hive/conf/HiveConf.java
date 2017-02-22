@@ -13082,9 +13082,13 @@ literal|"hive.llap.client.consistent.splits"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to setup split locations to match nodes on which llap daemons are running,"
+literal|"Whether to setup split locations to match nodes on which llap daemons are running, "
 operator|+
-literal|" instead of using the locations provided by the split itself"
+literal|"instead of using the locations provided by the split itself. If there is no llap daemon "
+operator|+
+literal|"running, fall back to locations provided by the split. This is effective only if "
+operator|+
+literal|"hive.execution.mode is llap"
 argument_list|)
 block|,
 name|LLAP_VALIDATE_ACLS
