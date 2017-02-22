@@ -324,9 +324,11 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|ASTBuilder
 block|{
+specifier|public
 specifier|static
 name|ASTBuilder
 name|construct
@@ -360,6 +362,7 @@ return|return
 name|b
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|createAST
@@ -387,6 +390,7 @@ name|text
 argument_list|)
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|destNode
@@ -431,6 +435,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|table
@@ -769,6 +774,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|join
@@ -914,6 +920,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|subQuery
@@ -955,6 +962,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|qualifiedName
@@ -1019,6 +1027,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|unqualifiedName
@@ -1057,6 +1066,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|where
@@ -1086,6 +1096,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|having
@@ -1115,6 +1126,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|limit
@@ -1166,6 +1178,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|selectExpr
@@ -1207,6 +1220,7 @@ name|node
 argument_list|()
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|literal
@@ -1224,6 +1238,7 @@ literal|false
 argument_list|)
 return|;
 block|}
+specifier|public
 specifier|static
 name|ASTNode
 name|literal
@@ -1954,6 +1969,7 @@ block|}
 name|ASTNode
 name|curr
 decl_stmt|;
+specifier|public
 name|ASTNode
 name|node
 parameter_list|()
@@ -1962,6 +1978,7 @@ return|return
 name|curr
 return|;
 block|}
+specifier|public
 name|ASTBuilder
 name|add
 parameter_list|(
@@ -1992,6 +2009,7 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
 name|ASTBuilder
 name|add
 parameter_list|(
@@ -2016,6 +2034,7 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
 name|ASTBuilder
 name|add
 parameter_list|(
