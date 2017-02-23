@@ -2170,6 +2170,11 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
+name|buffer
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
 comment|/* deserialize key into columns */
 name|VectorizedBatchUtil
 operator|.
