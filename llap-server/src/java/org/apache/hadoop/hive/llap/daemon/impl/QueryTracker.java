@@ -971,6 +971,12 @@ name|fragmentIdString
 parameter_list|,
 name|LlapTokenInfo
 name|tokenInfo
+parameter_list|,
+name|String
+name|amHost
+parameter_list|,
+name|int
+name|amPort
 parameter_list|)
 throws|throws
 name|IOException
@@ -1171,6 +1177,23 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Ensure the UGI is setup once.
+name|queryInfo
+operator|.
+name|setupUmbilicalUgi
+argument_list|(
+name|vertex
+operator|.
+name|getTokenIdentifier
+argument_list|()
+argument_list|,
+name|appToken
+argument_list|,
+name|amHost
+argument_list|,
+name|amPort
+argument_list|)
+expr_stmt|;
 name|isExistingQueryInfo
 operator|=
 literal|false

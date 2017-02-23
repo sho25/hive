@@ -183,6 +183,16 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|net
+operator|.
+name|SocketFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -831,6 +841,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|net
+operator|.
+name|NetUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -1149,6 +1173,11 @@ specifier|private
 specifier|final
 name|DaemonId
 name|daemonId
+decl_stmt|;
+specifier|private
+specifier|final
+name|SocketFactory
+name|socketFactory
 decl_stmt|;
 comment|// TODO Not the best way to share the address
 specifier|private
@@ -2203,6 +2232,17 @@ argument_list|)
 decl_stmt|;
 name|this
 operator|.
+name|socketFactory
+operator|=
+name|NetUtils
+operator|.
+name|getDefaultSocketFactory
+argument_list|(
+name|daemonConf
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
 name|amReporter
 operator|=
 operator|new
@@ -2221,6 +2261,8 @@ argument_list|,
 name|daemonConf
 argument_list|,
 name|daemonId
+argument_list|,
+name|socketFactory
 argument_list|)
 expr_stmt|;
 name|SecretManager
@@ -2346,6 +2388,8 @@ argument_list|,
 name|daemonId
 argument_list|,
 name|fsUgiFactory
+argument_list|,
+name|socketFactory
 argument_list|)
 expr_stmt|;
 name|addIfService

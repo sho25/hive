@@ -461,6 +461,16 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|javax
+operator|.
+name|net
+operator|.
+name|SocketFactory
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -1322,6 +1332,13 @@ argument_list|,
 name|mock
 argument_list|(
 name|SchedulerFragmentCompletingListener
+operator|.
+name|class
+argument_list|)
+argument_list|,
+name|mock
+argument_list|(
+name|SocketFactory
 operator|.
 name|class
 argument_list|)

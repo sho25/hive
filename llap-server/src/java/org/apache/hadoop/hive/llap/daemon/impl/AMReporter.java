@@ -871,6 +871,9 @@ name|conf
 parameter_list|,
 name|DaemonId
 name|daemonId
+parameter_list|,
+name|SocketFactory
+name|socketFactory
 parameter_list|)
 block|{
 name|super
@@ -1097,12 +1100,7 @@ name|this
 operator|.
 name|socketFactory
 operator|=
-name|NetUtils
-operator|.
-name|getDefaultSocketFactory
-argument_list|(
-name|conf
-argument_list|)
+name|socketFactory
 expr_stmt|;
 name|LOG
 operator|.
