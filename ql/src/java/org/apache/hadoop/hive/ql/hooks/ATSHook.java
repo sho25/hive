@@ -1129,7 +1129,7 @@ operator|.
 name|getUgi
 argument_list|()
 operator|.
-name|getUserName
+name|getShortUserName
 argument_list|()
 decl_stmt|;
 name|String

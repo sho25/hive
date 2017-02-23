@@ -6884,6 +6884,15 @@ operator|+
 literal|"Used only if hive.tez.java.opts is used to configure Java options."
 argument_list|)
 block|,
+name|HIVETEZHS2USERACCESS
+argument_list|(
+literal|"hive.tez.hs2.user.access"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to grant access to the hs2/hive user for queries"
+argument_list|)
+block|,
 name|HIVEQUERYNAME
 argument_list|(
 literal|"hive.query.name"

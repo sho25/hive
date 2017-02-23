@@ -10079,7 +10079,7 @@ argument_list|()
 argument_list|,
 name|ss
 operator|.
-name|getUserName
+name|getUserFromAuthenticator
 argument_list|()
 argument_list|,
 name|ss
