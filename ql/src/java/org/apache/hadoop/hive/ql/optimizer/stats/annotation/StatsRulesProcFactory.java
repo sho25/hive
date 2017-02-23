@@ -2275,9 +2275,42 @@ argument_list|()
 operator|<=
 literal|0
 condition|)
+block|{
+if|if
+condition|(
+name|isDebugEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Estimating row count for "
+operator|+
+name|pred
+operator|+
+literal|" Original num rows: "
+operator|+
+name|stats
+operator|.
+name|getNumRows
+argument_list|()
+operator|+
+literal|" Original data size: "
+operator|+
+name|stats
+operator|.
+name|getDataSize
+argument_list|()
+operator|+
+literal|" New num rows: 1"
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 literal|1
 return|;
+block|}
 if|if
 condition|(
 name|pred
@@ -2647,23 +2680,41 @@ operator|!=
 literal|null
 condition|)
 block|{
-return|return
+name|newNumRows
+operator|=
 name|cs
 operator|.
 name|getNumTrues
 argument_list|()
-return|;
+expr_stmt|;
 block|}
-block|}
-comment|// if not boolean column return half the number of rows
-return|return
+else|else
+block|{
+comment|// default
+name|newNumRows
+operator|=
 name|stats
 operator|.
 name|getNumRows
 argument_list|()
 operator|/
 literal|2
-return|;
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// if not boolean column return half the number of rows
+name|newNumRows
+operator|=
+name|stats
+operator|.
+name|getNumRows
+argument_list|()
+operator|/
+literal|2
+expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -2697,19 +2748,47 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-return|return
+name|newNumRows
+operator|=
 literal|0
-return|;
+expr_stmt|;
 block|}
 else|else
 block|{
-return|return
+name|newNumRows
+operator|=
 name|stats
 operator|.
 name|getNumRows
 argument_list|()
-return|;
+expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|isDebugEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Estimating row count for "
+operator|+
+name|pred
+operator|+
+literal|" Original num rows: "
+operator|+
+name|stats
+operator|.
+name|getNumRows
+argument_list|()
+operator|+
+literal|" New num rows: "
+operator|+
+name|newNumRows
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|newNumRows
@@ -3238,10 +3317,10 @@ expr_stmt|;
 block|}
 block|}
 comment|// 3. Calculate IN selectivity
-name|float
+name|double
 name|factor
 init|=
-literal|1
+literal|1d
 decl_stmt|;
 for|for
 control|(
@@ -3285,25 +3364,20 @@ operator|.
 name|getCountDistint
 argument_list|()
 decl_stmt|;
-comment|// ( num of distinct vals for col / num of rows ) * num of distinct vals for col in IN clause
-name|float
+comment|// (num of distinct vals for col in IN clause  / num of distinct vals for col )
+name|double
 name|columnFactor
 init|=
 name|dvs
 operator|==
 literal|0
 condition|?
-literal|0.5f
+literal|0.5d
 else|:
 operator|(
 operator|(
-name|float
+name|double
 operator|)
-name|dvs
-operator|/
-name|numRows
-operator|)
-operator|*
 name|values
 operator|.
 name|get
@@ -3313,9 +3387,19 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
+operator|/
+name|dvs
+operator|)
 decl_stmt|;
+comment|// max can be 1, even when ndv is larger in IN clause than in column stats
 name|factor
 operator|*=
+name|columnFactor
+operator|>
+literal|1d
+condition|?
+literal|1d
+else|:
 name|columnFactor
 expr_stmt|;
 block|}
@@ -10158,7 +10242,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"STATS-"
 operator|+
@@ -10167,7 +10251,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": Overflow in number of rows."
+literal|": Overflow in number of rows. "
 operator|+
 name|newNumRows
 operator|+
@@ -10184,7 +10268,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"STATS-"
 operator|+
@@ -10193,7 +10277,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": Equals 0 in number of rows."
+literal|": Equals 0 in number of rows. "
 operator|+
 name|newNumRows
 operator|+
@@ -12420,7 +12504,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"STATS-"
 operator|+
@@ -12429,7 +12513,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": Overflow in number of rows."
+literal|": Overflow in number of rows. "
 operator|+
 name|newNumRows
 operator|+
@@ -12455,7 +12539,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"STATS-"
 operator|+
@@ -12464,7 +12548,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|": Equals 0 in number of rows."
+literal|": Equals 0 in number of rows. "
 operator|+
 name|newNumRows
 operator|+
