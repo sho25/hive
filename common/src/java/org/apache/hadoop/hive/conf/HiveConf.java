@@ -6720,6 +6720,21 @@ operator|+
 literal|" in the metastore instead.)"
 argument_list|)
 block|,
+name|HIVECONVERTJOINMAXENTRIESHASHTABLE
+argument_list|(
+literal|"hive.auto.convert.join.hashtable.max.entries"
+argument_list|,
+literal|4194304L
+argument_list|,
+literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
+operator|+
+literal|"However, if it is on, and the predicated number of entries in hashtable for a given join \n"
+operator|+
+literal|"input is larger than this number, the join will not be converted to a mapjoin. \n"
+operator|+
+literal|"The value \"-1\" means no limit."
+argument_list|)
+block|,
 name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
 argument_list|(
 literal|"hive.hashtable.key.count.adjustment"

@@ -8441,9 +8441,25 @@ literal|null
 condition|)
 block|{
 comment|/* If statistics for the column already exist use it. */
+try|try
+block|{
 return|return
 name|colStats
+operator|.
+name|clone
+argument_list|()
 return|;
+block|}
+catch|catch
+parameter_list|(
+name|CloneNotSupportedException
+name|e
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 comment|// virtual columns
 name|colType
