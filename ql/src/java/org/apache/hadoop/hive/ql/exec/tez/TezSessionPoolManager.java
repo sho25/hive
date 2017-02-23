@@ -1779,11 +1779,9 @@ literal|false
 expr_stmt|;
 name|conf
 operator|.
-name|set
+name|unset
 argument_list|(
 literal|"tez.queue.name"
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
