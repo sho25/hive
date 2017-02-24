@@ -18429,7 +18429,7 @@ name|pathsProcessed
 operator|.
 name|add
 argument_list|(
-name|path
+name|file
 argument_list|)
 expr_stmt|;
 if|if
