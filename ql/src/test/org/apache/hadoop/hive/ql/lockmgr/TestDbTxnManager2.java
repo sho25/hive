@@ -546,12 +546,8 @@ decl_stmt|;
 name|TxnStore
 name|txnHandler
 decl_stmt|;
-annotation|@
-name|BeforeClass
 specifier|public
-specifier|static
-name|void
-name|setUpClass
+name|TestDbTxnManager2
 parameter_list|()
 throws|throws
 name|Exception
@@ -3353,6 +3349,19 @@ name|contains
 argument_list|(
 literal|"Attempt to do update or delete using transaction manager that does not support these operations."
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_TXN_MANAGER
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.lockmgr.DbTxnManager"
 argument_list|)
 expr_stmt|;
 block|}
