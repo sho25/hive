@@ -3941,6 +3941,8 @@ literal|null
 operator|)
 condition|)
 block|{
+try|try
+block|{
 name|hook
 operator|.
 name|rollbackCreateTable
@@ -3948,6 +3950,23 @@ argument_list|(
 name|tbl
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Create rollback failed with"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}

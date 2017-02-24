@@ -1692,7 +1692,7 @@ name|dataSegment
 init|=
 name|objectMapper
 operator|.
-name|readerFor
+name|reader
 argument_list|(
 name|DataSegment
 operator|.

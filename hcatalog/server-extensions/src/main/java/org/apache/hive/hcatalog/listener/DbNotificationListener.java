@@ -2695,6 +2695,16 @@ name|NotificationEvent
 name|event
 parameter_list|)
 block|{
+name|event
+operator|.
+name|setMessageFormat
+argument_list|(
+name|msgFactory
+operator|.
+name|getMessageFormat
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|rs

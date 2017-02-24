@@ -1210,16 +1210,6 @@ parameter_list|)
 throws|throws
 name|URISyntaxException
 block|{
-if|if
-condition|(
-operator|!
-name|Shell
-operator|.
-name|WINDOWS
-condition|)
-block|{
-comment|// If this is not windows shell, path better follow unix convention.
-comment|// Else, the below call will throw an URISyntaxException
 return|return
 operator|new
 name|URI
@@ -1227,20 +1217,6 @@ argument_list|(
 name|path
 argument_list|)
 return|;
-block|}
-else|else
-block|{
-return|return
-operator|new
-name|Path
-argument_list|(
-name|path
-argument_list|)
-operator|.
-name|toUri
-argument_list|()
-return|;
-block|}
 block|}
 comment|// Test when two jars are added with shared dependencies and one jar is deleted, the shared dependencies should not be deleted
 annotation|@

@@ -360,18 +360,6 @@ block|{
 specifier|private
 specifier|static
 specifier|final
-name|int
-name|FILE_HEADER_SEPARATOR_WIDTH
-init|=
-name|InPlaceUpdate
-operator|.
-name|MIN_TERMINAL_WIDTH
-operator|+
-literal|34
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
 name|String
 name|FILE_HEADER_SEPARATOR
 init|=
@@ -381,7 +369,9 @@ argument_list|(
 operator|new
 name|char
 index|[
-name|FILE_HEADER_SEPARATOR_WIDTH
+name|InPlaceUpdate
+operator|.
+name|MIN_TERMINAL_WIDTH
 index|]
 argument_list|)
 operator|.
@@ -398,7 +388,7 @@ specifier|final
 name|String
 name|FORMATTING_PATTERN
 init|=
-literal|"%10s %12s %16s %13s %14s %13s %12s %14s %15s"
+literal|"%10s %17s %14s %14s %15s %16s"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -413,12 +403,6 @@ argument_list|(
 name|FORMATTING_PATTERN
 argument_list|,
 literal|"VERTICES"
-argument_list|,
-literal|"TOTAL_TASKS"
-argument_list|,
-literal|"FAILED_ATTEMPTS"
-argument_list|,
-literal|"KILLED_TASKS"
 argument_list|,
 literal|"DURATION(ms)"
 argument_list|,
@@ -1092,21 +1076,6 @@ argument_list|(
 name|FORMATTING_PATTERN
 argument_list|,
 name|vertexName
-argument_list|,
-name|progress
-operator|.
-name|getTotalTaskCount
-argument_list|()
-argument_list|,
-name|progress
-operator|.
-name|getFailedTaskAttemptCount
-argument_list|()
-argument_list|,
-name|progress
-operator|.
-name|getKilledTaskAttemptCount
-argument_list|()
 argument_list|,
 name|secondsFormatter
 operator|.

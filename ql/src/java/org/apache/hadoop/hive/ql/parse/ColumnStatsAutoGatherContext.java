@@ -880,17 +880,10 @@ name|getExplainConfig
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|ParseDriver
-name|pd
-init|=
-operator|new
-name|ParseDriver
-argument_list|()
-decl_stmt|;
 name|ASTNode
 name|tree
 init|=
-name|pd
+name|ParseUtils
 operator|.
 name|parse
 argument_list|(
@@ -899,15 +892,6 @@ argument_list|,
 name|ctx
 argument_list|)
 decl_stmt|;
-name|tree
-operator|=
-name|ParseUtils
-operator|.
-name|findRootNonNullToken
-argument_list|(
-name|tree
-argument_list|)
-expr_stmt|;
 comment|//1. get the ColumnStatsSemanticAnalyzer
 name|BaseSemanticAnalyzer
 name|baseSem

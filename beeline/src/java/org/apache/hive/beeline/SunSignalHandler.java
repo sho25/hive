@@ -74,9 +74,23 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+specifier|final
+name|BeeLine
+name|beeLine
+decl_stmt|;
 name|SunSignalHandler
-parameter_list|()
+parameter_list|(
+name|BeeLine
+name|beeLine
+parameter_list|)
 block|{
+name|this
+operator|.
+name|beeLine
+operator|=
+name|beeLine
+expr_stmt|;
 comment|// Interpret Ctrl+C as a request to cancel the currently
 comment|// executing query.
 name|Signal
@@ -93,6 +107,8 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setStatement
@@ -108,6 +124,8 @@ operator|=
 name|stmt
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|handle
@@ -118,13 +136,42 @@ parameter_list|)
 block|{
 try|try
 block|{
+comment|// exit the JVM if Ctrl+C is received
+comment|// and no current statement is executing
 if|if
 condition|(
 name|stmt
-operator|!=
+operator|==
 literal|null
+operator|||
+name|stmt
+operator|.
+name|isClosed
+argument_list|()
 condition|)
 block|{
+name|System
+operator|.
+name|exit
+argument_list|(
+literal|127
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|beeLine
+operator|.
+name|info
+argument_list|(
+name|beeLine
+operator|.
+name|loc
+argument_list|(
+literal|"interrupt-ctrl-c"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|stmt
 operator|.
 name|cancel

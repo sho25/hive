@@ -240,6 +240,9 @@ argument_list|,
 name|LOAD_FACTOR
 argument_list|,
 name|WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -359,6 +362,9 @@ argument_list|,
 name|LOAD_FACTOR
 argument_list|,
 name|WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -485,6 +491,9 @@ argument_list|,
 name|LOAD_FACTOR
 argument_list|,
 name|WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -658,6 +667,9 @@ argument_list|,
 literal|1f
 argument_list|,
 name|WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -836,6 +848,9 @@ argument_list|,
 literal|0.0000001f
 argument_list|,
 name|WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -1105,6 +1120,9 @@ argument_list|,
 name|LOAD_FACTOR
 argument_list|,
 name|LARGE_WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet
@@ -1166,6 +1184,9 @@ argument_list|,
 name|LOAD_FACTOR
 argument_list|,
 name|MODERATE_WB_SIZE
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|VerifyFastLongHashSet

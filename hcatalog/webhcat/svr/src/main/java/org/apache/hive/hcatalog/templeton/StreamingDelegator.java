@@ -507,12 +507,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -528,12 +523,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|arg
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

@@ -1716,7 +1716,7 @@ name|bytes
 index|[
 name|i
 operator|+
-literal|1
+literal|2
 index|]
 operator|==
 literal|'u'

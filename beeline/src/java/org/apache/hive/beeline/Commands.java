@@ -5269,7 +5269,7 @@ name|BeelineInPlaceUpdateStream
 argument_list|(
 name|beeLine
 operator|.
-name|getOutputStream
+name|getErrorStream
 argument_list|()
 argument_list|)
 argument_list|)

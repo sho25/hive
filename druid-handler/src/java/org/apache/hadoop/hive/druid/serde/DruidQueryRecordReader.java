@@ -570,8 +570,11 @@ name|createRequest
 argument_list|(
 name|hiveDruidSplit
 operator|.
-name|getAddress
+name|getLocations
 argument_list|()
+index|[
+literal|0
+index|]
 argument_list|,
 name|query
 argument_list|)

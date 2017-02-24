@@ -405,13 +405,6 @@ argument_list|(
 literal|"--"
 argument_list|)
 expr_stmt|;
-name|TempletonUtils
-operator|.
-name|addCmdForWindows
-argument_list|(
-name|args
-argument_list|)
-expr_stmt|;
 comment|//check if the rest command specified explicitly to use hcatalog
 if|if
 condition|(
@@ -514,12 +507,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|libjarsListAsString
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -558,12 +546,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|filesListAsString
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -620,12 +603,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|d
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -641,12 +619,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-name|TempletonUtils
-operator|.
-name|quoteForWindows
-argument_list|(
 name|arg
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

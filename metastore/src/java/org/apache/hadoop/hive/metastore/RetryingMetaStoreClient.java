@@ -1265,7 +1265,24 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"MetaStoreClient lost connection. Attempting to reconnect."
+literal|"MetaStoreClient lost connection. Attempting to reconnect ("
+operator|+
+name|retriesMade
+operator|+
+literal|" of "
+operator|+
+name|retryLimit
+operator|+
+literal|") after "
+operator|+
+name|retryDelaySeconds
+operator|+
+literal|"s. "
+operator|+
+name|method
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 name|caughtException
 argument_list|)

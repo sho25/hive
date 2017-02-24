@@ -934,6 +934,19 @@ operator|=
 name|e
 expr_stmt|;
 block|}
+comment|/**    * Indicates whether the remote context is active. SparkJobMonitor can use this to decide whether    * to stop monitoring.    */
+specifier|public
+name|boolean
+name|isRemoteActive
+parameter_list|()
+block|{
+return|return
+name|sparkClient
+operator|.
+name|isActive
+argument_list|()
+return|;
+block|}
 specifier|private
 name|SparkJobInfo
 name|getSparkJobInfo

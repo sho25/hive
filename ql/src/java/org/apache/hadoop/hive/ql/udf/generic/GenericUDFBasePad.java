@@ -464,6 +464,14 @@ operator|||
 name|lenW
 operator|==
 literal|null
+operator|||
+name|pad
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 return|return

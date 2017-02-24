@@ -832,6 +832,15 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|exec
+operator|.
+name|currentScope
+operator|!=
+literal|null
+condition|)
+block|{
 name|exec
 operator|.
 name|currentScope
@@ -841,6 +850,7 @@ argument_list|(
 name|var
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|var
@@ -962,6 +972,15 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|exec
+operator|.
+name|currentScope
+operator|!=
+literal|null
+condition|)
+block|{
 name|exec
 operator|.
 name|currentScope
@@ -971,6 +990,7 @@ argument_list|(
 name|var
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|var

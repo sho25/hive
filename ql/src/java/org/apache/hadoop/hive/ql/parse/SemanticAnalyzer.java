@@ -16578,13 +16578,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ParseDriver
-name|pd
-init|=
-operator|new
-name|ParseDriver
-argument_list|()
-decl_stmt|;
 name|ASTNode
 name|viewTree
 decl_stmt|;
@@ -16635,7 +16628,7 @@ comment|// the top-level token stream.
 name|ASTNode
 name|tree
 init|=
-name|pd
+name|ParseUtils
 operator|.
 name|parse
 argument_list|(
@@ -16646,15 +16639,6 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-name|tree
-operator|=
-name|ParseUtils
-operator|.
-name|findRootNonNullToken
-argument_list|(
-name|tree
-argument_list|)
-expr_stmt|;
 name|viewTree
 operator|=
 name|tree
@@ -63991,7 +63975,7 @@ name|statsTmpLoc
 init|=
 name|ctx
 operator|.
-name|getExtTmpPathRelTo
+name|getTempDirForPath
 argument_list|(
 name|tab
 operator|.
@@ -66628,7 +66612,14 @@ name|ctx_1
 expr_stmt|;
 block|}
 name|void
-name|setCTASOrMVToken
+name|setCTASToken
+parameter_list|(
+name|ASTNode
+name|child
+parameter_list|)
+block|{     }
+name|void
+name|setViewToken
 parameter_list|(
 name|ASTNode
 name|child
@@ -67220,6 +67211,35 @@ range|:
 name|needRewritePrivObjs
 control|)
 block|{
+comment|// We don't support masking/filtering against ACID query at the moment
+if|if
+condition|(
+name|ctx
+operator|.
+name|getIsUpdateDeleteMerge
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|MASKING_FILTERING_ON_ACID_NOT_SUPPORTED
+argument_list|,
+name|privObj
+operator|.
+name|getDbname
+argument_list|()
+argument_list|,
+name|privObj
+operator|.
+name|getObjectName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|MaskAndFilterInfo
 name|info
 init|=
@@ -67543,7 +67563,7 @@ try|try
 block|{
 name|rewrittenTree
 operator|=
-name|pd
+name|ParseUtils
 operator|.
 name|parse
 argument_list|(
@@ -67565,15 +67585,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|rewrittenTree
-operator|=
-name|ParseUtils
-operator|.
-name|findRootNonNullToken
-argument_list|(
-name|rewrittenTree
-argument_list|)
-expr_stmt|;
 return|return
 name|rewrittenTree
 return|;
@@ -67627,11 +67638,7 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 comment|// 1. analyze and process the position alias
-name|processPositionAlias
-argument_list|(
-name|ast
-argument_list|)
-expr_stmt|;
+comment|// step processPositionAlias out of genResolvedParseTree
 comment|// 2. analyze create table command
 if|if
 condition|(
@@ -68294,6 +68301,12 @@ argument_list|(
 literal|"Starting Semantic Analysis"
 argument_list|)
 expr_stmt|;
+comment|//change the location of position alias process here
+name|processPositionAlias
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -68360,6 +68373,12 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+comment|//change the location of position alias process here
+name|processPositionAlias
+argument_list|(
+name|tree
+argument_list|)
+expr_stmt|;
 name|genResolvedParseTree
 argument_list|(
 name|tree
@@ -68402,6 +68421,14 @@ condition|(
 name|createVwDesc
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|this
+operator|.
+name|ctx
+operator|.
+name|isCboSucceeded
+argument_list|()
 condition|)
 block|{
 name|resultSchema
@@ -68580,9 +68607,19 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+operator|!
+name|ctx
+operator|.
+name|isCboSucceeded
+argument_list|()
+condition|)
+block|{
 name|saveViewDefinition
 argument_list|()
 expr_stmt|;
+block|}
 comment|// validate the create view statement at this point, the createVwDesc gets
 comment|// all the information for semanticcheck
 name|validateCreateView
@@ -69537,7 +69574,7 @@ return|return
 name|resultSchema
 return|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|saveViewDefinition
 parameter_list|()
@@ -70974,6 +71011,61 @@ name|getColumn
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// in subquery case, tmp may be from outside.
+if|if
+condition|(
+name|tmp
+index|[
+literal|0
+index|]
+operator|!=
+literal|null
+operator|&&
+name|columnDesc
+operator|.
+name|getTabAlias
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|tmp
+index|[
+literal|0
+index|]
+operator|.
+name|equals
+argument_list|(
+name|columnDesc
+operator|.
+name|getTabAlias
+argument_list|()
+argument_list|)
+operator|&&
+name|tcCtx
+operator|.
+name|getOuterRR
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|tmp
+operator|=
+name|tcCtx
+operator|.
+name|getOuterRR
+argument_list|()
+operator|.
+name|reverseLookup
+argument_list|(
+name|columnDesc
+operator|.
+name|getColumn
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|StringBuilder
 name|replacementText
 init|=
@@ -72549,7 +72641,7 @@ condition|)
 block|{
 name|plannerCtx
 operator|.
-name|setCTASOrMVToken
+name|setCTASToken
 argument_list|(
 name|child
 argument_list|)
@@ -74260,7 +74352,7 @@ condition|)
 block|{
 name|plannerCtx
 operator|.
-name|setCTASOrMVToken
+name|setViewToken
 argument_list|(
 name|child
 argument_list|)
@@ -74623,13 +74715,6 @@ operator|.
 name|CREATE_MATERIALIZED_VIEW
 argument_list|)
 expr_stmt|;
-name|qb
-operator|.
-name|setViewDesc
-argument_list|(
-name|createVwDesc
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -74713,6 +74798,13 @@ name|CREATEVIEW
 argument_list|)
 expr_stmt|;
 block|}
+name|qb
+operator|.
+name|setViewDesc
+argument_list|(
+name|createVwDesc
+argument_list|)
+expr_stmt|;
 return|return
 name|selectStmt
 return|;
@@ -75137,7 +75229,7 @@ throw|;
 block|}
 block|}
 comment|// Process the position alias in GROUPBY and ORDERBY
-specifier|private
+specifier|public
 name|void
 name|processPositionAlias
 parameter_list|(

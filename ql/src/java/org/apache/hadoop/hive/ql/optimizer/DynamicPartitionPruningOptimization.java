@@ -2786,6 +2786,15 @@ name|exprNodeDesc
 operator|instanceof
 name|ExprNodeColumnDesc
 operator|)
+operator|&&
+operator|(
+name|exprNodeDesc
+operator|.
+name|getChildren
+argument_list|()
+operator|!=
+literal|null
+operator|)
 condition|)
 block|{
 name|exprNodeDesc
@@ -2801,6 +2810,13 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|exprNodeDesc
+operator|instanceof
+name|ExprNodeColumnDesc
+condition|)
+block|{
 name|internalColName
 operator|=
 operator|(
@@ -2919,6 +2935,15 @@ argument_list|)
 condition|)
 block|{
 comment|// The column is partition column, skip the optimization.
+return|return
+literal|false
+return|;
+block|}
+block|}
+else|else
+block|{
+comment|// No column found!
+comment|// Bail out
 return|return
 literal|false
 return|;

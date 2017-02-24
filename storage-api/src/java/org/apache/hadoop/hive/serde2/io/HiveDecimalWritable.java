@@ -2819,6 +2819,19 @@ name|fastHashCode
 argument_list|()
 return|;
 block|}
+specifier|private
+specifier|static
+specifier|final
+name|byte
+index|[]
+name|EMPTY_ARRAY
+init|=
+operator|new
+name|byte
+index|[
+literal|0
+index|]
+decl_stmt|;
 annotation|@
 name|HiveDecimalWritableVersionV1
 specifier|public
@@ -2834,13 +2847,10 @@ name|isSet
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"no value set"
-argument_list|)
-throw|;
+comment|// don't break old callers that are trying to reuse storages
+return|return
+name|EMPTY_ARRAY
+return|;
 block|}
 if|if
 condition|(

@@ -895,6 +895,11 @@ argument_list|,
 name|elapsedTime
 argument_list|)
 decl_stmt|;
+name|reprintLine
+argument_list|(
+name|SEPARATOR
+argument_list|)
+expr_stmt|;
 name|reprintLineWithColorAsBold
 argument_list|(
 name|footer

@@ -113,6 +113,9 @@ class|class
 name|SortByShuffler
 implements|implements
 name|SparkShuffler
+argument_list|<
+name|BytesWritable
+argument_list|>
 block|{
 specifier|private
 specifier|final

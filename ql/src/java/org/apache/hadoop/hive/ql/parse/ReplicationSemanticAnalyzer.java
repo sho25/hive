@@ -2538,6 +2538,11 @@ name|maxRange
 expr_stmt|;
 block|}
 block|}
+comment|// TODO : instead of simply restricting by message format, we should eventually
+comment|// move to a jdbc-driver-stype registering of message format, and picking message
+comment|// factory per event to decode. For now, however, since all messages have the
+comment|// same factory, restricting by message format is effectively a guard against
+comment|// older leftover data that would cause us problems.
 name|IMetaStoreClient
 operator|.
 name|NotificationFilter
@@ -2563,6 +2568,19 @@ argument_list|(
 name|eventFrom
 argument_list|,
 name|eventTo
+argument_list|)
+argument_list|,
+name|EventUtils
+operator|.
+name|restrictByMessageFormat
+argument_list|(
+name|MessageFactory
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|getMessageFormat
+argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;

@@ -73,12 +73,15 @@ begin_interface
 specifier|public
 interface|interface
 name|SparkShuffler
+parameter_list|<
+name|V
+parameter_list|>
 block|{
 name|JavaPairRDD
 argument_list|<
 name|HiveKey
 argument_list|,
-name|BytesWritable
+name|V
 argument_list|>
 name|shuffle
 parameter_list|(

@@ -442,7 +442,9 @@ name|LLAP_VALIDATE_ACLS
 operator|.
 name|varname
 operator|+
-literal|" to false to disable ACL validation"
+literal|" to false to disable ACL validation (note"
+operator|+
+literal|" that invalid ACLs on secret key paths would mean that security is compromised)"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -466,7 +468,10 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|validateConfigBeforeCtor
+argument_list|(
 name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|this
@@ -484,6 +489,59 @@ expr_stmt|;
 name|checkForZKDTSMBug
 argument_list|()
 expr_stmt|;
+block|}
+specifier|private
+specifier|static
+name|Configuration
+name|validateConfigBeforeCtor
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|setCurator
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+comment|// Ensure there's no threadlocal. We don't expect one.
+comment|// We don't ever want to create key paths with world visibility. Why is that even an option?!!
+name|String
+name|authType
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|ZK_DTSM_ZK_AUTH_TYPE
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+literal|"sasl"
+operator|.
+name|equals
+argument_list|(
+name|authType
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Inconsistent configuration: secure cluster, but ZK auth is "
+operator|+
+name|authType
+operator|+
+literal|" instead of sasl"
+argument_list|)
+throw|;
+block|}
+return|return
+name|conf
+return|;
 block|}
 annotation|@
 name|Override
@@ -1174,10 +1232,11 @@ argument_list|,
 name|zkPath
 argument_list|)
 expr_stmt|;
-name|setZkConfIfNotSet
-argument_list|(
+comment|// Hardcode SASL here. ZKDTSM only supports none or sasl and we never want none.
 name|zkConf
-argument_list|,
+operator|.
+name|set
+argument_list|(
 name|SecretManager
 operator|.
 name|ZK_DTSM_ZK_AUTH_TYPE

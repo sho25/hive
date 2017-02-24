@@ -39,20 +39,6 @@ name|Description
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
-import|;
-end_import
-
 begin_comment
 comment|/**  * UDFLpad.  *  */
 end_comment
@@ -75,15 +61,21 @@ literal|"If str is longer than len, the return value is shortened to "
 operator|+
 literal|"len characters.\n"
 operator|+
+literal|"In case of empty pad string, the return value is null.\n"
+operator|+
 literal|"Example:\n"
 operator|+
 literal|"> SELECT _FUNC_('hi', 5, '??') FROM src LIMIT 1;\n"
 operator|+
-literal|"  '???hi'"
+literal|"  '???hi'\n"
 operator|+
 literal|"> SELECT _FUNC_('hi', 1, '??') FROM src LIMIT 1;\n"
 operator|+
-literal|"  'h'"
+literal|"  'h'\n"
+operator|+
+literal|"> SELECT _FUNC_('hi', 5, '') FROM src LIMIT 1;\n"
+operator|+
+literal|"  null"
 argument_list|)
 specifier|public
 class|class

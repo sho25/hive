@@ -5341,7 +5341,7 @@ name|RecordReaderUtils
 operator|.
 name|stringifyDiskRanges
 argument_list|(
-name|range
+name|result
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5362,7 +5362,7 @@ operator|==
 literal|null
 operator|)
 condition|?
-name|range
+name|result
 else|:
 name|metadataCache
 operator|.
@@ -5370,7 +5370,7 @@ name|getIncompleteCbs
 argument_list|(
 name|fileKey
 argument_list|,
-name|range
+name|result
 argument_list|,
 name|baseOffset
 argument_list|,

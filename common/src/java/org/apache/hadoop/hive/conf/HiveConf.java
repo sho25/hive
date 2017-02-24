@@ -2528,7 +2528,7 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+name|LLAP_DAEMON_XMX_HEADROOM
 operator|.
 name|varname
 argument_list|)
@@ -5417,7 +5417,7 @@ argument_list|)
 block|,
 name|SEMIJOIN_CONVERSION
 argument_list|(
-literal|"hive.enable.semijoin.conversion"
+literal|"hive.optimize.semijoin.conversion"
 argument_list|,
 literal|true
 argument_list|,
@@ -6749,6 +6749,21 @@ operator|+
 literal|" in the metastore instead.)"
 argument_list|)
 block|,
+name|HIVECONVERTJOINMAXENTRIESHASHTABLE
+argument_list|(
+literal|"hive.auto.convert.join.hashtable.max.entries"
+argument_list|,
+literal|4194304L
+argument_list|,
+literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
+operator|+
+literal|"However, if it is on, and the predicated number of entries in hashtable for a given join \n"
+operator|+
+literal|"input is larger than this number, the join will not be converted to a mapjoin. \n"
+operator|+
+literal|"The value \"-1\" means no limit."
+argument_list|)
+block|,
 name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
 argument_list|(
 literal|"hive.hashtable.key.count.adjustment"
@@ -6896,6 +6911,15 @@ argument_list|,
 literal|"The log level to use for tasks executing as part of the DAG.\n"
 operator|+
 literal|"Used only if hive.tez.java.opts is used to configure Java options."
+argument_list|)
+block|,
+name|HIVETEZHS2USERACCESS
+argument_list|(
+literal|"hive.tez.hs2.user.access"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to grant access to the hs2/hive user for queries"
 argument_list|)
 block|,
 name|HIVEQUERYNAME
@@ -8563,12 +8587,33 @@ argument_list|,
 literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
 argument_list|)
 block|,
+name|HIVE_DRUID_SELECT_DISTRIBUTE
+argument_list|(
+literal|"hive.druid.select.distribute"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If it is set to true, we distribute the execution of Druid Select queries. Concretely, we retrieve\n"
+operator|+
+literal|"the result for Select queries directly from the Druid nodes containing the segments data.\n"
+operator|+
+literal|"In particular, first we contact the Druid broker node to obtain the nodes containing the segments\n"
+operator|+
+literal|"for the given query, and then we contact those nodes to retrieve the results for the query.\n"
+operator|+
+literal|"If it is set to false, we do not execute the Select queries in a distributed fashion. Instead, results\n"
+operator|+
+literal|"for those queries are returned by the Druid broker node."
+argument_list|)
+block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
 argument_list|(
 literal|"hive.druid.select.threshold"
 argument_list|,
 literal|10000
 argument_list|,
+literal|"Takes only effect when hive.druid.select.distribute is set to false. \n"
+operator|+
 literal|"When we can split a Select query, this is the maximum number of rows that we try to retrieve\n"
 operator|+
 literal|"per query. In order to do that, we obtain the estimated size for the complete result. If the\n"
@@ -8577,7 +8622,7 @@ literal|"number of records of the query results is larger than this threshold, w
 operator|+
 literal|"total number of rows/threshold parts across the time dimension. Note that we assume the\n"
 operator|+
-literal|"records to be split uniformly across the time dimension"
+literal|"records to be split uniformly across the time dimension."
 argument_list|)
 block|,
 name|HIVE_DRUID_NUM_HTTP_CONNECTION
@@ -12164,6 +12209,15 @@ argument_list|,
 literal|"Whether LLAP should use vectorized SerDe reader to read text data when re-encoding."
 argument_list|)
 block|,
+name|LLAP_IO_ENCODE_VECTOR_SERDE_ASYNC_ENABLED
+argument_list|(
+literal|"hive.llap.io.encode.vector.serde.async.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP should use async mode in vectorized SerDe reader to read text data."
+argument_list|)
+block|,
 name|LLAP_IO_ENCODE_SLICE_ROW_COUNT
 argument_list|(
 literal|"hive.llap.io.encode.slice.row.count"
@@ -12774,19 +12828,19 @@ argument_list|,
 literal|"llap.daemon.memory.per.instance.mb"
 argument_list|)
 block|,
-name|LLAP_DAEMON_HEADROOM_MEMORY_PER_INSTANCE_MB
+name|LLAP_DAEMON_XMX_HEADROOM
 argument_list|(
-literal|"hive.llap.daemon.headroom.memory.per.instance.mb"
+literal|"hive.llap.daemon.xmx.headroom"
 argument_list|,
-literal|512
+literal|"5%"
 argument_list|,
-literal|"The total amount of memory deducted from daemon memory required for other LLAP services. The remaining memory"
+literal|"The total amount of heap memory set aside by LLAP and not used by the executors. Can\n"
 operator|+
-literal|" will be used by the executors. If the cache is off-heap, Executor memory + Headroom memory = Xmx. If the "
+literal|"be specified as size (e.g. '512Mb'), or percentage (e.g. '5%'). Note that the latter is\n"
 operator|+
-literal|"cache is on-heap, Executor memory + Cache memory + Headroom memory = Xmx. The headroom memory has to be "
+literal|"derived from the total daemon XMX, which can be different from the total executor\n"
 operator|+
-literal|"minimum of 5% from the daemon memory."
+literal|"memory if the cache is on-heap; although that's not the default configuration."
 argument_list|)
 block|,
 name|LLAP_DAEMON_VCPUS_PER_INSTANCE
@@ -13106,9 +13160,13 @@ literal|"hive.llap.client.consistent.splits"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Whether to setup split locations to match nodes on which llap daemons are running,"
+literal|"Whether to setup split locations to match nodes on which llap daemons are running, "
 operator|+
-literal|" instead of using the locations provided by the split itself"
+literal|"instead of using the locations provided by the split itself. If there is no llap daemon "
+operator|+
+literal|"running, fall back to locations provided by the split. This is effective only if "
+operator|+
+literal|"hive.execution.mode is llap"
 argument_list|)
 block|,
 name|LLAP_VALIDATE_ACLS
@@ -13219,6 +13277,32 @@ name|LLAP_LOGGER_NAME_CONSOLE
 argument_list|)
 argument_list|,
 literal|"logger used for llap-daemons."
+argument_list|)
+block|,
+name|SPARK_USE_OP_STATS
+argument_list|(
+literal|"hive.spark.use.op.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use operator stats to determine reducer parallelism for Hive on Spark. "
+operator|+
+literal|"If this is false, Hive will use source table stats to determine reducer "
+operator|+
+literal|"parallelism for all first level reduce tasks, and the maximum reducer parallelism "
+operator|+
+literal|"from all parents for all the rest (second level and onward) reducer tasks."
+argument_list|)
+block|,
+name|SPARK_USE_FILE_SIZE_FOR_MAPJOIN
+argument_list|(
+literal|"hive.spark.use.file.size.for.mapjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If this is set to true, mapjoin optimization in Hive/Spark will use source file sizes associated "
+operator|+
+literal|"with TableScan operator on the root of operator tree, instead of using operator statistics."
 argument_list|)
 block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
@@ -13390,6 +13474,17 @@ operator|*
 literal|1024L
 argument_list|,
 literal|"Maximum total data size in dynamic pruning."
+argument_list|)
+block|,
+name|SPARK_USE_GROUPBY_SHUFFLE
+argument_list|(
+literal|"hive.spark.use.groupby.shuffle"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Spark groupByKey transformation has better performance but uses unbounded memory."
+operator|+
+literal|"Turn this off when there is a memory issue."
 argument_list|)
 block|,
 name|NWAYJOINREORDER
@@ -14619,16 +14714,6 @@ expr_stmt|;
 comment|// Launch hadoop command file on windows.
 return|return
 name|val
-operator|+
-operator|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|?
-literal|".cmd"
-else|:
-literal|""
-operator|)
 return|;
 block|}
 specifier|private
@@ -14669,16 +14754,6 @@ operator|)
 expr_stmt|;
 return|return
 name|val
-operator|+
-operator|(
-name|Shell
-operator|.
-name|WINDOWS
-condition|?
-literal|".cmd"
-else|:
-literal|""
-operator|)
 return|;
 block|}
 specifier|private

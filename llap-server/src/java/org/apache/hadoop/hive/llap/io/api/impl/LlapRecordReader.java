@@ -827,6 +827,11 @@ specifier|private
 name|SchemaEvolution
 name|evolution
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isAcidScan
+decl_stmt|;
 specifier|public
 name|LlapRecordReader
 parameter_list|(
@@ -1187,9 +1192,8 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|boolean
 name|isAcidScan
-init|=
+operator|=
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -1200,7 +1204,7 @@ name|ConfVars
 operator|.
 name|HIVE_TRANSACTIONAL_TABLE_SCAN
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|TypeDescription
 name|schema
 init|=
@@ -1343,7 +1347,7 @@ name|i
 control|)
 block|{
 name|int
-name|colId
+name|projectedColId
 init|=
 name|columnIds
 operator|==
@@ -1358,6 +1362,23 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
+comment|// Adjust file column index for ORC struct.
+comment|// LLAP IO does not support ACID. When it supports, this would be auto adjusted.
+name|int
+name|fileColId
+init|=
+name|OrcInputFormat
+operator|.
+name|getRootColumn
+argument_list|(
+operator|!
+name|isAcidScan
+argument_list|)
+operator|+
+name|projectedColId
+operator|+
+literal|1
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1365,7 +1386,7 @@ name|evolution
 operator|.
 name|isPPDSafeConversion
 argument_list|(
-name|colId
+name|fileColId
 argument_list|)
 condition|)
 block|{

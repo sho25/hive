@@ -791,7 +791,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -907,7 +907,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1074,7 +1074,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1745,7 +1745,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1770,7 +1770,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1795,7 +1795,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1814,7 +1814,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1894,7 +1894,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1919,7 +1919,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -1944,7 +1944,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2041,7 +2041,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2151,7 +2151,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2169,7 +2169,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2320,7 +2320,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2437,7 +2437,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)
@@ -2496,7 +2496,7 @@ name|SQLException
 block|{
 throw|throw
 operator|new
-name|SQLException
+name|SQLFeatureNotSupportedException
 argument_list|(
 literal|"Method not supported"
 argument_list|)

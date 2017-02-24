@@ -2229,6 +2229,7 @@ name|HiveSQLException
 name|e
 parameter_list|)
 block|{
+comment|// TODO: why do we invent our own error path op top of the one from Future.get?
 name|setOperationException
 argument_list|(
 name|e

@@ -312,6 +312,19 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+name|runAndVerify
+argument_list|(
+literal|"hi"
+argument_list|,
+literal|3
+argument_list|,
+literal|""
+argument_list|,
+literal|null
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -386,12 +399,9 @@ block|,
 name|valueObj3
 block|}
 decl_stmt|;
-name|Text
+name|Object
 name|output
 init|=
-operator|(
-name|Text
-operator|)
 name|udf
 operator|.
 name|evaluate
@@ -399,6 +409,13 @@ argument_list|(
 name|args
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|expResult
+operator|!=
+literal|null
+condition|)
+block|{
 name|assertEquals
 argument_list|(
 literal|"lpad() test "
@@ -411,6 +428,17 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|assertNull
+argument_list|(
+literal|"lpad() test "
+argument_list|,
+name|output
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class

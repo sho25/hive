@@ -16,14 +16,12 @@ package|;
 end_package
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|junit
 operator|.
-name|Assert
-operator|.
-name|assertEquals
+name|Test
 import|;
 end_import
 
@@ -38,12 +36,14 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
 name|org
 operator|.
 name|junit
 operator|.
-name|Test
+name|Assert
+operator|.
+name|assertEquals
 import|;
 end_import
 
@@ -177,6 +177,56 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testaddBatch
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|HiveStatement
+name|stmt
+init|=
+operator|new
+name|HiveStatement
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|addBatch
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|assertEquals
+argument_list|(
+literal|"java.sql.SQLFeatureNotSupportedException: Method not supported"
+argument_list|,
+name|e
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class

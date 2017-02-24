@@ -2323,9 +2323,13 @@ expr_stmt|;
 name|RunningJob
 name|rj
 init|=
+operator|new
 name|JobClient
+argument_list|(
+name|job
+argument_list|)
 operator|.
-name|runJob
+name|submitJob
 argument_list|(
 name|job
 argument_list|)

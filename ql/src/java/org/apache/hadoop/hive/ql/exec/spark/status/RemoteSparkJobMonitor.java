@@ -45,6 +45,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -505,6 +519,28 @@ operator|=
 name|progressMap
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|sparkJobState
+operator|==
+literal|null
+condition|)
+block|{
+comment|// in case the remote context crashes between JobStarted and JobSubmitted
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|sparkJobStatus
+operator|.
+name|isRemoteActive
+argument_list|()
+argument_list|,
+literal|"Remote context becomes inactive."
+argument_list|)
+expr_stmt|;
+block|}
 break|break;
 case|case
 name|SUCCEEDED
@@ -790,7 +826,7 @@ literal|"'"
 decl_stmt|;
 name|msg
 operator|=
-literal|"Failed to monitor Job[ "
+literal|"Failed to monitor Job["
 operator|+
 name|sparkJobStatus
 operator|.

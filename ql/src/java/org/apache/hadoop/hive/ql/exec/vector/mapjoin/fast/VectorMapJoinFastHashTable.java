@@ -110,6 +110,10 @@ name|int
 name|writeBuffersSize
 decl_stmt|;
 specifier|protected
+name|long
+name|estimatedKeyCount
+decl_stmt|;
+specifier|protected
 name|int
 name|metricPutConflict
 decl_stmt|;
@@ -129,6 +133,82 @@ specifier|protected
 name|int
 name|metricExpands
 decl_stmt|;
+comment|// 2^30 (we cannot use Integer.MAX_VALUE which is 2^31-1).
+specifier|public
+specifier|static
+name|int
+name|HIGHEST_INT_POWER_OF_2
+init|=
+literal|1073741824
+decl_stmt|;
+specifier|public
+specifier|static
+name|int
+name|ONE_QUARTER_LIMIT
+init|=
+name|HIGHEST_INT_POWER_OF_2
+operator|/
+literal|4
+decl_stmt|;
+specifier|public
+specifier|static
+name|int
+name|ONE_SIXTH_LIMIT
+init|=
+name|HIGHEST_INT_POWER_OF_2
+operator|/
+literal|6
+decl_stmt|;
+specifier|public
+name|void
+name|throwExpandError
+parameter_list|(
+name|int
+name|limit
+parameter_list|,
+name|String
+name|dataTypeName
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Vector MapJoin "
+operator|+
+name|dataTypeName
+operator|+
+literal|" Hash Table cannot grow any more -- use a smaller container size. "
+operator|+
+literal|"Current logical size is "
+operator|+
+name|logicalHashBucketCount
+operator|+
+literal|" and "
+operator|+
+literal|"the limit is "
+operator|+
+name|limit
+operator|+
+literal|". "
+operator|+
+literal|"Estimated key count was "
+operator|+
+operator|(
+name|estimatedKeyCount
+operator|==
+operator|-
+literal|1
+condition|?
+literal|"not available"
+else|:
+name|estimatedKeyCount
+operator|)
+operator|+
+literal|"."
+argument_list|)
+throw|;
+block|}
 specifier|private
 specifier|static
 name|void
@@ -207,6 +287,9 @@ name|loadFactor
 parameter_list|,
 name|int
 name|writeBuffersSize
+parameter_list|,
+name|long
+name|estimatedKeyCount
 parameter_list|)
 block|{
 name|initialCapacity
@@ -233,6 +316,12 @@ name|validateCapacity
 argument_list|(
 name|initialCapacity
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|estimatedKeyCount
+operator|=
+name|estimatedKeyCount
 expr_stmt|;
 name|logicalHashBucketCount
 operator|=

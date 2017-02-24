@@ -45,22 +45,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|SynchronizedMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|exec
@@ -322,11 +306,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of HiveLockManager for use with {@link org.apache.hadoop.hive.ql.lockmgr.DbTxnManager}.  * Note, this lock manager is not meant to stand alone.  It cannot be used  * without the DbTxnManager.  */
+comment|/**  * An implementation of HiveLockManager for use with {@link org.apache.hadoop.hive.ql.lockmgr.DbTxnManager}.  * Note, this lock manager is not meant to be stand alone.  It cannot be used without the DbTxnManager.  * See {@link DbTxnManager#getMS()} for important concurrency/metastore access notes.  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|DbLockManager
 implements|implements
@@ -371,10 +356,6 @@ argument_list|>
 name|locks
 decl_stmt|;
 specifier|private
-name|SynchronizedMetaStoreClient
-name|client
-decl_stmt|;
-specifier|private
 name|long
 name|nextSleep
 init|=
@@ -385,13 +366,18 @@ specifier|final
 name|HiveConf
 name|conf
 decl_stmt|;
+specifier|private
+specifier|final
+name|DbTxnManager
+name|txnManager
+decl_stmt|;
 name|DbLockManager
 parameter_list|(
-name|SynchronizedMetaStoreClient
-name|client
-parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|,
+name|DbTxnManager
+name|txnManager
 parameter_list|)
 block|{
 name|locks
@@ -403,15 +389,15 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|client
+name|conf
 operator|=
-name|client
+name|conf
 expr_stmt|;
 name|this
 operator|.
-name|conf
+name|txnManager
 operator|=
-name|conf
+name|txnManager
 expr_stmt|;
 block|}
 annotation|@
@@ -579,7 +565,10 @@ expr_stmt|;
 name|LockResponse
 name|res
 init|=
-name|client
+name|txnManager
+operator|.
+name|getMS
+argument_list|()
 operator|.
 name|lock
 argument_list|(
@@ -660,7 +649,10 @@ argument_list|()
 expr_stmt|;
 name|res
 operator|=
-name|client
+name|txnManager
+operator|.
+name|getMS
+argument_list|()
 operator|.
 name|checkLock
 argument_list|(
@@ -1183,7 +1175,10 @@ block|{
 try|try
 block|{
 return|return
-name|client
+name|txnManager
+operator|.
+name|getMS
+argument_list|()
 operator|.
 name|checkLock
 argument_list|(
@@ -1256,7 +1251,10 @@ operator|+
 name|hiveLock
 argument_list|)
 expr_stmt|;
-name|client
+name|txnManager
+operator|.
+name|getMS
+argument_list|()
 operator|.
 name|unlock
 argument_list|(
@@ -1584,7 +1582,10 @@ block|{
 try|try
 block|{
 return|return
-name|client
+name|txnManager
+operator|.
+name|getMS
+argument_list|()
 operator|.
 name|showLocks
 argument_list|(
@@ -1831,7 +1832,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Clear the memory of the locks in this object.  This won't clear the locks from the database.    * It is for use with    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.IMetaStoreClient, org.apache.hadoop.hive.conf.HiveConf)} .commitTxn} and    * {@link #DbLockManager(org.apache.hadoop.hive.metastore.IMetaStoreClient, org.apache.hadoop.hive.conf.HiveConf)} .rollbackTxn}.    */
+comment|/**    * Clear the memory of the locks in this object.  This won't clear the locks from the database.    * It is for use with    * {@link #DbLockManager(HiveConf, DbTxnManager)} .commitTxn} and    * {@link #DbLockManager(HiveConf, DbTxnManager)} .rollbackTxn}.    */
 name|void
 name|clearLocalLockRecords
 parameter_list|()
