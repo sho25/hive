@@ -8537,6 +8537,14 @@ argument_list|,
 literal|"last_repl_id#string"
 argument_list|)
 expr_stmt|;
+name|setFetchTask
+argument_list|(
+name|createFetchTask
+argument_list|(
+literal|"last_repl_id#string"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
