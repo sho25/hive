@@ -743,7 +743,7 @@ specifier|static
 name|void
 name|clearConf
 parameter_list|(
-name|HiveConf
+name|Configuration
 name|conf
 parameter_list|,
 name|String
