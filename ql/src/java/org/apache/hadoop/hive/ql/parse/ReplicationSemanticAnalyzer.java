@@ -1050,7 +1050,7 @@ name|eventTo
 decl_stmt|;
 specifier|private
 name|Integer
-name|batchSize
+name|maxEventLimit
 decl_stmt|;
 comment|// Base path for REPL LOAD
 specifier|private
@@ -2038,10 +2038,10 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|TOK_BATCH
+name|TOK_LIMIT
 condition|)
 block|{
-name|batchSize
+name|maxEventLimit
 operator|=
 name|Integer
 operator|.
@@ -2135,13 +2135,13 @@ argument_list|(
 name|eventTo
 argument_list|)
 operator|+
-literal|" batchsize "
+literal|" maxEventLimit "
 operator|+
 name|String
 operator|.
 name|valueOf
 argument_list|(
-name|batchSize
+name|maxEventLimit
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2513,30 +2513,23 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|batchSize
+operator|(
+name|maxEventLimit
 operator|==
 literal|null
-condition|)
-block|{
-name|batchSize
-operator|=
-name|maxRange
-expr_stmt|;
-block|}
-else|else
-block|{
-if|if
-condition|(
-name|batchSize
+operator|)
+operator|||
+operator|(
+name|maxEventLimit
 operator|>
 name|maxRange
+operator|)
 condition|)
 block|{
-name|batchSize
+name|maxEventLimit
 operator|=
 name|maxRange
 expr_stmt|;
-block|}
 block|}
 comment|// TODO : instead of simply restricting by message format, we should eventually
 comment|// move to a jdbc-driver-stype registering of message format, and picking message
@@ -2614,7 +2607,7 @@ name|evFetcher
 argument_list|,
 name|eventFrom
 argument_list|,
-name|batchSize
+name|maxEventLimit
 argument_list|,
 name|evFilter
 argument_list|)

@@ -499,7 +499,7 @@ init|=
 literal|"200"
 decl_stmt|;
 name|String
-name|batchSize
+name|maxEventLimit
 init|=
 literal|"50"
 decl_stmt|;
@@ -1110,9 +1110,9 @@ literal|" to "
 operator|+
 name|toEventId
 operator|+
-literal|" batch "
+literal|" limit "
 operator|+
-name|batchSize
+name|maxEventLimit
 expr_stmt|;
 name|root
 operator|=
@@ -1352,7 +1352,7 @@ operator|.
 name|getText
 argument_list|()
 argument_list|,
-literal|"TOK_BATCH"
+literal|"TOK_LIMIT"
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1384,7 +1384,7 @@ operator|.
 name|getText
 argument_list|()
 argument_list|,
-name|batchSize
+name|maxEventLimit
 argument_list|)
 expr_stmt|;
 name|assertEquals
