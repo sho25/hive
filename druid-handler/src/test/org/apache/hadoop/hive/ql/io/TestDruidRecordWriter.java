@@ -764,7 +764,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|DruidRecordWriterTest
+name|TestDruidRecordWriter
 block|{
 specifier|private
 name|ObjectMapper

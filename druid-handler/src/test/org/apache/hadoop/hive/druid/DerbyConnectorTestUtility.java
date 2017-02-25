@@ -160,7 +160,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 extends|extends
 name|DerbyConnector
 block|{
@@ -170,7 +170,7 @@ name|String
 name|jdbcUri
 decl_stmt|;
 specifier|public
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 parameter_list|(
 name|Supplier
 argument_list|<
@@ -199,7 +199,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|protected
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 parameter_list|(
 name|Supplier
 argument_list|<
@@ -345,7 +345,7 @@ extends|extends
 name|ExternalResource
 block|{
 specifier|private
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 name|connector
 decl_stmt|;
 specifier|private
@@ -451,7 +451,7 @@ block|{
 name|connector
 operator|=
 operator|new
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 argument_list|(
 name|Suppliers
 operator|.
@@ -490,7 +490,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
-name|TestDerbyConnector
+name|DerbyConnectorTestUtility
 name|getConnector
 parameter_list|()
 block|{
