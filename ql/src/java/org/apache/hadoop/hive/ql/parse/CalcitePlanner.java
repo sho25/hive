@@ -18809,6 +18809,9 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|String
@@ -18826,6 +18829,9 @@ literal|1
 argument_list|)
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -18869,6 +18875,9 @@ literal|0
 argument_list|)
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 decl_stmt|;
