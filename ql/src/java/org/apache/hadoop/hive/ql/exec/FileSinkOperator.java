@@ -6124,10 +6124,6 @@ name|fsp2
 operator|.
 name|getTaskOutputTempPath
 argument_list|()
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
 argument_list|)
 expr_stmt|;
 if|if

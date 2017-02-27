@@ -3338,7 +3338,10 @@ name|FeedType
 operator|.
 name|DYNAMIC_PARTITIONS
 argument_list|,
-name|dps
+name|dp
+operator|.
+name|values
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
