@@ -18809,6 +18809,9 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|String
@@ -18826,6 +18829,9 @@ literal|1
 argument_list|)
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -18869,6 +18875,9 @@ literal|0
 argument_list|)
 operator|.
 name|getText
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -23197,7 +23206,14 @@ control|)
 block|{
 if|if
 condition|(
-name|cubeRollupGrpSetPresent
+operator|!
+name|qbp
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// Special handling of grouping function
@@ -23218,6 +23234,9 @@ name|wExprSpec
 operator|.
 name|getExpression
 argument_list|()
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -25081,7 +25100,14 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|cubeRollupGrpSetPresent
+operator|!
+name|qbp
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 comment|// Special handling of grouping function
@@ -25097,6 +25123,9 @@ name|selClauseName
 argument_list|)
 argument_list|,
 name|expr
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 expr_stmt|;
 block|}
@@ -27439,6 +27468,18 @@ argument_list|,
 name|targetNode
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|qbp
+operator|.
+name|getDestToGroupBy
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 specifier|final
 name|boolean
 name|cubeRollupGrpSetPresent
@@ -27472,11 +27513,6 @@ name|isEmpty
 argument_list|()
 operator|)
 decl_stmt|;
-if|if
-condition|(
-name|cubeRollupGrpSetPresent
-condition|)
-block|{
 comment|// Special handling of grouping function
 name|targetNode
 operator|=
@@ -27490,6 +27526,9 @@ name|destClauseName
 argument_list|)
 argument_list|,
 name|targetNode
+argument_list|,
+operator|!
+name|cubeRollupGrpSetPresent
 argument_list|)
 expr_stmt|;
 block|}

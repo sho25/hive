@@ -1942,6 +1942,16 @@ operator|.
 name|getChannel
 argument_list|()
 decl_stmt|;
+name|server
+operator|.
+name|runPendingTasks
+argument_list|()
+expr_stmt|;
+name|client
+operator|.
+name|runPendingTasks
+argument_list|()
+expr_stmt|;
 name|int
 name|count
 init|=
