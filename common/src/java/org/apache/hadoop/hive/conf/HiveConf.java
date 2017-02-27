@@ -13668,6 +13668,27 @@ operator|+
 literal|"If the query timeout is also set by thrift API call, the smaller one will be taken."
 argument_list|)
 block|,
+name|HIVE_EXEC_INPUT_LISTING_MAX_THREADS
+argument_list|(
+literal|"hive.exec.input.listing.max.threads"
+argument_list|,
+literal|0
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|true
+argument_list|,
+literal|1024L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Maximum number of threads that Hive uses to list file information from file systems (recommended> 1 for blobstore)."
+argument_list|)
+block|,
 comment|/* BLOBSTORE section */
 name|HIVE_BLOBSTORE_SUPPORTED_SCHEMES
 argument_list|(
