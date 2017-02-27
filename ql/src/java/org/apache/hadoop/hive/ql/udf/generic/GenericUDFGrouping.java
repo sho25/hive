@@ -141,24 +141,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|io
-operator|.
-name|ByteWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -303,6 +285,34 @@ name|WritableConstantIntObjectInspector
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|IntWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|math
+operator|.
+name|IntMath
+import|;
+end_import
+
 begin_comment
 comment|/**  * UDF grouping  */
 end_comment
@@ -317,13 +327,13 @@ literal|"grouping"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(a, b) - Indicates whether a specified column expression in "
+literal|"_FUNC_(a, p1, ..., pn) - Indicates whether a specified column expression in "
 operator|+
 literal|"is aggregated or not. Returns 1 for aggregated or 0 for not aggregated. "
 argument_list|,
 name|extended
 operator|=
-literal|"a is the grouping id, b is the index we want to extract"
+literal|"a is the grouping id, p1...pn are the indices we want to extract"
 argument_list|)
 annotation|@
 name|UDFType
@@ -331,13 +341,6 @@ argument_list|(
 name|deterministic
 operator|=
 literal|true
-argument_list|)
-annotation|@
-name|NDV
-argument_list|(
-name|maxNdv
-operator|=
-literal|2
 argument_list|)
 specifier|public
 class|class
@@ -352,16 +355,15 @@ name|groupingIdOI
 decl_stmt|;
 specifier|private
 name|int
-name|index
-init|=
-literal|0
+index|[]
+name|indices
 decl_stmt|;
 specifier|private
-name|ByteWritable
-name|byteWritable
+name|IntWritable
+name|intWritable
 init|=
 operator|new
-name|ByteWritable
+name|IntWritable
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -382,7 +384,7 @@ condition|(
 name|arguments
 operator|.
 name|length
-operator|!=
+operator|<
 literal|2
 condition|)
 block|{
@@ -390,7 +392,7 @@ throw|throw
 operator|new
 name|UDFArgumentLengthException
 argument_list|(
-literal|"grouping() requires 2 argument, got "
+literal|"grouping() requires at least 2 argument, got "
 operator|+
 name|arguments
 operator|.
@@ -466,6 +468,35 @@ index|[
 literal|0
 index|]
 expr_stmt|;
+name|indices
+operator|=
+operator|new
+name|int
+index|[
+name|arguments
+operator|.
+name|length
+operator|-
+literal|1
+index|]
+expr_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|1
+init|;
+name|i
+operator|<
+name|arguments
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
 name|PrimitiveObjectInspector
 name|arg2OI
 init|=
@@ -474,7 +505,7 @@ name|PrimitiveObjectInspector
 operator|)
 name|arguments
 index|[
-literal|1
+name|i
 index|]
 decl_stmt|;
 if|if
@@ -491,13 +522,18 @@ throw|throw
 operator|new
 name|UDFArgumentTypeException
 argument_list|(
-literal|1
+name|i
 argument_list|,
-literal|"The second argument to grouping() must be a constant"
+literal|"Must be a constant"
 argument_list|)
 throw|;
 block|}
-name|index
+name|indices
+index|[
+name|i
+operator|-
+literal|1
+index|]
 operator|=
 operator|(
 operator|(
@@ -512,10 +548,11 @@ operator|.
 name|get
 argument_list|()
 expr_stmt|;
+block|}
 return|return
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableByteObjectInspector
+name|writableIntObjectInspector
 return|;
 block|}
 annotation|@
@@ -533,14 +570,47 @@ name|HiveException
 block|{
 comment|// groupingId = PrimitiveObjectInspectorUtils.getInt(arguments[0].get(), groupingIdOI);
 comment|// Check that the bit at the given index is '1' or '0'
-name|byteWritable
+name|int
+name|result
+init|=
+literal|0
+decl_stmt|;
+comment|// grouping(c1, c2, c3)
+comment|// is equivalent to
+comment|// 4 * grouping(c1) + 2 * grouping(c2) + grouping(c3)
+for|for
+control|(
+name|int
+name|a
+init|=
+literal|1
+init|;
+name|a
+operator|<
+name|arguments
 operator|.
-name|set
+name|length
+condition|;
+name|a
+operator|++
+control|)
+block|{
+name|result
+operator|+=
+name|IntMath
+operator|.
+name|pow
 argument_list|(
-call|(
-name|byte
-call|)
-argument_list|(
+literal|2
+argument_list|,
+name|indices
+operator|.
+name|length
+operator|-
+name|a
+argument_list|)
+operator|*
+operator|(
 operator|(
 name|PrimitiveObjectInspectorUtils
 operator|.
@@ -557,15 +627,27 @@ argument_list|,
 name|groupingIdOI
 argument_list|)
 operator|>>
-name|index
+name|indices
+index|[
+name|a
+operator|-
+literal|1
+index|]
 operator|)
 operator|&
 literal|1
-argument_list|)
+operator|)
+expr_stmt|;
+block|}
+name|intWritable
+operator|.
+name|set
+argument_list|(
+name|result
 argument_list|)
 expr_stmt|;
 return|return
-name|byteWritable
+name|intWritable
 return|;
 block|}
 annotation|@
@@ -584,8 +666,8 @@ operator|(
 name|children
 operator|.
 name|length
-operator|==
-literal|2
+operator|>
+literal|1
 operator|)
 assert|;
 return|return
