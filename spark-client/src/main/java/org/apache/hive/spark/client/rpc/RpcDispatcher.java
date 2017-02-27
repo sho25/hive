@@ -893,23 +893,15 @@ name|Throwable
 name|cause
 parameter_list|)
 block|{
-if|if
-condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
+name|error
 argument_list|(
 name|String
 operator|.
 name|format
 argument_list|(
-literal|"[%s] Caught exception in channel pipeline."
+literal|"[%s] Closing channel due to exception in pipeline."
 argument_list|,
 name|name
 argument_list|()
@@ -918,25 +910,6 @@ argument_list|,
 name|cause
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"[{}] Closing channel due to exception in pipeline ({})."
-argument_list|,
-name|name
-argument_list|()
-argument_list|,
-name|cause
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|lastHeader
