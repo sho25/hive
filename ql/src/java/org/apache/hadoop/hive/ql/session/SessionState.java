@@ -1576,6 +1576,10 @@ name|String
 argument_list|>
 name|forwardedAddresses
 decl_stmt|;
+specifier|private
+name|String
+name|atsDomainId
+decl_stmt|;
 comment|/**    * Get the lineage state stored in this session.    *    * @return LineageState    */
 specifier|public
 name|LineageState
@@ -6172,6 +6176,30 @@ return|return
 literal|false
 return|;
 block|}
+block|}
+specifier|public
+name|String
+name|getATSDomainId
+parameter_list|()
+block|{
+return|return
+name|atsDomainId
+return|;
+block|}
+specifier|public
+name|void
+name|setATSDomainId
+parameter_list|(
+name|String
+name|domainId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|atsDomainId
+operator|=
+name|domainId
+expr_stmt|;
 block|}
 comment|/**    * ResourceType.    *    */
 specifier|public
