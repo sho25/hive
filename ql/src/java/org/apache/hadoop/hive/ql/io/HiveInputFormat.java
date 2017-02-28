@@ -4302,6 +4302,9 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// TODO: HiveFileFormatUtils.getPartitionDescFromPathRecursively for MM tables?
+comment|//       So far, the only case when this is called for a MM directory was in error.
+comment|//       Keep it like this for now; may need replacement if we find a valid usage like this.
 name|partDesc
 operator|=
 name|pathToPartitionInfo
