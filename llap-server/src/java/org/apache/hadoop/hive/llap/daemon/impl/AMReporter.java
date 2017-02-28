@@ -43,20 +43,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|ArrayWritable
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -92,18 +78,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|ConcurrentHashMap
 import|;
 end_import
 
@@ -274,20 +248,6 @@ operator|.
 name|atomic
 operator|.
 name|AtomicBoolean
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|atomic
-operator|.
-name|AtomicInteger
 import|;
 end_import
 
@@ -917,10 +877,6 @@ operator|<
 name|numExecutors
 condition|)
 block|{
-name|maxThreads
-operator|=
-name|numExecutors
-expr_stmt|;
 name|LOG
 operator|.
 name|warn
@@ -931,6 +887,10 @@ name|maxThreads
 argument_list|,
 name|numExecutors
 argument_list|)
+expr_stmt|;
+name|maxThreads
+operator|=
+name|numExecutors
 expr_stmt|;
 block|}
 name|ExecutorService
@@ -1615,8 +1575,6 @@ name|TezTaskAttemptID
 name|taskAttemptId
 parameter_list|)
 block|{
-comment|// Not re-using the connection for the AM heartbeat - which may or may not be open by this point.
-comment|// knownAppMasters is used for sending heartbeats for queued tasks. Killed messages use a new connection.
 name|LlapNodeId
 name|amNodeId
 init|=
@@ -1631,7 +1589,30 @@ argument_list|)
 decl_stmt|;
 name|AMNodeInfo
 name|amNodeInfo
-init|=
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|knownAppMasters
+init|)
+block|{
+name|amNodeInfo
+operator|=
+name|knownAppMasters
+operator|.
+name|get
+argument_list|(
+name|amNodeId
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|amNodeInfo
+operator|==
+literal|null
+condition|)
+block|{
+name|amNodeInfo
+operator|=
 operator|new
 name|AMNodeInfo
 argument_list|(
@@ -1651,7 +1632,9 @@ name|socketFactory
 argument_list|,
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+block|}
 comment|// Even if the service hasn't started up. It's OK to make this invocation since this will
 comment|// only happen after the AtomicReference address has been populated. Not adding an additional check.
 name|ListenableFuture
@@ -1730,6 +1713,60 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|queryComplete
+parameter_list|(
+name|LlapNodeId
+name|llapNodeId
+parameter_list|)
+block|{
+if|if
+condition|(
+name|llapNodeId
+operator|!=
+literal|null
+condition|)
+block|{
+synchronized|synchronized
+init|(
+name|knownAppMasters
+init|)
+block|{
+name|AMNodeInfo
+name|amNodeInfo
+init|=
+name|knownAppMasters
+operator|.
+name|remove
+argument_list|(
+name|llapNodeId
+argument_list|)
+decl_stmt|;
+comment|// TODO: not stopping umbilical explicitly as some taskKill requests may get scheduled during queryComplete
+comment|// which will be using the umbilical. HIVE-16021 should fix this, until then leave umbilical open and wait for
+comment|// it to be closed after max idle timeout (10s default)
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Query complete received. Removed {}."
+argument_list|,
+name|amNodeInfo
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
 specifier|private
 class|class
 name|QueueLookupCallable
@@ -1777,13 +1814,6 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|amNodeInfo
-operator|.
-name|getTaskCount
-argument_list|()
-operator|==
-literal|0
-operator|||
 name|amNodeInfo
 operator|.
 name|hasAmFailed
@@ -1842,13 +1872,18 @@ name|amNodeId
 argument_list|)
 expr_stmt|;
 block|}
-name|amNodeInfo
-operator|.
-name|stopUmbilical
-argument_list|()
-expr_stmt|;
 block|}
 else|else
+block|{
+if|if
+condition|(
+name|amNodeInfo
+operator|.
+name|getTaskCount
+argument_list|()
+operator|>
+literal|0
+condition|)
 block|{
 comment|// Add back to the queue for the next heartbeat, and schedule the actual heartbeat
 name|long
@@ -1968,6 +2003,7 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
