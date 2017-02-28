@@ -3868,6 +3868,7 @@ argument_list|>
 name|loadFileWork
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|ColumnStatsAutoGatherContext
@@ -10663,9 +10664,6 @@ name|qbp
 operator|.
 name|setHints
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|hintNode
 argument_list|)
 expr_stmt|;
@@ -43979,9 +43977,6 @@ operator|.
 name|getSourcePath
 argument_list|()
 argument_list|,
-operator|(
-name|FileSinkOperator
-operator|)
 name|output
 argument_list|)
 expr_stmt|;
@@ -44085,9 +44080,6 @@ name|mapDirToOp
 argument_list|(
 name|tlocation
 argument_list|,
-operator|(
-name|FileSinkOperator
-operator|)
 name|output
 argument_list|)
 expr_stmt|;
@@ -44586,9 +44578,8 @@ argument_list|(
 name|ErrorMsg
 operator|.
 name|NO_INSERT_OVERWRITE_WITH_ACID
-operator|.
-name|getMsg
-argument_list|()
+argument_list|,
+name|tableName
 argument_list|)
 throw|;
 block|}

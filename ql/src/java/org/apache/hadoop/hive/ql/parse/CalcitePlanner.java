@@ -5284,10 +5284,21 @@ condition|(
 name|e
 operator|instanceof
 name|SemanticException
+operator|&&
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+argument_list|)
 condition|)
 block|{
 comment|// although, its likely to be a valid exception, we will retry
 comment|// with cbo off anyway.
+comment|// for tests we would like to avoid retrying to catch cbo failures
 name|reAnalyzeAST
 operator|=
 literal|true
@@ -5305,6 +5316,18 @@ throw|throw
 operator|(
 name|RuntimeException
 operator|)
+name|e
+throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|e
+operator|instanceof
+name|SemanticException
+condition|)
+block|{
+throw|throw
 name|e
 throw|;
 block|}
@@ -24208,9 +24231,6 @@ name|qbp
 operator|.
 name|setHints
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|hintNode
 argument_list|)
 expr_stmt|;

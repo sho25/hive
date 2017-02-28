@@ -510,7 +510,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *   * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compile() to generate QueryPlan which can then be passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to openTxn()/commitTxn() etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  */
+comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *  * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compile() to generate QueryPlan which can then be passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to openTxn()/commitTxn() etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  */
 end_comment
 
 begin_class
@@ -3253,7 +3253,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"INSERT OVERWRITE not allowed on table with OutputFormat"
+literal|"INSERT OVERWRITE not allowed on table default.t10 with OutputFormat"
 operator|+
 literal|" that implements AcidOutputFormat while transaction manager that supports ACID is in use"
 argument_list|)
@@ -17215,12 +17215,7 @@ literal|"show tables"
 argument_list|)
 argument_list|)
 expr_stmt|;
-operator|(
-operator|(
-name|DbTxnManager
-operator|)
 name|txnMgr2
-operator|)
 operator|.
 name|acquireLocks
 argument_list|(

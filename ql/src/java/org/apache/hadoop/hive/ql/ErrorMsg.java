@@ -33,16 +33,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -1954,9 +1944,11 @@ name|NO_INSERT_OVERWRITE_WITH_ACID
 argument_list|(
 literal|10295
 argument_list|,
-literal|"INSERT OVERWRITE not allowed on table with OutputFormat "
+literal|"INSERT OVERWRITE not allowed on table {0} with OutputFormat "
 operator|+
 literal|"that implements AcidOutputFormat while transaction manager that supports ACID is in use"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|VALUES_TABLE_CONSTRUCTOR_NOT_SUPPORTED
