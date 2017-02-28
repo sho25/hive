@@ -647,6 +647,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Calendar
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -658,6 +668,16 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TimeZone
 import|;
 end_import
 
@@ -695,6 +715,11 @@ specifier|final
 name|GroupType
 name|schema
 decl_stmt|;
+specifier|private
+specifier|final
+name|TimeZone
+name|timeZone
+decl_stmt|;
 comment|/* This writer will be created when writing the first row in order to get   information about how to inspect the record data.  */
 specifier|private
 name|DataWriter
@@ -710,6 +735,10 @@ parameter_list|,
 specifier|final
 name|GroupType
 name|schema
+parameter_list|,
+specifier|final
+name|TimeZone
+name|timeZone
 parameter_list|)
 block|{
 name|this
@@ -723,6 +752,12 @@ operator|.
 name|schema
 operator|=
 name|schema
+expr_stmt|;
+name|this
+operator|.
+name|timeZone
+operator|=
+name|timeZone
 expr_stmt|;
 block|}
 comment|/**    * It writes a record to Parquet.    * @param record Contains the record that is going to be written.    */
@@ -2739,6 +2774,10 @@ specifier|private
 name|TimestampObjectInspector
 name|inspector
 decl_stmt|;
+specifier|private
+name|Calendar
+name|calendar
+decl_stmt|;
 specifier|public
 name|TimestampDataWriter
 parameter_list|(
@@ -2751,6 +2790,17 @@ operator|.
 name|inspector
 operator|=
 name|inspector
+expr_stmt|;
+name|this
+operator|.
+name|calendar
+operator|=
+name|Calendar
+operator|.
+name|getInstance
+argument_list|(
+name|timeZone
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -2783,7 +2833,7 @@ name|getNanoTime
 argument_list|(
 name|ts
 argument_list|,
-literal|false
+name|calendar
 argument_list|)
 operator|.
 name|toBinary

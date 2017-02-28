@@ -6359,6 +6359,8 @@ operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
 argument_list|(
 literal|"hive.parquet.timestamp.skip.conversion"
@@ -6368,6 +6370,15 @@ argument_list|,
 literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
 operator|+
 literal|"on reading parquet files from other tools"
+argument_list|)
+block|,
+name|PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
+argument_list|(
+literal|"parquet.mr.int96.enable.utc.write.zone"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable this variable to use UTC as the default timezone for new Parquet tables."
 argument_list|)
 block|,
 name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
