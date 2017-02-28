@@ -10998,7 +10998,6 @@ operator|.
 name|TABLE_TRANSACTIONAL_PROPERTIES
 argument_list|)
 decl_stmt|;
-comment|// TODO# for the test, all non-ACID tables are MM
 return|return
 operator|(
 name|transactionalProp

@@ -4572,20 +4572,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# calling origina getRr on "
-operator|+
-name|inputFormat
-operator|+
-literal|"; "
-operator|+
-name|getInputSplit
-argument_list|()
-argument_list|)
-expr_stmt|;
 return|return
 name|inputFormat
 operator|.
