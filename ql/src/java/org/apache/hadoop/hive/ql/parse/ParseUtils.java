@@ -437,6 +437,20 @@ name|VarcharTypeInfo
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
 comment|/**  * Library of utility functions used in the parse code.  *  */
 end_comment
@@ -2184,10 +2198,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// We find the SELECT closest to the top. This assumes there's only one FROM or FROM-s
-comment|// are all equivalent (union case). Also, this assumption could be false for an already
-comment|// malformed query; we don't check for that here - it will fail later anyway.
-comment|// TODO: Maybe we should find ALL the SELECT-s not nested in another from, and compare.
+comment|// Note: we assume that this isn't an already malformed query;
+comment|//       we don't check for that here - it will fail later anyway.
+comment|// First, we find the SELECT closest to the top.
 name|ASTNode
 name|select
 init|=
@@ -2236,6 +2249,143 @@ name|TOK_ALLCOLREF
 argument_list|)
 expr_stmt|;
 return|return;
+block|}
+comment|// Then, find the leftmost logical sibling select, because that's what Hive uses for aliases.
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+name|CommonTree
+name|queryOfSelect
+init|=
+name|select
+operator|.
+name|parent
+decl_stmt|;
+while|while
+condition|(
+name|queryOfSelect
+operator|!=
+literal|null
+operator|&&
+name|queryOfSelect
+operator|.
+name|getType
+argument_list|()
+operator|!=
+name|HiveParser
+operator|.
+name|TOK_QUERY
+condition|)
+block|{
+name|queryOfSelect
+operator|=
+name|queryOfSelect
+operator|.
+name|parent
+expr_stmt|;
+block|}
+comment|// We should have some QUERY; and also its parent because by supposition we are in subq.
+if|if
+condition|(
+name|queryOfSelect
+operator|==
+literal|null
+operator|||
+name|queryOfSelect
+operator|.
+name|parent
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Replacing SETCOLREF with ALLCOLREF because we couldn't find the QUERY"
+argument_list|)
+expr_stmt|;
+name|setCols
+operator|.
+name|token
+operator|.
+name|setType
+argument_list|(
+name|HiveParser
+operator|.
+name|TOK_ALLCOLREF
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
+name|queryOfSelect
+operator|.
+name|childIndex
+operator|==
+literal|0
+condition|)
+break|break;
+comment|// We are the left-most child.
+name|Tree
+name|moreToTheLeft
+init|=
+name|queryOfSelect
+operator|.
+name|parent
+operator|.
+name|getChild
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|moreToTheLeft
+operator|!=
+name|queryOfSelect
+argument_list|)
+expr_stmt|;
+name|ASTNode
+name|newSelect
+init|=
+name|searcher
+operator|.
+name|simpleBreadthFirstSearchAny
+argument_list|(
+operator|(
+name|ASTNode
+operator|)
+name|moreToTheLeft
+argument_list|,
+name|HiveParser
+operator|.
+name|TOK_SELECT
+argument_list|,
+name|HiveParser
+operator|.
+name|TOK_SELECTDI
+argument_list|)
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|newSelect
+operator|!=
+name|select
+argument_list|)
+expr_stmt|;
+name|select
+operator|=
+name|newSelect
+expr_stmt|;
+comment|// Repeat the procedure for the new select.
 block|}
 comment|// Found the proper columns.
 name|List
