@@ -994,6 +994,11 @@ argument_list|(
 name|dagName
 argument_list|)
 operator|.
+name|setHiveQueryId
+argument_list|(
+name|dagName
+argument_list|)
+operator|.
 name|setUser
 argument_list|(
 literal|"MockUser"
