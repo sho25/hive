@@ -148,9 +148,17 @@ name|ContainerLaunchRequest
 name|containerLaunchRequest
 parameter_list|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"No-op launch for container: "
 operator|+
@@ -167,6 +175,7 @@ name|getNodeId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|getContext
 argument_list|()
 operator|.
@@ -189,26 +198,28 @@ name|ContainerStopRequest
 name|containerStopRequest
 parameter_list|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"DEBUG: Ignoring STOP_REQUEST for event: "
-operator|+
-name|containerStopRequest
-argument_list|)
-expr_stmt|;
-name|getContext
+name|isDebugEnabled
 argument_list|()
+condition|)
+block|{
+name|LOG
 operator|.
-name|containerStopRequested
+name|debug
 argument_list|(
+literal|"No-op stopContainer invocation for containerId={}"
+argument_list|,
 name|containerStopRequest
 operator|.
 name|getContainerId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+comment|// Nothing to do here.
 block|}
 block|}
 end_class
