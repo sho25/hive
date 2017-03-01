@@ -41599,7 +41599,7 @@ operator|.
 name|DEST_DFS_FILE
 operator|)
 decl_stmt|;
-comment|// Create LFD even for MM CTAS - it's a no-op move, but it still seems to be uses for stats.
+comment|// Create LFD even for MM CTAS - it's a no-op move, but it still seems to be used for stats.
 name|loadFileWork
 operator|.
 name|add
@@ -41620,6 +41620,8 @@ argument_list|,
 name|cols
 argument_list|,
 name|colTypes
+argument_list|,
+name|isMmCtas
 argument_list|)
 argument_list|)
 expr_stmt|;

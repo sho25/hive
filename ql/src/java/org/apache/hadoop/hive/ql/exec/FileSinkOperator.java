@@ -2536,6 +2536,11 @@ operator|+=
 literal|".merged"
 expr_stmt|;
 block|}
+name|Path
+name|finalPath
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -2545,10 +2550,7 @@ operator|!
 name|isSkewedStoredAsSubDirectories
 condition|)
 block|{
-name|finalPaths
-index|[
-name|filesIdx
-index|]
+name|finalPath
 operator|=
 name|getFinalPath
 argument_list|(
@@ -2563,10 +2565,7 @@ block|}
 else|else
 block|{
 comment|// Note: tmpPath here has the correct partition key
-name|finalPaths
-index|[
-name|filesIdx
-index|]
+name|finalPath
 operator|=
 name|getFinalPath
 argument_list|(
@@ -2578,15 +2577,71 @@ name|extension
 argument_list|)
 expr_stmt|;
 block|}
+comment|// In the cases that have multi-stage insert, e.g. a "hive.skewjoin.key"-based skew join,
+comment|// it can happen that we want multiple commits into the same directory from different
+comment|// tasks (not just task instances). In non-MM case, Utilities.renameOrMoveFiles ensures
+comment|// unique names. We could do the same here, but this will still cause the old file to be
+comment|// deleted because it has not been committed in /this/ FSOP. We are going to fail to be
+comment|// safe. Potentially, we could implement some partial commit between stages, if this
+comment|// affects some less obscure scenario.
+try|try
+block|{
+name|FileSystem
+name|fpfs
+init|=
+name|finalPath
+operator|.
+name|getFileSystem
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|fpfs
+operator|.
+name|exists
+argument_list|(
+name|finalPath
+argument_list|)
+condition|)
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|finalPath
+operator|+
+literal|" already exists"
+argument_list|)
+throw|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+name|finalPaths
+index|[
+name|filesIdx
+index|]
+operator|=
+name|finalPath
+expr_stmt|;
 name|outPaths
 index|[
 name|filesIdx
 index|]
 operator|=
-name|finalPaths
-index|[
-name|filesIdx
-index|]
+name|finalPath
 expr_stmt|;
 block|}
 if|if

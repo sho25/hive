@@ -11709,6 +11709,12 @@ operator|+
 literal|" to "
 operator|+
 name|tblPath
+operator|+
+literal|" (replace = "
+operator|+
+name|replace
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 if|if

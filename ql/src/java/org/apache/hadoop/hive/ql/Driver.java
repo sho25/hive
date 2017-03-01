@@ -11037,15 +11037,6 @@ control|)
 block|{
 comment|// This should never happen, if it does, it's a bug with the potential to produce
 comment|// incorrect results.
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# running "
-operator|+
-name|tsk
-argument_list|)
-expr_stmt|;
 assert|assert
 name|tsk
 operator|.
