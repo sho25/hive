@@ -2371,6 +2371,24 @@ return|return
 literal|null
 return|;
 block|}
+comment|// if cRS is being used for distinct - the two reduce sinks are incompatible
+if|if
+condition|(
+name|cConf
+operator|.
+name|getDistinctColumnIndices
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|>=
+literal|2
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|Integer
 name|moveReducerNumTo
 init|=
