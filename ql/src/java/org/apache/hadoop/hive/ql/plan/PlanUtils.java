@@ -4394,8 +4394,6 @@ argument_list|,
 name|keyTable
 argument_list|,
 name|valueTable
-argument_list|,
-name|writeType
 argument_list|)
 return|;
 block|}

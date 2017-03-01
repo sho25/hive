@@ -8026,9 +8026,9 @@ literal|"Set to org.apache.hadoop.hive.ql.lockmgr.DbTxnManager as part of turnin
 operator|+
 literal|"transactions, which also requires appropriate settings for hive.compactor.initiator.on,\n"
 operator|+
-literal|"hive.compactor.worker.threads, hive.support.concurrency (true), hive.enforce.bucketing\n"
+literal|"hive.compactor.worker.threads, hive.support.concurrency (true),\n"
 operator|+
-literal|"(true), and hive.exec.dynamic.partition.mode (nonstrict).\n"
+literal|"and hive.exec.dynamic.partition.mode (nonstrict).\n"
 operator|+
 literal|"The default DummyTxnManager replicates pre-Hive-0.13 behavior and provides\n"
 operator|+

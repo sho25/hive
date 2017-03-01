@@ -2264,43 +2264,6 @@ return|return
 literal|null
 return|;
 block|}
-assert|assert
-name|fsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getWriteType
-argument_list|()
-operator|==
-name|rsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getWriteType
-argument_list|()
-operator|:
-literal|"WriteType mismatch. fsOp is "
-operator|+
-name|fsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getWriteType
-argument_list|()
-operator|+
-literal|"; rsOp is "
-operator|+
-name|rsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getWriteType
-argument_list|()
-assert|;
 comment|// Don't do this optimization with updates or deletes
 if|if
 condition|(
