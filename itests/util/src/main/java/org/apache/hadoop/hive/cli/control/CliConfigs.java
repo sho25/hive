@@ -1601,13 +1601,13 @@ specifier|public
 name|BeeLineConfig
 parameter_list|()
 block|{
-comment|// FIXME: beeline is disabled...
 name|super
 argument_list|(
-literal|null
+name|CoreBeeLineDriver
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
-comment|// super(CoreBeeLineDriver.class);
 try|try
 block|{
 name|setQueryDir
@@ -1615,16 +1615,16 @@ argument_list|(
 literal|"ql/src/test/queries/clientpositive"
 argument_list|)
 expr_stmt|;
-name|excludesFrom
+name|includesFrom
 argument_list|(
 name|testConfigProps
 argument_list|,
-literal|"beeline.positive.exclude"
+literal|"beeline.positive.include"
 argument_list|)
 expr_stmt|;
 name|setResultsDir
 argument_list|(
-literal|"ql/src/test/results/clientpositive"
+literal|"ql/src/test/results/clientpositive/beeline"
 argument_list|)
 expr_stmt|;
 name|setLogDir
@@ -1634,12 +1634,12 @@ argument_list|)
 expr_stmt|;
 name|setInitScript
 argument_list|(
-literal|"q_test_init.sql"
+literal|"q_test_init_src.sql"
 argument_list|)
 expr_stmt|;
 name|setCleanupScript
 argument_list|(
-literal|"q_test_cleanup.sql"
+literal|"q_test_cleanup_src.sql"
 argument_list|)
 expr_stmt|;
 name|setHiveConfDir
@@ -1696,13 +1696,6 @@ block|{
 name|setQueryDir
 argument_list|(
 literal|"accumulo-handler/src/test/queries/positive"
-argument_list|)
-expr_stmt|;
-name|excludesFrom
-argument_list|(
-name|testConfigProps
-argument_list|,
-literal|"beeline.positive.exclude"
 argument_list|)
 expr_stmt|;
 name|setResultsDir
