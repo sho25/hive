@@ -252,7 +252,7 @@ specifier|final
 name|int
 name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 init|=
-literal|1000
+literal|50000
 decl_stmt|;
 specifier|public
 name|void
