@@ -2019,6 +2019,36 @@ name|org
 operator|.
 name|apache
 operator|.
+name|logging
+operator|.
+name|log4j
+operator|.
+name|LogManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|logging
+operator|.
+name|log4j
+operator|.
+name|core
+operator|.
+name|LoggerContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TException
@@ -44226,6 +44256,10 @@ operator|.
 name|addHiveconfToSystemProperties
 argument_list|()
 decl_stmt|;
+comment|// NOTE: It is critical to do this here so that log4j is reinitialized
+comment|// before any of the other core hive classes are loaded
+try|try
+block|{
 comment|// If the log4j.configuration property hasn't already been explicitly set,
 comment|// use Hive's default log4j configuration
 if|if
@@ -44240,15 +44274,34 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// NOTE: It is critical to do this here so that log4j is reinitialized
-comment|// before any of the other core hive classes are loaded
-try|try
-block|{
 name|LogUtils
 operator|.
 name|initHiveLog4j
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|//reconfigure log4j after settings via hiveconf are write into System Properties
+name|LoggerContext
+name|context
+init|=
+operator|(
+name|LoggerContext
+operator|)
+name|LogManager
+operator|.
+name|getContext
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
+name|context
+operator|.
+name|reconfigure
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -44268,7 +44321,6 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|HiveStringUtils
 operator|.
