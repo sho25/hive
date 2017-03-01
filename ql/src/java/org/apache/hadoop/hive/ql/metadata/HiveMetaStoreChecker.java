@@ -1846,6 +1846,11 @@ name|IOException
 throws|,
 name|HiveException
 block|{
+comment|// Here we just reuse the THREAD_COUNT configuration for
+comment|// METASTORE_FS_HANDLER_THREADS_COUNT since this results in better performance
+comment|// The number of missing partitions discovered are later added by metastore using a
+comment|// threadpool of size METASTORE_FS_HANDLER_THREADS_COUNT. If we have different sized
+comment|// pool here the smaller sized pool of the two becomes a bottleneck
 name|int
 name|poolSize
 init|=
@@ -1855,7 +1860,7 @@ name|getInt
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_MOVE_FILES_THREAD_COUNT
+name|METASTORE_FS_HANDLER_THREADS_COUNT
 operator|.
 name|varname
 argument_list|,
