@@ -1716,7 +1716,9 @@ name|conf
 operator|.
 name|get
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -1751,7 +1753,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Specifying tez.queue.name is not allowed"
+literal|"Specifying "
+operator|+
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+operator|+
+literal|" is not allowed"
 argument_list|)
 throw|;
 case|case
@@ -1781,7 +1789,9 @@ name|conf
 operator|.
 name|unset
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|)
 expr_stmt|;
 block|}
@@ -2082,7 +2092,9 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"tez.queue.name"
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
 argument_list|,
 name|queueName
 argument_list|)
