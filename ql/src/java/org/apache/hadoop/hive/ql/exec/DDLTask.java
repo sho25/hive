@@ -26383,7 +26383,7 @@ comment|// we replace existing table.
 block|}
 block|}
 block|}
-comment|// If PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE is set to True, then set new Parquet tables timezone
+comment|// If HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE is set to True, then set new Parquet tables timezone
 comment|// to UTC by default (only if the table property is not set)
 if|if
 condition|(
@@ -26422,7 +26422,7 @@ name|getBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
+name|HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
 argument_list|)
 condition|)
 block|{
