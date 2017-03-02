@@ -1537,7 +1537,7 @@ name|int
 name|i
 parameter_list|)
 block|{
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
@@ -1547,11 +1547,7 @@ name|fullPartSpec
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|(
 name|dpCtx
 operator|.
@@ -1582,9 +1578,6 @@ name|PartitionDesc
 argument_list|(
 name|tblDesc
 argument_list|,
-operator|(
-name|LinkedHashMap
-operator|)
 name|fullPartSpec
 argument_list|)
 decl_stmt|;
