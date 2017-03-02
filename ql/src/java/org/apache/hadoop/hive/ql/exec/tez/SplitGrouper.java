@@ -1556,7 +1556,7 @@ name|pd
 init|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|work
 operator|.
@@ -1641,7 +1641,7 @@ name|prevPD
 init|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|work
 operator|.

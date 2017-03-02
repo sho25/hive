@@ -7143,6 +7143,7 @@ literal|false
 argument_list|)
 return|;
 block|}
+comment|// TODO: should this use getPartitionDescFromPathRecursively?
 name|PartitionDesc
 name|partDesc
 init|=

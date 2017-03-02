@@ -2238,7 +2238,7 @@ name|part
 init|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,

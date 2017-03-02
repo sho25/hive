@@ -830,7 +830,7 @@ name|otherPart
 init|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartInfo
 argument_list|,
