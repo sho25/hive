@@ -5858,6 +5858,19 @@ name|exprTokenType
 operator|==
 name|HiveParser
 operator|.
+name|TOK_SUBQUERY_EXPR
+condition|)
+block|{
+comment|//since now we have scalar subqueries we can get subquery expression in having
+comment|// we don't want to include aggregate from within subquery
+return|return;
+block|}
+if|if
+condition|(
+name|exprTokenType
+operator|==
+name|HiveParser
+operator|.
 name|TOK_FUNCTION
 operator|||
 name|exprTokenType
