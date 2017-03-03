@@ -13089,6 +13089,15 @@ argument_list|,
 literal|"llap.task.communicator.connection.timeout-millis"
 argument_list|)
 block|,
+name|LLAP_TASK_COMMUNICATOR_LISTENER_THREAD_COUNT
+argument_list|(
+literal|"hive.llap.task.communicator.listener.thread-count"
+argument_list|,
+literal|30
+argument_list|,
+literal|"The number of task communicator listener threads."
+argument_list|)
+block|,
 name|LLAP_TASK_COMMUNICATOR_CONNECTION_SLEEP_BETWEEN_RETRIES_MS
 argument_list|(
 literal|"hive.llap.task.communicator.connection.sleep.between.retries.ms"
