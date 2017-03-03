@@ -603,6 +603,9 @@ block|{
 case|case
 literal|2
 case|:
+case|case
+literal|3
+case|:
 return|return
 name|HADOOP23VERSIONNAME
 return|;
