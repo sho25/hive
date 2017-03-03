@@ -366,9 +366,9 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 init|=
-literal|"hs2_suceeded_queries"
+literal|"hs2_succeeded_queries"
 decl_stmt|;
 block|}
 end_class

@@ -676,7 +676,7 @@ name|METER
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|,
 literal|""
 argument_list|)
@@ -718,7 +718,7 @@ name|METER
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|,
 literal|"1"
 argument_list|)
@@ -760,7 +760,7 @@ name|METER
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|,
 literal|"1"
 argument_list|)
@@ -802,7 +802,7 @@ name|METER
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|,
 literal|"1"
 argument_list|)
@@ -844,7 +844,7 @@ name|METER
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|,
 literal|"2"
 argument_list|)

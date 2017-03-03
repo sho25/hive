@@ -3823,7 +3823,7 @@ argument_list|()
 argument_list|,
 name|MetricsConstant
 operator|.
-name|HS2_SUCEEDED_QUERIES
+name|HS2_SUCCEEDED_QUERIES
 argument_list|)
 expr_stmt|;
 block|}
