@@ -1348,11 +1348,11 @@ operator|+
 literal|"parameters overlap with the aggregation functions columns"
 argument_list|)
 block|,
-name|HIVE_GROUPING_SETS_AGGR_NOFUNC
+name|HIVE_GROUPING_SETS_EMPTY
 argument_list|(
 literal|10211
 argument_list|,
-literal|"Grouping sets aggregations are not allowed if no aggregation function is presented"
+literal|"Empty grouping sets not allowed"
 argument_list|)
 block|,
 name|HIVE_UNION_REMOVE_OPTIMIZATION_NEEDS_SUBDIRECTORIES
