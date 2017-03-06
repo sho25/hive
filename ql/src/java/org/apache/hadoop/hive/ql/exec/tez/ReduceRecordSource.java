@@ -893,6 +893,10 @@ operator|new
 name|GroupIterator
 argument_list|()
 decl_stmt|;
+specifier|private
+name|long
+name|vectorizedVertexNum
+decl_stmt|;
 name|void
 name|init
 parameter_list|(
@@ -925,10 +929,19 @@ name|tag
 parameter_list|,
 name|VectorizedRowBatchCtx
 name|batchContext
+parameter_list|,
+name|long
+name|vectorizedVertexNum
 parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|this
+operator|.
+name|vectorizedVertexNum
+operator|=
+name|vectorizedVertexNum
+expr_stmt|;
 name|ObjectInspector
 name|keyObjectInspector
 decl_stmt|;
@@ -2625,6 +2638,10 @@ argument_list|(
 literal|"Hive Runtime Error while processing vector batch (tag="
 operator|+
 name|tag
+operator|+
+literal|") (vectorizedVertexNum "
+operator|+
+name|vectorizedVertexNum
 operator|+
 literal|") "
 operator|+
