@@ -11029,11 +11029,11 @@ argument_list|,
 literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
 argument_list|)
 block|,
-name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+name|HIVE_SERVER2_THRIFT_RESULTSET_DEFAULT_FETCH_SIZE
 argument_list|(
-literal|"hive.server2.resultset.default.fetch.size"
+literal|"hive.server2.thrift.resultset.default.fetch.size"
 argument_list|,
-literal|10000
+literal|1000
 argument_list|,
 literal|"The number of rows sent in one Fetch RPC call by the server to the client, if not\n"
 operator|+
@@ -19049,6 +19049,8 @@ block|,
 literal|"hive\\.ppd\\..*"
 block|,
 literal|"hive\\.prewarm\\..*"
+block|,
+literal|"hive\\.server2\\.thrift\\.resultset\\.default\\.fetch\\.size"
 block|,
 literal|"hive\\.server2\\.proxy\\.user"
 block|,
