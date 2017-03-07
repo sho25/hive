@@ -4089,7 +4089,7 @@ name|int
 name|port
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -4112,7 +4112,7 @@ name|amLocation
 argument_list|,
 name|port
 argument_list|,
-name|user
+name|umbilicalUser
 argument_list|,
 name|jobToken
 argument_list|,

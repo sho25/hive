@@ -1412,7 +1412,7 @@ argument_list|()
 argument_list|,
 name|vertex
 operator|.
-name|getUser
+name|getTokenIdentifier
 argument_list|()
 argument_list|,
 name|jobToken
@@ -2662,7 +2662,7 @@ argument_list|()
 argument_list|,
 name|vertex
 operator|.
-name|getUser
+name|getTokenIdentifier
 argument_list|()
 argument_list|,
 name|jobToken

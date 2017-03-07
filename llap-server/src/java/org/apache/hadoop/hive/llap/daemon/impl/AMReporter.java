@@ -1299,7 +1299,7 @@ name|int
 name|port
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -1387,7 +1387,7 @@ name|AMNodeInfo
 argument_list|(
 name|amNodeId
 argument_list|,
-name|user
+name|umbilicalUser
 argument_list|,
 name|jobToken
 argument_list|,
@@ -1554,7 +1554,7 @@ name|int
 name|port
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -1614,7 +1614,7 @@ name|AMNodeInfo
 argument_list|(
 name|amNodeId
 argument_list|,
-name|user
+name|umbilicalUser
 argument_list|,
 name|jobToken
 argument_list|,
@@ -2436,7 +2436,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|String
-name|user
+name|umbilicalUser
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2513,7 +2513,7 @@ name|LlapNodeId
 name|amNodeId
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -2539,9 +2539,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|user
+name|umbilicalUser
 operator|=
-name|user
+name|umbilicalUser
 expr_stmt|;
 name|this
 operator|.
@@ -2639,7 +2639,7 @@ name|UserGroupInformation
 operator|.
 name|createRemoteUser
 argument_list|(
-name|user
+name|umbilicalUser
 argument_list|)
 decl_stmt|;
 name|ugi
