@@ -6735,7 +6735,7 @@ name|HIVECONVERTJOINMAXENTRIESHASHTABLE
 argument_list|(
 literal|"hive.auto.convert.join.hashtable.max.entries"
 argument_list|,
-literal|4194304L
+literal|40000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
