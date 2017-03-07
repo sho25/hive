@@ -655,6 +655,20 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
+literal|"going to print operations logs\n"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"printed operations logs\n"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
 literal|"Getting log thread is interrupted, since query is done!\n"
 argument_list|,
 literal|""
