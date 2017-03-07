@@ -1426,7 +1426,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Asked to die via task heartbeat"
+literal|"Asked to die via task heartbeat: {}"
+argument_list|,
+name|task
+operator|.
+name|getTaskAttemptID
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -1774,7 +1779,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Received should die response from AM"
+literal|"Received should die response from AM: {}"
+argument_list|,
+name|task
+operator|.
+name|getTaskAttemptID
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|askedToDie
