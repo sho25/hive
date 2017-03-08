@@ -193,6 +193,26 @@ name|exec
 operator|.
 name|tez
 operator|.
+name|InterruptibleProcessing
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|tez
+operator|.
 name|RecordSource
 import|;
 end_import
@@ -607,6 +627,11 @@ argument_list|<
 name|Integer
 argument_list|>
 name|fetchInputAtClose
+decl_stmt|;
+comment|// A field because we cannot multi-inherit.
+specifier|transient
+name|InterruptibleProcessing
+name|interruptChecker
 decl_stmt|;
 comment|/** Kryo ctor. */
 specifier|protected
@@ -1069,6 +1094,12 @@ argument_list|()
 operator|)
 operator|.
 name|getRecordSources
+argument_list|()
+expr_stmt|;
+name|interruptChecker
+operator|=
+operator|new
+name|InterruptibleProcessing
 argument_list|()
 expr_stmt|;
 block|}
@@ -2017,6 +2048,12 @@ return|return;
 block|}
 comment|// for tables other than the big table, we need to fetch more data until reach a new group or
 comment|// done.
+name|interruptChecker
+operator|.
+name|startAbortChecks
+argument_list|()
+expr_stmt|;
+comment|// Reset the time, we only want to count it in the loop.
 while|while
 condition|(
 operator|!
@@ -2041,6 +2078,28 @@ argument_list|(
 name|t
 argument_list|)
 expr_stmt|;
+try|try
+block|{
+name|interruptChecker
+operator|.
+name|addRowAndMaybeCheckAbort
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 if|if
 condition|(
