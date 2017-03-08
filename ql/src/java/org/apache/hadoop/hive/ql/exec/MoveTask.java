@@ -3000,8 +3000,16 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+comment|// See the comment inside updatePartitionBucketSortColumns.
 if|if
 condition|(
+operator|!
+name|tbd
+operator|.
+name|isMmTable
+argument_list|()
+operator|&&
+operator|(
 name|ti
 operator|.
 name|bucketCols
@@ -3013,6 +3021,7 @@ operator|.
 name|sortCols
 operator|!=
 literal|null
+operator|)
 condition|)
 block|{
 name|updatePartitionBucketSortColumns
@@ -3448,8 +3457,16 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+comment|// See the comment inside updatePartitionBucketSortColumns.
 if|if
 condition|(
+operator|!
+name|tbd
+operator|.
+name|isMmTable
+argument_list|()
+operator|&&
+operator|(
 name|ti
 operator|.
 name|bucketCols
@@ -3461,6 +3478,7 @@ operator|.
 name|sortCols
 operator|!=
 literal|null
+operator|)
 condition|)
 block|{
 name|updatePartitionBucketSortColumns
@@ -4414,6 +4432,11 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// TODO: this particular bit will not work for MM tables, as there can be multiple
+comment|//       directories for different MM IDs. We could put the path here that would account
+comment|//       for the current MM ID being written, but it will not guarantee that other MM IDs
+comment|//       have the correct buckets. The existing code discards the inferred data when the
+comment|//       reducers don't produce enough files; we'll do the same for MM tables for now.
 name|FileSystem
 name|fileSys
 init|=
