@@ -189,6 +189,13 @@ init|=
 literal|false
 decl_stmt|;
 comment|// lazy mode => we only list files, and expect that the eventual copy will pull data in.
+specifier|private
+name|boolean
+name|isInsert
+init|=
+literal|false
+decl_stmt|;
+comment|// default is that the import mode is replace-into
 comment|// Key definitions related to replication
 specifier|public
 enum|enum
@@ -218,7 +225,12 @@ name|LAZY
 argument_list|(
 literal|"repl.lazy"
 argument_list|)
-block|,     ;
+block|,
+name|IS_INSERT
+argument_list|(
+literal|"repl.is.insert"
+argument_list|)
+block|;
 specifier|private
 specifier|final
 name|String
@@ -483,6 +495,9 @@ name|isNoop
 parameter_list|,
 name|boolean
 name|isLazy
+parameter_list|,
+name|boolean
+name|isInsert
 parameter_list|)
 block|{
 name|this
@@ -520,6 +535,12 @@ operator|.
 name|isLazy
 operator|=
 name|isLazy
+expr_stmt|;
+name|this
+operator|.
+name|isInsert
+operator|=
+name|isInsert
 expr_stmt|;
 block|}
 specifier|public
@@ -688,6 +709,29 @@ operator|.
 name|KEY
 operator|.
 name|LAZY
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isInsert
+operator|=
+name|Boolean
+operator|.
+name|parseBoolean
+argument_list|(
+name|keyFetcher
+operator|.
+name|apply
+argument_list|(
+name|ReplicationSpec
+operator|.
+name|KEY
+operator|.
+name|IS_INSERT
 operator|.
 name|toString
 argument_list|()
@@ -1220,6 +1264,31 @@ operator|=
 name|isMetadataOnly
 expr_stmt|;
 block|}
+comment|/**    * @return true if this statement refers to insert-into operation.    */
+specifier|public
+name|boolean
+name|isInsert
+parameter_list|()
+block|{
+return|return
+name|isInsert
+return|;
+block|}
+specifier|public
+name|void
+name|setIsInsert
+parameter_list|(
+name|boolean
+name|isInsert
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isInsert
+operator|=
+name|isInsert
+expr_stmt|;
+block|}
 comment|/**    * @return the replication state of the event that spawned this statement    */
 specifier|public
 name|String
@@ -1383,6 +1452,18 @@ operator|.
 name|valueOf
 argument_list|(
 name|isLazy
+argument_list|()
+argument_list|)
+return|;
+case|case
+name|IS_INSERT
+case|:
+return|return
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|isInsert
 argument_list|()
 argument_list|)
 return|;
