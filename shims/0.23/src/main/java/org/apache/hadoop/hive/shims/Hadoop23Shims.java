@@ -6294,17 +6294,16 @@ name|NoSuchMethodException
 name|e
 parameter_list|)
 block|{
-comment|// the method is available since Hadoop-2.7.1
-comment|// if we run with an older Hadoop, check this ourselves
+comment|// The method is available since Hadoop-2.7.1; if we run with an older Hadoop, check this
+comment|// ourselves. Note that this setting is in turn deprected in newer versions of Hadoop, but
+comment|// we only care for it in the older versions; so we will hardcode the old name here.
 return|return
 operator|!
 name|conf
 operator|.
 name|getTrimmed
 argument_list|(
-name|DFSConfigKeys
-operator|.
-name|DFS_ENCRYPTION_KEY_PROVIDER_URI
+literal|"dfs.encryption.key.provider.uri"
 argument_list|,
 literal|""
 argument_list|)
