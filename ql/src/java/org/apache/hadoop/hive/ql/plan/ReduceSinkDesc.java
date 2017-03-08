@@ -55,16 +55,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashSet
 import|;
 end_import
@@ -102,24 +92,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|AcidUtils
 import|;
 end_import
 
@@ -468,13 +440,6 @@ operator|.
 name|UNSET
 argument_list|)
 decl_stmt|;
-comment|// Write type, since this needs to calculate buckets differently for updates and deletes
-specifier|private
-name|AcidUtils
-operator|.
-name|Operation
-name|writeType
-decl_stmt|;
 comment|// whether this RS is deduplicated
 specifier|private
 specifier|transient
@@ -568,11 +533,6 @@ parameter_list|,
 specifier|final
 name|TableDesc
 name|valueSerializeInfo
-parameter_list|,
-name|AcidUtils
-operator|.
-name|Operation
-name|writeType
 parameter_list|)
 block|{
 name|this
@@ -655,12 +615,6 @@ name|setBucketCols
 argument_list|(
 literal|null
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|writeType
-operator|=
-name|writeType
 expr_stmt|;
 name|this
 operator|.
@@ -2071,17 +2025,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-name|AcidUtils
-operator|.
-name|Operation
-name|getWriteType
-parameter_list|()
-block|{
-return|return
-name|writeType
-return|;
-block|}
-specifier|public
 name|boolean
 name|isDeduplicated
 parameter_list|()
@@ -2416,18 +2359,6 @@ argument_list|(
 name|engineInSupported
 argument_list|,
 name|engineInSupportedCondName
-argument_list|)
-block|,
-operator|new
-name|VectorizationCondition
-argument_list|(
-operator|!
-name|vectorReduceSinkDesc
-operator|.
-name|getAcidChange
-argument_list|()
-argument_list|,
-literal|"Not ACID UPDATE or DELETE"
 argument_list|)
 block|,
 operator|new

@@ -18465,6 +18465,11 @@ argument_list|(
 name|convert
 argument_list|(
 name|val
+argument_list|,
+name|groupSet
+operator|.
+name|cardinality
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18680,12 +18685,16 @@ return|return
 name|aggregateRel
 return|;
 block|}
+comment|/* This method returns the flip big-endian representation of value */
 specifier|private
 name|ImmutableBitSet
 name|convert
 parameter_list|(
 name|int
 name|value
+parameter_list|,
+name|int
+name|length
 parameter_list|)
 block|{
 name|BitSet
@@ -18695,17 +18704,22 @@ operator|new
 name|BitSet
 argument_list|()
 decl_stmt|;
+for|for
+control|(
 name|int
 name|index
 init|=
+name|length
+operator|-
+literal|1
+init|;
+name|index
+operator|>=
 literal|0
-decl_stmt|;
-while|while
-condition|(
-name|value
-operator|!=
-literal|0L
-condition|)
+condition|;
+name|index
+operator|--
+control|)
 block|{
 if|if
 condition|(
@@ -18724,9 +18738,6 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
-operator|++
-name|index
-expr_stmt|;
 name|value
 operator|=
 name|value
@@ -18734,6 +18745,18 @@ operator|>>>
 literal|1
 expr_stmt|;
 block|}
+comment|// We flip the bits because Calcite considers that '1'
+comment|// means that the column participates in the GroupBy
+comment|// and '0' does not, as opposed to grouping_id.
+name|bits
+operator|.
+name|flip
+argument_list|(
+literal|0
+argument_list|,
+name|length
+argument_list|)
+expr_stmt|;
 return|return
 name|ImmutableBitSet
 operator|.

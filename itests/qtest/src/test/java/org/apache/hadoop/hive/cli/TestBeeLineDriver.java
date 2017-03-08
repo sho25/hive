@@ -163,7 +163,7 @@ name|class
 argument_list|)
 specifier|public
 class|class
-name|DisabledTestBeeLineDriver
+name|TestBeeLineDriver
 block|{
 specifier|static
 name|CliAdapter
@@ -236,7 +236,7 @@ name|File
 name|qfile
 decl_stmt|;
 specifier|public
-name|DisabledTestBeeLineDriver
+name|TestBeeLineDriver
 parameter_list|(
 name|String
 name|name

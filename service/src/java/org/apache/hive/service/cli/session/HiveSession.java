@@ -61,6 +61,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|IMetaStoreClient
@@ -479,6 +495,13 @@ parameter_list|,
 name|String
 name|foreignTable
 parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
+comment|/**    *    * @return    * @throws HiveSQLException    */
+name|HiveConf
+name|getSessionConf
+parameter_list|()
 throws|throws
 name|HiveSQLException
 function_decl|;

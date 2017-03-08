@@ -3861,7 +3861,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a list of all current compactions.    * @return List of all current compactions.  This includes compactions waiting to happen,    * in progress, and finished but waiting to clean the existing files.    * @throws TException    */
+comment|/**    * Get a list of all compactions.    * @return List of all current compactions.  This includes compactions waiting to happen,    * in progress, and finished but waiting to clean the existing files.    * @throws TException    */
 name|ShowCompactResponse
 name|showCompactions
 parameter_list|()

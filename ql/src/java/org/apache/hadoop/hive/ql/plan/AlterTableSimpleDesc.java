@@ -97,6 +97,12 @@ specifier|private
 name|String
 name|compactionType
 decl_stmt|;
+specifier|private
+name|boolean
+name|isBlocking
+init|=
+literal|false
+decl_stmt|;
 name|AlterTableTypes
 name|type
 decl_stmt|;
@@ -194,6 +200,9 @@ name|partSpec
 parameter_list|,
 name|String
 name|compactionType
+parameter_list|,
+name|boolean
+name|isBlocking
 parameter_list|)
 block|{
 name|type
@@ -219,6 +228,12 @@ operator|.
 name|partSpec
 operator|=
 name|partSpec
+expr_stmt|;
+name|this
+operator|.
+name|isBlocking
+operator|=
+name|isBlocking
 expr_stmt|;
 block|}
 specifier|public
@@ -315,6 +330,16 @@ parameter_list|()
 block|{
 return|return
 name|compactionType
+return|;
+block|}
+comment|/**    * if compaction request should block until completion    */
+specifier|public
+name|boolean
+name|isBlocking
+parameter_list|()
+block|{
+return|return
+name|isBlocking
 return|;
 block|}
 specifier|public

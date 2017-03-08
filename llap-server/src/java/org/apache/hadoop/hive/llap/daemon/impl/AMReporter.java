@@ -43,20 +43,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|ArrayWritable
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -92,18 +78,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|ConcurrentHashMap
 import|;
 end_import
 
@@ -274,20 +248,6 @@ operator|.
 name|atomic
 operator|.
 name|AtomicBoolean
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|atomic
-operator|.
-name|AtomicInteger
 import|;
 end_import
 
@@ -825,7 +785,7 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|LlapNodeId
+name|QueryIdentifier
 argument_list|,
 name|AMNodeInfo
 argument_list|>
@@ -917,10 +877,6 @@ operator|<
 name|numExecutors
 condition|)
 block|{
-name|maxThreads
-operator|=
-name|numExecutors
-expr_stmt|;
 name|LOG
 operator|.
 name|warn
@@ -931,6 +887,10 @@ name|maxThreads
 argument_list|,
 name|numExecutors
 argument_list|)
+expr_stmt|;
+name|maxThreads
+operator|=
+name|numExecutors
 expr_stmt|;
 block|}
 name|ExecutorService
@@ -1339,7 +1299,7 @@ name|int
 name|port
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -1366,23 +1326,27 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"Registering for heartbeat: "
-operator|+
+literal|"Registering for heartbeat: {}, queryIdentifier={}, attemptId={}"
+argument_list|,
+operator|(
 name|amLocation
 operator|+
 literal|":"
 operator|+
 name|port
-operator|+
-literal|" for queryIdentifier="
-operator|+
+operator|)
+argument_list|,
 name|queryIdentifier
+argument_list|,
+name|attemptId
 argument_list|)
 expr_stmt|;
 block|}
 name|AMNodeInfo
 name|amNodeInfo
 decl_stmt|;
+comment|// Since we don't have an explicit AM end signal yet - we're going to create
+comment|// and discard AMNodeInfo instances per query.
 synchronized|synchronized
 init|(
 name|knownAppMasters
@@ -1406,7 +1370,7 @@ name|knownAppMasters
 operator|.
 name|get
 argument_list|(
-name|amNodeId
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 if|if
@@ -1423,7 +1387,7 @@ name|AMNodeInfo
 argument_list|(
 name|amNodeId
 argument_list|,
-name|user
+name|umbilicalUser
 argument_list|,
 name|jobToken
 argument_list|,
@@ -1442,7 +1406,7 @@ name|knownAppMasters
 operator|.
 name|put
 argument_list|(
-name|amNodeId
+name|queryIdentifier
 argument_list|,
 name|amNodeInfo
 argument_list|)
@@ -1468,14 +1432,11 @@ argument_list|(
 name|amNodeInfo
 argument_list|)
 expr_stmt|;
+comment|// AMNodeInfo will only be cleared when a queryComplete is received for this query, or
+comment|// when we detect a failure on the AM side (failure to heartbeat).
+comment|// A single queueLookupCallable is added here. We have to make sure one instance stays
+comment|// in the queue till the query completes.
 block|}
-name|amNodeInfo
-operator|.
-name|setCurrentQueryIdentifier
-argument_list|(
-name|queryIdentifier
-argument_list|)
-expr_stmt|;
 name|amNodeInfo
 operator|.
 name|addTaskAttempt
@@ -1495,6 +1456,9 @@ parameter_list|,
 name|int
 name|port
 parameter_list|,
+name|QueryIdentifier
+name|queryIdentifier
+parameter_list|,
 name|TezTaskAttemptID
 name|ta
 parameter_list|)
@@ -1511,30 +1475,22 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"Un-registering for heartbeat: "
-operator|+
+literal|"Un-registering for heartbeat: {}, attempt={}"
+argument_list|,
+operator|(
 name|amLocation
 operator|+
 literal|":"
 operator|+
 name|port
+operator|)
+argument_list|,
+name|ta
 argument_list|)
 expr_stmt|;
 block|}
 name|AMNodeInfo
 name|amNodeInfo
-decl_stmt|;
-name|LlapNodeId
-name|amNodeId
-init|=
-name|LlapNodeId
-operator|.
-name|getInstance
-argument_list|(
-name|amLocation
-argument_list|,
-name|port
-argument_list|)
 decl_stmt|;
 synchronized|synchronized
 init|(
@@ -1547,7 +1503,7 @@ name|knownAppMasters
 operator|.
 name|get
 argument_list|(
-name|amNodeId
+name|queryIdentifier
 argument_list|)
 expr_stmt|;
 if|if
@@ -1598,7 +1554,7 @@ name|int
 name|port
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -1615,8 +1571,6 @@ name|TezTaskAttemptID
 name|taskAttemptId
 parameter_list|)
 block|{
-comment|// Not re-using the connection for the AM heartbeat - which may or may not be open by this point.
-comment|// knownAppMasters is used for sending heartbeats for queued tasks. Killed messages use a new connection.
 name|LlapNodeId
 name|amNodeId
 init|=
@@ -1631,13 +1585,36 @@ argument_list|)
 decl_stmt|;
 name|AMNodeInfo
 name|amNodeInfo
-init|=
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|knownAppMasters
+init|)
+block|{
+name|amNodeInfo
+operator|=
+name|knownAppMasters
+operator|.
+name|get
+argument_list|(
+name|queryIdentifier
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|amNodeInfo
+operator|==
+literal|null
+condition|)
+block|{
+name|amNodeInfo
+operator|=
 operator|new
 name|AMNodeInfo
 argument_list|(
 name|amNodeId
 argument_list|,
-name|user
+name|umbilicalUser
 argument_list|,
 name|jobToken
 argument_list|,
@@ -1651,7 +1628,9 @@ name|socketFactory
 argument_list|,
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+block|}
 comment|// Even if the service hasn't started up. It's OK to make this invocation since this will
 comment|// only happen after the AtomicReference address has been populated. Not adding an additional check.
 name|ListenableFuture
@@ -1730,6 +1709,78 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|queryComplete
+parameter_list|(
+name|QueryIdentifier
+name|queryIdentifier
+parameter_list|)
+block|{
+if|if
+condition|(
+name|queryIdentifier
+operator|!=
+literal|null
+condition|)
+block|{
+synchronized|synchronized
+init|(
+name|knownAppMasters
+init|)
+block|{
+name|AMNodeInfo
+name|amNodeInfo
+init|=
+name|knownAppMasters
+operator|.
+name|remove
+argument_list|(
+name|queryIdentifier
+argument_list|)
+decl_stmt|;
+comment|// The AM can be used for multiple queries. This is an indication that a single query is complete.
+comment|// We don't have a good mechanism to know when an app ends. Removing this right now ensures
+comment|// that a new one gets created for the next query on the same AM.
+if|if
+condition|(
+name|amNodeInfo
+operator|!=
+literal|null
+condition|)
+block|{
+name|amNodeInfo
+operator|.
+name|setIsDone
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+comment|// TODO: not stopping umbilical explicitly as some taskKill requests may get scheduled during queryComplete
+comment|// which will be using the umbilical. HIVE-16021 should fix this, until then leave umbilical open and wait for
+comment|// it to be closed after max idle timeout (10s default)
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Query complete received. Removed {}."
+argument_list|,
+name|amNodeInfo
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
 specifier|private
 class|class
 name|QueueLookupCallable
@@ -1779,14 +1830,12 @@ if|if
 condition|(
 name|amNodeInfo
 operator|.
-name|getTaskCount
+name|hasAmFailed
 argument_list|()
-operator|==
-literal|0
 operator|||
 name|amNodeInfo
 operator|.
-name|hasAmFailed
+name|isDone
 argument_list|()
 condition|)
 block|{
@@ -1807,7 +1856,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Removing am {} with last associated dag {} from heartbeat with taskCount={}, amFailed={}"
+literal|"Removing am {} with last associated dag {} from heartbeat with taskCount={}, amFailed={}, isDone={}"
 argument_list|,
 name|amNodeInfo
 operator|.
@@ -1815,7 +1864,7 @@ name|amNodeId
 argument_list|,
 name|amNodeInfo
 operator|.
-name|getCurrentQueryIdentifier
+name|getQueryIdentifier
 argument_list|()
 argument_list|,
 name|amNodeInfo
@@ -1829,6 +1878,9 @@ name|hasAmFailed
 argument_list|()
 argument_list|,
 name|amNodeInfo
+operator|.
+name|isDone
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1838,19 +1890,16 @@ name|remove
 argument_list|(
 name|amNodeInfo
 operator|.
-name|amNodeId
+name|getQueryIdentifier
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|amNodeInfo
-operator|.
-name|stopUmbilical
-argument_list|()
-expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Add back to the queue for the next heartbeat, and schedule the actual heartbeat
+comment|// Always re-schedule the next callable - irrespective of task count,
+comment|// in case new tasks come in later.
 name|long
 name|next
 init|=
@@ -1875,6 +1924,18 @@ argument_list|(
 name|amNodeInfo
 argument_list|)
 expr_stmt|;
+comment|// Send an actual heartbeat only if the task count is> 0
+if|if
+condition|(
+name|amNodeInfo
+operator|.
+name|getTaskCount
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+comment|// Add back to the queue for the next heartbeat, and schedule the actual heartbeat
 name|ListenableFuture
 argument_list|<
 name|Void
@@ -1932,7 +1993,7 @@ name|currentQueryIdentifier
 init|=
 name|amNodeInfo
 operator|.
-name|getCurrentQueryIdentifier
+name|getQueryIdentifier
 argument_list|()
 decl_stmt|;
 name|amNodeInfo
@@ -1946,7 +2007,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Heartbeat failed to AM {}. Killing all other tasks for the query={}"
+literal|"Heartbeat failed to AM {}. Marking query as failed. query={}"
 argument_list|,
 name|amNodeInfo
 operator|.
@@ -1968,6 +2029,7 @@ block|}
 block|}
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
@@ -2187,26 +2249,6 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Skipping node heartbeat to AM: "
-operator|+
-name|amNodeInfo
-operator|+
-literal|", since ref count is 0"
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 literal|null
 return|;
@@ -2302,7 +2344,7 @@ name|currentQueryIdentifier
 init|=
 name|amNodeInfo
 operator|.
-name|getCurrentQueryIdentifier
+name|getQueryIdentifier
 argument_list|()
 decl_stmt|;
 name|amNodeInfo
@@ -2394,7 +2436,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|String
-name|user
+name|umbilicalUser
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2441,8 +2483,9 @@ literal|false
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|QueryIdentifier
-name|currentQueryIdentifier
+name|queryIdentifier
 decl_stmt|;
 specifier|private
 name|LlapTaskUmbilicalProtocol
@@ -2452,6 +2495,17 @@ specifier|private
 name|long
 name|nextHeartbeatTime
 decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicBoolean
+name|isDone
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
 specifier|public
 name|AMNodeInfo
 parameter_list|(
@@ -2459,7 +2513,7 @@ name|LlapNodeId
 name|amNodeId
 parameter_list|,
 name|String
-name|user
+name|umbilicalUser
 parameter_list|,
 name|Token
 argument_list|<
@@ -2485,9 +2539,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|user
+name|umbilicalUser
 operator|=
-name|user
+name|umbilicalUser
 expr_stmt|;
 name|this
 operator|.
@@ -2497,7 +2551,7 @@ name|jobToken
 expr_stmt|;
 name|this
 operator|.
-name|currentQueryIdentifier
+name|queryIdentifier
 operator|=
 name|currentQueryIdentifier
 expr_stmt|;
@@ -2585,7 +2639,7 @@ name|UserGroupInformation
 operator|.
 name|createRemoteUser
 argument_list|(
-name|user
+name|umbilicalUser
 argument_list|)
 decl_stmt|;
 name|ugi
@@ -2789,6 +2843,32 @@ name|get
 argument_list|()
 return|;
 block|}
+name|void
+name|setIsDone
+parameter_list|(
+name|boolean
+name|val
+parameter_list|)
+block|{
+name|isDone
+operator|.
+name|set
+argument_list|(
+name|val
+argument_list|)
+expr_stmt|;
+block|}
+name|boolean
+name|isDone
+parameter_list|()
+block|{
+return|return
+name|isDone
+operator|.
+name|get
+argument_list|()
+return|;
+block|}
 name|List
 argument_list|<
 name|TezTaskAttemptID
@@ -2825,30 +2905,13 @@ name|result
 return|;
 block|}
 specifier|public
-specifier|synchronized
 name|QueryIdentifier
-name|getCurrentQueryIdentifier
+name|getQueryIdentifier
 parameter_list|()
 block|{
 return|return
-name|currentQueryIdentifier
+name|queryIdentifier
 return|;
-block|}
-specifier|public
-specifier|synchronized
-name|void
-name|setCurrentQueryIdentifier
-parameter_list|(
-name|QueryIdentifier
-name|queryIdentifier
-parameter_list|)
-block|{
-name|this
-operator|.
-name|currentQueryIdentifier
-operator|=
-name|queryIdentifier
-expr_stmt|;
 block|}
 specifier|synchronized
 name|void
@@ -2964,6 +3027,10 @@ literal|", taskCount="
 operator|+
 name|getTaskCount
 argument_list|()
+operator|+
+literal|", queryIdentifier="
+operator|+
+name|queryIdentifier
 return|;
 block|}
 specifier|private

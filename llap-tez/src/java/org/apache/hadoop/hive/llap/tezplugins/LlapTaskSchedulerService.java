@@ -807,6 +807,42 @@ name|api
 operator|.
 name|records
 operator|.
+name|ContainerState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|yarn
+operator|.
+name|api
+operator|.
+name|records
+operator|.
+name|ContainerStatus
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|yarn
+operator|.
+name|api
+operator|.
+name|records
+operator|.
 name|NodeId
 import|;
 end_import
@@ -1513,6 +1549,17 @@ argument_list|<
 name|?
 argument_list|>
 name|timeoutFuture
+decl_stmt|;
+specifier|private
+specifier|final
+name|AtomicInteger
+name|assignedTaskCounter
+init|=
+operator|new
+name|AtomicInteger
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
@@ -2486,6 +2533,15 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending out nodeReport for onRemove: {}"
+argument_list|,
+name|nodeReport
+argument_list|)
+expr_stmt|;
 name|getContext
 argument_list|()
 operator|.
@@ -2513,11 +2569,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Removed node with identity: {}"
+literal|"Removed node with identity: {} due to RegistryNotification. currentActiveInstances={}"
 argument_list|,
 name|serviceInstance
 operator|.
 name|getWorkerIdentity
+argument_list|()
+argument_list|,
+name|activeInstances
+operator|.
+name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3811,6 +3872,7 @@ name|nodeInfo
 operator|!=
 literal|null
 assert|;
+comment|//  endReason shows up as OTHER for CONTAINER_TIME_OUT
 name|LOG
 operator|.
 name|info
@@ -3927,6 +3989,8 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+comment|// TODO Include EXTERNAL_PREEMPTION in this list?
+comment|// TODO HIVE-16134. Differentiate between EXTERNAL_PREEMPTION_WAITQUEU vs EXTERNAL_PREEMPTION_FINISHABLE?
 if|if
 condition|(
 name|endReason
@@ -4071,6 +4135,33 @@ operator|.
 name|containerId
 argument_list|)
 expr_stmt|;
+name|getContext
+argument_list|()
+operator|.
+name|containerCompleted
+argument_list|(
+name|taskInfo
+operator|.
+name|task
+argument_list|,
+name|ContainerStatus
+operator|.
+name|newInstance
+argument_list|(
+name|taskInfo
+operator|.
+name|containerId
+argument_list|,
+name|ContainerState
+operator|.
+name|COMPLETE
+argument_list|,
+literal|""
+argument_list|,
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 literal|true
 return|;
@@ -4085,15 +4176,24 @@ name|ContainerId
 name|containerId
 parameter_list|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Ignoring deallocateContainer for containerId: "
-operator|+
+literal|"Ignoring deallocateContainer for containerId: {}"
+argument_list|,
 name|containerId
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Containers are not being tracked for re-use.
 comment|// This is safe to ignore since a deallocate task will come in.
 return|return
@@ -4324,22 +4424,10 @@ name|prefHostCount
 operator|==
 literal|0
 operator|)
-operator|+
-operator|(
+argument_list|,
 name|requestedHosts
 operator|.
 name|length
-operator|>
-literal|1
-condition|?
-literal|", #prefLocations="
-operator|+
-name|requestedHosts
-operator|.
-name|length
-else|:
-literal|""
-operator|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -5066,6 +5154,10 @@ name|nodeReport
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// When the same node goes away and comes back... the old entry will be lost - which means
+comment|// we don't know how many fragments we have actually scheduled on this node.
+comment|// Replacing it is the right thing to do though, since we expect the AM to kill all the fragments running on the node, via timeouts.
+comment|// De-allocate messages coming in from the old node are sent to the NodeInfo instance for the old node.
 name|instanceToNodeMap
 operator|.
 name|put
@@ -5101,9 +5193,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Adding new node: {}"
+literal|"Adding new node: {}. TotalNodeCount={}. activeInstances.size={}"
 argument_list|,
 name|node
+argument_list|,
+name|instanceToNodeMap
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|activeInstances
+operator|.
+name|size
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|trySchedulingPendingTasks
@@ -5157,6 +5259,24 @@ operator|.
 name|enableNode
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|metrics
+operator|!=
+literal|null
+condition|)
+block|{
+name|metrics
+operator|.
+name|setDisabledNodeCount
+argument_list|(
+name|disabledNodesQueue
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -5202,11 +5322,6 @@ name|NodeInfo
 name|nodeInfo
 parameter_list|)
 block|{
-name|nodeInfo
-operator|.
-name|enableNode
-argument_list|()
-expr_stmt|;
 if|if
 condition|(
 name|disabledNodesQueue
@@ -5217,29 +5332,28 @@ name|nodeInfo
 argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Queueing node for re-enablement: {}"
+argument_list|,
+name|nodeInfo
+operator|.
+name|toShortString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|nodeInfo
+operator|.
+name|resetExpireInformation
+argument_list|()
+expr_stmt|;
 name|disabledNodesQueue
 operator|.
 name|add
 argument_list|(
 name|nodeInfo
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|metrics
-operator|!=
-literal|null
-condition|)
-block|{
-name|metrics
-operator|.
-name|setDisabledNodeCount
-argument_list|(
-name|disabledNodesQueue
-operator|.
-name|size
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -6202,9 +6316,9 @@ range|:
 name|potentialHosts
 control|)
 block|{
-comment|// Preempt only if there are not pending preemptions on the same host
+comment|// Preempt only if there are no pending preemptions on the same host
 comment|// When the premption registers, the request at the highest priority will be given the slot,
-comment|// even if the initial request was for some other task.
+comment|// even if the initial preemption was caused by some other task.
 comment|// TODO Maybe register which task the preemption was for, to avoid a bad non-local allocation.
 name|MutableInt
 name|pendingHostPreemptions
@@ -6272,7 +6386,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Preempting for {} on potential hosts={}. TotalPendingPreemptions={}"
+literal|"Attempting to preempt for {} on potential hosts={}. TotalPendingPreemptions={}"
 argument_list|,
 name|taskInfo
 operator|.
@@ -6370,17 +6484,30 @@ operator|==
 literal|0
 condition|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"Preempting for task={} on any available host"
+literal|"Attempting to preempt for task={}, priority={} on any available host"
 argument_list|,
 name|taskInfo
 operator|.
 name|task
+argument_list|,
+name|taskInfo
+operator|.
+name|priority
 argument_list|)
 expr_stmt|;
+block|}
 name|preemptTasks
 argument_list|(
 name|entry
@@ -6770,11 +6897,22 @@ expr_stmt|;
 comment|// While updating local structures
 try|try
 block|{
+comment|// The canAccept part of this log message does not account for this allocation.
+name|assignedTaskCounter
+operator|.
+name|incrementAndGet
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Assigned task={} on node={}, to container={}"
+literal|"Assigned #{}, task={} on node={}, to container={}"
+argument_list|,
+name|assignedTaskCounter
+operator|.
+name|get
+argument_list|()
 argument_list|,
 name|taskInfo
 argument_list|,
@@ -7178,9 +7316,14 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No tasks qualify as killable to schedule tasks at priority {}"
+literal|"No tasks qualify as killable to schedule tasks at priority {}. Current priority={}"
 argument_list|,
 name|forPriority
+argument_list|,
+name|entryAtPriority
+operator|.
+name|getKey
+argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;
@@ -8150,6 +8293,11 @@ specifier|final
 name|Resource
 name|resourcePerExecutor
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|shortStringBase
+decl_stmt|;
 comment|/**      * Create a NodeInfo bound to a service instance      *  @param serviceInstance         the associated serviceInstance      * @param blacklistConf           blacklist configuration      * @param clock                   clock to use to obtain timing information      * @param numSchedulableTasksConf number of schedulable tasks on the node. 0 represents auto *                                detect based on the serviceInstance, -1 indicates indicates      * @param metrics      */
 name|NodeInfo
 parameter_list|(
@@ -8375,6 +8523,11 @@ name|numSchedulableTasks
 argument_list|)
 expr_stmt|;
 block|}
+name|shortStringBase
+operator|=
+name|setupShortStringBase
+argument_list|()
+expr_stmt|;
 block|}
 name|String
 name|getNodeIdentity
@@ -8430,7 +8583,7 @@ name|resourcePerExecutor
 return|;
 block|}
 name|void
-name|enableNode
+name|resetExpireInformation
 parameter_list|()
 block|{
 name|expireTimeMillis
@@ -8438,11 +8591,19 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
-name|disabled
+name|hadCommFailure
 operator|=
 literal|false
 expr_stmt|;
-name|hadCommFailure
+block|}
+name|void
+name|enableNode
+parameter_list|()
+block|{
+name|resetExpireInformation
+argument_list|()
+expr_stmt|;
+name|disabled
 operator|=
 literal|false
 expr_stmt|;
@@ -8548,7 +8709,8 @@ name|info
 argument_list|(
 literal|"Disabling instance {} for {} milli-seconds. commFailure={}"
 argument_list|,
-name|serviceInstance
+name|toShortString
+argument_list|()
 argument_list|,
 name|delayTime
 argument_list|,
@@ -8704,19 +8866,11 @@ return|return
 name|hadCommFailure
 return|;
 block|}
-name|int
-name|canAcceptCounter
-init|=
-literal|0
-decl_stmt|;
-comment|/* Returning true does not guarantee that the task will run, considering other queries     may be running in the system. Also depends upon the capacity usage configuration      */
 name|boolean
-name|canAcceptTask
+name|_canAccepInternal
 parameter_list|()
 block|{
-name|boolean
-name|result
-init|=
+return|return
 operator|!
 name|hadCommFailure
 operator|&&
@@ -8739,6 +8893,23 @@ operator|>
 literal|0
 operator|)
 operator|)
+return|;
+block|}
+name|int
+name|canAcceptCounter
+init|=
+literal|0
+decl_stmt|;
+comment|/* Returning true does not guarantee that the task will run, considering other queries     may be running in the system. Also depends upon the capacity usage configuration      */
+name|boolean
+name|canAcceptTask
+parameter_list|()
+block|{
+name|boolean
+name|result
+init|=
+name|_canAccepInternal
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -8990,6 +9161,32 @@ literal|0
 return|;
 block|}
 block|}
+specifier|private
+name|String
+name|setupShortStringBase
+parameter_list|()
+block|{
+return|return
+literal|"{"
+operator|+
+name|serviceInstance
+operator|.
+name|getHost
+argument_list|()
+operator|+
+literal|":"
+operator|+
+name|serviceInstance
+operator|.
+name|getRpcPort
+argument_list|()
+operator|+
+literal|", id="
+operator|+
+name|getNodeIdentity
+argument_list|()
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -9044,31 +9241,92 @@ name|String
 name|toShortString
 parameter_list|()
 block|{
-return|return
-literal|"{"
-operator|+
-name|serviceInstance
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|sb
 operator|.
-name|getHost
-argument_list|()
-operator|+
-literal|":"
-operator|+
-name|serviceInstance
+name|append
+argument_list|(
+literal|", canAcceptTask="
+argument_list|)
 operator|.
-name|getRpcPort
+name|append
+argument_list|(
+name|_canAccepInternal
 argument_list|()
-operator|+
-literal|", id="
-operator|+
-name|getNodeIdentity
-argument_list|()
-operator|+
-literal|", stc="
-operator|+
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", st="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|numScheduledTasks
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", ac="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+operator|(
 name|numSchedulableTasks
-operator|+
+operator|-
+name|numScheduledTasks
+operator|)
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", commF="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|hadCommFailure
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|", disabled="
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|disabled
+argument_list|)
+expr_stmt|;
+name|sb
+operator|.
+name|append
+argument_list|(
 literal|"}"
+argument_list|)
+expr_stmt|;
+return|return
+name|shortStringBase
+operator|+
+name|sb
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 block|}

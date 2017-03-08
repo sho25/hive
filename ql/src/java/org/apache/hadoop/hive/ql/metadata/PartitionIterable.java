@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -168,6 +178,8 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|hasNext
@@ -382,7 +394,7 @@ name|currType
 decl_stmt|;
 comment|// used for LIST_PROVIDED cases
 specifier|private
-name|List
+name|Collection
 argument_list|<
 name|Partition
 argument_list|>
@@ -432,7 +444,7 @@ comment|/**    * Dummy constructor, which simply acts as an iterator on an alrea
 specifier|public
 name|PartitionIterable
 parameter_list|(
-name|List
+name|Collection
 argument_list|<
 name|Partition
 argument_list|>

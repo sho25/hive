@@ -554,7 +554,16 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_THRIFT_RESULTSET_MAX_FETCH_SIZE
+name|HIVE_SERVER2_THRIFT_RESULTSET_DEFAULT_FETCH_SIZE
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"ThriftJDBCBinarySerDe max number of buffered columns: "
+operator|+
+name|MAX_BUFFERED_ROWS
 argument_list|)
 expr_stmt|;
 name|String

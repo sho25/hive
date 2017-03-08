@@ -509,6 +509,14 @@ class|class
 name|TestDbTxnManager
 block|{
 specifier|private
+specifier|static
+specifier|final
+name|int
+name|TEST_TIMED_OUT_TXN_ABORT_BATCH_SIZE
+init|=
+literal|1000
+decl_stmt|;
+specifier|private
 specifier|final
 name|HiveConf
 name|conf
@@ -2048,9 +2056,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|TxnStore
-operator|.
-name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+name|TEST_TIMED_OUT_TXN_ABORT_BATCH_SIZE
 operator|+
 literal|17
 condition|;
@@ -2084,9 +2090,7 @@ name|testLockExpiration
 argument_list|(
 name|txnMgr
 argument_list|,
-name|TxnStore
-operator|.
-name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
+name|TEST_TIMED_OUT_TXN_ABORT_BATCH_SIZE
 operator|+
 literal|17
 argument_list|,

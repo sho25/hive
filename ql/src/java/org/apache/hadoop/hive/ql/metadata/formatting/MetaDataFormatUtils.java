@@ -3628,7 +3628,7 @@ else|:
 literal|""
 return|;
 block|}
-comment|/**    * Compares to lists of object T as vectors    *     * @param<T> the base object type. Must be {@link Comparable}    */
+comment|/**    * Compares to lists of object T as vectors    *    * @param<T> the base object type. Must be {@link Comparable}    */
 specifier|private
 specifier|static
 class|class
@@ -4255,7 +4255,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Prints the name value pair    * It the output is padded then unescape the value, so it could be printed in multiple lines.    * In this case it assumes the pair is already indented with a field delimiter    * @param name The field name to print    * @param value The value t print    * @param tableInfo The target builder    * @param isOutputPadded Should the value printed as a padded string?    */
-specifier|private
+specifier|protected
 specifier|static
 name|void
 name|formatOutput

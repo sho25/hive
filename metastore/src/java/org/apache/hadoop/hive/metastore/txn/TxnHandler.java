@@ -13192,13 +13192,13 @@ if|if
 condition|(
 name|LOG
 operator|.
-name|isDebugEnabled
+name|isTraceEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Locks to check(full): "
 argument_list|)
@@ -13213,7 +13213,7 @@ control|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"  "
 operator|+
@@ -15550,13 +15550,14 @@ operator|-
 name|timeout
 operator|)
 decl_stmt|;
+comment|//safety valve for extreme cases
 name|s
 operator|=
 name|sqlGenerator
 operator|.
 name|addLimitClause
 argument_list|(
-literal|250
+literal|10
 operator|*
 name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 argument_list|,

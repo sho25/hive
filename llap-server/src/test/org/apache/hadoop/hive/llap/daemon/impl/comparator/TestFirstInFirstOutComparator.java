@@ -576,6 +576,11 @@ argument_list|(
 name|dagName
 argument_list|)
 operator|.
+name|setHiveQueryId
+argument_list|(
+name|dagName
+argument_list|)
+operator|.
 name|setVertexName
 argument_list|(
 literal|"MockVertex"

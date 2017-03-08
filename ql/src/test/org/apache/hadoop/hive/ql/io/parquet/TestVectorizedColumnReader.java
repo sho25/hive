@@ -453,6 +453,14 @@ operator|new
 name|VectorizedParquetRecordReader
 argument_list|(
 operator|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
 name|InputSplit
 operator|)
 literal|null

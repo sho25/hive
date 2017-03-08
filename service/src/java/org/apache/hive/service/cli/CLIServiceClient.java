@@ -109,7 +109,7 @@ name|defaultFetchRows
 init|=
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+name|HIVE_SERVER2_THRIFT_RESULTSET_DEFAULT_FETCH_SIZE
 operator|.
 name|defaultIntVal
 decl_stmt|;
@@ -130,7 +130,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+name|HIVE_SERVER2_THRIFT_RESULTSET_DEFAULT_FETCH_SIZE
 argument_list|)
 expr_stmt|;
 block|}

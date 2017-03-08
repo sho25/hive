@@ -772,6 +772,8 @@ argument_list|,
 literal|"fakeUser"
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 return|return
@@ -990,6 +992,11 @@ name|newBuilder
 argument_list|()
 operator|.
 name|setDagName
+argument_list|(
+name|dagName
+argument_list|)
+operator|.
+name|setHiveQueryId
 argument_list|(
 name|dagName
 argument_list|)

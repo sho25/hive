@@ -1983,6 +1983,12 @@ name|sd
 operator|.
 name|getLocation
 argument_list|()
+operator|+
+literal|" for compactionId="
+operator|+
+name|ci
+operator|.
+name|id
 argument_list|)
 expr_stmt|;
 return|return;

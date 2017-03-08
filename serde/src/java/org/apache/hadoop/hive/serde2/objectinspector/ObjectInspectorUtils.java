@@ -3914,6 +3914,23 @@ name|int
 name|numberOfBuckets
 parameter_list|)
 block|{
+if|if
+condition|(
+name|numberOfBuckets
+operator|<=
+literal|0
+condition|)
+block|{
+comment|//note that (X % 0) is illegal and (X % -1) = 0
+comment|// -1 is a common default when the value is missing
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Number of Buckets must be> 0"
+argument_list|)
+throw|;
+block|}
 return|return
 operator|(
 name|hashCode

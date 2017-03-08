@@ -6388,6 +6388,8 @@ operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
 argument_list|(
 literal|"hive.parquet.timestamp.skip.conversion"
@@ -6397,6 +6399,15 @@ argument_list|,
 literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
 operator|+
 literal|"on reading parquet files from other tools"
+argument_list|)
+block|,
+name|HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
+argument_list|(
+literal|"hive.parquet.mr.int96.enable.utc.write.zone"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable this variable to use UTC as the default timezone for new Parquet tables."
 argument_list|)
 block|,
 name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
@@ -6753,7 +6764,7 @@ name|HIVECONVERTJOINMAXENTRIESHASHTABLE
 argument_list|(
 literal|"hive.auto.convert.join.hashtable.max.entries"
 argument_list|,
-literal|4194304L
+literal|40000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
@@ -8044,9 +8055,9 @@ literal|"Set to org.apache.hadoop.hive.ql.lockmgr.DbTxnManager as part of turnin
 operator|+
 literal|"transactions, which also requires appropriate settings for hive.compactor.initiator.on,\n"
 operator|+
-literal|"hive.compactor.worker.threads, hive.support.concurrency (true), hive.enforce.bucketing\n"
+literal|"hive.compactor.worker.threads, hive.support.concurrency (true),\n"
 operator|+
-literal|"(true), and hive.exec.dynamic.partition.mode (nonstrict).\n"
+literal|"and hive.exec.dynamic.partition.mode (nonstrict).\n"
 operator|+
 literal|"The default DummyTxnManager replicates pre-Hive-0.13 behavior and provides\n"
 operator|+
@@ -11051,11 +11062,11 @@ argument_list|,
 literal|"Max number of rows sent in one Fetch RPC call by the server to the client."
 argument_list|)
 block|,
-name|HIVE_SERVER2_RESULTSET_DEFAULT_FETCH_SIZE
+name|HIVE_SERVER2_THRIFT_RESULTSET_DEFAULT_FETCH_SIZE
 argument_list|(
-literal|"hive.server2.resultset.default.fetch.size"
+literal|"hive.server2.thrift.resultset.default.fetch.size"
 argument_list|,
-literal|10000
+literal|1000
 argument_list|,
 literal|"The number of rows sent in one Fetch RPC call by the server to the client, if not\n"
 operator|+
@@ -13109,6 +13120,15 @@ argument_list|,
 literal|"Connection timeout (in milliseconds) before a failure to an LLAP daemon from Tez AM."
 argument_list|,
 literal|"llap.task.communicator.connection.timeout-millis"
+argument_list|)
+block|,
+name|LLAP_TASK_COMMUNICATOR_LISTENER_THREAD_COUNT
+argument_list|(
+literal|"hive.llap.task.communicator.listener.thread-count"
+argument_list|,
+literal|30
+argument_list|,
+literal|"The number of task communicator listener threads."
 argument_list|)
 block|,
 name|LLAP_TASK_COMMUNICATOR_CONNECTION_SLEEP_BETWEEN_RETRIES_MS
@@ -19141,6 +19161,8 @@ block|,
 literal|"hive\\.ppd\\..*"
 block|,
 literal|"hive\\.prewarm\\..*"
+block|,
+literal|"hive\\.server2\\.thrift\\.resultset\\.default\\.fetch\\.size"
 block|,
 literal|"hive\\.server2\\.proxy\\.user"
 block|,
