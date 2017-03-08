@@ -84,6 +84,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DRUID_QUERY_GRANULARITY
+init|=
+literal|"druid.query.granularity"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DRUID_TIMESTAMP_GRANULARITY_COL_NAME
 init|=
 literal|"__time_granularity"
