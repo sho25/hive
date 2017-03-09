@@ -4516,11 +4516,9 @@ name|int
 name|size
 parameter_list|()
 block|{
+comment|// not using the path child cache here as there could be more than 1 path per host (worker and slot znodes)
 return|return
-name|instancesCache
-operator|.
-name|getCurrentData
-argument_list|()
+name|nodeToInstanceCache
 operator|.
 name|size
 argument_list|()
