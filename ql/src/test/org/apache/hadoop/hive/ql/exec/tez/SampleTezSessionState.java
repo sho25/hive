@@ -275,6 +275,11 @@ operator|.
 name|HIVE_SERVER2_ENABLE_DOAS
 argument_list|)
 expr_stmt|;
+name|setOpen
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override

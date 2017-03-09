@@ -2509,6 +2509,12 @@ operator|||
 name|conf
 operator|==
 literal|null
+operator|||
+operator|!
+name|session
+operator|.
+name|isOpen
+argument_list|()
 condition|)
 block|{
 return|return
