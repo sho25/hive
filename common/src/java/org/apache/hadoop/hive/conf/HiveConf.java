@@ -5740,7 +5740,18 @@ operator|+
 literal|"create new MR job for sorting final output"
 argument_list|)
 block|,
-comment|// Max filesize used to do a single copy (after that, distcp is used)
+comment|// Max file num and size used to do a single copy (after that, distcp is used)
+name|HIVE_EXEC_COPYFILE_MAXNUMFILES
+argument_list|(
+literal|"hive.exec.copyfile.maxnumfiles"
+argument_list|,
+literal|1L
+argument_list|,
+literal|"Maximum number of files Hive uses to do sequential HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for larger numbers of files so that copies can be done faster."
+argument_list|)
+block|,
 name|HIVE_EXEC_COPYFILE_MAXSIZE
 argument_list|(
 literal|"hive.exec.copyfile.maxsize"
@@ -5752,7 +5763,7 @@ operator|*
 literal|1024
 comment|/*32M*/
 argument_list|,
-literal|"Maximum file size (in Mb) that Hive uses to do single HDFS copies between directories."
+literal|"Maximum file size (in bytes) that Hive uses to do single HDFS copies between directories."
 operator|+
 literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
 argument_list|)
