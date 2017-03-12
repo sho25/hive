@@ -6503,13 +6503,17 @@ argument_list|,
 literal|"Allow synthetic file ID in splits on file systems that don't have a native one."
 argument_list|)
 block|,
-name|HIVE_ORC_CACHE_STRIPE_DETAILS_SIZE
+name|HIVE_ORC_CACHE_STRIPE_DETAILS_MEMORY_SIZE
 argument_list|(
-literal|"hive.orc.cache.stripe.details.size"
+literal|"hive.orc.cache.stripe.details.mem.size"
 argument_list|,
-literal|10000
+literal|"256Mb"
 argument_list|,
-literal|"Max cache size for keeping meta info about orc splits cached in the client."
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"Maximum size of orc splits cached in the client."
 argument_list|)
 block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
