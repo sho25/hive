@@ -1092,24 +1092,13 @@ condition|(
 operator|!
 name|needMore
 operator|||
-name|abort
+name|isAborted
+argument_list|()
 condition|)
 block|{
 break|break;
 block|}
 block|}
-block|}
-annotation|@
-name|Override
-name|void
-name|abort
-parameter_list|()
-block|{
-name|super
-operator|.
-name|abort
-argument_list|()
-expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -1140,11 +1129,12 @@ comment|// check if there are IOExceptions
 if|if
 condition|(
 operator|!
-name|abort
+name|isAborted
+argument_list|()
 condition|)
 block|{
-name|abort
-operator|=
+name|setAborted
+argument_list|(
 name|execContext
 operator|.
 name|getIoCxt
@@ -1152,6 +1142,7 @@ argument_list|()
 operator|.
 name|getIOExceptions
 argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 comment|// detecting failed executions by exceptions thrown by the operator tree
@@ -1170,6 +1161,12 @@ condition|)
 block|{
 return|return;
 block|}
+name|boolean
+name|abort
+init|=
+name|isAborted
+argument_list|()
+decl_stmt|;
 name|mergeOp
 operator|.
 name|close
@@ -1209,7 +1206,8 @@ block|{
 if|if
 condition|(
 operator|!
-name|abort
+name|isAborted
+argument_list|()
 condition|)
 block|{
 comment|// signal new failure to map-reduce
@@ -1313,9 +1311,10 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-name|abort
-operator|=
+name|setAborted
+argument_list|(
 literal|true
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

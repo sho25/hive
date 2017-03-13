@@ -4385,14 +4385,6 @@ operator|.
 name|INTERRUPT
 condition|)
 block|{
-name|Thread
-operator|.
-name|currentThread
-argument_list|()
-operator|.
-name|interrupt
-argument_list|()
-expr_stmt|;
 return|return
 literal|true
 return|;

@@ -751,6 +751,19 @@ argument_list|)
 expr_stmt|;
 name|hconf
 operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|FIRE_EVENTS_FOR_DML
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|hconf
+operator|.
 name|setVar
 argument_list|(
 name|HiveConf
@@ -5651,18 +5664,9 @@ block|}
 block|}
 annotation|@
 name|Test
-annotation|@
-name|Ignore
-comment|// The test turned off temporarily in HIVE-15478. This test is not running
-comment|// properly even though it passed before. The reason the test passed before is because
-comment|// we collect files added by "create table" statement during "repl dump", and it will take
-comment|// the files added by "insert statement". In HIVE-15478, Hive collect "create table" affected
-comment|// files during processing "create table" statement, and no data files present at that time.
-comment|// The inserted files rely on the missing INSERT_EVENT to signal. We need to turn on
-comment|// FIRE_EVENTS_FOR_DML setting to trigger INSERT_EVENT and this is WIP tracked by other ticket.
 specifier|public
 name|void
-name|testIncrementalInserts
+name|testIncrementalLoad
 parameter_list|()
 throws|throws
 name|IOException
@@ -5670,7 +5674,7 @@ block|{
 name|String
 name|testName
 init|=
-literal|"incrementalInserts"
+literal|"incrementalLoad"
 decl_stmt|;
 name|LOG
 operator|.
@@ -5769,7 +5773,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dumped to {} with id {}"
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
 argument_list|,
 name|replDumpLocn
 argument_list|,
@@ -6042,12 +6046,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dumped to {} with id {}"
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
 argument_list|,
 name|incrementalDumpLocn
 argument_list|,
 name|incrementalDumpId
+argument_list|,
+name|replDumpId
 argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
@@ -6232,12 +6242,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dumped to {} with id {}"
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
 argument_list|,
 name|incrementalDumpLocn
 argument_list|,
 name|incrementalDumpId
+argument_list|,
+name|replDumpId
 argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
@@ -6288,6 +6304,463 @@ operator|+
 literal|"_dupe.ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalInserts
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalInserts"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late LIKE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_late"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data_after_ins
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|,
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late values('"
+operator|+
+name|unptn_data_after_ins
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_late"
+argument_list|,
+name|unptn_data_after_ins
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_late"
+argument_list|,
+name|unptn_data_after_ins
 argument_list|)
 expr_stmt|;
 block|}

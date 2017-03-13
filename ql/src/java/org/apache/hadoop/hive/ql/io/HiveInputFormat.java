@@ -1647,6 +1647,14 @@ name|format
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1656,6 +1664,7 @@ operator|+
 name|ifName
 argument_list|)
 expr_stmt|;
+block|}
 name|isSupported
 operator|=
 name|isSerdeBased
@@ -1676,6 +1685,14 @@ operator|!
 name|isVectorized
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1693,6 +1710,7 @@ operator|+
 name|isVectorized
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|inputFormat
 return|;
@@ -1738,6 +1756,14 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1745,6 +1771,7 @@ argument_list|(
 literal|"Not using LLAP IO because it is not initialized"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|inputFormat
 return|;
@@ -1766,6 +1793,14 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1773,6 +1808,7 @@ argument_list|(
 literal|"Not using LLAP IO because there's no partition spec for SerDe-based IF"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|inputFormat
 return|;
@@ -1809,6 +1845,14 @@ operator|.
 name|VECTORIZED_INPUT_FILE_FORMAT
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -1832,6 +1876,7 @@ name|getPartSpec
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|vpart
 operator|.
 name|setVectorMapOperatorReadType
@@ -2246,6 +2291,14 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -2266,6 +2319,7 @@ operator|+
 name|pathToPartitionInfo
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(

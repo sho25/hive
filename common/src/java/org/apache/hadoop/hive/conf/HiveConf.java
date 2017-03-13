@@ -5758,7 +5758,18 @@ operator|+
 literal|"create new MR job for sorting final output"
 argument_list|)
 block|,
-comment|// Max filesize used to do a single copy (after that, distcp is used)
+comment|// Max file num and size used to do a single copy (after that, distcp is used)
+name|HIVE_EXEC_COPYFILE_MAXNUMFILES
+argument_list|(
+literal|"hive.exec.copyfile.maxnumfiles"
+argument_list|,
+literal|1L
+argument_list|,
+literal|"Maximum number of files Hive uses to do sequential HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for larger numbers of files so that copies can be done faster."
+argument_list|)
+block|,
 name|HIVE_EXEC_COPYFILE_MAXSIZE
 argument_list|(
 literal|"hive.exec.copyfile.maxsize"
@@ -5770,7 +5781,7 @@ operator|*
 literal|1024
 comment|/*32M*/
 argument_list|,
-literal|"Maximum file size (in Mb) that Hive uses to do single HDFS copies between directories."
+literal|"Maximum file size (in bytes) that Hive uses to do single HDFS copies between directories."
 operator|+
 literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
 argument_list|)
@@ -6521,13 +6532,17 @@ argument_list|,
 literal|"Allow synthetic file ID in splits on file systems that don't have a native one."
 argument_list|)
 block|,
-name|HIVE_ORC_CACHE_STRIPE_DETAILS_SIZE
+name|HIVE_ORC_CACHE_STRIPE_DETAILS_MEMORY_SIZE
 argument_list|(
-literal|"hive.orc.cache.stripe.details.size"
+literal|"hive.orc.cache.stripe.details.mem.size"
 argument_list|,
-literal|10000
+literal|"256Mb"
 argument_list|,
-literal|"Max cache size for keeping meta info about orc splits cached in the client."
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"Maximum size of orc splits cached in the client."
 argument_list|)
 block|,
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS

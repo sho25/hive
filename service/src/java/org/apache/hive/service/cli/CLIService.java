@@ -2208,14 +2208,6 @@ name|opHandle
 argument_list|)
 decl_stmt|;
 comment|/**      * If this is a background operation run asynchronously,      * we block for a duration determined by a step function, before we return      * However, if the background operation is complete, we return immediately.      */
-if|if
-condition|(
-name|operation
-operator|.
-name|shouldRunAsync
-argument_list|()
-condition|)
-block|{
 name|HiveConf
 name|conf
 init|=
@@ -2227,6 +2219,14 @@ operator|.
 name|getHiveConf
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|operation
+operator|.
+name|shouldRunAsync
+argument_list|()
+condition|)
+block|{
 name|long
 name|maxTimeout
 init|=
@@ -2401,6 +2401,8 @@ argument_list|(
 name|getProgressUpdate
 argument_list|,
 name|operation
+argument_list|,
+name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2449,6 +2451,9 @@ name|isProgressLogRequested
 parameter_list|,
 name|Operation
 name|operation
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 if|if
@@ -2461,7 +2466,7 @@ name|ServiceUtils
 operator|.
 name|canProvideProgressLog
 argument_list|(
-name|hiveConf
+name|conf
 argument_list|)
 operator|||
 operator|!

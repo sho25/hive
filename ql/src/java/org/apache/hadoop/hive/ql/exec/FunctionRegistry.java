@@ -4076,6 +4076,17 @@ argument_list|)
 expr_stmt|;
 name|system
 operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"mod"
+argument_list|,
+name|GenericUDFOPMod
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
 name|registerUDF
 argument_list|(
 literal|"div"

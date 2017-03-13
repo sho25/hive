@@ -1215,6 +1215,31 @@ operator|.
 name|getTezSession
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|session
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|session
+operator|.
+name|isOpen
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"The session: "
+operator|+
+name|session
+operator|+
+literal|" has not been opened"
+argument_list|)
+expr_stmt|;
+block|}
 name|session
 operator|=
 name|TezSessionPoolManager

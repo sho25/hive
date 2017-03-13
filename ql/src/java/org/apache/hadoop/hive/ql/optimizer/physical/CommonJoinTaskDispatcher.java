@@ -2532,32 +2532,6 @@ condition|)
 block|{
 continue|continue;
 block|}
-comment|// deep copy a new mapred work from xml
-comment|// Once HIVE-4396 is in, it would be faster to use a cheaper method to clone the plan
-name|MapredWork
-name|newWork
-init|=
-name|SerializationUtilities
-operator|.
-name|clonePlan
-argument_list|(
-name|currTask
-operator|.
-name|getWork
-argument_list|()
-argument_list|)
-decl_stmt|;
-comment|// create map join task and set big table as i
-name|MapRedTask
-name|newTask
-init|=
-name|convertTaskToMapJoinTask
-argument_list|(
-name|newWork
-argument_list|,
-name|pos
-argument_list|)
-decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -2615,6 +2589,30 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|MapredWork
+name|newWork
+init|=
+name|SerializationUtilities
+operator|.
+name|clonePlan
+argument_list|(
+name|currTask
+operator|.
+name|getWork
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|// create map join task and set big table as i
+name|MapRedTask
+name|newTask
+init|=
+name|convertTaskToMapJoinTask
+argument_list|(
+name|newWork
+argument_list|,
+name|pos
+argument_list|)
+decl_stmt|;
 comment|// add into conditional task
 name|listWorks
 operator|.
@@ -2702,6 +2700,18 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|listTasks
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+name|currTask
+return|;
 block|}
 comment|// insert current common join task to conditional task
 name|listWorks

@@ -16282,14 +16282,24 @@ name|ExprNodeConstantDesc
 operator|)
 name|expr
 decl_stmt|;
-if|if
-condition|(
-name|isStringFamily
-argument_list|(
+name|String
+name|constTypeString
+init|=
 name|constExpr
 operator|.
 name|getTypeString
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|isStringFamily
+argument_list|(
+name|constTypeString
+argument_list|)
+operator|||
+name|isDatetimeFamily
+argument_list|(
+name|constTypeString
 argument_list|)
 condition|)
 block|{
@@ -16356,7 +16366,7 @@ name|HiveException
 argument_list|(
 literal|"Udf: unhandled constant type for scalar argument. "
 operator|+
-literal|"Expecting string."
+literal|"Expecting string/date/timestamp."
 argument_list|)
 throw|;
 block|}

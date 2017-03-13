@@ -6998,14 +6998,18 @@ name|isMetadataOnly
 argument_list|()
 condition|)
 block|{
-comment|// repl-imports are replace-into
+comment|// repl-imports are replace-into unless the event is insert-into
 name|loadTable
 argument_list|(
 name|fromURI
 argument_list|,
 name|table
 argument_list|,
-literal|true
+operator|!
+name|replicationSpec
+operator|.
+name|isInsert
+argument_list|()
 argument_list|,
 operator|new
 name|Path

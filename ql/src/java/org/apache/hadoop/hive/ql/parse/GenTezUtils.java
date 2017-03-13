@@ -1358,6 +1358,27 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+comment|// we also collect table stats while collecting column stats.
+if|if
+condition|(
+name|context
+operator|.
+name|parseContext
+operator|.
+name|getAnalyzeRewrite
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|mapWork
+operator|.
+name|setGatheringStats
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// removes any union operator and clones the plan
 specifier|public

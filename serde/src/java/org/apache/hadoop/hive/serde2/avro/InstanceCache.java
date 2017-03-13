@@ -142,6 +142,7 @@ return|;
 block|}
 comment|/**    * Retrieve (or create if it doesn't exist) the correct Instance for this    * SeedObject using 'seenSchemas' to resolve circular references    */
 specifier|public
+specifier|synchronized
 name|Instance
 name|retrieve
 parameter_list|(

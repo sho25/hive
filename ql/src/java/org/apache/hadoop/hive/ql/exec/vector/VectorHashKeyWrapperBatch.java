@@ -4301,8 +4301,9 @@ name|allocateKeyWrapper
 parameter_list|()
 block|{
 return|return
-operator|new
 name|VectorHashKeyWrapper
+operator|.
+name|allocate
 argument_list|(
 name|longIndices
 operator|.

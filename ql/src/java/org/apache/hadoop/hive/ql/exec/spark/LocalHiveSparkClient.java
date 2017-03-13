@@ -305,6 +305,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|BaseWork
@@ -897,6 +915,22 @@ argument_list|(
 name|sparkWork
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|driverContext
+operator|.
+name|isShutdown
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Operation is cancelled."
+argument_list|)
+throw|;
+block|}
 comment|// Execute generated plan.
 name|JavaPairRDD
 argument_list|<
