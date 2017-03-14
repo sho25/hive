@@ -8532,6 +8532,34 @@ argument_list|,
 name|wareHouseDir
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setLastCommand
+argument_list|(
+name|commandName
+operator|+
+literal|" "
+operator|+
+name|commandArgs
+operator|.
+name|trim
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|enableTestOnlyCmd
 argument_list|(
 name|SessionState
@@ -12982,16 +13010,18 @@ name|command
 operator|!=
 literal|null
 condition|?
-literal|" running "
+literal|" running \""
 operator|+
 name|command
 else|:
 literal|""
 operator|)
 operator|+
-literal|"fname="
+literal|"\" fname="
 operator|+
 name|fname
+operator|+
+literal|" "
 operator|+
 operator|(
 name|debugHint
