@@ -671,6 +671,10 @@ name|splitPath
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -1193,6 +1197,10 @@ argument_list|,
 name|path
 argument_list|,
 literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
