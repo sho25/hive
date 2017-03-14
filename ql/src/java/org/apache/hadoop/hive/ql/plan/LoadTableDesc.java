@@ -353,11 +353,23 @@ name|sourcePath
 operator|+
 literal|" to "
 operator|+
+operator|(
+operator|(
+name|table
+operator|.
+name|getProperties
+argument_list|()
+operator|==
+literal|null
+operator|)
+condition|?
+literal|"null"
+else|:
 name|table
 operator|.
 name|getTableName
 argument_list|()
-comment|/*, new Exception()*/
+operator|)
 argument_list|)
 expr_stmt|;
 name|init

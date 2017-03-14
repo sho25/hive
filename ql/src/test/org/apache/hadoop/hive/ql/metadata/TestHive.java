@@ -2052,6 +2052,22 @@ argument_list|(
 literal|"Tables  doesn't match: "
 operator|+
 name|tableName
+operator|+
+literal|" ("
+operator|+
+name|ft
+operator|.
+name|getTTable
+argument_list|()
+operator|+
+literal|"; "
+operator|+
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
+operator|+
+literal|")"
 argument_list|,
 name|ft
 operator|.
