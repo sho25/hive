@@ -677,6 +677,24 @@ init|=
 literal|"Wait-Queue-Scheduler-%d"
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|long
+name|PREEMPTION_KILL_GRACE_MS
+init|=
+literal|500
+decl_stmt|;
+comment|// 500ms
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|PREEMPTION_KILL_GRACE_SLEEP_MS
+init|=
+literal|50
+decl_stmt|;
+comment|// 50ms
+specifier|private
 specifier|final
 name|AtomicBoolean
 name|isShutdown
@@ -747,10 +765,6 @@ specifier|private
 specifier|final
 name|Clock
 name|clock
-init|=
-operator|new
-name|MonotonicClock
-argument_list|()
 decl_stmt|;
 comment|// Tracks running fragments, and completing fragments.
 comment|// Completing since we have a race in the AM being notified and the task actually
@@ -818,6 +832,9 @@ parameter_list|,
 specifier|final
 name|LlapDaemonExecutorMetrics
 name|metrics
+parameter_list|,
+name|Clock
+name|clock
 parameter_list|)
 block|{
 name|super
@@ -883,6 +900,20 @@ name|waitQueueComparator
 argument_list|,
 name|waitQueueSize
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|clock
+operator|=
+name|clock
+operator|==
+literal|null
+condition|?
+operator|new
+name|MonotonicClock
+argument_list|()
+else|:
+name|clock
 expr_stmt|;
 name|this
 operator|.
@@ -1627,6 +1658,7 @@ name|WaitQueueWorker
 implements|implements
 name|Runnable
 block|{
+specifier|private
 name|TaskWrapper
 name|task
 decl_stmt|;
@@ -1639,6 +1671,11 @@ parameter_list|()
 block|{
 try|try
 block|{
+name|Long
+name|lastKillTimeMs
+init|=
+literal|null
+decl_stmt|;
 while|while
 condition|(
 operator|!
@@ -1658,9 +1695,9 @@ init|(
 name|lock
 init|)
 block|{
-comment|// Since schedule() can be called from multiple threads, we peek the wait queue,
-comment|// try scheduling the task and then remove the task if scheduling is successful.
-comment|// This will make sure the task's place in the wait queue is held until it gets scheduled.
+comment|// Since schedule() can be called from multiple threads, we peek the wait queue, try
+comment|// scheduling the task and then remove the task if scheduling is successful. This
+comment|// will make sure the task's place in the wait queue is held until it gets scheduled.
 name|task
 operator|=
 name|waitQueue
@@ -1692,11 +1729,21 @@ expr_stmt|;
 block|}
 continue|continue;
 block|}
-comment|// if the task cannot finish and if no slots are available then don't schedule it.
+comment|// If the task cannot finish and if no slots are available then don't schedule it.
+comment|// Also don't wait if we have a task and we just killed something to schedule it.
 name|boolean
 name|shouldWait
 init|=
-literal|false
+name|numSlotsAvailable
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|0
+operator|&&
+name|lastKillTimeMs
+operator|==
+literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -1718,7 +1765,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Attempting to schedule task {}, canFinish={}. Current state: preemptionQueueSize={}, numSlotsAvailable={}, waitQueueSize={}"
+literal|"Attempting to schedule task {}, canFinish={}. Current state: "
+operator|+
+literal|"preemptionQueueSize={}, numSlotsAvailable={}, waitQueueSize={}"
 argument_list|,
 name|task
 operator|.
@@ -1750,14 +1799,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|numSlotsAvailable
-operator|.
-name|get
-argument_list|()
-operator|==
-literal|0
+name|shouldWait
+operator|=
+name|shouldWait
 operator|&&
 operator|(
 name|enablePreemption
@@ -1769,31 +1813,7 @@ operator|.
 name|isEmpty
 argument_list|()
 operator|)
-condition|)
-block|{
-name|shouldWait
-operator|=
-literal|true
 expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-if|if
-condition|(
-name|numSlotsAvailable
-operator|.
-name|get
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-name|shouldWait
-operator|=
-literal|true
-expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
@@ -1821,12 +1841,12 @@ continue|continue;
 block|}
 try|try
 block|{
-name|trySchedule
+name|tryScheduleUnderLock
 argument_list|(
 name|task
 argument_list|)
 expr_stmt|;
-comment|// wait queue could have been re-ordered in the mean time because of concurrent task
+comment|// Wait queue could have been re-ordered in the mean time because of concurrent task
 comment|// submission. So remove the specific task instead of the head task.
 if|if
 condition|(
@@ -1857,6 +1877,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|lastKillTimeMs
+operator|=
+literal|null
+expr_stmt|;
+comment|// We have filled the spot we may have killed for (if any).
 block|}
 catch|catch
 parameter_list|(
@@ -1870,6 +1895,7 @@ name|e
 expr_stmt|;
 block|}
 block|}
+comment|// synchronized (lock)
 comment|// Handle the rejection outside of the lock
 if|if
 condition|(
@@ -1878,39 +1904,75 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|handleScheduleAttemptedRejection
-argument_list|(
-name|task
-argument_list|)
-expr_stmt|;
-block|}
+if|if
+condition|(
+name|lastKillTimeMs
+operator|!=
+literal|null
+operator|&&
+operator|(
+name|clock
+operator|.
+name|getTime
+argument_list|()
+operator|-
+name|lastKillTimeMs
+operator|)
+operator|<
+name|PREEMPTION_KILL_GRACE_MS
+condition|)
+block|{
+comment|// We killed something, but still got rejected. Wait a bit to give a chance to our
+comment|// previous victim to actually die.
 synchronized|synchronized
 init|(
 name|lock
 init|)
 block|{
-while|while
-condition|(
-name|waitQueue
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-if|if
-condition|(
-operator|!
-name|isShutdown
-operator|.
-name|get
-argument_list|()
-condition|)
-block|{
 name|lock
 operator|.
 name|wait
+argument_list|(
+name|PREEMPTION_KILL_GRACE_SLEEP_MS
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+if|if
+condition|(
+name|isDebugEnabled
+operator|&&
+name|lastKillTimeMs
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Grace period ended for the previous kill; preemtping more tasks"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|handleScheduleAttemptedRejection
+argument_list|(
+name|task
+argument_list|)
+condition|)
+block|{
+name|lastKillTimeMs
+operator|=
+name|clock
+operator|.
+name|getTime
 argument_list|()
 expr_stmt|;
+comment|// We killed something.
 block|}
 block|}
 block|}
@@ -2503,7 +2565,7 @@ init|)
 block|{
 name|lock
 operator|.
-name|notify
+name|notifyAll
 argument_list|()
 expr_stmt|;
 block|}
@@ -2722,7 +2784,7 @@ expr_stmt|;
 block|}
 name|lock
 operator|.
-name|notify
+name|notifyAll
 argument_list|()
 expr_stmt|;
 block|}
@@ -2843,8 +2905,9 @@ expr_stmt|;
 block|}
 annotation|@
 name|VisibleForTesting
+comment|/** Assumes the epic lock is already taken. */
 name|void
-name|trySchedule
+name|tryScheduleUnderLock
 parameter_list|(
 specifier|final
 name|TaskWrapper
@@ -2853,22 +2916,11 @@ parameter_list|)
 throws|throws
 name|RejectedExecutionException
 block|{
-synchronized|synchronized
-init|(
-name|lock
-init|)
+if|if
+condition|(
+name|isInfoEnabled
+condition|)
 block|{
-name|boolean
-name|canFinish
-init|=
-name|taskWrapper
-operator|.
-name|getTaskRunnerCallable
-argument_list|()
-operator|.
-name|canFinish
-argument_list|()
-decl_stmt|;
 name|LOG
 operator|.
 name|info
@@ -2878,6 +2930,7 @@ argument_list|,
 name|taskWrapper
 argument_list|)
 expr_stmt|;
+block|}
 name|ListenableFuture
 argument_list|<
 name|TaskRunner2Result
@@ -2930,6 +2983,17 @@ argument_list|,
 name|executionCompletionExecutorService
 argument_list|)
 expr_stmt|;
+name|boolean
+name|canFinish
+init|=
+name|taskWrapper
+operator|.
+name|getTaskRunnerCallable
+argument_list|()
+operator|.
+name|canFinish
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|isDebugEnabled
@@ -2988,7 +3052,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
 name|numSlotsAvailable
 operator|.
 name|decrementAndGet
@@ -3014,7 +3077,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
-name|void
+name|boolean
 name|handleScheduleAttemptedRejection
 parameter_list|(
 name|TaskWrapper
@@ -3055,20 +3118,30 @@ name|preemptionQueue
 argument_list|)
 expr_stmt|;
 block|}
+while|while
+condition|(
+literal|true
+condition|)
+block|{
+comment|// Try to preempt until we have something.
 name|TaskWrapper
 name|pRequest
 init|=
 name|removeAndGetNextFromPreemptionQueue
 argument_list|()
 decl_stmt|;
-comment|// Avoid preempting tasks which are finishable - callback still to be processed.
 if|if
 condition|(
 name|pRequest
-operator|!=
+operator|==
 literal|null
 condition|)
 block|{
+return|return
+literal|false
+return|;
+comment|// Woe us.
+block|}
 if|if
 condition|(
 name|pRequest
@@ -3092,9 +3165,9 @@ name|getRequestId
 argument_list|()
 argument_list|)
 expr_stmt|;
+continue|continue;
+comment|// Try something else.
 block|}
-else|else
-block|{
 if|if
 condition|(
 name|isInfoEnabled
@@ -3129,9 +3202,15 @@ operator|.
 name|killTask
 argument_list|()
 expr_stmt|;
+comment|// We've killed something and may want to wait for it to die.
+return|return
+literal|true
+return|;
 block|}
 block|}
-block|}
+return|return
+literal|false
+return|;
 block|}
 specifier|private
 name|void
@@ -3279,7 +3358,7 @@ expr_stmt|;
 block|}
 name|lock
 operator|.
-name|notify
+name|notifyAll
 argument_list|()
 expr_stmt|;
 block|}
@@ -3891,7 +3970,7 @@ condition|)
 block|{
 name|lock
 operator|.
-name|notify
+name|notifyAll
 argument_list|()
 expr_stmt|;
 block|}

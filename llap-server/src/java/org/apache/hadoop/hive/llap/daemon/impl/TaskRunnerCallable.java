@@ -2457,6 +2457,10 @@ operator|!=
 literal|null
 argument_list|)
 expr_stmt|;
+name|shouldRunTask
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|taskRunner
@@ -2537,10 +2541,6 @@ name|ta
 argument_list|)
 expr_stmt|;
 block|}
-name|shouldRunTask
-operator|=
-literal|false
-expr_stmt|;
 block|}
 else|else
 block|{

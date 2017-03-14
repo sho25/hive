@@ -1478,6 +1478,8 @@ argument_list|,
 name|classLoader
 argument_list|,
 name|metrics
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|completionListener
