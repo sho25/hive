@@ -8657,9 +8657,9 @@ name|HIVE_DRUID_BASE_PERSIST_DIRECTORY
 argument_list|(
 literal|"hive.druid.basePersistDirectory"
 argument_list|,
-literal|"/tmp"
+literal|""
 argument_list|,
-literal|"Local temporary directory used to persist intermediate indexing state."
+literal|"Local temporary directory used to persist intermediate indexing state, will default to JVM system property java.io.tmpdir."
 argument_list|)
 block|,
 name|DRUID_SEGMENT_DIRECTORY
