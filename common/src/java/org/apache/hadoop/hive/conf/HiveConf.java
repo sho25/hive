@@ -12659,6 +12659,7 @@ operator|+
 literal|" Used in LlapServiceDriver and package.py"
 argument_list|)
 block|,
+comment|// TODO Move the following 2 properties out of Configuration to a constant.
 name|LLAP_DAEMON_CONTAINER_ID
 argument_list|(
 literal|"hive.llap.daemon.container.id"
@@ -12666,6 +12667,17 @@ argument_list|,
 literal|null
 argument_list|,
 literal|"ContainerId of a running LlapDaemon. Used to publish to the registry"
+argument_list|)
+block|,
+name|LLAP_DAEMON_NM_ADDRESS
+argument_list|(
+literal|"hive.llap.daemon.nm.address"
+argument_list|,
+literal|null
+argument_list|,
+literal|"NM Address host:rpcPort for the NodeManager on which the instance of the daemon is running.\n"
+operator|+
+literal|"Published to the llap registry. Should never be set by users"
 argument_list|)
 block|,
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED
