@@ -26039,11 +26039,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// To avoid confusion from nested MM directories when table is converted back and forth,
-comment|// we will do the following - we will rename mm_ dirs to remove the prefix; we will also
-comment|// delete any directories that are not committed. Note that this relies on locks.
-comment|// Note also that we only do the renames AFTER the metastore operation commits.
-comment|// Deleting uncommitted things is safe, but moving stuff before we convert is data loss.
+comment|// To avoid confusion from nested MM directories when table is converted back and forth, we
+comment|// want to rename mm_ dirs to remove the prefix; however, given the unpredictable nested
+comment|// directory handling in Hive/MR, we will instead move all the files into the root directory.
+comment|// We will also delete any directories that are not committed.
+comment|// Note that this relies on locks. Note also that we only do the renames AFTER the metastore
+comment|// operation commits. Deleting uncommitted things is safe, but moving stuff before we convert
+comment|// could cause data loss.
 name|List
 argument_list|<
 name|Path
@@ -26063,7 +26065,7 @@ name|isStoredAsSubDirectories
 argument_list|()
 condition|)
 block|{
-comment|// TODO: support this?
+comment|// TODO: support this? we only bail because it's a PITA and hardly anyone seems to care.
 throw|throw
 operator|new
 name|HiveException
@@ -26071,6 +26073,61 @@ argument_list|(
 literal|"Converting list bucketed tables stored as subdirectories "
 operator|+
 literal|" to and from MM is not supported"
+argument_list|)
+throw|;
+block|}
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|bucketCols
+init|=
+name|tbl
+operator|.
+name|getBucketCols
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|bucketCols
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|bucketCols
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_STRICT_CHECKS_BUCKETING
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Converting bucketed tables from MM is not supported by default; "
+operator|+
+literal|"copying files from multiple MM directories may potentially break the buckets. You "
+operator|+
+literal|"can set "
+operator|+
+name|ConfVars
+operator|.
+name|HIVE_STRICT_CHECKS_BUCKETING
+operator|.
+name|varname
+operator|+
+literal|" to false for this query if you want to force the conversion."
 argument_list|)
 throw|;
 block|}
@@ -26217,6 +26274,22 @@ name|size
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|targetPrefix
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|allMmDirs
+operator|.
+name|size
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|int
 name|prefixLen
 init|=
@@ -26258,14 +26331,14 @@ decl_stmt|;
 name|Path
 name|tgt
 init|=
-operator|new
-name|Path
-argument_list|(
 name|src
 operator|.
 name|getParent
 argument_list|()
-argument_list|,
+decl_stmt|;
+name|String
+name|prefix
+init|=
 name|src
 operator|.
 name|getName
@@ -26277,7 +26350,8 @@ name|prefixLen
 operator|+
 literal|1
 argument_list|)
-argument_list|)
+operator|+
+literal|"_"
 decl_stmt|;
 name|Utilities
 operator|.
@@ -26292,6 +26366,12 @@ operator|+
 literal|" to "
 operator|+
 name|tgt
+operator|+
+literal|" (prefix "
+operator|+
+name|prefix
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|targetPaths
@@ -26299,6 +26379,13 @@ operator|.
 name|add
 argument_list|(
 name|tgt
+argument_list|)
+expr_stmt|;
+name|targetPrefix
+operator|.
+name|add
+argument_list|(
+name|prefix
 argument_list|)
 expr_stmt|;
 block|}
@@ -26330,6 +26417,8 @@ argument_list|(
 name|allMmDirs
 argument_list|,
 name|targetPaths
+argument_list|,
+name|targetPrefix
 argument_list|,
 literal|true
 argument_list|,
