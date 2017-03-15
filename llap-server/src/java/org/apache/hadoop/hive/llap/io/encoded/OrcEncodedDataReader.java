@@ -117,18 +117,6 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|OrcUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
 name|TypeDescription
 import|;
 end_import
@@ -1119,6 +1107,8 @@ name|ConsumerFeedback
 argument_list|<
 name|OrcEncodedColumnBatch
 argument_list|>
+implements|,
+name|TezCounterSource
 block|{
 specifier|private
 specifier|static
@@ -5810,6 +5800,8 @@ argument_list|)
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TezCounters
 name|getTezCounters
