@@ -5798,6 +5798,8 @@ argument_list|,
 literal|"RCfile"
 argument_list|,
 literal|"ORC"
+argument_list|,
+literal|"parquet"
 argument_list|)
 argument_list|,
 literal|"Default file format for CREATE TABLE statement. Users can explicitly override it by CREATE TABLE ... STORED AS [FORMAT]"
@@ -5821,6 +5823,8 @@ argument_list|,
 literal|"RCfile"
 argument_list|,
 literal|"ORC"
+argument_list|,
+literal|"parquet"
 argument_list|)
 argument_list|,
 literal|"Default file format for CREATE TABLE statement applied to managed tables only. External tables will be \n"
