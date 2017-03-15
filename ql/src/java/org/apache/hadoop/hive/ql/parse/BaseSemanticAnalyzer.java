@@ -4002,7 +4002,7 @@ operator|.
 name|getChildCount
 argument_list|()
 operator|<
-literal|6
+literal|4
 condition|)
 block|{
 throw|throw
@@ -4022,11 +4022,11 @@ comment|// The ANTLR grammar looks like :
 comment|// 1. KW_CONSTRAINT idfr=identifier KW_PRIMARY KW_KEY pkCols=columnParenthesesList
 comment|//  enableSpec=enableSpecification validateSpec=validateSpecification relySpec=relySpecification
 comment|// -> ^(TOK_PRIMARY_KEY $pkCols $idfr $relySpec $enableSpec $validateSpec)
-comment|// when the user specifies the constraint name (i.e. child.getChildCount() == 7)
+comment|// when the user specifies the constraint name (i.e. child.getChildCount() == 5)
 comment|// 2.  KW_PRIMARY KW_KEY columnParenthesesList
 comment|// enableSpec=enableSpecification validateSpec=validateSpecification relySpec=relySpecification
 comment|// -> ^(TOK_PRIMARY_KEY columnParenthesesList $relySpec $enableSpec $validateSpec)
-comment|// when the user does not specify the constraint name (i.e. child.getChildCount() == 6)
+comment|// when the user does not specify the constraint name (i.e. child.getChildCount() == 4)
 name|boolean
 name|userSpecifiedConstraintName
 init|=
@@ -4035,7 +4035,7 @@ operator|.
 name|getChildCount
 argument_list|()
 operator|==
-literal|7
+literal|5
 decl_stmt|;
 name|int
 name|relyIndex
@@ -4045,11 +4045,11 @@ operator|.
 name|getChildCount
 argument_list|()
 operator|==
-literal|7
+literal|5
 condition|?
-literal|4
+literal|2
 else|:
-literal|3
+literal|1
 decl_stmt|;
 for|for
 control|(
@@ -4064,7 +4064,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 operator|.
 name|getChildCount
@@ -4081,7 +4081,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 operator|.
 name|getChild
@@ -4219,7 +4219,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|3
+literal|1
 argument_list|)
 operator|.
 name|getText
@@ -4427,7 +4427,7 @@ block|{
 name|int
 name|relyIndex
 init|=
-literal|4
+literal|2
 decl_stmt|;
 name|int
 name|cnt
@@ -4464,7 +4464,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 operator|.
 name|getChildCount
@@ -4481,7 +4481,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|1
+literal|0
 argument_list|)
 operator|.
 name|getChild
@@ -4621,7 +4621,7 @@ name|child
 operator|.
 name|getChild
 argument_list|(
-literal|3
+literal|1
 argument_list|)
 operator|.
 name|getText
@@ -4684,12 +4684,12 @@ comment|// 1.  KW_CONSTRAINT idfr=identifier KW_FOREIGN KW_KEY fkCols=columnPare
 comment|// KW_REFERENCES tabName=tableName parCols=columnParenthesesList
 comment|// enableSpec=enableSpecification validateSpec=validateSpecification relySpec=relySpecification
 comment|// -> ^(TOK_FOREIGN_KEY $idfr $fkCols $tabName $parCols $relySpec $enableSpec $validateSpec)
-comment|// when the user specifies the constraint name (i.e. child.getChildCount() == 11)
+comment|// when the user specifies the constraint name (i.e. child.getChildCount() == 7)
 comment|// 2.  KW_FOREIGN KW_KEY fkCols=columnParenthesesList
 comment|// KW_REFERENCES tabName=tableName parCols=columnParenthesesList
 comment|// enableSpec=enableSpecification validateSpec=validateSpecification relySpec=relySpecification
 comment|// -> ^(TOK_FOREIGN_KEY $fkCols  $tabName $parCols $relySpec $enableSpec $validateSpec)
-comment|// when the user does not specify the constraint name (i.e. child.getChildCount() == 10)
+comment|// when the user does not specify the constraint name (i.e. child.getChildCount() == 6)
 name|boolean
 name|userSpecifiedConstraintName
 init|=
@@ -4698,48 +4698,37 @@ operator|.
 name|getChildCount
 argument_list|()
 operator|==
-literal|11
+literal|7
 decl_stmt|;
 name|int
 name|fkIndex
 init|=
 name|userSpecifiedConstraintName
 condition|?
-literal|2
+literal|1
 else|:
+literal|0
+decl_stmt|;
+name|int
+name|ptIndex
+init|=
+name|fkIndex
+operator|+
 literal|1
 decl_stmt|;
 name|int
 name|pkIndex
 init|=
-name|userSpecifiedConstraintName
-condition|?
-literal|6
-else|:
-literal|5
-decl_stmt|;
-name|int
 name|ptIndex
-init|=
-name|userSpecifiedConstraintName
-condition|?
-literal|4
-else|:
-literal|3
+operator|+
+literal|1
 decl_stmt|;
 name|int
 name|relyIndex
 init|=
-name|child
-operator|.
-name|getChildCount
-argument_list|()
-operator|==
-literal|11
-condition|?
-literal|8
-else|:
-literal|7
+name|pkIndex
+operator|+
+literal|1
 decl_stmt|;
 if|if
 condition|(

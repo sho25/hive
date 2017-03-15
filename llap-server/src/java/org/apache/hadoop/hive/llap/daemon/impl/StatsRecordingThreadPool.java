@@ -193,7 +193,7 @@ name|io
 operator|.
 name|encoded
 operator|.
-name|OrcEncodedDataReader
+name|TezCounterSource
 import|;
 end_import
 
@@ -923,15 +923,15 @@ if|if
 condition|(
 name|actualCallable
 operator|instanceof
-name|OrcEncodedDataReader
+name|TezCounterSource
 condition|)
 block|{
-comment|// counters for llap io side
+comment|// Other counter sources (currently used in LLAP IO).
 name|tezCounters
 operator|=
 operator|(
 operator|(
-name|OrcEncodedDataReader
+name|TezCounterSource
 operator|)
 name|actualCallable
 operator|)

@@ -5816,6 +5816,8 @@ argument_list|,
 literal|"RCfile"
 argument_list|,
 literal|"ORC"
+argument_list|,
+literal|"parquet"
 argument_list|)
 argument_list|,
 literal|"Default file format for CREATE TABLE statement. Users can explicitly override it by CREATE TABLE ... STORED AS [FORMAT]"
@@ -5839,6 +5841,8 @@ argument_list|,
 literal|"RCfile"
 argument_list|,
 literal|"ORC"
+argument_list|,
+literal|"parquet"
 argument_list|)
 argument_list|,
 literal|"Default file format for CREATE TABLE statement applied to managed tables only. External tables will be \n"
@@ -8686,9 +8690,9 @@ name|HIVE_DRUID_BASE_PERSIST_DIRECTORY
 argument_list|(
 literal|"hive.druid.basePersistDirectory"
 argument_list|,
-literal|"/tmp"
+literal|""
 argument_list|,
-literal|"Local temporary directory used to persist intermediate indexing state."
+literal|"Local temporary directory used to persist intermediate indexing state, will default to JVM system property java.io.tmpdir."
 argument_list|)
 block|,
 name|DRUID_SEGMENT_DIRECTORY
@@ -12692,6 +12696,7 @@ operator|+
 literal|" Used in LlapServiceDriver and package.py"
 argument_list|)
 block|,
+comment|// TODO Move the following 2 properties out of Configuration to a constant.
 name|LLAP_DAEMON_CONTAINER_ID
 argument_list|(
 literal|"hive.llap.daemon.container.id"
@@ -12699,6 +12704,17 @@ argument_list|,
 literal|null
 argument_list|,
 literal|"ContainerId of a running LlapDaemon. Used to publish to the registry"
+argument_list|)
+block|,
+name|LLAP_DAEMON_NM_ADDRESS
+argument_list|(
+literal|"hive.llap.daemon.nm.address"
+argument_list|,
+literal|null
+argument_list|,
+literal|"NM Address host:rpcPort for the NodeManager on which the instance of the daemon is running.\n"
+operator|+
+literal|"Published to the llap registry. Should never be set by users"
 argument_list|)
 block|,
 name|LLAP_DAEMON_SHUFFLE_DIR_WATCHER_ENABLED

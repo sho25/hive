@@ -335,6 +335,7 @@ name|implementor
 parameter_list|)
 block|{   }
 specifier|private
+specifier|static
 name|void
 name|findCorrelatedVar
 parameter_list|(
@@ -434,6 +435,7 @@ block|}
 comment|//traverse the given node to find all correlated variables
 comment|// Note that correlated variables are supported in Filter only i.e. Where& Having
 specifier|private
+specifier|static
 name|void
 name|traverseFilter
 parameter_list|(
@@ -653,6 +655,7 @@ name|allCorrVars
 return|;
 block|}
 specifier|public
+specifier|static
 name|Set
 argument_list|<
 name|CorrelationId

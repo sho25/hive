@@ -756,33 +756,15 @@ literal|"MERGE INTO target USING source ON target.pk = source.pk WHEN NOT MATCHE
 argument_list|)
 decl_stmt|;
 block|}
-comment|/**    * why does this fail but next one passes    * @throws ParseException    */
 annotation|@
 name|Test
 specifier|public
 name|void
-name|testNegative5
+name|test5_1
 parameter_list|()
 throws|throws
 name|ParseException
 block|{
-name|expectedException
-operator|.
-name|expect
-argument_list|(
-name|ParseException
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
-name|expectedException
-operator|.
-name|expectMessage
-argument_list|(
-literal|"line 1:103 mismatched input '+' expecting ) near 'b' in value row constructor"
-argument_list|)
-expr_stmt|;
-comment|//todo: why does this fail but next one passes?
 name|ASTNode
 name|ast
 init|=

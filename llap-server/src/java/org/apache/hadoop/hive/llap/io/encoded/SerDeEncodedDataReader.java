@@ -1295,6 +1295,8 @@ name|ConsumerFeedback
 argument_list|<
 name|OrcEncodedColumnBatch
 argument_list|>
+implements|,
+name|TezCounterSource
 block|{
 specifier|public
 specifier|static
@@ -10376,6 +10378,8 @@ name|ecb
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|TezCounters
 name|getTezCounters
