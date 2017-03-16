@@ -3274,6 +3274,17 @@ condition|)
 block|{
 name|history
 operator|.
+name|setMaxSize
+argument_list|(
+name|getOpts
+argument_list|()
+operator|.
+name|getMaxHistoryRows
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|history
+operator|.
 name|flush
 argument_list|()
 expr_stmt|;
