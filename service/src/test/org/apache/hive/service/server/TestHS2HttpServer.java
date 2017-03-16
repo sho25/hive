@@ -839,6 +839,8 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"Got an HTTP response code other thank OK."
+argument_list|,
 name|HttpURLConnection
 operator|.
 name|HTTP_OK

@@ -829,11 +829,11 @@ name|eclipse
 operator|.
 name|jetty
 operator|.
-name|server
+name|util
 operator|.
 name|ssl
 operator|.
-name|SslSocketConnector
+name|SslContextFactory
 import|;
 end_import
 
@@ -2889,7 +2889,7 @@ operator|.
 name|class
 operator|,
 comment|// hive-exec
-name|SslSocketConnector
+name|SslContextFactory
 operator|.
 name|class
 operator|,
