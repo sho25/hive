@@ -708,6 +708,25 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|ts
+operator|.
+name|tableHandle
+operator|.
+name|isView
+argument_list|()
+condition|)
+block|{
+name|replicationSpec
+operator|.
+name|setIsMetadataOnly
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -715,7 +734,7 @@ name|SemanticException
 name|e
 parameter_list|)
 block|{
-comment|// table was a view, a non-native table or an offline table.
+comment|// table was a non-native table or an offline table.
 comment|// ignore for replication, error if not.
 if|if
 condition|(
