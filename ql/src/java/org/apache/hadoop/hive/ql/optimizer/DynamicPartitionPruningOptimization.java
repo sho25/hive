@@ -2822,11 +2822,20 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|!
+operator|(
 name|exprNodeDesc
 operator|instanceof
 name|ExprNodeColumnDesc
+operator|)
 condition|)
 block|{
+comment|// No column found!
+comment|// Bail out
+return|return
+literal|false
+return|;
+block|}
 name|internalColName
 operator|=
 operator|(
@@ -2846,15 +2855,10 @@ operator|instanceof
 name|SelectOperator
 condition|)
 block|{
-comment|// Make sure the semijoin branch is not on parition column.
-name|ExprNodeColumnDesc
-name|colExpr
+comment|// Make sure the semijoin branch is not on partition column.
+name|ExprNodeDesc
+name|expr
 init|=
-operator|(
-call|(
-name|ExprNodeColumnDesc
-call|)
-argument_list|(
 name|parentOfRS
 operator|.
 name|getColumnExprMap
@@ -2864,8 +2868,62 @@ name|get
 argument_list|(
 name|internalColName
 argument_list|)
-argument_list|)
+decl_stmt|;
+while|while
+condition|(
+operator|!
+operator|(
+name|expr
+operator|instanceof
+name|ExprNodeColumnDesc
 operator|)
+operator|&&
+operator|(
+name|expr
+operator|.
+name|getChildren
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|)
+block|{
+name|expr
+operator|=
+name|expr
+operator|.
+name|getChildren
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+operator|(
+name|expr
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|)
+condition|)
+block|{
+comment|// No column found!
+comment|// Bail out
+return|return
+literal|false
+return|;
+block|}
+name|ExprNodeColumnDesc
+name|colExpr
+init|=
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|expr
 decl_stmt|;
 name|String
 name|colName
@@ -2957,15 +3015,6 @@ return|return
 literal|false
 return|;
 block|}
-block|}
-block|}
-else|else
-block|{
-comment|// No column found!
-comment|// Bail out
-return|return
-literal|false
-return|;
 block|}
 name|List
 argument_list|<
