@@ -86,8 +86,6 @@ name|Filter_expression_with_non_boolean_return_type
 block|,
 name|Having_clause_without_any_groupby
 block|,
-name|Hint
-block|,
 name|Invalid_column_reference
 block|,
 name|Invalid_decimal
