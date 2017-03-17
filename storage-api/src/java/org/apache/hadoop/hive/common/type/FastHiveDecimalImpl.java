@@ -199,22 +199,6 @@ specifier|private
 specifier|static
 specifier|final
 name|int
-name|MAX_INTWORD_DECIMAL
-init|=
-operator|(
-name|int
-operator|)
-name|powerOfTenTable
-index|[
-name|INTWORD_DECIMAL_DIGITS
-index|]
-operator|-
-literal|1
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|int
 name|MULTIPLER_INTWORD_DECIMAL
 init|=
 operator|(
@@ -311,28 +295,6 @@ name|HIGHWORD_DECIMAL_DIGITS
 index|]
 operator|-
 literal|1
-decl_stmt|;
-specifier|private
-specifier|static
-name|long
-name|HIGHWORD_DIVIDE_FACTOR
-init|=
-name|powerOfTenTable
-index|[
-name|LONGWORD_DECIMAL_DIGITS
-operator|-
-name|HIGHWORD_DECIMAL_DIGITS
-index|]
-decl_stmt|;
-specifier|private
-specifier|static
-name|long
-name|HIGHWORD_MULTIPLY_FACTOR
-init|=
-name|powerOfTenTable
-index|[
-name|HIGHWORD_DECIMAL_DIGITS
-index|]
 decl_stmt|;
 comment|// 38 * 2 or 76 full decimal maximum - (64 + 8) digits in 4 lower longs (4 digits here).
 specifier|private
@@ -461,32 +423,6 @@ specifier|private
 specifier|static
 specifier|final
 name|BigInteger
-name|BIG_INTEGER_LONGWORD_MULTIPLIER_3X
-init|=
-name|BIG_INTEGER_LONGWORD_MULTIPLIER_2X
-operator|.
-name|multiply
-argument_list|(
-name|BIG_INTEGER_LONGWORD_MULTIPLIER
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|BigInteger
-name|BIG_INTEGER_LONGWORD_MULTIPLIER_4X
-init|=
-name|BIG_INTEGER_LONGWORD_MULTIPLIER_3X
-operator|.
-name|multiply
-argument_list|(
-name|BIG_INTEGER_LONGWORD_MULTIPLIER
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|BigInteger
 name|BIG_INTEGER_MAX_HIGHWORD_DECIMAL
 init|=
 name|BigInteger
@@ -515,8 +451,8 @@ comment|// UTF-8 byte constants used by string/UTF-8 bytes to decimal and decima
 comment|// conversion.
 comment|// There is only one blank in UTF-8.
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_BLANK
 init|=
@@ -526,8 +462,8 @@ operator|)
 literal|' '
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_DIGIT_ZERO
 init|=
@@ -537,8 +473,8 @@ operator|)
 literal|'0'
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_DIGIT_NINE
 init|=
@@ -549,8 +485,8 @@ literal|'9'
 decl_stmt|;
 comment|// Decimal point.
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_DOT
 init|=
@@ -561,8 +497,8 @@ literal|'.'
 decl_stmt|;
 comment|// Sign.
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_MINUS
 init|=
@@ -572,8 +508,8 @@ operator|)
 literal|'-'
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_PLUS
 init|=
@@ -584,8 +520,8 @@ literal|'+'
 decl_stmt|;
 comment|// Exponent E or e.
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_EXPONENT_LOWER
 init|=
@@ -595,8 +531,8 @@ operator|)
 literal|'e'
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|byte
 name|BYTE_EXPONENT_UPPER
 init|=
@@ -5502,6 +5438,7 @@ comment|// Emulate SerializationUtils Deserialization used by ORC.
 comment|/*    * fastSerializationUtilsRead lower word is 62 bits (the lower bit is used as the sign and is    * removed).  So, we need a multiplier 2^62    *    *    2^62 =    *      4611686018427387904 or    *      4,611,686,018,427,387,904 or    *      461,1686018427387904 (16 digit comma'd)    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_62
 init|=
@@ -5524,6 +5461,7 @@ decl_stmt|;
 comment|/*    * fastSerializationUtilsRead middle word is 63 bits. So, we need a multiplier 2^63     *    *    2^63 =    *      9223372036854775808 (Long.MAX_VALUE) or    *      9,223,372,036,854,775,808 or    *      922,3372036854775808 (16 digit comma'd)    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_63
 init|=
@@ -5546,6 +5484,7 @@ decl_stmt|;
 comment|/*    * fastSerializationUtilsRead high word multiplier:    *    *    Multiply by 2^(62 + 63)                      -- 38 digits or 3 decimal words.    *    *    (2^62)*(2^63) =    *      42535295865117307932921825928971026432 or    *     (12345678901234567890123456789012345678)    *     (         1         2         3        )    *      42,535,295,865,117,307,932,921,825,928,971,026,432 or    *      425352,9586511730793292,1825928971026432  (16 digit comma'd)    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_125
 init|=
@@ -5568,6 +5507,7 @@ decl_stmt|;
 comment|/*    * Inverse of 2^63 = 2^-63.  Please see comments for doDecimalToBinaryDivisionRemainder.    *    * Multiply by 1/2^63 = 1.08420217248550443400745280086994171142578125e-19 to divide by 2^63.    * As 16 digit comma'd 1084202172485,5044340074528008,6994171142578125    *    * Scale down: 63 = 44 fraction digits + 19 (negative exponent or number of zeros after dot).    *    * 3*16 (48) + 15 --> 63 down shift.    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_63_INVERSE
 init|=
@@ -6665,6 +6605,7 @@ comment|// Emulate BigInteger deserialization used by LazyBinary and others.
 comment|/*    * fastSetFromBigIntegerBytes word size we choose is 56 bits to stay below the 64 bit sign bit:    * So, we need a multiplier 2^56    *    *    2^56 =    *      72057594037927936 or    *      72,057,594,037,927,936 or    *      7,2057594037927936  (16 digit comma'd)    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_56
 init|=
@@ -6687,6 +6628,7 @@ decl_stmt|;
 comment|/*    * fastSetFromBigIntegerBytes high word multiplier is 2^(56 + 56)    *    *    (2^56)*(2^56) =    *      5192296858534827628530496329220096 or    *     (1234567890123456789012345678901234)    *     (         1         2         3    )    *      5,192,296,858,534,827,628,530,496,329,220,096 or    *      51,9229685853482762,8530496329220096  (16 digit comma'd)    */
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_112
 init|=
@@ -6715,6 +6657,7 @@ comment|// 3*16 (48) + 8 --> 56 down shift.
 comment|//
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FAST_HIVE_DECIMAL_TWO_POWER_56_INVERSE
 init|=
@@ -6753,6 +6696,7 @@ literal|8
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|int
 name|INITIAL_SHIFT
 init|=
@@ -6762,6 +6706,7 @@ comment|// 56 bits minus 1 byte.
 comment|// Long masks and values.
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|LONG_56_BIT_MASK
 init|=
@@ -6769,6 +6714,7 @@ literal|0xFFFFFFFFFFFFFFL
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|LONG_TWO_TO_56_POWER
 init|=
@@ -6778,6 +6724,7 @@ literal|1L
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|LONG_BYTE_MASK
 init|=
@@ -6785,6 +6732,7 @@ literal|0xFFL
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|LONG_BYTE_HIGH_BIT_MASK
 init|=
@@ -6793,6 +6741,7 @@ decl_stmt|;
 comment|// Byte values.
 specifier|private
 specifier|static
+specifier|final
 name|byte
 name|BYTE_ALL_BITS
 init|=
@@ -9048,6 +8997,7 @@ literal|3
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MIN_BYTE_VALUE_MINUS_ONE
 init|=
@@ -9066,6 +9016,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MAX_BYTE_VALUE_PLUS_ONE
 init|=
@@ -9092,6 +9043,7 @@ literal|5
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MIN_SHORT_VALUE_MINUS_ONE
 init|=
@@ -9110,6 +9062,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MAX_SHORT_VALUE_PLUS_ONE
 init|=
@@ -9136,6 +9089,7 @@ literal|10
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MIN_INT_VALUE_MINUS_ONE
 init|=
@@ -9154,6 +9108,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MAX_INT_VALUE_PLUS_ONE
 init|=
@@ -9172,6 +9127,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MIN_LONG_VALUE
 init|=
@@ -9185,6 +9141,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MAX_LONG_VALUE
 init|=
@@ -9208,6 +9165,7 @@ name|fastIntegerDigitCount
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MIN_LONG_VALUE_MINUS_ONE
 init|=
@@ -9219,6 +9177,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|FastHiveDecimal
 name|FASTHIVEDECIMAL_MAX_LONG_VALUE_PLUS_ONE
 init|=
@@ -34255,6 +34214,7 @@ block|}
 comment|//************************************************************************************************
 comment|// Decimal Debugging.
 specifier|static
+specifier|final
 name|int
 name|STACK_LENGTH_LIMIT
 init|=

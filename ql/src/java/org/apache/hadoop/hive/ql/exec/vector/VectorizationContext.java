@@ -9031,6 +9031,7 @@ return|;
 block|}
 specifier|private
 specifier|static
+specifier|final
 name|int
 name|STACK_LENGTH_LIMIT
 init|=

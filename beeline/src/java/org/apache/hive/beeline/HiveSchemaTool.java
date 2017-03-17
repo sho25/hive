@@ -747,8 +747,6 @@ name|MetaStoreSchemaInfo
 argument_list|(
 name|hiveHome
 argument_list|,
-name|hiveConf
-argument_list|,
 name|dbType
 argument_list|)
 expr_stmt|;

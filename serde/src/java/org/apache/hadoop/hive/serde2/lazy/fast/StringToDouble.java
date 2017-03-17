@@ -39,6 +39,7 @@ class|class
 name|StringToDouble
 block|{
 specifier|static
+specifier|final
 name|int
 name|maxExponent
 init|=
@@ -46,6 +47,7 @@ literal|511
 decl_stmt|;
 comment|/* Largest possible base 10 exponent.  Any 				 * exponent larger than this will already 				 * produce underflow or overflow, so there's 				 * no need to worry about additional digits. 				 */
 specifier|static
+specifier|final
 name|double
 name|powersOf10
 index|[]

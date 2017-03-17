@@ -7010,6 +7010,7 @@ block|}
 comment|/**    * Find a common class that objects of both TypeInfo a and TypeInfo b can    * convert to. This is used for comparing objects of type a and type b.    *    * When we are comparing string and double, we will always convert both of    * them to double and then compare.    *    * @return null if no common class could be found.    */
 specifier|public
 specifier|static
+specifier|synchronized
 name|TypeInfo
 name|getCommonClassForComparison
 parameter_list|(

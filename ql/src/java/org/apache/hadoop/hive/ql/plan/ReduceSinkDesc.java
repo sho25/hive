@@ -2075,6 +2075,7 @@ block|}
 comment|// Use LinkedHashSet to give predictable display order.
 specifier|private
 specifier|static
+specifier|final
 name|Set
 argument_list|<
 name|String

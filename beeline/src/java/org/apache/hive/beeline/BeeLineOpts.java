@@ -365,6 +365,7 @@ literal|1000
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|URL_ENV_PREFIX
 init|=

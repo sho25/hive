@@ -114,6 +114,7 @@ name|HiveIOExceptionHandlerChain
 block|{
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|HIVE_IO_EXCEPTION_HANDLE_CHAIN
 init|=

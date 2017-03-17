@@ -43,16 +43,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|FileInputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|FileNotFoundException
 import|;
 end_import
@@ -113,22 +103,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|common
@@ -160,6 +134,7 @@ name|MetaStoreSchemaInfo
 block|{
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|SQL_FILE_EXTENSION
 init|=
@@ -167,6 +142,7 @@ literal|".sql"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|UPGRADE_FILE_PREFIX
 init|=
@@ -174,6 +150,7 @@ literal|"upgrade-"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|INIT_FILE_PREFIX
 init|=
@@ -181,6 +158,7 @@ literal|"hive-schema-"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|VERSION_UPGRADE_LIST
 init|=
@@ -188,6 +166,7 @@ literal|"upgrade.order"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|PRE_UPGRADE_PREFIX
 init|=
@@ -203,11 +182,6 @@ specifier|final
 name|String
 name|hiveSchemaVersions
 index|[]
-decl_stmt|;
-specifier|private
-specifier|final
-name|HiveConf
-name|hiveConf
 decl_stmt|;
 specifier|private
 specifier|final
@@ -259,9 +233,6 @@ parameter_list|(
 name|String
 name|hiveHome
 parameter_list|,
-name|HiveConf
-name|hiveConf
-parameter_list|,
 name|String
 name|dbType
 parameter_list|)
@@ -279,12 +250,6 @@ operator|.
 name|dbType
 operator|=
 name|dbType
-expr_stmt|;
-name|this
-operator|.
-name|hiveConf
-operator|=
-name|hiveConf
 expr_stmt|;
 comment|// load upgrade order for the given dbType
 name|List

@@ -136,6 +136,7 @@ decl_stmt|;
 comment|// 2^30 (we cannot use Integer.MAX_VALUE which is 2^31-1).
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|HIGHEST_INT_POWER_OF_2
 init|=
@@ -143,6 +144,7 @@ literal|1073741824
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|ONE_QUARTER_LIMIT
 init|=
@@ -152,6 +154,7 @@ literal|4
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|ONE_SIXTH_LIMIT
 init|=

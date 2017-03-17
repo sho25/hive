@@ -111,22 +111,6 @@ name|log4j
 operator|.
 name|core
 operator|.
-name|LoggerContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|logging
-operator|.
-name|log4j
-operator|.
-name|core
-operator|.
 name|config
 operator|.
 name|Configurator
@@ -228,6 +212,7 @@ decl_stmt|;
 comment|/**    * Constants for log masking    */
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|KEY_TO_MASK_WITH
 init|=
@@ -235,6 +220,7 @@ literal|"password"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|String
 name|MASKED_VALUE
 init|=

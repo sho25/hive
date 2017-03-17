@@ -1178,6 +1178,7 @@ name|acidInQuery
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|HIVE_COLUMN_ORDER_ASC
 init|=
@@ -1185,6 +1186,7 @@ literal|1
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|HIVE_COLUMN_ORDER_DESC
 init|=
@@ -1192,6 +1194,7 @@ literal|0
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|HIVE_COLUMN_NULLS_FIRST
 init|=
@@ -1199,6 +1202,7 @@ literal|0
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|HIVE_COLUMN_NULLS_LAST
 init|=

@@ -897,6 +897,7 @@ decl_stmt|;
 comment|/**    * A cache of InputFormat instances.    */
 specifier|private
 specifier|static
+specifier|final
 name|Map
 argument_list|<
 name|Class

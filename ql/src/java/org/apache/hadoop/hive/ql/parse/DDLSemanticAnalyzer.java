@@ -13533,6 +13533,7 @@ name|QualifiedNameUtil
 block|{
 comment|// delimiter to check DOT delimited qualified names
 specifier|static
+specifier|final
 name|String
 name|delimiter
 init|=

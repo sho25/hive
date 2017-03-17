@@ -19,24 +19,6 @@ name|plan
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Operator
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -46,6 +28,7 @@ name|VectorDesc
 block|{
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|serialVersionUID
 init|=

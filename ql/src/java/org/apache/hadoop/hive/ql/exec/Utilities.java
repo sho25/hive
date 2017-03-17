@@ -2143,20 +2143,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|common
@@ -2763,6 +2749,7 @@ block|{
 comment|/**    * The object in the reducer are composed of these top level fields.    */
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|HADOOP_LOCAL_FS
 init|=
@@ -2778,6 +2765,7 @@ literal|"file"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|MAP_PLAN_NAME
 init|=
@@ -2785,6 +2773,7 @@ literal|"map.xml"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|REDUCE_PLAN_NAME
 init|=
@@ -2792,6 +2781,7 @@ literal|"reduce.xml"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|MERGE_PLAN_NAME
 init|=
@@ -2863,6 +2853,7 @@ literal|"USE_VECTORIZED_INPUT_FILE_FORMAT"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|MAPNAME
 init|=
@@ -2870,6 +2861,7 @@ literal|"Map "
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|REDUCENAME
 init|=
@@ -2879,6 +2871,7 @@ annotation|@
 name|Deprecated
 specifier|protected
 specifier|static
+specifier|final
 name|String
 name|DEPRECATED_MAPRED_DFSCLIENT_PARALLELISM_MAX
 init|=
@@ -5676,6 +5669,7 @@ comment|// we should specify "NULL" to represent null in the temp table, and the
 comment|// we can make the following translation deprecated.
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|nullStringStorage
 init|=
@@ -5683,6 +5677,7 @@ literal|"\\N"
 decl_stmt|;
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|nullStringOutput
 init|=
@@ -15029,6 +15024,7 @@ expr_stmt|;
 block|}
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|suffix
 init|=
