@@ -3226,7 +3226,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Starting metastore validation"
+literal|"Starting metastore validation\n"
 argument_list|)
 expr_stmt|;
 name|Connection
@@ -3237,6 +3237,11 @@ argument_list|(
 literal|false
 argument_list|)
 decl_stmt|;
+name|boolean
+name|success
+init|=
+literal|true
+decl_stmt|;
 try|try
 block|{
 if|if
@@ -3246,6 +3251,7 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3255,7 +3261,13 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3265,6 +3277,7 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|validateSequences
@@ -3272,6 +3285,7 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3281,7 +3295,13 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3291,6 +3311,7 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|validateSchemaTables
@@ -3298,6 +3319,7 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3307,7 +3329,13 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3317,6 +3345,7 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|validateLocations
@@ -3328,6 +3357,7 @@ operator|.
 name|validationServers
 argument_list|)
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3337,7 +3367,13 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3347,6 +3383,7 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|validateColumnNullValues
@@ -3354,6 +3391,7 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
+block|{
 name|System
 operator|.
 name|out
@@ -3363,7 +3401,13 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3373,6 +3417,7 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 finally|finally
 block|{
@@ -3413,11 +3458,46 @@ name|System
 operator|.
 name|out
 operator|.
-name|println
+name|print
 argument_list|(
-literal|"Done with metastore validation"
+literal|"Done with metastore validation: "
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|success
+condition|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"[FAIL]"
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|exit
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"[SUCCESS]"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|boolean
 name|validateSequences
@@ -4157,7 +4237,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|error
+name|debug
 argument_list|(
 literal|"Failed to determine schema version from Hive Metastore DB,"
 operator|+
@@ -4181,7 +4261,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Validating tables in the schema for version "
 operator|+
@@ -4407,7 +4487,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Parsing subscript "
 operator|+
@@ -4531,18 +4611,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Found "
-operator|+
-name|schemaSize
-operator|+
-literal|" tables in schema definition, "
-operator|+
-name|schemaTables
-operator|.
-name|size
-argument_list|()
-operator|+
-literal|" tables [ "
+literal|"Table(s) [ "
 operator|+
 name|Arrays
 operator|.
@@ -4578,11 +4647,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Succeeded in schema table validation. "
-operator|+
-name|schemaSize
-operator|+
-literal|" tables matched"
+literal|"Succeeded in schema table validation."
 argument_list|)
 expr_stmt|;
 return|return
