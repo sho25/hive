@@ -895,13 +895,13 @@ else|:
 literal|"byte"
 operator|)
 operator|+
-literal|" buffers;"
+literal|" buffers; "
 operator|+
 operator|(
 name|isMapped
 condition|?
 operator|(
-literal|" memory mapped off "
+literal|"memory mapped off "
 operator|+
 name|cacheDir
 operator|.
@@ -926,7 +926,7 @@ literal|", arena size "
 operator|+
 name|arenaSizeVal
 operator|+
-literal|". total size "
+literal|", total size "
 operator|+
 name|maxSizeVal
 argument_list|)
@@ -1608,21 +1608,23 @@ comment|// Two solutions to this are some form of cross-thread helping (threads 
 comment|// into some sort of queues that deallocate and split will examine), or having and "actor"
 comment|// allocator thread (or threads per arena).
 comment|// The 2nd one is probably much simpler and will allow us to get rid of a lot of sync code.
-comment|// But for now we will just retry 5 times 0_o
-for|for
-control|(
+comment|// But for now we will just retry. We will evict more each time.
+name|long
+name|forceReserved
+init|=
+literal|0
+decl_stmt|;
 name|int
 name|attempt
 init|=
 literal|0
-init|;
-name|attempt
-operator|<
-literal|5
-condition|;
-operator|++
-name|attempt
-control|)
+decl_stmt|;
+try|try
+block|{
+while|while
+condition|(
+literal|true
+condition|)
 block|{
 comment|// Try to split bigger blocks. TODO: again, ideally we would tryLock at least once
 block|{
@@ -1768,31 +1770,43 @@ condition|)
 return|return;
 block|}
 block|}
+name|int
+name|numberToForce
+init|=
+operator|(
+name|dest
+operator|.
+name|length
+operator|-
+name|destAllocIx
+operator|)
+operator|*
+name|attempt
+decl_stmt|;
+name|long
+name|newReserved
+init|=
 name|memoryManager
 operator|.
 name|forceReservedMemory
 argument_list|(
 name|allocationSize
 argument_list|,
-name|dest
-operator|.
-name|length
-operator|-
-name|destAllocIx
+name|numberToForce
 argument_list|)
+decl_stmt|;
+name|forceReserved
+operator|+=
+name|newReserved
 expr_stmt|;
-name|LlapIoImpl
-operator|.
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Failed to allocate despite reserved memory; will retry "
-operator|+
-name|attempt
-argument_list|)
-expr_stmt|;
-block|}
+if|if
+condition|(
+name|newReserved
+operator|==
+literal|0
+condition|)
+block|{
+comment|// Cannot force-evict anything, give up.
 name|String
 name|msg
 init|=
@@ -1809,6 +1823,8 @@ operator|+
 name|dest
 operator|.
 name|length
+operator|+
+literal|" (entire cache is fragmented and locked, or an internal issue)"
 decl_stmt|;
 name|LlapIoImpl
 operator|.
@@ -1838,6 +1854,78 @@ argument_list|(
 name|msg
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|attempt
+operator|==
+literal|0
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Failed to allocate despite reserved memory; will retry"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|attempt
+operator|>
+literal|1
+condition|)
+block|{
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Allocation of "
+operator|+
+name|dest
+operator|.
+name|length
+operator|+
+literal|" buffers of size "
+operator|+
+name|size
+operator|+
+literal|" took "
+operator|+
+name|attempt
+operator|+
+literal|" attempts to evict enough memory"
+argument_list|)
+expr_stmt|;
+block|}
+comment|// After we succeed (or fail), release the force-evicted memory to memory manager. We have
+comment|// previously reserved enough to allocate all we need, so we don't take our allocation out
+comment|// of this - as per the comment above, we basically just wasted a bunch of cache (and CPU).
+if|if
+condition|(
+name|forceReserved
+operator|>
+literal|0
+condition|)
+block|{
+name|memoryManager
+operator|.
+name|releaseMemory
+argument_list|(
+name|forceReserved
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 annotation|@
 name|Override

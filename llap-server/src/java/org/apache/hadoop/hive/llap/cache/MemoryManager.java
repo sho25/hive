@@ -51,7 +51,7 @@ name|maxSize
 parameter_list|)
 function_decl|;
 comment|/** TODO: temporary method until we get a better allocator. */
-name|void
+name|long
 name|forceReservedMemory
 parameter_list|(
 name|int

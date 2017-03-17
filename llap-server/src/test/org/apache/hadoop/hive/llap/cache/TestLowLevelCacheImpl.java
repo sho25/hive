@@ -617,7 +617,7 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|int
+name|long
 name|tryEvictContiguousData
 parameter_list|(
 name|int
@@ -629,6 +629,8 @@ parameter_list|)
 block|{
 return|return
 name|count
+operator|*
+name|allocationSize
 return|;
 block|}
 block|}

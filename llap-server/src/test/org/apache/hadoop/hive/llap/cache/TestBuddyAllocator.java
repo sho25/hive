@@ -429,7 +429,7 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|void
+name|long
 name|forceReservedMemory
 parameter_list|(
 name|int
@@ -438,7 +438,13 @@ parameter_list|,
 name|int
 name|count
 parameter_list|)
-block|{     }
+block|{
+return|return
+name|allocationSize
+operator|*
+name|count
+return|;
+block|}
 block|}
 annotation|@
 name|Test
