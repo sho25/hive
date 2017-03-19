@@ -802,6 +802,8 @@ name|String
 name|EXPECTED
 init|=
 operator|(
+literal|"Column vector types: 0:STRUCT, 1:BYTES\n"
+operator|+
 literal|"[[0, 2000-01-01 00:00:01.0], \"value 0\"]\n"
 operator|+
 literal|"[[3, 2000-01-01 00:00:02.0], \"value 1\"]\n"
