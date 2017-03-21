@@ -119,12 +119,10 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-specifier|transient
 name|int
 name|colNum
 decl_stmt|;
 specifier|private
-specifier|transient
 name|int
 name|outputColumn
 decl_stmt|;
