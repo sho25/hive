@@ -42378,9 +42378,6 @@ operator|.
 name|equals
 argument_list|(
 name|colName
-operator|.
-name|trim
-argument_list|()
 argument_list|)
 condition|)
 block|{
