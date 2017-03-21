@@ -491,7 +491,7 @@ name|RowSetGenerator
 operator|.
 name|DoubleSequence
 argument_list|(
-literal|0
+literal|10
 argument_list|)
 argument_list|,
 operator|new
@@ -499,7 +499,7 @@ name|RowSetGenerator
 operator|.
 name|DoubleSequence
 argument_list|(
-literal|0
+literal|10
 argument_list|)
 argument_list|)
 block|}
@@ -1791,11 +1791,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|Ignore
-argument_list|(
-literal|"HIVE-16178 should fix this"
-argument_list|)
 specifier|public
 name|void
 name|corr
@@ -1860,11 +1855,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|Ignore
-argument_list|(
-literal|"HIVE-16178 should fix this"
-argument_list|)
 specifier|public
 name|void
 name|covar_samp
@@ -2139,6 +2129,10 @@ condition|(
 name|n
 operator|==
 literal|0
+operator|||
+name|xx
+operator|==
+literal|0.0d
 condition|)
 return|return
 literal|null

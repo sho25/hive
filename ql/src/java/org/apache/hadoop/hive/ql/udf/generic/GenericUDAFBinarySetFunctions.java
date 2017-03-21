@@ -1614,7 +1614,6 @@ name|Evaluator
 argument_list|()
 return|;
 block|}
-comment|/**      * NOTE: corr is declared as corr(x,y) instead corr(y,x)      */
 specifier|private
 specifier|static
 class|class
@@ -1652,7 +1651,7 @@ literal|2
 operator|||
 name|myagg
 operator|.
-name|yvar
+name|xvar
 operator|==
 literal|0.0d
 condition|)
@@ -1674,7 +1673,7 @@ name|covar
 operator|/
 name|myagg
 operator|.
-name|yvar
+name|xvar
 argument_list|)
 expr_stmt|;
 return|return
@@ -1743,7 +1742,6 @@ name|Evaluator
 argument_list|()
 return|;
 block|}
-comment|/**      * NOTE: corr is declared as corr(x,y) instead corr(y,x)      */
 specifier|private
 specifier|static
 class|class
@@ -1781,7 +1779,7 @@ literal|2
 operator|||
 name|myagg
 operator|.
-name|yvar
+name|xvar
 operator|==
 literal|0.0d
 condition|)
@@ -1800,7 +1798,7 @@ if|if
 condition|(
 name|myagg
 operator|.
-name|xvar
+name|yvar
 operator|==
 literal|0.0d
 condition|)
@@ -1829,11 +1827,11 @@ name|covar
 operator|/
 name|myagg
 operator|.
-name|yvar
+name|xvar
 operator|/
 name|myagg
 operator|.
-name|xvar
+name|yvar
 argument_list|)
 expr_stmt|;
 block|}
@@ -1899,7 +1897,6 @@ name|Evaluator
 argument_list|()
 return|;
 block|}
-comment|/**      * NOTE: corr is declared as corr(x,y) instead corr(y,x)      */
 specifier|private
 specifier|static
 class|class
@@ -2017,7 +2014,6 @@ name|Evaluator
 argument_list|()
 return|;
 block|}
-comment|/**      * NOTE: corr is declared as corr(x,y) instead corr(y,x)      */
 specifier|private
 specifier|static
 class|class
@@ -2052,6 +2048,12 @@ operator|.
 name|count
 operator|==
 literal|0
+operator|||
+name|myagg
+operator|.
+name|xvar
+operator|==
+literal|0.0d
 condition|)
 block|{
 return|return
@@ -2073,7 +2075,7 @@ name|covar
 operator|/
 name|myagg
 operator|.
-name|yvar
+name|xvar
 decl_stmt|;
 name|result
 operator|.
@@ -2081,13 +2083,13 @@ name|set
 argument_list|(
 name|myagg
 operator|.
-name|xavg
+name|yavg
 operator|-
 name|slope
 operator|*
 name|myagg
 operator|.
-name|yavg
+name|xavg
 argument_list|)
 expr_stmt|;
 return|return

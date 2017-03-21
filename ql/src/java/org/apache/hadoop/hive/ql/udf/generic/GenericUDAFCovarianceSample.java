@@ -105,6 +105,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|io
+operator|.
+name|DoubleWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -167,9 +185,13 @@ name|extended
 operator|=
 literal|"The function takes as arguments any pair of numeric types and returns a double.\n"
 operator|+
-literal|"Any pair with a NULL is ignored. If the function is applied to an empty set, NULL\n"
+literal|"Any pair with a NULL is ignored.\n"
 operator|+
-literal|"will be returned. Otherwise, it computes the following:\n"
+literal|"If applied to an empty set: NULL is returned.\n"
+operator|+
+literal|"If applied to a set with a single element: NULL is returned.\n"
+operator|+
+literal|"Otherwise, it computes the following:\n"
 operator|+
 literal|"   (SUM(x*y)-SUM(x)*SUM(y)/COUNT(x,y))/(COUNT(x,y)-1)\n"
 operator|+
@@ -470,28 +492,23 @@ condition|(
 name|myagg
 operator|.
 name|count
-operator|==
-literal|0
+operator|<=
+literal|1
 condition|)
 block|{
-comment|// SQL standard - return null for zero elements
 return|return
 literal|null
 return|;
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|myagg
-operator|.
-name|count
-operator|>
-literal|1
-condition|)
-block|{
+name|DoubleWritable
+name|result
+init|=
 name|getResult
 argument_list|()
+decl_stmt|;
+name|result
 operator|.
 name|set
 argument_list|(
@@ -508,22 +525,8 @@ literal|1
 operator|)
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// the covariance of a singleton set is always 0
-name|getResult
-argument_list|()
-operator|.
-name|set
-argument_list|(
-literal|0
-argument_list|)
-expr_stmt|;
-block|}
 return|return
-name|getResult
-argument_list|()
+name|result
 return|;
 block|}
 block|}
