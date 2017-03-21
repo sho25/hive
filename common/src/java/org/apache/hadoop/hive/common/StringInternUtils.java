@@ -578,7 +578,7 @@ return|return
 name|paths
 return|;
 block|}
-comment|/**    * This method interns all the strings in the given list in place. That is,    * it iterates over the list, replaces each element with the interned copy    * and eventually returns the same list.    */
+comment|/**    * This method interns all the strings in the given list in place. That is,    * it iterates over the list, replaces each element with the interned copy    * and eventually returns the same list.    *    * Note that the provided List implementation should return an iterator    * (via list.listIterator()) method, and that iterator should implement    * the set(Object) method. That's what all List implementations in the JDK    * provide. However, if some custom List implementation doesn't have this    * functionality, this method will return without interning its elements.    */
 specifier|public
 specifier|static
 name|List
@@ -600,6 +600,8 @@ name|list
 operator|!=
 literal|null
 condition|)
+block|{
+try|try
 block|{
 name|ListIterator
 argument_list|<
@@ -634,6 +636,14 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+catch|catch
+parameter_list|(
+name|UnsupportedOperationException
+name|e
+parameter_list|)
+block|{ }
+comment|// set() not implemented - ignore
 block|}
 return|return
 name|list
