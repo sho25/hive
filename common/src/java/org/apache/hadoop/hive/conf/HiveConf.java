@@ -9184,7 +9184,7 @@ name|HIVE_EXIM_URI_SCHEME_WL
 argument_list|(
 literal|"hive.exim.uri.scheme.whitelist"
 argument_list|,
-literal|"hdfs,pfile,file"
+literal|"hdfs,pfile,file,s3,s3a"
 argument_list|,
 literal|"A comma separated list of acceptable URI schemes for import and export."
 argument_list|)
