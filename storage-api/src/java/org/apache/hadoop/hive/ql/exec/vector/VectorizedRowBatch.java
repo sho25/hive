@@ -148,6 +148,19 @@ name|DEFAULT_SIZE
 init|=
 literal|1024
 decl_stmt|;
+comment|/*    * This number is a safety limit for 32MB of writables.    */
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|DEFAULT_BYTES
+init|=
+literal|32
+operator|*
+literal|1024
+operator|*
+literal|1024
+decl_stmt|;
 comment|/**    * Return a batch with the specified number of columns.    * This is the standard constructor -- all batches should be the same size    *    * @param numCols the number of columns to include in the batch    */
 specifier|public
 name|VectorizedRowBatch
