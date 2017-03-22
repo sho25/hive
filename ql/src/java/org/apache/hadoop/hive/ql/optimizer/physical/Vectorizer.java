@@ -6276,6 +6276,9 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+return|return
+literal|false
+return|;
 block|}
 name|String
 name|deserializerClassName

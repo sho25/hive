@@ -11486,11 +11486,11 @@ name|HIVE_VECTORIZATION_USE_VECTOR_DESERIALIZE
 argument_list|(
 literal|"hive.vectorized.use.vector.serde.deserialize"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorizing rows using vector deserialize.\n"
 operator|+
-literal|"The default value is false."
+literal|"The default value is true."
 argument_list|)
 block|,
 name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
