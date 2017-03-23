@@ -6614,23 +6614,26 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|StringBuffer
+name|StringBuilder
 name|command
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
+comment|// Marker to track if there is starting double quote without an ending double quote
 name|boolean
 name|hasUnterminatedDoubleQuote
 init|=
 literal|false
 decl_stmt|;
+comment|// Marker to track if there is starting single quote without an ending double quote
 name|boolean
-name|hasUntermindatedSingleQuote
+name|hasUnterminatedSingleQuote
 init|=
 literal|false
 decl_stmt|;
+comment|// Index of the last seen semicolon in the given line
 name|int
 name|lastSemiColonIndex
 init|=
@@ -6645,6 +6648,7 @@ operator|.
 name|toCharArray
 argument_list|()
 decl_stmt|;
+comment|// Marker to track if the previous character was an escape character
 name|boolean
 name|wasPrevEscape
 init|=
@@ -6655,6 +6659,8 @@ name|index
 init|=
 literal|0
 decl_stmt|;
+comment|// Iterate through the line and invoke the addCmdPart method whenever a semicolon is seen that is not inside a
+comment|// quoted string
 for|for
 control|(
 init|;
@@ -6679,6 +6685,8 @@ block|{
 case|case
 literal|'\''
 case|:
+comment|// If a single quote is seen and the index is not inside a double quoted string and the previous character
+comment|// was not an escape, then update the hasUnterminatedSingleQuote flag
 if|if
 condition|(
 operator|!
@@ -6688,10 +6696,10 @@ operator|!
 name|wasPrevEscape
 condition|)
 block|{
-name|hasUntermindatedSingleQuote
+name|hasUnterminatedSingleQuote
 operator|=
 operator|!
-name|hasUntermindatedSingleQuote
+name|hasUnterminatedSingleQuote
 expr_stmt|;
 block|}
 name|wasPrevEscape
@@ -6702,10 +6710,12 @@ break|break;
 case|case
 literal|'\"'
 case|:
+comment|// If a double quote is seen and the index is not inside a single quoted string and the previous character
+comment|// was not an escape, then update the hasUnterminatedDoubleQuote flag
 if|if
 condition|(
 operator|!
-name|hasUntermindatedSingleQuote
+name|hasUnterminatedSingleQuote
 operator|&&
 operator|!
 name|wasPrevEscape
@@ -6725,13 +6735,15 @@ break|break;
 case|case
 literal|';'
 case|:
+comment|// If a semicolon is seen, and the line isn't inside a quoted string, then treat
+comment|// line[lastSemiColonIndex] to line[index] as a single command
 if|if
 condition|(
 operator|!
 name|hasUnterminatedDoubleQuote
 operator|&&
 operator|!
-name|hasUntermindatedSingleQuote
+name|hasUnterminatedSingleQuote
 condition|)
 block|{
 name|addCmdPart
@@ -6767,7 +6779,8 @@ literal|'\\'
 case|:
 name|wasPrevEscape
 operator|=
-literal|true
+operator|!
+name|wasPrevEscape
 expr_stmt|;
 break|break;
 default|default:
@@ -6778,7 +6791,7 @@ expr_stmt|;
 break|break;
 block|}
 block|}
-comment|// if the line doesn't end with a ; or if the line is empty, add the cmd part
+comment|// If the line doesn't end with a ; or if the line is empty, add the cmd part
 if|if
 condition|(
 name|lastSemiColonIndex
@@ -6825,7 +6838,7 @@ name|String
 argument_list|>
 name|cmdList
 parameter_list|,
-name|StringBuffer
+name|StringBuilder
 name|command
 parameter_list|,
 name|String
