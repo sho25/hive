@@ -11894,6 +11894,18 @@ argument_list|,
 literal|"Big table for runtime filteting should be of atleast this size"
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_THRESHOLD
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction.threshold"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.50
+argument_list|,
+literal|"Only perform semijoin optimization if the estimated benefit at or above this fraction of the target table"
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"
