@@ -381,20 +381,13 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|void
 name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
-parameter_list|,
-name|boolean
-name|waitForEviction
 parameter_list|)
-block|{
-return|return
-literal|true
-return|;
-block|}
+block|{     }
 annotation|@
 name|Override
 specifier|public

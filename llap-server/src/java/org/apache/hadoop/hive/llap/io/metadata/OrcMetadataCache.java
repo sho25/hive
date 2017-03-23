@@ -215,24 +215,6 @@ name|OrcBatchKey
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|util
-operator|.
-name|JavaDataModel
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -352,8 +334,6 @@ operator|.
 name|reserveMemory
 argument_list|(
 name|memUsage
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|OrcFileMetadata
@@ -404,8 +384,6 @@ operator|.
 name|reserveMemory
 argument_list|(
 name|memUsage
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|OrcStripeMetadata
@@ -598,8 +576,6 @@ operator|.
 name|reserveMemory
 argument_list|(
 name|memUsage
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|OrcFileEstimateErrors
