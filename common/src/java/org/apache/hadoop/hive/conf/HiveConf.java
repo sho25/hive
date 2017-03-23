@@ -11855,6 +11855,15 @@ operator|+
 literal|"requires hive.tez.dynamic.partition.pruning to be enabled."
 argument_list|)
 block|,
+name|TEZ_MIN_BLOOM_FILTER_ENTRIES
+argument_list|(
+literal|"hive.tez.min.bloom.filter.entries"
+argument_list|,
+literal|1000000L
+argument_list|,
+literal|"Bloom filter should be of at min certain size to be effective"
+argument_list|)
+block|,
 name|TEZ_MAX_BLOOM_FILTER_ENTRIES
 argument_list|(
 literal|"hive.tez.max.bloom.filter.entries"
@@ -11862,6 +11871,27 @@ argument_list|,
 literal|100000000L
 argument_list|,
 literal|"Bloom filter should be of at max certain size to be effective"
+argument_list|)
+block|,
+name|TEZ_BLOOM_FILTER_FACTOR
+argument_list|(
+literal|"hive.tez.bloom.filter.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|2.0
+argument_list|,
+literal|"Bloom filter should be a multiple of this factor with nDV"
+argument_list|)
+block|,
+name|TEZ_BIGTABLE_MIN_SIZE_SEMIJOIN_REDUCTION
+argument_list|(
+literal|"hive.tez.bigtable.minsize.semijoin.reduction"
+argument_list|,
+literal|1000000L
+argument_list|,
+literal|"Big table for runtime filteting should be of atleast this size"
 argument_list|)
 block|,
 name|TEZ_SMB_NUMBER_WAVES
