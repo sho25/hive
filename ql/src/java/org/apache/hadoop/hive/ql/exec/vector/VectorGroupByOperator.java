@@ -1598,6 +1598,10 @@ operator|.
 name|defaultIntVal
 expr_stmt|;
 block|}
+name|sumBatchSize
+operator|=
+literal|0
+expr_stmt|;
 name|mapKeysAggregationBuffers
 operator|=
 operator|new
