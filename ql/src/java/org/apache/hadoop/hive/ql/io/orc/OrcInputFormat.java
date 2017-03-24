@@ -9276,6 +9276,8 @@ name|SchemaEvolution
 argument_list|(
 name|fileSchema
 argument_list|,
+literal|null
+argument_list|,
 name|readerOptions
 operator|.
 name|include

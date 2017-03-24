@@ -1973,6 +1973,8 @@ name|SchemaEvolution
 argument_list|(
 name|schema
 argument_list|,
+literal|null
+argument_list|,
 operator|new
 name|Reader
 operator|.

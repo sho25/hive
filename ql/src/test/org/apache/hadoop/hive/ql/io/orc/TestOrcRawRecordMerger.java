@@ -41,8 +41,6 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|impl
-operator|.
 name|MemoryManager
 import|;
 end_import
@@ -56,6 +54,20 @@ operator|.
 name|orc
 operator|.
 name|StripeInformation
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|MemoryManagerImpl
 import|;
 end_import
 
@@ -7248,7 +7260,7 @@ name|MemoryManager
 name|mgr
 init|=
 operator|new
-name|MemoryManager
+name|MemoryManagerImpl
 argument_list|(
 name|conf
 argument_list|)
@@ -8160,7 +8172,7 @@ name|MemoryManager
 name|mgr
 init|=
 operator|new
-name|MemoryManager
+name|MemoryManagerImpl
 argument_list|(
 name|conf
 argument_list|)
