@@ -2222,8 +2222,18 @@ argument_list|(
 name|waitQueueSize
 argument_list|)
 expr_stmt|;
-comment|// TODO: Has to be reverted in HIVE-15644
-comment|//this.metrics.getJvmMetrics().setPauseMonitor(pauseMonitor);
+name|this
+operator|.
+name|metrics
+operator|.
+name|getJvmMetrics
+argument_list|()
+operator|.
+name|setPauseMonitor
+argument_list|(
+name|pauseMonitor
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|llapDaemonInfoBean
