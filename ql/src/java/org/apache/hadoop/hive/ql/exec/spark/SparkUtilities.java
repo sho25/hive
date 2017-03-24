@@ -575,6 +575,11 @@ name|FileSystem
 operator|.
 name|get
 argument_list|(
+name|remoteFile
+operator|.
+name|toUri
+argument_list|()
+argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
@@ -666,6 +671,7 @@ name|deployMode
 argument_list|)
 operator|&&
 operator|!
+operator|(
 name|source
 operator|.
 name|getScheme
@@ -675,6 +681,17 @@ name|equals
 argument_list|(
 literal|"hdfs"
 argument_list|)
+operator|||
+name|source
+operator|.
+name|getScheme
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"viewfs"
+argument_list|)
+operator|)
 return|;
 block|}
 specifier|private
