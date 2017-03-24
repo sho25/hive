@@ -834,6 +834,13 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
+literal|"(?s)\nWaiting to acquire compile lock:.*?Acquired the compile lock.\n"
+argument_list|,
+literal|"\nAcquired the compile lock.\n"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
 literal|"Getting log thread is interrupted, since query is done!\n"
 argument_list|,
 literal|""
