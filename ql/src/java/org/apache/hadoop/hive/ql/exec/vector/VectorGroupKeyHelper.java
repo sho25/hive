@@ -154,6 +154,11 @@ name|VectorGroupKeyHelper
 extends|extends
 name|VectorColumnSetInfo
 block|{
+specifier|private
+name|int
+index|[]
+name|outputColumnNums
+decl_stmt|;
 specifier|public
 name|VectorGroupKeyHelper
 parameter_list|(
@@ -179,7 +184,15 @@ name|HiveException
 block|{
 comment|// NOTE: To support pruning the grouping set id dummy key by VectorGroupbyOpeator MERGE_PARTIAL
 comment|// case, we use the keyCount passed to the constructor and not keyExpressions.length.
-comment|// Inspect the output type of each key expression.
+comment|// Inspect the output type of each key expression.  And, remember the output columns.
+name|outputColumnNums
+operator|=
+operator|new
+name|int
+index|[
+name|keyCount
+index|]
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -236,6 +249,19 @@ argument_list|(
 name|columnVectorType
 argument_list|)
 expr_stmt|;
+name|outputColumnNums
+index|[
+name|i
+index|]
+operator|=
+name|keyExpressions
+index|[
+name|i
+index|]
+operator|.
+name|getOutputColumn
+argument_list|()
+expr_stmt|;
 block|}
 name|finishAdding
 argument_list|()
@@ -275,12 +301,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|longIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|LongColumnVector
@@ -293,7 +323,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|LongColumnVector
@@ -306,7 +336,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 comment|// This vectorized code pattern says:
@@ -393,12 +423,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|doubleIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|DoubleColumnVector
@@ -411,7 +445,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|DoubleColumnVector
@@ -424,7 +458,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 if|if
@@ -497,12 +531,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|stringIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|BytesColumnVector
@@ -515,7 +553,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|BytesColumnVector
@@ -528,7 +566,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 if|if
@@ -662,12 +700,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|decimalIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|DecimalColumnVector
@@ -680,7 +722,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|DecimalColumnVector
@@ -693,7 +735,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 if|if
@@ -768,12 +810,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|timestampIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|TimestampColumnVector
@@ -786,7 +832,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|TimestampColumnVector
@@ -799,7 +845,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 if|if
@@ -869,12 +915,16 @@ operator|++
 name|i
 control|)
 block|{
+specifier|final
 name|int
-name|keyIndex
+name|columnIndex
 init|=
+name|outputColumnNums
+index|[
 name|intervalDayTimeIndices
 index|[
 name|i
+index|]
 index|]
 decl_stmt|;
 name|IntervalDayTimeColumnVector
@@ -887,7 +937,7 @@ name|inputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 name|IntervalDayTimeColumnVector
@@ -900,7 +950,7 @@ name|outputBatch
 operator|.
 name|cols
 index|[
-name|keyIndex
+name|columnIndex
 index|]
 decl_stmt|;
 if|if
