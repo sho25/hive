@@ -1418,6 +1418,22 @@ parameter_list|()
 block|{
 try|try
 block|{
+name|String
+name|queryId
+init|=
+name|confOverlay
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYID
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
 name|LOG
 operator|.
 name|info
@@ -1426,7 +1442,9 @@ literal|"Query timed out after: "
 operator|+
 name|queryTimeout
 operator|+
-literal|" seconds. Cancelling the execution now."
+literal|" seconds. Cancelling the execution now: "
+operator|+
+name|queryId
 argument_list|)
 expr_stmt|;
 name|SQLOperation
@@ -2465,11 +2483,29 @@ condition|(
 name|success
 condition|)
 block|{
+name|String
+name|queryId
+init|=
+name|confOverlay
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYID
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"The running operation has been successfully interrupted."
+literal|"The running operation has been successfully interrupted: "
+operator|+
+name|queryId
 argument_list|)
 expr_stmt|;
 block|}
