@@ -7815,6 +7815,19 @@ operator|+
 literal|"of JOIN operator."
 argument_list|)
 block|,
+name|HIVE_STATS_CORRELATED_MULTI_KEY_JOINS
+argument_list|(
+literal|"hive.stats.correlated.multi.key.joins"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When estimating output rows for a join involving multiple columns, the default behavior assumes"
+operator|+
+literal|"the columns are independent. Setting this flag to true will cause the estimator to assume"
+operator|+
+literal|"the columns are correlated."
+argument_list|)
+block|,
 comment|// in the absence of uncompressed/raw data size, total file size will be used for statistics
 comment|// annotation. But the file may be compressed, encoded and serialized which may be lesser in size
 comment|// than the actual uncompressed/raw data size. This factor will be multiplied to file size to estimate
