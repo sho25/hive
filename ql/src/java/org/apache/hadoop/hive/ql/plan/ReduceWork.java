@@ -447,6 +447,13 @@ specifier|private
 name|boolean
 name|isAutoReduceParallelism
 decl_stmt|;
+comment|// boolean that says whether to slow start or not
+specifier|private
+name|boolean
+name|isSlowStart
+init|=
+literal|true
+decl_stmt|;
 comment|// for auto reduce parallelism - minimum reducers requested
 specifier|private
 name|int
@@ -963,6 +970,30 @@ block|{
 return|return
 name|isAutoReduceParallelism
 return|;
+block|}
+specifier|public
+name|boolean
+name|isSlowStart
+parameter_list|()
+block|{
+return|return
+name|isSlowStart
+return|;
+block|}
+specifier|public
+name|void
+name|setSlowStart
+parameter_list|(
+name|boolean
+name|isSlowStart
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isSlowStart
+operator|=
+name|isSlowStart
+expr_stmt|;
 block|}
 specifier|public
 name|void
