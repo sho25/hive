@@ -1799,6 +1799,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVE_METASTORE_STATS_NDV_TUNER
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
 block|,
 name|HiveConf
@@ -7678,6 +7684,22 @@ argument_list|,
 literal|"Standard error expressed in percentage. Provides a tradeoff between accuracy and compute cost. \n"
 operator|+
 literal|"A lower value for error indicates higher accuracy and a higher compute cost."
+argument_list|)
+block|,
+name|HIVE_METASTORE_STATS_NDV_TUNER
+argument_list|(
+literal|"hive.metastore.stats.ndv.tuner"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.0
+argument_list|,
+literal|"Provides a tunable parameter between the lower bound and the higher bound of ndv for aggregate ndv across all the partitions. \n"
+operator|+
+literal|"The lower bound is equal to the maximum of ndv of all the partitions. The higher bound is equal to the sum of ndv of all the partitions.\n"
+operator|+
+literal|"Its value should be between 0.0 (i.e., choose lower bound) and 1.0 (i.e., choose higher bound)"
 argument_list|)
 block|,
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION

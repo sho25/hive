@@ -7523,6 +7523,9 @@ name|colNames
 parameter_list|,
 name|boolean
 name|useDensityFunctionForNDVEstimation
+parameter_list|,
+name|double
+name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -7754,6 +7757,8 @@ argument_list|,
 name|partsFound
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 expr_stmt|;
 if|if
@@ -7834,6 +7839,8 @@ argument_list|,
 name|partsFound
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 expr_stmt|;
 block|}
@@ -8284,6 +8291,10 @@ parameter_list|,
 specifier|final
 name|boolean
 name|useDensityFunctionForNDVEstimation
+parameter_list|,
+specifier|final
+name|double
+name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8376,6 +8387,8 @@ argument_list|,
 name|areAllPartsFound
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 return|;
 block|}
@@ -8418,6 +8431,9 @@ name|areAllPartsFound
 parameter_list|,
 name|boolean
 name|useDensityFunctionForNDVEstimation
+parameter_list|,
+name|double
+name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8670,6 +8686,8 @@ argument_list|,
 literal|0
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9104,6 +9122,8 @@ argument_list|,
 literal|0
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10225,6 +10245,8 @@ argument_list|,
 literal|0
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10438,6 +10460,9 @@ name|i
 parameter_list|,
 name|boolean
 name|useDensityFunctionForNDVEstimation
+parameter_list|,
+name|double
+name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -10649,6 +10674,8 @@ argument_list|,
 name|sumDist
 argument_list|,
 name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
 argument_list|)
 expr_stmt|;
 return|return
