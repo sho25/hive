@@ -18442,7 +18442,7 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"test_param_2 = \"50\""
+literal|"test_param_2 LIKE \"50\""
 expr_stmt|;
 name|tableNames
 operator|=
@@ -18516,7 +18516,7 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"test_param_2 = \"75\""
+literal|"test_param_2 LIKE \"75\""
 expr_stmt|;
 name|tableNames
 operator|=
@@ -18564,7 +18564,7 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"key_dne = \"50\""
+literal|"key_dne LIKE \"50\""
 expr_stmt|;
 name|tableNames
 operator|=
@@ -18612,34 +18612,11 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"test_param_1<> \"yellow\""
+literal|"test_param_1 NOT LIKE \"yellow\""
 expr_stmt|;
-name|tableNames
-operator|=
-name|client
-operator|.
-name|listTableNamesByFilter
-argument_list|(
-name|dbName
-argument_list|,
-name|filter
-argument_list|,
-operator|(
-name|short
-operator|)
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|2
-argument_list|,
-name|tableNames
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// Commenting as part of HIVE-12274 != and<> are not supported for CLOBs
+comment|// tableNames = client.listTableNamesByFilter(dbName, filter, (short) 2);
+comment|// assertEquals(2, tableNames.size());
 name|filter
 operator|=
 name|org
@@ -18658,34 +18635,10 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"test_param_1 != \"yellow\""
+literal|"test_param_1 NOT LIKE \"yellow\""
 expr_stmt|;
-name|tableNames
-operator|=
-name|client
-operator|.
-name|listTableNamesByFilter
-argument_list|(
-name|dbName
-argument_list|,
-name|filter
-argument_list|,
-operator|(
-name|short
-operator|)
-literal|2
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|2
-argument_list|,
-name|tableNames
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// tableNames = client.listTableNamesByFilter(dbName, filter, (short) 2);
+comment|// assertEquals(2, tableNames.size());
 comment|//owner = "testOwner1" and (lastAccessTime = 30 or test_param_1 = "hi")
 name|filter
 operator|=
@@ -18741,7 +18694,7 @@ name|hive_metastoreConstants
 operator|.
 name|HIVE_FILTER_FIELD_PARAMS
 operator|+
-literal|"test_param_1 = \"hi\")"
+literal|"test_param_1 LIKE \"hi\")"
 expr_stmt|;
 name|tableNames
 operator|=

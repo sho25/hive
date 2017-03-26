@@ -13955,7 +13955,7 @@ comment|// Load the column stats and table params with 30 TB scale
 name|String
 name|importStatement1
 init|=
-literal|"CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE_LOBS_FROM_EXTFILE(null, '"
+literal|"CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null, '"
 operator|+
 literal|"TAB_COL_STATS"
 operator|+
@@ -13971,7 +13971,7 @@ decl_stmt|;
 name|String
 name|importStatement2
 init|=
-literal|"CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE_LOBS_FROM_EXTFILE(null, '"
+literal|"CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null, '"
 operator|+
 literal|"TABLE_PARAMS"
 operator|+

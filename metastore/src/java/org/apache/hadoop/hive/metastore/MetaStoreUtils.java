@@ -4019,15 +4019,6 @@ block|}
 specifier|public
 specifier|static
 specifier|final
-name|int
-name|MAX_MS_TYPENAME_LENGTH
-init|=
-literal|2000
-decl_stmt|;
-comment|// 4000/2, for an unlikely unicode case
-specifier|public
-specifier|static
-specifier|final
 name|String
 name|TYPE_FROM_DESERIALIZER
 init|=
@@ -4055,22 +4046,6 @@ condition|)
 return|return
 literal|null
 return|;
-if|if
-condition|(
-name|type
-operator|.
-name|length
-argument_list|()
-operator|>
-name|MAX_MS_TYPENAME_LENGTH
-condition|)
-block|{
-return|return
-literal|"type name is too long: "
-operator|+
-name|type
-return|;
-block|}
 name|int
 name|last
 init|=
