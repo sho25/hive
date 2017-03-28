@@ -15211,6 +15211,8 @@ name|getConf
 argument_list|()
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -17291,6 +17293,8 @@ name|getConf
 argument_list|()
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 block|}
@@ -18927,6 +18931,8 @@ argument_list|,
 name|filterDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|filterOp
 argument_list|)
 return|;
 block|}
@@ -19119,6 +19125,8 @@ argument_list|,
 name|groupByDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|groupByOp
 argument_list|)
 return|;
 block|}
@@ -19326,6 +19334,8 @@ argument_list|,
 name|selectDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|selectOp
 argument_list|)
 return|;
 block|}
@@ -19542,6 +19552,8 @@ name|getConf
 argument_list|()
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -19669,6 +19681,8 @@ argument_list|,
 name|smbJoinSinkDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -19737,6 +19751,8 @@ name|getConf
 argument_list|()
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -20121,6 +20137,8 @@ argument_list|,
 name|fileSinkDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -20172,6 +20190,8 @@ argument_list|,
 name|limitDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -20223,6 +20243,8 @@ argument_list|,
 name|eventDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -20274,6 +20296,8 @@ argument_list|,
 name|sparkHashTableSinkDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
@@ -20325,6 +20349,8 @@ argument_list|,
 name|sparkPartitionPruningSinkDesc
 argument_list|,
 name|vContext
+argument_list|,
+name|op
 argument_list|)
 expr_stmt|;
 name|isNative
