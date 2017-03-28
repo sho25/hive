@@ -2497,6 +2497,22 @@ name|eventTo
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|eventTo
+operator|<
+name|eventFrom
+condition|)
+block|{
+throw|throw
+operator|new
+name|Exception
+argument_list|(
+literal|"Invalid event ID input received in TO clause"
+argument_list|)
+throw|;
+block|}
 name|Integer
 name|maxRange
 init|=
@@ -2612,6 +2628,10 @@ argument_list|,
 name|evFilter
 argument_list|)
 decl_stmt|;
+name|lastReplId
+operator|=
+name|eventTo
+expr_stmt|;
 while|while
 condition|(
 name|evIter
@@ -2628,6 +2648,13 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+name|lastReplId
+operator|=
+name|ev
+operator|.
+name|getEventId
+argument_list|()
+expr_stmt|;
 name|Path
 name|evRoot
 init|=
@@ -2640,10 +2667,7 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|ev
-operator|.
-name|getEventId
-argument_list|()
+name|lastReplId
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2668,7 +2692,7 @@ operator|.
 name|toUri
 argument_list|()
 argument_list|,
-name|eventTo
+name|lastReplId
 argument_list|)
 expr_stmt|;
 name|writeOutput
@@ -2690,7 +2714,7 @@ name|String
 operator|.
 name|valueOf
 argument_list|(
-name|eventTo
+name|lastReplId
 argument_list|)
 argument_list|)
 argument_list|,
@@ -2710,7 +2734,7 @@ name|INCREMENTAL
 argument_list|,
 name|eventFrom
 argument_list|,
-name|eventTo
+name|lastReplId
 argument_list|,
 name|cmRoot
 argument_list|)
@@ -2719,11 +2743,6 @@ name|dmd
 operator|.
 name|write
 argument_list|()
-expr_stmt|;
-comment|// Set the correct last repl id to return to the user
-name|lastReplId
-operator|=
-name|eventTo
 expr_stmt|;
 block|}
 name|prepareReturnValues
