@@ -12074,7 +12074,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"16Kb"
+literal|"256Kb"
 argument_list|,
 operator|new
 name|SizeValidator
@@ -12100,6 +12100,23 @@ argument_list|,
 literal|"Maximum allocation possible from LLAP buddy allocator. For ORC, should be as large as\n"
 operator|+
 literal|"the largest expected ORC compression buffer size. Must be a power of 2."
+argument_list|)
+block|,
+annotation|@
+name|Deprecated
+name|LLAP_IO_METADATA_FRACTION
+argument_list|(
+literal|"hive.llap.io.metadata.fraction"
+argument_list|,
+literal|0.1f
+argument_list|,
+literal|"Temporary setting for on-heap metadata cache fraction of xmx, set to avoid potential\n"
+operator|+
+literal|"heap problems on very large datasets when on-heap metadata cache takes over\n"
+operator|+
+literal|"everything. -1 managed metadata and data together (which is more flexible). This\n"
+operator|+
+literal|"setting will be removed (in effect become -1) once ORC metadata cache is moved off-heap."
 argument_list|)
 block|,
 name|LLAP_ALLOCATOR_ARENA_COUNT

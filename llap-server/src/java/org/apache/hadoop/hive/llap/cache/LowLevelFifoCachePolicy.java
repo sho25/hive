@@ -157,10 +157,7 @@ name|parentDebugDump
 decl_stmt|;
 specifier|public
 name|LowLevelFifoCachePolicy
-parameter_list|(
-name|Configuration
-name|conf
-parameter_list|)
+parameter_list|()
 block|{
 name|LlapIoImpl
 operator|.
