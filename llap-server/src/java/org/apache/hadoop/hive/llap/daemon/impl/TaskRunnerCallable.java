@@ -2815,6 +2815,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// TODO: Can this be moved out of the main callback path
 name|RPC
 operator|.
 name|stopProxy

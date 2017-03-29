@@ -1731,6 +1731,7 @@ continue|continue;
 block|}
 comment|// If the task cannot finish and if no slots are available then don't schedule it.
 comment|// Also don't wait if we have a task and we just killed something to schedule it.
+comment|// (numSlotsAvailable can go negative, if the callback after the thread completes is delayed)
 name|boolean
 name|shouldWait
 init|=
@@ -1738,7 +1739,7 @@ name|numSlotsAvailable
 operator|.
 name|get
 argument_list|()
-operator|==
+operator|<=
 literal|0
 operator|&&
 name|lastKillTimeMs
@@ -3698,6 +3699,14 @@ operator|.
 name|maybeUnregisterForFinishedStateNotifications
 argument_list|()
 expr_stmt|;
+name|updatePreemptionListAndNotify
+argument_list|(
+name|result
+operator|.
+name|getEndReason
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|taskWrapper
 operator|.
 name|getTaskRunnerCallable
@@ -3709,14 +3718,6 @@ operator|.
 name|onSuccess
 argument_list|(
 name|result
-argument_list|)
-expr_stmt|;
-name|updatePreemptionListAndNotify
-argument_list|(
-name|result
-operator|.
-name|getEndReason
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3781,6 +3782,11 @@ operator|.
 name|maybeUnregisterForFinishedStateNotifications
 argument_list|()
 expr_stmt|;
+name|updatePreemptionListAndNotify
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
 name|taskWrapper
 operator|.
 name|getTaskRunnerCallable
@@ -3792,11 +3798,6 @@ operator|.
 name|onFailure
 argument_list|(
 name|t
-argument_list|)
-expr_stmt|;
-name|updatePreemptionListAndNotify
-argument_list|(
-literal|null
 argument_list|)
 expr_stmt|;
 name|LOG
