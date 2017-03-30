@@ -661,12 +661,12 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
-comment|// upgrade to 2.2.0 schema and re-validate
+comment|// upgrade from 2.0.0 schema and re-validate
 name|schemaTool
 operator|.
 name|doUpgrade
 argument_list|(
-literal|"2.2.0"
+literal|"2.0.0"
 argument_list|)
 expr_stmt|;
 name|isValid
