@@ -2916,6 +2916,9 @@ name|f
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|boolean
+name|purge
 parameter_list|)
 throws|throws
 name|IOException
@@ -2935,6 +2938,23 @@ init|=
 literal|false
 decl_stmt|;
 try|try
+block|{
+if|if
+condition|(
+name|purge
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"purge is set to true. Not moving to Trash "
+operator|+
+name|f
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 name|result
 operator|=
@@ -2966,6 +2986,7 @@ expr_stmt|;
 return|return
 literal|true
 return|;
+block|}
 block|}
 block|}
 catch|catch

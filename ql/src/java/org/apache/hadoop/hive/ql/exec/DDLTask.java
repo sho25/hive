@@ -29519,6 +29519,21 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+name|boolean
+name|isAutopurge
+init|=
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|table
+operator|.
+name|getProperty
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 comment|// this is not transactional
@@ -29625,6 +29640,8 @@ argument_list|,
 name|location
 argument_list|,
 name|conf
+argument_list|,
+name|isAutopurge
 argument_list|)
 expr_stmt|;
 name|fs
@@ -29696,6 +29713,8 @@ argument_list|,
 name|statuses
 argument_list|,
 name|conf
+argument_list|,
+name|isAutopurge
 argument_list|)
 decl_stmt|;
 if|if

@@ -8482,6 +8482,21 @@ name|isAcid
 operator|)
 condition|)
 block|{
+name|boolean
+name|isAutoPurge
+init|=
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|replaceFiles
 argument_list|(
 name|tbl
@@ -8499,6 +8514,8 @@ name|getConf
 argument_list|()
 argument_list|,
 name|isSrcLocal
+argument_list|,
+name|isAutoPurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -10535,6 +10552,21 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+name|boolean
+name|isAutopurge
+init|=
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|replaceFiles
 argument_list|(
 name|tableDest
@@ -10548,6 +10580,8 @@ argument_list|,
 name|sessionConf
 argument_list|,
 name|isSrcLocal
+argument_list|,
+name|isAutopurge
 argument_list|)
 expr_stmt|;
 block|}
@@ -18722,7 +18756,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param tablePath path of the table.  Used to identify permission inheritance.    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.  Most of time, will be the same    *          as destf, unless its across FileSystem boundaries.    * @param isSrcLocal    *          If the source directory is LOCAL    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param tablePath path of the table.  Used to identify permission inheritance.    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.  Most of time, will be the same    *          as destf, unless its across FileSystem boundaries.    * @param purge    *          When set to true files which needs to be deleted are not moved to Trash    * @param isSrcLocal    *          If the source directory is LOCAL    */
 specifier|protected
 name|void
 name|replaceFiles
@@ -18744,6 +18778,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|isSrcLocal
+parameter_list|,
+name|boolean
+name|purge
 parameter_list|)
 throws|throws
 name|HiveException
@@ -18911,6 +18948,8 @@ argument_list|,
 name|statuses
 argument_list|,
 name|conf
+argument_list|,
+name|purge
 argument_list|)
 expr_stmt|;
 block|}
@@ -19216,6 +19255,10 @@ parameter_list|,
 specifier|final
 name|Configuration
 name|conf
+parameter_list|,
+specifier|final
+name|boolean
+name|purge
 parameter_list|)
 throws|throws
 name|IOException
@@ -19352,6 +19395,8 @@ name|getPath
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+name|purge
 argument_list|)
 expr_stmt|;
 block|}
@@ -19401,6 +19446,8 @@ name|getPath
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+name|purge
 argument_list|)
 return|;
 block|}
