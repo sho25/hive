@@ -1269,7 +1269,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|SPARK_USE_FILE_SIZE_FOR_MAPJOIN
+name|SPARK_USE_TS_STATS_FOR_MAPJOIN
 operator|.
 name|varname
 argument_list|,

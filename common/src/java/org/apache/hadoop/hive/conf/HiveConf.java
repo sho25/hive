@@ -13397,24 +13397,26 @@ literal|"hive.spark.use.op.stats"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether to use operator stats to determine reducer parallelism for Hive on Spark. "
+literal|"Whether to use operator stats to determine reducer parallelism for Hive on Spark.\n"
 operator|+
-literal|"If this is false, Hive will use source table stats to determine reducer "
+literal|"If this is false, Hive will use source table stats to determine reducer\n"
 operator|+
-literal|"parallelism for all first level reduce tasks, and the maximum reducer parallelism "
+literal|"parallelism for all first level reduce tasks, and the maximum reducer parallelism\n"
 operator|+
 literal|"from all parents for all the rest (second level and onward) reducer tasks."
 argument_list|)
 block|,
-name|SPARK_USE_FILE_SIZE_FOR_MAPJOIN
+name|SPARK_USE_TS_STATS_FOR_MAPJOIN
 argument_list|(
-literal|"hive.spark.use.file.size.for.mapjoin"
+literal|"hive.spark.use.ts.stats.for.mapjoin"
 argument_list|,
 literal|false
 argument_list|,
-literal|"If this is set to true, mapjoin optimization in Hive/Spark will use source file sizes associated "
+literal|"If this is set to true, mapjoin optimization in Hive/Spark will use statistics from\n"
 operator|+
-literal|"with TableScan operator on the root of operator tree, instead of using operator statistics."
+literal|"TableScan operators at the root of operator tree, instead of parent ReduceSink\n"
+operator|+
+literal|"operators of the Join operator."
 argument_list|)
 block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
