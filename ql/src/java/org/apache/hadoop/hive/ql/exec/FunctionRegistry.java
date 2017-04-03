@@ -10369,6 +10369,38 @@ name|desc
 argument_list|)
 return|;
 block|}
+comment|/**    * Returns whether the fn is an exact equality comparison.    */
+specifier|public
+specifier|static
+name|boolean
+name|isEq
+parameter_list|(
+name|GenericUDF
+name|fn
+parameter_list|)
+block|{
+return|return
+name|fn
+operator|instanceof
+name|GenericUDFOPEqual
+return|;
+block|}
+comment|/**    * Returns whether the fn is an exact non-equality comparison.    */
+specifier|public
+specifier|static
+name|boolean
+name|isNeq
+parameter_list|(
+name|GenericUDF
+name|fn
+parameter_list|)
+block|{
+return|return
+name|fn
+operator|instanceof
+name|GenericUDFOPNotEqual
+return|;
+block|}
 comment|/**    * Returns whether the exprNodeDesc is a node of "positive".    */
 specifier|public
 specifier|static
