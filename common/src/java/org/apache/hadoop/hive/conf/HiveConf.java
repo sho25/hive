@@ -9413,15 +9413,38 @@ argument_list|,
 literal|"Hive metrics subsystem implementation class."
 argument_list|)
 block|,
+name|HIVE_CODAHALE_METRICS_REPORTER_CLASSES
+argument_list|(
+literal|"hive.service.metrics.codahale.reporter.classes"
+argument_list|,
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.JsonFileMetricsReporter, "
+operator|+
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.JmxMetricsReporter"
+argument_list|,
+literal|"Comma separated list of reporter implementation classes for metric class "
+operator|+
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics. Overrides "
+operator|+
+literal|"HIVE_METRICS_REPORTER conf if present"
+argument_list|)
+block|,
+annotation|@
+name|Deprecated
 name|HIVE_METRICS_REPORTER
 argument_list|(
 literal|"hive.service.metrics.reporter"
 argument_list|,
-literal|"JSON_FILE, JMX"
+literal|""
 argument_list|,
-literal|"Reporter type for metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics, "
+literal|"Reporter implementations for metric class "
 operator|+
-literal|"comma separated list of JMX, CONSOLE, JSON_FILE, HADOOP2"
+literal|"org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics;"
+operator|+
+literal|"Deprecated, use HIVE_CODAHALE_METRICS_REPORTER_CLASSES instead. This configuraiton will be"
+operator|+
+literal|" overridden by HIVE_CODAHALE_METRICS_REPORTER_CLASSES if present. "
+operator|+
+literal|"Comma separated list of JMX, CONSOLE, JSON_FILE, HADOOP2"
 argument_list|)
 block|,
 name|HIVE_METRICS_JSON_FILE_LOCATION
@@ -9439,7 +9462,7 @@ name|HIVE_METRICS_JSON_FILE_INTERVAL
 argument_list|(
 literal|"hive.service.metrics.file.frequency"
 argument_list|,
-literal|"5s"
+literal|"5000ms"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -9449,7 +9472,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 argument_list|,
-literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics JSON_FILE reporter, "
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.JsonFileMetricsReporter, "
 operator|+
 literal|"the frequency of updating JSON metrics file."
 argument_list|)
@@ -9468,7 +9491,7 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.CodahaleMetrics HADOOP2 reporter, "
+literal|"For metric class org.apache.hadoop.hive.common.metrics.metrics2.Metrics2Reporter, "
 operator|+
 literal|"the frequency of updating the HADOOP2 metrics system."
 argument_list|)
