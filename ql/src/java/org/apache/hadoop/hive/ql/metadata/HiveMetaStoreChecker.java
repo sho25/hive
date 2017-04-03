@@ -2495,6 +2495,8 @@ name|nextPath
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
 comment|// add sub-directory to the work queue if maxDepth is not yet reached
 name|pendingPaths
 operator|.
@@ -2511,6 +2513,7 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if
