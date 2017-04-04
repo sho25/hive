@@ -992,9 +992,9 @@ argument_list|(
 name|nd
 argument_list|)
 expr_stmt|;
-comment|// no need to go further down for a select op with a file sink or script
-comment|// child
-comment|// since all cols are needed for these ops
+comment|// no need to go further down for a select op with all file sink or script
+comment|// child since all cols are needed for these ops
+comment|// However, if one of the children is not file sink or script, we still go down.
 if|if
 condition|(
 name|nd
@@ -1002,6 +1002,10 @@ operator|instanceof
 name|SelectOperator
 condition|)
 block|{
+name|walkChildren
+operator|=
+literal|false
+expr_stmt|;
 for|for
 control|(
 name|Node
@@ -1015,13 +1019,12 @@ control|)
 block|{
 if|if
 condition|(
+operator|!
 operator|(
 name|child
 operator|instanceof
 name|FileSinkOperator
-operator|)
 operator|||
-operator|(
 name|child
 operator|instanceof
 name|ScriptOperator
@@ -1030,8 +1033,9 @@ condition|)
 block|{
 name|walkChildren
 operator|=
-literal|false
+literal|true
 expr_stmt|;
+break|break;
 block|}
 block|}
 block|}

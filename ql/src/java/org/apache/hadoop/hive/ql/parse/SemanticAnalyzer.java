@@ -45081,7 +45081,8 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// LazySimpleSerDe can convert any types to String type using
-comment|// JSON-format.
+comment|// JSON-format. However, we may add more operators.
+comment|// Thus, we still keep the conversion.
 if|if
 condition|(
 operator|!
@@ -45091,32 +45092,6 @@ name|equals
 argument_list|(
 name|rowFieldTypeInfo
 argument_list|)
-operator|&&
-operator|!
-operator|(
-name|isLazySimpleSerDe
-operator|&&
-name|tableFieldTypeInfo
-operator|.
-name|getCategory
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|Category
-operator|.
-name|PRIMITIVE
-argument_list|)
-operator|&&
-name|tableFieldTypeInfo
-operator|.
-name|equals
-argument_list|(
-name|TypeInfoFactory
-operator|.
-name|stringTypeInfo
-argument_list|)
-operator|)
 condition|)
 block|{
 comment|// need to do some conversions here
