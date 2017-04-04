@@ -669,6 +669,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|events
+operator|.
+name|ListenerEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|messaging
 operator|.
 name|EventMessage
@@ -1062,6 +1080,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|tableEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1138,6 +1158,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|tableEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1224,6 +1246,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|tableEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1743,6 +1767,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|partitionEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1824,6 +1850,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|partitionEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1915,6 +1943,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|partitionEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -1981,6 +2011,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|dbEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2047,6 +2079,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|dbEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2113,6 +2147,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|fnEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2179,6 +2215,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|fnEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2245,6 +2283,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|indexEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2311,6 +2351,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|indexEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2387,6 +2429,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|indexEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2606,6 +2650,8 @@ expr_stmt|;
 name|process
 argument_list|(
 name|event
+argument_list|,
+name|insertEvent
 argument_list|)
 expr_stmt|;
 block|}
@@ -2673,13 +2719,16 @@ operator|)
 name|millis
 return|;
 block|}
-comment|// Process this notification by adding it to metastore DB
+comment|/**    * Process this notification by adding it to metastore DB.    *    * @param event NotificationEvent is the object written to the metastore DB.    * @param listenerEvent ListenerEvent (from which NotificationEvent was based) used only to set the    *                      DB_NOTIFICATION_EVENT_ID_KEY_NAME for future reference by other listeners.    */
 specifier|private
 name|void
 name|process
 parameter_list|(
 name|NotificationEvent
 name|event
+parameter_list|,
+name|ListenerEvent
+name|listenerEvent
 parameter_list|)
 throws|throws
 name|MetaException
@@ -2726,6 +2775,35 @@ operator|.
 name|addNotificationEvent
 argument_list|(
 name|event
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Set the DB_NOTIFICATION_EVENT_ID for future reference by other listeners.
+if|if
+condition|(
+name|event
+operator|.
+name|isSetEventId
+argument_list|()
+condition|)
+block|{
+name|listenerEvent
+operator|.
+name|putParameter
+argument_list|(
+name|MetaStoreEventListenerConstants
+operator|.
+name|DB_NOTIFICATION_EVENT_ID_KEY_NAME
+argument_list|,
+name|Long
+operator|.
+name|toString
+argument_list|(
+name|event
+operator|.
+name|getEventId
+argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
