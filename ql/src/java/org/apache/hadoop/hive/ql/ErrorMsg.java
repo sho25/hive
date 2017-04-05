@@ -33,6 +33,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -118,6 +128,26 @@ operator|.
 name|parse
 operator|.
 name|ASTNodeOrigin
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|AlterTableDesc
+operator|.
+name|AlterTableTypes
 import|;
 end_import
 
@@ -1130,7 +1160,13 @@ name|ALTER_TABLE_NON_NATIVE
 argument_list|(
 literal|10134
 argument_list|,
-literal|"ALTER TABLE cannot be used for a non-native table"
+literal|"ALTER TABLE can only be used for "
+operator|+
+name|AlterTableTypes
+operator|.
+name|nonNativeTableAllowedTypes
+operator|+
+literal|" to a non-native table "
 argument_list|)
 block|,
 name|SORTMERGE_MAPJOIN_FAILED

@@ -10543,6 +10543,16 @@ name|tbl
 operator|.
 name|isNonNative
 argument_list|()
+operator|&&
+operator|!
+name|AlterTableTypes
+operator|.
+name|nonNativeTableAllowedTypes
+operator|.
+name|contains
+argument_list|(
+name|op
+argument_list|)
 condition|)
 block|{
 throw|throw
