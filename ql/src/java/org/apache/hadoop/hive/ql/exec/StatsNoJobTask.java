@@ -2325,14 +2325,14 @@ expr_stmt|;
 try|try
 block|{
 comment|// Wait a while for existing tasks to terminate
-if|if
+while|while
 condition|(
 operator|!
 name|threadPool
 operator|.
 name|awaitTermination
 argument_list|(
-literal|100
+literal|10
 argument_list|,
 name|TimeUnit
 operator|.
@@ -2340,6 +2340,14 @@ name|SECONDS
 argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Waiting for all stats tasks to finish..."
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Cancel currently executing tasks
 name|threadPool
 operator|.
@@ -2369,7 +2377,6 @@ argument_list|(
 literal|"Stats collection thread pool did not terminate"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 catch|catch
