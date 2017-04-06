@@ -91,18 +91,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|log4j
-operator|.
-name|MDC
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|logging
 operator|.
 name|log4j
@@ -180,6 +168,16 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|MDC
 import|;
 end_import
 
