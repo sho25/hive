@@ -8786,6 +8786,23 @@ argument_list|,
 literal|"Wait time in ms default to 30 seconds."
 argument_list|)
 block|,
+name|HIVE_DRUID_BITMAP_FACTORY_TYPE
+argument_list|(
+literal|"hive.druid.bitmap.type"
+argument_list|,
+literal|"roaring"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"roaring"
+argument_list|,
+literal|"concise"
+argument_list|)
+argument_list|,
+literal|"Coding algorithm use to encode the bitmaps"
+argument_list|)
+block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
