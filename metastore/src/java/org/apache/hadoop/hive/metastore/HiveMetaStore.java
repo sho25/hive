@@ -2065,6 +2065,14 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|PARTITION_NUMBER_EXCEED_LIMIT_MSG
+init|=
+literal|"Number of partitions scanned (=%d) on table '%s' exceeds limit (=%d). This is controlled on the metastore server by %s."
+decl_stmt|;
 comment|// boolean that tells if the HiveMetaStore (remote) server is being used.
 comment|// Can be used to determine if the calls to metastore api (HMSHandler) are being made with
 comment|// embedded metastore or a remote one
@@ -20158,9 +20166,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Number of partitions scanned (=%d) on table '%s' exceeds limit"
-operator|+
-literal|" (=%d). This is controlled on the metastore server by %s."
+name|PARTITION_NUMBER_EXCEED_LIMIT_MSG
 argument_list|,
 name|partitionRequest
 argument_list|,
