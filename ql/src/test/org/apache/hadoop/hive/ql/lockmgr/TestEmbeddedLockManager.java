@@ -86,6 +86,14 @@ specifier|private
 name|int
 name|counter
 decl_stmt|;
+specifier|private
+name|HiveConf
+name|conf
+init|=
+operator|new
+name|HiveConf
+argument_list|()
+decl_stmt|;
 specifier|public
 name|void
 name|testLocking
@@ -1225,6 +1233,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|query
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 return|return

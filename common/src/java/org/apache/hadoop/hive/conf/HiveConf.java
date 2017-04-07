@@ -7969,6 +7969,17 @@ operator|+
 literal|"that need to execute at least one mapred job."
 argument_list|)
 block|,
+name|HIVE_LOCK_QUERY_STRING_MAX_LENGTH
+argument_list|(
+literal|"hive.lock.query.string.max.length"
+argument_list|,
+literal|1000000
+argument_list|,
+literal|"The maximum length of the query string to store in the lock.\n"
+operator|+
+literal|"The default value is 1000000, since the data limit of a znode is 1MB"
+argument_list|)
+block|,
 comment|// Zookeeper related configs
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(

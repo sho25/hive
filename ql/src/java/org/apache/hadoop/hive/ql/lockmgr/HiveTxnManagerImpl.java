@@ -547,6 +547,8 @@ name|lockTbl
 operator|.
 name|getQueryStr
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -891,6 +893,8 @@ name|lockDb
 operator|.
 name|getQueryStr
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|HiveLock
