@@ -1671,7 +1671,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|/**          * This runs at READ_COMMITTED for exactly the same reason as {@link #getOpenTxnsInfo()} \         */
+comment|/**          * This runs at READ_COMMITTED for exactly the same reason as {@link #getOpenTxnsInfo()}          */
 name|dbConn
 operator|=
 name|getDbConn
