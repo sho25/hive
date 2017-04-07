@@ -15474,6 +15474,23 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"mapreduce.job.queuename"
+argument_list|)
+condition|)
+block|{
+comment|// a special property starting with mapreduce that we would also like to effect if it changes
+name|result
+operator|=
+literal|true
+expr_stmt|;
+block|}
 return|return
 name|result
 return|;
