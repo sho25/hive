@@ -4058,7 +4058,7 @@ name|METASTORE_CONNECTION_POOLING_TYPE
 argument_list|(
 literal|"datanucleus.connectionPoolingType"
 argument_list|,
-literal|"BONECP"
+literal|"HikariCP"
 argument_list|,
 operator|new
 name|StringSet
@@ -4073,6 +4073,25 @@ literal|"NONE"
 argument_list|)
 argument_list|,
 literal|"Specify connection pool library for datanucleus"
+argument_list|)
+block|,
+name|METASTORE_CONNECTION_POOLING_MAX_CONNECTIONS
+argument_list|(
+literal|"datanucleus.connectionPool.maxPoolSize"
+argument_list|,
+literal|10
+argument_list|,
+literal|"Specify the maximum number of connections in the connection pool. Note: The configured size will be used by"
+operator|+
+literal|" 2 connection pools (TxnHandler and ObjectStore). When configuring the max connection pool size, it is "
+operator|+
+literal|"recommended to take into account the number of metastore instances and the number of HiveServer2 instances "
+operator|+
+literal|"configured with embedded metastore. To get optimal performance, set config to meet the following condition"
+operator|+
+literal|"(2 * pool_size * metastore_instances + 2 * pool_size * HS2_instances_with_embedded_metastore) = "
+operator|+
+literal|"(2 * physical_core_count + hard_disk_count)."
 argument_list|)
 block|,
 comment|// Workaround for DN bug on Postgres:
