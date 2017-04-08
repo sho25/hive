@@ -3442,8 +3442,6 @@ operator|.
 name|mkdirs
 argument_list|(
 name|destParentPath
-argument_list|,
-literal|true
 argument_list|)
 condition|)
 block|{
@@ -3464,8 +3462,6 @@ argument_list|(
 name|srcPath
 argument_list|,
 name|destPath
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|LOG

@@ -9575,19 +9575,6 @@ operator|+
 literal|"\"insert directory '/HIVEFT25686/chinna/' from table\""
 argument_list|)
 block|,
-name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
-argument_list|(
-literal|"hive.warehouse.subdir.inherit.perms"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Set this to false if the table directories should be created\n"
-operator|+
-literal|"with the permissions derived from dfs umask instead of\n"
-operator|+
-literal|"inheriting the permission of the warehouse or database directory."
-argument_list|)
-block|,
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
 argument_list|(
 literal|"hive.insert.into.external.tables"
