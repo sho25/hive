@@ -12,24 +12,8 @@ operator|.
 name|hive
 operator|.
 name|beeline
-operator|.
-name|qfile
 package|;
 end_package
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|beeline
-operator|.
-name|BeeLine
-import|;
-end_import
 
 begin_import
 import|import
@@ -164,6 +148,8 @@ block|,
 literal|"!set showwarnings true"
 block|,
 literal|"!set showelapsedtime false"
+block|,
+literal|"!set trimscripts false"
 block|,
 literal|"!set maxwidth -1"
 block|,
@@ -363,28 +349,36 @@ name|qFile
 parameter_list|)
 throws|throws
 name|SQLException
+throws|,
+name|IOException
 block|{
 name|beforeExecute
 argument_list|(
 name|qFile
 argument_list|)
 expr_stmt|;
-name|execute
-argument_list|(
-operator|new
 name|String
 index|[]
-block|{
-literal|"!run "
-operator|+
+name|commands
+init|=
+name|beeLine
+operator|.
+name|getCommands
+argument_list|(
 name|qFile
 operator|.
 name|getInputFile
 argument_list|()
+argument_list|)
+decl_stmt|;
+name|execute
+argument_list|(
+name|qFile
 operator|.
-name|getAbsolutePath
-argument_list|()
-block|}
+name|filterCommands
+argument_list|(
+name|commands
+argument_list|)
 argument_list|,
 name|qFile
 operator|.

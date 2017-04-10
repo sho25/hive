@@ -12,8 +12,6 @@ operator|.
 name|hive
 operator|.
 name|beeline
-operator|.
-name|qfile
 package|;
 end_package
 
@@ -44,6 +42,22 @@ operator|.
 name|ql
 operator|.
 name|QTestProcessExecResult
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
 import|;
 end_import
 
@@ -145,16 +159,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedHashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -165,7 +169,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|Set
 import|;
 end_import
 
@@ -194,26 +198,75 @@ block|{
 specifier|private
 specifier|static
 specifier|final
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|srcTables
+init|=
+name|QTestUtil
+operator|.
+name|getSrcTables
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|String
 name|DEBUG_HINT
 init|=
-literal|"The following files can help you identifying the problem:\n"
+literal|"The following files can help you identifying the problem:%n"
 operator|+
-literal|" - Query file: %1\n"
+literal|" - Query file: %1s%n"
 operator|+
-literal|" - Raw output file: %2\n"
+literal|" - Raw output file: %2s%n"
 operator|+
-literal|" - Filtered output file: %3\n"
+literal|" - Filtered output file: %3s%n"
 operator|+
-literal|" - Expected output file: %4\n"
+literal|" - Expected output file: %4s%n"
 operator|+
-literal|" - Client log file: %5\n"
+literal|" - Client log file: %5s%n"
 operator|+
-literal|" - Client log files before the test: %6\n"
+literal|" - Client log files before the test: %6s%n"
 operator|+
-literal|" - Client log files after the test: %7\n"
+literal|" - Client log files after the test: %7s%n"
 operator|+
-literal|" - Hiveserver2 log file: %8\n"
+literal|" - Hiveserver2 log file: %8s%n"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|USE_COMMAND_WARNING
+init|=
+literal|"The query file %1s contains \"%2s\" command.%n"
+operator|+
+literal|"The source table name rewrite is turned on, so this might cause problems when the used "
+operator|+
+literal|"database contains tables named any of the following: "
+operator|+
+name|srcTables
+operator|+
+literal|"%n"
+operator|+
+literal|"To turn off the table name rewrite use -Dtest.rewrite.source.tables=false%n"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Pattern
+name|USE_PATTERN
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"^\\s*use\\s.*"
+argument_list|,
+name|Pattern
+operator|.
+name|CASE_INSENSITIVE
+argument_list|)
 decl_stmt|;
 specifier|private
 name|String
@@ -250,14 +303,14 @@ decl_stmt|;
 specifier|private
 specifier|static
 name|RegexFilterSet
-name|staticFilterSet
+name|filterSet
 init|=
-name|getStaticFilterSet
+name|getFilterSet
 argument_list|()
 decl_stmt|;
 specifier|private
-name|RegexFilterSet
-name|specificFilterSet
+name|boolean
+name|rewriteSourceTables
 decl_stmt|;
 specifier|private
 name|QFile
@@ -361,8 +414,141 @@ name|beforeExecuteLogFile
 argument_list|,
 name|afterExecuteLogFile
 argument_list|,
-literal|"./itests/qtest/target/tmp/hive.log"
+literal|"./itests/qtest/target/tmp/log/hive.log"
 argument_list|)
+return|;
+block|}
+comment|/**    * Filters the sql commands if necessary.    * @param commands The array of the sql commands before filtering    * @return The filtered array of the sql command strings    * @throws IOException File read error    */
+specifier|public
+name|String
+index|[]
+name|filterCommands
+parameter_list|(
+name|String
+index|[]
+name|commands
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+name|rewriteSourceTables
+condition|)
+block|{
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|commands
+operator|.
+name|length
+condition|;
+name|i
+operator|++
+control|)
+block|{
+if|if
+condition|(
+name|USE_PATTERN
+operator|.
+name|matcher
+argument_list|(
+name|commands
+index|[
+name|i
+index|]
+argument_list|)
+operator|.
+name|matches
+argument_list|()
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+name|USE_COMMAND_WARNING
+argument_list|,
+name|inputFile
+argument_list|,
+name|commands
+index|[
+name|i
+index|]
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|commands
+index|[
+name|i
+index|]
+operator|=
+name|replaceTableNames
+argument_list|(
+name|commands
+index|[
+name|i
+index|]
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+return|return
+name|commands
+return|;
+block|}
+comment|/**    * Replace the default src database TABLE_NAMEs in the queries with default.TABLE_NAME, like    * src->default.src, srcpart->default.srcpart, so the queries could be run even if the used    * database is query specific. This change is only a best effort, since we do not want to parse    * the queries, we could not be sure that we do not replace other strings which are not    * tablenames. Like 'select src from othertable;'. The q files containing these commands should    * be excluded. Only replace the tablenames, if rewriteSourceTables is set.    * @param source The original query string    * @return The query string where the tablenames are replaced    */
+specifier|private
+name|String
+name|replaceTableNames
+parameter_list|(
+name|String
+name|source
+parameter_list|)
+block|{
+for|for
+control|(
+name|String
+name|table
+range|:
+name|srcTables
+control|)
+block|{
+name|source
+operator|=
+name|source
+operator|.
+name|replaceAll
+argument_list|(
+literal|"(?is)(\\s+)"
+operator|+
+name|table
+operator|+
+literal|"([\\s;\\n\\)])"
+argument_list|,
+literal|"$1default."
+operator|+
+name|table
+operator|+
+literal|"$2"
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|source
 return|;
 block|}
 specifier|public
@@ -380,21 +566,18 @@ operator|.
 name|readFileToString
 argument_list|(
 name|rawOutputFile
+argument_list|,
+literal|"UTF-8"
 argument_list|)
 decl_stmt|;
 name|String
 name|filteredOutput
 init|=
-name|staticFilterSet
-operator|.
-name|filter
-argument_list|(
-name|specificFilterSet
+name|filterSet
 operator|.
 name|filter
 argument_list|(
 name|rawOutput
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|FileUtils
@@ -885,7 +1068,7 @@ comment|// Check specificFilterSet for QTest specific ones.
 specifier|private
 specifier|static
 name|RegexFilterSet
-name|getStaticFilterSet
+name|getFilterSet
 parameter_list|()
 block|{
 comment|// Extract the leading four digits from the unix time value.
@@ -930,14 +1113,6 @@ literal|"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) "
 operator|+
 literal|"\\d{2} \\d{2}:\\d{2}:\\d{2} \\w+ 20\\d{2}"
 decl_stmt|;
-comment|// Pattern to remove the timestamp and other infrastructural info from the out file
-name|String
-name|logPattern
-init|=
-literal|"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2},\\d*\\s+\\S+\\s+\\["
-operator|+
-literal|".*\\]\\s+\\S+:\\s+"
-decl_stmt|;
 name|String
 name|operatorPattern
 init|=
@@ -956,13 +1131,6 @@ argument_list|()
 operator|.
 name|addFilter
 argument_list|(
-name|logPattern
-argument_list|,
-literal|""
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
 literal|"(?s)\n[^\n]*Waiting to acquire compile lock.*?Acquired the compile lock.\n"
 argument_list|,
 literal|"\n"
@@ -970,7 +1138,7 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
-literal|"Acquired the compile lock.\n"
+literal|".*Acquired the compile lock.\n"
 argument_list|,
 literal|""
 argument_list|)
@@ -1001,6 +1169,13 @@ argument_list|(
 literal|"\\(queryId=[^\\)]*\\)"
 argument_list|,
 literal|"queryId=(!!{queryId}!!)"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"Query ID = [\\w-]+"
+argument_list|,
+literal|"Query ID = !!{queryId}!!"
 argument_list|)
 operator|.
 name|addFilter
@@ -1076,9 +1251,44 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
-literal|"Time taken: [0-9\\.]* seconds"
+literal|"(?i)Time taken: [0-9\\.]* sec"
 argument_list|,
-literal|"Time taken: !!ELIDED!! seconds"
+literal|"Time taken: !!ELIDED!! sec"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|" job(:?) job_\\w+([\\s\n])"
+argument_list|,
+literal|" job$1 !!{jobId}}!!$2"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"Ended Job = job_\\w+([\\s\n])"
+argument_list|,
+literal|"Ended Job = !!{jobId}!!$1"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|".*\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}.* map = .*\n"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\s+"
+argument_list|,
+literal|""
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"maximum memory = \\d*"
+argument_list|,
+literal|"maximum memory = !!ELIDED!!"
 argument_list|)
 return|;
 block|}
@@ -1101,16 +1311,8 @@ name|File
 name|resultsDirectory
 decl_stmt|;
 specifier|private
-name|String
-name|scratchDirectoryString
-decl_stmt|;
-specifier|private
-name|String
-name|warehouseDirectoryString
-decl_stmt|;
-specifier|private
-name|File
-name|hiveRootDirectory
+name|boolean
+name|rewriteSourceTables
 decl_stmt|;
 specifier|public
 name|QFileBuilder
@@ -1172,53 +1374,17 @@ return|;
 block|}
 specifier|public
 name|QFileBuilder
-name|setScratchDirectoryString
+name|setRewriteSourceTables
 parameter_list|(
-name|String
-name|scratchDirectoryString
+name|boolean
+name|rewriteSourceTables
 parameter_list|)
 block|{
 name|this
 operator|.
-name|scratchDirectoryString
+name|rewriteSourceTables
 operator|=
-name|scratchDirectoryString
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-specifier|public
-name|QFileBuilder
-name|setWarehouseDirectoryString
-parameter_list|(
-name|String
-name|warehouseDirectoryString
-parameter_list|)
-block|{
-name|this
-operator|.
-name|warehouseDirectoryString
-operator|=
-name|warehouseDirectoryString
-expr_stmt|;
-return|return
-name|this
-return|;
-block|}
-specifier|public
-name|QFileBuilder
-name|setHiveRootDirectory
-parameter_list|(
-name|File
-name|hiveRootDirectory
-parameter_list|)
-block|{
-name|this
-operator|.
-name|hiveRootDirectory
-operator|=
-name|hiveRootDirectory
+name|rewriteSourceTables
 expr_stmt|;
 return|return
 name|this
@@ -1345,71 +1511,11 @@ operator|+
 literal|".q.afterExecute.log"
 argument_list|)
 expr_stmt|;
-comment|// These are the filters which are specific for the given QTest.
-comment|// Check staticFilterSet for common filters.
 name|result
 operator|.
-name|specificFilterSet
+name|rewriteSourceTables
 operator|=
-operator|new
-name|RegexFilterSet
-argument_list|()
-operator|.
-name|addFilter
-argument_list|(
-name|scratchDirectoryString
-operator|+
-literal|"[\\w\\-/]+"
-argument_list|,
-literal|"!!{hive.exec.scratchdir}!!"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-name|warehouseDirectoryString
-argument_list|,
-literal|"!!{hive.metastore.warehouse.dir}!!"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-name|resultsDirectory
-operator|.
-name|getAbsolutePath
-argument_list|()
-argument_list|,
-literal|"!!{expectedDirectory}!!"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-name|logDirectory
-operator|.
-name|getAbsolutePath
-argument_list|()
-argument_list|,
-literal|"!!{outputDirectory}!!"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-name|queryDirectory
-operator|.
-name|getAbsolutePath
-argument_list|()
-argument_list|,
-literal|"!!{qFileDirectory}!!"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-name|hiveRootDirectory
-operator|.
-name|getAbsolutePath
-argument_list|()
-argument_list|,
-literal|"!!{hive.root}!!"
-argument_list|)
+name|rewriteSourceTables
 expr_stmt|;
 return|return
 name|result

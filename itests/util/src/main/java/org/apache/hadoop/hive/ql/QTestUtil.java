@@ -1777,7 +1777,7 @@ literal|".sorted"
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashSet
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -1946,7 +1946,9 @@ specifier|private
 name|HBaseTestingUtility
 name|utility
 decl_stmt|;
-name|HashSet
+specifier|public
+specifier|static
+name|Set
 argument_list|<
 name|String
 argument_list|>

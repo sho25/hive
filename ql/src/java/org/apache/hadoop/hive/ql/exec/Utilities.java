@@ -4754,7 +4754,9 @@ condition|)
 block|{
 name|useName
 operator|=
-literal|"mapreduce"
+literal|"mapreduce:"
+operator|+
+name|hiveScratchDir
 expr_stmt|;
 block|}
 name|conf

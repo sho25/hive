@@ -4,7 +4,7 @@ comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or 
 end_comment
 
 begin_comment
-comment|/**  * Package for the BeeLine specific QTest file classes.  */
+comment|/**  * Package for the BeeLine specific QTest classes.  */
 end_comment
 
 begin_package
@@ -16,8 +16,6 @@ operator|.
 name|hive
 operator|.
 name|beeline
-operator|.
-name|qfile
 package|;
 end_package
 
