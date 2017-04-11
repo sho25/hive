@@ -4983,6 +4983,45 @@ name|keySet
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found semijoin optimization from the big table side of a map join, which will cause a task cycle. "
+operator|+
+literal|"Removing semijoin "
+operator|+
+name|OperatorUtils
+operator|.
+name|getOpNamePretty
+argument_list|(
+name|rs
+argument_list|)
+operator|+
+literal|" - "
+operator|+
+name|OperatorUtils
+operator|.
+name|getOpNamePretty
+argument_list|(
+name|semiJoinMap
+operator|.
+name|get
+argument_list|(
+name|rs
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|GenTezUtils
 operator|.
 name|removeBranch
