@@ -64,6 +64,12 @@ name|int
 name|getNumExecutors
 parameter_list|()
 function_decl|;
+comment|/**    * Gets the number of active executors.    * @return number of active executors    */
+specifier|public
+name|int
+name|getNumActive
+parameter_list|()
+function_decl|;
 comment|/**    * Gets the shuffle port.    * @return the shuffle port    */
 specifier|public
 name|int
