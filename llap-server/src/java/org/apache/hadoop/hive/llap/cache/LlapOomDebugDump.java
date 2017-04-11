@@ -28,6 +28,13 @@ name|String
 name|debugDumpForOom
 parameter_list|()
 function_decl|;
+name|void
+name|debugDumpShort
+parameter_list|(
+name|StringBuilder
+name|sb
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

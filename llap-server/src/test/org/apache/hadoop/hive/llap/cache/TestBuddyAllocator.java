@@ -438,6 +438,16 @@ operator|*
 name|count
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|debugDumpShort
+parameter_list|(
+name|StringBuilder
+name|sb
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -1854,7 +1864,7 @@ literal|"; "
 operator|+
 name|a
 operator|.
-name|debugDump
+name|debugDumpForOomInternal
 argument_list|()
 argument_list|)
 expr_stmt|;

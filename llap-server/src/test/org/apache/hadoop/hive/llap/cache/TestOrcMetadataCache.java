@@ -278,6 +278,16 @@ return|return
 literal|0
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|debugDumpShort
+parameter_list|(
+name|StringBuilder
+name|sb
+parameter_list|)
+block|{     }
 block|}
 specifier|private
 specifier|static
@@ -359,6 +369,16 @@ operator|*
 name|count
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|debugDumpShort
+parameter_list|(
+name|StringBuilder
+name|sb
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
