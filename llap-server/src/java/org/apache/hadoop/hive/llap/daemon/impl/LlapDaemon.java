@@ -107,6 +107,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|text
+operator|.
+name|SimpleDateFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -120,6 +130,16 @@ operator|.
 name|util
 operator|.
 name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Date
 import|;
 end_import
 
@@ -1673,11 +1693,11 @@ operator|.
 name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Attempting to start LlapDaemonConf with the following configuration: "
+specifier|final
+name|String
+name|logMsg
+init|=
+literal|"Attempting to start LlapDaemon with the following configuration: "
 operator|+
 literal|"maxJvmMemory="
 operator|+
@@ -1802,6 +1822,43 @@ operator|+
 literal|", enablePreemption= "
 operator|+
 name|enablePreemption
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|logMsg
+argument_list|)
+expr_stmt|;
+specifier|final
+name|String
+name|currTSISO8601
+init|=
+operator|new
+name|SimpleDateFormat
+argument_list|(
+literal|"yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+argument_list|)
+operator|.
+name|format
+argument_list|(
+operator|new
+name|Date
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|// Time based log retrieval may not fetch the above log line so logging to stderr for debugging purpose.
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+name|currTSISO8601
+operator|+
+literal|" "
+operator|+
+name|logMsg
 argument_list|)
 expr_stmt|;
 name|long
@@ -2757,7 +2814,7 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|warn
+name|debug
 argument_list|(
 literal|"LLAP daemon logging initialized from {} in {} ms. Async: {}"
 argument_list|,
@@ -2919,7 +2976,7 @@ literal|"\n"
 decl_stmt|;
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"\n\n"
 operator|+
@@ -3919,7 +3976,7 @@ block|{
 comment|// TODO Replace this with a ExceptionHandler / ShutdownHook
 name|LOG
 operator|.
-name|warn
+name|error
 argument_list|(
 literal|"Failed to start LLAP Daemon with exception"
 argument_list|,
