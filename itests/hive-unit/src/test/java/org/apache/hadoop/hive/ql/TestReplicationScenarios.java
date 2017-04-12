@@ -7933,6 +7933,866 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testExchangePartition
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"exchangePartition"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src(a string) partitioned by (b int, c int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest(a string) partitioned by (b int, c int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|,
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"seventeen"
+block|,
+literal|"sixteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=1, c=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=1, c=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=1, c=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src ADD PARTITION (b=2, c=2)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=3) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=3) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src partition(b=2, c=3) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=1 and c=1)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=2)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=3)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+comment|// Exchange single partitions using complete partition-spec (all partition columns)
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest EXCHANGE PARTITION (b=1, c=1) WITH TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=1 and c=1)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=2 and c=2)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=2 and c=3)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=1and c=1)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=2)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=3)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+comment|// Exchange multiple partitions using partial partition-spec (only one partition column)
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest EXCHANGE PARTITION (b=2) WITH TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=1 and c=1)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=2)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_src where (b=2 and c=3)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_dest where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=1 and c=1)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=2)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_src where (b=2 and c=3)"
+argument_list|,
+name|empty
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_dest where (b=2 and c=3) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testStatus
 parameter_list|()
 throws|throws
