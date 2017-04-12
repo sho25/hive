@@ -2383,6 +2383,23 @@ operator|.
 name|waitForCompletion
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rj
+operator|.
+name|isSuccessful
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Job failed!"
+argument_list|)
+throw|;
+block|}
 block|}
 comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    */
 specifier|private
