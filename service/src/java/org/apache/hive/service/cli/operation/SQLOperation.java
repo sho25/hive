@@ -2419,10 +2419,24 @@ argument_list|(
 name|state
 argument_list|)
 expr_stmt|;
+comment|//Need shut down background thread gracefully, driver.close will inform background thread
+comment|//a cancel request is sent.
 if|if
 condition|(
 name|shouldRunAsync
 argument_list|()
+operator|&&
+name|state
+operator|!=
+name|OperationState
+operator|.
+name|CANCELED
+operator|&&
+name|state
+operator|!=
+name|OperationState
+operator|.
+name|TIMEDOUT
 condition|)
 block|{
 name|Future
