@@ -1267,6 +1267,16 @@ name|binarySortableSerDe
 operator|.
 name|getSortOrders
 argument_list|()
+argument_list|,
+name|binarySortableSerDe
+operator|.
+name|getNullMarkers
+argument_list|()
+argument_list|,
+name|binarySortableSerDe
+operator|.
+name|getNotNullMarkers
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
