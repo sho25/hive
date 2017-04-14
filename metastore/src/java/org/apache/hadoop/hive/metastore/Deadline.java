@@ -235,6 +235,8 @@ literal|0
 condition|)
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 operator|new
@@ -274,6 +276,8 @@ block|}
 else|else
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 operator|new
@@ -281,7 +285,7 @@ name|DeadlineException
 argument_list|(
 literal|"The threadlocal Deadline is null,"
 operator|+
-literal|" please register it firstly."
+literal|" please register it first."
 argument_list|)
 argument_list|)
 throw|;
@@ -313,6 +317,8 @@ literal|null
 condition|)
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 operator|new
@@ -320,7 +326,7 @@ name|DeadlineException
 argument_list|(
 literal|"The threadlocal Deadline is null,"
 operator|+
-literal|" please register it firstly."
+literal|" please register it first."
 argument_list|)
 argument_list|)
 throw|;
@@ -405,6 +411,8 @@ block|}
 else|else
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 operator|new
@@ -412,7 +420,7 @@ name|DeadlineException
 argument_list|(
 literal|"The threadlocal Deadline is null,"
 operator|+
-literal|" please register it firstly."
+literal|" please register it first."
 argument_list|)
 argument_list|)
 throw|;
@@ -460,6 +468,8 @@ block|}
 else|else
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 operator|new
@@ -564,45 +574,14 @@ name|e
 parameter_list|)
 block|{
 throw|throw
+name|MetaStoreUtils
+operator|.
 name|newMetaException
 argument_list|(
 name|e
 argument_list|)
 throw|;
 block|}
-block|}
-comment|/**    * convert DeadlineException to MetaException    * @param e    * @return    */
-specifier|private
-specifier|static
-name|MetaException
-name|newMetaException
-parameter_list|(
-name|DeadlineException
-name|e
-parameter_list|)
-block|{
-name|MetaException
-name|metaException
-init|=
-operator|new
-name|MetaException
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|metaException
-operator|.
-name|initCause
-argument_list|(
-name|e
-argument_list|)
-expr_stmt|;
-return|return
-name|metaException
-return|;
 block|}
 block|}
 end_class
