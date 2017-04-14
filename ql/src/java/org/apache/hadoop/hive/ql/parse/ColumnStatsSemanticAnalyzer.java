@@ -776,6 +776,9 @@ argument_list|,
 name|String
 argument_list|>
 name|partSpec
+parameter_list|,
+name|ColumnStatsAutoGatherContext
+name|context
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -819,15 +822,9 @@ comment|// for static partition, it may not exist when HIVESTATSCOLAUTOGATHER is
 comment|// set to true
 if|if
 condition|(
-operator|!
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVESTATSCOLAUTOGATHER
-argument_list|)
+name|context
+operator|==
+literal|null
 condition|)
 block|{
 if|if
@@ -2326,6 +2323,8 @@ expr_stmt|;
 name|handlePartialPartitionSpec
 argument_list|(
 name|partSpec
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -2663,6 +2662,8 @@ expr_stmt|;
 name|handlePartialPartitionSpec
 argument_list|(
 name|partSpec
+argument_list|,
+name|context
 argument_list|)
 expr_stmt|;
 block|}
