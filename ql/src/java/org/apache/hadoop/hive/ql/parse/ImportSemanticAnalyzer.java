@@ -3090,7 +3090,10 @@ operator|.
 name|getPartSpec
 argument_list|()
 argument_list|,
-literal|true
+name|replicationSpec
+operator|.
+name|isReplace
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|loadTableWork
@@ -6023,10 +6026,9 @@ name|fromURI
 argument_list|,
 name|table
 argument_list|,
-operator|!
 name|replicationSpec
 operator|.
-name|isInsert
+name|isReplace
 argument_list|()
 argument_list|,
 operator|new

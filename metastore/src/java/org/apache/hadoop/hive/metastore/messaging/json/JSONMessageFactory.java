@@ -1164,6 +1164,9 @@ name|String
 argument_list|>
 name|partKeyVals
 parameter_list|,
+name|boolean
+name|replace
+parameter_list|,
 name|Iterator
 argument_list|<
 name|String
@@ -1184,6 +1187,8 @@ argument_list|,
 name|table
 argument_list|,
 name|partKeyVals
+argument_list|,
+name|replace
 argument_list|,
 name|fileIter
 argument_list|,

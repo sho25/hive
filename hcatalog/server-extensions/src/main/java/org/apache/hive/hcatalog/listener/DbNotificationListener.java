@@ -2608,6 +2608,11 @@ operator|.
 name|getPartitionKeyValues
 argument_list|()
 argument_list|,
+name|insertEvent
+operator|.
+name|isReplace
+argument_list|()
+argument_list|,
 operator|new
 name|FileChksumIterator
 argument_list|(

@@ -214,6 +214,11 @@ name|keyValues
 decl_stmt|;
 specifier|private
 specifier|final
+name|boolean
+name|replace
+decl_stmt|;
+specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -282,6 +287,25 @@ operator|.
 name|table
 operator|=
 name|table
+expr_stmt|;
+comment|// If replace flag is not set by caller, then by default set it to true to maintain backward compatibility
+name|this
+operator|.
+name|replace
+operator|=
+operator|(
+name|insertData
+operator|.
+name|isSetReplace
+argument_list|()
+condition|?
+name|insertData
+operator|.
+name|isReplace
+argument_list|()
+else|:
+literal|true
+operator|)
 expr_stmt|;
 name|this
 operator|.
@@ -437,6 +461,16 @@ parameter_list|()
 block|{
 return|return
 name|keyValues
+return|;
+block|}
+comment|/**    * @return The replace flag.    */
+specifier|public
+name|boolean
+name|isReplace
+parameter_list|()
+block|{
+return|return
+name|replace
 return|;
 block|}
 comment|/**    * Get list of files created as a result of this DML operation    *    * @return list of new files    */

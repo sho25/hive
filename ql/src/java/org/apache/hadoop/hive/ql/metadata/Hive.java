@@ -8660,6 +8660,8 @@ name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
+name|replace
+argument_list|,
 name|newFiles
 argument_list|)
 expr_stmt|;
@@ -10821,6 +10823,8 @@ name|tbl
 argument_list|,
 literal|null
 argument_list|,
+name|replace
+argument_list|,
 name|newFiles
 argument_list|)
 expr_stmt|;
@@ -12281,6 +12285,8 @@ name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
+literal|true
+argument_list|,
 name|newFiles
 argument_list|)
 expr_stmt|;
@@ -12681,6 +12687,9 @@ name|String
 argument_list|>
 name|partitionSpec
 parameter_list|,
+name|boolean
+name|replace
+parameter_list|,
 name|List
 argument_list|<
 name|Path
@@ -12762,6 +12771,13 @@ operator|new
 name|InsertEventRequestData
 argument_list|()
 decl_stmt|;
+name|insertData
+operator|.
+name|setReplace
+argument_list|(
+name|replace
+argument_list|)
+expr_stmt|;
 name|data
 operator|.
 name|setInsertData
