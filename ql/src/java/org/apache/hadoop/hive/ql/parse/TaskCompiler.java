@@ -2078,7 +2078,7 @@ name|targetPath
 operator|=
 name|wh
 operator|.
-name|getTablePath
+name|getDefaultTablePath
 argument_list|(
 name|db
 operator|.

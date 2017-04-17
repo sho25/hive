@@ -8410,7 +8410,7 @@ name|tblPath
 operator|=
 name|wh
 operator|.
-name|getTablePath
+name|getDefaultTablePath
 argument_list|(
 name|ms
 operator|.

@@ -3281,7 +3281,7 @@ name|Path
 argument_list|(
 name|wh
 operator|.
-name|getTablePath
+name|getDefaultTablePath
 argument_list|(
 name|parentDb
 argument_list|,
@@ -5155,7 +5155,7 @@ name|tablePath
 operator|=
 name|wh
 operator|.
-name|getTablePath
+name|getDefaultTablePath
 argument_list|(
 name|parentDb
 argument_list|,
@@ -5435,7 +5435,7 @@ name|setLocation
 argument_list|(
 name|wh
 operator|.
-name|getTablePath
+name|getDefaultTablePath
 argument_list|(
 name|parentDb
 argument_list|,

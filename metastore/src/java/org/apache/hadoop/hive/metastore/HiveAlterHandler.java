@@ -2929,14 +2929,13 @@ else|else
 block|{
 try|try
 block|{
+comment|// if tbl location is available use it
+comment|// else derive the tbl location from database location
 name|destPath
 operator|=
-operator|new
-name|Path
-argument_list|(
 name|wh
 operator|.
-name|getTablePath
+name|getPartitionPath
 argument_list|(
 name|msdb
 operator|.
@@ -2945,23 +2944,12 @@ argument_list|(
 name|dbname
 argument_list|)
 argument_list|,
-name|name
-argument_list|)
-argument_list|,
-name|Warehouse
-operator|.
-name|makePartName
-argument_list|(
 name|tbl
-operator|.
-name|getPartitionKeys
-argument_list|()
 argument_list|,
 name|new_part
 operator|.
 name|getValues
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|destPath
