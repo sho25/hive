@@ -3763,18 +3763,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_LOG_EXPLAIN_OUTPUT
-argument_list|)
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
@@ -3788,7 +3776,6 @@ operator|+
 name|explainOutput
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|conf
