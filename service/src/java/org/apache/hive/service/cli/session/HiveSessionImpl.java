@@ -4136,9 +4136,19 @@ name|void
 name|cleanupSessionLogDir
 parameter_list|()
 block|{
+comment|// In case of test, if we might not want to remove the log directory
 if|if
 condition|(
 name|isOperationLogEnabled
+operator|&&
+name|sessionConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST_REMOVE_LOGS
+argument_list|)
 condition|)
 block|{
 try|try

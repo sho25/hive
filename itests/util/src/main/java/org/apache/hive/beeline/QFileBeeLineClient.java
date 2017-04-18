@@ -194,8 +194,6 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"!set outputformat csv"
-block|,
 literal|"!record "
 operator|+
 name|resultFile
@@ -266,6 +264,14 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"!set outputformat tsv2"
+block|,
+literal|"!set verbose false"
+block|,
+literal|"!set silent true"
+block|,
+literal|"!set showheader false"
+block|,
 literal|"USE default;"
 block|,
 literal|"SHOW TABLES;"
@@ -296,12 +302,23 @@ name|getName
 argument_list|()
 operator|+
 literal|"`;"
-block|}
+block|,
+literal|"set hive.in.test.short.logs=true;"
+block|,
+literal|"set hive.in.test.remove.logs=false;"
+block|,         }
 argument_list|,
 name|qFile
 operator|.
 name|getBeforeExecuteLogFile
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|beeLine
+operator|.
+name|setIsTestMode
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -315,12 +332,29 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
+name|beeLine
+operator|.
+name|setIsTestMode
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
 name|execute
 argument_list|(
 operator|new
 name|String
 index|[]
 block|{
+literal|"set hive.in.test.short.logs=false;"
+block|,
+literal|"!set verbose true"
+block|,
+literal|"!set silent false"
+block|,
+literal|"!set showheader true"
+block|,
+literal|"!set outputformat table"
+block|,
 literal|"USE default;"
 block|,
 literal|"DROP DATABASE IF EXISTS `"

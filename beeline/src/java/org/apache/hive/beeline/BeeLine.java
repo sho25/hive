@@ -1163,6 +1163,14 @@ name|isBeeLine
 init|=
 literal|true
 decl_stmt|;
+comment|// Indicates that we are in test mode.
+comment|// Print only the errors, the operation log and the query results.
+specifier|private
+name|boolean
+name|isTestMode
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -11707,6 +11715,29 @@ name|currentDatabase
 operator|=
 name|currentDatabase
 expr_stmt|;
+block|}
+comment|/**    * Setting the BeeLine into test mode.    * Print only the errors, the operation log and the query results.    * Should be used only by tests.    *    * @param isTestMode    */
+name|void
+name|setIsTestMode
+parameter_list|(
+name|boolean
+name|isTestMode
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isTestMode
+operator|=
+name|isTestMode
+expr_stmt|;
+block|}
+name|boolean
+name|isTestMode
+parameter_list|()
+block|{
+return|return
+name|isTestMode
+return|;
 block|}
 block|}
 end_class
