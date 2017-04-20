@@ -6221,6 +6221,9 @@ specifier|private
 name|boolean
 name|checkPreExisting
 parameter_list|(
+name|FileSystem
+name|sourceFS
+parameter_list|,
 name|Path
 name|src
 parameter_list|,
@@ -6237,16 +6240,6 @@ name|FileSystem
 name|destFS
 init|=
 name|dest
-operator|.
-name|getFileSystem
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|FileSystem
-name|sourceFS
-init|=
-name|src
 operator|.
 name|getFileSystem
 argument_list|(
@@ -6325,6 +6318,17 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// We call copyFromLocal below, so we basically assume src is a local file.
+name|FileSystem
+name|srcFs
+init|=
+name|FileSystem
+operator|.
+name|getLocal
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|src
@@ -6334,6 +6338,8 @@ operator|&&
 operator|!
 name|checkPreExisting
 argument_list|(
+name|srcFs
+argument_list|,
 name|src
 argument_list|,
 name|dest
@@ -6406,6 +6412,8 @@ literal|null
 operator|&&
 name|checkOrWaitForTheFile
 argument_list|(
+name|srcFs
+argument_list|,
 name|src
 argument_list|,
 name|dest
@@ -6551,6 +6559,8 @@ condition|(
 operator|!
 name|checkOrWaitForTheFile
 argument_list|(
+name|srcFs
+argument_list|,
 name|src
 argument_list|,
 name|dest
@@ -6627,6 +6637,9 @@ specifier|public
 name|boolean
 name|checkOrWaitForTheFile
 parameter_list|(
+name|FileSystem
+name|srcFs
+parameter_list|,
 name|Path
 name|src
 parameter_list|,
@@ -6670,6 +6683,8 @@ if|if
 condition|(
 name|checkPreExisting
 argument_list|(
+name|srcFs
+argument_list|,
 name|src
 argument_list|,
 name|dest
@@ -6763,6 +6778,8 @@ block|}
 return|return
 name|checkPreExisting
 argument_list|(
+name|srcFs
+argument_list|,
 name|src
 argument_list|,
 name|dest
