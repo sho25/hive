@@ -9656,7 +9656,13 @@ literal|""
 argument_list|,
 literal|"A comma separated list of hooks which implement QueryLifeTimeHook. These will be triggered"
 operator|+
-literal|" before/after query compilation and before/after query execution, in the order specified"
+literal|" before/after query compilation and before/after query execution, in the order specified."
+operator|+
+literal|"Implementations of QueryLifeTimeHookWithParseHooks can also be specified in this list. If they are"
+operator|+
+literal|"specified then they will be invoked in the same places as QueryLifeTimeHooks and will be invoked during pre "
+operator|+
+literal|"and post query parsing"
 argument_list|)
 block|,
 name|HIVE_DRIVER_RUN_HOOKS
