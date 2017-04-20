@@ -1014,8 +1014,6 @@ annotation|@
 name|SuppressWarnings
 argument_list|(
 block|{
-literal|"deprecation"
-block|,
 literal|"rawtypes"
 block|}
 argument_list|)
