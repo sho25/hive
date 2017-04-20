@@ -42,6 +42,28 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ReduceSinkDesc
+operator|.
+name|ReducerTraits
+operator|.
+name|UNIFORM
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -784,6 +806,24 @@ name|isSlowStart
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|reduceWork
+operator|.
+name|setUniformDistribution
+argument_list|(
+name|reduceSink
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getReducerTraits
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|UNIFORM
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|isAutoReduceParallelism
@@ -833,6 +873,7 @@ operator|.
 name|getNumReducers
 argument_list|()
 decl_stmt|;
+comment|// TODO# HERE
 comment|// min we allow tez to pick
 name|int
 name|minPartition
@@ -1045,6 +1086,13 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|reduceWork
+operator|.
+name|setEdgePropRef
+argument_list|(
+name|edgeProp
+argument_list|)
+expr_stmt|;
 name|tezWork
 operator|.
 name|connect

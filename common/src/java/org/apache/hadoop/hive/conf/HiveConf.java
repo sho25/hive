@@ -11883,6 +11883,17 @@ operator|+
 literal|"necessary."
 argument_list|)
 block|,
+name|TEZ_LLAP_MIN_REDUCER_PER_EXECUTOR
+argument_list|(
+literal|"hive.tez.llap.min.reducer.per.executor"
+argument_list|,
+literal|0.95f
+argument_list|,
+literal|"If above 0, the min number of reducers for auto-parallelism for LLAP scheduling will\n"
+operator|+
+literal|"be set to this fraction of the number of executors."
+argument_list|)
+block|,
 name|TEZ_MAX_PARTITION_FACTOR
 argument_list|(
 literal|"hive.tez.max.partition.factor"
