@@ -17408,6 +17408,11 @@ break|break;
 case|case
 name|HiveParser
 operator|.
+name|TOK_NULL
+case|:
+case|case
+name|HiveParser
+operator|.
 name|Number
 case|:
 case|case
