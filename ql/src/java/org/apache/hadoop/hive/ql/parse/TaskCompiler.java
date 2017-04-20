@@ -3698,11 +3698,11 @@ argument_list|)
 expr_stmt|;
 name|clone
 operator|.
-name|setRsOpToTsOpMap
+name|setRsToSemiJoinBranchInfo
 argument_list|(
 name|pCtx
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 argument_list|)
 expr_stmt|;

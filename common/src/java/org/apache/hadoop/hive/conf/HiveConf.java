@@ -12022,6 +12022,15 @@ argument_list|,
 literal|"Only perform semijoin optimization if the estimated benefit at or above this fraction of the target table"
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_HINT_ONLY
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction.hint.only"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When true, only enforce semijoin when a hint is provided"
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"

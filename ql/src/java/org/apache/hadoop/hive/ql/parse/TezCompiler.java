@@ -1533,6 +1533,17 @@ name|victimRS
 init|=
 literal|null
 decl_stmt|;
+comment|// If there is a hint and no operator is removed then throw error
+name|boolean
+name|hasHint
+init|=
+literal|false
+decl_stmt|;
+name|boolean
+name|removed
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|Operator
@@ -1582,6 +1593,10 @@ name|AppMasterEventOperator
 operator|)
 name|o
 expr_stmt|;
+name|removed
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
 elseif|else
@@ -1592,14 +1607,14 @@ operator|instanceof
 name|ReduceSinkOperator
 condition|)
 block|{
-name|TableScanOperator
-name|ts
+name|SemiJoinBranchInfo
+name|sjInfo
 init|=
 name|context
 operator|.
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
@@ -1609,13 +1624,34 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|ts
+name|sjInfo
 operator|==
 literal|null
 condition|)
+continue|continue;
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
 block|{
+comment|// Skipping because of hint. Mark this info,
+name|hasHint
+operator|=
+literal|true
+expr_stmt|;
 continue|continue;
 block|}
+name|TableScanOperator
+name|ts
+init|=
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
+decl_stmt|;
 comment|// Sanity check
 assert|assert
 name|component
@@ -1659,10 +1695,14 @@ name|victimTS
 operator|=
 name|ts
 expr_stmt|;
+name|removed
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
 block|}
-comment|// Always set the min/max optimization as victim.
+comment|// Always set the semijoin optimization as victim.
 name|Operator
 argument_list|<
 name|?
@@ -1763,6 +1803,23 @@ operator|=
 name|victimAM
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|hasHint
+operator|&&
+operator|!
+name|removed
+condition|)
+block|{
+comment|// There is hint but none of the operators removed. Throw error
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"The user hint is causing an operator cycle. Please fix it and retry"
+argument_list|)
+throw|;
 block|}
 if|if
 condition|(
@@ -2264,7 +2321,7 @@ operator|instanceof
 name|ReduceSinkOperator
 condition|)
 block|{
-comment|// min/max case
+comment|// semijoin case
 name|children
 operator|=
 operator|new
@@ -2287,12 +2344,12 @@ name|getChildOperators
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|TableScanOperator
-name|ts
+name|SemiJoinBranchInfo
+name|sjInfo
 init|=
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
@@ -2302,11 +2359,19 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|ts
+name|sjInfo
 operator|!=
 literal|null
 condition|)
 block|{
+name|TableScanOperator
+name|ts
+init|=
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -3455,7 +3520,7 @@ block|{
 comment|// Process min/max
 name|GenTezUtils
 operator|.
-name|processDynamicMinMaxPushDownOperator
+name|processDynamicSemiJoinPushDownOperator
 argument_list|(
 name|procCtx
 argument_list|,
@@ -4424,7 +4489,7 @@ name|procCtx
 operator|.
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|size
@@ -4557,6 +4622,17 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+name|List
+argument_list|<
+name|TableScanOperator
+argument_list|>
+name|tsOps
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
 comment|// Iterate over the map and remove semijoin optimizations if needed.
 for|for
 control|(
@@ -4571,19 +4647,6 @@ name|keySet
 argument_list|()
 control|)
 block|{
-name|List
-argument_list|<
-name|TableScanOperator
-argument_list|>
-name|tsOps
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|TableScanOperator
-argument_list|>
-argument_list|()
-decl_stmt|;
 comment|// Get one top level TS Op directly from the stack
 name|tsOps
 operator|.
@@ -4680,6 +4743,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 comment|// Now the relevant TableScanOperators are known, find if there exists
 comment|// a semijoin filter on any of them, if so, remove it.
 name|ParseContext
@@ -4704,26 +4768,34 @@ name|rs
 range|:
 name|pctx
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|keySet
 argument_list|()
 control|)
 block|{
-if|if
-condition|(
-name|ts
-operator|==
+name|SemiJoinBranchInfo
+name|sjInfo
+init|=
 name|pctx
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
 argument_list|(
 name|rs
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|ts
+operator|==
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
 condition|)
 block|{
 comment|// match!
@@ -4774,6 +4846,27 @@ name|pctx
 argument_list|,
 name|rs
 argument_list|,
+name|ts
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Removing hinted semijoin as it is with SMB join "
+operator|+
+name|rs
+operator|+
+literal|" : "
+operator|+
 name|ts
 argument_list|)
 expr_stmt|;
@@ -4926,7 +5019,7 @@ name|procCtx
 operator|.
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|size
@@ -5264,12 +5357,12 @@ operator|)
 name|child
 operator|)
 decl_stmt|;
-name|TableScanOperator
-name|ts
+name|SemiJoinBranchInfo
+name|sjInfo
 init|=
 name|pCtx
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
@@ -5279,13 +5372,19 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|ts
+name|sjInfo
 operator|==
 literal|null
 condition|)
-block|{
 continue|continue;
-block|}
+name|TableScanOperator
+name|ts
+init|=
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
+decl_stmt|;
 comment|// This is a semijoin branch. Find if this is creating a potential
 comment|// cycle with childJoin.
 for|for
@@ -5400,6 +5499,28 @@ argument_list|,
 name|ts
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Removing hinted semijoin as it is creating cycles with mapside joins "
+operator|+
+name|rs
+operator|+
+literal|" : "
+operator|+
+name|ts
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -5462,12 +5583,12 @@ operator|)
 operator|.
 name|parseContext
 decl_stmt|;
-name|TableScanOperator
-name|ts
+name|SemiJoinBranchInfo
+name|sjInfo
 init|=
 name|pCtx
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
@@ -5477,7 +5598,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|ts
+name|sjInfo
 operator|==
 literal|null
 condition|)
@@ -5533,6 +5654,14 @@ name|removeSemiJoin
 init|=
 literal|false
 decl_stmt|;
+name|TableScanOperator
+name|ts
+init|=
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|AggregationDesc
@@ -5564,6 +5693,17 @@ operator|.
 name|getGenericUDAFEvaluator
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|udafBloomFilterEvaluator
+operator|.
+name|hasHintEntries
+argument_list|()
+condition|)
+return|return
+literal|null
+return|;
+comment|// Created using hint, skip it
 name|long
 name|expectedEntries
 init|=
@@ -5641,6 +5781,7 @@ block|}
 break|break;
 block|}
 block|}
+comment|// At this point, hinted semijoin case has been handled already
 comment|// Check if big table is big enough that runtime filtering is
 comment|// worth it.
 if|if
@@ -6114,12 +6255,12 @@ name|ReduceSinkOperator
 operator|)
 name|child
 decl_stmt|;
-name|TableScanOperator
-name|ts
+name|SemiJoinBranchInfo
+name|sjInfo
 init|=
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
@@ -6129,16 +6270,42 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|ts
+name|sjInfo
 operator|==
 literal|null
-operator|||
+condition|)
+continue|continue;
+name|TableScanOperator
+name|ts
+init|=
+name|sjInfo
+operator|.
+name|getTsOp
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
 name|ts
 operator|!=
 name|bigTableTS
 condition|)
 block|{
-comment|// skip, no semijoin or not the one we are looking for.
+comment|// skip, not the one we are looking for.
+continue|continue;
+block|}
+name|parallelEdges
+operator|=
+literal|true
+expr_stmt|;
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+comment|// Created by hint, skip it
 continue|continue;
 block|}
 comment|// Add the semijoin branch to the map
@@ -6150,10 +6317,6 @@ name|rs
 argument_list|,
 name|ts
 argument_list|)
-expr_stmt|;
-name|parallelEdges
-operator|=
-literal|true
 expr_stmt|;
 block|}
 block|}
@@ -7310,7 +7473,7 @@ name|Map
 argument_list|<
 name|ReduceSinkOperator
 argument_list|,
-name|TableScanOperator
+name|SemiJoinBranchInfo
 argument_list|>
 name|map
 init|=
@@ -7318,7 +7481,7 @@ name|procCtx
 operator|.
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 decl_stmt|;
 name|double
@@ -7348,6 +7511,27 @@ name|keySet
 argument_list|()
 control|)
 block|{
+name|SemiJoinBranchInfo
+name|sjInfo
+init|=
+name|map
+operator|.
+name|get
+argument_list|(
+name|rs
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+comment|// Semijoin created using hint, skip it
+continue|continue;
+block|}
 comment|// rs is semijoin optimization branch, which should look like<Parent>-SEL-GB1-RS1-GB2-RS2
 comment|// Get to the SelectOperator ancestor
 name|SelectOperator
@@ -7426,12 +7610,10 @@ comment|// Check the ndv/rows from the SEL vs the destination tablescan the semi
 name|TableScanOperator
 name|ts
 init|=
-name|map
+name|sjInfo
 operator|.
-name|get
-argument_list|(
-name|rs
-argument_list|)
+name|getTsOp
+argument_list|()
 decl_stmt|;
 name|RuntimeValuesInfo
 name|rti
@@ -7570,6 +7752,9 @@ name|get
 argument_list|(
 name|rs
 argument_list|)
+operator|.
+name|getTsOp
+argument_list|()
 decl_stmt|;
 if|if
 condition|(

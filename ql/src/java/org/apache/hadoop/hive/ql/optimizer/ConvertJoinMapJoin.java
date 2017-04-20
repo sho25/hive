@@ -4726,7 +4726,7 @@ name|context
 operator|.
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|size
@@ -4870,13 +4870,16 @@ name|ts
 init|=
 name|parseContext
 operator|.
-name|getRsOpToTsOpMap
+name|getRsToSemiJoinBranchInfo
 argument_list|()
 operator|.
 name|get
 argument_list|(
 name|rs
 argument_list|)
+operator|.
+name|getTsOp
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
