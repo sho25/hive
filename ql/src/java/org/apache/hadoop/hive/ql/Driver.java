@@ -7869,6 +7869,25 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+name|PerfLogger
+name|perfLogger
+init|=
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|()
+decl_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|CLASS_NAME
+argument_list|,
+name|PerfLogger
+operator|.
+name|WAIT_COMPILE
+argument_list|)
+expr_stmt|;
 specifier|final
 name|ReentrantLock
 name|compileLock
@@ -7880,6 +7899,17 @@ argument_list|,
 name|command
 argument_list|)
 decl_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|CLASS_NAME
+argument_list|,
+name|PerfLogger
+operator|.
+name|WAIT_COMPILE
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|metrics
@@ -7987,14 +8017,6 @@ block|}
 comment|//Save compile-time PerfLogging for WebUI.
 comment|//Execution-time Perf logs are done by either another thread's PerfLogger
 comment|//or a reset PerfLogger.
-name|PerfLogger
-name|perfLogger
-init|=
-name|SessionState
-operator|.
-name|getPerfLogger
-argument_list|()
-decl_stmt|;
 name|queryDisplay
 operator|.
 name|setPerfLogStarts
