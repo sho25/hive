@@ -2750,7 +2750,21 @@ name|ZERO
 expr_stmt|;
 block|}
 block|}
-else|else
+if|if
+condition|(
+operator|!
+name|allowRounding
+condition|)
+block|{
+if|if
+condition|(
+name|bigDecimal
+operator|.
+name|signum
+argument_list|()
+operator|!=
+literal|0
+condition|)
 block|{
 name|BigDecimal
 name|bigDecimalStripped
@@ -2799,17 +2813,6 @@ name|bigDecimalStripped
 expr_stmt|;
 block|}
 block|}
-comment|// System.out.println("FAST_SET_FROM_BIG_DECIMAL adjusted for zeroes/scale " + bigDecimal + " scale " + bigDecimal.scale());
-name|BigInteger
-name|unscaledValue
-init|=
-name|bigDecimal
-operator|.
-name|unscaledValue
-argument_list|()
-decl_stmt|;
-comment|// System.out.println("FAST_SET_FROM_BIG_DECIMAL unscaledValue " + unscaledValue + " length " + unscaledValue.toString().length());
-specifier|final
 name|int
 name|scale
 init|=
@@ -2818,12 +2821,6 @@ operator|.
 name|scale
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|allowRounding
-condition|)
-block|{
 if|if
 condition|(
 name|scale
@@ -2847,7 +2844,10 @@ condition|(
 operator|!
 name|fastSetFromBigInteger
 argument_list|(
+name|bigDecimal
+operator|.
 name|unscaledValue
+argument_list|()
 argument_list|,
 name|fastResult
 argument_list|)
@@ -2900,9 +2900,20 @@ condition|(
 operator|!
 name|fastSetFromBigInteger
 argument_list|(
+name|bigDecimal
+operator|.
 name|unscaledValue
+argument_list|()
 argument_list|,
+name|bigDecimal
+operator|.
 name|scale
+argument_list|()
+argument_list|,
+name|bigDecimal
+operator|.
+name|precision
+argument_list|()
 argument_list|,
 name|fastResult
 argument_list|)
@@ -3657,6 +3668,40 @@ name|FastHiveDecimal
 name|fastResult
 parameter_list|)
 block|{
+comment|// Poor performance, because the precision will be calculated by bigInteger.toString()
+return|return
+name|fastSetFromBigInteger
+argument_list|(
+name|bigInteger
+argument_list|,
+name|scale
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+name|fastResult
+argument_list|)
+return|;
+block|}
+comment|/**    * Creates a fast decimal from a BigInteger with a specified scale.    *    * NOTE: The fastSetFromBigInteger method requires the caller to pass a fastResult    * parameter has been reset for better performance.    *    * @param bigInteger the value to set as an integer    * @param scale the scale to use    * @param precision the precision to use    * @param fastResult an object to reuse    * @return True if the BigInteger and scale were successfully converted to a decimal.    */
+specifier|public
+specifier|static
+name|boolean
+name|fastSetFromBigInteger
+parameter_list|(
+name|BigInteger
+name|bigInteger
+parameter_list|,
+name|int
+name|scale
+parameter_list|,
+name|int
+name|precision
+parameter_list|,
+name|FastHiveDecimal
+name|fastResult
+parameter_list|)
+block|{
 if|if
 condition|(
 name|scale
@@ -3728,10 +3773,16 @@ name|negate
 argument_list|()
 expr_stmt|;
 block|}
-comment|// A slow way to get the number of decimal digits.
-name|int
+if|if
+condition|(
 name|precision
-init|=
+operator|<
+literal|0
+condition|)
+block|{
+comment|// A slow way to get the number of decimal digits.
+name|precision
+operator|=
 name|bigInteger
 operator|.
 name|toString
@@ -3739,7 +3790,8 @@ argument_list|()
 operator|.
 name|length
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|// System.out.println("FAST_SET_FROM_BIG_INTEGER adjusted bigInteger " + bigInteger + " precision " + precision);
 name|int
 name|integerDigitCount
