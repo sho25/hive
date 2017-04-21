@@ -1203,6 +1203,32 @@ name|getEventId
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Verify that getNextNotification(last) returns zero events if there are no more notifications available
+name|eventResponse
+operator|=
+name|objectStore
+operator|.
+name|getNextNotification
+argument_list|(
+operator|new
+name|NotificationEventRequest
+argument_list|(
+name|SECOND_EVENT_ID
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|eventResponse
+operator|.
+name|getEventsSize
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Verify that cleanNotificationEvents() cleans up all old notifications
 name|Thread
 operator|.
