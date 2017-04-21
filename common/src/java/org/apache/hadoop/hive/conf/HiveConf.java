@@ -4105,15 +4105,15 @@ literal|"datanucleus.connectionPool.maxPoolSize"
 argument_list|,
 literal|10
 argument_list|,
-literal|"Specify the maximum number of connections in the connection pool. Note: The configured size will be used by"
+literal|"Specify the maximum number of connections in the connection pool. Note: The configured size will be used by\n"
 operator|+
-literal|" 2 connection pools (TxnHandler and ObjectStore). When configuring the max connection pool size, it is "
+literal|"2 connection pools (TxnHandler and ObjectStore). When configuring the max connection pool size, it is\n"
 operator|+
-literal|"recommended to take into account the number of metastore instances and the number of HiveServer2 instances "
+literal|"recommended to take into account the number of metastore instances and the number of HiveServer2 instances\n"
 operator|+
-literal|"configured with embedded metastore. To get optimal performance, set config to meet the following condition"
+literal|"configured with embedded metastore. To get optimal performance, set config to meet the following condition\n"
 operator|+
-literal|"(2 * pool_size * metastore_instances + 2 * pool_size * HS2_instances_with_embedded_metastore) = "
+literal|"(2 * pool_size * metastore_instances + 2 * pool_size * HS2_instances_with_embedded_metastore) = \n"
 operator|+
 literal|"(2 * physical_core_count + hard_disk_count)."
 argument_list|)
