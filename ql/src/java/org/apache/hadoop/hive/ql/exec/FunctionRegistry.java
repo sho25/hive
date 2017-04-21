@@ -5587,6 +5587,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"width_bucket"
+argument_list|,
+name|GenericUDFWidthBucket
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"from_utc_timestamp"
 argument_list|,
 name|GenericUDFFromUtcTimestamp
