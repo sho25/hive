@@ -3701,6 +3701,15 @@ argument_list|(
 name|statsObjs
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|statsObjs
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
 name|stats
 operator|.
 name|add
@@ -3708,6 +3717,7 @@ argument_list|(
 name|colStats
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|ftOp
 operator|.
@@ -3819,6 +3829,18 @@ argument_list|)
 decl_stmt|;
 comment|// Persist the column statistics object to the metastore
 comment|// Note, this function is shared for both table and partition column stats.
+if|if
+condition|(
+name|colStats
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 name|SetPartitionsStatsRequest
 name|request
 init|=
