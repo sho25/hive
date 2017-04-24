@@ -3706,6 +3706,16 @@ name|getRsToSemiJoinBranchInfo
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|clone
+operator|.
+name|setColExprToGBMap
+argument_list|(
+name|pCtx
+operator|.
+name|getColExprToGBMap
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|clone
 return|;
