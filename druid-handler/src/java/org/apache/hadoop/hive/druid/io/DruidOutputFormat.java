@@ -1865,13 +1865,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"not implemented yet"
-argument_list|)
-throw|;
+comment|// NOOP
 block|}
 block|}
 end_class
