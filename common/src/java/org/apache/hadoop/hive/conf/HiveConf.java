@@ -13003,6 +13003,34 @@ argument_list|,
 literal|"llap.daemon.num.executors"
 argument_list|)
 block|,
+name|LLAP_MAPJOIN_MEMORY_OVERSUBSCRIBE_FACTOR
+argument_list|(
+literal|"hive.llap.mapjoin.memory.oversubscribe.factor"
+argument_list|,
+literal|0.2f
+argument_list|,
+literal|"Fraction of memory from hive.auto.convert.join.noconditionaltask.size that can be over subscribed\n"
+operator|+
+literal|"by queries running in LLAP mode. This factor has to be from 0.0 to 1.0. Default is 20% over subscription.\n"
+argument_list|)
+block|,
+name|LLAP_MEMORY_OVERSUBSCRIPTION_MAX_EXECUTORS_PER_QUERY
+argument_list|(
+literal|"hive.llap.memory.oversubscription.max.executors.per.query"
+argument_list|,
+literal|3
+argument_list|,
+literal|"Used along with hive.llap.mapjoin.memory.oversubscribe.factor to limit the number of executors from\n"
+operator|+
+literal|"which memory for mapjoin can be borrowed. Default 3 (from 3 other executors\n"
+operator|+
+literal|"hive.llap.mapjoin.memory.oversubscribe.factor amount of memory can be borrowed based on which mapjoin\n"
+operator|+
+literal|"conversion decision will be made). This is only an upper bound. Lower bound is determined by number of\n"
+operator|+
+literal|"executors and configured max concurrency."
+argument_list|)
+block|,
 name|LLAP_DAEMON_AM_REPORTER_MAX_THREADS
 argument_list|(
 literal|"hive.llap.daemon.am-reporter.max.threads"
