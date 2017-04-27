@@ -1891,6 +1891,17 @@ operator|.
 name|startBatch
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|batch
+operator|.
+name|size
+operator|==
+literal|0
+condition|)
+block|{
+return|return;
+block|}
 comment|// We now have to probe the global hash and find-or-allocate
 comment|// the aggregation buffers to use for each key present in the batch
 name|VectorHashKeyWrapper
@@ -1902,6 +1913,23 @@ operator|.
 name|getVectorHashKeyWrappers
 argument_list|()
 decl_stmt|;
+specifier|final
+name|int
+name|n
+init|=
+name|keyExpressions
+operator|.
+name|length
+operator|==
+literal|0
+condition|?
+literal|1
+else|:
+name|batch
+operator|.
+name|size
+decl_stmt|;
+comment|// note - the row mapping is not relevant when aggregationBatchInfo::getDistinctBufferSetCount() == 1
 for|for
 control|(
 name|int
@@ -1911,9 +1939,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|batch
-operator|.
-name|size
+name|n
 condition|;
 operator|++
 name|i
