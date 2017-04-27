@@ -829,6 +829,22 @@ name|eclipse
 operator|.
 name|jetty
 operator|.
+name|rewrite
+operator|.
+name|handler
+operator|.
+name|Rule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
 name|util
 operator|.
 name|ssl
@@ -2894,6 +2910,11 @@ operator|.
 name|class
 operator|,
 comment|// hive-common (https deps)
+name|Rule
+operator|.
+name|class
+operator|,
+comment|// Jetty rewrite class
 name|RegistryUtils
 operator|.
 name|ServiceRecordMarshal
