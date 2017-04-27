@@ -870,7 +870,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|int
+name|long
 name|arenaSizeVal
 init|=
 operator|(
@@ -881,15 +881,11 @@ operator|)
 condition|?
 name|MAX_ARENA_SIZE
 else|:
-call|(
-name|int
-call|)
-argument_list|(
 name|maxSizeVal
 operator|/
 name|arenaCount
-argument_list|)
 decl_stmt|;
+comment|// The math.min, and the fact that maxAllocation is an int, ensures we don't overflow.
 name|arenaSizeVal
 operator|=
 name|Math
@@ -1147,6 +1143,9 @@ expr_stmt|;
 block|}
 name|arenaSize
 operator|=
+operator|(
+name|int
+operator|)
 name|arenaSizeVal
 expr_stmt|;
 if|if
