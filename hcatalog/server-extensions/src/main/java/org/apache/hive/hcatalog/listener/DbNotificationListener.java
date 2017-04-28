@@ -1217,6 +1217,11 @@ argument_list|(
 name|before
 argument_list|,
 name|after
+argument_list|,
+name|tableEvent
+operator|.
+name|getIsTruncateOp
+argument_list|()
 argument_list|)
 operator|.
 name|toString
@@ -1914,6 +1919,11 @@ argument_list|,
 name|before
 argument_list|,
 name|after
+argument_list|,
+name|partitionEvent
+operator|.
+name|getIsTruncateOp
+argument_list|()
 argument_list|)
 operator|.
 name|toString

@@ -1640,6 +1640,27 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Truncate the table/partitions in the DEFAULT database.    * @param dbName    *          The db to which the table to be truncate belongs to    * @param tableName    *          The table to truncate    * @param partNames    *          List of partitions to truncate. NULL will truncate the whole table/all partitions    * @throws MetaException    * @throws TException    *           Could not truncate table properly.    */
+name|void
+name|truncateTable
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 name|boolean
 name|tableExists
 parameter_list|(

@@ -3686,7 +3686,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// Next, we verify that the destination table is not offline, a view, or a non-native table
+comment|// Next, we verify that the destination table is not offline, or a non-native table
 name|EximUtil
 operator|.
 name|validateTable

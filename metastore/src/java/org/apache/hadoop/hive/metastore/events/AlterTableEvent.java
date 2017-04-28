@@ -72,6 +72,11 @@ specifier|final
 name|Table
 name|oldTable
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isTruncateOp
+decl_stmt|;
 specifier|public
 name|AlterTableEvent
 parameter_list|(
@@ -80,6 +85,9 @@ name|oldTable
 parameter_list|,
 name|Table
 name|newTable
+parameter_list|,
+name|boolean
+name|isTruncateOp
 parameter_list|,
 name|boolean
 name|status
@@ -107,6 +115,12 @@ name|newTable
 operator|=
 name|newTable
 expr_stmt|;
+name|this
+operator|.
+name|isTruncateOp
+operator|=
+name|isTruncateOp
+expr_stmt|;
 block|}
 comment|/**    * @return the old table    */
 specifier|public
@@ -126,6 +140,16 @@ parameter_list|()
 block|{
 return|return
 name|newTable
+return|;
+block|}
+comment|/**    * @return the flag for truncate    */
+specifier|public
+name|boolean
+name|getIsTruncateOp
+parameter_list|()
+block|{
+return|return
+name|isTruncateOp
 return|;
 block|}
 block|}

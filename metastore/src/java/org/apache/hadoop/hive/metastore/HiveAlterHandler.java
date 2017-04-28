@@ -1966,6 +1966,8 @@ name|oldt
 argument_list|,
 name|newt
 argument_list|,
+literal|false
+argument_list|,
 literal|true
 argument_list|,
 name|handler
@@ -2645,6 +2647,8 @@ argument_list|,
 name|new_part
 argument_list|,
 name|tbl
+argument_list|,
+literal|false
 argument_list|,
 literal|true
 argument_list|,
@@ -3351,6 +3355,8 @@ name|new_part
 argument_list|,
 name|tbl
 argument_list|,
+literal|false
+argument_list|,
 literal|true
 argument_list|,
 name|handler
@@ -3551,6 +3557,8 @@ argument_list|,
 name|oldPart
 argument_list|,
 name|tbl
+argument_list|,
+literal|false
 argument_list|,
 name|success
 argument_list|,
@@ -4124,6 +4132,8 @@ argument_list|,
 name|newPart
 argument_list|,
 name|tbl
+argument_list|,
+literal|false
 argument_list|,
 literal|true
 argument_list|,

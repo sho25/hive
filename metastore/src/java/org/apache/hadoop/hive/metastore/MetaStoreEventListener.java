@@ -414,7 +414,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{   }
-comment|/**    * @param add partition event    * @throws MetaException    */
 comment|/**    * @param tableEvent alter table event    * @throws MetaException    */
 specifier|public
 name|void
@@ -426,6 +425,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{   }
+comment|/**    * @param partitionEvent add partition event    * @throws MetaException    */
 specifier|public
 name|void
 name|onAddPartition
