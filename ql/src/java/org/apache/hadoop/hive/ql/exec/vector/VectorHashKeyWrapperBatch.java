@@ -249,6 +249,20 @@ specifier|private
 name|int
 name|keysFixedSize
 decl_stmt|;
+comment|/**    * Shared hashcontext for all keys in this batch    */
+specifier|private
+specifier|final
+name|VectorHashKeyWrapper
+operator|.
+name|HashContext
+name|hashCtx
+init|=
+operator|new
+name|VectorHashKeyWrapper
+operator|.
+name|HashContext
+argument_list|()
+decl_stmt|;
 comment|/**    * Returns the compiled fixed size for the key wrappers.    * @return    */
 specifier|public
 name|int
@@ -6504,6 +6518,8 @@ name|VectorHashKeyWrapper
 operator|.
 name|allocate
 argument_list|(
+name|hashCtx
+argument_list|,
 name|longIndices
 operator|.
 name|length
