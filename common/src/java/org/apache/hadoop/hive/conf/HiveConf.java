@@ -12022,7 +12022,7 @@ name|TEZ_BIGTABLE_MIN_SIZE_SEMIJOIN_REDUCTION
 argument_list|(
 literal|"hive.tez.bigtable.minsize.semijoin.reduction"
 argument_list|,
-literal|1000000L
+literal|100000000L
 argument_list|,
 literal|"Big table for runtime filteting should be of atleast this size"
 argument_list|)
