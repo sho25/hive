@@ -43386,6 +43386,9 @@ name|openTransaction
 argument_list|()
 expr_stmt|;
 comment|// We are not going to verify SD for each partition. Just verify for the table.
+comment|// ToDo: we need verify the partition column instead
+try|try
+block|{
 name|validateTableCols
 argument_list|(
 name|table
@@ -43393,6 +43396,21 @@ argument_list|,
 name|colNames
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|me
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"The table does not have the same column definition as its partition."
+argument_list|)
+expr_stmt|;
+block|}
 name|Query
 name|query
 init|=
