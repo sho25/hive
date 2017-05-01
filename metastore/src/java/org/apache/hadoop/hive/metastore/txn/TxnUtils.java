@@ -300,6 +300,7 @@ name|long
 name|currentTxn
 parameter_list|)
 block|{
+comment|/*todo: should highWater be min(currentTxn,txns.getTxn_high_water_mark()) assuming currentTxn>0      * otherwise if currentTxn=7 and 8 commits before 7, then 7 will see result of 8 which      * doesn't make sense for Snapshot Isolation.  Of course for Read Committed, the list should      * inlude the latest committed set.*/
 name|long
 name|highWater
 init|=

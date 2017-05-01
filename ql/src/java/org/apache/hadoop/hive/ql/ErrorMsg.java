@@ -2376,21 +2376,22 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+comment|/**    * {1} is the transaction id;    * use {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)} to format    */
+name|OP_NOT_ALLOWED_IN_IMPLICIT_TXN
 argument_list|(
 literal|20006
 argument_list|,
-literal|"Operation {0} is not allowed when autoCommit=true."
+literal|"Operation {0} is not allowed in an implicit transaction ({1})."
 argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|//todo: better SQLState?
+comment|/**    * {1} is the transaction id;    * use {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)} to format    */
 name|OP_NOT_ALLOWED_IN_TXN
 argument_list|(
 literal|20007
 argument_list|,
-literal|"Operation {0} is not allowed in a transaction.  TransactionID={1}."
+literal|"Operation {0} is not allowed in a transaction ({1},queryId={2})."
 argument_list|,
 literal|true
 argument_list|)
@@ -2399,7 +2400,7 @@ name|OP_NOT_ALLOWED_WITHOUT_TXN
 argument_list|(
 literal|20008
 argument_list|,
-literal|"Operation {0} is not allowed since autoCommit=false and there is no active transaction"
+literal|"Operation {0} is not allowed without an active transaction"
 argument_list|,
 literal|true
 argument_list|)

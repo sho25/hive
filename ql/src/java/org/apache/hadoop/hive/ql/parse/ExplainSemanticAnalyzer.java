@@ -975,6 +975,13 @@ argument_list|(
 name|config
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setExplainPlan
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|ASTNode
 name|input
 init|=
@@ -1048,7 +1055,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// runCtx and ctx share the configuration
+comment|// runCtx and ctx share the configuration, but not isExplainPlan()
 name|runCtx
 operator|.
 name|setExplainConfig
@@ -1199,6 +1206,9 @@ name|ANALYZING
 argument_list|)
 expr_stmt|;
 block|}
+comment|//Creating new QueryState unfortunately causes all .q.out to change - do this in a separate ticket
+comment|//Sharing QueryState between generating the plan and executing the query seems bad
+comment|//BaseSemanticAnalyzer sem = SemanticAnalyzerFactory.get(new QueryState(queryState.getConf()), input);
 name|BaseSemanticAnalyzer
 name|sem
 init|=

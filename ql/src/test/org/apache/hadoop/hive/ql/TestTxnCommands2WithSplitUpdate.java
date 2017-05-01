@@ -300,9 +300,11 @@ block|}
 comment|/**    * Test the query correctness and directory layout for ACID table conversion with split-update    * enabled.    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table with split-update enabled    * 3. Insert a row to ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
 annotation|@
 name|Test
+annotation|@
+name|Override
 specifier|public
 name|void
-name|testNonAcidToAcidSplitUpdateConversion1
+name|testNonAcidToAcidConversion1
 parameter_list|()
 throws|throws
 name|Exception
@@ -1485,9 +1487,11 @@ block|}
 comment|/**    * Test the query correctness and directory layout for ACID table conversion with split-update    * enabled.    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table with split update enabled.    * 3. Update the existing row in ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
 annotation|@
 name|Test
+annotation|@
+name|Override
 specifier|public
 name|void
-name|testNonAcidToAcidSplitUpdateConversion2
+name|testNonAcidToAcidConversion2
 parameter_list|()
 throws|throws
 name|Exception
@@ -2685,9 +2689,11 @@ block|}
 comment|/**    * Test the query correctness and directory layout for ACID table conversion with split-update    * enabled.    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table with split-update enabled    * 3. Perform Major compaction    * 4. Insert a new row to ACID table    * 5. Perform another Major compaction    * 6. Clean    * @throws Exception    */
 annotation|@
 name|Test
+annotation|@
+name|Override
 specifier|public
 name|void
-name|testNonAcidToAcidSplitUpdateConversion3
+name|testNonAcidToAcidConversion3
 parameter_list|()
 throws|throws
 name|Exception
@@ -3468,7 +3474,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000001_0000001_0000"
+literal|"delta_0000022_0000022_0000"
 argument_list|,
 name|status
 index|[
@@ -3526,7 +3532,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000002_0000002_0000"
+literal|"delta_0000023_0000023_0000"
 argument_list|,
 name|status
 index|[
@@ -3633,7 +3639,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delete_delta_0000001_0000001_0000"
+literal|"delete_delta_0000022_0000022_0000"
 argument_list|,
 name|status
 index|[
@@ -4113,7 +4119,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000002"
+literal|"base_0000023"
 argument_list|,
 name|status
 index|[
@@ -4343,7 +4349,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000002"
+literal|"base_0000023"
 argument_list|,
 name|status
 index|[

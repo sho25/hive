@@ -4060,7 +4060,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another fron the pool, the 2nd one    * doesn't see results of the first.    *     * Retry-by-caller note: If the call to lock is from a transaction, then in the worst case    * there will be a duplicate set of locks but both sets will belong to the same txn so they     * will not conflict with each other.  For locks w/o txn context (i.e. read-only query), this    * may lead to deadlock (at least a long wait).  (e.g. 1st call creates locks in {@code LOCK_WAITING}    * mode and response gets lost.  Then {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}    * retries, and enqueues another set of locks in LOCK_WAITING.  The 2nd LockResponse is delivered    * to the DbLockManager, which will keep dong {@link #checkLock(CheckLockRequest)} until the 1st    * set of locks times out.    */
+comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another from the pool, the 2nd one    * doesn't see results of the first.    *     * Retry-by-caller note: If the call to lock is from a transaction, then in the worst case    * there will be a duplicate set of locks but both sets will belong to the same txn so they     * will not conflict with each other.  For locks w/o txn context (i.e. read-only query), this    * may lead to deadlock (at least a long wait).  (e.g. 1st call creates locks in {@code LOCK_WAITING}    * mode and response gets lost.  Then {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}    * retries, and enqueues another set of locks in LOCK_WAITING.  The 2nd LockResponse is delivered    * to the DbLockManager, which will keep dong {@link #checkLock(CheckLockRequest)} until the 1st    * set of locks times out.    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -4576,6 +4576,15 @@ break|break;
 case|case
 name|SELECT
 case|:
+name|updateTxnComponents
+operator|=
+literal|false
+expr_stmt|;
+break|break;
+case|case
+name|NO_TXN
+case|:
+comment|/*this constant is a bit of a misnomer since we now always have a txn context.  It                    just means the operation is such that we don't care what tables/partitions it                    affected as it doesn't trigger a compaction or conflict detection.  A better name                    would be NON_TRANSACTIONAL.*/
 name|updateTxnComponents
 operator|=
 literal|false
@@ -12427,7 +12436,6 @@ operator|.
 name|setSavepoint
 argument_list|()
 decl_stmt|;
-comment|//todo: get rid of this
 name|StringBuilder
 name|query
 init|=
@@ -12459,7 +12467,7 @@ name|size
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|//This the set of entities that the statement represnted by extLockId wants to update
+comment|//This the set of entities that the statement represented by extLockId wants to update
 name|List
 argument_list|<
 name|LockInfo

@@ -248,7 +248,7 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * Acquire all of the locks needed by a query.  If used with a query that    * requires transactions, this should be called after {@link #openTxn(String)}.    * A list of acquired locks will be stored in the    * {@link org.apache.hadoop.hive.ql.Context} object and can be retrieved    * via {@link org.apache.hadoop.hive.ql.Context#getHiveLocks}.    * @param plan query plan    * @param ctx Context for this query    * @param username name of the user for this query    * @param lDrvState the state to inform if the query cancelled or not    * @throws LockException if there is an error getting the locks    */
+comment|/**    * Acquire all of the locks needed by a query.  If used with a query that    * requires transactions, this should be called after {@link #openTxn(Context, String)}.    * A list of acquired locks will be stored in the    * {@link org.apache.hadoop.hive.ql.Context} object and can be retrieved    * via {@link org.apache.hadoop.hive.ql.Context#getHiveLocks}.    * @param plan query plan    * @param ctx Context for this query    * @param username name of the user for this query    * @param lDrvState the state to inform if the query cancelled or not    * @throws LockException if there is an error getting the locks    */
 name|void
 name|acquireLocks
 parameter_list|(
@@ -385,19 +385,16 @@ name|boolean
 name|supportsAcid
 parameter_list|()
 function_decl|;
-comment|/**    * This behaves exactly as    * https://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html#setAutoCommit(boolean)    */
-name|void
-name|setAutoCommit
+comment|/**    * For resources that support MVCC, the state of the DB must be recorded for the duration of the    * operation/transaction.  Returns {@code true} if current statment needs to do this.    */
+name|boolean
+name|recordSnapshot
 parameter_list|(
-name|boolean
-name|autoCommit
+name|QueryPlan
+name|queryPlan
 parameter_list|)
-throws|throws
-name|LockException
 function_decl|;
-comment|/**    * This behaves exactly as    * https://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html#getAutoCommit()    */
 name|boolean
-name|getAutoCommit
+name|isImplicitTransactionOpen
 parameter_list|()
 function_decl|;
 name|boolean
