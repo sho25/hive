@@ -16947,6 +16947,33 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|ColumnStatisticsObj
+argument_list|>
+name|getAggrColStatsForTablePartitions
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+block|{
+comment|// TODO: see if it makes sense to implement this here
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

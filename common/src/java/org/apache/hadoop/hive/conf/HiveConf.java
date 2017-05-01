@@ -4632,6 +4632,32 @@ operator|+
 literal|"This class is used to store and retrieval of raw metadata objects such as table, database"
 argument_list|)
 block|,
+name|METASTORE_CACHED_RAW_STORE_IMPL
+argument_list|(
+literal|"hive.metastore.cached.rawstore.impl"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.ObjectStore"
+argument_list|,
+literal|"Name of the wrapped RawStore class"
+argument_list|)
+block|,
+name|METASTORE_CACHED_RAW_STORE_CACHE_UPDATE_FREQUENCY
+argument_list|(
+literal|"hive.metastore.cached.rawstore.cache.update.frequency"
+argument_list|,
+literal|"60"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"The time after which metastore cache is updated from metastore DB."
+argument_list|)
+block|,
 name|METASTORE_TXN_STORE_IMPL
 argument_list|(
 literal|"hive.metastore.txn.store.impl"
