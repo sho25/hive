@@ -2106,6 +2106,311 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testBootstrapLoadOnExistingDb
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"bootstrapLoadOnExistingDb"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|}
+decl_stmt|;
+name|String
+name|unptn_locn
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_unptn"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|createTestDataFile
+argument_list|(
+name|unptn_locn
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|unptn_locn
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+comment|// Create an empty database to load
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+operator|+
+literal|"_empty"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+comment|// Load to an empty database
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_empty FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// REPL STATUS should return same repl ID as dump
+name|verifyRun
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|dbName
+operator|+
+literal|"_empty"
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_empty.unptned"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|nullReplId
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"NULL"
+block|}
+decl_stmt|;
+comment|// Create a database with a table
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+operator|+
+literal|"_withtable"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|"_withtable.unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+comment|// Load using same dump to a DB with table. It should fail as DB is not empty.
+name|verifyFail
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_withtable FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// REPL STATUS should return NULL
+name|verifyRun
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|dbName
+operator|+
+literal|"_withtable"
+argument_list|,
+name|nullReplId
+argument_list|)
+expr_stmt|;
+comment|// Create a database with a view
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+operator|+
+literal|"_withview"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|"_withview.unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE VIEW "
+operator|+
+name|dbName
+operator|+
+literal|"_withview.view AS SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|"_withview.unptned"
+argument_list|)
+expr_stmt|;
+comment|// Load using same dump to a DB with view. It should fail as DB is not empty.
+name|verifyFail
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_withview FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// REPL STATUS should return NULL
+name|verifyRun
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|dbName
+operator|+
+literal|"_withview"
+argument_list|,
+name|nullReplId
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testIncrementalAdds
 parameter_list|()
 throws|throws
@@ -9066,7 +9371,7 @@ literal|"SELECT a from "
 operator|+
 name|dbName
 operator|+
-literal|"_dupe.ptned_src where (b=1and c=1)"
+literal|"_dupe.ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
 argument_list|)
@@ -12944,6 +13249,62 @@ expr_stmt|;
 name|verifyResults
 argument_list|(
 name|data
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|verifyFail
+parameter_list|(
+name|String
+name|cmd
+parameter_list|)
+throws|throws
+name|RuntimeException
+block|{
+name|boolean
+name|success
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|success
+operator|=
+name|run
+argument_list|(
+name|cmd
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|AssertionError
+name|ae
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"AssertionError:"
+argument_list|,
+name|ae
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|ae
+argument_list|)
+throw|;
+block|}
+name|assertFalse
+argument_list|(
+name|success
 argument_list|)
 expr_stmt|;
 block|}
