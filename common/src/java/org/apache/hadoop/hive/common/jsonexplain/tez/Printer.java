@@ -16,6 +16,8 @@ operator|.
 name|common
 operator|.
 name|jsonexplain
+operator|.
+name|tez
 package|;
 end_package
 

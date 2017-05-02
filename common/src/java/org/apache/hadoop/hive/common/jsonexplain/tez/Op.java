@@ -16,6 +16,8 @@ operator|.
 name|common
 operator|.
 name|jsonexplain
+operator|.
+name|tez
 package|;
 end_package
 
@@ -115,6 +117,8 @@ name|common
 operator|.
 name|jsonexplain
 operator|.
+name|tez
+operator|.
 name|Vertex
 operator|.
 name|VertexType
@@ -165,7 +169,7 @@ decl_stmt|;
 comment|// tezJsonParser
 specifier|public
 specifier|final
-name|DagJsonParser
+name|TezJsonParser
 name|parser
 decl_stmt|;
 specifier|public
@@ -264,7 +268,7 @@ parameter_list|,
 name|Vertex
 name|vertex
 parameter_list|,
-name|DagJsonParser
+name|TezJsonParser
 name|tezJsonParser
 parameter_list|)
 throws|throws
@@ -461,6 +465,16 @@ name|name
 argument_list|)
 decl_stmt|;
 comment|// get the map for posToVertex
+name|JSONObject
+name|verticeObj
+init|=
+name|joinObj
+operator|.
+name|getJSONObject
+argument_list|(
+literal|"input vertices:"
+argument_list|)
+decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -473,26 +487,6 @@ operator|new
 name|LinkedHashMap
 argument_list|<>
 argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|joinObj
-operator|.
-name|has
-argument_list|(
-literal|"input vertices:"
-argument_list|)
-condition|)
-block|{
-name|JSONObject
-name|verticeObj
-init|=
-name|joinObj
-operator|.
-name|getJSONObject
-argument_list|(
-literal|"input vertices:"
-argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -593,7 +587,6 @@ argument_list|(
 literal|"input vertices:"
 argument_list|)
 expr_stmt|;
-block|}
 comment|// update the keys to use operator name
 name|JSONObject
 name|keys
@@ -1933,7 +1926,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|DagJsonParserUtils
+name|TezJsonParserUtils
 operator|.
 name|renameReduceOutputOperator
 argument_list|(
@@ -1965,7 +1958,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|DagJsonParserUtils
+name|TezJsonParserUtils
 operator|.
 name|OperatorNoStats
 operator|.
@@ -2047,7 +2040,7 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|DagJsonParser
+name|TezJsonParser
 operator|.
 name|prefixString
 argument_list|(
@@ -2083,7 +2076,7 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|DagJsonParser
+name|TezJsonParser
 operator|.
 name|prefixString
 argument_list|(
@@ -2103,7 +2096,7 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|DagJsonParser
+name|TezJsonParser
 operator|.
 name|prefixString
 argument_list|(
@@ -2235,14 +2228,14 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|DagJsonParser
+name|TezJsonParser
 operator|.
 name|prefixString
 argument_list|(
 name|indentFlag
 argument_list|)
 operator|+
-name|DagJsonParserUtils
+name|TezJsonParserUtils
 operator|.
 name|attrsToString
 argument_list|(

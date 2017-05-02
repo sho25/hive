@@ -9467,18 +9467,7 @@ literal|true
 argument_list|,
 literal|"Whether to show explain result at user level.\n"
 operator|+
-literal|"When enabled, will log EXPLAIN output for the query at user level. Tez only."
-argument_list|)
-block|,
-name|HIVE_SPARK_EXPLAIN_USER
-argument_list|(
-literal|"hive.spark.explain.user"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to show explain result at user level.\n"
-operator|+
-literal|"When enabled, will log EXPLAIN output for the query at user level. Spark only."
+literal|"When enabled, will log EXPLAIN output for the query at user level."
 argument_list|)
 block|,
 comment|// prefix used to auto generated column aliases (this should be started with '_')
