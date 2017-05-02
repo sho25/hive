@@ -6452,6 +6452,15 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=1)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
 literal|"LOAD DATA LOCAL INPATH '"
 operator|+
 name|ptn_locn_1
@@ -6653,6 +6662,28 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_late WHERE b=2"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned WHERE b=1"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|)
@@ -7152,8 +7183,17 @@ argument_list|,
 name|unptn_data_after_ins
 argument_list|)
 expr_stmt|;
-comment|// Commenting the below verifications for the replication of insert overwrites until HIVE-15642 patch is in
-comment|//verifyRun("SELECT a from " + dbName + "_dupe.unptned", data_after_ovwrite);
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -7553,6 +7593,7 @@ block|{
 literal|"hundred"
 block|}
 decl_stmt|;
+comment|// Insert overwrite on existing partition
 name|run
 argument_list|(
 literal|"INSERT OVERWRITE TABLE "
@@ -7576,6 +7617,34 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned where (b=2)"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
+comment|// Insert overwrite on dynamic partition
+name|run
+argument_list|(
+literal|"INSERT OVERWRITE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=3) values('"
+operator|+
+name|data_after_ovwrite
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned where (b=3)"
 argument_list|,
 name|data_after_ovwrite
 argument_list|)
@@ -7660,8 +7729,28 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-comment|// Commenting the below verifications for the replication of insert overwrites until HIVE-15642 patch is in
-comment|//verifyRun("SELECT a from " + dbName + "_dupe.ptned where (b=2)", data_after_ovwrite);
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2)"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=3)"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test

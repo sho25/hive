@@ -8282,6 +8282,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
+comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @return    * @throws HiveException    */
 specifier|public
 name|void
 name|loadPartition
@@ -8351,7 +8352,7 @@ name|hasFollowingStatsTask
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid true if this is an ACID operation    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid    *          true if this is an ACID operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @return Partition object being loaded with data    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -8401,6 +8402,7 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
+comment|// Get the partition object if it already exists
 name|Partition
 name|oldPart
 init|=
@@ -8570,6 +8572,48 @@ argument_list|,
 literal|"FileMoves"
 argument_list|)
 expr_stmt|;
+comment|// If config is set, table is not temporary and partition being inserted exists, capture
+comment|// the list of files added. For not yet existing partitions (insert overwrite to new partition
+comment|// or dynamic partition inserts), the add partition event will capture the list of files added.
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|FIRE_EVENTS_FOR_DML
+argument_list|)
+operator|&&
+operator|!
+name|tbl
+operator|.
+name|isTemporary
+argument_list|()
+operator|&&
+operator|(
+literal|null
+operator|!=
+name|oldPart
+operator|)
+condition|)
+block|{
+name|newFiles
+operator|=
+name|Collections
+operator|.
+name|synchronizedList
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<
+name|Path
+argument_list|>
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|replace
@@ -8618,48 +8662,13 @@ argument_list|,
 name|isSrcLocal
 argument_list|,
 name|isAutoPurge
+argument_list|,
+name|newFiles
 argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|FIRE_EVENTS_FOR_DML
-argument_list|)
-operator|&&
-operator|!
-name|tbl
-operator|.
-name|isTemporary
-argument_list|()
-operator|&&
-name|oldPart
-operator|!=
-literal|null
-condition|)
-block|{
-name|newFiles
-operator|=
-name|Collections
-operator|.
-name|synchronizedList
-argument_list|(
-operator|new
-name|ArrayList
-argument_list|<
-name|Path
-argument_list|>
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|FileSystem
 name|fs
 init|=
@@ -8745,15 +8754,21 @@ argument_list|(
 name|newTPart
 argument_list|)
 expr_stmt|;
+comment|// Generate an insert event only if inserting into an existing partition
+comment|// When inserting into a new partition, the add partition event takes care of insert event
 if|if
 condition|(
 operator|(
 literal|null
 operator|!=
+name|oldPart
+operator|)
+operator|&&
+operator|(
+literal|null
+operator|!=
 name|newFiles
 operator|)
-operator|||
-name|replace
 condition|)
 block|{
 name|fireInsertEvent
@@ -8774,11 +8789,13 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No new files were created, and is not a replace. Skipping generating INSERT event."
+literal|"No new files were created, and is not a replace, or we're inserting into a "
+operator|+
+literal|"partition that does not exist yet. Skipping generating INSERT event."
 argument_list|)
 expr_stmt|;
 block|}
-comment|//column stats will be inaccurate
+comment|// column stats will be inaccurate
 name|StatsSetupConst
 operator|.
 name|clearColumnStatsState
@@ -10686,6 +10703,8 @@ argument_list|,
 name|isSrcLocal
 argument_list|,
 name|isAutopurge
+argument_list|,
+name|newFiles
 argument_list|)
 expr_stmt|;
 block|}
@@ -17036,6 +17055,113 @@ block|}
 block|}
 block|}
 block|}
+comment|// List the new files in destination path which gets copied from source.
+specifier|public
+specifier|static
+name|void
+name|listNewFilesRecursively
+parameter_list|(
+specifier|final
+name|FileSystem
+name|destFs
+parameter_list|,
+name|Path
+name|dest
+parameter_list|,
+name|List
+argument_list|<
+name|Path
+argument_list|>
+name|newFiles
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+try|try
+block|{
+for|for
+control|(
+name|FileStatus
+name|fileStatus
+range|:
+name|destFs
+operator|.
+name|listStatus
+argument_list|(
+name|dest
+argument_list|,
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
+argument_list|)
+control|)
+block|{
+if|if
+condition|(
+name|fileStatus
+operator|.
+name|isDirectory
+argument_list|()
+condition|)
+block|{
+comment|// If it is a sub-directory, then recursively list the files.
+name|listNewFilesRecursively
+argument_list|(
+name|destFs
+argument_list|,
+name|fileStatus
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|newFiles
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|newFiles
+operator|.
+name|add
+argument_list|(
+name|fileStatus
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to get source file statuses"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
 comment|//it is assumed that parent directory of the destf should already exist when this
 comment|//method is called. when the replace value is true, this method works a little different
 comment|//from mv command if the destf is a directory, it replaces the destf instead of moving under
@@ -17133,7 +17259,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to get dest fs"
+literal|"Failed to get src fs"
 argument_list|,
 name|e
 argument_list|)
@@ -18575,7 +18701,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param tablePath path of the table.  Used to identify permission inheritance.    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.  Most of time, will be the same    *          as destf, unless its across FileSystem boundaries.    * @param purge    *          When set to true files which needs to be deleted are not moved to Trash    * @param isSrcLocal    *          If the source directory is LOCAL    */
+comment|/**    * Replaces files in the partition with new data set specified by srcf. Works    * by renaming directory of srcf to the destination file.    * srcf, destf, and tmppath should resident in the same DFS, but the oldPath can be in a    * different DFS.    *    * @param tablePath path of the table.  Used to identify permission inheritance.    * @param srcf    *          Source directory to be renamed to tmppath. It should be a    *          leaf directory where the final data files reside. However it    *          could potentially contain subdirectories as well.    * @param destf    *          The directory where the final data needs to go    * @param oldPath    *          The directory where the old data location, need to be cleaned up.  Most of time, will be the same    *          as destf, unless its across FileSystem boundaries.    * @param purge    *          When set to true files which needs to be deleted are not moved to Trash    * @param isSrcLocal    *          If the source directory is LOCAL    * @param newFiles    *          Output the list of new files replaced in the destination path    */
 specifier|protected
 name|void
 name|replaceFiles
@@ -18600,6 +18726,12 @@ name|isSrcLocal
 parameter_list|,
 name|boolean
 name|purge
+parameter_list|,
+name|List
+argument_list|<
+name|Path
+argument_list|>
+name|newFiles
 parameter_list|)
 throws|throws
 name|HiveException
@@ -18957,6 +19089,24 @@ name|destf
 argument_list|)
 throw|;
 block|}
+comment|// Add file paths of the files that will be moved to the destination if the caller needs it
+if|if
+condition|(
+literal|null
+operator|!=
+name|newFiles
+condition|)
+block|{
+name|listNewFilesRecursively
+argument_list|(
+name|destFs
+argument_list|,
+name|destf
+argument_list|,
+name|newFiles
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -18969,18 +19119,9 @@ range|:
 name|srcs
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|moveFile
-argument_list|(
-name|conf
-argument_list|,
-name|src
-operator|.
-name|getPath
-argument_list|()
-argument_list|,
+name|Path
+name|destFile
+init|=
 operator|new
 name|Path
 argument_list|(
@@ -18994,6 +19135,20 @@ operator|.
 name|getName
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|moveFile
+argument_list|(
+name|conf
+argument_list|,
+name|src
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|destFile
 argument_list|,
 literal|true
 argument_list|,
@@ -19014,6 +19169,22 @@ operator|+
 name|destf
 argument_list|)
 throw|;
+block|}
+comment|// Add file paths of the files that will be moved to the destination if the caller needs it
+if|if
+condition|(
+literal|null
+operator|!=
+name|newFiles
+condition|)
+block|{
+name|newFiles
+operator|.
+name|add
+argument_list|(
+name|destFile
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
