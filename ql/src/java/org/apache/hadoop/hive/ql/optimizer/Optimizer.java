@@ -1603,6 +1603,9 @@ argument_list|)
 operator|&&
 operator|!
 name|isTezExecEngine
+operator|&&
+operator|!
+name|isSparkExecEngine
 condition|)
 block|{
 name|transformations
