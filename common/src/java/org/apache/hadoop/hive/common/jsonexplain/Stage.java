@@ -16,8 +16,6 @@ operator|.
 name|common
 operator|.
 name|jsonexplain
-operator|.
-name|tez
 package|;
 end_package
 
@@ -109,8 +107,6 @@ name|common
 operator|.
 name|jsonexplain
 operator|.
-name|tez
-operator|.
 name|Vertex
 operator|.
 name|VertexType
@@ -166,7 +162,7 @@ decl_stmt|;
 comment|//tezJsonParser
 specifier|public
 specifier|final
-name|TezJsonParser
+name|DagJsonParser
 name|parser
 decl_stmt|;
 comment|// upstream stages, e.g., root stage
@@ -249,7 +245,7 @@ parameter_list|(
 name|String
 name|name
 parameter_list|,
-name|TezJsonParser
+name|DagJsonParser
 name|tezJsonParser
 parameter_list|)
 block|{
@@ -461,7 +457,12 @@ name|object
 operator|.
 name|has
 argument_list|(
-literal|"Tez"
+name|this
+operator|.
+name|parser
+operator|.
+name|getFrameworkName
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -484,7 +485,12 @@ name|object
 operator|.
 name|get
 argument_list|(
-literal|"Tez"
+name|this
+operator|.
+name|parser
+operator|.
+name|getFrameworkName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|JSONObject
@@ -1541,7 +1547,7 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|TezJsonParser
+name|DagJsonParser
 operator|.
 name|prefixString
 argument_list|(
@@ -1568,7 +1574,7 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|TezJsonParser
+name|DagJsonParser
 operator|.
 name|prefixString
 argument_list|(
@@ -1641,14 +1647,14 @@ name|printer
 operator|.
 name|println
 argument_list|(
-name|TezJsonParser
+name|DagJsonParser
 operator|.
 name|prefixString
 argument_list|(
 name|indentFlag
 argument_list|)
 operator|+
-name|TezJsonParserUtils
+name|DagJsonParserUtils
 operator|.
 name|attrsToString
 argument_list|(

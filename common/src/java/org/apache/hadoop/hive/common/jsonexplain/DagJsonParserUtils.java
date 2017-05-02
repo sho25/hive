@@ -16,8 +16,6 @@ operator|.
 name|common
 operator|.
 name|jsonexplain
-operator|.
-name|tez
 package|;
 end_package
 
@@ -66,7 +64,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TezJsonParserUtils
+name|DagJsonParserUtils
 block|{
 specifier|public
 specifier|static
@@ -122,9 +120,6 @@ return|return
 name|vertex
 operator|.
 name|edgeType
-operator|.
-name|name
-argument_list|()
 return|;
 block|}
 else|else
