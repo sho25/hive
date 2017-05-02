@@ -1347,7 +1347,7 @@ name|mapKeysAggregationBuffers
 decl_stmt|;
 comment|/**      * Total per hashtable entry fixed memory (does not depend on key/agg values).      */
 specifier|private
-name|int
+name|long
 name|fixedHashEntrySize
 decl_stmt|;
 comment|/**      * Average per hashtable entry variable size memory (depends on key/agg value).      */

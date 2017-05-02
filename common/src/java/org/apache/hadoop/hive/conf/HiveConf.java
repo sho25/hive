@@ -13068,6 +13068,19 @@ operator|+
 literal|"executors and configured max concurrency."
 argument_list|)
 block|,
+name|LLAP_MAPJOIN_MEMORY_MONITOR_CHECK_INTERVAL
+argument_list|(
+literal|"hive.llap.mapjoin.memory.monitor.check.interval"
+argument_list|,
+literal|100000L
+argument_list|,
+literal|"Check memory usage of mapjoin hash tables after every interval of this many rows. If map join hash table\n"
+operator|+
+literal|"memory usage exceeds (hive.auto.convert.join.noconditionaltask.size * hive.hash.table.inflation.factor)\n"
+operator|+
+literal|"when running in LLAP, tasks will get killed and not retried. Set the value to 0 to disable this feature."
+argument_list|)
+block|,
 name|LLAP_DAEMON_AM_REPORTER_MAX_THREADS
 argument_list|(
 literal|"hive.llap.daemon.am-reporter.max.threads"

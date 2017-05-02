@@ -719,6 +719,10 @@ name|noOuterJoin
 parameter_list|,
 name|String
 name|dumpFilePrefix
+parameter_list|,
+specifier|final
+name|long
+name|noConditionalTaskSize
 parameter_list|)
 block|{
 name|super
@@ -734,6 +738,8 @@ argument_list|,
 name|filters
 argument_list|,
 literal|null
+argument_list|,
+name|noConditionalTaskSize
 argument_list|)
 expr_stmt|;
 name|vectorDesc

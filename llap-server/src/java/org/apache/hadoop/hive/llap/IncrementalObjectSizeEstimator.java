@@ -813,6 +813,9 @@ name|estimator
 operator|.
 name|directSize
 operator|=
+operator|(
+name|int
+operator|)
 name|JavaDataModel
 operator|.
 name|alignUp
@@ -3244,6 +3247,9 @@ name|len
 expr_stmt|;
 name|arraySize
 operator|=
+operator|(
+name|int
+operator|)
 name|JavaDataModel
 operator|.
 name|alignUp

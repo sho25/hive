@@ -1855,7 +1855,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
+name|long
 name|getAggregationBufferFixedSize
 parameter_list|()
 block|{
@@ -1916,7 +1916,7 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-name|int
+name|long
 name|bloomFilterSize
 init|=
 name|JavaDataModel

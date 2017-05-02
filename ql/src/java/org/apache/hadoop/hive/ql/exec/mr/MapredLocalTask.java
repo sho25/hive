@@ -661,7 +661,7 @@ name|exec
 operator|.
 name|mapjoin
 operator|.
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 import|;
 end_import
 
@@ -808,24 +808,6 @@ operator|.
 name|api
 operator|.
 name|StageType
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|OperationLog
 import|;
 end_import
 
@@ -2643,7 +2625,7 @@ operator|||
 operator|(
 name|throwable
 operator|instanceof
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 operator|)
 condition|)
 block|{

@@ -7976,6 +7976,8 @@ argument_list|,
 name|filters
 argument_list|,
 name|joinExpressions
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|desc

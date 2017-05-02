@@ -1088,6 +1088,10 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
+call|(
+name|int
+call|)
+argument_list|(
 name|model
 operator|.
 name|primitive2
@@ -1100,6 +1104,7 @@ operator|.
 name|lengthFor
 argument_list|(
 name|columnType
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -2449,6 +2454,10 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
+call|(
+name|int
+call|)
+argument_list|(
 name|model
 operator|.
 name|lengthFor
@@ -2489,6 +2498,7 @@ argument_list|(
 name|model
 argument_list|)
 operator|)
+argument_list|)
 return|;
 block|}
 specifier|protected
@@ -4615,6 +4625,10 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
+call|(
+name|int
+call|)
+argument_list|(
 name|model
 operator|.
 name|primitive1
@@ -4659,6 +4673,7 @@ argument_list|(
 name|model
 argument_list|)
 operator|)
+argument_list|)
 return|;
 block|}
 block|}
@@ -6261,6 +6276,10 @@ name|get
 argument_list|()
 decl_stmt|;
 return|return
+call|(
+name|int
+call|)
+argument_list|(
 name|model
 operator|.
 name|primitive2
@@ -6273,6 +6292,7 @@ operator|.
 name|lengthFor
 argument_list|(
 name|columnType
+argument_list|)
 argument_list|)
 return|;
 block|}

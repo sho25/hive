@@ -21,30 +21,16 @@ name|mapjoin
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
-import|;
-end_import
+begin_comment
+comment|/**  * When this Error is thrown, better not retry.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 extends|extends
-name|HiveException
+name|Error
 block|{
 specifier|private
 specifier|static
@@ -55,7 +41,7 @@ init|=
 literal|3678353959830506881L
 decl_stmt|;
 specifier|public
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 parameter_list|(
 name|String
 name|msg
