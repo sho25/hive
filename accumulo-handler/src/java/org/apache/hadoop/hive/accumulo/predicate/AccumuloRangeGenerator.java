@@ -2103,9 +2103,9 @@ name|encodeValue
 argument_list|(
 name|value
 argument_list|,
-name|objInspector
+name|leftHandNode
 operator|.
-name|getTypeName
+name|getTypeString
 argument_list|()
 argument_list|,
 literal|true
