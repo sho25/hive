@@ -72,6 +72,8 @@ name|enableValidateRely
 decl_stmt|;
 comment|// 0 - Primary Key
 comment|// 1 - PK-FK relationship
+comment|// 2 - Unique Constraint
+comment|// 3 - Not Null Constraint
 specifier|public
 specifier|final
 specifier|static
@@ -87,6 +89,22 @@ name|int
 name|FOREIGN_KEY_CONSTRAINT
 init|=
 literal|1
+decl_stmt|;
+specifier|public
+specifier|final
+specifier|static
+name|int
+name|UNIQUE_CONSTRAINT
+init|=
+literal|2
+decl_stmt|;
+specifier|public
+specifier|final
+specifier|static
+name|int
+name|NOT_NULL_CONSTRAINT
+init|=
+literal|3
 decl_stmt|;
 annotation|@
 name|SuppressWarnings

@@ -1126,7 +1126,7 @@ literal|"create table "
 operator|+
 name|tableNameWithPk
 operator|+
-literal|" (a STRING, b STRING, primary key (a) disable novalidate) "
+literal|" (a STRING, b STRING, primary key (a) disable) "
 argument_list|)
 expr_stmt|;
 comment|// load data
