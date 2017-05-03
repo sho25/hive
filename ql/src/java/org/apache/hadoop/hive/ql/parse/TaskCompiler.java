@@ -3716,6 +3716,16 @@ name|getColExprToGBMap
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|clone
+operator|.
+name|setSemiJoinHints
+argument_list|(
+name|pCtx
+operator|.
+name|getSemiJoinHints
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|clone
 return|;

@@ -4559,18 +4559,27 @@ name|PreCboCtx
 operator|)
 name|plannerCtx
 decl_stmt|;
+name|List
+argument_list|<
 name|ASTNode
+argument_list|>
 name|oldHints
 init|=
-name|getQB
-argument_list|()
-operator|.
-name|getParseInfo
-argument_list|()
-operator|.
-name|getHints
+operator|new
+name|ArrayList
+argument_list|<>
 argument_list|()
 decl_stmt|;
+comment|// Cache the hints before CBO runs and removes them.
+comment|// Use the hints later in top level QB.
+name|getHintsFromQB
+argument_list|(
+name|getQB
+argument_list|()
+argument_list|,
+name|oldHints
+argument_list|)
+expr_stmt|;
 comment|// Note: for now, we don't actually pass the queryForCbo to CBO, because
 comment|// it accepts qb, not AST, and can also access all the private stuff in
 comment|// SA. We rely on the fact that CBO ignores the unknown tokens (create
@@ -4718,6 +4727,37 @@ operator|=
 name|getOptimizedHiveOPDag
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|oldHints
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Propagating hints to QB: "
+operator|+
+name|oldHints
+argument_list|)
+expr_stmt|;
+name|getQB
+argument_list|()
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|setHintList
+argument_list|(
+name|oldHints
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -4932,8 +4972,11 @@ block|}
 if|if
 condition|(
 name|oldHints
-operator|!=
-literal|null
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
 condition|)
 block|{
 if|if
@@ -4954,14 +4997,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Hints are not null in the optimized tree; before CBO "
+literal|"Hints are not null in the optimized tree; "
 operator|+
-name|oldHints
-operator|.
-name|dump
-argument_list|()
-operator|+
-literal|"; after CBO "
+literal|"after CBO "
 operator|+
 name|getQB
 argument_list|()
@@ -4994,7 +5032,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 operator|.
-name|setHints
+name|setHintList
 argument_list|(
 name|oldHints
 argument_list|)
