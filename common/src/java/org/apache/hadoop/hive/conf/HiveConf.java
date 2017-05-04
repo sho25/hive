@@ -13786,6 +13786,18 @@ operator|+
 literal|"Turn this off when there is a memory issue."
 argument_list|)
 block|,
+name|SPARK_JOB_MAX_TASKS
+argument_list|(
+literal|"hive.spark.job.max.tasks"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The maximum number of tasks a Spark job may have.\n"
+operator|+
+literal|"If a Spark job contains more tasks than the maximum, it will be cancelled. A value of -1 means no limit."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"

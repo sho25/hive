@@ -1198,6 +1198,55 @@ comment|// Cancel job if the monitor found job submission timeout.
 comment|// TODO: If the timeout is because of lack of resources in the cluster, we should
 comment|// ideally also cancel the app request here. But w/o facilities from Spark or YARN,
 comment|// it's difficult to do it on hive side alone. See HIVE-12650.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Failed to submit Spark job "
+operator|+
+name|sparkJobID
+argument_list|)
+expr_stmt|;
+name|jobRef
+operator|.
+name|cancelJob
+argument_list|()
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|rc
+operator|==
+literal|4
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"The number of tasks reaches above the limit "
+operator|+
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SPARK_JOB_MAX_TASKS
+argument_list|)
+operator|+
+literal|". Cancelling Spark job "
+operator|+
+name|sparkJobID
+operator|+
+literal|" with application ID "
+operator|+
+name|jobID
+argument_list|)
+expr_stmt|;
 name|jobRef
 operator|.
 name|cancelJob
