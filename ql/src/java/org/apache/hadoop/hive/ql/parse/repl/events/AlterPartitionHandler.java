@@ -129,24 +129,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|SemanticException
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -176,7 +158,7 @@ import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -189,14 +171,14 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
 operator|.
-name|DUMPTYPE
+name|DumpType
 import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -209,7 +191,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
+operator|.
+name|load
 operator|.
 name|DumpMetaData
 import|;
@@ -351,12 +335,12 @@ name|ALTER
 block|{
 annotation|@
 name|Override
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{
 return|return
-name|DUMPTYPE
+name|DumpType
 operator|.
 name|EVENT_ALTER_PARTITION
 return|;
@@ -367,12 +351,12 @@ name|RENAME
 block|{
 annotation|@
 name|Override
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{
 return|return
-name|DUMPTYPE
+name|DumpType
 operator|.
 name|EVENT_RENAME_PARTITION
 return|;
@@ -383,12 +367,12 @@ name|TRUNCATE
 block|{
 annotation|@
 name|Override
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{
 return|return
-name|DUMPTYPE
+name|DumpType
 operator|.
 name|EVENT_TRUNCATE_PARTITION
 return|;
@@ -396,7 +380,7 @@ block|}
 block|}
 block|;
 specifier|abstract
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 function_decl|;
@@ -560,14 +544,14 @@ name|List
 argument_list|<
 name|Partition
 argument_list|>
-name|qlPtns
+name|partitions
 init|=
 operator|new
 name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|qlPtns
+name|partitions
 operator|.
 name|add
 argument_list|(
@@ -612,7 +596,7 @@ name|metaDataPath
 argument_list|,
 name|qlMdTable
 argument_list|,
-name|qlPtns
+name|partitions
 argument_list|,
 name|withinContext
 operator|.
@@ -649,7 +633,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{

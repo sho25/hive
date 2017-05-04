@@ -435,7 +435,29 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Rule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
+name|TestName
 import|;
 end_import
 
@@ -594,6 +616,18 @@ specifier|public
 class|class
 name|TestReplicationScenarios
 block|{
+annotation|@
+name|Rule
+specifier|public
+specifier|final
+name|TestName
+name|testName
+init|=
+operator|new
+name|TestName
+argument_list|()
+decl_stmt|;
+specifier|private
 specifier|final
 specifier|static
 name|String
@@ -602,6 +636,7 @@ init|=
 literal|"org.apache.hive.hcatalog.listener.DbNotificationListener"
 decl_stmt|;
 comment|// FIXME : replace with hive copy once that is copied
+specifier|private
 specifier|final
 specifier|static
 name|String
@@ -628,6 +663,7 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 decl_stmt|;
+specifier|private
 specifier|final
 specifier|static
 name|String
@@ -648,24 +684,29 @@ name|SEPARATOR
 operator|+
 name|tid
 decl_stmt|;
+specifier|private
 specifier|static
 name|HiveConf
 name|hconf
 decl_stmt|;
+specifier|private
 specifier|static
 name|boolean
 name|useExternalMS
 init|=
 literal|false
 decl_stmt|;
+specifier|private
 specifier|static
 name|int
 name|msPort
 decl_stmt|;
+specifier|private
 specifier|static
 name|Driver
 name|driver
 decl_stmt|;
+specifier|private
 specifier|static
 name|HiveMetaStoreClient
 name|metaStoreClient
@@ -1066,6 +1107,158 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFunctionReplicationAsPartOfBootstrap
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE FUNCTION "
+operator|+
+name|dbName
+operator|+
+literal|".testFunction as 'com.yahoo.sketches.hive.theta.DataToSketchUDAF' "
+operator|+
+literal|"using jar  'ivy://com.yahoo.datasketches:sketches-hive:0.8.2'"
+argument_list|)
+expr_stmt|;
+name|String
+name|replicatedDbName
+init|=
+name|loadAndVerify
+argument_list|(
+name|dbName
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"SHOW FUNCTIONS LIKE '"
+operator|+
+name|replicatedDbName
+operator|+
+literal|"*'"
+argument_list|)
+expr_stmt|;
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+name|replicatedDbName
+operator|+
+literal|".testFunction"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|String
+name|loadAndVerify
+parameter_list|(
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|dumpLocation
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|lastReplicationId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|String
+name|replicatedDbName
+init|=
+name|dbName
+operator|+
+literal|"_replicated"
+decl_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|replicatedDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|replicatedDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|replicatedDbName
+argument_list|,
+name|lastReplicationId
+argument_list|)
+expr_stmt|;
+return|return
+name|replicatedDbName
+return|;
+block|}
 comment|/**    * Tests basic operation - creates a db, with 4 tables, 2 ptned and 2 unptned.    * Inserts data into one of the ptned tables, and one of the unptned tables,    * and verifies that a REPL DUMP followed by a REPL LOAD is able to load it    * appropriately. This tests bootstrap behaviour primarily.    */
 annotation|@
 name|Test
@@ -1077,35 +1270,21 @@ throws|throws
 name|IOException
 block|{
 name|String
-name|testName
+name|name
 init|=
-literal|"basic"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -1202,7 +1381,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_unptn"
 argument_list|)
@@ -1221,7 +1400,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn1"
 argument_list|)
@@ -1240,7 +1419,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn2"
 argument_list|)
@@ -1366,85 +1545,21 @@ argument_list|,
 name|empty
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL DUMP "
-operator|+
-name|dbName
-argument_list|)
-expr_stmt|;
 name|String
-name|replDumpLocn
+name|replicatedDbName
 init|=
-name|getResult
+name|loadAndVerify
 argument_list|(
-literal|0
-argument_list|,
-literal|0
+name|dbName
 argument_list|)
 decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|)
-decl_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replicatedDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|)
@@ -1453,9 +1568,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replicatedDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|)
@@ -1464,9 +1579,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replicatedDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|)
@@ -1504,35 +1619,21 @@ throws|throws
 name|Exception
 block|{
 name|String
-name|testName
+name|name
 init|=
-literal|"basic_with_cm"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -1644,7 +1745,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_unptn"
 argument_list|)
@@ -1663,7 +1764,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn1"
 argument_list|)
@@ -1682,7 +1783,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn2"
 argument_list|)
@@ -1701,7 +1802,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn2_later"
 argument_list|)
@@ -2417,35 +2518,21 @@ throws|throws
 name|IOException
 block|{
 name|String
-name|testName
+name|name
 init|=
-literal|"incrementalAdds"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -2598,7 +2685,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_unptn"
 argument_list|)
@@ -2617,7 +2704,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn1"
 argument_list|)
@@ -2636,7 +2723,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn2"
 argument_list|)
@@ -3034,35 +3121,21 @@ throws|throws
 name|IOException
 block|{
 name|String
-name|testName
+name|name
 init|=
-literal|"drops"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -3159,7 +3232,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_unptn"
 argument_list|)
@@ -3178,7 +3251,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn1"
 argument_list|)
@@ -3197,7 +3270,7 @@ name|Path
 argument_list|(
 name|TEST_PATH
 argument_list|,
-name|testName
+name|name
 operator|+
 literal|"_ptn2"
 argument_list|)
@@ -3885,31 +3958,14 @@ name|testName
 init|=
 literal|"drops_with_cm"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -4759,31 +4815,14 @@ name|testName
 init|=
 literal|"alters"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -6027,31 +6066,14 @@ name|testName
 init|=
 literal|"incrementalLoad"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -6703,31 +6725,14 @@ name|testName
 init|=
 literal|"incrementalInserts"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -7766,31 +7771,14 @@ name|testName
 init|=
 literal|"viewsReplication"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -8405,35 +8393,21 @@ throws|throws
 name|IOException
 block|{
 name|String
-name|testName
+name|name
 init|=
-literal|"dumpLimit"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -11592,35 +11566,21 @@ argument_list|)
 expr_stmt|;
 comment|// Now, to actually testing status - first, we bootstrap.
 name|String
-name|testName
+name|name
 init|=
-literal|"incrementalStatus"
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
 name|testName
-argument_list|)
-expr_stmt|;
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|name
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -11911,6 +11871,44 @@ expr_stmt|;
 comment|// TODO : currently not testing the following scenarios:
 comment|//   a) Multi-db wh-level REPL LOAD - need to add that
 comment|//   b) Insert into tables - quite a few cases need to be enumerated there, including dyn adds.
+block|}
+specifier|private
+specifier|static
+name|String
+name|createDB
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|name
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|name
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+return|return
+name|dbName
+return|;
 block|}
 annotation|@
 name|Test
@@ -13087,6 +13085,7 @@ name|colNum
 index|]
 return|;
 block|}
+comment|/**    * All the results that are read from the hive output will not preserve    * case sensitivity and will all be in lower case, hence we will check against    * only lower case data values.    * Unless for Null Values it actually returns in UpperCase and hence explicitly lowering case    * before assert.    */
 specifier|private
 name|void
 name|verifyResults
@@ -13160,6 +13159,9 @@ name|data
 index|[
 name|i
 index|]
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|,
 name|results
 operator|.
@@ -13167,6 +13169,9 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -13189,9 +13194,7 @@ name|results
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 try|try

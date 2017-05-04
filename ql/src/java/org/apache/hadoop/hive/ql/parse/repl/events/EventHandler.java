@@ -90,7 +90,7 @@ import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -103,14 +103,16 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
+operator|.
+name|load
 operator|.
 name|DumpMetaData
 import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -123,9 +125,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
 operator|.
-name|DUMPTYPE
+name|DumpType
 import|;
 end_import
 
@@ -151,7 +153,7 @@ name|long
 name|toEventId
 parameter_list|()
 function_decl|;
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 function_decl|;

@@ -20,6 +20,8 @@ operator|.
 name|repl
 operator|.
 name|dump
+operator|.
+name|io
 package|;
 end_package
 
@@ -194,6 +196,14 @@ name|JsonWriter
 operator|.
 name|Serializer
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|FIELD_NAME
+init|=
+literal|"table"
+decl_stmt|;
 specifier|private
 specifier|final
 name|org
@@ -322,7 +332,7 @@ name|jsonGenerator
 operator|.
 name|writeStringField
 argument_list|(
-literal|"table"
+name|FIELD_NAME
 argument_list|,
 name|serializer
 operator|.
@@ -330,7 +340,7 @@ name|toString
 argument_list|(
 name|tTable
 argument_list|,
-literal|"UTF-8"
+name|UTF_8
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -340,7 +350,9 @@ name|jsonGenerator
 operator|.
 name|writeFieldName
 argument_list|(
-literal|"partitions"
+name|PartitionSerializer
+operator|.
+name|FIELD_NAME
 argument_list|)
 expr_stmt|;
 name|writePartitions

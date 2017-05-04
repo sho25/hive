@@ -42,7 +42,7 @@ import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -55,14 +55,14 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
 operator|.
-name|DUMPTYPE
+name|DumpType
 import|;
 end_import
 
 begin_import
-import|import static
+import|import
 name|org
 operator|.
 name|apache
@@ -75,7 +75,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
+operator|.
+name|load
 operator|.
 name|DumpMetaData
 import|;
@@ -156,12 +158,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{
 return|return
-name|DUMPTYPE
+name|DumpType
 operator|.
 name|EVENT_UNKNOWN
 return|;

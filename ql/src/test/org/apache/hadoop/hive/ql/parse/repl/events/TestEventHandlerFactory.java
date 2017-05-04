@@ -55,7 +55,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
+operator|.
+name|DumpType
 import|;
 end_import
 
@@ -142,9 +144,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|ReplicationSemanticAnalyzer
-operator|.
-name|DUMPTYPE
+name|DumpType
 name|dumpType
 parameter_list|()
 block|{
