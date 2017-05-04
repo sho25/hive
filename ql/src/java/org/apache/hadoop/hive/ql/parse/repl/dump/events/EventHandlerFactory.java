@@ -19,6 +19,8 @@ name|parse
 operator|.
 name|repl
 operator|.
+name|dump
+operator|.
 name|events
 package|;
 end_package
@@ -175,6 +177,17 @@ operator|.
 name|ALTER_TABLE_EVENT
 argument_list|,
 name|AlterTableHandler
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|register
+argument_list|(
+name|MessageFactory
+operator|.
+name|CREATE_FUNCTION_EVENT
+argument_list|,
+name|CreateFunctionHandler
 operator|.
 name|class
 argument_list|)

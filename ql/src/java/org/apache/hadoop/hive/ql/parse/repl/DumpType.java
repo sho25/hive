@@ -91,6 +91,11 @@ argument_list|(
 literal|"EVENT_INSERT"
 argument_list|)
 block|,
+name|EVENT_CREATE_FUNCTION
+argument_list|(
+literal|"EVENT_CREATE_FUNCTION"
+argument_list|)
+block|,
 name|EVENT_UNKNOWN
 argument_list|(
 literal|"EVENT_UNKNOWN"

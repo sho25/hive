@@ -19,6 +19,8 @@ name|parse
 operator|.
 name|repl
 operator|.
+name|dump
+operator|.
 name|events
 package|;
 end_package

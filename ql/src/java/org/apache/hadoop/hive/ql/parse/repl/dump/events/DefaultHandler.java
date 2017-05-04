@@ -19,6 +19,8 @@ name|parse
 operator|.
 name|repl
 operator|.
+name|dump
+operator|.
 name|events
 package|;
 end_package
@@ -84,7 +86,6 @@ import|;
 end_import
 
 begin_class
-specifier|public
 class|class
 name|DefaultHandler
 extends|extends
