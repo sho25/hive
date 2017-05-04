@@ -7512,6 +7512,17 @@ operator|+
 literal|"would change the query plan to take care of it, and hive.optimize.skewjoin will be a no-op."
 argument_list|)
 block|,
+name|HIVE_SHARED_SCAN_OPTIMIZATION
+argument_list|(
+literal|"hive.optimize.shared.scan"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable shared scan optimizer. The optimizer finds scan operator over the same table\n"
+operator|+
+literal|"in the query plan and merges them if they meet some preconditions."
+argument_list|)
+block|,
 comment|// CTE
 name|HIVE_CTE_MATERIALIZE_THRESHOLD
 argument_list|(

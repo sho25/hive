@@ -723,6 +723,10 @@ parameter_list|,
 specifier|final
 name|long
 name|noConditionalTaskSize
+parameter_list|,
+specifier|final
+name|long
+name|inMemoryDataSize
 parameter_list|)
 block|{
 name|super
@@ -794,6 +798,12 @@ operator|.
 name|dumpFilePrefix
 operator|=
 name|dumpFilePrefix
+expr_stmt|;
+name|this
+operator|.
+name|inMemoryDataSize
+operator|=
+name|inMemoryDataSize
 expr_stmt|;
 name|initRetainExprList
 argument_list|()

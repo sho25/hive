@@ -1793,6 +1793,29 @@ control|)
 block|{
 if|if
 condition|(
+operator|!
+name|context
+operator|.
+name|mapJoinParentMap
+operator|.
+name|get
+argument_list|(
+name|mj
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+name|r
+argument_list|)
+condition|)
+block|{
+comment|// We might be visiting twice because of reutilization of intermediary results.
+comment|// If that is the case, we do not need to do anything because either we have
+comment|// already connected this RS operator or we will connect it at subsequent pass.
+continue|continue;
+block|}
+if|if
+condition|(
 name|r
 operator|.
 name|getConf
@@ -1808,7 +1831,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cloning reduce sink for multi-child broadcast edge"
+literal|"Cloning reduce sink "
+operator|+
+name|r
+operator|+
+literal|" for multi-child broadcast edge"
 argument_list|)
 expr_stmt|;
 comment|// we've already set this one up. Need to clone for the next work.
@@ -2167,7 +2194,7 @@ literal|"Second pass. Leaf operator: "
 operator|+
 name|operator
 operator|+
-literal|" has common downstream work:"
+literal|" has common downstream work: "
 operator|+
 name|followingWork
 argument_list|)
