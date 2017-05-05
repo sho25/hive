@@ -21,6 +21,22 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QueryInfo
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -46,13 +62,13 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|SQLOperationDisplayCache
+name|QueryInfoCache
 extends|extends
 name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|SQLOperationDisplay
+name|QueryInfo
 argument_list|>
 block|{
 specifier|private
@@ -61,7 +77,7 @@ name|int
 name|capacity
 decl_stmt|;
 specifier|public
-name|SQLOperationDisplayCache
+name|QueryInfoCache
 parameter_list|(
 name|int
 name|capacity

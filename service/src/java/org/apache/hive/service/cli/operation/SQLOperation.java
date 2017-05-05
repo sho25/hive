@@ -461,6 +461,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|QueryInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|QueryState
 import|;
 end_import
@@ -570,24 +586,6 @@ operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|OperationLog
 import|;
 end_import
 
@@ -742,24 +740,6 @@ operator|.
 name|objectinspector
 operator|.
 name|StructObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|thrift
-operator|.
-name|ThriftJDBCBinarySerDe
 import|;
 end_import
 
@@ -1032,10 +1012,9 @@ specifier|volatile
 name|MetricsScope
 name|currentSQLStateScope
 decl_stmt|;
-comment|// Display for WebUI.
 specifier|private
-name|SQLOperationDisplay
-name|sqlOpDisplay
+name|QueryInfo
+name|queryInfo
 decl_stmt|;
 specifier|private
 name|long
@@ -1189,33 +1168,36 @@ name|getSessionState
 argument_list|()
 argument_list|)
 expr_stmt|;
-try|try
-block|{
-name|sqlOpDisplay
+name|queryInfo
 operator|=
 operator|new
-name|SQLOperationDisplay
+name|QueryInfo
 argument_list|(
-name|this
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveSQLException
-name|e
-parameter_list|)
-block|{
-name|LOG
+name|getState
+argument_list|()
 operator|.
-name|warn
-argument_list|(
-literal|"Error calcluating SQL Operation Display for webui"
+name|toString
+argument_list|()
 argument_list|,
-name|e
+name|getParentSession
+argument_list|()
+operator|.
+name|getUserName
+argument_list|()
+argument_list|,
+name|getExecutionEngine
+argument_list|()
+argument_list|,
+name|getHandle
+argument_list|()
+operator|.
+name|getHandleIdentifier
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|Metrics
 name|metrics
 init|=
@@ -1367,7 +1349,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Compile the query and extract metadata    * @param sqlOperationConf    * @throws HiveSQLException    */
+comment|/**    * Compile the query and extract metadata    *    * @throws HiveSQLException    */
 specifier|public
 name|void
 name|prepare
@@ -1399,6 +1381,8 @@ argument_list|()
 operator|.
 name|getUserName
 argument_list|()
+argument_list|,
+name|queryInfo
 argument_list|)
 expr_stmt|;
 comment|// Start the timer thread for cancelling the query when query timeout is reached
@@ -1521,7 +1505,7 @@ name|SECONDS
 argument_list|)
 expr_stmt|;
 block|}
-name|sqlOpDisplay
+name|queryInfo
 operator|.
 name|setQueryDisplay
 argument_list|(
@@ -2369,7 +2353,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Returns the current UGI on the stack    * @param opConfig    * @return UserGroupInformation    * @throws HiveSQLException    */
+comment|/**    * Returns the current UGI on the stack    *    * @return UserGroupInformation    *    * @throws HiveSQLException    */
 specifier|private
 name|UserGroupInformation
 name|getCurrentUGI
@@ -3702,12 +3686,12 @@ return|;
 block|}
 comment|/**    * Get summary information of this SQLOperation for display in WebUI.    */
 specifier|public
-name|SQLOperationDisplay
-name|getSQLOperationDisplay
+name|QueryInfo
+name|getQueryInfo
 parameter_list|()
 block|{
 return|return
-name|sqlOpDisplay
+name|queryInfo
 return|;
 block|}
 annotation|@
@@ -3827,7 +3811,7 @@ name|ERROR
 condition|)
 block|{
 comment|//update runtime
-name|sqlOpDisplay
+name|queryInfo
 operator|.
 name|setRuntime
 argument_list|(
@@ -3867,20 +3851,23 @@ operator|.
 name|CLOSED
 condition|)
 block|{
-name|sqlOpDisplay
+name|queryInfo
 operator|.
-name|closed
+name|setEndTime
 argument_list|()
 expr_stmt|;
 block|}
 else|else
 block|{
 comment|//CLOSED state not interesting, state before (FINISHED, ERROR) is.
-name|sqlOpDisplay
+name|queryInfo
 operator|.
 name|updateState
 argument_list|(
 name|state
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
