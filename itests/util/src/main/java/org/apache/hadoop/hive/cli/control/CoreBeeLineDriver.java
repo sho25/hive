@@ -105,6 +105,22 @@ name|hive
 operator|.
 name|beeline
 operator|.
+name|ConvertedOutputFile
+operator|.
+name|Converter
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|beeline
+operator|.
 name|QFile
 import|;
 end_import
@@ -706,6 +722,10 @@ name|script
 block|,           }
 argument_list|,
 name|log
+argument_list|,
+name|Converter
+operator|.
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
