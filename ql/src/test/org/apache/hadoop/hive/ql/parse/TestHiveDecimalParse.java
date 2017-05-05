@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -173,6 +163,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -194,7 +194,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal)"
+literal|"create table `dec` (d decimal)"
 decl_stmt|;
 name|String
 name|type
@@ -226,7 +226,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(5))"
+literal|"create table `dec` (d decimal(5))"
 decl_stmt|;
 name|String
 name|type
@@ -258,7 +258,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(9,7))"
+literal|"create table `dec` (d decimal(9,7))"
 decl_stmt|;
 name|String
 name|type
@@ -290,7 +290,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(66,7))"
+literal|"create table `dec` (d decimal(66,7))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -356,7 +356,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(0,7))"
+literal|"create table `dec` (d decimal(0,7))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -422,7 +422,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(7,33))"
+literal|"create table `dec` (d decimal(7,33))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -488,7 +488,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(7,-1))"
+literal|"create table `dec` (d decimal(7,-1))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -554,7 +554,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(7,33,4))"
+literal|"create table `dec` (d decimal(7,33,4))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -620,7 +620,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(7a))"
+literal|"create table `dec` (d decimal(7a))"
 decl_stmt|;
 name|Driver
 name|driver
@@ -686,7 +686,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"create table dec (d decimal(20,23))"
+literal|"create table `dec` (d decimal(20,23))"
 decl_stmt|;
 name|Driver
 name|driver

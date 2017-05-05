@@ -1211,6 +1211,8 @@ argument_list|,
 literal|"IMPLICIT"
 argument_list|,
 literal|"drop table table1"
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|HiveLockObjectData
@@ -1226,6 +1228,8 @@ argument_list|,
 literal|"IMPLICIT"
 argument_list|,
 literal|"drop table table1"
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// Start with the following locks:

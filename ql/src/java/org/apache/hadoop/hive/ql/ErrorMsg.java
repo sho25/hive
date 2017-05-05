@@ -121,6 +121,26 @@ name|ASTNodeOrigin
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|AlterTableDesc
+operator|.
+name|AlterTableTypes
+import|;
+end_import
+
 begin_comment
 comment|/**  * List of all error messages.  * This list contains both compile time and run-time errors.  *  * This class supports parametrized messages such as (@link #TRUNCATE_FOR_NON_MANAGED_TABLE}.  These are  * preferable over un-parametrized ones where arbitrary String is appended to the end of the message,  * for example {@link #getMsg(String)} and {@link #INVALID_TABLE}.  */
 end_comment
@@ -1130,7 +1150,13 @@ name|ALTER_TABLE_NON_NATIVE
 argument_list|(
 literal|10134
 argument_list|,
-literal|"ALTER TABLE cannot be used for a non-native table"
+literal|"ALTER TABLE can only be used for "
+operator|+
+name|AlterTableTypes
+operator|.
+name|nonNativeTableAllowedTypes
+operator|+
+literal|" to a non-native table "
 argument_list|)
 block|,
 name|SORTMERGE_MAPJOIN_FAILED
@@ -1918,9 +1944,11 @@ name|NO_INSERT_OVERWRITE_WITH_ACID
 argument_list|(
 literal|10295
 argument_list|,
-literal|"INSERT OVERWRITE not allowed on table with OutputFormat "
+literal|"INSERT OVERWRITE not allowed on table {0} with OutputFormat "
 operator|+
 literal|"that implements AcidOutputFormat while transaction manager that supports ACID is in use"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|VALUES_TABLE_CONSTRUCTOR_NOT_SUPPORTED
@@ -2348,21 +2376,22 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+comment|/**    * {1} is the transaction id;    * use {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)} to format    */
+name|OP_NOT_ALLOWED_IN_IMPLICIT_TXN
 argument_list|(
 literal|20006
 argument_list|,
-literal|"Operation {0} is not allowed when autoCommit=true."
+literal|"Operation {0} is not allowed in an implicit transaction ({1})."
 argument_list|,
 literal|true
 argument_list|)
 block|,
-comment|//todo: better SQLState?
+comment|/**    * {1} is the transaction id;    * use {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)} to format    */
 name|OP_NOT_ALLOWED_IN_TXN
 argument_list|(
 literal|20007
 argument_list|,
-literal|"Operation {0} is not allowed in a transaction.  TransactionID={1}."
+literal|"Operation {0} is not allowed in a transaction ({1},queryId={2})."
 argument_list|,
 literal|true
 argument_list|)
@@ -2371,7 +2400,7 @@ name|OP_NOT_ALLOWED_WITHOUT_TXN
 argument_list|(
 literal|20008
 argument_list|,
-literal|"Operation {0} is not allowed since autoCommit=false and there is no active transaction"
+literal|"Operation {0} is not allowed without an active transaction"
 argument_list|,
 literal|true
 argument_list|)

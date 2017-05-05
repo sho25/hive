@@ -208,6 +208,7 @@ block|{
 comment|/* Default list bucketing directory name. internal use only not for client. */
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|HIVE_LIST_BUCKETING_DEFAULT_DIR_NAME
 init|=
@@ -216,6 +217,7 @@ decl_stmt|;
 comment|/* Default list bucketing directory key. internal use only not for client. */
 specifier|public
 specifier|static
+specifier|final
 name|String
 name|HIVE_LIST_BUCKETING_DEFAULT_KEY
 init|=

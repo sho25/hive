@@ -617,7 +617,7 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|int
+name|long
 name|tryEvictContiguousData
 parameter_list|(
 name|int
@@ -629,8 +629,20 @@ parameter_list|)
 block|{
 return|return
 name|count
+operator|*
+name|allocationSize
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|debugDumpShort
+parameter_list|(
+name|StringBuilder
+name|sb
+parameter_list|)
+block|{     }
 block|}
 comment|/* Example code to test specific scenarios:     LowLevelCacheImpl cache = new LowLevelCacheImpl(         LlapDaemonCacheMetrics.create("test", "1"), new DummyCachePolicy(),         new DummyAllocator(), true, -1); // no cleanup thread     final int FILE = 1;     cache.putFileData(FILE, gaps(3756206, 4261729, 7294767, 7547564), fbs(3), 0, Priority.NORMAL, null);     cache.putFileData(FILE, gaps(7790545, 11051556), fbs(1), 0, Priority.NORMAL, null);     cache.putFileData(FILE, gaps(11864971, 11912961, 13350968, 13393630), fbs(3), 0, Priority.NORMAL, null);     DiskRangeList dr = dr(3756206, 7313562);     MutateHelper mh = new MutateHelper(dr);     dr = dr.insertAfter(dr(7790545, 11051556));     dr = dr.insertAfter(dr(11864971, 13393630));     BooleanRef g = new BooleanRef();     dr = cache.getFileData(FILE, mh.next, 0, testFactory, null, g); */
 annotation|@

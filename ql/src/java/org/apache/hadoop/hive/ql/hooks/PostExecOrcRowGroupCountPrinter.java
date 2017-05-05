@@ -411,7 +411,7 @@ condition|)
 block|{
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 name|tezTask
 operator|.
@@ -419,6 +419,8 @@ name|getId
 argument_list|()
 operator|+
 literal|" LLAP IO COUNTERS:"
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 for|for
@@ -449,7 +451,7 @@ condition|)
 block|{
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 literal|"   "
 operator|+
@@ -464,6 +466,8 @@ name|counter
 operator|.
 name|getValue
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

@@ -562,7 +562,7 @@ block|{
 name|String
 name|datePattern
 init|=
-literal|"[a-zA-Z]{3} [a-zA-Z]{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]+\\[[0-9]+]"
+literal|"[a-zA-Z]{3} [a-zA-Z]{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
 decl_stmt|;
 name|String
 name|dateMask
@@ -603,10 +603,9 @@ argument_list|(
 name|jspUrl
 argument_list|)
 decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
+name|String
+name|expected
+init|=
 name|contextRootContent
 operator|.
 name|replaceAll
@@ -615,7 +614,10 @@ name|datePattern
 argument_list|,
 name|dateMask
 argument_list|)
-argument_list|,
+decl_stmt|;
+name|String
+name|actual
+init|=
 name|jspContent
 operator|.
 name|replaceAll
@@ -624,6 +626,14 @@ name|datePattern
 argument_list|,
 name|dateMask
 argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|expected
+argument_list|,
+name|actual
 argument_list|)
 expr_stmt|;
 block|}
@@ -839,6 +849,8 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
+literal|"Got an HTTP response code other thank OK."
+argument_list|,
 name|HttpURLConnection
 operator|.
 name|HTTP_OK

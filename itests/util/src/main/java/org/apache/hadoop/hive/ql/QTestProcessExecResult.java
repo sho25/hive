@@ -17,36 +17,8 @@ name|ql
 package|;
 end_package
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Strings
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang3
-operator|.
-name|StringUtils
-import|;
-end_import
-
 begin_comment
-comment|/**  * Standard output and return code of a process executed during the qtests  */
+comment|/**  * Standard output and return code of a process executed during the qtests.  */
 end_comment
 
 begin_class

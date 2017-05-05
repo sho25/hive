@@ -26,16 +26,6 @@ name|MemoryManager
 extends|extends
 name|LlapOomDebugDump
 block|{
-name|boolean
-name|reserveMemory
-parameter_list|(
-name|long
-name|memoryToReserve
-parameter_list|,
-name|boolean
-name|waitForEviction
-parameter_list|)
-function_decl|;
 name|void
 name|releaseMemory
 parameter_list|(
@@ -51,7 +41,7 @@ name|maxSize
 parameter_list|)
 function_decl|;
 comment|/** TODO: temporary method until we get a better allocator. */
-name|void
+name|long
 name|forceReservedMemory
 parameter_list|(
 name|int
@@ -59,6 +49,13 @@ name|allocationSize
 parameter_list|,
 name|int
 name|count
+parameter_list|)
+function_decl|;
+name|void
+name|reserveMemory
+parameter_list|(
+name|long
+name|memoryToReserve
 parameter_list|)
 function_decl|;
 block|}

@@ -1211,8 +1211,6 @@ name|MetaStoreSchemaInfo
 argument_list|(
 name|metaStoreRoot
 argument_list|,
-name|conf
-argument_list|,
 literal|"derby"
 argument_list|)
 decl_stmt|;
@@ -1242,8 +1240,6 @@ operator|new
 name|MetaStoreSchemaInfo
 argument_list|(
 name|metaStoreRoot
-argument_list|,
-name|conf
 argument_list|,
 literal|"derby"
 argument_list|)

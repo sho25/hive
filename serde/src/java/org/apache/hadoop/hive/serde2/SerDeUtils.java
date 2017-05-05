@@ -639,6 +639,7 @@ comment|// we should use '\0' for COLUMN_NAME_DELIMITER if column name contains 
 comment|// but we should also take care of the backward compatibility
 specifier|public
 specifier|static
+specifier|final
 name|char
 name|COLUMN_COMMENTS_DELIMITER
 init|=

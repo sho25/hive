@@ -4161,6 +4161,18 @@ operator|+
 name|dagIndex
 return|;
 block|}
+specifier|public
+name|int
+name|getNumActive
+parameter_list|()
+block|{
+return|return
+name|executorService
+operator|.
+name|getNumActive
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

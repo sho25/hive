@@ -146,7 +146,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 operator|.
 name|class
 argument_list|)
@@ -155,7 +155,7 @@ name|void
 name|testAbort
 parameter_list|()
 throws|throws
-name|MapJoinMemoryExhaustionException
+name|MapJoinMemoryExhaustionError
 block|{
 name|MapJoinMemoryExhaustionHandler
 name|handler

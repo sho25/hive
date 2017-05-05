@@ -112,6 +112,7 @@ literal|0
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|INT_MASK
 init|=
@@ -119,6 +120,7 @@ literal|0x00000000ffffffffL
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|final
 name|long
 name|BYTE_MASK
 init|=

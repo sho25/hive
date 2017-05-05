@@ -3031,6 +3031,24 @@ argument_list|)
 expr_stmt|;
 name|registerFunction
 argument_list|(
+literal|"is not distinct from"
+argument_list|,
+name|SqlStdOperatorTable
+operator|.
+name|IS_NOT_DISTINCT_FROM
+argument_list|,
+name|hToken
+argument_list|(
+name|HiveParser
+operator|.
+name|EQUAL_NS
+argument_list|,
+literal|"<=>"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|registerFunction
+argument_list|(
 literal|"when"
 argument_list|,
 name|SqlStdOperatorTable

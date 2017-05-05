@@ -268,6 +268,8 @@ throws|,
 name|IOException
 throws|,
 name|InterruptedException
+throws|,
+name|TooManyRequestsException
 block|{
 if|if
 condition|(

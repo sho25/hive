@@ -789,21 +789,6 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_SUPPORT_CONCURRENCY
-operator|.
-name|varname
-argument_list|,
-literal|"false"
-argument_list|)
-expr_stmt|;
-name|hiveConf
-operator|.
-name|set
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
 name|METASTOREWAREHOUSE
 operator|.
 name|varname
@@ -1062,11 +1047,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|dropTables
 argument_list|()
 expr_stmt|;
@@ -1414,11 +1394,6 @@ comment|//List<String> rs = runStatementOnDriver("select a,b from " + Table.ACID
 comment|//Assert.assertEquals("Data didn't match in autocommit=true (rs)", stringifyValues(rows1), rs);
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"START TRANSACTION"
 argument_list|)
 expr_stmt|;
@@ -1544,15 +1519,34 @@ operator|+
 literal|" order by a,b"
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
 argument_list|(
 literal|"COMMIT"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|//txn started implicitly by previous statement
-name|runStatementOnDriver
+name|Assert
+operator|.
+name|assertEquals
 argument_list|(
-literal|"set autocommit true"
+literal|"Error didn't match: "
+operator|+
+name|cpr
+argument_list|,
+name|ErrorMsg
+operator|.
+name|OP_NOT_ALLOWED_WITHOUT_TXN
+operator|.
+name|getErrorCode
+argument_list|()
+argument_list|,
+name|cpr
+operator|.
+name|getErrorCode
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|List
@@ -1596,45 +1590,6 @@ name|Exception
 block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
-name|runStatementOnDriverNegative
-argument_list|(
-literal|"start transaction"
-argument_list|)
-decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Error didn't match: "
-operator|+
-name|cpr
-argument_list|,
-name|ErrorMsg
-operator|.
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
-operator|.
-name|getErrorCode
-argument_list|()
-argument_list|,
-name|cpr
-operator|.
-name|getErrorCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"start transaction"
 argument_list|)
 expr_stmt|;
@@ -1665,11 +1620,6 @@ name|getErrorCode
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|CommandProcessorResponse
 name|cpr3
 init|=
@@ -1698,69 +1648,23 @@ name|getErrorMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//line below should in principle work but Driver doesn't propagate errorCode properly
-comment|//Assert.assertEquals("Expected update of bucket column to fail", ErrorMsg.UPDATE_CANNOT_UPDATE_BUCKET_VALUE.getErrorCode(), cpr3.getErrorCode());
-name|cpr3
-operator|=
-name|runStatementOnDriverNegative
-argument_list|(
-literal|"commit work"
-argument_list|)
-expr_stmt|;
-comment|//not allowed in AC=true
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"Error didn't match: "
-operator|+
-name|cpr3
+literal|"Expected update of bucket column to fail"
 argument_list|,
 name|ErrorMsg
 operator|.
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+name|UPDATE_CANNOT_UPDATE_BUCKET_VALUE
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
-operator|.
-name|getErrorCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|cpr3
-operator|=
-name|runStatementOnDriverNegative
-argument_list|(
-literal|"rollback work"
-argument_list|)
-expr_stmt|;
-comment|//not allowed in AC=true
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Error didn't match: "
-operator|+
-name|cpr3
-argument_list|,
-name|ErrorMsg
-operator|.
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
 operator|.
 name|getErrorCode
 argument_list|()
-argument_list|,
-name|cpr
-operator|.
-name|getErrorCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
 argument_list|)
 expr_stmt|;
 name|cpr3
@@ -1781,12 +1685,12 @@ name|cpr3
 argument_list|,
 name|ErrorMsg
 operator|.
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+name|OP_NOT_ALLOWED_WITHOUT_TXN
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|cpr3
 operator|.
 name|getErrorCode
 argument_list|()
@@ -1810,12 +1714,12 @@ name|cpr3
 argument_list|,
 name|ErrorMsg
 operator|.
-name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
+name|OP_NOT_ALLOWED_WITHOUT_TXN
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|cpr3
 operator|.
 name|getErrorCode
 argument_list|()
@@ -1903,10 +1807,9 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit true"
+literal|"commit work"
 argument_list|)
 expr_stmt|;
-comment|//this should commit previous txn
 name|rs0
 operator|=
 name|runStatementOnDriver
@@ -1944,11 +1847,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"START TRANSACTION"
@@ -2087,11 +1985,6 @@ name|Exception
 block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"START TRANSACTION"
 argument_list|)
 expr_stmt|;
@@ -2213,11 +2106,6 @@ name|Exception
 block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"START TRANSACTION"
 argument_list|)
 expr_stmt|;
@@ -2235,11 +2123,6 @@ expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"ROLLBACK"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
 argument_list|)
 expr_stmt|;
 name|List
@@ -2283,11 +2166,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"START TRANSACTION"
@@ -2439,11 +2317,6 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -2550,11 +2423,6 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"START TRANSACTION"
 argument_list|)
 expr_stmt|;
@@ -2616,11 +2484,6 @@ expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"commit"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
 argument_list|)
 expr_stmt|;
 name|List
@@ -2728,11 +2591,6 @@ name|rows1
 argument_list|)
 argument_list|,
 name|rs0
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -2902,11 +2760,6 @@ argument_list|(
 literal|"commit"
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -3012,11 +2865,6 @@ name|rows1
 argument_list|)
 argument_list|,
 name|rs0
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -3297,11 +3145,6 @@ argument_list|(
 literal|"commit"
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -3419,11 +3262,6 @@ name|rows1
 argument_list|)
 argument_list|,
 name|rs0
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit false"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -3670,11 +3508,6 @@ argument_list|(
 literal|"commit"
 argument_list|)
 expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
-literal|"set autocommit true"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -3911,11 +3744,6 @@ name|Exception
 block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"set autocommit false"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"start transaction"
 argument_list|)
 expr_stmt|;
@@ -4140,7 +3968,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|2
+literal|12
 argument_list|,
 name|txnInfo
 operator|.

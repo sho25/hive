@@ -587,7 +587,7 @@ literal|"_FUNC_(date, fmt) / _FUNC_(N,D) - Returns If input is date returns date
 operator|+
 literal|"to the unit specified by the format model fmt. If you omit fmt, then date is truncated to "
 operator|+
-literal|"the nearest day. It now only supports 'MONTH'/'MON'/'MM' and 'YEAR'/'YYYY'/'YY' as format."
+literal|"the nearest day. It currently only supports 'MONTH'/'MON'/'MM', 'QUARTER'/'Q' and 'YEAR'/'YYYY'/'YY' as format."
 operator|+
 literal|"If input is a number group returns N truncated to D decimal places. If D is omitted, then N is truncated to 0 places."
 operator|+
@@ -606,6 +606,14 @@ operator|+
 literal|"OK\n"
 operator|+
 literal|" '2009-02-01'"
+operator|+
+literal|"\n"
+operator|+
+literal|"> SELECT _FUNC_('2017-03-15', 'Q');\n"
+operator|+
+literal|"OK\n"
+operator|+
+literal|" '2017-01-01'"
 operator|+
 literal|"\n"
 operator|+
@@ -2676,6 +2684,76 @@ name|fmtInput
 argument_list|)
 condition|)
 block|{
+name|calendar
+operator|.
+name|set
+argument_list|(
+name|Calendar
+operator|.
+name|DAY_OF_MONTH
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+return|return
+name|calendar
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+literal|"QUARTER"
+operator|.
+name|equals
+argument_list|(
+name|fmtInput
+argument_list|)
+operator|||
+literal|"Q"
+operator|.
+name|equals
+argument_list|(
+name|fmtInput
+argument_list|)
+condition|)
+block|{
+name|int
+name|month
+init|=
+name|calendar
+operator|.
+name|get
+argument_list|(
+name|Calendar
+operator|.
+name|MONTH
+argument_list|)
+decl_stmt|;
+name|int
+name|quarter
+init|=
+name|month
+operator|/
+literal|3
+decl_stmt|;
+name|int
+name|monthToSet
+init|=
+name|quarter
+operator|*
+literal|3
+decl_stmt|;
+name|calendar
+operator|.
+name|set
+argument_list|(
+name|Calendar
+operator|.
+name|MONTH
+argument_list|,
+name|monthToSet
+argument_list|)
+expr_stmt|;
 name|calendar
 operator|.
 name|set

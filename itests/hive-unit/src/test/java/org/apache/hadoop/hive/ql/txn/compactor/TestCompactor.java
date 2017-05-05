@@ -5667,7 +5667,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000001_0000004"
+literal|"delta_0000003_0000006"
 argument_list|)
 condition|)
 block|{
@@ -5698,13 +5698,13 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000001_0000002"
-block|,
-literal|"delta_0000001_0000004"
-block|,
 literal|"delta_0000003_0000004"
 block|,
+literal|"delta_0000003_0000006"
+block|,
 literal|"delta_0000005_0000006"
+block|,
+literal|"delta_0000007_0000008"
 block|}
 decl_stmt|;
 if|if
@@ -5761,9 +5761,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 block|}
@@ -6093,7 +6093,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000004\" and found "
+literal|"Expecting 1 file \"base_0000006\" and found "
 operator|+
 name|stat
 operator|.
@@ -6130,7 +6130,7 @@ name|assertEquals
 argument_list|(
 name|name
 argument_list|,
-literal|"base_0000004"
+literal|"base_0000006"
 argument_list|)
 expr_stmt|;
 name|checkExpectedTxnsPresent
@@ -6151,9 +6151,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 block|}
@@ -6565,7 +6565,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000001_0000004"
+literal|"delta_0000003_0000006"
 argument_list|)
 condition|)
 block|{
@@ -6596,11 +6596,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000001_0000002"
-block|,
-literal|"delta_0000001_0000004"
-block|,
 literal|"delta_0000003_0000004"
+block|,
+literal|"delta_0000003_0000006"
+block|,
+literal|"delta_0000005_0000006"
 block|}
 decl_stmt|;
 if|if
@@ -6657,9 +6657,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 block|}
@@ -7036,7 +7036,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000004\" and found "
+literal|"Expecting 1 file \"base_0000006\" and found "
 operator|+
 name|stat
 operator|.
@@ -7074,7 +7074,7 @@ name|name
 operator|.
 name|equals
 argument_list|(
-literal|"base_0000004"
+literal|"base_0000006"
 argument_list|)
 condition|)
 block|{
@@ -7086,7 +7086,7 @@ literal|"majorCompactAfterAbort name "
 operator|+
 name|name
 operator|+
-literal|" not equals to base_0000004"
+literal|" not equals to base_0000006"
 argument_list|)
 expr_stmt|;
 block|}
@@ -7108,9 +7108,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 block|}
@@ -7443,7 +7443,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000004\" and found "
+literal|"Expecting 1 file \"base_0000006\" and found "
 operator|+
 name|stat
 operator|.
@@ -7480,7 +7480,7 @@ name|assertEquals
 argument_list|(
 name|name
 argument_list|,
-literal|"base_0000004"
+literal|"base_0000006"
 argument_list|)
 expr_stmt|;
 name|checkExpectedTxnsPresent
@@ -7501,9 +7501,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 block|}
@@ -7600,7 +7600,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Insert some data -> this will generate only insert deltas and no delete deltas: delta_1_1
+comment|// Insert some data -> this will generate only insert deltas and no delete deltas: delta_3_3
 name|executeStatementOnDriver
 argument_list|(
 literal|"INSERT INTO "
@@ -7612,7 +7612,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Insert some data -> this will again generate only insert deltas and no delete deltas: delta_2_2
+comment|// Insert some data -> this will again generate only insert deltas and no delete deltas: delta_4_4
 name|executeStatementOnDriver
 argument_list|(
 literal|"INSERT INTO "
@@ -7624,7 +7624,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Delete some data -> this will generate only delete deltas and no insert deltas: delete_delta_3_3
+comment|// Delete some data -> this will generate only delete deltas and no insert deltas: delete_delta_5_5
 name|executeStatementOnDriver
 argument_list|(
 literal|"DELETE FROM "
@@ -7637,8 +7637,8 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Now, compact -> Compaction produces a single range for both delta and delete delta
-comment|// That is, both delta and delete_deltas would be compacted into delta_1_3 and delete_delta_1_3
-comment|// even though there are only two delta_1_1, delta_2_2 and one delete_delta_3_3.
+comment|// That is, both delta and delete_deltas would be compacted into delta_3_5 and delete_delta_3_5
+comment|// even though there are only two delta_3_3, delta_4_4 and one delete_delta_5_5.
 name|TxnStore
 name|txnHandler
 init|=
@@ -7840,7 +7840,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000001_0000003"
+literal|"delta_0000003_0000005"
 argument_list|)
 condition|)
 block|{
@@ -7871,11 +7871,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000001_0000001_0000"
+literal|"delta_0000003_0000003_0000"
 block|,
-literal|"delta_0000001_0000003"
+literal|"delta_0000003_0000005"
 block|,
-literal|"delta_0000002_0000002_0000"
+literal|"delta_0000004_0000004_0000"
 block|}
 decl_stmt|;
 if|if
@@ -7932,9 +7932,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|2L
+literal|4L
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas.
@@ -8022,7 +8022,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000001_0000003"
+literal|"delete_delta_0000003_0000005"
 argument_list|)
 condition|)
 block|{
@@ -8053,9 +8053,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000001_0000003"
+literal|"delete_delta_0000003_0000005"
 block|,
-literal|"delete_delta_0000003_0000003_0000"
+literal|"delete_delta_0000005_0000005_0000"
 block|}
 decl_stmt|;
 if|if
@@ -8112,9 +8112,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|2L
+literal|4L
 argument_list|,
-literal|2L
+literal|4L
 argument_list|)
 expr_stmt|;
 block|}
@@ -8431,7 +8431,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000001_0000002"
+literal|"delta_0000003_0000004"
 argument_list|)
 condition|)
 block|{
@@ -8462,11 +8462,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000001_0000001_0000"
+literal|"delta_0000003_0000003_0000"
 block|,
-literal|"delta_0000001_0000002"
+literal|"delta_0000003_0000004"
 block|,
-literal|"delta_0000002_0000002_0000"
+literal|"delta_0000004_0000004_0000"
 block|}
 decl_stmt|;
 if|if
@@ -8523,9 +8523,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|2L
+literal|4L
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas.
@@ -8613,7 +8613,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000001_0000002"
+literal|"delete_delta_0000003_0000004"
 argument_list|)
 condition|)
 block|{
@@ -8644,7 +8644,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000001_0000002"
+literal|"delete_delta_0000003_0000004"
 block|}
 decl_stmt|;
 if|if
@@ -9073,7 +9073,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000001_0000004"
+literal|"delta_0000003_0000006"
 argument_list|)
 condition|)
 block|{
@@ -9104,13 +9104,13 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000001_0000002"
-block|,
-literal|"delta_0000001_0000004"
-block|,
 literal|"delta_0000003_0000004"
 block|,
+literal|"delta_0000003_0000006"
+block|,
 literal|"delta_0000005_0000006"
+block|,
+literal|"delta_0000007_0000008"
 block|}
 decl_stmt|;
 if|if
@@ -9167,9 +9167,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|1L
+literal|3L
 argument_list|,
-literal|4L
+literal|6L
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas also
@@ -9257,7 +9257,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000001_0000004"
+literal|"delete_delta_0000003_0000006"
 argument_list|)
 condition|)
 block|{
@@ -9288,7 +9288,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000001_0000004"
+literal|"delete_delta_0000003_0000006"
 block|}
 decl_stmt|;
 if|if
@@ -10690,6 +10690,39 @@ parameter_list|)
 block|{
 return|return
 literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isTxnAborted
+parameter_list|(
+name|long
+name|txnid
+parameter_list|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|RangeResponse
+name|isTxnRangeAborted
+parameter_list|(
+name|long
+name|minTxnId
+parameter_list|,
+name|long
+name|maxTxnId
+parameter_list|)
+block|{
+return|return
+name|RangeResponse
+operator|.
+name|ALL
 return|;
 block|}
 block|}

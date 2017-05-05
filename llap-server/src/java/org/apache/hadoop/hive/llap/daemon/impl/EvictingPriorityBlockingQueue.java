@@ -178,6 +178,18 @@ return|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Empty queue. But no capacity available, due to waitQueueSize and additionalElementsAllowed
+comment|// Return the element.
+return|return
+name|e
+return|;
+block|}
 comment|// No capacity. Check if an element needs to be evicted.
 name|E
 name|last

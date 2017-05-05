@@ -1790,6 +1790,7 @@ return|;
 block|}
 specifier|public
 specifier|static
+specifier|final
 name|int
 name|VLONG_BYTES_LEN
 init|=

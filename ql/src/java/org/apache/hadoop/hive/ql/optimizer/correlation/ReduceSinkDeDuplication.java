@@ -1343,7 +1343,7 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|<
+operator|!=
 name|pRSNc
 operator|.
 name|getKeyCols
