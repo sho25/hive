@@ -169,7 +169,6 @@ name|DagJsonParser
 name|parser
 decl_stmt|;
 specifier|public
-specifier|final
 name|String
 name|operatorId
 decl_stmt|;
@@ -209,13 +208,11 @@ name|vertex
 decl_stmt|;
 comment|// the vertex that this operator output to
 specifier|public
-specifier|final
 name|String
 name|outputVertexName
 decl_stmt|;
 comment|// the Operator type
 specifier|public
-specifier|final
 name|OpType
 name|type
 decl_stmt|;
@@ -243,6 +240,9 @@ name|id
 parameter_list|,
 name|String
 name|outputVertexName
+parameter_list|,
+name|Op
+name|parent
 parameter_list|,
 name|List
 argument_list|<
@@ -299,6 +299,12 @@ operator|.
 name|outputVertexName
 operator|=
 name|outputVertexName
+expr_stmt|;
+name|this
+operator|.
+name|parent
+operator|=
+name|parent
 expr_stmt|;
 name|this
 operator|.
@@ -448,18 +454,6 @@ operator|.
 name|MAPJOIN
 condition|)
 block|{
-name|JSONObject
-name|joinObj
-init|=
-name|opObject
-operator|.
-name|getJSONObject
-argument_list|(
-name|this
-operator|.
-name|name
-argument_list|)
-decl_stmt|;
 comment|// get the map for posToVertex
 name|Map
 argument_list|<
@@ -476,7 +470,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|joinObj
+name|opObject
 operator|.
 name|has
 argument_list|(
@@ -487,7 +481,7 @@ block|{
 name|JSONObject
 name|verticeObj
 init|=
-name|joinObj
+name|opObject
 operator|.
 name|getJSONObject
 argument_list|(
@@ -598,7 +592,7 @@ comment|// update the keys to use operator name
 name|JSONObject
 name|keys
 init|=
-name|joinObj
+name|opObject
 operator|.
 name|getJSONObject
 argument_list|(
@@ -708,7 +702,7 @@ if|if
 condition|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -724,7 +718,7 @@ name|key
 argument_list|,
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|get
 argument_list|(
@@ -741,7 +735,7 @@ condition|(
 operator|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -878,7 +872,7 @@ if|if
 condition|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -894,7 +888,7 @@ name|key
 argument_list|,
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|get
 argument_list|(
@@ -911,7 +905,7 @@ condition|(
 operator|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -1027,7 +1021,7 @@ decl_stmt|;
 name|JSONArray
 name|conditionMap
 init|=
-name|joinObj
+name|opObject
 operator|.
 name|getJSONArray
 argument_list|(
@@ -1358,7 +1352,7 @@ if|if
 condition|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -1377,7 +1371,7 @@ argument_list|()
 argument_list|,
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|get
 argument_list|(
@@ -1394,7 +1388,7 @@ condition|(
 operator|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -1545,7 +1539,7 @@ if|if
 condition|(
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|size
 argument_list|()
@@ -1577,7 +1571,7 @@ name|tag
 argument_list|,
 name|v
 operator|.
-name|rootOps
+name|outputOps
 operator|.
 name|get
 argument_list|(
@@ -1589,23 +1583,11 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|JSONObject
-name|joinObj
-init|=
-name|opObject
-operator|.
-name|getJSONObject
-argument_list|(
-name|this
-operator|.
-name|name
-argument_list|)
-decl_stmt|;
 comment|// update the keys to use operator name
 name|JSONObject
 name|keys
 init|=
-name|joinObj
+name|opObject
 operator|.
 name|getJSONObject
 argument_list|(
@@ -1715,7 +1697,7 @@ decl_stmt|;
 name|JSONArray
 name|conditionMap
 init|=
-name|joinObj
+name|opObject
 operator|.
 name|getJSONArray
 argument_list|(
@@ -2378,6 +2360,30 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+specifier|public
+name|void
+name|setOperatorId
+parameter_list|(
+name|String
+name|operatorId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|operatorId
+operator|=
+name|operatorId
+expr_stmt|;
+name|this
+operator|.
+name|type
+operator|=
+name|deriveOpType
+argument_list|(
+name|operatorId
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

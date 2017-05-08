@@ -555,6 +555,8 @@ argument_list|(
 name|to
 argument_list|)
 argument_list|,
+name|this
+argument_list|,
 name|parser
 argument_list|)
 argument_list|)
@@ -650,6 +652,8 @@ name|getJSONObject
 argument_list|(
 name|parent
 argument_list|)
+argument_list|,
+name|this
 argument_list|,
 name|parser
 argument_list|)
@@ -855,6 +859,8 @@ argument_list|(
 name|parent
 argument_list|)
 argument_list|,
+name|this
+argument_list|,
 name|parser
 argument_list|)
 expr_stmt|;
@@ -1005,13 +1011,15 @@ argument_list|(
 name|vertexName
 argument_list|)
 argument_list|,
+name|this
+argument_list|,
 name|parser
 argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// The opTree in vertex is extracted
+comment|// iterate for the first time to extract opTree in vertex
 for|for
 control|(
 name|Vertex
@@ -1047,12 +1055,29 @@ operator|.
 name|extractOpTree
 argument_list|()
 expr_stmt|;
+block|}
+block|}
+comment|// iterate for the second time to rewrite object
+for|for
+control|(
+name|Vertex
+name|v
+range|:
+name|vertexs
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
 name|v
 operator|.
 name|checkMultiReduceOperator
-argument_list|()
+argument_list|(
+name|parser
+operator|.
+name|rewriteObject
+argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 else|else
@@ -1318,6 +1343,8 @@ literal|null
 argument_list|,
 name|object
 argument_list|,
+name|this
+argument_list|,
 name|parser
 argument_list|)
 expr_stmt|;
@@ -1404,6 +1431,8 @@ operator|new
 name|Op
 argument_list|(
 name|opName
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|,
