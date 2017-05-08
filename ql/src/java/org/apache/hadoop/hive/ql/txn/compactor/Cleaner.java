@@ -375,6 +375,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|BitSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -1475,6 +1485,10 @@ name|long
 index|[
 literal|0
 index|]
+argument_list|,
+operator|new
+name|BitSet
+argument_list|()
 argument_list|,
 name|ci
 operator|.

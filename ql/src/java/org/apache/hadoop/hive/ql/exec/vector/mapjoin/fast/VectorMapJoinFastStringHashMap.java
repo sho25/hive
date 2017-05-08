@@ -150,6 +150,37 @@ name|isOuterJoin
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getEstimatedMemorySize
+parameter_list|()
+block|{
+name|long
+name|size
+init|=
+literal|0
+decl_stmt|;
+comment|// adding 16KB constant memory for stringCommon as the rabit hole is deep to implement
+comment|// MemoryEstimate interface, also it is constant overhead
+name|size
+operator|+=
+operator|(
+literal|16
+operator|*
+literal|1024L
+operator|)
+expr_stmt|;
+return|return
+name|super
+operator|.
+name|getEstimatedMemorySize
+argument_list|()
+operator|+
+name|size
+return|;
+block|}
 block|}
 end_class
 

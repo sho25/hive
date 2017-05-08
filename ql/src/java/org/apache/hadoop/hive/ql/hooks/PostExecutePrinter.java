@@ -715,7 +715,7 @@ condition|)
 block|{
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 literal|"POSTHOOK: query: "
 operator|+
@@ -726,11 +726,13 @@ argument_list|()
 operator|.
 name|trim
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 literal|"POSTHOOK: type: "
 operator|+
@@ -738,6 +740,8 @@ name|queryState
 operator|.
 name|getCommandType
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -1110,12 +1114,14 @@ argument_list|)
 expr_stmt|;
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 name|sb
 operator|.
 name|toString
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

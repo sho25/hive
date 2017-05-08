@@ -346,17 +346,9 @@ specifier|public
 class|class
 name|HdfsUtils
 block|{
-comment|// TODO: this relies on HDFS not changing the format; we assume if we could get inode ID, this
-comment|//       is still going to work. Otherwise, file IDs can be turned off. Later, we should use
-comment|//       as public utility method in HDFS to obtain the inode-based path.
 specifier|private
 specifier|static
-name|String
-name|HDFS_ID_PATH_PREFIX
-init|=
-literal|"/.reserved/.inodes/"
-decl_stmt|;
-specifier|static
+specifier|final
 name|Logger
 name|LOG
 init|=
@@ -366,6 +358,17 @@ name|getLogger
 argument_list|(
 literal|"shims.HdfsUtils"
 argument_list|)
+decl_stmt|;
+comment|// TODO: this relies on HDFS not changing the format; we assume if we could get inode ID, this
+comment|//       is still going to work. Otherwise, file IDs can be turned off. Later, we should use
+comment|//       as public utility method in HDFS to obtain the inode-based path.
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|HDFS_ID_PATH_PREFIX
+init|=
+literal|"/.reserved/.inodes/"
 decl_stmt|;
 specifier|public
 specifier|static

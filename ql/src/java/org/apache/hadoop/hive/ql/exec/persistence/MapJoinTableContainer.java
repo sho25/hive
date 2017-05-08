@@ -87,6 +87,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|MemoryEstimate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -209,6 +225,8 @@ begin_interface
 specifier|public
 interface|interface
 name|MapJoinTableContainer
+extends|extends
+name|MemoryEstimate
 block|{
 comment|/**    * Retrieve rows from hashtable key by key, one key at a time, w/o copying the structures    * for each key. "Old" HashMapWrapper will still create/retrieve new objects for java HashMap;    * but the optimized one doesn't have to.    */
 specifier|public

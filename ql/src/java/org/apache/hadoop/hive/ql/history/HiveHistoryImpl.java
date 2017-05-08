@@ -292,14 +292,6 @@ name|HiveHistoryImpl
 implements|implements
 name|HiveHistory
 block|{
-name|PrintWriter
-name|histStream
-decl_stmt|;
-comment|// History File stream
-name|String
-name|histFileName
-decl_stmt|;
-comment|// History file name
 specifier|private
 specifier|static
 specifier|final
@@ -313,6 +305,14 @@ argument_list|(
 literal|"hive.ql.exec.HiveHistoryImpl"
 argument_list|)
 decl_stmt|;
+name|PrintWriter
+name|histStream
+decl_stmt|;
+comment|// History File stream
+name|String
+name|histFileName
+decl_stmt|;
+comment|// History file name
 specifier|private
 specifier|static
 specifier|final
@@ -1749,6 +1749,7 @@ expr_stmt|;
 block|}
 comment|/**    * write out counters.    */
 specifier|static
+specifier|final
 name|ThreadLocal
 argument_list|<
 name|Map

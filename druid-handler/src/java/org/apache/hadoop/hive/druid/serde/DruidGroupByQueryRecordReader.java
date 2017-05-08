@@ -578,7 +578,7 @@ argument_list|(
 name|j
 argument_list|)
 operator|.
-name|getDimension
+name|getOutputName
 argument_list|()
 argument_list|)
 operator|.
@@ -668,7 +668,7 @@ name|getDimension
 argument_list|(
 name|ds
 operator|.
-name|getDimension
+name|getOutputName
 argument_list|()
 argument_list|)
 operator|.
@@ -791,7 +791,7 @@ name|getDimension
 argument_list|(
 name|ds
 operator|.
-name|getDimension
+name|getOutputName
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1090,7 +1090,7 @@ name|getDimension
 argument_list|(
 name|ds
 operator|.
-name|getDimension
+name|getOutputName
 argument_list|()
 argument_list|)
 decl_stmt|;

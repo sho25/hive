@@ -568,19 +568,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|conf
-operator|.
-name|setBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_WAREHOUSE_SUBDIR_INHERIT_PERMS
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
 comment|// Set up scratch directory
 name|Path
 name|scratchDir

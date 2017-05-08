@@ -369,6 +369,28 @@ name|UNIFORM
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|ReduceSinkDesc
+operator|.
+name|ReducerTraits
+operator|.
+name|FIXED
+import|;
+end_import
+
 begin_comment
 comment|/**  * SetReducerParallelism determines how many reducers should  * be run for a given reduce sink.  */
 end_comment
@@ -779,6 +801,19 @@ name|getNumReducers
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|desc
+operator|.
+name|setReducerTraits
+argument_list|(
+name|EnumSet
+operator|.
+name|of
+argument_list|(
+name|FIXED
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// usually controlled by bucketing
 block|}
 return|return
 literal|false

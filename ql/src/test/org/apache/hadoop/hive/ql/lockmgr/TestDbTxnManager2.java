@@ -59,6 +59,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidTxnList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -441,6 +457,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -475,16 +511,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Comparator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -509,8 +535,68 @@ name|Map
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Executor
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ExecutorService
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Executors
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Future
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ThreadFactory
+import|;
+end_import
+
 begin_comment
-comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *   * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compile() to generate QueryPlan which can then be passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to openTxn()/commitTxn() etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  */
+comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *  * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compileAndRespond() (which also starts a txn) to generate QueryPlan which can then be  * passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to commitTxn()/rollback etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  *   * A slightly different (and simpler) approach is to use "start transaction/(commit/rollback)"  * command with the Driver.run().  This allows you to "see" the state of the Lock Manager after  * each statement and can also simulate concurrent (but very controlled) work but w/o forking any  * threads.  The limitation here is that not all statements are allowed in an explicit transaction.  * For example, "drop table foo".  This approach will also cause the query to execute which will  * make tests slower but will exericise the code path that is much closer to the actual user calls.  *   * In either approach, each logical "session" should use it's own Transaction Manager.  This requires  * using {@link #swapTxnManager(HiveTxnManager)} since in the SessionState the TM is associated with  * each thread.    */
 end_comment
 
 begin_class
@@ -518,6 +604,21 @@ specifier|public
 class|class
 name|TestDbTxnManager2
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|TestDbTxnManager2
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 name|HiveConf
@@ -543,6 +644,7 @@ specifier|private
 name|Driver
 name|driver
 decl_stmt|;
+specifier|private
 name|TxnStore
 name|txnHandler
 decl_stmt|;
@@ -765,15 +867,6 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"one"
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
 name|acquireLocks
 argument_list|(
 name|driver
@@ -864,15 +957,6 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"one"
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
 name|acquireLocks
 argument_list|(
 name|driver
@@ -955,15 +1039,6 @@ name|compileAndRespond
 argument_list|(
 literal|"insert into R select * from S where a in (select a from T where b = 1)"
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"three"
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1055,6 +1130,11 @@ literal|null
 argument_list|,
 name|locks
 argument_list|)
+expr_stmt|;
+name|txnMgr
+operator|.
+name|rollbackTxn
+argument_list|()
 expr_stmt|;
 block|}
 annotation|@
@@ -1149,16 +1229,8 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|commitTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|ctx
-operator|.
-name|getHiveLocks
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
@@ -1317,16 +1389,8 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|commitTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|ctx
-operator|.
-name|getHiveLocks
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
@@ -1511,16 +1575,8 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|commitTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|ctx
-operator|.
-name|getHiveLocks
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
@@ -1640,6 +1696,24 @@ operator|.
 name|getHiveLocks
 argument_list|()
 decl_stmt|;
+name|HiveTxnManager
+name|txnMgr2
+init|=
+name|TxnManagerFactory
+operator|.
+name|getTxnManagerFactory
+argument_list|()
+operator|.
+name|getTxnManager
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -1662,7 +1736,7 @@ operator|(
 operator|(
 name|DbTxnManager
 operator|)
-name|txnMgr
+name|txnMgr2
 operator|)
 operator|.
 name|acquireLocks
@@ -1742,13 +1816,8 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|selectLocks
-argument_list|)
 expr_stmt|;
 comment|//release S on T6
 comment|//attempt to X on T6 again - succeed
@@ -1815,51 +1884,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|HiveLock
-argument_list|>
-name|xLock
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|xLock
+name|txnMgr2
 operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
+name|rollbackTxn
 argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
-name|getLockManager
-argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|xLock
-argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -1952,18 +1980,10 @@ argument_list|(
 literal|"update temp.T7 set a = 5 where b = 6"
 argument_list|)
 expr_stmt|;
+comment|//gets SS lock on T7
 name|checkCmdOnDriver
 argument_list|(
 name|cpr
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Fifer"
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1980,16 +2000,6 @@ argument_list|,
 literal|"Fifer"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|driver
-operator|.
-name|compileAndRespond
-argument_list|(
-literal|"drop database if exists temp"
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|HiveTxnManager
 name|txnMgr2
 init|=
@@ -2003,7 +2013,21 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|//txnMgr2.openTxn("Fiddler");
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
+name|checkCmdOnDriver
+argument_list|(
+name|driver
+operator|.
+name|compileAndRespond
+argument_list|(
+literal|"drop database if exists temp"
+argument_list|)
+argument_list|)
+expr_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -2025,7 +2049,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|//gets SS lock on T7
 name|List
 argument_list|<
 name|ShowLocksResponseElement
@@ -2096,7 +2119,7 @@ operator|(
 operator|(
 name|DbLockManager
 operator|)
-name|txnMgr
+name|txnMgr2
 operator|.
 name|getLockManager
 argument_list|()
@@ -2153,51 +2176,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|HiveLock
-argument_list|>
-name|xLock
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|0
-argument_list|)
-decl_stmt|;
-name|xLock
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr2
 operator|.
-name|getLockManager
+name|commitTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|xLock
-argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -2250,15 +2232,6 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Fifer"
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
 name|acquireLocks
 argument_list|(
 name|driver
@@ -2272,21 +2245,6 @@ literal|"Fifer"
 argument_list|)
 expr_stmt|;
 comment|//gets SS lock on T8
-name|cpr
-operator|=
-name|driver
-operator|.
-name|compileAndRespond
-argument_list|(
-literal|"select a from T8"
-argument_list|)
-expr_stmt|;
-comment|//gets S lock on T8
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
 name|HiveTxnManager
 name|txnMgr2
 init|=
@@ -2300,13 +2258,34 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"Fiddler"
+name|txnMgr2
+argument_list|)
+expr_stmt|;
+name|checkCmdOnDriver
+argument_list|(
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"start transaction"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|cpr
+operator|=
+name|driver
+operator|.
+name|compileAndRespond
+argument_list|(
+literal|"select a from T8"
+argument_list|)
+expr_stmt|;
+comment|//gets S lock on T8
+name|checkCmdOnDriver
+argument_list|(
+name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -2435,10 +2414,14 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|txnMgr
+name|driver
 operator|.
-name|rollbackTxn
-argument_list|()
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+literal|false
+argument_list|,
+name|txnMgr
+argument_list|)
 expr_stmt|;
 operator|(
 operator|(
@@ -2520,10 +2503,19 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|txnMgr2
+name|driver
 operator|.
-name|commitTxn
-argument_list|()
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+literal|true
+argument_list|,
+name|txnMgr2
+argument_list|)
+expr_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr
+argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -2604,25 +2596,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|HiveTxnManager
-name|otherTxnMgr
-init|=
-operator|new
-name|DbTxnManager
-argument_list|()
-decl_stmt|;
-operator|(
-operator|(
-name|DbTxnManager
-operator|)
-name|otherTxnMgr
-operator|)
-operator|.
-name|setHiveConf
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
 name|CommandProcessorResponse
 name|cpr
 init|=
@@ -2673,9 +2646,7 @@ argument_list|>
 name|locks
 init|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|Assert
 operator|.
@@ -2710,6 +2681,24 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
+name|HiveTxnManager
+name|txnMgr2
+init|=
+name|TxnManagerFactory
+operator|.
+name|getTxnManagerFactory
+argument_list|()
+operator|.
+name|getTxnManager
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -2726,7 +2715,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|otherTxnMgr
+name|txnMgr2
 operator|.
 name|acquireLocks
 argument_list|(
@@ -2804,7 +2793,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|otherTxnMgr
+name|txnMgr2
 operator|.
 name|closeTxnManager
 argument_list|()
@@ -2880,9 +2869,7 @@ argument_list|>
 name|locks
 init|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|Assert
 operator|.
@@ -2917,6 +2904,24 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
+name|HiveTxnManager
+name|txnMgr2
+init|=
+name|TxnManagerFactory
+operator|.
+name|getTxnManagerFactory
+argument_list|()
+operator|.
+name|getTxnManager
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -2935,7 +2940,7 @@ operator|(
 operator|(
 name|DbTxnManager
 operator|)
-name|txnMgr
+name|txnMgr2
 operator|)
 operator|.
 name|acquireLocks
@@ -2956,9 +2961,7 @@ comment|//make non-blocking
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -3253,7 +3256,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"INSERT OVERWRITE not allowed on table with OutputFormat"
+literal|"INSERT OVERWRITE not allowed on table default.t10 with OutputFormat"
 operator|+
 literal|" that implements AcidOutputFormat while transaction manager that supports ACID is in use"
 argument_list|)
@@ -4867,52 +4870,12 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|HiveLock
-argument_list|>
-name|relLocks
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
+empty_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -4988,47 +4951,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|relLocks
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -5105,47 +5031,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|relLocks
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -5222,47 +5111,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|relLocks
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -5339,47 +5191,10 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|relLocks
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
 name|cpr
 operator|=
@@ -5457,47 +5272,10 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//https://issues.apache.org/jira/browse/HIVE-13212
-name|relLocks
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|HiveLock
-argument_list|>
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|relLocks
-operator|.
-name|add
-argument_list|(
-operator|new
-name|DbLockManager
-operator|.
-name|DbHiveLock
-argument_list|(
-name|locks
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getLockid
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|releaseLocks
-argument_list|(
-name|relLocks
-argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Check to make sure we acquire proper locks for queries involving acid and non-acid tables    */
@@ -6352,6 +6130,28 @@ literal|"How did it get here?!"
 argument_list|)
 throw|;
 block|}
+comment|/**    * SessionState is stored in ThreadLoacal; UnitTest runs in a single thread (otherwise Derby wedges)    * {@link HiveTxnManager} instances are per SessionState.    * So to be able to simulate concurrent locks/transactions s/o forking threads we just swap    * the TxnManager instance in the session (hacky but nothing is actually threading so it allows us    * to write good tests)    */
+specifier|private
+specifier|static
+name|HiveTxnManager
+name|swapTxnManager
+parameter_list|(
+name|HiveTxnManager
+name|txnMgr
+parameter_list|)
+block|{
+return|return
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setTxnMgr
+argument_list|(
+name|txnMgr
+argument_list|)
+return|;
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -6532,6 +6332,24 @@ name|cpr
 argument_list|)
 expr_stmt|;
 comment|// Acquire different locks at different levels
+name|HiveTxnManager
+name|txnMgr1
+init|=
+name|TxnManagerFactory
+operator|.
+name|getTxnManagerFactory
+argument_list|()
+operator|.
+name|getTxnManager
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr1
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -6546,7 +6364,7 @@ argument_list|(
 name|cpr
 argument_list|)
 expr_stmt|;
-name|txnMgr
+name|txnMgr1
 operator|.
 name|acquireLocks
 argument_list|(
@@ -6573,6 +6391,11 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -6614,6 +6437,11 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr3
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -6655,6 +6483,11 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr4
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -6696,6 +6529,11 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr5
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -6930,6 +6768,11 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|// SHOW LOCKS t14
+name|swapTxnManager
+argument_list|(
+name|txnMgr
+argument_list|)
+expr_stmt|;
 name|cpr
 operator|=
 name|driver
@@ -7295,25 +7138,6 @@ argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Nicholas"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|driver
-operator|.
-name|compileAndRespond
-argument_list|(
-literal|"update TAB_PART set b = 7 where p = 'blah'"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|txnMgr
-operator|.
 name|acquireLocks
 argument_list|(
 name|driver
@@ -7325,6 +7149,11 @@ name|ctx
 argument_list|,
 literal|"Nicholas"
 argument_list|)
+expr_stmt|;
+name|txnMgr
+operator|.
+name|commitTxn
+argument_list|()
 expr_stmt|;
 name|HiveTxnManager
 name|txnMgr2
@@ -7339,18 +7168,19 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr
-operator|.
-name|commitTxn
-argument_list|()
-expr_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"Alexandra"
+name|txnMgr2
+argument_list|)
+expr_stmt|;
+name|checkCmdOnDriver
+argument_list|(
+name|driver
+operator|.
+name|compileAndRespond
+argument_list|(
+literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -7374,7 +7204,7 @@ argument_list|()
 argument_list|,
 name|ctx
 argument_list|,
-literal|"Nicholas"
+literal|"Alexandra"
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -7650,43 +7480,6 @@ literal|"insert into TAB_PART partition(p='blah') values(1,2)"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|HiveTxnManager
-name|txnMgr2
-init|=
-name|TxnManagerFactory
-operator|.
-name|getTxnManagerFactory
-argument_list|()
-operator|.
-name|getTxnManager
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|long
-name|txnId
-init|=
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Known"
-argument_list|)
-decl_stmt|;
-name|long
-name|txnId2
-init|=
-name|txnMgr2
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Unknown"
-argument_list|)
-decl_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -7697,6 +7490,14 @@ literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnId
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr
 operator|.
 name|acquireLocks
@@ -7755,6 +7556,24 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
+name|HiveTxnManager
+name|txnMgr2
+init|=
+name|TxnManagerFactory
+operator|.
+name|getTxnManagerFactory
+argument_list|()
+operator|.
+name|getTxnManager
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -7765,6 +7584,14 @@ literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnId2
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -7959,7 +7786,23 @@ name|assertEquals
 argument_list|(
 literal|"Exception msg didn't match"
 argument_list|,
-literal|"Aborting [txnid:3,3] due to a write conflict on default/TAB_PART/p=blah committed by [txnid:2,3] u/u"
+literal|"Aborting [txnid:"
+operator|+
+name|txnId2
+operator|+
+literal|","
+operator|+
+name|txnId2
+operator|+
+literal|"] due to a write conflict on default/TAB_PART/p=blah committed by [txnid:"
+operator|+
+name|txnId
+operator|+
+literal|","
+operator|+
+name|txnId2
+operator|+
+literal|"] u/u"
 argument_list|,
 name|expectedException
 operator|.
@@ -9077,13 +8920,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"Horton"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -9243,6 +9082,11 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
+name|txnMgr
+operator|.
+name|commitTxn
+argument_list|()
+expr_stmt|;
 name|TestTxnCommands2
 operator|.
 name|runHouseKeeperService
@@ -9346,16 +9190,12 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|//test with predicates such that partition pruning works
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
+comment|//test with predicates such that partition pruning works
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -9366,6 +9206,14 @@ literal|"update tab2 set b = 7 where p='two'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate1
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -9425,13 +9273,9 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T3"
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -9444,6 +9288,14 @@ literal|"update tab2 set b = 7 where p='one'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate2
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -9525,6 +9377,7 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//this simulates the completion of txnid:2
+comment|//this simulates the completion of txnid:idTxnUpdate1
 name|AddDynamicPartitions
 name|adp
 init|=
@@ -9569,7 +9422,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:2
+comment|//txnid:idTxnUpdate1
 name|locks
 operator|=
 name|getLocks
@@ -9610,7 +9463,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:3
+comment|//completion of txnid:idTxnUpdate2
 name|adp
 operator|=
 operator|new
@@ -9654,7 +9507,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:3
+comment|//txnid:idTxnUpdate2
 comment|//now both txns concurrently updated TAB2 but different partitions.
 name|Assert
 operator|.
@@ -9755,13 +9608,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:4
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T5"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -9774,6 +9623,14 @@ literal|"update tab1 set b = 7 where b=1"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate3
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -9848,13 +9705,9 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T6"
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -9867,6 +9720,14 @@ literal|"update tab1 set b = 7 where b = 2"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate4
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -9985,7 +9846,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//this simulates the completion of txnid:5
+comment|//this simulates the completion of txnid:idTxnUpdate3
 name|adp
 operator|=
 operator|new
@@ -10029,7 +9890,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:5
+comment|//txnid:idTxnUpdate3
 operator|(
 operator|(
 name|DbLockManager
@@ -10113,7 +9974,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:6
+comment|//completion of txnid:idTxnUpdate4
 name|adp
 operator|=
 operator|new
@@ -10157,7 +10018,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:6
+comment|//txnid:idTxnUpdate4
 name|Assert
 operator|.
 name|assertEquals
@@ -10278,7 +10139,6 @@ literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//txnid:1
 name|HiveTxnManager
 name|txnMgr2
 init|=
@@ -10292,13 +10152,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -10311,6 +10167,14 @@ literal|"update tab1 set b = 7 where b=1"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate1
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -10389,13 +10253,9 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T3"
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -10408,6 +10268,14 @@ literal|"update tab1 set b = 7 where p='two'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate2
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -10507,7 +10375,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//this simulates the completion of txnid:2
+comment|//this simulates the completion of txnid:idTxnUpdate1
 name|AddDynamicPartitions
 name|adp
 init|=
@@ -10552,7 +10420,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:2
+comment|//txnid:idTxnUpdate1
 operator|(
 operator|(
 name|DbLockManager
@@ -10617,7 +10485,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:3
+comment|//completion of txnid:idTxnUpdate2
 name|adp
 operator|=
 operator|new
@@ -10661,7 +10529,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:3
+comment|//txnid:idTxnUpdate2
 name|Assert
 operator|.
 name|assertEquals
@@ -10779,7 +10647,6 @@ literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//txnid:1
 name|HiveTxnManager
 name|txnMgr2
 init|=
@@ -10793,13 +10660,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -10812,6 +10675,14 @@ literal|"update tab1 set b = 7 where b=1"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnUpdate1
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -10890,13 +10761,9 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T3"
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -10909,6 +10776,14 @@ literal|"delete from tab1 where p='two' and b=2"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|idTxnDelete1
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -11008,7 +10883,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//this simulates the completion of txnid:2
+comment|//this simulates the completion of txnid:idTxnUpdate1
 name|AddDynamicPartitions
 name|adp
 init|=
@@ -11053,7 +10928,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:2
+comment|//txnid:idTxnUpdate1
 operator|(
 operator|(
 name|DbLockManager
@@ -11118,7 +10993,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:3
+comment|//completion of txnid:idTxnUpdate2
 name|adp
 operator|=
 operator|new
@@ -11162,7 +11037,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:3
+comment|//txnid:idTxnUpdate2
 name|Assert
 operator|.
 name|assertEquals
@@ -11182,7 +11057,15 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=1  and ctc_table='tab1'"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
+operator|+
+operator|(
+name|idTxnUpdate1
+operator|-
+literal|1
+operator|)
+operator|+
+literal|"  and ctc_table='tab1'"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11205,7 +11088,11 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=2  and ctc_table='tab1' and ctc_partition='p=one'"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
+operator|+
+name|idTxnUpdate1
+operator|+
+literal|"  and ctc_table='tab1' and ctc_partition='p=one'"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11228,7 +11115,11 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=3  and ctc_table='tab1' and ctc_partition='p=two'"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
+operator|+
+name|idTxnDelete1
+operator|+
+literal|" and ctc_table='tab1' and ctc_partition='p=two'"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11363,13 +11254,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -11460,13 +11347,9 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T3"
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -11578,7 +11461,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//this simulates the completion of txnid:2
+comment|//this simulates the completion of "Update tab2" txn
 name|AddDynamicPartitions
 name|adp
 init|=
@@ -11623,7 +11506,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:2
+comment|//"Update tab2"
 operator|(
 operator|(
 name|DbLockManager
@@ -11688,7 +11571,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:3
+comment|//completion of "delete from tab1" txn
 name|adp
 operator|=
 operator|new
@@ -11739,7 +11622,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:3
+comment|//"delete from tab1"
 block|}
 catch|catch
 parameter_list|(
@@ -11769,7 +11652,7 @@ name|assertEquals
 argument_list|(
 literal|"Exception msg doesn't match"
 argument_list|,
-literal|"Aborting [txnid:3,3] due to a write conflict on default/tab1/p=two committed by [txnid:2,3] d/u"
+literal|"Aborting [txnid:5,5] due to a write conflict on default/tab1/p=two committed by [txnid:4,5] d/u"
 argument_list|,
 name|exception
 operator|.
@@ -11874,7 +11757,6 @@ literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//txnid:1
 name|HiveTxnManager
 name|txnMgr2
 init|=
@@ -11888,13 +11770,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -11907,6 +11785,15 @@ literal|"delete from tab1 where b=2"
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//start "delete from tab1" txn
+name|long
+name|txnIdDelete
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -11984,16 +11871,23 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//now start concurrent txn
-name|txnMgr
-operator|.
-name|openTxn
+comment|//now start concurrent "select * from tab1" txn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T3"
+name|txnMgr
 argument_list|)
 expr_stmt|;
+name|checkCmdOnDriver
+argument_list|(
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"start transaction"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|//start explicit txn so that txnMgr knows it
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -12004,6 +11898,14 @@ literal|"select * from tab1 where b=1 and p='one'"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnIdSelect
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 operator|(
 operator|(
 name|DbTxnManager
@@ -12172,7 +12074,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//this simulates the completion of txnid:2
+comment|//this simulates the completion of "delete from tab1" txn
 name|AddDynamicPartitions
 name|adp
 init|=
@@ -12217,7 +12119,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:2
+comment|//"delete from tab1" txn
 operator|(
 operator|(
 name|DbLockManager
@@ -12320,7 +12222,7 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-comment|//completion of txnid:3
+comment|//completion of txnid:txnIdSelect
 name|adp
 operator|=
 operator|new
@@ -12364,7 +12266,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-comment|//txnid:3
+comment|//"select * from tab1" txn
 name|Assert
 operator|.
 name|assertEquals
@@ -12384,7 +12286,9 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid=2"
+literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
+operator|+
+name|txnIdDelete
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12407,7 +12311,9 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid=3"
+literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
+operator|+
+name|txnIdSelect
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12430,7 +12336,9 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid=2"
+literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
+operator|+
+name|txnIdDelete
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12453,7 +12361,9 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid=3"
+literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
+operator|+
+name|txnIdSelect
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12594,7 +12504,7 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=1 and ctc_table='tab1'"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=6 and ctc_table='tab1'"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12692,7 +12602,7 @@ literal|"insert into tab1 partition(p) values(3,3,'one'),(4,4,'two')"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//txinid:1
+comment|//txinid:8
 comment|//writing both acid and non-acid resources in the same txn
 comment|//tab1 write is a dynamic partition insert
 name|checkCmdOnDriver
@@ -12705,7 +12615,7 @@ literal|"from tab_not_acid insert into tab1 partition(p)(a,b,p) select a,b,p ins
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//txnid:2
+comment|//txnid:9
 name|Assert
 operator|.
 name|assertEquals
@@ -12745,7 +12655,7 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=2"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=9"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12766,7 +12676,7 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=2 and ctc_table='tab1'"
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=9 and ctc_table='tab1'"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13203,18 +13113,6 @@ literal|"(9,100,1,2),      (3,4,1,2),               (5,13,1,3),       (7,8,2,2),
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|long
-name|txnId1
-init|=
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"T1"
-argument_list|)
-decl_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -13234,6 +13132,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//insert p=1/q=2, p=1/q=3 and new part 1/1
+name|long
+name|txnId1
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr
 operator|.
 name|acquireLocks
@@ -13255,9 +13161,7 @@ argument_list|>
 name|locks
 init|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|Assert
 operator|.
@@ -13385,18 +13289,11 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|long
-name|txnId2
-init|=
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -13426,6 +13323,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//insert p=1/q=2, p=1/q=3 and new part 1/1
+name|long
+name|txnId2
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -13445,9 +13350,7 @@ expr_stmt|;
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr2
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -14048,9 +13951,7 @@ expr_stmt|;
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr2
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -14465,11 +14366,11 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"Transaction manager has aborted the transaction txnid:3.  Reason: "
+literal|"Transaction manager has aborted the transaction txnid:11.  Reason: "
 operator|+
-literal|"Aborting [txnid:3,3] due to a write conflict on default/target/p=1/q=3 "
+literal|"Aborting [txnid:11,11] due to a write conflict on default/target/p=1/q=3 "
 operator|+
-literal|"committed by [txnid:2,3] u/u"
+literal|"committed by [txnid:10,11] u/u"
 argument_list|,
 name|expectedException
 operator|.
@@ -14754,18 +14655,6 @@ literal|"create table source (a int, b int)"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|long
-name|txnid1
-init|=
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"T1"
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
 name|causeConflict
@@ -14795,6 +14684,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|long
+name|txnid1
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr
 operator|.
 name|acquireLocks
@@ -14910,19 +14807,12 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|//start a 2nd (overlapping) txn
-name|long
-name|txnid2
-init|=
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+comment|//start a 2nd (overlapping) txn
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -14939,6 +14829,14 @@ literal|"when not matched then insert values(s.a,s.b)"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnid2
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -14958,9 +14856,7 @@ expr_stmt|;
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -15125,9 +15021,7 @@ expr_stmt|;
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -15316,7 +15210,7 @@ name|assertEquals
 argument_list|(
 literal|"Exception msg didn't match"
 argument_list|,
-literal|"Aborting [txnid:3,3] due to a write conflict on default/target committed by [txnid:2,3] d/u"
+literal|"Aborting [txnid:7,7] due to a write conflict on default/target committed by [txnid:6,7] d/u"
 argument_list|,
 name|expectedException
 operator|.
@@ -15895,18 +15789,6 @@ literal|"create table source (a1 int, b1 int, p1 int, q1 int)"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|long
-name|txnId1
-init|=
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"T1"
-argument_list|)
-decl_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -15917,6 +15799,14 @@ literal|"update target set b = 2 where p=1"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnId1
+init|=
+name|txnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr
 operator|.
 name|acquireLocks
@@ -15938,9 +15828,7 @@ argument_list|>
 name|locks
 init|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|Assert
 operator|.
@@ -16010,19 +15898,12 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|//start a 2nd (overlapping) txn
-name|long
-name|txnid2
-init|=
-name|txnMgr2
-operator|.
-name|openTxn
+name|swapTxnManager
 argument_list|(
-name|ctx
-argument_list|,
-literal|"T2"
+name|txnMgr2
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+comment|//start a 2nd (overlapping) txn
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -16039,6 +15920,14 @@ literal|"when not matched then insert values(a1,b1,p1,q1)"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|long
+name|txnid2
+init|=
+name|txnMgr2
+operator|.
+name|getCurrentTxnId
+argument_list|()
+decl_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -16388,9 +16277,7 @@ expr_stmt|;
 name|locks
 operator|=
 name|getLocks
-argument_list|(
-name|txnMgr
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|Assert
 operator|.
@@ -16750,7 +16637,7 @@ name|assertEquals
 argument_list|(
 literal|"Exception msg didn't match"
 argument_list|,
-literal|"Aborting [txnid:3,3] due to a write conflict on default/target/p=1/q=2 committed by [txnid:2,3] u/u"
+literal|"Aborting [txnid:7,7] due to a write conflict on default/target/p=1/q=2 committed by [txnid:6,7] u/u"
 argument_list|,
 name|expectedException
 operator|.
@@ -16838,6 +16725,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * This test is mostly obsolete.  The logic in the Driver.java no longer acquires any locks for    * "show tables".  Keeping the test for now in case we change that logic.    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -16966,6 +16854,20 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|txnMgr2
+operator|.
+name|openTxn
+argument_list|(
+name|ctx
+argument_list|,
+literal|"Fidler"
+argument_list|)
+expr_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -17054,20 +16956,8 @@ argument_list|()
 expr_stmt|;
 name|txnMgr2
 operator|.
-name|releaseLocks
-argument_list|(
-name|txnMgr2
-operator|.
-name|getLockManager
+name|rollbackTxn
 argument_list|()
-operator|.
-name|getLocks
-argument_list|(
-literal|false
-argument_list|,
-literal|false
-argument_list|)
-argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
@@ -17099,6 +16989,11 @@ argument_list|)
 operator|.
 name|size
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr
 argument_list|)
 expr_stmt|;
 name|cpr
@@ -17115,17 +17010,6 @@ expr_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|cpr
-argument_list|)
-expr_stmt|;
-name|txnid1
-operator|=
-name|txnMgr
-operator|.
-name|openTxn
-argument_list|(
-name|ctx
-argument_list|,
-literal|"Fifer"
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -17205,6 +17089,20 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|txnMgr2
+operator|.
+name|openTxn
+argument_list|(
+name|ctx
+argument_list|,
+literal|"Fidler"
+argument_list|)
+expr_stmt|;
+name|swapTxnManager
+argument_list|(
+name|txnMgr2
+argument_list|)
+expr_stmt|;
 name|checkCmdOnDriver
 argument_list|(
 name|driver
@@ -17215,12 +17113,7 @@ literal|"show tables"
 argument_list|)
 argument_list|)
 expr_stmt|;
-operator|(
-operator|(
-name|DbTxnManager
-operator|)
 name|txnMgr2
-operator|)
 operator|.
 name|acquireLocks
 argument_list|(
@@ -17300,20 +17193,8 @@ argument_list|()
 expr_stmt|;
 name|txnMgr2
 operator|.
-name|releaseLocks
-argument_list|(
-name|txnMgr2
-operator|.
-name|getLockManager
+name|commitTxn
 argument_list|()
-operator|.
-name|getLocks
-argument_list|(
-literal|false
-argument_list|,
-literal|false
-argument_list|)
-argument_list|)
 expr_stmt|;
 name|Assert
 operator|.

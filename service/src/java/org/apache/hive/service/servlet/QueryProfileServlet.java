@@ -23,15 +23,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|service
+name|ql
 operator|.
-name|cli
-operator|.
-name|operation
-operator|.
-name|OperationManager
+name|QueryInfo
 import|;
 end_import
 
@@ -49,7 +47,7 @@ name|cli
 operator|.
 name|operation
 operator|.
-name|SQLOperationDisplay
+name|OperationManager
 import|;
 end_import
 
@@ -254,19 +252,19 @@ operator|.
 name|getOperationManager
 argument_list|()
 decl_stmt|;
-name|SQLOperationDisplay
-name|sod
+name|QueryInfo
+name|queryInfo
 init|=
 name|opManager
 operator|.
-name|getSQLOperationDisplay
+name|getQueryInfo
 argument_list|(
 name|opId
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|sod
+name|queryInfo
 operator|==
 literal|null
 condition|)
@@ -293,7 +291,7 @@ operator|.
 name|getWriter
 argument_list|()
 argument_list|,
-name|sod
+name|queryInfo
 argument_list|)
 expr_stmt|;
 block|}

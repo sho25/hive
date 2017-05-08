@@ -191,11 +191,11 @@ decl_stmt|;
 comment|// lazy mode => we only list files, and expect that the eventual copy will pull data in.
 specifier|private
 name|boolean
-name|isInsert
+name|isReplace
 init|=
-literal|false
+literal|true
 decl_stmt|;
-comment|// default is that the import mode is replace-into
+comment|// default is that the import mode is insert overwrite
 comment|// Key definitions related to replication
 specifier|public
 enum|enum
@@ -226,9 +226,9 @@ argument_list|(
 literal|"repl.lazy"
 argument_list|)
 block|,
-name|IS_INSERT
+name|IS_REPLACE
 argument_list|(
-literal|"repl.is.insert"
+literal|"repl.is.replace"
 argument_list|)
 block|;
 specifier|private
@@ -497,7 +497,7 @@ name|boolean
 name|isLazy
 parameter_list|,
 name|boolean
-name|isInsert
+name|isReplace
 parameter_list|)
 block|{
 name|this
@@ -538,9 +538,9 @@ name|isLazy
 expr_stmt|;
 name|this
 operator|.
-name|isInsert
+name|isReplace
 operator|=
-name|isInsert
+name|isReplace
 expr_stmt|;
 block|}
 specifier|public
@@ -717,7 +717,7 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|isInsert
+name|isReplace
 operator|=
 name|Boolean
 operator|.
@@ -731,7 +731,7 @@ name|ReplicationSpec
 operator|.
 name|KEY
 operator|.
-name|IS_INSERT
+name|IS_REPLACE
 operator|.
 name|toString
 argument_list|()
@@ -1264,29 +1264,29 @@ operator|=
 name|isMetadataOnly
 expr_stmt|;
 block|}
-comment|/**    * @return true if this statement refers to insert-into operation.    */
+comment|/**    * @return true if this statement refers to insert-into or insert-overwrite operation.    */
 specifier|public
 name|boolean
-name|isInsert
+name|isReplace
 parameter_list|()
 block|{
 return|return
-name|isInsert
+name|isReplace
 return|;
 block|}
 specifier|public
 name|void
-name|setIsInsert
+name|setIsReplace
 parameter_list|(
 name|boolean
-name|isInsert
+name|isReplace
 parameter_list|)
 block|{
 name|this
 operator|.
-name|isInsert
+name|isReplace
 operator|=
-name|isInsert
+name|isReplace
 expr_stmt|;
 block|}
 comment|/**    * @return the replication state of the event that spawned this statement    */
@@ -1456,14 +1456,14 @@ argument_list|()
 argument_list|)
 return|;
 case|case
-name|IS_INSERT
+name|IS_REPLACE
 case|:
 return|return
 name|String
 operator|.
 name|valueOf
 argument_list|(
-name|isInsert
+name|isReplace
 argument_list|()
 argument_list|)
 return|;

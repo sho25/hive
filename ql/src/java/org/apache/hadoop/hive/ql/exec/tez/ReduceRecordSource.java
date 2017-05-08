@@ -840,6 +840,15 @@ name|int
 name|firstValueColumnOffset
 decl_stmt|;
 specifier|private
+specifier|final
+name|int
+name|BATCH_BYTES
+init|=
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_BYTES
+decl_stmt|;
+specifier|private
 name|StructObjectInspector
 name|keyStructInspector
 decl_stmt|;
@@ -1257,6 +1266,16 @@ argument_list|,
 name|binarySortableSerDe
 operator|.
 name|getSortOrders
+argument_list|()
+argument_list|,
+name|binarySortableSerDe
+operator|.
+name|getNullMarkers
+argument_list|()
+argument_list|,
+name|binarySortableSerDe
+operator|.
+name|getNotNullMarkers
 argument_list|()
 argument_list|)
 argument_list|)
@@ -2429,6 +2448,13 @@ name|rowIdx
 init|=
 literal|0
 decl_stmt|;
+name|int
+name|batchBytes
+init|=
+name|keyBytes
+operator|.
+name|length
+decl_stmt|;
 try|try
 block|{
 for|for
@@ -2472,6 +2498,10 @@ operator|.
 name|getLength
 argument_list|()
 decl_stmt|;
+name|batchBytes
+operator|+=
+name|valueLength
+expr_stmt|;
 comment|// l4j.info("ReduceRecordSource processVectorGroup valueBytes " + valueLength + " " +
 comment|//     VectorizedBatchUtil.displayBytes(valueBytes, 0, valueLength));
 name|valueLazyBinaryDeserializeToRow
@@ -2503,6 +2533,10 @@ condition|(
 name|rowIdx
 operator|>=
 name|maxSize
+operator|||
+name|batchBytes
+operator|>=
+name|BATCH_BYTES
 condition|)
 block|{
 comment|// Batch is full.
@@ -2552,6 +2586,10 @@ argument_list|()
 expr_stmt|;
 block|}
 name|rowIdx
+operator|=
+literal|0
+expr_stmt|;
+name|batchBytes
 operator|=
 literal|0
 expr_stmt|;

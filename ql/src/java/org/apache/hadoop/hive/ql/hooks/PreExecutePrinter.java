@@ -378,7 +378,7 @@ condition|)
 block|{
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 literal|"PREHOOK: query: "
 operator|+
@@ -389,11 +389,13 @@ argument_list|()
 operator|.
 name|trim
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 literal|"PREHOOK: type: "
 operator|+
@@ -401,6 +403,8 @@ name|queryState
 operator|.
 name|getCommandType
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -489,11 +493,13 @@ control|)
 block|{
 name|console
 operator|.
-name|printError
+name|printInfo
 argument_list|(
 name|prefix
 operator|+
 name|s
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

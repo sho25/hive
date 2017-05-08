@@ -792,6 +792,10 @@ comment|/* useExternalBuffer */
 literal|false
 argument_list|,
 name|columnSortOrderIsDesc
+argument_list|,
+name|columnNullMarker
+argument_list|,
+name|columnNotNullMarker
 argument_list|)
 decl_stmt|;
 name|BytesWritable
@@ -935,6 +939,10 @@ comment|/* useExternalBuffer */
 literal|false
 argument_list|,
 name|columnSortOrderIsDesc
+argument_list|,
+name|columnNullMarker
+argument_list|,
+name|columnNotNullMarker
 argument_list|)
 decl_stmt|;
 name|binarySortableDeserializeRead2
@@ -1795,6 +1803,10 @@ comment|/* useExternalBuffer */
 literal|false
 argument_list|,
 name|columnSortOrderIsDesc
+argument_list|,
+name|columnNullMarker
+argument_list|,
+name|columnNotNullMarker
 argument_list|)
 decl_stmt|;
 name|BytesWritable

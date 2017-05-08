@@ -6145,6 +6145,11 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
+name|Ignore
+argument_list|(
+literal|"now that every op has a txn ctx, we don't produce the error expected here...."
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void

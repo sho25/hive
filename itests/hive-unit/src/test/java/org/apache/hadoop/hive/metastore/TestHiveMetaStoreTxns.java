@@ -928,7 +928,7 @@ operator|=
 operator|new
 name|ValidReadTxnList
 argument_list|(
-literal|"10:5:4:5:6"
+literal|"10:5:4,5,6:"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1523,7 +1523,7 @@ name|Long
 operator|.
 name|MAX_VALUE
 operator|+
-literal|":"
+literal|"::"
 argument_list|)
 decl_stmt|;
 name|String
@@ -1544,7 +1544,7 @@ name|Long
 operator|.
 name|MAX_VALUE
 operator|+
-literal|":"
+literal|"::"
 argument_list|,
 name|asString
 argument_list|)
@@ -1610,7 +1610,7 @@ name|Long
 operator|.
 name|MAX_VALUE
 operator|+
-literal|":"
+literal|"::"
 argument_list|,
 name|asString
 argument_list|)

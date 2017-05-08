@@ -329,7 +329,7 @@ literal|"(tok_where "
 operator|+
 literal|"(and "
 operator|+
-literal|"(tok_function tok_isnotnull (tok_table_or_col key)) "
+literal|"(tok_function isnotnull (tok_table_or_col key)) "
 operator|+
 literal|"(< (. (tok_table_or_col src) value) 0))))"
 argument_list|,
@@ -457,7 +457,7 @@ literal|"(= "
 operator|+
 literal|"(tok_table_or_col key) 3)) "
 operator|+
-literal|"(tok_where (tok_function tok_isnull (tok_table_or_col value))))"
+literal|"(tok_where (tok_function isnull (tok_table_or_col value))))"
 argument_list|,
 name|ast
 operator|.
@@ -499,7 +499,7 @@ literal|"(= (tok_table_or_col val) (tok_function tok_int (+ 6.1 (tok_table_or_co
 operator|+
 literal|"(= (tok_table_or_col d) (- (tok_table_or_col d) 1))) "
 operator|+
-literal|"(tok_where (tok_function tok_isnull (tok_table_or_col value))))"
+literal|"(tok_where (tok_function isnull (tok_table_or_col value))))"
 argument_list|,
 name|ast
 operator|.
@@ -591,7 +591,7 @@ literal|"(tok_selexpr (. (tok_table_or_col pvs) viewtime)) "
 operator|+
 literal|"(tok_selexpr (. (tok_table_or_col pvs) userid))) "
 operator|+
-literal|"(tok_where (tok_function tok_isnull (. (tok_table_or_col pvs) userid)))))"
+literal|"(tok_where (tok_function isnull (. (tok_table_or_col pvs) userid)))))"
 argument_list|,
 name|ast
 operator|.

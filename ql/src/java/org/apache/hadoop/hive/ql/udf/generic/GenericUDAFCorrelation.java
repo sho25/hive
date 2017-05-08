@@ -373,7 +373,7 @@ literal|"corr"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(x,y) - Returns the Pearson coefficient of correlation\n"
+literal|"_FUNC_(y,x) - Returns the Pearson coefficient of correlation\n"
 operator|+
 literal|"between a set of number pairs"
 argument_list|,
@@ -381,9 +381,15 @@ name|extended
 operator|=
 literal|"The function takes as arguments any pair of numeric types and returns a double.\n"
 operator|+
-literal|"Any pair with a NULL is ignored. If the function is applied to an empty set or\n"
+literal|"Any pair with a NULL is ignored.\n"
 operator|+
-literal|"a singleton set, NULL will be returned. Otherwise, it computes the following:\n"
+literal|"If applied to an empty set: NULL is returned.\n"
+operator|+
+literal|"If N*SUM(x*x) = SUM(x)*SUM(x): NULL is returned.\n"
+operator|+
+literal|"If N*SUM(y*y) = SUM(y)*SUM(y): NULL is returned.\n"
+operator|+
+literal|"Otherwise, it computes the following:\n"
 operator|+
 literal|"   COVAR_POP(x,y)/(STDDEV_POP(x)*STDDEV_POP(y))\n"
 operator|+
@@ -793,7 +799,7 @@ operator|==
 literal|2
 operator|)
 assert|;
-name|xInputOI
+name|yInputOI
 operator|=
 operator|(
 name|PrimitiveObjectInspector
@@ -803,7 +809,7 @@ index|[
 literal|0
 index|]
 expr_stmt|;
-name|yInputOI
+name|xInputOI
 operator|=
 operator|(
 name|PrimitiveObjectInspector
@@ -1356,7 +1362,7 @@ literal|2
 operator|)
 assert|;
 name|Object
-name|px
+name|py
 init|=
 name|parameters
 index|[
@@ -1364,7 +1370,7 @@ literal|0
 index|]
 decl_stmt|;
 name|Object
-name|py
+name|px
 init|=
 name|parameters
 index|[
@@ -2062,19 +2068,35 @@ condition|(
 name|myagg
 operator|.
 name|count
-operator|<
-literal|2
+operator|==
+literal|0
+operator|||
+name|myagg
+operator|.
+name|xvar
+operator|==
+literal|0.0d
+operator|||
+name|myagg
+operator|.
+name|yvar
+operator|==
+literal|0.0d
 condition|)
 block|{
-comment|// SQL standard - return null for zero or one pair
 return|return
 literal|null
 return|;
 block|}
 else|else
 block|{
+name|DoubleWritable
+name|result
+init|=
 name|getResult
 argument_list|()
+decl_stmt|;
+name|result
 operator|.
 name|set
 argument_list|(
@@ -2092,7 +2114,7 @@ name|sqrt
 argument_list|(
 name|myagg
 operator|.
-name|xvar
+name|yvar
 argument_list|)
 operator|/
 name|java
@@ -2105,13 +2127,12 @@ name|sqrt
 argument_list|(
 name|myagg
 operator|.
-name|yvar
+name|xvar
 argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-name|getResult
-argument_list|()
+name|result
 return|;
 block|}
 block|}

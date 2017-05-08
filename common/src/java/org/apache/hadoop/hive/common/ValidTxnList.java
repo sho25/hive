@@ -83,7 +83,7 @@ name|String
 name|writeToString
 parameter_list|()
 function_decl|;
-comment|/**    * Populate this validTxnList from the string.  It is assumed that the string    * was created via {@link #writeToString()}.    * @param src source string.    */
+comment|/**    * Populate this validTxnList from the string.  It is assumed that the string    * was created via {@link #writeToString()} and the exceptions list is sorted.    * @param src source string.    */
 specifier|public
 name|void
 name|readFromString
@@ -104,6 +104,27 @@ name|long
 index|[]
 name|getInvalidTransactions
 parameter_list|()
+function_decl|;
+comment|/**    * Indicates whether a given transaction is aborted.    * @param txnid id for the transaction    * @return true if aborted, false otherwise    */
+specifier|public
+name|boolean
+name|isTxnAborted
+parameter_list|(
+name|long
+name|txnid
+parameter_list|)
+function_decl|;
+comment|/**    * Find out if a range of transaction ids are aborted.    * @param minTxnId minimum txnid to look for, inclusive    * @param maxTxnId maximum txnid to look for, inclusive    * @return Indicate whether none, some, or all of these transactions are aborted.    */
+specifier|public
+name|RangeResponse
+name|isTxnRangeAborted
+parameter_list|(
+name|long
+name|minTxnId
+parameter_list|,
+name|long
+name|maxTxnId
+parameter_list|)
 function_decl|;
 block|}
 end_interface

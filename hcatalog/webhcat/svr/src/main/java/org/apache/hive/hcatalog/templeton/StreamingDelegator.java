@@ -208,6 +208,8 @@ throws|,
 name|IOException
 throws|,
 name|InterruptedException
+throws|,
+name|TooManyRequestsException
 block|{
 name|List
 argument_list|<

@@ -108,7 +108,7 @@ name|distinctCount
 decl_stmt|;
 comment|/**    * Memory consumed by a set of aggregation buffers    */
 specifier|private
-name|int
+name|long
 name|aggregatorsFixedSize
 decl_stmt|;
 comment|/**    * Array of indexes for aggregators that have variable size    */
@@ -134,7 +134,7 @@ return|;
 block|}
 comment|/**    * Returns the fixed size consumed by the aggregation buffers    * @return    */
 specifier|public
-name|int
+name|long
 name|getAggregatorsFixedSize
 parameter_list|()
 block|{

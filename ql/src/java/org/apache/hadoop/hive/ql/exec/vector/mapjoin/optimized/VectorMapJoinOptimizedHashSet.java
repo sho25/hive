@@ -346,6 +346,20 @@ name|hashMapRowGetter
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getEstimatedMemorySize
+parameter_list|()
+block|{
+return|return
+name|super
+operator|.
+name|getEstimatedMemorySize
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

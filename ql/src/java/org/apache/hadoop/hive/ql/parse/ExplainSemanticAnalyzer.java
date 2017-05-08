@@ -975,6 +975,13 @@ argument_list|(
 name|config
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setExplainPlan
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|ASTNode
 name|input
 init|=
@@ -1048,7 +1055,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-comment|// runCtx and ctx share the configuration
+comment|// runCtx and ctx share the configuration, but not isExplainPlan()
 name|runCtx
 operator|.
 name|setExplainConfig
@@ -1199,6 +1206,9 @@ name|ANALYZING
 argument_list|)
 expr_stmt|;
 block|}
+comment|//Creating new QueryState unfortunately causes all .q.out to change - do this in a separate ticket
+comment|//Sharing QueryState between generating the plan and executing the query seems bad
+comment|//BaseSemanticAnalyzer sem = SemanticAnalyzerFactory.get(new QueryState(queryState.getConf()), input);
 name|BaseSemanticAnalyzer
 name|sem
 init|=
@@ -1356,6 +1366,7 @@ name|isAuthorize
 argument_list|()
 operator|&&
 operator|(
+operator|(
 name|HiveConf
 operator|.
 name|getBoolVar
@@ -1389,6 +1400,43 @@ name|equals
 argument_list|(
 literal|"tez"
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ctx
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SPARK_EXPLAIN_USER
+argument_list|)
+operator|&&
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"spark"
+argument_list|)
+operator|)
 operator|)
 argument_list|)
 expr_stmt|;
