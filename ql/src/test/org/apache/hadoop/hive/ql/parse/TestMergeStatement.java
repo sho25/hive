@@ -338,7 +338,7 @@ literal|"(tok_set_columns_clause "
 operator|+
 literal|"(= (tok_table_or_col a) (. (tok_table_or_col source) b)) "
 operator|+
-literal|"(= (tok_table_or_col b) (tok_function when (tok_function tok_isnull (tok_table_or_col c1)) (tok_table_or_col c1) (tok_table_or_col c1)))"
+literal|"(= (tok_table_or_col b) (tok_function when (tok_function isnull (tok_table_or_col c1)) (tok_table_or_col c1) (tok_table_or_col c1)))"
 operator|+
 literal|")"
 operator|+
@@ -468,7 +468,7 @@ literal|"(. (tok_table_or_col source) a) "
 operator|+
 literal|"(tok_function when "
 operator|+
-literal|"(tok_function tok_isnull (. (tok_table_or_col source) b)) (. (tok_table_or_col target) b) "
+literal|"(tok_function isnull (. (tok_table_or_col source) b)) (. (tok_table_or_col target) b) "
 operator|+
 literal|"(. (tok_table_or_col source) b)"
 operator|+

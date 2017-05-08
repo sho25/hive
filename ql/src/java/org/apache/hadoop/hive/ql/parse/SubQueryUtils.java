@@ -666,9 +666,9 @@ name|create
 argument_list|(
 name|HiveParser
 operator|.
-name|TOK_ISNULL
+name|Identifier
 argument_list|,
-literal|"TOK_ISNULL"
+literal|"isnull"
 argument_list|)
 argument_list|)
 expr_stmt|;
