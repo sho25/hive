@@ -1290,20 +1290,6 @@ argument_list|(
 name|reduceSinkPartitionTypeInfos
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"*NEW* partitionObjectInspectors "
-operator|+
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|partitionObjectInspectors
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|partitionVectorExtractRow
 operator|=
 operator|new

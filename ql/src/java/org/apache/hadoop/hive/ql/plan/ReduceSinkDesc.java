@@ -2429,10 +2429,10 @@ argument_list|(
 operator|!
 name|vectorReduceSinkDesc
 operator|.
-name|getHasTopN
+name|getHasPTFTopN
 argument_list|()
 argument_list|,
-literal|"No TopN"
+literal|"No PTF TopN"
 argument_list|)
 block|,
 operator|new
