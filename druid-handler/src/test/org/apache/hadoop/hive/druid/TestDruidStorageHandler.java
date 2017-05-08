@@ -101,18 +101,6 @@ name|io
 operator|.
 name|druid
 operator|.
-name|metadata
-operator|.
-name|SQLMetadataSegmentManager
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|druid
-operator|.
 name|segment
 operator|.
 name|loading
@@ -769,8 +757,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 try|try
@@ -905,8 +891,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
@@ -946,8 +930,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
@@ -1194,8 +1176,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
@@ -1394,8 +1374,6 @@ argument_list|()
 operator|.
 name|get
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|String
@@ -1672,8 +1650,6 @@ argument_list|(
 name|connector
 argument_list|,
 name|metadataStorageTablesConfig
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|druidStorageHandler
