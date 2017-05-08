@@ -2695,13 +2695,75 @@ argument_list|,
 literal|"conf"
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
 name|lfs
 operator|.
 name|mkdirs
 argument_list|(
 name|confPath
 argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"mkdirs for "
+operator|+
+name|confPath
+operator|+
+literal|" returned false"
+argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|lfs
+operator|.
+name|mkdirs
+argument_list|(
+name|tezDir
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"mkdirs for "
+operator|+
+name|tezDir
+operator|+
+literal|" returned false"
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|lfs
+operator|.
+name|mkdirs
+argument_list|(
+name|udfDir
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"mkdirs for "
+operator|+
+name|udfDir
+operator|+
+literal|" returned false"
+argument_list|)
+expr_stmt|;
+block|}
 name|NamedCallable
 argument_list|<
 name|Void
