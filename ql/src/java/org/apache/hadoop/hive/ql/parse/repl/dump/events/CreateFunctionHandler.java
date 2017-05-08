@@ -175,7 +175,7 @@ begin_class
 class|class
 name|CreateFunctionHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|CreateFunctionHandler
 parameter_list|(
@@ -289,6 +289,16 @@ name|replicationSpec
 argument_list|)
 expr_stmt|;
 block|}
+name|withinContext
+operator|.
+name|createDmd
+argument_list|(
+name|this
+argument_list|)
+operator|.
+name|write
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override

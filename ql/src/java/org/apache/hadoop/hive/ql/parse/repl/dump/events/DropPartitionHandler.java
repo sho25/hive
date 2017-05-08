@@ -89,7 +89,7 @@ begin_class
 class|class
 name|DropPartitionHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|DropPartitionHandler
 parameter_list|(

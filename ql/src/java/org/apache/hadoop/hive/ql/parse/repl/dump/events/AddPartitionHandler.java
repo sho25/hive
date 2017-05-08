@@ -281,7 +281,7 @@ begin_class
 class|class
 name|AddPartitionHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 specifier|protected
 name|AddPartitionHandler

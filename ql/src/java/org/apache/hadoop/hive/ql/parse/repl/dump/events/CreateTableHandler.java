@@ -179,7 +179,7 @@ begin_class
 class|class
 name|CreateTableHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|CreateTableHandler
 parameter_list|(

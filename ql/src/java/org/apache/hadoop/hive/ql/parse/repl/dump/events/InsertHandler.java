@@ -243,7 +243,7 @@ begin_class
 class|class
 name|InsertHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|InsertHandler
 parameter_list|(

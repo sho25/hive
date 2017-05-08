@@ -102,7 +102,7 @@ end_import
 begin_class
 specifier|abstract
 class|class
-name|AbstractHandler
+name|AbstractEventHandler
 implements|implements
 name|EventHandler
 block|{
@@ -115,7 +115,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|AbstractHandler
+name|AbstractEventHandler
 operator|.
 name|class
 argument_list|)
@@ -128,7 +128,7 @@ specifier|final
 name|MessageDeserializer
 name|deserializer
 decl_stmt|;
-name|AbstractHandler
+name|AbstractEventHandler
 parameter_list|(
 name|NotificationEvent
 name|event
