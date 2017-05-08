@@ -747,9 +747,63 @@ name|MetaStoreSchemaInfo
 argument_list|(
 name|hiveHome
 argument_list|,
+name|hiveConf
+argument_list|,
 name|dbType
 argument_list|)
 expr_stmt|;
+name|userName
+operator|=
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_CONNECTION_USER_NAME
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|passWord
+operator|=
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|getPassword
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREPWD
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|err
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveMetaException
+argument_list|(
+literal|"Error getting metastore password"
+argument_list|,
+name|err
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|public
 name|HiveConf
@@ -3174,7 +3228,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Starting metastore validation\n"
+literal|"Starting metastore validation"
 argument_list|)
 expr_stmt|;
 name|Connection
@@ -3185,11 +3239,6 @@ argument_list|(
 literal|false
 argument_list|)
 decl_stmt|;
-name|boolean
-name|success
-init|=
-literal|true
-decl_stmt|;
 try|try
 block|{
 if|if
@@ -3199,7 +3248,6 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
-block|{
 name|System
 operator|.
 name|out
@@ -3209,13 +3257,7 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
-block|}
 else|else
-block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3225,7 +3267,6 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|validateSequences
@@ -3233,7 +3274,6 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
-block|{
 name|System
 operator|.
 name|out
@@ -3243,13 +3283,7 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
-block|}
 else|else
-block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3259,7 +3293,6 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|validateSchemaTables
@@ -3267,7 +3300,6 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
-block|{
 name|System
 operator|.
 name|out
@@ -3277,13 +3309,7 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
-block|}
 else|else
-block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3293,7 +3319,6 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|validateLocations
@@ -3305,7 +3330,6 @@ operator|.
 name|validationServers
 argument_list|)
 condition|)
-block|{
 name|System
 operator|.
 name|out
@@ -3315,13 +3339,7 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
-block|}
 else|else
-block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3331,7 +3349,6 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|validateColumnNullValues
@@ -3339,7 +3356,6 @@ argument_list|(
 name|conn
 argument_list|)
 condition|)
-block|{
 name|System
 operator|.
 name|out
@@ -3349,13 +3365,7 @@ argument_list|(
 literal|"[SUCCESS]\n"
 argument_list|)
 expr_stmt|;
-block|}
 else|else
-block|{
-name|success
-operator|=
-literal|false
-expr_stmt|;
 name|System
 operator|.
 name|out
@@ -3365,7 +3375,6 @@ argument_list|(
 literal|"[FAIL]\n"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 finally|finally
 block|{
@@ -3406,46 +3415,11 @@ name|System
 operator|.
 name|out
 operator|.
-name|print
-argument_list|(
-literal|"Done with metastore validation: "
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-operator|!
-name|success
-condition|)
-block|{
-name|System
-operator|.
-name|out
-operator|.
 name|println
 argument_list|(
-literal|"[FAIL]"
+literal|"Done with metastore validation"
 argument_list|)
 expr_stmt|;
-name|System
-operator|.
-name|exit
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"[SUCCESS]"
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 name|boolean
 name|validateSequences
@@ -4185,7 +4159,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|debug
+name|error
 argument_list|(
 literal|"Failed to determine schema version from Hive Metastore DB,"
 operator|+
@@ -4209,7 +4183,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Validating tables in the schema for version "
 operator|+
@@ -4435,7 +4409,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Parsing subscript "
 operator|+
@@ -4559,7 +4533,18 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Table(s) [ "
+literal|"Found "
+operator|+
+name|schemaSize
+operator|+
+literal|" tables in schema definition, "
+operator|+
+name|schemaTables
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" tables [ "
 operator|+
 name|Arrays
 operator|.
@@ -4595,7 +4580,11 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Succeeded in schema table validation."
+literal|"Succeeded in schema table validation. "
+operator|+
+name|schemaSize
+operator|+
+literal|" tables matched"
 argument_list|)
 expr_stmt|;
 return|return
@@ -6471,28 +6460,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-else|else
-block|{
-name|schemaTool
-operator|.
-name|setUserName
-argument_list|(
-name|schemaTool
-operator|.
-name|getHiveConf
-argument_list|()
-operator|.
-name|get
-argument_list|(
-name|ConfVars
-operator|.
-name|METASTORE_CONNECTION_USER_NAME
-operator|.
-name|varname
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|line
@@ -6515,54 +6482,6 @@ literal|"passWord"
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-try|try
-block|{
-name|schemaTool
-operator|.
-name|setPassWord
-argument_list|(
-name|ShimLoader
-operator|.
-name|getHadoopShims
-argument_list|()
-operator|.
-name|getPassword
-argument_list|(
-name|schemaTool
-operator|.
-name|getHiveConf
-argument_list|()
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREPWD
-operator|.
-name|varname
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|err
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveMetaException
-argument_list|(
-literal|"Error getting metastore password"
-argument_list|,
-name|err
-argument_list|)
-throw|;
-block|}
 block|}
 if|if
 condition|(

@@ -276,8 +276,6 @@ throws|,
 name|IOException
 throws|,
 name|InterruptedException
-throws|,
-name|TooManyRequestsException
 block|{
 name|runAs
 operator|=

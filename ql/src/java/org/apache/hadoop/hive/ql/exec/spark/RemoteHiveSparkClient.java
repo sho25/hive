@@ -2405,23 +2405,41 @@ argument_list|(
 literal|"Logging job configuration: "
 argument_list|)
 expr_stmt|;
-name|StringBuilder
+name|StringWriter
 name|outWriter
 init|=
 operator|new
-name|StringBuilder
+name|StringWriter
 argument_list|()
 decl_stmt|;
-comment|// redact sensitive information before logging
-name|HiveConfUtil
+try|try
+block|{
+name|Configuration
 operator|.
-name|dumpConfig
+name|dumpConfiguration
 argument_list|(
 name|localJobConf
 argument_list|,
 name|outWriter
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Error logging job configuration"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info

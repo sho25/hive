@@ -1787,8 +1787,6 @@ argument_list|,
 name|ci
 operator|.
 name|id
-argument_list|,
-name|jobName
 argument_list|)
 expr_stmt|;
 block|}
@@ -2035,8 +2033,6 @@ argument_list|,
 name|ci
 operator|.
 name|id
-argument_list|,
-name|jobName
 argument_list|)
 expr_stmt|;
 name|su
@@ -2083,9 +2079,6 @@ name|txnHandler
 parameter_list|,
 name|long
 name|id
-parameter_list|,
-name|String
-name|jobName
 parameter_list|)
 throws|throws
 name|IOException
@@ -2390,42 +2383,6 @@ operator|.
 name|waitForCompletion
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-operator|!
-name|rj
-operator|.
-name|isSuccessful
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-name|compactionType
-operator|==
-name|CompactionType
-operator|.
-name|MAJOR
-condition|?
-literal|"Major"
-else|:
-literal|"Minor"
-operator|+
-literal|" compactor job failed for "
-operator|+
-name|jobName
-operator|+
-literal|"! Hadoop JobId: "
-operator|+
-name|rj
-operator|.
-name|getID
-argument_list|()
-argument_list|)
-throw|;
-block|}
 block|}
 comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    */
 specifier|private

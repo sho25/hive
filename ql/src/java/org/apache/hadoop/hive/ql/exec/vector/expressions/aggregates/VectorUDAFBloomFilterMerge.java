@@ -1528,7 +1528,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|long
+name|int
 name|getAggregationBufferFixedSize
 parameter_list|()
 block|{

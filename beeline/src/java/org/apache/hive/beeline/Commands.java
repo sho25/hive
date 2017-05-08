@@ -367,6 +367,24 @@ name|hive
 operator|.
 name|conf
 operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
 name|HiveVariableSource
 import|;
 end_import
@@ -5214,15 +5232,8 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-comment|// In test mode we want the operation logs regardless of the settings
 if|if
 condition|(
-operator|!
-name|beeLine
-operator|.
-name|isTestMode
-argument_list|()
-operator|&&
 name|beeLine
 operator|.
 name|getOpts
@@ -6603,26 +6614,23 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|StringBuilder
+name|StringBuffer
 name|command
 init|=
 operator|new
-name|StringBuilder
+name|StringBuffer
 argument_list|()
 decl_stmt|;
-comment|// Marker to track if there is starting double quote without an ending double quote
 name|boolean
 name|hasUnterminatedDoubleQuote
 init|=
 literal|false
 decl_stmt|;
-comment|// Marker to track if there is starting single quote without an ending double quote
 name|boolean
-name|hasUnterminatedSingleQuote
+name|hasUntermindatedSingleQuote
 init|=
 literal|false
 decl_stmt|;
-comment|// Index of the last seen semicolon in the given line
 name|int
 name|lastSemiColonIndex
 init|=
@@ -6637,7 +6645,6 @@ operator|.
 name|toCharArray
 argument_list|()
 decl_stmt|;
-comment|// Marker to track if the previous character was an escape character
 name|boolean
 name|wasPrevEscape
 init|=
@@ -6648,8 +6655,6 @@ name|index
 init|=
 literal|0
 decl_stmt|;
-comment|// Iterate through the line and invoke the addCmdPart method whenever a semicolon is seen that is not inside a
-comment|// quoted string
 for|for
 control|(
 init|;
@@ -6674,8 +6679,6 @@ block|{
 case|case
 literal|'\''
 case|:
-comment|// If a single quote is seen and the index is not inside a double quoted string and the previous character
-comment|// was not an escape, then update the hasUnterminatedSingleQuote flag
 if|if
 condition|(
 operator|!
@@ -6685,10 +6688,10 @@ operator|!
 name|wasPrevEscape
 condition|)
 block|{
-name|hasUnterminatedSingleQuote
+name|hasUntermindatedSingleQuote
 operator|=
 operator|!
-name|hasUnterminatedSingleQuote
+name|hasUntermindatedSingleQuote
 expr_stmt|;
 block|}
 name|wasPrevEscape
@@ -6699,12 +6702,10 @@ break|break;
 case|case
 literal|'\"'
 case|:
-comment|// If a double quote is seen and the index is not inside a single quoted string and the previous character
-comment|// was not an escape, then update the hasUnterminatedDoubleQuote flag
 if|if
 condition|(
 operator|!
-name|hasUnterminatedSingleQuote
+name|hasUntermindatedSingleQuote
 operator|&&
 operator|!
 name|wasPrevEscape
@@ -6724,15 +6725,13 @@ break|break;
 case|case
 literal|';'
 case|:
-comment|// If a semicolon is seen, and the line isn't inside a quoted string, then treat
-comment|// line[lastSemiColonIndex] to line[index] as a single command
 if|if
 condition|(
 operator|!
 name|hasUnterminatedDoubleQuote
 operator|&&
 operator|!
-name|hasUnterminatedSingleQuote
+name|hasUntermindatedSingleQuote
 condition|)
 block|{
 name|addCmdPart
@@ -6768,8 +6767,7 @@ literal|'\\'
 case|:
 name|wasPrevEscape
 operator|=
-operator|!
-name|wasPrevEscape
+literal|true
 expr_stmt|;
 break|break;
 default|default:
@@ -6780,7 +6778,7 @@ expr_stmt|;
 break|break;
 block|}
 block|}
-comment|// If the line doesn't end with a ; or if the line is empty, add the cmd part
+comment|// if the line doesn't end with a ; or if the line is empty, add the cmd part
 if|if
 condition|(
 name|lastSemiColonIndex
@@ -6827,7 +6825,7 @@ name|String
 argument_list|>
 name|cmdList
 parameter_list|,
-name|StringBuilder
+name|StringBuffer
 name|command
 parameter_list|,
 name|String
@@ -7096,17 +7094,6 @@ range|:
 name|queryLogs
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|commands
-operator|.
-name|beeLine
-operator|.
-name|isTestMode
-argument_list|()
-condition|)
-block|{
 name|commands
 operator|.
 name|beeLine
@@ -7116,20 +7103,6 @@ argument_list|(
 name|log
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// In test mode print the logs to the output
-name|commands
-operator|.
-name|beeLine
-operator|.
-name|output
-argument_list|(
-name|log
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
@@ -7315,15 +7288,6 @@ range|:
 name|logs
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|beeLine
-operator|.
-name|isTestMode
-argument_list|()
-condition|)
-block|{
 name|beeLine
 operator|.
 name|info
@@ -7331,18 +7295,6 @@ argument_list|(
 name|log
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// In test mode print the logs to the output
-name|beeLine
-operator|.
-name|output
-argument_list|(
-name|log
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 do|while
@@ -9449,18 +9401,29 @@ return|return
 literal|false
 return|;
 block|}
-try|try
-block|{
+name|List
+argument_list|<
 name|String
-index|[]
+argument_list|>
 name|cmds
 init|=
-name|beeLine
-operator|.
-name|getCommands
+operator|new
+name|LinkedList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
+try|try
+block|{
+name|BufferedReader
+name|reader
+init|=
+operator|new
+name|BufferedReader
 argument_list|(
 operator|new
-name|File
+name|FileReader
 argument_list|(
 name|parts
 index|[
@@ -9469,6 +9432,183 @@ index|]
 argument_list|)
 argument_list|)
 decl_stmt|;
+try|try
+block|{
+comment|// ### NOTE: fix for sf.net bug 879427
+name|StringBuilder
+name|cmd
+init|=
+literal|null
+decl_stmt|;
+for|for
+control|(
+init|;
+condition|;
+control|)
+block|{
+name|String
+name|scriptLine
+init|=
+name|reader
+operator|.
+name|readLine
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|scriptLine
+operator|==
+literal|null
+condition|)
+block|{
+break|break;
+block|}
+name|String
+name|trimmedLine
+init|=
+name|scriptLine
+operator|.
+name|trim
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getTrimScripts
+argument_list|()
+condition|)
+block|{
+name|scriptLine
+operator|=
+name|trimmedLine
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|cmd
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// we're continuing an existing command
+name|cmd
+operator|.
+name|append
+argument_list|(
+literal|" \n"
+argument_list|)
+expr_stmt|;
+name|cmd
+operator|.
+name|append
+argument_list|(
+name|scriptLine
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|trimmedLine
+operator|.
+name|endsWith
+argument_list|(
+literal|";"
+argument_list|)
+condition|)
+block|{
+comment|// this command has terminated
+name|cmds
+operator|.
+name|add
+argument_list|(
+name|cmd
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|cmd
+operator|=
+literal|null
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// we're starting a new command
+if|if
+condition|(
+name|beeLine
+operator|.
+name|needsContinuation
+argument_list|(
+name|scriptLine
+argument_list|)
+condition|)
+block|{
+comment|// multi-line
+name|cmd
+operator|=
+operator|new
+name|StringBuilder
+argument_list|(
+name|scriptLine
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// single-line
+name|cmds
+operator|.
+name|add
+argument_list|(
+name|scriptLine
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+if|if
+condition|(
+name|cmd
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// ### REVIEW: oops, somebody left the last command
+comment|// unterminated; should we fix it for them or complain?
+comment|// For now be nice and fix it.
+name|cmd
+operator|.
+name|append
+argument_list|(
+literal|";"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+name|cmd
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+finally|finally
+block|{
+name|reader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
 comment|// success only if all the commands were successful
 return|return
 name|beeLine
@@ -9480,7 +9620,8 @@ argument_list|)
 operator|==
 name|cmds
 operator|.
-name|length
+name|size
+argument_list|()
 return|;
 block|}
 catch|catch

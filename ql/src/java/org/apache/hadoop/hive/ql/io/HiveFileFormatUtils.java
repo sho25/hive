@@ -791,7 +791,6 @@ comment|// we don't have many file formats that implement InputFormatChecker. We
 comment|// multiple instances of such classes
 specifier|private
 specifier|static
-specifier|final
 name|int
 name|MAX_CACHE_SIZE
 init|=

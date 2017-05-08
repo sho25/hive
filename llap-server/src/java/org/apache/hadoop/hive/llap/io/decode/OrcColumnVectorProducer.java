@@ -653,6 +653,7 @@ argument_list|,
 name|ioMetrics
 argument_list|)
 decl_stmt|;
+comment|// Note: we use global conf here and ignore JobConf.
 name|OrcEncodedDataReader
 name|reader
 init|=
@@ -666,8 +667,6 @@ argument_list|,
 name|metadataCache
 argument_list|,
 name|conf
-argument_list|,
-name|job
 argument_list|,
 name|split
 argument_list|,

@@ -483,8 +483,6 @@ argument_list|,
 literal|"SHARED"
 argument_list|,
 literal|"show tables"
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|hiveLock

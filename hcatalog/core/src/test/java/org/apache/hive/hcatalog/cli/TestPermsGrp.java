@@ -940,7 +940,7 @@ name|dfsPath
 init|=
 name|clientWH
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,
@@ -1009,7 +1009,7 @@ name|dfsPath
 operator|=
 name|clientWH
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,
@@ -1107,7 +1107,7 @@ name|dfsPath
 operator|=
 name|clientWH
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,

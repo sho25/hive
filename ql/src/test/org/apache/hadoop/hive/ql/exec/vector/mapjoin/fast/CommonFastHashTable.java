@@ -108,7 +108,6 @@ name|random
 decl_stmt|;
 specifier|protected
 specifier|static
-specifier|final
 name|int
 name|MAX_KEY_LENGTH
 init|=
@@ -116,7 +115,6 @@ literal|100
 decl_stmt|;
 specifier|protected
 specifier|static
-specifier|final
 name|int
 name|MAX_VALUE_LENGTH
 init|=

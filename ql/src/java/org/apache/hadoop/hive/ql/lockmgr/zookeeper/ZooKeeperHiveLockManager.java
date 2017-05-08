@@ -1403,17 +1403,8 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|Exception
-name|lastException
-init|=
-literal|null
-decl_stmt|;
 do|do
 block|{
-name|lastException
-operator|=
-literal|null
-expr_stmt|;
 name|tryNum
 operator|++
 expr_stmt|;
@@ -1468,10 +1459,6 @@ name|Exception
 name|e1
 parameter_list|)
 block|{
-name|lastException
-operator|=
-name|e1
-expr_stmt|;
 if|if
 condition|(
 name|e1
@@ -1501,12 +1488,6 @@ case|:
 case|case
 name|OPERATIONTIMEOUT
 case|:
-case|case
-name|NONODE
-case|:
-case|case
-name|NODEEXISTS
-case|:
 name|LOG
 operator|.
 name|debug
@@ -1516,7 +1497,7 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-break|break;
+continue|continue;
 default|default:
 name|LOG
 operator|.
@@ -1530,17 +1511,75 @@ expr_stmt|;
 break|break;
 block|}
 block|}
-else|else
+if|if
+condition|(
+name|tryNum
+operator|>=
+name|numRetriesForLock
+condition|)
 block|{
+name|console
+operator|.
+name|printError
+argument_list|(
+literal|"Unable to acquire "
+operator|+
+name|key
+operator|.
+name|getData
+argument_list|()
+operator|.
+name|getLockMode
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|mode
+operator|+
+literal|" lock "
+operator|+
+name|key
+operator|.
+name|getDisplayName
+argument_list|()
+operator|+
+literal|" after "
+operator|+
+name|tryNum
+operator|+
+literal|" attempts."
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Other unexpected exception: "
+literal|"Exceeds maximum retries with errors: "
 argument_list|,
 name|e1
 argument_list|)
 expr_stmt|;
+name|printConflictingLocks
+argument_list|(
+name|key
+argument_list|,
+name|mode
+argument_list|,
+name|conflictingLocks
+argument_list|)
+expr_stmt|;
+name|conflictingLocks
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+throw|throw
+operator|new
+name|LockException
+argument_list|(
+name|e1
+argument_list|)
+throw|;
 block|}
 block|}
 block|}
@@ -1599,31 +1638,12 @@ argument_list|,
 name|conflictingLocks
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|lastException
-operator|!=
-literal|null
-condition|)
-block|{
-name|LOG
+block|}
+name|conflictingLocks
 operator|.
-name|error
-argument_list|(
-literal|"Exceeds maximum retries with errors: "
-argument_list|,
-name|lastException
-argument_list|)
+name|clear
+argument_list|()
 expr_stmt|;
-throw|throw
-operator|new
-name|LockException
-argument_list|(
-name|lastException
-argument_list|)
-throw|;
-block|}
-block|}
 return|return
 name|ret
 return|;
@@ -1759,7 +1779,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Creates a primitive lock object on ZooKeeper.    * @param key The lock data    * @param mode The lock mode (HiveLockMode - EXCLUSIVE/SHARED/SEMI_SHARED)    * @param keepAlive If true creating PERSISTENT ZooKeeper locks, otherwise EPHEMERAL ZooKeeper    *                  locks    * @param parentCreated If we expect, that the parent is already created then true, otherwise    *                      we will try to create the parents as well    * @param conflictingLocks The set where we should collect the conflicting locks when    *                         the logging level is set to DEBUG    * @return The created ZooKeeperHiveLock object, null if there was a conflicting lock    * @throws Exception If there was an unexpected Exception    */
 specifier|private
 name|ZooKeeperHiveLock
 name|lockPrimitive
@@ -2000,15 +2019,9 @@ argument_list|(
 name|res
 argument_list|)
 expr_stmt|;
-throw|throw
-operator|new
-name|LockException
-argument_list|(
-literal|"The created node does not contain a sequence number: "
-operator|+
-name|res
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 name|List
 argument_list|<
@@ -2965,7 +2978,7 @@ name|fetchData
 argument_list|)
 return|;
 block|}
-comment|/**    * @param conf        Hive configuration    * @param key         The object to be compared against - if key is null, then get all locks    **/
+comment|/**    * @param conf        Hive configuration    * @param zkpClient   The ZooKeeper client    * @param key         The object to be compared against - if key is null, then get all locks    **/
 specifier|private
 specifier|static
 name|List

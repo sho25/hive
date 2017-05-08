@@ -654,6 +654,7 @@ argument_list|()
 decl_stmt|;
 comment|/**    * Flag to print the re-encoding warning message only once. Avoid excessive logging for each    * record encoding.    */
 specifier|private
+specifier|static
 name|boolean
 name|warnedOnce
 init|=

@@ -92,10 +92,6 @@ name|void
 name|close
 parameter_list|()
 function_decl|;
-name|String
-name|getMemoryInfo
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 

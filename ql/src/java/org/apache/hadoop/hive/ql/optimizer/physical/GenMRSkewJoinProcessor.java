@@ -2159,11 +2159,6 @@ name|getNoOuterJoin
 argument_list|()
 argument_list|,
 name|dumpFilePrefix
-argument_list|,
-name|joinDescriptor
-operator|.
-name|getNoConditionalTaskSize
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|mapJoinDescriptor
@@ -2814,7 +2809,6 @@ return|;
 block|}
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|skewJoinPrefix
 init|=
@@ -2822,7 +2816,6 @@ literal|"hive_skew_join"
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|UNDERLINE
 init|=
@@ -2830,7 +2823,6 @@ literal|"_"
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|BIGKEYS
 init|=
@@ -2838,7 +2830,6 @@ literal|"bigkeys"
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|SMALLKEYS
 init|=
@@ -2846,7 +2837,6 @@ literal|"smallkeys"
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|RESULTS
 init|=

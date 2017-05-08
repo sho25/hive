@@ -259,7 +259,7 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
-name|long
+name|int
 name|getAggregationBufferFixedSize
 parameter_list|()
 function_decl|;

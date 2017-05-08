@@ -62,7 +62,6 @@ name|HiveIOExceptionHandlerUtil
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|ThreadLocal
 argument_list|<
 name|HiveIOExceptionHandlerChain
@@ -78,7 +77,6 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|synchronized
 name|HiveIOExceptionHandlerChain
 name|get
 parameter_list|(

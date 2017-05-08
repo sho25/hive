@@ -117,22 +117,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|StringInternUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|metastore
 operator|.
 name|api
@@ -1124,12 +1108,7 @@ name|this
 operator|.
 name|expr
 operator|=
-name|StringInternUtils
-operator|.
-name|internIfNotNull
-argument_list|(
 name|expr
-argument_list|)
 expr_stmt|;
 block|}
 comment|/**      * @return the baseCols      */

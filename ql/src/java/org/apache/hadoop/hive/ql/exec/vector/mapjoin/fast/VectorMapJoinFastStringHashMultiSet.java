@@ -150,33 +150,6 @@ name|isOuterJoin
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|long
-name|getEstimatedMemorySize
-parameter_list|()
-block|{
-comment|// adding 16KB constant memory for stringCommon as the rabit hole is deep to implement
-comment|// MemoryEstimate interface, also it is constant overhead
-name|long
-name|size
-init|=
-operator|(
-literal|16
-operator|*
-literal|1024L
-operator|)
-decl_stmt|;
-return|return
-name|super
-operator|.
-name|getEstimatedMemorySize
-argument_list|()
-operator|+
-name|size
-return|;
-block|}
 block|}
 end_class
 

@@ -2544,11 +2544,9 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Checking fs privileges of user {} for {} {} "
-argument_list|,
-name|userName
+literal|"Checking fs privileges for {} {}"
 argument_list|,
 name|fileStatus
 operator|.

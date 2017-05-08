@@ -61,22 +61,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|JavaUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|junit
 operator|.
 name|Test
@@ -156,7 +140,7 @@ name|testReverseMatch
 argument_list|(
 name|ErrorMsg
 operator|.
-name|OP_NOT_ALLOWED_IN_IMPLICIT_TXN
+name|OP_NOT_ALLOWED_IN_AUTOCOMMIT
 argument_list|,
 literal|"COMMIT"
 argument_list|)
@@ -169,14 +153,7 @@ name|OP_NOT_ALLOWED_IN_TXN
 argument_list|,
 literal|"ALTER TABLE"
 argument_list|,
-name|JavaUtils
-operator|.
-name|txnIdToString
-argument_list|(
-literal|1
-argument_list|)
-argument_list|,
-literal|"123"
+literal|"1"
 argument_list|)
 expr_stmt|;
 name|testReverseMatch

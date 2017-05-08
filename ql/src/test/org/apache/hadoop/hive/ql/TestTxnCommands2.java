@@ -950,6 +950,21 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
+name|HIVE_SUPPORT_CONCURRENCY
+operator|.
+name|varname
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|set
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
 name|METASTOREWAREHOUSE
 operator|.
 name|varname
@@ -5504,7 +5519,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000022_0000022_0000"
+literal|"delta_0000001_0000001_0000"
 argument_list|,
 name|status
 index|[
@@ -5562,7 +5577,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000023_0000023_0000"
+literal|"delta_0000002_0000002_0000"
 argument_list|,
 name|status
 index|[
@@ -6048,7 +6063,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000023"
+literal|"base_0000002"
 argument_list|,
 name|status
 index|[
@@ -6296,7 +6311,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000023"
+literal|"base_0000002"
 argument_list|,
 name|status
 index|[
@@ -6503,6 +6518,36 @@ argument_list|,
 name|value
 argument_list|)
 expr_stmt|;
+comment|// 2. Run a query against an ACID table, and we should have txn logged in conf
+name|runStatementOnDriver
+argument_list|(
+literal|"select * from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+argument_list|)
+expr_stmt|;
+name|value
+operator|=
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertNotNull
+argument_list|(
+literal|"The entry shouldn't be null for query that involves ACID tables"
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -6574,20 +6619,6 @@ literal|3
 block|}
 block|}
 decl_stmt|;
-comment|//this will cause next txn to be marked aborted but the data is still written to disk
-name|hiveConf
-operator|.
-name|setBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVETESTMODEROLLBACKTXN
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"insert into "
@@ -6604,22 +6635,17 @@ name|tableData2
 argument_list|)
 argument_list|)
 expr_stmt|;
-assert|assert
 name|hiveConf
 operator|.
-name|get
+name|set
 argument_list|(
 name|ValidTxnList
 operator|.
 name|VALID_TXNS_KEY
+argument_list|,
+literal|"0:"
 argument_list|)
-operator|==
-literal|null
-operator|:
-literal|"previous txn should've cleaned it"
-assert|;
-comment|//so now if HIVEFETCHTASKCONVERSION were to use a stale value, it would use a
-comment|//ValidTxnList with HWM=MAX_LONG, i.e. include the data for aborted txn
+expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -6639,9 +6665,9 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"Extra data"
+literal|"Missing data"
 argument_list|,
-literal|2
+literal|3
 argument_list|,
 name|rs
 operator|.
@@ -13580,6 +13606,7 @@ literal|0
 return|;
 block|}
 block|}
+specifier|private
 name|String
 name|makeValuesClause
 parameter_list|(

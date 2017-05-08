@@ -448,6 +448,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|private
+specifier|static
 name|Map
 argument_list|<
 name|Integer
@@ -1427,6 +1428,7 @@ return|;
 block|}
 block|}
 specifier|private
+specifier|static
 name|Map
 argument_list|<
 name|Integer

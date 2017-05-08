@@ -1968,13 +1968,6 @@ operator|+
 literal|" does not exist."
 argument_list|)
 throw|;
-name|FileSystem
-operator|.
-name|closeAllForUGI
-argument_list|(
-name|ugi
-argument_list|)
-expr_stmt|;
 return|return
 name|p
 return|;

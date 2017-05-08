@@ -153,10 +153,9 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
-comment|// Load the defaults.
 for|for
 control|(
 name|String

@@ -85,22 +85,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|StringInternUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -713,10 +697,6 @@ block|{
 comment|// Get column names and sort order
 name|columnNames
 operator|=
-name|StringInternUtils
-operator|.
-name|internStringsInList
-argument_list|(
 name|Arrays
 operator|.
 name|asList
@@ -726,7 +706,6 @@ operator|.
 name|split
 argument_list|(
 name|columnNameDelimiter
-argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -853,15 +832,10 @@ name|this
 operator|.
 name|columnNames
 operator|=
-name|StringInternUtils
-operator|.
-name|internStringsInList
-argument_list|(
 name|aoig
 operator|.
 name|getColumnNames
 argument_list|()
-argument_list|)
 expr_stmt|;
 name|this
 operator|.

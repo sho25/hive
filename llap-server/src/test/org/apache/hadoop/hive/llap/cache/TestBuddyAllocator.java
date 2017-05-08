@@ -381,13 +381,20 @@ block|{
 annotation|@
 name|Override
 specifier|public
-name|void
+name|boolean
 name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
+parameter_list|,
+name|boolean
+name|waitForEviction
 parameter_list|)
-block|{     }
+block|{
+return|return
+literal|true
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -422,7 +429,7 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|long
+name|void
 name|forceReservedMemory
 parameter_list|(
 name|int
@@ -430,22 +437,6 @@ name|allocationSize
 parameter_list|,
 name|int
 name|count
-parameter_list|)
-block|{
-return|return
-name|allocationSize
-operator|*
-name|count
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|debugDumpShort
-parameter_list|(
-name|StringBuilder
-name|sb
 parameter_list|)
 block|{     }
 block|}
@@ -1864,7 +1855,7 @@ literal|"; "
 operator|+
 name|a
 operator|.
-name|debugDumpForOomInternal
+name|debugDump
 argument_list|()
 argument_list|)
 expr_stmt|;

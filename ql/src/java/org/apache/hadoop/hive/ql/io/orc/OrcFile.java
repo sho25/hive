@@ -171,6 +171,8 @@ name|apache
 operator|.
 name|orc
 operator|.
+name|impl
+operator|.
 name|MemoryManager
 import|;
 end_import
@@ -827,7 +829,7 @@ name|this
 return|;
 block|}
 comment|/**      * A package local option to set the memory manager.      */
-specifier|public
+specifier|protected
 name|WriterOptions
 name|memory
 parameter_list|(

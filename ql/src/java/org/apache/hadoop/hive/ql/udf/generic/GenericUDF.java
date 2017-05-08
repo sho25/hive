@@ -1820,9 +1820,6 @@ case|:
 case|case
 name|LONG
 case|:
-case|case
-name|VOID
-case|:
 break|break;
 default|default:
 throw|throw
@@ -1861,7 +1858,7 @@ index|]
 argument_list|,
 name|PrimitiveObjectInspectorFactory
 operator|.
-name|writableLongObjectInspector
+name|writableIntObjectInspector
 argument_list|)
 decl_stmt|;
 name|converters

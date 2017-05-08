@@ -2357,7 +2357,6 @@ name|IOException
 block|{
 comment|// TODO: parts of this should be moved out of TezSession to reuse the clients, but there's
 comment|//       no good place for that right now (HIVE-13698).
-comment|// TODO: De-link from SessionState. A TezSession can be linked to different Hive Sessions via the pool.
 name|SessionState
 name|session
 init|=
@@ -2817,7 +2816,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// TODO: De-link from SessionState. A TezSession can be linked to different Hive Sessions via the pool.
 name|String
 name|user
 init|=
@@ -2910,7 +2908,6 @@ name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
-comment|// TODO: De-link from SessionState. A TezSession can be linked to different Hive Sessions via the pool.
 name|LOG
 operator|.
 name|debug
@@ -3498,7 +3495,6 @@ throws|throws
 name|IOException
 block|{
 comment|// tez needs its own scratch dir (per session)
-comment|// TODO: De-link from SessionState. A TezSession can be linked to different Hive Sessions via the pool.
 name|Path
 name|tezDir
 init|=

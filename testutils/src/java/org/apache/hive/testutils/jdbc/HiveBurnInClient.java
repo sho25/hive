@@ -74,7 +74,6 @@ name|HiveBurnInClient
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|driverName
 init|=
@@ -82,8 +81,8 @@ literal|"org.apache.hive.jdbc.HiveDriver"
 decl_stmt|;
 comment|//default 80k (runs slightly over 1 day long)
 specifier|private
-specifier|static
 specifier|final
+specifier|static
 name|int
 name|NUM_QUERY_ITERATIONS
 init|=

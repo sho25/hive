@@ -363,6 +363,7 @@ literal|1024
 operator|)
 decl_stmt|;
 specifier|protected
+specifier|static
 name|boolean
 name|test
 init|=
@@ -403,6 +404,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
 name|CharsetDecoder
 name|decoder
 decl_stmt|;
@@ -413,7 +415,6 @@ literal|null
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|TAB
 init|=
@@ -421,7 +422,6 @@ literal|"\t"
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|NEWLINE
 init|=
@@ -1498,7 +1498,6 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|Usage
 init|=
@@ -1587,6 +1586,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+specifier|static
 name|void
 name|setupBufferedOutput
 parameter_list|()

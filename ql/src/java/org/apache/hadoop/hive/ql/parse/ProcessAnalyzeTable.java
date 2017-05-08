@@ -73,26 +73,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|parquet
-operator|.
-name|MapredParquetInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -728,26 +708,17 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|inputFormat
+operator|.
+name|equals
+argument_list|(
 name|OrcInputFormat
 operator|.
 name|class
-operator|.
-name|isAssignableFrom
-argument_list|(
-name|inputFormat
-argument_list|)
-operator|||
-name|MapredParquetInputFormat
-operator|.
-name|class
-operator|.
-name|isAssignableFrom
-argument_list|(
-name|inputFormat
 argument_list|)
 condition|)
 block|{
-comment|// For ORC& Parquet, all the following statements are the same
+comment|// For ORC, all the following statements are the same
 comment|// ANALYZE TABLE T [PARTITION (...)] COMPUTE STATISTICS
 comment|// ANALYZE TABLE T [PARTITION (...)] COMPUTE STATISTICS partialscan;
 comment|// ANALYZE TABLE T [PARTITION (...)] COMPUTE STATISTICS noscan;

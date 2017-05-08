@@ -849,17 +849,6 @@ specifier|final
 name|String
 name|spillLocalDirs
 decl_stmt|;
-annotation|@
-name|Override
-specifier|public
-name|long
-name|getEstimatedMemorySize
-parameter_list|()
-block|{
-return|return
-name|memoryUsed
-return|;
-block|}
 comment|/**    * This class encapsulates the triplet together since they are closely related to each other    * The triplet: hashmap (either in memory or on disk), small table container, big table container    */
 specifier|public
 specifier|static

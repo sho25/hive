@@ -79,10 +79,6 @@ argument_list|>
 name|getExecutorsStatus
 parameter_list|()
 function_decl|;
-name|int
-name|getNumActive
-parameter_list|()
-function_decl|;
 name|QueryIdentifier
 name|findQueryByFragment
 parameter_list|(

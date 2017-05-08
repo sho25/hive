@@ -2260,12 +2260,6 @@ name|SerDeException
 throws|,
 name|ClassNotFoundException
 block|{
-name|this
-operator|.
-name|vectorMapJoinHashTable
-operator|=
-literal|null
-expr_stmt|;
 comment|// The super method will reload a hash table partition of one of the small tables.
 comment|// Currently, for native vector map join it will only be one small table.
 name|super

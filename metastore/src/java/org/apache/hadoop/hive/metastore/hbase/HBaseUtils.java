@@ -4286,7 +4286,6 @@ argument_list|()
 return|;
 block|}
 comment|/**    * Produce a hash for the storage descriptor    * @param sd storage descriptor to hash    * @param md message descriptor to use to generate the hash    * @return the hash as a byte array    */
-specifier|public
 specifier|static
 name|byte
 index|[]

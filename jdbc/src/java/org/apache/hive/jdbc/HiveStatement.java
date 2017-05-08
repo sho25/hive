@@ -1345,10 +1345,6 @@ name|isExecuteStatementFailed
 operator|=
 literal|true
 expr_stmt|;
-name|isLogBeingGenerated
-operator|=
-literal|false
-expr_stmt|;
 throw|throw
 name|eS
 throw|;
@@ -1362,10 +1358,6 @@ block|{
 name|isExecuteStatementFailed
 operator|=
 literal|true
-expr_stmt|;
-name|isLogBeingGenerated
-operator|=
-literal|false
 expr_stmt|;
 throw|throw
 operator|new
@@ -2767,6 +2759,21 @@ argument_list|(
 literal|"Method getQueryLog() failed. The "
 operator|+
 literal|"statement has been closed or cancelled."
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|isExecuteStatementFailed
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"Method getQueryLog() failed. Because the stmtHandle in "
+operator|+
+literal|"HiveStatement is null and the statement execution might fail."
 argument_list|)
 throw|;
 block|}

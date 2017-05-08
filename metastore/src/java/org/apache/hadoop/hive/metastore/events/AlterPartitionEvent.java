@@ -95,11 +95,6 @@ specifier|final
 name|Table
 name|table
 decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|isTruncateOp
-decl_stmt|;
 specifier|public
 name|AlterPartitionEvent
 parameter_list|(
@@ -111,9 +106,6 @@ name|newPart
 parameter_list|,
 name|Table
 name|table
-parameter_list|,
-name|boolean
-name|isTruncateOp
 parameter_list|,
 name|boolean
 name|status
@@ -147,12 +139,6 @@ name|table
 operator|=
 name|table
 expr_stmt|;
-name|this
-operator|.
-name|isTruncateOp
-operator|=
-name|isTruncateOp
-expr_stmt|;
 block|}
 comment|/**    * @return the old partition    */
 specifier|public
@@ -182,16 +168,6 @@ parameter_list|()
 block|{
 return|return
 name|table
-return|;
-block|}
-comment|/**    * Get the truncate table flag    * @return    */
-specifier|public
-name|boolean
-name|getIsTruncateOp
-parameter_list|()
-block|{
-return|return
-name|isTruncateOp
 return|;
 block|}
 block|}

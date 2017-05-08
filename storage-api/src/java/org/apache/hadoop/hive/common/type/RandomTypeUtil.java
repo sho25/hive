@@ -569,7 +569,6 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|ThreadLocal
 argument_list|<
 name|DateFormat
@@ -603,7 +602,6 @@ decl_stmt|;
 comment|// We've switched to Joda/Java Calendar which has a more limited time range....
 specifier|public
 specifier|static
-specifier|final
 name|int
 name|MIN_YEAR
 init|=
@@ -611,7 +609,6 @@ literal|1900
 decl_stmt|;
 specifier|public
 specifier|static
-specifier|final
 name|int
 name|MAX_YEAR
 init|=
@@ -619,7 +616,6 @@ literal|3000
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|long
 name|MIN_FOUR_DIGIT_YEAR_MILLIS
 init|=
@@ -630,7 +626,6 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|long
 name|MAX_FOUR_DIGIT_YEAR_MILLIS
 init|=

@@ -4510,7 +4510,6 @@ block|}
 block|}
 specifier|public
 specifier|static
-specifier|synchronized
 name|void
 name|registerNumericType
 parameter_list|(

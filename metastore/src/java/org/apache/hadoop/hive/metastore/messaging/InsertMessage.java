@@ -60,13 +60,6 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
-comment|/**    * Getter for the replace flag being insert into/overwrite    * @return Replace flag to represent INSERT INTO or INSERT OVERWRITE (Boolean).    */
-specifier|public
-specifier|abstract
-name|boolean
-name|isReplace
-parameter_list|()
-function_decl|;
 comment|/**    * Get the map of partition keyvalues.  Will be null if this insert is to a table and not a    * partition.    * @return Map of partition keyvalues, or null.    */
 specifier|public
 specifier|abstract

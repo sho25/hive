@@ -112,11 +112,6 @@ name|ExprNodeDesc
 argument_list|>
 name|colExprs
 decl_stmt|;
-comment|// Column expression of the table being filtered by the semijoin optimization.
-specifier|private
-name|ExprNodeDesc
-name|tsColExpr
-decl_stmt|;
 comment|// get-set methods
 specifier|public
 name|TableDesc
@@ -200,30 +195,6 @@ operator|.
 name|colExprs
 operator|=
 name|colExprs
-expr_stmt|;
-block|}
-specifier|public
-name|ExprNodeDesc
-name|getTsColExpr
-parameter_list|()
-block|{
-return|return
-name|tsColExpr
-return|;
-block|}
-specifier|public
-name|void
-name|setTsColExpr
-parameter_list|(
-name|ExprNodeDesc
-name|tsColExpr
-parameter_list|)
-block|{
-name|this
-operator|.
-name|tsColExpr
-operator|=
-name|tsColExpr
 expr_stmt|;
 block|}
 block|}

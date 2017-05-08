@@ -1117,7 +1117,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultPartitionPath
+name|getPartitionPath
 argument_list|(
 name|db
 argument_list|,
@@ -1163,7 +1163,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultPartitionPath
+name|getPartitionPath
 argument_list|(
 name|db
 argument_list|,
@@ -1209,7 +1209,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultPartitionPath
+name|getPartitionPath
 argument_list|(
 name|db
 argument_list|,
@@ -1710,7 +1710,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,
@@ -1747,7 +1747,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,
@@ -1784,7 +1784,7 @@ name|Path
 argument_list|(
 name|warehouse
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|db
 argument_list|,

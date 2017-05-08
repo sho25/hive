@@ -1677,7 +1677,6 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|boolean
 name|isDebugEnabled
 init|=
@@ -9276,8 +9275,6 @@ name|SchemaEvolution
 argument_list|(
 name|fileSchema
 argument_list|,
-literal|null
-argument_list|,
 name|readerOptions
 operator|.
 name|include
@@ -11569,6 +11566,15 @@ argument_list|()
 return|;
 block|}
 block|}
+comment|// The schema type description does not include the ACID fields (i.e. it is the
+comment|// non-ACID original schema).
+specifier|private
+specifier|static
+name|boolean
+name|SCHEMA_TYPES_IS_ORIGINAL
+init|=
+literal|true
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public

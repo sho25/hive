@@ -480,17 +480,6 @@ literal|"hdfs:/"
 argument_list|)
 operator|==
 literal|0
-operator|||
-name|StringUtils
-operator|.
-name|indexOf
-argument_list|(
-name|path
-argument_list|,
-literal|"viewfs:/"
-argument_list|)
-operator|==
-literal|0
 condition|)
 block|{
 name|Path

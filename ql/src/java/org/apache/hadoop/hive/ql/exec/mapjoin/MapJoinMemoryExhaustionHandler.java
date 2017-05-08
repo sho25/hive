@@ -297,7 +297,7 @@ return|return
 name|maxHeapSize
 return|;
 block|}
-comment|/**    * Throws MapJoinMemoryExhaustionException when the JVM has consumed the    * configured percentage of memory. The arguments are used simply for the error    * message.    *    * @param tableContainerSize currently table container size    * @param numRows number of rows processed    * @throws MapJoinMemoryExhaustionError    */
+comment|/**    * Throws MapJoinMemoryExhaustionException when the JVM has consumed the    * configured percentage of memory. The arguments are used simply for the error    * message.    *    * @param tableContainerSize currently table container size    * @param numRows number of rows processed    * @throws MapJoinMemoryExhaustionException    */
 specifier|public
 name|void
 name|checkMemoryStatus
@@ -309,7 +309,7 @@ name|long
 name|numRows
 parameter_list|)
 throws|throws
-name|MapJoinMemoryExhaustionError
+name|MapJoinMemoryExhaustionException
 block|{
 name|long
 name|usedMemory
@@ -380,7 +380,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|MapJoinMemoryExhaustionError
+name|MapJoinMemoryExhaustionException
 argument_list|(
 name|msg
 argument_list|)

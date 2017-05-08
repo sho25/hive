@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -199,7 +189,9 @@ name|ExprNodeDesc
 name|clone
 parameter_list|()
 block|{
-return|return
+name|ExprNodeDynamicListDesc
+name|clone
+init|=
 operator|new
 name|ExprNodeDynamicListDesc
 argument_list|(
@@ -209,6 +201,9 @@ name|source
 argument_list|,
 name|keyIndex
 argument_list|)
+decl_stmt|;
+return|return
+name|clone
 return|;
 block|}
 annotation|@

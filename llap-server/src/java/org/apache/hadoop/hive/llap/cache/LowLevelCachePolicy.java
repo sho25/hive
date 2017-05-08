@@ -92,7 +92,7 @@ name|dumper
 parameter_list|)
 function_decl|;
 comment|/** TODO: temporary method until we have a better allocator */
-name|long
+name|int
 name|tryEvictContiguousData
 parameter_list|(
 name|int

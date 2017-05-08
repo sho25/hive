@@ -317,8 +317,8 @@ class|class
 name|StatsSetupConst
 block|{
 specifier|protected
-specifier|static
 specifier|final
+specifier|static
 name|Logger
 name|LOG
 init|=

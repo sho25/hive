@@ -45,22 +45,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|MemoryEstimate
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|metadata
@@ -107,8 +91,6 @@ begin_interface
 specifier|public
 interface|interface
 name|VectorMapJoinHashTable
-extends|extends
-name|MemoryEstimate
 block|{
 comment|/*    * @param currentKey    *          The current key.    * @param currentValue    *          The current value.    */
 name|void

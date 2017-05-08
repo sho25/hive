@@ -156,9 +156,6 @@ name|fieldName
 operator|.
 name|toLowerCase
 argument_list|()
-operator|.
-name|intern
-argument_list|()
 expr_stmt|;
 name|this
 operator|.

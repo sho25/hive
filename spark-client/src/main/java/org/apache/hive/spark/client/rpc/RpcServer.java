@@ -759,7 +759,7 @@ name|this
 operator|.
 name|config
 operator|.
-name|getConnectTimeoutMs
+name|getServerConnectTimeoutMs
 argument_list|()
 argument_list|,
 name|TimeUnit

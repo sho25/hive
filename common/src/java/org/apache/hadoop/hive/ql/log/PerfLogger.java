@@ -212,14 +212,6 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|WAIT_COMPILE
-init|=
-literal|"waitCompile"
-decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
 name|PARSE
 init|=
 literal|"parse"

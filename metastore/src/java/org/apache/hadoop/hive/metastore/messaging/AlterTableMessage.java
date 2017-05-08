@@ -65,12 +65,6 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
-name|boolean
-name|getIsTruncateOp
-parameter_list|()
-function_decl|;
-specifier|public
-specifier|abstract
 name|Table
 name|getTableObjBefore
 parameter_list|()

@@ -27,16 +27,6 @@ name|Arrays
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|BitSet
-import|;
-end_import
-
 begin_comment
 comment|/**  * An implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  *   * Compaction should only include txns up to smallest open txn (exclussive).  * There may be aborted txns in the snapshot represented by this ValidCompactorTxnList.  * Thus {@link #isTxnRangeValid(long, long)} returns NONE for any range that inluces any unresolved  * transactions.  Any txn above {@code highWatermark} is unresolved.  * These produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  *   * See {@link org.apache.hadoop.hive.metastore.txn.TxnUtils#createValidCompactTxnList()} for proper  * way to construct this.  */
 end_comment
@@ -56,16 +46,13 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param abortedTxnList list of all aborted transactions    * @param abortedBits bitset marking whether the corresponding transaction is aborted    * @param highWatermark highest committed transaction to be considered for compaction,    *                      equivalently (lowest_open_txn - 1).    */
+comment|/**    * @param abortedTxnList list of all aborted transactions    * @param highWatermark highest committed transaction to be considered for compaction,    *                      equivalently (lowest_open_txn - 1).    */
 specifier|public
 name|ValidCompactorTxnList
 parameter_list|(
 name|long
 index|[]
 name|abortedTxnList
-parameter_list|,
-name|BitSet
-name|abortedBits
 parameter_list|,
 name|long
 name|highWatermark
@@ -75,12 +62,9 @@ name|super
 argument_list|(
 name|abortedTxnList
 argument_list|,
-name|abortedBits
-argument_list|,
 name|highWatermark
 argument_list|)
 expr_stmt|;
-comment|// abortedBits should be all true as everything in exceptions are aborted txns
 if|if
 condition|(
 name|this
@@ -200,29 +184,6 @@ else|:
 name|RangeResponse
 operator|.
 name|NONE
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|isTxnAborted
-parameter_list|(
-name|long
-name|txnid
-parameter_list|)
-block|{
-return|return
-name|Arrays
-operator|.
-name|binarySearch
-argument_list|(
-name|exceptions
-argument_list|,
-name|txnid
-argument_list|)
-operator|>=
-literal|0
 return|;
 block|}
 block|}

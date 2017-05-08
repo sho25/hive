@@ -1171,10 +1171,6 @@ argument_list|,
 name|Operator
 operator|.
 name|NOTEQUALS2
-argument_list|,
-name|Operator
-operator|.
-name|LIKE
 argument_list|)
 decl_stmt|;
 specifier|private

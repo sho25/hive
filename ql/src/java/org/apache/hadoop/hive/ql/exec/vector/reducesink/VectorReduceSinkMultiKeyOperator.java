@@ -188,7 +188,7 @@ specifier|public
 class|class
 name|VectorReduceSinkMultiKeyOperator
 extends|extends
-name|VectorReduceSinkUniformHashOperator
+name|VectorReduceSinkCommonOperator
 block|{
 specifier|private
 specifier|static

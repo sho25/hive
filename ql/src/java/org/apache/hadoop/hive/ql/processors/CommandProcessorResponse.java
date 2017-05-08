@@ -502,31 +502,27 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"(responseCode = "
+literal|"("
 operator|+
 name|responseCode
 operator|+
-literal|", errorMessage = "
+literal|","
 operator|+
 name|errorMessage
 operator|+
-literal|", "
+literal|","
 operator|+
 operator|(
 name|hiveErrorCode
 operator|>
 literal|0
 condition|?
-literal|"hiveErrorCode = "
-operator|+
 name|hiveErrorCode
 operator|+
-literal|", "
+literal|","
 else|:
 literal|""
 operator|)
-operator|+
-literal|"SQLState = "
 operator|+
 name|SQLState
 operator|+
@@ -537,9 +533,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|", resSchema = "
-operator|+
-name|resSchema
+literal|","
 operator|)
 operator|+
 operator|(
@@ -549,8 +543,6 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|", exception = "
-operator|+
 name|exception
 operator|.
 name|getMessage

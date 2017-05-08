@@ -144,10 +144,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|LOCKDB
@@ -585,10 +581,6 @@ name|SHOW_DATABASE
 block|}
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOWTABLES
@@ -598,10 +590,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOWCOLUMNS
@@ -611,10 +599,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_TABLESTATUS
@@ -624,10 +608,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_TBLPROPERTIES
@@ -637,10 +617,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_CREATEDATABASE
@@ -682,10 +658,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOWINDEXES
@@ -695,10 +667,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOWPARTITIONS
@@ -717,10 +685,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOWCONF
@@ -739,10 +703,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|CREATEFUNCTION
@@ -988,10 +948,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|GRANT_ROLE
@@ -1019,10 +975,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_ROLE_PRINCIPALS
@@ -1032,10 +984,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_ROLE_GRANT
@@ -1045,10 +993,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|ALTERTABLE_FILEFORMAT
@@ -1459,10 +1403,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|SHOW_TRANSACTIONS
@@ -1472,10 +1412,6 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
-argument_list|,
-literal|true
-argument_list|,
-literal|false
 argument_list|)
 block|,
 name|START_TRANSACTION
@@ -1557,7 +1493,7 @@ name|Privilege
 index|[]
 name|outputRequiredPrivileges
 decl_stmt|;
-comment|/**    * Only a small set of operations is allowed inside an explicit transactions, e.g. DML on    * Acid tables or ops w/o persistent side effects like USE DATABASE, SHOW TABLES, etc so    * that rollback is meaningful    * todo: mark all operations appropriately    */
+comment|/**    * Only a small set of operations is allowed inside an open transactions, e.g. DML    */
 specifier|private
 specifier|final
 name|boolean

@@ -206,7 +206,7 @@ specifier|public
 class|class
 name|VectorReduceSinkStringOperator
 extends|extends
-name|VectorReduceSinkUniformHashOperator
+name|VectorReduceSinkCommonOperator
 block|{
 specifier|private
 specifier|static

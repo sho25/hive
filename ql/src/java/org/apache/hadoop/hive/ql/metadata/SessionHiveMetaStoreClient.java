@@ -2698,6 +2698,8 @@ operator|.
 name|mkdirs
 argument_list|(
 name|tblPath
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{

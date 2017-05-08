@@ -95,22 +95,6 @@ name|Configuration
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConfUtil
-import|;
-end_import
-
 begin_comment
 comment|/**  * A servlet to print out the running configuration data.  */
 end_comment
@@ -346,23 +330,6 @@ name|IOException
 throws|,
 name|BadFormatException
 block|{
-comment|//redact the sensitive information from the configuration values
-name|Configuration
-name|hconf
-init|=
-operator|new
-name|Configuration
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
-name|HiveConfUtil
-operator|.
-name|stripConfigurations
-argument_list|(
-name|hconf
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|FORMAT_JSON
@@ -377,7 +344,7 @@ name|Configuration
 operator|.
 name|dumpConfiguration
 argument_list|(
-name|hconf
+name|conf
 argument_list|,
 name|out
 argument_list|)
@@ -394,7 +361,7 @@ name|format
 argument_list|)
 condition|)
 block|{
-name|hconf
+name|conf
 operator|.
 name|writeXml
 argument_list|(

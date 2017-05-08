@@ -375,14 +375,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|long
-name|DEFAULT_HASHMAP_ENTRY_SIZE
-init|=
-literal|1024L
-decl_stmt|;
 comment|// default threshold for using main memory based HashMap
 specifier|private
 specifier|static
@@ -898,23 +890,6 @@ name|GetAdaptor
 argument_list|(
 name|keyTypeFromLoader
 argument_list|)
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|long
-name|getEstimatedMemorySize
-parameter_list|()
-block|{
-comment|// TODO: Key and Values are Object[] which can be eagerly deserialized or lazily deserialized. To accurately
-comment|// estimate the entry size, every possible Objects in Key, Value should implement MemoryEstimate interface which
-comment|// is very intrusive. So assuming default entry size here.
-return|return
-name|size
-argument_list|()
-operator|*
-name|DEFAULT_HASHMAP_ENTRY_SIZE
 return|;
 block|}
 specifier|private

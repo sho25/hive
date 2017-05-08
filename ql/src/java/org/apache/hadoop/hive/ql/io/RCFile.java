@@ -2727,7 +2727,6 @@ comment|// 4M
 comment|// the conf string for COLUMNS_BUFFER_SIZE
 specifier|public
 specifier|static
-specifier|final
 name|String
 name|COLUMNS_BUFFER_SIZE_CONF_STR
 init|=

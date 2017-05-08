@@ -2262,7 +2262,6 @@ argument_list|>
 block|{
 specifier|public
 specifier|static
-specifier|final
 name|int
 name|UNBOUNDED_AMOUNT
 init|=

@@ -493,17 +493,6 @@ operator|.
 name|PrimitiveCategory
 operator|.
 name|VARCHAR
-operator|||
-name|poi
-operator|.
-name|getPrimitiveCategory
-argument_list|()
-operator|==
-name|PrimitiveObjectInspector
-operator|.
-name|PrimitiveCategory
-operator|.
-name|VOID
 return|;
 block|}
 annotation|@

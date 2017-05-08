@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one or more  * contributor license agreements.  See the NOTICE file distributed with  * this work for additional information regarding copyright ownership.  * The ASF licenses this file to You under the Apache License, Version 2.0  * (the "License"); you may not use this file except in compliance with  * the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -148,24 +148,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|accumulo
-operator|.
-name|columns
-operator|.
-name|ColumnEncoding
 import|;
 end_import
 
@@ -1061,7 +1043,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Logger
-name|LOG
+name|log
 init|=
 name|LoggerFactory
 operator|.
@@ -1299,7 +1281,6 @@ argument_list|(
 name|udfType
 argument_list|)
 condition|)
-block|{
 throw|throw
 operator|new
 name|NoSuchCompareOpException
@@ -1309,7 +1290,6 @@ operator|+
 name|udfType
 argument_list|)
 throw|;
-block|}
 return|return
 name|compareOps
 operator|.
@@ -1457,7 +1437,6 @@ argument_list|(
 name|type
 argument_list|)
 condition|)
-block|{
 throw|throw
 operator|new
 name|NoSuchPrimitiveComparisonException
@@ -1467,7 +1446,6 @@ operator|+
 name|type
 argument_list|)
 throw|;
-block|}
 return|return
 name|pComparisons
 operator|.
@@ -1695,8 +1673,6 @@ name|result
 init|=
 name|generateRanges
 argument_list|(
-name|conf
-argument_list|,
 name|columnMapper
 argument_list|,
 name|hiveRowIdColumnName
@@ -1711,7 +1687,7 @@ operator|==
 name|result
 condition|)
 block|{
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -1730,7 +1706,7 @@ operator|instanceof
 name|Range
 condition|)
 block|{
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -1759,7 +1735,7 @@ operator|instanceof
 name|List
 condition|)
 block|{
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -1804,14 +1780,11 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Encapsulates the traversal over some {@link ExprNodeDesc} tree for the generation of Accumuluo.    * Ranges using expressions involving the Accumulo rowid-mapped Hive column.    *    * @param conf    *          Hadoop configuration    * @param columnMapper    *          Mapping of Hive to Accumulo columns for the query    * @param hiveRowIdColumnName    *          Name of the hive column mapped to the Accumulo rowid    * @param root    *          Root of some ExprNodeDesc tree to traverse, the WHERE clause    * @return An object representing the result from the ExprNodeDesc tree traversal using the    *         AccumuloRangeGenerator    */
+comment|/**    * Encapsulates the traversal over some {@link ExprNodeDesc} tree for the generation of Accumuluo    * Ranges using expressions involving the Accumulo rowid-mapped Hive column    *    * @param columnMapper    *          Mapping of Hive to Accumulo columns for the query    * @param hiveRowIdColumnName    *          Name of the hive column mapped to the Accumulo rowid    * @param root    *          Root of some ExprNodeDesc tree to traverse, the WHERE clause    * @return An object representing the result from the ExprNodeDesc tree traversal using the    *         AccumuloRangeGenerator    */
 specifier|protected
 name|Object
 name|generateRanges
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|ColumnMapper
 name|columnMapper
 parameter_list|,
@@ -1828,8 +1801,6 @@ init|=
 operator|new
 name|AccumuloRangeGenerator
 argument_list|(
-name|conf
-argument_list|,
 name|handler
 argument_list|,
 name|columnMapper
@@ -1870,7 +1841,7 @@ argument_list|(
 name|disp
 argument_list|)
 decl_stmt|;
-name|List
+name|ArrayList
 argument_list|<
 name|Node
 argument_list|>
@@ -1992,7 +1963,7 @@ operator|!
 name|shouldPushdown
 condition|)
 block|{
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -2003,28 +1974,6 @@ return|return
 name|itrs
 return|;
 block|}
-name|boolean
-name|binaryEncodedRow
-init|=
-name|ColumnEncoding
-operator|.
-name|BINARY
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|conf
-operator|.
-name|get
-argument_list|(
-name|AccumuloSerDeParameters
-operator|.
-name|DEFAULT_STORAGE_TYPE
-argument_list|)
-argument_list|)
-decl_stmt|;
 name|int
 name|rowIdOffset
 init|=
@@ -2161,8 +2110,6 @@ argument_list|(
 name|mapping
 argument_list|,
 name|sc
-argument_list|,
-name|binaryEncodedRow
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2170,13 +2117,12 @@ block|}
 block|}
 if|if
 condition|(
-name|LOG
+name|log
 operator|.
 name|isInfoEnabled
 argument_list|()
 condition|)
-block|{
-name|LOG
+name|log
 operator|.
 name|info
 argument_list|(
@@ -2188,12 +2134,11 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|itrs
 return|;
 block|}
-comment|/**    * Create an IteratorSetting for the right qualifier, constant, CompareOpt, and PrimitiveCompare    * type.    *    * @param accumuloColumnMapping    *          ColumnMapping to filter    * @param sc    *          IndexSearchCondition    * @param binaryEncodedValues    *          flag for binary encodedValues    * @return IteratorSetting    * @throws SerDeException    */
+comment|/**    * Create an IteratorSetting for the right qualifier, constant, CompareOpt, and PrimitiveCompare    * type.    *    * @param accumuloColumnMapping    *          ColumnMapping to filter    * @param sc    *          IndexSearchCondition    * @return IteratorSetting    * @throws SerDeException    */
 specifier|public
 name|IteratorSetting
 name|toSetting
@@ -2203,9 +2148,6 @@ name|accumuloColumnMapping
 parameter_list|,
 name|IndexSearchCondition
 name|sc
-parameter_list|,
-name|boolean
-name|binaryEncodedValues
 parameter_list|)
 throws|throws
 name|SerDeException
@@ -2237,21 +2179,12 @@ specifier|final
 name|String
 name|type
 init|=
-name|binaryEncodedValues
-condition|?
 name|sc
 operator|.
 name|getColumnDesc
 argument_list|()
 operator|.
 name|getTypeString
-argument_list|()
-else|:
-name|ColumnEncoding
-operator|.
-name|STRING
-operator|.
-name|getName
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -2434,11 +2367,9 @@ name|filteredExprSerialized
 operator|==
 literal|null
 condition|)
-block|{
 return|return
 literal|null
 return|;
-block|}
 return|return
 name|SerializationUtilities
 operator|.
@@ -2517,7 +2448,6 @@ name|residual
 operator|!=
 literal|null
 condition|)
-block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -2530,7 +2460,6 @@ name|getExprString
 argument_list|()
 argument_list|)
 throw|;
-block|}
 return|return
 name|sConditions
 return|;
@@ -2590,7 +2519,14 @@ operator|==
 literal|0
 condition|)
 block|{
-name|LOG
+if|if
+condition|(
+name|log
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+name|log
 operator|.
 name|info
 argument_list|(

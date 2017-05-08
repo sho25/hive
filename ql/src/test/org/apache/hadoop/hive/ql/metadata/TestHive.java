@@ -1974,7 +1974,7 @@ literal|"Data location is not set correctly"
 argument_list|,
 name|wh
 operator|.
-name|getDefaultTablePath
+name|getTablePath
 argument_list|(
 name|hm
 operator|.

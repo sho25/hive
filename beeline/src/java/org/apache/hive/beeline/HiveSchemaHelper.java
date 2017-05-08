@@ -1085,7 +1085,6 @@ name|AbstractCommandParser
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|DERBY_NESTING_TOKEN
 init|=
@@ -1521,7 +1520,6 @@ name|AbstractCommandParser
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|POSTGRES_NESTING_TOKEN
 init|=
@@ -1531,7 +1529,6 @@ annotation|@
 name|VisibleForTesting
 specifier|public
 specifier|static
-specifier|final
 name|String
 name|POSTGRES_STANDARD_STRINGS_OPT
 init|=
@@ -1541,7 +1538,6 @@ annotation|@
 name|VisibleForTesting
 specifier|public
 specifier|static
-specifier|final
 name|String
 name|POSTGRES_SKIP_STANDARD_STRINGS_DBOPT
 init|=
@@ -1721,7 +1717,6 @@ name|AbstractCommandParser
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|ORACLE_NESTING_TOKEN
 init|=
@@ -1835,7 +1830,6 @@ name|AbstractCommandParser
 block|{
 specifier|private
 specifier|static
-specifier|final
 name|String
 name|MSSQL_NESTING_TOKEN
 init|=

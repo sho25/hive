@@ -213,13 +213,13 @@ name|File
 operator|.
 name|separator
 operator|+
-literal|"hive"
+literal|"conf"
 operator|+
 name|File
 operator|.
 name|separator
 operator|+
-literal|"conf"
+literal|"hive"
 decl_stmt|;
 specifier|private
 specifier|final

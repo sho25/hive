@@ -3585,7 +3585,7 @@ operator|+
 operator|new
 name|BigInteger
 argument_list|(
-literal|260
+literal|200
 argument_list|,
 operator|new
 name|Random
