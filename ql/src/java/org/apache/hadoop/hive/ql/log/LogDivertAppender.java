@@ -642,6 +642,8 @@ literal|"org.apache.hadoop.mapreduce.Job"
 block|,
 literal|"SessionState"
 block|,
+literal|"ReplState"
+block|,
 name|Task
 operator|.
 name|class
