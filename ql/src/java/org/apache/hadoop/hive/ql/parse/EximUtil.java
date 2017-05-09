@@ -513,6 +513,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -534,16 +544,6 @@ operator|.
 name|util
 operator|.
 name|StringTokenizer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TreeMap
 import|;
 end_import
 
@@ -2063,7 +2063,7 @@ argument_list|>
 name|partSpec
 init|=
 operator|new
-name|TreeMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
