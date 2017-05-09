@@ -928,8 +928,10 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|/**    * Closes the statement if there is one running. Do not change the the flags.    * @throws SQLException If there is an error closing the statement    */
+specifier|private
 name|void
-name|closeClientOperation
+name|closeStatementIfNeeded
 parameter_list|()
 throws|throws
 name|SQLException
@@ -972,6 +974,10 @@ name|getStatus
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|stmtHandle
+operator|=
+literal|null
+expr_stmt|;
 block|}
 block|}
 catch|catch
@@ -1005,6 +1011,16 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+name|void
+name|closeClientOperation
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+name|closeStatementIfNeeded
+argument_list|()
+expr_stmt|;
 name|isQueryClosed
 operator|=
 literal|true
@@ -1262,10 +1278,7 @@ argument_list|(
 literal|"execute"
 argument_list|)
 expr_stmt|;
-name|closeClientOperation
-argument_list|()
-expr_stmt|;
-name|initFlags
+name|reInitState
 argument_list|()
 expr_stmt|;
 name|TExecuteStatementReq
@@ -1739,11 +1752,17 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|/**    * Close statement if needed, and reset the flags.    * @throws SQLException    */
 specifier|private
 name|void
-name|initFlags
+name|reInitState
 parameter_list|()
+throws|throws
+name|SQLException
 block|{
+name|closeStatementIfNeeded
+argument_list|()
+expr_stmt|;
 name|isCancelled
 operator|=
 literal|false
