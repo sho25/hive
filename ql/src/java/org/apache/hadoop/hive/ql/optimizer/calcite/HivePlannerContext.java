@@ -137,8 +137,11 @@ name|CalciteConnectionConfig
 name|calciteConfig
 decl_stmt|;
 specifier|private
-name|SubqueryConf
-name|subqueryConfig
+name|Set
+argument_list|<
+name|RelNode
+argument_list|>
+name|corrScalarRexSQWithAgg
 decl_stmt|;
 specifier|public
 name|HivePlannerContext
@@ -157,12 +160,6 @@ argument_list|<
 name|RelNode
 argument_list|>
 name|corrScalarRexSQWithAgg
-parameter_list|,
-name|Set
-argument_list|<
-name|RelNode
-argument_list|>
-name|scalarAggNoGbyWindowing
 parameter_list|)
 block|{
 name|this
@@ -188,15 +185,9 @@ comment|// this is computed in CalcitePlanner while planning and is later requir
 comment|// hence this is passed using HivePlannerContext
 name|this
 operator|.
-name|subqueryConfig
-operator|=
-operator|new
-name|SubqueryConf
-argument_list|(
 name|corrScalarRexSQWithAgg
-argument_list|,
-name|scalarAggNoGbyWindowing
-argument_list|)
+operator|=
+name|corrScalarRexSQWithAgg
 expr_stmt|;
 block|}
 specifier|public
@@ -276,7 +267,7 @@ name|clazz
 operator|.
 name|isInstance
 argument_list|(
-name|subqueryConfig
+name|corrScalarRexSQWithAgg
 argument_list|)
 condition|)
 block|{
@@ -285,7 +276,7 @@ name|clazz
 operator|.
 name|cast
 argument_list|(
-name|subqueryConfig
+name|corrScalarRexSQWithAgg
 argument_list|)
 return|;
 block|}
