@@ -174,6 +174,16 @@ name|server
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|Object
+name|stopLock
+init|=
+operator|new
+name|Object
+argument_list|()
+decl_stmt|;
 comment|/**    * Initializes the SparkClient library. Must be called before creating client instances.    *    * @param conf Map containing configuration parameters for the client library.    */
 specifier|public
 specifier|static
@@ -230,10 +240,21 @@ block|}
 comment|/** Stops the SparkClient library. */
 specifier|public
 specifier|static
-specifier|synchronized
 name|void
 name|stop
 parameter_list|()
+block|{
+if|if
+condition|(
+name|server
+operator|!=
+literal|null
+condition|)
+block|{
+synchronized|synchronized
+init|(
+name|stopLock
+init|)
 block|{
 if|if
 condition|(
@@ -251,6 +272,8 @@ name|server
 operator|=
 literal|null
 expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 comment|/**    * Instantiates a new Spark client.    *    * @param sparkConf Configuration for the remote Spark application, contains spark.* properties.    * @param hiveConf Configuration for Hive, contains hive.* properties.    */
