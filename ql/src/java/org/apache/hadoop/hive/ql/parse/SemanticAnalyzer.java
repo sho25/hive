@@ -24795,6 +24795,9 @@ operator|.
 name|getText
 argument_list|()
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 name|failIfColAliasExists
 argument_list|(
@@ -24904,6 +24907,9 @@ operator|.
 name|getText
 argument_list|()
 argument_list|)
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 name|failIfColAliasExists
 argument_list|(
