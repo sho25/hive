@@ -198,7 +198,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Specialized class for native vectorized reduce sink that is reducing on a single long key column.  */
+comment|/*  * Specialized class for native vectorized reduce sink that is reducing on a Uniform Hash  * single long key column.  */
 end_comment
 
 begin_class

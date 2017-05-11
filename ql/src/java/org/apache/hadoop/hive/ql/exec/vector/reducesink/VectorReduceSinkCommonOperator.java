@@ -771,6 +771,10 @@ comment|/**    * Reduce sink key vector expressions.    */
 comment|// This is map of which vectorized row batch columns are the key columns.
 comment|// And, their types.
 specifier|protected
+name|boolean
+name|isEmptyKey
+decl_stmt|;
+specifier|protected
 name|int
 index|[]
 name|reduceSinkKeyColumnMap
@@ -788,6 +792,10 @@ name|reduceSinkKeyExpressions
 decl_stmt|;
 comment|// This is map of which vectorized row batch columns are the value columns.
 comment|// And, their types.
+specifier|protected
+name|boolean
+name|isEmptyValue
+decl_stmt|;
 specifier|protected
 name|int
 index|[]
@@ -999,6 +1007,19 @@ name|vContext
 operator|=
 name|vContext
 expr_stmt|;
+name|isEmptyKey
+operator|=
+name|vectorDesc
+operator|.
+name|getIsEmptyKey
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isEmptyKey
+condition|)
+block|{
 comment|// Since a key expression can be a calculation and the key will go into a scratch column,
 comment|// we need the mapping and type information.
 name|reduceSinkKeyColumnMap
@@ -1022,6 +1043,20 @@ operator|.
 name|getReduceSinkKeyExpressions
 argument_list|()
 expr_stmt|;
+block|}
+name|isEmptyValue
+operator|=
+name|vectorDesc
+operator|.
+name|getIsEmptyValue
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isEmptyValue
+condition|)
+block|{
 name|reduceSinkValueColumnMap
 operator|=
 name|vectorReduceSinkInfo
@@ -1043,6 +1078,7 @@ operator|.
 name|getReduceSinkValueExpressions
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|// Get the sort order
 specifier|private
@@ -2063,6 +2099,12 @@ name|reduceTagByte
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|isEmptyKey
+condition|)
+block|{
 name|TableDesc
 name|keyTableDesc
 init|=
@@ -2135,6 +2177,13 @@ argument_list|,
 name|columnNotNullMarker
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|isEmptyValue
+condition|)
+block|{
 name|valueLazyBinarySerializeWrite
 operator|=
 operator|new
@@ -2178,6 +2227,7 @@ argument_list|(
 name|valueOutput
 argument_list|)
 expr_stmt|;
+block|}
 name|keyWritable
 operator|=
 operator|new
@@ -2247,6 +2297,69 @@ block|}
 name|batchCounter
 operator|=
 literal|0
+expr_stmt|;
+block|}
+specifier|protected
+name|void
+name|initializeEmptyKey
+parameter_list|(
+name|int
+name|tag
+parameter_list|)
+block|{
+comment|// Use the same logic as ReduceSinkOperator.toHiveKey.
+comment|//
+if|if
+condition|(
+name|tag
+operator|==
+operator|-
+literal|1
+operator|||
+name|reduceSkipTag
+condition|)
+block|{
+name|keyWritable
+operator|.
+name|setSize
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|keyWritable
+operator|.
+name|setSize
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
+name|keyWritable
+operator|.
+name|get
+argument_list|()
+index|[
+literal|0
+index|]
+operator|=
+name|reduceTagByte
+expr_stmt|;
+block|}
+name|keyWritable
+operator|.
+name|setDistKeyLength
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+name|keyWritable
+operator|.
+name|setHashCode
+argument_list|(
+literal|0
+argument_list|)
 expr_stmt|;
 block|}
 comment|// The collect method override for TopNHash.BinaryCollector
