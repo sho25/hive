@@ -2854,7 +2854,7 @@ argument_list|()
 decl_stmt|;
 name|console
 operator|.
-name|printInfoNoLog
+name|printInfo
 argument_list|(
 name|logMsg
 argument_list|)

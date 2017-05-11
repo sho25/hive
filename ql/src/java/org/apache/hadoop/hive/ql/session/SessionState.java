@@ -5155,6 +5155,7 @@ operator|=
 name|isSilent
 expr_stmt|;
 block|}
+comment|/**      * Get the console output stream for HiveServer2 or HiveCli.      * @return The output stream      */
 specifier|public
 name|PrintStream
 name|getOutStream
@@ -5194,6 +5195,7 @@ operator|.
 name|out
 return|;
 block|}
+comment|/**      * Get the console info stream for HiveServer2 or HiveCli.      * @return The info stream      */
 specifier|public
 specifier|static
 name|PrintStream
@@ -5233,6 +5235,7 @@ name|getErrStream
 argument_list|()
 return|;
 block|}
+comment|/**      * Get the console error stream for HiveServer2 or HiveCli.      * @return The error stream      */
 specifier|public
 specifier|static
 name|PrintStream
@@ -5273,6 +5276,7 @@ operator|.
 name|err
 return|;
 block|}
+comment|/**      * Get the child process output stream for HiveServer2 or HiveCli.      * @return The child process output stream      */
 specifier|public
 name|PrintStream
 name|getChildOutStream
@@ -5312,6 +5316,7 @@ operator|.
 name|out
 return|;
 block|}
+comment|/**      * Get the child process error stream for HiveServer2 or HiveCli.      * @return The child process error stream      */
 specifier|public
 name|PrintStream
 name|getChildErrStream
@@ -5351,6 +5356,7 @@ operator|.
 name|err
 return|;
 block|}
+comment|/**      * Is the logging to the info stream is enabled, or not.      * @return True if the logging is disabled to the HiveServer2 or HiveCli info stream      */
 specifier|public
 name|boolean
 name|getIsSilent
@@ -5380,6 +5386,7 @@ else|:
 name|isSilent
 return|;
 block|}
+comment|/**      * Logs into the log file.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      */
 specifier|public
 name|void
 name|logInfo
@@ -5396,6 +5403,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs into the log file. Handles an extra detail which will not be printed if null.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      * @param detail Extra detail to log which will be not printed if null      */
 specifier|public
 name|void
 name|logInfo
@@ -5422,6 +5430,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs info into the log file, and if the LogHelper is not silent then into the HiveServer2 or      * HiveCli info stream too.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      */
 specifier|public
 name|void
 name|printInfo
@@ -5438,6 +5447,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs info into the log file, and if not silent then into the HiveServer2 or HiveCli info      * stream too. The isSilent parameter is used instead of the LogHelper isSilent attribute.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      * @param isSilent If true then the message will not be printed to the info stream      */
 specifier|public
 name|void
 name|printInfo
@@ -5459,6 +5469,7 @@ name|isSilent
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs info into the log file, and if the LogHelper is not silent then into the HiveServer2 or      * HiveCli info stream too. Handles an extra detail which will not be printed if null.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      * @param detail Extra detail to log which will be not printed if null      */
 specifier|public
 name|void
 name|printInfo
@@ -5481,6 +5492,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs info into the log file, and if not silent then into the HiveServer2 or HiveCli info      * stream too. Handles an extra detail which will not be printed if null.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param info The log message      * @param detail Extra detail to log which will be not printed if null      * @param isSilent If true then the message will not be printed to the info stream      */
 specifier|public
 name|void
 name|printInfo
@@ -5525,31 +5537,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
-name|void
-name|printInfoNoLog
-parameter_list|(
-name|String
-name|info
-parameter_list|)
-block|{
-if|if
-condition|(
-operator|!
-name|getIsSilent
-argument_list|()
-condition|)
-block|{
-name|getInfoStream
-argument_list|()
-operator|.
-name|println
-argument_list|(
-name|info
-argument_list|)
-expr_stmt|;
-block|}
-block|}
+comment|/**      * Logs an error into the log file, and into the HiveServer2 or HiveCli error stream too.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param error The log message      */
 specifier|public
 name|void
 name|printError
@@ -5566,6 +5554,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * Logs an error into the log file, and into the HiveServer2 or HiveCli error stream too.      * Handles an extra detail which will not be printed if null.      * BeeLine uses the operation log file to show the logs to the user, so depending on the      * BeeLine settings it could be shown to the user.      * @param error The log message      * @param detail Extra detail to log which will be not printed if null      */
 specifier|public
 name|void
 name|printError
