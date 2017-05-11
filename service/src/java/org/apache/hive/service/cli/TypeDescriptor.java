@@ -494,6 +494,12 @@ case|:
 return|return
 literal|29
 return|;
+case|case
+name|TIMESTAMPTZ_TYPE
+case|:
+return|return
+literal|31
+return|;
 default|default:
 return|return
 literal|null

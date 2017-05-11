@@ -173,6 +173,11 @@ name|INTERVAL_DAY_TIME_TYPE
 argument_list|(
 literal|21
 argument_list|)
+block|,
+name|TIMESTAMPTZ_TYPE
+argument_list|(
+literal|22
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -349,6 +354,12 @@ literal|21
 case|:
 return|return
 name|INTERVAL_DAY_TIME_TYPE
+return|;
+case|case
+literal|22
+case|:
+return|return
+name|TIMESTAMPTZ_TYPE
 return|;
 default|default:
 return|return

@@ -623,6 +623,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TIMESTAMPTZ_TYPE_NAME
+init|=
+literal|"timestamp with time zone"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|LIST_TYPE_NAME
 init|=
 literal|"array"
@@ -825,6 +833,13 @@ operator|.
 name|add
 argument_list|(
 literal|"binary"
+argument_list|)
+expr_stmt|;
+name|PrimitiveTypes
+operator|.
+name|add
+argument_list|(
+literal|"timestamp with time zone"
 argument_list|)
 expr_stmt|;
 block|}
