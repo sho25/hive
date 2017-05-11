@@ -840,7 +840,10 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|SemiJoinHint
+argument_list|>
 argument_list|>
 name|semiJoinHints
 decl_stmt|;
@@ -2724,7 +2727,10 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|SemiJoinHint
+argument_list|>
 argument_list|>
 name|hints
 parameter_list|)
@@ -2741,7 +2747,10 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|SemiJoinHint
+argument_list|>
 argument_list|>
 name|getSemiJoinHints
 parameter_list|()
