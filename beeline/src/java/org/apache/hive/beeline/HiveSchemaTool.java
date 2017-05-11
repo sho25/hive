@@ -1247,7 +1247,7 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Could not find version info in metastore VERSION table"
+literal|"Could not find version info in metastore VERSION table."
 argument_list|)
 throw|;
 block|}
@@ -1592,17 +1592,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid DB locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -1919,17 +1908,6 @@ block|{
 name|isValid
 operator|=
 literal|false
-expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid TABLE locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
 expr_stmt|;
 block|}
 return|return
@@ -2253,17 +2231,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid PARTITION locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -2334,18 +2301,18 @@ condition|)
 block|{
 name|skewedColLoc
 operator|=
-literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\" from \"TBLS\" t, \"SDS\" s, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
+literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\", db.\"NAME\", db.\"DB_ID\" from \"TBLS\" t, \"SDS\" s, \"DBS\" db, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
 operator|+
-literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? "
+literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and t.\"DB_ID\" = db.\"DB_ID\" and sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? "
 expr_stmt|;
 block|}
 else|else
 block|{
 name|skewedColLoc
 operator|=
-literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION from TBLS t, SDS s, SKEWED_COL_VALUE_LOC_MAP sk "
+literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION, db.NAME, db.DB_ID from TBLS t, SDS s, DBS db, SKEWED_COL_VALUE_LOC_MAP sk "
 operator|+
-literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? "
+literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? "
 expr_stmt|;
 block|}
 name|long
@@ -2484,7 +2451,18 @@ decl_stmt|;
 name|String
 name|entity
 init|=
-literal|"Table "
+literal|"Database "
+operator|+
+name|getNameOrID
+argument_list|(
+name|res
+argument_list|,
+literal|5
+argument_list|,
+literal|6
+argument_list|)
+operator|+
+literal|", Table "
 operator|+
 name|getNameOrID
 argument_list|(
@@ -2567,17 +2545,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid SKEWED_COL_VALUE_LOC_MAP locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -2619,7 +2586,7 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", error: empty location"
+literal|", Error: empty location"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2669,11 +2636,11 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", location: "
+literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", error: missing location scheme"
+literal|", Error: missing location scheme"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2768,11 +2735,11 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", location: "
+literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", error: mismatched server"
+literal|", Error: mismatched server"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2796,7 +2763,7 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", error: invalid location "
+literal|", Error: invalid location - "
 operator|+
 name|pe
 operator|.
@@ -4134,16 +4101,23 @@ condition|)
 block|{
 name|System
 operator|.
-name|out
+name|err
 operator|.
 name|println
 argument_list|(
-literal|"Failed in schema version validation: "
-operator|+
 name|hme
 operator|.
 name|getMessage
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Failed in schema version validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4272,12 +4246,21 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"Failed to determine schema version from Hive Metastore DB,"
+literal|"Failed to determine schema version from Hive Metastore DB. "
 operator|+
 name|he
 operator|.
 name|getMessage
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Failed in schema version validation."
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -4579,7 +4562,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Schema table validation failed!!!"
+literal|"Failed in schema table validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4625,14 +4608,6 @@ literal|" ]"
 argument_list|)
 expr_stmt|;
 comment|// now diff the lists
-name|int
-name|schemaSize
-init|=
-name|schemaTables
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
 name|schemaTables
 operator|.
 name|removeAll
@@ -4652,7 +4627,7 @@ condition|)
 block|{
 name|System
 operator|.
-name|out
+name|err
 operator|.
 name|println
 argument_list|(
@@ -6348,7 +6323,7 @@ argument_list|()
 operator|.
 name|withDescription
 argument_list|(
-literal|"a comma-separated list of servers used in location validation"
+literal|"a comma-separated list of servers used in location validation in the format of scheme://authority (e.g. hdfs://localhost:8000)"
 argument_list|)
 operator|.
 name|create
