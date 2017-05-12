@@ -3064,6 +3064,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Gets the unique id of the backing datastore for the metadata    * @return    * @throws MetaException    */
+name|String
+name|getMetastoreDbUuid
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 block|}
 end_interface
 

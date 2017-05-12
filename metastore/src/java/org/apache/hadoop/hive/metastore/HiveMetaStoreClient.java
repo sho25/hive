@@ -12608,6 +12608,22 @@ name|isIsSupported
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getMetastoreDbUuid
+parameter_list|()
+throws|throws
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|get_metastore_db_uuid
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

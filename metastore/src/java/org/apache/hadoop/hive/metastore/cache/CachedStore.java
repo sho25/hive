@@ -9984,6 +9984,22 @@ operator|=
 name|rawStore
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getMetastoreDbUuid
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+return|return
+name|rawStore
+operator|.
+name|getMetastoreDbUuid
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

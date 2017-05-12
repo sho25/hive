@@ -3738,6 +3738,23 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getMetastoreDbUuid
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Get metastore uuid is not implemented"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 
