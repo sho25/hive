@@ -1784,7 +1784,7 @@ specifier|final
 name|boolean
 name|DEFAULT_SHUFFLE_CONNECTION_KEEP_ALIVE_ENABLED
 init|=
-literal|false
+literal|true
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1877,7 +1877,15 @@ specifier|final
 name|int
 name|DEFAULT_MAX_SHUFFLE_THREADS
 init|=
-literal|0
+name|Runtime
+operator|.
+name|getRuntime
+argument_list|()
+operator|.
+name|availableProcessors
+argument_list|()
+operator|*
+literal|3
 decl_stmt|;
 specifier|public
 specifier|static
