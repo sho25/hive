@@ -2112,6 +2112,16 @@ argument_list|(
 name|fsTaskUgi
 argument_list|)
 expr_stmt|;
+name|fragmentInfo
+operator|.
+name|getQueryInfo
+argument_list|()
+operator|.
+name|returnUmbilicalUgi
+argument_list|(
+name|taskOwner
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
