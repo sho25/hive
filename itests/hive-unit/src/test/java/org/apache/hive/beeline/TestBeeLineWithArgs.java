@@ -2171,9 +2171,28 @@ name|SCRIPT_TEXT
 argument_list|,
 name|argList
 argument_list|,
+name|OutStream
+operator|.
+name|ERR
+argument_list|,
 name|EXPECTED_PATTERN
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2371,6 +2390,10 @@ operator|.
 name|getBaseJdbcURL
 argument_list|()
 argument_list|)
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|,
 name|EXPECTED_PATTERN
 argument_list|,
@@ -4734,13 +4757,12 @@ name|SCRIPT_TEXT
 init|=
 literal|"drop table if exists nonEscapedSemiColon;create table nonEscapedSemiColon "
 operator|+
-literal|"(key int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ';';show tables;"
+literal|"(key int, value int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ';';show tables;"
 decl_stmt|;
-specifier|final
 name|String
 name|EXPECTED_PATTERN
 init|=
-literal|" nonEscapedSemiColon "
+literal|"nonescapedsemicolon"
 decl_stmt|;
 name|List
 argument_list|<
@@ -4765,6 +4787,42 @@ argument_list|,
 name|EXPECTED_PATTERN
 argument_list|,
 literal|true
+argument_list|)
+expr_stmt|;
+comment|//look for the " nonEscapedSemiColon " in the query text not the table name which comes
+comment|//in the result
+name|EXPECTED_PATTERN
+operator|=
+literal|" nonEscapedSemiColon "
+expr_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
+argument_list|,
+name|EXPECTED_PATTERN
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -4888,6 +4946,10 @@ argument_list|(
 name|SCRIPT_TEXT
 argument_list|,
 name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|ERR
 argument_list|,
 name|EXPECTED_PATTERN
 argument_list|,

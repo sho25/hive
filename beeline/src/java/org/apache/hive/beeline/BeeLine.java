@@ -1117,6 +1117,14 @@ literal|true
 argument_list|)
 decl_stmt|;
 specifier|private
+name|InputStream
+name|inputStream
+init|=
+name|System
+operator|.
+name|in
+decl_stmt|;
+specifier|private
 name|ConsoleReader
 name|consoleReader
 decl_stmt|;
@@ -6585,7 +6593,7 @@ name|ConsoleReader
 argument_list|(
 name|inputStreamAppendedNewline
 argument_list|,
-name|getOutputStream
+name|getErrorStream
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6604,7 +6612,13 @@ name|consoleReader
 operator|=
 operator|new
 name|ConsoleReader
+argument_list|(
+name|getInputStream
 argument_list|()
+argument_list|,
+name|getErrorStream
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 comment|//disable the expandEvents for the purpose of backward compatibility
@@ -11622,6 +11636,14 @@ parameter_list|()
 block|{
 return|return
 name|errorStream
+return|;
+block|}
+name|InputStream
+name|getInputStream
+parameter_list|()
+block|{
+return|return
+name|inputStream
 return|;
 block|}
 name|ConsoleReader

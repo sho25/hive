@@ -552,7 +552,7 @@ literal|"set hive.cli.prompt=MYCLI;SHOW\nTABLES;"
 argument_list|,
 literal|"MYCLI> "
 argument_list|,
-name|os
+name|errS
 argument_list|,
 literal|null
 argument_list|,
@@ -1066,7 +1066,7 @@ literal|"use default;drop if exists testDB;"
 argument_list|,
 literal|"hive (testDB)>"
 argument_list|,
-name|os
+name|errS
 argument_list|,
 literal|null
 argument_list|,
@@ -1089,7 +1089,7 @@ literal|"create database if not exists testDB; set hive.cli.print.current.db=tru
 argument_list|,
 literal|"hive (testDB)>"
 argument_list|,
-name|os
+name|errS
 argument_list|,
 literal|null
 argument_list|,
@@ -1114,7 +1114,7 @@ literal|"use default;drop if exists testDB;"
 argument_list|,
 literal|"hive (testDB)>"
 argument_list|,
-name|os
+name|errS
 argument_list|,
 literal|null
 argument_list|,
