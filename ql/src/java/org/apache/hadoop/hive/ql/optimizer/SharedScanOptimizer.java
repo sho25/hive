@@ -2103,7 +2103,7 @@ comment|// 1.2. There cannot be more than one DummyStore operator in the new res
 comment|// work when the TS operators are merged. This is due to an assumption in
 comment|// MergeJoinProc that needs to be further explored.
 comment|// If any of these conditions are not met, we cannot merge.
-comment|// TODO: Extend rule so it can be apply for these cases.
+comment|// TODO: Extend rule so it can be applied for these cases.
 specifier|final
 name|Set
 argument_list|<
@@ -2817,7 +2817,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Semijoin DPP work is considered an child because work needs
+comment|// Semijoin DPP work is considered a child because work needs
 comment|// to finish for it to execute
 name|SemiJoinBranchInfo
 name|sjbi
@@ -2867,7 +2867,7 @@ operator|instanceof
 name|DynamicPruningEventDesc
 condition|)
 block|{
-comment|// DPP work is considered an child because work needs
+comment|// DPP work is considered a child because work needs
 comment|// to finish for it to execute
 name|set
 operator|.
