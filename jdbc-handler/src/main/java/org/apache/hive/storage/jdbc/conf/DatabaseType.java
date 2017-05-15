@@ -29,6 +29,14 @@ block|,
 name|H2
 block|,
 name|DERBY
+block|,
+name|ORACLE
+block|,
+name|POSTGRES
+block|,
+name|MSSQL
+block|,
+name|METASTORE
 block|}
 end_enum
 

@@ -363,6 +363,8 @@ argument_list|,
 name|hiveConf
 argument_list|,
 literal|"derby"
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|schemaTool
@@ -2545,6 +2547,8 @@ argument_list|,
 name|PostgresCommandParser
 operator|.
 name|POSTGRES_SKIP_STANDARD_STRINGS_DBOPT
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|,

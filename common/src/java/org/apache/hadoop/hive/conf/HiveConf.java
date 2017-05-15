@@ -3461,6 +3461,29 @@ literal|true
 argument_list|)
 block|,
 comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add something here!
+name|METASTOREDBTYPE
+argument_list|(
+literal|"hive.metastore.db.type"
+argument_list|,
+literal|"DERBY"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"DERBY"
+argument_list|,
+literal|"ORACLE"
+argument_list|,
+literal|"MYSQL"
+argument_list|,
+literal|"MSSQL"
+argument_list|,
+literal|"POSTGRES"
+argument_list|)
+argument_list|,
+literal|"Type of database used by the metastore. Information schema& JDBCStorageHandler depend on it."
+argument_list|)
+block|,
 name|METASTOREWAREHOUSE
 argument_list|(
 literal|"hive.metastore.warehouse.dir"

@@ -179,6 +179,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|MapWritable
 import|;
 end_import
@@ -417,7 +431,6 @@ argument_list|(
 literal|"Initializing the SerDe"
 argument_list|)
 expr_stmt|;
-comment|// Hive cdh-4.3 does not provide the properties object on all calls
 if|if
 condition|(
 name|tbl
@@ -825,6 +838,10 @@ condition|(
 name|value
 operator|==
 literal|null
+operator|||
+name|value
+operator|instanceof
+name|NullWritable
 condition|)
 block|{
 name|row

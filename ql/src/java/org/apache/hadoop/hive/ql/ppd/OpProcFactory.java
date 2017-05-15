@@ -1047,6 +1047,8 @@ parameter_list|,
 name|OpWalkerInfo
 name|owi
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 if|if
 condition|(
@@ -5623,6 +5625,8 @@ parameter_list|,
 name|OpWalkerInfo
 name|owi
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 if|if
 condition|(
@@ -5676,6 +5680,8 @@ parameter_list|,
 name|OpWalkerInfo
 name|owi
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|RowSchema
 name|inputRS
@@ -6059,6 +6065,8 @@ parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|TableScanDesc
 name|tableScanDesc
@@ -6190,6 +6198,8 @@ argument_list|,
 name|tableScanOp
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|Utilities
 operator|.
 name|copyTableJobPropertiesToConf
@@ -6204,6 +6214,21 @@ argument_list|,
 name|jobConf
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
 name|Deserializer
 name|deserializer
 init|=

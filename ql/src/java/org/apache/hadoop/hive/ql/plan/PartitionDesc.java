@@ -754,6 +754,13 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|PlanUtils
+operator|.
+name|configureInputJobPropertiesForStorageHandler
+argument_list|(
+name|tblDesc
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|tableDesc
@@ -2221,13 +2228,6 @@ name|Path
 name|path
 parameter_list|)
 block|{
-name|PlanUtils
-operator|.
-name|configureInputJobPropertiesForStorageHandler
-argument_list|(
-name|tableDesc
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|path
