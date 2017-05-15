@@ -13889,11 +13889,30 @@ literal|"hive.msck.repair.batch.size"
 argument_list|,
 literal|0
 argument_list|,
-literal|"Batch size for the msck repair command. If the value is greater than zero, "
+literal|"Batch size for the msck repair command. If the value is greater than zero,\n "
 operator|+
-literal|"it will execute batch wise with the configured batch size. "
+literal|"it will execute batch wise with the configured batch size. In case of errors while\n"
 operator|+
-literal|"The default value is zero. Zero means it will execute directly (Not batch wise)"
+literal|"adding unknown partitions the batch size is automatically reduced by half in the subsequent\n"
+operator|+
+literal|"retry attempt. The default value is zero which means it will execute directly (not batch wise)"
+argument_list|)
+block|,
+name|HIVE_MSCK_REPAIR_BATCH_MAX_RETRIES
+argument_list|(
+literal|"hive.msck.repair.batch.max.retries"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Maximum number of retries for the msck repair command when adding unknown partitions.\n "
+operator|+
+literal|"If the value is greater than zero it will retry adding unknown partitions until the maximum\n"
+operator|+
+literal|"number of attempts is reached or batch size is reduced to 0, whichever is earlier.\n"
+operator|+
+literal|"In each retry attempt it will reduce the batch size by a factor of 2 until it reaches zero.\n"
+operator|+
+literal|"If the value is set to zero it will retry until the batch size becomes zero as described above."
 argument_list|)
 block|,
 name|HIVE_SERVER2_LLAP_CONCURRENT_QUERIES
