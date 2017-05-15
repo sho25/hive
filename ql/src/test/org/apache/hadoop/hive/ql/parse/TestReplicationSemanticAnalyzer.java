@@ -443,6 +443,11 @@ name|queryState
 operator|=
 operator|new
 name|QueryState
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|withHiveConf
 argument_list|(
 operator|new
 name|HiveConf
@@ -452,6 +457,9 @@ operator|.
 name|class
 argument_list|)
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 name|conf
 operator|=

@@ -2896,9 +2896,12 @@ name|queryState
 init|=
 operator|new
 name|QueryState
-argument_list|(
-literal|null
-argument_list|)
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 name|HiveConf
 name|conf

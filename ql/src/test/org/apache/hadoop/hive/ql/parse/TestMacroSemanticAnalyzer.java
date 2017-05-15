@@ -243,9 +243,12 @@ name|queryState
 operator|=
 operator|new
 name|QueryState
-argument_list|(
-literal|null
-argument_list|)
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 name|conf
 operator|=
