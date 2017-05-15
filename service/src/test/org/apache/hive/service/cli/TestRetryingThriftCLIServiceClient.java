@@ -59,7 +59,7 @@ name|service
 operator|.
 name|auth
 operator|.
-name|HiveAuthFactory
+name|HiveAuthConstants
 import|;
 end_import
 
@@ -333,7 +333,7 @@ name|ConfVars
 operator|.
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|,
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|AuthTypes
 operator|.

@@ -285,6 +285,22 @@ name|service
 operator|.
 name|auth
 operator|.
+name|HiveAuthConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|auth
+operator|.
 name|HiveAuthFactory
 import|;
 end_import
@@ -5392,7 +5408,7 @@ name|sessionConf
 operator|.
 name|containsKey
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|)
@@ -5405,7 +5421,7 @@ name|sessionConf
 operator|.
 name|get
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|)
@@ -5462,7 +5478,7 @@ block|}
 comment|// If there's no authentication, then directly substitute the user
 if|if
 condition|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|AuthTypes
 operator|.
