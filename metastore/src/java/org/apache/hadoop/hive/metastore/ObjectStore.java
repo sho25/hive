@@ -9180,9 +9180,9 @@ block|}
 elseif|else
 if|if
 condition|(
-literal|"TRUE"
+name|Boolean
 operator|.
-name|equals
+name|parseBoolean
 argument_list|(
 name|mtbl
 operator|.
@@ -9397,9 +9397,9 @@ decl_stmt|;
 name|boolean
 name|isExternal
 init|=
-literal|"TRUE"
+name|Boolean
 operator|.
-name|equals
+name|parseBoolean
 argument_list|(
 name|tbl
 operator|.
