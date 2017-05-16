@@ -68,7 +68,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * These annotations are meant to indicate how to handle retry logic.  * Initially meant for Metastore API when made across a network, i.e. asynchronously where  * the response may not reach the caller and thus it cannot know if the operation was actually  * performed on the server.  * @see RetryingMetastoreClient  */
+comment|/**  * These annotations are meant to indicate how to handle retry logic.  * Initially meant for Metastore API when made across a network, i.e. asynchronously where  * the response may not reach the caller and thus it cannot know if the operation was actually  * performed on the server.  */
 end_comment
 
 begin_class

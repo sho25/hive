@@ -642,7 +642,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Utility method for ACID to normalize logging info.  Matches    * {@link org.apache.hadoop.hive.metastore.api.LockRequest#toString()}    */
+comment|/**    * Utility method for ACID to normalize logging info.  Matches    * org.apache.hadoop.hive.metastore.api.LockRequest#toString    */
 specifier|public
 specifier|static
 name|String
@@ -658,7 +658,7 @@ operator|+
 name|extLockId
 return|;
 block|}
-comment|/**    * Utility method for ACID to normalize logging info.  Matches    * {@link org.apache.hadoop.hive.metastore.api.LockResponse#toString()}    */
+comment|/**    * Utility method for ACID to normalize logging info.  Matches    * org.apache.hadoop.hive.metastore.api.LockResponse#toString    */
 specifier|public
 specifier|static
 name|String

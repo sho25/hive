@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  *   * Compaction should only include txns up to smallest open txn (exclussive).  * There may be aborted txns in the snapshot represented by this ValidCompactorTxnList.  * Thus {@link #isTxnRangeValid(long, long)} returns NONE for any range that inluces any unresolved  * transactions.  Any txn above {@code highWatermark} is unresolved.  * These produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  *   * See {@link org.apache.hadoop.hive.metastore.txn.TxnUtils#createValidCompactTxnList()} for proper  * way to construct this.  */
+comment|/**  * An implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  *   * Compaction should only include txns up to smallest open txn (exclussive).  * There may be aborted txns in the snapshot represented by this ValidCompactorTxnList.  * Thus {@link #isTxnRangeValid(long, long)} returns NONE for any range that inluces any unresolved  * transactions.  Any txn above {@code highWatermark} is unresolved.  * These produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  *   * See org.apache.hadoop.hive.metastore.txn.TxnUtils#createValidCompactTxnList() for proper  * way to construct this.  */
 end_comment
 
 begin_class
@@ -174,7 +174,7 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns {@link org.apache.hadoop.hive.common.ValidTxnList.RangeResponse.ALL} if all txns in    * the range are resolved and RangeResponse.NONE otherwise    */
+comment|/**    * Returns org.apache.hadoop.hive.common.ValidTxnList.RangeResponse.ALL if all txns in    * the range are resolved and RangeResponse.NONE otherwise    */
 annotation|@
 name|Override
 specifier|public

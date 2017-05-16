@@ -1953,7 +1953,7 @@ return|return
 name|values
 return|;
 block|}
-comment|/**    * Splits a comma separated value<code>String</code>, trimming leading and trailing whitespace on each value.    * @param str a comma separated<String> with values    * @return a<code>Collection</code> of<code>String</code> values    */
+comment|/**    * Splits a comma separated value<code>String</code>, trimming leading and trailing whitespace on each value.    * @param str a comma separated<code>String</code> with values    * @return a<code>Collection</code> of<code>String</code> values    */
 specifier|public
 specifier|static
 name|Collection
@@ -1985,7 +1985,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Splits a comma separated value<code>String</code>, trimming leading and trailing whitespace on each value.    * @param str a comma separated<String> with values    * @return an array of<code>String</code> values    */
+comment|/**    * Splits a comma separated value<code>String</code>, trimming leading and trailing whitespace on each value.    * @param str a comma separated<code>String</code> with values    * @return an array of<code>String</code> values    */
 specifier|public
 specifier|static
 name|String
