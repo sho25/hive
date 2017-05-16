@@ -1057,18 +1057,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|public
-name|Configuration
-name|getFetchConf
-parameter_list|()
-block|{
-return|return
-name|fetch
-operator|.
-name|getJobConf
-argument_list|()
-return|;
-block|}
 block|}
 end_class
 

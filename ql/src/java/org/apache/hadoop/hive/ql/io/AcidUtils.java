@@ -1587,7 +1587,6 @@ return|return
 name|result
 return|;
 block|}
-comment|// INSERT_ONLY is a special operation which we only support INSERT operations, no UPDATE/DELETE
 specifier|public
 enum|enum
 name|Operation
@@ -1599,8 +1598,6 @@ block|,
 name|UPDATE
 block|,
 name|DELETE
-block|,
-name|INSERT_ONLY
 block|}
 comment|/**    * Logically this should have been defined in Operation but that causes a dependency    * on metastore package from exec jar (from the cluster) which is not allowed.    * This method should only be called from client side where metastore.* classes are present.    * Not following this will not be caught by unit tests since they have all the jar loaded.    */
 specifier|public

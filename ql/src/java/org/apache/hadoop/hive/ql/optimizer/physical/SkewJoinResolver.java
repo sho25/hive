@@ -613,7 +613,7 @@ if|if
 condition|(
 name|ltd
 operator|.
-name|getMmWriteId
+name|getTxnId
 argument_list|()
 operator|==
 literal|null
