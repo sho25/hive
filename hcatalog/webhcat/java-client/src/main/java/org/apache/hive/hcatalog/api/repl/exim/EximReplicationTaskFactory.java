@@ -67,7 +67,7 @@ name|api
 operator|.
 name|repl
 operator|.
-name|NoopReplicationTask
+name|ErroredReplicationTask
 import|;
 end_import
 
@@ -349,13 +349,19 @@ return|;
 block|}
 else|else
 block|{
-throw|throw
+return|return
+operator|new
+name|ErroredReplicationTask
+argument_list|(
+name|event
+argument_list|,
 operator|new
 name|IllegalStateException
 argument_list|(
 literal|"Unrecognized Event type, no replication task available"
 argument_list|)
-throw|;
+argument_list|)
+return|;
 block|}
 block|}
 block|}
