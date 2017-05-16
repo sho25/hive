@@ -823,7 +823,7 @@ name|Configuration
 name|conf
 parameter_list|)
 function_decl|;
-comment|/**    * All updates to jobtracker/resource manager rpc address    * in the configuration should be done through this shim    * @param conf    * @return    */
+comment|/**    * All updates to jobtracker/resource manager rpc address    * in the configuration should be done through this shim    * @param conf    */
 specifier|public
 name|void
 name|setJobLauncherRpcAddress
@@ -1006,7 +1006,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * For the block locations returned by getLocations() convert them into a Treemap    *<Offset,blockLocation> by iterating over the list of blockLocation.    * Using TreeMap from offset to blockLocation, makes it O(logn) to get a particular    * block based upon offset.    * @param fs the file system    * @param status the file information    * @return TreeMap<Long, BlockLocation>    * @throws IOException    */
+comment|/**    * For the block locations returned by getLocations() convert them into a Treemap    *&lt;Offset,blockLocation&gt; by iterating over the list of blockLocation.    * Using TreeMap from offset to blockLocation, makes it O(logn) to get a particular    * block based upon offset.    * @param fs the file system    * @param status the file information    * @return TreeMap&lt;Long, BlockLocation&gt;    * @throws IOException    */
 name|TreeMap
 argument_list|<
 name|Long
