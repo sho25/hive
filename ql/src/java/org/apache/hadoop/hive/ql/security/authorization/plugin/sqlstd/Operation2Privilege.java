@@ -1921,6 +1921,16 @@ argument_list|,
 operator|new
 name|PrivRequirement
 argument_list|(
+name|OWNER_INS_SEL_DEL_NOGRANT_AR
+argument_list|,
+name|HivePrivilegeObjectType
+operator|.
+name|DFS_URI
+argument_list|)
+argument_list|,
+operator|new
+name|PrivRequirement
+argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
 name|HivePrivilegeObjectType
