@@ -680,7 +680,7 @@ name|uncheckedGetField
 argument_list|()
 return|;
 block|}
-comment|/**    * Check if the object is null and return the length of the stream    *    * @param objectInspector    * @param cachedByteArrayRef    *          the bytes of the object    * @param start    *          the start offset    * @param length    *          the length    *    * @return -1 for null,>=0 for length    */
+comment|/**    * Check if the object is null and return the length of the stream    *    * @param objectInspector    * @param cachedByteArrayRef    *          the bytes of the object    * @param start    *          the start offset    * @param length    *          the length    *    * @return -1 for null,&gt;=0 for length    */
 specifier|protected
 specifier|abstract
 name|int

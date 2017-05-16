@@ -233,7 +233,7 @@ else|:
 name|configErrors
 return|;
 block|}
-comment|/**    * @rturn Whether the SerDe that can store schema both inside and outside of metastore    *        does, in fact, store it inside metastore, based on table parameters.    */
+comment|/**    * @return Whether the SerDe that can store schema both inside and outside of metastore    *        does, in fact, store it inside metastore, based on table parameters.    */
 specifier|public
 name|boolean
 name|shouldStoreFieldsInMetastore

@@ -1022,7 +1022,7 @@ name|fieldTypeInfos
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns the array element type, if the Type is an array (Object[]), or    * GenericArrayType (Map<String,String>[]). Otherwise return null.    */
+comment|/**    * Returns the array element type, if the Type is an array (Object[]), or    * GenericArrayType (Map&lt;String,String&gt;[]). Otherwise return null.    */
 specifier|public
 specifier|static
 name|Type
@@ -1100,7 +1100,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Get the parameter TypeInfo for a method.    *    * @param size    *          In case the last parameter of Method is an array, we will try to    *          return a List<TypeInfo> with the specified size by repeating the    *          element of the array at the end. In case the size is smaller than    *          the minimum possible number of arguments for the method, null will    *          be returned.    */
+comment|/**    * Get the parameter TypeInfo for a method.    *    * @param size    *          In case the last parameter of Method is an array, we will try to    *          return a List&lt;TypeInfo&gt; with the specified size by repeating the    *          element of the array at the end. In case the size is smaller than    *          the minimum possible number of arguments for the method, null will    *          be returned.    */
 specifier|public
 specifier|static
 name|List

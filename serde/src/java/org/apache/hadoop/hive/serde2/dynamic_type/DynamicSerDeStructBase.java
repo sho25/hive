@@ -266,7 +266,7 @@ return|return
 name|o
 return|;
 block|}
-comment|/**    * serialize    *     * The way to serialize a Thrift "table" which in thrift land is really a    * function and thus this class's name.    *     * @param o    *          - this list should be in the order of the function's params for    *          now. If we wanted to remove this requirement, we'd need to make it    *          a List<Pair<String, Object>> with the String being the field name.    *     */
+comment|/**    * serialize    *     * The way to serialize a Thrift "table" which in thrift land is really a    * function and thus this class's name.    *     * @param o    *          - this list should be in the order of the function's params for    *          now. If we wanted to remove this requirement, we'd need to make it    *          a List&lt;Pair&lt;String, Object&gt;&gt; with the String being the field name.    *     */
 annotation|@
 name|Override
 specifier|public

@@ -248,7 +248,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryStruct is serialized as follows: start A B A B A B end bytes[] ->  * |-----|---------|--- ... ---|-----|---------|  *  * Section A is one null-byte, corresponding to eight struct fields in Section  * B. Each bit indicates whether the corresponding field is null (0) or not null  * (1). Each field is a LazyBinaryObject.  *  * Following B, there is another section A and B. This pattern repeats until the  * all struct fields are serialized.  */
+comment|/**  * LazyBinaryStruct is serialized as follows: start A B A B A B end bytes[] -&gt;  * |-----|---------|--- ... ---|-----|---------|  *  * Section A is one null-byte, corresponding to eight struct fields in Section  * B. Each bit indicates whether the corresponding field is null (0) or not null  * (1). Each field is a LazyBinaryObject.  *  * Following B, there is another section A and B. This pattern repeats until the  * all struct fields are serialized.  */
 end_comment
 
 begin_class

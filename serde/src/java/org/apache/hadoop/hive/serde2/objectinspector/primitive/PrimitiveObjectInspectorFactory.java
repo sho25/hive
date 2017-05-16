@@ -2017,7 +2017,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns the PrimitiveWritableObjectInspector for the given type info    * @param PrimitiveTypeInfo    PrimitiveTypeInfo instance    * @return AbstractPrimitiveWritableObjectInspector instance    */
+comment|/**    * Returns the PrimitiveWritableObjectInspector for the given type info    * @param typeInfo PrimitiveTypeInfo instance    * @return AbstractPrimitiveWritableObjectInspector instance    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveWritableObjectInspector
@@ -2140,7 +2140,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns a PrimitiveWritableObjectInspector which implements ConstantObjectInspector    * for the PrimitiveCategory.    *    * @param primitiveCategory    * @param value    */
+comment|/**    * Returns a PrimitiveWritableObjectInspector which implements ConstantObjectInspector    * for the PrimitiveCategory.    *    * @param typeInfo    * @param value    */
 specifier|public
 specifier|static
 name|ConstantObjectInspector
@@ -2462,7 +2462,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns the PrimitiveJavaObjectInspector for the given PrimitiveTypeInfo instance,    * @param PrimitiveTypeInfo    PrimitiveTypeInfo instance    * @return AbstractPrimitiveJavaObjectInspector instance    */
+comment|/**    * Returns the PrimitiveJavaObjectInspector for the given PrimitiveTypeInfo instance,    * @param typeInfo PrimitiveTypeInfo instance    * @return AbstractPrimitiveJavaObjectInspector instance    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveJavaObjectInspector

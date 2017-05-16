@@ -541,7 +541,7 @@ return|return
 name|value
 return|;
 block|}
-comment|/**    * Record is the unit that data is serialized in. A record includes two parts.    * The first part stores the size of the element and the second part stores    * the real element. size element record -> |----|-------------------------|    *    * A RecordInfo stores two information of a record, the size of the "size"    * part which is the element offset and the size of the element part which is    * element size.    */
+comment|/**    * Record is the unit that data is serialized in. A record includes two parts.    * The first part stores the size of the element and the second part stores    * the real element. size element record -&gt; |----|-------------------------|    *    * A RecordInfo stores two information of a record, the size of the "size"    * part which is the element offset and the size of the element part which is    * element size.    */
 specifier|public
 specifier|static
 class|class

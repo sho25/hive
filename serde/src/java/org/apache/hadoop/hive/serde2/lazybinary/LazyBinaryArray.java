@@ -182,7 +182,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryArray is serialized as follows: start A b b b b b b end bytes[] ->  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the list has N elements, then there are  * (N+7)/8 bytes used as null-bytes. Each bit corresponds to an element and it  * indicates whether that element is null (0) or not null (1).  *   * After A, all b(s) represent the elements of the list. Each of them is again a  * LazyBinaryObject.  *   */
+comment|/**  * LazyBinaryArray is serialized as follows: start A b b b b b b end bytes[] -&gt;  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the list has N elements, then there are  * (N+7)/8 bytes used as null-bytes. Each bit corresponds to an element and it  * indicates whether that element is null (0) or not null (1).  *   * After A, all b(s) represent the elements of the list. Each of them is again a  * LazyBinaryObject.  *   */
 end_comment
 
 begin_class

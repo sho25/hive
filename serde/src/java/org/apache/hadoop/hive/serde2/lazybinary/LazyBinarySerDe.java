@@ -2230,7 +2230,7 @@ name|byteLength
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    *    * Allocate scratchLongs with HiveDecimal.SCRATCH_LONGS_LEN longs.    * And, allocate scratch buffer with HiveDecimal.SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes.    *    * @param byteStream    * @param dec    * @param scratchLongs    * @param buffer    */
+comment|/**    *    * Allocate scratchLongs with HiveDecimal.SCRATCH_LONGS_LEN longs.    * And, allocate scratch buffer with HiveDecimal.SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes.    *    * @param byteStream    * @param dec    * @param scratchLongs    * @param scratchBytes    */
 specifier|public
 specifier|static
 name|void
@@ -2313,7 +2313,7 @@ name|byteLength
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**   *   * Allocate scratchLongs with HiveDecimal.SCRATCH_LONGS_LEN longs.   * And, allocate scratch buffer with HiveDecimal.SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes.   *   * @param byteStream   * @param dec   * @param scratchLongs   * @param buffer   */
+comment|/**   *   * Allocate scratchLongs with HiveDecimal.SCRATCH_LONGS_LEN longs.   * And, allocate scratch buffer with HiveDecimal.SCRATCH_BUFFER_LEN_BIG_INTEGER_BYTES bytes.   *   * @param byteStream   * @param decWritable   * @param scratchLongs   * @param scratchBytes   */
 specifier|public
 specifier|static
 name|void

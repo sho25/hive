@@ -582,7 +582,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Writes HiveDecimalWritable object to output stream as string    * @param outputStream    * @param hiveDecimal    * @throws IOException    */
+comment|/**    * Writes HiveDecimalWritable object to output stream as string    * @param outputStream    * @param hiveDecimalWritable    * @throws IOException    */
 specifier|public
 specifier|static
 name|void

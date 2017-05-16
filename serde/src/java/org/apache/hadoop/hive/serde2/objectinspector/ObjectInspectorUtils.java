@@ -8293,7 +8293,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-comment|/**    *    * @param oi - Input object inspector    * @param oiSettableProperties - Lookup map to cache the result.(If no caching, pass null)    * @return - true if : (1) oi is an instance of settable<DataType>OI.    *                     (2) All the embedded object inspectors are instances of settable<DataType>OI.    *           If (1) or (2) is false, return false.    */
+comment|/**    *    * @param oi - Input object inspector    * @param oiSettableProperties - Lookup map to cache the result.(If no caching, pass null)    * @return - true if : (1) oi is an instance of settable&lt;DataType&gt;OI.    *                     (2) All the embedded object inspectors are instances of settable&lt;DataType&gt;OI.    *           If (1) or (2) is false, return false.    */
 specifier|public
 specifier|static
 name|boolean

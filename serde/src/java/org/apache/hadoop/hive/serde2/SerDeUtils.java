@@ -1131,7 +1131,7 @@ argument_list|()
 operator|)
 return|;
 block|}
-comment|/**    * Convert a Object to a standard Java object in compliance with JDBC 3.0 (see JDBC 3.0    * Specification, Table B-3: Mapping from JDBC Types to Java Object Types).    *    * This method is kept consistent with {@link HiveResultSetMetaData#hiveTypeToSqlType}.    */
+comment|/**    * Convert a Object to a standard Java object in compliance with JDBC 3.0 (see JDBC 3.0    * Specification, Table B-3: Mapping from JDBC Types to Java Object Types).    *    * This method is kept consistent with HiveResultSetMetaData#hiveTypeToSqlType .    */
 specifier|public
 specifier|static
 name|Object

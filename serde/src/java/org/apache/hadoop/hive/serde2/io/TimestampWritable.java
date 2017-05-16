@@ -220,7 +220,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TimestampWritable  * Writable equivalent of java.sq.Timestamp  *  * Timestamps are of the format  *    YYYY-MM-DD HH:MM:SS.[fff...]  *  * We encode Unix timestamp in seconds in 4 bytes, using the MSB to signify  * whether the timestamp has a fractional portion.  *  * The fractional portion is reversed, and encoded as a VInt  * so timestamps with less precision use fewer bytes.  *  *      0.1    -> 1  *      0.01   -> 10  *      0.001  -> 100  *  */
+comment|/**  * TimestampWritable  * Writable equivalent of java.sq.Timestamp  *  * Timestamps are of the format  *    YYYY-MM-DD HH:MM:SS.[fff...]  *  * We encode Unix timestamp in seconds in 4 bytes, using the MSB to signify  * whether the timestamp has a fractional portion.  *  * The fractional portion is reversed, and encoded as a VInt  * so timestamps with less precision use fewer bytes.  *  *      0.1    -&gt; 1  *      0.01   -&gt; 10  *      0.001  -&gt; 100  *  */
 end_comment
 
 begin_class
