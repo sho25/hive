@@ -9678,6 +9678,19 @@ name|RelNode
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|Set
+argument_list|<
+name|RelNode
+argument_list|>
+name|scalarAggNoGbyNoWin
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|RelNode
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|// TODO: Do we need to keep track of RR, ColNameToPosMap for every op or
 comment|// just last one.
 name|LinkedHashMap
@@ -9893,6 +9906,8 @@ argument_list|,
 name|calciteConfig
 argument_list|,
 name|corrScalarRexSQWithAgg
+argument_list|,
+name|scalarAggNoGbyNoWin
 argument_list|)
 decl_stmt|;
 name|RelOptPlanner
@@ -17240,6 +17255,12 @@ argument_list|<
 name|ASTNode
 argument_list|>
 name|corrScalarQueries
+parameter_list|,
+name|Set
+argument_list|<
+name|ASTNode
+argument_list|>
+name|scalarQueriesWithAggNoWinNoGby
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -17458,8 +17479,15 @@ init|=
 literal|null
 decl_stmt|;
 name|boolean
-name|isCorrScalarWithAgg
+index|[]
+name|subqueryConfig
 init|=
+block|{
+literal|false
+block|,
+literal|false
+block|}
+decl_stmt|;
 name|subQuery
 operator|.
 name|subqueryRestrictionsCheck
@@ -17469,14 +17497,35 @@ argument_list|,
 name|forHavingClause
 argument_list|,
 name|havingInputAlias
+argument_list|,
+name|subqueryConfig
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
-name|isCorrScalarWithAgg
+name|subqueryConfig
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|corrScalarQueries
+operator|.
+name|add
+argument_list|(
+name|originalSubQueryAST
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|subqueryConfig
+index|[
+literal|1
+index|]
+condition|)
+block|{
+name|scalarQueriesWithAggNoWinNoGby
 operator|.
 name|add
 argument_list|(
@@ -17526,6 +17575,19 @@ name|ASTNode
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|Set
+argument_list|<
+name|ASTNode
+argument_list|>
+name|scalarQueriesWithAggNoWinNoGby
+init|=
+operator|new
+name|HashSet
+argument_list|<
+name|ASTNode
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|//disallow subqueries which HIVE doesn't currently support
 name|subqueryRestrictionCheck
 argument_list|(
@@ -17538,6 +17600,8 @@ argument_list|,
 name|forHavingClause
 argument_list|,
 name|corrScalarQueriesWithAgg
+argument_list|,
+name|scalarQueriesWithAggNoWinNoGby
 argument_list|)
 expr_stmt|;
 name|Deque
@@ -17736,6 +17800,8 @@ argument_list|)
 expr_stmt|;
 comment|//keep track of subqueries which are scalar, correlated and contains aggregate
 comment|// subquery expression. This will later be special cased in Subquery remove rule
+comment|// for correlated scalar queries with aggregate we have take care of the case where
+comment|// inner aggregate happens on empty result
 if|if
 condition|(
 name|corrScalarQueriesWithAgg
@@ -17747,6 +17813,24 @@ argument_list|)
 condition|)
 block|{
 name|corrScalarRexSQWithAgg
+operator|.
+name|add
+argument_list|(
+name|subQueryRelNode
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|scalarQueriesWithAggNoWinNoGby
+operator|.
+name|contains
+argument_list|(
+name|next
+argument_list|)
+condition|)
+block|{
+name|scalarAggNoGbyNoWin
 operator|.
 name|add
 argument_list|(

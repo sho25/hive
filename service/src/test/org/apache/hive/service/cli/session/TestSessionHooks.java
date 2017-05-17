@@ -129,7 +129,7 @@ name|service
 operator|.
 name|auth
 operator|.
-name|HiveAuthFactory
+name|HiveAuthConstants
 import|;
 end_import
 
@@ -519,7 +519,7 @@ name|sessConf
 operator|.
 name|put
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|,

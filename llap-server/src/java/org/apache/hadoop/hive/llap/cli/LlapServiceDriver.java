@@ -952,6 +952,8 @@ block|{
 literal|"org.apache.hive.hcatalog.data.JsonSerDe"
 block|,
 literal|"org.apache.hadoop.hive.druid.DruidStorageHandler"
+block|,
+literal|"org.apache.hive.storage.jdbc.JdbcStorageHandler"
 block|}
 decl_stmt|;
 specifier|private

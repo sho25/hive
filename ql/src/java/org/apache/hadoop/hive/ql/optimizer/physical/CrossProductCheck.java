@@ -1022,19 +1022,13 @@ operator|.
 name|getConsole
 argument_list|()
 operator|.
-name|getInfoStream
-argument_list|()
-operator|.
-name|println
+name|printInfo
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Warning: %s"
-argument_list|,
+literal|"Warning: "
+operator|+
 name|msg
-argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

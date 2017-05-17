@@ -393,6 +393,26 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|void
+name|configureInputJobCredentials
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|secrets
+parameter_list|)
+block|{
+comment|//do nothing by default
+block|}
+annotation|@
+name|Override
+specifier|public
 name|Configuration
 name|getConf
 parameter_list|()

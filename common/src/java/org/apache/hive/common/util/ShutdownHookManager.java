@@ -246,7 +246,7 @@ name|shutdownHook
 argument_list|)
 return|;
 block|}
-comment|/**    * register file to delete-on-exit hook    *    * @see {@link org.apache.hadoop.hive.common.FileUtils#createTempFile}    */
+comment|/**    * register file to delete-on-exit hook    *    * {@link org.apache.hadoop.hive.common.FileUtils#createTempFile}    */
 specifier|public
 specifier|static
 name|void

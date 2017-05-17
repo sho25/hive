@@ -654,6 +654,9 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
+name|TIMESTAMPTZ
+case|:
+case|case
 name|DATE
 case|:
 name|dateWritableConverter
@@ -822,6 +825,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 break|break;
+case|case
+name|TIMESTAMPTZ
+case|:
 case|case
 name|DATE
 case|:

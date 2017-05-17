@@ -77,6 +77,16 @@ begin_import
 import|import
 name|org
 operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|apache
 operator|.
 name|hive
@@ -168,6 +178,8 @@ specifier|public
 name|void
 name|testWithAllRequiredSettingsDefined
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|Properties
 name|props
@@ -360,6 +372,9 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// since metastore connections don't require the url, this is allowable.
+annotation|@
+name|Ignore
 annotation|@
 name|Test
 argument_list|(
@@ -373,6 +388,8 @@ specifier|public
 name|void
 name|testWithJdbcUrlMissing
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|Properties
 name|props
@@ -454,6 +471,8 @@ specifier|public
 name|void
 name|testWithDatabaseTypeMissing
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|Properties
 name|props
@@ -530,6 +549,8 @@ specifier|public
 name|void
 name|testWithUnknownDatabaseType
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|Properties
 name|props

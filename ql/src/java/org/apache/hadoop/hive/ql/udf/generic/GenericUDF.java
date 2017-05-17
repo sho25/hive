@@ -2026,6 +2026,9 @@ case|:
 case|case
 name|VOID
 case|:
+case|case
+name|TIMESTAMPTZ
+case|:
 name|outOi
 operator|=
 name|PrimitiveObjectInspectorFactory
@@ -2141,6 +2144,9 @@ name|TIMESTAMP
 case|:
 case|case
 name|DATE
+case|:
+case|case
+name|TIMESTAMPTZ
 case|:
 break|break;
 default|default:
@@ -2580,6 +2586,9 @@ name|TIMESTAMP
 case|:
 case|case
 name|DATE
+case|:
+case|case
+name|TIMESTAMPTZ
 case|:
 name|Object
 name|writableValue

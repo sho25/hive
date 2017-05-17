@@ -621,6 +621,18 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+name|String
+name|url
+init|=
+literal|null
+decl_stmt|;
+specifier|private
+name|String
+name|driver
+init|=
+literal|null
+decl_stmt|;
+specifier|private
 name|URI
 index|[]
 name|validationServers
@@ -637,6 +649,11 @@ specifier|private
 specifier|final
 name|String
 name|dbType
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|metaDbType
 decl_stmt|;
 specifier|private
 specifier|final
@@ -666,6 +683,9 @@ name|HiveSchemaTool
 parameter_list|(
 name|String
 name|dbType
+parameter_list|,
+name|String
+name|metaDbType
 parameter_list|)
 throws|throws
 name|HiveMetaException
@@ -688,6 +708,8 @@ name|class
 argument_list|)
 argument_list|,
 name|dbType
+argument_list|,
+name|metaDbType
 argument_list|)
 expr_stmt|;
 block|}
@@ -702,6 +724,9 @@ name|hiveConf
 parameter_list|,
 name|String
 name|dbType
+parameter_list|,
+name|String
+name|metaDbType
 parameter_list|)
 throws|throws
 name|HiveMetaException
@@ -740,6 +765,12 @@ name|dbType
 expr_stmt|;
 name|this
 operator|.
+name|metaDbType
+operator|=
+name|metaDbType
+expr_stmt|;
+name|this
+operator|.
 name|metaStoreSchemaInfo
 operator|=
 operator|new
@@ -759,6 +790,36 @@ block|{
 return|return
 name|hiveConf
 return|;
+block|}
+specifier|public
+name|void
+name|setUrl
+parameter_list|(
+name|String
+name|url
+parameter_list|)
+block|{
+name|this
+operator|.
+name|url
+operator|=
+name|url
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setDriver
+parameter_list|(
+name|String
+name|driver
+parameter_list|)
+block|{
+name|this
+operator|.
+name|driver
+operator|=
+name|driver
+expr_stmt|;
 block|}
 specifier|public
 name|void
@@ -964,9 +1025,43 @@ name|userName
 argument_list|,
 name|passWord
 argument_list|,
+name|url
+argument_list|,
+name|driver
+argument_list|,
 name|printInfo
 argument_list|,
 name|hiveConf
+argument_list|)
+return|;
+block|}
+specifier|private
+name|NestedScriptParser
+name|getDbCommandParser
+parameter_list|(
+name|String
+name|dbType
+parameter_list|,
+name|String
+name|metaDbType
+parameter_list|)
+block|{
+return|return
+name|HiveSchemaHelper
+operator|.
+name|getDbCommandParser
+argument_list|(
+name|dbType
+argument_list|,
+name|dbOpts
+argument_list|,
+name|userName
+argument_list|,
+name|passWord
+argument_list|,
+name|hiveConf
+argument_list|,
+name|metaDbType
 argument_list|)
 return|;
 block|}
@@ -992,6 +1087,8 @@ argument_list|,
 name|passWord
 argument_list|,
 name|hiveConf
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
@@ -1150,7 +1247,7 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Could not find version info in metastore VERSION table"
+literal|"Could not find version info in metastore VERSION table."
 argument_list|)
 throw|;
 block|}
@@ -1495,17 +1592,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid DB locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -1822,17 +1908,6 @@ block|{
 name|isValid
 operator|=
 literal|false
-expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid TABLE locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
 expr_stmt|;
 block|}
 return|return
@@ -2156,17 +2231,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid PARTITION locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -2237,18 +2301,18 @@ condition|)
 block|{
 name|skewedColLoc
 operator|=
-literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\" from \"TBLS\" t, \"SDS\" s, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
+literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\", db.\"NAME\", db.\"DB_ID\" from \"TBLS\" t, \"SDS\" s, \"DBS\" db, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
 operator|+
-literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? "
+literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and t.\"DB_ID\" = db.\"DB_ID\" and sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? "
 expr_stmt|;
 block|}
 else|else
 block|{
 name|skewedColLoc
 operator|=
-literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION from TBLS t, SDS s, SKEWED_COL_VALUE_LOC_MAP sk "
+literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION, db.NAME, db.DB_ID from TBLS t, SDS s, DBS db, SKEWED_COL_VALUE_LOC_MAP sk "
 operator|+
-literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? "
+literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? "
 expr_stmt|;
 block|}
 name|long
@@ -2387,7 +2451,18 @@ decl_stmt|;
 name|String
 name|entity
 init|=
-literal|"Table "
+literal|"Database "
+operator|+
+name|getNameOrID
+argument_list|(
+name|res
+argument_list|,
+literal|5
+argument_list|,
+literal|6
+argument_list|)
+operator|+
+literal|", Table "
 operator|+
 name|getNameOrID
 argument_list|(
@@ -2470,17 +2545,6 @@ name|isValid
 operator|=
 literal|false
 expr_stmt|;
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Total number of invalid SKEWED_COL_VALUE_LOC_MAP locations is: "
-operator|+
-name|numOfInvalid
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|isValid
@@ -2522,7 +2586,7 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", error: empty location"
+literal|", Error: empty location"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2572,11 +2636,11 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", location: "
+literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", error: missing location scheme"
+literal|", Error: missing location scheme"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2671,11 +2735,11 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", location: "
+literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", error: mismatched server"
+literal|", Error: mismatched server"
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2699,7 +2763,7 @@ name|println
 argument_list|(
 name|entity
 operator|+
-literal|", error: invalid location "
+literal|", Error: invalid location - "
 operator|+
 name|pe
 operator|.
@@ -4037,16 +4101,23 @@ condition|)
 block|{
 name|System
 operator|.
-name|out
+name|err
 operator|.
 name|println
 argument_list|(
-literal|"Failed in schema version validation: "
-operator|+
 name|hme
 operator|.
 name|getMessage
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Failed in schema version validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4175,12 +4246,21 @@ name|err
 operator|.
 name|println
 argument_list|(
-literal|"Failed to determine schema version from Hive Metastore DB,"
+literal|"Failed to determine schema version from Hive Metastore DB. "
 operator|+
 name|he
 operator|.
 name|getMessage
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Failed in schema version validation."
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -4482,7 +4562,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Schema table validation failed!!!"
+literal|"Failed in schema table validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4528,14 +4608,6 @@ literal|" ]"
 argument_list|)
 expr_stmt|;
 comment|// now diff the lists
-name|int
-name|schemaSize
-init|=
-name|schemaTables
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
 name|schemaTables
 operator|.
 name|removeAll
@@ -4555,7 +4627,7 @@ condition|)
 block|{
 name|System
 operator|.
-name|out
+name|err
 operator|.
 name|println
 argument_list|(
@@ -5354,9 +5426,15 @@ init|=
 name|getDbCommandParser
 argument_list|(
 name|dbType
+argument_list|,
+name|metaDbType
 argument_list|)
 decl_stmt|;
 comment|// expand the nested script
+comment|// If the metaDbType is set, this is setting up the information
+comment|// schema in Hive. That specifically means that the sql commands need
+comment|// to be adjusted for the underlying RDBMS (correct quotation
+comment|// strings, etc).
 name|String
 name|sqlCommands
 init|=
@@ -5367,6 +5445,10 @@ argument_list|(
 name|scriptDir
 argument_list|,
 name|scriptFile
+argument_list|,
+name|metaDbType
+operator|!=
+literal|null
 argument_list|)
 decl_stmt|;
 name|File
@@ -5475,6 +5557,10 @@ operator|new
 name|CommandBuilder
 argument_list|(
 name|hiveConf
+argument_list|,
+name|url
+argument_list|,
+name|driver
 argument_list|,
 name|userName
 argument_list|,
@@ -5628,10 +5714,26 @@ specifier|final
 name|String
 name|sqlScriptFile
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|driver
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|url
+decl_stmt|;
 name|CommandBuilder
 parameter_list|(
 name|HiveConf
 name|hiveConf
+parameter_list|,
+name|String
+name|url
+parameter_list|,
+name|String
+name|driver
 parameter_list|,
 name|String
 name|userName
@@ -5660,6 +5762,18 @@ operator|.
 name|password
 operator|=
 name|password
+expr_stmt|;
+name|this
+operator|.
+name|url
+operator|=
+name|url
+expr_stmt|;
+name|this
+operator|.
+name|driver
+operator|=
+name|driver
 expr_stmt|;
 name|this
 operator|.
@@ -5725,6 +5839,10 @@ index|[]
 block|{
 literal|"-u"
 block|,
+name|url
+operator|==
+literal|null
+condition|?
 name|HiveSchemaHelper
 operator|.
 name|getValidConfVar
@@ -5735,9 +5853,15 @@ name|METASTORECONNECTURLKEY
 argument_list|,
 name|hiveConf
 argument_list|)
+else|:
+name|url
 block|,
 literal|"-d"
 block|,
+name|driver
+operator|==
+literal|null
+condition|?
 name|HiveSchemaHelper
 operator|.
 name|getValidConfVar
@@ -5748,6 +5872,8 @@ name|METASTORE_CONNECTION_DRIVER
 argument_list|,
 name|hiveConf
 argument_list|)
+else|:
+name|driver
 block|,
 literal|"-n"
 block|,
@@ -6069,6 +6195,75 @@ literal|"dbType"
 argument_list|)
 decl_stmt|;
 name|Option
+name|metaDbTypeOpt
+init|=
+name|OptionBuilder
+operator|.
+name|withArgName
+argument_list|(
+literal|"metaDatabaseType"
+argument_list|)
+operator|.
+name|hasArgs
+argument_list|()
+operator|.
+name|withDescription
+argument_list|(
+literal|"Used only if upgrading the system catalog for hive"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|"metaDbType"
+argument_list|)
+decl_stmt|;
+name|Option
+name|urlOpt
+init|=
+name|OptionBuilder
+operator|.
+name|withArgName
+argument_list|(
+literal|"url"
+argument_list|)
+operator|.
+name|hasArgs
+argument_list|()
+operator|.
+name|withDescription
+argument_list|(
+literal|"connection url to the database"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|"url"
+argument_list|)
+decl_stmt|;
+name|Option
+name|driverOpt
+init|=
+name|OptionBuilder
+operator|.
+name|withArgName
+argument_list|(
+literal|"driver"
+argument_list|)
+operator|.
+name|hasArgs
+argument_list|()
+operator|.
+name|withDescription
+argument_list|(
+literal|"driver name for connection"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|"driver"
+argument_list|)
+decl_stmt|;
+name|Option
 name|dbOpts
 init|=
 name|OptionBuilder
@@ -6128,7 +6323,7 @@ argument_list|()
 operator|.
 name|withDescription
 argument_list|(
-literal|"a comma-separated list of servers used in location validation"
+literal|"a comma-separated list of servers used in location validation in the format of scheme://authority (e.g. hdfs://localhost:8000)"
 argument_list|)
 operator|.
 name|create
@@ -6182,6 +6377,27 @@ name|cmdLineOptions
 operator|.
 name|addOption
 argument_list|(
+name|metaDbTypeOpt
+argument_list|)
+expr_stmt|;
+name|cmdLineOptions
+operator|.
+name|addOption
+argument_list|(
+name|urlOpt
+argument_list|)
+expr_stmt|;
+name|cmdLineOptions
+operator|.
+name|addOption
+argument_list|(
+name|driverOpt
+argument_list|)
+expr_stmt|;
+name|cmdLineOptions
+operator|.
+name|addOption
+argument_list|(
 name|dbOpts
 argument_list|)
 expr_stmt|;
@@ -6224,6 +6440,11 @@ literal|null
 decl_stmt|;
 name|String
 name|dbType
+init|=
+literal|null
+decl_stmt|;
+name|String
+name|metaDbType
 init|=
 literal|null
 decl_stmt|;
@@ -6352,6 +6573,16 @@ name|equalsIgnoreCase
 argument_list|(
 name|HiveSchemaHelper
 operator|.
+name|DB_HIVE
+argument_list|)
+operator|&&
+operator|!
+name|dbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
 name|DB_MSSQL
 argument_list|)
 operator|&&
@@ -6422,6 +6653,152 @@ name|cmdLineOptions
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|line
+operator|.
+name|hasOption
+argument_list|(
+literal|"metaDbType"
+argument_list|)
+condition|)
+block|{
+name|metaDbType
+operator|=
+name|line
+operator|.
+name|getOptionValue
+argument_list|(
+literal|"metaDbType"
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|dbType
+operator|.
+name|equals
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_HIVE
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"metaDbType only supported for dbType = hive"
+argument_list|)
+expr_stmt|;
+name|printAndExit
+argument_list|(
+name|cmdLineOptions
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|metaDbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_DERBY
+argument_list|)
+operator|&&
+operator|!
+name|metaDbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_MSSQL
+argument_list|)
+operator|&&
+operator|!
+name|metaDbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_MYSQL
+argument_list|)
+operator|&&
+operator|!
+name|metaDbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_POSTGRACE
+argument_list|)
+operator|&&
+operator|!
+name|metaDbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_ORACLE
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"Unsupported metaDbType "
+operator|+
+name|metaDbType
+argument_list|)
+expr_stmt|;
+name|printAndExit
+argument_list|(
+name|cmdLineOptions
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|dbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_HIVE
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+literal|"no metaDbType supplied"
+argument_list|)
+expr_stmt|;
+name|printAndExit
+argument_list|(
+name|cmdLineOptions
+argument_list|)
+expr_stmt|;
+block|}
 name|System
 operator|.
 name|setProperty
@@ -6446,6 +6823,8 @@ operator|new
 name|HiveSchemaTool
 argument_list|(
 name|dbType
+argument_list|,
+name|metaDbType
 argument_list|)
 decl_stmt|;
 if|if
@@ -6563,6 +6942,52 @@ name|err
 argument_list|)
 throw|;
 block|}
+block|}
+if|if
+condition|(
+name|line
+operator|.
+name|hasOption
+argument_list|(
+literal|"url"
+argument_list|)
+condition|)
+block|{
+name|schemaTool
+operator|.
+name|setUrl
+argument_list|(
+name|line
+operator|.
+name|getOptionValue
+argument_list|(
+literal|"url"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|line
+operator|.
+name|hasOption
+argument_list|(
+literal|"driver"
+argument_list|)
+condition|)
+block|{
+name|schemaTool
+operator|.
+name|setDriver
+argument_list|(
+name|line
+operator|.
+name|getOptionValue
+argument_list|(
+literal|"driver"
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(

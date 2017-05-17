@@ -180,7 +180,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * Specialized class for native vectorized reduce sink that is reducing on multiple key columns  * (or a single non-long / non-string column).  */
+comment|/*  * Specialized class for native vectorized reduce sink that is reducing on Uniform Hash  * multiple key columns (or a single non-long / non-string column).  */
 end_comment
 
 begin_class

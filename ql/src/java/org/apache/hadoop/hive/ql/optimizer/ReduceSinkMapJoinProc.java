@@ -1563,14 +1563,14 @@ literal|"Mapjoin "
 operator|+
 name|mapJoinOp
 operator|+
-literal|"(bucket map join = )"
+literal|"(bucket map join = "
 operator|+
 name|joinConf
 operator|.
 name|isBucketMapJoin
 argument_list|()
 operator|+
-literal|", pos: "
+literal|"), pos: "
 operator|+
 name|pos
 operator|+
@@ -1960,7 +1960,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cloning reduce sink for multi-child broadcast edge"
+literal|"Cloning reduce sink "
+operator|+
+name|parentRS
+operator|+
+literal|" for multi-child broadcast edge"
 argument_list|)
 expr_stmt|;
 comment|// we've already set this one up. Need to clone for the next work.

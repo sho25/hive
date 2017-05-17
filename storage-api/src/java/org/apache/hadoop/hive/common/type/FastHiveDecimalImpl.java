@@ -13054,7 +13054,7 @@ name|key
 init|=
 name|fast0
 decl_stmt|;
-comment|// Hash code logic from calculateLongHashCode.
+comment|// Hash code logic from original calculateLongHashCode
 name|key
 operator|=
 operator|(

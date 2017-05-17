@@ -142,7 +142,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryUnion is serialized as follows: start TAG FIELD end bytes[] ->  * |-----|---------|--- ... ---|-----|---------|  *  * Section TAG is one byte, corresponding to tag of set union field  * FIELD is a LazyBinaryObject corresponding to set union field value.  *  */
+comment|/**  * LazyBinaryUnion is serialized as follows: start TAG FIELD end bytes[] -&gt;  * |-----|---------|--- ... ---|-----|---------|  *  * Section TAG is one byte, corresponding to tag of set union field  * FIELD is a LazyBinaryObject corresponding to set union field value.  *  */
 end_comment
 
 begin_class

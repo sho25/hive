@@ -192,7 +192,7 @@ name|READ_COLUMN_IDS_CONF_STR
 init|=
 literal|"hive.io.file.readcolumn.ids"
 decl_stmt|;
-comment|/**    * the nested column path is the string from the root to the leaf    * e.g.    * c:struct<a:string,b:string>    * the column a's path is c.a and b's path is c.b    */
+comment|/**    * the nested column path is the string from the root to the leaf    * e.g.    * c:struct&lt;a:string,b:string&gt;    * the column a's path is c.a and b's path is c.b    */
 specifier|public
 specifier|static
 specifier|final
@@ -257,7 +257,7 @@ operator|.
 name|skipNulls
 argument_list|()
 decl_stmt|;
-comment|/**    * @deprecated for backwards compatibility with<= 0.12, use setReadAllColumns    */
+comment|/**    * @deprecated for backwards compatibility with&lt;= 0.12, use setReadAllColumns    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -275,7 +275,7 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @deprecated for backwards compatibility with<= 0.12, use setReadAllColumns    * and appendReadColumns    */
+comment|/**    * @deprecated for backwards compatibility with&lt;= 0.12, use setReadAllColumns    * and appendReadColumns    */
 annotation|@
 name|Deprecated
 annotation|@
@@ -310,7 +310,7 @@ name|ids
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @deprecated for backwards compatibility with<= 0.12, use appendReadColumns    */
+comment|/**    * @deprecated for backwards compatibility with&lt;= 0.12, use appendReadColumns    */
 annotation|@
 name|Deprecated
 specifier|public

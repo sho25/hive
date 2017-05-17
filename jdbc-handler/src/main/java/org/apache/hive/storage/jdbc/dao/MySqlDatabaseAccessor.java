@@ -69,11 +69,11 @@ name|sql
 operator|+
 literal|" LIMIT "
 operator|+
-name|limit
+name|offset
 operator|+
 literal|","
 operator|+
-name|offset
+name|limit
 return|;
 block|}
 block|}

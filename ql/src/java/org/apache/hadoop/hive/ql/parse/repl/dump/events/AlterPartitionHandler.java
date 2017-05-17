@@ -205,7 +205,7 @@ begin_class
 class|class
 name|AlterPartitionHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 specifier|private
 specifier|final

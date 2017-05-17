@@ -347,6 +347,24 @@ annotation|@
 name|Override
 specifier|public
 name|void
+name|configureInputJobCredentials
+parameter_list|(
+name|TableDesc
+name|tableDesc
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|jobProperties
+parameter_list|)
+block|{    }
+annotation|@
+name|Override
+specifier|public
+name|void
 name|configureOutputJobProperties
 parameter_list|(
 name|TableDesc

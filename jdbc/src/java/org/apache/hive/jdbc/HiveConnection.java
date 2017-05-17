@@ -75,7 +75,7 @@ name|service
 operator|.
 name|auth
 operator|.
-name|HiveAuthFactory
+name|HiveAuthConstants
 import|;
 end_import
 
@@ -3922,7 +3922,7 @@ name|Utils
 operator|.
 name|getTokenStrForm
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_CLIENT_TOKEN
 argument_list|)
@@ -4104,7 +4104,7 @@ name|sessVars
 operator|.
 name|containsKey
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|)
@@ -4114,7 +4114,7 @@ name|openConf
 operator|.
 name|put
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|,
@@ -4122,7 +4122,7 @@ name|sessVars
 operator|.
 name|get
 argument_list|(
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_PROXY_USER
 argument_list|)

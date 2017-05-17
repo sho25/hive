@@ -349,21 +349,6 @@ name|tokenStartIndex
 condition|)
 block|{
 comment|// Collect newer entry is if a super-set of existing entry,
-assert|assert
-operator|(
-name|replacementText
-operator|.
-name|contains
-argument_list|(
-name|existingEntry
-operator|.
-name|getValue
-argument_list|()
-operator|.
-name|replacementText
-argument_list|)
-operator|)
-assert|;
 name|subsetEntries
 operator|.
 name|add

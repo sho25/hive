@@ -315,7 +315,7 @@ literal|"DROP DATABASE IF EXISTS `"
 operator|+
 name|qFile
 operator|.
-name|getName
+name|getDatabaseName
 argument_list|()
 operator|+
 literal|"` CASCADE;"
@@ -324,7 +324,7 @@ literal|"CREATE DATABASE `"
 operator|+
 name|qFile
 operator|.
-name|getName
+name|getDatabaseName
 argument_list|()
 operator|+
 literal|"`;"
@@ -333,7 +333,7 @@ literal|"USE `"
 operator|+
 name|qFile
 operator|.
-name|getName
+name|getDatabaseName
 argument_list|()
 operator|+
 literal|"`;"
@@ -400,7 +400,7 @@ literal|"DROP DATABASE IF EXISTS `"
 operator|+
 name|qFile
 operator|.
-name|getName
+name|getDatabaseName
 argument_list|()
 operator|+
 literal|"` CASCADE;"

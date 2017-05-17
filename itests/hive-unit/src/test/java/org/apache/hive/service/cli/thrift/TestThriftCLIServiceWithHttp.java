@@ -137,7 +137,25 @@ name|service
 operator|.
 name|auth
 operator|.
-name|HiveAuthFactory
+name|HiveAuthConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|auth
+operator|.
+name|HiveAuthConstants
+operator|.
+name|AuthTypes
 import|;
 end_import
 
@@ -154,8 +172,6 @@ operator|.
 name|auth
 operator|.
 name|HiveAuthFactory
-operator|.
-name|AuthTypes
 import|;
 end_import
 
@@ -521,6 +537,8 @@ name|ConfVars
 operator|.
 name|HIVE_SERVER2_AUTHENTICATION
 argument_list|,
+name|HiveAuthConstants
+operator|.
 name|AuthTypes
 operator|.
 name|NOSASL

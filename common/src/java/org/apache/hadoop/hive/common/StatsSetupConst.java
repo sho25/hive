@@ -514,7 +514,7 @@ name|STATS_FILE_PREFIX
 init|=
 literal|"tmpstats-"
 decl_stmt|;
-comment|/**    * @return List of all supported statistics    */
+comment|/**    * List of all supported statistics    */
 specifier|public
 specifier|static
 specifier|final
@@ -532,7 +532,7 @@ block|,
 name|RAW_DATA_SIZE
 block|}
 decl_stmt|;
-comment|/**    * @return List of all statistics that need to be collected during query execution. These are    * statistics that inherently require a scan of the data.    */
+comment|/**    * List of all statistics that need to be collected during query execution. These are    * statistics that inherently require a scan of the data.    */
 specifier|public
 specifier|static
 specifier|final
@@ -549,7 +549,7 @@ block|,
 name|RAW_DATA_SIZE
 block|}
 decl_stmt|;
-comment|/**    * @return List of statistics that can be collected quickly without requiring a scan of the data.    */
+comment|/**    * List of statistics that can be collected quickly without requiring a scan of the data.    */
 specifier|public
 specifier|static
 specifier|final

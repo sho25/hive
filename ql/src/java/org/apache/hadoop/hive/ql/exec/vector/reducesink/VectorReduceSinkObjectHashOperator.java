@@ -810,7 +810,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is uniform hash (common) operator class for native vectorized reduce sink.  */
+comment|/**  * This class is the object hash (not Uniform Hash) operator class for native vectorized reduce sink.  * It takes the "object" hash code of bucket and/or partition keys (which are often subsets of the  * reduce key).  If the bucket and partition keys are empty, the hash will be a random number.  */
 end_comment
 
 begin_class
@@ -855,6 +855,10 @@ name|CLASS_NAME
 argument_list|)
 decl_stmt|;
 specifier|protected
+name|boolean
+name|isEmptyBuckets
+decl_stmt|;
+specifier|protected
 name|int
 index|[]
 name|reduceSinkBucketColumnMap
@@ -868,6 +872,10 @@ specifier|protected
 name|VectorExpression
 index|[]
 name|reduceSinkBucketExpressions
+decl_stmt|;
+specifier|protected
+name|boolean
+name|isEmptyPartitions
 decl_stmt|;
 specifier|protected
 name|int
@@ -887,6 +895,11 @@ decl_stmt|;
 comment|// The above members are initialized by the constructor and must not be
 comment|// transient.
 comment|//---------------------------------------------------------------------------
+specifier|private
+specifier|transient
+name|boolean
+name|isKeyInitialized
+decl_stmt|;
 specifier|protected
 specifier|transient
 name|Output
@@ -1021,6 +1034,19 @@ name|getUseUniformHash
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|isEmptyBuckets
+operator|=
+name|vectorDesc
+operator|.
+name|getIsEmptyBuckets
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isEmptyBuckets
+condition|)
+block|{
 name|reduceSinkBucketColumnMap
 operator|=
 name|vectorReduceSinkInfo
@@ -1042,6 +1068,20 @@ operator|.
 name|getReduceSinkBucketExpressions
 argument_list|()
 expr_stmt|;
+block|}
+name|isEmptyPartitions
+operator|=
+name|vectorDesc
+operator|.
+name|getIsEmptyPartitions
+argument_list|()
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isEmptyPartitions
+condition|)
+block|{
 name|reduceSinkPartitionColumnMap
 operator|=
 name|vectorReduceSinkInfo
@@ -1063,6 +1103,7 @@ operator|.
 name|getReduceSinkPartitionExpressions
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|ObjectInspector
@@ -1156,6 +1197,14 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isEmptyKey
+condition|)
+block|{
+comment|// For this variation, we serialize the key without caring if it single Long,
+comment|// single String, multi-key, etc.
 name|keyOutput
 operator|=
 operator|new
@@ -1189,19 +1238,20 @@ argument_list|,
 name|reduceSinkKeyColumnMap
 argument_list|)
 expr_stmt|;
-name|hasBuckets
-operator|=
-literal|false
-expr_stmt|;
-name|isPartitioned
-operator|=
-literal|false
-expr_stmt|;
+block|}
+comment|// Object Hash.
+if|if
+condition|(
+name|isEmptyBuckets
+condition|)
+block|{
 name|numBuckets
 operator|=
 literal|0
 expr_stmt|;
-comment|// Object Hash.
+block|}
+else|else
+block|{
 name|numBuckets
 operator|=
 name|conf
@@ -1209,19 +1259,6 @@ operator|.
 name|getNumBuckets
 argument_list|()
 expr_stmt|;
-name|hasBuckets
-operator|=
-operator|(
-name|numBuckets
-operator|>
-literal|0
-operator|)
-expr_stmt|;
-if|if
-condition|(
-name|hasBuckets
-condition|)
-block|{
 name|bucketObjectInspectors
 operator|=
 name|getObjectInspectorArray
@@ -1255,21 +1292,9 @@ name|length
 index|]
 expr_stmt|;
 block|}
-name|isPartitioned
-operator|=
-operator|(
-name|conf
-operator|.
-name|getPartitionCols
-argument_list|()
-operator|!=
-literal|null
-operator|)
-expr_stmt|;
 if|if
 condition|(
-operator|!
-name|isPartitioned
+name|isEmptyPartitions
 condition|)
 block|{
 name|nonPartitionRandom
@@ -1377,6 +1402,28 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return;
+block|}
+if|if
+condition|(
+operator|!
+name|isKeyInitialized
+condition|)
+block|{
+name|isKeyInitialized
+operator|=
+literal|true
+expr_stmt|;
+if|if
+condition|(
+name|isEmptyKey
+condition|)
+block|{
+name|initializeEmptyKey
+argument_list|(
+name|tag
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// Perform any key expressions.  Results will go into scratch columns.
 if|if
@@ -1538,14 +1585,12 @@ name|hashCode
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|hasBuckets
+name|isEmptyBuckets
 condition|)
 block|{
 if|if
 condition|(
-operator|!
-name|isPartitioned
+name|isEmptyPartitions
 condition|)
 block|{
 name|hashCode
@@ -1612,8 +1657,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|isPartitioned
+name|isEmptyPartitions
 condition|)
 block|{
 name|hashCode
@@ -1658,6 +1702,12 @@ name|bucketNum
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+operator|!
+name|isEmptyKey
+condition|)
+block|{
 name|keyBinarySortableSerializeWrite
 operator|.
 name|reset
@@ -1764,6 +1814,13 @@ argument_list|(
 name|hashCode
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+operator|!
+name|isEmptyValue
+condition|)
+block|{
 name|valueLazyBinarySerializeWrite
 operator|.
 name|reset
@@ -1795,6 +1852,7 @@ name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|collect
 argument_list|(
 name|keyWritable

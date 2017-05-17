@@ -1176,14 +1176,6 @@ argument_list|(
 name|ParquetTableUtils
 operator|.
 name|PARQUET_INT96_WRITE_ZONE_PROPERTY
-argument_list|,
-name|TimeZone
-operator|.
-name|getDefault
-argument_list|()
-operator|.
-name|getID
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|NanoTimeUtils

@@ -3461,6 +3461,29 @@ literal|true
 argument_list|)
 block|,
 comment|// Metastore stuff. Be sure to update HiveConf.metaVars when you add something here!
+name|METASTOREDBTYPE
+argument_list|(
+literal|"hive.metastore.db.type"
+argument_list|,
+literal|"DERBY"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"DERBY"
+argument_list|,
+literal|"ORACLE"
+argument_list|,
+literal|"MYSQL"
+argument_list|,
+literal|"MSSQL"
+argument_list|,
+literal|"POSTGRES"
+argument_list|)
+argument_list|,
+literal|"Type of database used by the metastore. Information schema& JDBCStorageHandler depend on it."
+argument_list|)
+block|,
 name|METASTOREWAREHOUSE
 argument_list|(
 literal|"hive.metastore.warehouse.dir"
@@ -7521,6 +7544,17 @@ operator|+
 literal|"If the skew information is correctly stored in the metadata, hive.optimize.skewjoin.compiletime\n"
 operator|+
 literal|"would change the query plan to take care of it, and hive.optimize.skewjoin will be a no-op."
+argument_list|)
+block|,
+name|HIVE_SHARED_SCAN_OPTIMIZATION
+argument_list|(
+literal|"hive.optimize.shared.scan"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable shared scan optimizer. The optimizer finds scan operator over the same table\n"
+operator|+
+literal|"in the query plan and merges them if they meet some preconditions."
 argument_list|)
 block|,
 comment|// CTE
@@ -12091,15 +12125,6 @@ argument_list|,
 literal|"Only perform semijoin optimization if the estimated benefit at or above this fraction of the target table"
 argument_list|)
 block|,
-name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_HINT_ONLY
-argument_list|(
-literal|"hive.tez.dynamic.semijoin.reduction.hint.only"
-argument_list|,
-literal|false
-argument_list|,
-literal|"When true, only enforce semijoin when a hint is provided"
-argument_list|)
-block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"
@@ -13879,11 +13904,30 @@ literal|"hive.msck.repair.batch.size"
 argument_list|,
 literal|0
 argument_list|,
-literal|"Batch size for the msck repair command. If the value is greater than zero, "
+literal|"Batch size for the msck repair command. If the value is greater than zero,\n "
 operator|+
-literal|"it will execute batch wise with the configured batch size. "
+literal|"it will execute batch wise with the configured batch size. In case of errors while\n"
 operator|+
-literal|"The default value is zero. Zero means it will execute directly (Not batch wise)"
+literal|"adding unknown partitions the batch size is automatically reduced by half in the subsequent\n"
+operator|+
+literal|"retry attempt. The default value is zero which means it will execute directly (not batch wise)"
+argument_list|)
+block|,
+name|HIVE_MSCK_REPAIR_BATCH_MAX_RETRIES
+argument_list|(
+literal|"hive.msck.repair.batch.max.retries"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Maximum number of retries for the msck repair command when adding unknown partitions.\n "
+operator|+
+literal|"If the value is greater than zero it will retry adding unknown partitions until the maximum\n"
+operator|+
+literal|"number of attempts is reached or batch size is reduced to 0, whichever is earlier.\n"
+operator|+
+literal|"In each retry attempt it will reduce the batch size by a factor of 2 until it reaches zero.\n"
+operator|+
+literal|"If the value is set to zero it will retry until the batch size becomes zero as described above."
 argument_list|)
 block|,
 name|HIVE_SERVER2_LLAP_CONCURRENT_QUERIES

@@ -89,7 +89,7 @@ begin_class
 class|class
 name|DefaultHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|DefaultHandler
 parameter_list|(

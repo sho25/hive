@@ -1959,7 +1959,13 @@ argument_list|(
 literal|"TABLE_NAME"
 argument_list|)
 operator|+
-literal|";"
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1979,7 +1985,15 @@ parameter_list|(
 name|Exception
 name|e
 parameter_list|)
-block|{         }
+block|{
+name|beeLine
+operator|.
+name|error
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// run as a batch
 return|return
@@ -4236,6 +4250,11 @@ name|rows
 init|=
 literal|null
 decl_stmt|;
+name|ResultSet
+name|rs
+init|=
+literal|null
+decl_stmt|;
 try|try
 block|{
 name|boolean
@@ -4328,14 +4347,13 @@ condition|(
 name|hasResults
 condition|)
 block|{
-name|ResultSet
 name|rs
-init|=
+operator|=
 name|stmnt
 operator|.
 name|getResultSet
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|rows
 operator|=
 operator|new
@@ -4366,14 +4384,14 @@ finally|finally
 block|{
 if|if
 condition|(
-name|stmnt
+name|rs
 operator|!=
 literal|null
 condition|)
 block|{
 try|try
 block|{
-name|stmnt
+name|rs
 operator|.
 name|close
 argument_list|()
@@ -4390,6 +4408,36 @@ operator|.
 name|error
 argument_list|(
 name|e1
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|stmnt
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|stmnt
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e2
+parameter_list|)
+block|{
+name|beeLine
+operator|.
+name|error
+argument_list|(
+name|e2
 argument_list|)
 expr_stmt|;
 block|}
@@ -4821,7 +4869,13 @@ name|lines
 operator|.
 name|split
 argument_list|(
-literal|";"
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
 argument_list|)
 decl_stmt|;
 for|for
@@ -6184,7 +6238,13 @@ name|line
 operator|.
 name|endsWith
 argument_list|(
-literal|";"
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
 argument_list|)
 operator|||
 name|beeLine
@@ -6542,7 +6602,7 @@ comment|// higher-level logic never sees the extra lines. So,
 comment|// for example, if a script is being saved, it won't include
 comment|// the continuation lines! This is logged as sf.net
 comment|// bug 879518.
-comment|// use multiple lines for statements not terminated by ";"
+comment|// use multiple lines for statements not terminated by the delimiter
 try|try
 block|{
 name|line
@@ -6649,7 +6709,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Helper method to parse input from Beeline and convert it to a {@link List} of commands that    * can be executed. This method contains logic for handling semicolons that are placed within    * quotations. It iterates through each character in the line and checks to see if it is a ;, ',    * or "    */
+comment|/**    * Helper method to parse input from Beeline and convert it to a {@link List} of commands that    * can be executed. This method contains logic for handling delimiters that are placed within    * quotations. It iterates through each character in the line and checks to see if it is the delimiter, ',    * or "    */
 specifier|private
 name|List
 argument_list|<
@@ -6711,20 +6771,11 @@ name|hasUnterminatedSingleQuote
 init|=
 literal|false
 decl_stmt|;
-comment|// Index of the last seen semicolon in the given line
+comment|// Index of the last seen delimiter in the given line
 name|int
-name|lastSemiColonIndex
+name|lastDelimiterIndex
 init|=
 literal|0
-decl_stmt|;
-name|char
-index|[]
-name|lineChars
-init|=
-name|line
-operator|.
-name|toCharArray
-argument_list|()
 decl_stmt|;
 comment|// Marker to track if the previous character was an escape character
 name|boolean
@@ -6737,32 +6788,32 @@ name|index
 init|=
 literal|0
 decl_stmt|;
-comment|// Iterate through the line and invoke the addCmdPart method whenever a semicolon is seen that is not inside a
+comment|// Iterate through the line and invoke the addCmdPart method whenever the delimiter is seen that is not inside a
 comment|// quoted string
 for|for
 control|(
 init|;
 name|index
 operator|<
-name|lineChars
+name|line
 operator|.
 name|length
+argument_list|()
 condition|;
-name|index
-operator|++
 control|)
 block|{
-switch|switch
+if|if
 condition|(
-name|lineChars
-index|[
+name|line
+operator|.
+name|startsWith
+argument_list|(
+literal|"\'"
+argument_list|,
 name|index
-index|]
+argument_list|)
 condition|)
 block|{
-case|case
-literal|'\''
-case|:
 comment|// If a single quote is seen and the index is not inside a double quoted string and the previous character
 comment|// was not an escape, then update the hasUnterminatedSingleQuote flag
 if|if
@@ -6784,10 +6835,23 @@ name|wasPrevEscape
 operator|=
 literal|false
 expr_stmt|;
-break|break;
-case|case
-literal|'\"'
-case|:
+name|index
+operator|++
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|line
+operator|.
+name|startsWith
+argument_list|(
+literal|"\""
+argument_list|,
+name|index
+argument_list|)
+condition|)
+block|{
 comment|// If a double quote is seen and the index is not inside a single quoted string and the previous character
 comment|// was not an escape, then update the hasUnterminatedDoubleQuote flag
 if|if
@@ -6809,12 +6873,31 @@ name|wasPrevEscape
 operator|=
 literal|false
 expr_stmt|;
-break|break;
-case|case
-literal|';'
-case|:
-comment|// If a semicolon is seen, and the line isn't inside a quoted string, then treat
-comment|// line[lastSemiColonIndex] to line[index] as a single command
+name|index
+operator|++
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|line
+operator|.
+name|startsWith
+argument_list|(
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
+argument_list|,
+name|index
+argument_list|)
+condition|)
+block|{
+comment|// If the delimiter is seen, and the line isn't inside a quoted string, then treat
+comment|// line[lastDelimiterIndex] to line[index] as a single command
 if|if
 condition|(
 operator|!
@@ -6834,51 +6917,78 @@ name|line
 operator|.
 name|substring
 argument_list|(
-name|lastSemiColonIndex
+name|lastDelimiterIndex
 argument_list|,
 name|index
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|lastSemiColonIndex
+name|lastDelimiterIndex
 operator|=
 name|index
 operator|+
-literal|1
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
+operator|.
+name|length
+argument_list|()
 expr_stmt|;
 block|}
 name|wasPrevEscape
 operator|=
 literal|false
 expr_stmt|;
-break|break;
-case|case
-literal|'\\'
-case|:
+name|index
+operator|+=
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
+operator|.
+name|length
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|wasPrevEscape
 operator|=
+name|line
+operator|.
+name|startsWith
+argument_list|(
+literal|"\\"
+argument_list|,
+name|index
+argument_list|)
+operator|&&
 operator|!
 name|wasPrevEscape
 expr_stmt|;
-break|break;
-default|default:
-name|wasPrevEscape
-operator|=
-literal|false
+name|index
+operator|++
 expr_stmt|;
-break|break;
 block|}
 block|}
-comment|// If the line doesn't end with a ; or if the line is empty, add the cmd part
+comment|// If the line doesn't end with the delimiter or if the line is empty, add the cmd part
 if|if
 condition|(
-name|lastSemiColonIndex
+name|lastDelimiterIndex
 operator|!=
 name|index
 operator|||
-name|lineChars
+name|line
 operator|.
 name|length
+argument_list|()
 operator|==
 literal|0
 condition|)
@@ -6893,7 +7003,7 @@ name|line
 operator|.
 name|substring
 argument_list|(
-name|lastSemiColonIndex
+name|lastDelimiterIndex
 argument_list|,
 name|index
 argument_list|)
@@ -6954,7 +7064,13 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|";"
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getDelimiter
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return;
@@ -7524,9 +7640,7 @@ argument_list|(
 literal|null
 argument_list|)
 condition|)
-block|{
-empty_stmt|;
-block|}
+block|{       }
 return|return
 literal|true
 return|;
@@ -10281,6 +10395,23 @@ argument_list|()
 expr_stmt|;
 return|return
 literal|true
+return|;
+block|}
+specifier|public
+name|boolean
+name|delimiter
+parameter_list|(
+name|String
+name|line
+parameter_list|)
+block|{
+return|return
+name|set
+argument_list|(
+literal|"set "
+operator|+
+name|line
+argument_list|)
 return|;
 block|}
 block|}

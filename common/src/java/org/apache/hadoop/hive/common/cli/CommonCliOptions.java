@@ -142,7 +142,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Reusable code for Hive Cli's.  *<p>  * Basic usage is: create an instance (usually a subclass if you want to  * all your own options or processing instructions), parse, and then use  * the resulting information.  *<p>  * See {@link org.apache.hadoop.hive.service.HiveServer} or  *     {@link org.apache.hadoop.hive.metastore.HiveMetaStore}  *     for examples of use.  *  */
+comment|/**  * Reusable code for Hive Cli's.  *<p>  * Basic usage is: create an instance (usually a subclass if you want to  * all your own options or processing instructions), parse, and then use  * the resulting information.  *<p>  * See org.apache.hadoop.hive.service.HiveServer or  *     org.apache.hadoop.hive.metastore.HiveMetaStore  *     for examples of use.  *  */
 end_comment
 
 begin_class

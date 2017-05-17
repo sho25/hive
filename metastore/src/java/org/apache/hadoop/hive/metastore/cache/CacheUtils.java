@@ -790,7 +790,6 @@ argument_list|,
 literal|"\\\\$"
 argument_list|)
 expr_stmt|;
-empty_stmt|;
 if|if
 condition|(
 name|Pattern

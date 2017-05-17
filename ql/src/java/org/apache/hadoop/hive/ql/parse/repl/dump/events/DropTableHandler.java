@@ -89,7 +89,7 @@ begin_class
 class|class
 name|DropTableHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 name|DropTableHandler
 parameter_list|(

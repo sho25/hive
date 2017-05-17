@@ -76,6 +76,8 @@ name|DATE
 block|,
 name|TIMESTAMP
 block|,
+name|TIMESTAMPTZ
+block|,
 name|BINARY
 block|,
 name|DECIMAL

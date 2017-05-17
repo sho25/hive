@@ -4076,7 +4076,7 @@ name|throwIfExceedsTenToThirtyEight
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**     * Performs decimal modulo     *<p>     * The definition of modulo (x % p) is:     *   x - IntegerPart(x / p, resultScale) * p     *</p>     *     * @left     *    is x     * @right     *    is p     * @result     *    receives the result     * @scratch     *    scratch space to avoid need to create a new object     * @scale     *    scale of result     */
+comment|/**     * Performs decimal modulo     *<p>     * The definition of modulo (x % p) is:     *   x - IntegerPart(x / p, resultScale) * p     *</p>     *     * @param left     *    is x     * @param right     *    is p     * @param result     *    receives the result     * @param scale     *    scale of result     */
 specifier|public
 specifier|static
 name|void
@@ -5427,7 +5427,7 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Update the value to a decimal value with the decimal point equal to    * val but with the decimal point inserted scale    * digits from the right. Behavior is undefined if scale is> 38 or< 0.    *    * For example, updateFixedPoint(123456789L, (short) 3) changes the target    * to the value 123456.789 with scale 3.    */
+comment|/**    * Update the value to a decimal value with the decimal point equal to    * val but with the decimal point inserted scale    * digits from the right. Behavior is undefined if scale is&gt; 38 or&lt; 0.    *    * For example, updateFixedPoint(123456789L, (short) 3) changes the target    * to the value 123456.789 with scale 3.    */
 specifier|public
 name|void
 name|updateFixedPoint

@@ -2051,6 +2051,11 @@ name|joinDesc
 operator|.
 name|getNoConditionalTaskSize
 argument_list|()
+argument_list|,
+name|joinDesc
+operator|.
+name|getInMemoryDataSize
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|mapJoinDesc
@@ -3031,15 +3036,6 @@ block|{
 comment|// each side better have 0 or more RS. if either side is unbalanced, cannot convert.
 comment|// This is a workaround for now. Right fix would be to refactor code in the
 comment|// MapRecordProcessor and ReduceRecordProcessor with respect to the sources.
-annotation|@
-name|SuppressWarnings
-argument_list|(
-block|{
-literal|"rawtypes"
-block|,
-literal|"unchecked"
-block|}
-argument_list|)
 name|Set
 argument_list|<
 name|ReduceSinkOperator
@@ -4384,6 +4380,21 @@ name|currInputStat
 expr_stmt|;
 block|}
 block|}
+comment|// We store the total memory that this MapJoin is going to use,
+comment|// which is calculated as totalSize/buckets, with totalSize
+comment|// equal to sum of small tables size.
+name|joinOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setInMemoryDataSize
+argument_list|(
+name|totalSize
+operator|/
+name|buckets
+argument_list|)
+expr_stmt|;
 return|return
 name|bigTablePosition
 return|;

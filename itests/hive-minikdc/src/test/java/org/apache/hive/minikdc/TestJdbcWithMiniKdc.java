@@ -191,7 +191,7 @@ name|service
 operator|.
 name|auth
 operator|.
-name|HiveAuthFactory
+name|HiveAuthConstants
 import|;
 end_import
 
@@ -1236,7 +1236,7 @@ name|ugi
 argument_list|,
 name|tokenStr
 argument_list|,
-name|HiveAuthFactory
+name|HiveAuthConstants
 operator|.
 name|HS2_CLIENT_TOKEN
 argument_list|)

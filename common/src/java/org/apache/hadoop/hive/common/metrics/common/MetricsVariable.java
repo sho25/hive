@@ -22,7 +22,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Interface for metrics variables.<p/> For example a the database service could expose the number of  * currently active connections.  */
+comment|/**  * Interface for metrics variables. For example a the database service could expose the number of  * currently active connections.  */
 end_comment
 
 begin_interface

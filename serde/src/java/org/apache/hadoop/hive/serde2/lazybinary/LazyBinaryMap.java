@@ -184,7 +184,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * LazyBinaryMap is serialized as follows: start A b c b c b c end bytes[] ->  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the map has N key-value pairs, then  * there are (N*2+7)/8 bytes used as null-bytes. Each bit corresponds to a key  * or a value and it indicates whether that key or value is null (0) or not null  * (1).  *   * After A, all the bytes are actual serialized data of the map, which are  * key-value pairs. b represent the keys and c represent the values. Each of  * them is again a LazyBinaryObject.  *   */
+comment|/**  * LazyBinaryMap is serialized as follows: start A b c b c b c end bytes[] -&gt;  * |--------|---|---|---|---| ... |---|---|  *   * Section A is the null-bytes. Suppose the map has N key-value pairs, then  * there are (N*2+7)/8 bytes used as null-bytes. Each bit corresponds to a key  * or a value and it indicates whether that key or value is null (0) or not null  * (1).  *   * After A, all the bytes are actual serialized data of the map, which are  * key-value pairs. b represent the keys and c represent the values. Each of  * them is again a LazyBinaryObject.  *   */
 end_comment
 
 begin_class

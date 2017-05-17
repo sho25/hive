@@ -870,6 +870,21 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|timeZoneID
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Missing timezone id for parquet int96 conversion!"
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 name|TimeZone
 operator|.
 name|getTimeZone
@@ -896,7 +911,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|IllegalArgumentException
 argument_list|(
 literal|"Unexpected timezone id found for parquet int96 conversion: "
 operator|+

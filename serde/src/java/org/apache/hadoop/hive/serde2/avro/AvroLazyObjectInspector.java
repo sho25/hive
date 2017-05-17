@@ -688,7 +688,7 @@ operator|=
 name|readerSchema
 expr_stmt|;
 block|}
-comment|/**    * Set the {@link AvroSchemaRetriever} for the {@link AvroLazyObjectInspector} to the given class    *    * @param scheamRetrieverClass the schema retriever class to be set    * */
+comment|/**    * Set the {@link AvroSchemaRetriever} for the {@link AvroLazyObjectInspector} to the given class    *    * @param schemaRetriever the schema retriever class to be set    * */
 specifier|public
 name|void
 name|setSchemaRetriever

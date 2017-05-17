@@ -4025,6 +4025,11 @@ name|queryState
 operator|=
 operator|new
 name|QueryState
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|withHiveConf
 argument_list|(
 operator|new
 name|HiveConf
@@ -4034,6 +4039,9 @@ operator|.
 name|class
 argument_list|)
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -10259,6 +10267,8 @@ block|,
 literal|".*at com\\.zaxxer.*"
 block|,
 literal|"org\\.apache\\.hadoop\\.hive\\.metastore\\.model\\.MConstraint@([0-9]|[a-z])*"
+block|,
+literal|"^Repair: Added partition to metastore.*"
 block|}
 argument_list|)
 decl_stmt|;
@@ -11423,9 +11433,17 @@ name|queryState
 operator|=
 operator|new
 name|QueryState
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|withHiveConf
 argument_list|(
 name|conf
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 name|sem
 operator|=

@@ -645,7 +645,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
+comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFileName the input .tar file    * @param outputDirName the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
 specifier|public
 specifier|static
 name|List
@@ -680,7 +680,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFile the input .tar file    * @param outputDir the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
+comment|/**    * Untar an input file into an output file.    *    * The output file is created in the output folder, having the same name as the input file, minus    * the '.tar' extension.    *    * @param inputFileName the input .tar file    * @param outputDirName the output directory file.    * @throws IOException    * @throws FileNotFoundException    *    * @return The {@link List} of {@link File}s with the untared content.    * @throws ArchiveException    */
 specifier|public
 specifier|static
 name|List

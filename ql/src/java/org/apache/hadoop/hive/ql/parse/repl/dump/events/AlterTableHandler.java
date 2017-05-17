@@ -157,7 +157,7 @@ begin_class
 class|class
 name|AlterTableHandler
 extends|extends
-name|AbstractHandler
+name|AbstractEventHandler
 block|{
 specifier|private
 specifier|final

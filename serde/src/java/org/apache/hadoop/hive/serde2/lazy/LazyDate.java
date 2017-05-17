@@ -310,7 +310,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Writes a Date in SQL date format to the output stream.    * @param out    *          The output stream    * @param i    *          The Date to write    * @throws IOException    */
+comment|/**    * Writes a Date in SQL date format to the output stream.    * @param out    *          The output stream    * @param d    *          The Date to write    * @throws IOException    */
 specifier|public
 specifier|static
 name|void

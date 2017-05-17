@@ -591,6 +591,28 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
+name|LazyTimestampTZObjectInspector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|lazy
+operator|.
+name|objectinspector
+operator|.
+name|primitive
+operator|.
 name|LazyVoidObjectInspector
 import|;
 end_import
@@ -999,7 +1021,7 @@ specifier|final
 class|class
 name|LazyFactory
 block|{
-comment|/**    * Create a lazy primitive object instance given a primitive object inspector based on it's    * type. It takes a boolean switch to decide whether to return a binary or standard variant    * of the lazy object.    *    * @param poi PrimitiveObjectInspector    * @param typeBinary a switch to return either a LazyPrimtive class or it's binary    *        companion    * @return LazyPrimitive<? extends ObjectInspector, ? extends Writable>    */
+comment|/**    * Create a lazy primitive object instance given a primitive object inspector based on it's    * type. It takes a boolean switch to decide whether to return a binary or standard variant    * of the lazy object.    *    * @param poi PrimitiveObjectInspector    * @param typeBinary a switch to return either a LazyPrimtive class or it's binary    *        companion    * @return LazyPrimitive&lt;? extends ObjectInspector, ? extends Writable&gt;    */
 specifier|public
 specifier|static
 name|LazyPrimitive
@@ -1227,6 +1249,19 @@ name|LazyTimestamp
 argument_list|(
 operator|(
 name|LazyTimestampObjectInspector
+operator|)
+name|oi
+argument_list|)
+return|;
+case|case
+name|TIMESTAMPTZ
+case|:
+return|return
+operator|new
+name|LazyTimestampTZ
+argument_list|(
+operator|(
+name|LazyTimestampTZObjectInspector
 operator|)
 name|oi
 argument_list|)
@@ -1558,7 +1593,7 @@ literal|"Hive LazySerDe Internal error."
 argument_list|)
 throw|;
 block|}
-comment|/**    * Creates a LazyObject based on the LazyObjectInspector. Will create binary variants for    * primitive objects when the switch<code>typeBinary</code> is specified as true.    *    * @param oi ObjectInspector    * @param typeBinary Boolean value used as switch to return variants of LazyPrimitive    *                   objects which are initialized from a binary format for the data.    * @return LazyObject<? extends ObjectInspector>    */
+comment|/**    * Creates a LazyObject based on the LazyObjectInspector. Will create binary variants for    * primitive objects when the switch<code>typeBinary</code> is specified as true.    *    * @param oi ObjectInspector    * @param typeBinary Boolean value used as switch to return variants of LazyPrimitive    *                   objects which are initialized from a binary format for the data.    * @return LazyObject&lt;? extends ObjectInspector&gt;    */
 specifier|public
 specifier|static
 name|LazyObject
@@ -1610,7 +1645,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given    * typeInfo.    *    * @param typeInfo    *          The type information for the LazyObject    * @param separator    *          The array of separators for delimiting each level    * @param separatorIndex    *          The current level (for separators). List(array), struct uses 1    *          level of separator, and map uses 2 levels: the first one for    *          delimiting entries, the second one for delimiting key and values.    * @param nullSequence    *          The sequence of bytes representing NULL.    * @return The ObjectInspector    * @throws SerDeException    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given    * typeInfo.    *    * @param typeInfo    *          The type information for the LazyObject    * @param separators    *          The array of separators for delimiting each level    * @param separatorIndex    *          The current level (for separators). List(array), struct uses 1    *          level of separator, and map uses 2 levels: the first one for    *          delimiting entries, the second one for delimiting key and values.    * @param nullSequence    *          The sequence of bytes representing NULL.    * @return The ObjectInspector    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -1664,7 +1699,7 @@ name|option
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given    * typeInfo.    *    * @param typeInfo    *          The type information for the LazyObject    * @param separator    *          The array of separators for delimiting each level    * @param separatorIndex    *          The current level (for separators). List(array), struct uses 1    *          level of separator, and map uses 2 levels: the first one for    *          delimiting entries, the second one for delimiting key and values.    * @param nullSequence    *          The sequence of bytes representing NULL.    * @return The ObjectInspector    * @throws SerDeException    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given    * typeInfo.    *    * @param typeInfo    *          The type information for the LazyObject    * @param separators    *          The array of separators for delimiting each level    * @param separatorIndex    *          The current level (for separators). List(array), struct uses 1    *          level of separator, and map uses 2 levels: the first one for    *          delimiting entries, the second one for delimiting key and values.    * @param nullSequence    *          The sequence of bytes representing NULL.    * @return The ObjectInspector    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -1717,7 +1752,7 @@ name|JAVA
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separator The array of separators for delimiting each level    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param nullSequence The sequence of bytes representing NULL.    * @param extendedBooleanLiteral whether extended boolean literal set is legal    * @param option the {@link ObjectInspectorOption}    * @return The ObjectInspector    * @throws SerDeException    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separators The array of separators for delimiting each level    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param nullSequence The sequence of bytes representing NULL.    * @param extendedBooleanLiteral whether extended boolean literal set is legal    * @return The ObjectInspector    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -1773,7 +1808,7 @@ name|JAVA
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separator The array of separators for delimiting each level    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param nullSequence The sequence of bytes representing NULL.    * @param extendedBooleanLiteral whether extended boolean literal set is legal    * @param option the {@link ObjectInspectorOption}    * @return The ObjectInspector    * @throws SerDeException    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separators The array of separators for delimiting each level    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param nullSequence The sequence of bytes representing NULL.    * @param extendedBooleanLiteral whether extended boolean literal set is legal    * @param option the {@link ObjectInspectorOptions}    * @return The ObjectInspector    * @throws SerDeException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -1841,7 +1876,7 @@ name|option
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separator The array of separators for delimiting each level    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param lazyParams Params for lazy types    * @param option the {@link ObjectInspectorOption}    * @return The ObjectInspector    * @throws SerDeException    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyObject with the given typeInfo.    *    * @param typeInfo The type information for the LazyObject    * @param separatorIndex The current level (for separators). List(array), struct uses 1 level of    *          separator, and map uses 2 levels: the first one for delimiting entries, the second one    *          for delimiting key and values.    * @param lazyParams Params for lazy types    * @param option the {@link ObjectInspectorOptions}    * @return The ObjectInspector    * @throws SerDeException    */
 specifier|public
 specifier|static
 name|ObjectInspector
@@ -2356,7 +2391,7 @@ name|lazyParams
 argument_list|)
 return|;
 block|}
-comment|/**    * Create a hierarchical ObjectInspector for LazyStruct with the given    * columnNames and columnTypeInfos.    *    * @param lastColumnTakesRest    *          whether the last column of the struct should take the rest of the    *          row if there are extra fields.    * @param lazyParams  parameters for the lazy types    * @throws SerDeException    * @see LazyFactory#createLazyObjectInspector(TypeInfo, byte[], int, Text,    *      boolean, byte)    */
+comment|/**    * Create a hierarchical ObjectInspector for LazyStruct with the given    * columnNames and columnTypeInfos.    *    * @param lazyParams  parameters for the lazy types    * @throws SerDeException    * @see LazyFactory#createLazyObjectInspector(TypeInfo, byte[], int, Text,    *      boolean, byte)    */
 specifier|public
 specifier|static
 name|ObjectInspector

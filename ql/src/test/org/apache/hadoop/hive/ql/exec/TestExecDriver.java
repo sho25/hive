@@ -685,20 +685,6 @@ name|TextInputFormat
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
-import|;
-end_import
-
 begin_comment
 comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out.  *  */
 end_comment
@@ -770,6 +756,11 @@ name|queryState
 operator|=
 operator|new
 name|QueryState
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|withHiveConf
 argument_list|(
 operator|new
 name|HiveConf
@@ -779,6 +770,9 @@ operator|.
 name|class
 argument_list|)
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 name|conf
 operator|=

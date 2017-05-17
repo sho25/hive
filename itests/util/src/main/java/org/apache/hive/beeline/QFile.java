@@ -297,6 +297,10 @@ name|String
 name|name
 decl_stmt|;
 specifier|private
+name|String
+name|databaseName
+decl_stmt|;
+specifier|private
 name|File
 name|inputFile
 decl_stmt|;
@@ -355,6 +359,15 @@ parameter_list|()
 block|{
 return|return
 name|name
+return|;
+block|}
+specifier|public
+name|String
+name|getDatabaseName
+parameter_list|()
+block|{
+return|return
+name|databaseName
 return|;
 block|}
 specifier|public
@@ -615,7 +628,7 @@ name|source
 operator|.
 name|replaceAll
 argument_list|(
-literal|"(?is)(\\s+)default\\."
+literal|"(?is)(?<!name:?|alias:?)(\\s+)default\\."
 operator|+
 name|table
 operator|+
@@ -1361,6 +1374,14 @@ name|name
 expr_stmt|;
 name|result
 operator|.
+name|databaseName
+operator|=
+literal|"test_db_"
+operator|+
+name|name
+expr_stmt|;
+name|result
+operator|.
 name|inputFile
 operator|=
 operator|new
@@ -1475,7 +1496,9 @@ name|addFilter
 argument_list|(
 literal|"(PREHOOK|POSTHOOK): (Output|Input): database:"
 operator|+
-name|name
+name|result
+operator|.
+name|databaseName
 operator|+
 literal|"\n"
 argument_list|,
@@ -1486,7 +1509,9 @@ name|addFilter
 argument_list|(
 literal|"(PREHOOK|POSTHOOK): (Output|Input): "
 operator|+
-name|name
+name|result
+operator|.
+name|databaseName
 operator|+
 literal|"@"
 argument_list|,
@@ -1497,7 +1522,9 @@ name|addFilter
 argument_list|(
 literal|"name(:?) "
 operator|+
-name|name
+name|result
+operator|.
+name|databaseName
 operator|+
 literal|"\\.(.*)\n"
 argument_list|,
@@ -1506,9 +1533,24 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
+literal|"alias(:?) "
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|"\\.(.*)\n"
+argument_list|,
+literal|"alias$1 default.$2\n"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
 literal|"/"
 operator|+
-name|name
+name|result
+operator|.
+name|databaseName
 operator|+
 literal|".db/"
 argument_list|,

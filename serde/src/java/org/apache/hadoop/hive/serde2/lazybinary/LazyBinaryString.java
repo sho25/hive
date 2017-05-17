@@ -72,7 +72,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The serialization of LazyBinaryString is very simple: start A end bytes[] ->  * |---------------------------------|  *   * Section A is just an array of bytes which are exactly the Text contained in  * this object.  *   */
+comment|/**  * The serialization of LazyBinaryString is very simple: start A end bytes[] -&gt;  * |---------------------------------|  *   * Section A is just an array of bytes which are exactly the Text contained in  * this object.  *   */
 end_comment
 
 begin_class
