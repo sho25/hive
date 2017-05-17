@@ -471,7 +471,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Left Outer Join"
+literal|"Left Outer Join "
 argument_list|)
 expr_stmt|;
 break|break;
@@ -484,7 +484,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Right Outer Join"
+literal|"Right Outer Join "
 argument_list|)
 expr_stmt|;
 break|break;
@@ -497,7 +497,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Unique Join"
+literal|"Unique Join "
 argument_list|)
 expr_stmt|;
 break|break;
@@ -519,7 +519,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Unknow Join "
+literal|"Unknown Join "
 argument_list|)
 expr_stmt|;
 break|break;
@@ -683,7 +683,7 @@ name|put
 argument_list|(
 literal|"type"
 argument_list|,
-literal|"Unknow Join"
+literal|"Unknown Join"
 argument_list|)
 expr_stmt|;
 break|break;
