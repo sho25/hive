@@ -2500,7 +2500,10 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
+argument_list|()
+operator|.
+name|getAdjustedNoConditionalTaskSize
 argument_list|()
 condition|)
 block|{
@@ -2518,7 +2521,10 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
+argument_list|()
+operator|.
+name|getAdjustedNoConditionalTaskSize
 argument_list|()
 argument_list|)
 expr_stmt|;

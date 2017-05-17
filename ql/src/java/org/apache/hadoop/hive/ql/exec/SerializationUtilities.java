@@ -1830,6 +1830,15 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|kryo
+operator|.
+name|register
+argument_list|(
+name|MemoryMonitorInfo
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// This must be called after all the explicit register calls.
 return|return
 name|kryo

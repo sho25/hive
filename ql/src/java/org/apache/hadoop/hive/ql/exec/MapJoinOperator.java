@@ -1098,6 +1098,15 @@ name|hconf
 argument_list|)
 return|;
 block|}
+specifier|public
+name|String
+name|getCacheKey
+parameter_list|()
+block|{
+return|return
+name|cacheKey
+return|;
+block|}
 annotation|@
 name|Override
 specifier|protected
