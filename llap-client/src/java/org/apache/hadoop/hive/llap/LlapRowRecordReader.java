@@ -125,6 +125,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|BytesWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|NullWritable
 import|;
 end_import
@@ -415,6 +429,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|lazybinary
+operator|.
+name|LazyBinarySerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ListObjectInspector
@@ -611,7 +643,7 @@ name|RecordReader
 argument_list|<
 name|NullWritable
 argument_list|,
-name|Text
+name|BytesWritable
 argument_list|>
 name|reader
 decl_stmt|;
@@ -627,12 +659,8 @@ name|serde
 decl_stmt|;
 specifier|protected
 specifier|final
-name|Text
-name|textData
-init|=
-operator|new
-name|Text
-argument_list|()
+name|BytesWritable
+name|data
 decl_stmt|;
 specifier|public
 name|LlapRowRecordReader
@@ -647,7 +675,7 @@ name|RecordReader
 argument_list|<
 name|NullWritable
 argument_list|,
-name|Text
+name|BytesWritable
 argument_list|>
 name|reader
 parameter_list|)
@@ -671,6 +699,14 @@ operator|.
 name|reader
 operator|=
 name|reader
+expr_stmt|;
+name|this
+operator|.
+name|data
+operator|=
+operator|new
+name|BytesWritable
+argument_list|()
 expr_stmt|;
 try|try
 block|{
@@ -800,7 +836,7 @@ name|next
 argument_list|(
 name|key
 argument_list|,
-name|textData
+name|data
 argument_list|)
 decl_stmt|;
 if|if
@@ -808,7 +844,7 @@ condition|(
 name|hasNext
 condition|)
 block|{
-comment|// Deserialize Text to column values, and populate the row record
+comment|// Deserialize data to column values, and populate the row record
 name|Object
 name|rowObj
 decl_stmt|;
@@ -831,7 +867,7 @@ name|serde
 operator|.
 name|deserialize
 argument_list|(
-name|textData
+name|data
 argument_list|)
 expr_stmt|;
 name|setRowFromStruct
@@ -862,9 +898,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Error deserializing row from text: "
+literal|"Error deserializing row from data: "
 operator|+
-name|textData
+name|data
 argument_list|)
 expr_stmt|;
 block|}
@@ -1606,7 +1642,7 @@ name|AbstractSerDe
 name|serde
 init|=
 operator|new
-name|LazySimpleSerDe
+name|LazyBinarySerDe
 argument_list|()
 decl_stmt|;
 name|serde
