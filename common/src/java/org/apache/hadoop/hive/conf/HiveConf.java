@@ -12742,6 +12742,23 @@ argument_list|,
 literal|"ZooKeeper connection string for ZooKeeper SecretManager."
 argument_list|)
 block|,
+name|LLAP_ZKSM_ZK_SESSION_TIMEOUT
+argument_list|(
+literal|"hive.llap.zk.sm.session.timeout"
+argument_list|,
+literal|"40s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper session timeout for ZK SecretManager."
+argument_list|)
+block|,
 name|LLAP_ZK_REGISTRY_USER
 argument_list|(
 literal|"hive.llap.zk.registry.user"
