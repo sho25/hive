@@ -1362,6 +1362,31 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// This is used to compare global and vertex resources. Global resources are originally
+comment|// derived from session conf via localizeTempFilesFromConf. So, use that here.
+name|Configuration
+name|sessionConf
+init|=
+operator|(
+name|session
+operator|!=
+literal|null
+operator|&&
+name|session
+operator|.
+name|getConf
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|?
+name|session
+operator|.
+name|getConf
+argument_list|()
+else|:
+name|conf
+decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -1377,6 +1402,8 @@ argument_list|,
 name|scratchDir
 argument_list|,
 name|inputOutputJars
+argument_list|,
+name|sessionConf
 argument_list|)
 decl_stmt|;
 comment|// Ensure the session is open and has the necessary local resources
@@ -1940,6 +1967,9 @@ parameter_list|,
 name|String
 index|[]
 name|inputOutputJars
+parameter_list|,
+name|Configuration
+name|sessionConf
 parameter_list|)
 throws|throws
 name|Exception
@@ -1962,6 +1992,7 @@ name|LocalResource
 argument_list|>
 argument_list|()
 decl_stmt|;
+comment|// Skip the files already in session local resources...
 specifier|final
 name|List
 argument_list|<
@@ -1981,6 +2012,13 @@ argument_list|,
 name|jobConf
 argument_list|,
 name|inputOutputJars
+argument_list|,
+name|DagUtils
+operator|.
+name|getTempFilesFromConf
+argument_list|(
+name|sessionConf
+argument_list|)
 argument_list|)
 decl_stmt|;
 if|if

@@ -3016,7 +3016,7 @@ name|lrs
 argument_list|)
 expr_stmt|;
 block|}
-comment|// these are local resources that are set through the mr "tmpjars" property
+comment|// these are local resources that are set through the mr "tmpjars" property; skip session files.
 name|List
 argument_list|<
 name|LocalResource
@@ -3043,6 +3043,13 @@ operator|.
 name|size
 argument_list|()
 index|]
+argument_list|)
+argument_list|,
+name|DagUtils
+operator|.
+name|getTempFilesFromConf
+argument_list|(
+name|conf
 argument_list|)
 argument_list|)
 decl_stmt|;
