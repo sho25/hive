@@ -814,6 +814,13 @@ name|equalsIgnoreCase
 argument_list|(
 literal|"bigint"
 argument_list|)
+operator|||
+name|columnType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"timestamp"
+argument_list|)
 condition|)
 block|{
 name|LongColumnStatsData
@@ -2109,13 +2116,6 @@ operator|.
 name|equalsIgnoreCase
 argument_list|(
 literal|"date"
-argument_list|)
-operator|||
-name|columnType
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-literal|"timestamp"
 argument_list|)
 condition|)
 block|{
