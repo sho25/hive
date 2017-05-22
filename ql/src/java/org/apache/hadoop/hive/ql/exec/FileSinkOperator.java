@@ -7419,10 +7419,8 @@ if|if
 condition|(
 name|conf
 operator|.
-name|getMmWriteId
+name|isMmTable
 argument_list|()
-operator|!=
-literal|null
 condition|)
 block|{
 name|Utilities
@@ -7439,7 +7437,7 @@ name|taskId
 argument_list|,
 name|conf
 operator|.
-name|getMmWriteId
+name|getTransactionId
 argument_list|()
 argument_list|,
 name|conf
@@ -7776,7 +7774,7 @@ name|mbc
 argument_list|,
 name|conf
 operator|.
-name|getMmWriteId
+name|getTransactionId
 argument_list|()
 argument_list|,
 name|conf
@@ -7785,6 +7783,11 @@ name|getStatementId
 argument_list|()
 argument_list|,
 name|reporter
+argument_list|,
+name|conf
+operator|.
+name|isMmTable
+argument_list|()
 argument_list|,
 name|conf
 operator|.

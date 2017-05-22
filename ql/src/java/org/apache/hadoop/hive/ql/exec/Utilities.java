@@ -9577,6 +9577,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|0
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}
@@ -9683,6 +9685,9 @@ name|txnId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isMmTable
 parameter_list|)
 throws|throws
 name|IOException
@@ -9826,9 +9831,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnId
-operator|!=
-literal|null
+name|isMmTable
 condition|)
 block|{
 name|Path
@@ -9933,9 +9936,8 @@ return|;
 block|}
 if|if
 condition|(
-name|txnId
-operator|==
-literal|null
+operator|!
+name|isMmTable
 condition|)
 block|{
 name|taskIDToFile
@@ -23489,6 +23491,9 @@ name|Reporter
 name|reporter
 parameter_list|,
 name|boolean
+name|isMmTable
+parameter_list|,
+name|boolean
 name|isMmCtas
 parameter_list|)
 throws|throws
@@ -24133,6 +24138,8 @@ argument_list|,
 name|txnId
 argument_list|,
 name|stmtId
+argument_list|,
+name|isMmTable
 argument_list|)
 decl_stmt|;
 comment|// create empty buckets if necessary

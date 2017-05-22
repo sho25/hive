@@ -470,10 +470,8 @@ name|isMmTable
 operator|=
 name|conf
 operator|.
-name|getTxnId
+name|getIsMmTable
 argument_list|()
-operator|!=
-literal|null
 expr_stmt|;
 if|if
 condition|(
@@ -1328,9 +1326,8 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|mmWriteId
-operator|==
-literal|null
+operator|!
+name|isMmTable
 condition|)
 block|{
 name|Path
@@ -1449,6 +1446,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|reporter
+argument_list|,
+name|isMmTable
 argument_list|,
 literal|false
 argument_list|)

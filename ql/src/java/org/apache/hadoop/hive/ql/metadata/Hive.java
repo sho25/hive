@@ -8445,32 +8445,6 @@ argument_list|(
 name|tableName
 argument_list|)
 decl_stmt|;
-name|boolean
-name|isMmTableWrite
-init|=
-operator|(
-name|txnId
-operator|!=
-literal|null
-operator|)
-decl_stmt|;
-name|Preconditions
-operator|.
-name|checkState
-argument_list|(
-name|isMmTableWrite
-operator|==
-name|MetaStoreUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
-name|tbl
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|loadPartition
 argument_list|(
 name|loadPath
@@ -8550,6 +8524,19 @@ name|tbl
 operator|.
 name|getDataLocation
 argument_list|()
+decl_stmt|;
+name|boolean
+name|isMmTableWrite
+init|=
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -8768,9 +8755,7 @@ block|}
 comment|// TODO: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
-name|txnId
-operator|!=
-literal|null
+name|isMmTableWrite
 operator|&&
 name|loadPath
 operator|.
@@ -8927,9 +8912,7 @@ name|newPartPath
 decl_stmt|;
 if|if
 condition|(
-name|txnId
-operator|!=
-literal|null
+name|isMmTableWrite
 condition|)
 block|{
 comment|// We will load into MM directory, and delete from the parent if needed.
@@ -9041,9 +9024,7 @@ name|newFiles
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
-operator|!=
-literal|null
+name|isMmTableWrite
 argument_list|)
 expr_stmt|;
 block|}
@@ -10514,6 +10495,9 @@ name|txnId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isMmTable
 parameter_list|)
 throws|throws
 name|HiveException
@@ -10545,9 +10529,8 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnId
-operator|==
-literal|null
+operator|!
+name|isMmTable
 condition|)
 block|{
 name|FileStatus
@@ -10987,6 +10970,16 @@ argument_list|,
 name|txnId
 argument_list|,
 name|stmtId
+argument_list|,
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -11612,6 +11605,9 @@ name|txnId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isMmTable
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11676,9 +11672,7 @@ block|}
 comment|// TODO: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
-name|txnId
-operator|!=
-literal|null
+name|isMmTable
 operator|&&
 name|loadPath
 operator|.
@@ -11816,9 +11810,7 @@ name|HIDDEN_FILES_PATH_FILTER
 decl_stmt|;
 if|if
 condition|(
-name|txnId
-operator|!=
-literal|null
+name|isMmTable
 condition|)
 block|{
 comment|// We will load into MM directory, and delete from the parent if needed.
@@ -11923,9 +11915,7 @@ name|newFiles
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
-operator|!=
-literal|null
+name|isMmTable
 argument_list|)
 expr_stmt|;
 block|}

@@ -611,12 +611,11 @@ control|)
 block|{
 if|if
 condition|(
+operator|!
 name|ltd
 operator|.
-name|getTxnId
+name|isMmTable
 argument_list|()
-operator|==
-literal|null
 condition|)
 continue|continue;
 comment|// See the path in FSOP that calls fs.exists on finalPath.

@@ -42845,15 +42845,6 @@ name|rsCtx
 argument_list|)
 expr_stmt|;
 block|}
-assert|assert
-name|isMmTable
-operator|==
-operator|(
-name|txnId
-operator|!=
-literal|null
-operator|)
-assert|;
 name|FileSinkDesc
 name|fileSinkDesc
 init|=
