@@ -3038,9 +3038,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into METASTORE_DB_PROPERTIES values (1, 'guid', 'test-uuid-1', 'dummy uuid 1')"
+literal|"insert into METASTORE_DB_PROPERTIES values ('guid', 'test-uuid-1', 'dummy uuid 1')"
 block|,
-literal|"insert into METASTORE_DB_PROPERTIES values (2, 'guid', 'test-uuid-2', 'dummy uuid 2')"
+literal|"insert into METASTORE_DB_PROPERTIES values ('guid', 'test-uuid-2', 'dummy uuid 2')"
 block|, }
 decl_stmt|;
 name|File
