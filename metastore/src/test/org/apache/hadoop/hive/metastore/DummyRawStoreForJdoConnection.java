@@ -3718,9 +3718,12 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
-name|getAggrColStatsForTablePartitions
+argument_list|>
+name|getColStatsForTablePartitions
 parameter_list|(
 name|String
 name|dbName

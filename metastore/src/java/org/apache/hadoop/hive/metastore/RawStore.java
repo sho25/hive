@@ -2783,15 +2783,18 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get all partition column statistics for a table    * @param dbName    * @param tableName    * @return Map of partition column statistics    * @throws MetaException    * @throws NoSuchObjectException    */
+comment|/**    * Get all partition column statistics for a table in a db    *    * @param dbName    * @param tableName    * @return Map of partition column statistics. Key in the map is partition name. Value is a list    *         of column stat object for each column in the partition    * @throws MetaException    * @throws NoSuchObjectException    */
 specifier|public
 name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
-name|getAggrColStatsForTablePartitions
+argument_list|>
+name|getColStatsForTablePartitions
 parameter_list|(
 name|String
 name|dbName

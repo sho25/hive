@@ -7626,9 +7626,11 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|ColumnStatisticsDesc
 name|csd
 init|=
@@ -8571,21 +8573,18 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
-name|getAggrColStatsForTablePartitions
+argument_list|>
+name|getColStatsForTablePartitions
 parameter_list|(
 name|String
 name|dbName
 parameter_list|,
 name|String
 name|tblName
-parameter_list|,
-name|boolean
-name|useDensityFunctionForNDVEstimation
-parameter_list|,
-name|double
-name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8593,38 +8592,17 @@ block|{
 name|String
 name|queryText
 init|=
-literal|"select \"PARTITION_NAME\", \"COLUMN_NAME\", \"COLUMN_TYPE\", "
+literal|"select \"PARTITION_NAME\", \"COLUMN_NAME\", \"COLUMN_TYPE\", \"LONG_LOW_VALUE\", "
 operator|+
-literal|"min(\"LONG_LOW_VALUE\"), max(\"LONG_HIGH_VALUE\"), min(\"DOUBLE_LOW_VALUE\"), max(\"DOUBLE_HIGH_VALUE\"), "
+literal|"\"LONG_HIGH_VALUE\", \"DOUBLE_LOW_VALUE\", \"DOUBLE_HIGH_VALUE\",  "
 operator|+
-literal|"min(cast(\"BIG_DECIMAL_LOW_VALUE\" as decimal)), max(cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)), "
+literal|"\"BIG_DECIMAL_LOW_VALUE\", \"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", "
 operator|+
-literal|"sum(\"NUM_NULLS\"), max(\"NUM_DISTINCTS\"), "
+literal|"\"NUM_DISTINCTS\", \"AVG_COL_LEN\", \"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\""
 operator|+
-literal|"max(\"AVG_COL_LEN\"), max(\"MAX_COL_LEN\"), sum(\"NUM_TRUES\"), sum(\"NUM_FALSES\"), "
-comment|// The following data is used to compute a partitioned table's NDV based
-comment|// on partitions' NDV when useDensityFunctionForNDVEstimation = true. Global NDVs cannot be
-comment|// accurately derived from partition NDVs, because the domain of column value two partitions
-comment|// can overlap. If there is no overlap then global NDV is just the sum
-comment|// of partition NDVs (UpperBound). But if there is some overlay then
-comment|// global NDV can be anywhere between sum of partition NDVs (no overlap)
-comment|// and same as one of the partition NDV (domain of column value in all other
-comment|// partitions is subset of the domain value in one of the partition)
-comment|// (LowerBound).But under uniform distribution, we can roughly estimate the global
-comment|// NDV by leveraging the min/max values.
-comment|// And, we also guarantee that the estimation makes sense by comparing it to the
-comment|// UpperBound (calculated by "sum(\"NUM_DISTINCTS\")")
-comment|// and LowerBound (calculated by "max(\"NUM_DISTINCTS\")")
+literal|" from \"PART_COL_STATS\" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
-literal|"avg((\"LONG_HIGH_VALUE\"-\"LONG_LOW_VALUE\")/cast(\"NUM_DISTINCTS\" as decimal)),"
-operator|+
-literal|"avg((\"DOUBLE_HIGH_VALUE\"-\"DOUBLE_LOW_VALUE\")/\"NUM_DISTINCTS\"),"
-operator|+
-literal|"avg((cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)-cast(\"BIG_DECIMAL_LOW_VALUE\" as decimal))/\"NUM_DISTINCTS\"),"
-operator|+
-literal|"sum(\"NUM_DISTINCTS\") from \"PART_COL_STATS\""
-operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? group by \"PARTITION_NAME\", \"COLUMN_NAME\", \"COLUMN_TYPE\""
+literal|" order by \"PARTITION_NAME\""
 decl_stmt|;
 name|long
 name|start
@@ -8651,11 +8629,6 @@ argument_list|()
 decl_stmt|;
 name|Object
 name|qResult
-init|=
-literal|null
-decl_stmt|;
-name|ForwardQueryResult
-name|fqr
 init|=
 literal|null
 decl_stmt|;
@@ -8768,7 +8741,10 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|ColumnStatisticsObj
+argument_list|>
 argument_list|>
 name|partColStatsMap
 init|=
@@ -8777,6 +8753,27 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|String
+name|partNameCurrent
+init|=
+literal|null
+decl_stmt|;
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|partColStatsList
+init|=
+operator|new
+name|ArrayList
+argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
 argument_list|()
@@ -8801,51 +8798,108 @@ index|[
 literal|0
 index|]
 decl_stmt|;
-name|String
-name|colName
-init|=
-operator|(
-name|String
-operator|)
+if|if
+condition|(
+name|partNameCurrent
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Update the current partition we are working on
+name|partNameCurrent
+operator|=
+name|partName
+expr_stmt|;
+comment|// Create a new list for this new partition
+name|partColStatsList
+operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|()
+expr_stmt|;
+comment|// Add the col stat for the current column
+name|partColStatsList
+operator|.
+name|add
+argument_list|(
+name|prepareCSObj
+argument_list|(
 name|row
-index|[
+argument_list|,
 literal|1
-index|]
-decl_stmt|;
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+operator|!
+name|partNameCurrent
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|partName
+argument_list|)
+condition|)
+block|{
+comment|// Save the previous partition and its col stat list
 name|partColStatsMap
 operator|.
 name|put
 argument_list|(
-name|CacheUtils
-operator|.
-name|buildKey
-argument_list|(
-name|dbName
+name|partNameCurrent
 argument_list|,
-name|tblName
-argument_list|,
-name|CachedStore
-operator|.
-name|partNameToVals
-argument_list|(
+name|partColStatsList
+argument_list|)
+expr_stmt|;
+comment|// Update the current partition we are working on
+name|partNameCurrent
+operator|=
 name|partName
-argument_list|)
-argument_list|,
-name|colName
-argument_list|)
-argument_list|,
-name|prepareCSObjWithAdjustedNDV
+expr_stmt|;
+comment|// Create a new list for this new partition
+name|partColStatsList
+operator|=
+operator|new
+name|ArrayList
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|()
+expr_stmt|;
+comment|// Add the col stat for the current column
+name|partColStatsList
+operator|.
+name|add
+argument_list|(
+name|prepareCSObj
 argument_list|(
 name|row
 argument_list|,
 literal|1
-argument_list|,
-name|useDensityFunctionForNDVEstimation
-argument_list|,
-name|ndvTuner
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|partColStatsList
+operator|.
+name|add
+argument_list|(
+name|prepareCSObj
+argument_list|(
+name|row
+argument_list|,
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|Deadline
 operator|.
 name|checkTimeout
