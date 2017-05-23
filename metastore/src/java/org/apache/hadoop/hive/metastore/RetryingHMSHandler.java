@@ -667,11 +667,11 @@ return|;
 block|}
 finally|finally
 block|{
-name|StringBuffer
+name|StringBuilder
 name|additionalInfo
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|()
 decl_stmt|;
 name|additionalInfo

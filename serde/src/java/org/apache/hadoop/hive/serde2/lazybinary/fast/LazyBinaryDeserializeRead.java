@@ -973,12 +973,14 @@ name|String
 name|getDetailedReadPositionString
 parameter_list|()
 block|{
-name|StringBuffer
+name|StringBuilder
 name|sb
 init|=
 operator|new
-name|StringBuffer
-argument_list|()
+name|StringBuilder
+argument_list|(
+literal|64
+argument_list|)
 decl_stmt|;
 name|sb
 operator|.
