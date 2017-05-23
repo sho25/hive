@@ -45521,10 +45521,21 @@ name|getMetaStoreSchemaVersion
 argument_list|()
 decl_stmt|;
 comment|// version of schema for this version of hive
+name|IMetaStoreSchemaInfo
+name|metastoreSchemaInfo
+init|=
+name|MetaStoreSchemaInfoFactory
+operator|.
+name|get
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|String
 name|hiveSchemaVer
 init|=
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -45590,7 +45601,7 @@ else|else
 block|{
 if|if
 condition|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -45820,7 +45831,13 @@ literal|"Version table not found. "
 operator|+
 literal|"The metastore is not upgraded to "
 operator|+
-name|MetaStoreSchemaInfo
+name|MetaStoreSchemaInfoFactory
+operator|.
+name|get
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
 operator|.
 name|getHiveSchemaVersion
 argument_list|()

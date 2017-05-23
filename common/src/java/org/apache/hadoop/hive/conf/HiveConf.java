@@ -4229,6 +4229,19 @@ operator|+
 literal|" enabled the MS will be unusable."
 argument_list|)
 block|,
+name|METASTORE_SCHEMA_INFO_CLASS
+argument_list|(
+literal|"hive.metastore.schema.info.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.MetaStoreSchemaInfo"
+argument_list|,
+literal|"Fully qualified class name for the metastore schema information class \n"
+operator|+
+literal|"which is used by schematool to fetch the schema information.\n"
+operator|+
+literal|" This class should implement the IMetaStoreSchemaInfo interface"
+argument_list|)
+block|,
 name|METASTORE_TRANSACTION_ISOLATION
 argument_list|(
 literal|"datanucleus.transactionIsolation"

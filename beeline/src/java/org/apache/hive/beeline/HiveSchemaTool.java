@@ -277,7 +277,23 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreSchemaInfo
+name|IMetaStoreSchemaInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreSchemaInfoFactory
 import|;
 end_import
 
@@ -667,7 +683,7 @@ name|metaDbType
 decl_stmt|;
 specifier|private
 specifier|final
-name|MetaStoreSchemaInfo
+name|IMetaStoreSchemaInfo
 name|metaStoreSchemaInfo
 decl_stmt|;
 specifier|static
@@ -783,9 +799,12 @@ name|this
 operator|.
 name|metaStoreSchemaInfo
 operator|=
-operator|new
-name|MetaStoreSchemaInfo
+name|MetaStoreSchemaInfoFactory
+operator|.
+name|get
 argument_list|(
+name|hiveConf
+argument_list|,
 name|hiveHome
 argument_list|,
 name|dbType
@@ -1121,7 +1140,7 @@ decl_stmt|;
 name|String
 name|hiveVersion
 init|=
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -2862,7 +2881,7 @@ decl_stmt|;
 comment|// verify that the new version is added to schema
 name|assertCompatibleVersion
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -2887,7 +2906,7 @@ block|{
 if|if
 condition|(
 operator|!
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -2972,7 +2991,7 @@ name|HiveMetaException
 block|{
 if|if
 condition|(
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -3025,7 +3044,7 @@ name|fromSchemaVer
 operator|+
 literal|" to "
 operator|+
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -3125,7 +3144,7 @@ name|HiveMetaException
 block|{
 name|doInit
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -4061,7 +4080,7 @@ argument_list|)
 decl_stmt|;
 name|assertCompatibleVersion
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -5330,7 +5349,7 @@ block|{
 name|String
 name|preUpgradeScript
 init|=
-name|MetaStoreSchemaInfo
+name|metaStoreSchemaInfo
 operator|.
 name|getPreUpgradeScriptName
 argument_list|(
