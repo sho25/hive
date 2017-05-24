@@ -11787,6 +11787,27 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+comment|// If there are aggregations in order by, we need to remember them in qb.
+name|qbp
+operator|.
+name|addAggregationExprsForClause
+argument_list|(
+name|ctx_1
+operator|.
+name|dest
+argument_list|,
+name|doPhase1GetAggregationsFromSelect
+argument_list|(
+name|ast
+argument_list|,
+name|qb
+argument_list|,
+name|ctx_1
+operator|.
+name|dest
+argument_list|)
+argument_list|)
+expr_stmt|;
 break|break;
 case|case
 name|HiveParser
