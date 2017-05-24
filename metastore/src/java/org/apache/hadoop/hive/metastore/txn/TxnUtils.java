@@ -578,10 +578,9 @@ name|set
 argument_list|(
 literal|0
 argument_list|,
-name|bitSet
+name|exceptions
 operator|.
 name|length
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// for ValidCompactorTxnList, everything in exceptions are aborted
