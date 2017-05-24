@@ -1543,6 +1543,18 @@ name|Timer
 import|;
 end_import
 
+begin_import
+import|import
+name|io
+operator|.
+name|netty
+operator|.
+name|util
+operator|.
+name|NetUtil
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -2483,6 +2495,17 @@ argument_list|(
 name|pipelineFact
 argument_list|)
 expr_stmt|;
+name|bootstrap
+operator|.
+name|setOption
+argument_list|(
+literal|"backlog"
+argument_list|,
+name|NetUtil
+operator|.
+name|SOMAXCONN
+argument_list|)
+expr_stmt|;
 name|port
 operator|=
 name|conf
@@ -2575,6 +2598,17 @@ operator|+
 literal|" listening on port "
 operator|+
 name|port
+operator|+
+literal|" (SOMAXCONN: "
+operator|+
+name|bootstrap
+operator|.
+name|getOption
+argument_list|(
+literal|"backlog"
+argument_list|)
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}
