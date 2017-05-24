@@ -12700,6 +12700,17 @@ name|isFullAcidTable
 argument_list|(
 name|tbl
 argument_list|)
+operator|&&
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
 condition|)
 block|{
 throw|throw
