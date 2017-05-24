@@ -493,6 +493,11 @@ name|JobTokenIdentifier
 argument_list|>
 name|appToken
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isExternalQuery
+decl_stmt|;
 comment|// Map of states for different vertices.
 specifier|private
 specifier|final
@@ -599,6 +604,9 @@ argument_list|<
 name|JobTokenIdentifier
 argument_list|>
 name|appToken
+parameter_list|,
+name|boolean
+name|isExternalQuery
 parameter_list|)
 block|{
 name|this
@@ -690,6 +698,12 @@ operator|.
 name|appToken
 operator|=
 name|appToken
+expr_stmt|;
+name|this
+operator|.
+name|isExternalQuery
+operator|=
+name|isExternalQuery
 expr_stmt|;
 specifier|final
 name|InetSocketAddress
@@ -878,6 +892,15 @@ name|newArrayList
 argument_list|(
 name|knownFragments
 argument_list|)
+return|;
+block|}
+specifier|public
+name|boolean
+name|isExternalQuery
+parameter_list|()
+block|{
+return|return
+name|isExternalQuery
 return|;
 block|}
 specifier|private

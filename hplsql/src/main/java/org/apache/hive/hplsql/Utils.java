@@ -69,11 +69,11 @@ operator|.
 name|length
 argument_list|()
 decl_stmt|;
-name|StringBuffer
+name|StringBuilder
 name|s2
 init|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 name|len
 argument_list|)

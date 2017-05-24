@@ -2817,7 +2817,7 @@ argument_list|()
 argument_list|,
 name|smbJoinDesc
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
 argument_list|()
 argument_list|,
 name|smbJoinDesc
@@ -6847,7 +6847,7 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
 argument_list|()
 argument_list|,
 name|op

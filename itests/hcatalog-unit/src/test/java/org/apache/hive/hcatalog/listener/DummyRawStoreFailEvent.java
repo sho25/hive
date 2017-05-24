@@ -4755,9 +4755,12 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
+name|List
+argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
-name|getAggrColStatsForTablePartitions
+argument_list|>
+name|getColStatsForTablePartitions
 parameter_list|(
 name|String
 name|dbName
@@ -4773,7 +4776,7 @@ block|{
 return|return
 name|objectStore
 operator|.
-name|getAggrColStatsForTablePartitions
+name|getColStatsForTablePartitions
 argument_list|(
 name|dbName
 argument_list|,

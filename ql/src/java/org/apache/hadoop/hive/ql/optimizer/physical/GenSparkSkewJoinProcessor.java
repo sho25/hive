@@ -2224,7 +2224,7 @@ name|dumpFilePrefix
 argument_list|,
 name|joinDescriptor
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
 argument_list|()
 argument_list|,
 name|joinDescriptor

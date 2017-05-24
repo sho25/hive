@@ -389,6 +389,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|PrunedPartitionList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|SemanticException
 import|;
 end_import
@@ -1036,6 +1054,57 @@ block|{
 comment|// Skip
 continue|continue;
 block|}
+comment|// If partitions do not match, we currently do not merge
+name|PrunedPartitionList
+name|prevTsOpPPList
+init|=
+name|pctx
+operator|.
+name|getPrunedPartitions
+argument_list|(
+name|prevTsOp
+argument_list|)
+decl_stmt|;
+name|PrunedPartitionList
+name|tsOpPPList
+init|=
+name|pctx
+operator|.
+name|getPrunedPartitions
+argument_list|(
+name|tsOp
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|prevTsOpPPList
+operator|.
+name|hasUnknownPartitions
+argument_list|()
+operator|||
+name|tsOpPPList
+operator|.
+name|hasUnknownPartitions
+argument_list|()
+operator|||
+operator|!
+name|prevTsOpPPList
+operator|.
+name|getPartitions
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|tsOpPPList
+operator|.
+name|getPartitions
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// Skip
+continue|continue;
+block|}
 comment|// It seems these two operators can be merged.
 comment|// Check that plan meets some preconditions before doing it.
 comment|// In particular, in the presence of map joins in the upstream plan:
@@ -1472,16 +1541,16 @@ parameter_list|,
 name|SharedScanOptimizerCache
 name|optimizerCache
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 comment|// Find TS operators with partition pruning enabled in plan
 comment|// because these TS may potentially read different data for
 comment|// different pipeline.
 comment|// These can be:
-comment|// 1) TS with static partitioning.
-comment|//    TODO: Check partition list of different TS and do not add if they are identical
-comment|// 2) TS with DPP.
+comment|// 1) TS with DPP.
 comment|//    TODO: Check if dynamic filters are identical and do not add.
-comment|// 3) TS with semijoin DPP.
+comment|// 2) TS with semijoin DPP.
 comment|//    TODO: Check for dynamic filters.
 name|Set
 argument_list|<
@@ -1494,7 +1563,7 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|// 1) TS with static partitioning.
+comment|// 1) TS with DPP.
 name|Map
 argument_list|<
 name|String
@@ -1508,52 +1577,6 @@ operator|.
 name|getTopOps
 argument_list|()
 decl_stmt|;
-for|for
-control|(
-name|TableScanOperator
-name|tsOp
-range|:
-name|topOps
-operator|.
-name|values
-argument_list|()
-control|)
-block|{
-if|if
-condition|(
-name|tsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getPartColumns
-argument_list|()
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|tsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getPartColumns
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-name|notValidTableScanOps
-operator|.
-name|add
-argument_list|(
-name|tsOp
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-comment|// 2) TS with DPP.
 name|Collection
 argument_list|<
 name|Operator
@@ -1653,7 +1676,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// 3) TS with semijoin DPP.
+comment|// 2) TS with semijoin DPP.
 for|for
 control|(
 name|Entry
@@ -2500,7 +2523,10 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
+argument_list|()
+operator|.
+name|getAdjustedNoConditionalTaskSize
 argument_list|()
 condition|)
 block|{
@@ -2518,7 +2544,10 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getNoConditionalTaskSize
+name|getMemoryMonitorInfo
+argument_list|()
+operator|.
+name|getAdjustedNoConditionalTaskSize
 argument_list|()
 argument_list|)
 expr_stmt|;

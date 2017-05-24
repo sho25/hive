@@ -104,7 +104,7 @@ name|visited
 decl_stmt|;
 specifier|private
 specifier|final
-name|StringBuffer
+name|StringBuilder
 name|partitionKeyBuilder
 decl_stmt|;
 specifier|private
@@ -142,7 +142,7 @@ expr_stmt|;
 name|partitionKeyBuilder
 operator|=
 operator|new
-name|StringBuffer
+name|StringBuilder
 argument_list|(
 literal|64
 argument_list|)

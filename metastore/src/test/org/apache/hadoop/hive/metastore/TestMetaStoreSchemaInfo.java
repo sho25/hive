@@ -21,6 +21,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Assert
@@ -58,11 +74,27 @@ block|{
 comment|// first argument is hiveVersion, it is compatible if 2nd argument - dbVersion is
 comment|// greater than or equal to it
 comment|// check the compatible case
+name|IMetaStoreSchemaInfo
+name|metastoreSchemaInfo
+init|=
+name|MetaStoreSchemaInfoFactory
+operator|.
+name|get
+argument_list|(
+operator|new
+name|HiveConf
+argument_list|(
+name|TestMetaStoreSchemaInfo
+operator|.
+name|class
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -76,7 +108,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -90,7 +122,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -104,7 +136,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -119,7 +151,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -133,7 +165,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -148,7 +180,7 @@ name|Assert
 operator|.
 name|assertFalse
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(
@@ -162,7 +194,7 @@ name|Assert
 operator|.
 name|assertFalse
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|isVersionCompatible
 argument_list|(

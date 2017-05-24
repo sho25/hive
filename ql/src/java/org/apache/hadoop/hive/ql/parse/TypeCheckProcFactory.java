@@ -1471,6 +1471,13 @@ condition|(
 name|source
 operator|!=
 literal|null
+operator|&&
+name|ctx
+operator|.
+name|getUnparseTranslator
+argument_list|()
+operator|!=
+literal|null
 condition|)
 block|{
 name|ctx

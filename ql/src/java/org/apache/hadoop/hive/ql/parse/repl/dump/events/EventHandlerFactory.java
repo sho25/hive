@@ -236,6 +236,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|register
+argument_list|(
+name|MessageFactory
+operator|.
+name|DROP_FUNCTION_EVENT
+argument_list|,
+name|DropFunctionHandler
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 block|}
 specifier|static
 name|void

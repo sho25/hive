@@ -1479,9 +1479,25 @@ name|isAutoReduceParallelism
 argument_list|()
 condition|)
 block|{
+comment|// Do not exceed the configured max reducers.
 name|int
 name|newMin
 init|=
+name|Math
+operator|.
+name|min
+argument_list|(
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|MAXREDUCERS
+argument_list|)
+argument_list|,
 name|Math
 operator|.
 name|max
@@ -1492,6 +1508,7 @@ name|getMinReduceTasks
 argument_list|()
 argument_list|,
 name|targetCount
+argument_list|)
 argument_list|)
 decl_stmt|;
 if|if

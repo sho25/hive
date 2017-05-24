@@ -197,7 +197,39 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|IMetaStoreSchemaInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|MetaStoreSchemaInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|MetaStoreSchemaInfoFactory
 import|;
 end_import
 
@@ -984,11 +1016,32 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|IMetaStoreSchemaInfo
+name|metastoreSchemaInfo
+init|=
+name|MetaStoreSchemaInfoFactory
+operator|.
+name|get
+argument_list|(
+name|hiveConf
+argument_list|,
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.tmp.dir"
+argument_list|,
+literal|"target/tmp"
+argument_list|)
+argument_list|,
+literal|"derby"
+argument_list|)
+decl_stmt|;
 name|schemaTool
 operator|.
 name|doInit
 argument_list|(
-name|MetaStoreSchemaInfo
+name|metastoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
 argument_list|()
@@ -3038,9 +3091,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into METASTORE_DB_PROPERTIES values (1, 'guid', 'test-uuid-1', 'dummy uuid 1')"
+literal|"insert into METASTORE_DB_PROPERTIES values ('guid', 'test-uuid-1', 'dummy uuid 1')"
 block|,
-literal|"insert into METASTORE_DB_PROPERTIES values (2, 'guid', 'test-uuid-2', 'dummy uuid 2')"
+literal|"insert into METASTORE_DB_PROPERTIES values ('guid', 'test-uuid-2', 'dummy uuid 2')"
 block|, }
 decl_stmt|;
 name|File

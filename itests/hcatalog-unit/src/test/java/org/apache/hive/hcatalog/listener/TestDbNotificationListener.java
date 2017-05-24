@@ -1243,6 +1243,24 @@ name|hive
 operator|.
 name|hcatalog
 operator|.
+name|api
+operator|.
+name|repl
+operator|.
+name|ReplicationV1CompatRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|hcatalog
+operator|.
 name|data
 operator|.
 name|Pair
@@ -1285,7 +1303,29 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Rule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
+name|TestRule
 import|;
 end_import
 
@@ -1396,6 +1436,49 @@ specifier|private
 name|long
 name|firstEventId
 decl_stmt|;
+specifier|private
+specifier|static
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|testsToSkipForReplV1BackwardCompatTesting
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"cleanupNotifs"
+argument_list|,
+literal|"sqlTempTable"
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|// Make sure we skip backward-compat checking for those tests that don't generate events
+specifier|private
+specifier|static
+name|ReplicationV1CompatRule
+name|bcompat
+init|=
+literal|null
+decl_stmt|;
+annotation|@
+name|Rule
+specifier|public
+name|TestRule
+name|replV1BackwardCompatibleRule
+init|=
+name|bcompat
+decl_stmt|;
+comment|// Note - above looks funny because it seems like we're instantiating a static var, and
+comment|// then a non-static var as the rule, but the reason this is required is because Rules
+comment|// are not allowed to be static, but we wind up needing it initialized from a static
+comment|// context. So, bcompat is initialzed in a static context, but this rule is initialized
+comment|// before the tests run, and will pick up an initialized value of bcompat.
 comment|/* This class is used to verify that HiveMetaStore calls the non-transactional listeners with the     * current event ID set by the DbNotificationListener class */
 specifier|public
 specifier|static
@@ -2135,6 +2218,18 @@ argument_list|()
 operator|.
 name|getDeserializer
 argument_list|()
+expr_stmt|;
+name|bcompat
+operator|=
+operator|new
+name|ReplicationV1CompatRule
+argument_list|(
+name|msClient
+argument_list|,
+name|conf
+argument_list|,
+name|testsToSkipForReplV1BackwardCompatTesting
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@

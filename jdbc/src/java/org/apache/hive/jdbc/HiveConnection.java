@@ -2280,6 +2280,7 @@ operator|.
 name|open
 argument_list|()
 expr_stmt|;
+block|}
 name|logZkDiscoveryMessage
 argument_list|(
 literal|"Connected to "
@@ -2297,7 +2298,6 @@ name|getPort
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 specifier|public
 name|String

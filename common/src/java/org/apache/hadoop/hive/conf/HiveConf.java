@@ -4229,6 +4229,19 @@ operator|+
 literal|" enabled the MS will be unusable."
 argument_list|)
 block|,
+name|METASTORE_SCHEMA_INFO_CLASS
+argument_list|(
+literal|"hive.metastore.schema.info.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.MetaStoreSchemaInfo"
+argument_list|,
+literal|"Fully qualified class name for the metastore schema information class \n"
+operator|+
+literal|"which is used by schematool to fetch the schema information.\n"
+operator|+
+literal|" This class should implement the IMetaStoreSchemaInfo interface"
+argument_list|)
+block|,
 name|METASTORE_TRANSACTION_ISOLATION
 argument_list|(
 literal|"datanucleus.transactionIsolation"
@@ -10974,6 +10987,19 @@ operator|+
 literal|"Hive operations as the user making the calls to it."
 argument_list|)
 block|,
+name|HIVE_DISTCP_DOAS_USER
+argument_list|(
+literal|"hive.distcp.privileged.doAs"
+argument_list|,
+literal|"hdfs"
+argument_list|,
+literal|"This property allows privileged distcp executions done by hive\n"
+operator|+
+literal|"to run as this user. Typically, it should be the user you\n"
+operator|+
+literal|"run the namenode as, such as the 'hdfs' user."
+argument_list|)
+block|,
 name|HIVE_SERVER2_TABLE_TYPE_MAPPING
 argument_list|(
 literal|"hive.server2.table.type.mapping"
@@ -12757,6 +12783,23 @@ argument_list|,
 literal|"ZooKeeper connection string for ZooKeeper SecretManager."
 argument_list|)
 block|,
+name|LLAP_ZKSM_ZK_SESSION_TIMEOUT
+argument_list|(
+literal|"hive.llap.zk.sm.session.timeout"
+argument_list|,
+literal|"40s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper session timeout for ZK SecretManager."
+argument_list|)
+block|,
 name|LLAP_ZK_REGISTRY_USER
 argument_list|(
 literal|"hive.llap.zk.registry.user"
@@ -13994,6 +14037,8 @@ operator|+
 literal|"hive.security.metastore.authorization.manager,hive.security.metastore.authenticator.manager,"
 operator|+
 literal|"hive.users.in.admin.role,hive.server2.xsrf.filter.enabled,hive.security.authorization.enabled,"
+operator|+
+literal|"hive.distcp.privileged.doAs,"
 operator|+
 literal|"hive.server2.authentication.ldap.baseDN,"
 operator|+

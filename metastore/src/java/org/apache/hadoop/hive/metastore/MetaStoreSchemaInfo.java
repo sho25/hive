@@ -131,16 +131,10 @@ begin_class
 specifier|public
 class|class
 name|MetaStoreSchemaInfo
+implements|implements
+name|IMetaStoreSchemaInfo
 block|{
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|SQL_FILE_EXTENSION
-init|=
-literal|".sql"
-decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -172,16 +166,15 @@ name|PRE_UPGRADE_PREFIX
 init|=
 literal|"pre-"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|String
 name|dbType
 decl_stmt|;
 specifier|private
-specifier|final
 name|String
-name|hiveSchemaVersions
 index|[]
+name|hiveSchemaVersions
 decl_stmt|;
 specifier|private
 specifier|final
@@ -251,6 +244,17 @@ name|dbType
 operator|=
 name|dbType
 expr_stmt|;
+block|}
+specifier|private
+name|void
+name|loadAllUpgradeScripts
+parameter_list|(
+name|String
+name|dbType
+parameter_list|)
+throws|throws
+name|HiveMetaException
+block|{
 comment|// load upgrade order for the given dbType
 name|List
 argument_list|<
@@ -384,6 +388,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/***    * Get the list of sql scripts required to upgrade from the give version to current    * @param fromVersion    * @return    * @throws HiveMetaException    */
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -426,6 +432,11 @@ return|return
 name|upgradeScriptList
 return|;
 block|}
+name|loadAllUpgradeScripts
+argument_list|(
+name|dbType
+argument_list|)
+expr_stmt|;
 comment|// Find the list of scripts to execute for this upgrade
 name|int
 name|firstScript
@@ -532,6 +543,8 @@ name|upgradeScriptList
 return|;
 block|}
 comment|/***    * Get the name of the script to initialize the schema for given version    * @param toVersion Target version. If it's null, then the current server version is used    * @return    * @throws HiveMetaException    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|generateInitFileName
@@ -606,6 +619,8 @@ name|initScriptName
 return|;
 block|}
 comment|/**    * Find the directory of metastore scripts    * @return    */
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getMetaStoreScriptDir
@@ -660,8 +675,9 @@ operator|+
 name|SQL_FILE_EXTENSION
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
-specifier|static
 name|String
 name|getPreUpgradeScriptName
 parameter_list|(
@@ -682,8 +698,9 @@ operator|+
 name|upgradeScriptName
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
-specifier|static
 name|String
 name|getHiveSchemaVersion
 parameter_list|()
@@ -741,9 +758,9 @@ name|hiveVersion
 return|;
 block|}
 block|}
-comment|/**    * A dbVersion is compatible with hive version if it is greater or equal to    * the hive version. This is result of the db schema upgrade design principles    * followed in hive project. The state where db schema version is ahead of     * hive software version is often seen when a 'rolling upgrade' or     * 'rolling downgrade' is happening. This is a state where hive is functional     * and returning non zero status for it is misleading.    *    * @param hiveVersion    *          version of hive software    * @param dbVersion    *          version of metastore rdbms schema    * @return true if versions are compatible    */
+annotation|@
+name|Override
 specifier|public
-specifier|static
 name|boolean
 name|isVersionCompatible
 parameter_list|(
