@@ -119,7 +119,7 @@ name|EncryptionHandler
 block|{
 comment|// LOG is not static to make debugging easier (being able to identify which sub-class
 comment|// generated the log message).
-specifier|private
+specifier|protected
 specifier|final
 name|Logger
 name|LOG
