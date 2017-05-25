@@ -133,6 +133,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|json
@@ -435,7 +449,8 @@ name|OTHERS
 return|;
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|void
 name|inlineJoinOp
 parameter_list|()
