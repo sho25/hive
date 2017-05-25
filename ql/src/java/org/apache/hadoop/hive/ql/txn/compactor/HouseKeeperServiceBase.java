@@ -316,7 +316,9 @@ name|Runnable
 name|r
 parameter_list|)
 block|{
-return|return
+name|Thread
+name|t
+init|=
 operator|new
 name|Thread
 argument_list|(
@@ -339,6 +341,16 @@ operator|.
 name|getAndIncrement
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|t
+operator|.
+name|setDaemon
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+return|return
+name|t
 return|;
 block|}
 block|}
