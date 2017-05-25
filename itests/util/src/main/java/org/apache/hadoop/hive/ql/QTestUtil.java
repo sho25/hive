@@ -10260,6 +10260,10 @@ literal|"pk_-?[0-9]*_[0-9]*_[0-9]*"
 block|,
 literal|"fk_-?[0-9]*_[0-9]*_[0-9]*"
 block|,
+literal|"uk_-?[0-9]*_[0-9]*_[0-9]*"
+block|,
+literal|"nn_-?[0-9]*_[0-9]*_[0-9]*"
+block|,
 literal|".*at com\\.sun\\.proxy.*"
 block|,
 literal|".*at com\\.jolbox.*"

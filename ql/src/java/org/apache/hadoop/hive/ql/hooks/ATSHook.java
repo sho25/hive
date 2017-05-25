@@ -173,6 +173,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -708,7 +722,8 @@ name|DEFAULT_ATS_DOMAIN
 init|=
 literal|"hive_default_ats"
 decl_stmt|;
-specifier|private
+annotation|@
+name|VisibleForTesting
 enum|enum
 name|OtherInfoTypes
 block|{

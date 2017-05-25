@@ -253,6 +253,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1479,7 +1493,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/*    * Below method returns the dependencies for the passed in query to EXPLAIN.    * The dependencies are the set of input tables and partitions, and are    * provided back as JSON output for the EXPLAIN command.    * Example output:    * {"input_tables":[{"tablename": "default@test_sambavi_v1", "tabletype": "TABLE"}],    *  "input partitions":["default@srcpart@ds=2008-04-08/hr=11"]}    */
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|JSONObject
 name|getJSONDependencies
@@ -1959,7 +1974,8 @@ name|varname
 operator|+
 literal|" IS false"
 decl_stmt|;
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|ImmutablePair
 argument_list|<
 name|Boolean
@@ -3152,7 +3168,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|JSONObject
 name|collectAuthRelatedEntities
 parameter_list|(
@@ -3577,7 +3594,8 @@ name|toString
 argument_list|()
 return|;
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|JSONObject
 name|outputMap
 parameter_list|(
@@ -4981,7 +4999,8 @@ literal|""
 argument_list|)
 return|;
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|JSONObject
 name|outputPlan
 parameter_list|(
@@ -6849,7 +6868,8 @@ return|return
 literal|null
 return|;
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|JSONObject
 name|outputDependencies
 parameter_list|(

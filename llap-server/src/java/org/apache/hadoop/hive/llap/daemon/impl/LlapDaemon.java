@@ -1001,6 +1001,22 @@ name|common
 operator|.
 name|util
 operator|.
+name|HiveVersionInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
 name|ShutdownHookManager
 import|;
 end_import
@@ -1838,6 +1854,15 @@ operator|+
 literal|", enablePreemption= "
 operator|+
 name|enablePreemption
+operator|+
+literal|", versionInfo= ("
+operator|+
+name|HiveVersionInfo
+operator|.
+name|getBuildVersion
+argument_list|()
+operator|+
+literal|")"
 decl_stmt|;
 name|LOG
 operator|.

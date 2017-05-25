@@ -2196,11 +2196,11 @@ argument_list|,
 literal|"Invalid Foreign Key syntax"
 argument_list|)
 block|,
-name|INVALID_PK_SYNTAX
+name|INVALID_CSTR_SYNTAX
 argument_list|(
 literal|10326
 argument_list|,
-literal|"Invalid Primary Key syntax"
+literal|"Invalid Constraint syntax"
 argument_list|)
 block|,
 name|ACID_NOT_ENOUGH_HISTORY
@@ -2233,6 +2233,20 @@ argument_list|(
 literal|10330
 argument_list|,
 literal|"Query was cancelled while acquiring locks on the underlying objects. "
+argument_list|)
+block|,
+name|NOT_RECOGNIZED_CONSTRAINT
+argument_list|(
+literal|10331
+argument_list|,
+literal|"Constraint not recognized"
+argument_list|)
+block|,
+name|INVALID_CONSTRAINT
+argument_list|(
+literal|10332
+argument_list|,
+literal|"Invalid constraint definition"
 argument_list|)
 block|,
 name|REPLACE_VIEW_WITH_MATERIALIZED

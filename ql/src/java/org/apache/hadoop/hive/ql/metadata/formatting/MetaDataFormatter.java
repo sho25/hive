@@ -191,6 +191,24 @@ name|ql
 operator|.
 name|metadata
 operator|.
+name|NotNullConstraint
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
 name|Partition
 import|;
 end_import
@@ -228,6 +246,24 @@ operator|.
 name|metadata
 operator|.
 name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|UniqueConstraint
 import|;
 end_import
 
@@ -300,7 +336,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @param fkInfo  foreign keys information    * @param pkInfo  primary key information    * @throws HiveException    */
+comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @param fkInfo  foreign keys information    * @param pkInfo  primary key information    * @param ukInfo  unique constraint information    * @param nnInfo  not null constraint information    * @throws HiveException    */
 specifier|public
 name|void
 name|describeTable
@@ -349,6 +385,12 @@ name|pkInfo
 parameter_list|,
 name|ForeignKeyInfo
 name|fkInfo
+parameter_list|,
+name|UniqueConstraint
+name|ukInfo
+parameter_list|,
+name|NotNullConstraint
+name|nnInfo
 parameter_list|)
 throws|throws
 name|HiveException

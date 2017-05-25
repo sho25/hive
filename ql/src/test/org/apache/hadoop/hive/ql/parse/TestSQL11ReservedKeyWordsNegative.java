@@ -3801,6 +3801,52 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testSQL11ReservedKeyWords_UNIQUE
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE UNIQUE (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertFalse
+argument_list|(
+literal|"Expected ParseException"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:13 cannot recognize input near 'UNIQUE' '(' 'col' in table name"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testSQL11ReservedKeyWords_UPDATE
 parameter_list|()
 block|{
