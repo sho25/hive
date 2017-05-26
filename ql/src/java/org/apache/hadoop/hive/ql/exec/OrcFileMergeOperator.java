@@ -576,7 +576,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -716,7 +719,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -867,7 +873,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

@@ -1030,7 +1030,10 @@ name|INIT
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1066,7 +1069,10 @@ return|return;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1132,7 +1138,10 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|cntrs
@@ -1488,7 +1497,10 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 for|for

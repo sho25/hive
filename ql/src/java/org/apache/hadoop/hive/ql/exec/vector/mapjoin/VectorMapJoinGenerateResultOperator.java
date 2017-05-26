@@ -2327,7 +2327,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -2355,7 +2358,10 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -2589,7 +2595,10 @@ throw|;
 block|}
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -2795,7 +2804,10 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

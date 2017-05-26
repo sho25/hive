@@ -480,28 +480,6 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
-name|boolean
-name|isInfoEnabled
-init|=
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|boolean
-name|isTraceEnabled
-init|=
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
 name|String
 name|PLAN_KEY
 init|=
@@ -662,7 +640,10 @@ name|keyObjectInspector
 decl_stmt|;
 if|if
 condition|(
+name|LOG
+operator|.
 name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 try|try
@@ -1216,7 +1197,10 @@ block|{
 comment|// If a operator wants to do some work at the end of a group
 if|if
 condition|(
+name|LOG
+operator|.
 name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1304,7 +1288,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|LOG
+operator|.
 name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1577,7 +1564,10 @@ name|oc
 operator|==
 literal|null
 operator|&&
+name|LOG
+operator|.
 name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1600,7 +1590,10 @@ block|{
 comment|// If a operator wants to do some work at the end of a group
 if|if
 condition|(
+name|LOG
+operator|.
 name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

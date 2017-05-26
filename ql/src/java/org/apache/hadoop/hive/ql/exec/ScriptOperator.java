@@ -1546,7 +1546,10 @@ parameter_list|()
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1805,7 +1808,10 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -3457,7 +3463,10 @@ condition|)
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -3681,7 +3690,10 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

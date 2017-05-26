@@ -3056,7 +3056,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -4100,7 +4103,10 @@ condition|)
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

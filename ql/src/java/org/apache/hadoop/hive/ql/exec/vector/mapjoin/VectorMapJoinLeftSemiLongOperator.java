@@ -563,7 +563,10 @@ condition|)
 block|{
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -733,7 +736,10 @@ block|}
 comment|/*          * Common repeated join result processing.          */
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -773,7 +779,10 @@ block|{
 comment|/*          * NOT Repeating.          */
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1169,7 +1178,10 @@ block|}
 block|}
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

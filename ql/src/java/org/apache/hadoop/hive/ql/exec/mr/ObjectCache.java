@@ -160,17 +160,6 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|boolean
-name|isDebugEnabled
-init|=
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -184,7 +173,10 @@ block|{
 comment|// nothing to do
 if|if
 condition|(
+name|LOG
+operator|.
 name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -247,7 +239,10 @@ try|try
 block|{
 if|if
 condition|(
+name|LOG
+operator|.
 name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

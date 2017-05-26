@@ -598,7 +598,10 @@ else|else
 block|{
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 operator|&&
 operator|(
 name|sz
