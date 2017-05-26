@@ -1416,7 +1416,7 @@ name|segmentOutputPath
 init|=
 name|JobHelper
 operator|.
-name|makeSegmentOutputPath
+name|makeFileNamePath
 argument_list|(
 operator|new
 name|Path
@@ -1427,6 +1427,10 @@ argument_list|,
 name|localFileSystem
 argument_list|,
 name|dataSegment
+argument_list|,
+name|JobHelper
+operator|.
+name|INDEX_ZIP
 argument_list|)
 decl_stmt|;
 name|Path

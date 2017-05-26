@@ -91,18 +91,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|metamx
-operator|.
-name|common
-operator|.
-name|Granularity
-import|;
-end_import
-
-begin_import
-import|import
 name|io
 operator|.
 name|druid
@@ -247,9 +235,15 @@ name|io
 operator|.
 name|druid
 operator|.
+name|java
+operator|.
+name|util
+operator|.
+name|common
+operator|.
 name|granularity
 operator|.
-name|QueryGranularities
+name|Granularities
 import|;
 end_import
 
@@ -966,7 +960,7 @@ literal|1.0d
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// This test need this patch https://github.com/druid-io/druid/pull/3483
+comment|// This test fails due to conflict of guava classes with hive-exec jar.
 annotation|@
 name|Ignore
 annotation|@
@@ -1111,11 +1105,11 @@ argument_list|,
 operator|new
 name|UniformGranularitySpec
 argument_list|(
-name|Granularity
+name|Granularities
 operator|.
 name|DAY
 argument_list|,
-name|QueryGranularities
+name|Granularities
 operator|.
 name|NONE
 argument_list|,
@@ -1327,11 +1321,11 @@ name|Constants
 operator|.
 name|DRUID_TIMESTAMP_GRANULARITY_COL_NAME
 argument_list|,
-name|Granularity
+name|Granularities
 operator|.
 name|DAY
 operator|.
-name|truncate
+name|bucketStart
 argument_list|(
 operator|new
 name|DateTime
@@ -1498,7 +1492,7 @@ argument_list|)
 argument_list|,
 literal|null
 argument_list|,
-name|QueryGranularities
+name|Granularities
 operator|.
 name|NONE
 argument_list|)
