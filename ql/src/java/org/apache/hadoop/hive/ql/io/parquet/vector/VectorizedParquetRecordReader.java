@@ -1642,7 +1642,21 @@ name|close
 parameter_list|()
 throws|throws
 name|IOException
-block|{   }
+block|{
+if|if
+condition|(
+name|reader
+operator|!=
+literal|null
+condition|)
+block|{
+name|reader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+block|}
 annotation|@
 name|Override
 specifier|public
