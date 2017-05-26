@@ -23,22 +23,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|LlapOutputFormatService
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -336,6 +320,22 @@ operator|.
 name|llap
 operator|.
 name|LlapDaemonInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|LlapOutputFormatService
 import|;
 end_import
 
@@ -2161,6 +2161,8 @@ argument_list|(
 name|displayNameJvm
 argument_list|,
 name|sessionId
+argument_list|,
+name|daemonConf
 argument_list|)
 expr_stmt|;
 name|String
@@ -3984,7 +3986,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Started LlapDaemon"
+literal|"Started LlapDaemon with PID: {}"
+argument_list|,
+name|LlapDaemonInfo
+operator|.
+name|INSTANCE
+operator|.
+name|getPID
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Relying on the RPC threads to keep the service alive.

@@ -102,7 +102,17 @@ name|LlapDaemonMaxFileDescriptorCount
 argument_list|(
 literal|"Maximum number of file descriptors"
 argument_list|)
-block|,   ;
+block|,
+name|LlapDaemonResidentSetSize
+argument_list|(
+literal|"Resident memory (RSS) used by llap daemon process in bytes"
+argument_list|)
+block|,
+name|LlapDaemonVirtualMemorySize
+argument_list|(
+literal|"Virtual memory (VMEM) used by llap daemon process in bytes"
+argument_list|)
+block|;
 specifier|private
 specifier|final
 name|String
