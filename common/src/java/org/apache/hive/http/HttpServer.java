@@ -2343,6 +2343,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|addServlet
+argument_list|(
+literal|"conflog"
+argument_list|,
+literal|"/conflog"
+argument_list|,
+name|Log4j2ConfiguratorServlet
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Pair

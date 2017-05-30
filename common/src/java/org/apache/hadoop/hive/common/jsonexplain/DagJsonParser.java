@@ -651,6 +651,18 @@ operator|>
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|candidate
+operator|.
+name|parentStages
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
 name|printer
 operator|.
 name|println
@@ -658,6 +670,21 @@ argument_list|(
 literal|"Vertex dependency in root stage"
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|printer
+operator|.
+name|println
+argument_list|(
+literal|"Vertex dependency in "
+operator|+
+name|candidate
+operator|.
+name|externalName
+argument_list|)
+expr_stmt|;
+block|}
 for|for
 control|(
 name|Entry

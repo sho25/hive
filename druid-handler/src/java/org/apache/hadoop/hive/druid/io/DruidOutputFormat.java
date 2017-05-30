@@ -77,18 +77,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|metamx
-operator|.
-name|common
-operator|.
-name|Granularity
-import|;
-end_import
-
-begin_import
-import|import
 name|io
 operator|.
 name|druid
@@ -205,9 +193,15 @@ name|io
 operator|.
 name|druid
 operator|.
+name|java
+operator|.
+name|util
+operator|.
+name|common
+operator|.
 name|granularity
 operator|.
-name|QueryGranularity
+name|Granularity
 import|;
 end_import
 
@@ -1030,12 +1024,12 @@ name|UniformGranularitySpec
 argument_list|(
 name|Granularity
 operator|.
-name|valueOf
+name|fromString
 argument_list|(
 name|segmentGranularity
 argument_list|)
 argument_list|,
-name|QueryGranularity
+name|Granularity
 operator|.
 name|fromString
 argument_list|(

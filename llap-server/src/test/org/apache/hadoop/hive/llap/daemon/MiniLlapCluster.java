@@ -794,6 +794,8 @@ argument_list|,
 name|ioIsDirect
 argument_list|,
 name|llapIoEnabled
+argument_list|,
+literal|"-1"
 argument_list|)
 expr_stmt|;
 comment|// Setup Local Dirs

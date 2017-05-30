@@ -675,16 +675,6 @@ name|size
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|isLogInfoEnabled
-init|=
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-decl_stmt|;
 comment|// TODO: move to DynamicSerDe when it's ready
 specifier|private
 name|Deserializer
@@ -2058,7 +2048,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|logMemoryInfo
@@ -2339,7 +2332,10 @@ literal|0
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|logMemoryInfo
@@ -2376,7 +2372,10 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|logMemoryInfo
@@ -2569,7 +2568,10 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|logCloseInfo

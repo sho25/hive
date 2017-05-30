@@ -133,18 +133,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|metamx
-operator|.
-name|common
-operator|.
-name|Granularity
-import|;
-end_import
-
-begin_import
-import|import
 name|io
 operator|.
 name|druid
@@ -182,6 +170,24 @@ operator|.
 name|input
 operator|.
 name|MapBasedInputRow
+import|;
+end_import
+
+begin_import
+import|import
+name|io
+operator|.
+name|druid
+operator|.
+name|java
+operator|.
+name|util
+operator|.
+name|common
+operator|.
+name|granularity
+operator|.
+name|Granularity
 import|;
 end_import
 

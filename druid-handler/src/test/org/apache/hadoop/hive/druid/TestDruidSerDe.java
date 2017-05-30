@@ -2822,9 +2822,9 @@ decl_stmt|;
 name|ObjectMapper
 name|mapper
 init|=
-operator|new
-name|DefaultObjectMapper
-argument_list|()
+name|DruidStorageHandlerUtils
+operator|.
+name|JSON_MAPPER
 decl_stmt|;
 switch|switch
 condition|(

@@ -940,7 +940,10 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|isLogDebugEnabled
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1292,7 +1295,10 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1849,7 +1855,10 @@ comment|//       should either init for each tag, or if rowInspector doesn't rea
 comment|//       matter, then we can create this in ctor and get rid of firstRow.
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -2773,7 +2782,10 @@ name|buckNum
 decl_stmt|;
 if|if
 condition|(
-name|isLogTraceEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -3067,7 +3079,10 @@ operator|++
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 if|if
@@ -3249,7 +3264,10 @@ literal|null
 expr_stmt|;
 if|if
 condition|(
-name|isLogInfoEnabled
+name|LOG
+operator|.
+name|isTraceEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG

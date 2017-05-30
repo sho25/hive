@@ -733,6 +733,8 @@ argument_list|,
 name|address
 argument_list|)
 expr_stmt|;
+comment|// TODO Caching this and re-using across submissions breaks AM recovery, since the
+comment|// new AM may run on a different host/port.
 block|}
 specifier|public
 name|QueryIdentifier

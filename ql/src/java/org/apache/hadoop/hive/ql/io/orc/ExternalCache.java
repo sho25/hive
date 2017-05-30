@@ -484,16 +484,6 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-specifier|static
-name|boolean
-name|isDebugEnabled
-init|=
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-decl_stmt|;
-specifier|private
 specifier|final
 name|LocalCache
 name|localCache
@@ -1442,7 +1432,10 @@ condition|(
 operator|!
 name|isWarnLogged
 operator|||
+name|LOG
+operator|.
 name|isDebugEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
