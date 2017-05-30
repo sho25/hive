@@ -165,16 +165,6 @@ name|Iterator
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
 begin_comment
 comment|/**  * Abstract Factory for the construction of HCatalog message instances.  */
 end_comment
@@ -701,25 +691,17 @@ name|Index
 name|after
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for building insert message    *    * @param db Name of the database the insert occurred in    * @param table Name of the table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null if    *          the insert was done into a non-partitioned table    * @param replace Flag to represent if INSERT OVERWRITE or INSERT INTO    * @param files Iterator of file created    * @return instance of InsertMessage    */
+comment|/**    * Factory method for building insert message    *    * @param tableObj Table object where the insert occurred in    * @param ptnObj Partition object where the insert occurred in, may be null if    *          the insert was done into a non-partitioned table    * @param replace Flag to represent if INSERT OVERWRITE or INSERT INTO    * @param files Iterator of file created    * @return instance of InsertMessage    */
 specifier|public
 specifier|abstract
 name|InsertMessage
 name|buildInsertMessage
 parameter_list|(
-name|String
-name|db
+name|Table
+name|tableObj
 parameter_list|,
-name|String
-name|table
-parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partVals
+name|Partition
+name|ptnObj
 parameter_list|,
 name|boolean
 name|replace

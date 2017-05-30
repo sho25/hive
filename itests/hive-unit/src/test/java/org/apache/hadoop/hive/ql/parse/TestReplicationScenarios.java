@@ -9634,6 +9634,963 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testIncrementalInsertDropUnpartitionedTable
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalInsertDropUnpartitionedTable"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp AS SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|lastDumpIdWithoutDrop
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|)
+decl_stmt|;
+comment|// Drop all the tables
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp"
+argument_list|)
+expr_stmt|;
+comment|// Dump all the events except DROP
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|lastDumpIdWithoutDrop
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// Need to find the tables and data as drop is not part of this dump
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_tmp ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+comment|// Dump the drop events and check if tables are getting dropped in target as well
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalInsertDropPartitionedTable
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalInsertDropPartitionedTable"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|,
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"seventeen"
+block|,
+literal|"sixteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=20)"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned RENAME PARTITION (b=20) TO PARTITION (b=2"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp AS SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|lastDumpIdWithoutDrop
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|)
+decl_stmt|;
+comment|// Drop all the tables
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|)
+expr_stmt|;
+comment|// Dump all the events except DROP
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|lastDumpIdWithoutDrop
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// Need to find the tables and data as drop is not part of this dump
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_tmp where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// Dump the drop events and check if tables are getting dropped in target as well
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp"
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testViewsReplication
 parameter_list|()
 throws|throws

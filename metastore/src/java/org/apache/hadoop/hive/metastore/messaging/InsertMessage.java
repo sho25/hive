@@ -21,11 +21,37 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Map
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Partition
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
 import|;
 end_import
 
@@ -67,18 +93,6 @@ name|boolean
 name|isReplace
 parameter_list|()
 function_decl|;
-comment|/**    * Get the map of partition keyvalues.  Will be null if this insert is to a table and not a    * partition.    * @return Map of partition keyvalues, or null.    */
-specifier|public
-specifier|abstract
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|getPartitionKeyValues
-parameter_list|()
-function_decl|;
 comment|/**    * Get list of file name and checksum created as a result of this DML operation    *    * @return The iterable of files    */
 specifier|public
 specifier|abstract
@@ -88,6 +102,24 @@ name|String
 argument_list|>
 name|getFiles
 parameter_list|()
+function_decl|;
+comment|/**    * Get the table object associated with the insert    *    * @return The Json format of Table object    */
+specifier|public
+specifier|abstract
+name|Table
+name|getTableObj
+parameter_list|()
+throws|throws
+name|Exception
+function_decl|;
+comment|/**    * Get the partition object associated with the insert    *    * @return The Json format of Partition object if the table is partitioned else return null.    */
+specifier|public
+specifier|abstract
+name|Partition
+name|getPtnObj
+parameter_list|()
+throws|throws
+name|Exception
 function_decl|;
 annotation|@
 name|Override
