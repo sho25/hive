@@ -2836,6 +2836,15 @@ argument_list|,
 literal|"Inteval for cmroot cleanup thread."
 argument_list|)
 block|,
+name|REPL_FUNCTIONS_ROOT_DIR
+argument_list|(
+literal|"hive.repl.replica.functions.root.dir"
+argument_list|,
+literal|"/user/hive/repl/functions/"
+argument_list|,
+literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
