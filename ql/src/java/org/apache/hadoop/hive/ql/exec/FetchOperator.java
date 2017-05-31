@@ -3194,11 +3194,16 @@ name|ValidTxnList
 name|extractValidTxnList
 parameter_list|()
 block|{
-name|ValidTxnList
-name|validTxnList
-decl_stmt|;
 if|if
 condition|(
+name|currDesc
+operator|.
+name|getTableName
+argument_list|()
+operator|==
+literal|null
+operator|||
+operator|!
 name|org
 operator|.
 name|apache
@@ -3218,14 +3223,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|validTxnList
-operator|=
-literal|null
-expr_stmt|;
-comment|// i.e. not fetching from a table directly but from a temp location
-block|}
-else|else
-block|{
 name|String
 name|txnString
 init|=
@@ -3238,8 +3235,7 @@ operator|.
 name|VALID_TXNS_KEY
 argument_list|)
 decl_stmt|;
-name|validTxnList
-operator|=
+return|return
 name|txnString
 operator|==
 literal|null
@@ -3253,11 +3249,12 @@ name|ValidReadTxnList
 argument_list|(
 name|txnString
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 return|return
-name|validTxnList
+literal|null
 return|;
+comment|// not fetching from a table directly but from a temp location
 block|}
 specifier|private
 name|FetchInputFormatSplit
