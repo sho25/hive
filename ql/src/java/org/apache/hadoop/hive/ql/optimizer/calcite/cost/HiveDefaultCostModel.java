@@ -271,6 +271,9 @@ name|getScanCost
 parameter_list|(
 name|HiveTableScan
 name|ts
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 block|{
 return|return

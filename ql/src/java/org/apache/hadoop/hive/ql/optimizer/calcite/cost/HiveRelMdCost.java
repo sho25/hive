@@ -419,6 +419,8 @@ operator|.
 name|getScanCost
 argument_list|(
 name|ts
+argument_list|,
+name|mq
 argument_list|)
 return|;
 block|}

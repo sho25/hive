@@ -614,11 +614,14 @@ operator|*
 name|selectivity
 return|;
 block|}
+comment|// Do not call mq.getRowCount(join), will trigger CyclicMetadataException
 return|return
 name|join
 operator|.
-name|getRows
-argument_list|()
+name|estimateRowCount
+argument_list|(
+name|mq
+argument_list|)
 return|;
 block|}
 annotation|@
