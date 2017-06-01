@@ -7265,6 +7265,15 @@ argument_list|,
 literal|"Minimum number of OR clauses needed to transform into IN clauses"
 argument_list|)
 block|,
+name|HIVECOUNTDISTINCTOPTIMIZER
+argument_list|(
+literal|"hive.optimize.countdistinct"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to transform count distinct into two stages"
+argument_list|)
+block|,
 name|HIVEPARTITIONCOLUMNSEPARATOR
 argument_list|(
 literal|"hive.optimize.partition.columns.separate"
