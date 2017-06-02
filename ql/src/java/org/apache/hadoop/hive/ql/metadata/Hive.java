@@ -9120,12 +9120,14 @@ condition|)
 block|{
 name|StatsSetupConst
 operator|.
-name|setBasicStatsStateForCreateTable
+name|setStatsStateForCreateTable
 argument_list|(
 name|newTPart
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+literal|null
 argument_list|,
 name|StatsSetupConst
 operator|.
