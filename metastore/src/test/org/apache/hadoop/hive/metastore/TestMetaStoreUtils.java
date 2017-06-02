@@ -74,7 +74,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testColumnsIncluded
+name|testcolumnsIncludedByNameType
 parameter_list|()
 block|{
 name|FieldSchema
@@ -88,6 +88,19 @@ argument_list|,
 literal|"string"
 argument_list|,
 literal|"col1 comment"
+argument_list|)
+decl_stmt|;
+name|FieldSchema
+name|col1a
+init|=
+operator|new
+name|FieldSchema
+argument_list|(
+literal|"col1"
+argument_list|,
+literal|"string"
+argument_list|,
+literal|"col1 but with a different comment"
 argument_list|)
 decl_stmt|;
 name|FieldSchema
@@ -122,7 +135,7 @@ name|assertTrue
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
@@ -146,7 +159,31 @@ name|assertTrue
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|col1
+argument_list|)
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|col1a
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
@@ -174,7 +211,7 @@ name|assertTrue
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
@@ -202,7 +239,7 @@ name|assertTrue
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
@@ -232,7 +269,7 @@ name|assertTrue
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
@@ -262,7 +299,7 @@ name|assertFalse
 argument_list|(
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|Arrays
 operator|.
