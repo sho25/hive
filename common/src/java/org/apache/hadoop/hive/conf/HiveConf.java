@@ -13884,6 +13884,18 @@ operator|+
 literal|"If a Spark job contains more tasks than the maximum, it will be cancelled. A value of -1 means no limit."
 argument_list|)
 block|,
+name|SPARK_STAGE_MAX_TASKS
+argument_list|(
+literal|"hive.spark.stage.max.tasks"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The maximum number of tasks a stage in a Spark job may have.\n"
+operator|+
+literal|"If a Spark job stage contains more tasks than the maximum, the job will be cancelled. A value of -1 means no limit."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"

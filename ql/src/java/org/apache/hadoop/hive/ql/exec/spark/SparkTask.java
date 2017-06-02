@@ -1249,18 +1249,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"The number of tasks reaches above the limit "
-operator|+
-name|conf
-operator|.
-name|getIntVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SPARK_JOB_MAX_TASKS
-argument_list|)
+literal|"The spark job or one stage of it has too many tasks"
 operator|+
 literal|". Cancelling Spark job "
 operator|+
