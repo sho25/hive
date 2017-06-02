@@ -835,7 +835,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// Do not lose the old indexes. Create a super set includes
+comment|// Do not loose the old indexes. Create a super set includes
 name|OrcProto
 operator|.
 name|RowIndex
@@ -946,7 +946,7 @@ literal|null
 argument_list|,
 literal|true
 argument_list|,
-name|superset
+name|includes
 argument_list|,
 name|rowIndex
 operator|.
