@@ -1537,7 +1537,7 @@ name|TezJobMonitor
 argument_list|(
 name|work
 operator|.
-name|getWorkMap
+name|getAllWork
 argument_list|()
 argument_list|,
 name|dagClient
