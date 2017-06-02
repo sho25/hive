@@ -4649,7 +4649,7 @@ argument_list|)
 operator|&&
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|oldCols
 argument_list|,
@@ -5160,7 +5160,7 @@ name|rename
 operator|&&
 name|MetaStoreUtils
 operator|.
-name|columnsIncluded
+name|columnsIncludedByNameType
 argument_list|(
 name|oldCols
 argument_list|,
