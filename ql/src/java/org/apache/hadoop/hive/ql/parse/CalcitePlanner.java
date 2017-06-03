@@ -12135,7 +12135,7 @@ name|class
 argument_list|,
 name|HiveRelFactories
 operator|.
-name|HIVE_FILTER_FACTORY
+name|HIVE_BUILDER
 argument_list|,
 name|Aggregate
 operator|.
