@@ -117,6 +117,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|BlockingDeque
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|BlockingQueue
 import|;
 end_import
@@ -130,6 +142,18 @@ operator|.
 name|concurrent
 operator|.
 name|ConcurrentLinkedQueue
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|LinkedBlockingDeque
 import|;
 end_import
 
@@ -521,7 +545,7 @@ name|SessionState
 name|initSessionState
 decl_stmt|;
 specifier|private
-name|BlockingQueue
+name|BlockingDeque
 argument_list|<
 name|TezSessionPoolSession
 argument_list|>
@@ -1189,7 +1213,7 @@ block|{
 name|defaultQueuePool
 operator|=
 operator|new
-name|ArrayBlockingQueue
+name|LinkedBlockingDeque
 argument_list|<
 name|TezSessionPoolSession
 argument_list|>
@@ -2342,7 +2366,7 @@ condition|)
 block|{
 name|defaultQueuePool
 operator|.
-name|put
+name|putFirst
 argument_list|(
 name|poolSession
 argument_list|)
