@@ -427,6 +427,8 @@ operator|new
 name|FilterSelectivityEstimator
 argument_list|(
 name|t
+argument_list|,
+name|mq
 argument_list|)
 decl_stmt|;
 return|return
@@ -643,6 +645,8 @@ operator|new
 name|FilterSelectivityEstimator
 argument_list|(
 name|j
+argument_list|,
+name|mq
 argument_list|)
 operator|.
 name|estimateSelectivity

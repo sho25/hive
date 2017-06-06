@@ -170,6 +170,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|MetaData
 parameter_list|(
 name|Database

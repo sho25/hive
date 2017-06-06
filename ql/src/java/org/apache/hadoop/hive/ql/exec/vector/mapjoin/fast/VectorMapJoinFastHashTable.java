@@ -77,6 +77,26 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|mapjoin
+operator|.
+name|MapJoinMemoryExhaustionError
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|vector
 operator|.
 name|mapjoin
@@ -193,7 +213,7 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|RuntimeException
+name|MapJoinMemoryExhaustionError
 argument_list|(
 literal|"Vector MapJoin "
 operator|+

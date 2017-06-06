@@ -30522,7 +30522,7 @@ condition|)
 block|{
 name|StatsSetupConst
 operator|.
-name|setBasicStatsStateForCreateTable
+name|setStatsStateForCreateTable
 argument_list|(
 name|tbl
 operator|.
@@ -30531,6 +30531,16 @@ argument_list|()
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+name|MetaStoreUtils
+operator|.
+name|getColumnNames
+argument_list|(
+name|tbl
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
 argument_list|,
 name|StatsSetupConst
 operator|.

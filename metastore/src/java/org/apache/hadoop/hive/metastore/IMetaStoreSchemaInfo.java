@@ -39,9 +39,37 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Connection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|tools
+operator|.
+name|HiveSchemaHelper
 import|;
 end_import
 
@@ -106,6 +134,18 @@ comment|/**    * Get hive distribution schema version. Schematool uses this vers
 name|String
 name|getHiveSchemaVersion
 parameter_list|()
+function_decl|;
+comment|/**    * Get the schema version from the backend database. This version is used by SchemaTool to to    * compare the version returned by getHiveSchemaVersion and determine the upgrade order and    * scripts needed to upgrade the metastore schema    *     * @param metastoreDbConnectionInfo Connection information needed to connect to the backend    *          database    * @return    * @throws HiveMetaException when unable to fetch the schema version    */
+name|String
+name|getMetaStoreSchemaVersion
+parameter_list|(
+name|HiveSchemaHelper
+operator|.
+name|MetaStoreConnectionInfo
+name|metastoreDbConnectionInfo
+parameter_list|)
+throws|throws
+name|HiveMetaException
 function_decl|;
 comment|/**    * A dbVersion is compatible with hive version if it is greater or equal to the hive version. This    * is result of the db schema upgrade design principles followed in hive project. The state where    * db schema version is ahead of hive software version is often seen when a 'rolling upgrade' or    * 'rolling downgrade' is happening. This is a state where hive is functional and returning non    * zero status for it is misleading.    *    * @param hiveVersion version of hive software    * @param dbVersion version of metastore rdbms schema    * @return true if versions are compatible    */
 name|boolean

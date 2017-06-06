@@ -1365,6 +1365,13 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
+literal|".*Output:.*/data/files/.*\n"
+argument_list|,
+name|MASK_PATTERN
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
 literal|".*CreateTime.*\n"
 argument_list|,
 name|MASK_PATTERN

@@ -773,10 +773,12 @@ block|}
 name|double
 name|numRows
 init|=
-name|tScan
+name|mq
 operator|.
-name|getRows
-argument_list|()
+name|getRowCount
+argument_list|(
+name|tScan
+argument_list|)
 decl_stmt|;
 name|List
 argument_list|<

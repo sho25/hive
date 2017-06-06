@@ -2704,6 +2704,7 @@ block|}
 assert|assert
 name|isFoundInCache
 assert|;
+comment|// If it's not fresh from the cache, indexes should be present.
 name|counters
 operator|.
 name|incrCounter

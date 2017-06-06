@@ -542,10 +542,12 @@ name|min
 argument_list|(
 name|noDistinctRows
 argument_list|,
-name|htRel
+name|mq
 operator|.
-name|getRows
-argument_list|()
+name|getRowCount
+argument_list|(
+name|htRel
+argument_list|)
 argument_list|)
 return|;
 block|}

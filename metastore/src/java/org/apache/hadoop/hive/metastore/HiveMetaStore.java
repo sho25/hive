@@ -36124,6 +36124,75 @@ literal|" does not exist"
 argument_list|)
 throw|;
 block|}
+comment|// if copy of jar to change management fails we fail the metastore transaction, since the
+comment|// user might delete the jars on HDFS externally after dropping the function, hence having
+comment|// a copy is required to allow incremental replication to work correctly.
+if|if
+condition|(
+name|func
+operator|.
+name|getResourceUris
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|func
+operator|.
+name|getResourceUris
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+for|for
+control|(
+name|ResourceUri
+name|uri
+range|:
+name|func
+operator|.
+name|getResourceUris
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|uri
+operator|.
+name|getUri
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+operator|.
+name|startsWith
+argument_list|(
+literal|"hdfs:"
+argument_list|)
+condition|)
+block|{
+name|wh
+operator|.
+name|addToChangeManagement
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|uri
+operator|.
+name|getUri
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+comment|// if the operation on metastore fails, we don't do anything in change management, but fail
+comment|// the metastore transaction, as having a copy of the jar in change management is not going
+comment|// to cause any problem, the cleaner thread will remove this when this jar expires.
 name|ms
 operator|.
 name|dropFunction

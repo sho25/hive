@@ -2836,6 +2836,15 @@ argument_list|,
 literal|"Inteval for cmroot cleanup thread."
 argument_list|)
 block|,
+name|REPL_FUNCTIONS_ROOT_DIR
+argument_list|(
+literal|"hive.repl.replica.functions.root.dir"
+argument_list|,
+literal|"/user/hive/repl/functions/"
+argument_list|,
+literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
@@ -7265,6 +7274,15 @@ argument_list|,
 literal|31
 argument_list|,
 literal|"Minimum number of OR clauses needed to transform into IN clauses"
+argument_list|)
+block|,
+name|HIVECOUNTDISTINCTOPTIMIZER
+argument_list|(
+literal|"hive.optimize.countdistinct"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to transform count distinct into two stages"
 argument_list|)
 block|,
 name|HIVEPARTITIONCOLUMNSEPARATOR
@@ -13879,6 +13897,18 @@ argument_list|,
 literal|"The maximum number of tasks a Spark job may have.\n"
 operator|+
 literal|"If a Spark job contains more tasks than the maximum, it will be cancelled. A value of -1 means no limit."
+argument_list|)
+block|,
+name|SPARK_STAGE_MAX_TASKS
+argument_list|(
+literal|"hive.spark.stage.max.tasks"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"The maximum number of tasks a stage in a Spark job may have.\n"
+operator|+
+literal|"If a Spark job stage contains more tasks than the maximum, the job will be cancelled. A value of -1 means no limit."
 argument_list|)
 block|,
 name|NWAYJOINREORDER

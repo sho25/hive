@@ -93,19 +93,15 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
+name|apache
 operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|calcite
 operator|.
-name|slf4j
+name|rel
 operator|.
-name|LoggerFactory
+name|metadata
+operator|.
+name|RelMetadataQuery
 import|;
 end_import
 
@@ -189,6 +185,26 @@ name|ImmutableList
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * Cost model interface.  */
 end_comment
@@ -261,6 +277,9 @@ name|getScanCost
 parameter_list|(
 name|HiveTableScan
 name|ts
+parameter_list|,
+name|RelMetadataQuery
+name|mq
 parameter_list|)
 function_decl|;
 specifier|public

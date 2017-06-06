@@ -1157,6 +1157,11 @@ argument_list|(
 literal|"spark_job_max_tasks.q"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"spark_stage_max_tasks.q"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientnegative"
