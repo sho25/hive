@@ -3811,6 +3811,9 @@ block|{
 return|return
 operator|new
 name|HiveMetaDataResultSet
+argument_list|<
+name|Object
+argument_list|>
 argument_list|(
 name|Arrays
 operator|.
