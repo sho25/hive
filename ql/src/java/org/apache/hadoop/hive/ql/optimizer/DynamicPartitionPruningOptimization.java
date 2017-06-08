@@ -1575,6 +1575,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|//falling back
 name|Operator
 argument_list|<
 name|?
@@ -2391,6 +2392,28 @@ argument_list|(
 name|sjHint
 operator|.
 name|getColName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+continue|continue;
+block|}
+if|if
+condition|(
+operator|!
+name|ts
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getAlias
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|sjHint
+operator|.
+name|getTarget
 argument_list|()
 argument_list|)
 condition|)

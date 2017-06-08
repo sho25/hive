@@ -5677,6 +5677,28 @@ block|{
 comment|// match!
 if|if
 condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Removing hinted semijoin as it is with SMB join "
+operator|+
+name|rs
+operator|+
+literal|" : "
+operator|+
+name|ts
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 name|LOG
 operator|.
 name|isDebugEnabled
@@ -5725,28 +5747,6 @@ argument_list|,
 name|ts
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|sjInfo
-operator|.
-name|getIsHint
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Removing hinted semijoin as it is with SMB join "
-operator|+
-name|rs
-operator|+
-literal|" : "
-operator|+
-name|ts
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 block|}
@@ -6327,6 +6327,28 @@ block|{
 comment|// We have a cycle!
 if|if
 condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Removing hinted semijoin as it is creating cycles with mapside joins "
+operator|+
+name|rs
+operator|+
+literal|" : "
+operator|+
+name|ts
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 name|LOG
 operator|.
 name|isDebugEnabled
@@ -6375,28 +6397,6 @@ argument_list|,
 name|ts
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|sjInfo
-operator|.
-name|getIsHint
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Removing hinted semijoin as it is creating cycles with mapside joins "
-operator|+
-name|rs
-operator|+
-literal|" : "
-operator|+
-name|ts
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 block|}
 block|}
@@ -6597,6 +6597,24 @@ name|TEZ_MAX_BLOOM_FILTER_ENTRIES
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Removing hinted semijoin due to lack to stats"
+operator|+
+literal|" or exceeding max bloom filter entries"
+argument_list|)
+throw|;
+block|}
 comment|// Remove the semijoin optimization branch along with ALL the mappings
 comment|// The parent GB2 has all the branches. Collect them and remove them.
 for|for

@@ -55925,7 +55925,7 @@ name|streamAliases
 argument_list|)
 expr_stmt|;
 block|}
-comment|/** Parses semjoin hints in the query and returns the table names mapped to filter size, or -1 if not specified.    *  Hints can be in 2 formats    *  1. TableName, ColumnName, bloom filter entries    *  2. TableName, ColumnName    *  */
+comment|/** Parses semjoin hints in the query and returns the table names mapped to filter size, or -1 if not specified.    *  Hints can be in 2 formats    *  1. TableName, ColumnName, Target-TableName, bloom filter entries    *  2. TableName, ColumnName, Target-TableName    *  */
 specifier|private
 name|Map
 argument_list|<
@@ -56174,7 +56174,7 @@ if|if
 condition|(
 name|numEntriesLeft
 operator|<
-literal|2
+literal|3
 condition|)
 block|{
 throw|throw
@@ -56196,7 +56196,7 @@ argument_list|)
 throw|;
 block|}
 name|String
-name|alias
+name|source
 init|=
 name|args
 operator|.
@@ -56216,7 +56216,7 @@ name|StringUtils
 operator|.
 name|isNumeric
 argument_list|(
-name|alias
+name|source
 argument_list|)
 condition|)
 block|{
@@ -56224,7 +56224,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"User provided bloom filter entries when alias is expected"
+literal|"User provided bloom filter entries when source alias is expected"
 argument_list|)
 throw|;
 block|}
@@ -56261,6 +56261,39 @@ literal|"User provided bloom filter entries when column name is expected"
 argument_list|)
 throw|;
 block|}
+name|String
+name|target
+init|=
+name|args
+operator|.
+name|getChild
+argument_list|(
+name|curIdx
+operator|++
+argument_list|)
+operator|.
+name|getText
+argument_list|()
+decl_stmt|;
+comment|// validate
+if|if
+condition|(
+name|StringUtils
+operator|.
+name|isNumeric
+argument_list|(
+name|colName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"User provided bloom filter entries when target alias is expected"
+argument_list|)
+throw|;
+block|}
 name|Integer
 name|number
 init|=
@@ -56270,7 +56303,7 @@ if|if
 condition|(
 name|numEntriesLeft
 operator|>
-literal|2
+literal|3
 condition|)
 block|{
 comment|// Check if there exists bloom filter size entry
@@ -56310,7 +56343,7 @@ name|result
 operator|.
 name|computeIfAbsent
 argument_list|(
-name|alias
+name|source
 argument_list|,
 name|value
 lambda|->
@@ -56326,6 +56359,8 @@ operator|new
 name|SemiJoinHint
 argument_list|(
 name|colName
+argument_list|,
+name|target
 argument_list|,
 name|number
 argument_list|)
