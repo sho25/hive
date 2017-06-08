@@ -5549,6 +5549,30 @@ name|partNames
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Recycles the files recursively from the input path to the cmroot directory either by copying or moving it.    *    * @param request Inputs for path of the data files to be recycled to cmroot and    *                isPurge flag when set to true files which needs to be recycled are not moved to Trash    * @return Response which is currently void    */
+annotation|@
+name|Override
+specifier|public
+name|CmRecycleResponse
+name|recycleDirToCmPath
+parameter_list|(
+name|CmRecycleRequest
+name|request
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|cm_recycle
+argument_list|(
+name|request
+argument_list|)
+return|;
+block|}
 comment|/**    * @param type    * @return true if the type is dropped    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_type(java.lang.String)    */
 specifier|public
 name|boolean

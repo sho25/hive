@@ -10591,6 +10591,764 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testInsertOverwriteOnUnpartitionedTableWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"insertOverwriteOnUnpartitionedTableWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// After INSERT INTO operation, get the last Repl ID
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|insertDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+comment|// Insert overwrite on unpartitioned table
+name|String
+index|[]
+name|data_after_ovwrite
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"hundred"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT OVERWRITE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|data_after_ovwrite
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+comment|// Dump only one INSERT INTO operation on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|insertDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// After Load from this dump, all target tables/partitions will have initial set of data but source will have latest data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+comment|// Dump the remaining INSERT OVERWRITE operations on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+comment|// After load, shall see the overwritten data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertOverwriteOnPartitionedTableWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"insertOverwriteOnPartitionedTableWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+comment|// INSERT INTO 2 partitions and get the last repl ID
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fourteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"sixteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|insertDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+comment|// Insert overwrite on one partition with multiple files
+name|String
+index|[]
+name|data_after_ovwrite
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"hundred"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT OVERWRITE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|data_after_ovwrite
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned where (b=2)"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
+comment|// Dump only 2 INSERT INTO operations.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|insertDumpId
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// After Load from this dump, all target tables/partitions will have initial set of data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|)
+expr_stmt|;
+comment|// Dump the remaining INSERT OVERWRITE operation on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+comment|// After load, shall see the overwritten data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|data_after_ovwrite
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testViewsReplication
 parameter_list|()
 throws|throws
