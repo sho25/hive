@@ -819,8 +819,6 @@ operator|.
 name|open
 argument_list|(
 name|filePath
-argument_list|,
-literal|4096
 argument_list|)
 expr_stmt|;
 name|in
@@ -1431,8 +1429,6 @@ operator|.
 name|open
 argument_list|(
 name|filePath
-argument_list|,
-literal|4096
 argument_list|)
 expr_stmt|;
 name|in
