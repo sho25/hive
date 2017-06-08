@@ -134,8 +134,7 @@ name|included
 parameter_list|,
 name|boolean
 index|[]
-index|[]
-name|colRgs
+name|rgs
 parameter_list|,
 name|Consumer
 argument_list|<

@@ -71,16 +71,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Collection
 import|;
 end_import
@@ -1302,8 +1292,7 @@ name|included
 parameter_list|,
 name|boolean
 index|[]
-index|[]
-name|colRgs
+name|rgs
 parameter_list|,
 name|Consumer
 argument_list|<
@@ -1480,13 +1469,6 @@ name|hasIndexOnlyCols
 init|=
 literal|false
 decl_stmt|;
-name|boolean
-index|[]
-name|includedRgs
-init|=
-literal|null
-decl_stmt|;
-comment|// Will always be the same for all cols at the moment.
 for|for
 control|(
 name|OrcProto
@@ -1604,15 +1586,6 @@ name|ctx
 operator|!=
 literal|null
 assert|;
-name|includedRgs
-operator|=
-name|colRgs
-index|[
-name|ctx
-operator|.
-name|includedIx
-index|]
-expr_stmt|;
 name|int
 name|indexIx
 init|=
@@ -1691,7 +1664,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|includedRgs
+name|rgs
 operator|==
 literal|null
 operator|||
@@ -1754,7 +1727,7 @@ name|addRgFilteredStreamToRanges
 argument_list|(
 name|stream
 argument_list|,
-name|includedRgs
+name|rgs
 argument_list|,
 name|codec
 operator|!=
@@ -1827,7 +1800,7 @@ condition|(
 name|hasIndexOnlyCols
 operator|&&
 operator|(
-name|includedRgs
+name|rgs
 operator|==
 literal|null
 operator|)
@@ -2025,6 +1998,13 @@ operator|.
 name|value
 condition|)
 block|{
+name|boolean
+name|hasError
+init|=
+literal|true
+decl_stmt|;
+try|try
+block|{
 if|if
 condition|(
 operator|!
@@ -2110,6 +2090,29 @@ operator|.
 name|next
 expr_stmt|;
 block|}
+name|hasError
+operator|=
+literal|false
+expr_stmt|;
+block|}
+finally|finally
+block|{
+comment|// The FS can be closed from under us if the task is interrupted. Release cache buffers.
+comment|// We are assuming here that toRelease will not be present in such cases.
+if|if
+condition|(
+name|hasError
+condition|)
+block|{
+name|releaseInitialRefcounts
+argument_list|(
+name|toRead
+operator|.
+name|next
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 comment|// 3. For uncompressed case, we need some special processing before read.
 comment|//    Basically, we are trying to create artificial, consistent ranges to cache, as there are
@@ -2124,13 +2127,19 @@ name|toRead
 operator|.
 name|next
 decl_stmt|;
-comment|// Keep "toRead" list for future use, don't extract().
 if|if
 condition|(
 name|codec
 operator|==
 literal|null
 condition|)
+block|{
+name|boolean
+name|hasError
+init|=
+literal|true
+decl_stmt|;
+try|try
 block|{
 for|for
 control|(
@@ -2228,7 +2237,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// Release buffers as we are done with all the streams... also see toRelease comment.\
+comment|// Release buffers as we are done with all the streams... also see toRelease comment.
 comment|// With uncompressed streams, we know we are done earlier.
 if|if
 condition|(
@@ -2254,12 +2263,15 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|isTracingEnabled
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|trace
+name|info
 argument_list|(
 literal|"Disk ranges after pre-read (file "
 operator|+
@@ -2289,7 +2301,54 @@ operator|.
 name|next
 expr_stmt|;
 comment|// Reset the iter to start.
+name|hasError
+operator|=
+literal|false
+expr_stmt|;
 block|}
+finally|finally
+block|{
+comment|// At this point, everything in the list is going to have a refcount of one. Unless it
+comment|// failed between the allocation and the incref for a single item, we should be ok.
+if|if
+condition|(
+name|hasError
+condition|)
+block|{
+name|releaseInitialRefcounts
+argument_list|(
+name|toRead
+operator|.
+name|next
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|toRelease
+operator|!=
+literal|null
+condition|)
+block|{
+name|releaseBuffers
+argument_list|(
+name|toRelease
+operator|.
+name|keySet
+argument_list|()
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|toRelease
+operator|=
+literal|null
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
+try|try
+block|{
 comment|// 4. Finally, decompress data, map per RG, and return to caller.
 comment|// We go by RG and not by column because that is how data is processed.
 name|int
@@ -2328,6 +2387,22 @@ operator|++
 name|rgIx
 control|)
 block|{
+if|if
+condition|(
+name|rgs
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|rgs
+index|[
+name|rgIx
+index|]
+condition|)
+block|{
+continue|continue;
+comment|// RG filtered.
+block|}
 name|boolean
 name|isLastRg
 init|=
@@ -2348,6 +2423,13 @@ operator|.
 name|take
 argument_list|()
 decl_stmt|;
+name|boolean
+name|hasError
+init|=
+literal|true
+decl_stmt|;
+try|try
+block|{
 name|ecb
 operator|.
 name|init
@@ -2363,11 +2445,6 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
-name|boolean
-name|isRGSelected
-init|=
-literal|true
-decl_stmt|;
 for|for
 control|(
 name|int
@@ -2421,88 +2498,6 @@ argument_list|,
 name|rgCount
 argument_list|)
 expr_stmt|;
-block|}
-comment|// TODO: simplify this now that high-level cache has been removed. Same RGs for all cols.
-if|if
-condition|(
-name|colRgs
-index|[
-name|ctx
-operator|.
-name|includedIx
-index|]
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|colRgs
-index|[
-name|ctx
-operator|.
-name|includedIx
-index|]
-index|[
-name|rgIx
-index|]
-condition|)
-block|{
-comment|// RG x col filtered.
-name|isRGSelected
-operator|=
-literal|false
-expr_stmt|;
-if|if
-condition|(
-name|isTracingEnabled
-condition|)
-block|{
-name|LOG
-operator|.
-name|trace
-argument_list|(
-literal|"colIxMod: {} rgIx: {} colRgs[{}]: {} colRgs[{}][{}]: {}"
-argument_list|,
-name|ctx
-operator|.
-name|includedIx
-argument_list|,
-name|rgIx
-argument_list|,
-name|ctx
-operator|.
-name|includedIx
-argument_list|,
-name|Arrays
-operator|.
-name|toString
-argument_list|(
-name|colRgs
-index|[
-name|ctx
-operator|.
-name|includedIx
-index|]
-argument_list|)
-argument_list|,
-name|ctx
-operator|.
-name|includedIx
-argument_list|,
-name|rgIx
-argument_list|,
-name|colRgs
-index|[
-name|ctx
-operator|.
-name|includedIx
-index|]
-index|[
-name|rgIx
-index|]
-argument_list|)
-expr_stmt|;
-block|}
-continue|continue;
 block|}
 name|OrcProto
 operator|.
@@ -2664,8 +2659,7 @@ argument_list|()
 expr_stmt|;
 comment|// We will be using this for each RG while also sending RGs to processing.
 comment|// To avoid buffers being unlocked, run refcount one ahead; so each RG
-comment|// processing will decref once, and the
-comment|// last one will unlock the buffers.
+comment|// processing will decref once, and the last one will unlock the buffers.
 name|sctx
 operator|.
 name|stripeLevelStream
@@ -3013,11 +3007,26 @@ throw|;
 block|}
 block|}
 block|}
+name|hasError
+operator|=
+literal|false
+expr_stmt|;
+block|}
+finally|finally
+block|{
 if|if
 condition|(
-name|isRGSelected
+name|hasError
 condition|)
 block|{
+name|releaseEcbRefCountsOnError
+argument_list|(
+name|ecb
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// After this, the non-initial refcounts are the responsibility of the consumer.
 name|consumer
 operator|.
 name|consumeData
@@ -3025,7 +3034,6 @@ argument_list|(
 name|ecb
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
@@ -3049,7 +3057,10 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Release the unreleased buffers. See class comment about refcounts.
+block|}
+finally|finally
+block|{
+comment|// Release the unreleased stripe-level buffers. See class comment about refcounts.
 for|for
 control|(
 name|int
@@ -3135,6 +3146,14 @@ name|decRef
 argument_list|()
 condition|)
 continue|continue;
+comment|// Note - this is a little bit confusing; the special treatment of stripe-level buffers
+comment|// is because we run the ColumnStreamData refcount one ahead (as specified above). It
+comment|// may look like this would release the buffers too many times (one release from the
+comment|// consumer, one from releaseInitialRefcounts below, and one here); however, this is
+comment|// merely handling a special case where all the batches that are sharing the stripe-
+comment|// level stream have been processed before we got here; they have all decRef-ed the CSD,
+comment|// but have not released the buffers because of that extra refCount. So, this is
+comment|// essentially the "consumer" refcount being released here.
 for|for
 control|(
 name|MemoryBuffer
@@ -3202,6 +3221,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 name|releaseCacheChunksIntoObjectPool
 argument_list|(
 name|toRead
@@ -3209,6 +3229,119 @@ operator|.
 name|next
 argument_list|)
 expr_stmt|;
+block|}
+specifier|private
+name|void
+name|releaseEcbRefCountsOnError
+parameter_list|(
+name|OrcEncodedColumnBatch
+name|ecb
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isTracingEnabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"Unlocking the batch not sent to consumer, on error"
+argument_list|)
+expr_stmt|;
+block|}
+comment|// We cannot send the ecb to consumer. Discard whatever is already there.
+for|for
+control|(
+name|int
+name|colIx
+init|=
+literal|0
+init|;
+name|colIx
+operator|<
+name|ecb
+operator|.
+name|getTotalColCount
+argument_list|()
+condition|;
+operator|++
+name|colIx
+control|)
+block|{
+if|if
+condition|(
+operator|!
+name|ecb
+operator|.
+name|hasData
+argument_list|(
+name|colIx
+argument_list|)
+condition|)
+continue|continue;
+name|ColumnStreamData
+index|[]
+name|datas
+init|=
+name|ecb
+operator|.
+name|getColumnData
+argument_list|(
+name|colIx
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|ColumnStreamData
+name|data
+range|:
+name|datas
+control|)
+block|{
+if|if
+condition|(
+name|data
+operator|==
+literal|null
+operator|||
+name|data
+operator|.
+name|decRef
+argument_list|()
+operator|!=
+literal|0
+condition|)
+continue|continue;
+for|for
+control|(
+name|MemoryBuffer
+name|buf
+range|:
+name|data
+operator|.
+name|getCacheBuffers
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|buf
+operator|==
+literal|null
+condition|)
+continue|continue;
+name|cacheWrapper
+operator|.
+name|releaseBuffer
+argument_list|(
+name|buf
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 block|}
 specifier|private
 specifier|static

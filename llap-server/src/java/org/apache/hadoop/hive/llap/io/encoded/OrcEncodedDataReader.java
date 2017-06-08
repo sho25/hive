@@ -1404,13 +1404,12 @@ specifier|private
 name|FileSystem
 name|fs
 decl_stmt|;
-comment|/**    * readState[stripeIx'][colIx'] => boolean array (could be a bitmask) of rg-s that need to be    * read. Contains only stripes that are read, and only columns included. null => read all RGs.    */
+comment|/**    * stripeRgs[stripeIx'] => boolean array (could be a bitmask) of rg-s that need to be read.    * Contains only stripes that are read, and only columns included. null => read all RGs.    */
 specifier|private
 name|boolean
 index|[]
 index|[]
-index|[]
-name|readState
+name|stripeRgs
 decl_stmt|;
 specifier|private
 specifier|volatile
@@ -1998,7 +1997,7 @@ return|;
 block|}
 if|if
 condition|(
-name|readState
+name|stripeRgs
 operator|.
 name|length
 operator|==
@@ -2034,7 +2033,7 @@ name|stripeIxFrom
 operator|+
 literal|","
 operator|+
-name|readState
+name|stripeRgs
 operator|.
 name|length
 argument_list|)
@@ -2319,7 +2318,7 @@ literal|0
 init|;
 name|stripeIxMod
 operator|<
-name|readState
+name|stripeRgs
 operator|.
 name|length
 condition|;
@@ -2351,8 +2350,7 @@ name|stripeIxMod
 decl_stmt|;
 name|boolean
 index|[]
-index|[]
-name|colRgs
+name|rgs
 init|=
 literal|null
 decl_stmt|;
@@ -2399,9 +2397,9 @@ name|getLength
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|colRgs
+name|rgs
 operator|=
-name|readState
+name|stripeRgs
 index|[
 name|stripeIxMod
 index|]
@@ -2430,7 +2428,7 @@ name|Arrays
 operator|.
 name|toString
 argument_list|(
-name|colRgs
+name|rgs
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2441,16 +2439,7 @@ comment|// Skip this case for 0-column read. We could probably special-case it j
 comment|// in EncodedReaderImpl, but for now it's not that important.
 if|if
 condition|(
-name|colRgs
-operator|.
-name|length
-operator|>
-literal|0
-operator|&&
-name|colRgs
-index|[
-literal|0
-index|]
+name|rgs
 operator|==
 name|RecordReaderImpl
 operator|.
@@ -2819,7 +2808,7 @@ argument_list|()
 argument_list|,
 name|globalIncludes
 argument_list|,
-name|colRgs
+name|rgs
 argument_list|,
 name|consumer
 argument_list|)
@@ -3912,7 +3901,7 @@ argument_list|<
 name|OrcStripeMetadata
 argument_list|>
 argument_list|(
-name|readState
+name|stripeRgs
 operator|.
 name|length
 argument_list|)
@@ -3952,7 +3941,7 @@ literal|0
 init|;
 name|stripeIxMod
 operator|<
-name|readState
+name|stripeRgs
 operator|.
 name|length
 condition|;
@@ -4554,7 +4543,7 @@ name|hasAnyData
 init|=
 literal|false
 decl_stmt|;
-comment|// readState should have been initialized by this time with an empty array.
+comment|// stripeRgs should have been initialized by this time with an empty array.
 for|for
 control|(
 name|int
@@ -4564,7 +4553,7 @@ literal|0
 init|;
 name|stripeIxMod
 operator|<
-name|readState
+name|stripeRgs
 operator|.
 name|length
 condition|;
@@ -4766,77 +4755,9 @@ name|length
 operator|==
 name|rgCount
 assert|;
-name|int
-name|fileIncludesCount
-init|=
-literal|0
-decl_stmt|;
-comment|// TODO: hacky for now - skip the root 0-s column.
-comment|//        We don't need separate readState w/o HL cache, should get rid of that instead.
-for|for
-control|(
-name|int
-name|includeIx
-init|=
-literal|1
-init|;
-name|includeIx
-operator|<
-name|globalIncludes
-operator|.
-name|length
-condition|;
-operator|++
-name|includeIx
-control|)
-block|{
-name|fileIncludesCount
-operator|+=
-operator|(
-name|globalIncludes
-index|[
-name|includeIx
-index|]
-condition|?
-literal|1
-else|:
-literal|0
-operator|)
-expr_stmt|;
-block|}
-name|readState
+name|stripeRgs
 index|[
 name|stripeIxMod
-index|]
-operator|=
-operator|new
-name|boolean
-index|[
-name|fileIncludesCount
-index|]
-index|[]
-expr_stmt|;
-for|for
-control|(
-name|int
-name|includeIx
-init|=
-literal|0
-init|;
-name|includeIx
-operator|<
-name|fileIncludesCount
-condition|;
-operator|++
-name|includeIx
-control|)
-block|{
-name|readState
-index|[
-name|stripeIxMod
-index|]
-index|[
-name|includeIx
 index|]
 operator|=
 operator|(
@@ -4858,7 +4779,6 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
-block|}
 name|adjustRgMetric
 argument_list|(
 name|rgCount
@@ -5241,7 +5161,7 @@ operator|)
 argument_list|)
 expr_stmt|;
 block|}
-name|readState
+name|stripeRgs
 operator|=
 operator|new
 name|boolean
@@ -5250,7 +5170,6 @@ name|stripeIxTo
 operator|-
 name|stripeIxFrom
 index|]
-index|[]
 index|[]
 expr_stmt|;
 block|}
