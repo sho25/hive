@@ -4336,6 +4336,10 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+name|pm
+operator|=
+literal|null
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Opens a new one or the one already created Every call of this function must    * have corresponding commit or rollback function call    *    * @return an active transaction    */
