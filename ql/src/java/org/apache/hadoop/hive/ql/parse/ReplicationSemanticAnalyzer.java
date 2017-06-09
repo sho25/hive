@@ -703,6 +703,28 @@ name|repl
 operator|.
 name|load
 operator|.
+name|EventDumpDirComparator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|repl
+operator|.
+name|load
+operator|.
 name|MetaData
 import|;
 end_import
@@ -3524,15 +3546,19 @@ block|}
 block|}
 else|else
 block|{
-comment|// event dump, each subdir is an individual event dump.
+comment|// Event dump, each sub-dir is an individual event dump.
+comment|// We need to guarantee that the directory listing we got is in order of evid.
 name|Arrays
 operator|.
 name|sort
 argument_list|(
 name|dirsInLoadPath
+argument_list|,
+operator|new
+name|EventDumpDirComparator
+argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// we need to guarantee that the directory listing we got is in order of evid.
 name|Task
 argument_list|<
 name|?
