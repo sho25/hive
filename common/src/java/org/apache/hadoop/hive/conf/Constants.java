@@ -132,6 +132,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DRUID_SEGMENT_INTERMEDIATE_DIRECTORY
+init|=
+literal|"druid.storage.storageDirectory.intermediate"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DRUID_SEGMENT_VERSION
 init|=
 literal|"druid.segment.version"
