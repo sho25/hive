@@ -1479,7 +1479,7 @@ argument_list|()
 argument_list|,
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|file
 operator|.

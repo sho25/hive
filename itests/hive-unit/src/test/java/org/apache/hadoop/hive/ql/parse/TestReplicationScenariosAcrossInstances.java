@@ -671,9 +671,9 @@ literal|"CREATE FUNCTION "
 operator|+
 name|primaryDbName
 operator|+
-literal|".testFunction as 'com.yahoo.sketches.hive.theta.DataToSketchUDAF' "
+literal|".testFunction as 'hivemall.tools.string.StopwordUDF' "
 operator|+
-literal|"using jar  'ivy://com.yahoo.datasketches:sketches-hive:0.8.2'"
+literal|"using jar  'ivy://io.github.myui:hivemall:0.4.0-2'"
 argument_list|)
 expr_stmt|;
 name|WarehouseInstance

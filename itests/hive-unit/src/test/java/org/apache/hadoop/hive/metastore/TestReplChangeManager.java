@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -1172,7 +1172,7 @@ name|path1Chksum
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part1Path
 argument_list|,
@@ -1218,7 +1218,7 @@ name|path2Chksum
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part2Path
 argument_list|,
@@ -1264,7 +1264,7 @@ name|path3Chksum
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part3Path
 argument_list|,
@@ -1734,7 +1734,7 @@ name|fileChksum1
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|filePath1
 argument_list|,
@@ -1771,7 +1771,7 @@ name|fileChksum2
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|filePath2
 argument_list|,
@@ -1808,7 +1808,7 @@ name|fileChksum3
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|filePath3
 argument_list|,
@@ -2120,7 +2120,7 @@ name|fileChksum11
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part11
 argument_list|,
@@ -2150,7 +2150,7 @@ name|fileChksum12
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part12
 argument_list|,
@@ -2198,7 +2198,7 @@ name|fileChksum21
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part21
 argument_list|,
@@ -2228,7 +2228,7 @@ name|fileChksum22
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part22
 argument_list|,
@@ -2276,7 +2276,7 @@ name|fileChksum31
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part31
 argument_list|,
@@ -2306,7 +2306,7 @@ name|fileChksum32
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|part32
 argument_list|,

@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -384,7 +384,7 @@ specifier|private
 name|FileSystem
 name|fs
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -392,7 +392,6 @@ name|ORIG_LOC_TAG
 init|=
 literal|"user.original-loc"
 decl_stmt|;
-specifier|public
 specifier|static
 specifier|final
 name|String
@@ -400,7 +399,7 @@ name|REMAIN_IN_TRASH_TAG
 init|=
 literal|"user.remain-in-trash"
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -439,6 +438,7 @@ return|return
 name|instance
 return|;
 block|}
+specifier|private
 name|ReplChangeManager
 parameter_list|(
 name|HiveConf
@@ -677,7 +677,7 @@ name|getCMPath
 argument_list|(
 name|hiveConf
 argument_list|,
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|path
 argument_list|,
@@ -812,8 +812,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param ifPurge if the file should skip Trash when delete    * @return    * @throws MetaException    */
-specifier|public
+comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param ifPurge if the file should skip Trash when delete    * @return int    * @throws MetaException    */
 name|int
 name|recycle
 parameter_list|(
@@ -897,7 +896,7 @@ name|getCMPath
 argument_list|(
 name|hiveConf
 argument_list|,
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|path
 argument_list|,
@@ -1149,7 +1148,7 @@ comment|// Get checksum of a file
 specifier|static
 specifier|public
 name|String
-name|getChksumString
+name|checksumFor
 parameter_list|(
 name|Path
 name|path
@@ -1224,7 +1223,7 @@ operator|=
 name|cmRoot
 expr_stmt|;
 block|}
-comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param checkSum checksum of the file, can be retrieved by {@link getCksumString}    * @return    * @throws IOException    * @throws MetaException    */
+comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param checkSum checksum of the file, can be retrieved by {@link #checksumFor(Path, FileSystem)}    * @return Path    */
 specifier|static
 name|Path
 name|getCMPath
@@ -1295,7 +1294,7 @@ name|newFileName
 argument_list|)
 return|;
 block|}
-comment|/***    * Get original file specified by src and chksumString. If the file exists and checksum    * matches, return the file; otherwise, use chksumString to retrieve it from cmroot    * @param src Original file location    * @param chksumString Checksum of the original file    * @param conf    * @return Corresponding FileStatus object    * @throws MetaException    */
+comment|/***    * Get original file specified by src and chksumString. If the file exists and checksum    * matches, return the file; otherwise, use chksumString to retrieve it from cmroot    * @param src Original file location    * @param checksumString Checksum of the original file    * @param hiveConf    * @return Corresponding FileStatus object    */
 specifier|static
 specifier|public
 name|FileStatus
@@ -1305,10 +1304,10 @@ name|Path
 name|src
 parameter_list|,
 name|String
-name|chksumString
+name|checksumString
 parameter_list|,
 name|HiveConf
-name|conf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1322,12 +1321,12 @@ name|src
 operator|.
 name|getFileSystem
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|chksumString
+name|checksumString
 operator|==
 literal|null
 condition|)
@@ -1359,17 +1358,17 @@ name|getFileStatus
 argument_list|(
 name|getCMPath
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|,
-name|chksumString
+name|checksumString
 argument_list|)
 argument_list|)
 return|;
 block|}
 name|String
-name|currentChksumString
+name|currentChecksumString
 init|=
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|src
 argument_list|,
@@ -1378,15 +1377,15 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|currentChksumString
+name|currentChecksumString
 operator|==
 literal|null
 operator|||
-name|chksumString
+name|checksumString
 operator|.
 name|equals
 argument_list|(
-name|currentChksumString
+name|currentChecksumString
 argument_list|)
 condition|)
 block|{
@@ -1408,9 +1407,9 @@ name|getFileStatus
 argument_list|(
 name|getCMPath
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|,
-name|chksumString
+name|checksumString
 argument_list|)
 argument_list|)
 return|;
@@ -1892,7 +1891,6 @@ block|}
 block|}
 block|}
 comment|// Schedule CMClearer thread. Will be invoked by metastore
-specifier|public
 specifier|static
 name|void
 name|scheduleCMClearer
