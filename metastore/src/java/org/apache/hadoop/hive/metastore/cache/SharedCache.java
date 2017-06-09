@@ -1079,6 +1079,9 @@ name|get
 argument_list|(
 name|colStatsCacheKey
 argument_list|)
+operator|.
+name|deepCopy
+argument_list|()
 return|;
 block|}
 specifier|public
@@ -3271,6 +3274,9 @@ name|get
 argument_list|(
 name|key
 argument_list|)
+operator|.
+name|deepCopy
+argument_list|()
 return|;
 block|}
 specifier|public
