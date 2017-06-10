@@ -11557,6 +11557,28 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// cascade only occurs with partitioned table
+if|if
+condition|(
+name|isCascade
+operator|&&
+operator|!
+name|tab
+operator|.
+name|isPartitioned
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|ALTER_TABLE_NON_PARTITIONED_TABLE_CASCADE_NOT_SUPPORTED
+argument_list|)
+throw|;
+block|}
 comment|// Determine the lock type to acquire
 name|WriteEntity
 operator|.

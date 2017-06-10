@@ -2333,6 +2333,13 @@ argument_list|,
 literal|"Expression in GROUPING function not present in GROUP BY"
 argument_list|)
 block|,
+name|ALTER_TABLE_NON_PARTITIONED_TABLE_CASCADE_NOT_SUPPORTED
+argument_list|(
+literal|10410
+argument_list|,
+literal|"Alter table with non-partitioned table does not support cascade"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
