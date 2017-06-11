@@ -4974,7 +4974,7 @@ decl_stmt|;
 name|String
 name|colName
 init|=
-literal|"col"
+literal|"f1"
 decl_stmt|;
 name|Database
 name|db
@@ -5018,7 +5018,7 @@ argument_list|(
 operator|new
 name|FieldSchema
 argument_list|(
-literal|"f1"
+name|colName
 argument_list|,
 literal|"int"
 argument_list|,
