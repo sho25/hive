@@ -1257,7 +1257,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Validating database/table/partition locations"
+literal|"Validating DFS locations"
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -1319,7 +1319,7 @@ else|:
 literal|"Failed"
 operator|)
 operator|+
-literal|" in database/table/partition location validation"
+literal|" in DFS location validation"
 argument_list|)
 expr_stmt|;
 return|return
@@ -1412,14 +1412,14 @@ condition|)
 block|{
 name|dbLoc
 operator|=
-literal|"select dbt.\"DB_ID\", dbt.\"NAME\", dbt.\"DB_LOCATION_URI\" from \"DBS\" dbt"
+literal|"select dbt.\"DB_ID\", dbt.\"NAME\", dbt.\"DB_LOCATION_URI\" from \"DBS\" dbt order by dbt.\"NAME\" "
 expr_stmt|;
 block|}
 else|else
 block|{
 name|dbLoc
 operator|=
-literal|"select dbt.DB_ID, dbt.NAME, dbt.DB_LOCATION_URI from DBS dbt"
+literal|"select dbt.DB_ID, dbt.NAME, dbt.DB_LOCATION_URI from DBS dbt order by dbt.NAME"
 expr_stmt|;
 block|}
 try|try
@@ -1589,7 +1589,7 @@ name|VIRTUAL_VIEW
 operator|+
 literal|"' and tbl.\"TBL_ID\">= ? and tbl.\"TBL_ID\"<= ? "
 operator|+
-literal|"inner join \"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" "
+literal|"inner join \"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_NAME\" "
 expr_stmt|;
 block|}
 else|else
@@ -1602,7 +1602,7 @@ name|TableType
 operator|.
 name|VIRTUAL_VIEW
 operator|+
-literal|"' and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID"
+literal|"' and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_NAME"
 expr_stmt|;
 block|}
 name|long
@@ -1890,7 +1890,7 @@ literal|"inner join \"SDS\" sd on pt.\"SD_ID\" = sd.\"SD_ID\" and pt.\"PART_ID\"
 operator|+
 literal|" inner join \"TBLS\" tbl on pt.\"TBL_ID\" = tbl.\"TBL_ID\" inner join "
 operator|+
-literal|"\"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" "
+literal|"\"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_NAME\" "
 expr_stmt|;
 block|}
 else|else
@@ -1901,7 +1901,7 @@ literal|"select pt.PART_ID, pt.PART_NAME, sd.LOCATION, tbl.TBL_ID, tbl.TBL_NAME,
 operator|+
 literal|"inner join SDS sd on pt.SD_ID = sd.SD_ID and pt.PART_ID>= ? and pt.PART_ID<= ?  "
 operator|+
-literal|"inner join TBLS tbl on tbl.TBL_ID = pt.TBL_ID inner join DBS dbt on tbl.DB_ID = dbt.DB_ID "
+literal|"inner join TBLS tbl on tbl.TBL_ID = pt.TBL_ID inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_NAME "
 expr_stmt|;
 block|}
 name|long
@@ -2194,9 +2194,13 @@ condition|)
 block|{
 name|skewedColLoc
 operator|=
-literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\", db.\"NAME\", db.\"DB_ID\" from \"TBLS\" t, \"SDS\" s, \"DBS\" db, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
+literal|"select t.\"TBL_NAME\", t.\"TBL_ID\", sk.\"STRING_LIST_ID_KID\", sk.\"LOCATION\", db.\"NAME\", db.\"DB_ID\" "
 operator|+
-literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and t.\"DB_ID\" = db.\"DB_ID\" and sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? "
+literal|" from \"TBLS\" t, \"SDS\" s, \"DBS\" db, \"SKEWED_COL_VALUE_LOC_MAP\" sk "
+operator|+
+literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and t.\"DB_ID\" = db.\"DB_ID\" and "
+operator|+
+literal|"sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? order by t.\"TBL_NAME\" "
 expr_stmt|;
 block|}
 else|else
@@ -2205,7 +2209,7 @@ name|skewedColLoc
 operator|=
 literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION, db.NAME, db.DB_ID from TBLS t, SDS s, DBS db, SKEWED_COL_VALUE_LOC_MAP sk "
 operator|+
-literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? "
+literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? order by t.TBL_NAME "
 expr_stmt|;
 block|}
 name|long
@@ -2511,6 +2515,14 @@ operator|.
 name|getScheme
 argument_list|()
 decl_stmt|;
+name|String
+name|path
+init|=
+name|currentUri
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|StringUtils
@@ -2533,7 +2545,38 @@ literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", Error: missing location scheme"
+literal|", Error: missing location scheme."
+argument_list|)
+expr_stmt|;
+name|isValid
+operator|=
+literal|false
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|path
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+name|entity
+operator|+
+literal|", Location: "
+operator|+
+name|entityLocation
+operator|+
+literal|", Error: missing location path."
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2632,7 +2675,7 @@ literal|", Location: "
 operator|+
 name|entityLocation
 operator|+
-literal|", Error: mismatched server"
+literal|", Error: mismatched server."
 argument_list|)
 expr_stmt|;
 name|isValid
@@ -2640,6 +2683,37 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+block|}
+comment|// if there is no path element other than "/", report it but not fail
+if|if
+condition|(
+name|isValid
+operator|&&
+name|StringUtils
+operator|.
+name|containsOnly
+argument_list|(
+name|path
+argument_list|,
+literal|"/"
+argument_list|)
+condition|)
+block|{
+name|System
+operator|.
+name|err
+operator|.
+name|println
+argument_list|(
+name|entity
+operator|+
+literal|", Location: "
+operator|+
+name|entityLocation
+operator|+
+literal|", Warn: location set to root, not a recommended config."
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 catch|catch
@@ -3744,7 +3818,7 @@ literal|"select t.\"NEXT_VAL\" from \"SEQUENCE_TABLE\" t WHERE t.\"SEQUENCE_NAME
 operator|+
 name|seqName
 operator|+
-literal|"'"
+literal|"' order by t.\"SEQUENCE_NAME\" "
 operator|)
 else|:
 operator|(
@@ -3752,7 +3826,7 @@ literal|"select t.NEXT_VAL from SEQUENCE_TABLE t WHERE t.SEQUENCE_NAME='org.apac
 operator|+
 name|seqName
 operator|+
-literal|"'"
+literal|"' order by t.SEQUENCE_NAME "
 operator|)
 decl_stmt|;
 name|String
@@ -4181,7 +4255,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Failed in schema version validation."
+literal|"Failed in schema table validation."
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -4583,7 +4657,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Schema table validation failed!!!"
+literal|"Failed in schema table validation"
 argument_list|)
 expr_stmt|;
 return|return
@@ -4890,6 +4964,18 @@ name|line
 operator|.
 name|replaceAll
 argument_list|(
+literal|"( )+"
+argument_list|,
+literal|" "
+argument_list|)
+expr_stmt|;
+comment|//suppress multi-spaces
+name|line
+operator|=
+name|line
+operator|.
+name|replaceAll
+argument_list|(
 literal|"\\("
 argument_list|,
 literal|" "
@@ -5082,7 +5168,7 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 operator|+
-literal|"')"
+literal|"') order by t.\"TBL_NAME\" "
 operator|)
 else|:
 operator|(
@@ -5098,7 +5184,7 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 operator|+
-literal|"')"
+literal|"') order by t.TBL_NAME "
 operator|)
 decl_stmt|;
 name|ResultSet
