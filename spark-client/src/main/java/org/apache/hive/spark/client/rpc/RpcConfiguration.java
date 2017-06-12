@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -375,11 +385,17 @@ argument_list|>
 name|config
 parameter_list|)
 block|{
+comment|// make sure we don't modify the config in RpcConfiguration
 name|this
 operator|.
 name|config
 operator|=
+name|Collections
+operator|.
+name|unmodifiableMap
+argument_list|(
 name|config
+argument_list|)
 expr_stmt|;
 block|}
 name|long

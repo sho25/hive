@@ -775,15 +775,6 @@ name|option
 argument_list|(
 name|ChannelOption
 operator|.
-name|SO_BACKLOG
-argument_list|,
-literal|1
-argument_list|)
-operator|.
-name|option
-argument_list|(
-name|ChannelOption
-operator|.
 name|SO_REUSEADDR
 argument_list|,
 literal|true
