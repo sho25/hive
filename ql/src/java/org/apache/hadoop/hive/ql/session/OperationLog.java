@@ -214,8 +214,6 @@ parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|)
-throws|throws
-name|FileNotFoundException
 block|{
 name|operationName
 operator|=
@@ -561,8 +559,6 @@ parameter_list|(
 name|File
 name|file
 parameter_list|)
-throws|throws
-name|FileNotFoundException
 block|{
 name|this
 operator|.
@@ -638,6 +634,11 @@ operator|!
 name|isRemoved
 operator|&&
 name|removeLog
+operator|&&
+name|file
+operator|.
+name|exists
+argument_list|()
 condition|)
 block|{
 name|FileUtils

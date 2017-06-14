@@ -1219,8 +1219,6 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// create OperationLog object with above log file
-try|try
-block|{
 name|operationLog
 operator|=
 operator|new
@@ -1239,30 +1237,6 @@ name|getHiveConf
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|FileNotFoundException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Unable to instantiate OperationLog object for operation: "
-operator|+
-name|opHandle
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-name|isOperationLogEnabled
-operator|=
-literal|false
-expr_stmt|;
-return|return;
-block|}
 block|}
 block|}
 comment|/**    * Invoked before runInternal().    * Set up some preconditions, or configurations.    */
