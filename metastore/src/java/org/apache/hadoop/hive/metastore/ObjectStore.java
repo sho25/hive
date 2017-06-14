@@ -2879,6 +2879,12 @@ argument_list|(
 name|pmf
 argument_list|)
 expr_stmt|;
+comment|// close the underlying connection pool to avoid leaks
+name|pmf
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 name|pmf
 operator|=
