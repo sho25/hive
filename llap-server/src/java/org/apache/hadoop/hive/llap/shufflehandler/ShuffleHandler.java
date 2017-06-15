@@ -1591,7 +1591,7 @@ specifier|final
 name|String
 name|SHUFFLE_MANAGE_OS_CACHE
 init|=
-literal|"lla[.shuffle.manage.os.cache"
+literal|"llap.shuffle.manage.os.cache"
 decl_stmt|;
 specifier|public
 specifier|static
