@@ -3468,7 +3468,7 @@ return|return
 name|pvals
 return|;
 block|}
-comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *    * @param name    *          the name to validate    * @param conf    *          hive configuration    * @return true or false depending on conformance    * @exception MetaException    *              if it doesn't match the pattern.    */
+comment|/**    * validateName    *    * Checks the name conforms to our standars which are: "[a-zA-z_0-9]+". checks    * this is just characters and numbers and _    *    * @param name    *          the name to validate    * @param conf    *          hive configuration    * @return true or false depending on conformance    *              if it doesn't match the pattern.    */
 specifier|static
 specifier|public
 name|boolean
@@ -4058,7 +4058,7 @@ name|TYPE_FROM_DESERIALIZER
 init|=
 literal|"<derived from deserializer>"
 decl_stmt|;
-comment|/**    * validate column type    *    * if it is predefined, yes. otherwise no    * @param name    * @return    */
+comment|/**    * validate column type    *    * if it is predefined, yes. otherwise no    * @param type    * @return    */
 specifier|static
 specifier|public
 name|String
@@ -5077,7 +5077,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Convert FieldSchemas to Thrift DDL + column names and column types    *    * @param structName    *          The name of the table    * @param fieldSchemas    *          List of fields along with their schemas    * @return String containing "Thrift    *         DDL#comma-separated-column-names#colon-separated-columntypes    *         Example:    *         "struct result { a string, map<int,string> b}#a,b#string:map<int,string>"    */
+comment|/**    * Convert FieldSchemas to Thrift DDL + column names and column types    *    * @param structName    *          The name of the table    * @param fieldSchemas    *          List of fields along with their schemas    * @return String containing "Thrift    *         DDL#comma-separated-column-names#colon-separated-columntypes    *         Example:    *         "struct result { a string, map&lt;int,string&gt; b}#a,b#string:map&lt;int,string&gt;"    */
 specifier|public
 specifier|static
 name|String

@@ -225,7 +225,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    *    * @param db name of the database the table is in    * @param table name of the table being inserted into    * @param partVals list of partition values, can be null    * @param insertData the inserted files& their checksums    * @param status status of insert, true = success, false = failure    * @param handler handler that is firing the event    */
+comment|/**    *    * @param db name of the database the table is in    * @param table name of the table being inserted into    * @param partVals list of partition values, can be null    * @param insertData the inserted files and their checksums    * @param status status of insert, true = success, false = failure    * @param handler handler that is firing the event    */
 specifier|public
 name|InsertEvent
 parameter_list|(

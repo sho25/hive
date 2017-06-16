@@ -843,7 +843,7 @@ parameter_list|()
 function_decl|;
 block|}
 block|}
-comment|/**    * Once a {@link java.util.concurrent.ThreadPoolExecutor.Worker} submits a job to the cluster,    * it calls this to update the metadata.    * @param id {@link CompactionInfo#id}    */
+comment|/**    * Once a {@link java.util.concurrent.ThreadPoolExecutor} Worker submits a job to the cluster,    * it calls this to update the metadata.    * @param id {@link CompactionInfo#id}    */
 annotation|@
 name|RetrySemantics
 operator|.

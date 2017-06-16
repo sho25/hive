@@ -1384,7 +1384,7 @@ name|getAddress
 argument_list|()
 return|;
 block|}
-comment|/**    * Submit the work for actual execution.    * @throws InvalidProtocolBufferException     */
+comment|/**    * Submit the work for actual execution.    */
 specifier|public
 name|void
 name|submitWork

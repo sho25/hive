@@ -2302,7 +2302,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidInputException    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    *    */
 specifier|public
 specifier|abstract
 name|ColumnStatistics
@@ -2730,7 +2730,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @return    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
 specifier|public
 name|void
 name|dropFunction

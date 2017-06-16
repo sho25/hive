@@ -3612,7 +3612,7 @@ name|p
 argument_list|)
 return|;
 block|}
-comment|/**    * Exchange the partition between two tables    * @param partitionSpecs partitions specs of the parent partition to be exchanged    * @param destDb the db of the destination table    * @param destinationTableName the destination table name    @ @return new partition after exchanging    */
+comment|/**    * Exchange the partition between two tables    * @param partitionSpecs partitions specs of the parent partition to be exchanged    * @param destDb the db of the destination table    * @param destinationTableName the destination table name    * @return new partition after exchanging    */
 annotation|@
 name|Override
 specifier|public
@@ -3665,7 +3665,7 @@ name|destinationTableName
 argument_list|)
 return|;
 block|}
-comment|/**    * Exchange the partitions between two tables    * @param partitionSpecs partitions specs of the parent partition to be exchanged    * @param destDb the db of the destination table    * @param destinationTableName the destination table name    @ @return new partitions after exchanging    */
+comment|/**    * Exchange the partitions between two tables    * @param partitionSpecs partitions specs of the parent partition to be exchanged    * @param destDb the db of the destination table    * @param destinationTableName the destination table name    * @return new partitions after exchanging    */
 annotation|@
 name|Override
 specifier|public
@@ -6105,7 +6105,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
 annotation|@
 name|Override
 specifier|public
@@ -7558,7 +7558,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Get number of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * Get number of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
 annotation|@
 name|Override
 specifier|public

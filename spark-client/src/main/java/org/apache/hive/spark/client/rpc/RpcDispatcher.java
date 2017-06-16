@@ -190,7 +190,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of ChannelInboundHandler that dispatches incoming messages to an instance  * method based on the method signature.  *<p/>  * A handler's signature must be of the form:  *<p/>  *<blockquote><tt>protected void handle(ChannelHandlerContext, MessageType)</tt></blockquote>  *<p/>  * Where "MessageType" must match exactly the type of the message to handle. Polymorphism is not  * supported. Handlers can return a value, which becomes the RPC reply; if a null is returned, then  * a reply is still sent, with an empty payload.  */
+comment|/**  * An implementation of ChannelInboundHandler that dispatches incoming messages to an instance  * method based on the method signature.  *<p>  * A handler's signature must be of the form:  *</p>  *<blockquote><tt>protected void handle(ChannelHandlerContext, MessageType)</tt></blockquote>  *<p>  * Where "MessageType" must match exactly the type of the message to handle. Polymorphism is not  * supported. Handlers can return a value, which becomes the RPC reply; if a null is returned, then  * a reply is still sent, with an empty payload.  *</p>  */
 end_comment
 
 begin_class

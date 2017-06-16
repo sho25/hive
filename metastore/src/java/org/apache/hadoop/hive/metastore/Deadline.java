@@ -215,7 +215,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * reset the timeout value of this timer.    * @param timeout    */
+comment|/**    * reset the timeout value of this timer.    * @param timeoutMs    */
 specifier|public
 specifier|static
 name|void
@@ -437,7 +437,7 @@ name|removeCurrentDeadline
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Check whether the long running method timeout.    * @throws DeadlineException when the method timeout    */
+comment|/**    * Check whether the long running method timeout.    * @throws MetaException when the method timeout    */
 specifier|public
 specifier|static
 name|void

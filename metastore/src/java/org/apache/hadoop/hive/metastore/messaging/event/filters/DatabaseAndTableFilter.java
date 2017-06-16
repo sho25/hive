@@ -42,7 +42,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utility function that constructs a notification filter to match a given db name and/or table name.  * If dbName == null, fetches all warehouse events.  * If dnName != null, but tableName == null, fetches all events for the db  * If dbName != null&& tableName != null, fetches all events for the specified table  */
+comment|/**  * Utility function that constructs a notification filter to match a given db name and/or table name.  * If dbName == null, fetches all warehouse events.  * If dnName != null, but tableName == null, fetches all events for the db  * If dbName != null&amp;&amp; tableName != null, fetches all events for the specified table  */
 end_comment
 
 begin_class

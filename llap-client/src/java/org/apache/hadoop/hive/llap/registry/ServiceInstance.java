@@ -52,7 +52,7 @@ specifier|public
 interface|interface
 name|ServiceInstance
 block|{
-comment|/**    * Worker identity is a UUID (unique across restarts), to identify a node which died& was brought    * back on the same host/port    */
+comment|/**    * Worker identity is a UUID (unique across restarts), to identify a node which died&amp; was brought    * back on the same host/port    */
 specifier|public
 name|String
 name|getWorkerIdentity

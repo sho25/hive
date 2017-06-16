@@ -243,7 +243,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @returnList of filtered table names    */
+comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @return List of filtered table names    */
 specifier|public
 name|List
 argument_list|<
@@ -276,7 +276,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @returnList of filtered table names    */
+comment|/**    * Filter given list of tables    * @param tableList    * @return List of filtered table names    */
 specifier|public
 name|List
 argument_list|<

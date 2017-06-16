@@ -13924,7 +13924,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * @param fileIds file ID list.    * @return Serialized file metadata.    */
+comment|/**    * @param fileIds file ID list.    */
 annotation|@
 name|Override
 specifier|public

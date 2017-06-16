@@ -222,7 +222,7 @@ name|DB_ORACLE
 init|=
 literal|"oracle"
 decl_stmt|;
-comment|/***    * Get JDBC connection to metastore db    *    * @param userName metastore connection username    * @param password metastore connection password    * @param printInfo print connection parameters    * @param hiveConf hive config object    * @return metastore connection object    * @throws org.apache.hadoop.hive.metastore.api.MetaException    */
+comment|/***    * Get JDBC connection to metastore db    *    * @param userName metastore connection username    * @param password metastore connection password    * @param printInfo print connection parameters    * @param hiveConf hive config object    * @return metastore connection object    * @throws org.apache.hadoop.hive.metastore.HiveMetaException    */
 specifier|public
 specifier|static
 name|Connection

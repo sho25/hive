@@ -645,7 +645,7 @@ return|return
 name|skewedColValueLocationMaps
 return|;
 block|}
-comment|/**    * @param skewedColValueLocationMaps the skewedColValueLocationMaps to set    */
+comment|/**    * @param listBucketColValuesMapping the skewedColValueLocationMaps to set    */
 specifier|public
 name|void
 name|setSkewedColValueLocationMaps
