@@ -423,9 +423,9 @@ name|value
 operator|!=
 literal|null
 condition|?
-name|Integer
+name|Long
 operator|.
-name|parseInt
+name|parseLong
 argument_list|(
 name|value
 argument_list|)
