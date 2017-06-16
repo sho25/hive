@@ -14066,7 +14066,23 @@ literal|"hive.server2.authentication.ldap.userMembershipKey,"
 operator|+
 literal|"hive.server2.authentication.ldap.groupClassKey,"
 operator|+
-literal|"hive.server2.authentication.ldap.customLDAPQuery"
+literal|"hive.server2.authentication.ldap.customLDAPQuery,"
+operator|+
+literal|"hive.spark.client.connect.timeout,"
+operator|+
+literal|"hive.spark.client.server.connect.timeout,"
+operator|+
+literal|"hive.spark.client.channel.log.level,"
+operator|+
+literal|"hive.spark.client.rpc.max.size,"
+operator|+
+literal|"hive.spark.client.rpc.threads,"
+operator|+
+literal|"hive.spark.client.secret.bits,"
+operator|+
+literal|"hive.spark.client.rpc.server.address,"
+operator|+
+literal|"hive.spark.client.rpc.server.port"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
