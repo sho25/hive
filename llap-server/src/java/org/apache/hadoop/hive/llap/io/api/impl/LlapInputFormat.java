@@ -1585,6 +1585,7 @@ name|partSpec
 operator|!=
 literal|null
 operator|&&
+operator|!
 name|partSpec
 operator|.
 name|isEmpty
