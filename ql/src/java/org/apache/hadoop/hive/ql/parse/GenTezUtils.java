@@ -873,7 +873,6 @@ operator|.
 name|getNumReducers
 argument_list|()
 decl_stmt|;
-comment|// TODO# HERE
 comment|// min we allow tez to pick
 name|int
 name|minPartition

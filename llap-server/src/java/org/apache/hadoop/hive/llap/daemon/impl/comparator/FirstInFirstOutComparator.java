@@ -163,7 +163,7 @@ name|o1CanFinish
 init|=
 name|o1
 operator|.
-name|canFinish
+name|canFinishForPriority
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -171,7 +171,7 @@ name|o2CanFinish
 init|=
 name|o2
 operator|.
-name|canFinish
+name|canFinishForPriority
 argument_list|()
 decl_stmt|;
 if|if

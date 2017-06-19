@@ -1147,7 +1147,6 @@ operator|.
 name|LLAP_DAEMON_NUM_EXECUTORS
 argument_list|)
 expr_stmt|;
-comment|// TODO# hmm
 name|mapJoinOpList
 operator|=
 operator|new
