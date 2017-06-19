@@ -4316,7 +4316,10 @@ name|getTables
 argument_list|(
 literal|null
 argument_list|,
-literal|null
+name|hmsConn
+operator|.
+name|getSchema
+argument_list|()
 argument_list|,
 literal|"%"
 argument_list|,
