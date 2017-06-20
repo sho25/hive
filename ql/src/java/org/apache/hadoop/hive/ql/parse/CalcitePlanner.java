@@ -1021,22 +1021,6 @@ name|calcite
 operator|.
 name|rel
 operator|.
-name|rules
-operator|.
-name|UnionMergeRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
 name|type
 operator|.
 name|RelDataType
@@ -3246,6 +3230,28 @@ operator|.
 name|rules
 operator|.
 name|HiveSubQueryRemoveRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
+name|HiveUnionMergeRule
 import|;
 end_import
 
@@ -10577,7 +10583,7 @@ name|ProjectRemoveRule
 operator|.
 name|INSTANCE
 argument_list|,
-name|UnionMergeRule
+name|HiveUnionMergeRule
 operator|.
 name|INSTANCE
 argument_list|,
@@ -11748,6 +11754,10 @@ argument_list|,
 name|HiveIntersectMergeRule
 operator|.
 name|INSTANCE
+argument_list|,
+name|HiveUnionMergeRule
+operator|.
+name|INSTANCE
 argument_list|)
 expr_stmt|;
 name|perfLogger
@@ -11766,7 +11776,7 @@ name|PerfLogger
 operator|.
 name|OPTIMIZER
 argument_list|,
-literal|"Calcite: HiveProjectOverIntersectRemoveRule and HiveIntersectMerge rules"
+literal|"Calcite: HiveProjectOverIntersectRemoveRule, HiveIntersectMerge and HiveUnionMergeRule rules"
 argument_list|)
 expr_stmt|;
 name|perfLogger
