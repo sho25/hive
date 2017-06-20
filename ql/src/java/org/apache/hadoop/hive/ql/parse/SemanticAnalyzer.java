@@ -50073,15 +50073,9 @@ name|getFilterMap
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// For outer joins, add filters that apply to more than one input
+comment|// Add filters that apply to more than one input
 if|if
 condition|(
-operator|!
-name|join
-operator|.
-name|getNoOuterJoin
-argument_list|()
-operator|&&
 name|join
 operator|.
 name|getPostJoinFilters
@@ -50091,8 +50085,36 @@ name|size
 argument_list|()
 operator|!=
 literal|0
+operator|&&
+operator|(
+operator|!
+name|join
+operator|.
+name|getNoOuterJoin
+argument_list|()
+operator|||
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_PUSH_RESIDUAL_INNER
+argument_list|)
+operator|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Generate JOIN with post-filtering conditions"
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -50126,6 +50148,11 @@ argument_list|(
 name|cond
 argument_list|,
 name|outputRR
+argument_list|,
+literal|false
+argument_list|,
+name|isCBOExecuted
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -51674,13 +51701,37 @@ operator|!=
 literal|0
 condition|)
 block|{
-comment|// Safety check for postconditions
 assert|assert
 name|joinTree
 operator|.
 name|getNoOuterJoin
 argument_list|()
 assert|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_PUSH_RESIDUAL_INNER
+argument_list|)
+condition|)
+block|{
+comment|// Safety check for postconditions
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Post-filtering conditions should have been added to the JOIN operator"
+argument_list|)
+throw|;
+block|}
 name|Operator
 name|op
 init|=
@@ -51710,26 +51761,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Generated "
-operator|+
-name|op
-operator|+
-literal|" with post-filtering conditions after JOIN operator"
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 return|return
 name|op

@@ -12400,7 +12400,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cannot vectorize outer join with complex ON clause"
+literal|"Cannot vectorize join with complex ON clause"
 argument_list|)
 expr_stmt|;
 return|return

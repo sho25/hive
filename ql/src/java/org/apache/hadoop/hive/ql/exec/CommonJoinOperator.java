@@ -1913,16 +1913,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// Currently residual filter expressions are only used with outer joins, thus
-comment|// we add this safeguard.
-comment|// TODO: Remove this guard when support for residual expressions can be present
-comment|// for inner joins too. This would be added to improve efficiency in the evaluation
-comment|// of certain joins, since we will not be emitting rows which are thrown away by
-comment|// filter straight away.
-assert|assert
-operator|!
-name|noOuterJoin
-assert|;
 name|residualJoinFilters
 operator|=
 operator|new
@@ -2021,6 +2011,12 @@ name|needsPostEvaluation
 operator|=
 literal|true
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|noOuterJoin
+condition|)
+block|{
 comment|// We need to disable join emit interval, since for outer joins with post conditions
 comment|// we need to have the full view on the right matching rows to know whether we need
 comment|// to produce a row with NULL values or not
@@ -2029,6 +2025,7 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

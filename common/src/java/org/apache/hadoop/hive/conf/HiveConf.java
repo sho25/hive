@@ -5391,6 +5391,21 @@ argument_list|,
 literal|"How many rows in the joining tables (except the streaming table) should be cached in memory."
 argument_list|)
 block|,
+name|HIVE_PUSH_RESIDUAL_INNER
+argument_list|(
+literal|"hive.join.inner.residual"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to push non-equi filter predicates within inner joins. This can improve efficiency in "
+operator|+
+literal|"the evaluation of certain joins, since we will not be emitting rows which are thrown away by "
+operator|+
+literal|"a Filter operator straight away. However, currently vectorization does not support them, thus "
+operator|+
+literal|"enabling it is only recommended when vectorization is disabled."
+argument_list|)
+block|,
 comment|// CBO related
 name|HIVE_CBO_ENABLED
 argument_list|(

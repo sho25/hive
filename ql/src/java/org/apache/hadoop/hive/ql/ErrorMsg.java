@@ -2314,7 +2314,7 @@ name|INVALID_JOIN_CONDITION
 argument_list|(
 literal|10407
 argument_list|,
-literal|"Error parsing condition in outer join"
+literal|"Error parsing condition in join"
 argument_list|)
 block|,
 name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
