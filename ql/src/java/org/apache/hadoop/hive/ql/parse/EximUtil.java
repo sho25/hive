@@ -849,10 +849,23 @@ operator|.
 name|toUri
 argument_list|()
 decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|FileSystem
+operator|.
+name|get
+argument_list|(
+name|uri
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+comment|// Get scheme from FileSystem
 name|String
 name|scheme
 init|=
-name|uri
+name|fs
 operator|.
 name|getScheme
 argument_list|()
@@ -872,18 +885,6 @@ name|uri
 operator|.
 name|getPath
 argument_list|()
-decl_stmt|;
-name|FileSystem
-name|fs
-init|=
-name|FileSystem
-operator|.
-name|get
-argument_list|(
-name|uri
-argument_list|,
-name|conf
-argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -968,14 +969,6 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// Get scheme from FileSystem
-name|scheme
-operator|=
-name|fs
-operator|.
-name|getScheme
-argument_list|()
-expr_stmt|;
 comment|// if scheme is specified but not authority then use the default authority
 if|if
 condition|(
