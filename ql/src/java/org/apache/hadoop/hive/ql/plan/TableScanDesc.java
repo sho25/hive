@@ -753,6 +753,17 @@ name|String
 name|getFilterExprString
 parameter_list|()
 block|{
+if|if
+condition|(
+name|filterExpr
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 return|return
 name|PlanUtils
 operator|.

@@ -975,7 +975,7 @@ name|ql
 operator|.
 name|optimizer
 operator|.
-name|SharedScanOptimizer
+name|SharedWorkOptimizer
 import|;
 end_import
 
@@ -2107,12 +2107,12 @@ name|getBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_SHARED_SCAN_OPTIMIZATION
+name|HIVE_SHARED_WORK_OPTIMIZATION
 argument_list|)
 condition|)
 block|{
 operator|new
-name|SharedScanOptimizer
+name|SharedWorkOptimizer
 argument_list|()
 operator|.
 name|transform
