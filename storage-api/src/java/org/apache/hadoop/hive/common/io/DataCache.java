@@ -139,6 +139,13 @@ name|Allocator
 name|getAllocator
 parameter_list|()
 function_decl|;
+comment|/**    * Gets the buffer object factory associated with this DataCache, to use with allocator.    * @return the factory    */
+name|Allocator
+operator|.
+name|BufferObjectFactory
+name|getDataBufferFactory
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

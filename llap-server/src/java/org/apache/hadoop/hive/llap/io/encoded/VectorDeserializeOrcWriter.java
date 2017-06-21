@@ -1744,6 +1744,9 @@ condition|(
 literal|true
 condition|)
 block|{
+comment|// The reason we poll here is that a blocking queue causes the query thread to spend
+comment|// non-trivial amount of time signaling when an element is added; we'd rather that the
+comment|// time was wasted on this background thread.
 name|op
 operator|=
 name|queue

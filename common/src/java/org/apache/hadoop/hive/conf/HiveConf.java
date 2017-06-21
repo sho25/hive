@@ -12287,7 +12287,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"256Kb"
+literal|"16Kb"
 argument_list|,
 operator|new
 name|SizeValidator
@@ -12391,6 +12391,40 @@ name|WritableDirectoryValidator
 argument_list|()
 argument_list|,
 literal|"The directory location for mapping NVDIMM/NVMe flash storage into the ORC low-level cache."
+argument_list|)
+block|,
+name|LLAP_ALLOCATOR_DISCARD_METHOD
+argument_list|(
+literal|"hive.llap.io.allocator.discard.method"
+argument_list|,
+literal|"both"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"freelist"
+argument_list|,
+literal|"brute"
+argument_list|,
+literal|"both"
+argument_list|)
+argument_list|,
+literal|"Which method to use to force-evict blocks to deal with fragmentation:\n"
+operator|+
+literal|"freelist - use half-size free list (discards less, but also less reliable); brute -\n"
+operator|+
+literal|"brute force, discard whatever we can; both - first try free list, then brute force."
+argument_list|)
+block|,
+name|LLAP_ALLOCATOR_DEFRAG_HEADROOM
+argument_list|(
+literal|"hive.llap.io.allocator.defrag.headroom"
+argument_list|,
+literal|"1Mb"
+argument_list|,
+literal|"How much of a headroom to leave to allow allocator more flexibility to defragment.\n"
+operator|+
+literal|"The allocator would further cap it to a fraction of total memory."
 argument_list|)
 block|,
 name|LLAP_USE_LRFU

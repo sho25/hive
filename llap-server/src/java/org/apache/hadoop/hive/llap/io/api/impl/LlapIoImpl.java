@@ -1085,7 +1085,11 @@ literal|null
 decl_stmt|;
 comment|// TODO: extract interface when needed
 name|BufferUsageManager
-name|bufferManager
+name|bufferManagerOrc
+init|=
+literal|null
+decl_stmt|,
+name|bufferManagerGeneric
 init|=
 literal|null
 decl_stmt|;
@@ -1453,11 +1457,15 @@ name|startThreads
 argument_list|()
 expr_stmt|;
 comment|// Start the cache threads.
-name|bufferManager
+name|bufferManagerOrc
 operator|=
 name|cacheImpl
 expr_stmt|;
 comment|// Cache also serves as buffer manager.
+name|bufferManagerGeneric
+operator|=
+name|serdeCache
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -1486,7 +1494,9 @@ argument_list|,
 name|cacheMetrics
 argument_list|)
 decl_stmt|;
-name|bufferManager
+name|bufferManagerOrc
+operator|=
+name|bufferManagerGeneric
 operator|=
 name|sbm
 expr_stmt|;
@@ -1564,7 +1574,7 @@ name|metadataCache
 argument_list|,
 name|cache
 argument_list|,
-name|bufferManager
+name|bufferManagerOrc
 argument_list|,
 name|conf
 argument_list|,
@@ -1584,7 +1594,7 @@ name|GenericColumnVectorProducer
 argument_list|(
 name|serdeCache
 argument_list|,
-name|bufferManager
+name|bufferManagerGeneric
 argument_list|,
 name|conf
 argument_list|,

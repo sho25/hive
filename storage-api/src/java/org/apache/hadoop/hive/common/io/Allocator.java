@@ -77,7 +77,18 @@ init|=
 literal|268124648177151761L
 decl_stmt|;
 block|}
+specifier|public
+interface|interface
+name|BufferObjectFactory
+block|{
+name|MemoryBuffer
+name|create
+parameter_list|()
+function_decl|;
+block|}
 comment|/**    * Allocates multiple buffers of a given size.    * @param dest Array where buffers are placed. Objects are reused if already there    *             (see createUnallocated), created otherwise.    * @param size Allocation size.    * @throws AllocatorOutOfMemoryException Cannot allocate.    */
+annotation|@
+name|Deprecated
 name|void
 name|allocateMultiple
 parameter_list|(
@@ -91,7 +102,26 @@ parameter_list|)
 throws|throws
 name|AllocatorOutOfMemoryException
 function_decl|;
+comment|/**    * Allocates multiple buffers of a given size.    * @param dest Array where buffers are placed. Objects are reused if already there    *             (see createUnallocated), created otherwise.    * @param size Allocation size.    * @param factory A factory to create the objects in the dest array, if needed.    * @throws AllocatorOutOfMemoryException Cannot allocate.    */
+name|void
+name|allocateMultiple
+parameter_list|(
+name|MemoryBuffer
+index|[]
+name|dest
+parameter_list|,
+name|int
+name|size
+parameter_list|,
+name|BufferObjectFactory
+name|factory
+parameter_list|)
+throws|throws
+name|AllocatorOutOfMemoryException
+function_decl|;
 comment|/**    * Creates an unallocated memory buffer object. This object can be passed to allocateMultiple    * to allocate; this is useful if data structures are created for separate buffers that can    * later be allocated together.    * @return a new unallocated memory buffer    */
+annotation|@
+name|Deprecated
 name|MemoryBuffer
 name|createUnallocated
 parameter_list|()

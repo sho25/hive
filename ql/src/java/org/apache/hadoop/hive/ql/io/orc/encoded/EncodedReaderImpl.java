@@ -3945,16 +3945,14 @@ literal|0
 assert|;
 comment|// Had the put succeeded for our new buffer, it would have refcount of 2 - 1 from put,
 comment|// and 1 from notifyReused call above. "Old" buffer now has the 1 from put; new buffer
-comment|// is not in cache.
+comment|// is not in cache. releaseBuffer will decref the buffer, and also deallocate.
 name|cacheWrapper
 operator|.
-name|getAllocator
-argument_list|()
-operator|.
-name|deallocate
+name|releaseBuffer
 argument_list|(
-name|getBuffer
-argument_list|()
+name|this
+operator|.
+name|buffer
 argument_list|)
 expr_stmt|;
 name|cacheWrapper

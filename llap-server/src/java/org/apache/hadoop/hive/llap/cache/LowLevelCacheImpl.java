@@ -2335,9 +2335,6 @@ name|fake
 operator|.
 name|initialize
 argument_list|(
-operator|-
-literal|1
-argument_list|,
 name|fakeBuf
 argument_list|,
 literal|0
@@ -2505,11 +2502,6 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
-name|boolean
-name|isEmpty
-init|=
-literal|true
-decl_stmt|;
 while|while
 condition|(
 name|subIter
@@ -2594,13 +2586,6 @@ name|subIter
 operator|.
 name|remove
 argument_list|()
-expr_stmt|;
-block|}
-else|else
-block|{
-name|isEmpty
-operator|=
-literal|false
 expr_stmt|;
 block|}
 operator|--
@@ -2887,6 +2872,10 @@ decl_stmt|,
 name|allEvicted
 init|=
 literal|0
+decl_stmt|,
+name|allMoving
+init|=
+literal|0
 decl_stmt|;
 for|for
 control|(
@@ -2940,6 +2929,10 @@ decl_stmt|,
 name|fileEvicted
 init|=
 literal|0
+decl_stmt|,
+name|fileMoving
+init|=
+literal|0
 decl_stmt|;
 if|if
 condition|(
@@ -2987,7 +2980,7 @@ operator|.
 name|getValue
 argument_list|()
 operator|.
-name|incRef
+name|tryIncRef
 argument_list|()
 decl_stmt|;
 if|if
@@ -2997,9 +2990,33 @@ operator|<
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|newRc
+operator|==
+name|LlapAllocatorBuffer
+operator|.
+name|INCREF_EVICTED
+condition|)
+block|{
 operator|++
 name|fileEvicted
 expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|newRc
+operator|==
+name|LlapAllocatorBuffer
+operator|.
+name|INCREF_FAILED
+condition|)
+block|{
+operator|++
+name|fileMoving
+expr_stmt|;
+block|}
 continue|continue;
 block|}
 try|try
@@ -3047,6 +3064,10 @@ name|allEvicted
 operator|+=
 name|fileEvicted
 expr_stmt|;
+name|allMoving
+operator|+=
+name|fileMoving
+expr_stmt|;
 name|sb
 operator|.
 name|append
@@ -3070,7 +3091,11 @@ literal|" unlocked, "
 operator|+
 name|fileEvicted
 operator|+
-literal|" evicted"
+literal|" evicted, "
+operator|+
+name|fileMoving
+operator|+
+literal|" being moved"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3102,7 +3127,11 @@ literal|" unlocked, "
 operator|+
 name|allEvicted
 operator|+
-literal|" evicted"
+literal|" evicted, "
+operator|+
+name|allMoving
+operator|+
+literal|" being moved"
 argument_list|)
 expr_stmt|;
 block|}

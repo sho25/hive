@@ -1097,12 +1097,12 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|boolean
+name|int
 name|invalidate
 parameter_list|()
 block|{
 return|return
-literal|true
+name|INVALIDATE_OK
 return|;
 block|}
 annotation|@

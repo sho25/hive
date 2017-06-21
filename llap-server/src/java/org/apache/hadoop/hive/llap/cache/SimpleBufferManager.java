@@ -238,7 +238,7 @@ specifier|private
 name|boolean
 name|lockBuffer
 parameter_list|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 name|buffer
 parameter_list|)
 block|{
@@ -272,7 +272,7 @@ specifier|private
 name|void
 name|unlockBuffer
 parameter_list|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 name|buffer
 parameter_list|)
 block|{
@@ -335,7 +335,7 @@ block|{
 name|unlockBuffer
 argument_list|(
 operator|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 operator|)
 name|buffer
 argument_list|)
@@ -365,7 +365,7 @@ block|{
 name|unlockBuffer
 argument_list|(
 operator|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 operator|)
 name|b
 argument_list|)
@@ -386,7 +386,7 @@ return|return
 name|lockBuffer
 argument_list|(
 operator|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 operator|)
 name|buffer
 argument_list|)
@@ -478,11 +478,11 @@ operator|++
 name|i
 control|)
 block|{
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 name|buffer
 init|=
 operator|(
-name|LlapDataBuffer
+name|LlapAllocatorBuffer
 operator|)
 name|chunks
 index|[
