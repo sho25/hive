@@ -6085,6 +6085,13 @@ argument_list|(
 literal|"-skipcrccheck"
 argument_list|)
 expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+literal|"-pb"
+argument_list|)
+expr_stmt|;
 block|}
 name|params
 operator|.

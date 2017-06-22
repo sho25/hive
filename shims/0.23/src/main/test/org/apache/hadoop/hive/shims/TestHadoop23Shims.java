@@ -274,7 +274,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|paramsDefault
 operator|.
@@ -306,6 +306,18 @@ literal|"-skipcrccheck"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -pb set by default"
+argument_list|,
+name|paramsDefault
+operator|.
+name|contains
+argument_list|(
+literal|"-pb"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
 name|copySrc
@@ -317,7 +329,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|2
+literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -332,7 +344,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|4
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -417,6 +429,19 @@ operator|.
 name|contains
 argument_list|(
 literal|"-skipcrccheck"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -pb not set if not requested"
+argument_list|,
+operator|!
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-pb"
 argument_list|)
 argument_list|)
 expr_stmt|;
