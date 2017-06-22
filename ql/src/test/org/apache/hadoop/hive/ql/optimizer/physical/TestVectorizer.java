@@ -1124,6 +1124,8 @@ operator|.
 name|Mode
 operator|.
 name|FILTER
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1144,6 +1146,8 @@ operator|.
 name|Mode
 operator|.
 name|PROJECTION
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1669,6 +1673,8 @@ argument_list|,
 name|Mode
 operator|.
 name|FILTER
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1687,6 +1693,8 @@ argument_list|,
 name|Mode
 operator|.
 name|PROJECTION
+argument_list|,
+literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1874,6 +1882,8 @@ argument_list|,
 name|Mode
 operator|.
 name|FILTER
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|Assert

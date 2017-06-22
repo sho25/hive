@@ -11781,6 +11781,34 @@ operator|+
 literal|"2. all    : use VectorUDFAdaptor for all UDFs"
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_COMPLEX_TYPES_ENABLED
+argument_list|(
+literal|"hive.vectorized.complex.types.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorization\n"
+operator|+
+literal|"of expressions with complex types.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_GROUPBY_COMPLEX_TYPES_ENABLED
+argument_list|(
+literal|"hive.vectorized.groupby.complex.types.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable group by vectorization\n"
+operator|+
+literal|"of aggregations that use complex types.\n"
+argument_list|,
+literal|"For example, AVG uses a complex type (STRUCT) for partial aggregation results"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"
