@@ -4737,6 +4737,9 @@ argument_list|)
 expr_stmt|;
 comment|// only create bucket files only if no dynamic partitions,
 comment|// buckets of dynamic partitions will be created for each newly created partition
+comment|//todo IOW integration. Full Acid uses the else if block to create Acid's RecordUpdater (HiveFileFormatUtils)
+comment|// and that will set writingBase(conf.getInsertOverwrite())
+comment|// If MM wants to create a new base for IOW (instead of delta dir), it should specify it here
 if|if
 condition|(
 name|conf
