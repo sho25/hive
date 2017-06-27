@@ -1081,6 +1081,20 @@ name|Sets
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rex
+operator|.
+name|RexTableInputRef
+import|;
+end_import
+
 begin_comment
 comment|/**  * Generic utility functions needed for Calcite based Hive CBO.  */
 end_comment
@@ -6735,6 +6749,20 @@ name|Boolean
 name|visitPatternFieldRef
 parameter_list|(
 name|RexPatternFieldRef
+name|fieldRef
+parameter_list|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Boolean
+name|visitTableInputRef
+parameter_list|(
+name|RexTableInputRef
 name|fieldRef
 parameter_list|)
 block|{

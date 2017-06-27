@@ -86,11 +86,26 @@ name|DEFAULT_DECIMAL_PRECISION
 init|=
 literal|10
 decl_stmt|;
+comment|// STRING type in Hive is represented as VARCHAR with precision Integer.MAX_VALUE.
+comment|// In turn, the max VARCHAR precision should be 65535. However, the value is not
+comment|// used for validation, but rather only internally by the optimizer to know the max
+comment|// precision supported by the system. Thus, no VARCHAR precision should fall between
+comment|// 65535 and Integer.MAX_VALUE; the check for VARCHAR precision is done in Hive.
 specifier|private
 specifier|static
 specifier|final
 name|int
-name|MAX_VARCHAR_PRECISION
+name|MAX_CHAR_PRECISION
+init|=
+name|Integer
+operator|.
+name|MAX_VALUE
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|DEFAULT_VARCHAR_PRECISION
 init|=
 literal|65535
 decl_stmt|;
@@ -98,7 +113,7 @@ specifier|private
 specifier|static
 specifier|final
 name|int
-name|MAX_CHAR_PRECISION
+name|DEFAULT_CHAR_PRECISION
 init|=
 literal|255
 decl_stmt|;
@@ -211,12 +226,6 @@ block|{
 comment|// Hive will always require user to specify exact sizes for char, varchar;
 comment|// Binary doesn't need any sizes; Decimal has the default of 10.
 case|case
-name|CHAR
-case|:
-case|case
-name|VARCHAR
-case|:
-case|case
 name|BINARY
 case|:
 case|case
@@ -233,6 +242,18 @@ name|getMaxPrecision
 argument_list|(
 name|typeName
 argument_list|)
+return|;
+case|case
+name|CHAR
+case|:
+return|return
+name|DEFAULT_CHAR_PRECISION
+return|;
+case|case
+name|VARCHAR
+case|:
+return|return
+name|DEFAULT_VARCHAR_PRECISION
 return|;
 case|case
 name|DECIMAL
@@ -316,9 +337,6 @@ return|;
 case|case
 name|VARCHAR
 case|:
-return|return
-name|MAX_VARCHAR_PRECISION
-return|;
 case|case
 name|CHAR
 case|:
