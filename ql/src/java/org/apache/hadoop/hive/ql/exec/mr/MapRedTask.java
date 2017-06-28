@@ -586,8 +586,6 @@ block|,
 literal|"build.dir.hive"
 block|,
 literal|"hive.query.id"
-block|,
-literal|"user.timezone"
 block|}
 decl_stmt|;
 specifier|private
