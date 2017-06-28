@@ -6522,9 +6522,9 @@ operator|+
 literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
-name|HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
+name|PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
 argument_list|(
-literal|"hive.parquet.mr.int96.enable.utc.write.zone"
+literal|"parquet.mr.int96.enable.utc.write.zone"
 argument_list|,
 literal|false
 argument_list|,
