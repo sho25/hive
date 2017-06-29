@@ -865,6 +865,11 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
+name|String
+name|errorMsg
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|e
@@ -875,32 +880,51 @@ operator|instanceof
 name|TimeoutException
 condition|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
+name|errorMsg
+operator|=
 literal|"Timed out waiting for client to connect.\nPossible reasons include network "
 operator|+
 literal|"issues, errors in remote driver or the cluster has no available resources, etc."
 operator|+
 literal|"\nPlease check YARN or Spark driver's logs for further information."
-argument_list|,
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
 name|e
-argument_list|)
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+name|errorMsg
+operator|=
+literal|"Interruption occurred while waiting for client to connect.\nPossibly the Spark session is closed "
+operator|+
+literal|"such as in case of query cancellation."
+operator|+
+literal|"\nPlease refer to HiveServer2 logs for further information."
 expr_stmt|;
 block|}
 else|else
 block|{
+name|errorMsg
+operator|=
+literal|"Error while waiting for client to connect."
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error while waiting for client to connect."
+name|errorMsg
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-block|}
 name|driverThread
 operator|.
 name|interrupt
@@ -923,9 +947,11 @@ block|{
 comment|// Give up.
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
 literal|"Interrupted before driver thread was finished."
+argument_list|,
+name|ie
 argument_list|)
 expr_stmt|;
 block|}
