@@ -5287,71 +5287,6 @@ name|WriteType
 operator|.
 name|DDL_NO_LOCK
 decl_stmt|;
-if|if
-condition|(
-operator|(
-name|table
-operator|!=
-literal|null
-operator|)
-operator|&&
-operator|(
-name|isPartitioned
-argument_list|(
-name|tblDesc
-argument_list|)
-operator|!=
-name|table
-operator|.
-name|isPartitioned
-argument_list|()
-operator|)
-condition|)
-block|{
-comment|// If destination table exists, but is partitioned, and we think we're writing to an unpartitioned
-comment|// or if destination table exists, but is unpartitioned and we think we're writing to a partitioned
-comment|// table, then this can only happen because there are drops in the queue that are yet to be processed.
-comment|// So, we check the repl.last.id of the destination, and if it's newer, we no-op. If it's older, we
-comment|// drop and re-create.
-if|if
-condition|(
-name|replicationSpec
-operator|.
-name|allowReplacementInto
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-name|dr
-operator|=
-name|dropTableTask
-argument_list|(
-name|table
-argument_list|,
-name|x
-argument_list|)
-expr_stmt|;
-name|lockType
-operator|=
-name|WriteEntity
-operator|.
-name|WriteType
-operator|.
-name|DDL_EXCLUSIVE
-expr_stmt|;
-name|table
-operator|=
-literal|null
-expr_stmt|;
-comment|// null it out so we go into the table re-create flow.
-block|}
-else|else
-block|{
-return|return;
-comment|// noop out of here.
-block|}
-block|}
 comment|// Normally, on import, trying to create a table or a partition in a db that does not yet exist
 comment|// is a error condition. However, in the case of a REPL LOAD, it is possible that we are trying
 comment|// to create tasks to create a table inside a db that as-of-now does not exist, but there is
@@ -5403,6 +5338,60 @@ argument_list|()
 argument_list|)
 argument_list|)
 throw|;
+block|}
+block|}
+if|if
+condition|(
+name|table
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|replicationSpec
+operator|.
+name|allowReplacementInto
+argument_list|(
+name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// If the target table exists and is newer or same as current update based on repl.last.id, then just noop it.
+return|return;
+block|}
+block|}
+else|else
+block|{
+comment|// If table doesn't exist, allow creating a new one only if the database state is older than the update.
+if|if
+condition|(
+operator|(
+name|parentDb
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+operator|!
+name|replicationSpec
+operator|.
+name|allowReplacementInto
+argument_list|(
+name|parentDb
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+operator|)
+condition|)
+block|{
+comment|// If the target table exists and is newer or same as current update based on repl.last.id, then just noop it.
+return|return;
 block|}
 block|}
 if|if
@@ -5486,7 +5475,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/* Note: In the following section, Metadata-only import handling logic is         interleaved with regular repl-import logic. The rule of thumb being         followed here is that MD-only imports are essentially ALTERs. They do         not load data, and should not be "creating" any metadata - they should         be replacing instead. The only place it makes sense for a MD-only import         to create is in the case of a table that's been dropped and recreated,         or in the case of an unpartitioned table. In all other cases, it should         behave like a noop or a pure MD alter.      */
+comment|/* Note: In the following section, Metadata-only import handling logic is        interleaved with regular repl-import logic. The rule of thumb being        followed here is that MD-only imports are essentially ALTERs. They do        not load data, and should not be "creating" any metadata - they should        be replacing instead. The only place it makes sense for a MD-only import        to create is in the case of a table that's been dropped and recreated,        or in the case of an unpartitioned table. In all other cases, it should        behave like a noop or a pure MD alter.     */
 if|if
 condition|(
 name|table
@@ -5824,6 +5813,9 @@ operator|.
 name|allowReplacementInto
 argument_list|(
 name|ptn
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -5996,6 +5988,9 @@ operator|.
 name|allowReplacementInto
 argument_list|(
 name|table
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 condition|)
 block|{

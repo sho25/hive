@@ -6123,6 +6123,8 @@ argument_list|(
 name|dbName
 argument_list|,
 name|dbProps
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|addAlterDbDesc
@@ -7813,6 +7815,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|partSpec
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|DDLWork
@@ -18646,6 +18650,8 @@ argument_list|,
 name|targetName
 argument_list|,
 name|expectView
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|addInputsOutputsAlterTable
@@ -19475,6 +19481,8 @@ argument_list|,
 name|oldPartSpec
 argument_list|,
 name|newPartSpec
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|rootTasks

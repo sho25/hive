@@ -11670,6 +11670,9 @@ operator|.
 name|allowReplacementInto
 argument_list|(
 name|ptn
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 condition|)
 block|{

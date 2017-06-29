@@ -257,10 +257,10 @@ literal|true
 argument_list|,
 literal|true
 argument_list|,
-name|eventOnlyReplicationSpec
-argument_list|(
 name|context
-argument_list|)
+operator|.
+name|eventOnlyReplicationSpec
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Task

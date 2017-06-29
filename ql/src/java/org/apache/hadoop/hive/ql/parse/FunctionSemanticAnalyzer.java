@@ -677,6 +677,8 @@ argument_list|,
 name|className
 argument_list|,
 name|resources
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -859,6 +861,8 @@ argument_list|(
 name|functionName
 argument_list|,
 name|isTemporaryFunction
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|rootTasks

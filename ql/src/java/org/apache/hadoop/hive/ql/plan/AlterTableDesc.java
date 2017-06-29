@@ -213,6 +213,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|ReplicationSpec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|SemanticException
 import|;
 end_import
@@ -853,6 +871,9 @@ name|SQLNotNullConstraint
 argument_list|>
 name|notNullConstraintCols
 decl_stmt|;
+name|ReplicationSpec
+name|replicationSpec
+decl_stmt|;
 specifier|public
 name|AlterTableDesc
 parameter_list|()
@@ -1094,7 +1115,7 @@ operator|=
 name|notNullConstraintCols
 expr_stmt|;
 block|}
-comment|/**    * @param oldName    *          old name of the table    * @param newName    *          new name of the table    */
+comment|/**    * @param oldName    *          old name of the table    * @param newName    *          new name of the table    * @param expectView    *          Flag to denote if current table can be a view    * @param replicationSpec    *          Replication specification with current event ID    */
 specifier|public
 name|AlterTableDesc
 parameter_list|(
@@ -1106,6 +1127,9 @@ name|newName
 parameter_list|,
 name|boolean
 name|expectView
+parameter_list|,
+name|ReplicationSpec
+name|replicationSpec
 parameter_list|)
 block|{
 name|op
@@ -1131,6 +1155,12 @@ operator|.
 name|expectView
 operator|=
 name|expectView
+expr_stmt|;
+name|this
+operator|.
+name|replicationSpec
+operator|=
+name|replicationSpec
 expr_stmt|;
 block|}
 comment|/**    * @param name    *          name of the table    * @param newCols    *          new columns to be added    */
@@ -1195,6 +1225,28 @@ operator|=
 name|isCascade
 expr_stmt|;
 block|}
+comment|/**    * @param alterType    *          type of alter op    * @param replicationSpec    *          Replication specification with current event ID    */
+specifier|public
+name|AlterTableDesc
+parameter_list|(
+name|AlterTableTypes
+name|alterType
+parameter_list|,
+name|ReplicationSpec
+name|replicationSpec
+parameter_list|)
+block|{
+name|op
+operator|=
+name|alterType
+expr_stmt|;
+name|this
+operator|.
+name|replicationSpec
+operator|=
+name|replicationSpec
+expr_stmt|;
+block|}
 comment|/**    * @param alterType    *          type of alter op    */
 specifier|public
 name|AlterTableDesc
@@ -1213,7 +1265,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param alterType    *          type of alter op    */
+comment|/**    * @param alterType    *          type of alter op    * @param expectView    *          Flag to denote if current table can be a view    * @param partSpec    *          Partition specifier with map of key and values.    */
 specifier|public
 name|AlterTableDesc
 parameter_list|(
@@ -3018,6 +3070,18 @@ name|environmentContext
 operator|=
 name|environmentContext
 expr_stmt|;
+block|}
+comment|/**    * @return what kind of replication scope this alter is running under.    * This can result in a "ALTER IF NEWER THAN" kind of semantic    */
+specifier|public
+name|ReplicationSpec
+name|getReplicationSpec
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|replicationSpec
+return|;
 block|}
 block|}
 end_class

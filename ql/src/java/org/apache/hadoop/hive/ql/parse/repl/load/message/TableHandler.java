@@ -123,16 +123,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedHashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -185,42 +175,6 @@ throw|;
 block|}
 try|try
 block|{
-comment|// TODO: why not have the below variables as static / inline seems to have no possibility of updates back here
-comment|// no location set on repl loads
-name|boolean
-name|isLocationSet
-init|=
-literal|false
-decl_stmt|;
-comment|// all repl imports are non-external
-name|boolean
-name|isExternalSet
-init|=
-literal|false
-decl_stmt|;
-comment|// bootstrap loads are not partition level
-name|boolean
-name|isPartSpecSet
-init|=
-literal|false
-decl_stmt|;
-comment|// repl loads are not partition level
-name|LinkedHashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|parsedPartSpec
-init|=
-literal|null
-decl_stmt|;
-comment|// no location for repl imports
-name|String
-name|parsedLocation
-init|=
-literal|null
-decl_stmt|;
 name|List
 argument_list|<
 name|Task
@@ -270,15 +224,17 @@ operator|.
 name|nestedContext
 argument_list|)
 decl_stmt|;
+comment|// REPL LOAD is not partition level. It is always DB or table level. So, passing null for partition specs.
+comment|// Also, REPL LOAD doesn't support external table and hence no location set as well.
 name|ImportSemanticAnalyzer
 operator|.
 name|prepareImport
 argument_list|(
-name|isLocationSet
+literal|false
 argument_list|,
-name|isExternalSet
+literal|false
 argument_list|,
-name|isPartSpecSet
+literal|false
 argument_list|,
 operator|(
 name|context
@@ -288,7 +244,7 @@ operator|!=
 literal|null
 operator|)
 argument_list|,
-name|parsedLocation
+literal|null
 argument_list|,
 name|context
 operator|.
@@ -298,7 +254,7 @@ name|context
 operator|.
 name|dbName
 argument_list|,
-name|parsedPartSpec
+literal|null
 argument_list|,
 name|context
 operator|.

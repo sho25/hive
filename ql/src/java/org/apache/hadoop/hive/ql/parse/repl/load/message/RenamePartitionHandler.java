@@ -459,6 +459,11 @@ argument_list|,
 name|oldPartSpec
 argument_list|,
 name|newPartSpec
+argument_list|,
+name|context
+operator|.
+name|eventOnlyReplicationSpec
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Task
