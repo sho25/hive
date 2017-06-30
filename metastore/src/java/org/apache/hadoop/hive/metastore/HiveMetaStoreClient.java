@@ -809,6 +809,8 @@ class|class
 name|HiveMetaStoreClient
 implements|implements
 name|IMetaStoreClient
+implements|,
+name|AutoCloseable
 block|{
 comment|/**    * Capabilities of the current client. If this client talks to a MetaStore server in a manner    * implying the usage of some expanded features that require client-side support that this client    * doesn't have (e.g. a getting a table of a new type), it will get back failures when the    * capability checking is enabled (the default).    */
 specifier|public
