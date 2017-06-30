@@ -11801,11 +11801,20 @@ name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
 argument_list|(
 literal|"hive.vectorized.use.row.serde.deserialize"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorizing using row deserialize.\n"
 operator|+
 literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_ROW_DESERIALIZE_INPUTFORMAT_EXCLUDES
+argument_list|(
+literal|"hive.vectorized.row.serde.inputformat.excludes"
+argument_list|,
+literal|"org.apache.parquet.hadoop.ParquetInputFormat,org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+argument_list|,
+literal|"The input formats not supported by row deserialize vectorization."
 argument_list|)
 block|,
 name|HIVE_VECTOR_ADAPTOR_USAGE_MODE
