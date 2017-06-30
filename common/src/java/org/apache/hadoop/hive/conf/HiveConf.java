@@ -7432,6 +7432,15 @@ argument_list|,
 literal|"Probability with which a row will be chosen."
 argument_list|)
 block|,
+name|HIVE_REMOVE_ORDERBY_IN_SUBQUERY
+argument_list|(
+literal|"hive.remove.orderby.in.subquery"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If set to true, order/sort by without limit in sub queries will be removed."
+argument_list|)
+block|,
 name|HIVEOPTIMIZEDISTINCTREWRITE
 argument_list|(
 literal|"hive.optimize.distinct.rewrite"
