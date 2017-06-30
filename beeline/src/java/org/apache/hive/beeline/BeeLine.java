@@ -10652,7 +10652,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 try|try
-block|{
+init|(
 name|ZipFile
 name|zf
 init|=
@@ -10661,7 +10661,8 @@ name|ZipFile
 argument_list|(
 name|f
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 name|int
 name|total
 init|=

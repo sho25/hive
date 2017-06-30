@@ -382,8 +382,7 @@ throws|throws
 name|SemanticException
 block|{
 try|try
-block|{
-comment|// read from dumpfile and instantiate self
+init|(
 name|FileSystem
 name|fs
 init|=
@@ -393,10 +392,10 @@ name|getFileSystem
 argument_list|(
 name|hiveConf
 argument_list|)
-decl_stmt|;
+init|;
 name|BufferedReader
 name|br
-init|=
+operator|=
 operator|new
 name|BufferedReader
 argument_list|(
@@ -411,7 +410,9 @@ name|dumpFile
 argument_list|)
 argument_list|)
 argument_list|)
-decl_stmt|;
+init|)
+block|{
+comment|// read from dumpfile and instantiate self
 name|String
 name|line
 init|=

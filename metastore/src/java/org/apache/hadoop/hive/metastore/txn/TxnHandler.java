@@ -7309,6 +7309,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -7318,7 +7320,8 @@ name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 operator|!
@@ -7379,6 +7382,7 @@ expr_stmt|;
 return|return
 name|id
 return|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -14572,6 +14576,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -14581,7 +14587,8 @@ name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 operator|!
@@ -14615,6 +14622,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs2
 init|=
@@ -14624,7 +14633,8 @@ name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 name|rs2
@@ -14639,7 +14649,8 @@ operator|.
 name|COMMITTED
 return|;
 block|}
-comment|//could also check WRITE_SET but that seems overkill
+block|}
+comment|// could also check WRITE_SET but that seems overkill
 return|return
 name|TxnStatus
 operator|.
@@ -14681,6 +14692,7 @@ name|TXN_OPEN
 operator|:
 literal|"we found it in TXNS but it's not ABORTED, so must be OPEN"
 assert|;
+block|}
 return|return
 name|TxnStatus
 operator|.
@@ -14838,6 +14850,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -14847,7 +14861,8 @@ name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 operator|!
@@ -14857,13 +14872,15 @@ name|next
 argument_list|()
 condition|)
 block|{
-comment|//todo: add LIMIT 1 instead of count - should be more efficient
+comment|// todo: add LIMIT 1 instead of count - should be more efficient
 name|s
 operator|=
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
 operator|+
 name|txnid
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs2
 init|=
@@ -14873,9 +14890,11 @@ name|executeQuery
 argument_list|(
 name|s
 argument_list|)
-decl_stmt|;
-comment|//todo: strictly speaking you can commit an empty txn, thus 2nd conjunct is wrong but only
-comment|//possible for for multi-stmt txns
+init|)
+block|{
+comment|// todo: strictly speaking you can commit an empty txn, thus 2nd conjunct is wrong but
+comment|// only
+comment|// possible for for multi-stmt txns
 name|boolean
 name|alreadyCommitted
 init|=
@@ -14910,7 +14929,7 @@ condition|(
 name|alreadyCommitted
 condition|)
 block|{
-comment|//makes the message more informative - helps to find bugs in client code
+comment|// makes the message more informative - helps to find bugs in client code
 throw|throw
 operator|new
 name|NoSuchTxnException
@@ -14942,6 +14961,7 @@ name|txnid
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
@@ -14988,7 +15008,9 @@ operator|+
 literal|" already aborted"
 argument_list|)
 throw|;
-comment|//todo: add time of abort, which is not currently tracked.  Requires schema change
+comment|// todo: add time of abort, which is not currently tracked.
+comment|// Requires schema change
+block|}
 block|}
 block|}
 specifier|private

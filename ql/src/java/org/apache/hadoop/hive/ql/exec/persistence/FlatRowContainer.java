@@ -1503,6 +1503,8 @@ name|iterator
 parameter_list|()
 block|{
 return|return
+name|super
+operator|.
 name|listIterator
 argument_list|()
 return|;
