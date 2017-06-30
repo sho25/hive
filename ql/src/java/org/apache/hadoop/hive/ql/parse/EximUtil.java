@@ -808,6 +808,7 @@ name|EximUtil
 parameter_list|()
 block|{   }
 comment|/**    * Initialize the URI where the exported data collection is    * to created for export, or is present for import    */
+specifier|public
 specifier|static
 name|URI
 name|getValidatedURI

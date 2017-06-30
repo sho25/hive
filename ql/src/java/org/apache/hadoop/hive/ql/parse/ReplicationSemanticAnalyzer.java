@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*   Licensed to the Apache Software Foundation (ASF) under one   or more contributor license agreements.  See the NOTICE file   distributed with this work for additional information   regarding copyright ownership.  The ASF licenses this file   to you under the Apache License, Version 2.0 (the   "License"); you may not use this file except in compliance   with the License.  You may obtain a copy of the License at        http://www.apache.org/licenses/LICENSE-2.0    Unless required by applicable law or agreed to in writing, software   distributed under the License is distributed on an "AS IS" BASIS,   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   See the License for the specific language governing permissions and   limitations under the License.  */
 end_comment
 
 begin_package
@@ -563,6 +563,28 @@ name|repl
 operator|.
 name|dump
 operator|.
+name|TableExport
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|repl
+operator|.
+name|dump
+operator|.
 name|Utils
 import|;
 end_import
@@ -1012,18 +1034,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|function
-operator|.
-name|Consumer
 import|;
 end_import
 
@@ -1818,7 +1828,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ReplicationSemanticAnalyzer: analyzeReplDump dumping table: "
+literal|"analyzeReplDump dumping table: "
 operator|+
 name|tblName
 operator|+
@@ -1830,7 +1840,7 @@ name|toUri
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|dumpTbl
+name|dumpTable
 argument_list|(
 name|ast
 argument_list|,
@@ -2639,6 +2649,19 @@ operator|.
 name|database
 argument_list|()
 decl_stmt|;
+name|inputs
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ReadEntity
+argument_list|(
+name|database
+operator|.
+name|object
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|EximUtil
 operator|.
 name|createDbExportDump
@@ -2715,7 +2738,6 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
-comment|// TODO : This should ideally return the Function Objects and not Strings(function names) that should be done by the caller, Look at this separately.
 name|List
 argument_list|<
 name|String
@@ -2908,10 +2930,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    *    * @param ast    * @param dbName    * @param tblName    * @param dbRoot    * @return tbl dumped path    * @throws SemanticException    */
 specifier|private
-name|Path
-name|dumpTbl
+name|void
+name|dumpTable
 parameter_list|(
 name|ASTNode
 name|ast
@@ -2928,37 +2949,8 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|Path
-name|tableRoot
-init|=
-operator|new
-name|Path
-argument_list|(
-name|dbRoot
-argument_list|,
-name|tblName
-argument_list|)
-decl_stmt|;
 try|try
 block|{
-name|URI
-name|toURI
-init|=
-name|EximUtil
-operator|.
-name|getValidatedURI
-argument_list|(
-name|conf
-argument_list|,
-name|tableRoot
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-decl_stmt|;
 name|TableSpec
 name|ts
 init|=
@@ -2978,13 +2970,29 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|ExportSemanticAnalyzer
+name|TableExport
 operator|.
-name|prepareExport
+name|Paths
+name|exportPaths
+init|=
+operator|new
+name|TableExport
+operator|.
+name|Paths
 argument_list|(
 name|ast
 argument_list|,
-name|toURI
+name|dbRoot
+argument_list|,
+name|tblName
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
+operator|new
+name|TableExport
+argument_list|(
+name|exportPaths
 argument_list|,
 name|ts
 argument_list|,
@@ -2995,16 +3003,11 @@ name|db
 argument_list|,
 name|conf
 argument_list|,
-name|ctx
-argument_list|,
-name|rootTasks
-argument_list|,
-name|inputs
-argument_list|,
-name|outputs
-argument_list|,
 name|LOG
 argument_list|)
+operator|.
+name|run
+argument_list|()
 expr_stmt|;
 name|REPL_STATE_LOG
 operator|.
@@ -3018,7 +3021,9 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|toURI
+name|exportPaths
+operator|.
+name|exportRootDir
 operator|.
 name|toString
 argument_list|()
@@ -3043,9 +3048,6 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
-return|return
-literal|null
-return|;
 block|}
 catch|catch
 parameter_list|(
@@ -3062,9 +3064,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return
-name|tableRoot
-return|;
 block|}
 comment|// REPL LOAD
 specifier|private

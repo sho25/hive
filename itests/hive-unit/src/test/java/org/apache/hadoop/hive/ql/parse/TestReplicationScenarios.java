@@ -17413,13 +17413,28 @@ operator|+
 literal|".ptned2 DROP PARTITION (b=11)"
 argument_list|)
 decl_stmt|;
+comment|/*     Comparisons using Strings for event Ids is wrong. This should be numbers since lexical string comparison     and numeric comparision differ. This requires a broader change where we return the dump Id as long and not string     fixing this here for now as it was observed in one of the builds where "1001".compareTo("998") results     in failure of the assertion below.      */
 name|assertTrue
 argument_list|(
+operator|new
+name|Long
+argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
 name|finalTblReplDumpId
+argument_list|)
+argument_list|)
 operator|.
 name|compareTo
 argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
 name|lastTblReplDumpId
+argument_list|)
 argument_list|)
 operator|>
 literal|0
