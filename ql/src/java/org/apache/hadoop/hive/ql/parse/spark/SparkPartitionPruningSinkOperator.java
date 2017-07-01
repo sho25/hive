@@ -664,8 +664,6 @@ operator|new
 name|BufferedOutputStream
 argument_list|(
 name|fsout
-argument_list|,
-literal|4096
 argument_list|)
 argument_list|)
 expr_stmt|;
