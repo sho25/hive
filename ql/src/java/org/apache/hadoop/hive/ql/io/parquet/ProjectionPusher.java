@@ -856,6 +856,16 @@ name|getNeededColumnIDs
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|ts
+operator|.
+name|getNeededNestedColumnPaths
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|neededNestedColumnPaths
 operator|.
 name|addAll
@@ -866,6 +876,7 @@ name|getNeededNestedColumnPaths
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|rowSchema
 operator|=
