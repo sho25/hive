@@ -125,6 +125,11 @@ name|COLUMNSTATS
 argument_list|(
 literal|11
 argument_list|)
+block|,
+name|REPLDUMP
+argument_list|(
+literal|12
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -241,6 +246,12 @@ literal|11
 case|:
 return|return
 name|COLUMNSTATS
+return|;
+case|case
+literal|12
+case|:
+return|return
+name|REPLDUMP
 return|;
 default|default:
 return|return
