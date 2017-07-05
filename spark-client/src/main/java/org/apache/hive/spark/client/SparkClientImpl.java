@@ -3325,20 +3325,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|rpcServer
-operator|.
-name|cancelClient
-argument_list|(
-name|clientId
-argument_list|,
-literal|"Child process exited before connecting back with error log "
-operator|+
-name|errStr
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|warn
@@ -3346,6 +3332,20 @@ argument_list|(
 literal|"Child process exited with code {}"
 argument_list|,
 name|exitCode
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+literal|"Child process (spark-submit) exited before connecting back with error log "
+operator|+
+name|errStr
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3360,7 +3360,16 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Waiting thread interrupted, killing child process."
+literal|"Thread waiting on the child process (spark-submit) is interrupted, killing the child process."
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+literal|"Thread waiting on the child porcess (spark-submit) is interrupted"
 argument_list|)
 expr_stmt|;
 name|Thread
@@ -3380,13 +3389,27 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|String
+name|errMsg
+init|=
+literal|"Exception while waiting for child process (spark-submit)"
+decl_stmt|;
 name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Exception while waiting for child process."
+name|errMsg
 argument_list|,
 name|e
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+name|errMsg
 argument_list|)
 expr_stmt|;
 block|}
