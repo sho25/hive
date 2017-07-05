@@ -1485,13 +1485,15 @@ argument_list|(
 name|srcPath
 argument_list|)
 operator|&&
-name|srcFs
+name|wh
 operator|.
-name|rename
+name|renameDir
 argument_list|(
 name|srcPath
 argument_list|,
 name|destPath
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -1504,6 +1506,8 @@ block|}
 catch|catch
 parameter_list|(
 name|IOException
+decl||
+name|MetaException
 name|e
 parameter_list|)
 block|{
@@ -2347,11 +2351,11 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * RemoteExceptionS from hadoop RPC wrap the stack trace into e.getMessage() which makes    * logs/stack traces confusing.    * @param ex    * @return    */
+comment|/**    * MetaException that encapsulates error message from RemoteException from hadoop RPC which wrap    * the stack trace into e.getMessage() which makes logs/stack traces confusing.    * @param ex    * @return    */
 name|String
 name|getSimpleMessage
 parameter_list|(
-name|IOException
+name|Exception
 name|ex
 parameter_list|)
 block|{
@@ -2359,7 +2363,7 @@ if|if
 condition|(
 name|ex
 operator|instanceof
-name|RemoteException
+name|MetaException
 condition|)
 block|{
 name|String
@@ -3335,6 +3339,8 @@ argument_list|(
 name|srcPath
 argument_list|,
 name|destPath
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -3717,6 +3723,8 @@ argument_list|(
 name|destPath
 argument_list|,
 name|srcPath
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
