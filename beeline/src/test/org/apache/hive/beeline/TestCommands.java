@@ -29,6 +29,24 @@ begin_import
 import|import static
 name|org
 operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
+operator|.
+name|removeComments
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
 name|Assert
@@ -49,22 +67,6 @@ name|void
 name|testLinesEndingWithComments
 parameter_list|()
 block|{
-name|BeeLine
-name|beeline
-init|=
-operator|new
-name|BeeLine
-argument_list|()
-decl_stmt|;
-name|Commands
-name|commands
-init|=
-operator|new
-name|Commands
-argument_list|(
-name|beeline
-argument_list|)
-decl_stmt|;
 name|int
 index|[]
 name|escape
@@ -78,8 +80,6 @@ name|assertEquals
 argument_list|(
 literal|"show tables;"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show tables;"
@@ -92,8 +92,6 @@ name|assertEquals
 argument_list|(
 literal|"show tables;"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show tables; --comments"
@@ -106,8 +104,6 @@ name|assertEquals
 argument_list|(
 literal|"show tables;"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show tables; -------comments"
@@ -120,8 +116,6 @@ name|assertEquals
 argument_list|(
 literal|"show tables;"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show tables; -------comments;one;two;three;;;;"
@@ -134,8 +128,6 @@ name|assertEquals
 argument_list|(
 literal|"show"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show-- tables; -------comments"
@@ -148,8 +140,6 @@ name|assertEquals
 argument_list|(
 literal|"show"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"show --tables; -------comments"
@@ -162,8 +152,6 @@ name|assertEquals
 argument_list|(
 literal|"s"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"s--how --tables; -------comments"
@@ -176,8 +164,6 @@ name|assertEquals
 argument_list|(
 literal|""
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"-- show tables; -------comments"
@@ -190,8 +176,6 @@ name|assertEquals
 argument_list|(
 literal|"\"show tables\""
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"\"show tables\" --comments"
@@ -204,8 +188,6 @@ name|assertEquals
 argument_list|(
 literal|"\"show --comments tables\""
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"\"show --comments tables\" --comments"
@@ -218,8 +200,6 @@ name|assertEquals
 argument_list|(
 literal|"\"'show --comments' tables\""
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"\"'show --comments' tables\" --comments"
@@ -232,8 +212,6 @@ name|assertEquals
 argument_list|(
 literal|"'show --comments tables'"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"'show --comments tables' --comments"
@@ -246,8 +224,6 @@ name|assertEquals
 argument_list|(
 literal|"'\"show --comments tables\"'"
 argument_list|,
-name|commands
-operator|.
 name|removeComments
 argument_list|(
 literal|"'\"show --comments tables\"' --comments"

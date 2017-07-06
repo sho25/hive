@@ -202,6 +202,29 @@ name|Assert
 operator|.
 name|assertNull
 argument_list|(
+literal|"Set role should have returned null"
+argument_list|,
+name|CommandProcessorFactory
+operator|.
+name|getForHiveCommand
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"set"
+block|,
+literal|"role"
+block|}
+argument_list|,
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertNull
+argument_list|(
 literal|"SQL should have returned null"
 argument_list|,
 name|CommandProcessorFactory
