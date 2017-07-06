@@ -73,9 +73,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
@@ -240,6 +240,24 @@ operator|.
 name|parse
 operator|.
 name|SemanticException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|HiveOperation
 import|;
 end_import
 
@@ -601,6 +619,11 @@ name|command
 decl_stmt|;
 specifier|public
 specifier|static
+name|HiveOperation
+name|commandType
+decl_stmt|;
+specifier|public
+specifier|static
 name|String
 name|ipAddress
 decl_stmt|;
@@ -650,6 +673,13 @@ operator|=
 name|context
 operator|.
 name|getCommand
+argument_list|()
+expr_stmt|;
+name|commandType
+operator|=
+name|context
+operator|.
+name|getHiveOperation
 argument_list|()
 expr_stmt|;
 block|}
@@ -723,6 +753,13 @@ operator|=
 name|context
 operator|.
 name|getCommand
+argument_list|()
+expr_stmt|;
+name|commandType
+operator|=
+name|context
+operator|.
+name|getHiveOperation
 argument_list|()
 expr_stmt|;
 block|}
@@ -954,6 +991,12 @@ literal|null
 expr_stmt|;
 name|SemanticAnalysisHook
 operator|.
+name|commandType
+operator|=
+literal|null
+expr_stmt|;
+name|SemanticAnalysisHook
+operator|.
 name|preAnalyzeError
 operator|=
 literal|null
@@ -1171,33 +1214,33 @@ name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"ipaddress is null"
+argument_list|,
 name|PreExecHook
 operator|.
 name|ipAddress
-argument_list|,
-literal|"ipaddress is null"
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"userName is null"
+argument_list|,
 name|PreExecHook
 operator|.
 name|userName
-argument_list|,
-literal|"userName is null"
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"operation is null"
+argument_list|,
 name|PreExecHook
 operator|.
 name|operation
-argument_list|,
-literal|"operation is null"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1267,33 +1310,44 @@ name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"semantic hook context ipaddress is null"
+argument_list|,
 name|SemanticAnalysisHook
 operator|.
 name|ipAddress
-argument_list|,
-literal|"semantic hook context ipaddress is null"
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"semantic hook context userName is null"
+argument_list|,
 name|SemanticAnalysisHook
 operator|.
 name|userName
-argument_list|,
-literal|"semantic hook context userName is null"
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertNotNull
 argument_list|(
+literal|"semantic hook context command is null"
+argument_list|,
 name|SemanticAnalysisHook
 operator|.
 name|command
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertNotNull
+argument_list|(
+literal|"semantic hook context commandType is null"
 argument_list|,
-literal|"semantic hook context command is null"
+name|SemanticAnalysisHook
+operator|.
+name|commandType
 argument_list|)
 expr_stmt|;
 name|Assert

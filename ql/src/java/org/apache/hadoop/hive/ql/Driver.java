@@ -3619,6 +3619,16 @@ argument_list|(
 name|command
 argument_list|)
 expr_stmt|;
+name|hookCtx
+operator|.
+name|setHiveOperation
+argument_list|(
+name|queryState
+operator|.
+name|getHiveOperation
+argument_list|()
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|HiveSemanticAnalyzerHook

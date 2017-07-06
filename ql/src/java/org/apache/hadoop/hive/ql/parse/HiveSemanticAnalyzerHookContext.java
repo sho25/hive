@@ -115,6 +115,24 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|HiveOperation
+import|;
+end_import
+
 begin_comment
 comment|/**  * Context information provided by Hive to implementations of  * HiveSemanticAnalyzerHook.  */
 end_comment
@@ -197,6 +215,19 @@ name|setCommand
 parameter_list|(
 name|String
 name|command
+parameter_list|)
+function_decl|;
+specifier|public
+name|HiveOperation
+name|getHiveOperation
+parameter_list|()
+function_decl|;
+specifier|public
+name|void
+name|setHiveOperation
+parameter_list|(
+name|HiveOperation
+name|commandType
 parameter_list|)
 function_decl|;
 block|}
