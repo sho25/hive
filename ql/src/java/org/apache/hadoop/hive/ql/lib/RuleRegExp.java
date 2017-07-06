@@ -319,6 +319,16 @@ operator|==
 name|wcc
 operator|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|ret
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 block|}
 return|return

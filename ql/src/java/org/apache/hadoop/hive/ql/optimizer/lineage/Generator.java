@@ -505,6 +505,26 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class generates the lineage information for the columns  * and tables from the plan before it goes through other  * optimization phases.  */
 end_comment
@@ -516,6 +536,21 @@ name|Generator
 extends|extends
 name|Transform
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|Generator
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|/* (non-Javadoc)    * @see org.apache.hadoop.hive.ql.optimizer.Transform#transform(org.apache.hadoop.hive.ql.parse.ParseContext)    */
 annotation|@
 name|Override
@@ -552,6 +587,14 @@ argument_list|()
 else|:
 operator|new
 name|Index
+argument_list|()
+decl_stmt|;
+name|long
+name|sTime
+init|=
+name|System
+operator|.
+name|currentTimeMillis
 argument_list|()
 decl_stmt|;
 comment|// Create the lineage context
@@ -905,6 +948,22 @@ argument_list|(
 name|topNodes
 argument_list|,
 literal|null
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Time taken for lineage transform={}"
+argument_list|,
+operator|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|-
+name|sTime
+operator|)
 argument_list|)
 expr_stmt|;
 return|return
