@@ -17112,7 +17112,9 @@ argument_list|,
 name|name
 operator|+
 operator|(
-literal|"_copy_"
+name|Utilities
+operator|.
+name|COPY_KEYWORD
 operator|+
 name|counter
 operator|)

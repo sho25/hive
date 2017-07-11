@@ -8229,10 +8229,6 @@ name|splitPath
 argument_list|,
 name|adi
 operator|.
-name|acidInfo
-argument_list|,
-name|adi
-operator|.
 name|baseFiles
 argument_list|,
 name|adi
@@ -8345,10 +8341,6 @@ argument_list|,
 name|adi
 operator|.
 name|splitPath
-argument_list|,
-name|adi
-operator|.
-name|acidInfo
 argument_list|,
 name|adi
 operator|.
@@ -26425,9 +26417,11 @@ comment|// call-1: open to read footer - split 1 => mock:/mocktable5/0_0
 comment|// call-2: open to read data - split 1 => mock:/mocktable5/0_0
 comment|// call-3: open to read footer - split 2 => mock:/mocktable5/0_1
 comment|// call-4: open to read data - split 2 => mock:/mocktable5/0_1
+comment|// call-5: AcidUtils.getAcidState - getLen() mock:/mocktable5/0_0
+comment|// call-6: AcidUtils.getAcidState - getLen() mock:/mocktable5/0_1
 name|assertEquals
 argument_list|(
-literal|4
+literal|6
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -26965,9 +26959,11 @@ block|}
 block|}
 comment|// call-1: open to read data - split 1 => mock:/mocktable6/0_0
 comment|// call-2: open to read data - split 2 => mock:/mocktable6/0_1
+comment|// call-3: AcidUtils.getAcidState - getLen() mock:/mocktable6/0_0
+comment|// call-4: AcidUtils.getAcidState - getLen() mock:/mocktable6/0_1
 name|assertEquals
 argument_list|(
-literal|2
+literal|4
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -27516,9 +27512,10 @@ comment|// call-1: open to read footer - split 1 => mock:/mocktable7/0_0
 comment|// call-2: open to read data - split 1 => mock:/mocktable7/0_0
 comment|// call-3: open side file (flush length) of delta directory
 comment|// call-4: fs.exists() check for delta_xxx_xxx/bucket_00000 file
+comment|// call-5: AcidUtils.getAcidState - getLen() mock:/mocktable7/0_0
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -28066,9 +28063,10 @@ block|}
 comment|// call-1: open to read data - split 1 => mock:/mocktable8/0_0
 comment|// call-2: open side file (flush length) of delta directory
 comment|// call-3: fs.exists() check for delta_xxx_xxx/bucket_00000 file
+comment|// call-4: AcidUtils.getAcidState - getLen() mock:/mocktable8/0_0
 name|assertEquals
 argument_list|(
-literal|3
+literal|4
 argument_list|,
 name|readOpsDelta
 argument_list|)

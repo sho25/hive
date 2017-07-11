@@ -1374,10 +1374,6 @@ name|splitPath
 argument_list|,
 name|adi
 operator|.
-name|acidInfo
-argument_list|,
-name|adi
-operator|.
 name|baseFiles
 argument_list|,
 name|adi

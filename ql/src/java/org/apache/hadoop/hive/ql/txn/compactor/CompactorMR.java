@@ -1901,6 +1901,7 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+comment|//note that originalFiles are all original files recursively not dirs
 name|dirsToSearch
 operator|.
 name|add
@@ -2045,6 +2046,7 @@ name|gatherStats
 argument_list|()
 expr_stmt|;
 block|}
+comment|/**    * @param baseDir if not null, it's either table/partition root folder or base_xxxx.      *                If it's base_xxxx, it's in dirsToSearch, else the actual original files    *                (all leaves recursively) are in the dirsToSearch list    */
 specifier|private
 name|void
 name|launchCompactionJob
@@ -2626,7 +2628,7 @@ specifier|public
 name|CompactorInputSplit
 parameter_list|()
 block|{     }
-comment|/**      *      * @param hadoopConf      * @param bucket bucket to be processed by this split      * @param files actual files this split should process.  It is assumed the caller has already      *              parsed out the files in base and deltas to populate this list.      * @param base directory of the base, or the partition/table location if the files are in old      *             style.  Can be null.      * @param deltas directories of the delta files.      * @throws IOException      */
+comment|/**      *      * @param hadoopConf      * @param bucket bucket to be processed by this split      * @param files actual files this split should process.  It is assumed the caller has already      *              parsed out the files in base and deltas to populate this list.  Includes copy_N      * @param base directory of the base, or the partition/table location if the files are in old      *             style.  Can be null.      * @param deltas directories of the delta files.      * @throws IOException      */
 name|CompactorInputSplit
 parameter_list|(
 name|Configuration

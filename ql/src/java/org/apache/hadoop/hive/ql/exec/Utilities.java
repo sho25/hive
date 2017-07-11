@@ -7851,7 +7851,7 @@ literal|"^.*?([0-9]+)(_[0-9]{1,6})?(\\..*)?$"
 argument_list|)
 decl_stmt|;
 comment|/**    * Some jobs like "INSERT INTO" jobs create copies of files like 0000001_0_copy_2.    * For such files,    * Group 1: 00000001 [taskId]    * Group 3: 0        [task attempId]    * Group 4: _copy_2  [copy suffix]    * Group 6: copy     [copy keyword]    * Group 8: 2        [copy file index]    */
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String

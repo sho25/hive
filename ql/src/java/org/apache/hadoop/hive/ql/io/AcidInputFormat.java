@@ -281,6 +281,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * @param stmtIds delta dir suffixes when a single txn writes> 1 delta in the same partition      */
 name|DeltaMetaData
 parameter_list|(
 name|long
