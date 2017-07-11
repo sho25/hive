@@ -365,7 +365,7 @@ name|stream
 operator|.
 name|println
 argument_list|(
-literal|"  Wtaited count: "
+literal|"  Waited count: "
 operator|+
 name|info
 operator|.
