@@ -301,6 +301,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|VectorTableScanDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|api
 operator|.
 name|OperatorType
@@ -540,6 +558,11 @@ name|boolean
 name|insideView
 decl_stmt|;
 specifier|private
+specifier|transient
+name|boolean
+name|vectorized
+decl_stmt|;
+specifier|private
 name|String
 name|defaultPartitionName
 decl_stmt|;
@@ -648,6 +671,10 @@ operator|instanceof
 name|VectorizedRowBatch
 condition|)
 block|{
+comment|// We need to check with 'instanceof' instead of just checking
+comment|// vectorized because the row can be a VectorizedRowBatch when
+comment|// FetchOptimizer kicks in even if the operator pipeline is not
+comment|// vectorized
 name|VectorizedRowBatch
 name|batch
 init|=
@@ -740,6 +767,8 @@ name|inputObjInspectors
 index|[
 name|tag
 index|]
+argument_list|,
+name|vectorized
 argument_list|)
 expr_stmt|;
 block|}
@@ -1454,6 +1483,13 @@ name|String
 argument_list|,
 name|Stat
 argument_list|>
+argument_list|()
+expr_stmt|;
+name|vectorized
+operator|=
+name|conf
+operator|.
+name|isVectorized
 argument_list|()
 expr_stmt|;
 block|}

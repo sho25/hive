@@ -657,6 +657,8 @@ name|inputObjInspectors
 index|[
 name|tag
 index|]
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 return|return;
@@ -766,6 +768,8 @@ argument_list|(
 name|vrg
 argument_list|,
 name|outputObjInspector
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Revert the projected columns back, because vrg will be re-used.
