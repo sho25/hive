@@ -1809,6 +1809,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|LOAD_DATA_ON_ACID_TABLE
+argument_list|(
+literal|10266
+argument_list|,
+literal|"LOAD DATA... statement is not supported on transactional table {0}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
