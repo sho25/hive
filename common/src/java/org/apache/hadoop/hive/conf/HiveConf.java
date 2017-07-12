@@ -13140,7 +13140,7 @@ name|LLAP_DAEMON_AM_USE_FQDN
 argument_list|(
 literal|"hive.llap.am.use.fqdn"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to use FQDN of the AM machine when submitting work to LLAP."
 argument_list|)
