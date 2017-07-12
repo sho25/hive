@@ -560,6 +560,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    *    * @param ignored Unused parameter    * @param job JobConf - expecting mandatory parameter PARQUET_HIVE_SCHEMA    * @param name Path to write to    * @param progress Progress    * @return    * @throws IOException    */
 annotation|@
 name|Override
 specifier|public
@@ -590,13 +591,19 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-throw|throw
+return|return
 operator|new
-name|RuntimeException
+name|ParquetRecordWriterWrapper
 argument_list|(
-literal|"Should never be used"
+name|realOutputFormat
+argument_list|,
+name|job
+argument_list|,
+name|name
+argument_list|,
+name|progress
 argument_list|)
-throw|;
+return|;
 block|}
 comment|/**    *    * Create the parquet schema from the hive schema, and return the RecordWriterWrapper which    * contains the real output format    */
 annotation|@
