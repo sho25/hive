@@ -27,6 +27,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|BucketCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|orc
 operator|.
 name|CompressionKind
@@ -347,22 +365,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde
-operator|.
-name|serdeConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -386,24 +388,6 @@ operator|.
 name|objectinspector
 operator|.
 name|ObjectInspectorFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspectorUtils
 import|;
 end_import
 
@@ -1846,7 +1830,7 @@ literal|20
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1907,7 +1891,7 @@ literal|50
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2047,7 +2031,7 @@ literal|20
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2108,7 +2092,7 @@ literal|20
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2169,7 +2153,7 @@ literal|20
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2230,7 +2214,7 @@ literal|50
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2291,7 +2275,7 @@ literal|50
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2805,7 +2789,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2866,7 +2850,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3080,7 +3064,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3141,7 +3125,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3202,7 +3186,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3263,7 +3247,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3324,7 +3308,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4161,7 +4145,7 @@ literal|20
 argument_list|,
 name|id
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4215,7 +4199,7 @@ literal|50
 argument_list|,
 name|id
 operator|.
-name|getBucketId
+name|getBucketProperty
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -5052,6 +5036,19 @@ argument_list|(
 name|root
 argument_list|)
 decl_stmt|;
+specifier|final
+name|int
+name|BUCKET_PROPERTY
+init|=
+name|BucketCodec
+operator|.
+name|V1
+operator|.
+name|encode
+argument_list|(
+name|options
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -5165,7 +5162,7 @@ literal|0
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5184,7 +5181,7 @@ literal|2
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5203,7 +5200,7 @@ literal|3
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5222,7 +5219,7 @@ literal|7
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5241,7 +5238,7 @@ literal|8
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5534,7 +5531,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|0
 argument_list|,
@@ -5599,7 +5596,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|1
 argument_list|,
@@ -5664,7 +5661,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|2
 argument_list|,
@@ -5719,7 +5716,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|3
 argument_list|,
@@ -5774,7 +5771,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|4
 argument_list|,
@@ -5829,7 +5826,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|5
 argument_list|,
@@ -5884,7 +5881,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|6
 argument_list|,
@@ -5939,7 +5936,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|7
 argument_list|,
@@ -6004,7 +6001,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|8
 argument_list|,
@@ -6059,7 +6056,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|9
 argument_list|,
@@ -6180,7 +6177,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|0
 argument_list|,
@@ -6235,7 +6232,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|0
 argument_list|,
@@ -6290,7 +6287,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|1
 argument_list|,
@@ -6345,7 +6342,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|2
 argument_list|,
@@ -6400,7 +6397,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|2
 argument_list|,
@@ -6455,7 +6452,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|3
 argument_list|,
@@ -6510,7 +6507,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|3
 argument_list|,
@@ -6565,7 +6562,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|4
 argument_list|,
@@ -6620,7 +6617,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|5
 argument_list|,
@@ -6675,7 +6672,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|6
 argument_list|,
@@ -6730,7 +6727,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|7
 argument_list|,
@@ -6785,7 +6782,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|7
 argument_list|,
@@ -6840,7 +6837,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|8
 argument_list|,
@@ -6895,7 +6892,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|8
 argument_list|,
@@ -6950,7 +6947,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 literal|9
 argument_list|,
@@ -7109,7 +7106,7 @@ name|ReaderKey
 argument_list|(
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|,
 name|i
 argument_list|,
@@ -8454,6 +8451,19 @@ argument_list|(
 name|fs
 argument_list|)
 decl_stmt|;
+specifier|final
+name|int
+name|BUCKET_PROPERTY
+init|=
+name|BucketCodec
+operator|.
+name|V1
+operator|.
+name|encode
+argument_list|(
+name|options
+argument_list|)
+decl_stmt|;
 name|options
 operator|.
 name|orcOptions
@@ -8700,7 +8710,7 @@ name|i
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8719,7 +8729,7 @@ literal|9
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8830,7 +8840,7 @@ name|i
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8849,7 +8859,7 @@ literal|8
 argument_list|,
 literal|0
 argument_list|,
-name|BUCKET
+name|BUCKET_PROPERTY
 argument_list|)
 argument_list|)
 expr_stmt|;

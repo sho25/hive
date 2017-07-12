@@ -475,6 +475,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|BucketCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|HiveInputFormat
 import|;
 end_import
@@ -821,6 +839,8 @@ block|,
 name|ACIDTBLPART
 argument_list|(
 literal|"acidTblPart"
+argument_list|,
+literal|"p"
 argument_list|)
 block|,
 name|NONACIDORCTBL
@@ -831,22 +851,33 @@ block|,
 name|NONACIDPART
 argument_list|(
 literal|"nonAcidPart"
+argument_list|,
+literal|"p"
 argument_list|)
 block|,
 name|NONACIDPART2
 argument_list|(
 literal|"nonAcidPart2"
+argument_list|,
+literal|"p2"
 argument_list|)
 block|,
 name|ACIDNESTEDPART
 argument_list|(
 literal|"acidNestedPart"
+argument_list|,
+literal|"p,q"
 argument_list|)
 block|;
 specifier|private
 specifier|final
 name|String
 name|name
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|partitionColumns
 decl_stmt|;
 annotation|@
 name|Override
@@ -859,6 +890,14 @@ return|return
 name|name
 return|;
 block|}
+name|String
+name|getPartitionColumns
+parameter_list|()
+block|{
+return|return
+name|partitionColumns
+return|;
+block|}
 name|Table
 parameter_list|(
 name|String
@@ -866,10 +905,33 @@ name|name
 parameter_list|)
 block|{
 name|this
+argument_list|(
+name|name
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+name|Table
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|String
+name|partitionColumns
+parameter_list|)
+block|{
+name|this
 operator|.
 name|name
 operator|=
 name|name
+expr_stmt|;
+name|this
+operator|.
+name|partitionColumns
+operator|=
+name|partitionColumns
 expr_stmt|;
 block|}
 block|}
@@ -2546,13 +2608,13 @@ literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":18,\"bucketid\":0,\"rowid\":0}\t0\t15"
+literal|"{\"transactionid\":18,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":20,\"bucketid\":0,\"rowid\":0}\t0\t17"
+literal|"{\"transactionid\":20,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
 block|,
 literal|"bucket_00000"
 block|}
@@ -2588,7 +2650,7 @@ literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":18,\"bucketid\":1,\"rowid\":0}\t1\t16"
+literal|"{\"transactionid\":18,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
 block|,
 literal|"bucket_00001"
 block|}
@@ -4247,6 +4309,7 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
+comment|//todo: what is the point of this if we just did select *?
 name|int
 name|resultCount
 init|=
@@ -4413,6 +4476,7 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
+comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|1
@@ -6270,6 +6334,7 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
+comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|2
@@ -6630,6 +6695,7 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
+comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|2
@@ -12239,7 +12305,7 @@ literal|" s ON t.a = s.a2 "
 operator|+
 literal|"WHEN MATCHED AND t.b between 1 and 3 THEN UPDATE set b = s.b2 "
 operator|+
-literal|"WHEN NOT MATCHED and s.b2>= 11 THEN INSERT VALUES(s.a2, s.b2)"
+literal|"WHEN NOT MATCHED and s.b2>= 8 THEN INSERT VALUES(s.a2, s.b2)"
 decl_stmt|;
 name|runStatementOnDriver
 argument_list|(
@@ -12290,6 +12356,12 @@ literal|8
 block|}
 block|,
 block|{
+literal|8
+block|,
+literal|8
+block|}
+block|,
+block|{
 literal|11
 block|,
 literal|11
@@ -12306,6 +12378,13 @@ name|rExpected
 argument_list|)
 argument_list|,
 name|r
+argument_list|)
+expr_stmt|;
+name|assertUniqueID
+argument_list|(
+name|Table
+operator|.
+name|ACIDTBL
 argument_list|)
 expr_stmt|;
 block|}
@@ -12564,6 +12643,13 @@ argument_list|,
 name|r
 argument_list|)
 expr_stmt|;
+name|assertUniqueID
+argument_list|(
+name|Table
+operator|.
+name|ACIDTBL
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * test combines delete + insert clauses    * @throws Exception    */
 annotation|@
@@ -12798,9 +12884,6 @@ name|r
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * https://hortonworks.jira.com/browse/BUG-66580    * @throws Exception    */
-annotation|@
-name|Ignore
 annotation|@
 name|Test
 specifier|public
@@ -12812,25 +12895,14 @@ name|Exception
 block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"create table if not exists  srcpart (a int, b int, c int) "
-operator|+
-literal|"partitioned by (z int) clustered by (a) into 2 buckets "
-operator|+
-literal|"stored as orc tblproperties('transactional'='true')"
-argument_list|)
-expr_stmt|;
-name|runStatementOnDriver
-argument_list|(
 literal|"create temporary table if not exists data1 (x int)"
 argument_list|)
 expr_stmt|;
-comment|//    runStatementOnDriver("create temporary table if not exists data2 (x int)");
 name|runStatementOnDriver
 argument_list|(
-literal|"insert into data1 values (1),(2),(3)"
+literal|"insert into data1 values (1),(2),(1)"
 argument_list|)
 expr_stmt|;
-comment|//    runStatementOnDriver("insert into data2 values (4),(5),(6)");
 name|d
 operator|.
 name|destroy
@@ -12857,6 +12929,28 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|" from data1 "
+operator|+
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p) select 0, 0, 'p' || x  "
+operator|+
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" partition(p='p1') select 0, 1"
+argument_list|)
+expr_stmt|;
+comment|/**      * Using {@link BucketCodec.V0} the output      * is missing 1 of the (p1,0,1) rows because they have the same ROW__ID and only differ by      * StatementId so {@link org.apache.hadoop.hive.ql.io.orc.OrcRawRecordMerger} skips one.      * With split update (and V0), the data is read correctly (insert deltas are now the base) but we still      * should get duplicate ROW__IDs.      */
 name|List
 argument_list|<
 name|String
@@ -12865,13 +12959,69 @@ name|r
 init|=
 name|runStatementOnDriver
 argument_list|(
-literal|" from data1 "
+literal|"select p,a,b from "
 operator|+
-literal|"insert into srcpart partition(z) select 0,0,1,x  "
+name|Table
+operator|.
+name|ACIDTBLPART
 operator|+
-literal|"insert into srcpart partition(z=1) select 0,0,1"
+literal|" order by p, a, b"
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"[p1\t0\t0, p1\t0\t0, p1\t0\t1, p1\t0\t1, p1\t0\t1, p2\t0\t0]"
+argument_list|,
+name|r
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertUniqueID
+argument_list|(
+name|Table
+operator|.
+name|ACIDTBLPART
+argument_list|)
+expr_stmt|;
+comment|/**      * this delete + select covers VectorizedOrcAcidRowBatchReader      */
+name|runStatementOnDriver
+argument_list|(
+literal|"delete from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+argument_list|)
+expr_stmt|;
+name|r
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select p,a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBLPART
+operator|+
+literal|" order by p, a, b"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"[]"
+argument_list|,
+name|r
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Investigating DP and WriteEntity, etc    * @throws Exception    */
 annotation|@
@@ -13197,6 +13347,14 @@ argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
+comment|//note: inserts go into 'new part'... so this won't fail
+name|assertUniqueID
+argument_list|(
+name|Table
+operator|.
+name|ACIDTBLPART
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Using nested partitions and thus DummyPartition    * @throws Exception    */
 annotation|@
@@ -13471,6 +13629,14 @@ block|}
 argument_list|)
 argument_list|,
 name|r1
+argument_list|)
+expr_stmt|;
+comment|//insert of merge lands in part (3,4) - no updates land there
+name|assertUniqueID
+argument_list|(
+name|Table
+operator|.
+name|ACIDNESTEDPART
 argument_list|)
 expr_stmt|;
 block|}
@@ -13813,6 +13979,293 @@ name|r
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBucketCodec
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|d
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
+comment|//insert data in "legacy" format
+name|hiveConf
+operator|.
+name|setIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|TESTMODE_BUCKET_CODEC_VERSION
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|d
+operator|=
+operator|new
+name|Driver
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|int
+index|[]
+index|[]
+name|targetVals
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|6
+block|}
+block|,
+block|{
+literal|7
+block|,
+literal|8
+block|}
+block|}
+decl_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" "
+operator|+
+name|makeValuesClause
+argument_list|(
+name|targetVals
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|d
+operator|.
+name|destroy
+argument_list|()
+expr_stmt|;
+name|hiveConf
+operator|.
+name|setIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|TESTMODE_BUCKET_CODEC_VERSION
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|d
+operator|=
+operator|new
+name|Driver
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|//do some operations with new format
+name|runStatementOnDriver
+argument_list|(
+literal|"update "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" set b=11 where a in (5,7)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" values(11,11)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"delete from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" where a = 7"
+argument_list|)
+expr_stmt|;
+comment|//make sure we get the right data back before/after compactions
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|int
+index|[]
+index|[]
+name|rExpected
+init|=
+block|{
+block|{
+literal|2
+block|,
+literal|1
+block|}
+block|,
+block|{
+literal|4
+block|,
+literal|3
+block|}
+block|,
+block|{
+literal|5
+block|,
+literal|11
+block|}
+block|,
+block|{
+literal|11
+block|,
+literal|11
+block|}
+block|}
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|rExpected
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" COMPACT 'MINOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|r
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|rExpected
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" COMPACT 'MAJOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|r
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|Table
+operator|.
+name|ACIDTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|rExpected
+argument_list|)
+argument_list|,
+name|r
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * takes raw data and turns it into a string as if from Driver.getResults()    * sorts rows in dictionary order    */
 specifier|static
 name|List
@@ -13939,9 +14392,7 @@ return|return
 name|rs
 return|;
 block|}
-specifier|private
 specifier|static
-specifier|final
 class|class
 name|RowComp
 implements|implements
@@ -14035,6 +14486,7 @@ literal|0
 return|;
 block|}
 block|}
+specifier|static
 name|String
 name|makeValuesClause
 parameter_list|(
@@ -14251,6 +14703,146 @@ expr_stmt|;
 return|return
 name|rs
 return|;
+block|}
+specifier|final
+name|void
+name|assertUniqueID
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|String
+name|partCols
+init|=
+name|table
+operator|.
+name|getPartitionColumns
+argument_list|()
+decl_stmt|;
+comment|//check to make sure there are no duplicate ROW__IDs - HIVE-16832
+name|StringBuilder
+name|sb
+init|=
+operator|new
+name|StringBuilder
+argument_list|(
+literal|"select "
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|partCols
+operator|!=
+literal|null
+operator|&&
+name|partCols
+operator|.
+name|length
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+name|partCols
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|","
+argument_list|)
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|" ROW__ID, count(*) from "
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|table
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|" group by "
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|partCols
+operator|!=
+literal|null
+operator|&&
+name|partCols
+operator|.
+name|length
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|sb
+operator|.
+name|append
+argument_list|(
+name|partCols
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|","
+argument_list|)
+expr_stmt|;
+block|}
+name|sb
+operator|.
+name|append
+argument_list|(
+literal|"ROW__ID having count(*)> 1"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|r
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|sb
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Duplicate ROW__ID: "
+operator|+
+name|r
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|r
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

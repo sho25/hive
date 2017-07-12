@@ -491,6 +491,7 @@ specifier|private
 name|long
 name|currentTransactionId
 decl_stmt|;
+comment|/**      * This is the value from delta file name which may be different from value encode in       * {@link RecordIdentifier#getBucketProperty()} in case of Update/Delete.      * So for Acid 1.0 + multi-stmt txn, if {@code isSameRow() == true}, then it must be an update      * or delete event.  For Acid 2.0 + multi-stmt txn, it must be a delete event.      * No 2 Insert events from can ever agree on {@link RecordIdentifier}      */
 specifier|private
 name|int
 name|statementId
@@ -924,9 +925,9 @@ operator|+
 name|getTransactionId
 argument_list|()
 operator|+
-literal|", bucket: "
+literal|", "
 operator|+
-name|getBucketId
+name|bucketToString
 argument_list|()
 operator|+
 literal|", row: "
@@ -1683,7 +1684,7 @@ if|if
 condition|(
 name|bucketOptions
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 operator|!=
 name|bucket
@@ -1905,7 +1906,7 @@ if|if
 condition|(
 name|bucketOptions
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 operator|==
 name|bucket
@@ -2509,7 +2510,7 @@ if|if
 condition|(
 name|bucketOptions
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 operator|==
 name|bucket

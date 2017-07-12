@@ -6335,6 +6335,19 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|TESTMODE_BUCKET_CODEC_VERSION
+argument_list|(
+literal|"hive.test.bucketcodec.version"
+argument_list|,
+literal|1
+argument_list|,
+literal|"For testing only.  Will make ACID subsystem write RecordIdentifier.bucketId in specified\n"
+operator|+
+literal|"format"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"

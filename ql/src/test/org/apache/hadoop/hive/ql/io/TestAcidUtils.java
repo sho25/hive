@@ -880,7 +880,7 @@ literal|123
 argument_list|,
 name|opts
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -947,7 +947,7 @@ literal|1
 argument_list|,
 name|opts
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1014,7 +1014,7 @@ literal|1
 argument_list|,
 name|opts
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1061,7 +1061,7 @@ literal|123
 argument_list|,
 name|opts
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 argument_list|)
 expr_stmt|;

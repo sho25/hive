@@ -11784,7 +11784,7 @@ if|if
 condition|(
 name|acidIOOptions
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 operator|<
 literal|0
@@ -11809,7 +11809,7 @@ name|bucket
 operator|=
 name|acidIOOptions
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 expr_stmt|;
 if|if
@@ -12201,7 +12201,7 @@ if|if
 condition|(
 name|bucketInfo
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 operator|==
 name|bucket
@@ -13381,7 +13381,7 @@ name|b
 init|=
 name|opts
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 decl_stmt|;
 comment|// If the bucket is in the valid range, mark it as covered.
