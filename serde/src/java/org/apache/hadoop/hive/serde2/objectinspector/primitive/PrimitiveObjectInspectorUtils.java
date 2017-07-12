@@ -4681,10 +4681,6 @@ name|BOOLEAN
 case|:
 name|result
 operator|=
-name|String
-operator|.
-name|valueOf
-argument_list|(
 operator|(
 operator|(
 operator|(
@@ -4698,7 +4694,10 @@ argument_list|(
 name|o
 argument_list|)
 operator|)
-argument_list|)
+condition|?
+literal|"TRUE"
+else|:
+literal|"FALSE"
 expr_stmt|;
 break|break;
 case|case
