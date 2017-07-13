@@ -7571,7 +7571,10 @@ name|IOException
 block|{
 name|dag
 operator|.
-name|setCredentials
+name|getCredentials
+argument_list|()
+operator|.
+name|mergeAll
 argument_list|(
 name|UserGroupInformation
 operator|.
