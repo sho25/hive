@@ -7401,6 +7401,19 @@ operator|+
 literal|"The optimization will be automatically disabled if number of reducers would be less than specified value."
 argument_list|)
 block|,
+name|HIVEOPTJOINREDUCEDEDUPLICATION
+argument_list|(
+literal|"hive.optimize.joinreducededuplication"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Remove extra shuffle/sorting operations after join algorithm selection has been executed. \n"
+operator|+
+literal|"Currently it only works with Apache Tez. This should always be set to true. \n"
+operator|+
+literal|"Since it is a new feature, it has been made configurable."
+argument_list|)
+block|,
 name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"

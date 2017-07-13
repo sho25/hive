@@ -85,6 +85,12 @@ case|:
 return|return
 literal|"MULTICAST"
 return|;
+case|case
+literal|"ONE_TO_ONE_EDGE"
+case|:
+return|return
+literal|"FORWARD"
+return|;
 default|default:
 return|return
 literal|"UNKNOWN"

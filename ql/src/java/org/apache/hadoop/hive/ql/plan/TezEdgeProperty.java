@@ -53,7 +53,9 @@ block|,
 name|CUSTOM_EDGE
 block|,
 name|CUSTOM_SIMPLE_EDGE
-block|,   }
+block|,
+name|ONE_TO_ONE_EDGE
+block|}
 specifier|private
 name|HiveConf
 name|hiveConf
@@ -329,6 +331,21 @@ operator|.
 name|isSlowStart
 operator|=
 name|slowStart
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setEdgeType
+parameter_list|(
+name|EdgeType
+name|type
+parameter_list|)
+block|{
+name|this
+operator|.
+name|edgeType
+operator|=
+name|type
 expr_stmt|;
 block|}
 block|}

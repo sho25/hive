@@ -365,6 +365,11 @@ name|boolean
 name|skipTag
 decl_stmt|;
 comment|// Skip writing tags when feeding into mapjoin hashtable
+specifier|private
+name|boolean
+name|forwarding
+decl_stmt|;
+comment|// Whether this RS can forward records directly instead of shuffling/sorting
 specifier|public
 specifier|static
 enum|enum
@@ -1873,6 +1878,30 @@ parameter_list|()
 block|{
 return|return
 name|skipTag
+return|;
+block|}
+specifier|public
+name|void
+name|setForwarding
+parameter_list|(
+name|boolean
+name|forwarding
+parameter_list|)
+block|{
+name|this
+operator|.
+name|forwarding
+operator|=
+name|forwarding
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isForwarding
+parameter_list|()
+block|{
+return|return
+name|forwarding
 return|;
 block|}
 annotation|@
