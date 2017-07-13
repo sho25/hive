@@ -7603,6 +7603,17 @@ operator|+
 literal|"and follow-up operators in the query plan and merges them if they meet some preconditions."
 argument_list|)
 block|,
+name|HIVE_REMOVE_SQ_COUNT_CHECK
+argument_list|(
+literal|"hive.optimize.remove.sq_count_check"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to remove an extra join with sq_count_check for scalar subqueries "
+operator|+
+literal|"with constant group by keys."
+argument_list|)
+block|,
 comment|// CTE
 name|HIVE_CTE_MATERIALIZE_THRESHOLD
 argument_list|(
