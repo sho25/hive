@@ -795,10 +795,14 @@ name|queryState
 argument_list|)
 expr_stmt|;
 block|}
-comment|// FIXME : Note that the tableExists flag as used by Auth is kinda a hack and
+comment|// Note that the tableExists flag as used by Auth is kinda a hack and
 comment|// assumes only 1 table will ever be imported - this assumption is broken by
-comment|// REPL LOAD. We need to fix this. Maybe by continuing the hack and replacing
-comment|// by a map, maybe by coming up with a better api for it.
+comment|// REPL LOAD.
+comment|//
+comment|// However, we've not chosen to expand this to a map of tables/etc, since
+comment|// we have expanded how auth works with REPL DUMP / REPL LOAD to simply
+comment|// require ADMIN privileges, rather than checking each object, which
+comment|// quickly becomes untenable, and even more so, costly on memory.
 specifier|private
 name|boolean
 name|tableExists

@@ -1358,10 +1358,9 @@ name|TOK_REPL_DUMP
 argument_list|,
 name|HiveOperation
 operator|.
-name|EXPORT
+name|REPLDUMP
 argument_list|)
 expr_stmt|;
-comment|// piggyback on EXPORT security handling for now
 name|commandType
 operator|.
 name|put
@@ -1372,10 +1371,9 @@ name|TOK_REPL_LOAD
 argument_list|,
 name|HiveOperation
 operator|.
-name|IMPORT
+name|REPLLOAD
 argument_list|)
 expr_stmt|;
-comment|// piggyback on IMPORT security handling for now
 name|commandType
 operator|.
 name|put
@@ -1386,10 +1384,9 @@ name|TOK_REPL_STATUS
 argument_list|,
 name|HiveOperation
 operator|.
-name|SHOW_TBLPROPERTIES
+name|REPLSTATUS
 argument_list|)
 expr_stmt|;
-comment|// TODO : also actually DESCDATABASE
 block|}
 static|static
 block|{

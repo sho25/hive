@@ -91,6 +91,12 @@ name|EXPORT
 block|,
 name|IMPORT
 block|,
+name|REPLDUMP
+block|,
+name|REPLLOAD
+block|,
+name|REPLSTATUS
+block|,
 name|CREATEDATABASE
 block|,
 name|DROPDATABASE
