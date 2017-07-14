@@ -100,7 +100,12 @@ argument_list|)
 block|,
 name|LlapDaemonMaxFileDescriptorCount
 argument_list|(
-literal|"Maximum number of file descriptors"
+literal|"Maximum number of file descriptors used so far"
+argument_list|)
+block|,
+name|LlapDaemonLimitFileDescriptorCount
+argument_list|(
+literal|"Limit for file descriptors allowed by system"
 argument_list|)
 block|,
 name|LlapDaemonResidentSetSize
