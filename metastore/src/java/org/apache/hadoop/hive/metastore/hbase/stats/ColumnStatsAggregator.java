@@ -92,10 +92,6 @@ class|class
 name|ColumnStatsAggregator
 block|{
 specifier|public
-name|int
-name|numBitVectors
-decl_stmt|;
-specifier|public
 name|boolean
 name|useDensityFunctionForNDVEstimation
 decl_stmt|;

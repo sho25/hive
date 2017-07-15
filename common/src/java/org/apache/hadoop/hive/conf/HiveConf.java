@@ -7841,7 +7841,24 @@ operator|+
 literal|"This is useful to identify how tables are accessed and to determine if there are wasted columns that can be trimmed."
 argument_list|)
 block|,
-comment|// standard error allowed for ndv estimates. A lower value indicates higher accuracy and a
+name|HIVE_STATS_NDV_ALGO
+argument_list|(
+literal|"hive.stats.ndv.algo"
+argument_list|,
+literal|"hll"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"hll"
+argument_list|,
+literal|"fm"
+argument_list|)
+argument_list|,
+literal|"hll and fm stand for HyperLogLog and FM-sketch, respectively for computing ndv."
+argument_list|)
+block|,
+comment|// standard error allowed for ndv estimates for FM-sketch. A lower value indicates higher accuracy and a
 comment|// higher compute cost.
 name|HIVE_STATS_NDV_ERROR
 argument_list|(

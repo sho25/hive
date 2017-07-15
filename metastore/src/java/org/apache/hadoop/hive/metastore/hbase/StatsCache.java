@@ -555,16 +555,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|int
-name|numBitVectors
-init|=
-name|HiveStatsUtils
-operator|.
-name|getNumBitVectorsForNDVEstimation
-argument_list|(
-name|conf
-argument_list|)
-decl_stmt|;
 name|boolean
 name|useDensityFunctionForNDVEstimation
 init|=
@@ -737,8 +727,6 @@ argument_list|()
 operator|.
 name|getSetField
 argument_list|()
-argument_list|,
-name|numBitVectors
 argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|)

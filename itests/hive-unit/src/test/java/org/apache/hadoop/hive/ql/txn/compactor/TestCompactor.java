@@ -3527,7 +3527,7 @@ name|assertEquals
 argument_list|(
 literal|"nunDVs"
 argument_list|,
-literal|2
+literal|3
 argument_list|,
 name|colBStats
 operator|.
@@ -4202,7 +4202,7 @@ name|assertEquals
 argument_list|(
 literal|"nunDVs"
 argument_list|,
-literal|10
+literal|8
 argument_list|,
 name|colBStats
 operator|.

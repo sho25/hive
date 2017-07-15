@@ -500,7 +500,7 @@ name|TreeMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|// NDV will be 3 for bitVectors[0] and 12 for bitVectors[1]
+comment|// NDV will be 3 for bitVectors[0] and 1 for bitVectors[1]
 name|String
 name|bitVectors
 index|[]
@@ -2502,7 +2502,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|12
+literal|3
 argument_list|,
 name|lcsd
 operator|.
@@ -3860,7 +3860,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|12
+literal|3
 argument_list|,
 name|lcsd
 operator|.
@@ -4576,7 +4576,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|12
+literal|3
 argument_list|,
 name|lcsd
 operator|.
@@ -5264,7 +5264,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|12
+literal|3
 argument_list|,
 name|lcsd
 operator|.

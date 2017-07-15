@@ -202,9 +202,6 @@ parameter_list|(
 name|_Fields
 name|type
 parameter_list|,
-name|int
-name|numBitVectors
-parameter_list|,
 name|boolean
 name|useDensityFunctionForNDVEstimation
 parameter_list|)
@@ -291,12 +288,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-name|agg
-operator|.
-name|numBitVectors
-operator|=
-name|numBitVectors
-expr_stmt|;
 name|agg
 operator|.
 name|useDensityFunctionForNDVEstimation
