@@ -56255,7 +56255,11 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"User provided bloom filter entries when source alias is expected"
+literal|"User provided bloom filter entries when source alias is "
+operator|+
+literal|"expected. source:"
+operator|+
+name|source
 argument_list|)
 throw|;
 block|}
@@ -56288,7 +56292,11 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"User provided bloom filter entries when column name is expected"
+literal|"User provided bloom filter entries when column name is "
+operator|+
+literal|"expected. colName:"
+operator|+
+name|colName
 argument_list|)
 throw|;
 block|}
@@ -56313,7 +56321,7 @@ name|StringUtils
 operator|.
 name|isNumeric
 argument_list|(
-name|colName
+name|target
 argument_list|)
 condition|)
 block|{
@@ -56321,7 +56329,11 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"User provided bloom filter entries when target alias is expected"
+literal|"User provided bloom filter entries when target alias is "
+operator|+
+literal|"expected. target: "
+operator|+
+name|target
 argument_list|)
 throw|;
 block|}
@@ -56368,6 +56380,17 @@ name|e
 parameter_list|)
 block|{
 comment|// Ignore
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Number format exception when parsing "
+operator|+
+name|number
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 name|result

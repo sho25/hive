@@ -102,6 +102,27 @@ operator|-
 literal|1
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"colName="
+operator|+
+name|colName
+operator|+
+literal|", target="
+operator|+
+name|target
+operator|+
+literal|", numEntries="
+operator|+
+name|numEntries
+return|;
+block|}
 block|}
 end_class
 
