@@ -378,6 +378,12 @@ specifier|final
 name|Closeable
 name|socket
 decl_stmt|;
+specifier|private
+name|boolean
+name|closed
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 name|LlapBaseRecordReader
 parameter_list|(
@@ -496,12 +502,23 @@ block|}
 annotation|@
 name|Override
 specifier|public
+specifier|synchronized
 name|void
 name|close
 parameter_list|()
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+operator|!
+name|closed
+condition|)
+block|{
+name|closed
+operator|=
+literal|true
+expr_stmt|;
 name|Exception
 name|caughtException
 init|=
@@ -611,6 +628,7 @@ argument_list|,
 name|caughtException
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 annotation|@
@@ -793,6 +811,8 @@ name|IOException
 name|io
 parameter_list|)
 block|{
+try|try
+block|{
 if|if
 condition|(
 name|Thread
@@ -878,6 +898,36 @@ comment|// If we weren't interrupted, just propagate the error
 throw|throw
 name|io
 throw|;
+block|}
+block|}
+finally|finally
+block|{
+comment|// The external client handling umbilical responses and the connection to read the incoming
+comment|// data are not coupled. Calling close() here to make sure an error in one will cause the
+comment|// other to be closed as well.
+try|try
+block|{
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|err
+parameter_list|)
+block|{
+comment|// Don't propagate errors from close() since this will lose the original error above.
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Closing RecordReader due to error and hit another error during close()"
+argument_list|,
+name|err
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
