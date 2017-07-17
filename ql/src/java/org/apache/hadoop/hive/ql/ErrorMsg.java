@@ -1949,17 +1949,6 @@ operator|+
 literal|" does not support these operations."
 argument_list|)
 block|,
-name|NO_INSERT_OVERWRITE_WITH_ACID
-argument_list|(
-literal|10295
-argument_list|,
-literal|"INSERT OVERWRITE not allowed on table {0} with OutputFormat "
-operator|+
-literal|"that implements AcidOutputFormat while transaction manager that supports ACID is in use"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|VALUES_TABLE_CONSTRUCTOR_NOT_SUPPORTED
 argument_list|(
 literal|10296

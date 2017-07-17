@@ -1971,8 +1971,11 @@ name|dir
 operator|.
 name|getOriginalFiles
 argument_list|()
+operator|.
+name|size
+argument_list|()
 operator|==
-literal|null
+literal|0
 condition|)
 block|{
 comment|// Skip compaction if there's no delta files AND there's no original files
