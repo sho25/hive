@@ -577,9 +577,9 @@ decl_stmt|;
 name|RelOptPredicateList
 name|preds
 init|=
-name|RelMetadataQuery
+name|call
 operator|.
-name|instance
+name|getMetadataQuery
 argument_list|()
 operator|.
 name|getPulledUpPredicates

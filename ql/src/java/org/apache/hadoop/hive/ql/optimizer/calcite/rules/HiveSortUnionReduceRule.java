@@ -416,9 +416,9 @@ argument_list|)
 operator|+
 name|offset
 operator|<
-name|RelMetadataQuery
+name|call
 operator|.
-name|instance
+name|getMetadataQuery
 argument_list|()
 operator|.
 name|getRowCount

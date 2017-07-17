@@ -541,9 +541,9 @@ specifier|final
 name|RelMetadataQuery
 name|metadataProvider
 init|=
-name|RelMetadataQuery
+name|call
 operator|.
-name|instance
+name|getMetadataQuery
 argument_list|()
 decl_stmt|;
 comment|// 1. Recompose filter possibly by pulling out common elements from DNF
