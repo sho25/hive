@@ -125,6 +125,10 @@ name|bufPos
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+name|String
+name|id
+decl_stmt|;
 specifier|public
 name|ChunkedOutputStream
 parameter_list|(
@@ -133,8 +137,20 @@ name|out
 parameter_list|,
 name|int
 name|bufSize
+parameter_list|,
+name|String
+name|id
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Creating chunked input stream: {}"
+argument_list|,
+name|id
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|bufSize
@@ -167,6 +183,12 @@ name|DataOutputStream
 argument_list|(
 name|out
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|id
+operator|=
+name|id
 expr_stmt|;
 block|}
 annotation|@
@@ -312,7 +334,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ChunkedOutputStream: Closing underlying output stream."
+literal|"{}: Closing underlying output stream."
+argument_list|,
+name|id
 argument_list|)
 expr_stmt|;
 name|dout
@@ -367,8 +391,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Writing chunk of size "
-operator|+
+literal|"{}: Writing chunk of size {}"
+argument_list|,
+name|id
+argument_list|,
 name|bufPos
 argument_list|)
 expr_stmt|;

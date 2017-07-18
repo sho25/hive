@@ -127,11 +127,18 @@ name|endOfData
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|String
+name|id
+decl_stmt|;
 specifier|public
 name|ChunkedInputStream
 parameter_list|(
 name|InputStream
 name|in
+parameter_list|,
+name|String
+name|id
 parameter_list|)
 block|{
 name|din
@@ -140,6 +147,21 @@ operator|new
 name|DataInputStream
 argument_list|(
 name|in
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|id
+operator|=
+name|id
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Creating chunked input for {}"
+argument_list|,
+name|id
 argument_list|)
 expr_stmt|;
 block|}
@@ -152,6 +174,15 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"{}: Closing chunked input."
+argument_list|,
+name|id
+argument_list|)
+expr_stmt|;
 name|din
 operator|.
 name|close
@@ -234,7 +265,9 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Negative read length"
+name|id
+operator|+
+literal|": Negative read length"
 argument_list|)
 throw|;
 block|}
@@ -280,8 +313,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Chunk size "
-operator|+
+literal|"{}: Chunk size {}"
+argument_list|,
+name|id
+argument_list|,
 name|unreadBytes
 argument_list|)
 expr_stmt|;
@@ -297,7 +332,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Hit end of data"
+literal|"{}: Hit end of data"
+argument_list|,
+name|id
 argument_list|)
 expr_stmt|;
 name|endOfData
@@ -320,7 +357,9 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Error while attempting to read chunk length"
+name|id
+operator|+
+literal|": Error while attempting to read chunk length"
 argument_list|,
 name|err
 argument_list|)
@@ -363,7 +402,9 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Error while attempting to read "
+name|id
+operator|+
+literal|": Error while attempting to read "
 operator|+
 name|bytesToRead
 operator|+

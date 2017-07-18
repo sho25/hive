@@ -87,6 +87,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|Semaphore
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -166,24 +178,13 @@ literal|false
 decl_stmt|;
 specifier|private
 specifier|final
-name|Object
-name|writeMonitor
-init|=
-operator|new
-name|Object
-argument_list|()
-decl_stmt|;
-specifier|private
-specifier|final
 name|int
 name|maxPendingWrites
 decl_stmt|;
 specifier|private
-specifier|volatile
-name|int
-name|pendingWrites
-init|=
-literal|0
+specifier|final
+name|Semaphore
+name|writeResources
 decl_stmt|;
 specifier|private
 name|ChannelFutureListener
@@ -203,8 +204,10 @@ name|ChannelFuture
 name|future
 parameter_list|)
 block|{
-name|pendingWrites
-operator|--
+name|writeResources
+operator|.
+name|release
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -247,17 +250,6 @@ operator|.
 name|cause
 argument_list|()
 argument_list|)
-expr_stmt|;
-block|}
-synchronized|synchronized
-init|(
-name|writeMonitor
-init|)
-block|{
-name|writeMonitor
-operator|.
-name|notifyAll
-argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -380,6 +372,16 @@ operator|.
 name|maxPendingWrites
 operator|=
 name|maxOutstandingWrites
+expr_stmt|;
+name|this
+operator|.
+name|writeResources
+operator|=
+operator|new
+name|Semaphore
+argument_list|(
+name|maxPendingWrites
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -593,7 +595,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error flushing stream before close"
+literal|"Error flushing stream before close on "
+operator|+
+name|id
 argument_list|,
 name|err
 argument_list|)
@@ -604,9 +608,9 @@ operator|=
 literal|true
 expr_stmt|;
 comment|// Wait for all writes to finish before we actually close.
-name|waitForWritesToFinish
+name|takeWriteResources
 argument_list|(
-literal|0
+name|maxPendingWrites
 argument_list|)
 expr_stmt|;
 try|try
@@ -643,35 +647,25 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+comment|// Attempt to acquire write resources, waiting if they are not available.
 specifier|private
 name|void
-name|waitForWritesToFinish
+name|takeWriteResources
 parameter_list|(
 name|int
-name|desiredWriteCount
+name|numResources
 parameter_list|)
 throws|throws
 name|IOException
 block|{
-synchronized|synchronized
-init|(
-name|writeMonitor
-init|)
-block|{
-comment|// to prevent spurious wake up
-while|while
-condition|(
-name|pendingWrites
-operator|>
-name|desiredWriteCount
-condition|)
-block|{
 try|try
 block|{
-name|writeMonitor
+name|writeResources
 operator|.
-name|wait
-argument_list|()
+name|acquire
+argument_list|(
+name|numResources
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -684,13 +678,11 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Interrupted while waiting for write operations to finish for "
+literal|"Interrupted while waiting for write resources for "
 operator|+
 name|id
 argument_list|)
 throw|;
-block|}
-block|}
 block|}
 block|}
 specifier|private
@@ -715,16 +707,10 @@ name|id
 argument_list|)
 throw|;
 block|}
-comment|// Wait if we have exceeded our max pending write count
-name|waitForWritesToFinish
+name|takeWriteResources
 argument_list|(
-name|maxPendingWrites
-operator|-
 literal|1
 argument_list|)
-expr_stmt|;
-name|pendingWrites
-operator|++
 expr_stmt|;
 name|chc
 operator|.

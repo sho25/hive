@@ -159,16 +159,28 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+name|String
+name|id
+decl_stmt|;
 name|DataOutputStream
 name|dos
 decl_stmt|;
 specifier|public
 name|LlapRecordWriter
 parameter_list|(
+name|String
+name|id
+parameter_list|,
 name|OutputStream
 name|out
 parameter_list|)
 block|{
+name|this
+operator|.
+name|id
+operator|=
+name|id
+expr_stmt|;
 name|dos
 operator|=
 operator|new
@@ -194,7 +206,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"CLOSING the record writer output stream"
+literal|"CLOSING the record writer output stream for "
+operator|+
+name|id
 argument_list|)
 expr_stmt|;
 name|dos
