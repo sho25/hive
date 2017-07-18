@@ -425,7 +425,7 @@ specifier|final
 name|String
 name|COLLECTION_DELIM
 init|=
-literal|"colelction.delim"
+literal|"collection.delim"
 decl_stmt|;
 specifier|public
 specifier|static
