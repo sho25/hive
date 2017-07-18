@@ -1271,7 +1271,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/*      * 1. The only correlation operator we check for is EQUAL; because that is      *    the one for which we can do a Algebraic transformation.      * 2. For expressions that are not an EQUAL predicate, we treat them as conjuncts      *    having only 1 side. These should only contain references to the SubQuery      *    table sources.      * 3. For expressions that are an EQUAL predicate; we analyze each side and let the      *    left and right exprs in the Conjunct object.      *      * @return Conjunct  contains details on the left and right side of the conjunct expression.      */
+comment|/*      *  we analyze each side and let the      *    left and right exprs in the Conjunct object.      *      * @return Conjunct  contains details on the left and right side of the conjunct expression.      */
 name|Conjunct
 name|analyzeConjunct
 parameter_list|(
@@ -1281,21 +1281,14 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|int
-name|type
-init|=
-name|conjunct
-operator|.
-name|getType
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
-name|type
-operator|==
-name|HiveParser
+name|conjunct
 operator|.
-name|EQUAL
+name|getChildCount
+argument_list|()
+operator|==
+literal|2
 condition|)
 block|{
 name|ASTNode
@@ -2526,7 +2519,7 @@ comment|/*      * Restriction.13.m :: In the case of an implied Group By on a   
 comment|// Following is special cases for different type of subqueries which have aggregate and no implicit group by
 comment|// and are correlatd
 comment|// * EXISTS/NOT EXISTS - NOT allowed, throw an error for now. We plan to allow this later
-comment|// * SCALAR - only allow if it has non equi join predicate. This should return true since later in subquery remove
+comment|// * SCALAR - This should return true since later in subquery remove
 comment|//              rule we need to know about this case.
 comment|// * IN - always allowed, BUT returns true for cases with aggregate other than COUNT since later in subquery remove
 comment|//        rule we need to know about this case.
@@ -2597,28 +2590,6 @@ operator|.
 name|SCALAR
 condition|)
 block|{
-if|if
-condition|(
-name|hasNonEquiJoinPred
-condition|)
-block|{
-throw|throw
-operator|new
-name|CalciteSubquerySemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|INVALID_SUBQUERY_EXPRESSION
-operator|.
-name|getMsg
-argument_list|(
-name|subQueryAST
-argument_list|,
-literal|"Scalar subqueries with aggregate cannot have non-equi join predicate"
-argument_list|)
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 operator|!
