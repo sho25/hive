@@ -783,6 +783,10 @@ operator|=
 operator|-
 literal|1
 expr_stmt|;
+name|isMaterializedView
+operator|=
+literal|false
+expr_stmt|;
 name|hasJoin
 operator|=
 literal|false

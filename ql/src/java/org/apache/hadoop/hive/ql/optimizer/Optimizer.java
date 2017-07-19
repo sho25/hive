@@ -651,7 +651,9 @@ name|add
 argument_list|(
 operator|new
 name|Generator
-argument_list|()
+argument_list|(
+name|postExecHooks
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
