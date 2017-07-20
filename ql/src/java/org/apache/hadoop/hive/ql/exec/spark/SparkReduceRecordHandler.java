@@ -2511,6 +2511,15 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// Indicate last batch of current group.
+name|reducer
+operator|.
+name|setNextVectorBatchGroupStatus
+argument_list|(
+comment|/* isLastGroupBatch */
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// Forward; reset key and value columns.
 name|forwardBatch
 argument_list|(
@@ -2518,17 +2527,7 @@ comment|/* resetValueColumnsOnly */
 literal|false
 argument_list|)
 expr_stmt|;
-name|reducer
-operator|.
-name|endGroup
-argument_list|()
-expr_stmt|;
 block|}
-name|reducer
-operator|.
-name|startGroup
-argument_list|()
-expr_stmt|;
 comment|// Deserialize group key into vector row columns.
 name|byte
 index|[]
@@ -2652,6 +2651,15 @@ operator|>=
 name|BATCH_BYTES
 condition|)
 block|{
+comment|// We have a row for current group, so we indicate not the last batch.
+name|reducer
+operator|.
+name|setNextVectorBatchGroupStatus
+argument_list|(
+comment|/* isLastGroupBatch */
+literal|false
+argument_list|)
+expr_stmt|;
 comment|// Batch is full or using too much space.
 name|forwardBatch
 argument_list|(
@@ -3111,23 +3119,27 @@ operator|>
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|handleGroupKey
+condition|)
+block|{
+comment|// Indicate last batch of current group.
+name|reducer
+operator|.
+name|setNextVectorBatchGroupStatus
+argument_list|(
+comment|/* isLastGroupBatch */
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 name|forwardBatch
 argument_list|(
 comment|/* resetValueColumnsOnly */
 literal|false
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|handleGroupKey
-condition|)
-block|{
-name|reducer
-operator|.
-name|endGroup
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 block|}
 else|else

@@ -2872,6 +2872,21 @@ name|defaultEndGroup
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Tell the operator the status of the next key-grouped VectorizedRowBatch that will be delivered
+comment|// to the process method.  E.g. by reduce-shuffle.  These semantics are needed by PTF so it can
+comment|// efficiently add computed values to the last batch of a group key.
+specifier|public
+name|void
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+comment|// Do nothing.
+block|}
 comment|// an blocking operator (e.g. GroupByOperator and JoinOperator) can
 comment|// override this method to forward its outputs
 specifier|public

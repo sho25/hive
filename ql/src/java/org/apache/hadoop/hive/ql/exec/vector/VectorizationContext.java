@@ -4427,7 +4427,7 @@ name|udfClass
 argument_list|)
 return|;
 block|}
-specifier|protected
+specifier|public
 name|int
 name|getInputColumnIndex
 parameter_list|(
@@ -4579,8 +4579,6 @@ parameter_list|(
 name|TypeInfo
 name|typeInfo
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 if|if
 condition|(
@@ -4859,8 +4857,6 @@ parameter_list|(
 name|TypeInfo
 name|typeInfo
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 return|return
 name|ocm
@@ -17724,8 +17720,6 @@ parameter_list|(
 name|TypeInfo
 name|typeInfo
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 comment|// For now, leave DECIMAL precision/scale in the name so DecimalColumnVector scratch columns
 comment|// don't need their precision/scale adjusted...

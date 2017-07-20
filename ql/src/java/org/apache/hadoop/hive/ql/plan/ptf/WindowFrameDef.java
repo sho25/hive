@@ -282,6 +282,10 @@ name|toString
 parameter_list|()
 block|{
 return|return
+name|windowType
+operator|+
+literal|" "
+operator|+
 name|start
 operator|+
 literal|"~"

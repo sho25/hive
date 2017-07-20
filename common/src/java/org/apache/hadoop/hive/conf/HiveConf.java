@@ -11820,6 +11820,17 @@ operator|+
 literal|"2. all    : use VectorUDFAdaptor for all UDFs"
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_PTF_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.ptf.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the PTF of query execution.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_COMPLEX_TYPES_ENABLED
 argument_list|(
 literal|"hive.vectorized.complex.types.enabled"
