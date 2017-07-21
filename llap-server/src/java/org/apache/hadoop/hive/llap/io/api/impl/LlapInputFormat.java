@@ -1467,6 +1467,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|// UNDONE: Virtual column support?
 return|return
 operator|new
 name|VectorizedRowBatchCtx
@@ -1502,6 +1503,12 @@ argument_list|,
 literal|null
 argument_list|,
 name|partitionColumnCount
+argument_list|,
+operator|new
+name|VirtualColumn
+index|[
+literal|0
+index|]
 argument_list|,
 operator|new
 name|String

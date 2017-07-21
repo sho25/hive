@@ -11872,6 +11872,19 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_ROW_IDENTIFIER_ENABLED
+argument_list|(
+literal|"hive.vectorized.row.identifier.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorization\n"
+operator|+
+literal|"of ROW__ID.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"
