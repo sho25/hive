@@ -862,6 +862,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|boolean
+name|isActiveTransaction
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|void
 name|rollbackTransaction
 parameter_list|()

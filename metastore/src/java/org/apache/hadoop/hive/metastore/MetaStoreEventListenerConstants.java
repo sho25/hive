@@ -9,11 +9,11 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|hcatalog
-operator|.
-name|listener
+name|metastore
 package|;
 end_package
 
@@ -34,6 +34,15 @@ name|String
 name|DB_NOTIFICATION_EVENT_ID_KEY_NAME
 init|=
 literal|"DB_NOTIFICATION_EVENT_ID_KEY_NAME"
+decl_stmt|;
+comment|/*    * HiveMetaStore keys reserved for updating ListenerEvent parameters.    *    * HIVE_METASTORE_TRANSACTION_ACTIVE This key is used to check if a listener event is run inside a current    *                                   transaction. A boolean value is used for active (true) or no active (false).    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_METASTORE_TRANSACTION_ACTIVE
+init|=
+literal|"HIVE_METASTORE_TRANSACTION_ACTIVE"
 decl_stmt|;
 block|}
 end_class

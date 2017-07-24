@@ -417,6 +417,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|MetaStoreEventListenerConstants
+operator|.
+name|HIVE_METASTORE_TRANSACTION_ACTIVE
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|messaging
 operator|.
 name|EventMessage
@@ -1160,7 +1178,7 @@ name|event
 argument_list|)
 return|;
 block|}
-comment|/**    * Notify a list of listeners about a specific metastore event. Each listener notified might update    * the (ListenerEvent) event by setting a parameter key/value pair. These updated parameters will    * be returned to the caller.    *    * @param listeners List of MetaStoreEventListener listeners.    * @param eventType Type of the notification event.    * @param event The ListenerEvent with information about the event.    * @param environmentContext An EnvironmentContext object with parameters sent by the HMS client.    * @param parameters A list of key/value pairs with the new parameters to add.    * @return A list of key/value pair parameters that the listeners set. The returned object will return an empty    *         map if no parameters were updated or if no listeners were notified.    * @throws MetaException If an error occurred while calling the listeners.    */
+comment|/**    * Notify a list of listeners about a specific metastore event. Each listener notified might update    * the (ListenerEvent) event by setting a parameter key/value pair. These updated parameters will    * be returned to the caller.    *    * Sometimes these events are run inside a DB transaction and might cause issues with the listeners,    * for instance, Sentry blocks the HMS until an event is seen committed on the DB. To notify the listener about this,    * a new parameter to verify if a transaction is active is added to the ListenerEvent, and is up to the listener    * to skip this notification if so.    *    * @param listeners List of MetaStoreEventListener listeners.    * @param eventType Type of the notification event.    * @param event The ListenerEvent with information about the event.    * @param environmentContext An EnvironmentContext object with parameters sent by the HMS client.    * @param parameters A list of key/value pairs with the new parameters to add.    * @param ms The RawStore object from where to check if a transaction is active.    * @return A list of key/value pair parameters that the listeners set. The returned object will return an empty    *         map if no parameters were updated or if no listeners were notified.    * @throws MetaException If an error occurred while calling the listeners.    */
 specifier|public
 specifier|static
 name|Map
@@ -1193,6 +1211,10 @@ argument_list|,
 name|String
 argument_list|>
 name|parameters
+parameter_list|,
+specifier|final
+name|RawStore
+name|ms
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1213,6 +1235,31 @@ argument_list|(
 name|parameters
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|ms
+operator|!=
+literal|null
+condition|)
+block|{
+name|event
+operator|.
+name|putParameter
+argument_list|(
+name|HIVE_METASTORE_TRANSACTION_ACTIVE
+argument_list|,
+name|Boolean
+operator|.
+name|toString
+argument_list|(
+name|ms
+operator|.
+name|isActiveTransaction
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|notifyEvent
 argument_list|(

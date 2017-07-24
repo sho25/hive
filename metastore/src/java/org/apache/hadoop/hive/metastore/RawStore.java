@@ -839,6 +839,11 @@ name|boolean
 name|commitTransaction
 parameter_list|()
 function_decl|;
+specifier|public
+name|boolean
+name|isActiveTransaction
+parameter_list|()
+function_decl|;
 comment|/**    * Rolls back the current transaction if it is active    */
 annotation|@
 name|CanNotRetry
