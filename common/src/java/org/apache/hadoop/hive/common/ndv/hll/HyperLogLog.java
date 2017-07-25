@@ -1188,9 +1188,18 @@ name|long
 name|estimateNumDistinctValues
 parameter_list|()
 block|{
+comment|// FMSketch treats the ndv of all nulls as 1 but hll treates the ndv as 0.
+comment|// In order to get rid of divide by 0 problem, we follow FMSketch
 return|return
 name|count
 argument_list|()
+operator|>
+literal|0
+condition|?
+name|count
+argument_list|()
+else|:
+literal|1
 return|;
 block|}
 specifier|public

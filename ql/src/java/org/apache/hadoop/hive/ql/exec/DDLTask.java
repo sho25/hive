@@ -21799,6 +21799,8 @@ operator|.
 name|getCountDistint
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
 name|cs
 operator|.
 name|getAvgColLen

@@ -15,9 +15,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|hbase
+name|columnstats
 operator|.
-name|stats
+name|aggr
 package|;
 end_package
 
@@ -94,6 +94,10 @@ block|{
 specifier|public
 name|boolean
 name|useDensityFunctionForNDVEstimation
+decl_stmt|;
+specifier|public
+name|double
+name|ndvTuner
 decl_stmt|;
 specifier|public
 specifier|abstract

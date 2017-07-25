@@ -15,9 +15,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|hbase
-operator|.
-name|stats
+name|columnstats
 operator|.
 name|merge
 package|;

@@ -7924,6 +7924,15 @@ argument_list|,
 literal|"hll and fm stand for HyperLogLog and FM-sketch, respectively for computing ndv."
 argument_list|)
 block|,
+name|HIVE_STATS_FETCH_BITVECTOR
+argument_list|(
+literal|"hive.stats.fetch.bitvector"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether we fetch bitvector when we compute ndv. Users can turn it off if they want to use old schema"
+argument_list|)
+block|,
 comment|// standard error allowed for ndv estimates for FM-sketch. A lower value indicates higher accuracy and a
 comment|// higher compute cost.
 name|HIVE_STATS_NDV_ERROR

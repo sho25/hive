@@ -15,9 +15,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|hbase
+name|columnstats
 operator|.
-name|stats
+name|aggr
 package|;
 end_package
 
@@ -241,6 +241,26 @@ name|HBaseUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -250,6 +270,21 @@ name|ColumnStatsAggregator
 implements|implements
 name|IExtrapolatePartStatus
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|DecimalColumnStatsAggregator
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -294,6 +329,19 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"doAllPartitionContainStats for "
+operator|+
+name|colName
+operator|+
+literal|" is "
+operator|+
+name|doAllPartitionContainStats
+argument_list|)
+expr_stmt|;
 name|NumDistinctValueEstimator
 name|ndvEstimator
 init|=
@@ -493,6 +541,23 @@ name|ndvEstimator
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"all of the bit vectors can merge for "
+operator|+
+name|colName
+operator|+
+literal|" is "
+operator|+
+operator|(
+name|ndvEstimator
+operator|!=
+literal|null
+operator|)
+argument_list|)
+expr_stmt|;
 name|ColumnStatisticsData
 name|columnStatisticsData
 init|=
@@ -562,11 +627,6 @@ operator|.
 name|getDecimalStats
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|useDensityFunctionForNDVEstimation
-condition|)
-block|{
 name|lowerBound
 operator|=
 name|Math
@@ -617,7 +677,6 @@ operator|.
 name|getNumDVs
 argument_list|()
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|ndvEstimator
@@ -812,6 +871,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|long
+name|estimation
+decl_stmt|;
 if|if
 condition|(
 name|useDensityFunctionForNDVEstimation
@@ -829,9 +891,8 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|long
 name|estimation
-init|=
+operator|=
 call|(
 name|long
 call|)
@@ -860,7 +921,7 @@ operator|)
 operator|/
 name|densityAvg
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|estimation
@@ -868,12 +929,9 @@ operator|<
 name|lowerBound
 condition|)
 block|{
-name|aggregateData
-operator|.
-name|setNumDVs
-argument_list|(
+name|estimation
+operator|=
 name|lowerBound
-argument_list|)
 expr_stmt|;
 block|}
 elseif|else
@@ -884,16 +942,32 @@ operator|>
 name|higherBound
 condition|)
 block|{
-name|aggregateData
-operator|.
-name|setNumDVs
-argument_list|(
+name|estimation
+operator|=
 name|higherBound
-argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
+name|estimation
+operator|=
+call|(
+name|long
+call|)
+argument_list|(
+name|lowerBound
+operator|+
+operator|(
+name|higherBound
+operator|-
+name|lowerBound
+operator|)
+operator|*
+name|ndvTuner
+argument_list|)
+expr_stmt|;
+block|}
 name|aggregateData
 operator|.
 name|setNumDVs
@@ -901,14 +975,6 @@ argument_list|(
 name|estimation
 argument_list|)
 expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-comment|// Without useDensityFunctionForNDVEstimation, we just use the
-comment|// default one, which is the max of all the partitions and it is
-comment|// already done.
-block|}
 block|}
 name|columnStatisticsData
 operator|.
@@ -921,6 +987,15 @@ block|}
 else|else
 block|{
 comment|// we need extrapolation
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"start extrapolation for "
+operator|+
+name|colName
+argument_list|)
+expr_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -1635,6 +1710,25 @@ operator|.
 name|setStatsData
 argument_list|(
 name|columnStatisticsData
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Ndv estimatation for "
+operator|+
+name|colName
+operator|+
+literal|" is "
+operator|+
+name|columnStatisticsData
+operator|.
+name|getDecimalStats
+argument_list|()
+operator|.
+name|getNumDVs
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

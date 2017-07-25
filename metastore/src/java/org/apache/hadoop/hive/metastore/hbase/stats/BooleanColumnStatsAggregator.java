@@ -15,9 +15,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|hbase
+name|columnstats
 operator|.
-name|stats
+name|aggr
 package|;
 end_package
 
