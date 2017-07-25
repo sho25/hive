@@ -2393,7 +2393,7 @@ name|plan
 operator|.
 name|VectorMapJoinDesc
 operator|.
-name|OperatorVariation
+name|VectorMapJoinVariation
 import|;
 end_import
 
@@ -17013,10 +17013,10 @@ name|HashTableKeyType
 operator|.
 name|NONE
 decl_stmt|;
-name|OperatorVariation
-name|operatorVariation
+name|VectorMapJoinVariation
+name|vectorMapJoinVariation
 init|=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|NONE
 decl_stmt|;
@@ -17284,9 +17284,9 @@ operator|!
 name|isInnerBigOnly
 condition|)
 block|{
-name|operatorVariation
+name|vectorMapJoinVariation
 operator|=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|INNER
 expr_stmt|;
@@ -17299,9 +17299,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|operatorVariation
+name|vectorMapJoinVariation
 operator|=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|INNER_BIG_ONLY
 expr_stmt|;
@@ -17323,9 +17323,9 @@ name|JoinDesc
 operator|.
 name|RIGHT_OUTER_JOIN
 case|:
-name|operatorVariation
+name|vectorMapJoinVariation
 operator|=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|OUTER
 expr_stmt|;
@@ -17341,9 +17341,9 @@ name|JoinDesc
 operator|.
 name|LEFT_SEMI_JOIN
 case|:
-name|operatorVariation
+name|vectorMapJoinVariation
 operator|=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|LEFT_SEMI
 expr_stmt|;
@@ -17406,7 +17406,7 @@ name|LONG
 case|:
 switch|switch
 condition|(
-name|operatorVariation
+name|vectorMapJoinVariation
 condition|)
 block|{
 case|case
@@ -17456,7 +17456,7 @@ name|HiveException
 argument_list|(
 literal|"Unknown operator variation "
 operator|+
-name|operatorVariation
+name|vectorMapJoinVariation
 argument_list|)
 throw|;
 block|}
@@ -17466,7 +17466,7 @@ name|STRING
 case|:
 switch|switch
 condition|(
-name|operatorVariation
+name|vectorMapJoinVariation
 condition|)
 block|{
 case|case
@@ -17516,7 +17516,7 @@ name|HiveException
 argument_list|(
 literal|"Unknown operator variation "
 operator|+
-name|operatorVariation
+name|vectorMapJoinVariation
 argument_list|)
 throw|;
 block|}
@@ -17526,7 +17526,7 @@ name|MULTI_KEY
 case|:
 switch|switch
 condition|(
-name|operatorVariation
+name|vectorMapJoinVariation
 condition|)
 block|{
 case|case
@@ -17576,7 +17576,7 @@ name|HiveException
 argument_list|(
 literal|"Unknown operator variation "
 operator|+
-name|operatorVariation
+name|vectorMapJoinVariation
 argument_list|)
 throw|;
 block|}
@@ -17634,9 +17634,9 @@ argument_list|)
 expr_stmt|;
 name|vectorDesc
 operator|.
-name|setOperatorVariation
+name|setVectorMapJoinVariation
 argument_list|(
-name|operatorVariation
+name|vectorMapJoinVariation
 argument_list|)
 expr_stmt|;
 name|vectorDesc

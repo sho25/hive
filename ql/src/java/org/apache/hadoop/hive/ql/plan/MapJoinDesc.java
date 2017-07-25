@@ -241,7 +241,7 @@ name|plan
 operator|.
 name|VectorMapJoinDesc
 operator|.
-name|OperatorVariation
+name|VectorMapJoinVariation
 import|;
 end_import
 
@@ -2060,7 +2060,7 @@ operator|)
 name|vectorDesc
 operator|)
 operator|.
-name|hashTableImplementationType
+name|getHashTableImplementationType
 argument_list|()
 operator|!=
 name|HashTableImplementationType
@@ -2823,10 +2823,10 @@ name|isNative
 operator|||
 name|vectorMapJoinDesc
 operator|.
-name|operatorVariation
+name|getVectorMapJoinVariation
 argument_list|()
 operator|!=
-name|OperatorVariation
+name|VectorMapJoinVariation
 operator|.
 name|OUTER
 condition|)

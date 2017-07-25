@@ -690,7 +690,7 @@ literal|null
 operator|&&
 name|vectorDesc
 operator|.
-name|hashTableImplementationType
+name|getHashTableImplementationType
 argument_list|()
 operator|==
 name|VectorMapJoinDesc

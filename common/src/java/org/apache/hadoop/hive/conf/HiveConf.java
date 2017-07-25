@@ -3298,6 +3298,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_MAPJOIN_TESTING_NO_HASH_TABLE_LOAD
+argument_list|(
+literal|"hive.mapjoin.testing.no.hash.table.load"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal use only, true when in testing map join"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"
