@@ -12462,9 +12462,8 @@ name|LLAP_IO_TRACE_ALWAYS_DUMP
 argument_list|(
 literal|"hive.llap.io.trace.always.dump"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
-comment|// TODO#
 literal|"Whether to always dump the LLAP IO trace (if enabled); the default is on error."
 argument_list|)
 block|,
