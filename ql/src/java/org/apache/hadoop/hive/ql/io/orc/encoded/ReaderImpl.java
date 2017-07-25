@@ -158,6 +158,9 @@ name|dataReader
 parameter_list|,
 name|PoolFactory
 name|pf
+parameter_list|,
+name|IoTrace
+name|trace
 parameter_list|)
 throws|throws
 name|IOException
@@ -181,6 +184,8 @@ argument_list|,
 name|dataReader
 argument_list|,
 name|pf
+argument_list|,
+name|trace
 argument_list|)
 return|;
 block|}

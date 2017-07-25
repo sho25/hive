@@ -230,6 +230,17 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+name|IoTrace
+name|trace
+init|=
+operator|new
+name|IoTrace
+argument_list|(
+literal|0
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
 name|BufferChunk
 name|rv
 init|=
@@ -246,6 +257,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 decl_stmt|;
 name|assertNull
@@ -298,6 +311,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 expr_stmt|;
 name|assertNull
@@ -368,6 +383,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -450,6 +467,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -522,6 +541,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 expr_stmt|;
 name|assertNull
@@ -574,6 +595,8 @@ argument_list|,
 name|l
 argument_list|,
 literal|true
+argument_list|,
+name|trace
 argument_list|)
 expr_stmt|;
 name|assertNotNull

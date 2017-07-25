@@ -12432,6 +12432,42 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
+name|LLAP_IO_TRACE_SIZE
+argument_list|(
+literal|"hive.llap.io.trace.size"
+argument_list|,
+literal|"2Mb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|true
+argument_list|,
+operator|(
+name|long
+operator|)
+name|Integer
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|false
+argument_list|)
+argument_list|,
+literal|"The buffer size for a per-fragment LLAP debug trace. 0 to disable."
+argument_list|)
+block|,
+name|LLAP_IO_TRACE_ALWAYS_DUMP
+argument_list|(
+literal|"hive.llap.io.trace.always.dump"
+argument_list|,
+literal|true
+argument_list|,
+comment|// TODO#
+literal|"Whether to always dump the LLAP IO trace (if enabled); the default is on error."
+argument_list|)
+block|,
 name|LLAP_IO_NONVECTOR_WRAPPER_ENABLED
 argument_list|(
 literal|"hive.llap.io.nonvector.wrapper.enabled"

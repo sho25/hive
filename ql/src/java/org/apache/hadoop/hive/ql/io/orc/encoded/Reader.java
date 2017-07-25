@@ -231,6 +231,9 @@ name|dataReader
 parameter_list|,
 name|PoolFactory
 name|pf
+parameter_list|,
+name|IoTrace
+name|trace
 parameter_list|)
 throws|throws
 name|IOException
