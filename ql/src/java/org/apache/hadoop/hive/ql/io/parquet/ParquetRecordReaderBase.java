@@ -1055,11 +1055,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"PARQUET predicate push down generated. Predicates = ["
-operator|+
-name|p
-operator|+
-literal|"]"
+literal|"PARQUET predicate push down generated."
 argument_list|)
 expr_stmt|;
 name|ParquetInputFormat
