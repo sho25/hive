@@ -6332,12 +6332,6 @@ argument_list|(
 name|fileStream
 argument_list|)
 expr_stmt|;
-name|output
-argument_list|(
-literal|""
-argument_list|)
-expr_stmt|;
-comment|// dummy new line
 block|}
 block|}
 specifier|private
