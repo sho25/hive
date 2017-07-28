@@ -9650,7 +9650,9 @@ literal|false
 argument_list|,
 literal|"Whether to log explain output for every query.\n"
 operator|+
-literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
+literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level\n"
+operator|+
+literal|"and in WebUI / Drilldown / Show Query."
 argument_list|)
 block|,
 name|HIVE_EXPLAIN_USER

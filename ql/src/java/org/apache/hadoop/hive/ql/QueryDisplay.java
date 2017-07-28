@@ -933,10 +933,13 @@ name|getExplainPlan
 parameter_list|()
 block|{
 return|return
-name|returnStringOrUnknown
-argument_list|(
 name|explainPlan
-argument_list|)
+operator|==
+literal|null
+condition|?
+literal|"SET hive.log.explain.output TO true TO VIEW PLANS"
+else|:
+name|explainPlan
 return|;
 block|}
 specifier|public
