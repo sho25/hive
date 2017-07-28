@@ -47,6 +47,12 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
 annotation|@
 name|Override
 specifier|public

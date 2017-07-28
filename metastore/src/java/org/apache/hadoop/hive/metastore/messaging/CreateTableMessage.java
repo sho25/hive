@@ -66,6 +66,12 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
+specifier|public
+specifier|abstract
 name|Table
 name|getTableObj
 parameter_list|()

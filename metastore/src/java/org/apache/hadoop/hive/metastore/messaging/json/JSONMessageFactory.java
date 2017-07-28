@@ -900,6 +900,11 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
+name|table
+operator|.
+name|getTableType
+argument_list|()
+argument_list|,
 name|now
 argument_list|()
 argument_list|)

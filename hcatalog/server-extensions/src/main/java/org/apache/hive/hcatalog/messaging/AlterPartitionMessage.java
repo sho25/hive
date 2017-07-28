@@ -59,6 +59,12 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
+specifier|public
+specifier|abstract
 name|Map
 argument_list|<
 name|String

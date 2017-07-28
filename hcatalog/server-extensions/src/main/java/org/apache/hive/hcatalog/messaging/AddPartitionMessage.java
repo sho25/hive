@@ -68,6 +68,12 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
 comment|/**    * Getter for list of partitions added.    * @return List of maps, where each map identifies values for each partition-key, for every added partition.    */
 specifier|public
 specifier|abstract
