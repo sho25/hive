@@ -2946,6 +2946,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|//so that we create empty bucket files when needed (but see HIVE-17138)
 name|writer
 operator|=
 name|OrcFile
