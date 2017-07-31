@@ -250,6 +250,11 @@ name|FileChannel
 name|fileChannel
 decl_stmt|;
 specifier|private
+specifier|final
+name|boolean
+name|canEvictAfterTransfer
+decl_stmt|;
+specifier|private
 name|ReadaheadRequest
 name|readaheadRequest
 decl_stmt|;
@@ -282,6 +287,9 @@ name|shuffleBufferSize
 parameter_list|,
 name|boolean
 name|shuffleTransferToAllowed
+parameter_list|,
+name|boolean
+name|canEvictAfterTransfer
 parameter_list|)
 throws|throws
 name|IOException
@@ -363,6 +371,13 @@ operator|.
 name|shuffleTransferToAllowed
 operator|=
 name|shuffleTransferToAllowed
+expr_stmt|;
+comment|// To indicate whether the pages should be thrown away or not.
+name|this
+operator|.
+name|canEvictAfterTransfer
+operator|=
+name|canEvictAfterTransfer
 expr_stmt|;
 block|}
 annotation|@
@@ -686,6 +701,22 @@ condition|)
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|canEvictAfterTransfer
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"shuffleBufferSize: {}, path: {}"
+argument_list|,
+name|shuffleBufferSize
+argument_list|,
+name|identifier
+argument_list|)
+expr_stmt|;
 name|NativeIO
 operator|.
 name|POSIX
@@ -712,6 +743,7 @@ operator|.
 name|POSIX_FADV_DONTNEED
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
