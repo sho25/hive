@@ -769,7 +769,7 @@ name|ql
 operator|.
 name|optimizer
 operator|.
-name|SparkRemoveDynamicPruningBySize
+name|SparkRemoveDynamicPruning
 import|;
 end_import
 
@@ -1431,7 +1431,7 @@ name|procCtx
 argument_list|)
 expr_stmt|;
 comment|// Remove DPP based on expected size of the output data
-name|runRemoveDynamicPruningBySize
+name|runRemoveDynamicPruning
 argument_list|(
 name|procCtx
 argument_list|)
@@ -1456,7 +1456,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|runRemoveDynamicPruningBySize
+name|runRemoveDynamicPruning
 parameter_list|(
 name|OptimizeSparkProcContext
 name|procCtx
@@ -1496,7 +1496,7 @@ argument_list|(
 operator|new
 name|RuleRegExp
 argument_list|(
-literal|"Disabling Dynamic Partition Pruning By Size"
+literal|"Disabling Dynamic Partition Pruning"
 argument_list|,
 name|SparkPartitionPruningSinkOperator
 operator|.
@@ -1507,7 +1507,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|SparkRemoveDynamicPruningBySize
+name|SparkRemoveDynamicPruning
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1585,14 +1585,8 @@ condition|(
 operator|!
 name|conf
 operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SPARK_DYNAMIC_PARTITION_PRUNING
-argument_list|)
+name|isSparkDPPAny
+argument_list|()
 condition|)
 block|{
 return|return;
@@ -2427,14 +2421,8 @@ condition|(
 operator|!
 name|conf
 operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SPARK_DYNAMIC_PARTITION_PRUNING
-argument_list|)
+name|isSparkDPPAny
+argument_list|()
 condition|)
 block|{
 return|return;

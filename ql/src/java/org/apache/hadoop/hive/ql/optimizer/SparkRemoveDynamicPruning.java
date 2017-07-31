@@ -218,13 +218,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * If we expect the number of keys for dynamic pruning to be too large we  * disable it.  *  * Cloned from RemoveDynamicPruningBySize  */
+comment|/**  * Check if dynamic partition pruning should be disabled.  Currently the following 2 cases  * checked.  * 1.  The expected number of keys for dynamic pruning is too large  * 2.  If DPP enabled only for mapjoin and join is not a map join.  *  * Cloned from RemoveDynamicPruningBySize  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|SparkRemoveDynamicPruningBySize
+name|SparkRemoveDynamicPruning
 implements|implements
 name|NodeProcessor
 block|{
@@ -238,7 +238,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|SparkRemoveDynamicPruningBySize
+name|SparkRemoveDynamicPruning
 operator|.
 name|class
 operator|.
@@ -279,6 +279,11 @@ name|OptimizeSparkProcContext
 operator|)
 name|procContext
 decl_stmt|;
+name|boolean
+name|remove
+init|=
+literal|false
+decl_stmt|;
 name|SparkPartitionPruningSinkOperator
 name|op
 init|=
@@ -295,6 +300,46 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|context
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isSparkDPPOnlyMapjoin
+argument_list|()
+operator|&&
+operator|!
+name|op
+operator|.
+name|isWithMapjoin
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Disabling dynamic partition pruning based on: "
+operator|+
+name|desc
+operator|.
+name|getTableScan
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|". This is not part of a map join."
+argument_list|)
+expr_stmt|;
+name|remove
+operator|=
+literal|true
+expr_stmt|;
+block|}
+elseif|else
 if|if
 condition|(
 name|desc
@@ -318,19 +363,11 @@ name|SPARK_DYNAMIC_PARTITION_PRUNING_MAX_DATA_SIZE
 argument_list|)
 condition|)
 block|{
-name|OperatorUtils
-operator|.
-name|removeBranch
-argument_list|(
-name|op
-argument_list|)
-expr_stmt|;
-comment|// at this point we've found the fork in the op pipeline that has the pruning as a child plan.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Disabling dynamic pruning for: "
+literal|"Disabling dynamic partition pruning based on: "
 operator|+
 name|desc
 operator|.
@@ -349,6 +386,24 @@ argument_list|()
 operator|.
 name|getDataSize
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|remove
+operator|=
+literal|true
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|remove
+condition|)
+block|{
+comment|// at this point we've found the fork in the op pipeline that has the pruning as a child plan.
+name|OperatorUtils
+operator|.
+name|removeBranch
+argument_list|(
+name|op
 argument_list|)
 expr_stmt|;
 block|}

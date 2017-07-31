@@ -2533,15 +2533,9 @@ argument_list|)
 operator|&&
 name|HiveConf
 operator|.
-name|getBoolVar
+name|isSparkDPPAny
 argument_list|(
 name|job
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|SPARK_DYNAMIC_PARTITION_PRUNING
 argument_list|)
 condition|)
 block|{
