@@ -1319,7 +1319,7 @@ else|:
 literal|"Failed"
 operator|)
 operator|+
-literal|" in DFS location validation"
+literal|" in DFS location validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -1412,14 +1412,14 @@ condition|)
 block|{
 name|dbLoc
 operator|=
-literal|"select dbt.\"DB_ID\", dbt.\"NAME\", dbt.\"DB_LOCATION_URI\" from \"DBS\" dbt order by dbt.\"NAME\" "
+literal|"select dbt.\"DB_ID\", dbt.\"NAME\", dbt.\"DB_LOCATION_URI\" from \"DBS\" dbt order by dbt.\"DB_ID\" "
 expr_stmt|;
 block|}
 else|else
 block|{
 name|dbLoc
 operator|=
-literal|"select dbt.DB_ID, dbt.NAME, dbt.DB_LOCATION_URI from DBS dbt order by dbt.NAME"
+literal|"select dbt.DB_ID, dbt.NAME, dbt.DB_LOCATION_URI from DBS dbt order by dbt.DB_ID"
 expr_stmt|;
 block|}
 try|try
@@ -1589,7 +1589,7 @@ name|VIRTUAL_VIEW
 operator|+
 literal|"' and tbl.\"TBL_ID\">= ? and tbl.\"TBL_ID\"<= ? "
 operator|+
-literal|"inner join \"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_NAME\" "
+literal|"inner join \"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_ID\" "
 expr_stmt|;
 block|}
 else|else
@@ -1602,7 +1602,7 @@ name|TableType
 operator|.
 name|VIRTUAL_VIEW
 operator|+
-literal|"' and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_NAME"
+literal|"' and tbl.TBL_ID>= ? and tbl.TBL_ID<= ?  inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_ID"
 expr_stmt|;
 block|}
 name|long
@@ -1890,7 +1890,7 @@ literal|"inner join \"SDS\" sd on pt.\"SD_ID\" = sd.\"SD_ID\" and pt.\"PART_ID\"
 operator|+
 literal|" inner join \"TBLS\" tbl on pt.\"TBL_ID\" = tbl.\"TBL_ID\" inner join "
 operator|+
-literal|"\"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_NAME\" "
+literal|"\"DBS\" dbt on tbl.\"DB_ID\" = dbt.\"DB_ID\" order by tbl.\"TBL_ID\" "
 expr_stmt|;
 block|}
 else|else
@@ -1901,7 +1901,7 @@ literal|"select pt.PART_ID, pt.PART_NAME, sd.LOCATION, tbl.TBL_ID, tbl.TBL_NAME,
 operator|+
 literal|"inner join SDS sd on pt.SD_ID = sd.SD_ID and pt.PART_ID>= ? and pt.PART_ID<= ?  "
 operator|+
-literal|"inner join TBLS tbl on tbl.TBL_ID = pt.TBL_ID inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_NAME "
+literal|"inner join TBLS tbl on tbl.TBL_ID = pt.TBL_ID inner join DBS dbt on tbl.DB_ID = dbt.DB_ID order by tbl.TBL_ID "
 expr_stmt|;
 block|}
 name|long
@@ -2200,7 +2200,7 @@ literal|" from \"TBLS\" t, \"SDS\" s, \"DBS\" db, \"SKEWED_COL_VALUE_LOC_MAP\" s
 operator|+
 literal|"where sk.\"SD_ID\" = s.\"SD_ID\" and s.\"SD_ID\" = t.\"SD_ID\" and t.\"DB_ID\" = db.\"DB_ID\" and "
 operator|+
-literal|"sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? order by t.\"TBL_NAME\" "
+literal|"sk.\"STRING_LIST_ID_KID\">= ? and sk.\"STRING_LIST_ID_KID\"<= ? order by t.\"TBL_ID\" "
 expr_stmt|;
 block|}
 else|else
@@ -2209,7 +2209,7 @@ name|skewedColLoc
 operator|=
 literal|"select t.TBL_NAME, t.TBL_ID, sk.STRING_LIST_ID_KID, sk.LOCATION, db.NAME, db.DB_ID from TBLS t, SDS s, DBS db, SKEWED_COL_VALUE_LOC_MAP sk "
 operator|+
-literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? order by t.TBL_NAME "
+literal|"where sk.SD_ID = s.SD_ID and s.SD_ID = t.SD_ID and t.DB_ID = db.DB_ID and sk.STRING_LIST_ID_KID>= ? and sk.STRING_LIST_ID_KID<= ? order by t.TBL_ID "
 expr_stmt|;
 block|}
 name|long
@@ -3982,7 +3982,7 @@ else|:
 literal|"Failed"
 operator|)
 operator|+
-literal|" in sequence number validation for SEQUENCE_TABLE"
+literal|" in sequence number validation for SEQUENCE_TABLE."
 argument_list|)
 expr_stmt|;
 return|return
@@ -4660,7 +4660,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Failed in schema table validation"
+literal|"Failed in schema table validation."
 argument_list|)
 expr_stmt|;
 return|return
@@ -5135,7 +5135,7 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"Validating columns for incorrect NULL values"
+literal|"Validating columns for incorrect NULL values."
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -5171,7 +5171,7 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 operator|+
-literal|"') order by t.\"TBL_NAME\" "
+literal|"') order by t.\"TBL_ID\" "
 operator|)
 else|:
 operator|(
@@ -5187,7 +5187,7 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 operator|+
-literal|"') order by t.TBL_NAME "
+literal|"') order by t.TBL_ID "
 operator|)
 decl_stmt|;
 name|ResultSet
@@ -5276,7 +5276,7 @@ else|:
 literal|"Failed"
 operator|)
 operator|+
-literal|" in column validation for incorrect NULL values"
+literal|" in column validation for incorrect NULL values."
 argument_list|)
 expr_stmt|;
 return|return
