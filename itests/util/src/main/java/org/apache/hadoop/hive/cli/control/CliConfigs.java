@@ -226,6 +226,13 @@ name|excludesFrom
 argument_list|(
 name|testConfigProps
 argument_list|,
+literal|"miniSparkOnYarn.only.query.files"
+argument_list|)
+expr_stmt|;
+name|excludesFrom
+argument_list|(
+name|testConfigProps
+argument_list|,
 literal|"disabled.query.files"
 argument_list|)
 expr_stmt|;
@@ -1791,6 +1798,13 @@ argument_list|,
 literal|"spark.query.files"
 argument_list|)
 expr_stmt|;
+name|includesFrom
+argument_list|(
+name|testConfigProps
+argument_list|,
+literal|"spark.only.query.files"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/spark"
@@ -1878,7 +1892,7 @@ name|includesFrom
 argument_list|(
 name|testConfigProps
 argument_list|,
-literal|"spark.only.query.files"
+literal|"miniSparkOnYarn.only.query.files"
 argument_list|)
 expr_stmt|;
 name|setResultsDir
