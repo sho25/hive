@@ -3339,6 +3339,13 @@ operator|.
 name|HIVE_IN_TEST
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|threadPool
+operator|==
+literal|null
+condition|)
+block|{
 synchronized|synchronized
 init|(
 name|HMSHandler
@@ -3393,6 +3400,7 @@ name|build
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if
