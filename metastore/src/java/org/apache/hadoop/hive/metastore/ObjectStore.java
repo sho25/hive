@@ -11215,6 +11215,11 @@ argument_list|(
 name|toPersist
 argument_list|)
 expr_stmt|;
+name|pm
+operator|.
+name|flush
+argument_list|()
+expr_stmt|;
 block|}
 name|success
 operator|=
