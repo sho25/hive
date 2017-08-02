@@ -14373,12 +14373,18 @@ literal|"@"
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Add tbl_id and empty bitvector
 return|return
 name|sb
 operator|.
 name|append
 argument_list|(
 name|tblID
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"@"
 argument_list|)
 operator|.
 name|toString
