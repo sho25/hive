@@ -41,6 +41,16 @@ name|DiskRangeList
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -94,6 +104,17 @@ return|return
 literal|true
 return|;
 comment|// Should not be treated like it needs data.
+block|}
+annotation|@
+name|Override
+specifier|public
+name|ByteBuffer
+name|getData
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class
