@@ -464,7 +464,6 @@ operator|.
 name|isTemporary
 argument_list|()
 operator|&&
-operator|!
 name|replicationSpec
 operator|.
 name|isInReplicationScope
