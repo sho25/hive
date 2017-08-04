@@ -277,7 +277,7 @@ argument_list|,
 name|HCatRecord
 argument_list|>
 block|{
-comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * @param conf the Configuration object    * @return the table schema    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
+comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * Note: This is the record-schema for the table. It does not include the table's partition columns.    * @param conf the Configuration object    * @return the table schema, excluding partition columns    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -304,6 +304,31 @@ name|getTableInfo
 argument_list|()
 operator|.
 name|getDataColumns
+argument_list|()
+return|;
+block|}
+comment|/**    * Gets the table schema for the table specified in the HCatOutputFormat.setOutput call    * on the specified job context.    * Note: This is the complete table-schema, including the record-schema *and* the partitioning schema.    * @param conf the Configuration object    * @return the table schema, including the record-schema and partitioning schema.    * @throws IOException if HCatOutputFormat.setOutput has not been called for the passed context    */
+specifier|public
+specifier|static
+name|HCatSchema
+name|getTableSchemaWithPartitionColumns
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|getJobInfo
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|getTableInfo
+argument_list|()
+operator|.
+name|getAllColumns
 argument_list|()
 return|;
 block|}
