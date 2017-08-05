@@ -760,7 +760,8 @@ name|path
 argument_list|,
 name|now
 argument_list|,
-name|now
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -1009,7 +1010,8 @@ name|cmPath
 argument_list|,
 name|now
 argument_list|,
-name|now
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
