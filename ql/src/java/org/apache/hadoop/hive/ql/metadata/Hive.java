@@ -18144,7 +18144,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Moved src: {}"
+literal|"Moved src: {}, to dest: {}"
 argument_list|,
 name|pair
 operator|.
@@ -18153,8 +18153,6 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
-argument_list|,
-literal|", to dest: {}"
 argument_list|,
 name|pair
 operator|.
@@ -19846,10 +19844,6 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
 literal|"Failed to move: {}"
 argument_list|,
 name|he
@@ -19857,18 +19851,13 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|)
-argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
 name|LOG
 operator|.
-name|info
-argument_list|(
-name|String
-operator|.
-name|format
+name|error
 argument_list|(
 literal|"Failed to move: {}"
 argument_list|,
@@ -19876,7 +19865,6 @@ name|he
 operator|.
 name|getRemoteErrorMsg
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -19888,17 +19876,12 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
 literal|"Failed to move: {}"
 argument_list|,
 name|e
 operator|.
 name|getMessage
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|he
