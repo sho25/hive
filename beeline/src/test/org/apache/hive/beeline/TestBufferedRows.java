@@ -499,7 +499,7 @@ name|when
 argument_list|(
 name|mockResultSet
 operator|.
-name|getString
+name|getObject
 argument_list|(
 name|Matchers
 operator|.
