@@ -12502,6 +12502,16 @@ name|isPathEncrypted
 argument_list|(
 name|location
 argument_list|)
+operator|&&
+operator|!
+name|FileUtils
+operator|.
+name|pathHasSnapshotSubDir
+argument_list|(
+name|location
+argument_list|,
+name|fs
+argument_list|)
 condition|)
 block|{
 name|HdfsUtils
