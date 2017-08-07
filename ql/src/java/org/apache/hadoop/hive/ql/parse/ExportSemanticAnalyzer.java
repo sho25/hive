@@ -354,7 +354,7 @@ argument_list|,
 name|LOG
 argument_list|)
 operator|.
-name|run
+name|write
 argument_list|()
 decl_stmt|;
 name|inputs

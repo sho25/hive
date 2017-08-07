@@ -2797,6 +2797,15 @@ argument_list|,
 literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
 argument_list|)
 block|,
+name|REPL_PARTITIONS_DUMP_PARALLELISM
+argument_list|(
+literal|"hive.repl.partitions.dump.parallelism"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Number of threads that will be used to dump partition data information during repl dump."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
