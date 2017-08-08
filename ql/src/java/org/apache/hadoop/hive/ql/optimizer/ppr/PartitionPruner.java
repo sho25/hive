@@ -1360,6 +1360,13 @@ name|PrunedPartitionList
 argument_list|(
 name|tab
 argument_list|,
+name|key
+operator|+
+name|compactExpr
+operator|.
+name|getExprString
+argument_list|()
+argument_list|,
 operator|new
 name|LinkedHashSet
 argument_list|<
@@ -1396,6 +1403,14 @@ name|prunedPartitionsMap
 argument_list|)
 return|;
 block|}
+name|String
+name|compactExprString
+init|=
+name|compactExpr
+operator|.
+name|getExprString
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|LOG
@@ -1410,10 +1425,7 @@ name|debug
 argument_list|(
 literal|"Filter w/ compacting: "
 operator|+
-name|compactExpr
-operator|.
-name|getExprString
-argument_list|()
+name|compactExprString
 operator|+
 literal|"; filter w/o compacting: "
 operator|+
@@ -1425,10 +1437,7 @@ name|key
 operator|=
 name|key
 operator|+
-name|compactExpr
-operator|.
-name|getExprString
-argument_list|()
+name|compactExprString
 expr_stmt|;
 name|PrunedPartitionList
 name|ppList
@@ -1456,6 +1465,8 @@ operator|=
 name|getPartitionsFromServer
 argument_list|(
 name|tab
+argument_list|,
+name|key
 argument_list|,
 operator|(
 name|ExprNodeGenericFuncDesc
@@ -1580,6 +1591,8 @@ operator|new
 name|PrunedPartitionList
 argument_list|(
 name|tab
+argument_list|,
+name|key
 argument_list|,
 name|parts
 argument_list|,
@@ -2534,6 +2547,10 @@ name|Table
 name|tab
 parameter_list|,
 specifier|final
+name|String
+name|key
+parameter_list|,
+specifier|final
 name|ExprNodeGenericFuncDesc
 name|compactExpr
 parameter_list|,
@@ -2698,6 +2715,8 @@ operator|new
 name|PrunedPartitionList
 argument_list|(
 name|tab
+argument_list|,
+name|key
 argument_list|,
 operator|new
 name|LinkedHashSet

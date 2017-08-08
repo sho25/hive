@@ -4641,7 +4641,7 @@ name|void
 name|reset
 parameter_list|(
 name|boolean
-name|clearPartsCache
+name|clearCache
 parameter_list|)
 block|{
 name|super
@@ -4653,7 +4653,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|clearPartsCache
+name|clearCache
 condition|)
 block|{
 name|prunedPartitions
@@ -4661,6 +4661,25 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|ctx
+operator|!=
+literal|null
+condition|)
+block|{
+name|ctx
+operator|.
+name|getOpContext
+argument_list|()
+operator|.
+name|getColStatsCache
+argument_list|()
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
 comment|//When init(true) combine with genResolvedParseTree, it will generate Resolved Parse tree from syntax tree
 comment|//ReadEntity created under these conditions should be all relevant to the syntax tree even the ones without parents
 comment|//set mergeIsDirect to true here.
