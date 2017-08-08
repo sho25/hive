@@ -325,20 +325,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|common
@@ -2795,6 +2781,21 @@ argument_list|,
 literal|"/user/hive/repl/functions/"
 argument_list|,
 literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
+argument_list|)
+block|,
+name|REPL_APPROX_MAX_LOAD_TASKS
+argument_list|(
+literal|"hive.repl.approx.max.load.tasks"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"Provide and approximate of the max number of tasks that should be executed in before  \n"
+operator|+
+literal|"dynamically generating the next set of tasks. The number is an approximate as we \n"
+operator|+
+literal|"will stop at slightly higher number than above, the reason being some events might \n"
+operator|+
+literal|"lead to an task increment that would cross the above limit"
 argument_list|)
 block|,
 name|REPL_PARTITIONS_DUMP_PARALLELISM

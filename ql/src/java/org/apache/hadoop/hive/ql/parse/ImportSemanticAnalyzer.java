@@ -769,6 +769,16 @@ name|OutputFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
 begin_comment
 comment|/**  * ImportSemanticAnalyzer.  *  */
 end_comment
@@ -2559,6 +2569,19 @@ operator|.
 name|getCreateTableTask
 argument_list|(
 name|x
+operator|.
+name|getInputs
+argument_list|()
+argument_list|,
+name|x
+operator|.
+name|getOutputs
+argument_list|()
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -2681,6 +2704,19 @@ operator|.
 name|getCreateTableTask
 argument_list|(
 name|x
+operator|.
+name|getInputs
+argument_list|()
+argument_list|,
+name|x
+operator|.
+name|getOutputs
+argument_list|()
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -3351,6 +3387,9 @@ argument_list|,
 name|replicationSpec
 argument_list|,
 name|x
+operator|.
+name|getLOG
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|partSpec
@@ -3364,7 +3403,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|checkTargetLocationEmpty
@@ -3378,10 +3417,8 @@ parameter_list|,
 name|ReplicationSpec
 name|replicationSpec
 parameter_list|,
-name|EximUtil
-operator|.
-name|SemanticAnalyzerWrapperContext
-name|x
+name|Logger
+name|logger
 parameter_list|)
 throws|throws
 name|IOException
@@ -3399,10 +3436,7 @@ block|{
 comment|// replication scope allows replacement, and does not require empty directories
 return|return;
 block|}
-name|x
-operator|.
-name|getLOG
-argument_list|()
+name|logger
 operator|.
 name|debug
 argument_list|(
@@ -3448,10 +3482,7 @@ operator|>
 literal|0
 condition|)
 block|{
-name|x
-operator|.
-name|getLOG
-argument_list|()
+name|logger
 operator|.
 name|debug
 argument_list|(
@@ -3491,7 +3522,7 @@ throw|;
 block|}
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|partSpecToString
@@ -3588,7 +3619,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|checkTable
@@ -4882,6 +4913,9 @@ argument_list|,
 name|replicationSpec
 argument_list|,
 name|x
+operator|.
+name|getLOG
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|loadTable
@@ -5189,6 +5223,9 @@ argument_list|,
 name|replicationSpec
 argument_list|,
 name|x
+operator|.
+name|getLOG
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|t
@@ -6093,7 +6130,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|boolean
 name|isPartitioned
@@ -6123,7 +6160,7 @@ operator|)
 return|;
 block|}
 comment|/**    * Utility method that returns a table if one corresponding to the destination    * tblDesc is found. Returns null if no such table is found.    */
-specifier|private
+specifier|public
 specifier|static
 name|Table
 name|tableIfExists

@@ -479,7 +479,6 @@ specifier|private
 name|Driver
 name|driver
 decl_stmt|;
-specifier|private
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -557,6 +556,18 @@ name|getFileSystem
 argument_list|()
 decl_stmt|;
 name|Path
+name|warehouseRoot
+init|=
+name|mkDir
+argument_list|(
+name|fs
+argument_list|,
+literal|"/warehouse"
+operator|+
+name|uniqueIdentifier
+argument_list|)
+decl_stmt|;
+name|Path
 name|cmRootPath
 init|=
 name|mkDir
@@ -587,6 +598,11 @@ expr_stmt|;
 name|initialize
 argument_list|(
 name|cmRootPath
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|warehouseRoot
 operator|.
 name|toString
 argument_list|()
@@ -622,6 +638,9 @@ name|initialize
 parameter_list|(
 name|String
 name|cmRoot
+parameter_list|,
+name|String
+name|warehouseRoot
 parameter_list|,
 name|boolean
 name|hiveInTest
@@ -737,6 +756,19 @@ name|hiveInTest
 argument_list|)
 expr_stmt|;
 comment|// turn on db notification listener on meta store
+name|hiveConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREWAREHOUSE
+argument_list|,
+name|warehouseRoot
+argument_list|)
+expr_stmt|;
 name|hiveConf
 operator|.
 name|setVar
@@ -1332,7 +1364,7 @@ name|this
 return|;
 block|}
 name|WarehouseInstance
-name|verify
+name|verifyResult
 parameter_list|(
 name|String
 name|data
@@ -1340,7 +1372,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-return|return
 name|verifyResults
 argument_list|(
 name|data
@@ -1359,9 +1390,12 @@ block|{
 name|data
 block|}
 argument_list|)
+expr_stmt|;
+return|return
+name|this
 return|;
 block|}
-comment|/**    * All the results that are read from the hive output will not preserve    * case sensitivity and will all be in lower case, hence we will check against    * only lower case data values.    * Unless for Null Values it actually returns in UpperCase and hence explicitly lowering case    * before assert.    */
+comment|/**      * All the results that are read from the hive output will not preserve      * case sensitivity and will all be in lower case, hence we will check against      * only lower case data values.      * Unless for Null Values it actually returns in UpperCase and hence explicitly lowering case      * before assert.      */
 name|WarehouseInstance
 name|verifyResults
 parameter_list|(

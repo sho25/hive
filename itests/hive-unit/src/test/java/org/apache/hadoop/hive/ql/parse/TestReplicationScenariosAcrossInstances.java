@@ -99,6 +99,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|parse
@@ -576,7 +592,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|bootStrapDump
 operator|.
@@ -630,7 +646,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|incrementalDump
 operator|.
@@ -646,7 +662,7 @@ operator|+
 literal|"*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
@@ -672,7 +688,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|incrementalDump
 operator|.
@@ -688,7 +704,7 @@ operator|+
 literal|"*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
@@ -750,7 +766,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|bootStrapDump
 operator|.
@@ -802,7 +818,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|incrementalDump
 operator|.
@@ -814,7 +830,7 @@ argument_list|(
 literal|"SHOW FUNCTIONS LIKE '*testfunction*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 literal|null
 argument_list|)
@@ -838,7 +854,7 @@ operator|+
 name|replicatedDbName
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|incrementalDump
 operator|.
@@ -850,7 +866,7 @@ argument_list|(
 literal|"SHOW FUNCTIONS LIKE '*testfunction*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 literal|null
 argument_list|)
@@ -912,7 +928,7 @@ operator|+
 literal|"*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
@@ -996,7 +1012,7 @@ operator|+
 literal|"*'"
 argument_list|)
 operator|.
-name|verify
+name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
@@ -1382,6 +1398,135 @@ argument_list|(
 name|collect
 argument_list|)
 return|;
+block|}
+comment|/*   From the hive logs(hive.log) we can also check for the info statement   fgrep "Total Tasks" [location of hive.log]   each line indicates one run of loadTask.    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMultipleStagesOfReplicationLoadTask
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('mumbai')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('delhi')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t3 (rank int)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+comment|// each table creation itself takes more than one task, give we are giving a max of 1, we should hit multiple runs.
+name|replica
+operator|.
+name|hiveConf
+operator|.
+name|setIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_APPROX_MAX_LOAD_TASKS
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|,
+literal|"t2"
+block|,
+literal|"t3"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"repl status "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|tuple
+operator|.
+name|lastReplicationId
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

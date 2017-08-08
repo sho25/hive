@@ -753,7 +753,7 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|FUNCTION_METADATA_DIR_NAME
+name|FUNCTION_METADATA_FILE_NAME
 init|=
 literal|"_metadata"
 decl_stmt|;
@@ -929,6 +929,11 @@ name|error
 argument_list|(
 literal|"failed"
 argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+name|setException
+argument_list|(
 name|e
 argument_list|)
 expr_stmt|;
@@ -2025,7 +2030,7 @@ comment|// however, this does mean that in writing tests, we have to be aware th
 comment|// repl dump will clash with prior dumps, and thus have to clean up properly.
 if|if
 condition|(
-name|work
+name|ReplDumpWork
 operator|.
 name|testInjectDumpDir
 operator|==
@@ -2039,7 +2044,7 @@ block|}
 else|else
 block|{
 return|return
-name|work
+name|ReplDumpWork
 operator|.
 name|testInjectDumpDir
 return|;
@@ -2153,14 +2158,14 @@ name|functionName
 argument_list|)
 decl_stmt|;
 name|Path
-name|functionMetadataRoot
+name|functionMetadataFile
 init|=
 operator|new
 name|Path
 argument_list|(
 name|functionRoot
 argument_list|,
-name|FUNCTION_METADATA_DIR_NAME
+name|FUNCTION_METADATA_FILE_NAME
 argument_list|)
 decl_stmt|;
 try|try
@@ -2171,14 +2176,14 @@ init|=
 operator|new
 name|JsonWriter
 argument_list|(
-name|functionMetadataRoot
+name|functionMetadataFile
 operator|.
 name|getFileSystem
 argument_list|(
 name|conf
 argument_list|)
 argument_list|,
-name|functionMetadataRoot
+name|functionMetadataFile
 argument_list|)
 init|)
 block|{
@@ -2328,7 +2333,7 @@ block|{
 return|return
 name|StageType
 operator|.
-name|REPLDUMP
+name|REPL_DUMP
 return|;
 block|}
 block|}
