@@ -3397,6 +3397,13 @@ argument_list|)
 expr_stmt|;
 name|desc
 operator|.
+name|setTargetColumnType
+argument_list|(
+name|columnType
+argument_list|)
+expr_stmt|;
+name|desc
+operator|.
 name|setPartKey
 argument_list|(
 name|partKey
