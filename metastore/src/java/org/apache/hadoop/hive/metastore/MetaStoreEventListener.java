@@ -113,7 +113,79 @@ name|metastore
 operator|.
 name|events
 operator|.
+name|AddForeignKeyEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
 name|AddIndexEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|AddNotNullConstraintEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|AddPrimaryKeyEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|AddUniqueConstraintEvent
 import|;
 end_import
 
@@ -258,6 +330,24 @@ operator|.
 name|events
 operator|.
 name|CreateTableEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|events
+operator|.
+name|DropConstraintEvent
 import|;
 end_import
 
@@ -601,6 +691,61 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{    }
+comment|/**    * @param addPrimaryKeyEvent add primary key event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAddPrimaryKey
+parameter_list|(
+name|AddPrimaryKeyEvent
+name|addPrimaryKeyEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param addForeignKeyEvent add foreign key event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAddForeignKey
+parameter_list|(
+name|AddForeignKeyEvent
+name|addForeignKeyEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param addUniqueConstraintEvent add unique constraint event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAddUniqueConstraint
+parameter_list|(
+name|AddUniqueConstraintEvent
+name|addUniqueConstraintEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param addNotNullConstraintEvent add not null constraint event    * @throws MetaException    */
+specifier|public
+name|void
+name|onAddNotNullConstraint
+parameter_list|(
+name|AddNotNullConstraintEvent
+name|addNotNullConstraintEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
+comment|/**    * @param dropConstraintEvent drop constraint event    * @throws MetaException    */
+specifier|public
+name|void
+name|onDropConstraint
+parameter_list|(
+name|DropConstraintEvent
+name|dropConstraintEvent
+parameter_list|)
+throws|throws
+name|MetaException
+block|{   }
 annotation|@
 name|Override
 specifier|public

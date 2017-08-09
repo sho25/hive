@@ -4579,6 +4579,45 @@ condition|)
 block|{
 if|if
 condition|(
+operator|!
+name|allowOperationInReplicationScope
+argument_list|(
+name|db
+argument_list|,
+name|alterTbl
+operator|.
+name|getOldName
+argument_list|()
+argument_list|,
+literal|null
+argument_list|,
+name|alterTbl
+operator|.
+name|getReplicationSpec
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// no alter, the table is missing either due to drop/rename which follows the alter.
+comment|// or the existing table is newer than our update.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"DDLTask: Alter Table is skipped as table {} is newer than update"
+argument_list|,
+name|alterTbl
+operator|.
+name|getOldName
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|0
+return|;
+block|}
+if|if
+condition|(
 name|alterTbl
 operator|.
 name|getOp
@@ -22995,45 +23034,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-if|if
-condition|(
-operator|!
-name|allowOperationInReplicationScope
-argument_list|(
-name|db
-argument_list|,
-name|alterTbl
-operator|.
-name|getOldName
-argument_list|()
-argument_list|,
-literal|null
-argument_list|,
-name|alterTbl
-operator|.
-name|getReplicationSpec
-argument_list|()
-argument_list|)
-condition|)
-block|{
-comment|// no alter, the table is missing either due to drop/rename which follows the alter.
-comment|// or the existing table is newer than our update.
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"DDLTask: Alter Table is skipped as table {} is newer than update"
-argument_list|,
-name|alterTbl
-operator|.
-name|getOldName
-argument_list|()
-argument_list|)
-expr_stmt|;
-return|return
-literal|0
-return|;
-block|}
 comment|// alter the table
 name|Table
 name|tbl

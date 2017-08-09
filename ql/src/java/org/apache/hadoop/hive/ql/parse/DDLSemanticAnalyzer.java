@@ -13420,6 +13420,11 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dropConstraintName
+argument_list|,
+operator|(
+name|ReplicationSpec
+operator|)
+literal|null
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -13655,6 +13660,8 @@ argument_list|,
 name|foreignKeys
 argument_list|,
 name|uniqueConstraints
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|rootTasks

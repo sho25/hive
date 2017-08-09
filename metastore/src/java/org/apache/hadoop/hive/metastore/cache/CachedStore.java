@@ -11309,7 +11309,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|createTableWithConstraints
 parameter_list|(
 name|Table
@@ -11345,6 +11348,12 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO constraintCache
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|constraintNames
+init|=
 name|rawStore
 operator|.
 name|createTableWithConstraints
@@ -11359,7 +11368,7 @@ name|uniqueConstraints
 argument_list|,
 name|notNullConstraints
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|SharedCache
 operator|.
 name|addTableToCache
@@ -11387,6 +11396,9 @@ argument_list|,
 name|tbl
 argument_list|)
 expr_stmt|;
+return|return
+name|constraintNames
+return|;
 block|}
 annotation|@
 name|Override
@@ -11422,7 +11434,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addPrimaryKeys
 parameter_list|(
 name|List
@@ -11437,18 +11452,22 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO constraintCache
+return|return
 name|rawStore
 operator|.
 name|addPrimaryKeys
 argument_list|(
 name|pks
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addForeignKeys
 parameter_list|(
 name|List
@@ -11463,18 +11482,22 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO constraintCache
+return|return
 name|rawStore
 operator|.
 name|addForeignKeys
 argument_list|(
 name|fks
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addUniqueConstraints
 parameter_list|(
 name|List
@@ -11489,18 +11512,22 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO constraintCache
+return|return
 name|rawStore
 operator|.
 name|addUniqueConstraints
 argument_list|(
 name|uks
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addNotNullConstraints
 parameter_list|(
 name|List
@@ -11515,13 +11542,14 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO constraintCache
+return|return
 name|rawStore
 operator|.
 name|addNotNullConstraints
 argument_list|(
 name|nns
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 annotation|@
 name|Override

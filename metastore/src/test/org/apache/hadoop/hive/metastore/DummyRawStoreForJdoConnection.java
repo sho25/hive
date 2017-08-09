@@ -3721,7 +3721,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|createTableWithConstraints
 parameter_list|(
 name|Table
@@ -3757,6 +3760,9 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override
@@ -3781,7 +3787,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addPrimaryKeys
 parameter_list|(
 name|List
@@ -3796,11 +3805,17 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addForeignKeys
 parameter_list|(
 name|List
@@ -3815,9 +3830,15 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addUniqueConstraints
 parameter_list|(
 name|List
@@ -3832,11 +3853,17 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addNotNullConstraints
 parameter_list|(
 name|List
@@ -3851,6 +3878,9 @@ throws|,
 name|MetaException
 block|{
 comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override
