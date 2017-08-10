@@ -125,9 +125,11 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|columnstats
 operator|.
-name|DateColumnStatsData
+name|cache
+operator|.
+name|DateColumnStatsDataInspector
 import|;
 end_import
 
@@ -143,9 +145,11 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|columnstats
 operator|.
-name|DecimalColumnStatsData
+name|cache
+operator|.
+name|DecimalColumnStatsDataInspector
 import|;
 end_import
 
@@ -161,9 +165,11 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|columnstats
 operator|.
-name|DoubleColumnStatsData
+name|cache
+operator|.
+name|DoubleColumnStatsDataInspector
 import|;
 end_import
 
@@ -179,9 +185,11 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|columnstats
 operator|.
-name|LongColumnStatsData
+name|cache
+operator|.
+name|LongColumnStatsDataInspector
 import|;
 end_import
 
@@ -197,9 +205,11 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|columnstats
 operator|.
-name|StringColumnStatsData
+name|cache
+operator|.
+name|StringColumnStatsDataInspector
 import|;
 end_import
 
@@ -404,7 +414,7 @@ operator|.
 name|setLongStats
 argument_list|(
 operator|new
-name|LongColumnStatsData
+name|LongColumnStatsDataInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -417,7 +427,7 @@ operator|.
 name|setDateStats
 argument_list|(
 operator|new
-name|DateColumnStatsData
+name|DateColumnStatsDataInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -430,7 +440,7 @@ operator|.
 name|setDoubleStats
 argument_list|(
 operator|new
-name|DoubleColumnStatsData
+name|DoubleColumnStatsDataInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -443,7 +453,7 @@ operator|.
 name|setStringStats
 argument_list|(
 operator|new
-name|StringColumnStatsData
+name|StringColumnStatsDataInspector
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -469,7 +479,7 @@ operator|.
 name|setDecimalStats
 argument_list|(
 operator|new
-name|DecimalColumnStatsData
+name|DecimalColumnStatsDataInspector
 argument_list|()
 argument_list|)
 expr_stmt|;

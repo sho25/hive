@@ -34,6 +34,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertArrayEquals
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -399,8 +411,9 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|String
-name|s
+name|byte
+index|[]
+name|buf
 init|=
 name|sketch
 operator|.
@@ -417,7 +430,7 @@ name|NumDistinctValueEstimatorFactory
 operator|.
 name|getNumDistinctValueEstimator
 argument_list|(
-name|s
+name|buf
 argument_list|)
 decl_stmt|;
 name|sketch
@@ -437,14 +450,14 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|assertEquals
+name|assertArrayEquals
 argument_list|(
 name|newSketch
 operator|.
 name|serialize
 argument_list|()
 argument_list|,
-name|s
+name|buf
 argument_list|)
 expr_stmt|;
 block|}

@@ -85,7 +85,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|Statement
+name|SQLException
 import|;
 end_import
 
@@ -95,7 +95,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|SQLException
+name|Statement
 import|;
 end_import
 
@@ -176,18 +176,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-operator|.
-name|Entry
 import|;
 end_import
 
@@ -662,46 +650,6 @@ operator|.
 name|api
 operator|.
 name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|columnstats
-operator|.
-name|aggr
-operator|.
-name|ColumnStatsAggregator
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|columnstats
-operator|.
-name|aggr
-operator|.
-name|ColumnStatsAggregatorFactory
 import|;
 end_import
 
@@ -6573,7 +6521,8 @@ return|;
 block|}
 block|}
 specifier|static
-name|String
+name|byte
+index|[]
 name|extractSqlBlob
 parameter_list|(
 name|Object
@@ -6604,9 +6553,6 @@ block|{
 comment|// getBytes function says: pos the ordinal position of the first byte in
 comment|// the BLOB value to be extracted; the first byte is at position 1
 return|return
-operator|new
-name|String
-argument_list|(
 operator|(
 operator|(
 name|Blob
@@ -6630,7 +6576,6 @@ argument_list|)
 operator|.
 name|length
 argument_list|()
-argument_list|)
 argument_list|)
 return|;
 block|}
@@ -6660,15 +6605,11 @@ condition|)
 block|{
 comment|// mysql, postgres, sql server
 return|return
-operator|new
-name|String
-argument_list|(
 operator|(
 name|byte
 index|[]
 operator|)
 name|value
-argument_list|)
 return|;
 block|}
 else|else

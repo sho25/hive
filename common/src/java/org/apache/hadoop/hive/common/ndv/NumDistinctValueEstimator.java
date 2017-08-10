@@ -103,7 +103,8 @@ name|reset
 parameter_list|()
 function_decl|;
 specifier|public
-name|String
+name|byte
+index|[]
 name|serialize
 parameter_list|()
 function_decl|;
@@ -111,8 +112,9 @@ specifier|public
 name|NumDistinctValueEstimator
 name|deserialize
 parameter_list|(
-name|String
-name|s
+name|byte
+index|[]
+name|buf
 parameter_list|)
 function_decl|;
 specifier|public
