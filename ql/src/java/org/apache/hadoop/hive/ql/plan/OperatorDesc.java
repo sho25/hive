@@ -130,6 +130,13 @@ name|String
 name|runtimeStatsTmpDir
 parameter_list|)
 function_decl|;
+name|boolean
+name|isSame
+parameter_list|(
+name|OperatorDesc
+name|other
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

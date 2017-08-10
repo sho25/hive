@@ -5245,6 +5245,7 @@ comment|// and the current comparator implementation does not.
 comment|// We can ignore table alias since when we compare ReduceSinkOperator, all
 comment|// its ancestors need to match (down to table scan), thus we make sure that
 comment|// both plans are the same.
+comment|// TODO: move this to logicalEquals
 if|if
 condition|(
 name|op1
@@ -5384,6 +5385,7 @@ block|}
 block|}
 comment|// We handle TableScanOperator here as we can safely ignore table alias
 comment|// and the current comparator implementation does not.
+comment|// TODO: move this to logicalEquals
 if|if
 condition|(
 name|op1
@@ -5539,28 +5541,11 @@ literal|false
 return|;
 block|}
 block|}
-name|OperatorComparatorFactory
-operator|.
-name|OperatorComparator
-name|operatorComparator
-init|=
-name|OperatorComparatorFactory
-operator|.
-name|getOperatorComparator
-argument_list|(
-name|op1
-operator|.
-name|getClass
-argument_list|()
-argument_list|)
-decl_stmt|;
 return|return
-name|operatorComparator
-operator|.
-name|equals
-argument_list|(
 name|op1
-argument_list|,
+operator|.
+name|logicalEquals
+argument_list|(
 name|op2
 argument_list|)
 return|;
