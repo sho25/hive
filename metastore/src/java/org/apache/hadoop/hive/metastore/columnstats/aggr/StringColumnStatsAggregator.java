@@ -864,17 +864,6 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
-name|StringColumnStatsData
-name|newData
-init|=
-name|cso
-operator|.
-name|getStatsData
-argument_list|()
-operator|.
-name|getStringStats
-argument_list|()
-decl_stmt|;
 name|adjustedIndexMap
 operator|.
 name|put
@@ -1284,18 +1273,26 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Ndv estimatation for "
-operator|+
+literal|"Ndv estimatation for {} is {} # of partitions requested: {} # of partitions found: {}"
+argument_list|,
 name|colName
-operator|+
-literal|" is "
-operator|+
+argument_list|,
 name|columnStatisticsData
 operator|.
 name|getStringStats
 argument_list|()
 operator|.
 name|getNumDVs
+argument_list|()
+argument_list|,
+name|partNames
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|css
+operator|.
+name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1460,6 +1457,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -1486,6 +1485,10 @@ name|o2
 parameter_list|)
 block|{
 return|return
+name|Double
+operator|.
+name|compare
+argument_list|(
 name|o1
 operator|.
 name|getValue
@@ -1493,7 +1496,7 @@ argument_list|()
 operator|.
 name|getAvgColLen
 argument_list|()
-operator|<
+argument_list|,
 name|o2
 operator|.
 name|getValue
@@ -1501,11 +1504,7 @@ argument_list|()
 operator|.
 name|getAvgColLen
 argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
-literal|1
+argument_list|)
 return|;
 block|}
 block|}
@@ -1685,6 +1684,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -1711,6 +1712,10 @@ name|o2
 parameter_list|)
 block|{
 return|return
+name|Long
+operator|.
+name|compare
+argument_list|(
 name|o1
 operator|.
 name|getValue
@@ -1718,7 +1723,7 @@ argument_list|()
 operator|.
 name|getMaxColLen
 argument_list|()
-operator|<
+argument_list|,
 name|o2
 operator|.
 name|getValue
@@ -1726,11 +1731,7 @@ argument_list|()
 operator|.
 name|getMaxColLen
 argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
-literal|1
+argument_list|)
 return|;
 block|}
 block|}
@@ -1955,6 +1956,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -1981,6 +1984,10 @@ name|o2
 parameter_list|)
 block|{
 return|return
+name|Long
+operator|.
+name|compare
+argument_list|(
 name|o1
 operator|.
 name|getValue
@@ -1988,7 +1995,7 @@ argument_list|()
 operator|.
 name|getNumDVs
 argument_list|()
-operator|<
+argument_list|,
 name|o2
 operator|.
 name|getValue
@@ -1996,11 +2003,7 @@ argument_list|()
 operator|.
 name|getNumDVs
 argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
-literal|1
+argument_list|)
 return|;
 block|}
 block|}

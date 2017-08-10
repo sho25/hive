@@ -2620,6 +2620,8 @@ name|Partition
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2752,6 +2754,7 @@ class|class
 name|SqlFilterForPushdown
 block|{
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|Object
@@ -2766,6 +2769,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -3424,6 +3428,8 @@ name|Partition
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -6592,6 +6598,7 @@ operator|instanceof
 name|Blob
 condition|)
 block|{
+comment|//derby, oracle
 try|try
 block|{
 comment|// getBytes function says: pos the ordinal position of the first byte in
@@ -6641,6 +6648,28 @@ literal|"Encounter error while processing blob."
 argument_list|)
 throw|;
 block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|value
+operator|instanceof
+name|byte
+index|[]
+condition|)
+block|{
+comment|// mysql, postgres, sql server
+return|return
+operator|new
+name|String
+argument_list|(
+operator|(
+name|byte
+index|[]
+operator|)
+name|value
+argument_list|)
+return|;
 block|}
 else|else
 block|{
@@ -8266,6 +8295,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9032,6 +9063,8 @@ name|Long
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9063,6 +9096,8 @@ name|Long
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9357,6 +9392,8 @@ name|ColumnStatisticsObj
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9388,6 +9425,8 @@ name|ColumnStatisticsObj
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -9849,8 +9888,6 @@ name|partNames
 argument_list|,
 name|colNames
 argument_list|,
-name|areAllPartsFound
-argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|,
 name|ndvTuner
@@ -9905,9 +9942,6 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|boolean
-name|areAllPartsFound
-parameter_list|,
-name|boolean
 name|useDensityFunctionForNDVEstimation
 parameter_list|,
 name|double
@@ -9951,8 +9985,6 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
-argument_list|,
-name|areAllPartsFound
 argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|,
@@ -11328,10 +11360,6 @@ operator|+
 name|colStatIndex
 index|]
 operator|=
-call|(
-name|Long
-call|)
-argument_list|(
 name|val
 operator|/
 name|sumVal
@@ -11342,7 +11370,6 @@ operator|.
 name|size
 argument_list|()
 operator|)
-argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -12486,6 +12513,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -12523,6 +12552,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<

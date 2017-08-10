@@ -1703,23 +1703,14 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|statsObj
-operator|.
-name|setStatsData
-argument_list|(
-name|columnStatisticsData
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Ndv estimatation for "
-operator|+
+literal|"Ndv estimatation for {} is {} # of partitions requested: {} # of partitions found: {}"
+argument_list|,
 name|colName
-operator|+
-literal|" is "
-operator|+
+argument_list|,
 name|columnStatisticsData
 operator|.
 name|getDecimalStats
@@ -1727,6 +1718,23 @@ argument_list|()
 operator|.
 name|getNumDVs
 argument_list|()
+argument_list|,
+name|partNames
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|css
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|statsObj
+operator|.
+name|setStatsData
+argument_list|(
+name|columnStatisticsData
 argument_list|)
 expr_stmt|;
 return|return
@@ -1883,6 +1891,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -2116,6 +2126,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -2404,6 +2416,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -2430,6 +2444,10 @@ name|o2
 parameter_list|)
 block|{
 return|return
+name|Long
+operator|.
+name|compare
+argument_list|(
 name|o1
 operator|.
 name|getValue
@@ -2437,7 +2455,7 @@ argument_list|()
 operator|.
 name|getNumDVs
 argument_list|()
-operator|<
+argument_list|,
 name|o2
 operator|.
 name|getValue
@@ -2445,11 +2463,7 @@ argument_list|()
 operator|.
 name|getNumDVs
 argument_list|()
-condition|?
-operator|-
-literal|1
-else|:
-literal|1
+argument_list|)
 return|;
 block|}
 block|}
