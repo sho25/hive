@@ -2803,15 +2803,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Task killed - "
-operator|+
-name|taskAttemptIdString
-argument_list|)
-expr_stmt|;
 name|LlapTaskUmbilicalExternalClient
 name|client
 init|=
@@ -2829,8 +2820,42 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|client
+operator|.
+name|requestInfo
+operator|.
+name|state
+operator|==
+name|RequestState
+operator|.
+name|PENDING
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Ignoring task kill for {}, request is still in pending state"
+argument_list|,
+name|taskAttemptIdString
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 try|try
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Task killed - "
+operator|+
+name|taskAttemptIdString
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|unregisterClient
@@ -2871,6 +2896,7 @@ argument_list|,
 name|err
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
