@@ -12443,9 +12443,9 @@ name|DropTableEvent
 argument_list|(
 name|tbl
 argument_list|,
-name|deleteData
-argument_list|,
 literal|true
+argument_list|,
+name|deleteData
 argument_list|,
 name|this
 argument_list|)
@@ -12529,9 +12529,9 @@ name|DropTableEvent
 argument_list|(
 name|tbl
 argument_list|,
-name|deleteData
-argument_list|,
 name|success
+argument_list|,
+name|deleteData
 argument_list|,
 name|this
 argument_list|)
