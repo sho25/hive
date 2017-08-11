@@ -731,6 +731,14 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|String
+name|MR_CREDENTIALS_LOCATION_PROPERTY
+init|=
+literal|"mapreduce.job.credentials.binary"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 specifier|transient
 name|Logger
 name|LOG
@@ -1672,6 +1680,14 @@ name|get
 argument_list|(
 name|MR_JAR_PROPERTY
 argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// remove the location of container tokens
+name|conf
+operator|.
+name|unset
+argument_list|(
+name|MR_CREDENTIALS_LOCATION_PROPERTY
 argument_list|)
 expr_stmt|;
 comment|// add added files
