@@ -2193,7 +2193,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    *     * @param keyWritable    * @param values    * @param tag    * @throws HiveException    * @throws IOException    */
+comment|/**    *    * @param keyWritable    * @param values    * @param tag    * @throws HiveException    * @throws IOException    */
 specifier|private
 name|void
 name|processVectorGroup
@@ -2591,9 +2591,9 @@ operator|+
 literal|" ]"
 expr_stmt|;
 block|}
-throw|throw
-operator|new
-name|HiveException
+name|l4j
+operator|.
+name|error
 argument_list|(
 literal|"Hive Runtime Error while processing vector batch (tag="
 operator|+
@@ -2606,6 +2606,23 @@ operator|+
 literal|") "
 operator|+
 name|rowString
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Hive Runtime Error while processing vector batch (tag="
+operator|+
+name|tag
+operator|+
+literal|") (vectorizedVertexNum "
+operator|+
+name|vectorizedVertexNum
+operator|+
+literal|")"
 argument_list|,
 name|e
 argument_list|)
