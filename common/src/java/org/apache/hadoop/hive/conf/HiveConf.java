@@ -12065,6 +12065,15 @@ argument_list|,
 literal|"Only perform semijoin optimization if the estimated benefit at or above this fraction of the target table"
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_FOR_MAPJOIN
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction.for.mapjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Use a semi-join branch for map-joins. This may not make it faster, but is helpful in certain join patterns."
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"

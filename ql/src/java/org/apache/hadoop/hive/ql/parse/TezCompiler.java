@@ -7561,9 +7561,21 @@ name|ConfVars
 operator|.
 name|HIVECONVERTJOIN
 argument_list|)
+operator|||
+name|procCtx
+operator|.
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_FOR_MAPJOIN
+argument_list|)
 condition|)
 block|{
-comment|// Not needed without semi-join reduction
+comment|// Not needed without semi-join reduction or mapjoins or when semijoins
+comment|// are enabled for parallel mapjoins.
 return|return;
 block|}
 comment|// Get all the TS ops.
