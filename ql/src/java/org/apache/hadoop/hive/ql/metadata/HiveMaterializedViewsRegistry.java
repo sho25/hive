@@ -95,6 +95,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Objects
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -848,7 +858,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**   * Registry for materialized views. The goal of this cache is to avoid parsing and creating  * logical plans for the materialized views at query runtime. When a query arrives, we will  * just need to consult this cache and extract the logical plans for the views (which had  * already been parsed) from it.  */
+comment|/**  * Registry for materialized views. The goal of this cache is to avoid parsing and creating  * logical plans for the materialized views at query runtime. When a query arrives, we will  * just need to consult this cache and extract the logical plans for the views (which had  * already been parsed) from it.  */
 end_comment
 
 begin_class
@@ -2348,28 +2358,16 @@ name|viewKey
 operator|.
 name|creationDate
 operator|&&
-operator|(
-name|viewName
-operator|==
-name|viewKey
-operator|.
-name|viewName
-operator|||
-operator|(
-name|viewName
-operator|!=
-literal|null
-operator|&&
-name|viewName
+name|Objects
 operator|.
 name|equals
 argument_list|(
+name|viewName
+argument_list|,
 name|viewKey
 operator|.
 name|viewName
 argument_list|)
-operator|)
-operator|)
 return|;
 block|}
 annotation|@

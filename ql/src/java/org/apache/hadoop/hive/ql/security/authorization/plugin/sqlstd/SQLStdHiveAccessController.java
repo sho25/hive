@@ -91,6 +91,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Objects
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Set
 import|;
 end_import
@@ -993,9 +1003,14 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|Objects
+operator|.
+name|equals
+argument_list|(
 name|currentUserName
-operator|==
+argument_list|,
 name|newUserName
+argument_list|)
 condition|)
 block|{
 comment|//no need to (re-)initialize the currentUserName, currentRoles fields
