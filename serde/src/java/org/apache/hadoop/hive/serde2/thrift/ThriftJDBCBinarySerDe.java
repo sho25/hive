@@ -734,12 +734,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+throw|throw
 operator|new
 name|SerDeException
 argument_list|(
 name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 block|}
 annotation|@
