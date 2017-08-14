@@ -1863,14 +1863,6 @@ operator|==
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -1878,7 +1870,6 @@ argument_list|(
 literal|"mapJoinTables is null"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
@@ -1941,24 +1932,15 @@ operator|.
 name|getTmpPath
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Temp URI for side table: "
-operator|+
+literal|"Temp URI for side table: {}"
+argument_list|,
 name|tmpURI
 argument_list|)
 expr_stmt|;
-block|}
 for|for
 control|(
 name|byte
@@ -2094,8 +2076,6 @@ name|create
 argument_list|(
 name|path
 argument_list|)
-argument_list|,
-literal|4096
 argument_list|)
 argument_list|)
 decl_stmt|;
