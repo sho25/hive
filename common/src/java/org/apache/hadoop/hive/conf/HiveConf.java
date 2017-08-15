@@ -16698,7 +16698,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|1024
+literal|1024L
 operator|*
 literal|1024
 operator|*
@@ -16719,7 +16719,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|1024
+literal|1024L
 operator|*
 literal|1024
 operator|*
