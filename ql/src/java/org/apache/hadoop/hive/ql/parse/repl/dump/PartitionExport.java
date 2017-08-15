@@ -325,6 +325,11 @@ name|partitionIterable
 decl_stmt|;
 specifier|private
 specifier|final
+name|String
+name|distCpDoAsUser
+decl_stmt|;
+specifier|private
+specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -368,6 +373,9 @@ parameter_list|,
 name|PartitionIterable
 name|partitionIterable
 parameter_list|,
+name|String
+name|distCpDoAsUser
+parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|,
@@ -386,6 +394,12 @@ operator|.
 name|partitionIterable
 operator|=
 name|partitionIterable
+expr_stmt|;
+name|this
+operator|.
+name|distCpDoAsUser
+operator|=
+name|distCpDoAsUser
 expr_stmt|;
 name|this
 operator|.
@@ -640,6 +654,8 @@ argument_list|(
 name|fromPath
 argument_list|,
 name|rootDataDumpDir
+argument_list|,
+name|distCpDoAsUser
 argument_list|,
 name|hiveConf
 argument_list|)

@@ -349,9 +349,9 @@ name|replicationSpec
 argument_list|,
 name|db
 argument_list|,
-name|conf
+literal|null
 argument_list|,
-name|LOG
+name|conf
 argument_list|)
 operator|.
 name|write

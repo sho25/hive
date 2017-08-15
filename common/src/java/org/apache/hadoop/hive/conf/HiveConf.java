@@ -10844,13 +10844,11 @@ name|HIVE_DISTCP_DOAS_USER
 argument_list|(
 literal|"hive.distcp.privileged.doAs"
 argument_list|,
-literal|"hdfs"
+literal|"hive"
 argument_list|,
 literal|"This property allows privileged distcp executions done by hive\n"
 operator|+
-literal|"to run as this user. Typically, it should be the user you\n"
-operator|+
-literal|"run the namenode as, such as the 'hdfs' user."
+literal|"to run as this user."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TABLE_TYPE_MAPPING

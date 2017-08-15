@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -18,10 +18,6 @@ operator|.
 name|parse
 operator|.
 name|repl
-operator|.
-name|dump
-operator|.
-name|io
 package|;
 end_package
 
@@ -200,6 +196,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|CopyUtils
 block|{
@@ -243,8 +240,12 @@ specifier|final
 name|String
 name|copyAsUser
 decl_stmt|;
+specifier|public
 name|CopyUtils
 parameter_list|(
+name|String
+name|distCpDoAsUser
+parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|)
@@ -298,18 +299,10 @@ name|this
 operator|.
 name|copyAsUser
 operator|=
-name|hiveConf
-operator|.
-name|getVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_DISTCP_DOAS_USER
-argument_list|)
+name|distCpDoAsUser
 expr_stmt|;
 block|}
+specifier|public
 name|void
 name|doCopy
 parameter_list|(
@@ -457,7 +450,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/*       Check for conditions that will lead to local copy, checks are:       1. we are testing hive.       2. both source and destination are same FileSystem       3. either source or destination is a "local" FileSystem("file")       4. aggregate fileSize of all source Paths(can be directory /  file) is less than configured size.       5. number of files of all source Paths(can be directory /  file) is less than configured size.   */
+comment|/*       Check for conditions that will lead to local copy, checks are:       1. we are testing hive.       2. either source or destination is a "local" FileSystem("file")       3. aggregate fileSize of all source Paths(can be directory /  file) is less than configured size.       4. number of files of all source Paths(can be directory /  file) is less than configured size.   */
 specifier|private
 name|boolean
 name|regularCopy
@@ -498,34 +491,17 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
-name|boolean
-name|isLocalFs
-init|=
-name|isLocal
-argument_list|(
-name|sourceFs
-argument_list|)
-operator|||
-name|isLocal
-argument_list|(
-name|destinationFs
-argument_list|)
-decl_stmt|;
-name|boolean
-name|sameFs
-init|=
-name|sourceFs
-operator|.
-name|equals
-argument_list|(
-name|destinationFs
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
-name|isLocalFs
+name|isLocal
+argument_list|(
+name|sourceFs
+argument_list|)
 operator|||
-name|sameFs
+name|isLocal
+argument_list|(
+name|destinationFs
+argument_list|)
 condition|)
 block|{
 return|return
