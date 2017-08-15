@@ -1314,6 +1314,17 @@ argument_list|(
 name|opHandle
 argument_list|)
 decl_stmt|;
+name|HiveConf
+name|hiveConf
+init|=
+name|sessionManager
+operator|.
+name|getOperationManager
+argument_list|()
+operator|.
+name|getHiveConf
+argument_list|()
+decl_stmt|;
 operator|new
 name|QueryProfileTmpl
 argument_list|()
@@ -1323,6 +1334,8 @@ argument_list|(
 name|sw
 argument_list|,
 name|queryInfo
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 name|String
