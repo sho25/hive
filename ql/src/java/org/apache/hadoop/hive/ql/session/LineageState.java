@@ -277,6 +277,7 @@ name|fop
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Update the path of the captured lineage information in case the    * conditional input path and the linked MoveWork were merged into one MoveWork.    * This should only happen for Blobstore systems with optimization turned on.    * @param newPath conditional input path    * @param oldPath path of the old linked MoveWork    */
 specifier|public
 name|void
 name|updateDirToOpMap
@@ -293,7 +294,7 @@ name|op
 init|=
 name|dirToFop
 operator|.
-name|remove
+name|get
 argument_list|(
 name|oldPath
 argument_list|)
