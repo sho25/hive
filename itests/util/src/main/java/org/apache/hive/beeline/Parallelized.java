@@ -121,16 +121,12 @@ argument_list|(
 literal|"junit.parallel.threads"
 argument_list|)
 decl_stmt|;
+comment|//HIVE-17322: remove parallelism to check if the BeeLine test flakyness gets fixed
+comment|//int numThreads = Runtime.getRuntime().availableProcessors();
 name|int
 name|numThreads
 init|=
-name|Runtime
-operator|.
-name|getRuntime
-argument_list|()
-operator|.
-name|availableProcessors
-argument_list|()
+literal|1
 decl_stmt|;
 if|if
 condition|(
