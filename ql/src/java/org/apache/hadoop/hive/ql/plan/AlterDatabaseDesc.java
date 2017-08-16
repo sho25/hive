@@ -87,7 +87,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Create Database"
+literal|"Alter Database"
 argument_list|,
 name|explainLevels
 operator|=

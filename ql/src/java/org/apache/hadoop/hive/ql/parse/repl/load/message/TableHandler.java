@@ -262,9 +262,7 @@ name|location
 argument_list|,
 name|x
 argument_list|,
-name|databasesUpdated
-argument_list|,
-name|tablesUpdated
+name|updatedMetadata
 argument_list|)
 expr_stmt|;
 return|return

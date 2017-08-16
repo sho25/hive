@@ -23423,9 +23423,9 @@ name|db
 operator|.
 name|alterPartitions
 argument_list|(
-name|tbl
+name|alterTbl
 operator|.
-name|getTableName
+name|getOldName
 argument_list|()
 argument_list|,
 name|allPartitions

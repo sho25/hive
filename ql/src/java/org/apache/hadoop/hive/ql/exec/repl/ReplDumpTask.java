@@ -1396,7 +1396,9 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-return|return
+name|ReplicationSpec
+name|rspec
+init|=
 name|getNewReplicationSpec
 argument_list|(
 name|eventId
@@ -1409,6 +1411,16 @@ operator|.
 name|toString
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|rspec
+operator|.
+name|setIsIncrementalDump
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+return|return
+name|rspec
 return|;
 block|}
 specifier|private
@@ -2005,6 +2017,8 @@ operator|new
 name|ReplicationSpec
 argument_list|(
 literal|true
+argument_list|,
+literal|false
 argument_list|,
 literal|false
 argument_list|,

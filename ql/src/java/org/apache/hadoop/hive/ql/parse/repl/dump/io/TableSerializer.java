@@ -427,6 +427,17 @@ name|isInReplicationScope
 argument_list|()
 condition|)
 block|{
+comment|// Current replication state must be set on the Table object only for bootstrap dump.
+comment|// Event replication State will be null in case of bootstrap dump.
+if|if
+condition|(
+operator|!
+name|additionalPropertiesProvider
+operator|.
+name|isIncrementalDump
+argument_list|()
+condition|)
+block|{
 name|table
 operator|.
 name|putToParameters
@@ -446,6 +457,7 @@ name|getCurrentReplicationState
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isExternalTable

@@ -1120,7 +1120,7 @@ name|MetaException
 name|e
 parameter_list|)
 block|{
-comment|// skip and issue warning for missing file
+comment|// issue warning for missing file and throw exception
 name|LOG
 operator|.
 name|warn
@@ -1135,6 +1135,16 @@ operator|+
 literal|" in source repo or cmroot"
 argument_list|)
 expr_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
 block|}
 comment|// Note - we need srcFs rather than fs, because it is possible that the _files lists files
 comment|// which are from a different filesystem than the fs where the _files file itself was loaded
