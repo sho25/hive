@@ -683,6 +683,12 @@ name|WriterOptions
 name|writerOptions
 decl_stmt|;
 specifier|private
+name|OrcFile
+operator|.
+name|WriterOptions
+name|deleteWriterOptions
+decl_stmt|;
+specifier|private
 name|Writer
 name|writer
 init|=
@@ -782,7 +788,9 @@ name|indexBuilder
 init|=
 operator|new
 name|KeyIndexBuilder
-argument_list|()
+argument_list|(
+literal|"insert"
+argument_list|)
 decl_stmt|;
 specifier|private
 name|KeyIndexBuilder
@@ -1000,8 +1008,8 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * An extension to AcidOutputFormat that allows users to add additional    * options.    */
-specifier|public
+comment|/**    * An extension to AcidOutputFormat that allows users to add additional    * options.    *    * todo: since this is only used for testing could we not control the writer some other way?    * to simplify {@link #OrcRecordUpdater(Path, AcidOutputFormat.Options)}    */
+specifier|final
 specifier|static
 class|class
 name|OrcOptions
@@ -1017,7 +1025,6 @@ name|orcOptions
 init|=
 literal|null
 decl_stmt|;
-specifier|public
 name|OrcOptions
 parameter_list|(
 name|Configuration
@@ -1030,7 +1037,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|OrcOptions
 name|orcOptions
 parameter_list|(
@@ -1050,7 +1056,6 @@ return|return
 name|this
 return|;
 block|}
-specifier|public
 name|OrcFile
 operator|.
 name|WriterOptions
@@ -1272,6 +1277,16 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+assert|assert
+name|this
+operator|.
+name|acidOperationalProperties
+operator|.
+name|isSplitUpdate
+argument_list|()
+operator|:
+literal|"HIVE-17089?!"
+assert|;
 name|BucketCodec
 name|bucketCodec
 init|=
@@ -1559,6 +1574,22 @@ name|getReporter
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|flushLengths
+operator|.
+name|writeLong
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+name|OrcInputFormat
+operator|.
+name|SHIMS
+operator|.
+name|hflush
+argument_list|(
+name|flushLengths
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -1697,10 +1728,26 @@ name|isSplitUpdate
 argument_list|()
 condition|)
 block|{
+name|AcidOutputFormat
+operator|.
+name|Options
+name|deleteOptions
+init|=
+name|options
+operator|.
+name|clone
+argument_list|()
+operator|.
+name|writingDeleteDelta
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
 comment|// If this is a split-update, we initialize a delete delta file path in anticipation that
 comment|// they would write update/delete events to that separate file.
 comment|// This writes to a file in directory which starts with "delete_delta_..."
-comment|// The actual initialization of a writer only happens if any delete events are written.
+comment|// The actual initialization of a writer only happens if any delete events are written
+comment|//to avoid empty files.
 name|this
 operator|.
 name|deleteEventPath
@@ -1711,11 +1758,49 @@ name|createFilename
 argument_list|(
 name|path
 argument_list|,
+name|deleteOptions
+argument_list|)
+expr_stmt|;
+comment|/**          * HIVE-14514 is not done so we can't clone writerOptions().  So here we create a new          * options object to make sure insert and delete writers don't share them (like the          * callback object, for example)          * In any case insert writer and delete writer would most likely have very different          * characteristics - delete writer only writes a tiny amount of data.  Once we do early          * update split, each {@link OrcRecordUpdater} will have only 1 writer. (except for Mutate API)          * Then it would perhaps make sense to take writerOptions as input - how?.          */
+name|this
+operator|.
+name|deleteWriterOptions
+operator|=
+name|OrcFile
+operator|.
+name|writerOptions
+argument_list|(
 name|optionsCloneForDelta
 operator|.
-name|writingDeleteDelta
+name|getTableProperties
+argument_list|()
+argument_list|,
+name|optionsCloneForDelta
+operator|.
+name|getConfiguration
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|deleteWriterOptions
+operator|.
+name|inspector
 argument_list|(
-literal|true
+name|createEventSchema
+argument_list|(
+name|findRecId
+argument_list|(
+name|options
+operator|.
+name|getInspector
+argument_list|()
+argument_list|,
+name|options
+operator|.
+name|getRecordIdColumn
+argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2441,20 +2526,15 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// Initialize an indexBuilder for deleteEvents.
+comment|// Initialize an indexBuilder for deleteEvents. (HIVE-17284)
 name|deleteEventIndexBuilder
 operator|=
 operator|new
 name|KeyIndexBuilder
-argument_list|()
+argument_list|(
+literal|"delete"
+argument_list|)
 expr_stmt|;
-comment|// Change the indexBuilder callback too for the deleteEvent file, the remaining writer
-comment|// options remain the same.
-comment|// TODO: When we change the callback, we are essentially mutating the writerOptions.
-comment|// This works but perhaps is not a good thing. The proper way to do this would be
-comment|// to clone the writerOptions, however it requires that the parent OrcFile.writerOptions
-comment|// implements a clone() method (which it does not for now). HIVE-14514 is currently an open
-comment|// JIRA to fix this.
 name|this
 operator|.
 name|deleteEventWriter
@@ -2465,7 +2545,7 @@ name|createWriter
 argument_list|(
 name|deleteEventPath
 argument_list|,
-name|writerOptions
+name|deleteWriterOptions
 operator|.
 name|callback
 argument_list|(
@@ -2860,6 +2940,16 @@ argument_list|(
 name|flushLengths
 argument_list|)
 expr_stmt|;
+comment|//multiple transactions only happen for streaming ingest which only allows inserts
+assert|assert
+name|deleteEventWriter
+operator|==
+literal|null
+operator|:
+literal|"unexpected delete writer for "
+operator|+
+name|path
+assert|;
 block|}
 annotation|@
 name|Override
@@ -3282,6 +3372,11 @@ name|OrcFile
 operator|.
 name|WriterCallback
 block|{
+specifier|private
+specifier|final
+name|String
+name|builderName
+decl_stmt|;
 name|StringBuilder
 name|lastKey
 init|=
@@ -3289,6 +3384,7 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
+comment|//list of last keys for each stripe
 name|long
 name|lastTransaction
 decl_stmt|;
@@ -3305,6 +3401,19 @@ operator|new
 name|AcidStats
 argument_list|()
 decl_stmt|;
+name|KeyIndexBuilder
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+name|this
+operator|.
+name|builderName
+operator|=
+name|name
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public

@@ -3517,7 +3517,9 @@ init|=
 name|indiaAssertions
 operator|.
 name|readRecords
-argument_list|()
+argument_list|(
+literal|2
+argument_list|)
 decl_stmt|;
 name|assertThat
 argument_list|(
@@ -3614,18 +3616,19 @@ argument_list|(
 operator|new
 name|RecordIdentifier
 argument_list|(
-literal|1L
+literal|2L
 argument_list|,
 name|encodeBucket
 argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-literal|1L
+literal|0L
 argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//with split update, new version of the row is a new insert
 name|assertThat
 argument_list|(
 name|indiaRecords
@@ -3668,7 +3671,7 @@ argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-literal|0L
+literal|1L
 argument_list|)
 argument_list|)
 argument_list|)
@@ -3699,6 +3702,7 @@ argument_list|(
 literal|2L
 argument_list|)
 expr_stmt|;
+comment|//1 split since mutateTransaction txn just does deletes
 name|List
 argument_list|<
 name|Record
@@ -3708,7 +3712,9 @@ init|=
 name|ukAssertions
 operator|.
 name|readRecords
-argument_list|()
+argument_list|(
+literal|1
+argument_list|)
 decl_stmt|;
 name|assertThat
 argument_list|(
@@ -3805,7 +3811,9 @@ init|=
 name|franceAssertions
 operator|.
 name|readRecords
-argument_list|()
+argument_list|(
+literal|2
+argument_list|)
 decl_stmt|;
 name|assertThat
 argument_list|(
@@ -3855,18 +3863,19 @@ argument_list|(
 operator|new
 name|RecordIdentifier
 argument_list|(
-literal|1L
+literal|2L
 argument_list|,
 name|encodeBucket
 argument_list|(
 literal|0
 argument_list|)
 argument_list|,
-literal|1L
+literal|0L
 argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//with split update, new version of the row is a new insert
 name|client
 operator|.
 name|close

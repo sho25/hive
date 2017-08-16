@@ -3208,6 +3208,7 @@ return|return
 literal|null
 return|;
 block|}
+comment|/**      * This is bogus especially with split update acid tables.  This causes compaction to create      * delete_delta_x_y where none existed before.  Makes the data layout such as would never be      * created by 'real' code path.      */
 annotation|@
 name|Override
 specifier|public
@@ -3789,6 +3790,27 @@ return|return
 name|AcidUtils
 operator|.
 name|deltaSubdir
+argument_list|(
+name|minTxnId
+argument_list|,
+name|maxTxnId
+argument_list|)
+return|;
+block|}
+name|String
+name|makeDeleteDeltaDirNameCompacted
+parameter_list|(
+name|long
+name|minTxnId
+parameter_list|,
+name|long
+name|maxTxnId
+parameter_list|)
+block|{
+return|return
+name|AcidUtils
+operator|.
+name|deleteDeltaSubdir
 argument_list|(
 name|minTxnId
 argument_list|,

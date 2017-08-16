@@ -301,6 +301,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|orc
+operator|.
+name|OrcRecordUpdater
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|Table
@@ -370,6 +390,20 @@ operator|.
 name|util
 operator|.
 name|Ref
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|OrcAcidUtils
 import|;
 end_import
 
@@ -503,6 +537,7 @@ name|DELETE_DELTA_PREFIX
 init|=
 literal|"delete_delta_"
 decl_stmt|;
+comment|/**    * Acid Streaming Ingest writes multiple transactions to the same file.  It also maintains a    * {@link org.apache.orc.impl.OrcAcidUtils#getSideFile(Path)} side file which stores the length of    * the primary file as of the last commit ({@link OrcRecordUpdater#flush()}).  That is the 'logical length'.    * Once the primary is closed, the side file is deleted (logical length = actual length) but if    * the writer dies or the primary file is being read while its still being written to, anything    * past the logical length should be ignored.    *    * @see org.apache.orc.impl.OrcAcidUtils#DELTA_SIDE_FILE_SUFFIX    * @see org.apache.orc.impl.OrcAcidUtils#getLastFlushLength(FileSystem, Path)    * @see #getLogicalLength(FileSystem, FileStatus)    */
 specifier|public
 specifier|static
 specifier|final
@@ -957,6 +992,7 @@ block|}
 comment|/**    * This is format of delete delta dir name prior to Hive 2.2.x    */
 annotation|@
 name|VisibleForTesting
+specifier|public
 specifier|static
 name|String
 name|deleteDeltaSubdir
@@ -995,6 +1031,7 @@ block|}
 comment|/**    * Each write statement in a transaction creates its own delete delta dir,    * when split-update acid operational property is turned on.    * @since 2.2.x    */
 annotation|@
 name|VisibleForTesting
+specifier|public
 specifier|static
 name|String
 name|deleteDeltaSubdir
@@ -1946,39 +1983,10 @@ name|TransactionalValidationListener
 operator|.
 name|DEFAULT_TRANSACTIONAL_PROPERTY
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|LEGACY_VALUE_STRING
-init|=
-name|TransactionalValidationListener
-operator|.
-name|LEGACY_TRANSACTIONAL_PROPERTY
-decl_stmt|;
 specifier|private
 name|AcidOperationalProperties
 parameter_list|()
 block|{     }
-comment|/**      * Returns an acidOperationalProperties object that represents ACID behavior for legacy tables      * that were created before ACID type system using operational properties was put in place.      * @return the acidOperationalProperties object      */
-specifier|public
-specifier|static
-name|AcidOperationalProperties
-name|getLegacy
-parameter_list|()
-block|{
-name|AcidOperationalProperties
-name|obj
-init|=
-operator|new
-name|AcidOperationalProperties
-argument_list|()
-decl_stmt|;
-comment|// In legacy mode, none of these properties are turned on.
-return|return
-name|obj
-return|;
-block|}
 comment|/**      * Returns an acidOperationalProperties object that represents default ACID behavior for tables      * that do no explicitly specify/override the default behavior.      * @return the acidOperationalProperties object.      */
 specifier|public
 specifier|static
@@ -2031,7 +2039,7 @@ block|{
 return|return
 name|AcidOperationalProperties
 operator|.
-name|getLegacy
+name|getDefault
 argument_list|()
 return|;
 block|}
@@ -2049,23 +2057,6 @@ return|return
 name|AcidOperationalProperties
 operator|.
 name|getDefault
-argument_list|()
-return|;
-block|}
-if|if
-condition|(
-name|propertiesStr
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|LEGACY_VALUE_STRING
-argument_list|)
-condition|)
-block|{
-return|return
-name|AcidOperationalProperties
-operator|.
-name|getLegacy
 argument_list|()
 return|;
 block|}
@@ -5445,6 +5436,28 @@ name|isAcidTable
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * @param p - not null    */
+specifier|public
+specifier|static
+name|boolean
+name|isDeleteDelta
+parameter_list|(
+name|Path
+name|p
+parameter_list|)
+block|{
+return|return
+name|p
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|startsWith
+argument_list|(
+name|DELETE_DELTA_PREFIX
+argument_list|)
+return|;
+block|}
 comment|/** Checks if a table is a valid ACID table.    * Note, users are responsible for using the correct TxnManager. We do not look at    * SessionState.get().getTxnMgr().supportsAcid() here    * @param table table    * @return true if table is a legit ACID table, false otherwise    */
 specifier|public
 specifier|static
@@ -5623,11 +5636,11 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// If the table does not define any transactional properties, we return a legacy type.
+comment|// If the table does not define any transactional properties, we return a default type.
 return|return
 name|AcidOperationalProperties
 operator|.
-name|getLegacy
+name|getDefault
 argument_list|()
 return|;
 block|}
@@ -5651,7 +5664,7 @@ name|conf
 parameter_list|)
 block|{
 comment|// If the conf does not define any transactional properties, the parseInt() should receive
-comment|// a value of zero, which will set AcidOperationalProperties to a legacy type and return that.
+comment|// a value of 1, which will set AcidOperationalProperties to a default type and return that.
 return|return
 name|AcidOperationalProperties
 operator|.
@@ -5699,11 +5712,11 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// If the properties does not define any transactional properties, we return a legacy type.
+comment|// If the properties does not define any transactional properties, we return a default type.
 return|return
 name|AcidOperationalProperties
 operator|.
-name|getLegacy
+name|getDefault
 argument_list|()
 return|;
 block|}
@@ -5750,11 +5763,11 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// If the parameters does not define any transactional properties, we return a legacy type.
+comment|// If the parameters does not define any transactional properties, we return a default type.
 return|return
 name|AcidOperationalProperties
 operator|.
-name|getLegacy
+name|getDefault
 argument_list|()
 return|;
 block|}
@@ -5766,6 +5779,91 @@ argument_list|(
 name|resultStr
 argument_list|)
 return|;
+block|}
+comment|/**    * See comments at {@link AcidUtils#DELTA_SIDE_FILE_SUFFIX}.    *    * Returns the logical end of file for an acid data file.    *    * This relies on the fact that if delta_x_y has no committed transactions it wil be filtered out    * by {@link #getAcidState(Path, Configuration, ValidTxnList)} and so won't be read at all.    * @param file - data file to read/compute splits on    */
+specifier|public
+specifier|static
+name|long
+name|getLogicalLength
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|FileStatus
+name|file
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Path
+name|lengths
+init|=
+name|OrcAcidUtils
+operator|.
+name|getSideFile
+argument_list|(
+name|file
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|lengths
+argument_list|)
+condition|)
+block|{
+comment|/**        * if here for delta_x_y that means txn y is resolved and all files in this delta are closed so        * they should all have a valid ORC footer and info from NameNode about length is good        */
+return|return
+name|file
+operator|.
+name|getLen
+argument_list|()
+return|;
+block|}
+name|long
+name|len
+init|=
+name|OrcAcidUtils
+operator|.
+name|getLastFlushLength
+argument_list|(
+name|fs
+argument_list|,
+name|file
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|len
+operator|>=
+literal|0
+condition|)
+block|{
+comment|/**        * if here something is still writing to delta_x_y so  read only as far as the last commit,        * i.e. where last footer was written.  The file may contain more data after 'len' position        * belonging to an open txn.        */
+return|return
+name|len
+return|;
+block|}
+comment|/**      * if here, side file is there but we couldn't read it.  We want to avoid a read where      * (file.getLen()< 'value from side file' which may happen if file is not closed) because this      * means some committed data from 'file' would be skipped.      * This should be very unusual.      */
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+name|lengths
+operator|+
+literal|" found but is not readable.  Consider waiting or orcfiledump --recover"
+argument_list|)
+throw|;
 block|}
 block|}
 end_class

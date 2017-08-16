@@ -77,6 +77,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -4108,6 +4118,7 @@ comment|// Determine the transactional_properties of the table from the job conf
 comment|// The table properties are copied to job conf at HiveInputFormat::addSplitsForGroup(),
 comment|//& therefore we should be able to retrieve them here and determine appropriate behavior.
 comment|// Note that this will be meaningless for non-acid tables& will be set to null.
+comment|//this is set by Utilities.copyTablePropertiesToConf()
 name|boolean
 name|isTableTransactional
 init|=
@@ -6085,12 +6096,21 @@ operator|.
 name|getFileStatus
 argument_list|()
 decl_stmt|;
+name|long
+name|logicalLen
+init|=
+name|AcidUtils
+operator|.
+name|getLogicalLength
+argument_list|(
+name|fs
+argument_list|,
+name|fileStatus
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-name|fileStatus
-operator|.
-name|getLen
-argument_list|()
+name|logicalLen
 operator|!=
 literal|0
 condition|)
@@ -6156,6 +6176,27 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|+
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|getLength
+argument_list|()
+operator|>
+name|logicalLen
+condition|)
+block|{
+comment|//don't create splits for anything past logical EOF
+continue|continue;
+block|}
 name|OrcSplit
 name|orcSplit
 init|=
@@ -6201,10 +6242,7 @@ argument_list|,
 operator|-
 literal|1
 argument_list|,
-name|fileStatus
-operator|.
-name|getLen
-argument_list|()
+name|logicalLen
 argument_list|)
 decl_stmt|;
 name|splits
@@ -6263,26 +6301,30 @@ argument_list|<
 name|OrcSplit
 argument_list|>
 block|{
+specifier|private
 name|Path
 name|dir
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|DeltaMetaData
 argument_list|>
 name|deltas
 decl_stmt|;
+specifier|private
 name|boolean
 index|[]
 name|covered
 decl_stmt|;
+specifier|private
 name|int
 name|numBuckets
 decl_stmt|;
+specifier|private
 name|AcidOperationalProperties
 name|acidOperationalProperties
 decl_stmt|;
-specifier|public
 name|ACIDSplitStrategy
 parameter_list|(
 name|Path
@@ -6377,9 +6419,11 @@ argument_list|()
 condition|)
 block|{
 return|return
-name|splits
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
 return|;
-comment|// return an empty list.
 block|}
 comment|// Generate a split for any buckets that weren't covered.
 comment|// This happens in the case where a bucket just has deltas and no
@@ -6393,69 +6437,20 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-for|for
-control|(
-name|int
-name|b
-init|=
-literal|0
-init|;
-name|b
-operator|<
-name|numBuckets
-condition|;
-operator|++
-name|b
-control|)
-block|{
-if|if
-condition|(
-operator|!
-name|covered
-index|[
-name|b
-index|]
-condition|)
-block|{
-name|splits
-operator|.
-name|add
-argument_list|(
+comment|//since HIVE-17089 if here, then it's not an acid table so there should never be any deltas
+throw|throw
 operator|new
-name|OrcSplit
+name|IllegalStateException
 argument_list|(
-name|dir
-argument_list|,
-literal|null
-argument_list|,
-name|b
-argument_list|,
-literal|0
-argument_list|,
-operator|new
-name|String
-index|[
-literal|0
-index|]
-argument_list|,
-literal|null
-argument_list|,
-literal|false
-argument_list|,
-literal|false
-argument_list|,
+literal|"Found unexpected deltas: "
+operator|+
 name|deltas
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-operator|-
-literal|1
+operator|+
+literal|" in "
+operator|+
+name|dir
 argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-block|}
+throw|;
 block|}
 return|return
 name|splits
@@ -6917,7 +6912,7 @@ argument_list|()
 argument_list|,
 name|AcidUtils
 operator|.
-name|hiddenFileFilter
+name|bucketFileFilter
 argument_list|)
 decl_stmt|;
 for|for
@@ -7022,7 +7017,7 @@ argument_list|()
 argument_list|,
 name|AcidUtils
 operator|.
-name|hiddenFileFilter
+name|bucketFileFilter
 argument_list|)
 decl_stmt|;
 for|for
@@ -8388,7 +8383,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|// We can't eliminate stripes if there are deltas because the
-comment|// deltas may change the rows making them match the predicate.
+comment|// deltas may change the rows making them match the predicate. todo: See HIVE-14516.
 if|if
 condition|(
 operator|(
@@ -9135,10 +9130,14 @@ argument_list|)
 operator|.
 name|maxLength
 argument_list|(
-name|file
+name|AcidUtils
 operator|.
-name|getLen
-argument_list|()
+name|getLogicalLength
+argument_list|(
+name|fs
+argument_list|,
+name|file
+argument_list|)
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -13369,13 +13368,6 @@ operator|.
 name|conf
 argument_list|)
 decl_stmt|;
-name|opts
-operator|.
-name|writingBase
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 name|int
 name|b
 init|=

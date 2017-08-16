@@ -275,14 +275,6 @@ name|DEFAULT_TRANSACTIONAL_PROPERTY
 init|=
 literal|"default"
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|LEGACY_TRANSACTIONAL_PROPERTY
-init|=
-literal|"legacy"
-decl_stmt|;
 name|TransactionalValidationListener
 parameter_list|(
 name|Configuration
@@ -1331,9 +1323,6 @@ condition|)
 block|{
 case|case
 name|DEFAULT_TRANSACTIONAL_PROPERTY
-case|:
-case|case
-name|LEGACY_TRANSACTIONAL_PROPERTY
 case|:
 name|isValid
 operator|=

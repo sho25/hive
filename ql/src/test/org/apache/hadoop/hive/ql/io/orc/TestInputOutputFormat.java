@@ -819,6 +819,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|AcidUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|CombineHiveInputFormat
 import|;
 end_import
@@ -910,6 +928,24 @@ operator|.
 name|io
 operator|.
 name|RecordIdentifier
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|RecordUpdater
 import|;
 end_import
 
@@ -4328,6 +4364,17 @@ argument_list|,
 literal|"2"
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|OrcInputFormat
 operator|.
 name|Context
@@ -4352,7 +4399,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_000_001/part-00"
+literal|"mock:/a/delta_000_001/bucket_000000"
 argument_list|,
 literal|1000
 argument_list|,
@@ -4372,7 +4419,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_000_001/part-01"
+literal|"mock:/a/delta_000_001/bucket_000001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -4392,7 +4439,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_001_002/part-02"
+literal|"mock:/a/delta_001_002/bucket_000000"
 argument_list|,
 literal|1000
 argument_list|,
@@ -4412,7 +4459,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_001_002/part-03"
+literal|"mock:/a/delta_001_002/bucket_000001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -4531,9 +4578,7 @@ control|)
 block|{
 name|assertEquals
 argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
+literal|1
 argument_list|,
 name|splitSizeEstimator
 operator|.
@@ -4546,7 +4591,7 @@ expr_stmt|;
 block|}
 name|assertEquals
 argument_list|(
-literal|2
+literal|4
 argument_list|,
 name|splits
 operator|.
@@ -9223,6 +9268,7 @@ argument_list|()
 return|;
 block|}
 block|}
+comment|/**    * WARNING: detele(Path...) don't actually delete    */
 specifier|public
 specifier|static
 class|class
@@ -9898,8 +9944,121 @@ expr_stmt|;
 name|checkAccess
 argument_list|()
 expr_stmt|;
+name|int
+name|removed
+init|=
+literal|0
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|files
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|MockFile
+name|mf
+init|=
+name|files
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|path
+operator|.
+name|equals
+argument_list|(
+name|mf
+operator|.
+name|path
+argument_list|)
+condition|)
+block|{
+name|files
+operator|.
+name|remove
+argument_list|(
+name|i
+argument_list|)
+expr_stmt|;
+name|removed
+operator|++
+expr_stmt|;
+break|break;
+block|}
+block|}
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|globalFiles
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|MockFile
+name|mf
+init|=
+name|files
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|path
+operator|.
+name|equals
+argument_list|(
+name|mf
+operator|.
+name|path
+argument_list|)
+condition|)
+block|{
+name|globalFiles
+operator|.
+name|remove
+argument_list|(
+name|i
+argument_list|)
+expr_stmt|;
+name|removed
+operator|++
+expr_stmt|;
+break|break;
+block|}
+block|}
 return|return
-literal|false
+name|removed
+operator|>
+literal|0
 return|;
 block|}
 annotation|@
@@ -9917,18 +10076,22 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|statistics
-operator|.
-name|incrementWriteOps
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|checkAccess
+if|if
+condition|(
+name|b
+condition|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
 argument_list|()
-expr_stmt|;
+throw|;
+block|}
 return|return
-literal|false
+name|delete
+argument_list|(
+name|path
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -21470,11 +21633,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktable
-comment|// call-2: open - mock:/mocktable/0_0
-comment|// call-3: open - mock:/mocktable/0_1
+comment|// call-2: check existence of side file for mock:/mocktable/0_0
+comment|// call-3: open - mock:/mocktable/0_0
+comment|// call-4: check existence of side file for mock:/mocktable/0_1
+comment|// call-5: open - mock:/mocktable/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -21879,11 +22044,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl
-comment|// call-2: open - mock:/mocktbl/0_0
-comment|// call-3: open - mock:/mocktbl/0_1
+comment|// call-2: check existence of side file for mock:/mocktbl/0_0
+comment|// call-3: open - mock:/mocktbl/0_0
+comment|// call-4: check existence of side file for  mock:/mocktbl/0_1
+comment|// call-5: open - mock:/mocktbl/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -22003,9 +22170,11 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl
+comment|// call-2: check existence of side file for mock:/mocktbl/0_0
+comment|// call-3: check existence of side file for  mock:/mocktbl/0_1
 name|assertEquals
 argument_list|(
-literal|1
+literal|3
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -22138,11 +22307,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl
-comment|// call-2: open - mock:/mocktbl/0_0
-comment|// call-3: open - mock:/mocktbl/0_1
+comment|// call-2: check existence of side file for mock:/mocktbl/0_0
+comment|// call-3: open - mock:/mocktbl/0_0
+comment|// call-4: check existence of side file for mock:/mocktbl/0_1
+comment|// call-5: open - mock:/mocktbl/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -22631,11 +22802,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktable
-comment|// call-2: open - mock:/mocktbl1/0_0
-comment|// call-3: open - mock:/mocktbl1/0_1
+comment|// call-2: check side file for mock:/mocktbl1/0_0
+comment|// call-3: open - mock:/mocktbl1/0_0
+comment|// call-4: check side file for  mock:/mocktbl1/0_1
+comment|// call-5: open - mock:/mocktbl1/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -22891,11 +23064,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktable
-comment|// call-2: open - mock:/mocktbl1/0_0
-comment|// call-3: open - mock:/mocktbl1/0_1
+comment|// call-2: check side file for mock:/mocktbl1/0_0
+comment|// call-3: open - mock:/mocktbl1/0_0
+comment|// call-4: check side file for  mock:/mocktbl1/0_1
+comment|// call-5: open - mock:/mocktbl1/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -23393,11 +23568,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl2
-comment|// call-2: open - mock:/mocktbl2/0_0
-comment|// call-3: open - mock:/mocktbl2/0_1
+comment|// call-2: check side file for mock:/mocktbl2/0_0
+comment|// call-3: open - mock:/mocktbl2/0_0
+comment|// call-4: check side file for  mock:/mocktbl2/0_1
+comment|// call-5: open - mock:/mocktbl2/0_1
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -23545,10 +23722,11 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl2
-comment|// call-2: open - mock:/mocktbl2/0_1
+comment|// call-2: check side file for  mock:/mocktbl2/0_1
+comment|// call-3: open - mock:/mocktbl2/0_1
 name|assertEquals
 argument_list|(
-literal|2
+literal|3
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -23694,10 +23872,11 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: listLocatedStatus - mock:/mocktbl2
-comment|// call-2: open - mock:/mocktbl2/0_0
+comment|// call-2: check side file for  mock:/mocktbl2/0_0
+comment|// call-3: open - mock:/mocktbl2/0_0
 name|assertEquals
 argument_list|(
-literal|2
+literal|3
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -25915,6 +26094,17 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
 name|set
 argument_list|(
 name|IOConstants
@@ -26459,6 +26649,17 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
 name|set
 argument_list|(
 name|IOConstants
@@ -26970,11 +27171,35 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"fs.defaultFS"
+argument_list|,
+literal|"mock:///"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"fs.mock.impl"
+argument_list|,
 name|MockFileSystem
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|FileSystem
 name|fs
 init|=
-operator|new
-name|MockFileSystem
+name|FileSystem
+operator|.
+name|get
 argument_list|(
 name|conf
 argument_list|)
@@ -26990,15 +27215,6 @@ argument_list|,
 literal|"mock:///mocktable7"
 argument_list|)
 decl_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.transactional.table.scan"
-argument_list|,
-literal|"true"
-argument_list|)
-expr_stmt|;
 name|conf
 operator|.
 name|set
@@ -27045,29 +27261,6 @@ argument_list|,
 name|mockPath
 operator|.
 name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"fs.defaultFS"
-argument_list|,
-literal|"mock:///"
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"fs.mock.impl"
-argument_list|,
-name|MockFileSystem
-operator|.
-name|class
-operator|.
-name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -27176,49 +27369,63 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|writer
-operator|=
-name|OrcFile
+name|AcidOutputFormat
 operator|.
-name|createWriter
-argument_list|(
+name|Options
+name|options
+init|=
 operator|new
-name|Path
-argument_list|(
-operator|new
-name|Path
-argument_list|(
-name|mockPath
-operator|+
-literal|"/delta_001_002"
-argument_list|)
-operator|+
-literal|"/0_1"
-argument_list|)
-argument_list|,
-name|OrcFile
+name|AcidOutputFormat
 operator|.
-name|writerOptions
+name|Options
 argument_list|(
 name|conf
 argument_list|)
 operator|.
-name|blockPadding
+name|bucket
 argument_list|(
-literal|false
+literal|1
 argument_list|)
 operator|.
-name|bufferSize
+name|minimumTransactionId
 argument_list|(
-literal|1024
+literal|1
+argument_list|)
+operator|.
+name|maximumTransactionId
+argument_list|(
+literal|1
 argument_list|)
 operator|.
 name|inspector
 argument_list|(
 name|inspector
 argument_list|)
+operator|.
+name|finalDestination
+argument_list|(
+name|mockPath
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|OrcOutputFormat
+name|of
+init|=
+operator|new
+name|OrcOutputFormat
+argument_list|()
+decl_stmt|;
+name|RecordUpdater
+name|ru
+init|=
+name|of
+operator|.
+name|getRecordUpdater
+argument_list|(
+name|mockPath
+argument_list|,
+name|options
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -27234,10 +27441,15 @@ operator|++
 name|i
 control|)
 block|{
-name|writer
+name|ru
 operator|.
-name|addRow
+name|insert
 argument_list|(
+name|options
+operator|.
+name|getMinimumTransactionId
+argument_list|()
+argument_list|,
 operator|new
 name|MyRow
 argument_list|(
@@ -27250,10 +27462,34 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|writer
+name|ru
 operator|.
 name|close
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+comment|//this deletes the side file
+comment|//set up props for read
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|AcidUtils
+operator|.
+name|setTransactionalTableScan
+argument_list|(
+name|conf
+argument_list|,
+literal|true
+argument_list|)
 expr_stmt|;
 name|OrcInputFormat
 name|orcInputFormat
@@ -27277,7 +27513,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|1
+literal|2
 argument_list|,
 name|splits
 operator|.
@@ -27392,29 +27628,6 @@ literal|"hasBase=true"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// NOTE: don't be surprised if deltas value is different
-comment|// in older release deltas=2 as min and max transaction are added separately to delta list.
-comment|// in newer release since both of them are put together deltas=1
-name|assertTrue
-argument_list|(
-name|split
-operator|.
-name|toString
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"deltas=1"
-argument_list|)
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|split
-operator|instanceof
-name|OrcSplit
-condition|)
-block|{
 name|assertFalse
 argument_list|(
 literal|"No footer serialize test for ACID reader, hasFooter is not expected in"
@@ -27432,7 +27645,6 @@ name|hasFooter
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|orcInputFormat
 operator|.
 name|getRecordReader
@@ -27490,11 +27702,9 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: open to read footer - split 1 => mock:/mocktable7/0_0
-comment|// call-2: open to read data - split 1 => mock:/mocktable7/0_0
-comment|// call-3: open side file (flush length) of delta directory
-comment|// call-4: fs.exists() check for delta_xxx_xxx/bucket_00000 file
-comment|// call-5: AcidUtils.getAcidState - getLen() mock:/mocktable7/0_0
+comment|// call-1: open to read data - split 1 => mock:/mocktable8/0_0
+comment|// call-2: split 2 - find hive.acid.key.index in footer of delta_x_y/bucket_00001
+comment|// call-3: split 2 - read delta_x_y/bucket_00001
 name|assertEquals
 argument_list|(
 literal|5
@@ -27522,15 +27732,40 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"fs.defaultFS"
+argument_list|,
+literal|"mock:///"
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"fs.mock.impl"
+argument_list|,
 name|MockFileSystem
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|FileSystem
 name|fs
 init|=
-operator|new
-name|MockFileSystem
+name|FileSystem
+operator|.
+name|get
 argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|//ensures that FS object is cached so that everyone uses the same instance
 name|MockPath
 name|mockPath
 init|=
@@ -27542,15 +27777,6 @@ argument_list|,
 literal|"mock:///mocktable8"
 argument_list|)
 decl_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.transactional.table.scan"
-argument_list|,
-literal|"true"
-argument_list|)
-expr_stmt|;
 name|conf
 operator|.
 name|set
@@ -27597,29 +27823,6 @@ argument_list|,
 name|mockPath
 operator|.
 name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"fs.defaultFS"
-argument_list|,
-literal|"mock:///"
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"fs.mock.impl"
-argument_list|,
-name|MockFileSystem
-operator|.
-name|class
-operator|.
-name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -27728,49 +27931,63 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|writer
-operator|=
-name|OrcFile
+name|AcidOutputFormat
 operator|.
-name|createWriter
-argument_list|(
+name|Options
+name|options
+init|=
 operator|new
-name|Path
-argument_list|(
-operator|new
-name|Path
-argument_list|(
-name|mockPath
-operator|+
-literal|"/delta_001_002"
-argument_list|)
-operator|+
-literal|"/0_1"
-argument_list|)
-argument_list|,
-name|OrcFile
+name|AcidOutputFormat
 operator|.
-name|writerOptions
+name|Options
 argument_list|(
 name|conf
 argument_list|)
 operator|.
-name|blockPadding
+name|bucket
 argument_list|(
-literal|false
+literal|1
 argument_list|)
 operator|.
-name|bufferSize
+name|minimumTransactionId
 argument_list|(
-literal|1024
+literal|1
+argument_list|)
+operator|.
+name|maximumTransactionId
+argument_list|(
+literal|1
 argument_list|)
 operator|.
 name|inspector
 argument_list|(
 name|inspector
 argument_list|)
+operator|.
+name|finalDestination
+argument_list|(
+name|mockPath
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|OrcOutputFormat
+name|of
+init|=
+operator|new
+name|OrcOutputFormat
+argument_list|()
+decl_stmt|;
+name|RecordUpdater
+name|ru
+init|=
+name|of
+operator|.
+name|getRecordUpdater
+argument_list|(
+name|mockPath
+argument_list|,
+name|options
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -27786,10 +28003,15 @@ operator|++
 name|i
 control|)
 block|{
-name|writer
+name|ru
 operator|.
-name|addRow
+name|insert
 argument_list|(
+name|options
+operator|.
+name|getMinimumTransactionId
+argument_list|()
+argument_list|,
 operator|new
 name|MyRow
 argument_list|(
@@ -27802,10 +28024,34 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|writer
+name|ru
 operator|.
 name|close
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+comment|//this deletes the side file
+comment|//set up props for read
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|AcidUtils
+operator|.
+name|setTransactionalTableScan
+argument_list|(
+name|conf
+argument_list|,
+literal|true
+argument_list|)
 expr_stmt|;
 name|OrcInputFormat
 name|orcInputFormat
@@ -27829,7 +28075,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|1
+literal|2
 argument_list|,
 name|splits
 operator|.
@@ -27944,29 +28190,6 @@ literal|"hasBase=true"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// NOTE: don't be surprised if deltas value is different
-comment|// in older release deltas=2 as min and max transaction are added separately to delta list.
-comment|// in newer release since both of them are put together deltas=1
-name|assertTrue
-argument_list|(
-name|split
-operator|.
-name|toString
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"deltas=1"
-argument_list|)
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|split
-operator|instanceof
-name|OrcSplit
-condition|)
-block|{
 name|assertTrue
 argument_list|(
 literal|"Footer serialize test for ACID reader, hasFooter is not expected in"
@@ -27984,7 +28207,6 @@ name|hasFooter
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 name|orcInputFormat
 operator|.
 name|getRecordReader
@@ -28043,12 +28265,11 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: open to read data - split 1 => mock:/mocktable8/0_0
-comment|// call-2: open side file (flush length) of delta directory
-comment|// call-3: fs.exists() check for delta_xxx_xxx/bucket_00000 file
-comment|// call-4: AcidUtils.getAcidState - getLen() mock:/mocktable8/0_0
+comment|// call-2: split 2 - find hive.acid.key.index in footer of delta_x_y/bucket_00001
+comment|// call-3: split 2 - read delta_x_y/bucket_00001
 name|assertEquals
 argument_list|(
-literal|4
+literal|3
 argument_list|,
 name|readOpsDelta
 argument_list|)

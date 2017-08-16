@@ -8144,17 +8144,11 @@ name|HIVE_TXN_OPERATIONAL_PROPERTIES
 argument_list|(
 literal|"hive.txn.operational.properties"
 argument_list|,
-literal|0
+literal|1
 argument_list|,
-literal|"Sets the operational properties that control the appropriate behavior for various\n"
+literal|"This is intended to be used as an internal property for future versions of ACID. (See\n"
 operator|+
-literal|"versions of the Hive ACID subsystem. Setting it to zero will turn on the legacy mode\n"
-operator|+
-literal|"for ACID, while setting it to one will enable a split-update feature found in the newer\n"
-operator|+
-literal|"version of Hive ACID subsystem. Mostly it is intended to be used as an internal property\n"
-operator|+
-literal|"for future versions of ACID. (See HIVE-14035 for details.)"
+literal|"HIVE-14035 for details.)"
 argument_list|)
 block|,
 name|HIVE_MAX_OPEN_TXNS

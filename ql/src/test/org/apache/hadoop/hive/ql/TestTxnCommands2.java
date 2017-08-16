@@ -475,6 +475,24 @@ name|ql
 operator|.
 name|io
 operator|.
+name|AcidOutputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|BucketCodec
 import|;
 end_import
@@ -697,6 +715,18 @@ name|junit
 operator|.
 name|rules
 operator|.
+name|ExpectedException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
 name|TestName
 import|;
 end_import
@@ -720,22 +750,6 @@ operator|.
 name|LoggerFactory
 import|;
 end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|validation
-operator|.
-name|constraints
-operator|.
-name|AssertTrue
-import|;
-end_import
-
-begin_comment
-comment|/**  * TODO: this should be merged with TestTxnCommands once that is checked in  * specifically the tests; the supporting code here is just a clone of TestTxnCommands  */
-end_comment
 
 begin_class
 specifier|public
@@ -839,7 +853,6 @@ name|Driver
 name|d
 decl_stmt|;
 specifier|protected
-specifier|static
 enum|enum
 name|Table
 block|{
@@ -947,6 +960,17 @@ name|partitionColumns
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Rule
+specifier|public
+name|ExpectedException
+name|expectedException
+init|=
+name|ExpectedException
+operator|.
+name|none
+argument_list|()
+decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -2606,7 +2630,61 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*      * All ROW__IDs are unique on read after conversion to acid       * ROW__IDs are exactly the same before and after compaction      * Also check the file name after compaction for completeness      */
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|536870912
+argument_list|,
+name|BucketCodec
+operator|.
+name|V1
+operator|.
+name|encode
+argument_list|(
+operator|new
+name|AcidOutputFormat
+operator|.
+name|Options
+argument_list|(
+name|hiveConf
+argument_list|)
+operator|.
+name|bucket
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|536936448
+argument_list|,
+name|BucketCodec
+operator|.
+name|V1
+operator|.
+name|encode
+argument_list|(
+operator|new
+name|AcidOutputFormat
+operator|.
+name|Options
+argument_list|(
+name|hiveConf
+argument_list|)
+operator|.
+name|bucket
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|/*      * All ROW__IDs are unique on read after conversion to acid       * ROW__IDs are exactly the same before and after compaction      * Also check the file name (only) after compaction for completeness      */
 name|String
 index|[]
 index|[]
@@ -2614,7 +2692,7 @@ name|expected
 init|=
 block|{
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":0,\"rowid\":0}\t0\t13"
+literal|"{\"transactionid\":0,\"bucketid\":536870912,\"rowid\":0}\t0\t13"
 block|,
 literal|"bucket_00000"
 block|}
@@ -2632,31 +2710,31 @@ literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":0,\"rowid\":1}\t0\t120"
+literal|"{\"transactionid\":19,\"bucketid\":536870912,\"rowid\":0}\t0\t120"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":1,\"rowid\":1}\t1\t2"
+literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t2"
 block|,
 literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":1,\"rowid\":3}\t1\t4"
+literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":3}\t1\t4"
 block|,
 literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":1,\"rowid\":2}\t1\t5"
+literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":2}\t1\t5"
 block|,
 literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":0,\"bucketid\":1,\"rowid\":4}\t1\t6"
+literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":4}\t1\t6"
 block|,
 literal|"bucket_00001"
 block|}
@@ -2903,7 +2981,48 @@ expr_stmt|;
 block|}
 comment|//make sure they are the same before and after compaction
 block|}
-comment|/**    * Test the query correctness and directory layout after ACID table conversion and MAJOR compaction    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Insert a row to ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
+comment|/**    * In current implementation of ACID, altering the value of transactional_properties or trying to    * set a value for previously unset value for an acid table will throw an exception.    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFailureOnAlteringTransactionalProperties
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|expectedException
+operator|.
+name|expect
+argument_list|(
+name|RuntimeException
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|expectedException
+operator|.
+name|expectMessage
+argument_list|(
+literal|"TBLPROPERTIES with 'transactional_properties' cannot be altered after the table is created"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table acidTblLegacy (a int, b int) clustered by (a) into "
+operator|+
+name|BUCKET_COUNT
+operator|+
+literal|" buckets stored as orc TBLPROPERTIES ('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table acidTblLegacy SET TBLPROPERTIES ('transactional_properties' = 'default')"
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Test the query correctness and directory layout for ACID table conversion    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Insert a row to ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -3309,7 +3428,7 @@ name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files (000000_0 and 000001_0), plus a new delta directory.
-comment|// The delta directory should also have 2 bucket files (bucket_00000 and bucket_00001)
+comment|// The delta directory should also have only 1 bucket file (bucket_00001)
 name|Assert
 operator|.
 name|assertEquals
@@ -3391,13 +3510,14 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
 name|length
 argument_list|)
 expr_stmt|;
+comment|// only one bucket file
 name|Assert
 operator|.
 name|assertTrue
@@ -3415,28 +3535,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_0000[01]"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|buckets
-index|[
-literal|1
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"bucket_0000[01]"
+literal|"bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3482,6 +3581,8 @@ operator|+
 name|Table
 operator|.
 name|NONACIDORCTBL
+operator|+
+literal|" order by a,b"
 argument_list|)
 expr_stmt|;
 name|resultData
@@ -3681,7 +3782,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
@@ -3705,28 +3806,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_0000[01]"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|buckets
-index|[
-literal|1
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"bucket_0000[01]"
+literal|"bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4021,7 +4101,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
@@ -4045,28 +4125,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_0000[01]"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|buckets
-index|[
-literal|1
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|"bucket_0000[01]"
+literal|"bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4148,7 +4207,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the query correctness and directory layout after ACID table conversion and MAJOR compaction    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Update the existing row in ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
+comment|/**    * Test the query correctness and directory layout for ACID table conversion    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Update the existing row in ACID table    * 4. Perform Major compaction    * 5. Clean    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -4321,7 +4380,6 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
-comment|//todo: what is the point of this if we just did select *?
 name|int
 name|resultCount
 init|=
@@ -4488,7 +4546,6 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
-comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|1
@@ -4555,13 +4612,16 @@ operator|.
 name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
-comment|// There should be 2 original bucket files (000000_0 and 000001_0), plus a new delta directory.
+comment|// There should be 2 original bucket files (000000_0 and 000001_0), plus one delta directory
+comment|// and one delete_delta directory. When split-update is enabled, an update event is split into
+comment|// a combination of delete and insert, that generates the delete_delta directory.
 comment|// The delta directory should also have 2 bucket files (bucket_00000 and bucket_00001)
+comment|// and so should the delete_delta directory.
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|3
+literal|4
 argument_list|,
 name|status
 operator|.
@@ -4570,6 +4630,11 @@ argument_list|)
 expr_stmt|;
 name|boolean
 name|sawNewDelta
+init|=
+literal|false
+decl_stmt|;
+name|boolean
+name|sawNewDeleteDelta
 init|=
 literal|false
 decl_stmt|;
@@ -4669,6 +4734,86 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|"delete_delta_.*"
+argument_list|)
+condition|)
+block|{
+name|sawNewDeleteDelta
+operator|=
+literal|true
+expr_stmt|;
+name|FileStatus
+index|[]
+name|buckets
+init|=
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|FileUtils
+operator|.
+name|STAGING_DIR_PATH_FILTER
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|BUCKET_COUNT
+operator|-
+literal|1
+argument_list|,
+name|buckets
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|buckets
+index|[
+literal|0
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|"bucket_0000[01]"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 name|Assert
@@ -4699,6 +4844,13 @@ operator|.
 name|assertTrue
 argument_list|(
 name|sawNewDelta
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|sawNewDeleteDelta
 argument_list|)
 expr_stmt|;
 name|rs
@@ -4826,7 +4978,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|status
 operator|.
@@ -5045,13 +5197,13 @@ operator|.
 name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
-comment|// Before Cleaner, there should be 4 items:
-comment|// 2 original files, 1 delta directory and 1 base directory
+comment|// Before Cleaner, there should be 5 items:
+comment|// 2 original files, 1 delta directory, 1 delete_delta directory and 1 base directory
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|status
 operator|.
@@ -5064,7 +5216,7 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 comment|// There should be only 1 directory left: base_0000001.
-comment|// Original bucket files and delta directory should have been cleaned up.
+comment|// Original bucket files, delta directory and delete_delta should have been cleaned up.
 name|status
 operator|=
 name|fs
@@ -5255,7 +5407,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Test the query correctness and directory layout after ACID table conversion and MAJOR compaction    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Perform Major compaction    * 4. Insert a new row to ACID table    * 5. Perform another Major compaction    * 6. Clean    * @throws Exception    */
+comment|/**    * Test the query correctness and directory layout for ACID table conversion    * 1. Insert a row to Non-ACID table    * 2. Convert Non-ACID to ACID table    * 3. Perform Major compaction    * 4. Insert a new row to ACID table    * 5. Perform another Major compaction    * 6. Clean    * @throws Exception    */
 annotation|@
 name|Test
 specifier|public
@@ -5452,7 +5604,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 2. Convert NONACIDORCTBL to ACID table
+comment|// 2. Convert NONACIDORCTBL to ACID table with split_update enabled. (txn_props=default)
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "
@@ -5936,12 +6088,13 @@ argument_list|)
 expr_stmt|;
 comment|// make sure delta_0000001_0000001_0000 appears before delta_0000002_0000002_0000
 comment|// There should be 2 original bucket files (000000_0 and 000001_0), a base directory,
-comment|// plus two new delta directories
+comment|// plus two new delta directories and one delete_delta directory that would be created due to
+comment|// the update statement (remember split-update U=D+I)!
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|5
+literal|6
 argument_list|,
 name|status
 operator|.
@@ -5950,6 +6103,11 @@ argument_list|)
 expr_stmt|;
 name|int
 name|numDelta
+init|=
+literal|0
+decl_stmt|;
+name|int
+name|numDeleteDelta
 init|=
 literal|0
 decl_stmt|;
@@ -6111,7 +6269,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
@@ -6122,7 +6280,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"bucket_00000"
+literal|"bucket_00001"
 argument_list|,
 name|buckets
 index|[
@@ -6136,6 +6294,97 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|"delete_delta_.*"
+argument_list|)
+condition|)
+block|{
+name|numDeleteDelta
+operator|++
+expr_stmt|;
+name|FileStatus
+index|[]
+name|buckets
+init|=
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|FileUtils
+operator|.
+name|STAGING_DIR_PATH_FILTER
+argument_list|)
+decl_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|buckets
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|numDeleteDelta
+operator|==
+literal|1
+condition|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"delete_delta_0000022_0000022_0000"
+argument_list|,
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|BUCKET_COUNT
+operator|-
+literal|1
+argument_list|,
+name|buckets
+operator|.
+name|length
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -6144,7 +6393,7 @@ literal|"bucket_00001"
 argument_list|,
 name|buckets
 index|[
-literal|1
+literal|0
 index|]
 operator|.
 name|getPath
@@ -6287,6 +6536,15 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|numDeleteDelta
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
 name|assertTrue
 argument_list|(
 name|sawNewBase
@@ -6346,7 +6604,6 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
-comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|2
@@ -6388,7 +6645,8 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 comment|// There should be 1 new base directory: base_0000001
-comment|// Original bucket files, delta directories and the previous base directory should stay until Cleaner kicks in.
+comment|// Original bucket files, delta directories, delete_delta directories and the
+comment|// previous base directory should stay until Cleaner kicks in.
 name|status
 operator|=
 name|fs
@@ -6431,7 +6689,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|6
+literal|7
 argument_list|,
 name|status
 operator|.
@@ -6598,7 +6856,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
@@ -6609,29 +6867,11 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"bucket_00000"
-argument_list|,
-name|buckets
-index|[
-literal|0
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
 literal|"bucket_00001"
 argument_list|,
 name|buckets
 index|[
-literal|1
+literal|0
 index|]
 operator|.
 name|getPath
@@ -6707,7 +6947,6 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 expr_stmt|;
-comment|//todo: what is the point of this if we just did select *?
 name|resultCount
 operator|=
 literal|2
@@ -6764,12 +7003,12 @@ name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Before Cleaner, there should be 6 items:
-comment|// 2 original files, 2 delta directories and 2 base directories
+comment|// 2 original files, 2 delta directories, 1 delete_delta directory and 2 base directories
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|6
+literal|7
 argument_list|,
 name|status
 operator|.
@@ -6875,7 +7114,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|BUCKET_COUNT
+literal|1
 argument_list|,
 name|buckets
 operator|.
@@ -6886,29 +7125,11 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"bucket_00000"
-argument_list|,
-name|buckets
-index|[
-literal|0
-index|]
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
 literal|"bucket_00001"
 argument_list|,
 name|buckets
 index|[
-literal|1
+literal|0
 index|]
 operator|.
 name|getPath

@@ -107,6 +107,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|BucketCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|HadoopShims
@@ -1373,6 +1391,10 @@ specifier|final
 name|int
 name|bucketId
 decl_stmt|;
+specifier|final
+name|int
+name|bucketProperty
+decl_stmt|;
 name|OriginalReaderPair
 parameter_list|(
 name|ReaderKey
@@ -1380,6 +1402,9 @@ name|key
 parameter_list|,
 name|int
 name|bucketId
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -1403,6 +1428,17 @@ literal|0
 operator|:
 literal|"don't support non-bucketed tables yet"
 assert|;
+name|this
+operator|.
+name|bucketProperty
+operator|=
+name|encodeBucketId
+argument_list|(
+name|conf
+argument_list|,
+name|bucketId
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -1576,7 +1612,7 @@ argument_list|,
 operator|new
 name|IntWritable
 argument_list|(
-name|bucketId
+name|bucketProperty
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1677,7 +1713,7 @@ operator|)
 operator|.
 name|set
 argument_list|(
-name|bucketId
+name|bucketProperty
 argument_list|)
 expr_stmt|;
 operator|(
@@ -1748,7 +1784,7 @@ name|setValues
 argument_list|(
 literal|0L
 argument_list|,
-name|bucketId
+name|bucketProperty
 argument_list|,
 name|nextRowId
 argument_list|,
@@ -1812,6 +1848,39 @@ literal|false
 return|;
 comment|//reached EndOfFile
 block|}
+block|}
+specifier|static
+name|int
+name|encodeBucketId
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|int
+name|bucketId
+parameter_list|)
+block|{
+return|return
+name|BucketCodec
+operator|.
+name|V1
+operator|.
+name|encode
+argument_list|(
+operator|new
+name|AcidOutputFormat
+operator|.
+name|Options
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|bucket
+argument_list|(
+name|bucketId
+argument_list|)
+argument_list|)
+return|;
 block|}
 annotation|@
 name|VisibleForTesting
@@ -1888,6 +1957,8 @@ argument_list|(
 name|key
 argument_list|,
 name|bucketId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -2115,7 +2186,7 @@ literal|0
 condition|)
 block|{
 comment|//rowIdOffset could be 0 if all files before current one are empty
-comment|/**            * Since we already done {@link OrcRawRecordMerger#discoverOriginalKeyBounds(Reader,            * int, Reader.Options)} need to fix min/max key since these are used by            * {@link #next(OrcStruct)} which uses {@link #rowIdOffset} to generate rowId for            * the key.  Clear?  */
+comment|/**            * Since we already done {@link OrcRawRecordMerger#discoverOriginalKeyBounds(Reader, int, Reader.Options, Configuration)}            * need to fix min/max key since these are used by            * {@link #next(OrcStruct)} which uses {@link #rowIdOffset} to generate rowId for            * the key.  Clear?  */
 if|if
 condition|(
 name|minKey
@@ -2146,7 +2217,7 @@ name|RecordIdentifier
 argument_list|(
 literal|0
 argument_list|,
-name|bucketId
+name|bucketProperty
 argument_list|,
 name|rowIdOffset
 operator|-
@@ -2294,7 +2365,7 @@ name|RecordIdentifier
 argument_list|(
 literal|0
 argument_list|,
-name|bucketId
+name|bucketProperty
 argument_list|,
 name|rowIdOffset
 operator|+
@@ -2533,6 +2604,8 @@ argument_list|(
 name|key
 argument_list|,
 name|bucketId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 assert|assert
@@ -3040,6 +3113,9 @@ name|Reader
 operator|.
 name|Options
 name|options
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -3086,6 +3162,16 @@ name|RecordIdentifier
 name|maxKey
 init|=
 literal|null
+decl_stmt|;
+name|int
+name|bucketProperty
+init|=
+name|encodeBucketId
+argument_list|(
+name|conf
+argument_list|,
+name|bucket
+argument_list|)
 decl_stmt|;
 comment|/**     * options.getOffset() and getMaxOffset() would usually be at block boundary which doesn't     * necessarily match stripe boundary.  So we want to come up with minKey to be one before the 1st     * row of the first stripe that starts after getOffset() and maxKey to be the last row of the     * stripe that contains getMaxOffset().  This breaks if getOffset() and getMaxOffset() are inside     * the sames tripe - in this case we have minKey& isTail=false but rowLength is never set.     * (HIVE-16953)     */
 for|for
@@ -3159,7 +3245,7 @@ name|RecordIdentifier
 argument_list|(
 literal|0
 argument_list|,
-name|bucket
+name|bucketProperty
 argument_list|,
 name|rowOffset
 operator|-
@@ -3180,7 +3266,7 @@ name|RecordIdentifier
 argument_list|(
 literal|0
 argument_list|,
-name|bucket
+name|bucketProperty
 argument_list|,
 name|rowOffset
 operator|+
@@ -3776,6 +3862,8 @@ argument_list|,
 name|bucket
 argument_list|,
 name|options
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4010,6 +4098,34 @@ range|:
 name|deltaDirectory
 control|)
 block|{
+if|if
+condition|(
+operator|!
+name|mergerOptions
+operator|.
+name|isCompacting
+argument_list|()
+operator|&&
+operator|!
+name|AcidUtils
+operator|.
+name|isDeleteDelta
+argument_list|(
+name|delta
+argument_list|)
+condition|)
+block|{
+comment|//all inserts should be in baseReader for normal read so this should always be delete delta if not compacting
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+name|delta
+operator|+
+literal|" is not delete delta and is not compacting."
+argument_list|)
+throw|;
+block|}
 name|ReaderKey
 name|key
 init|=
