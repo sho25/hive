@@ -71,9 +71,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|security
 operator|.
-name|NoSuchObjectException
+name|HadoopThriftAuthBridge
 import|;
 end_import
 
@@ -108,22 +108,6 @@ operator|.
 name|session
 operator|.
 name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
 import|;
 end_import
 
@@ -192,9 +176,9 @@ name|startMetaStore
 argument_list|(
 name|port
 argument_list|,
-name|ShimLoader
+name|HadoopThriftAuthBridge
 operator|.
-name|getHadoopThriftAuthBridge
+name|getBridge
 argument_list|()
 argument_list|)
 expr_stmt|;

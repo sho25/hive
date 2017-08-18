@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 package|;
 end_package
 
@@ -142,26 +144,6 @@ operator|.
 name|api
 operator|.
 name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|thrift
-operator|.
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
-operator|.
-name|ServerMode
 import|;
 end_import
 
@@ -597,6 +579,10 @@ parameter_list|(
 name|Object
 name|hmsHandler
 parameter_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 name|smode
 parameter_list|)
