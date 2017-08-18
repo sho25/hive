@@ -1155,7 +1155,7 @@ expr_stmt|;
 block|}
 name|addJars
 argument_list|(
-name|conf
+name|jobConf
 operator|.
 name|get
 argument_list|(
