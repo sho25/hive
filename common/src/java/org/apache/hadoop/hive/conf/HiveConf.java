@@ -10246,6 +10246,15 @@ argument_list|,
 literal|"Response header size in bytes, when using HTTP transport mode. Jetty defaults used."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COMPRESSION_ENABLED
+argument_list|(
+literal|"hive.server2.thrift.http.compression.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable thrift http compression via Jetty compression support"
+argument_list|)
+block|,
 comment|// Cookie based authentication when using HTTP Transport
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
 argument_list|(
