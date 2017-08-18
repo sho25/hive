@@ -3330,7 +3330,7 @@ decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 argument_list|>
 name|transactionalListeners
 decl_stmt|;
@@ -3388,7 +3388,7 @@ block|}
 block|}
 name|List
 argument_list|<
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 argument_list|>
 name|getTransactionalListeners
 parameter_list|()
@@ -3821,7 +3821,7 @@ name|MetaStoreUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 operator|.
 name|class
 argument_list|,

@@ -944,7 +944,7 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 argument_list|>
 name|transactionalListeners
 init|=
@@ -2540,7 +2540,7 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 argument_list|>
 name|transactionalListeners
 init|=
@@ -3922,7 +3922,7 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|MetaStoreEventListener
+name|TransactionalMetaStoreEventListener
 argument_list|>
 name|transactionalListeners
 init|=

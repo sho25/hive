@@ -1286,6 +1286,8 @@ name|notifyEvent
 parameter_list|(
 name|List
 argument_list|<
+name|?
+extends|extends
 name|MetaStoreEventListener
 argument_list|>
 name|listeners
@@ -1363,6 +1365,8 @@ name|notifyEvent
 parameter_list|(
 name|List
 argument_list|<
+name|?
+extends|extends
 name|MetaStoreEventListener
 argument_list|>
 name|listeners
@@ -1419,6 +1423,8 @@ name|notifyEvent
 parameter_list|(
 name|List
 argument_list|<
+name|?
+extends|extends
 name|MetaStoreEventListener
 argument_list|>
 name|listeners
