@@ -15692,6 +15692,135 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
+comment|// Test "alter table"
+name|run
+argument_list|(
+literal|"ALTER VIEW "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view RENAME TO "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.virtual_view_rename"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
