@@ -33,6 +33,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Iterables
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -15590,16 +15604,25 @@ block|}
 block|}
 if|if
 condition|(
-name|restrictList
+name|Iterables
 operator|.
-name|contains
+name|any
+argument_list|(
+name|restrictList
+argument_list|,
+name|restrictedVar
+lambda|->
+name|restrictedVar
+operator|.
+name|startsWith
 argument_list|(
 name|name
+argument_list|)
 argument_list|)
 condition|)
 block|{
 throw|throw
-operator|new
+argument_list|new
 name|IllegalArgumentException
 argument_list|(
 literal|"Cannot modify "
@@ -15608,10 +15631,9 @@ name|name
 operator|+
 literal|" at runtime. It is in the list"
 operator|+
-literal|" of parameters that can't be modified at runtime"
+literal|" of parameters that can't be modified at runtime or is prefixed by a restricted variable"
 argument_list|)
-throw|;
-block|}
+block|;     }
 name|String
 name|oldValue
 init|=
