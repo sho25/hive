@@ -971,7 +971,9 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-literal|"hive.metastore"
+name|HiveMetaStoreClient
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 specifier|public
