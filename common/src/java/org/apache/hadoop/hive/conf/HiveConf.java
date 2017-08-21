@@ -12438,6 +12438,19 @@ operator|+
 literal|"to avoid this setting."
 argument_list|)
 block|,
+name|LLAP_CACHE_DEFAULT_FS_FILE_ID
+argument_list|(
+literal|"hive.llap.cache.defaultfs.only.native.fileid"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP cache should use native file IDs from the default FS only. This is to\n"
+operator|+
+literal|"avoid file ID collisions when several different DFS instances are in use at the same\n"
+operator|+
+literal|"time. Disable this check to allow native file IDs from non-default DFS."
+argument_list|)
+block|,
 name|LLAP_CACHE_ENABLE_ORC_GAP_CACHE
 argument_list|(
 literal|"hive.llap.orc.gap.cache"

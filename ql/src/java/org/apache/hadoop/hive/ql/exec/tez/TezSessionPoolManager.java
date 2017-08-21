@@ -1908,6 +1908,7 @@ default|default:
 comment|// All good.
 block|}
 block|}
+comment|// Check the restricted configs that the users cannot set.
 for|for
 control|(
 name|ConfVars
@@ -1987,6 +1988,39 @@ argument_list|,
 name|userValue
 argument_list|,
 name|serverValue
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Propagate this value from HS2; don't allow users to set it.
+comment|// In HS2, initConf will be set; it won't be set otherwise as noone calls setupPool.
+comment|// TODO: add a section like the restricted configs for overrides when there's more than one.
+if|if
+condition|(
+name|initConf
+operator|!=
+literal|null
+condition|)
+block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_CACHE_DEFAULT_FS_FILE_ID
+operator|.
+name|varname
+argument_list|,
+name|HiveConf
+operator|.
+name|getVarWithoutType
+argument_list|(
+name|initConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_CACHE_DEFAULT_FS_FILE_ID
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

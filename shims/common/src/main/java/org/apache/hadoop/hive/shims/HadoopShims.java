@@ -19,6 +19,20 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hdfs
+operator|.
+name|DistributedFileSystem
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -1964,7 +1978,7 @@ comment|/**    * Gets file ID. Only supported on hadoop-2.    * @return inode ID
 name|long
 name|getFileId
 parameter_list|(
-name|FileSystem
+name|DistributedFileSystem
 name|fs
 parameter_list|,
 name|String

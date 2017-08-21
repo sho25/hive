@@ -1528,7 +1528,7 @@ name|fileId
 init|=
 name|HdfsUtils
 operator|.
-name|createFileId
+name|createTestFileId
 argument_list|(
 name|fs
 operator|.

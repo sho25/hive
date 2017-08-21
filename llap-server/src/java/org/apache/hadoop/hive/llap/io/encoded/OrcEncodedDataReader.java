@@ -1718,6 +1718,17 @@ name|ConfVars
 operator|.
 name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
 argument_list|)
+argument_list|,
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_CACHE_DEFAULT_FS_FILE_ID
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|fileMetadata
@@ -3452,6 +3463,9 @@ name|split
 parameter_list|,
 name|boolean
 name|allowSynthetic
+parameter_list|,
+name|boolean
+name|checkDefaultFs
 parameter_list|)
 throws|throws
 name|IOException
@@ -3522,6 +3536,8 @@ name|getPath
 argument_list|()
 argument_list|,
 name|allowSynthetic
+argument_list|,
+name|checkDefaultFs
 argument_list|)
 return|;
 block|}
