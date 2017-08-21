@@ -626,6 +626,13 @@ name|startsWith
 argument_list|(
 literal|"spark"
 argument_list|)
+operator|||
+name|masterURL
+operator|.
+name|startsWith
+argument_list|(
+literal|"local"
+argument_list|)
 condition|)
 block|{
 name|totalCores
