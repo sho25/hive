@@ -7837,7 +7837,7 @@ name|HIVE_STATS_CORRELATED_MULTI_KEY_JOINS
 argument_list|(
 literal|"hive.stats.correlated.multi.key.joins"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"When estimating output rows for a join involving multiple columns, the default behavior assumes"
 operator|+
