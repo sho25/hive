@@ -62,6 +62,8 @@ comment|/**  * An abstract class to help facilitate existing implementations of 
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 specifier|abstract
 class|class
