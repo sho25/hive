@@ -521,16 +521,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|/**    * Maintain a String pool to reduce memory.    */
-specifier|private
-specifier|static
-specifier|final
-name|Interner
-argument_list|<
-name|String
-argument_list|>
-name|STRING_INTERNER
-decl_stmt|;
 static|static
 block|{
 name|NumberFormat
@@ -559,13 +549,6 @@ argument_list|(
 literal|"#.##"
 argument_list|)
 expr_stmt|;
-name|STRING_INTERNER
-operator|=
-name|Interners
-operator|.
-name|newWeakInterner
-argument_list|()
-expr_stmt|;
 block|}
 comment|/**    * Return the internalized string, or null if the given string is null.    * @param str The string to intern    * @return The identical string cached in the string pool.    */
 specifier|public
@@ -589,12 +572,10 @@ literal|null
 return|;
 block|}
 return|return
-name|STRING_INTERNER
+name|str
 operator|.
 name|intern
-argument_list|(
-name|str
-argument_list|)
+argument_list|()
 return|;
 block|}
 comment|/**    * Return an interned list with identical contents as the given list.    * @param list The list whose strings will be interned    * @return An identical list with its strings interned.    */
