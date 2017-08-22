@@ -15692,7 +15692,7 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Test "alter table"
+comment|// Test "alter table" with rename
 name|run
 argument_list|(
 literal|"ALTER VIEW "
@@ -15817,6 +15817,149 @@ operator|+
 literal|"_dupe.virtual_view_rename"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Test "alter table" with schema change
+name|run
+argument_list|(
+literal|"ALTER VIEW "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename AS SELECT a, concat(a, '_') as a_ FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SHOW COLUMNS FROM "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"a"
+block|,
+literal|"a_"
+block|}
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SHOW COLUMNS FROM "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.virtual_view_rename"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"a"
+block|,
+literal|"a_"
+block|}
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -23854,6 +23997,9 @@ index|]
 operator|.
 name|toLowerCase
 argument_list|()
+operator|.
+name|trim
+argument_list|()
 argument_list|,
 name|results
 operator|.
@@ -23863,6 +24009,9 @@ name|i
 argument_list|)
 operator|.
 name|toLowerCase
+argument_list|()
+operator|.
+name|trim
 argument_list|()
 argument_list|)
 expr_stmt|;
