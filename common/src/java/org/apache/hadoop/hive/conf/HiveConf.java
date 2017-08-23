@@ -11761,6 +11761,23 @@ argument_list|,
 literal|"Controls the number of containers to prewarm for Tez/Spark (Hadoop 2 only)"
 argument_list|)
 block|,
+name|HIVE_PREWARM_SPARK_TIMEOUT
+argument_list|(
+literal|"hive.prewarm.spark.timeout"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time to wait to finish prewarming spark executors"
+argument_list|)
+block|,
 name|HIVESTAGEIDREARRANGE
 argument_list|(
 literal|"hive.stageid.rearrange"

@@ -755,15 +755,6 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
-name|long
-name|MAX_PREWARM_TIME
-init|=
-literal|5000
-decl_stmt|;
-comment|// 5s
-specifier|private
-specifier|static
-specifier|final
 specifier|transient
 name|Splitter
 name|CSV_SPLITTER
@@ -928,6 +919,7 @@ operator|.
 name|HIVE_PREWARM_ENABLED
 argument_list|)
 operator|&&
+operator|(
 name|SparkClientUtilities
 operator|.
 name|isYarnMaster
@@ -939,6 +931,19 @@ argument_list|(
 literal|"spark.master"
 argument_list|)
 argument_list|)
+operator|||
+name|SparkClientUtilities
+operator|.
+name|isLocalMaster
+argument_list|(
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+literal|"spark.master"
+argument_list|)
+argument_list|)
+operator|)
 condition|)
 block|{
 name|int
@@ -965,11 +970,29 @@ operator|+
 name|minExecutors
 argument_list|)
 expr_stmt|;
-comment|// Spend at most MAX_PREWARM_TIME to wait for executors to come up.
+comment|// Spend at most HIVE_PREWARM_SPARK_TIMEOUT to wait for executors to come up.
 name|int
 name|curExecutors
 init|=
 literal|0
+decl_stmt|;
+name|long
+name|maxPrewarmTime
+init|=
+name|HiveConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_PREWARM_SPARK_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
 decl_stmt|;
 name|long
 name|ts
@@ -987,7 +1010,7 @@ name|curExecutors
 operator|=
 name|getExecutorCount
 argument_list|(
-name|MAX_PREWARM_TIME
+name|maxPrewarmTime
 argument_list|,
 name|TimeUnit
 operator|.
@@ -1048,7 +1071,7 @@ argument_list|()
 operator|-
 name|ts
 operator|<
-name|MAX_PREWARM_TIME
+name|maxPrewarmTime
 condition|)
 do|;
 name|LOG
@@ -1057,7 +1080,7 @@ name|info
 argument_list|(
 literal|"Timeout ("
 operator|+
-name|MAX_PREWARM_TIME
+name|maxPrewarmTime
 operator|/
 literal|1000
 operator|+
