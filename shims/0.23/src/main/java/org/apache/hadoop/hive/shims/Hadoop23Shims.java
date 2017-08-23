@@ -7404,7 +7404,7 @@ specifier|public
 name|long
 name|getFileId
 parameter_list|(
-name|DistributedFileSystem
+name|FileSystem
 name|fs
 parameter_list|,
 name|String
@@ -7414,7 +7414,10 @@ throws|throws
 name|IOException
 block|{
 return|return
+name|ensureDfs
+argument_list|(
 name|fs
+argument_list|)
 operator|.
 name|getClient
 argument_list|()
