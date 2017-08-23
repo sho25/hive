@@ -96,7 +96,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The list of pruned partitions.  */
+comment|/**  * The list of column stats and their state.  */
 end_comment
 
 begin_class
