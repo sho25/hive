@@ -14127,7 +14127,9 @@ literal|"hive.spark.client.secret.bits,"
 operator|+
 literal|"hive.spark.client.rpc.server.address,"
 operator|+
-literal|"hive.spark.client.rpc.server.port"
+literal|"hive.spark.client.rpc.server.port,"
+operator|+
+literal|"bonecp."
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
