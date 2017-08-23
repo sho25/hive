@@ -2935,7 +2935,7 @@ case|case
 name|TIMESTAMP
 case|:
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 return|return
 name|javaObjectOverHead

@@ -2079,7 +2079,7 @@ case|case
 name|VOID
 case|:
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 name|outOi
 operator|=
@@ -2198,7 +2198,7 @@ case|case
 name|DATE
 case|:
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 break|break;
 default|default:
@@ -2640,7 +2640,7 @@ case|case
 name|DATE
 case|:
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 name|Object
 name|writableValue

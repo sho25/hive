@@ -591,7 +591,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|LazyTimestampTZObjectInspector
+name|LazyTimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -1254,14 +1254,14 @@ name|oi
 argument_list|)
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 return|return
 operator|new
-name|LazyTimestampTZ
+name|LazyTimestampLocalTZ
 argument_list|(
 operator|(
-name|LazyTimestampTZObjectInspector
+name|LazyTimestampLocalTZObjectInspector
 operator|)
 name|oi
 argument_list|)

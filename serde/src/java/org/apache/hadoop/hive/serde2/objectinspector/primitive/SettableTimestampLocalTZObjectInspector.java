@@ -53,16 +53,16 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
 begin_interface
 specifier|public
 interface|interface
-name|SettableTimestampTZObjectInspector
+name|SettableTimestampLocalTZObjectInspector
 extends|extends
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 block|{
 name|Object
 name|set
@@ -94,7 +94,7 @@ parameter_list|(
 name|Object
 name|o
 parameter_list|,
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|t
 parameter_list|)
 function_decl|;

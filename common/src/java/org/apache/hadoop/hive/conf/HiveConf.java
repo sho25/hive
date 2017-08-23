@@ -137,6 +137,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|TimestampTZUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|Validator
@@ -478,6 +496,16 @@ operator|.
 name|net
 operator|.
 name|URLEncoder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneId
 import|;
 end_import
 
@@ -4895,6 +4923,21 @@ argument_list|,
 literal|false
 argument_list|,
 literal|""
+argument_list|)
+block|,
+name|HIVE_LOCAL_TIME_ZONE
+argument_list|(
+literal|"hive.local.time.zone"
+argument_list|,
+literal|"LOCAL"
+argument_list|,
+literal|"Sets the time-zone for displaying and interpreting time stamps. If this property value is set to\n"
+operator|+
+literal|"LOCAL, it is not specified, or it is not a correct time-zone, the system default time-zone will be\n "
+operator|+
+literal|"used instead. Time-zone IDs can be specified as region-based zone IDs (based on IANA time-zone data),\n"
+operator|+
+literal|"abbreviated zone IDs, or offset IDs."
 argument_list|)
 block|,
 name|HIVE_SESSION_HISTORY_ENABLED
@@ -19101,6 +19144,31 @@ operator|+
 literal|"|"
 operator|+
 name|confVarPatternStr
+return|;
+block|}
+comment|/**    * Obtains the local time-zone ID.    */
+specifier|public
+name|ZoneId
+name|getLocalTimeZone
+parameter_list|()
+block|{
+name|String
+name|timeZoneStr
+init|=
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_LOCAL_TIME_ZONE
+argument_list|)
+decl_stmt|;
+return|return
+name|TimestampTZUtil
+operator|.
+name|parseTimeZone
+argument_list|(
+name|timeZoneStr
+argument_list|)
 return|;
 block|}
 comment|/**    * @param paramList  list of parameter strings    * @return list of parameter strings with "." replaced by "\."    */

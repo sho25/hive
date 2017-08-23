@@ -4820,9 +4820,9 @@ name|registerGenericUDF
 argument_list|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|,
-name|GenericUDFToTimestampTZ
+name|GenericUDFToTimestampLocalTZ
 operator|.
 name|class
 argument_list|)
@@ -10671,7 +10671,7 @@ name|class
 operator|||
 name|udfClass
 operator|==
-name|GenericUDFToTimestampTZ
+name|GenericUDFToTimestampLocalTZ
 operator|.
 name|class
 return|;

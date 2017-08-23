@@ -119,7 +119,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -139,7 +139,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|SettableTimestampTZObjectInspector
+name|SettableTimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -159,7 +159,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -2711,7 +2711,7 @@ name|PrimitiveObjectInspector
 operator|.
 name|PrimitiveCategory
 operator|.
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 condition|)
 block|{
 name|result
@@ -4484,14 +4484,14 @@ name|hashCode
 argument_list|()
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|tstz
 init|=
 operator|(
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|poi
 operator|)
@@ -6133,15 +6133,15 @@ argument_list|)
 return|;
 block|}
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 block|{
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|tstz1
 init|=
 operator|(
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|poi1
 operator|)
@@ -6151,12 +6151,12 @@ argument_list|(
 name|o1
 argument_list|)
 decl_stmt|;
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|tstz2
 init|=
 operator|(
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|poi2
 operator|)
@@ -8140,12 +8140,12 @@ operator|instanceof
 name|SettableTimestampObjectInspector
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 return|return
 name|oi
 operator|instanceof
-name|SettableTimestampTZObjectInspector
+name|SettableTimestampLocalTZObjectInspector
 return|;
 case|case
 name|INTERVAL_YEAR_MONTH

@@ -461,7 +461,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|SettableTimestampTZObjectInspector
+name|SettableTimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -502,24 +502,6 @@ operator|.
 name|primitive
 operator|.
 name|WritableStringObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|typeinfo
-operator|.
-name|PrimitiveTypeInfo
 import|;
 end_import
 
@@ -824,18 +806,18 @@ name|outputOI
 argument_list|)
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 return|return
 operator|new
 name|PrimitiveObjectInspectorConverter
 operator|.
-name|TimestampTZConverter
+name|TimestampLocalTZConverter
 argument_list|(
 name|inputOI
 argument_list|,
 operator|(
-name|SettableTimestampTZObjectInspector
+name|SettableTimestampLocalTZObjectInspector
 operator|)
 name|outputOI
 argument_list|)

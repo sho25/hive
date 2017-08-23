@@ -317,7 +317,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 

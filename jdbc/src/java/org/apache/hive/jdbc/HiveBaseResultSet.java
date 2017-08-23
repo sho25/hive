@@ -325,7 +325,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|TimestampTZ
+name|TimestampTZUtil
 import|;
 end_import
 
@@ -2454,10 +2454,10 @@ name|value
 argument_list|)
 return|;
 case|case
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 case|:
 return|return
-name|TimestampTZ
+name|TimestampTZUtil
 operator|.
 name|parse
 argument_list|(

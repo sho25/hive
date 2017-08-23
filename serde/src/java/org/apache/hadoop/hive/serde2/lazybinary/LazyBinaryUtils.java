@@ -83,7 +83,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -922,7 +922,7 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 name|recordInfo
 operator|.
@@ -934,7 +934,7 @@ name|recordInfo
 operator|.
 name|elementSize
 operator|=
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 operator|.
 name|getTotalLength
 argument_list|(

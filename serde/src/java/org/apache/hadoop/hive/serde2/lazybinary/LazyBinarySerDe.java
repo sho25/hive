@@ -83,7 +83,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -103,7 +103,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -2989,15 +2989,15 @@ expr_stmt|;
 return|return;
 block|}
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 block|{
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|t
 init|=
 operator|(
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|poi
 operator|)

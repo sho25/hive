@@ -521,7 +521,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -1025,7 +1025,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -1116,6 +1116,24 @@ operator|.
 name|typeinfo
 operator|.
 name|StructTypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TimestampLocalTZTypeInfo
 import|;
 end_import
 
@@ -3040,9 +3058,9 @@ return|return
 name|t
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|tstz
 init|=
 operator|(
@@ -3051,11 +3069,11 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 argument_list|()
 else|:
 operator|(
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 operator|)
 name|reuse
 operator|)
@@ -3067,7 +3085,7 @@ init|=
 operator|new
 name|byte
 index|[
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 operator|.
 name|BINARY_SORTABLE_LENGTH
 index|]
@@ -3102,6 +3120,8 @@ name|invert
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Across MR process boundary tz is normalized and stored in type
+comment|// and is not carried in data for each row.
 name|tstz
 operator|.
 name|fromBinarySortable
@@ -3109,6 +3129,16 @@ argument_list|(
 name|data
 argument_list|,
 literal|0
+argument_list|,
+operator|(
+operator|(
+name|TimestampLocalTZTypeInfo
+operator|)
+name|type
+operator|)
+operator|.
+name|timeZone
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -5246,18 +5276,18 @@ expr_stmt|;
 return|return;
 block|}
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 block|{
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 name|toi
 init|=
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|poi
 decl_stmt|;
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|t
 init|=
 name|toi
@@ -6665,7 +6695,7 @@ operator|.
 name|Output
 name|buffer
 parameter_list|,
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|t
 parameter_list|,
 name|boolean

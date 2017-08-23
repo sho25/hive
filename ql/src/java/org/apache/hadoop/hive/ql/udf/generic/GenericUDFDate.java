@@ -654,7 +654,7 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 case|case
 name|DATE
@@ -826,7 +826,7 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 case|case
 name|DATE

@@ -1393,7 +1393,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|WritableTimestampTZObjectInspector
+name|WritableTimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -6090,7 +6090,7 @@ name|equals
 argument_list|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|)
 condition|)
 block|{
@@ -7880,7 +7880,7 @@ name|equals
 argument_list|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|)
 condition|)
 block|{
@@ -8169,7 +8169,7 @@ name|equals
 argument_list|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|)
 condition|)
 block|{
@@ -8741,7 +8741,7 @@ name|WritableTimestampObjectInspector
 operator|||
 name|oi
 operator|instanceof
-name|WritableTimestampTZObjectInspector
+name|WritableTimestampLocalTZObjectInspector
 condition|)
 block|{
 return|return
@@ -10509,7 +10509,7 @@ name|equals
 argument_list|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|)
 condition|)
 block|{

@@ -53,7 +53,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -78,11 +78,11 @@ end_import
 begin_interface
 specifier|public
 interface|interface
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 extends|extends
 name|PrimitiveObjectInspector
 block|{
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|getPrimitiveWritableObject
 parameter_list|(
 name|Object

@@ -120,7 +120,7 @@ name|DATE
 block|,
 name|TIMESTAMP
 block|,
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 block|,
 name|BINARY
 block|,
