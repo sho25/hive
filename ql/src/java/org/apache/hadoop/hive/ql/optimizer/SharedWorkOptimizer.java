@@ -173,6 +173,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -2415,6 +2425,25 @@ operator|.
 name|create
 argument_list|()
 decl_stmt|;
+comment|// Sort by operator ID so we get deterministic results
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|TableScanOperator
+argument_list|>
+name|sortedTopOps
+init|=
+operator|new
+name|TreeMap
+argument_list|<>
+argument_list|(
+name|pctx
+operator|.
+name|getTopOps
+argument_list|()
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|Entry
@@ -2425,10 +2454,7 @@ name|TableScanOperator
 argument_list|>
 name|e
 range|:
-name|pctx
-operator|.
-name|getTopOps
-argument_list|()
+name|sortedTopOps
 operator|.
 name|entrySet
 argument_list|()
