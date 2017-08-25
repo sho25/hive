@@ -77,6 +77,10 @@ operator|.
 name|add
 argument_list|(
 operator|new
+name|HikariCPDataSourceProvider
+argument_list|()
+argument_list|,
+operator|new
 name|BoneCPDataSourceProvider
 argument_list|()
 argument_list|)

@@ -14172,7 +14172,9 @@ literal|"hive.spark.client.rpc.server.address,"
 operator|+
 literal|"hive.spark.client.rpc.server.port,"
 operator|+
-literal|"bonecp."
+literal|"bonecp.,"
+operator|+
+literal|"hikari."
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
