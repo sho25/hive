@@ -214,8 +214,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|TezSessionPoolManager
-operator|.
 name|TezSessionPoolSession
 name|createSession
 parameter_list|(
