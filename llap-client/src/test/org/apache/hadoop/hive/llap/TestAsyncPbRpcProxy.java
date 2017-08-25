@@ -14,8 +14,6 @@ operator|.
 name|hive
 operator|.
 name|llap
-operator|.
-name|tez
 package|;
 end_package
 
@@ -147,6 +145,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|tez
+operator|.
+name|LlapProtocolClientProxy
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Assert
@@ -166,7 +182,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestLlapDaemonProtocolClientProxy
+name|TestAsyncPbRpcProxy
 block|{
 annotation|@
 name|Test
