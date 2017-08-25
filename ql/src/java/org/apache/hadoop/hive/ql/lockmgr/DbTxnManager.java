@@ -3165,9 +3165,25 @@ operator|==
 literal|0
 condition|)
 block|{
+comment|/*make initialDelay a random number in [0, 0.75*heartbeatInterval] so that if a lot       of queries land on the server at the same time and all get blocked on lack of       resources, that they all don't start heartbeating at the same time*/
 name|initialDelay
 operator|=
+operator|(
+name|long
+operator|)
+name|Math
+operator|.
+name|floor
+argument_list|(
 name|heartbeatInterval
+operator|*
+literal|0.75
+operator|*
+name|Math
+operator|.
+name|random
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 name|heartbeatTask
