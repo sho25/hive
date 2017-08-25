@@ -3448,9 +3448,6 @@ argument_list|(
 literal|"Tez session was closed. Reopening..."
 argument_list|)
 expr_stmt|;
-comment|// close the old one, but keep the tmp files around
-comment|// TODO Why is the session being create using a conf instance belonging to TezTask
-comment|//      - instead of the session conf instance.
 name|TezSessionPoolManager
 operator|.
 name|getInstance
@@ -3460,13 +3457,7 @@ name|reopenSession
 argument_list|(
 name|sessionState
 argument_list|,
-name|this
-operator|.
 name|conf
-argument_list|,
-name|inputOutputJars
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|console
@@ -3534,13 +3525,7 @@ name|reopenSession
 argument_list|(
 name|sessionState
 argument_list|,
-name|this
-operator|.
 name|conf
-argument_list|,
-name|inputOutputJars
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|dagClient
