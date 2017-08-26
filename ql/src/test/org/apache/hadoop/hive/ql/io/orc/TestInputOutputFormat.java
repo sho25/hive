@@ -26515,6 +26515,19 @@ literal|"deltas=0"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertTrue
+argument_list|(
+name|split
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"isOriginal=true"
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|split
@@ -26599,13 +26612,15 @@ block|}
 block|}
 comment|// call-1: open to read footer - split 1 => mock:/mocktable5/0_0
 comment|// call-2: open to read data - split 1 => mock:/mocktable5/0_0
-comment|// call-3: open to read footer - split 2 => mock:/mocktable5/0_1
-comment|// call-4: open to read data - split 2 => mock:/mocktable5/0_1
-comment|// call-5: AcidUtils.getAcidState - getLen() mock:/mocktable5/0_0
-comment|// call-6: AcidUtils.getAcidState - getLen() mock:/mocktable5/0_1
+comment|// call-3: getAcidState - split 1 => mock:/mocktable5 (to compute offset for original read)
+comment|// call-4: open to read footer - split 2 => mock:/mocktable5/0_1
+comment|// call-5: open to read data - split 2 => mock:/mocktable5/0_1
+comment|// call-6: getAcidState - split 2 => mock:/mocktable5 (to compute offset for original read)
+comment|// call-7: open to read footer - split 2 => mock:/mocktable5/0_0 (to get row count)
+comment|// call-8: file status - split 2 => mock:/mocktable5/0_0
 name|assertEquals
 argument_list|(
-literal|6
+literal|8
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -27070,6 +27085,19 @@ literal|"deltas=0"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|assertTrue
+argument_list|(
+name|split
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"isOriginal=true"
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|split
@@ -27153,12 +27181,14 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: open to read data - split 1 => mock:/mocktable6/0_0
-comment|// call-2: open to read data - split 2 => mock:/mocktable6/0_1
-comment|// call-3: AcidUtils.getAcidState - getLen() mock:/mocktable6/0_0
-comment|// call-4: AcidUtils.getAcidState - getLen() mock:/mocktable6/0_1
+comment|// call-2: AcidUtils.getAcidState - split 1 => ls mock:/mocktable6
+comment|// call-3: open to read data - split 2 => mock:/mocktable6/0_1
+comment|// call-4: AcidUtils.getAcidState - split 2 => ls mock:/mocktable6
+comment|// call-5: read footer - split 2 => mock:/mocktable6/0_0 (to get offset since it's original file)
+comment|// call-6: file stat - split 2 => mock:/mocktable6/0_0
 name|assertEquals
 argument_list|(
-literal|4
+literal|6
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -30201,6 +30231,8 @@ argument_list|,
 name|fileLength
 argument_list|,
 name|fileLength
+argument_list|,
+name|workDir
 argument_list|)
 decl_stmt|;
 name|OrcInputFormat
@@ -30469,6 +30501,8 @@ argument_list|,
 name|fileLength
 argument_list|,
 name|fileLength
+argument_list|,
+name|workDir
 argument_list|)
 expr_stmt|;
 name|inputFormat

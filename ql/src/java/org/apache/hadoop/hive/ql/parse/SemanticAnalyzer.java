@@ -44755,9 +44755,6 @@ name|colName
 return|;
 block|}
 comment|// Check constraints on acid tables.  This includes
-comment|// * no insert overwrites
-comment|// * no use of vectorization
-comment|// * turns off reduce deduplication optimization, as that sometimes breaks acid
 comment|// * Check that the table is bucketed
 comment|// * Check that the table is not sorted
 comment|// This method assumes you have already decided that this is an Acid write.  Don't call it if
@@ -44790,31 +44787,6 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|table
-operator|.
-name|getNumBuckets
-argument_list|()
-operator|<
-literal|1
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|ACID_OP_ON_NONACID_TABLE
-argument_list|,
-name|table
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 name|table

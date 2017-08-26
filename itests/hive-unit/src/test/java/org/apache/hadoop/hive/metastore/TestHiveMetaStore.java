@@ -21746,7 +21746,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be bucketed and stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC)"
 argument_list|,
 name|e
 operator|.
@@ -21839,7 +21839,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be bucketed and stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC)"
 argument_list|,
 name|e
 operator|.
@@ -22036,6 +22036,13 @@ operator|.
 name|unsetBucketCols
 argument_list|()
 expr_stmt|;
+name|sd
+operator|.
+name|setInputFormat
+argument_list|(
+literal|"org.apache.hadoop.mapred.FileInputFormat"
+argument_list|)
+expr_stmt|;
 name|t
 operator|=
 name|createTable
@@ -22102,7 +22109,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be bucketed and stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC)"
 argument_list|,
 name|e
 operator|.
@@ -22133,6 +22140,13 @@ operator|.
 name|setBucketCols
 argument_list|(
 name|bucketCols
+argument_list|)
+expr_stmt|;
+name|sd
+operator|.
+name|setInputFormat
+argument_list|(
+literal|"org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"
 argument_list|)
 expr_stmt|;
 name|t

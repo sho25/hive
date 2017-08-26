@@ -2210,7 +2210,7 @@ operator|+
 literal|"(a,b) values(1,2),(3,4),(5,6),(7,8),(9,10)"
 argument_list|)
 expr_stmt|;
-comment|// 2. Convert NONACIDORCTBL to ACID table.
+comment|// 2. Convert NONACIDORCTBL to ACID table.  //todo: remove trans_prop after HIVE-17089
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "
@@ -2219,7 +2219,7 @@ name|Table
 operator|.
 name|NONACIDORCTBL
 operator|+
-literal|" SET TBLPROPERTIES ('transactional'='true')"
+literal|" SET TBLPROPERTIES ('transactional'='true', 'transactional_properties'='default')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -2472,7 +2472,7 @@ name|rs
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * see HIVE-16177    * See also {@link TestTxnCommands#testNonAcidToAcidConversion01()}    */
+comment|/**    * see HIVE-16177    * See also {@link TestTxnCommands#testNonAcidToAcidConversion01()}    * {@link TestTxnNoBuckets#testCTAS()}    */
 annotation|@
 name|Test
 specifier|public
@@ -2518,7 +2518,7 @@ operator|+
 literal|"(a,b) values(1,6)"
 argument_list|)
 expr_stmt|;
-comment|//convert the table to Acid
+comment|//convert the table to Acid  //todo: remove trans_prop after HIVE-17089
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "
@@ -2527,7 +2527,7 @@ name|Table
 operator|.
 name|NONACIDORCTBL
 operator|+
-literal|" SET TBLPROPERTIES ('transactional'='true')"
+literal|" SET TBLPROPERTIES ('transactional'='true', 'transactional_properties'='default')"
 argument_list|)
 expr_stmt|;
 name|List
@@ -2684,7 +2684,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|/*      * All ROW__IDs are unique on read after conversion to acid       * ROW__IDs are exactly the same before and after compaction      * Also check the file name (only) after compaction for completeness      */
+comment|/*      * All ROW__IDs are unique on read after conversion to acid       * ROW__IDs are exactly the same before and after compaction      * Also check the file name (only) after compaction for completeness      * Note: order of rows in a file ends up being the reverse of order in values clause (why?!)      */
 name|String
 index|[]
 index|[]
@@ -16203,7 +16203,7 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"values"
+literal|" values"
 argument_list|)
 decl_stmt|;
 for|for

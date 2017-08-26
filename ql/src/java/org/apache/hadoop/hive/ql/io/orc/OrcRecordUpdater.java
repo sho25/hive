@@ -1549,6 +1549,7 @@ name|isWritingBase
 argument_list|()
 condition|)
 block|{
+comment|//throw if file already exists as that should never happen
 name|flushLengths
 operator|=
 name|fs
@@ -1564,7 +1565,7 @@ operator|.
 name|path
 argument_list|)
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|8
 argument_list|,
@@ -2150,6 +2151,7 @@ name|newInspector
 return|;
 block|}
 block|}
+comment|/**    * The INSERT event always uses {@link #bucket} that this {@link RecordUpdater} was created with    * thus even for unbucketed tables, the N in bucket_N file name matches writerId/bucketId even for    * late split    */
 specifier|private
 name|void
 name|addSimpleEvent
@@ -2497,6 +2499,7 @@ operator|==
 name|UPDATE_OPERATION
 condition|)
 block|{
+comment|/**        * make sure bucketProperty in the delete event is from the {@link row} rather than whatever        * {@link this#bucket} is.  For bucketed tables, the 2 must agree on bucketId encoded in it        * not for necessarily the whole value.  For unbucketed tables there is no relationship.        */
 name|currentBucket
 operator|=
 name|setBucket

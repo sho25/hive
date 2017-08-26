@@ -2032,9 +2032,9 @@ name|ACID_OP_ON_NONACID_TABLE
 argument_list|(
 literal|10297
 argument_list|,
-literal|"Attempt to do update or delete on table {0} that does not use "
+literal|"Attempt to do update or delete on table {0} that is "
 operator|+
-literal|"an AcidOutputFormat or is not bucketed"
+literal|"not transactional"
 argument_list|,
 literal|true
 argument_list|)
