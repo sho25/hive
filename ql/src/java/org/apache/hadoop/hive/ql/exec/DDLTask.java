@@ -23423,10 +23423,15 @@ name|db
 operator|.
 name|alterPartitions
 argument_list|(
-name|alterTbl
+name|Warehouse
 operator|.
-name|getOldName
+name|getQualifiedName
+argument_list|(
+name|tbl
+operator|.
+name|getTTable
 argument_list|()
+argument_list|)
 argument_list|,
 name|allPartitions
 argument_list|,
