@@ -6724,9 +6724,24 @@ literal|40000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
-literal|"However, if it is on, and the predicated number of entries in hashtable for a given join \n"
+literal|"However, if it is on, and the predicted number of entries in hashtable for a given join \n"
 operator|+
 literal|"input is larger than this number, the join will not be converted to a mapjoin. \n"
+operator|+
+literal|"The value \"-1\" means no limit."
+argument_list|)
+block|,
+name|HIVECONVERTJOINMAXSHUFFLESIZE
+argument_list|(
+literal|"hive.auto.convert.join.shuffle.max.size"
+argument_list|,
+literal|10000000L
+argument_list|,
+literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
+operator|+
+literal|"However, if it is on, and the predicted size of the larger input for a given join is greater \n"
+operator|+
+literal|"than this number, the join will not be converted to a dynamically partitioned hash join. \n"
 operator|+
 literal|"The value \"-1\" means no limit."
 argument_list|)
