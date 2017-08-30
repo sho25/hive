@@ -7122,6 +7122,7 @@ condition|(
 literal|true
 condition|)
 block|{
+comment|// Do not release beyond current stream (we don't know which RGs that buffer is for).
 if|if
 condition|(
 operator|(
@@ -7138,13 +7139,19 @@ argument_list|()
 operator|<=
 name|streamStartOffset
 operator|)
-operator|||
-operator|!
-operator|(
+condition|)
+break|break;
+comment|// Only release cache chunks; do not release ProcCacheChunks - they may not yet have data.
+if|if
+condition|(
 name|prev
-operator|instanceof
+operator|.
+name|getClass
+argument_list|()
+operator|!=
 name|CacheChunk
-operator|)
+operator|.
+name|class
 condition|)
 break|break;
 name|CacheChunk
