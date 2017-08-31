@@ -573,7 +573,6 @@ return|return
 literal|true
 return|;
 block|}
-specifier|private
 name|boolean
 name|limitReachedForLocalCopy
 parameter_list|(
@@ -590,7 +589,7 @@ init|=
 name|size
 operator|>
 name|maxCopyFileSize
-operator|||
+operator|&&
 name|numberOfFiles
 operator|>
 name|maxNumberOfFiles
