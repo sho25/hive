@@ -403,6 +403,17 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|Path
+name|dbLevelPath
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|dbLevelPath
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

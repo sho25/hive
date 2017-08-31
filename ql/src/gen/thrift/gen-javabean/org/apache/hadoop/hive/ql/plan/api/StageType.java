@@ -135,6 +135,11 @@ name|REPL_BOOTSTRAP_LOAD
 argument_list|(
 literal|13
 argument_list|)
+block|,
+name|REPL_STATE_LOG
+argument_list|(
+literal|14
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -263,6 +268,12 @@ literal|13
 case|:
 return|return
 name|REPL_BOOTSTRAP_LOAD
+return|;
+case|case
+literal|14
+case|:
+return|return
+name|REPL_STATE_LOG
 return|;
 default|default:
 return|return

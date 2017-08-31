@@ -223,6 +223,8 @@ name|BootstrapEventsIterator
 argument_list|(
 name|dumpDirectory
 argument_list|,
+name|dbNameToLoadIn
+argument_list|,
 name|hiveConf
 argument_list|)
 expr_stmt|;
@@ -311,10 +313,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 decl_stmt|;
-name|state
-operator|=
-literal|null
-expr_stmt|;
 return|return
 name|databaseEvent
 return|;

@@ -290,14 +290,18 @@ function_decl|;
 class|class
 name|Context
 block|{
-specifier|final
+specifier|public
 name|String
 name|dbName
-decl_stmt|,
+decl_stmt|;
+specifier|public
+specifier|final
+name|String
 name|tableName
 decl_stmt|,
 name|location
 decl_stmt|;
+specifier|public
 specifier|final
 name|Task
 argument_list|<
@@ -307,6 +311,7 @@ name|Serializable
 argument_list|>
 name|precursor
 decl_stmt|;
+specifier|public
 name|DumpMetaData
 name|dmd
 decl_stmt|;
@@ -532,6 +537,7 @@ name|tableName
 argument_list|)
 return|;
 block|}
+specifier|public
 name|boolean
 name|isDbNameEmpty
 parameter_list|()
