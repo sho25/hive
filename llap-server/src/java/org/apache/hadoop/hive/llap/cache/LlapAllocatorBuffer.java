@@ -648,6 +648,34 @@ operator|.
 name|get
 argument_list|()
 expr_stmt|;
+comment|// We have to check it here since invalid decref will overflow.
+name|int
+name|oldRefCount
+init|=
+name|State
+operator|.
+name|getRefCount
+argument_list|(
+name|oldState
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|oldRefCount
+operator|==
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Invalid decRef when refCount is 0: "
+operator|+
+name|this
+argument_list|)
+throw|;
+block|}
 name|newState
 operator|=
 name|State
@@ -704,27 +732,6 @@ argument_list|,
 name|newRefCount
 argument_list|)
 expr_stmt|;
-block|}
-if|if
-condition|(
-name|newRefCount
-operator|<
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-literal|"Unexpected refCount "
-operator|+
-name|newRefCount
-operator|+
-literal|": "
-operator|+
-name|this
-argument_list|)
-throw|;
 block|}
 return|return
 name|newRefCount

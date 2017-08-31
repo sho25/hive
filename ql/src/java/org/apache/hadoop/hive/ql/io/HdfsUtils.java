@@ -320,7 +320,9 @@ name|dfs
 argument_list|)
 condition|)
 block|{
-return|return
+name|Object
+name|result
+init|=
 name|SHIMS
 operator|.
 name|getFileId
@@ -335,6 +337,15 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|result
+operator|!=
+literal|null
+condition|)
+return|return
+name|result
 return|;
 block|}
 block|}

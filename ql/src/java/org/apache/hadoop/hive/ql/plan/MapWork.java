@@ -1526,6 +1526,10 @@ decl_stmt|,
 name|hasAcid
 init|=
 literal|false
+decl_stmt|,
+name|hasCacheOnly
+init|=
+literal|false
 decl_stmt|;
 comment|// Assume the IO is enabled on the daemon by default. We cannot reasonably check it here.
 name|boolean
@@ -1616,14 +1620,9 @@ operator|)
 decl_stmt|;
 if|if
 condition|(
-name|canWrapAny
-operator|&&
 name|hasPathToPartInfo
 condition|)
 block|{
-assert|assert
-name|isLlapOn
-assert|;
 for|for
 control|(
 name|PartitionDesc
@@ -1638,6 +1637,8 @@ block|{
 name|boolean
 name|isUsingLlapIo
 init|=
+name|canWrapAny
+operator|&&
 name|HiveInputFormat
 operator|.
 name|canWrapForLlap
@@ -1691,6 +1692,27 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+elseif|else
+if|if
+condition|(
+name|isLlapOn
+operator|&&
+name|HiveInputFormat
+operator|.
+name|canInjectCaches
+argument_list|(
+name|part
+operator|.
+name|getInputFileFormatClass
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|hasCacheOnly
+operator|=
+literal|true
+expr_stmt|;
+block|}
 else|else
 block|{
 name|hasNonLlap
@@ -1699,14 +1721,6 @@ literal|true
 expr_stmt|;
 block|}
 block|}
-block|}
-comment|// check if the column types that are read are supported by LLAP IO
-if|if
-condition|(
-name|hasLlap
-condition|)
-block|{
-comment|// TODO: no need for now hasLlap = checkVectorizerSupportedTypes();
 block|}
 name|llapIoDesc
 operator|=
@@ -1723,6 +1737,8 @@ argument_list|,
 name|hasNonLlap
 argument_list|,
 name|hasAcid
+argument_list|,
+name|hasCacheOnly
 argument_list|)
 expr_stmt|;
 block|}
@@ -1748,6 +1764,9 @@ name|hasNonLlap
 parameter_list|,
 name|boolean
 name|hasAcid
+parameter_list|,
+name|boolean
+name|hasCacheOnly
 parameter_list|)
 block|{
 if|if
@@ -1763,6 +1782,9 @@ if|if
 condition|(
 operator|!
 name|canWrapAny
+operator|&&
+operator|!
+name|hasCacheOnly
 condition|)
 return|return
 literal|"no inputs"
@@ -1777,6 +1799,51 @@ return|return
 literal|"unknown"
 return|;
 comment|// No information to judge.
+name|int
+name|varieties
+init|=
+operator|(
+name|hasAcid
+condition|?
+literal|1
+else|:
+literal|0
+operator|)
+operator|+
+operator|(
+name|hasLlap
+condition|?
+literal|1
+else|:
+literal|0
+operator|)
+operator|+
+operator|(
+name|hasCacheOnly
+condition|?
+literal|1
+else|:
+literal|0
+operator|)
+operator|+
+operator|(
+name|hasNonLlap
+condition|?
+literal|1
+else|:
+literal|0
+operator|)
+decl_stmt|;
+if|if
+condition|(
+name|varieties
+operator|>
+literal|1
+condition|)
+return|return
+literal|"some inputs"
+return|;
+comment|// Will probably never actually happen.
 if|if
 condition|(
 name|hasAcid
@@ -1784,20 +1851,22 @@ condition|)
 return|return
 literal|"may be used (ACID table)"
 return|;
-return|return
-operator|(
+if|if
+condition|(
 name|hasLlap
-condition|?
-operator|(
-name|hasNonLlap
-condition|?
-literal|"some inputs"
-else|:
+condition|)
+return|return
 literal|"all inputs"
-operator|)
-else|:
+return|;
+if|if
+condition|(
+name|hasCacheOnly
+condition|)
+return|return
+literal|"all inputs (cache only)"
+return|;
+return|return
 literal|"no inputs"
-operator|)
 return|;
 block|}
 specifier|public
