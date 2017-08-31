@@ -137,13 +137,6 @@ literal|false
 decl_stmt|;
 comment|// default is full export/import, not metadata-only
 specifier|private
-name|boolean
-name|isIncrementalDump
-init|=
-literal|false
-decl_stmt|;
-comment|// default is replv2 bootstrap dump or replv1 export or import/load.
-specifier|private
 name|String
 name|eventId
 init|=
@@ -175,6 +168,15 @@ init|=
 literal|true
 decl_stmt|;
 comment|// default is that the import mode is insert overwrite
+specifier|private
+name|Type
+name|specType
+init|=
+name|Type
+operator|.
+name|DEFAULT
+decl_stmt|;
+comment|// DEFAULT means REPL_LOAD or BOOTSTRAP_DUMP or EXPORT
 comment|// Key definitions related to replication
 specifier|public
 enum|enum
@@ -250,17 +252,16 @@ name|MD_ONLY
 block|,
 name|REPL
 block|}
-empty_stmt|;
-specifier|static
-specifier|private
-name|Collator
-name|collator
-init|=
-name|Collator
-operator|.
-name|getInstance
-argument_list|()
-decl_stmt|;
+specifier|public
+enum|enum
+name|Type
+block|{
+name|DEFAULT
+block|,
+name|INCREMENTAL_DUMP
+block|,
+name|IMPORT
+block|}
 comment|/**    * Constructor to construct spec based on either the ASTNode that    * corresponds to the replication clause itself, or corresponds to    * the parent node, and will scan through the children to instantiate    * itself.    * @param node replicationClause node, or parent of replicationClause node    */
 specifier|public
 name|ReplicationSpec
@@ -377,8 +378,6 @@ literal|true
 argument_list|,
 literal|false
 argument_list|,
-literal|false
-argument_list|,
 name|fromId
 argument_list|,
 name|toId
@@ -399,9 +398,6 @@ name|isInReplicationScope
 parameter_list|,
 name|boolean
 name|isMetadataOnly
-parameter_list|,
-name|boolean
-name|isIncrementalDump
 parameter_list|,
 name|String
 name|eventReplicationState
@@ -433,12 +429,6 @@ name|isMetadataOnly
 expr_stmt|;
 name|this
 operator|.
-name|isIncrementalDump
-operator|=
-name|isIncrementalDump
-expr_stmt|;
-name|this
-operator|.
 name|eventId
 operator|=
 name|eventReplicationState
@@ -466,6 +456,14 @@ operator|.
 name|isReplace
 operator|=
 name|isReplace
+expr_stmt|;
+name|this
+operator|.
+name|specType
+operator|=
+name|Type
+operator|.
+name|DEFAULT
 expr_stmt|;
 block|}
 specifier|public
@@ -511,9 +509,11 @@ literal|false
 expr_stmt|;
 name|this
 operator|.
-name|isIncrementalDump
+name|specType
 operator|=
-literal|false
+name|Type
+operator|.
+name|DEFAULT
 expr_stmt|;
 if|if
 condition|(
@@ -698,7 +698,6 @@ return|;
 block|}
 comment|/**    * @param currReplState Current object state    * @param replacementReplState Replacement-candidate state    * @return whether or not a provided replacement candidate is newer(or equal) to the existing object state or not    */
 specifier|public
-specifier|static
 name|boolean
 name|allowReplacement
 parameter_list|(
@@ -788,17 +787,38 @@ literal|""
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Failure handling of IMPORT command and REPL LOAD commands are different.
+comment|// IMPORT will set the last repl ID before copying data files and hence need to allow
+comment|// replacement if loaded from same dump twice after failing to copy in previous attempt.
+comment|// But, REPL LOAD will set the last repl ID only after the successful copy of data files and
+comment|// hence need not allow if same event is applied twice.
+if|if
+condition|(
+name|specType
+operator|==
+name|Type
+operator|.
+name|IMPORT
+condition|)
+block|{
 return|return
 operator|(
-operator|(
 name|currReplStateLong
-operator|-
+operator|<=
 name|replacementReplStateLong
 operator|)
+return|;
+block|}
+else|else
+block|{
+return|return
+operator|(
+name|currReplStateLong
 operator|<
-literal|0
+name|replacementReplStateLong
 operator|)
 return|;
+block|}
 block|}
 comment|/**    * Determines if a current replication object (current state of dump) is allowed to    * replicate-replace-into a given metastore object (based on state_id stored in their parameters)    */
 specifier|public
@@ -941,16 +961,15 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|(
 name|node
 operator|.
 name|getChildCount
 argument_list|()
 operator|>
 literal|1
-condition|)
-block|{
-if|if
-condition|(
+operator|)
+operator|&&
 name|node
 operator|.
 name|getChild
@@ -974,6 +993,35 @@ name|isMetadataOnly
 operator|=
 literal|true
 expr_stmt|;
+try|try
+block|{
+if|if
+condition|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|eventId
+argument_list|)
+operator|>=
+literal|0
+condition|)
+block|{
+comment|// If metadata-only dump, then the state of the dump shouldn't be the latest event id as
+comment|// the data is not yet dumped and shall be dumped in future export.
+name|currStateId
+operator|=
+name|eventId
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+comment|// Ignore the exception and fall through the default currentStateId
 block|}
 block|}
 block|}
@@ -1032,6 +1080,33 @@ return|return
 literal|null
 return|;
 block|}
+comment|/**    * @return true if this statement refers to incremental dump operation.    */
+specifier|public
+name|Type
+name|getReplSpecType
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|specType
+return|;
+block|}
+specifier|public
+name|void
+name|setReplSpecType
+parameter_list|(
+name|Type
+name|specType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|specType
+operator|=
+name|specType
+expr_stmt|;
+block|}
 comment|/**    * @return true if this statement is being run for the purposes of replication    */
 specifier|public
 name|boolean
@@ -1041,31 +1116,6 @@ block|{
 return|return
 name|isInReplicationScope
 return|;
-block|}
-comment|/**    * @return true if this statement refers to incremental dump operation.    */
-specifier|public
-name|boolean
-name|isIncrementalDump
-parameter_list|()
-block|{
-return|return
-name|isIncrementalDump
-return|;
-block|}
-specifier|public
-name|void
-name|setIsIncrementalDump
-parameter_list|(
-name|boolean
-name|isIncrementalDump
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isIncrementalDump
-operator|=
-name|isIncrementalDump
-expr_stmt|;
 block|}
 comment|/**    * @return true if this statement refers to metadata-only operation.    */
 specifier|public

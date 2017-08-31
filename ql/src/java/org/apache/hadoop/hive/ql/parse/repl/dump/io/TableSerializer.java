@@ -431,11 +431,16 @@ comment|// Current replication state must be set on the Table object only for bo
 comment|// Event replication State will be null in case of bootstrap dump.
 if|if
 condition|(
-operator|!
 name|additionalPropertiesProvider
 operator|.
-name|isIncrementalDump
+name|getReplSpecType
 argument_list|()
+operator|!=
+name|ReplicationSpec
+operator|.
+name|Type
+operator|.
+name|INCREMENTAL_DUMP
 condition|)
 block|{
 name|table

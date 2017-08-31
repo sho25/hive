@@ -1494,9 +1494,13 @@ argument_list|)
 decl_stmt|;
 name|rspec
 operator|.
-name|setIsIncrementalDump
+name|setReplSpecType
 argument_list|(
-literal|true
+name|ReplicationSpec
+operator|.
+name|Type
+operator|.
+name|INCREMENTAL_DUMP
 argument_list|)
 expr_stmt|;
 return|return
@@ -2127,8 +2131,6 @@ operator|new
 name|ReplicationSpec
 argument_list|(
 literal|true
-argument_list|,
-literal|false
 argument_list|,
 literal|false
 argument_list|,

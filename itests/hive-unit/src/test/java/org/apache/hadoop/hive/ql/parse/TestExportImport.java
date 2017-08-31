@@ -142,7 +142,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestExport
+name|TestExportImport
 block|{
 specifier|protected
 specifier|static
@@ -154,7 +154,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|TestExport
+name|TestExportImport
 operator|.
 name|class
 argument_list|)
@@ -162,7 +162,12 @@ decl_stmt|;
 specifier|private
 specifier|static
 name|WarehouseInstance
-name|hiveWarehouse
+name|srcHiveWarehouse
+decl_stmt|;
+specifier|private
+specifier|static
+name|WarehouseInstance
+name|destHiveWarehouse
 decl_stmt|;
 annotation|@
 name|Rule
@@ -178,6 +183,10 @@ decl_stmt|;
 specifier|private
 name|String
 name|dbName
+decl_stmt|;
+specifier|private
+name|String
+name|replDbName
 decl_stmt|;
 annotation|@
 name|BeforeClass
@@ -229,7 +238,19 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
-name|hiveWarehouse
+name|srcHiveWarehouse
+operator|=
+operator|new
+name|WarehouseInstance
+argument_list|(
+name|LOG
+argument_list|,
+name|miniDFSCluster
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
 operator|=
 operator|new
 name|WarehouseInstance
@@ -252,7 +273,12 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-name|hiveWarehouse
+name|srcHiveWarehouse
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|destHiveWarehouse
 operator|.
 name|close
 argument_list|()
@@ -282,13 +308,28 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 expr_stmt|;
-name|hiveWarehouse
+name|replDbName
+operator|=
+name|dbName
+operator|+
+literal|"_dupe"
+expr_stmt|;
+name|srcHiveWarehouse
 operator|.
 name|run
 argument_list|(
 literal|"create database "
 operator|+
 name|dbName
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create database "
+operator|+
+name|replDbName
 argument_list|)
 expr_stmt|;
 block|}
@@ -326,7 +367,7 @@ name|path
 operator|+
 literal|"/data"
 decl_stmt|;
-name|hiveWarehouse
+name|srcHiveWarehouse
 operator|.
 name|run
 argument_list|(
@@ -369,6 +410,134 @@ operator|.
 name|run
 argument_list|(
 literal|"select * from t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|dataImportAfterMetadataOnlyImport
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|path
+init|=
+literal|"hdfs:///tmp/"
+operator|+
+name|dbName
+operator|+
+literal|"/"
+decl_stmt|;
+name|String
+name|exportMDPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"1/'"
+decl_stmt|;
+name|String
+name|exportDataPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"2/'"
+decl_stmt|;
+name|srcHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 (i int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 values (1),(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportMDPath
+operator|+
+literal|" for metadata replication('1')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportDataPath
+operator|+
+literal|" for replication('2')"
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t1 from "
+operator|+
+name|exportMDPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t1 from "
+operator|+
+name|exportDataPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from "
+operator|+
+name|replDbName
+operator|+
+literal|".t1"
 argument_list|)
 operator|.
 name|verifyResults
