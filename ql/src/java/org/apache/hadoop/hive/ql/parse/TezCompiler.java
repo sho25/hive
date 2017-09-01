@@ -6888,15 +6888,12 @@ comment|// Remove the semijoin optimization branch along with ALL the mappings
 comment|// The parent GB2 has all the branches. Collect them and remove them.
 for|for
 control|(
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-name|op
+name|Node
+name|node
 range|:
 name|gbOp
 operator|.
-name|getChildOperators
+name|getChildren
 argument_list|()
 control|)
 block|{
@@ -6906,7 +6903,7 @@ init|=
 operator|(
 name|ReduceSinkOperator
 operator|)
-name|op
+name|node
 decl_stmt|;
 name|TableScanOperator
 name|ts
@@ -7352,6 +7349,46 @@ literal|1
 operator|)
 condition|)
 block|{
+if|if
+condition|(
+name|op
+operator|instanceof
+name|MapJoinOperator
+condition|)
+block|{
+comment|// Pick the correct parent, only one of the parents is not
+comment|// ReduceSink, that is what we are looking for.
+for|for
+control|(
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|parentOp
+range|:
+name|op
+operator|.
+name|getParentOperators
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|parentOp
+operator|instanceof
+name|ReduceSinkOperator
+condition|)
+block|{
+continue|continue;
+block|}
+name|op
+operator|=
+name|parentOp
+expr_stmt|;
+comment|// parent in current pipeline
+continue|continue;
+block|}
+block|}
 name|op
 operator|=
 name|op
@@ -7449,6 +7486,32 @@ name|ReduceSinkOperator
 operator|)
 condition|)
 block|{
+comment|// This still could be DPP.
+if|if
+condition|(
+name|child
+operator|instanceof
+name|AppMasterEventOperator
+operator|&&
+operator|(
+operator|(
+name|AppMasterEventOperator
+operator|)
+name|child
+operator|)
+operator|.
+name|getConf
+argument_list|()
+operator|instanceof
+name|DynamicPruningEventDesc
+condition|)
+block|{
+comment|// DPP indeed, Set parallel edges true
+name|parallelEdges
+operator|=
+literal|true
+expr_stmt|;
+block|}
 continue|continue;
 block|}
 name|ReduceSinkOperator
@@ -7529,7 +7592,7 @@ return|return
 name|parallelEdges
 return|;
 block|}
-comment|/*    *  The algorithm looks at all the mapjoins in the operator pipeline until    *  it hits RS Op and for each mapjoin examines if it has paralllel semijoin    *  edge.    */
+comment|/*    *  The algorithm looks at all the mapjoins in the operator pipeline until    *  it hits RS Op and for each mapjoin examines if it has paralllel semijoin    *  edge or dynamic partition pruning.    */
 specifier|private
 name|void
 name|removeSemijoinsParallelToMapJoin
@@ -7676,7 +7739,7 @@ name|op
 init|=
 name|deque
 operator|.
-name|poll
+name|pollLast
 argument_list|()
 decl_stmt|;
 if|if
