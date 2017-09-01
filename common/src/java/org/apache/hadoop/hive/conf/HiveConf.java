@@ -12958,6 +12958,24 @@ argument_list|,
 literal|"The deny ACL for LLAP daemon management."
 argument_list|)
 block|,
+name|LLAP_PLUGIN_ACL
+argument_list|(
+literal|"hive.llap.plugin.acl"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"The ACL for LLAP plugin AM endpoint."
+argument_list|)
+block|,
+name|LLAP_PLUGIN_ACL_DENY
+argument_list|(
+literal|"hive.llap.plugin.acl.blocked"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The deny ACL for LLAP plugin AM endpoint."
+argument_list|)
+block|,
 name|LLAP_REMOTE_TOKEN_REQUIRES_SIGNING
 argument_list|(
 literal|"hive.llap.remote.token.requires.signing"
@@ -13028,6 +13046,24 @@ argument_list|,
 literal|"Number of RPC handlers for LLAP daemon."
 argument_list|,
 literal|"llap.daemon.rpc.num.handlers"
+argument_list|)
+block|,
+name|LLAP_PLUGIN_RPC_PORT
+argument_list|(
+literal|"hive.llap.plugin.rpc.port"
+argument_list|,
+literal|15005
+argument_list|,
+literal|"RPC port for AM LLAP daemon plugin endpoint."
+argument_list|)
+block|,
+name|LLAP_PLUGIN_RPC_NUM_HANDLERS
+argument_list|(
+literal|"hive.llap.plugin.rpc.num.handlers"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of RPC handlers for AM LLAP plugin endpoint."
 argument_list|)
 block|,
 name|LLAP_DAEMON_WORK_DIRS
