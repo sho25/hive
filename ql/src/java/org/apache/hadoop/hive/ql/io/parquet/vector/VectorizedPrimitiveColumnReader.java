@@ -2799,25 +2799,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|dataEncoding
-operator|!=
-name|Encoding
-operator|.
-name|PLAIN
-condition|)
-block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"Unsupported encoding: "
-operator|+
-name|dataEncoding
-argument_list|)
-throw|;
-block|}
 name|dataColumn
 operator|=
 name|dataEncoding
