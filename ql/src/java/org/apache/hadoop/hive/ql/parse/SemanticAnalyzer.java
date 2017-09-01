@@ -1075,6 +1075,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|LimitOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Operator
 import|;
 end_import
@@ -65405,6 +65423,9 @@ name|alias
 argument_list|)
 decl_stmt|;
 name|Operator
+argument_list|<
+name|?
+argument_list|>
 name|operator
 init|=
 name|genPlan
@@ -65437,6 +65458,28 @@ argument_list|)
 condition|)
 block|{
 comment|// we set viewProjectToTableSchema so that we can leverage ColumnPruner.
+if|if
+condition|(
+name|operator
+operator|instanceof
+name|LimitOperator
+condition|)
+block|{
+comment|// If create view has LIMIT operator, this can happen
+comment|// Fetch parent operator
+name|operator
+operator|=
+name|operator
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|operator
