@@ -21,11 +21,17 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Map
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|registry
+operator|.
+name|ServiceInstance
 import|;
 end_import
 
@@ -50,26 +56,10 @@ end_import
 begin_interface
 specifier|public
 interface|interface
+name|LlapServiceInstance
+extends|extends
 name|ServiceInstance
 block|{
-comment|/**    * Worker identity is a UUID (unique across restarts), to identify a node which died&amp; was brought    * back on the same host/port    */
-specifier|public
-name|String
-name|getWorkerIdentity
-parameter_list|()
-function_decl|;
-comment|/**    * Hostname of the service instance    *     * @return    */
-specifier|public
-name|String
-name|getHost
-parameter_list|()
-function_decl|;
-comment|/**    * RPC Endpoint for service instance    *     * @return    */
-specifier|public
-name|int
-name|getRpcPort
-parameter_list|()
-function_decl|;
 comment|/**    * Management endpoint for service instance    *    * @return    */
 specifier|public
 name|int
@@ -92,17 +82,6 @@ comment|/**    * OutputFormat endpoint for service instance    *    * @return   
 specifier|public
 name|int
 name|getOutputFormatPort
-parameter_list|()
-function_decl|;
-comment|/**    * Config properties of the Service Instance (llap.daemon.*)    *     * @return    */
-specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|getProperties
 parameter_list|()
 function_decl|;
 comment|/**    * Memory and Executors available for the LLAP tasks    *     * This does not include the size of the cache or the actual vCores allocated via Slider.    *     * @return    */

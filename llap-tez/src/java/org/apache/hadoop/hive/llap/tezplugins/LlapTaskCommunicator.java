@@ -47,7 +47,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -3651,7 +3651,7 @@ return|;
 block|}
 name|Set
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|instanceSet
 decl_stmt|;
@@ -3706,14 +3706,14 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|ServiceInstance
+name|LlapServiceInstance
 name|matchedInstance
 init|=
 literal|null
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|instance
 range|:
 name|instanceSet

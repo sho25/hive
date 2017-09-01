@@ -37,6 +37,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|registry
+operator|.
+name|ServiceInstanceStateChangeListener
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|yarn
 operator|.
 name|api
@@ -85,7 +101,7 @@ throws|throws
 name|IOException
 function_decl|;
 comment|/**    * Client API to get the list of instances registered via the current registry key.    * @param component    * @param clusterReadyTimeoutMs The time to wait for the cluster to be ready, if it's not    *                              started yet. 0 means do not wait.    */
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|getInstances
 parameter_list|(
 name|String
@@ -102,6 +118,9 @@ name|void
 name|registerStateChangeListener
 parameter_list|(
 name|ServiceInstanceStateChangeListener
+argument_list|<
+name|LlapServiceInstance
+argument_list|>
 name|listener
 parameter_list|)
 throws|throws

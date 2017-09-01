@@ -409,7 +409,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -427,7 +427,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 import|;
 end_import
 
@@ -1051,12 +1051,12 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
-name|ServiceInstance
+name|LlapServiceInstance
 index|[]
 name|serviceInstanceArray
 init|=
 operator|new
-name|ServiceInstance
+name|LlapServiceInstance
 index|[
 literal|0
 index|]
@@ -1174,7 +1174,7 @@ name|getPlanBytes
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 init|=
 name|getServiceInstance
@@ -1885,7 +1885,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|ServiceInstance
+name|LlapServiceInstance
 name|getServiceInstance
 parameter_list|(
 name|JobConf
@@ -1918,7 +1918,7 @@ index|[
 literal|0
 index|]
 decl_stmt|;
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 init|=
 name|getServiceInstanceForHost
@@ -1974,7 +1974,7 @@ name|serviceInstance
 return|;
 block|}
 specifier|private
-name|ServiceInstance
+name|LlapServiceInstance
 name|getServiceInstanceForHost
 parameter_list|(
 name|LlapRegistryService
@@ -1996,7 +1996,7 @@ argument_list|(
 name|host
 argument_list|)
 decl_stmt|;
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|instanceSet
 init|=
 name|registryService
@@ -2004,7 +2004,7 @@ operator|.
 name|getInstances
 argument_list|()
 decl_stmt|;
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 init|=
 literal|null
@@ -2134,7 +2134,7 @@ name|serviceInstance
 return|;
 block|}
 specifier|private
-name|ServiceInstance
+name|LlapServiceInstance
 name|getServiceInstanceRandom
 parameter_list|(
 name|LlapRegistryService
@@ -2143,7 +2143,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|instanceSet
 init|=
 name|registryService
@@ -2151,7 +2151,7 @@ operator|.
 name|getInstances
 argument_list|()
 decl_stmt|;
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 init|=
 literal|null
@@ -2165,7 +2165,7 @@ argument_list|)
 expr_stmt|;
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|allInstances
 init|=
@@ -2215,12 +2215,12 @@ name|serviceInstance
 return|;
 block|}
 specifier|private
-name|ServiceInstance
+name|LlapServiceInstance
 name|selectServiceInstance
 parameter_list|(
 name|Set
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|serviceInstances
 parameter_list|)
@@ -2244,7 +2244,7 @@ block|}
 comment|// Get the first live service instance
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 range|:
 name|serviceInstances

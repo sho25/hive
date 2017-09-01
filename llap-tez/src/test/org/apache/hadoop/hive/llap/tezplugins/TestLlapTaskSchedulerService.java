@@ -333,7 +333,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -351,7 +351,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 import|;
 end_import
 
@@ -10198,12 +10198,12 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|mockServiceInstanceSet
 init|=
 name|mock
 argument_list|(
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 operator|.
 name|class
 argument_list|)
@@ -10581,7 +10581,7 @@ condition|)
 block|{
 name|List
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|liveInstances
 init|=
@@ -10605,7 +10605,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|ServiceInstance
+name|LlapServiceInstance
 name|mockInactive
 init|=
 name|mock
@@ -10679,12 +10679,12 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|ServiceInstance
+name|LlapServiceInstance
 name|mockActive
 init|=
 name|mock
 argument_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 operator|.
 name|class
 argument_list|)
@@ -10769,7 +10769,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|allInstances
 init|=
@@ -10786,12 +10786,12 @@ range|:
 name|hosts
 control|)
 block|{
-name|ServiceInstance
+name|LlapServiceInstance
 name|mockActive
 init|=
 name|mock
 argument_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 operator|.
 name|class
 argument_list|)

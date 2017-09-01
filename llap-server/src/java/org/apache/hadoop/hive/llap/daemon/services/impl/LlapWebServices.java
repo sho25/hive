@@ -213,7 +213,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -1412,7 +1412,7 @@ argument_list|)
 expr_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|s
 range|:
 name|registry

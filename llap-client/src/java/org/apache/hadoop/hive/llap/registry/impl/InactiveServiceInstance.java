@@ -45,7 +45,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -72,7 +72,7 @@ specifier|public
 class|class
 name|InactiveServiceInstance
 implements|implements
-name|ServiceInstance
+name|LlapServiceInstance
 block|{
 specifier|private
 specifier|final

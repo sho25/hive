@@ -21,6 +21,22 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|registry
+operator|.
+name|ServiceInstanceStateChangeListener
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -613,7 +629,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -631,25 +647,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstanceSet
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|registry
-operator|.
-name|ServiceInstanceStateChangeListener
+name|LlapServiceInstanceSet
 import|;
 end_import
 
@@ -1210,7 +1208,7 @@ name|conf
 decl_stmt|;
 comment|// interface into the registry service
 specifier|private
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|activeInstances
 decl_stmt|;
 comment|// Tracks all instances, including ones which have been disabled in the past.
@@ -2406,7 +2404,7 @@ argument_list|()
 expr_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|inst
 range|:
 name|activeInstances
@@ -2451,7 +2449,7 @@ specifier|public
 name|void
 name|setServiceInstanceSet
 parameter_list|(
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|serviceInstanceSet
 parameter_list|)
 block|{
@@ -2467,6 +2465,9 @@ class|class
 name|NodeStateChangeListener
 implements|implements
 name|ServiceInstanceStateChangeListener
+argument_list|<
+name|LlapServiceInstance
+argument_list|>
 block|{
 specifier|private
 specifier|final
@@ -2488,7 +2489,7 @@ specifier|public
 name|void
 name|onCreate
 parameter_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|)
 block|{
@@ -2530,7 +2531,7 @@ specifier|public
 name|void
 name|onUpdate
 parameter_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|)
 block|{
@@ -2551,7 +2552,7 @@ specifier|public
 name|void
 name|onRemove
 parameter_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|)
 block|{
@@ -3071,7 +3072,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|inst
 range|:
 name|activeInstances
@@ -3181,7 +3182,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|inst
 range|:
 name|activeInstances
@@ -4393,7 +4394,7 @@ expr_stmt|;
 comment|// Pick the first host always. Weak attempt at cache affinity.
 name|Set
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|instances
 init|=
@@ -4415,7 +4416,7 @@ condition|)
 block|{
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|inst
 range|:
 name|instances
@@ -4659,7 +4660,7 @@ block|}
 comment|/* fall through - miss in locality or no locality-requested */
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|instances
 init|=
@@ -4699,7 +4700,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|inst
 range|:
 name|instances
@@ -5151,7 +5152,7 @@ parameter_list|(
 name|NodeInfo
 name|node
 parameter_list|,
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|)
 block|{
@@ -5539,7 +5540,7 @@ specifier|static
 name|NodeReport
 name|constructNodeReport
 parameter_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|,
 name|boolean
@@ -8271,7 +8272,7 @@ name|NodeBlacklistConf
 name|blacklistConf
 decl_stmt|;
 specifier|final
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 decl_stmt|;
 specifier|private
@@ -8354,7 +8355,7 @@ decl_stmt|;
 comment|/**      * Create a NodeInfo bound to a service instance      *  @param serviceInstance         the associated serviceInstance      * @param blacklistConf           blacklist configuration      * @param clock                   clock to use to obtain timing information      * @param numSchedulableTasksConf number of schedulable tasks on the node. 0 represents auto *                                detect based on the serviceInstance, -1 indicates indicates      * @param metrics      */
 name|NodeInfo
 parameter_list|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 parameter_list|,
 name|NodeBlacklistConf

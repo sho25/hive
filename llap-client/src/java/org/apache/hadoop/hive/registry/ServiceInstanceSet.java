@@ -13,8 +13,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
-operator|.
 name|registry
 package|;
 end_package
@@ -47,28 +45,22 @@ begin_interface
 specifier|public
 interface|interface
 name|ServiceInstanceSet
+parameter_list|<
+name|InstanceType
+extends|extends
+name|ServiceInstance
+parameter_list|>
 block|{
 comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return    */
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|InstanceType
 argument_list|>
 name|getAll
 parameter_list|()
 function_decl|;
-comment|/**    * Gets a list containing all the instances. This list has the same iteration order across    * different processes, assuming the list of registry entries is the same.    * @param consistentIndexes if true, also try to maintain the same exact index for each node    *                          across calls, by inserting inactive instances to replace the    *                          removed ones.    */
-name|Collection
-argument_list|<
-name|ServiceInstance
-argument_list|>
-name|getAllInstancesOrdered
-parameter_list|(
-name|boolean
-name|consistentIndexes
-parameter_list|)
-function_decl|;
 comment|/**    * Get an instance by worker identity.    *     * @param name    * @return    */
-name|ServiceInstance
+name|InstanceType
 name|getInstance
 parameter_list|(
 name|String
@@ -78,7 +70,7 @@ function_decl|;
 comment|/**    * Get a list of service instances for a given host.    *     * The list could include dead and alive instances.    *     * @param host    * @return    */
 name|Set
 argument_list|<
-name|ServiceInstance
+name|InstanceType
 argument_list|>
 name|getByHost
 parameter_list|(

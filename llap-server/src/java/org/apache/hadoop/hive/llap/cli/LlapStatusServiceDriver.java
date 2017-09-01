@@ -367,7 +367,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -3012,7 +3012,7 @@ block|}
 block|}
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|serviceInstances
 decl_stmt|;
@@ -3135,7 +3135,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|serviceInstance
 range|:
 name|serviceInstances
