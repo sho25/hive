@@ -1503,6 +1503,21 @@ name|e
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|rv
+operator|.
+name|getTable
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+comment|// nothing to do here, silently return.
+return|return
+literal|false
+return|;
+block|}
 name|ReplicationSpec
 name|replicationSpec
 init|=
