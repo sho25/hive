@@ -7560,6 +7560,39 @@ literal|"Whether or not to use a binary search to find the entries in an index t
 argument_list|)
 block|,
 comment|// Statistics
+name|HIVE_STATS_ESTIMATE_STATS
+argument_list|(
+literal|"hive.stats.estimate"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Estimate statistics in absence of statistics."
+argument_list|)
+block|,
+name|HIVE_STATS_NDV_ESTIMATE_PERC
+argument_list|(
+literal|"hive.stats.ndv.estimate.percent"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|20
+argument_list|,
+literal|"This many percentage of rows will be estimated as count distinct in absence of statistics."
+argument_list|)
+block|,
+name|HIVE_STATS_NUM_NULLS_ESTIMATE_PERC
+argument_list|(
+literal|"hive.stats.num.nulls.estimate.percent"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|5
+argument_list|,
+literal|"This many percentage of rows will be estimated as number of nulls in absence of statistics."
+argument_list|)
+block|,
 name|HIVESTATSAUTOGATHER
 argument_list|(
 literal|"hive.stats.autogather"
