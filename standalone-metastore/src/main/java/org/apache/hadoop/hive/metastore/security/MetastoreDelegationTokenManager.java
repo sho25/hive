@@ -521,37 +521,21 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|ownerUgi
-operator|.
-name|doAs
-argument_list|(
-operator|new
-name|PrivilegedExceptionAction
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-block|{
-annotation|@
-name|Override
-specifier|public
-name|String
-name|run
-parameter_list|()
-throws|throws
-name|IOException
-block|{
+comment|//if impersonation is turned on this called using the HiveSessionImplWithUGI
+comment|//using sessionProxy. so the currentUser will be the impersonated user here eg. oozie
+comment|//we cannot create a proxy user which represents Oozie's client user here since
+comment|//we cannot authenticate it using Kerberos/Digest. We trust the user which opened
+comment|//session using Kerberos in this case.
+comment|//if impersonation is turned off, the current user is Hive which can open
+comment|//kerberos connections to HMS if required.
 return|return
 name|secretManager
 operator|.
 name|getDelegationToken
 argument_list|(
+name|owner
+argument_list|,
 name|renewer
-argument_list|)
-return|;
-block|}
-block|}
 argument_list|)
 return|;
 block|}
