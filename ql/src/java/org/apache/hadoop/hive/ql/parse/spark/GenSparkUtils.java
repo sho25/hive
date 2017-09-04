@@ -3029,12 +3029,9 @@ argument_list|)
 expr_stmt|;
 name|desc
 operator|.
-name|setTargetWork
+name|setTargetMapWork
 argument_list|(
 name|targetWork
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// store table descriptor in map-targetWork
