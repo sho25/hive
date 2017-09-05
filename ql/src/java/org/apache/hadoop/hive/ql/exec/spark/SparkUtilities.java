@@ -1240,7 +1240,7 @@ name|conf
 argument_list|)
 return|;
 block|}
-comment|/**    * Recursively find all operators under root, that are of class clazz, and    * put them in result.    * @param result all operators under root that are of class clazz    * @param root the root operator under which all operators will be examined    * @param clazz clas to collect. Must NOT be null.    */
+comment|/**    * Recursively find all operators under root, that are of class clazz or are the sub-class of clazz, and    * put them in result.    * @param result all operators under root that are of class clazz    * @param root the root operator under which all operators will be examined    * @param clazz clas to collect. Must NOT be null.    */
 specifier|public
 specifier|static
 name|void
@@ -1292,7 +1292,7 @@ if|if
 condition|(
 name|clazz
 operator|.
-name|equals
+name|isAssignableFrom
 argument_list|(
 name|root
 operator|.
