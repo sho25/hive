@@ -201,7 +201,6 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
-comment|// TODO : simple wrap& rethrow for now, clean up with error codes
 block|}
 block|}
 block|}
