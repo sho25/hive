@@ -7869,7 +7869,12 @@ argument_list|)
 expr_stmt|;
 name|stats
 operator|=
-literal|null
+operator|new
+name|ArrayList
+argument_list|<
+name|ColStatistics
+argument_list|>
+argument_list|()
 expr_stmt|;
 block|}
 comment|// Merge stats from cache with metastore cache
