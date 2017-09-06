@@ -4147,7 +4147,7 @@ name|getBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_IN_TEST_REMOVE_LOGS
+name|HIVE_TESTING_REMOVE_LOGS
 argument_list|)
 condition|)
 block|{

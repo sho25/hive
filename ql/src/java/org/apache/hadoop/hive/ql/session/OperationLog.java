@@ -289,7 +289,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_IN_TEST_REMOVE_LOGS
+name|HIVE_TESTING_REMOVE_LOGS
 argument_list|)
 expr_stmt|;
 if|if
@@ -302,7 +302,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_IN_TEST_SHORT_LOGS
+name|HIVE_TESTING_SHORT_LOGS
 argument_list|)
 condition|)
 block|{

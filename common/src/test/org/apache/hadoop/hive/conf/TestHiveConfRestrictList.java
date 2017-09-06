@@ -166,11 +166,11 @@ name|verifyRestriction
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVETESTMODE
+name|HIVE_IN_TEST
 operator|.
 name|varname
 argument_list|,
-literal|"false"
+literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
