@@ -33,6 +33,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Iterables
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -110,6 +124,24 @@ operator|.
 name|InterfaceAudience
 operator|.
 name|LimitedPrivate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|TimestampTZUtil
 import|;
 end_import
 
@@ -325,20 +357,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|common
@@ -478,6 +496,16 @@ operator|.
 name|net
 operator|.
 name|URLEncoder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneId
 import|;
 end_import
 
@@ -1162,7 +1190,7 @@ literal|"conf"
 operator|+
 name|File
 operator|.
-name|pathSeparator
+name|separator
 operator|+
 name|name
 decl_stmt|;
@@ -1193,8 +1221,10 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-name|jarUri
-operator|=
+comment|// Handle both file:// and jar:<url>!{entry} in the case of shaded hive libs
+name|URL
+name|sourceUrl
+init|=
 name|HiveConf
 operator|.
 name|class
@@ -1207,6 +1237,29 @@ argument_list|()
 operator|.
 name|getLocation
 argument_list|()
+decl_stmt|;
+name|jarUri
+operator|=
+name|sourceUrl
+operator|.
+name|getProtocol
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"jar"
+argument_list|)
+condition|?
+operator|new
+name|URI
+argument_list|(
+name|sourceUrl
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+else|:
+name|sourceUrl
 operator|.
 name|toURI
 argument_list|()
@@ -1251,13 +1304,10 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|result
-operator|=
-name|checkConfigFile
-argument_list|(
-operator|new
+comment|// From the jar file, the parent is /lib folder
 name|File
-argument_list|(
+name|parent
+init|=
 operator|new
 name|File
 argument_list|(
@@ -1266,11 +1316,31 @@ argument_list|)
 operator|.
 name|getParentFile
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|parent
+operator|!=
+literal|null
+condition|)
+block|{
+name|result
+operator|=
+name|checkConfigFile
+argument_list|(
+operator|new
+name|File
+argument_list|(
+name|parent
+operator|.
+name|getParentFile
+argument_list|()
 argument_list|,
 name|nameInConf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1872,96 +1942,6 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_FASTPATH
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CATALOG_CACHE_SIZE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_SIZE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_FALSE_POSITIVE_PROBABILITY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CACHE_TIME_TO_LIVE
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CACHE_MAX_WRITER_WAIT
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CACHE_MAX_READER_WAIT
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CACHE_MAX_FULL
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CACHE_CLEAN_UNTIL
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_CONNECTION_CLASS
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGR_STATS_CACHE_ENTRIES
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGR_STATS_MEMORY_TTL
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGR_STATS_INVALIDATOR_FREQUENCY
-block|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTORE_HBASE_AGGR_STATS_HBASE_TTL
 block|,
 name|HiveConf
 operator|.
@@ -2845,6 +2825,30 @@ argument_list|,
 literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
 argument_list|)
 block|,
+name|REPL_APPROX_MAX_LOAD_TASKS
+argument_list|(
+literal|"hive.repl.approx.max.load.tasks"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"Provide and approximate of the max number of tasks that should be executed in before  \n"
+operator|+
+literal|"dynamically generating the next set of tasks. The number is an approximate as we \n"
+operator|+
+literal|"will stop at slightly higher number than above, the reason being some events might \n"
+operator|+
+literal|"lead to an task increment that would cross the above limit"
+argument_list|)
+block|,
+name|REPL_PARTITIONS_DUMP_PARALLELISM
+argument_list|(
+literal|"hive.repl.partitions.dump.parallelism"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Number of threads that will be used to dump partition data information during repl dump."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
@@ -3298,6 +3302,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_MAPJOIN_TESTING_NO_HASH_TABLE_LOAD
+argument_list|(
+literal|"hive.mapjoin.testing.no.hash.table.load"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal use only, true when in testing map join"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"
@@ -3540,207 +3555,6 @@ argument_list|,
 literal|15
 argument_list|,
 literal|"Number of threads to be allocated for metastore handler for fs operations."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CATALOG_CACHE_SIZE
-argument_list|(
-literal|"hive.metastore.hbase.catalog.cache.size"
-argument_list|,
-literal|50000
-argument_list|,
-literal|"Maximum number of "
-operator|+
-literal|"objects we will place in the hbase metastore catalog cache.  The objects will be divided up by "
-operator|+
-literal|"types that we need to cache."
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_SIZE
-argument_list|(
-literal|"hive.metastore.hbase.aggregate.stats.cache.size"
-argument_list|,
-literal|10000
-argument_list|,
-literal|"Maximum number of aggregate stats nodes that we will place in the hbase metastore aggregate stats cache."
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
-argument_list|(
-literal|"hive.metastore.hbase.aggregate.stats.max.partitions"
-argument_list|,
-literal|10000
-argument_list|,
-literal|"Maximum number of partitions that are aggregated per cache node."
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_FALSE_POSITIVE_PROBABILITY
-argument_list|(
-literal|"hive.metastore.hbase.aggregate.stats.false.positive.probability"
-argument_list|,
-operator|(
-name|float
-operator|)
-literal|0.01
-argument_list|,
-literal|"Maximum false positive probability for the Bloom Filter used in each aggregate stats cache node (default 1%)."
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
-argument_list|(
-literal|"hive.metastore.hbase.aggregate.stats.max.variance"
-argument_list|,
-operator|(
-name|float
-operator|)
-literal|0.1
-argument_list|,
-literal|"Maximum tolerable variance in number of partitions between a cached node and our request (default 10%)."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CACHE_TIME_TO_LIVE
-argument_list|(
-literal|"hive.metastore.hbase.cache.ttl"
-argument_list|,
-literal|"600s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Number of seconds for a cached node to be active in the cache before they become stale."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CACHE_MAX_WRITER_WAIT
-argument_list|(
-literal|"hive.metastore.hbase.cache.max.writer.wait"
-argument_list|,
-literal|"5000ms"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
-argument_list|,
-literal|"Number of milliseconds a writer will wait to acquire the writelock before giving up."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CACHE_MAX_READER_WAIT
-argument_list|(
-literal|"hive.metastore.hbase.cache.max.reader.wait"
-argument_list|,
-literal|"1000ms"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|MILLISECONDS
-argument_list|)
-argument_list|,
-literal|"Number of milliseconds a reader will wait to acquire the readlock before giving up."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CACHE_MAX_FULL
-argument_list|(
-literal|"hive.metastore.hbase.cache.max.full"
-argument_list|,
-operator|(
-name|float
-operator|)
-literal|0.9
-argument_list|,
-literal|"Maximum cache full % after which the cache cleaner thread kicks in."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CACHE_CLEAN_UNTIL
-argument_list|(
-literal|"hive.metastore.hbase.cache.clean.until"
-argument_list|,
-operator|(
-name|float
-operator|)
-literal|0.8
-argument_list|,
-literal|"The cleaner thread cleans until cache reaches this % full size."
-argument_list|)
-block|,
-name|METASTORE_HBASE_CONNECTION_CLASS
-argument_list|(
-literal|"hive.metastore.hbase.connection.class"
-argument_list|,
-literal|"org.apache.hadoop.hive.metastore.hbase.VanillaHBaseConnection"
-argument_list|,
-literal|"Class used to connection to HBase"
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGR_STATS_CACHE_ENTRIES
-argument_list|(
-literal|"hive.metastore.hbase.aggr.stats.cache.entries"
-argument_list|,
-literal|10000
-argument_list|,
-literal|"How many in stats objects to cache in memory"
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGR_STATS_MEMORY_TTL
-argument_list|(
-literal|"hive.metastore.hbase.aggr.stats.memory.ttl"
-argument_list|,
-literal|"60s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Number of seconds stats objects live in memory after they are read from HBase."
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGR_STATS_INVALIDATOR_FREQUENCY
-argument_list|(
-literal|"hive.metastore.hbase.aggr.stats.invalidator.frequency"
-argument_list|,
-literal|"5s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"How often the stats cache scans its HBase entries and looks for expired entries"
-argument_list|)
-block|,
-name|METASTORE_HBASE_AGGR_STATS_HBASE_TTL
-argument_list|(
-literal|"hive.metastore.hbase.aggr.stats.hbase.ttl"
-argument_list|,
-literal|"604800s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Number of seconds stats entries live in HBase cache after they are created.  They may be"
-operator|+
-literal|" invalided by updates or partition drops before this.  Default is one week."
 argument_list|)
 block|,
 name|METASTORE_HBASE_FILE_METADATA_THREADS
@@ -5111,6 +4925,21 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVE_LOCAL_TIME_ZONE
+argument_list|(
+literal|"hive.local.time.zone"
+argument_list|,
+literal|"LOCAL"
+argument_list|,
+literal|"Sets the time-zone for displaying and interpreting time stamps. If this property value is set to\n"
+operator|+
+literal|"LOCAL, it is not specified, or it is not a correct time-zone, the system default time-zone will be\n "
+operator|+
+literal|"used instead. Time-zone IDs can be specified as region-based zone IDs (based on IANA time-zone data),\n"
+operator|+
+literal|"abbreviated zone IDs, or offset IDs."
+argument_list|)
+block|,
 name|HIVE_SESSION_HISTORY_ENABLED
 argument_list|(
 literal|"hive.session.history.enabled"
@@ -5389,6 +5218,21 @@ argument_list|,
 literal|25000
 argument_list|,
 literal|"How many rows in the joining tables (except the streaming table) should be cached in memory."
+argument_list|)
+block|,
+name|HIVE_PUSH_RESIDUAL_INNER
+argument_list|(
+literal|"hive.join.inner.residual"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to push non-equi filter predicates within inner joins. This can improve efficiency in "
+operator|+
+literal|"the evaluation of certain joins, since we will not be emitting rows which are thrown away by "
+operator|+
+literal|"a Filter operator straight away. However, currently vectorization does not support them, thus "
+operator|+
+literal|"enabling it is only recommended when vectorization is disabled."
 argument_list|)
 block|,
 comment|// CBO related
@@ -6331,6 +6175,19 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|TESTMODE_BUCKET_CODEC_VERSION
+argument_list|(
+literal|"hive.test.bucketcodec.version"
+argument_list|,
+literal|1
+argument_list|,
+literal|"For testing only.  Will make ACID subsystem write RecordIdentifier.bucketId in specified\n"
+operator|+
+literal|"format"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"
@@ -6505,8 +6362,6 @@ operator|+
 literal|"This config parameter is defined in Parquet, so that it does not start with 'hive.'."
 argument_list|)
 block|,
-annotation|@
-name|Deprecated
 name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
 argument_list|(
 literal|"hive.parquet.timestamp.skip.conversion"
@@ -6516,15 +6371,6 @@ argument_list|,
 literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
 operator|+
 literal|"on reading parquet files from other tools"
-argument_list|)
-block|,
-name|HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE
-argument_list|(
-literal|"hive.parquet.mr.int96.enable.utc.write.zone"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Enable this variable to use UTC as the default timezone for new Parquet tables."
 argument_list|)
 block|,
 name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
@@ -6889,9 +6735,24 @@ literal|40000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
-literal|"However, if it is on, and the predicated number of entries in hashtable for a given join \n"
+literal|"However, if it is on, and the predicted number of entries in hashtable for a given join \n"
 operator|+
 literal|"input is larger than this number, the join will not be converted to a mapjoin. \n"
+operator|+
+literal|"The value \"-1\" means no limit."
+argument_list|)
+block|,
+name|HIVECONVERTJOINMAXSHUFFLESIZE
+argument_list|(
+literal|"hive.auto.convert.join.shuffle.max.size"
+argument_list|,
+literal|10000000L
+argument_list|,
+literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
+operator|+
+literal|"However, if it is on, and the predicted size of the larger input for a given join is greater \n"
+operator|+
+literal|"than this number, the join will not be converted to a dynamically partitioned hash join. \n"
 operator|+
 literal|"The value \"-1\" means no limit."
 argument_list|)
@@ -7395,6 +7256,19 @@ operator|+
 literal|"The optimization will be automatically disabled if number of reducers would be less than specified value."
 argument_list|)
 block|,
+name|HIVEOPTJOINREDUCEDEDUPLICATION
+argument_list|(
+literal|"hive.optimize.joinreducededuplication"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Remove extra shuffle/sorting operations after join algorithm selection has been executed. \n"
+operator|+
+literal|"Currently it only works with Apache Tez. This should always be set to true. \n"
+operator|+
+literal|"Since it is a new feature, it has been made configurable."
+argument_list|)
+block|,
 name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"
@@ -7437,6 +7311,15 @@ name|RatioValidator
 argument_list|()
 argument_list|,
 literal|"Probability with which a row will be chosen."
+argument_list|)
+block|,
+name|HIVE_REMOVE_ORDERBY_IN_SUBQUERY
+argument_list|(
+literal|"hive.remove.orderby.in.subquery"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If set to true, order/sort by without limit in sub queries will be removed."
 argument_list|)
 block|,
 name|HIVEOPTIMIZEDISTINCTREWRITE
@@ -7577,15 +7460,26 @@ operator|+
 literal|"would change the query plan to take care of it, and hive.optimize.skewjoin will be a no-op."
 argument_list|)
 block|,
-name|HIVE_SHARED_SCAN_OPTIMIZATION
+name|HIVE_SHARED_WORK_OPTIMIZATION
 argument_list|(
-literal|"hive.optimize.shared.scan"
+literal|"hive.optimize.shared.work"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Whether to enable shared scan optimizer. The optimizer finds scan operator over the same table\n"
+literal|"Whether to enable shared work optimizer. The optimizer finds scan operator over the same table\n"
 operator|+
-literal|"in the query plan and merges them if they meet some preconditions."
+literal|"and follow-up operators in the query plan and merges them if they meet some preconditions."
+argument_list|)
+block|,
+name|HIVE_REMOVE_SQ_COUNT_CHECK
+argument_list|(
+literal|"hive.optimize.remove.sq_count_check"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to remove an extra join with sq_count_check for scalar subqueries "
+operator|+
+literal|"with constant group by keys."
 argument_list|)
 block|,
 comment|// CTE
@@ -7815,7 +7709,33 @@ operator|+
 literal|"This is useful to identify how tables are accessed and to determine if there are wasted columns that can be trimmed."
 argument_list|)
 block|,
-comment|// standard error allowed for ndv estimates. A lower value indicates higher accuracy and a
+name|HIVE_STATS_NDV_ALGO
+argument_list|(
+literal|"hive.stats.ndv.algo"
+argument_list|,
+literal|"hll"
+argument_list|,
+operator|new
+name|PatternSet
+argument_list|(
+literal|"hll"
+argument_list|,
+literal|"fm"
+argument_list|)
+argument_list|,
+literal|"hll and fm stand for HyperLogLog and FM-sketch, respectively for computing ndv."
+argument_list|)
+block|,
+name|HIVE_STATS_FETCH_BITVECTOR
+argument_list|(
+literal|"hive.stats.fetch.bitvector"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether we fetch bitvector when we compute ndv. Users can turn it off if they want to use old schema"
+argument_list|)
+block|,
+comment|// standard error allowed for ndv estimates for FM-sketch. A lower value indicates higher accuracy and a
 comment|// higher compute cost.
 name|HIVE_STATS_NDV_ERROR
 argument_list|(
@@ -7986,7 +7906,7 @@ name|HIVE_STATS_CORRELATED_MULTI_KEY_JOINS
 argument_list|(
 literal|"hive.stats.correlated.multi.key.joins"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"When estimating output rows for a join involving multiple columns, the default behavior assumes"
 operator|+
@@ -8307,7 +8227,7 @@ name|HIVE_TXN_OPERATIONAL_PROPERTIES
 argument_list|(
 literal|"hive.txn.operational.properties"
 argument_list|,
-literal|0
+literal|1
 argument_list|,
 literal|"Sets the operational properties that control the appropriate behavior for various\n"
 operator|+
@@ -8321,7 +8241,11 @@ literal|"1: Enable split-update feature found in the newer version of Hive ACID 
 operator|+
 literal|"2: Hash-based merge, which combines delta files using GRACE hash join based approach (not implemented)\n"
 operator|+
-literal|"3: Make the table 'quarter-acid' as it only supports insert. But it doesn't require ORC or bucketing."
+literal|"3: Make the table 'quarter-acid' as it only supports insert. But it doesn't require ORC or bucketing.\n"
+operator|+
+literal|"This is intended to be used as an internal property for future versions of ACID. (See\n"
+operator|+
+literal|"HIVE-14035 for details.)"
 argument_list|)
 block|,
 name|HIVE_MAX_OPEN_TXNS
@@ -9536,7 +9460,9 @@ literal|false
 argument_list|,
 literal|"Whether to log explain output for every query.\n"
 operator|+
-literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
+literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level\n"
+operator|+
+literal|"and in WebUI / Drilldown / Show Query."
 argument_list|)
 block|,
 name|HIVE_EXPLAIN_USER
@@ -10417,6 +10343,15 @@ argument_list|,
 literal|"Response header size in bytes, when using HTTP transport mode. Jetty defaults used."
 argument_list|)
 block|,
+name|HIVE_SERVER2_THRIFT_HTTP_COMPRESSION_ENABLED
+argument_list|(
+literal|"hive.server2.thrift.http.compression.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable thrift http compression via Jetty compression support"
+argument_list|)
+block|,
 comment|// Cookie based authentication when using HTTP Transport
 name|HIVE_SERVER2_THRIFT_HTTP_COOKIE_AUTH_ENABLED
 argument_list|(
@@ -11009,13 +10944,11 @@ name|HIVE_DISTCP_DOAS_USER
 argument_list|(
 literal|"hive.distcp.privileged.doAs"
 argument_list|,
-literal|"hdfs"
+literal|"hive"
 argument_list|,
 literal|"This property allows privileged distcp executions done by hive\n"
 operator|+
-literal|"to run as this user. Typically, it should be the user you\n"
-operator|+
-literal|"run the namenode as, such as the 'hdfs' user."
+literal|"to run as this user."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TABLE_TYPE_MAPPING
@@ -11749,11 +11682,20 @@ name|HIVE_VECTORIZATION_USE_ROW_DESERIALIZE
 argument_list|(
 literal|"hive.vectorized.use.row.serde.deserialize"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorizing using row deserialize.\n"
 operator|+
 literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_ROW_DESERIALIZE_INPUTFORMAT_EXCLUDES
+argument_list|(
+literal|"hive.vectorized.row.serde.inputformat.excludes"
+argument_list|,
+literal|"org.apache.parquet.hadoop.ParquetInputFormat,org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+argument_list|,
+literal|"The input formats not supported by row deserialize vectorization."
 argument_list|)
 block|,
 name|HIVE_VECTOR_ADAPTOR_USAGE_MODE
@@ -11779,6 +11721,58 @@ operator|+
 literal|"1. chosen : use VectorUDFAdaptor for a small set of UDFs that were choosen for good performance\n"
 operator|+
 literal|"2. all    : use VectorUDFAdaptor for all UDFs"
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_PTF_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.ptf.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorized mode of the PTF of query execution.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_COMPLEX_TYPES_ENABLED
+argument_list|(
+literal|"hive.vectorized.complex.types.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable vectorization\n"
+operator|+
+literal|"of expressions with complex types.\n"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_GROUPBY_COMPLEX_TYPES_ENABLED
+argument_list|(
+literal|"hive.vectorized.groupby.complex.types.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This flag should be set to true to enable group by vectorization\n"
+operator|+
+literal|"of aggregations that use complex types.\n"
+argument_list|,
+literal|"For example, AVG uses a complex type (STRUCT) for partial aggregation results"
+operator|+
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_ROW_IDENTIFIER_ENABLED
+argument_list|(
+literal|"hive.vectorized.row.identifier.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable vectorization\n"
+operator|+
+literal|"of ROW__ID.\n"
+operator|+
+literal|"The default value is false."
 argument_list|)
 block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
@@ -11848,6 +11842,23 @@ argument_list|,
 literal|10
 argument_list|,
 literal|"Controls the number of containers to prewarm for Tez/Spark (Hadoop 2 only)"
+argument_list|)
+block|,
+name|HIVE_PREWARM_SPARK_TIMEOUT
+argument_list|(
+literal|"hive.prewarm.spark.timeout"
+argument_list|,
+literal|"5000ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Time to wait to finish prewarming spark executors"
 argument_list|)
 block|,
 name|HIVESTAGEIDREARRANGE
@@ -12169,6 +12180,15 @@ argument_list|,
 literal|"Only perform semijoin optimization if the estimated benefit at or above this fraction of the target table"
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_FOR_MAPJOIN
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction.for.mapjoin"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Use a semi-join branch for map-joins. This may not make it faster, but is helpful in certain join patterns."
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"
@@ -12266,6 +12286,41 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
+name|LLAP_IO_TRACE_SIZE
+argument_list|(
+literal|"hive.llap.io.trace.size"
+argument_list|,
+literal|"2Mb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|(
+literal|0L
+argument_list|,
+literal|true
+argument_list|,
+operator|(
+name|long
+operator|)
+name|Integer
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|false
+argument_list|)
+argument_list|,
+literal|"The buffer size for a per-fragment LLAP debug trace. 0 to disable."
+argument_list|)
+block|,
+name|LLAP_IO_TRACE_ALWAYS_DUMP
+argument_list|(
+literal|"hive.llap.io.trace.always.dump"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to always dump the LLAP IO trace (if enabled); the default is on error."
+argument_list|)
+block|,
 name|LLAP_IO_NONVECTOR_WRAPPER_ENABLED
 argument_list|(
 literal|"hive.llap.io.nonvector.wrapper.enabled"
@@ -12302,7 +12357,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"256Kb"
+literal|"16Kb"
 argument_list|,
 operator|new
 name|SizeValidator
@@ -12408,6 +12463,40 @@ argument_list|,
 literal|"The directory location for mapping NVDIMM/NVMe flash storage into the ORC low-level cache."
 argument_list|)
 block|,
+name|LLAP_ALLOCATOR_DISCARD_METHOD
+argument_list|(
+literal|"hive.llap.io.allocator.discard.method"
+argument_list|,
+literal|"both"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"freelist"
+argument_list|,
+literal|"brute"
+argument_list|,
+literal|"both"
+argument_list|)
+argument_list|,
+literal|"Which method to use to force-evict blocks to deal with fragmentation:\n"
+operator|+
+literal|"freelist - use half-size free list (discards less, but also less reliable); brute -\n"
+operator|+
+literal|"brute force, discard whatever we can; both - first try free list, then brute force."
+argument_list|)
+block|,
+name|LLAP_ALLOCATOR_DEFRAG_HEADROOM
+argument_list|(
+literal|"hive.llap.io.allocator.defrag.headroom"
+argument_list|,
+literal|"1Mb"
+argument_list|,
+literal|"How much of a headroom to leave to allow allocator more flexibility to defragment.\n"
+operator|+
+literal|"The allocator would further cap it to a fraction of total memory."
+argument_list|)
+block|,
 name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.io.use.lrfu"
@@ -12447,6 +12536,19 @@ operator|+
 literal|"use a FS without file IDs and rewrite files a lot (or are paranoid), you might want\n"
 operator|+
 literal|"to avoid this setting."
+argument_list|)
+block|,
+name|LLAP_CACHE_DEFAULT_FS_FILE_ID
+argument_list|(
+literal|"hive.llap.cache.defaultfs.only.native.fileid"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether LLAP cache should use native file IDs from the default FS only. This is to\n"
+operator|+
+literal|"avoid file ID collisions when several different DFS instances are in use at the same\n"
+operator|+
+literal|"time. Disable this check to allow native file IDs from non-default DFS."
 argument_list|)
 block|,
 name|LLAP_CACHE_ENABLE_ORC_GAP_CACHE
@@ -13080,7 +13182,7 @@ name|LLAP_DAEMON_AM_USE_FQDN
 argument_list|(
 literal|"hive.llap.am.use.fqdn"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to use FQDN of the AM machine when submitting work to LLAP."
 argument_list|)
@@ -13876,6 +13978,17 @@ argument_list|,
 literal|"Maximum total data size in dynamic pruning."
 argument_list|)
 block|,
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAP_JOIN_ONLY
+argument_list|(
+literal|"hive.spark.dynamic.partition.pruning.map.join.only"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Turn on dynamic partition pruning only for map joins.\n"
+operator|+
+literal|"If hive.spark.dynamic.partition.pruning is set to true, this parameter value is ignored."
+argument_list|)
+block|,
 name|SPARK_USE_GROUPBY_SHUFFLE
 argument_list|(
 literal|"hive.spark.use.groupby.shuffle"
@@ -14090,7 +14203,27 @@ literal|"hive.server2.authentication.ldap.userMembershipKey,"
 operator|+
 literal|"hive.server2.authentication.ldap.groupClassKey,"
 operator|+
-literal|"hive.server2.authentication.ldap.customLDAPQuery"
+literal|"hive.server2.authentication.ldap.customLDAPQuery,"
+operator|+
+literal|"hive.spark.client.connect.timeout,"
+operator|+
+literal|"hive.spark.client.server.connect.timeout,"
+operator|+
+literal|"hive.spark.client.channel.log.level,"
+operator|+
+literal|"hive.spark.client.rpc.max.size,"
+operator|+
+literal|"hive.spark.client.rpc.threads,"
+operator|+
+literal|"hive.spark.client.secret.bits,"
+operator|+
+literal|"hive.spark.client.rpc.server.address,"
+operator|+
+literal|"hive.spark.client.rpc.server.port,"
+operator|+
+literal|"bonecp.,"
+operator|+
+literal|"hikari."
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -14174,6 +14307,19 @@ literal|true
 argument_list|)
 argument_list|,
 literal|"Maximum number of threads that Hive uses to list file information from file systems (recommended> 1 for blobstore)."
+argument_list|)
+block|,
+name|HIVE_EXEC_MOVE_FILES_FROM_SOURCE_DIR
+argument_list|(
+literal|"hive.exec.move.files.from.source.dir"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When moving/renaming a directory from source to destination, individually move each \n"
+operator|+
+literal|"file in the source directory, rather than renaming the source directory. This may \n"
+operator|+
+literal|"help protect against files written to temp directories by runaway task attempts."
 argument_list|)
 block|,
 comment|/* BLOBSTORE section */
@@ -15584,16 +15730,25 @@ block|}
 block|}
 if|if
 condition|(
-name|restrictList
+name|Iterables
 operator|.
-name|contains
+name|any
+argument_list|(
+name|restrictList
+argument_list|,
+name|restrictedVar
+lambda|->
+name|restrictedVar
+operator|.
+name|startsWith
 argument_list|(
 name|name
+argument_list|)
 argument_list|)
 condition|)
 block|{
 throw|throw
-operator|new
+argument_list|new
 name|IllegalArgumentException
 argument_list|(
 literal|"Cannot modify "
@@ -15602,10 +15757,9 @@ name|name
 operator|+
 literal|" at runtime. It is in the list"
 operator|+
-literal|" of parameters that can't be modified at runtime"
+literal|" of parameters that can't be modified at runtime or is prefixed by a restricted variable"
 argument_list|)
-throw|;
-block|}
+block|;     }
 name|String
 name|oldValue
 init|=
@@ -16693,7 +16847,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|1024
+literal|1024L
 operator|*
 literal|1024
 operator|*
@@ -16714,7 +16868,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|1024
+literal|1024L
 operator|*
 literal|1024
 operator|*
@@ -17405,6 +17559,54 @@ argument_list|,
 name|val
 argument_list|)
 expr_stmt|;
+block|}
+comment|/* Dynamic partition pruning is enabled in some or all cases if either    * hive.spark.dynamic.partition.pruning is true or    * hive.spark.dynamic.partition.pruning.map.join.only is true    */
+specifier|public
+specifier|static
+name|boolean
+name|isSparkDPPAny
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+return|return
+operator|(
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+operator|.
+name|varname
+argument_list|,
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+operator|.
+name|defaultBoolVal
+argument_list|)
+operator|||
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAP_JOIN_ONLY
+operator|.
+name|varname
+argument_list|,
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAP_JOIN_ONLY
+operator|.
+name|defaultBoolVal
+argument_list|)
+operator|)
+return|;
 block|}
 specifier|public
 name|boolean
@@ -18995,6 +19197,31 @@ operator|+
 name|confVarPatternStr
 return|;
 block|}
+comment|/**    * Obtains the local time-zone ID.    */
+specifier|public
+name|ZoneId
+name|getLocalTimeZone
+parameter_list|()
+block|{
+name|String
+name|timeZoneStr
+init|=
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_LOCAL_TIME_ZONE
+argument_list|)
+decl_stmt|;
+return|return
+name|TimestampTZUtil
+operator|.
+name|parseTimeZone
+argument_list|(
+name|timeZoneStr
+argument_list|)
+return|;
+block|}
 comment|/**    * @param paramList  list of parameter strings    * @return list of parameter strings with "." replaced by "\."    */
 specifier|private
 specifier|static
@@ -20403,6 +20630,48 @@ name|HIVE_SERVER2_WEBUI_MAX_HISTORIC_QUERIES
 argument_list|)
 operator|>
 literal|0
+return|;
+block|}
+comment|/* Dynamic partition pruning is enabled in some or all cases    */
+specifier|public
+name|boolean
+name|isSparkDPPAny
+parameter_list|()
+block|{
+return|return
+name|isSparkDPPAny
+argument_list|(
+name|this
+argument_list|)
+return|;
+block|}
+comment|/* Dynamic partition pruning is enabled only for map join    * hive.spark.dynamic.partition.pruning is false and    * hive.spark.dynamic.partition.pruning.map.join.only is true    */
+specifier|public
+name|boolean
+name|isSparkDPPOnlyMapjoin
+parameter_list|()
+block|{
+return|return
+operator|(
+operator|!
+name|this
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING
+argument_list|)
+operator|&&
+name|this
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|SPARK_DYNAMIC_PARTITION_PRUNING_MAP_JOIN_ONLY
+argument_list|)
+operator|)
 return|;
 block|}
 specifier|public

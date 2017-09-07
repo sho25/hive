@@ -432,6 +432,24 @@ operator|=
 name|runtimeStatsTmpDir
 expr_stmt|;
 block|}
+comment|/**    * The default implementation delegates to {@link #equals(Object)}. Intended to be    * overridden by sub classes.    */
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isSame
+parameter_list|(
+name|OperatorDesc
+name|other
+parameter_list|)
+block|{
+return|return
+name|equals
+argument_list|(
+name|other
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

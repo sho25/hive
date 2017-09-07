@@ -1177,7 +1177,7 @@ name|value
 argument_list|)
 return|;
 case|case
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 case|:
 return|return
 name|timestampTZValue

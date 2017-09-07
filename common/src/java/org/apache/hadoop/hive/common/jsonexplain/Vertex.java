@@ -389,6 +389,8 @@ name|MULTICAST
 block|,
 name|PARTITION_ONLY_SHUFFLE
 block|,
+name|FORWARD
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;

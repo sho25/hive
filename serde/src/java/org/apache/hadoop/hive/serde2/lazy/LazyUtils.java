@@ -513,7 +513,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -1760,10 +1760,10 @@ expr_stmt|;
 break|break;
 block|}
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 block|{
-name|LazyTimestampTZ
+name|LazyTimestampLocalTZ
 operator|.
 name|writeUTF8
 argument_list|(
@@ -1771,7 +1771,7 @@ name|out
 argument_list|,
 operator|(
 operator|(
-name|TimestampTZObjectInspector
+name|TimestampLocalTZObjectInspector
 operator|)
 name|oi
 operator|)

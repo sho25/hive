@@ -357,6 +357,15 @@ specifier|final
 class|class
 name|LogDivertAppenderForTest
 block|{
+comment|/**    * Name of the test query routine appender.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TEST_QUERY_ROUTING_APPENDER
+init|=
+literal|"test-query-routing"
+decl_stmt|;
 specifier|private
 name|LogDivertAppenderForTest
 parameter_list|()
@@ -1051,7 +1060,7 @@ name|RoutingAppender
 operator|.
 name|createAppender
 argument_list|(
-literal|"test-query-routing"
+name|TEST_QUERY_ROUTING_APPENDER
 argument_list|,
 literal|"true"
 argument_list|,

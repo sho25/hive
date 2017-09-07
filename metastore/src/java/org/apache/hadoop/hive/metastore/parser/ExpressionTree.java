@@ -916,7 +916,7 @@ name|this
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**      * Generates a JDO filter statement      * @param table      *        The table on which the filter is applied.  If table is not null,      *        then this method generates a JDO statement to get all partitions      *        of the table that match the filter.      *        If table is null, then this method generates a JDO statement to get all      *        tables that match the filter.      * @param params      *        A map of parameter key to values for the filter statement.      * @param filterBuilder The filter builder that is used to build filter.      * @return a JDO filter statement      * @throws MetaException      */
+comment|/**      * Generates a JDO filter statement      * @param table      *        The table on which the filter is applied.  If table is not null,      *        then this method generates a JDO statement to get all partitions      *        of the table that match the filter.      *        If table is null, then this method generates a JDO statement to get all      *        tables that match the filter.      * @param params      *        A map of parameter key to values for the filter statement.      * @param filterBuffer The filter builder that is used to build filter.      * @throws MetaException      */
 specifier|public
 name|void
 name|generateJDOFilter
@@ -1746,7 +1746,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**      * @param operator operator      * @return true iff filter pushdown for this operator can be done for integral types.      */
+comment|/**      * @return true iff filter pushdown for this operator can be done for integral types.      */
 specifier|public
 name|boolean
 name|canJdoUseStringsWithIntegral

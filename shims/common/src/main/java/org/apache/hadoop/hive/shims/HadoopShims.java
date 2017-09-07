@@ -31,16 +31,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|InputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|net
 operator|.
 name|InetSocketAddress
@@ -306,20 +296,6 @@ operator|.
 name|io
 operator|.
 name|LongWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|Text
 import|;
 end_import
 
@@ -1619,13 +1595,16 @@ throws|throws
 name|IOException
 function_decl|;
 block|}
-comment|/**    * Copies a source dir/file to a destination by orchestrating the copy between hdfs nodes.    * This distributed process is meant to copy huge files that could take some time if a single    * copy is done. This is a variation which allows proxying as a different user to perform    * the distcp, and requires that the caller have requisite proxy user privileges.    *    * @param src Path to the source file or directory to copy    * @param dst Path to the destination file or directory    * @param conf The hadoop configuration object    * @param doAsUser The user to perform the distcp as    * @return True if it is successfull; False otherwise.    */
+comment|/**    * Copies a source dir/file to a destination by orchestrating the copy between hdfs nodes.    * This distributed process is meant to copy huge files that could take some time if a single    * copy is done. This is a variation which allows proxying as a different user to perform    * the distcp, and requires that the caller have requisite proxy user privileges.    *    * @param srcPaths List of Path to the source files or directories to copy    * @param dst Path to the destination file or directory    * @param conf The hadoop configuration object    * @param doAsUser The user to perform the distcp as    * @return True if it is successfull; False otherwise.    */
 specifier|public
 name|boolean
 name|runDistCpAs
 parameter_list|(
+name|List
+argument_list|<
 name|Path
-name|src
+argument_list|>
+name|srcPaths
 parameter_list|,
 name|Path
 name|dst
@@ -1639,13 +1618,16 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Copies a source dir/file to a destination by orchestrating the copy between hdfs nodes.    * This distributed process is meant to copy huge files that could take some time if a single    * copy is done.    *    * @param src Path to the source file or directory to copy    * @param dst Path to the destination file or directory    * @param conf The hadoop configuration object    * @return True if it is successfull; False otherwise.    */
+comment|/**    * Copies a source dir/file to a destination by orchestrating the copy between hdfs nodes.    * This distributed process is meant to copy huge files that could take some time if a single    * copy is done.    *    * @param srcPaths List of Path to the source files or directories to copy    * @param dst Path to the destination file or directory    * @param conf The hadoop configuration object    * @return True if it is successfull; False otherwise.    */
 specifier|public
 name|boolean
 name|runDistCp
 parameter_list|(
+name|List
+argument_list|<
 name|Path
-name|src
+argument_list|>
+name|srcPaths
 parameter_list|,
 name|Path
 name|dst

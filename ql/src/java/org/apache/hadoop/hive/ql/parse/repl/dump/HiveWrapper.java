@@ -116,7 +116,12 @@ name|dbName
 decl_stmt|;
 specifier|private
 specifier|final
-name|BootStrapReplicationSpecFunction
+name|Tuple
+operator|.
+name|Function
+argument_list|<
+name|ReplicationSpec
+argument_list|>
 name|functionForSpec
 decl_stmt|;
 specifier|public

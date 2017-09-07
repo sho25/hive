@@ -1252,9 +1252,23 @@ block|,
 comment|// 10^16
 literal|"-10000000000000000"
 block|,
+literal|"99999999999999999"
+block|,
+comment|// 10^17 - 1
+literal|"-99999999999999999"
+block|,
 literal|"100000000000000000"
 block|,
 literal|"-100000000000000000"
+block|,
+literal|"999999999999999999"
+block|,
+comment|// 10^18 - 1
+literal|"-999999999999999999"
+block|,
+literal|"123456789012345678"
+block|,
+literal|"-123456789012345678"
 block|,
 literal|"1000000000000000000"
 block|,
@@ -1388,6 +1402,15 @@ literal|"0.00000000000000001"
 block|,
 comment|// 10^-16
 literal|"-0.00000000000000001"
+block|,
+literal|"0.99999999999999999"
+block|,
+literal|"-0.99999999999999999"
+block|,
+literal|"0.999999999999999999"
+block|,
+comment|// 10^-18
+literal|"-0.999999999999999999"
 block|,
 literal|"0.00000000000000000000000000000001"
 block|,

@@ -23,6 +23,40 @@ begin_import
 import|import
 name|java
 operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|InvocationTargetException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|Method
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|regex
@@ -109,24 +143,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|log
-operator|.
-name|PerfLogger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|session
 operator|.
 name|OperationLog
@@ -144,6 +160,22 @@ operator|.
 name|log4j
 operator|.
 name|LogManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|logging
+operator|.
+name|log4j
+operator|.
+name|core
+operator|.
+name|Appender
 import|;
 end_import
 
@@ -254,6 +286,24 @@ operator|.
 name|routing
 operator|.
 name|RoutingAppender
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|logging
+operator|.
+name|log4j
+operator|.
+name|core
+operator|.
+name|config
+operator|.
+name|AppenderControl
 import|;
 end_import
 
@@ -535,6 +585,15 @@ name|String
 name|nonVerboseLayout
 init|=
 literal|"%-5p : %m%n"
+decl_stmt|;
+comment|/**    * Name of the query routine appender.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|QUERY_ROUTING_APPENDER
+init|=
+literal|"query-routing"
 decl_stmt|;
 comment|/**    * A log filter that filters messages coming from the logger with the given names.    * It be used as a white list filter or a black list filter.    * We apply black list filter on the Loggers used by the log diversion stuff, so that    * they don't generate more logs for themselves when they process logs.    * White list filter is used for less verbose log collection    */
 annotation|@
@@ -971,7 +1030,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Programmatically register a routing appender to Log4J configuration, which    * automatically writes the log of each query to an individual file.    * The equivilent property configuration is as follows:    * # queryId based routing file appender       appender.query-routing.type = Routing       appender.query-routing.name = query-routing       appender.query-routing.routes.type = Routes       appender.query-routing.routes.pattern = $${ctx:queryId}       # default route       appender.query-routing.routes.route-default.type = Route       appender.query-routing.routes.route-default.key = $${ctx:queryId}       appender.query-routing.routes.route-default.app.type = null       appender.query-routing.routes.route-default.app.name = Null       # queryId based route       appender.query-routing.routes.route-mdc.type = Route       appender.query-routing.routes.route-mdc.name = IrrelevantName-query-routing       appender.query-routing.routes.route-mdc.app.type = RandomAccessFile       appender.query-routing.routes.route-mdc.app.name = query-file-appender       appender.query-routing.routes.route-mdc.app.fileName = ${sys:hive.log.dir}/${ctx:sessionId}/${ctx:queryId}       appender.query-routing.routes.route-mdc.app.layout.type = PatternLayout       appender.query-routing.routes.route-mdc.app.layout.pattern = %d{ISO8601} %5p %c{2}: %m%n    * @param conf  the configuration for HiveServer2 instance    */
+comment|/**    * Programmatically register a routing appender to Log4J configuration, which    * automatically writes the log of each query to an individual file.    * The equivalent property configuration is as follows:    * # queryId based routing file appender       appender.query-routing.type = Routing       appender.query-routing.name = query-routing       appender.query-routing.routes.type = Routes       appender.query-routing.routes.pattern = $${ctx:queryId}       # default route       appender.query-routing.routes.route-default.type = Route       appender.query-routing.routes.route-default.key = $${ctx:queryId}       appender.query-routing.routes.route-default.app.type = null       appender.query-routing.routes.route-default.app.name = Null       # queryId based route       appender.query-routing.routes.route-mdc.type = Route       appender.query-routing.routes.route-mdc.name = IrrelevantName-query-routing       appender.query-routing.routes.route-mdc.app.type = RandomAccessFile       appender.query-routing.routes.route-mdc.app.name = query-file-appender       appender.query-routing.routes.route-mdc.app.fileName = ${sys:hive.log.dir}/${ctx:sessionId}/${ctx:queryId}       appender.query-routing.routes.route-mdc.app.layout.type = PatternLayout       appender.query-routing.routes.route-mdc.app.layout.pattern = %d{ISO8601} %5p %c{2}: %m%n    * @param conf  the configuration for HiveServer2 instance    */
 specifier|public
 specifier|static
 name|void
@@ -1616,7 +1675,7 @@ name|RoutingAppender
 operator|.
 name|createAppender
 argument_list|(
-literal|"query-routing"
+name|QUERY_ROUTING_APPENDER
 argument_list|,
 literal|"true"
 argument_list|,

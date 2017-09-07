@@ -1979,7 +1979,9 @@ operator|new
 name|OrcRecordUpdater
 operator|.
 name|KeyIndexBuilder
-argument_list|()
+argument_list|(
+literal|"compactor"
+argument_list|)
 decl_stmt|;
 name|opts
 operator|.

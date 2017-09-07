@@ -157,7 +157,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 import|;
 end_import
 
@@ -862,7 +862,7 @@ specifier|public
 name|Text
 name|evaluate
 parameter_list|(
-name|TimestampTZWritable
+name|TimestampLocalTZWritable
 name|i
 parameter_list|)
 block|{

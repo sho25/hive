@@ -715,7 +715,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|record
 init|=
@@ -767,12 +767,7 @@ name|is
 argument_list|(
 name|equalTo
 argument_list|(
-name|String
-operator|.
-name|valueOf
-argument_list|(
 name|count
-argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -864,7 +859,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|record
 init|=
@@ -916,14 +911,9 @@ name|is
 argument_list|(
 name|equalTo
 argument_list|(
-name|String
-operator|.
-name|valueOf
-argument_list|(
 name|count
 operator|+
 literal|2
-argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)

@@ -419,6 +419,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -710,11 +724,6 @@ name|hiveConf
 decl_stmt|;
 specifier|private
 specifier|final
-name|AtomicInteger
-name|childIdGenerator
-decl_stmt|;
-specifier|private
-specifier|final
 name|Thread
 name|driverThread
 decl_stmt|;
@@ -778,14 +787,6 @@ operator|.
 name|hiveConf
 operator|=
 name|hiveConf
-expr_stmt|;
-name|this
-operator|.
-name|childIdGenerator
-operator|=
-operator|new
-name|AtomicInteger
-argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -864,6 +865,11 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
+name|String
+name|errorMsg
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|e
@@ -874,32 +880,51 @@ operator|instanceof
 name|TimeoutException
 condition|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
+name|errorMsg
+operator|=
 literal|"Timed out waiting for client to connect.\nPossible reasons include network "
 operator|+
 literal|"issues, errors in remote driver or the cluster has no available resources, etc."
 operator|+
 literal|"\nPlease check YARN or Spark driver's logs for further information."
-argument_list|,
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
 name|e
-argument_list|)
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+name|errorMsg
+operator|=
+literal|"Interruption occurred while waiting for client to connect.\nPossibly the Spark session is closed "
+operator|+
+literal|"such as in case of query cancellation."
+operator|+
+literal|"\nPlease refer to HiveServer2 logs for further information."
 expr_stmt|;
 block|}
 else|else
 block|{
+name|errorMsg
+operator|=
+literal|"Error while waiting for client to connect."
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error while waiting for client to connect."
+name|errorMsg
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-block|}
 name|driverThread
 operator|.
 name|interrupt
@@ -922,9 +947,11 @@ block|{
 comment|// Give up.
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
 literal|"Interrupted before driver thread was finished."
+argument_list|,
+name|ie
 argument_list|)
 expr_stmt|;
 block|}
@@ -2667,6 +2694,23 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
+name|principal
+argument_list|)
+operator|&&
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
+name|keyTabFile
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
 name|hiveConf
 operator|.
 name|getBoolVar
@@ -2771,6 +2815,7 @@ argument_list|(
 name|keyTabFile
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 if|if
@@ -3139,12 +3184,15 @@ operator|.
 name|start
 argument_list|()
 decl_stmt|;
-name|int
-name|childId
+name|String
+name|threadName
 init|=
-name|childIdGenerator
+name|Thread
 operator|.
-name|incrementAndGet
+name|currentThread
+argument_list|()
+operator|.
+name|getName
 argument_list|()
 decl_stmt|;
 specifier|final
@@ -3168,9 +3216,9 @@ argument_list|)
 decl_stmt|;
 name|redirect
 argument_list|(
-literal|"stdout-redir-"
+literal|"RemoteDriver-stdout-redir-"
 operator|+
-name|childId
+name|threadName
 argument_list|,
 operator|new
 name|Redirector
@@ -3184,9 +3232,9 @@ argument_list|)
 expr_stmt|;
 name|redirect
 argument_list|(
-literal|"stderr-redir-"
+literal|"RemoteDriver-stderr-redir-"
 operator|+
-name|childId
+name|threadName
 argument_list|,
 operator|new
 name|Redirector
@@ -3277,20 +3325,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|rpcServer
-operator|.
-name|cancelClient
-argument_list|(
-name|clientId
-argument_list|,
-literal|"Child process exited before connecting back with error log "
-operator|+
-name|errStr
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|warn
@@ -3298,6 +3332,20 @@ argument_list|(
 literal|"Child process exited with code {}"
 argument_list|,
 name|exitCode
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+literal|"Child process (spark-submit) exited before connecting back with error log "
+operator|+
+name|errStr
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3312,7 +3360,16 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Waiting thread interrupted, killing child process."
+literal|"Thread waiting on the child process (spark-submit) is interrupted, killing the child process."
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+literal|"Thread waiting on the child porcess (spark-submit) is interrupted"
 argument_list|)
 expr_stmt|;
 name|Thread
@@ -3332,13 +3389,27 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|String
+name|errMsg
+init|=
+literal|"Exception while waiting for child process (spark-submit)"
+decl_stmt|;
 name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Exception while waiting for child process."
+name|errMsg
 argument_list|,
 name|e
+argument_list|)
+expr_stmt|;
+name|rpcServer
+operator|.
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
+name|errMsg
 argument_list|)
 expr_stmt|;
 block|}

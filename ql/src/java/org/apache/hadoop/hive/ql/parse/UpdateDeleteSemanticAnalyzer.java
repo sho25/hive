@@ -3666,54 +3666,9 @@ assert|assert
 name|numInsertClauses
 operator|<
 literal|2
+operator|:
+literal|"too many Insert clauses"
 assert|;
-if|if
-condition|(
-name|numInsertClauses
-operator|==
-literal|1
-operator|&&
-name|numWhenMatchedUpdateClauses
-operator|==
-literal|1
-condition|)
-block|{
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|getAcidOperationalProperties
-argument_list|(
-name|targetTable
-argument_list|)
-operator|.
-name|isSplitUpdate
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Tables with "
-operator|+
-name|hive_metastoreConstants
-operator|.
-name|TABLE_TRANSACTIONAL_PROPERTIES
-operator|+
-literal|"="
-operator|+
-name|TransactionalValidationListener
-operator|.
-name|DEFAULT_TRANSACTIONAL_PROPERTY
-operator|+
-literal|" currently do not "
-operator|+
-literal|"support MERGE with both Insert and Update clauses."
-argument_list|)
-throw|;
-block|}
-block|}
 block|}
 if|if
 condition|(

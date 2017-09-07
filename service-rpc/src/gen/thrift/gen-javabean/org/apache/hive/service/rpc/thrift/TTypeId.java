@@ -174,7 +174,7 @@ argument_list|(
 literal|21
 argument_list|)
 block|,
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 argument_list|(
 literal|22
 argument_list|)
@@ -359,7 +359,7 @@ case|case
 literal|22
 case|:
 return|return
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 return|;
 default|default:
 return|return

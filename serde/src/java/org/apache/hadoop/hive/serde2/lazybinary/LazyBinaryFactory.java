@@ -529,7 +529,7 @@ name|objectinspector
 operator|.
 name|primitive
 operator|.
-name|WritableTimestampTZObjectInspector
+name|WritableTimestampLocalTZObjectInspector
 import|;
 end_import
 
@@ -780,14 +780,14 @@ name|oi
 argument_list|)
 return|;
 case|case
-name|TIMESTAMPTZ
+name|TIMESTAMPLOCALTZ
 case|:
 return|return
 operator|new
-name|LazyBinaryTimestampTZ
+name|LazyBinaryTimestampLocalTZ
 argument_list|(
 operator|(
-name|WritableTimestampTZObjectInspector
+name|WritableTimestampLocalTZObjectInspector
 operator|)
 name|oi
 argument_list|)

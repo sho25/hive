@@ -1434,13 +1434,38 @@ argument_list|(
 name|mrAndMvTask
 argument_list|)
 expr_stmt|;
+comment|// Originally the mvTask and the child move task of the mrAndMvTask contain the same
+comment|// MoveWork object.
+comment|// If the blobstore optimizations are on and the input/output paths are merged
+comment|// in the move only MoveWork, the mvTask and the child move task of the mrAndMvTask
+comment|// will contain different MoveWork objects, which causes problems.
+comment|// Not just in this case, but also in general the child move task of the mrAndMvTask should
+comment|// be used, because that is the correct move task for the "merge and move" use case.
+name|Task
+argument_list|<
+name|?
+extends|extends
+name|Serializable
+argument_list|>
+name|mergeAndMoveMoveTask
+init|=
+name|mrAndMvTask
+operator|.
+name|getChildTasks
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
 name|MoveWork
 name|mvWork
 init|=
 operator|(
 name|MoveWork
 operator|)
-name|mvTask
+name|mergeAndMoveMoveTask
 operator|.
 name|getWork
 argument_list|()

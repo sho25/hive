@@ -810,12 +810,13 @@ block|{
 return|return;
 block|}
 comment|// Do the columns used by the join appear in the output of the aggregate?
+specifier|final
 name|RelMetadataQuery
 name|mq
 init|=
-name|RelMetadataQuery
+name|call
 operator|.
-name|instance
+name|getMetadataQuery
 argument_list|()
 decl_stmt|;
 specifier|final

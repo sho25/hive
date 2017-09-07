@@ -410,6 +410,9 @@ name|row
 parameter_list|,
 name|ObjectInspector
 name|rowInspector
+parameter_list|,
+name|boolean
+name|isVectorized
 parameter_list|)
 throws|throws
 name|HiveException

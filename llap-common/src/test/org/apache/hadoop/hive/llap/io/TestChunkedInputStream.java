@@ -654,6 +654,8 @@ argument_list|(
 name|pout
 argument_list|,
 name|bufferSize
+argument_list|,
+literal|"test"
 argument_list|)
 expr_stmt|;
 name|in
@@ -662,6 +664,8 @@ operator|new
 name|ChunkedInputStream
 argument_list|(
 name|pin
+argument_list|,
+literal|"test"
 argument_list|)
 expr_stmt|;
 block|}
@@ -963,7 +967,7 @@ name|writer2
 argument_list|,
 name|reader2
 argument_list|,
-name|nonChunkedStreams
+name|chunkedStreams
 argument_list|)
 expr_stmt|;
 name|assertTrue

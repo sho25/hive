@@ -55,6 +55,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|Blob
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|Clob
 import|;
 end_import
@@ -75,7 +85,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|Statement
+name|SQLException
 import|;
 end_import
 
@@ -85,7 +95,7 @@ name|java
 operator|.
 name|sql
 operator|.
-name|SQLException
+name|Statement
 import|;
 end_import
 
@@ -116,6 +126,16 @@ operator|.
 name|util
 operator|.
 name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
 import|;
 end_import
 
@@ -645,42 +665,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|cache
-operator|.
-name|CacheUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|cache
-operator|.
-name|CachedStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|model
 operator|.
 name|MConstraint
@@ -961,20 +945,6 @@ name|Lists
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Maps
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class contains the optimizations for MetaStore that rely on direct SQL access to  * the underlying database. It should use ANSI SQL and be compatible with common databases  * such as MySQL (note that MySQL doesn't use full ANSI mode by default), Postgres, etc.  *  * As of now, only the partition retrieval is done this way to improve job startup time;  * JDOQL partition retrieval is still present so as not to limit the ORM solution we have  * to SQL stores only. There's always a way to do without direct SQL.  */
 end_comment
@@ -1016,6 +986,11 @@ specifier|final
 name|PersistenceManager
 name|pm
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|schema
+decl_stmt|;
 comment|/**    * We want to avoid db-specific code in this class and stick with ANSI SQL. However:    * 1) mysql and postgres are differently ansi-incompatible (mysql by default doesn't support    * quoted identifiers, and postgres contravenes ANSI by coercing unquoted ones to lower case).    * MySQL's way of working around this is simpler (just set ansi quotes mode on), so we will    * use that. MySQL detection is done by actually issuing the set-ansi-quotes command;    *    * Use sparingly, we don't want to devolve into another DataNucleus...    */
 specifier|private
 specifier|final
@@ -1052,6 +1027,93 @@ specifier|private
 name|AggregateStatsCache
 name|aggrStatsCache
 decl_stmt|;
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|annotation
+operator|.
+name|Target
+argument_list|(
+name|java
+operator|.
+name|lang
+operator|.
+name|annotation
+operator|.
+name|ElementType
+operator|.
+name|FIELD
+argument_list|)
+annotation|@
+name|java
+operator|.
+name|lang
+operator|.
+name|annotation
+operator|.
+name|Retention
+argument_list|(
+name|java
+operator|.
+name|lang
+operator|.
+name|annotation
+operator|.
+name|RetentionPolicy
+operator|.
+name|RUNTIME
+argument_list|)
+specifier|private
+annotation_defn|@interface
+name|TableName
+block|{}
+comment|// Table names with schema name, if necessary
+annotation|@
+name|TableName
+specifier|private
+name|String
+name|DBS
+decl_stmt|,
+name|TBLS
+decl_stmt|,
+name|PARTITIONS
+decl_stmt|,
+name|DATABASE_PARAMS
+decl_stmt|,
+name|PARTITION_PARAMS
+decl_stmt|,
+name|SORT_COLS
+decl_stmt|,
+name|SD_PARAMS
+decl_stmt|,
+name|SDS
+decl_stmt|,
+name|SERDES
+decl_stmt|,
+name|SKEWED_STRING_LIST_VALUES
+decl_stmt|,
+name|SKEWED_VALUES
+decl_stmt|,
+name|BUCKETING_COLS
+decl_stmt|,
+name|SKEWED_COL_NAMES
+decl_stmt|,
+name|SKEWED_COL_VALUE_LOC_MAP
+decl_stmt|,
+name|COLUMNS_V2
+decl_stmt|,
+name|SERDE_PARAMS
+decl_stmt|,
+name|PART_COL_STATS
+decl_stmt|,
+name|KEY_CONSTRAINTS
+decl_stmt|,
+name|TAB_COL_STATS
+decl_stmt|,
+name|PARTITION_KEY_VALS
+decl_stmt|;
 specifier|public
 name|MetaStoreDirectSql
 parameter_list|(
@@ -1061,8 +1123,8 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|DatabaseProduct
-name|dbType
+name|String
+name|schema
 parameter_list|)
 block|{
 name|this
@@ -1071,6 +1133,52 @@ name|pm
 operator|=
 name|pm
 expr_stmt|;
+name|this
+operator|.
+name|schema
+operator|=
+name|schema
+expr_stmt|;
+name|DatabaseProduct
+name|dbType
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|dbType
+operator|=
+name|DatabaseProduct
+operator|.
+name|determineDatabaseProduct
+argument_list|(
+name|getProductName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Cannot determine database product; assuming OTHER"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+name|dbType
+operator|=
+name|DatabaseProduct
+operator|.
+name|OTHER
+expr_stmt|;
+block|}
 name|this
 operator|.
 name|dbType
@@ -1118,6 +1226,82 @@ name|batchSize
 operator|=
 name|batchSize
 expr_stmt|;
+for|for
+control|(
+name|java
+operator|.
+name|lang
+operator|.
+name|reflect
+operator|.
+name|Field
+name|f
+range|:
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getDeclaredFields
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|f
+operator|.
+name|getAnnotation
+argument_list|(
+name|TableName
+operator|.
+name|class
+argument_list|)
+operator|==
+literal|null
+condition|)
+continue|continue;
+try|try
+block|{
+name|f
+operator|.
+name|set
+argument_list|(
+name|this
+argument_list|,
+name|getFullyQualifiedName
+argument_list|(
+name|schema
+argument_list|,
+name|f
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IllegalArgumentException
+decl||
+name|IllegalAccessException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Internal error, cannot set "
+operator|+
+name|f
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
 name|convertMapNullsToEmptyStrings
 operator|=
 name|HiveConf
@@ -1239,6 +1423,67 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+specifier|static
+name|String
+name|getFullyQualifiedName
+parameter_list|(
+name|String
+name|schema
+parameter_list|,
+name|String
+name|tblName
+parameter_list|)
+block|{
+return|return
+operator|(
+operator|(
+name|schema
+operator|==
+literal|null
+operator|||
+name|schema
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|?
+literal|""
+else|:
+literal|"\""
+operator|+
+name|schema
+operator|+
+literal|"\".\""
+operator|)
+operator|+
+literal|"\""
+operator|+
+name|tblName
+operator|+
+literal|"\""
+return|;
+block|}
+specifier|public
+name|MetaStoreDirectSql
+parameter_list|(
+name|PersistenceManager
+name|pm
+parameter_list|,
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|pm
+argument_list|,
+name|conf
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|String
@@ -1541,7 +1786,11 @@ comment|// Run a self-test query. If it doesn't work, we will self-disable. What
 name|String
 name|selfTestQuery
 init|=
-literal|"select \"DB_ID\" from \"DBS\""
+literal|"select \"DB_ID\" from "
+operator|+
+name|DBS
+operator|+
+literal|""
 decl_stmt|;
 try|try
 block|{
@@ -1627,6 +1876,15 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+block|}
+specifier|public
+name|String
+name|getSchema
+parameter_list|()
+block|{
+return|return
+name|schema
+return|;
 block|}
 specifier|public
 name|boolean
@@ -1785,7 +2043,11 @@ literal|"\"DB_ID\", \"NAME\", \"DB_LOCATION_URI\", \"DESC\", "
 operator|+
 literal|"\"OWNER_NAME\", \"OWNER_TYPE\" "
 operator|+
-literal|"FROM \"DBS\" where \"NAME\" = ? "
+literal|"FROM "
+operator|+
+name|DBS
+operator|+
+literal|" where \"NAME\" = ? "
 decl_stmt|;
 name|Object
 index|[]
@@ -1923,7 +2185,11 @@ name|queryTextDbParams
 init|=
 literal|"select \"PARAM_KEY\", \"PARAM_VALUE\" "
 operator|+
-literal|" FROM \"DATABASE_PARAMS\" "
+literal|" from "
+operator|+
+name|DATABASE_PARAMS
+operator|+
+literal|" "
 operator|+
 literal|" WHERE \"DB_ID\" = ? "
 operator|+
@@ -2282,11 +2548,9 @@ argument_list|()
 condition|)
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|Partition
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -2304,6 +2568,8 @@ name|Partition
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -2323,7 +2589,11 @@ block|{
 name|String
 name|filter
 init|=
-literal|"\"PARTITIONS\".\"PART_NAME\" in ("
+literal|""
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"PART_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -2348,11 +2618,12 @@ name|filter
 argument_list|,
 name|input
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|,
 literal|null
@@ -2431,6 +2702,7 @@ class|class
 name|SqlFilterForPushdown
 block|{
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|Object
@@ -2445,6 +2717,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -2525,6 +2798,8 @@ argument_list|,
 name|defaultPartName
 argument_list|,
 name|dbType
+argument_list|,
+name|schema
 argument_list|)
 expr_stmt|;
 return|return
@@ -2566,18 +2841,20 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|,
 name|max
@@ -2640,11 +2917,35 @@ block|{
 name|String
 name|queryText
 init|=
-literal|"select \"TBL_TYPE\" from \"TBLS\""
+literal|"select \"TBL_TYPE\" from "
 operator|+
-literal|" inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|TBLS
 operator|+
-literal|" where \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ?"
+literal|""
+operator|+
+literal|" inner join "
+operator|+
+name|DBS
+operator|+
+literal|" on "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|" where "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? and "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ?"
 decl_stmt|;
 name|Object
 index|[]
@@ -2819,15 +3120,55 @@ comment|// causing it to not sort the entire table due to not knowing how select
 name|String
 name|queryText
 init|=
-literal|"select \"PARTITIONS\".\"PART_ID\" from \"PARTITIONS\""
+literal|"select "
 operator|+
-literal|"  inner join \"TBLS\" on \"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
+name|PARTITIONS
 operator|+
-literal|"    and \"TBLS\".\"TBL_NAME\" = ? "
+literal|".\"PART_ID\" from "
 operator|+
-literal|"  inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|PARTITIONS
 operator|+
-literal|"     and \"DBS\".\"NAME\" = ? "
+literal|""
+operator|+
+literal|"  inner join "
+operator|+
+name|TBLS
+operator|+
+literal|" on "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" "
+operator|+
+literal|"    and "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? "
+operator|+
+literal|"  inner join "
+operator|+
+name|DBS
+operator|+
+literal|" on "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|"     and "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? "
 operator|+
 name|join
 argument_list|(
@@ -3008,11 +3349,9 @@ argument_list|()
 condition|)
 block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<
-name|Partition
-argument_list|>
+name|Collections
+operator|.
+name|emptyList
 argument_list|()
 return|;
 comment|// no partitions, bail early.
@@ -3037,6 +3376,8 @@ name|Partition
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -3193,21 +3534,105 @@ comment|// Assume db and table names are the same for all partition, as provided
 name|String
 name|queryText
 init|=
-literal|"select \"PARTITIONS\".\"PART_ID\", \"SDS\".\"SD_ID\", \"SDS\".\"CD_ID\","
+literal|"select "
 operator|+
-literal|" \"SERDES\".\"SERDE_ID\", \"PARTITIONS\".\"CREATE_TIME\","
+name|PARTITIONS
 operator|+
-literal|" \"PARTITIONS\".\"LAST_ACCESS_TIME\", \"SDS\".\"INPUT_FORMAT\", \"SDS\".\"IS_COMPRESSED\","
+literal|".\"PART_ID\", "
 operator|+
-literal|" \"SDS\".\"IS_STOREDASSUBDIRECTORIES\", \"SDS\".\"LOCATION\", \"SDS\".\"NUM_BUCKETS\","
+name|SDS
 operator|+
-literal|" \"SDS\".\"OUTPUT_FORMAT\", \"SERDES\".\"NAME\", \"SERDES\".\"SLIB\" "
+literal|".\"SD_ID\", "
 operator|+
-literal|"from \"PARTITIONS\""
+name|SDS
 operator|+
-literal|"  left outer join \"SDS\" on \"PARTITIONS\".\"SD_ID\" = \"SDS\".\"SD_ID\" "
+literal|".\"CD_ID\","
 operator|+
-literal|"  left outer join \"SERDES\" on \"SDS\".\"SERDE_ID\" = \"SERDES\".\"SERDE_ID\" "
+literal|" "
+operator|+
+name|SERDES
+operator|+
+literal|".\"SERDE_ID\", "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"CREATE_TIME\","
+operator|+
+literal|" "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"LAST_ACCESS_TIME\", "
+operator|+
+name|SDS
+operator|+
+literal|".\"INPUT_FORMAT\", "
+operator|+
+name|SDS
+operator|+
+literal|".\"IS_COMPRESSED\","
+operator|+
+literal|" "
+operator|+
+name|SDS
+operator|+
+literal|".\"IS_STOREDASSUBDIRECTORIES\", "
+operator|+
+name|SDS
+operator|+
+literal|".\"LOCATION\", "
+operator|+
+name|SDS
+operator|+
+literal|".\"NUM_BUCKETS\","
+operator|+
+literal|" "
+operator|+
+name|SDS
+operator|+
+literal|".\"OUTPUT_FORMAT\", "
+operator|+
+name|SERDES
+operator|+
+literal|".\"NAME\", "
+operator|+
+name|SERDES
+operator|+
+literal|".\"SLIB\" "
+operator|+
+literal|"from "
+operator|+
+name|PARTITIONS
+operator|+
+literal|""
+operator|+
+literal|"  left outer join "
+operator|+
+name|SDS
+operator|+
+literal|" on "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"SD_ID\" = "
+operator|+
+name|SDS
+operator|+
+literal|".\"SD_ID\" "
+operator|+
+literal|"  left outer join "
+operator|+
+name|SERDES
+operator|+
+literal|" on "
+operator|+
+name|SDS
+operator|+
+literal|".\"SERDE_ID\" = "
+operator|+
+name|SERDES
+operator|+
+literal|".\"SERDE_ID\" "
 operator|+
 literal|"where \"PART_ID\" in ("
 operator|+
@@ -4084,7 +4509,11 @@ expr_stmt|;
 comment|// Now get all the one-to-many things. Start with partitions.
 name|queryText
 operator|=
-literal|"select \"PART_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"PARTITION_PARAMS\""
+literal|"select \"PART_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from "
+operator|+
+name|PARTITION_PARAMS
+operator|+
+literal|""
 operator|+
 literal|" where \"PART_ID\" in ("
 operator|+
@@ -4180,7 +4609,11 @@ expr_stmt|;
 block|}
 name|queryText
 operator|=
-literal|"select \"PART_ID\", \"PART_KEY_VAL\" from \"PARTITION_KEY_VALS\""
+literal|"select \"PART_ID\", \"PART_KEY_VAL\" from "
+operator|+
+name|PARTITION_KEY_VALS
+operator|+
+literal|""
 operator|+
 literal|" where \"PART_ID\" in ("
 operator|+
@@ -4294,7 +4727,11 @@ decl_stmt|;
 comment|// Get all the stuff for SD. Don't do empty-list check - we expect partitions do have SDs.
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"SD_PARAMS\""
+literal|"select \"SD_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from "
+operator|+
+name|SD_PARAMS
+operator|+
+literal|""
 operator|+
 literal|" where \"SD_ID\" in ("
 operator|+
@@ -4390,9 +4827,17 @@ expr_stmt|;
 block|}
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"COLUMN_NAME\", \"SORT_COLS\".\"ORDER\""
+literal|"select \"SD_ID\", \"COLUMN_NAME\", "
 operator|+
-literal|" from \"SORT_COLS\""
+name|SORT_COLS
+operator|+
+literal|".\"ORDER\""
+operator|+
+literal|" from "
+operator|+
+name|SORT_COLS
+operator|+
+literal|""
 operator|+
 literal|" where \"SD_ID\" in ("
 operator|+
@@ -4472,7 +4917,11 @@ argument_list|)
 expr_stmt|;
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"BUCKET_COL_NAME\" from \"BUCKETING_COLS\""
+literal|"select \"SD_ID\", \"BUCKET_COL_NAME\" from "
+operator|+
+name|BUCKETING_COLS
+operator|+
+literal|""
 operator|+
 literal|" where \"SD_ID\" in ("
 operator|+
@@ -4531,7 +4980,11 @@ expr_stmt|;
 comment|// Skewed columns stuff.
 name|queryText
 operator|=
-literal|"select \"SD_ID\", \"SKEWED_COL_NAME\" from \"SKEWED_COL_NAMES\""
+literal|"select \"SD_ID\", \"SKEWED_COL_NAME\" from "
+operator|+
+name|SKEWED_COL_NAMES
+operator|+
+literal|""
 operator|+
 literal|" where \"SD_ID\" in ("
 operator|+
@@ -4621,31 +5074,83 @@ block|{
 comment|// We are skipping the SKEWED_STRING_LIST table here, as it seems to be totally useless.
 name|queryText
 operator|=
-literal|"select \"SKEWED_VALUES\".\"SD_ID_OID\","
+literal|"select "
 operator|+
-literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\","
+name|SKEWED_VALUES
 operator|+
-literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_VALUE\" "
+literal|".\"SD_ID_OID\","
 operator|+
-literal|"from \"SKEWED_VALUES\" "
+literal|"  "
 operator|+
-literal|"  left outer join \"SKEWED_STRING_LIST_VALUES\" on \"SKEWED_VALUES\"."
+name|SKEWED_STRING_LIST_VALUES
 operator|+
-literal|"\"STRING_LIST_ID_EID\" = \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" "
+literal|".\"STRING_LIST_ID\","
 operator|+
-literal|"where \"SKEWED_VALUES\".\"SD_ID_OID\" in ("
+literal|"  "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"STRING_LIST_VALUE\" "
+operator|+
+literal|"from "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|" "
+operator|+
+literal|"  left outer join "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|" on "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|"."
+operator|+
+literal|"\"STRING_LIST_ID_EID\" = "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"STRING_LIST_ID\" "
+operator|+
+literal|"where "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|".\"SD_ID_OID\" in ("
 operator|+
 name|sdIds
 operator|+
 literal|") "
 operator|+
-literal|"  and \"SKEWED_VALUES\".\"STRING_LIST_ID_EID\" is not null "
+literal|"  and "
 operator|+
-literal|"  and \"SKEWED_VALUES\".\"INTEGER_IDX\">= 0 "
+name|SKEWED_VALUES
 operator|+
-literal|"order by \"SKEWED_VALUES\".\"SD_ID_OID\" asc, \"SKEWED_VALUES\".\"INTEGER_IDX\" asc,"
+literal|".\"STRING_LIST_ID_EID\" is not null "
 operator|+
-literal|"  \"SKEWED_STRING_LIST_VALUES\".\"INTEGER_IDX\" asc"
+literal|"  and "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|".\"INTEGER_IDX\">= 0 "
+operator|+
+literal|"order by "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|".\"SD_ID_OID\" asc, "
+operator|+
+name|SKEWED_VALUES
+operator|+
+literal|".\"INTEGER_IDX\" asc,"
+operator|+
+literal|"  "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -4734,11 +5239,12 @@ argument_list|()
 operator|.
 name|addToSkewedColValues
 argument_list|(
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4812,33 +5318,85 @@ expr_stmt|;
 comment|// We are skipping the SKEWED_STRING_LIST table here, as it seems to be totally useless.
 name|queryText
 operator|=
-literal|"select \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\","
+literal|"select "
 operator|+
-literal|" \"SKEWED_STRING_LIST_VALUES\".STRING_LIST_ID,"
+name|SKEWED_COL_VALUE_LOC_MAP
 operator|+
-literal|" \"SKEWED_COL_VALUE_LOC_MAP\".\"LOCATION\","
+literal|".\"SD_ID\","
 operator|+
-literal|" \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_VALUE\" "
+literal|" "
 operator|+
-literal|"from \"SKEWED_COL_VALUE_LOC_MAP\""
+name|SKEWED_STRING_LIST_VALUES
 operator|+
-literal|"  left outer join \"SKEWED_STRING_LIST_VALUES\" on \"SKEWED_COL_VALUE_LOC_MAP\"."
+literal|".STRING_LIST_ID,"
 operator|+
-literal|"\"STRING_LIST_ID_KID\" = \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" "
+literal|" "
 operator|+
-literal|"where \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\" in ("
+name|SKEWED_COL_VALUE_LOC_MAP
+operator|+
+literal|".\"LOCATION\","
+operator|+
+literal|" "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"STRING_LIST_VALUE\" "
+operator|+
+literal|"from "
+operator|+
+name|SKEWED_COL_VALUE_LOC_MAP
+operator|+
+literal|""
+operator|+
+literal|"  left outer join "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|" on "
+operator|+
+name|SKEWED_COL_VALUE_LOC_MAP
+operator|+
+literal|"."
+operator|+
+literal|"\"STRING_LIST_ID_KID\" = "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"STRING_LIST_ID\" "
+operator|+
+literal|"where "
+operator|+
+name|SKEWED_COL_VALUE_LOC_MAP
+operator|+
+literal|".\"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
 literal|")"
 operator|+
-literal|"  and \"SKEWED_COL_VALUE_LOC_MAP\".\"STRING_LIST_ID_KID\" is not null "
+literal|"  and "
 operator|+
-literal|"order by \"SKEWED_COL_VALUE_LOC_MAP\".\"SD_ID\" asc,"
+name|SKEWED_COL_VALUE_LOC_MAP
 operator|+
-literal|"  \"SKEWED_STRING_LIST_VALUES\".\"STRING_LIST_ID\" asc,"
+literal|".\"STRING_LIST_ID_KID\" is not null "
 operator|+
-literal|"  \"SKEWED_STRING_LIST_VALUES\".\"INTEGER_IDX\" asc"
+literal|"order by "
+operator|+
+name|SKEWED_COL_VALUE_LOC_MAP
+operator|+
+literal|".\"SD_ID\" asc,"
+operator|+
+literal|"  "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"STRING_LIST_ID\" asc,"
+operator|+
+literal|"  "
+operator|+
+name|SKEWED_STRING_LIST_VALUES
+operator|+
+literal|".\"INTEGER_IDX\" asc"
 expr_stmt|;
 name|loopJoinOrderedResult
 argument_list|(
@@ -5068,7 +5626,11 @@ name|queryText
 operator|=
 literal|"select \"CD_ID\", \"COMMENT\", \"COLUMN_NAME\", \"TYPE_NAME\""
 operator|+
-literal|" from \"COLUMNS_V2\" where \"CD_ID\" in ("
+literal|" from "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|" where \"CD_ID\" in ("
 operator|+
 name|colIds
 operator|+
@@ -5152,7 +5714,11 @@ block|}
 comment|// Finally, get all the stuff for serdes - just the params.
 name|queryText
 operator|=
-literal|"select \"SERDE_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from \"SERDE_PARAMS\""
+literal|"select \"SERDE_ID\", \"PARAM_KEY\", \"PARAM_VALUE\" from "
+operator|+
+name|SERDE_PARAMS
+operator|+
+literal|""
 operator|+
 literal|" where \"SERDE_ID\" in ("
 operator|+
@@ -5298,15 +5864,55 @@ comment|// Get number of partitions by doing count on PART_ID.
 name|String
 name|queryText
 init|=
-literal|"select count(\"PARTITIONS\".\"PART_ID\") from \"PARTITIONS\""
+literal|"select count("
 operator|+
-literal|"  inner join \"TBLS\" on \"PARTITIONS\".\"TBL_ID\" = \"TBLS\".\"TBL_ID\" "
+name|PARTITIONS
 operator|+
-literal|"    and \"TBLS\".\"TBL_NAME\" = ? "
+literal|".\"PART_ID\") from "
 operator|+
-literal|"  inner join \"DBS\" on \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|PARTITIONS
 operator|+
-literal|"     and \"DBS\".\"NAME\" = ? "
+literal|""
+operator|+
+literal|"  inner join "
+operator|+
+name|TBLS
+operator|+
+literal|" on "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" "
+operator|+
+literal|"    and "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? "
+operator|+
+literal|"  inner join "
+operator|+
+name|DBS
+operator|+
+literal|" on "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|"     and "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? "
 operator|+
 name|join
 argument_list|(
@@ -5914,6 +6520,121 @@ literal|null
 return|;
 block|}
 block|}
+specifier|static
+name|byte
+index|[]
+name|extractSqlBlob
+parameter_list|(
+name|Object
+name|value
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+if|if
+condition|(
+name|value
+operator|==
+literal|null
+condition|)
+return|return
+literal|null
+return|;
+if|if
+condition|(
+name|value
+operator|instanceof
+name|Blob
+condition|)
+block|{
+comment|//derby, oracle
+try|try
+block|{
+comment|// getBytes function says: pos the ordinal position of the first byte in
+comment|// the BLOB value to be extracted; the first byte is at position 1
+return|return
+operator|(
+operator|(
+name|Blob
+operator|)
+name|value
+operator|)
+operator|.
+name|getBytes
+argument_list|(
+literal|1
+argument_list|,
+call|(
+name|int
+call|)
+argument_list|(
+operator|(
+name|Blob
+operator|)
+name|value
+argument_list|)
+operator|.
+name|length
+argument_list|()
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Encounter error while processing blob."
+argument_list|)
+throw|;
+block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|value
+operator|instanceof
+name|byte
+index|[]
+condition|)
+block|{
+comment|// mysql, postgres, sql server
+return|return
+operator|(
+name|byte
+index|[]
+operator|)
+name|value
+return|;
+block|}
+else|else
+block|{
+comment|// this may happen when enablebitvector is false
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Expected blob type but got "
+operator|+
+name|value
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+block|}
 specifier|private
 specifier|static
 name|String
@@ -6306,6 +7027,17 @@ name|DatabaseProduct
 name|dbType
 decl_stmt|;
 specifier|private
+specifier|final
+name|String
+name|PARTITION_KEY_VALS
+decl_stmt|,
+name|PARTITIONS
+decl_stmt|,
+name|DBS
+decl_stmt|,
+name|TBLS
+decl_stmt|;
+specifier|private
 name|PartitionFilterGenerator
 parameter_list|(
 name|Table
@@ -6331,6 +7063,9 @@ name|defaultPartName
 parameter_list|,
 name|DatabaseProduct
 name|dbType
+parameter_list|,
+name|String
+name|schema
 parameter_list|)
 block|{
 name|this
@@ -6379,6 +7114,50 @@ name|dbType
 operator|=
 name|dbType
 expr_stmt|;
+name|this
+operator|.
+name|PARTITION_KEY_VALS
+operator|=
+name|getFullyQualifiedName
+argument_list|(
+name|schema
+argument_list|,
+literal|"PARTITION_KEY_VALS"
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|PARTITIONS
+operator|=
+name|getFullyQualifiedName
+argument_list|(
+name|schema
+argument_list|,
+literal|"PARTITIONS"
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|DBS
+operator|=
+name|getFullyQualifiedName
+argument_list|(
+name|schema
+argument_list|,
+literal|"DBS"
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|TBLS
+operator|=
+name|getFullyQualifiedName
+argument_list|(
+name|schema
+argument_list|,
+literal|"TBLS"
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**      * Generate the ANSI SQL92 filter for the given expression tree      * @param table the table being queried      * @param params the ordered parameters for the resulting expression      * @param joins the joins necessary for the resulting expression      * @return the string representation of the expression tree      */
 specifier|private
@@ -6412,6 +7191,9 @@ name|defaultPartName
 parameter_list|,
 name|DatabaseProduct
 name|dbType
+parameter_list|,
+name|String
+name|schema
 parameter_list|)
 throws|throws
 name|MetaException
@@ -6465,6 +7247,8 @@ argument_list|,
 name|defaultPartName
 argument_list|,
 name|dbType
+argument_list|,
+name|schema
 argument_list|)
 decl_stmt|;
 name|tree
@@ -7085,7 +7869,11 @@ name|set
 argument_list|(
 name|partColIndex
 argument_list|,
-literal|"inner join \"PARTITION_KEY_VALS\" \"FILTER"
+literal|"inner join "
+operator|+
+name|PARTITION_KEY_VALS
+operator|+
+literal|" \"FILTER"
 operator|+
 name|partColIndex
 operator|+
@@ -7093,7 +7881,11 @@ literal|"\" on \"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|"\".\"PART_ID\" = \"PARTITIONS\".\"PART_ID\""
+literal|"\".\"PART_ID\" = "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"PART_ID\""
 operator|+
 literal|" and \"FILTER"
 operator|+
@@ -7234,13 +8026,25 @@ comment|// This is a workaround for DERBY-6358 and Oracle bug; it is pretty horr
 name|tableValue
 operator|+=
 operator|(
-literal|" and \"TBLS\".\"TBL_NAME\" = ? and \"DBS\".\"NAME\" = ? and "
+literal|" and "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? and "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? and "
 operator|+
 literal|"\"FILTER"
 operator|+
 name|partColIndex
 operator|+
-literal|"\".\"PART_ID\" = \"PARTITIONS\".\"PART_ID\" and "
+literal|"\".\"PART_ID\" = "
+operator|+
+name|PARTITIONS
+operator|+
+literal|".\"PART_ID\" and "
 operator|+
 literal|"\"FILTER"
 operator|+
@@ -7362,6 +8166,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|boolean
+name|enableBitVector
 parameter_list|)
 throws|throws
 name|MetaException
@@ -7397,9 +8204,16 @@ name|queryText0
 init|=
 literal|"select "
 operator|+
-name|STATS_COLLIST
+name|getStatsList
+argument_list|(
+name|enableBitVector
+argument_list|)
 operator|+
-literal|" from \"TAB_COL_STATS\" "
+literal|" from "
+operator|+
+name|TAB_COL_STATS
+operator|+
+literal|" "
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
 decl_stmt|;
@@ -7422,6 +8236,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -7691,6 +8507,9 @@ name|useDensityFunctionForNDVEstimation
 parameter_list|,
 name|double
 name|ndvTuner
+parameter_list|,
+name|boolean
+name|enableBitVector
 parameter_list|)
 throws|throws
 name|MetaException
@@ -7719,11 +8538,12 @@ return|return
 operator|new
 name|AggrStats
 argument_list|(
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|ColumnStatisticsObj
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|,
 literal|0
@@ -7924,6 +8744,8 @@ argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|,
 name|ndvTuner
+argument_list|,
+name|enableBitVector
 argument_list|)
 expr_stmt|;
 if|if
@@ -8006,6 +8828,8 @@ argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|,
 name|ndvTuner
+argument_list|,
+name|enableBitVector
 argument_list|)
 expr_stmt|;
 block|}
@@ -8149,7 +8973,11 @@ specifier|final
 name|String
 name|queryText0
 init|=
-literal|"select count(\"COLUMN_NAME\") from \"PART_COL_STATS\""
+literal|"select count(\"COLUMN_NAME\") from "
+operator|+
+name|PART_COL_STATS
+operator|+
+literal|""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
@@ -8176,6 +9004,8 @@ name|Long
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -8207,6 +9037,8 @@ name|Long
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -8325,10 +9157,16 @@ name|end
 argument_list|)
 expr_stmt|;
 name|ForwardQueryResult
+argument_list|<
+name|?
+argument_list|>
 name|fqr
 init|=
 operator|(
 name|ForwardQueryResult
+argument_list|<
+name|?
+argument_list|>
 operator|)
 name|qResult
 decl_stmt|;
@@ -8460,6 +9298,10 @@ parameter_list|,
 specifier|final
 name|double
 name|ndvTuner
+parameter_list|,
+specifier|final
+name|boolean
+name|enableBitVector
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8491,6 +9333,8 @@ name|ColumnStatisticsObj
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -8522,6 +9366,8 @@ name|ColumnStatisticsObj
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -8554,6 +9400,8 @@ argument_list|,
 name|useDensityFunctionForNDVEstimation
 argument_list|,
 name|ndvTuner
+argument_list|,
+name|enableBitVector
 argument_list|)
 return|;
 block|}
@@ -8584,6 +9432,9 @@ name|dbName
 parameter_list|,
 name|String
 name|tblName
+parameter_list|,
+name|boolean
+name|enableBitVector
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8591,15 +9442,20 @@ block|{
 name|String
 name|queryText
 init|=
-literal|"select \"PARTITION_NAME\", \"COLUMN_NAME\", \"COLUMN_TYPE\", \"LONG_LOW_VALUE\", "
+literal|"select \"PARTITION_NAME\", "
 operator|+
-literal|"\"LONG_HIGH_VALUE\", \"DOUBLE_LOW_VALUE\", \"DOUBLE_HIGH_VALUE\",  "
+name|getStatsList
+argument_list|(
+name|enableBitVector
+argument_list|)
 operator|+
-literal|"\"BIG_DECIMAL_LOW_VALUE\", \"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", "
+literal|" from "
 operator|+
-literal|"\"NUM_DISTINCTS\", \"AVG_COL_LEN\", \"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\""
+literal|" "
 operator|+
-literal|" from \"PART_COL_STATS\" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
+name|PART_COL_STATS
+operator|+
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
 literal|" order by \"PARTITION_NAME\""
 decl_stmt|;
@@ -8665,18 +9521,20 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<
+name|Collections
+operator|.
+expr|<
 name|String
-argument_list|>
+operator|>
+name|emptyList
 argument_list|()
 argument_list|)
 argument_list|,
@@ -8696,9 +9554,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Maps
+name|Collections
 operator|.
-name|newHashMap
+name|emptyMap
 argument_list|()
 return|;
 block|}
@@ -8948,6 +9806,166 @@ name|useDensityFunctionForNDVEstimation
 parameter_list|,
 name|double
 name|ndvTuner
+parameter_list|,
+name|boolean
+name|enableBitVector
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+if|if
+condition|(
+name|enableBitVector
+condition|)
+block|{
+return|return
+name|aggrStatsUseJava
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|partNames
+argument_list|,
+name|colNames
+argument_list|,
+name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+name|aggrStatsUseDB
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|partNames
+argument_list|,
+name|colNames
+argument_list|,
+name|areAllPartsFound
+argument_list|,
+name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
+argument_list|)
+return|;
+block|}
+block|}
+specifier|private
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|aggrStatsUseJava
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|boolean
+name|useDensityFunctionForNDVEstimation
+parameter_list|,
+name|double
+name|ndvTuner
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+comment|// 1. get all the stats for colNames in partNames;
+name|List
+argument_list|<
+name|ColumnStatistics
+argument_list|>
+name|partStats
+init|=
+name|getPartitionStats
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|partNames
+argument_list|,
+name|colNames
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+comment|// 2. use util function to aggr stats
+return|return
+name|MetaStoreUtils
+operator|.
+name|aggrPartitionStats
+argument_list|(
+name|partStats
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|partNames
+argument_list|,
+name|colNames
+argument_list|,
+name|useDensityFunctionForNDVEstimation
+argument_list|,
+name|ndvTuner
+argument_list|)
+return|;
+block|}
+specifier|private
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|aggrStatsUseDB
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|boolean
+name|areAllPartsFound
+parameter_list|,
+name|boolean
+name|useDensityFunctionForNDVEstimation
+parameter_list|,
+name|double
+name|ndvTuner
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8988,7 +10006,11 @@ literal|"avg((cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)-cast(\"BIG_DECIMAL_LOW
 operator|+
 literal|"sum(\"NUM_DISTINCTS\")"
 operator|+
-literal|" from \"PART_COL_STATS\""
+literal|" from "
+operator|+
+name|PART_COL_STATS
+operator|+
+literal|""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 decl_stmt|;
@@ -9026,6 +10048,9 @@ init|=
 literal|null
 decl_stmt|;
 name|ForwardQueryResult
+argument_list|<
+name|?
+argument_list|>
 name|fqr
 init|=
 literal|null
@@ -9122,9 +10147,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -9247,7 +10272,9 @@ name|queryText
 operator|=
 literal|"select \"COLUMN_NAME\", \"COLUMN_TYPE\", count(\"PARTITION_NAME\") "
 operator|+
-literal|" from \"PART_COL_STATS\""
+literal|" from "
+operator|+
+name|PART_COL_STATS
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
@@ -9354,9 +10381,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -9603,9 +10630,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -9769,7 +10796,11 @@ name|queryText
 operator|=
 literal|"select \"COLUMN_NAME\", sum(\"NUM_NULLS\"), sum(\"NUM_TRUES\"), sum(\"NUM_FALSES\"), sum(\"NUM_DISTINCTS\")"
 operator|+
-literal|" from \"PART_COL_STATS\" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+literal|" from "
+operator|+
+name|PART_COL_STATS
+operator|+
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
 literal|" and \"COLUMN_NAME\" in ("
 operator|+
@@ -9871,9 +10902,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -10270,10 +11301,6 @@ operator|+
 name|colStatIndex
 index|]
 operator|=
-call|(
-name|Long
-call|)
-argument_list|(
 name|val
 operator|/
 name|sumVal
@@ -10284,7 +11311,6 @@ operator|.
 name|size
 argument_list|()
 operator|)
-argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -10332,7 +11358,9 @@ literal|"select \""
 operator|+
 name|colStatName
 operator|+
-literal|"\",\"PARTITION_NAME\" from \"PART_COL_STATS\""
+literal|"\",\"PARTITION_NAME\" from "
+operator|+
+name|PART_COL_STATS
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -10365,7 +11393,9 @@ literal|"select \""
 operator|+
 name|colStatName
 operator|+
-literal|"\",\"PARTITION_NAME\" from \"PART_COL_STATS\""
+literal|"\",\"PARTITION_NAME\" from "
+operator|+
+name|PART_COL_STATS
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -10450,9 +11480,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -10460,6 +11490,9 @@ name|fqr
 operator|=
 operator|(
 name|ForwardQueryResult
+argument_list|<
+name|?
+argument_list|>
 operator|)
 name|qResult
 expr_stmt|;
@@ -10593,7 +11626,11 @@ literal|"avg((\"DOUBLE_HIGH_VALUE\"-\"DOUBLE_LOW_VALUE\")/\"NUM_DISTINCTS\"),"
 operator|+
 literal|"avg((cast(\"BIG_DECIMAL_HIGH_VALUE\" as decimal)-cast(\"BIG_DECIMAL_LOW_VALUE\" as decimal))/\"NUM_DISTINCTS\")"
 operator|+
-literal|" from \"PART_COL_STATS\""
+literal|" from "
+operator|+
+name|PART_COL_STATS
+operator|+
+literal|""
 operator|+
 literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
@@ -10673,9 +11710,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -10683,6 +11720,9 @@ name|fqr
 operator|=
 operator|(
 name|ForwardQueryResult
+argument_list|<
+name|?
+argument_list|>
 operator|)
 name|qResult
 expr_stmt|;
@@ -10889,6 +11929,14 @@ name|i
 operator|++
 index|]
 decl_stmt|,
+name|bitVector
+init|=
+name|row
+index|[
+name|i
+operator|++
+index|]
+decl_stmt|,
 name|avglen
 init|=
 name|row
@@ -10947,6 +11995,8 @@ argument_list|,
 name|nulls
 argument_list|,
 name|dist
+argument_list|,
+name|bitVector
 argument_list|,
 name|avglen
 argument_list|,
@@ -11328,6 +12378,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|boolean
+name|enableBitVector
 parameter_list|)
 throws|throws
 name|MetaException
@@ -11346,9 +12399,9 @@ argument_list|()
 condition|)
 block|{
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -11367,11 +12420,18 @@ name|queryText0
 init|=
 literal|"select \"PARTITION_NAME\", "
 operator|+
-name|STATS_COLLIST
+name|getStatsList
+argument_list|(
+name|enableBitVector
+argument_list|)
 operator|+
 literal|" from "
 operator|+
-literal|" \"PART_COL_STATS\" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\""
+literal|" "
+operator|+
+name|PART_COL_STATS
+operator|+
+literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\""
 operator|+
 literal|"  in (%1$s) AND \"PARTITION_NAME\" in (%2$s) order by \"PARTITION_NAME\""
 decl_stmt|;
@@ -11394,6 +12454,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -11431,6 +12493,8 @@ index|[]
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|List
 argument_list|<
@@ -11552,9 +12616,9 @@ name|closeAll
 argument_list|()
 expr_stmt|;
 return|return
-name|Lists
+name|Collections
 operator|.
-name|newArrayList
+name|emptyList
 argument_list|()
 return|;
 block|}
@@ -11784,19 +12848,34 @@ return|;
 block|}
 comment|/** The common query part for table and partition stats */
 specifier|private
-specifier|static
 specifier|final
 name|String
-name|STATS_COLLIST
-init|=
+name|getStatsList
+parameter_list|(
+name|boolean
+name|enableBitVector
+parameter_list|)
+block|{
+return|return
 literal|"\"COLUMN_NAME\", \"COLUMN_TYPE\", \"LONG_LOW_VALUE\", \"LONG_HIGH_VALUE\", "
 operator|+
 literal|"\"DOUBLE_LOW_VALUE\", \"DOUBLE_HIGH_VALUE\", \"BIG_DECIMAL_LOW_VALUE\", "
 operator|+
-literal|"\"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", \"NUM_DISTINCTS\", \"AVG_COL_LEN\", "
+literal|"\"BIG_DECIMAL_HIGH_VALUE\", \"NUM_NULLS\", \"NUM_DISTINCTS\", "
+operator|+
+operator|(
+name|enableBitVector
+condition|?
+literal|"\"BIT_VECTOR\", "
+else|:
+literal|"\'\', "
+operator|)
+operator|+
+literal|"\"AVG_COL_LEN\", "
 operator|+
 literal|"\"MAX_COL_LEN\", \"NUM_TRUES\", \"NUM_FALSES\", \"LAST_ANALYZED\" "
-decl_stmt|;
+return|;
+block|}
 specifier|private
 name|ColumnStatistics
 name|makeColumnStats
@@ -11867,7 +12946,7 @@ name|row
 index|[
 name|offset
 operator|+
-literal|14
+literal|15
 index|]
 decl_stmt|;
 if|if
@@ -12568,37 +13647,161 @@ name|queryText
 init|=
 literal|"SELECT  \"D2\".\"NAME\", \"T2\".\"TBL_NAME\", \"C2\".\"COLUMN_NAME\","
 operator|+
-literal|"\"DBS\".\"NAME\", \"TBLS\".\"TBL_NAME\", \"COLUMNS_V2\".\"COLUMN_NAME\", "
+literal|""
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"POSITION\", \"KEY_CONSTRAINTS\".\"UPDATE_RULE\", \"KEY_CONSTRAINTS\".\"DELETE_RULE\", "
+name|DBS
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\" , \"KEY_CONSTRAINTS2\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\" "
+literal|".\"NAME\", "
 operator|+
-literal|" FROM \"TBLS\" "
+name|TBLS
 operator|+
-literal|" INNER JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRAINTS\".\"CHILD_TBL_ID\" "
+literal|".\"TBL_NAME\", "
 operator|+
-literal|" INNER JOIN \"KEY_CONSTRAINTS\" \"KEY_CONSTRAINTS2\" ON \"KEY_CONSTRAINTS2\".\"PARENT_TBL_ID\"  = \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" "
+name|COLUMNS_V2
 operator|+
-literal|" AND \"KEY_CONSTRAINTS2\".\"PARENT_CD_ID\"  = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+literal|".\"COLUMN_NAME\", "
 operator|+
-literal|" \"KEY_CONSTRAINTS2\".\"PARENT_INTEGER_IDX\"  = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+literal|""
 operator|+
-literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|KEY_CONSTRAINTS
 operator|+
-literal|" INNER JOIN \"TBLS\" \"T2\" ON  \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" = \"T2\".\"TBL_ID\" "
+literal|".\"POSITION\", "
 operator|+
-literal|" INNER JOIN \"DBS\" \"D2\" ON \"T2\".\"DB_ID\" = \"D2\".\"DB_ID\" "
+name|KEY_CONSTRAINTS
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\"  ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"CHILD_CD_ID\" AND "
+literal|".\"UPDATE_RULE\", "
 operator|+
-literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"CHILD_INTEGER_IDX\" "
+name|KEY_CONSTRAINTS
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" \"C2\" ON \"C2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+literal|".\"DELETE_RULE\", "
 operator|+
-literal|" \"C2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+literal|""
 operator|+
-literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_NAME\" , \"KEY_CONSTRAINTS2\".\"CONSTRAINT_NAME\", "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"ENABLE_VALIDATE_RELY\" "
+operator|+
+literal|" from "
+operator|+
+name|TBLS
+operator|+
+literal|" "
+operator|+
+literal|" INNER join "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CHILD_TBL_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|" \"KEY_CONSTRAINTS2\" ON \"KEY_CONSTRAINTS2\".\"PARENT_TBL_ID\"  = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_TBL_ID\" "
+operator|+
+literal|" AND \"KEY_CONSTRAINTS2\".\"PARENT_CD_ID\"  = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" \"KEY_CONSTRAINTS2\".\"PARENT_INTEGER_IDX\"  = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|DBS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|TBLS
+operator|+
+literal|" \"T2\" ON  "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_TBL_ID\" = \"T2\".\"TBL_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|DBS
+operator|+
+literal|" \"D2\" ON \"T2\".\"DB_ID\" = \"D2\".\"DB_ID\" "
+operator|+
+literal|" INNER JOIN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|"  ON "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"CD_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CHILD_CD_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CHILD_INTEGER_IDX\" "
+operator|+
+literal|" INNER JOIN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|" \"C2\" ON \"C2\".\"CD_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" \"C2\".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" WHERE "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_TYPE\" = "
 operator|+
 name|MConstraint
 operator|.
@@ -12619,7 +13822,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"DBS\".\"NAME\" = ? AND"
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -12629,7 +13836,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"TBLS\".\"TBL_NAME\" = ? AND"
+literal|" "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -13001,29 +14212,105 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"SELECT \"DBS\".\"NAME\", \"TBLS\".\"TBL_NAME\", \"COLUMNS_V2\".\"COLUMN_NAME\","
+literal|"SELECT "
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"POSITION\", "
+name|DBS
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\" "
+literal|".\"NAME\", "
 operator|+
-literal|" FROM  \"TBLS\" "
+name|TBLS
 operator|+
-literal|" INNER  JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" "
+literal|".\"TBL_NAME\", "
 operator|+
-literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|COLUMNS_V2
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+literal|".\"COLUMN_NAME\","
 operator|+
-literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+literal|""
 operator|+
-literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"POSITION\", "
+operator|+
+literal|""
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_NAME\", "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"ENABLE_VALIDATE_RELY\" "
+operator|+
+literal|" from "
+operator|+
+name|TBLS
+operator|+
+literal|" "
+operator|+
+literal|" INNER  join "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_TBL_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|DBS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|" INNER JOIN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|" ON "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"CD_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" WHERE "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_TYPE\" = "
 operator|+
 name|MConstraint
 operator|.
 name|PRIMARY_KEY_CONSTRAINT
 operator|+
-literal|" AND "
+literal|" AND"
 operator|+
 operator|(
 name|db_name
@@ -13032,7 +14319,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"\"DBS\".\"NAME\" = ? AND"
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -13042,7 +14333,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"TBLS\".\"TBL_NAME\" = ? "
+literal|" "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? "
 operator|)
 decl_stmt|;
 name|queryText
@@ -13316,29 +14611,105 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"SELECT \"DBS\".\"NAME\", \"TBLS\".\"TBL_NAME\", \"COLUMNS_V2\".\"COLUMN_NAME\","
+literal|"SELECT "
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"POSITION\", "
+name|DBS
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\" "
+literal|".\"NAME\", "
 operator|+
-literal|" FROM  \"TBLS\" "
+name|TBLS
 operator|+
-literal|" INNER  JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" "
+literal|".\"TBL_NAME\", "
 operator|+
-literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+name|COLUMNS_V2
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+literal|".\"COLUMN_NAME\","
 operator|+
-literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+literal|""
 operator|+
-literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"POSITION\", "
+operator|+
+literal|""
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_NAME\", "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"ENABLE_VALIDATE_RELY\" "
+operator|+
+literal|" from "
+operator|+
+name|TBLS
+operator|+
+literal|" "
+operator|+
+literal|" INNER  join "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_TBL_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|DBS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|" INNER JOIN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|" ON "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"CD_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" WHERE "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_TYPE\" = "
 operator|+
 name|MConstraint
 operator|.
 name|UNIQUE_CONSTRAINT
 operator|+
-literal|" AND "
+literal|" AND"
 operator|+
 operator|(
 name|db_name
@@ -13347,7 +14718,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"\"DBS\".\"NAME\" = ? AND"
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -13357,7 +14732,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"TBLS\".\"TBL_NAME\" = ? "
+literal|" "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? "
 operator|)
 decl_stmt|;
 name|queryText
@@ -13631,27 +15010,99 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"SELECT \"DBS\".\"NAME\", \"TBLS\".\"TBL_NAME\", \"COLUMNS_V2\".\"COLUMN_NAME\","
+literal|"SELECT "
 operator|+
-literal|"\"KEY_CONSTRAINTS\".\"CONSTRAINT_NAME\", \"KEY_CONSTRAINTS\".\"ENABLE_VALIDATE_RELY\" "
+name|DBS
 operator|+
-literal|" FROM  \"TBLS\" "
+literal|".\"NAME\", "
 operator|+
-literal|" INNER  JOIN \"KEY_CONSTRAINTS\" ON \"TBLS\".\"TBL_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_TBL_ID\" "
+name|TBLS
 operator|+
-literal|" INNER JOIN \"DBS\" ON \"TBLS\".\"DB_ID\" = \"DBS\".\"DB_ID\" "
+literal|".\"TBL_NAME\", "
 operator|+
-literal|" INNER JOIN \"COLUMNS_V2\" ON \"COLUMNS_V2\".\"CD_ID\" = \"KEY_CONSTRAINTS\".\"PARENT_CD_ID\" AND "
+name|COLUMNS_V2
 operator|+
-literal|" \"COLUMNS_V2\".\"INTEGER_IDX\" = \"KEY_CONSTRAINTS\".\"PARENT_INTEGER_IDX\" "
+literal|".\"COLUMN_NAME\","
 operator|+
-literal|" WHERE \"KEY_CONSTRAINTS\".\"CONSTRAINT_TYPE\" = "
+literal|""
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_NAME\", "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"ENABLE_VALIDATE_RELY\" "
+operator|+
+literal|" from "
+operator|+
+name|TBLS
+operator|+
+literal|" "
+operator|+
+literal|" INNER join "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_TBL_ID\" "
+operator|+
+literal|" INNER join "
+operator|+
+name|DBS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"DB_ID\" = "
+operator|+
+name|DBS
+operator|+
+literal|".\"DB_ID\" "
+operator|+
+literal|" INNER JOIN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|" ON "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"CD_ID\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_CD_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" WHERE "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CONSTRAINT_TYPE\" = "
 operator|+
 name|MConstraint
 operator|.
 name|NOT_NULL_CONSTRAINT
 operator|+
-literal|" AND "
+literal|" AND"
 operator|+
 operator|(
 name|db_name
@@ -13660,7 +15111,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"\"DBS\".\"NAME\" = ? AND"
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"NAME\" = ? AND"
 operator|)
 operator|+
 operator|(
@@ -13670,7 +15125,11 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" \"TBLS\".\"TBL_NAME\" = ? "
+literal|" "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_NAME\" = ? "
 operator|)
 decl_stmt|;
 name|queryText

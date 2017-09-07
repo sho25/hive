@@ -2737,7 +2737,7 @@ name|MR_PREFIX
 init|=
 literal|"-mr-"
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String

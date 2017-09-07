@@ -1106,6 +1106,15 @@ return|return;
 block|}
 comment|// If all of the agg expressions are distinct and have the same
 comment|// arguments then we can use a more efficient form.
+specifier|final
+name|RelMetadataQuery
+name|mq
+init|=
+name|call
+operator|.
+name|getMetadataQuery
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|(
@@ -1144,10 +1153,7 @@ name|RelColumnOrigin
 argument_list|>
 name|colOrigs
 init|=
-name|RelMetadataQuery
-operator|.
-name|instance
-argument_list|()
+name|mq
 operator|.
 name|getColumnOrigins
 argument_list|(

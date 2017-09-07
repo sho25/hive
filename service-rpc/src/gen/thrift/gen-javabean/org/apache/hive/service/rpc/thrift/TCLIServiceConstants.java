@@ -718,7 +718,7 @@ name|thrift
 operator|.
 name|TTypeId
 operator|.
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 argument_list|)
 expr_stmt|;
 block|}
@@ -1430,9 +1430,9 @@ name|thrift
 operator|.
 name|TTypeId
 operator|.
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 argument_list|,
-literal|"TIMESTAMP WITH TIME ZONE"
+literal|"TIMESTAMP WITH LOCAL TIME ZONE"
 argument_list|)
 expr_stmt|;
 block|}

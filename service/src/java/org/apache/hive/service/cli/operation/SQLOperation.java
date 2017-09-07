@@ -1829,7 +1829,7 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-comment|/**        * If the operation was cancelled by another thread, or the execution timed out, Driver#run        * may return a non-zero response code. We will simply return if the operation state is        * CANCELED, TIMEDOUT or CLOSED, otherwise throw an exception        */
+comment|/**        * If the operation was cancelled by another thread, or the execution timed out, Driver#run        * may return a non-zero response code. We will simply return if the operation state is        * CANCELED, TIMEDOUT, CLOSED or FINISHED, otherwise throw an exception        */
 if|if
 condition|(
 operator|(
@@ -1866,6 +1866,18 @@ operator|==
 name|OperationState
 operator|.
 name|CLOSED
+operator|)
+operator|||
+operator|(
+name|getStatus
+argument_list|()
+operator|.
+name|getState
+argument_list|()
+operator|==
+name|OperationState
+operator|.
+name|FINISHED
 operator|)
 condition|)
 block|{

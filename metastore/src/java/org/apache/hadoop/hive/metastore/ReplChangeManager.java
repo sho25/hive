@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -384,7 +384,7 @@ specifier|private
 name|FileSystem
 name|fs
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -392,7 +392,6 @@ name|ORIG_LOC_TAG
 init|=
 literal|"user.original-loc"
 decl_stmt|;
-specifier|public
 specifier|static
 specifier|final
 name|String
@@ -400,7 +399,7 @@ name|REMAIN_IN_TRASH_TAG
 init|=
 literal|"user.remain-in-trash"
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -408,6 +407,14 @@ name|URI_FRAGMENT_SEPARATOR
 init|=
 literal|"#"
 decl_stmt|;
+specifier|public
+enum|enum
+name|RecycleType
+block|{
+name|MOVE
+block|,
+name|COPY
+block|}
 specifier|public
 specifier|static
 name|ReplChangeManager
@@ -439,6 +446,7 @@ return|return
 name|instance
 return|;
 block|}
+specifier|private
 name|ReplChangeManager
 parameter_list|(
 name|HiveConf
@@ -631,194 +639,15 @@ return|;
 block|}
 block|}
 decl_stmt|;
-name|void
-name|addFile
-parameter_list|(
-name|Path
-name|path
-parameter_list|)
-throws|throws
-name|MetaException
-block|{
-if|if
-condition|(
-operator|!
-name|enabled
-condition|)
-block|{
-return|return;
-block|}
-try|try
-block|{
-if|if
-condition|(
-name|fs
-operator|.
-name|isDirectory
-argument_list|(
-name|path
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-name|path
-operator|+
-literal|" cannot be a directory"
-argument_list|)
-throw|;
-block|}
-name|Path
-name|cmPath
-init|=
-name|getCMPath
-argument_list|(
-name|hiveConf
-argument_list|,
-name|getChksumString
-argument_list|(
-name|path
-argument_list|,
-name|fs
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|boolean
-name|copySuccessful
-init|=
-name|FileUtils
-operator|.
-name|copy
-argument_list|(
-name|path
-operator|.
-name|getFileSystem
-argument_list|(
-name|hiveConf
-argument_list|)
-argument_list|,
-name|path
-argument_list|,
-name|cmPath
-operator|.
-name|getFileSystem
-argument_list|(
-name|hiveConf
-argument_list|)
-argument_list|,
-name|cmPath
-argument_list|,
-literal|false
-argument_list|,
-literal|false
-argument_list|,
-name|hiveConf
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|copySuccessful
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"A file with the same content of "
-operator|+
-name|path
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" already exists, ignore"
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|fs
-operator|.
-name|setOwner
-argument_list|(
-name|cmPath
-argument_list|,
-name|msUser
-argument_list|,
-name|msGroup
-argument_list|)
-expr_stmt|;
-try|try
-block|{
-name|fs
-operator|.
-name|setXAttr
-argument_list|(
-name|cmPath
-argument_list|,
-name|ORIG_LOC_TAG
-argument_list|,
-name|path
-operator|.
-name|toString
-argument_list|()
-operator|.
-name|getBytes
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|UnsupportedOperationException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Error setting xattr for "
-operator|+
-name|path
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|exception
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|exception
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
-comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param ifPurge if the file should skip Trash when delete    * @return    * @throws MetaException    */
-specifier|public
+comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param type if the files to be copied or moved to cmpath.    *             Copy is costly but preserve the source file    * @param ifPurge if the file should skip Trash when move/delete source file.    *                This is referred only if type is MOVE.    * @return int    * @throws MetaException    */
 name|int
 name|recycle
 parameter_list|(
 name|Path
 name|path
+parameter_list|,
+name|RecycleType
+name|type
 parameter_list|,
 name|boolean
 name|ifPurge
@@ -883,6 +712,8 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|,
+name|type
+argument_list|,
 name|ifPurge
 argument_list|)
 expr_stmt|;
@@ -890,6 +721,16 @@ block|}
 block|}
 else|else
 block|{
+name|String
+name|fileCheckSum
+init|=
+name|checksumFor
+argument_list|(
+name|path
+argument_list|,
+name|fs
+argument_list|)
+decl_stmt|;
 name|Path
 name|cmPath
 init|=
@@ -897,42 +738,9 @@ name|getCMPath
 argument_list|(
 name|hiveConf
 argument_list|,
-name|getChksumString
-argument_list|(
-name|path
-argument_list|,
-name|fs
-argument_list|)
+name|fileCheckSum
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Moving "
-operator|+
-name|path
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" to "
-operator|+
-name|cmPath
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 comment|// set timestamp before moving to cmroot, so we can
 comment|// avoid race condition CM remove the file before setting
 comment|// timestamp
@@ -952,28 +760,56 @@ name|path
 argument_list|,
 name|now
 argument_list|,
-name|now
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|boolean
-name|succ
+name|success
 init|=
-name|fs
-operator|.
-name|rename
-argument_list|(
-name|path
-argument_list|,
-name|cmPath
-argument_list|)
+literal|false
 decl_stmt|;
-comment|// Ignore if a file with same content already exist in cmroot
-comment|// We might want to setXAttr for the new location in the future
 if|if
 condition|(
-operator|!
-name|succ
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|cmPath
+argument_list|)
+operator|&&
+name|fileCheckSum
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|checksumFor
+argument_list|(
+name|cmPath
+argument_list|,
+name|fs
+argument_list|)
+argument_list|)
 condition|)
+block|{
+comment|// If already a file with same checksum exists in cmPath, just ignore the copy/move
+comment|// Also, mark the operation is unsuccessful to notify that file with same name already
+comment|// exist which will ensure the timestamp of cmPath is updated to avoid clean-up by
+comment|// CM cleaner.
+name|success
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
+switch|switch
+condition|(
+name|type
+condition|)
+block|{
+case|case
+name|MOVE
+case|:
 block|{
 if|if
 condition|(
@@ -987,31 +823,101 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"A file with the same content of "
-operator|+
+literal|"Moving {} to {}"
+argument_list|,
 name|path
 operator|.
 name|toString
 argument_list|()
-operator|+
-literal|" already exists, ignore"
+argument_list|,
+name|cmPath
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Need to extend the tenancy if we saw a newer file with the same content
+comment|// Rename fails if the file with same name already exist.
+name|success
+operator|=
 name|fs
 operator|.
-name|setTimes
+name|rename
 argument_list|(
+name|path
+argument_list|,
 name|cmPath
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+case|case
+name|COPY
+case|:
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Copying {} to {}"
 argument_list|,
-name|now
+name|path
+operator|.
+name|toString
+argument_list|()
 argument_list|,
-name|now
+name|cmPath
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-else|else
+comment|// It is possible to have a file with same checksum in cmPath but the content is
+comment|// partially copied or corrupted. In this case, just overwrite the existing file with
+comment|// new one.
+name|success
+operator|=
+name|FileUtils
+operator|.
+name|copy
+argument_list|(
+name|fs
+argument_list|,
+name|path
+argument_list|,
+name|fs
+argument_list|,
+name|cmPath
+argument_list|,
+literal|false
+argument_list|,
+literal|true
+argument_list|,
+name|hiveConf
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+default|default:
+comment|// Operation fails as invalid input
+break|break;
+block|}
+block|}
+comment|// Ignore if a file with same content already exist in cmroot
+comment|// We might want to setXAttr for the new location in the future
+if|if
+condition|(
+name|success
+condition|)
 block|{
 comment|// set the file owner to hive (or the id metastore run as)
 name|fs
@@ -1059,8 +965,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error setting xattr for "
-operator|+
+literal|"Error setting xattr for {}"
+argument_list|,
 name|path
 operator|.
 name|toString
@@ -1072,11 +978,56 @@ name|count
 operator|++
 expr_stmt|;
 block|}
+else|else
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"A file with the same content of {} already exists, ignore"
+argument_list|,
+name|path
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Need to extend the tenancy if we saw a newer file with the same content
+name|fs
+operator|.
+name|setTimes
+argument_list|(
+name|cmPath
+argument_list|,
+name|now
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Tag if we want to remain in trash after deletion.
 comment|// If multiple files share the same content, then
 comment|// any file claim remain in trash would be granted
 if|if
 condition|(
+operator|(
+name|type
+operator|==
+name|RecycleType
+operator|.
+name|MOVE
+operator|)
+operator|&&
 operator|!
 name|ifPurge
 condition|)
@@ -1110,8 +1061,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error setting xattr for "
-operator|+
+literal|"Error setting xattr for {}"
+argument_list|,
 name|cmPath
 operator|.
 name|toString
@@ -1149,7 +1100,7 @@ comment|// Get checksum of a file
 specifier|static
 specifier|public
 name|String
-name|getChksumString
+name|checksumFor
 parameter_list|(
 name|Path
 name|path
@@ -1224,7 +1175,7 @@ operator|=
 name|cmRoot
 expr_stmt|;
 block|}
-comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param checkSum checksum of the file, can be retrieved by {@link getCksumString}    * @return    * @throws IOException    * @throws MetaException    */
+comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param checkSum checksum of the file, can be retrieved by {@link #checksumFor(Path, FileSystem)}    * @return Path    */
 specifier|static
 name|Path
 name|getCMPath
@@ -1295,7 +1246,7 @@ name|newFileName
 argument_list|)
 return|;
 block|}
-comment|/***    * Get original file specified by src and chksumString. If the file exists and checksum    * matches, return the file; otherwise, use chksumString to retrieve it from cmroot    * @param src Original file location    * @param chksumString Checksum of the original file    * @param conf    * @return Corresponding FileStatus object    * @throws MetaException    */
+comment|/***    * Get original file specified by src and chksumString. If the file exists and checksum    * matches, return the file; otherwise, use chksumString to retrieve it from cmroot    * @param src Original file location    * @param checksumString Checksum of the original file    * @param hiveConf    * @return Corresponding FileStatus object    */
 specifier|static
 specifier|public
 name|FileStatus
@@ -1305,10 +1256,10 @@ name|Path
 name|src
 parameter_list|,
 name|String
-name|chksumString
+name|checksumString
 parameter_list|,
 name|HiveConf
-name|conf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1322,12 +1273,12 @@ name|src
 operator|.
 name|getFileSystem
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|chksumString
+name|checksumString
 operator|==
 literal|null
 condition|)
@@ -1359,17 +1310,17 @@ name|getFileStatus
 argument_list|(
 name|getCMPath
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|,
-name|chksumString
+name|checksumString
 argument_list|)
 argument_list|)
 return|;
 block|}
 name|String
-name|currentChksumString
+name|currentChecksumString
 init|=
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|src
 argument_list|,
@@ -1378,15 +1329,15 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|currentChksumString
+name|currentChecksumString
 operator|==
 literal|null
 operator|||
-name|chksumString
+name|checksumString
 operator|.
 name|equals
 argument_list|(
-name|currentChksumString
+name|currentChecksumString
 argument_list|)
 condition|)
 block|{
@@ -1408,9 +1359,9 @@ name|getFileStatus
 argument_list|(
 name|getCMPath
 argument_list|(
-name|conf
+name|hiveConf
 argument_list|,
-name|chksumString
+name|checksumString
 argument_list|)
 argument_list|)
 return|;
@@ -1892,7 +1843,6 @@ block|}
 block|}
 block|}
 comment|// Schedule CMClearer thread. Will be invoked by metastore
-specifier|public
 specifier|static
 name|void
 name|scheduleCMClearer

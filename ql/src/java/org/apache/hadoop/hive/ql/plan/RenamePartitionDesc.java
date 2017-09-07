@@ -21,6 +21,24 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|ReplicationSpec
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -70,12 +88,15 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|private
 name|String
 name|tableName
 decl_stmt|;
+specifier|private
 name|String
 name|location
 decl_stmt|;
+specifier|private
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -84,6 +105,7 @@ name|String
 argument_list|>
 name|oldPartSpec
 decl_stmt|;
+specifier|private
 name|LinkedHashMap
 argument_list|<
 name|String
@@ -92,12 +114,16 @@ name|String
 argument_list|>
 name|newPartSpec
 decl_stmt|;
+specifier|private
+name|ReplicationSpec
+name|replicationSpec
+decl_stmt|;
 comment|/**    * For serialization only.    */
 specifier|public
 name|RenamePartitionDesc
 parameter_list|()
 block|{   }
-comment|/**    * @param dbName    *          database to add to.    * @param tableName    *          table to add to.    * @param oldPartSpec    *          old partition specification.    * @param newPartSpec    *          new partition specification.    */
+comment|/**    * @param tableName    *          table to add to.    * @param oldPartSpec    *          old partition specification.    * @param newPartSpec    *          new partition specification.    */
 specifier|public
 name|RenamePartitionDesc
 parameter_list|(
@@ -119,6 +145,9 @@ argument_list|,
 name|String
 argument_list|>
 name|newPartSpec
+parameter_list|,
+name|ReplicationSpec
+name|replicationSpec
 parameter_list|)
 block|{
 name|this
@@ -156,6 +185,12 @@ argument_list|>
 argument_list|(
 name|newPartSpec
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|replicationSpec
+operator|=
+name|replicationSpec
 expr_stmt|;
 block|}
 comment|/**    * @return the table we're going to add the partitions to.    */
@@ -281,6 +316,18 @@ name|newPartSpec
 operator|=
 name|partSpec
 expr_stmt|;
+block|}
+comment|/**    * @return what kind of replication scope this rename is running under.    * This can result in a "RENAME IF NEWER THAN" kind of semantic    */
+specifier|public
+name|ReplicationSpec
+name|getReplicationSpec
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|replicationSpec
+return|;
 block|}
 block|}
 end_class

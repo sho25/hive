@@ -58,7 +58,7 @@ name|SQLSERVER
 block|,
 name|OTHER
 block|;
-comment|/**    * Determine the database product type    * @param conn database connection    * @return database product type    */
+comment|/**    * Determine the database product type    * @param productName string to defer database connection    * @return database product type    */
 specifier|public
 specifier|static
 name|DatabaseProduct

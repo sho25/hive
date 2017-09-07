@@ -240,8 +240,6 @@ argument_list|,
 name|cleanupScript
 argument_list|,
 literal|false
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// do a one time initialization

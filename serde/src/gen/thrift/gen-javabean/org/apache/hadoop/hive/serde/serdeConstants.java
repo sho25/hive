@@ -425,7 +425,7 @@ specifier|final
 name|String
 name|COLLECTION_DELIM
 init|=
-literal|"colelction.delim"
+literal|"collection.delim"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -623,9 +623,9 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 init|=
-literal|"timestamp with time zone"
+literal|"timestamp with local time zone"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -839,7 +839,7 @@ name|PrimitiveTypes
 operator|.
 name|add
 argument_list|(
-literal|"timestamp with time zone"
+literal|"timestamp with local time zone"
 argument_list|)
 expr_stmt|;
 block|}

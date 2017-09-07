@@ -68,6 +68,12 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
 comment|/**    * Get the map of partition keyvalues.  Will be null if this insert is to a table and not a    * partition.    * @return Map of partition keyvalues, or null.    */
 specifier|public
 specifier|abstract

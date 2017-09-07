@@ -3225,54 +3225,6 @@ name|driver
 operator|.
 name|compileAndRespond
 argument_list|(
-literal|"insert overwrite table T10 select a, b from T11"
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-name|ErrorMsg
-operator|.
-name|NO_INSERT_OVERWRITE_WITH_ACID
-operator|.
-name|getErrorCode
-argument_list|()
-argument_list|,
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|cpr
-operator|.
-name|getErrorMessage
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"INSERT OVERWRITE not allowed on table default.t10 with OutputFormat"
-operator|+
-literal|" that implements AcidOutputFormat while transaction manager that supports ACID is in use"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|useDummyTxnManagerTemporarily
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
-name|driver
-operator|.
-name|compileAndRespond
-argument_list|(
 literal|"update T10 set a=0 where b=1"
 argument_list|)
 expr_stmt|;

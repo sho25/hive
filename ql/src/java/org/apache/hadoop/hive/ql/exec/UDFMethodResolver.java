@@ -64,6 +64,8 @@ comment|/**  * The UDF Method resolver interface. A user can plugin a resolver t
 end_comment
 
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|UDFMethodResolver

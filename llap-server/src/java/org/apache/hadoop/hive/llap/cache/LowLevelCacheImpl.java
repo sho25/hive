@@ -1489,6 +1489,7 @@ name|getOffset
 argument_list|()
 condition|)
 block|{
+comment|// Cached buffer has the same (or lower) offset as the requested buffer.
 if|if
 condition|(
 name|currentNotCached
@@ -1502,8 +1503,11 @@ name|getEnd
 argument_list|()
 condition|)
 block|{
-comment|// we assume it's always "==" now
 comment|// Replace the entire current DiskRange with new cached range.
+comment|// In case of an inexact match in either of the below it may throw. We do not currently
+comment|// support the case where the caller requests a single cache buffer via multiple smaller
+comment|// sub-ranges; if that happens, this may throw. Noone does it now, though.
+comment|// TODO: should we actively assert here for cache buffers larger than range?
 name|currentNotCached
 operator|.
 name|replaceSelfWith
@@ -1517,7 +1521,8 @@ return|;
 block|}
 else|else
 block|{
-comment|// Insert the new cache range before the disk range.
+comment|// This cache range is a prefix of the requested one; the above also applies.
+comment|// The cache may still contain the rest of the requested range, so don't set gotAllData.
 name|currentNotCached
 operator|.
 name|insertPartBefore
@@ -1530,9 +1535,7 @@ name|currentNotCached
 return|;
 block|}
 block|}
-else|else
-block|{
-comment|// There's some part of current buffer that is not cached.
+comment|// Some part of the requested range is not cached - the cached offset is past the requested.
 if|if
 condition|(
 name|gotAllData
@@ -1547,53 +1550,12 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-assert|assert
-name|currentNotCached
-operator|.
-name|getOffset
-argument_list|()
-operator|<
-name|currentCached
-operator|.
-name|getOffset
-argument_list|()
-operator|||
-name|currentNotCached
-operator|.
-name|prev
-operator|==
-literal|null
-operator|||
-name|currentNotCached
-operator|.
-name|prev
-operator|.
-name|getEnd
-argument_list|()
-operator|<=
-name|currentCached
-operator|.
-name|getOffset
-argument_list|()
-assert|;
-name|long
-name|endOffset
-init|=
-name|currentNotCached
-operator|.
-name|getEnd
-argument_list|()
-decl_stmt|;
-name|currentNotCached
-operator|.
-name|insertPartAfter
-argument_list|(
-name|currentCached
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
-name|endOffset
+name|currentNotCached
+operator|.
+name|getEnd
+argument_list|()
 operator|<=
 name|currentCached
 operator|.
@@ -1601,17 +1563,29 @@ name|getEnd
 argument_list|()
 condition|)
 block|{
-comment|// we assume it's always "==" now
+comment|// The cache buffer comprises the tail of the requested range (and possibly overshoots it).
+comment|// The same as above applies - may throw if cache buffer is larger than the requested range,
+comment|// and there's another range after this that starts in the middle of this cache buffer.
+comment|// Currently, we cache at exact offsets, so the latter should never happen.
+name|currentNotCached
+operator|.
+name|insertPartAfter
+argument_list|(
+name|currentCached
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
-comment|// No more matches expected...
+comment|// No more matches expected.
 block|}
 else|else
 block|{
-comment|// Insert the new disk range after the cache range. TODO: not strictly necessary yet?
-name|currentNotCached
-operator|=
+comment|// The cached buffer is in the middle of the requested range.
+comment|// The remaining tail of the latter may still be available further.
+name|DiskRangeList
+name|tail
+init|=
 operator|new
 name|DiskRangeList
 argument_list|(
@@ -1620,20 +1594,29 @@ operator|.
 name|getEnd
 argument_list|()
 argument_list|,
-name|endOffset
+name|currentNotCached
+operator|.
+name|getEnd
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|currentNotCached
+operator|.
+name|insertPartAfter
+argument_list|(
+name|currentCached
 argument_list|)
 expr_stmt|;
 name|currentCached
 operator|.
 name|insertAfter
 argument_list|(
-name|currentNotCached
+name|tail
 argument_list|)
 expr_stmt|;
 return|return
-name|currentNotCached
+name|tail
 return|;
-block|}
 block|}
 block|}
 specifier|private
@@ -2335,9 +2318,6 @@ name|fake
 operator|.
 name|initialize
 argument_list|(
-operator|-
-literal|1
-argument_list|,
 name|fakeBuf
 argument_list|,
 literal|0
@@ -2505,11 +2485,6 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
-name|boolean
-name|isEmpty
-init|=
-literal|true
-decl_stmt|;
 while|while
 condition|(
 name|subIter
@@ -2594,13 +2569,6 @@ name|subIter
 operator|.
 name|remove
 argument_list|()
-expr_stmt|;
-block|}
-else|else
-block|{
-name|isEmpty
-operator|=
-literal|false
 expr_stmt|;
 block|}
 operator|--
@@ -2887,6 +2855,10 @@ decl_stmt|,
 name|allEvicted
 init|=
 literal|0
+decl_stmt|,
+name|allMoving
+init|=
+literal|0
 decl_stmt|;
 for|for
 control|(
@@ -2940,6 +2912,10 @@ decl_stmt|,
 name|fileEvicted
 init|=
 literal|0
+decl_stmt|,
+name|fileMoving
+init|=
+literal|0
 decl_stmt|;
 if|if
 condition|(
@@ -2987,7 +2963,7 @@ operator|.
 name|getValue
 argument_list|()
 operator|.
-name|incRef
+name|tryIncRef
 argument_list|()
 decl_stmt|;
 if|if
@@ -2997,9 +2973,33 @@ operator|<
 literal|0
 condition|)
 block|{
+if|if
+condition|(
+name|newRc
+operator|==
+name|LlapAllocatorBuffer
+operator|.
+name|INCREF_EVICTED
+condition|)
+block|{
 operator|++
 name|fileEvicted
 expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|newRc
+operator|==
+name|LlapAllocatorBuffer
+operator|.
+name|INCREF_FAILED
+condition|)
+block|{
+operator|++
+name|fileMoving
+expr_stmt|;
+block|}
 continue|continue;
 block|}
 try|try
@@ -3047,6 +3047,10 @@ name|allEvicted
 operator|+=
 name|fileEvicted
 expr_stmt|;
+name|allMoving
+operator|+=
+name|fileMoving
+expr_stmt|;
 name|sb
 operator|.
 name|append
@@ -3070,7 +3074,11 @@ literal|" unlocked, "
 operator|+
 name|fileEvicted
 operator|+
-literal|" evicted"
+literal|" evicted, "
+operator|+
+name|fileMoving
+operator|+
+literal|" being moved"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3102,7 +3110,11 @@ literal|" unlocked, "
 operator|+
 name|allEvicted
 operator|+
-literal|" evicted"
+literal|" evicted, "
+operator|+
+name|allMoving
+operator|+
+literal|" being moved"
 argument_list|)
 expr_stmt|;
 block|}

@@ -752,6 +752,47 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// Special-casing for ADMIN-level operations that do not require object checking.
+if|if
+condition|(
+name|Operation2Privilege
+operator|.
+name|isAdminPrivOperation
+argument_list|(
+name|hiveOpType
+argument_list|)
+condition|)
+block|{
+comment|// Require ADMIN privilege
+if|if
+condition|(
+operator|!
+name|privController
+operator|.
+name|isUserAdmin
+argument_list|()
+condition|)
+block|{
+name|deniedMessages
+operator|.
+name|add
+argument_list|(
+name|SQLPrivTypeGrant
+operator|.
+name|ADMIN_PRIV
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" on "
+operator|+
+name|ioType
+argument_list|)
+expr_stmt|;
+block|}
+return|return;
+comment|// Ignore object, fail if not admin, succeed if admin.
+block|}
 comment|// Compare required privileges and available privileges for each hive object
 for|for
 control|(

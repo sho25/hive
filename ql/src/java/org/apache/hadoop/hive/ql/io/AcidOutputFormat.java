@@ -101,6 +101,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -237,7 +253,14 @@ name|maximumTransactionId
 decl_stmt|;
 specifier|private
 name|int
-name|bucket
+name|bucketId
+decl_stmt|;
+comment|/**      * Based on {@link org.apache.hadoop.hive.ql.metadata.Hive#mvFile(HiveConf, FileSystem, Path, FileSystem, Path, boolean, boolean)}      * _copy_N starts with 1.      */
+specifier|private
+name|int
+name|copyNumber
+init|=
+literal|0
 decl_stmt|;
 specifier|private
 name|PrintStream
@@ -498,7 +521,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * The bucket that is included in this file.      * @param bucket the bucket number      * @return this      */
+comment|/**      * The bucketId that is included in this file.      * @param bucket the bucketId number      * @return this      */
 specifier|public
 name|Options
 name|bucket
@@ -509,9 +532,28 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|bucket
+name|bucketId
 operator|=
 name|bucket
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**      * Multiple inserts into legacy (pre-acid) tables can generate multiple copies of each bucket      * file.      * @see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD      * @param copyNumber the number of the copy (> 0)      * @return this      */
+specifier|public
+name|Options
+name|copyNumber
+parameter_list|(
+name|int
+name|copyNumber
+parameter_list|)
+block|{
+name|this
+operator|.
+name|copyNumber
+operator|=
+name|copyNumber
 expr_stmt|;
 return|return
 name|this
@@ -738,11 +780,11 @@ return|;
 block|}
 specifier|public
 name|int
-name|getBucket
+name|getBucketId
 parameter_list|()
 block|{
 return|return
-name|bucket
+name|bucketId
 return|;
 block|}
 specifier|public
@@ -778,6 +820,15 @@ parameter_list|()
 block|{
 return|return
 name|statementId
+return|;
+block|}
+specifier|public
+name|int
+name|getCopyNumber
+parameter_list|()
+block|{
+return|return
+name|copyNumber
 return|;
 block|}
 specifier|public

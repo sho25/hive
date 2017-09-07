@@ -1009,6 +1009,56 @@ name|scratchLongs
 argument_list|)
 return|;
 block|}
+comment|/*    * Deserializes 64-bit decimals up to the maximum 64-bit precision (18 decimal digits).    */
+specifier|protected
+name|void
+name|fastDeserialize64
+parameter_list|(
+name|long
+name|decimalLong
+parameter_list|,
+name|int
+name|scale
+parameter_list|)
+block|{
+name|FastHiveDecimalImpl
+operator|.
+name|fastDeserialize64
+argument_list|(
+name|decimalLong
+argument_list|,
+name|scale
+argument_list|,
+name|this
+argument_list|)
+expr_stmt|;
+block|}
+comment|/*    * Serializes decimal64 up to the maximum 64-bit precision (18 decimal digits).    */
+specifier|protected
+name|long
+name|fastSerialize64
+parameter_list|(
+name|int
+name|scale
+parameter_list|)
+block|{
+return|return
+name|FastHiveDecimalImpl
+operator|.
+name|fastSerialize64
+argument_list|(
+name|scale
+argument_list|,
+name|fastSignum
+argument_list|,
+name|fast1
+argument_list|,
+name|fast0
+argument_list|,
+name|fastScale
+argument_list|)
+return|;
+block|}
 comment|// The fastBigIntegerBytes method returns 3 56 bit (7 byte) words and a possible sign byte.
 comment|// However, the fastBigIntegerBytes can take on trailing zeroes -- so make it larger.
 specifier|protected

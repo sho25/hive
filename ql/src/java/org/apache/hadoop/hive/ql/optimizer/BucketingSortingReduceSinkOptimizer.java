@@ -3372,9 +3372,30 @@ name|bucketPositions
 operator|.
 name|size
 argument_list|()
+operator|||
+name|selectDesc
+operator|.
+name|getColList
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|!=
+name|fsOp
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getSignature
+argument_list|()
+operator|.
+name|size
+argument_list|()
 condition|)
 block|{
 comment|// Some columns in select are pruned. This may happen if those are constants.
+comment|// TODO: the best solution is to hook the operator before fs with the select operator.
+comment|// See smb_mapjoin_20.q for more details.
 return|return
 literal|null
 return|;

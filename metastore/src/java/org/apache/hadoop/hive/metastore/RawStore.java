@@ -447,6 +447,42 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|NotificationEventsCountRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|NotificationEventsCountResponse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Partition
 import|;
 end_import
@@ -821,6 +857,11 @@ specifier|public
 specifier|abstract
 name|boolean
 name|commitTransaction
+parameter_list|()
+function_decl|;
+specifier|public
+name|boolean
+name|isActiveTransaction
 parameter_list|()
 function_decl|;
 comment|/**    * Rolls back the current transaction if it is active    */
@@ -2286,7 +2327,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidInputException    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    *    */
 specifier|public
 specifier|abstract
 name|ColumnStatistics
@@ -2714,7 +2755,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @return    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
 specifier|public
 name|void
 name|dropFunction
@@ -2859,6 +2900,15 @@ specifier|public
 name|CurrentNotificationEventId
 name|getCurrentNotificationEventId
 parameter_list|()
+function_decl|;
+comment|/**    * Get the number of events corresponding to given database with fromEventId.    * This is intended for use by the repl commands to track the progress of incremental dump.    * @return    */
+specifier|public
+name|NotificationEventsCountResponse
+name|getNotificationEventsCount
+parameter_list|(
+name|NotificationEventsCountRequest
+name|rqst
+parameter_list|)
 function_decl|;
 comment|/*    * Flush any catalog objects held by the metastore implementation.  Note that this does not    * flush statistics objects.  This should be called at the beginning of each query.    */
 specifier|public
@@ -3055,7 +3105,10 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|createTableWithConstraints
 parameter_list|(
 name|Table
@@ -3105,7 +3158,10 @@ parameter_list|)
 throws|throws
 name|NoSuchObjectException
 function_decl|;
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addPrimaryKeys
 parameter_list|(
 name|List
@@ -3119,7 +3175,10 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addForeignKeys
 parameter_list|(
 name|List
@@ -3133,7 +3192,10 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addUniqueConstraints
 parameter_list|(
 name|List
@@ -3147,7 +3209,10 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-name|void
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|addNotNullConstraints
 parameter_list|(
 name|List

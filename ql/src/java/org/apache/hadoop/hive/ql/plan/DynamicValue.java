@@ -539,6 +539,17 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|cache
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Get the registry
 name|DynamicValueRegistry
 name|valueRegistry

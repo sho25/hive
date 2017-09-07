@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|FileNotFoundException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|text
 operator|.
 name|MessageFormat
@@ -93,6 +103,54 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hdfs
+operator|.
+name|protocol
+operator|.
+name|DSQuotaExceededException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hdfs
+operator|.
+name|protocol
+operator|.
+name|NSQuotaExceededException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hdfs
+operator|.
+name|protocol
+operator|.
+name|UnresolvedPathException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|ql
@@ -138,6 +196,20 @@ operator|.
 name|AlterTableDesc
 operator|.
 name|AlterTableTypes
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|AccessControlException
 import|;
 end_import
 
@@ -1809,6 +1881,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|LOAD_DATA_ON_ACID_TABLE
+argument_list|(
+literal|10266
+argument_list|,
+literal|"LOAD DATA... statement is not supported on transactional table {0}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
@@ -1940,17 +2021,6 @@ operator|+
 literal|" does not support these operations."
 argument_list|)
 block|,
-name|NO_INSERT_OVERWRITE_WITH_ACID
-argument_list|(
-literal|10295
-argument_list|,
-literal|"INSERT OVERWRITE not allowed on table {0} with OutputFormat "
-operator|+
-literal|"that implements AcidOutputFormat while transaction manager that supports ACID is in use"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|VALUES_TABLE_CONSTRUCTOR_NOT_SUPPORTED
 argument_list|(
 literal|10296
@@ -1962,9 +2032,9 @@ name|ACID_OP_ON_NONACID_TABLE
 argument_list|(
 literal|10297
 argument_list|,
-literal|"Attempt to do update or delete on table {0} that does not use "
+literal|"Attempt to do update or delete on table {0} that is "
 operator|+
-literal|"an AcidOutputFormat or is not bucketed"
+literal|"not transactional"
 argument_list|,
 literal|true
 argument_list|)
@@ -2314,7 +2384,7 @@ name|INVALID_JOIN_CONDITION
 argument_list|(
 literal|10407
 argument_list|,
-literal|"Error parsing condition in outer join"
+literal|"Error parsing condition in join"
 argument_list|)
 block|,
 name|INVALID_TARGET_COLUMN_IN_SET_CLAUSE
@@ -2331,6 +2401,13 @@ argument_list|(
 literal|10409
 argument_list|,
 literal|"Expression in GROUPING function not present in GROUP BY"
+argument_list|)
+block|,
+name|ALTER_TABLE_NON_PARTITIONED_TABLE_CASCADE_NOT_SUPPORTED
+argument_list|(
+literal|10410
+argument_list|,
+literal|"Alter table with non-partitioned table does not support cascade"
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//
@@ -2415,6 +2492,73 @@ argument_list|(
 literal|20008
 argument_list|,
 literal|"Operation {0} is not allowed without an active transaction"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ACCESS_DENIED
+argument_list|(
+literal|20009
+argument_list|,
+literal|"Access denied: {0}"
+argument_list|,
+literal|"42000"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|QUOTA_EXCEEDED
+argument_list|(
+literal|20010
+argument_list|,
+literal|"Quota exceeded: {0}"
+argument_list|,
+literal|"64000"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|UNRESOLVED_PATH
+argument_list|(
+literal|20011
+argument_list|,
+literal|"Unresolved path: {0}"
+argument_list|,
+literal|"64000"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|FILE_NOT_FOUND
+argument_list|(
+literal|20012
+argument_list|,
+literal|"File not found: {0}"
+argument_list|,
+literal|"64000"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|WRONG_FILE_FORMAT
+argument_list|(
+literal|20013
+argument_list|,
+literal|"Wrong file format. Please check the file's format."
+argument_list|,
+literal|"64000"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// An exception from runtime that will show the full stack to client
+name|UNRESOLVED_RT_EXCEPTION
+argument_list|(
+literal|29999
+argument_list|,
+literal|"Runtime Error: {0}"
+argument_list|,
+literal|"58004"
 argument_list|,
 literal|true
 argument_list|)
@@ -2815,6 +2959,65 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
+comment|/**    * Given a remote runtime exception, returns the ErrorMsg object associated with it.    * @param e An exception    * @return ErrorMsg    */
+specifier|public
+specifier|static
+name|ErrorMsg
+name|getErrorMsg
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|instanceof
+name|AccessControlException
+condition|)
+return|return
+name|ACCESS_DENIED
+return|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|NSQuotaExceededException
+condition|)
+return|return
+name|QUOTA_EXCEEDED
+return|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|DSQuotaExceededException
+condition|)
+return|return
+name|QUOTA_EXCEEDED
+return|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|UnresolvedPathException
+condition|)
+return|return
+name|UNRESOLVED_PATH
+return|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|FileNotFoundException
+condition|)
+return|return
+name|FILE_NOT_FOUND
+return|;
+return|return
+name|UNRESOLVED_RT_EXCEPTION
+return|;
 block|}
 comment|/**    * Given an error message string, returns the ErrorMsg object associated with it.    * @param mesg An error message string    * @return ErrorMsg    */
 specifier|public

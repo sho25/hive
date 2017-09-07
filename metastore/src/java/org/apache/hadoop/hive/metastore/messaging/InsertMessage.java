@@ -86,6 +86,12 @@ name|String
 name|getTable
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|String
+name|getTableType
+parameter_list|()
+function_decl|;
 comment|/**    * Getter for the replace flag being insert into/overwrite    * @return Replace flag to represent INSERT INTO or INSERT OVERWRITE (Boolean).    */
 specifier|public
 specifier|abstract

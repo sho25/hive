@@ -79,9 +79,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
+name|metastore
 operator|.
-name|ShimLoader
+name|security
+operator|.
+name|HadoopThriftAuthBridge
 import|;
 end_import
 
@@ -133,9 +135,9 @@ name|startMetaStore
 argument_list|(
 name|port
 argument_list|,
-name|ShimLoader
+name|HadoopThriftAuthBridge
 operator|.
-name|getHadoopThriftAuthBridge
+name|getBridge
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -224,9 +226,9 @@ name|startMetaStore
 argument_list|(
 name|port
 argument_list|,
-name|ShimLoader
+name|HadoopThriftAuthBridge
 operator|.
-name|getHadoopThriftAuthBridge
+name|getBridge
 argument_list|()
 argument_list|)
 expr_stmt|;

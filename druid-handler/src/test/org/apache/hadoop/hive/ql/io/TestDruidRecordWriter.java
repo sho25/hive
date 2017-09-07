@@ -1179,6 +1179,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+literal|0L
 argument_list|)
 decl_stmt|;
 name|LocalFileSystem
@@ -1491,10 +1493,6 @@ literal|"unique_hosts"
 argument_list|)
 argument_list|,
 literal|null
-argument_list|,
-name|Granularities
-operator|.
-name|NONE
 argument_list|)
 decl_stmt|;
 name|List

@@ -265,7 +265,7 @@ name|hashTableKind
 init|=
 name|vectorDesc
 operator|.
-name|hashTableKind
+name|getHashTableKind
 argument_list|()
 decl_stmt|;
 name|HashTableKeyType
@@ -273,7 +273,7 @@ name|hashTableKeyType
 init|=
 name|vectorDesc
 operator|.
-name|hashTableKeyType
+name|getHashTableKeyType
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -281,7 +281,7 @@ name|minMaxEnabled
 init|=
 name|vectorDesc
 operator|.
-name|minMaxEnabled
+name|getMinMaxEnabled
 argument_list|()
 decl_stmt|;
 name|VectorMapJoinOptimizedHashTable

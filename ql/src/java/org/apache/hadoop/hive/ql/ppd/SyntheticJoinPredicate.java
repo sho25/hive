@@ -717,12 +717,8 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|SPARK_DYNAMIC_PARTITION_PRUNING
-argument_list|)
+name|isSparkDPPAny
+argument_list|()
 operator|)
 condition|)
 block|{

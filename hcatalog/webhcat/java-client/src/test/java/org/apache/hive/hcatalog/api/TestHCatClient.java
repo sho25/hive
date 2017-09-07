@@ -7759,6 +7759,46 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|private
+name|HCatClient
+name|sourceMetaStore
+parameter_list|()
+throws|throws
+name|HCatException
+block|{
+return|return
+name|HCatClient
+operator|.
+name|create
+argument_list|(
+operator|new
+name|Configuration
+argument_list|(
+name|hcatConf
+argument_list|)
+argument_list|)
+return|;
+block|}
+specifier|private
+name|HCatClient
+name|targetMetaStore
+parameter_list|()
+throws|throws
+name|HCatException
+block|{
+return|return
+name|HCatClient
+operator|.
+name|create
+argument_list|(
+operator|new
+name|Configuration
+argument_list|(
+name|replicationTargetHCatConf
+argument_list|)
+argument_list|)
+return|;
+block|}
 comment|/**    * Test for detecting schema-changes for an HCatalog table, across 2 different HCat instances.    * A table is created with the same schema on 2 HCat instances. The table-schema is modified on the source HCat    * instance (columns, I/O formats, SerDe definitions, etc.). The table metadata is compared between source    * and target, the changes are detected and propagated to target.    * @throws Exception    */
 annotation|@
 name|Test
@@ -7774,20 +7814,6 @@ block|{
 name|startReplicationTargetMetaStoreIfRequired
 argument_list|()
 expr_stmt|;
-name|HCatClient
-name|sourceMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|hcatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
 specifier|final
 name|String
 name|dbName
@@ -7801,6 +7827,7 @@ init|=
 literal|"myTable"
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -7816,6 +7843,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -7922,6 +7950,7 @@ name|partitionSchema
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -7940,6 +7969,7 @@ comment|// Verify that the sourceTable was created successfully.
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -7960,27 +7990,15 @@ name|String
 name|tableStringRep
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|serializeTable
 argument_list|(
 name|sourceTable
 argument_list|)
 decl_stmt|;
-name|HCatClient
 name|targetMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|replicationTargetHCatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|targetMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -7996,6 +8014,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -8014,6 +8033,7 @@ name|HCatTable
 name|targetTable
 init|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|deserializeTable
 argument_list|(
@@ -8038,6 +8058,7 @@ argument_list|)
 expr_stmt|;
 comment|// Create table on Target.
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -8056,6 +8077,7 @@ comment|// Verify that the created table is identical to sourceTable.
 name|targetTable
 operator|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -8175,6 +8197,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|updateTableSchema
 argument_list|(
@@ -8188,6 +8211,7 @@ expr_stmt|;
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -8310,6 +8334,7 @@ argument_list|)
 expr_stmt|;
 comment|// Replicate the changes to the replicated-table.
 name|targetMetaStore
+argument_list|()
 operator|.
 name|updateTableSchema
 argument_list|(
@@ -8330,6 +8355,7 @@ expr_stmt|;
 name|targetTable
 operator|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -8399,20 +8425,6 @@ block|{
 name|startReplicationTargetMetaStoreIfRequired
 argument_list|()
 expr_stmt|;
-name|HCatClient
-name|sourceMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|hcatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
 specifier|final
 name|String
 name|dbName
@@ -8426,6 +8438,7 @@ init|=
 literal|"myTable"
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -8441,6 +8454,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -8559,6 +8573,7 @@ literal|"Source table."
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -8577,6 +8592,7 @@ comment|// Verify that the sourceTable was created successfully.
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -8647,6 +8663,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|addPartition
 argument_list|(
@@ -8668,6 +8685,7 @@ argument_list|,
 literal|1
 argument_list|,
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartitions
 argument_list|(
@@ -8685,6 +8703,7 @@ name|HCatPartition
 name|addedPartition_1
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartition
 argument_list|(
@@ -8771,21 +8790,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Replicate table definition.
-name|HCatClient
 name|targetMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|replicationTargetHCatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|targetMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -8801,6 +8807,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -8820,10 +8827,12 @@ name|HCatTable
 name|targetTable
 init|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|deserializeTable
 argument_list|(
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|serializeTable
 argument_list|(
@@ -8832,6 +8841,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -8849,6 +8859,7 @@ expr_stmt|;
 name|targetTable
 operator|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -8968,6 +8979,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|updateTableSchema
 argument_list|(
@@ -8981,6 +8993,7 @@ expr_stmt|;
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -9044,6 +9057,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|addPartition
 argument_list|(
@@ -9067,6 +9081,7 @@ argument_list|>
 name|sourcePartitions
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartitions
 argument_list|(
@@ -9130,6 +9145,7 @@ argument_list|)
 expr_stmt|;
 block|}
 name|targetMetaStore
+argument_list|()
 operator|.
 name|addPartitions
 argument_list|(
@@ -9143,6 +9159,7 @@ argument_list|>
 name|targetPartitions
 init|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getPartitions
 argument_list|(
@@ -9324,20 +9341,6 @@ block|{
 name|startReplicationTargetMetaStoreIfRequired
 argument_list|()
 expr_stmt|;
-name|HCatClient
-name|sourceMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|hcatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
 specifier|final
 name|String
 name|dbName
@@ -9351,6 +9354,7 @@ init|=
 literal|"myTable"
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -9366,6 +9370,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -9484,6 +9489,7 @@ literal|"Source table."
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -9502,6 +9508,7 @@ comment|// Verify that the sourceTable was created successfully.
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -9572,6 +9579,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|addPartition
 argument_list|(
@@ -9593,6 +9601,7 @@ argument_list|,
 literal|1
 argument_list|,
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartitions
 argument_list|(
@@ -9610,6 +9619,7 @@ name|HCatPartition
 name|addedPartition_1
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartition
 argument_list|(
@@ -9696,21 +9706,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Replicate table definition.
-name|HCatClient
 name|targetMetaStore
-init|=
-name|HCatClient
-operator|.
-name|create
-argument_list|(
-operator|new
-name|Configuration
-argument_list|(
-name|replicationTargetHCatConf
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|targetMetaStore
+argument_list|()
 operator|.
 name|dropDatabase
 argument_list|(
@@ -9726,6 +9723,7 @@ name|CASCADE
 argument_list|)
 expr_stmt|;
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createDatabase
 argument_list|(
@@ -9745,10 +9743,12 @@ name|HCatTable
 name|targetTable
 init|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|deserializeTable
 argument_list|(
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|serializeTable
 argument_list|(
@@ -9757,6 +9757,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|targetMetaStore
+argument_list|()
 operator|.
 name|createTable
 argument_list|(
@@ -9774,6 +9775,7 @@ expr_stmt|;
 name|targetTable
 operator|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -9893,6 +9895,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|updateTableSchema
 argument_list|(
@@ -9906,6 +9909,7 @@ expr_stmt|;
 name|sourceTable
 operator|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getTable
 argument_list|(
@@ -9969,6 +9973,7 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|addPartition
 argument_list|(
@@ -9989,6 +9994,7 @@ name|HCatPartitionSpec
 name|sourcePartitionSpec
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|getPartitionSpecs
 argument_list|(
@@ -10020,6 +10026,7 @@ argument_list|>
 name|partitionSpecString
 init|=
 name|sourceMetaStore
+argument_list|()
 operator|.
 name|serializePartitionSpec
 argument_list|(
@@ -10031,6 +10038,7 @@ name|HCatPartitionSpec
 name|targetPartitionSpec
 init|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|deserializePartitionSpec
 argument_list|(
@@ -10047,6 +10055,7 @@ name|size
 argument_list|()
 argument_list|,
 name|targetMetaStore
+argument_list|()
 operator|.
 name|addPartitionSpec
 argument_list|(
@@ -10058,6 +10067,7 @@ comment|// Retrieve partitions.
 name|targetPartitionSpec
 operator|=
 name|targetMetaStore
+argument_list|()
 operator|.
 name|getPartitionSpecs
 argument_list|(

@@ -138,7 +138,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 argument_list|>
 block|{
@@ -244,7 +244,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|next
 parameter_list|()
@@ -271,7 +271,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|record
 init|=
@@ -280,7 +280,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 argument_list|(
 name|numColumns
@@ -313,12 +313,12 @@ operator|+
 literal|1
 argument_list|)
 decl_stmt|;
-name|String
+name|Object
 name|value
 init|=
 name|rs
 operator|.
-name|getString
+name|getObject
 argument_list|(
 name|i
 operator|+

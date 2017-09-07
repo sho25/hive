@@ -169,6 +169,7 @@ literal|"spark.client.authentication.secret"
 decl_stmt|;
 specifier|private
 specifier|static
+specifier|volatile
 name|RpcServer
 name|server
 init|=
@@ -178,7 +179,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Object
-name|stopLock
+name|serverLock
 init|=
 operator|new
 name|Object
@@ -187,7 +188,6 @@ decl_stmt|;
 comment|/**    * Initializes the SparkClient library. Must be called before creating client instances.    *    * @param conf Map containing configuration parameters for the client library.    */
 specifier|public
 specifier|static
-specifier|synchronized
 name|void
 name|initialize
 parameter_list|(
@@ -201,6 +201,18 @@ name|conf
 parameter_list|)
 throws|throws
 name|IOException
+block|{
+if|if
+condition|(
+name|server
+operator|==
+literal|null
+condition|)
+block|{
+synchronized|synchronized
+init|(
+name|serverLock
+init|)
 block|{
 if|if
 condition|(
@@ -237,6 +249,8 @@ throw|;
 block|}
 block|}
 block|}
+block|}
+block|}
 comment|/** Stops the SparkClient library. */
 specifier|public
 specifier|static
@@ -253,7 +267,7 @@ condition|)
 block|{
 synchronized|synchronized
 init|(
-name|stopLock
+name|serverLock
 init|)
 block|{
 if|if
@@ -279,7 +293,6 @@ block|}
 comment|/**    * Instantiates a new Spark client.    *    * @param sparkConf Configuration for the remote Spark application, contains spark.* properties.    * @param hiveConf Configuration for Hive, contains hive.* properties.    */
 specifier|public
 specifier|static
-specifier|synchronized
 name|SparkClient
 name|createClient
 parameter_list|(

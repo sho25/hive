@@ -262,6 +262,7 @@ name|Integer
 argument_list|>
 name|stmtIds
 decl_stmt|;
+comment|//would be useful to have enum for Type: insert/delete/load data
 specifier|public
 name|DeltaMetaData
 parameter_list|()
@@ -281,6 +282,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**      * @param stmtIds delta dir suffixes when a single txn writes> 1 delta in the same partition      */
 name|DeltaMetaData
 parameter_list|(
 name|long
@@ -475,6 +477,30 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+comment|//? is Type - when implemented
+return|return
+literal|"Delta(?,"
+operator|+
+name|minTxnId
+operator|+
+literal|","
+operator|+
+name|maxTxnId
+operator|+
+literal|","
+operator|+
+name|stmtIds
+operator|+
+literal|")"
+return|;
 block|}
 block|}
 comment|/**    * Options for controlling the record readers.    */

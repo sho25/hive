@@ -888,12 +888,12 @@ block|}
 annotation|@
 name|Override
 specifier|protected
-name|boolean
+name|int
 name|invalidate
 parameter_list|()
 block|{
 return|return
-literal|true
+name|INVALIDATE_OK
 return|;
 comment|// relies on GC, so it can always be evicted now.
 block|}

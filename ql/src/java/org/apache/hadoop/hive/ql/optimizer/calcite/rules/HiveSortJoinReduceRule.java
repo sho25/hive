@@ -515,6 +515,15 @@ operator|.
 name|offset
 argument_list|)
 decl_stmt|;
+specifier|final
+name|RelMetadataQuery
+name|mq
+init|=
+name|call
+operator|.
+name|getMetadataQuery
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|offset
@@ -528,10 +537,7 @@ operator|.
 name|fetch
 argument_list|)
 operator|>=
-name|RelMetadataQuery
-operator|.
-name|instance
-argument_list|()
+name|mq
 operator|.
 name|getRowCount
 argument_list|(

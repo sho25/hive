@@ -91,6 +91,12 @@ name|EXPORT
 block|,
 name|IMPORT
 block|,
+name|REPLDUMP
+block|,
+name|REPLLOAD
+block|,
+name|REPLSTATUS
+block|,
 name|CREATEDATABASE
 block|,
 name|DROPDATABASE
@@ -262,6 +268,8 @@ block|,
 name|ALTERDATABASE
 block|,
 name|ALTERDATABASE_OWNER
+block|,
+name|ALTERDATABASE_LOCATION
 block|,
 name|DESCDATABASE
 block|,

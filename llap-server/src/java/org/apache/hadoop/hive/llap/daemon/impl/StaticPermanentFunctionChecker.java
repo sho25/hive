@@ -271,7 +271,7 @@ expr_stmt|;
 return|return;
 block|}
 try|try
-block|{
+init|(
 name|BufferedReader
 name|r
 init|=
@@ -287,7 +287,8 @@ name|openStream
 argument_list|()
 argument_list|)
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 name|String
 name|klassName
 init|=

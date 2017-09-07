@@ -629,7 +629,7 @@ argument_list|>
 name|partialResult
 init|=
 operator|(
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>

@@ -643,9 +643,12 @@ operator|.
 name|write
 argument_list|(
 name|file
-operator|+
-literal|"\n"
 argument_list|)
+expr_stmt|;
+name|fileListWriter
+operator|.
+name|newLine
+argument_list|()
 expr_stmt|;
 block|}
 block|}

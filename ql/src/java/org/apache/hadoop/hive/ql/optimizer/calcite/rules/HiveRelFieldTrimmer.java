@@ -1998,7 +1998,7 @@ operator|)
 name|tableAccessRel
 operator|)
 operator|.
-name|getPartOrVirtualCols
+name|getVirtualCols
 argument_list|()
 argument_list|)
 expr_stmt|;

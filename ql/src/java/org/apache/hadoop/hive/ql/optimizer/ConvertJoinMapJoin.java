@@ -3864,7 +3864,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Obtain big table position for join.    *    * @param joinOp join operator    * @param context optimization context    * @param buckets bucket count for Bucket Map Join conversion consideration or reduce count    * for Dynamic Hash Join conversion consideration    * @param skipJoinTypeChecks whether to skip join type checking    * @param maxSize size threshold for Map Join conversion    * @param checkHashTableEntries whether to check threshold for distinct keys in hash table for Map Join    * @return returns big table position or -1 if it cannot be determined    * @throws SemanticException    */
+comment|/**    * Obtain big table position for join.    *    * @param joinOp join operator    * @param context optimization context    * @param buckets bucket count for Bucket Map Join conversion consideration or reduce count    * for Dynamic Hash Join conversion consideration    * @param skipJoinTypeChecks whether to skip join type checking    * @param maxSize size threshold for Map Join conversion    * @param checkMapJoinThresholds whether to check thresholds to convert to Map Join    * @return returns big table position or -1 if it cannot be determined    * @throws SemanticException    */
 specifier|public
 name|int
 name|getMapJoinConversionPos
@@ -3885,7 +3885,7 @@ name|long
 name|maxSize
 parameter_list|,
 name|boolean
-name|checkHashTableEntries
+name|checkMapJoinThresholds
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -4056,6 +4056,12 @@ name|long
 name|totalSize
 init|=
 literal|0
+decl_stmt|;
+comment|// convert to DPHJ
+name|boolean
+name|convertDPHJ
+init|=
+literal|false
 decl_stmt|;
 for|for
 control|(
@@ -4320,11 +4326,11 @@ operator|.
 name|getDataSize
 argument_list|()
 expr_stmt|;
-comment|// Check if number of distinct keys is larger than given max
-comment|// number of entries for HashMap. If it is, we do not convert.
+comment|// Check if number of distinct keys is greater than given max number of entries
+comment|// for HashMap
 if|if
 condition|(
-name|checkHashTableEntries
+name|checkMapJoinThresholds
 operator|&&
 operator|!
 name|checkNumberOfEntriesForHashTable
@@ -4337,10 +4343,10 @@ name|context
 argument_list|)
 condition|)
 block|{
-return|return
-operator|-
-literal|1
-return|;
+name|convertDPHJ
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
 elseif|else
@@ -4356,11 +4362,11 @@ name|totalSize
 operator|+=
 name|inputSize
 expr_stmt|;
-comment|// Check if number of distinct keys is larger than given max
-comment|// number of entries for HashMap. If it is, we do not convert.
+comment|// Check if number of distinct keys is greater than given max number of entries
+comment|// for HashMap
 if|if
 condition|(
-name|checkHashTableEntries
+name|checkMapJoinThresholds
 operator|&&
 operator|!
 name|checkNumberOfEntriesForHashTable
@@ -4373,10 +4379,10 @@ name|context
 argument_list|)
 condition|)
 block|{
-return|return
-operator|-
-literal|1
-return|;
+name|convertDPHJ
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
 if|if
@@ -4413,6 +4419,35 @@ operator|=
 name|currInputStat
 expr_stmt|;
 block|}
+block|}
+comment|// Check if size of data to shuffle (larger table) is less than given max size
+if|if
+condition|(
+name|checkMapJoinThresholds
+operator|&&
+name|convertDPHJ
+operator|&&
+name|checkShuffleSizeForLargeTable
+argument_list|(
+name|joinOp
+argument_list|,
+name|bigTablePosition
+argument_list|,
+name|context
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Conditions to convert to MapJoin are not met"
+argument_list|)
+expr_stmt|;
+return|return
+operator|-
+literal|1
+return|;
 block|}
 comment|// We store the total memory that this MapJoin is going to use,
 comment|// which is calculated as totalSize/buckets, with totalSize
@@ -5304,6 +5339,66 @@ comment|// skip, no semijoin branch
 continue|continue;
 block|}
 comment|// Found a semijoin branch.
+comment|// There can be more than one semijoin branch coming from the parent
+comment|// GBY Operator of the RS Operator.
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|parentGB
+init|=
+name|op
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|Operator
+argument_list|<
+name|?
+argument_list|>
+name|childRS
+range|:
+name|parentGB
+operator|.
+name|getChildOperators
+argument_list|()
+control|)
+block|{
+comment|// Get the RS and TS for this branch
+name|rs
+operator|=
+operator|(
+name|ReduceSinkOperator
+operator|)
+name|childRS
+expr_stmt|;
+name|ts
+operator|=
+name|parseContext
+operator|.
+name|getRsToSemiJoinBranchInfo
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|rs
+argument_list|)
+operator|.
+name|getTsOp
+argument_list|()
+expr_stmt|;
+assert|assert
+name|ts
+operator|!=
+literal|null
+assert|;
 for|for
 control|(
 name|Operator
@@ -5347,6 +5442,11 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+name|boolean
+name|found
+init|=
+literal|false
+decl_stmt|;
 for|for
 control|(
 name|TableScanOperator
@@ -5372,8 +5472,18 @@ argument_list|,
 name|ts
 argument_list|)
 expr_stmt|;
+name|found
+operator|=
+literal|true
+expr_stmt|;
 break|break;
 block|}
+block|}
+if|if
+condition|(
+name|found
+condition|)
+break|break;
 block|}
 block|}
 block|}
@@ -6276,7 +6386,7 @@ name|debug
 argument_list|(
 literal|"Number of different entries for HashTable is greater than the max; "
 operator|+
-literal|"we do not converting to MapJoin"
+literal|"we do not convert to MapJoin"
 argument_list|)
 expr_stmt|;
 return|return
@@ -6284,6 +6394,124 @@ literal|false
 return|;
 block|}
 comment|// We can proceed with the conversion
+return|return
+literal|true
+return|;
+block|}
+comment|/* Returns true if it passes the test, false otherwise. */
+specifier|private
+name|boolean
+name|checkShuffleSizeForLargeTable
+parameter_list|(
+name|JoinOperator
+name|joinOp
+parameter_list|,
+name|int
+name|position
+parameter_list|,
+name|OptimizeTezProcContext
+name|context
+parameter_list|)
+block|{
+name|long
+name|max
+init|=
+name|HiveConf
+operator|.
+name|getLongVar
+argument_list|(
+name|context
+operator|.
+name|parseContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVECONVERTJOINMAXSHUFFLESIZE
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|max
+operator|<
+literal|1
+condition|)
+block|{
+comment|// Max is disabled, we can safely return true
+return|return
+literal|true
+return|;
+block|}
+comment|// Evaluate
+name|ReduceSinkOperator
+name|rsOp
+init|=
+operator|(
+name|ReduceSinkOperator
+operator|)
+name|joinOp
+operator|.
+name|getParentOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|position
+argument_list|)
+decl_stmt|;
+name|Statistics
+name|inputStats
+init|=
+name|rsOp
+operator|.
+name|getStatistics
+argument_list|()
+decl_stmt|;
+name|long
+name|inputSize
+init|=
+name|inputStats
+operator|.
+name|getDataSize
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Estimated size for input {}: {}; Max size for DPHJ conversion: {}"
+argument_list|,
+name|position
+argument_list|,
+name|inputSize
+argument_list|,
+name|max
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|inputSize
+operator|>
+name|max
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Size of input is greater than the max; "
+operator|+
+literal|"we do not convert to DPHJ"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 return|return
 literal|true
 return|;

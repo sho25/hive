@@ -1325,6 +1325,10 @@ name|GenSparkUtils
 operator|.
 name|getEdgeProperty
 argument_list|(
+name|context
+operator|.
+name|conf
+argument_list|,
 name|rsOp
 argument_list|,
 name|reduceWork

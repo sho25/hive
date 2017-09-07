@@ -227,6 +227,22 @@ name|isInReplicationScope
 argument_list|()
 condition|)
 block|{
+comment|// Current replication state must be set on the Partition object only for bootstrap dump.
+comment|// Event replication State will be null in case of bootstrap dump.
+if|if
+condition|(
+name|additionalPropertiesProvider
+operator|.
+name|getReplSpecType
+argument_list|()
+operator|!=
+name|ReplicationSpec
+operator|.
+name|Type
+operator|.
+name|INCREMENTAL_DUMP
+condition|)
+block|{
 name|partition
 operator|.
 name|putToParameters
@@ -246,6 +262,7 @@ name|getCurrentReplicationState
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isPartitionExternal

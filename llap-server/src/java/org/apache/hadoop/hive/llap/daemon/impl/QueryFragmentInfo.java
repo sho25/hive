@@ -235,6 +235,10 @@ specifier|final
 name|String
 name|fragmentIdString
 decl_stmt|;
+specifier|private
+name|boolean
+name|canFinishForPriority
+decl_stmt|;
 specifier|public
 name|QueryFragmentInfo
 parameter_list|(
@@ -314,6 +318,13 @@ name|fragmentIdString
 operator|=
 name|fragmentIdString
 expr_stmt|;
+name|this
+operator|.
+name|canFinishForPriority
+operator|=
+literal|false
+expr_stmt|;
+comment|// Updated when we add this to the queue.
 block|}
 comment|// Only meant for use by the QueryTracker
 name|QueryInfo
@@ -371,8 +382,49 @@ return|return
 name|fragmentIdString
 return|;
 block|}
+comment|/**    * Unlike canFinish, this CANNOT be derived dynamically; a change without a reinsert will    * cause the queue order to become incorrect.    */
+specifier|public
+name|boolean
+name|canFinishForPriority
+parameter_list|()
+block|{
+return|return
+name|canFinishForPriority
+return|;
+block|}
+comment|/**    * This MUST be called when the fragment is NOT in wait queue.    */
+specifier|public
+name|void
+name|setCanFinishForPriority
+parameter_list|(
+name|boolean
+name|value
+parameter_list|)
+block|{
+name|canFinishForPriority
+operator|=
+name|value
+expr_stmt|;
+block|}
 comment|/**    * Check whether a task can run to completion or may end up blocking on it's sources.    * This currently happens via looking up source state.    * TODO: Eventually, this should lookup the Hive Processor to figure out whether    * it's reached a state where it can finish - especially in cases of failures    * after data has been fetched.    *    * @return true if the task can finish, false otherwise    */
 specifier|public
+specifier|static
+name|boolean
+name|canFinish
+parameter_list|(
+name|QueryFragmentInfo
+name|fragment
+parameter_list|)
+block|{
+return|return
+name|fragment
+operator|.
+name|canFinish
+argument_list|()
+return|;
+block|}
+comment|// Hide this so it doesn't look like a simple property.
+specifier|private
 name|boolean
 name|canFinish
 parameter_list|()

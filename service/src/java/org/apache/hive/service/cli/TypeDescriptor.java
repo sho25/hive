@@ -495,7 +495,7 @@ return|return
 literal|29
 return|;
 case|case
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 case|:
 return|return
 literal|31

@@ -1498,6 +1498,7 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+comment|//HIVE-17328: not sure this is correct... I don't think is gets wrapped in UDFToInteger....
 name|bucketColumns
 operator|.
 name|add

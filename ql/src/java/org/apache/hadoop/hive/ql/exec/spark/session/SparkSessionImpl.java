@@ -393,6 +393,15 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Trying to open Spark session {}"
+argument_list|,
+name|sessionId
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|conf
@@ -421,16 +430,41 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
+comment|// It's possible that user session is closed while creating Spark client.
+name|String
+name|msg
+init|=
+name|isOpen
+condition|?
+literal|"Failed to create Spark client for Spark session "
+operator|+
+name|sessionId
+else|:
+literal|"Spark Session "
+operator|+
+name|sessionId
+operator|+
+literal|" is closed before Spark client is created"
+decl_stmt|;
 throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Failed to create spark client."
+name|msg
 argument_list|,
 name|e
 argument_list|)
 throw|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Spark session {} is successfully opened"
+argument_list|,
+name|sessionId
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -591,6 +625,13 @@ operator|.
 name|startsWith
 argument_list|(
 literal|"spark"
+argument_list|)
+operator|||
+name|masterURL
+operator|.
+name|startsWith
+argument_list|(
+literal|"local"
 argument_list|)
 condition|)
 block|{
@@ -756,6 +797,15 @@ name|void
 name|close
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Trying to close Spark session {}"
+argument_list|,
+name|sessionId
+argument_list|)
+expr_stmt|;
 name|isOpen
 operator|=
 literal|false
@@ -773,6 +823,15 @@ name|hiveSparkClient
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Spark session {} is successfully closed"
+argument_list|,
+name|sessionId
+argument_list|)
 expr_stmt|;
 name|cleanScratchDir
 argument_list|()

@@ -2336,7 +2336,10 @@ argument_list|)
 operator|.
 name|writingBase
 argument_list|(
-literal|false
+name|conf
+operator|.
+name|getInsertOverwrite
+argument_list|()
 argument_list|)
 operator|.
 name|minimumTransactionId

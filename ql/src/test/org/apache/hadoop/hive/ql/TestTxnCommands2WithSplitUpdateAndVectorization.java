@@ -54,7 +54,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Same as TestTxnCommands2WithSplitUpdate but tests ACID tables with vectorization turned on by  * default, and having 'transactional_properties' set to 'default'. This specifically tests the  * fast VectorizedOrcAcidRowBatchReader for ACID tables with split-update turned on.  */
+comment|/**  * Same as TestTxnCommands2 but tests ACID tables with vectorization turned on by  * default, and having 'transactional_properties' set to 'default'. This specifically tests the  * fast VectorizedOrcAcidRowBatchReader for ACID tables with split-update turned on.  */
 end_comment
 
 begin_class
@@ -62,7 +62,7 @@ specifier|public
 class|class
 name|TestTxnCommands2WithSplitUpdateAndVectorization
 extends|extends
-name|TestTxnCommands2WithSplitUpdate
+name|TestTxnCommands2
 block|{
 specifier|public
 name|TestTxnCommands2WithSplitUpdateAndVectorization

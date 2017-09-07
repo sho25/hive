@@ -506,7 +506,7 @@ name|assertThat
 argument_list|(
 name|options
 operator|.
-name|getBucket
+name|getBucketId
 argument_list|()
 argument_list|,
 name|is

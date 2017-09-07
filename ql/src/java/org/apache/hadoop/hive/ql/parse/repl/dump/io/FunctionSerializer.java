@@ -416,7 +416,7 @@ name|checkSum
 init|=
 name|ReplChangeManager
 operator|.
-name|getChksumString
+name|checksumFor
 argument_list|(
 name|qualifiedUri
 argument_list|,

@@ -1298,6 +1298,8 @@ init|=
 operator|new
 name|LlapRecordWriter
 argument_list|(
+name|id
+argument_list|,
 operator|new
 name|ChunkedOutputStream
 argument_list|(
@@ -1314,6 +1316,8 @@ name|maxPendingWrites
 argument_list|)
 argument_list|,
 name|sendBufferSize
+argument_list|,
+name|id
 argument_list|)
 argument_list|)
 decl_stmt|;

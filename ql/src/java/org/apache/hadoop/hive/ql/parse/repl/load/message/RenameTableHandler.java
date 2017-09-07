@@ -342,6 +342,11 @@ argument_list|,
 name|newName
 argument_list|,
 literal|false
+argument_list|,
+name|context
+operator|.
+name|eventOnlyReplicationSpec
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Task
@@ -388,44 +393,36 @@ name|newName
 argument_list|)
 expr_stmt|;
 comment|// oldDbName and newDbName *will* be the same if we're here
-name|databasesUpdated
+name|updatedMetadata
 operator|.
-name|put
+name|set
 argument_list|(
+name|context
+operator|.
+name|dmd
+operator|.
+name|getEventTo
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|,
 name|newDbName
 argument_list|,
-name|context
+name|msg
 operator|.
-name|dmd
-operator|.
-name|getEventTo
+name|getTableObjAfter
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|tablesUpdated
 operator|.
-name|remove
-argument_list|(
-name|oldName
-argument_list|)
-expr_stmt|;
-name|tablesUpdated
-operator|.
-name|put
-argument_list|(
-name|newName
+name|getTableName
+argument_list|()
 argument_list|,
-name|context
-operator|.
-name|dmd
-operator|.
-name|getEventTo
-argument_list|()
+literal|null
 argument_list|)
 expr_stmt|;
-comment|// Note : edge-case here in interaction with table-level REPL LOAD, where that nukes out tablesUpdated
-comment|// However, we explicitly don't support repl of that sort, and error out above if so. If that should
-comment|// ever change, this will need reworking.
+comment|// Note : edge-case here in interaction with table-level REPL LOAD, where that nukes out
+comment|// tablesUpdated. However, we explicitly don't support repl of that sort, and error out above
+comment|// if so. If that should ever change, this will need reworking.
 return|return
 name|Collections
 operator|.

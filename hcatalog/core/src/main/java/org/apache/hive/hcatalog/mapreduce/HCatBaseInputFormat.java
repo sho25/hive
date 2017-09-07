@@ -666,6 +666,17 @@ operator|.
 name|getConfiguration
 argument_list|()
 decl_stmt|;
+comment|// Set up recursive reads for sub-directories.
+comment|// (Otherwise, sub-directories produced by Hive UNION operations won't be readable.)
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+literal|"mapred.input.dir.recursive"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 comment|//Get the job info from the configuration,
 comment|//throws exception if not initialized
 name|InputJobInfo

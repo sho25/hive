@@ -2669,6 +2669,8 @@ argument_list|(
 name|batch
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Revert the projected columns back, because batch can be re-used by our parent operators.
@@ -2698,6 +2700,8 @@ argument_list|(
 name|overflowBatch
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|overflowBatch
@@ -2762,6 +2766,8 @@ argument_list|(
 name|overflowBatch
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

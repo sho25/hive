@@ -644,6 +644,33 @@ argument_list|>
 name|files
 parameter_list|)
 function_decl|;
+comment|/**    * Factory method for building insert message    * @param db Name of the database the insert occurred in    * @param table Table the insert occurred in    * @param partVals Partition values for the partition that the insert occurred in, may be null    *                 if the insert was done into a non-partitioned table    * @param files List of files created as a result of the insert, may be null.    * @return instance of InsertMessage    */
+specifier|public
+specifier|abstract
+name|InsertMessage
+name|buildInsertMessage
+parameter_list|(
+name|String
+name|db
+parameter_list|,
+name|Table
+name|table
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partVals
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|files
+parameter_list|)
+function_decl|;
 block|}
 end_class
 

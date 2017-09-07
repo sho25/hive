@@ -161,7 +161,13 @@ literal|"var_samp"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(x) - Returns the sample variance of a set of numbers"
+literal|"_FUNC_(x) - Returns the sample variance of a set of numbers.\n"
+operator|+
+literal|"If applied to an empty set: NULL is returned.\n"
+operator|+
+literal|"If applied to a set with a single element: NULL is returned.\n"
+operator|+
+literal|"Otherwise it computes: (S2-S1*S1/N)/(N-1)"
 argument_list|)
 specifier|public
 class|class
@@ -351,25 +357,15 @@ condition|(
 name|myagg
 operator|.
 name|count
-operator|==
-literal|0
+operator|<=
+literal|1
 condition|)
 block|{
-comment|// SQL standard - return null for zero elements
 return|return
 literal|null
 return|;
 block|}
 else|else
-block|{
-if|if
-condition|(
-name|myagg
-operator|.
-name|count
-operator|>
-literal|1
-condition|)
 block|{
 name|getResult
 argument_list|()
@@ -389,19 +385,6 @@ literal|1
 operator|)
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// for one element the variance is always 0
-name|getResult
-argument_list|()
-operator|.
-name|set
-argument_list|(
-literal|0
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 name|getResult
 argument_list|()

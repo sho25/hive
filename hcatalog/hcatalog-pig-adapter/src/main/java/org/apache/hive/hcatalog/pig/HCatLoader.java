@@ -1674,16 +1674,12 @@ argument_list|)
 decl_stmt|;
 name|stats
 operator|.
-name|setmBytes
+name|setSizeInBytes
 argument_list|(
 name|getSizeInBytes
 argument_list|(
 name|inputJobInfo
 argument_list|)
-operator|/
-literal|1024
-operator|/
-literal|1024
 argument_list|)
 expr_stmt|;
 return|return

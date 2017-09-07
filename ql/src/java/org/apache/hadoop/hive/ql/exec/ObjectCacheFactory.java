@@ -293,6 +293,28 @@ block|}
 else|else
 block|{
 comment|// container
+if|if
+condition|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|tez
+operator|.
+name|ObjectCache
+operator|.
+name|isObjectRegistryConfigured
+argument_list|()
+condition|)
+block|{
 return|return
 operator|new
 name|ObjectCacheWrapper
@@ -318,6 +340,14 @@ argument_list|,
 name|queryId
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+comment|// Tez processor needs to configure object registry first.
+return|return
+literal|null
+return|;
+block|}
 block|}
 block|}
 else|else

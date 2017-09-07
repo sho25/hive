@@ -144,6 +144,11 @@ specifier|private
 name|String
 name|targetColumnName
 decl_stmt|;
+comment|// type of target column
+specifier|private
+name|String
+name|targetColumnType
+decl_stmt|;
 specifier|private
 name|TableDesc
 name|table
@@ -269,8 +274,23 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"target column name"
+literal|"Target column"
 argument_list|)
+specifier|public
+name|String
+name|displayTargetColumn
+parameter_list|()
+block|{
+return|return
+name|targetColumnName
+operator|+
+literal|" ("
+operator|+
+name|targetColumnType
+operator|+
+literal|")"
+return|;
+block|}
 specifier|public
 name|String
 name|getTargetColumnName
@@ -293,6 +313,30 @@ operator|.
 name|targetColumnName
 operator|=
 name|targetColumnName
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getTargetColumnType
+parameter_list|()
+block|{
+return|return
+name|targetColumnType
+return|;
+block|}
+specifier|public
+name|void
+name|setTargetColumnType
+parameter_list|(
+name|String
+name|columnType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|targetColumnType
+operator|=
+name|columnType
 expr_stmt|;
 block|}
 specifier|public

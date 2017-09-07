@@ -792,7 +792,7 @@ if|if
 condition|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 operator|.
 name|equalsIgnoreCase
 argument_list|(
@@ -803,7 +803,7 @@ block|{
 return|return
 name|Type
 operator|.
-name|TIMESTAMPTZ_TYPE
+name|TIMESTAMPLOCALTZ_TYPE
 return|;
 block|}
 elseif|else
@@ -1201,7 +1201,7 @@ if|if
 condition|(
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 operator|.
 name|equalsIgnoreCase
 argument_list|(
@@ -1212,7 +1212,7 @@ block|{
 return|return
 name|serdeConstants
 operator|.
-name|TIMESTAMPTZ_TYPE_NAME
+name|TIMESTAMPLOCALTZ_TYPE_NAME
 return|;
 block|}
 elseif|else

@@ -335,18 +335,6 @@ operator|.
 name|getCleanupScript
 argument_list|()
 decl_stmt|;
-name|boolean
-name|useHBaseMetastore
-init|=
-name|cliConfig
-operator|.
-name|getMetastoreType
-argument_list|()
-operator|==
-name|MetastoreType
-operator|.
-name|hbase
-decl_stmt|;
 try|try
 block|{
 name|String
@@ -385,8 +373,6 @@ argument_list|,
 name|initScript
 argument_list|,
 name|cleanupScript
-argument_list|,
-name|useHBaseMetastore
 argument_list|,
 literal|true
 argument_list|)

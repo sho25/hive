@@ -835,15 +835,11 @@ name|HiveException
 function_decl|;
 specifier|public
 name|void
-name|startGroup
-parameter_list|()
-throws|throws
-name|HiveException
-function_decl|;
-specifier|public
-name|void
-name|endGroup
-parameter_list|()
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
@@ -876,28 +872,20 @@ name|ProcessingModeBase
 implements|implements
 name|IProcessingMode
 block|{
-comment|// Overridden and used in sorted reduce group batch processing mode.
+comment|// Overridden and used in ProcessingModeReduceMergePartial mode.
 annotation|@
 name|Override
 specifier|public
 name|void
-name|startGroup
-parameter_list|()
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
 throws|throws
 name|HiveException
 block|{
-comment|// Do nothing.
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|endGroup
-parameter_list|()
-throws|throws
-name|HiveException
-block|{
-comment|// Do nothing.
+comment|// Some Spark plans cause Hash and other modes to get this.  So, ignore it.
 block|}
 specifier|protected
 specifier|abstract
@@ -1244,6 +1232,20 @@ argument_list|(
 literal|"using global aggregation processing mode"
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+comment|// Do nothing.
 block|}
 annotation|@
 name|Override
@@ -2712,6 +2714,20 @@ annotation|@
 name|Override
 specifier|public
 name|void
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+comment|// Do nothing.
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
 name|doProcessBatch
 parameter_list|(
 name|VectorizedRowBatch
@@ -3045,11 +3061,11 @@ name|ProcessingModeBase
 block|{
 specifier|private
 name|boolean
-name|inGroup
+name|first
 decl_stmt|;
 specifier|private
 name|boolean
-name|first
+name|isLastGroupBatch
 decl_stmt|;
 comment|/**      * The group vector key helper.      */
 name|VectorGroupKeyHelper
@@ -3077,9 +3093,9 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|inGroup
+name|isLastGroupBatch
 operator|=
-literal|false
+literal|true
 expr_stmt|;
 comment|// We do not include the dummy grouping set column in the output.  So we pass outputKeyLength
 comment|// instead of keyExpressions.length
@@ -3121,53 +3137,33 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|startGroup
-parameter_list|()
-throws|throws
-name|HiveException
-block|{
-name|inGroup
-operator|=
-literal|true
-expr_stmt|;
-name|first
-operator|=
-literal|true
-expr_stmt|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|endGroup
-parameter_list|()
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
 throws|throws
 name|HiveException
 block|{
 if|if
 condition|(
-name|inGroup
-operator|&&
-operator|!
-name|first
+name|this
+operator|.
+name|isLastGroupBatch
 condition|)
 block|{
-name|writeGroupRow
-argument_list|(
-name|groupAggregators
-argument_list|,
-name|buffer
-argument_list|)
-expr_stmt|;
-name|groupAggregators
-operator|.
-name|reset
-argument_list|()
+comment|// Previous batch was the last of a group of batches.  Remember the next is the first batch
+comment|// of a new group of batches.
+name|first
+operator|=
+literal|true
 expr_stmt|;
 block|}
-name|inGroup
+name|this
+operator|.
+name|isLastGroupBatch
 operator|=
-literal|false
+name|isLastGroupBatch
 expr_stmt|;
 block|}
 annotation|@
@@ -3189,11 +3185,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-assert|assert
-operator|(
-name|inGroup
-operator|)
-assert|;
 if|if
 condition|(
 name|first
@@ -3279,6 +3270,24 @@ name|batch
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|isLastGroupBatch
+condition|)
+block|{
+name|writeGroupRow
+argument_list|(
+name|groupAggregators
+argument_list|,
+name|buffer
+argument_list|)
+expr_stmt|;
+name|groupAggregators
+operator|.
+name|reset
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -3297,10 +3306,11 @@ condition|(
 operator|!
 name|aborted
 operator|&&
-name|inGroup
-operator|&&
 operator|!
 name|first
+operator|&&
+operator|!
+name|isLastGroupBatch
 condition|)
 block|{
 name|writeGroupRow
@@ -3791,10 +3801,9 @@ name|i
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|objectInspectors
-operator|.
-name|add
-argument_list|(
+name|ObjectInspector
+name|objInsp
+init|=
 name|aggregators
 index|[
 name|i
@@ -3802,6 +3811,21 @@ index|]
 operator|.
 name|getOutputObjectInspector
 argument_list|()
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|objInsp
+operator|!=
+literal|null
+argument_list|)
+expr_stmt|;
+name|objectInspectors
+operator|.
+name|add
+argument_list|(
+name|objInsp
 argument_list|)
 expr_stmt|;
 block|}
@@ -4083,19 +4107,41 @@ annotation|@
 name|Override
 specifier|public
 name|void
-name|startGroup
-parameter_list|()
+name|setNextVectorBatchGroupStatus
+parameter_list|(
+name|boolean
+name|isLastGroupBatch
+parameter_list|)
 throws|throws
 name|HiveException
 block|{
 name|processingMode
 operator|.
-name|startGroup
-argument_list|()
+name|setNextVectorBatchGroupStatus
+argument_list|(
+name|isLastGroupBatch
+argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|startGroup
+parameter_list|()
+throws|throws
+name|HiveException
+block|{
 comment|// We do not call startGroup on operators below because we are batching rows in
 comment|// an output batch and the semantics will not work.
 comment|// super.startGroup();
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unexpected startGroup"
+argument_list|)
+throw|;
 block|}
 annotation|@
 name|Override
@@ -4106,14 +4152,16 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|processingMode
-operator|.
-name|endGroup
-argument_list|()
-expr_stmt|;
 comment|// We do not call endGroup on operators below because we are batching rows in
 comment|// an output batch and the semantics will not work.
 comment|// super.endGroup();
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unexpected startGroup"
+argument_list|)
+throw|;
 block|}
 annotation|@
 name|Override
@@ -4262,6 +4310,8 @@ argument_list|(
 name|forwardCache
 argument_list|,
 name|outputObjInspector
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -4486,6 +4536,8 @@ argument_list|(
 name|outputBatch
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|outputBatch

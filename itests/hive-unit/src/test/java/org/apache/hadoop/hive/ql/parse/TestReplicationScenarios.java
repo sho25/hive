@@ -25,6 +25,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|io
+operator|.
+name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -91,6 +105,38 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|HiveMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|InjectableBehaviourObjectStore
 import|;
 end_import
@@ -125,39 +171,41 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|IMetaStoreClient
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|ObjectStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|ForeignKeysRequest
 import|;
 end_import
 
@@ -193,7 +241,43 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|NotNullConstraintsRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|NotificationEvent
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|NotificationEventResponse
 import|;
 end_import
 
@@ -229,7 +313,115 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|PrimaryKeysRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SQLForeignKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SQLNotNullConstraint
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SQLPrimaryKey
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SQLUniqueConstraint
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|UniqueConstraintsRequest
 import|;
 end_import
 
@@ -383,11 +575,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|exec
 operator|.
-name|ReplicationSpec
+name|repl
 operator|.
-name|ReplStateMap
+name|ReplDumpWork
 import|;
 end_import
 
@@ -739,6 +931,9 @@ operator|.
 name|getCanonicalName
 argument_list|()
 operator|.
+name|toLowerCase
+argument_list|()
+operator|.
 name|replace
 argument_list|(
 literal|'.'
@@ -781,13 +976,6 @@ name|hconf
 decl_stmt|;
 specifier|private
 specifier|static
-name|boolean
-name|useExternalMS
-init|=
-literal|false
-decl_stmt|;
-specifier|private
-specifier|static
 name|int
 name|msPort
 decl_stmt|;
@@ -800,6 +988,22 @@ specifier|private
 specifier|static
 name|HiveMetaStoreClient
 name|metaStoreClient
+decl_stmt|;
+specifier|static
+name|HiveConf
+name|hconfMirror
+decl_stmt|;
+specifier|static
+name|int
+name|msPortMirror
+decl_stmt|;
+specifier|static
+name|Driver
+name|driverMirror
+decl_stmt|;
+specifier|static
+name|HiveMetaStoreClient
+name|metaStoreClientMirror
 decl_stmt|;
 annotation|@
 name|Rule
@@ -919,10 +1123,6 @@ name|METASTOREURIS
 argument_list|,
 name|metastoreUri
 argument_list|)
-expr_stmt|;
-name|useExternalMS
-operator|=
-literal|true
 expr_stmt|;
 return|return;
 block|}
@@ -1181,6 +1381,94 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
+name|FileUtils
+operator|.
+name|deleteDirectory
+argument_list|(
+operator|new
+name|File
+argument_list|(
+literal|"metastore_db2"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|HiveConf
+name|hconfMirrorServer
+init|=
+operator|new
+name|HiveConf
+argument_list|()
+decl_stmt|;
+name|hconfMirrorServer
+operator|.
+name|set
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLKEY
+operator|.
+name|varname
+argument_list|,
+literal|"jdbc:derby:;databaseName=metastore_db2;create=true"
+argument_list|)
+expr_stmt|;
+name|msPortMirror
+operator|=
+name|MetaStoreUtils
+operator|.
+name|startMetaStore
+argument_list|(
+name|hconfMirrorServer
+argument_list|)
+expr_stmt|;
+name|hconfMirror
+operator|=
+operator|new
+name|HiveConf
+argument_list|(
+name|hconf
+argument_list|)
+expr_stmt|;
+name|hconfMirror
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREURIS
+argument_list|,
+literal|"thrift://localhost:"
+operator|+
+name|msPortMirror
+argument_list|)
+expr_stmt|;
+name|driverMirror
+operator|=
+operator|new
+name|Driver
+argument_list|(
+name|hconfMirror
+argument_list|)
+expr_stmt|;
+name|metaStoreClientMirror
+operator|=
+operator|new
+name|HiveMetaStoreClient
+argument_list|(
+name|hconfMirror
+argument_list|)
+expr_stmt|;
+name|ObjectStore
+operator|.
+name|setTwoMetastoreTesting
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|AfterClass
@@ -1200,6 +1488,16 @@ name|setUp
 parameter_list|()
 block|{
 comment|// before each test
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|setCurrentDatabase
+argument_list|(
+literal|"default"
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|After
@@ -1226,7 +1524,7 @@ block|{
 name|next
 operator|++
 expr_stmt|;
-name|ReplicationSemanticAnalyzer
+name|ReplDumpWork
 operator|.
 name|injectNextDumpDirForTest
 argument_list|(
@@ -1245,41 +1543,149 @@ name|Tuple
 block|{
 specifier|final
 name|String
-name|replicatedDbName
+name|dumpLocation
 decl_stmt|;
 specifier|final
 name|String
-name|lastReplicationId
+name|lastReplId
 decl_stmt|;
 name|Tuple
 parameter_list|(
 name|String
-name|replicatedDbName
+name|dumpLocation
 parameter_list|,
 name|String
-name|lastReplicationId
+name|lastReplId
 parameter_list|)
 block|{
 name|this
 operator|.
-name|replicatedDbName
+name|dumpLocation
 operator|=
-name|replicatedDbName
+name|dumpLocation
 expr_stmt|;
 name|this
 operator|.
-name|lastReplicationId
+name|lastReplId
 operator|=
-name|lastReplicationId
+name|lastReplId
 expr_stmt|;
 block|}
 block|}
 specifier|private
 name|Tuple
-name|loadAndVerify
+name|bootstrapLoadAndVerify
 parameter_list|(
 name|String
 name|dbName
+parameter_list|,
+name|String
+name|replDbName
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+literal|null
+argument_list|,
+name|replDbName
+argument_list|)
+return|;
+block|}
+specifier|private
+name|Tuple
+name|incrementalLoadAndVerify
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|fromReplId
+parameter_list|,
+name|String
+name|replDbName
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Tuple
+name|dump
+init|=
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+name|fromReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|dump
+operator|.
+name|dumpLocation
+argument_list|,
+name|dump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+return|return
+name|dump
+return|;
+block|}
+specifier|private
+name|Tuple
+name|dumpDbFromLastDump
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|Tuple
+name|lastDump
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+name|lastDump
+operator|.
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+return|;
+block|}
+specifier|private
+name|Tuple
+name|replDumpDb
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|fromReplID
+parameter_list|,
+name|String
+name|toReplID
+parameter_list|,
+name|String
+name|limit
 parameter_list|)
 throws|throws
 name|IOException
@@ -1287,11 +1693,66 @@ block|{
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
-name|run
-argument_list|(
+name|String
+name|dumpCmd
+init|=
 literal|"REPL DUMP "
 operator|+
 name|dbName
+decl_stmt|;
+if|if
+condition|(
+literal|null
+operator|!=
+name|fromReplID
+condition|)
+block|{
+name|dumpCmd
+operator|=
+name|dumpCmd
+operator|+
+literal|" FROM "
+operator|+
+name|fromReplID
+expr_stmt|;
+block|}
+if|if
+condition|(
+literal|null
+operator|!=
+name|toReplID
+condition|)
+block|{
+name|dumpCmd
+operator|=
+name|dumpCmd
+operator|+
+literal|" TO "
+operator|+
+name|toReplID
+expr_stmt|;
+block|}
+if|if
+condition|(
+literal|null
+operator|!=
+name|limit
+condition|)
+block|{
+name|dumpCmd
+operator|=
+name|dumpCmd
+operator|+
+literal|" LIMIT "
+operator|+
+name|limit
+expr_stmt|;
+block|}
+name|run
+argument_list|(
+name|dumpCmd
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -1302,10 +1763,12 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
-name|lastReplicationId
+name|lastReplId
 init|=
 name|getResult
 argument_list|(
@@ -1314,62 +1777,96 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
-argument_list|)
-decl_stmt|;
-name|String
-name|replicatedDbName
-init|=
-name|dbName
-operator|+
-literal|"_replicated"
-decl_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|replicatedDbName
 argument_list|,
-name|lastReplicationId
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {} for command: {}"
+argument_list|,
+name|dumpLocation
+argument_list|,
+name|lastReplId
+argument_list|,
+name|dumpCmd
 argument_list|)
 expr_stmt|;
 return|return
 operator|new
 name|Tuple
 argument_list|(
-name|replicatedDbName
+name|dumpLocation
 argument_list|,
-name|lastReplicationId
+name|lastReplId
 argument_list|)
 return|;
+block|}
+specifier|private
+name|void
+name|loadAndVerify
+parameter_list|(
+name|String
+name|replDbName
+parameter_list|,
+name|String
+name|dumpLocation
+parameter_list|,
+name|String
+name|lastReplId
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|replDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|replDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"REPL STATUS "
+operator|+
+name|replDbName
+argument_list|,
+name|lastReplId
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+return|return;
 block|}
 comment|/**    * Tests basic operation - creates a db, with 4 tables, 2 ptned and 2 unptned.    * Inserts data into one of the ptned tables, and one of the unptned tables,    * and verifies that a REPL DUMP followed by a REPL LOAD is able to load it    * appropriately. This tests bootstrap behaviour primarily.    */
 annotation|@
@@ -1395,6 +1892,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -1404,6 +1903,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1413,6 +1914,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1422,6 +1925,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1431,6 +1936,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -1574,6 +2081,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -1585,6 +2094,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1598,6 +2109,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -1609,6 +2122,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1622,6 +2137,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -1633,6 +2150,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -1644,6 +2163,8 @@ operator|+
 literal|".ptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -1655,18 +2176,24 @@ operator|+
 literal|".unptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
 name|replicatedDbName
 init|=
-name|loadAndVerify
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|bootstrapLoadAndVerify
 argument_list|(
 name|dbName
-argument_list|)
-operator|.
+argument_list|,
 name|replicatedDbName
-decl_stmt|;
+argument_list|)
+expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
@@ -1676,6 +2203,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -1687,6 +2216,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -1698,6 +2229,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -1709,6 +2242,8 @@ operator|+
 literal|".ptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -1720,6 +2255,8 @@ operator|+
 literal|".unptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -1746,6 +2283,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -1755,6 +2294,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1764,6 +2305,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1773,6 +2316,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1782,6 +2327,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -1825,21 +2372,6 @@ block|,
 literal|"sixteen"
 block|,
 literal|"seventeen"
-block|}
-decl_stmt|;
-name|String
-index|[]
-name|ptn_data_2_later
-init|=
-operator|new
-name|String
-index|[]
-block|{
-literal|"eighteen"
-block|,
-literal|"nineteen"
-block|,
-literal|"twenty"
 block|}
 decl_stmt|;
 name|String
@@ -1948,13 +2480,6 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|createTestDataFile
-argument_list|(
-name|ptn_locn_2_later
-argument_list|,
-name|ptn_data_2_later
-argument_list|)
-expr_stmt|;
 name|run
 argument_list|(
 literal|"LOAD DATA LOCAL INPATH '"
@@ -1966,6 +2491,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1975,11 +2502,15 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -1993,6 +2524,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2002,11 +2535,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=1"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2020,6 +2557,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2029,11 +2568,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2043,11 +2586,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2057,11 +2604,15 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -2072,6 +2623,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -2082,6 +2635,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -2094,6 +2649,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 comment|// Table dropped after "repl dump"
@@ -2104,6 +2661,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Partition droppped after "repl dump"
@@ -2116,84 +2675,8 @@ operator|+
 literal|".ptned "
 operator|+
 literal|"DROP PARTITION(b=1)"
-argument_list|)
-expr_stmt|;
-comment|// File changed after "repl dump"
-name|Partition
-name|p
-init|=
-name|metaStoreClient
-operator|.
-name|getPartition
-argument_list|(
-name|dbName
 argument_list|,
-literal|"ptned"
-argument_list|,
-literal|"b=2"
-argument_list|)
-decl_stmt|;
-name|Path
-name|loc
-init|=
-operator|new
-name|Path
-argument_list|(
-name|p
-operator|.
-name|getSd
-argument_list|()
-operator|.
-name|getLocation
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|FileSystem
-name|fs
-init|=
-name|loc
-operator|.
-name|getFileSystem
-argument_list|(
-name|hconf
-argument_list|)
-decl_stmt|;
-name|Path
-name|file
-init|=
-name|fs
-operator|.
-name|listStatus
-argument_list|(
-name|loc
-argument_list|)
-index|[
-literal|0
-index|]
-operator|.
-name|getPath
-argument_list|()
-decl_stmt|;
-name|fs
-operator|.
-name|delete
-argument_list|(
-name|file
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|copyFromLocalFile
-argument_list|(
-operator|new
-name|Path
-argument_list|(
-name|ptn_locn_2_later
-argument_list|)
-argument_list|,
-name|file
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2207,10 +2690,14 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -2223,6 +2710,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2232,6 +2721,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -2242,6 +2733,8 @@ index|[]
 block|{
 name|replDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2251,11 +2744,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2265,15 +2762,17 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=1"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Since partition(b=2) changed manually, Hive cannot find
-comment|// it in original location and cmroot, thus empty
 name|run
 argument_list|(
 literal|"SELECT a from "
@@ -2281,11 +2780,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
-name|empty
+name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2295,11 +2798,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2309,11 +2816,15 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -2354,6 +2865,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2363,6 +2876,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -2415,6 +2930,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -2426,6 +2943,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Create an empty database to load
@@ -2436,6 +2955,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_empty"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -2446,6 +2967,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -2456,6 +2979,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -2468,6 +2993,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 comment|// Load to an empty database
@@ -2482,6 +3009,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// REPL STATUS should return same repl ID as dump
@@ -2494,6 +3023,8 @@ operator|+
 literal|"_empty"
 argument_list|,
 name|replDumpId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -2505,6 +3036,8 @@ operator|+
 literal|"_empty.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -2526,6 +3059,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_withtable"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2535,6 +3070,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_withtable.unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Load using same dump to a DB with table. It should fail as DB is not empty.
@@ -2549,6 +3086,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// REPL STATUS should return NULL
@@ -2561,6 +3100,8 @@ operator|+
 literal|"_withtable"
 argument_list|,
 name|nullReplId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Create a database with a view
@@ -2571,6 +3112,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_withview"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2580,6 +3123,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_withview.unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -2593,6 +3138,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_withview.unptned"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Load using same dump to a DB with view. It should fail as DB is not empty.
@@ -2607,6 +3154,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// REPL STATUS should return NULL
@@ -2619,6 +3168,8 @@ operator|+
 literal|"_withview"
 argument_list|,
 name|nullReplId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -2645,6 +3196,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -2654,6 +3207,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2663,6 +3218,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -2806,6 +3363,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -2817,6 +3376,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2830,6 +3391,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -2841,6 +3404,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -2854,6 +3419,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -2865,6 +3432,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -2948,6 +3517,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|ptnedTableNuller
@@ -2973,6 +3544,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -2985,6 +3558,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3009,6 +3584,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// The ptned table should miss in target as the table was marked virtually as dropped
@@ -3021,6 +3598,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -3030,6 +3609,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=1"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
@@ -3039,6 +3620,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"ptned"
+argument_list|,
+name|metaStoreClient
 argument_list|)
 expr_stmt|;
 comment|// Verify if Drop table on a non-existing table is idempotent
@@ -3049,6 +3632,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
@@ -3056,6 +3641,8 @@ argument_list|(
 name|dbName
 argument_list|,
 literal|"ptned"
+argument_list|,
+name|metaStoreClient
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -3070,6 +3657,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -3080,6 +3669,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -3092,6 +3683,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3122,6 +3715,8 @@ operator|+
 literal|"'"
 argument_list|,
 literal|true
+argument_list|,
+name|driverMirror
 argument_list|)
 operator|)
 assert|;
@@ -3134,6 +3729,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
@@ -3143,6 +3740,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -3152,6 +3751,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=1"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -3178,6 +3779,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -3187,6 +3790,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -3291,6 +3896,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -3302,6 +3909,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -3315,6 +3924,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -3326,6 +3937,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -3408,6 +4021,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|listPartitionNamesNuller
@@ -3433,6 +4048,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -3445,6 +4062,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3469,6 +4088,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// All partitions should miss in target as it was marked virtually as dropped
@@ -3481,6 +4102,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=1"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -3492,6 +4115,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
@@ -3513,6 +4138,8 @@ argument_list|(
 literal|"1"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
@@ -3534,6 +4161,8 @@ argument_list|(
 literal|"2"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 comment|// Verify if drop partition on a non-existing partition is idempotent and just a noop.
@@ -3544,6 +4173,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned DROP PARTITION (b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -3553,6 +4184,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned DROP PARTITION (b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
@@ -3572,6 +4205,8 @@ argument_list|(
 literal|"1"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClient
 argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
@@ -3591,6 +4226,8 @@ argument_list|(
 literal|"2"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClient
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -3602,6 +4239,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -3613,6 +4252,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -3627,6 +4268,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -3637,6 +4280,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -3649,6 +4294,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3679,6 +4326,8 @@ operator|+
 literal|"'"
 argument_list|,
 literal|true
+argument_list|,
+name|driverMirror
 argument_list|)
 operator|)
 assert|;
@@ -3701,6 +4350,8 @@ argument_list|(
 literal|"1"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
@@ -3722,6 +4373,8 @@ argument_list|(
 literal|"2"
 argument_list|)
 argument_list|)
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -3733,6 +4386,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=1"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -3744,6 +4399,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -3770,6 +4427,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -3779,6 +4438,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -3788,6 +4449,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -3797,6 +4460,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -3806,6 +4471,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -3816,6 +4483,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -3826,6 +4495,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -3838,6 +4509,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3862,6 +4535,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -4003,6 +4678,8 @@ operator|+
 literal|".ptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4014,6 +4691,8 @@ operator|+
 literal|".unptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Now, we load data into the tables, and see if an incremental
@@ -4029,6 +4708,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4040,6 +4721,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4053,6 +4736,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4064,6 +4749,8 @@ operator|+
 literal|".unptned_late"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4077,6 +4764,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4088,6 +4777,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4101,6 +4792,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4112,6 +4805,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4121,6 +4816,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_late(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4134,6 +4831,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_late PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4145,6 +4844,8 @@ operator|+
 literal|".ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4158,6 +4859,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_late PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4169,6 +4872,8 @@ operator|+
 literal|".ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
@@ -4184,6 +4889,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -4194,6 +4901,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -4206,6 +4915,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -4230,10 +4941,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -4246,6 +4961,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -4255,6 +4972,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -4265,6 +4984,8 @@ index|[]
 block|{
 name|incrementalDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// VERIFY tables and partitions on destination for equivalence.
@@ -4277,6 +4998,8 @@ operator|+
 literal|"_dupe.unptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -4288,6 +5011,8 @@ operator|+
 literal|"_dupe.ptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|//    verifyRun("SELECT * from " + dbName + "_dupe.unptned", unptn_data);
@@ -4303,6 +5028,8 @@ operator|+
 literal|"_dupe.unptned_late"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -4314,6 +5041,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -4325,6 +5054,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -4336,6 +5067,8 @@ operator|+
 literal|"_dupe.ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -4347,6 +5080,628 @@ operator|+
 literal|"_dupe.ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalLoadWithVariableLengthEventId
+parameter_list|()
+throws|throws
+name|IOException
+throws|,
+name|TException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalLoadWithVariableLengthEventId"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('ten')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// CREATE_TABLE - TRUNCATE - INSERT - The result is just one record.
+comment|// Creating dummy table to control the event ID of TRUNCATE not to be 10 or 100 or 1000...
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".dummy(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Inject a behaviour where all events will get ID less than 100 except TRUNCATE which will get ID 100.
+comment|// This enesures variable length of event ID in the incremental dump
+name|BehaviourInjection
+argument_list|<
+name|NotificationEventResponse
+argument_list|,
+name|NotificationEventResponse
+argument_list|>
+name|eventIdModifier
+init|=
+operator|new
+name|BehaviourInjection
+argument_list|<
+name|NotificationEventResponse
+argument_list|,
+name|NotificationEventResponse
+argument_list|>
+argument_list|()
+block|{
+specifier|private
+name|long
+name|nextEventId
+init|=
+literal|0
+decl_stmt|;
+comment|// Initialize to 0 as for increment dump, 0 won't be used.
+annotation|@
+name|Nullable
+annotation|@
+name|Override
+specifier|public
+name|NotificationEventResponse
+name|apply
+parameter_list|(
+annotation|@
+name|Nullable
+name|NotificationEventResponse
+name|eventIdList
+parameter_list|)
+block|{
+if|if
+condition|(
+literal|null
+operator|!=
+name|eventIdList
+condition|)
+block|{
+name|List
+argument_list|<
+name|NotificationEvent
+argument_list|>
+name|eventIds
+init|=
+name|eventIdList
+operator|.
+name|getEvents
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|NotificationEvent
+argument_list|>
+name|outEventIds
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|NotificationEvent
+argument_list|>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|eventIds
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|NotificationEvent
+name|event
+init|=
+name|eventIds
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+comment|// Skip all the events belong to other DBs/tables.
+if|if
+condition|(
+name|event
+operator|.
+name|getDbName
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|dbName
+argument_list|)
+condition|)
+block|{
+comment|// We will encounter create_table, truncate followed by insert.
+comment|// For the insert, set the event ID longer such that old comparator picks insert before truncate
+comment|// Eg: Event IDs CREATE_TABLE - 5, TRUNCATE - 9, INSERT - 12 changed to
+comment|// CREATE_TABLE - 5, TRUNCATE - 9, INSERT - 100
+comment|// But if TRUNCATE have ID-10, then having INSERT-100 won't be sufficient to test the scenario.
+comment|// So, we set any event comes after CREATE_TABLE starts with 20.
+comment|// Eg: Event IDs CREATE_TABLE - 5, TRUNCATE - 10, INSERT - 12 changed to
+comment|// CREATE_TABLE - 5, TRUNCATE - 20(20<= Id< 100), INSERT - 100
+switch|switch
+condition|(
+name|event
+operator|.
+name|getEventType
+argument_list|()
+condition|)
+block|{
+case|case
+literal|"CREATE_TABLE"
+case|:
+block|{
+comment|// The next ID is set to 20 or 200 or 2000 ... based on length of current event ID
+comment|// This is done to ensure TRUNCATE doesn't get an ID 10 or 100...
+name|nextEventId
+operator|=
+operator|(
+name|long
+operator|)
+name|Math
+operator|.
+name|pow
+argument_list|(
+literal|10.0
+argument_list|,
+operator|(
+name|double
+operator|)
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|event
+operator|.
+name|getEventId
+argument_list|()
+argument_list|)
+operator|.
+name|length
+argument_list|()
+argument_list|)
+operator|*
+literal|2
+expr_stmt|;
+break|break;
+block|}
+case|case
+literal|"INSERT"
+case|:
+block|{
+comment|// INSERT will come always after CREATE_TABLE, TRUNCATE. So, no need to validate nextEventId
+name|nextEventId
+operator|=
+operator|(
+name|long
+operator|)
+name|Math
+operator|.
+name|pow
+argument_list|(
+literal|10.0
+argument_list|,
+operator|(
+name|double
+operator|)
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|nextEventId
+argument_list|)
+operator|.
+name|length
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Changed EventId #{} to #{}"
+argument_list|,
+name|event
+operator|.
+name|getEventId
+argument_list|()
+argument_list|,
+name|nextEventId
+argument_list|)
+expr_stmt|;
+name|event
+operator|.
+name|setEventId
+argument_list|(
+name|nextEventId
+operator|++
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+default|default:
+block|{
+comment|// After CREATE_TABLE all the events in this DB should get an ID>= 20 or 200 ...
+if|if
+condition|(
+name|nextEventId
+operator|>
+literal|0
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Changed EventId #{} to #{}"
+argument_list|,
+name|event
+operator|.
+name|getEventId
+argument_list|()
+argument_list|,
+name|nextEventId
+argument_list|)
+expr_stmt|;
+name|event
+operator|.
+name|setEventId
+argument_list|(
+name|nextEventId
+operator|++
+argument_list|)
+expr_stmt|;
+block|}
+break|break;
+block|}
+block|}
+name|outEventIds
+operator|.
+name|add
+argument_list|(
+name|event
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|injectionPathCalled
+operator|=
+literal|true
+expr_stmt|;
+if|if
+condition|(
+name|outEventIds
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+name|eventIdList
+return|;
+comment|// If not even one event belongs to current DB, then return original one itself.
+block|}
+else|else
+block|{
+comment|// If the new list is not empty (input list have some events from this DB), then return it
+return|return
+operator|new
+name|NotificationEventResponse
+argument_list|(
+name|outEventIds
+argument_list|)
+return|;
+block|}
+block|}
+else|else
+block|{
+return|return
+literal|null
+return|;
+block|}
+block|}
+block|}
+decl_stmt|;
+name|InjectableBehaviourObjectStore
+operator|.
+name|setGetNextNotificationBehaviour
+argument_list|(
+name|eventIdModifier
+argument_list|)
+expr_stmt|;
+comment|// It is possible that currentNotificationEventID from metastore is less than newly set event ID by stub function.
+comment|// In this case, REPL DUMP will skip events beyond this upper limit.
+comment|// So, to avoid this failure, we will set the TO clause to ID 100 times of currentNotificationEventID
+name|String
+name|cmd
+init|=
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|metaStoreClient
+operator|.
+name|getCurrentNotificationEventId
+argument_list|()
+operator|.
+name|getEventId
+argument_list|()
+operator|*
+literal|100
+argument_list|)
+decl_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+name|cmd
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|eventIdModifier
+operator|.
+name|assertInjectionsPerformed
+argument_list|(
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetGetNextNotificationBehaviour
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -4373,6 +5728,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -4382,6 +5739,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4391,6 +5750,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4400,6 +5761,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4409,6 +5772,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned3(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -4552,6 +5917,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4563,6 +5930,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4576,6 +5945,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4587,6 +5958,8 @@ operator|+
 literal|".ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4600,6 +5973,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4611,6 +5986,8 @@ operator|+
 literal|".ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4624,6 +6001,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4635,6 +6014,8 @@ operator|+
 literal|".ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4648,6 +6029,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4659,6 +6042,8 @@ operator|+
 literal|".ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4672,6 +6057,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned3 PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4683,6 +6070,8 @@ operator|+
 literal|".ptned2 WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4696,6 +6085,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned3 PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4707,6 +6098,8 @@ operator|+
 literal|".ptned2 WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// At this point, we've set up all the tables and ptns we're going to test drops across
@@ -4719,6 +6112,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -4729,6 +6124,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -4741,6 +6138,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -4754,10 +6153,14 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -4770,6 +6173,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4786,6 +6191,8 @@ index|[]
 block|{
 name|replDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4797,6 +6204,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4808,6 +6217,8 @@ operator|+
 literal|"_dupe.ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4819,6 +6230,8 @@ operator|+
 literal|"_dupe.ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4830,6 +6243,8 @@ operator|+
 literal|"_dupe.ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4841,6 +6256,8 @@ operator|+
 literal|"_dupe.ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4852,6 +6269,8 @@ operator|+
 literal|"_dupe.ptned3 WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4863,6 +6282,8 @@ operator|+
 literal|"_dupe.ptned3 WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// All tables good on destination, drop on source.
@@ -4873,6 +6294,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4882,6 +6305,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned DROP PARTITION (b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4891,6 +6316,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -4900,6 +6327,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned3 DROP PARTITION (b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4911,6 +6340,8 @@ operator|+
 literal|".ptned WHERE b='2'"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4922,6 +6353,8 @@ operator|+
 literal|".ptned"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4933,6 +6366,8 @@ operator|+
 literal|".ptned3 WHERE b=1"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -4944,6 +6379,8 @@ operator|+
 literal|".ptned3"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// replicate the incremental drops
@@ -4959,6 +6396,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -4969,6 +6408,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -4981,6 +6422,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -5007,10 +6450,14 @@ operator|+
 name|postDropReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -5023,6 +6470,8 @@ operator|+
 name|postDropReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// verify that drops were replicated. This can either be from tables or ptns
@@ -5035,6 +6484,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -5046,6 +6497,8 @@ operator|+
 literal|"_dupe.ptned WHERE b='2'"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -5057,6 +6510,8 @@ operator|+
 literal|"_dupe.ptned"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -5068,6 +6523,8 @@ operator|+
 literal|"_dupe.ptned3 WHERE b=1"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -5079,6 +6536,8 @@ operator|+
 literal|"_dupe.ptned3"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
@@ -5088,6 +6547,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"ptned2"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -5111,6 +6572,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -5120,6 +6583,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5129,6 +6594,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5138,6 +6605,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -5281,6 +6750,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5290,11 +6761,15 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5308,6 +6783,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5317,11 +6794,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='1'"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5335,6 +6816,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5344,11 +6827,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='2'"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5362,6 +6849,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5371,11 +6860,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='1'"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5389,6 +6882,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5398,11 +6893,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 WHERE b='2'"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -5413,6 +6912,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -5423,6 +6924,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -5435,6 +6938,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -5448,10 +6953,14 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -5464,6 +6973,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5473,6 +6984,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -5483,6 +6996,8 @@ index|[]
 block|{
 name|replDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5492,11 +7007,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5506,11 +7025,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='1'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5520,11 +7043,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b='2'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5534,11 +7061,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='1'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5548,11 +7079,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned2 WHERE b='2'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5568,6 +7103,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5583,6 +7120,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5598,6 +7137,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b='1'"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5607,11 +7148,15 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_copy"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5621,11 +7166,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_copy"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5635,6 +7184,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5644,6 +7195,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned DROP PARTITION (b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5653,6 +7206,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5662,11 +7217,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5676,11 +7235,15 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -5695,6 +7258,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -5705,6 +7270,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -5717,6 +7284,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -5740,6 +7309,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_copy"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Drop partition after dump
@@ -5750,6 +7321,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_copy DROP PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5763,10 +7336,14 @@ operator|+
 name|postDropReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -5779,6 +7356,8 @@ operator|+
 name|postDropReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|Exception
@@ -5791,7 +7370,7 @@ block|{
 name|Table
 name|tbl
 init|=
-name|metaStoreClient
+name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
@@ -5843,11 +7422,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned WHERE b=2"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5857,11 +7440,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
@@ -5871,6 +7458,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"ptned2"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5880,11 +7469,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.unptned_copy"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5894,11 +7487,15 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe.ptned_copy"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -5922,6 +7519,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -5931,6 +7530,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5940,6 +7541,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned2(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5949,6 +7552,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -5958,6 +7563,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2(a string) partitioned by (b string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -6101,6 +7708,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6112,6 +7721,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6125,6 +7736,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6136,6 +7749,8 @@ operator|+
 literal|".unptned2"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6149,6 +7764,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6160,6 +7777,8 @@ operator|+
 literal|".ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6173,6 +7792,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6184,6 +7805,8 @@ operator|+
 literal|".ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6197,6 +7820,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='1')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6208,6 +7833,8 @@ operator|+
 literal|".ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6221,6 +7848,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION(b='2')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6232,6 +7861,8 @@ operator|+
 literal|".ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// base tables set up, let's replicate them over
@@ -6243,6 +7874,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -6253,6 +7886,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -6265,6 +7900,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -6278,10 +7915,14 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -6294,6 +7935,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -6303,6 +7946,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -6313,6 +7958,8 @@ index|[]
 block|{
 name|replDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6324,6 +7971,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6335,6 +7984,8 @@ operator|+
 literal|"_dupe.unptned2"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6346,6 +7997,8 @@ operator|+
 literal|"_dupe.ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6357,6 +8010,8 @@ operator|+
 literal|"_dupe.ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6368,6 +8023,8 @@ operator|+
 literal|"_dupe.ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6379,6 +8036,8 @@ operator|+
 literal|"_dupe.ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// tables have been replicated over, and verified to be identical. Now, we do a couple of
@@ -6395,6 +8054,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_rn"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6406,6 +8067,8 @@ operator|+
 literal|".unptned_rn"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Alter unpartitioned table set table property
@@ -6434,6 +8097,8 @@ operator|+
 name|testVal
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 if|if
@@ -6505,6 +8170,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION (b='2') RENAME TO PARTITION (b='22')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6516,6 +8183,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6527,6 +8196,8 @@ operator|+
 literal|".ptned WHERE b=22"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// alter partitioned table set table property
@@ -6545,6 +8216,8 @@ operator|+
 name|testVal
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 if|if
@@ -6694,6 +8367,8 @@ operator|+
 literal|".ptned2 WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -6707,6 +8382,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2_rn"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -6718,6 +8395,8 @@ operator|+
 literal|".ptned2_rn WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// All alters done, now we replicate them over.
@@ -6733,6 +8412,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -6743,6 +8424,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -6755,6 +8438,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -6781,10 +8466,14 @@ operator|+
 name|postAlterReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -6797,6 +8486,8 @@ operator|+
 name|postAlterReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Replication done, we now do the following verifications:
@@ -6808,6 +8499,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -6819,6 +8512,8 @@ operator|+
 literal|"_dupe.unptned_rn"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// verify that partition rename succeded.
@@ -6827,7 +8522,7 @@ block|{
 name|Table
 name|unptn2
 init|=
-name|metaStoreClient
+name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
@@ -6888,6 +8583,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -6899,6 +8596,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=22"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// verify that ptned table rename succeded.
@@ -6909,6 +8608,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"ptned2"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -6920,6 +8621,8 @@ operator|+
 literal|"_dupe.ptned2_rn WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// verify that ptned table property set worked
@@ -6928,7 +8631,7 @@ block|{
 name|Table
 name|ptned
 init|=
-name|metaStoreClient
+name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
@@ -7006,7 +8709,7 @@ expr_stmt|;
 name|Partition
 name|ptn1
 init|=
-name|metaStoreClient
+name|metaStoreClientMirror
 operator|.
 name|getPartition
 argument_list|(
@@ -7081,6 +8784,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -7090,6 +8795,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7099,6 +8806,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7108,6 +8817,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_empty(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7117,6 +8828,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_empty(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -7127,6 +8840,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -7137,6 +8852,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -7149,6 +8866,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -7173,6 +8892,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -7314,6 +9035,8 @@ operator|+
 literal|".ptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7325,6 +9048,8 @@ operator|+
 literal|".unptned_empty"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -7338,6 +9063,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7349,6 +9076,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7362,6 +9091,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7375,6 +9106,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7386,6 +9119,8 @@ operator|+
 literal|".unptned_late"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -7400,6 +9135,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -7410,6 +9147,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -7422,6 +9161,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -7452,10 +9193,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -7468,6 +9213,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7479,6 +9226,8 @@ operator|+
 literal|"_dupe.unptned_late"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -7488,6 +9237,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned ADD PARTITION (b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7501,6 +9252,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7512,6 +9265,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7525,6 +9280,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7536,6 +9293,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7545,6 +9304,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_late(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7558,6 +9319,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=1"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7569,6 +9332,8 @@ operator|+
 literal|".ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7582,6 +9347,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned WHERE b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7593,6 +9360,8 @@ operator|+
 literal|".ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -7607,6 +9376,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -7616,6 +9387,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -7627,6 +9400,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -7657,10 +9432,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -7673,6 +9452,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7684,6 +9465,8 @@ operator|+
 literal|"_dupe.ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7695,6 +9478,8 @@ operator|+
 literal|"_dupe.ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7706,6 +9491,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7717,6 +9504,8 @@ operator|+
 literal|"_dupe.ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -7740,6 +9529,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -7749,6 +9540,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -7759,6 +9552,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -7769,6 +9564,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -7781,6 +9578,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -7805,6 +9604,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -7834,6 +9635,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7850,6 +9653,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7861,6 +9666,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7874,6 +9681,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -7887,6 +9696,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -7898,6 +9709,8 @@ operator|+
 literal|".unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -7912,6 +9725,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -7922,6 +9737,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -7934,6 +9751,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -7964,10 +9783,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -7980,6 +9803,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -7991,6 +9816,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8002,6 +9829,8 @@ operator|+
 literal|".unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8013,6 +9842,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8024,6 +9855,8 @@ operator|+
 literal|"_dupe.unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -8066,6 +9899,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8077,6 +9912,8 @@ operator|+
 literal|".unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8093,6 +9930,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8104,6 +9943,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -8118,6 +9959,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -8127,6 +9970,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -8138,6 +9983,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -8168,10 +10015,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -8184,6 +10035,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8195,6 +10048,8 @@ operator|+
 literal|"_dupe.unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8206,6 +10061,276 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testEventTypesForDynamicAddPartitionByInsert
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|name
+init|=
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+decl_stmt|;
+specifier|final
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|name
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|Tuple
+name|bootstrap
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ten"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Inject a behaviour where it throws exception if an INSERT event is found
+comment|// As we dynamically add a partition through INSERT INTO cmd, it should just add ADD_PARTITION
+comment|// event not an INSERT event
+name|BehaviourInjection
+argument_list|<
+name|NotificationEventResponse
+argument_list|,
+name|NotificationEventResponse
+argument_list|>
+name|eventTypeValidator
+init|=
+operator|new
+name|BehaviourInjection
+argument_list|<
+name|NotificationEventResponse
+argument_list|,
+name|NotificationEventResponse
+argument_list|>
+argument_list|()
+block|{
+annotation|@
+name|Nullable
+annotation|@
+name|Override
+specifier|public
+name|NotificationEventResponse
+name|apply
+parameter_list|(
+annotation|@
+name|Nullable
+name|NotificationEventResponse
+name|eventsList
+parameter_list|)
+block|{
+if|if
+condition|(
+literal|null
+operator|!=
+name|eventsList
+condition|)
+block|{
+name|List
+argument_list|<
+name|NotificationEvent
+argument_list|>
+name|events
+init|=
+name|eventsList
+operator|.
+name|getEvents
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|events
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|NotificationEvent
+name|event
+init|=
+name|events
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+comment|// Skip all the events belong to other DBs/tables.
+if|if
+condition|(
+name|event
+operator|.
+name|getDbName
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|dbName
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|event
+operator|.
+name|getEventType
+argument_list|()
+operator|==
+literal|"INSERT"
+condition|)
+block|{
+comment|// If an insert event is found, then return null hence no event is dumped.
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Encountered INSERT event when it was not expected to"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
+block|}
+block|}
+name|injectionPathCalled
+operator|=
+literal|true
+expr_stmt|;
+block|}
+return|return
+name|eventsList
+return|;
+block|}
+block|}
+decl_stmt|;
+name|InjectableBehaviourObjectStore
+operator|.
+name|setGetNextNotificationBehaviour
+argument_list|(
+name|eventTypeValidator
+argument_list|)
+expr_stmt|;
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrap
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+expr_stmt|;
+name|eventTypeValidator
+operator|.
+name|assertInjectionsPerformed
+argument_list|(
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetGetNextNotificationBehaviour
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -8246,6 +10371,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8255,6 +10382,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -8265,6 +10394,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -8275,6 +10406,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -8287,6 +10420,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -8311,6 +10446,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -8357,6 +10494,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8373,6 +10512,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8389,6 +10530,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8398,6 +10541,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned ADD PARTITION (b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8414,6 +10559,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8430,6 +10577,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8446,6 +10595,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8457,6 +10608,8 @@ operator|+
 literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8468,6 +10621,8 @@ operator|+
 literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -8482,6 +10637,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -8492,6 +10649,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -8504,6 +10663,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -8534,10 +10695,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -8550,6 +10715,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8561,6 +10728,8 @@ operator|+
 literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8572,6 +10741,8 @@ operator|+
 literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8583,6 +10754,8 @@ operator|+
 literal|"_dupe.ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8594,6 +10767,8 @@ operator|+
 literal|"_dupe.ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -8622,6 +10797,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8633,6 +10810,8 @@ operator|+
 literal|".ptned where (b=2)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Insert overwrite on dynamic partition
@@ -8650,6 +10829,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8661,6 +10842,8 @@ operator|+
 literal|".ptned where (b=3)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -8675,6 +10858,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -8684,6 +10869,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -8695,6 +10882,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -8725,10 +10914,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -8741,6 +10934,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8752,6 +10947,8 @@ operator|+
 literal|"_dupe.ptned where (b=2)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -8763,6 +10960,8 @@ operator|+
 literal|"_dupe.ptned where (b=3)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -8803,6 +11002,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8812,6 +11013,8 @@ operator|+
 name|dbName
 operator|+
 literal|".namelist(name string) partitioned by (year int, month int, day int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8819,6 +11022,8 @@ argument_list|(
 literal|"USE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -8902,6 +11107,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8918,6 +11125,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -8934,6 +11143,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8945,6 +11156,8 @@ operator|+
 literal|".namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8956,6 +11169,8 @@ operator|+
 literal|".namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8967,6 +11182,8 @@ operator|+
 literal|".namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8978,6 +11195,8 @@ operator|+
 literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -8989,6 +11208,8 @@ operator|+
 literal|".namelist"
 argument_list|,
 name|ptn_list_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRunWithPatternMatch
@@ -8998,6 +11219,8 @@ argument_list|,
 literal|"location"
 argument_list|,
 literal|"namelist/year=1980/month=4/day=1"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -9008,6 +11231,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9018,6 +11243,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -9030,6 +11257,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -9054,6 +11283,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9065,6 +11296,8 @@ operator|+
 literal|"_dupe.namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9076,6 +11309,8 @@ operator|+
 literal|"_dupe.namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9087,6 +11322,8 @@ operator|+
 literal|"_dupe.namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9098,6 +11335,8 @@ operator|+
 literal|"_dupe.namelist ORDER BY name"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9109,6 +11348,8 @@ operator|+
 literal|"_dupe.namelist"
 argument_list|,
 name|ptn_list_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -9118,6 +11359,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRunWithPatternMatch
@@ -9127,6 +11370,8 @@ argument_list|,
 literal|"location"
 argument_list|,
 literal|"namelist/year=1980/month=4/day=1"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -9134,6 +11379,8 @@ argument_list|(
 literal|"USE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9214,6 +11461,8 @@ literal|3
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -9230,6 +11479,8 @@ literal|4
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9241,6 +11492,8 @@ operator|+
 literal|".namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9252,6 +11505,8 @@ operator|+
 literal|".namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9263,6 +11518,8 @@ operator|+
 literal|".namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9274,6 +11531,8 @@ operator|+
 literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9285,6 +11544,8 @@ operator|+
 literal|".namelist"
 argument_list|,
 name|ptn_list_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRunWithPatternMatch
@@ -9294,6 +11555,8 @@ argument_list|,
 literal|"location"
 argument_list|,
 literal|"namelist/year=1990/month=5/day=25"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -9308,6 +11571,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9318,6 +11583,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -9330,6 +11597,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -9360,10 +11629,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -9376,6 +11649,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9387,6 +11662,8 @@ operator|+
 literal|"_dupe.namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9398,6 +11675,8 @@ operator|+
 literal|"_dupe.namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9409,6 +11688,8 @@ operator|+
 literal|"_dupe.namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9420,6 +11701,8 @@ operator|+
 literal|"_dupe.namelist ORDER BY name"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9431,6 +11714,8 @@ operator|+
 literal|"_dupe.namelist"
 argument_list|,
 name|ptn_list_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -9440,6 +11725,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRunWithPatternMatch
@@ -9449,6 +11736,8 @@ argument_list|,
 literal|"location"
 argument_list|,
 literal|"namelist/year=1990/month=5/day=25"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -9456,6 +11745,8 @@ argument_list|(
 literal|"USE "
 operator|+
 name|dbName
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -9503,6 +11794,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9514,6 +11807,8 @@ operator|+
 literal|".namelist where (year=1990 and month=5 and day=25)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9525,6 +11820,8 @@ operator|+
 literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_3
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -9539,6 +11836,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -9548,6 +11847,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -9559,6 +11860,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -9589,10 +11892,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -9605,6 +11912,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9616,6 +11925,8 @@ operator|+
 literal|"_dupe.namelist where (year=1990 and month=5 and day=25)"
 argument_list|,
 name|data_after_ovwrite
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9627,6 +11938,8 @@ operator|+
 literal|"_dupe.namelist ORDER BY name"
 argument_list|,
 name|ptn_data_3
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -9650,6 +11963,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -9659,6 +11974,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -9669,6 +11986,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9679,6 +11998,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -9691,6 +12012,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -9715,6 +12038,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -9744,6 +12069,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -9760,6 +12087,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9771,6 +12100,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -9784,6 +12115,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -9795,6 +12128,8 @@ operator|+
 literal|".unptned_tmp ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
@@ -9810,6 +12145,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9820,6 +12157,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|1
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 comment|// Drop all the tables
@@ -9830,6 +12169,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -9839,6 +12180,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_tmp"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -9848,6 +12191,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -9857,6 +12202,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_tmp"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Dump all the events except DROP
@@ -9876,6 +12223,8 @@ operator|+
 literal|" TO "
 operator|+
 name|lastDumpIdWithoutDrop
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -9886,6 +12235,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -9898,6 +12249,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -9929,6 +12282,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9940,6 +12295,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -9951,6 +12308,8 @@ operator|+
 literal|"_dupe.unptned_tmp ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump the drop events and check if tables are getting dropped in target as well
@@ -9966,6 +12325,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -9975,6 +12336,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -9986,6 +12349,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -10016,6 +12381,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10025,6 +12392,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10034,6 +12403,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned_tmp"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -10057,6 +12428,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -10066,6 +12439,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -10076,6 +12451,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -10086,6 +12463,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -10098,6 +12477,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -10122,6 +12503,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -10168,6 +12551,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10184,6 +12569,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10200,6 +12587,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10209,6 +12598,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned ADD PARTITION (b=20)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10218,6 +12609,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned RENAME PARTITION (b=20) TO PARTITION (b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10234,6 +12627,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10250,6 +12645,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10266,6 +12663,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10277,6 +12676,8 @@ operator|+
 literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10288,6 +12689,8 @@ operator|+
 literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10301,6 +12704,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10312,6 +12717,8 @@ operator|+
 literal|".ptned_tmp where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10323,6 +12730,8 @@ operator|+
 literal|".ptned_tmp where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
@@ -10338,6 +12747,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -10348,6 +12759,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|1
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 comment|// Drop all the tables
@@ -10358,6 +12771,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_tmp"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10367,6 +12782,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10376,6 +12793,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_tmp"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10385,6 +12804,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Dump all the events except DROP
@@ -10404,6 +12825,8 @@ operator|+
 literal|" TO "
 operator|+
 name|lastDumpIdWithoutDrop
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -10414,6 +12837,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -10426,6 +12851,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -10457,6 +12884,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -10468,6 +12897,8 @@ operator|+
 literal|"_dupe.ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -10479,6 +12910,8 @@ operator|+
 literal|"_dupe.ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -10490,6 +12923,8 @@ operator|+
 literal|"_dupe.ptned_tmp where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -10501,6 +12936,8 @@ operator|+
 literal|"_dupe.ptned_tmp where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump the drop events and check if tables are getting dropped in target as well
@@ -10516,6 +12953,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -10525,6 +12964,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -10536,6 +12977,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -10566,6 +13009,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10575,6 +13020,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_tmp"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyFail
@@ -10584,6 +13031,1954 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertOverwriteOnUnpartitionedTableWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"insertOverwriteOnUnpartitionedTableWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// After INSERT INTO operation, get the last Repl ID
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|insertDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|false
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+comment|// Insert overwrite on unpartitioned table
+name|String
+index|[]
+name|data_after_ovwrite
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"hundred"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT OVERWRITE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|data_after_ovwrite
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Dump only one INSERT INTO operation on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|insertDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// After Load from this dump, all target tables/partitions will have initial set of data but source will have latest data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Dump the remaining INSERT OVERWRITE operations on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+comment|// After load, shall see the overwritten data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|data_after_ovwrite
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testInsertOverwriteOnPartitionedTableWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"insertOverwriteOnPartitionedTableWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// INSERT INTO 2 partitions and get the last repl ID
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fourteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"sixteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|insertDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|false
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+comment|// Insert overwrite on one partition with multiple files
+name|String
+index|[]
+name|data_after_ovwrite
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"hundred"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT OVERWRITE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|data_after_ovwrite
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|".ptned where (b=2)"
+argument_list|,
+name|data_after_ovwrite
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Dump only 2 INSERT INTO operations.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|insertDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+comment|// After Load from this dump, all target tables/partitions will have initial set of data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Dump the remaining INSERT OVERWRITE operation on the table.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+comment|// After load, shall see the overwritten data.
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|data_after_ovwrite
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRenameTableWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"renameTableWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ten"
+block|,
+literal|"twenty"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"seventeen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=2)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Get the last repl ID corresponding to all insert events except RENAME.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|lastDumpIdWithoutRename
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned RENAME TO "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_renamed"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned RENAME TO "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_renamed"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|lastDumpIdWithoutRename
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned ORDER BY a"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned_renamed ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_renamed where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned_renamed where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRenamePartitionWithCM
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"renamePartitionWithCM"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"seventeen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=2)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Get the last repl ID corresponding to all insert events except RENAME.
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|lastDumpIdWithoutRename
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION (b=2) RENAME TO PARTITION (b=10)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+operator|+
+literal|" TO "
+operator|+
+name|lastDumpIdWithoutRename
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=10) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|replDumpId
+operator|=
+name|incrementalDumpId
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=10) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=2) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -10607,6 +15002,8 @@ init|=
 name|createDB
 argument_list|(
 name|testName
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -10616,6 +15013,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10625,6 +15024,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10638,6 +15039,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -10779,6 +15182,8 @@ operator|+
 literal|".ptned"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10790,6 +15195,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10801,6 +15208,8 @@ operator|+
 literal|".virtual_view"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10814,6 +15223,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10825,6 +15236,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10836,6 +15249,8 @@ operator|+
 literal|".virtual_view"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10849,6 +15264,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10860,6 +15277,8 @@ operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10873,6 +15292,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10884,6 +15305,8 @@ operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -10897,6 +15320,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned where b=1"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -10908,6 +15333,8 @@ operator|+
 literal|".mat_view"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -10918,6 +15345,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -10928,6 +15357,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -10940,6 +15371,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -10964,8 +15397,11 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
+comment|// view is referring to old database, so no data
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
@@ -10974,7 +15410,9 @@ name|dbName
 operator|+
 literal|"_dupe.virtual_view"
 argument_list|,
-name|unptn_data
+name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -10986,6 +15424,8 @@ operator|+
 literal|"_dupe.mat_view"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -10999,6 +15439,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned where b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -11010,6 +15452,8 @@ operator|+
 literal|".virtual_view2"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Create a view with name already exist. Just to verify if failure flow clears the added create_table event.
@@ -11024,6 +15468,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned where b=2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11037,6 +15483,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -11048,6 +15496,8 @@ operator|+
 literal|".mat_view2"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
@@ -11063,6 +15513,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -11073,6 +15525,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -11085,6 +15539,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -11109,10 +15565,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -11125,6 +15585,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -11134,6 +15596,8 @@ operator|+
 name|dbName
 operator|+
 literal|"_dupe"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyResults
@@ -11144,6 +15608,8 @@ index|[]
 block|{
 name|incrementalDumpId
 block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11155,6 +15621,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11166,8 +15634,11 @@ operator|+
 literal|"_dupe.ptned where b=1"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
+comment|// view is referring to old database, so no data
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
@@ -11176,7 +15647,9 @@ name|dbName
 operator|+
 literal|"_dupe.virtual_view"
 argument_list|,
-name|unptn_data
+name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11188,8 +15661,11 @@ operator|+
 literal|"_dupe.mat_view"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
+comment|// view is referring to old database, so no data
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
@@ -11198,7 +15674,9 @@ name|dbName
 operator|+
 literal|"_dupe.virtual_view2"
 argument_list|,
-name|ptn_data_2
+name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11210,6 +15688,280 @@ operator|+
 literal|"_dupe.mat_view2"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Test "alter table" with rename
+name|run
+argument_list|(
+literal|"ALTER VIEW "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view RENAME TO "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.virtual_view_rename"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Test "alter table" with schema change
+name|run
+argument_list|(
+literal|"ALTER VIEW "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename AS SELECT a, concat(a, '_') as a_ FROM "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifySetup
+argument_list|(
+literal|"SHOW COLUMNS FROM "
+operator|+
+name|dbName
+operator|+
+literal|".virtual_view_rename"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"a"
+block|,
+literal|"a_"
+block|}
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SHOW COLUMNS FROM "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.virtual_view_rename"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"a"
+block|,
+literal|"a_"
+block|}
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -11236,6 +15988,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -11245,6 +15999,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -11255,6 +16011,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -11265,6 +16023,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -11277,6 +16037,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -11344,6 +16106,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// 3 events to insert, last repl ID: replDumpId+6
@@ -11361,6 +16125,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// 3 events to insert, last repl ID: replDumpId+9
@@ -11378,6 +16144,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11389,6 +16157,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11402,6 +16172,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -11418,6 +16190,8 @@ operator|+
 name|replDumpId
 operator|+
 literal|" LIMIT 3"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -11428,6 +16202,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -11440,6 +16216,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -11470,6 +16248,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11481,6 +16261,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11492,6 +16274,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -11536,6 +16320,8 @@ operator|+
 name|toReplID
 operator|+
 literal|" LIMIT 3"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -11545,6 +16331,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -11556,6 +16344,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -11586,6 +16376,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11597,6 +16389,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -11611,6 +16405,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -11620,6 +16416,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -11631,6 +16429,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -11661,6 +16461,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -11672,6 +16474,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -11712,6 +16516,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11721,6 +16527,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_src(a string) partitioned by (b int, c int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11730,6 +16538,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_dest(a string) partitioned by (b int, c int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -11785,6 +16595,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11801,6 +16613,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11817,6 +16631,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11826,6 +16642,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_src ADD PARTITION (b=2, c=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11842,6 +16660,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11858,6 +16678,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11874,6 +16696,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11890,6 +16714,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11906,6 +16732,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -11922,6 +16750,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -11933,6 +16763,8 @@ operator|+
 literal|".ptned_src where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -11944,6 +16776,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -11955,6 +16789,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -11965,6 +16801,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -11975,6 +16813,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -11987,6 +16827,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -12011,6 +16853,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12022,6 +16866,8 @@ operator|+
 literal|".ptned_src where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12033,6 +16879,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12044,6 +16892,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12055,6 +16905,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12066,6 +16918,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12077,6 +16931,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12088,6 +16944,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=1 and c=1)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12099,6 +16957,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12110,6 +16970,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=3)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Exchange single partitions using complete partition-spec (all partition columns)
@@ -12124,6 +16986,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_src"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12135,6 +16999,8 @@ operator|+
 literal|".ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12146,6 +17012,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12157,6 +17025,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12168,6 +17038,8 @@ operator|+
 literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12179,6 +17051,8 @@ operator|+
 literal|".ptned_dest where (b=2 and c=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12190,6 +17064,8 @@ operator|+
 literal|".ptned_dest where (b=2 and c=3)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12204,6 +17080,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -12214,6 +17092,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -12226,6 +17106,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -12256,6 +17138,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12267,6 +17151,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12278,6 +17164,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12289,6 +17177,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12300,6 +17190,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12311,6 +17203,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12322,6 +17216,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=3)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Exchange multiple partitions using partial partition-spec (only one partition column)
@@ -12336,6 +17232,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_src"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12347,6 +17245,8 @@ operator|+
 literal|".ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12358,6 +17258,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12369,6 +17271,8 @@ operator|+
 literal|".ptned_src where (b=2 and c=3)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12380,6 +17284,8 @@ operator|+
 literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12391,6 +17297,8 @@ operator|+
 literal|".ptned_dest where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12402,6 +17310,8 @@ operator|+
 literal|".ptned_dest where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12416,6 +17326,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -12425,6 +17337,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -12436,6 +17350,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -12466,6 +17382,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12477,6 +17395,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12488,6 +17408,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12499,6 +17421,8 @@ operator|+
 literal|"_dupe.ptned_src where (b=2 and c=3)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12510,6 +17434,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12521,6 +17447,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12532,6 +17460,8 @@ operator|+
 literal|"_dupe.ptned_dest where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -12572,6 +17502,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -12581,6 +17513,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12591,6 +17525,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -12601,6 +17537,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -12613,6 +17551,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -12637,6 +17577,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -12675,6 +17617,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -12691,6 +17635,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12702,6 +17648,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12716,6 +17664,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -12726,6 +17676,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -12738,6 +17690,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -12768,10 +17722,14 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|printOutput
-argument_list|()
+argument_list|(
+name|driverMirror
+argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -12784,6 +17742,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12795,6 +17755,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12806,6 +17768,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -12815,6 +17779,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12826,6 +17792,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12840,6 +17808,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -12849,6 +17819,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -12860,6 +17832,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -12890,6 +17864,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12901,6 +17877,8 @@ operator|+
 literal|".unptned"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -12912,6 +17890,8 @@ operator|+
 literal|"_dupe.unptned"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|String
@@ -12939,6 +17919,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -12950,6 +17932,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -12964,6 +17948,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -12973,6 +17959,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -12984,6 +17972,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -13014,6 +18004,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13025,6 +18017,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13036,6 +18030,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -13076,6 +18072,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13085,6 +18083,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_1(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13094,6 +18094,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_2(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -13149,6 +18151,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13165,6 +18169,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13181,6 +18187,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13197,6 +18205,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13213,6 +18223,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13229,6 +18241,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13245,6 +18259,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13261,6 +18277,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13277,6 +18295,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13293,6 +18313,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13309,6 +18331,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13325,6 +18349,8 @@ literal|2
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13336,6 +18362,8 @@ operator|+
 literal|".ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13347,6 +18375,8 @@ operator|+
 literal|".ptned_1 where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13358,6 +18388,8 @@ operator|+
 literal|".ptned_2 where (b=10) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13369,6 +18401,8 @@ operator|+
 literal|".ptned_2 where (b=20) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -13379,6 +18413,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -13389,6 +18425,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -13401,6 +18439,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -13425,6 +18465,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13436,6 +18478,8 @@ operator|+
 literal|"_dupe.ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13447,6 +18491,8 @@ operator|+
 literal|"_dupe.ptned_1 where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13458,6 +18504,8 @@ operator|+
 literal|"_dupe.ptned_2 where (b=10) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13469,6 +18517,8 @@ operator|+
 literal|"_dupe.ptned_2 where (b=20) ORDER BY a"
 argument_list|,
 name|ptn_data_2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -13478,6 +18528,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_1 PARTITION(b=2)"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13489,6 +18541,8 @@ operator|+
 literal|".ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13500,6 +18554,8 @@ operator|+
 literal|".ptned_1 where (b=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13509,6 +18565,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13520,6 +18578,8 @@ operator|+
 literal|".ptned_2 where (b=10)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13531,6 +18591,8 @@ operator|+
 literal|".ptned_2 where (b=20)"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -13545,6 +18607,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -13555,6 +18619,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -13567,6 +18633,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -13597,6 +18665,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13608,6 +18678,8 @@ operator|+
 literal|"_dupe.ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13619,6 +18691,8 @@ operator|+
 literal|"_dupe.ptned_1 where (b=2)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13630,6 +18704,8 @@ operator|+
 literal|"_dupe.ptned_2 where (b=10)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifySetup
@@ -13641,6 +18717,8 @@ operator|+
 literal|"_dupe.ptned_2 where (b=20)"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -13681,6 +18759,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13690,6 +18770,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -13700,6 +18782,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -13710,6 +18794,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -13722,6 +18808,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -13796,6 +18884,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// 3 events to insert, last repl ID: replDumpId+6
@@ -13813,6 +18903,8 @@ literal|1
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13824,6 +18916,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// 1 event to truncate, last repl ID: replDumpId+8
@@ -13834,6 +18928,8 @@ operator|+
 name|dbName
 operator|+
 literal|".unptned"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13845,6 +18941,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|empty
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 comment|// 3 events to insert, last repl ID: replDumpId+11
@@ -13862,6 +18960,8 @@ literal|0
 index|]
 operator|+
 literal|"')"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13873,6 +18973,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|run
@@ -13886,6 +18988,8 @@ operator|+
 name|replDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only first insert (1 record)
@@ -13903,6 +19007,8 @@ operator|+
 name|replDumpId
 operator|+
 literal|" LIMIT 3"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -13913,6 +19019,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -13925,6 +19033,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -13955,6 +19065,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13966,6 +19078,8 @@ operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -13977,6 +19091,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only second insert (2 records)
@@ -14022,6 +19138,8 @@ operator|+
 name|toReplID
 operator|+
 literal|" LIMIT 3"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -14031,6 +19149,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -14042,6 +19162,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -14072,6 +19194,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -14083,6 +19207,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load2
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only truncate (0 records)
@@ -14100,6 +19226,8 @@ operator|+
 name|replDumpId
 operator|+
 literal|" LIMIT 2"
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -14109,6 +19237,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -14120,6 +19250,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -14150,6 +19282,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -14161,6 +19295,8 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|empty
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load insert after truncate (1 record)
@@ -14176,6 +19312,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|replDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpLocn
@@ -14185,6 +19323,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|incrementalDumpId
@@ -14196,6 +19336,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -14226,6 +19368,8 @@ operator|+
 name|incrementalDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -14237,6 +19381,2046 @@ operator|+
 literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalRepeatEventOnExistingObject
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalRepeatEventOnExistingObject"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+comment|// List to maintain the incremental dumps for each operation
+name|List
+argument_list|<
+name|Tuple
+argument_list|>
+name|incrementalDumpList
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Tuple
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ten"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"seventeen"
+block|}
+decl_stmt|;
+comment|// INSERT EVENT to unpartitioned table
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|Tuple
+name|replDump
+init|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+argument_list|)
+decl_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// ADD_PARTITION EVENT to partitioned table
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=2)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table on existing partition
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// TRUNCATE_PARTITION EVENT on partitioned table
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION (b=1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// TRUNCATE_TABLE EVENT on unpartitioned table
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// CREATE_TABLE EVENT with multiple partitions
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp AS SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// ADD_CONSTRAINT EVENT
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_tmp ADD CONSTRAINT uk_unptned UNIQUE(a) disable"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// Replicate all the events happened so far
+name|Tuple
+name|incrDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned_tmp where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Load each incremental dump from the list. Each dump have only one operation.
+for|for
+control|(
+name|Tuple
+name|currDump
+range|:
+name|incrementalDumpList
+control|)
+block|{
+comment|// Load the incremental dump and ensure it does nothing and lastReplID remains same
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|currDump
+operator|.
+name|dumpLocation
+argument_list|,
+name|incrDump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+comment|// Verify if the data are intact even after applying an applied event once again on existing objects
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned_tmp where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalRepeatEventOnMissingObject
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalRepeatEventOnMissingObject"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+comment|// List to maintain the incremental dumps for each operation
+name|List
+argument_list|<
+name|Tuple
+argument_list|>
+name|incrementalDumpList
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Tuple
+argument_list|>
+argument_list|()
+decl_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ten"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"seventeen"
+block|}
+decl_stmt|;
+comment|// INSERT EVENT to unpartitioned table
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|Tuple
+name|replDump
+init|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+argument_list|)
+decl_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// ADD_PARTITION EVENT to partitioned table
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned ADD PARTITION (b=2)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table on existing partition
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned partition(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// TRUNCATE_PARTITION EVENT on partitioned table
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// TRUNCATE_TABLE EVENT on unpartitioned table
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// CREATE_TABLE EVENT on partitioned table
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp (a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp partition(b=10) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp partition(b=20) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// DROP_PARTITION EVENT to partitioned table
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned DROP PARTITION (b=1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// RENAME_PARTITION EVENT to partitioned table
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION (b=2) RENAME TO PARTITION (b=20)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// RENAME_TABLE EVENT to unpartitioned table
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned RENAME TO "
+operator|+
+name|dbName
+operator|+
+literal|".unptned_new"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// ADD_CONSTRAINT EVENT
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp ADD CONSTRAINT uk_unptned UNIQUE(a) disable"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// DROP_TABLE EVENT to partitioned table
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|replDump
+operator|=
+name|dumpDbFromLastDump
+argument_list|(
+name|dbName
+argument_list|,
+name|replDump
+argument_list|)
+expr_stmt|;
+name|incrementalDumpList
+operator|.
+name|add
+argument_list|(
+name|replDump
+argument_list|)
+expr_stmt|;
+comment|// Replicate all the events happened so far
+name|Tuple
+name|incrDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned_tmp"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"unptned_new"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"1"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"2"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"20"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+comment|// Load each incremental dump from the list. Each dump have only one operation.
+for|for
+control|(
+name|Tuple
+name|currDump
+range|:
+name|incrementalDumpList
+control|)
+block|{
+comment|// Load the current incremental dump and ensure it does nothing and lastReplID remains same
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|currDump
+operator|.
+name|dumpLocation
+argument_list|,
+name|incrDump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+comment|// Verify if the data are intact even after applying an applied event once again on missing objects
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned_tmp"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"unptned_new"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"1"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"2"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"20"
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testConcatenateTable
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"concatenateTable"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS ORC"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"eleven"
+block|,
+literal|"twelve"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('"
+operator|+
+name|unptn_data
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned CONCATENATE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Replicate all the events happened after bootstrap
+name|Tuple
+name|incrDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testConcatenatePartitionedTable
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"concatenatePartitionedTable"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b int) STORED AS ORC"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|,
+literal|"thirteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data_2
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"seventeen"
+block|,
+literal|"sixteen"
+block|}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|1
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2) values('"
+operator|+
+name|ptn_data_2
+index|[
+literal|2
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=2) CONCATENATE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Replicate all the events happened so far
+name|Tuple
+name|incrDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=2) ORDER BY a"
+argument_list|,
+name|ptn_data_2
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalLoadFailAndRetry
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"incrementalLoadFailAndRetry"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+comment|// Prefixed with incrementalLoadFailAndRetry to avoid finding entry in cmpath
+name|String
+index|[]
+name|ptn_data_1
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"incrementalLoadFailAndRetry_fifteen"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|empty
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=1) values('"
+operator|+
+name|ptn_data_1
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned_tmp AS SELECT * FROM "
+operator|+
+name|dbName
+operator|+
+literal|".ptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Move the data files of this newly created partition to a temp location
+name|Partition
+name|ptn
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|ptn
+operator|=
+name|metaStoreClient
+operator|.
+name|getPartition
+argument_list|(
+name|dbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"1"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+assert|assert
+operator|(
+literal|false
+operator|)
+assert|;
+block|}
+name|Path
+name|ptnLoc
+init|=
+operator|new
+name|Path
+argument_list|(
+name|ptn
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Path
+name|tmpLoc
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+operator|+
+literal|"/incrementalLoadFailAndRetry"
+argument_list|)
+decl_stmt|;
+name|FileSystem
+name|dataFs
+init|=
+name|ptnLoc
+operator|.
+name|getFileSystem
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
+assert|assert
+operator|(
+name|dataFs
+operator|.
+name|rename
+argument_list|(
+name|ptnLoc
+argument_list|,
+name|tmpLoc
+argument_list|)
+operator|)
+assert|;
+comment|// Replicate all the events happened so far. It should fail as the data files missing in
+comment|// original path and not available in CM as well.
+name|Tuple
+name|incrDump
+init|=
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|verifyFail
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|replDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|incrDump
+operator|.
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|empty
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// Move the files back to original data location
+assert|assert
+operator|(
+name|dataFs
+operator|.
+name|rename
+argument_list|(
+name|tmpLoc
+argument_list|,
+name|ptnLoc
+argument_list|)
+operator|)
+assert|;
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|incrDump
+operator|.
+name|dumpLocation
+argument_list|,
+name|incrDump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned_tmp where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data_1
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -14249,152 +21433,6 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-comment|// first test ReplStateMap functionality
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|Long
-argument_list|>
-name|cmap
-init|=
-operator|new
-name|ReplStateMap
-argument_list|<
-name|String
-argument_list|,
-name|Long
-argument_list|>
-argument_list|()
-decl_stmt|;
-name|Long
-name|oldV
-decl_stmt|;
-name|oldV
-operator|=
-name|cmap
-operator|.
-name|put
-argument_list|(
-literal|"a"
-argument_list|,
-literal|1L
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|1L
-argument_list|,
-name|cmap
-operator|.
-name|get
-argument_list|(
-literal|"a"
-argument_list|)
-operator|.
-name|longValue
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|null
-argument_list|,
-name|oldV
-argument_list|)
-expr_stmt|;
-name|cmap
-operator|.
-name|put
-argument_list|(
-literal|"b"
-argument_list|,
-literal|2L
-argument_list|)
-expr_stmt|;
-name|oldV
-operator|=
-name|cmap
-operator|.
-name|put
-argument_list|(
-literal|"b"
-argument_list|,
-operator|-
-literal|2L
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|2L
-argument_list|,
-name|cmap
-operator|.
-name|get
-argument_list|(
-literal|"b"
-argument_list|)
-operator|.
-name|longValue
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|2L
-argument_list|,
-name|oldV
-operator|.
-name|longValue
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|cmap
-operator|.
-name|put
-argument_list|(
-literal|"c"
-argument_list|,
-literal|3L
-argument_list|)
-expr_stmt|;
-name|oldV
-operator|=
-name|cmap
-operator|.
-name|put
-argument_list|(
-literal|"c"
-argument_list|,
-literal|33L
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|33L
-argument_list|,
-name|cmap
-operator|.
-name|get
-argument_list|(
-literal|"c"
-argument_list|)
-operator|.
-name|longValue
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|3L
-argument_list|,
-name|oldV
-operator|.
-name|longValue
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// Now, to actually testing status - first, we bootstrap.
 name|String
 name|name
 init|=
@@ -14409,6 +21447,8 @@ init|=
 name|createDB
 argument_list|(
 name|name
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|advanceDumpDir
@@ -14419,6 +21459,8 @@ argument_list|(
 literal|"REPL DUMP "
 operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -14429,6 +21471,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -14441,6 +21485,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -14454,6 +21500,8 @@ operator|+
 name|lastReplDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Bootstrap done, now on to incremental. First, we test db-level REPL LOADs.
@@ -14686,13 +21734,28 @@ operator|+
 literal|".ptned2 DROP PARTITION (b=11)"
 argument_list|)
 decl_stmt|;
+comment|/*     Comparisons using Strings for event Ids is wrong. This should be numbers since lexical string comparison     and numeric comparision differ. This requires a broader change where we return the dump Id as long and not string     fixing this here for now as it was observed in one of the builds where "1001".compareTo("998") results     in failure of the assertion below.      */
 name|assertTrue
 argument_list|(
+operator|new
+name|Long
+argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
 name|finalTblReplDumpId
+argument_list|)
+argument_list|)
 operator|.
 name|compareTo
 argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
 name|lastTblReplDumpId
+argument_list|)
 argument_list|)
 operator|>
 literal|0
@@ -14702,6 +21765,902 @@ comment|// TODO : currently not testing the following scenarios:
 comment|//   a) Multi-db wh-level REPL LOAD - need to add that
 comment|//   b) Insert into tables - quite a few cases need to be enumerated there, including dyn adds.
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testConstraints
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"constraints"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl1(a string, b string, primary key (a) disable novalidate rely, unique (b) disable)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl2(a string, b string, foreign key (a, b) references "
+operator|+
+name|dbName
+operator|+
+literal|".tbl1(a, b) disable novalidate)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl3(a string, b string not null disable)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+comment|// bootstrap replication for constraint is not implemented. Will verify it works once done
+try|try
+block|{
+name|List
+argument_list|<
+name|SQLPrimaryKey
+argument_list|>
+name|pks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getPrimaryKeys
+argument_list|(
+operator|new
+name|PrimaryKeysRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl1"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|pks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLUniqueConstraint
+argument_list|>
+name|uks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getUniqueConstraints
+argument_list|(
+operator|new
+name|UniqueConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl1"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|uks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLForeignKey
+argument_list|>
+name|fks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getForeignKeys
+argument_list|(
+operator|new
+name|ForeignKeysRequest
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl2"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|fks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLNotNullConstraint
+argument_list|>
+name|nns
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getNotNullConstraints
+argument_list|(
+operator|new
+name|NotNullConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl3"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|nns
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|te
+parameter_list|)
+block|{
+name|assertNull
+argument_list|(
+name|te
+argument_list|)
+expr_stmt|;
+block|}
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl4(a string, b string, primary key (a) disable novalidate rely, unique (b) disable)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl5(a string, b string, foreign key (a, b) references "
+operator|+
+name|dbName
+operator|+
+literal|".tbl4(a, b) disable novalidate)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl6(a string, b string not null disable)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|incrementalDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|incrementalDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|String
+name|pkName
+init|=
+literal|null
+decl_stmt|;
+name|String
+name|ukName
+init|=
+literal|null
+decl_stmt|;
+name|String
+name|fkName
+init|=
+literal|null
+decl_stmt|;
+name|String
+name|nnName
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|List
+argument_list|<
+name|SQLPrimaryKey
+argument_list|>
+name|pks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getPrimaryKeys
+argument_list|(
+operator|new
+name|PrimaryKeysRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl4"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|pks
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|pkName
+operator|=
+name|pks
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getPk_name
+argument_list|()
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLUniqueConstraint
+argument_list|>
+name|uks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getUniqueConstraints
+argument_list|(
+operator|new
+name|UniqueConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl4"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|uks
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|ukName
+operator|=
+name|uks
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getUk_name
+argument_list|()
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLForeignKey
+argument_list|>
+name|fks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getForeignKeys
+argument_list|(
+operator|new
+name|ForeignKeysRequest
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl5"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|fks
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|fkName
+operator|=
+name|fks
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getFk_name
+argument_list|()
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLNotNullConstraint
+argument_list|>
+name|nns
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getNotNullConstraints
+argument_list|(
+operator|new
+name|NotNullConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl6"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|nns
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|nnName
+operator|=
+name|nns
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getNn_name
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|te
+parameter_list|)
+block|{
+name|assertNull
+argument_list|(
+name|te
+argument_list|)
+expr_stmt|;
+block|}
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl4 DROP CONSTRAINT `"
+operator|+
+name|pkName
+operator|+
+literal|"`"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl4 DROP CONSTRAINT `"
+operator|+
+name|ukName
+operator|+
+literal|"`"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl5 DROP CONSTRAINT `"
+operator|+
+name|fkName
+operator|+
+literal|"`"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".tbl6 DROP CONSTRAINT `"
+operator|+
+name|nnName
+operator|+
+literal|"`"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|List
+argument_list|<
+name|SQLPrimaryKey
+argument_list|>
+name|pks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getPrimaryKeys
+argument_list|(
+operator|new
+name|PrimaryKeysRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl4"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|pks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLUniqueConstraint
+argument_list|>
+name|uks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getUniqueConstraints
+argument_list|(
+operator|new
+name|UniqueConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl4"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|uks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLForeignKey
+argument_list|>
+name|fks
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getForeignKeys
+argument_list|(
+operator|new
+name|ForeignKeysRequest
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl5"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|fks
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|SQLNotNullConstraint
+argument_list|>
+name|nns
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getNotNullConstraints
+argument_list|(
+operator|new
+name|NotNullConstraintsRequest
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"tbl6"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|nns
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|te
+parameter_list|)
+block|{
+name|assertNull
+argument_list|(
+name|te
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 specifier|private
 specifier|static
 name|String
@@ -14709,6 +22668,9 @@ name|createDB
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 block|{
 name|LOG
@@ -14734,6 +22696,8 @@ argument_list|(
 literal|"CREATE DATABASE "
 operator|+
 name|dbName
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 return|return
@@ -15576,6 +23540,8 @@ block|{
 name|run
 argument_list|(
 name|cmd
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -15590,6 +23556,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|prevReplDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -15600,6 +23568,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -15612,6 +23582,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -15625,6 +23597,8 @@ operator|+
 name|lastDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -15636,6 +23610,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 name|lastReplDumpId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 if|if
@@ -15656,6 +23632,8 @@ operator|+
 name|tblName
 argument_list|,
 name|lastReplDumpId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -15706,6 +23684,8 @@ block|{
 name|run
 argument_list|(
 name|cmd
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -15724,6 +23704,8 @@ operator|+
 literal|" FROM "
 operator|+
 name|prevReplDumpId
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|String
@@ -15734,6 +23716,8 @@ argument_list|(
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|String
@@ -15746,6 +23730,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|true
+argument_list|,
+name|driver
 argument_list|)
 decl_stmt|;
 name|run
@@ -15763,6 +23749,8 @@ operator|+
 name|lastDumpLocn
 operator|+
 literal|"'"
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -15774,6 +23762,8 @@ operator|+
 literal|"_dupe"
 argument_list|,
 name|lastDbReplDumpId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
@@ -15787,6 +23777,8 @@ operator|+
 name|tblName
 argument_list|,
 name|lastReplDumpId
+argument_list|,
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -15819,6 +23811,9 @@ name|rowNum
 parameter_list|,
 name|int
 name|colNum
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -15831,6 +23826,8 @@ argument_list|,
 name|colNum
 argument_list|,
 literal|false
+argument_list|,
+name|myDriver
 argument_list|)
 return|;
 block|}
@@ -15846,6 +23843,9 @@ name|colNum
 parameter_list|,
 name|boolean
 name|reuse
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -15867,7 +23867,7 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
-name|driver
+name|myDriver
 operator|.
 name|getResults
 argument_list|(
@@ -15923,6 +23923,9 @@ parameter_list|(
 name|String
 index|[]
 name|data
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -15934,7 +23937,9 @@ argument_list|>
 name|results
 init|=
 name|getOutput
-argument_list|()
+argument_list|(
+name|myDriver
+argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -15992,6 +23997,9 @@ index|]
 operator|.
 name|toLowerCase
 argument_list|()
+operator|.
+name|trim
+argument_list|()
 argument_list|,
 name|results
 operator|.
@@ -16001,6 +24009,9 @@ name|i
 argument_list|)
 operator|.
 name|toLowerCase
+argument_list|()
+operator|.
+name|trim
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -16012,7 +24023,10 @@ argument_list|<
 name|String
 argument_list|>
 name|getOutput
-parameter_list|()
+parameter_list|(
+name|Driver
+name|myDriver
+parameter_list|)
 throws|throws
 name|IOException
 block|{
@@ -16029,7 +24043,7 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|driver
+name|myDriver
 operator|.
 name|getResults
 argument_list|(
@@ -16070,7 +24084,10 @@ block|}
 specifier|private
 name|void
 name|printOutput
-parameter_list|()
+parameter_list|(
+name|Driver
+name|myDriver
+parameter_list|)
 throws|throws
 name|IOException
 block|{
@@ -16080,7 +24097,9 @@ name|String
 name|s
 range|:
 name|getOutput
-argument_list|()
+argument_list|(
+name|myDriver
+argument_list|)
 control|)
 block|{
 name|LOG
@@ -16101,6 +24120,9 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|HiveMetaStoreClient
+name|myClient
 parameter_list|)
 block|{
 name|Exception
@@ -16113,7 +24135,7 @@ block|{
 name|Table
 name|tbl
 init|=
-name|metaStoreClient
+name|myClient
 operator|.
 name|getTable
 argument_list|(
@@ -16166,6 +24188,9 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|HiveMetaStoreClient
+name|myClient
 parameter_list|)
 block|{
 name|Exception
@@ -16178,7 +24203,7 @@ block|{
 name|Table
 name|tbl
 init|=
-name|metaStoreClient
+name|myClient
 operator|.
 name|getTable
 argument_list|(
@@ -16221,6 +24246,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partValues
+parameter_list|,
+name|HiveMetaStoreClient
+name|myClient
 parameter_list|)
 block|{
 name|Exception
@@ -16233,7 +24261,7 @@ block|{
 name|Partition
 name|ptn
 init|=
-name|metaStoreClient
+name|myClient
 operator|.
 name|getPartition
 argument_list|(
@@ -16294,6 +24322,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partValues
+parameter_list|,
+name|HiveMetaStoreClient
+name|myClient
 parameter_list|)
 block|{
 name|Exception
@@ -16306,7 +24337,7 @@ block|{
 name|Partition
 name|ptn
 init|=
-name|metaStoreClient
+name|myClient
 operator|.
 name|getPartition
 argument_list|(
@@ -16346,6 +24377,9 @@ parameter_list|,
 name|String
 index|[]
 name|data
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -16358,11 +24392,15 @@ block|{
 name|run
 argument_list|(
 name|cmd
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|data
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 block|}
@@ -16376,6 +24414,9 @@ name|cmd
 parameter_list|,
 name|String
 name|data
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -16390,6 +24431,8 @@ index|[]
 block|{
 name|data
 block|}
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 block|}
@@ -16403,6 +24446,9 @@ parameter_list|,
 name|String
 index|[]
 name|data
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -16410,11 +24456,15 @@ block|{
 name|run
 argument_list|(
 name|cmd
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 name|verifyResults
 argument_list|(
 name|data
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 block|}
@@ -16424,6 +24474,9 @@ name|verifyFail
 parameter_list|(
 name|String
 name|cmd
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|RuntimeException
@@ -16442,6 +24495,8 @@ argument_list|(
 name|cmd
 argument_list|,
 literal|false
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 block|}
@@ -16468,6 +24523,17 @@ name|ae
 argument_list|)
 throw|;
 block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|success
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|assertFalse
 argument_list|(
 name|success
@@ -16486,6 +24552,9 @@ name|key
 parameter_list|,
 name|String
 name|pattern
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|IOException
@@ -16493,6 +24562,8 @@ block|{
 name|run
 argument_list|(
 name|cmd
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 name|List
@@ -16502,7 +24573,9 @@ argument_list|>
 name|results
 init|=
 name|getOutput
-argument_list|()
+argument_list|(
+name|myDriver
+argument_list|)
 decl_stmt|;
 name|assertTrue
 argument_list|(
@@ -16584,6 +24657,9 @@ name|run
 parameter_list|(
 name|String
 name|cmd
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|RuntimeException
@@ -16595,6 +24671,8 @@ argument_list|(
 name|cmd
 argument_list|,
 literal|false
+argument_list|,
+name|myDriver
 argument_list|)
 expr_stmt|;
 comment|// default arg-less run simply runs, and does not care about failure
@@ -16634,6 +24712,9 @@ name|cmd
 parameter_list|,
 name|boolean
 name|errorOnFail
+parameter_list|,
+name|Driver
+name|myDriver
 parameter_list|)
 throws|throws
 name|RuntimeException
@@ -16648,7 +24729,7 @@ block|{
 name|CommandProcessorResponse
 name|ret
 init|=
-name|driver
+name|myDriver
 operator|.
 name|run
 argument_list|(
@@ -16658,12 +24739,23 @@ decl_stmt|;
 name|success
 operator|=
 operator|(
+operator|(
 name|ret
 operator|.
 name|getException
 argument_list|()
 operator|==
 literal|null
+operator|)
+operator|&&
+operator|(
+name|ret
+operator|.
+name|getErrorMessage
+argument_list|()
+operator|==
+literal|null
+operator|)
 operator|)
 expr_stmt|;
 if|if

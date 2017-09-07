@@ -83,6 +83,22 @@ name|apache
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
 name|service
 operator|.
 name|cli
@@ -216,10 +232,20 @@ throws|throws
 name|HiveSQLException
 block|{
 name|String
+name|cleanStatement
+init|=
+name|HiveStringUtils
+operator|.
+name|removeComments
+argument_list|(
+name|statement
+argument_list|)
+decl_stmt|;
+name|String
 index|[]
 name|tokens
 init|=
-name|statement
+name|cleanStatement
 operator|.
 name|trim
 argument_list|()
@@ -283,6 +309,7 @@ literal|null
 condition|)
 block|{
 comment|// runAsync, queryTimeout makes sense only for a SQLOperation
+comment|// Pass the original statement to SQLOperation as sql parser can remove comments by itself
 return|return
 operator|new
 name|SQLOperation
@@ -305,7 +332,7 @@ name|HiveCommandOperation
 argument_list|(
 name|parentSession
 argument_list|,
-name|statement
+name|cleanStatement
 argument_list|,
 name|processor
 argument_list|,

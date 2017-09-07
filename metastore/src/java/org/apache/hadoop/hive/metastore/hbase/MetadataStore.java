@@ -101,7 +101,7 @@ name|IOException
 throws|,
 name|InterruptedException
 function_decl|;
-comment|/**    * @param fileId The file ID.    * @param metadataBuffers Serialized file metadata.    * @param addedCols The column names for additional columns created by file-format-specific    *                  metadata handler, to be stored in the cache.    * @param addedVals The values for addedCols; one value per added column.    */
+comment|/**    * @param fileId The file ID.    * @param metadata Serialized file metadata.    * @param addedCols The column names for additional columns created by file-format-specific    *                  metadata handler, to be stored in the cache.    * @param addedVals The values for addedCols; one value per added column.    */
 name|void
 name|storeFileMetadata
 parameter_list|(

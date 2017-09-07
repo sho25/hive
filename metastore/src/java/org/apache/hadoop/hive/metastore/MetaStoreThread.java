@@ -104,7 +104,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Run the thread in the background.  This must not be called until    * {@link ##init(java.util.concurrent.atomic.AtomicBoolean, java.util.concurrent.atomic.AtomicBoolean)} has    * been called.    */
+comment|/**    * Run the thread in the background.  This must not be called until    * {@link MetaStoreThread#init(java.util.concurrent.atomic.AtomicBoolean,java.util.concurrent.atomic.AtomicBoolean)} has    * been called.    */
 name|void
 name|start
 parameter_list|()

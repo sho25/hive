@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Buffer that can be managed by LowLevelEvictionPolicy.  */
+comment|/**  * Buffer that can be managed by LowLevelEvictionPolicy.  * We want to have cacheable and non-allocator buffers, as well as allocator buffers with no  * cache dependency, and also ones that are both. Alas, we could only achieve this if we were  * using a real programming language.  */
 end_comment
 
 begin_class
@@ -78,9 +78,25 @@ name|indexInHeap
 init|=
 name|NOT_IN_CACHE
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|INVALIDATE_OK
+init|=
+literal|0
+decl_stmt|,
+name|INVALIDATE_FAILED
+init|=
+literal|1
+decl_stmt|,
+name|INVALIDATE_ALREADY_INVALID
+init|=
+literal|2
+decl_stmt|;
 specifier|protected
 specifier|abstract
-name|boolean
+name|int
 name|invalidate
 parameter_list|()
 function_decl|;

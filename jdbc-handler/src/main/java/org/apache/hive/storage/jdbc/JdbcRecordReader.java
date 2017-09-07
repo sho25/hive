@@ -69,6 +69,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|ObjectWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Text
 import|;
 end_import
@@ -383,7 +397,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|record
 init|=
@@ -415,7 +429,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|String
+name|Object
 argument_list|>
 name|entry
 range|:
@@ -451,7 +465,7 @@ name|get
 argument_list|()
 else|:
 operator|new
-name|Text
+name|ObjectWritable
 argument_list|(
 name|entry
 operator|.

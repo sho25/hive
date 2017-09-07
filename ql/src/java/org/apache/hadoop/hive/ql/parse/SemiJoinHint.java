@@ -29,6 +29,10 @@ name|String
 name|colName
 decl_stmt|;
 specifier|private
+name|String
+name|target
+decl_stmt|;
+specifier|private
 name|Integer
 name|numEntries
 decl_stmt|;
@@ -37,6 +41,9 @@ name|SemiJoinHint
 parameter_list|(
 name|String
 name|colName
+parameter_list|,
+name|String
+name|target
 parameter_list|,
 name|Integer
 name|numEntries
@@ -47,6 +54,12 @@ operator|.
 name|colName
 operator|=
 name|colName
+expr_stmt|;
+name|this
+operator|.
+name|target
+operator|=
+name|target
 expr_stmt|;
 name|this
 operator|.
@@ -65,6 +78,15 @@ name|colName
 return|;
 block|}
 specifier|public
+name|String
+name|getTarget
+parameter_list|()
+block|{
+return|return
+name|target
+return|;
+block|}
+specifier|public
 name|Integer
 name|getNumEntries
 parameter_list|()
@@ -78,6 +100,27 @@ name|numEntries
 else|:
 operator|-
 literal|1
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"colName="
+operator|+
+name|colName
+operator|+
+literal|", target="
+operator|+
+name|target
+operator|+
+literal|", numEntries="
+operator|+
+name|numEntries
 return|;
 block|}
 block|}

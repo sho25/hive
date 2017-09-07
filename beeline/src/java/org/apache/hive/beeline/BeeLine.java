@@ -6332,12 +6332,6 @@ argument_list|(
 name|fileStream
 argument_list|)
 expr_stmt|;
-name|output
-argument_list|(
-literal|""
-argument_list|)
-expr_stmt|;
-comment|// dummy new line
 block|}
 block|}
 specifier|private
@@ -10652,7 +10646,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 try|try
-block|{
+init|(
 name|ZipFile
 name|zf
 init|=
@@ -10661,7 +10655,8 @@ name|ZipFile
 argument_list|(
 name|f
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 name|int
 name|total
 init|=
