@@ -1530,11 +1530,16 @@ throws|throws
 name|Exception
 block|{
 comment|// bootstrap case
-name|Long
-name|bootDumpBeginReplId
+name|Hive
+name|hiveDb
 init|=
 name|getHive
 argument_list|()
+decl_stmt|;
+name|Long
+name|bootDumpBeginReplId
+init|=
+name|hiveDb
 operator|.
 name|getMSC
 argument_list|()
@@ -1554,8 +1559,7 @@ name|Utils
 operator|.
 name|matchesDb
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|,
 name|work
 operator|.
@@ -1629,6 +1633,18 @@ argument_list|,
 name|dumpRoot
 argument_list|)
 expr_stmt|;
+name|String
+name|uniqueKey
+init|=
+name|Utils
+operator|.
+name|setDbBootstrapDumpState
+argument_list|(
+name|hiveDb
+argument_list|,
+name|dbName
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -1638,8 +1654,7 @@ name|Utils
 operator|.
 name|matchesTbl
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|,
 name|dbName
 argument_list|,
@@ -1675,6 +1690,17 @@ name|dbRoot
 argument_list|)
 expr_stmt|;
 block|}
+name|Utils
+operator|.
+name|resetDbBootstrapDumpState
+argument_list|(
+name|hiveDb
+argument_list|,
+name|dbName
+argument_list|,
+name|uniqueKey
+argument_list|)
+expr_stmt|;
 name|replLogger
 operator|.
 name|endLog
@@ -1689,8 +1715,7 @@ block|}
 name|Long
 name|bootDumpEndReplId
 init|=
-name|getHive
-argument_list|()
+name|hiveDb
 operator|.
 name|getMSC
 argument_list|()
@@ -1742,8 +1767,7 @@ name|EventUtils
 operator|.
 name|MSClientNotificationFetcher
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 operator|.
 name|getMSC
 argument_list|()
@@ -1852,8 +1876,9 @@ name|write
 argument_list|()
 expr_stmt|;
 comment|// Set the correct last repl id to return to the user
+comment|// Currently returned bootDumpBeginReplId as we don't consolidate the events after bootstrap
 return|return
-name|bootDumpEndReplId
+name|bootDumpBeginReplId
 return|;
 block|}
 specifier|private
