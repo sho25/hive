@@ -1119,7 +1119,7 @@ literal|"{  \"queryType\": \"timeseries\", "
 operator|+
 literal|" \"dataSource\": \"sample_datasource\", "
 operator|+
-literal|" \"granularity\": \"day\", "
+literal|" \"granularity\": \"DAY\", "
 operator|+
 literal|" \"descending\": \"true\", "
 operator|+
@@ -1143,7 +1143,7 @@ literal|"\"virtualColumns\":[],"
 operator|+
 literal|"\"filter\":null,"
 operator|+
-literal|"\"granularity\":{\"type\":\"period\",\"period\":\"P1D\",\"timeZone\":\"America/Los_Angeles\",\"origin\":null},"
+literal|"\"granularity\":\"DAY\","
 operator|+
 literal|"\"aggregations\":[],"
 operator|+
@@ -1283,7 +1283,7 @@ literal|"\"virtualColumns\":[],"
 operator|+
 literal|"\"filter\":null,"
 operator|+
-literal|"\"granularity\":{\"type\":\"period\",\"period\":\"P1D\",\"timeZone\":\"America/Los_Angeles\",\"origin\":null},"
+literal|"\"granularity\":\"DAY\","
 operator|+
 literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"country\",\"outputName\":\"country\",\"outputType\":\"STRING\"},"
 operator|+

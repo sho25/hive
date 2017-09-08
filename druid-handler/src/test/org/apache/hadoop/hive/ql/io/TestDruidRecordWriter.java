@@ -845,7 +845,7 @@ name|Object
 operator|>
 name|of
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -886,7 +886,7 @@ name|Object
 operator|>
 name|of
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -927,7 +927,7 @@ name|Object
 operator|>
 name|of
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -960,6 +960,29 @@ literal|1.0d
 argument_list|)
 argument_list|)
 decl_stmt|;
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testTimeStampColumnName
+parameter_list|()
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Time column name need to match to ensure serdeser compatibility"
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|DEFAULT_TIMESTAMP_COLUMN
+argument_list|,
+name|DruidTable
+operator|.
+name|DEFAULT_TIMESTAMP_COLUMN
+argument_list|)
+expr_stmt|;
+block|}
 comment|// This test fails due to conflict of guava classes with hive-exec jar.
 annotation|@
 name|Ignore
@@ -1018,7 +1041,7 @@ argument_list|(
 operator|new
 name|TimestampSpec
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -1339,7 +1362,7 @@ name|input
 operator|.
 name|get
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -1649,7 +1672,7 @@ name|expected
 operator|.
 name|get
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
