@@ -291,7 +291,7 @@ begin_class
 specifier|public
 specifier|abstract
 class|class
-name|TestTxnCommandsBase
+name|TxnCommandsBaseForTests
 block|{
 comment|//bucket count for test tables; set it to 1 for easier debugging
 specifier|final
@@ -705,12 +705,12 @@ name|Exception
 block|{
 for|for
 control|(
-name|TestTxnCommandsBase
+name|TxnCommandsBaseForTests
 operator|.
 name|Table
 name|t
 range|:
-name|TestTxnCommandsBase
+name|TxnCommandsBaseForTests
 operator|.
 name|Table
 operator|.
