@@ -160,7 +160,7 @@ specifier|public
 class|class
 name|TestTxnNoBuckets
 extends|extends
-name|TestTxnCommandsBase
+name|TxnCommandsBaseForTests
 block|{
 specifier|static
 specifier|final

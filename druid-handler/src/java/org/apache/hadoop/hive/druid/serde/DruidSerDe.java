@@ -117,22 +117,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|calcite
-operator|.
-name|adapter
-operator|.
-name|druid
-operator|.
-name|DruidTable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hadoop
 operator|.
 name|conf
@@ -1405,7 +1389,7 @@ name|columnNames
 operator|.
 name|contains
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -1417,7 +1401,7 @@ name|SerDeException
 argument_list|(
 literal|"Timestamp column (' "
 operator|+
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 operator|+
@@ -1739,7 +1723,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -2526,7 +2510,7 @@ name|columnNames
 operator|.
 name|add
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -2680,7 +2664,7 @@ name|columnNames
 operator|.
 name|add
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -2862,7 +2846,7 @@ name|columnNames
 operator|.
 name|add
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -3100,7 +3084,7 @@ name|columnNames
 operator|.
 name|add
 argument_list|(
-name|DruidTable
+name|DruidStorageHandlerUtils
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)

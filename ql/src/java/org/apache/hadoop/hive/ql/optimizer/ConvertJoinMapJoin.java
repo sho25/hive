@@ -976,9 +976,9 @@ operator|.
 name|conf
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
+name|boolean
+name|hiveConvertJoin
+init|=
 name|context
 operator|.
 name|conf
@@ -991,6 +991,19 @@ name|ConfVars
 operator|.
 name|HIVECONVERTJOIN
 argument_list|)
+operator|&
+operator|!
+name|context
+operator|.
+name|parseContext
+operator|.
+name|getDisableMapJoin
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|hiveConvertJoin
 condition|)
 block|{
 comment|// we are just converting to a common merge join operator. The shuffle

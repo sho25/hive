@@ -558,15 +558,9 @@ name|filterPartitionsByExpr
 parameter_list|(
 name|List
 argument_list|<
-name|String
+name|FieldSchema
 argument_list|>
-name|partColumnNames
-parameter_list|,
-name|List
-argument_list|<
-name|PrimitiveTypeInfo
-argument_list|>
-name|partColumnTypeInfos
+name|partColumns
 parameter_list|,
 name|byte
 index|[]
